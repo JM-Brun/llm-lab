@@ -1,6 +1,6 @@
 ---
-title: "L'espace des embeddings (ou plongements)"
-subtitle: "Comment les identifiants sélectionnent des vecteurs et comment le contexte les transforme"
+title: "Des identifiants aux vecteurs : les embeddings"
+subtitle: "Comment un ID de token sélectionne un vecteur dans une table apprise"
 keywords: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
@@ -11,7 +11,7 @@ id: "fr/embedding-space"
 scope: "Explique le lookup qui associe chaque ID de token à un vecteur initial appris, puis distingue ce vecteur des représentations contextualisées produites par les couches du Transformer ; introduit prudemment la géométrie sans en faire un prérequis."
 purpose: "Le lecteur doit pouvoir expliquer comment un ID sélectionne une ligne de la matrice de plongements (embedding), distinguer le vecteur de plongement initial de la représentation contextualisée, et comprendre pourquoi les propriétés géométriques demandent une interprétation dépendante du modèle et de la tâche."
 suggested_route:
-  previous: "fr/tokenization-strategies"
+  previous: "fr/text-data"
   next: "fr/positional-encoding"
 hierarchy:
   parents: ["fr/text-data", "fr/transformer"]
@@ -23,7 +23,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space",
 {{< include ../includes/generated-guided-context-fr-embedding-space.qmd >}}
 
 ::: {.chapter-lead}
-Un **embedding**, ou **plongement**, est ici un vecteur numérique associé à un objet, par exemple un token. L'ensemble de ces vecteurs forme un espace de représentation. Le terme anglais reste très courant en apprentissage automatique ; *plongement* est son équivalent français et sera employé aussi dans cette page. On peut comparer leurs directions, leurs distances ou leurs voisins, mais leur interprétation dépend du modèle, de son entraînement et de la tâche : la géométrie n'est pas un dictionnaire universel du sens.
+Après la tokenisation, chaque token est représenté par un identifiant entier. Cet identifiant sert d'indice dans une table apprise : le modèle lit la ligne correspondante et obtient un vecteur. C'est le **lookup d'embedding**. Deux occurrences du même ID sélectionnent le même vecteur initial ; la position et les couches du modèle interviennent ensuite pour construire des représentations dépendant du contexte.
 :::
 
 

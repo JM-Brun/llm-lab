@@ -11,8 +11,8 @@ id: "fr/tokenization-strategies"
 scope: "Compare les unités de segmentation et les familles d’algorithmes de tokenisation — notamment BPE, WordPiece et unigramme — ainsi que leurs compromis de couverture, longueur et coût ; suppose la chaîne d’entrée déjà représentée en texte et s’arrête avant le lookup des embeddings."
 purpose: "Le lecteur doit pouvoir décrire le principe des principales stratégies de segmentation, comparer leurs hypothèses et compromis, expliquer pourquoi les tokens et IDs dépendent du tokenizer et de sa version, et montrer les limites d’un découpage fondé uniquement sur les espaces."
 suggested_route:
-  previous: "fr/text-data"
-  next: "fr/embedding-space"
+  previous: null
+  next: null
 hierarchy:
   parents: ["fr/text-data"]
   children: []
@@ -233,9 +233,9 @@ La taille du vocabulaire, les budgets d'entraînement et l'évaluation comparati
 - **Les IDs se transfèrent entre modèles.** Non en général : un même ID peut désigner des fragments différents.
 - **Byte-level = indépendant de la langue.** Non : la couverture ne garantit ni coût ni qualité uniformes.
 
-## Où se situe cette étape dans le parcours ?
+## Où se situe cette page dans le parcours ?
 
-[Texte et données](text-data.qmd) situe la tokenisation dans le parcours qui mène du texte brut aux identifiants fournis au modèle. Cette page compare les stratégies de découpage ; l'[espace des plongements](embedding-space.qmd), prochaine étape du parcours, montre comment ces identifiants sélectionnent des vecteurs initiaux. Pour approfondir : [conception et évaluation des tokenizers](tokenizer-design-evaluation.qmd) pour les critères empiriques, et [Unicode et texte](unicode-text.qmd) pour la représentation des caractères sous-jacente.
+Cette page est un **approfondissement facultatif** de [Du texte aux tokens](text-data.qmd) : elle compare les stratégies qui transforment le texte en tokens et en identifiants. Il n'est pas nécessaire de connaître BPE, WordPiece ou unigramme pour comprendre le lookup des embeddings. Le parcours central reprend directement avec [Des identifiants aux vecteurs](embedding-space.qmd), qui montre comment les IDs sélectionnent les vecteurs initiaux. Pour approfondir les critères empiriques, consultez [la conception et l'évaluation des tokenizers](tokenizer-design-evaluation.qmd) ; pour la représentation des caractères, consultez [Unicode et texte](unicode-text.qmd).
 
 ## Ressources externes
 

@@ -11,8 +11,8 @@ id: "en/tokenization-strategies"
 scope: "Compares segmentation units and tokenization algorithm families—including BPE, WordPiece, and unigram—and their coverage, sequence-length, and cost trade-offs; assumes the input is already represented as text and stops before embedding lookup."
 purpose: "Readers should be able to describe major segmentation strategies, compare their assumptions and trade-offs, explain why tokens and IDs depend on the tokenizer and its version, and demonstrate the limits of whitespace-only splitting."
 suggested_route:
-  previous: "en/text-data"
-  next: "en/embedding-space"
+  previous: null
+  next: null
 hierarchy:
   parents: ["en/text-data"]
   children: []
@@ -234,9 +234,9 @@ Vocabulary size, training budgets, and comparative tokenizer evaluation raise qu
 - **IDs transfer between models.** Generally not: the same ID can denote different fragments.
 - **Byte-level = language-independent.** No: coverage guarantees neither uniform cost nor uniform quality.
 
-## Where does this step sit in the route?
+## Where does this page sit in the route?
 
-[Text and data](text-data.qmd) places tokenization in the path that leads from raw text to the IDs supplied to the model. This page compares segmentation strategies; the [embedding space](embedding-space.qmd), the next step in the route, shows how those IDs select initial vectors. To go further: [tokenizer design and evaluation](tokenizer-design-evaluation.qmd) for empirical criteria, and [Unicode and text](unicode-text.qmd) for the underlying character representation.
+This page is an **optional deepening** of [From text to tokens](text-data.qmd): it compares the strategies that turn text into tokens and IDs. You do not need to know BPE, WordPiece, or unigram tokenization to understand embedding lookup. The core route continues directly with [From token IDs to vectors](embedding-space.qmd), which shows how IDs select initial vectors. For empirical evaluation criteria, see [tokenizer design and evaluation](tokenizer-design-evaluation.qmd); for character representation, see [Unicode and text](unicode-text.qmd).
 
 ## External tools
 

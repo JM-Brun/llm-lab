@@ -19,14 +19,14 @@ stages:
       fr: "Du texte aux tokens"
       en: "From text to tokens"
     objective:
-      fr: "Distinguer le texte, la tokenisation, le vocabulaire et les identifiants de tokens qui constituent le contexte discret fourni au modèle."
-      en: "Distinguish text, tokenization, vocabulary, and token IDs that form the discrete context supplied to the model."
+      fr: "Distinguer le texte, les tokens et les identifiants qui constituent l'entrée discrète du modèle, sans devoir connaître les algorithmes de segmentation."
+      en: "Distinguish text, tokens, and token IDs that form the model's discrete input without needing to study segmentation algorithms."
     pages:
-      fr: [fr/text-data, fr/tokenization-strategies]
-      en: [en/text-data, en/tokenization-strategies]
+      fr: [fr/text-data]
+      en: [en/text-data]
     optional_pages:
-      fr: [fr/unicode-text, fr/tokenizer-design-evaluation]
-      en: [en/unicode-text, en/tokenizer-design-evaluation]
+      fr: [fr/tokenization-strategies, fr/unicode-text, fr/tokenizer-design-evaluation]
+      en: [en/tokenization-strategies, en/unicode-text, en/tokenizer-design-evaluation]
 
   - id: representations
     title:

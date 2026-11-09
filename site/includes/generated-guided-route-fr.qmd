@@ -27,10 +27,10 @@ Distinguer le texte, la tokenisation, le vocabulaire et les identifiants de toke
 **Pages centrales**
 
 - [Du texte aux tokens : représenter le langage](text-data.html)
-- [Stratégies de tokenisation : granularité, algorithmes et compromis](tokenization-strategies.html)
 
 **Ressources facultatives**
 
+- [Stratégies de tokenisation : granularité, algorithmes et compromis](tokenization-strategies.html)
 - [Unicode, UTF-8 et normalisation du texte](unicode-text.html)
 - [Concevoir et évaluer un tokenizer](tokenizer-design-evaluation.html)
 
@@ -44,7 +44,7 @@ Suivre la lecture des vecteurs d'embedding et l'ajout d'information positionnell
 
 **Pages centrales**
 
-- [L'espace des embeddings (ou plongements)](embedding-space.html)
+- [Des identifiants aux vecteurs : les embeddings](embedding-space.html)
 - [Encodage positionnel : donner un ordre aux tokens](positional-encoding.html)
 - [Pourquoi un même token peut-il avoir plusieurs représentations contextualisées ?](contextualized-representations.html)
 

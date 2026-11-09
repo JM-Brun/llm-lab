@@ -1,6 +1,6 @@
 ---
-title: "The embedding space"
-subtitle: "How token IDs select vectors and how context transforms them"
+title: "From token IDs to vectors: embeddings"
+subtitle: "How a token ID selects a vector from a learned table"
 keywords: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:en", "status:published"]
 lang: en
 ---
@@ -11,7 +11,7 @@ id: "en/embedding-space"
 scope: "Explains the lookup that maps each token ID to an initial learned vector, then distinguishes this vector from contextualized representations produced by Transformer layers; introduces geometry cautiously without making it a prerequisite."
 purpose: "Readers should be able to explain how an ID selects a row in the embedding matrix, distinguish initial embeddings from contextualized representations, and understand why geometric properties require model- and task-dependent interpretation."
 suggested_route:
-  previous: "en/tokenization-strategies"
+  previous: "en/text-data"
   next: "en/positional-encoding"
 hierarchy:
   parents: ["en/text-data", "en/transformer"]
@@ -23,7 +23,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space",
 {{< include ../includes/generated-guided-context-en-embedding-space.qmd >}}
 
 ::: {.chapter-lead}
-An **embedding** is a numerical vector associated with an object, such as a token. The collection of these vectors forms a representation space. We can compare their directions, distances, or neighbours, but interpretation depends on the model, its training, and the task: geometry is not a universal dictionary of meaning.
+After tokenization, each token is represented by an integer ID. The ID acts as an index into a learned table: the model retrieves the corresponding row, a vector. This operation is the **embedding lookup**. Two occurrences of the same ID select the same initial vector; positional information and the model's layers then build representations that depend on context.
 :::
 
 

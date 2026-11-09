@@ -460,3 +460,27 @@ Revue des pages d'entrée et du catalogue FR/EN effectuée. Le workflow Quarto/b
 - Le workflow Quarto/browser sur le commit précédent du PR #760 a réussi, y compris la revue Playwright ciblée. Cette réussite ne valide pas automatiquement les modifications de cette passe, qui doivent être testées sur leur propre commit.
 - Rendu Quarto, liens locaux, navigation au clavier et captures de cette nouvelle passe restent à vérifier.
 - Aucun test avec apprenant indépendant n'est revendiqué.
+
+
+## 17. Passe J — rendre l'entrée vers les représentations plus directe (2026-11-09)
+
+### Problème constaté
+
+La page `text-data` indiquait déjà que les détails BPE/WordPiece pouvaient être remis à plus tard, mais `data/guided-route.yml` classait `tokenization-strategies` parmi les pages centrales obligatoires de l'étape `text-input`. Le stepper de `text-data` présentait également cette page spécialisée comme une étape intermédiaire avant le lookup des embeddings. L'intention éditoriale et le parcours généré se contredisaient.
+
+### Décision et changements
+
+1. **Parcours central raccourci :** `text-data → embedding-space → positional-encoding → contextualized-representations`. Le lecteur apprend d'abord le minimum nécessaire pour passer du texte aux IDs, puis comment ces IDs sélectionnent des vecteurs.
+2. **Tokenisation spécialisée facultative :** `tokenization-strategies` reste une ressource Understand publiée et utile, mais devient une ressource facultative de l'étape `text-input`. Elle reste accessible depuis la page d'entrée et la sidebar ; ses algorithmes ne sont plus un prérequis artificiel au lookup.
+3. **Stepper simplifié :** le stepper local de `text-data` décrit désormais les transformations essentielles — texte → IDs → vecteurs → position → contexte — sans présenter l'étude des algorithmes de segmentation comme une étape obligatoire.
+4. **Titre de la page embeddings :** le titre français et anglais annonce directement le passage des IDs aux vecteurs ; le premier paragraphe explique le lookup avant d'aborder la géométrie.
+5. **Relations corrigées :** `generation` reste le contexte de lecture précédent de `text-data`, mais n'en est plus le parent conceptuel. Le lien est conservé comme relation associée ; la hiérarchie ne confond plus ordre de lecture et containment.
+6. **Parité FR/EN :** les libellés, les relations, le parcours guidé, les pages et le stepper sont modifiés en parallèle.
+
+### Validation attendue
+
+- Vérifier la fraîcheur des fragments guidés suivis dans le dépôt.
+- Exécuter les tests de memberships, de métadonnées, de relations et de liens locaux.
+- Rendre le site FR/EN et inspecter le parcours depuis la génération jusqu'à l'embedding-space sur desktop et mobile.
+- Vérifier que la ressource de tokenisation apparaît comme facultative dans la carte et le contexte de page.
+- Garder la revue navigateur complète de la chaîne d'entrée avec #320 ; aucune preuve de compréhension apprenant n'est revendiquée ici.

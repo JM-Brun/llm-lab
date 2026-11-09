@@ -149,24 +149,25 @@ website:
           contents:
             - fr/llm-overview.qmd
             - fr/generation.qmd
-            - section: "Du texte à la distribution du prochain token"
+            - section: "Comment le modèle calcule sa prédiction"
               contents:
-                - section: "Entrée : texte et tokens"
+                - section: "Du texte aux identifiants"
                   contents:
                     - fr/text-data.qmd
-                    - fr/tokenization-strategies.qmd
-                - section: "Embeddings, position et contexte"
+                    - text: "Approfondir : stratégies de tokenisation (facultatif)"
+                      href: fr/tokenization-strategies.qmd
+                - section: "Des identifiants aux représentations"
                   contents:
                     - fr/embedding-space.qmd
                     - fr/positional-encoding.qmd
                     - fr/contextualized-representations.qmd
-                - section: "Calcul d’un bloc Transformer"
+                - section: "Transformer les représentations"
                   contents:
                     - fr/transformer.qmd
                     - fr/queries-keys-values.qmd
                     - fr/scaled-dot-product-attention.qmd
                     - fr/causal-masking.qmd
-                - section: "Logits, probabilités et entropie"
+                - section: "Des scores aux probabilités"
                   contents:
                     - fr/logits.qmd
                     - fr/probabilites.qmd
@@ -252,24 +253,25 @@ website:
           contents:
             - en/llm-overview.qmd
             - en/generation.qmd
-            - section: "From text to the next-token distribution"
+            - section: "How the model computes a prediction"
               contents:
-                - section: "Input: text and tokens"
+                - section: "From text to token IDs"
                   contents:
                     - en/text-data.qmd
-                    - en/tokenization-strategies.qmd
-                - section: "Embeddings, position, and context"
+                    - text: "Go deeper: tokenization strategies (optional)"
+                      href: en/tokenization-strategies.qmd
+                - section: "From IDs to representations"
                   contents:
                     - en/embedding-space.qmd
                     - en/positional-encoding.qmd
                     - en/contextualized-representations.qmd
-                - section: "Computing a Transformer block"
+                - section: "Transforming representations"
                   contents:
                     - en/transformer.qmd
                     - en/queries-keys-values.qmd
                     - en/scaled-dot-product-attention.qmd
                     - en/causal-masking.qmd
-                - section: "Logits, probabilities, and entropy"
+                - section: "From scores to probabilities"
                   contents:
                     - en/logits.qmd
                     - en/probabilities.qmd
