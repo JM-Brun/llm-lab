@@ -84,15 +84,15 @@ Les leçons utilisent trois repères pour distinguer les types de contenu :
 
 Ces repères décrivent les preuves disponibles ; ils ne rendent pas toutes les preuves équivalentes. Un schéma rend une structure lisible sans démontrer une propriété ; une dérivation établit un résultat sous des hypothèses explicites ; un test vérifie les cas qu’il couvre ; une expérience compare des configurations selon un protocole, des métriques et des limites documentés.
 
-## Deux parcours opérationnels et une évaluation transversale
+## Trois usages opérationnels frères et une évaluation transversale
 
-Le même modèle intervient dans plusieurs processus, mais leurs objectifs et leurs dynamiques diffèrent :
+Le même calcul prédictif produit une distribution conditionnelle. À partir de cette distribution, trois usages opérationnels distincts sont possibles : générer un token, scorer une cible observée ou apprendre en ajustant les paramètres. L'évaluation est transversale : elle agrège des mesures sur des données et selon un protocole définis.
 
 ```{=html}
 <figure class="llm-flow-figure">
-<svg class="llm-flow" viewBox="0 0 1220 650" role="group" aria-labelledby="llm-flow-title-fr" aria-describedby="llm-flow-desc-fr" xmlns="http://www.w3.org/2000/svg">
-<title id="llm-flow-title-fr">Carte interactive des processus d'inférence, d'apprentissage et d'évaluation</title>
-<desc id="llm-flow-desc-fr">La ligne supérieure décrit l'inférence autorégressive avec des paramètres fixes, du contexte textuel au choix du prochain token puis son ajout au contexte. La deuxième ligne décrit l'apprentissage : corpus et tokenizer, exemples, passe avant, perte, gradients et mise à jour des paramètres. La troisième ligne présente l'évaluation sur des données tenues à l'écart. Chaque bloc cliquable ouvre une page de référence.</desc>
+<svg class="llm-flow" viewBox="0 0 1220 850" role="group" aria-labelledby="llm-flow-title-fr" aria-describedby="llm-flow-desc-fr" xmlns="http://www.w3.org/2000/svg">
+<title id="llm-flow-title-fr">Carte interactive des trois usages opérationnels du calcul prédictif et de l'évaluation</title>
+<desc id="llm-flow-desc-fr">La première ligne décrit la génération autorégressive à paramètres fixes. Les lignes suivantes distinguent l'apprentissage, qui met à jour les paramètres, et le scoring d'une séquence observée, qui calcule les probabilités des cibles sans sélection de token ni mise à jour. L'évaluation utilise notamment le scoring sur des données tenues à l'écart et agrège les résultats selon un protocole. Chaque bloc cliquable ouvre une page de référence.</desc>
 <defs>
 <marker id="flow-arrow-fr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#7b91a6"/></marker>
 <marker id="flow-feedback-fr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#39845b"/></marker>
@@ -125,14 +125,60 @@ Le même modèle intervient dans plusieurs processus, mais leurs objectifs et le
 <g class="flow-node" role="link" tabindex="0" data-href="fr/gradients.html" aria-label="Gradients et mise à jour"><rect x="980" y="270" width="220" height="90" rx="12"/><text x="994" y="292" class="flow-kicker">OPTIMISATION</text><text x="994" y="318" class="flow-title">Gradients + update</text><text x="994" y="340" class="flow-subtitle">modifier les paramètres θ</text></g>
 <text x="650" y="414" class="flow-note">Les paramètres mis à jour servent au calcul suivant</text>
 
-<text x="20" y="448" class="flow-kicker">3 · ÉVALUATION — FONCTION TRANSVERSALE</text>
+<text x="20" y="448" class="flow-kicker">3 · SCORING — CIBLE OBSERVÉE, PARAMÈTRES FIXES</text>
 <g class="flow-connectors" fill="none" stroke="#7b91a6" stroke-width="2.2" marker-end="url(#flow-arrow-fr)">
-<path d="M240 525 H420"/><path d="M640 525 H820"/>
+<path d="M280 525 H320"/><path d="M580 525 H620"/><path d="M880 525 H920"/>
 </g>
-<g class="flow-node" role="link" tabindex="0" data-href="fr/corpus-preparation.html" aria-label="Jeux de validation et de test"><rect x="20" y="480" width="220" height="90" rx="12"/><text x="34" y="502" class="flow-kicker">DONNÉES TENUES À L'ÉCART</text><text x="34" y="528" class="flow-title">Validation / test</text><text x="34" y="550" class="flow-subtitle">séparation sans fuite</text></g>
-<g class="flow-node" role="link" tabindex="0" data-href="fr/evaluation-experimentale.html" aria-label="Métriques et analyse des erreurs"><rect x="420" y="480" width="220" height="90" rx="12"/><text x="434" y="502" class="flow-kicker">MESURES</text><text x="434" y="528" class="flow-title">Métriques + erreurs</text><text x="434" y="550" class="flow-subtitle">incertitude et analyse</text></g>
-<g class="flow-node" role="link" tabindex="0" data-href="fr/evaluation-experimentale.html" aria-label="Interpréter les résultats de l’évaluation"><rect x="820" y="480" width="220" height="90" rx="12"/><text x="834" y="502" class="flow-kicker">INTERPRÉTATION</text><text x="834" y="528" class="flow-title">Décisions informées</text><text x="834" y="550" class="flow-subtitle">ajuster sans contaminer le test</text></g>
-<text x="20" y="606" class="flow-hint">Les résultats de validation peuvent guider les choix de données, d'entraînement et de décodage ; le jeu de test reste réservé à l'évaluation finale.</text>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/training-examples.html" aria-label="Séquence observée et préfixes de référence"><rect x="20" y="480" width="260" height="90" rx="12"/><text x="34" y="502" class="flow-kicker">DONNÉES OBSERVÉES</text><text x="34" y="528" class="flow-title">Séquence connue</text><text x="34" y="550" class="flow-subtitle">préfixes de référence</text></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/transformer.html" aria-label="Passe avant du modèle"><rect x="320" y="480" width="260" height="90" rx="12"/><text x="334" y="502" class="flow-kicker">CALCUL PARTAGÉ</text><text x="334" y="528" class="flow-title">Forward pass</text><text x="334" y="550" class="flow-subtitle">distribution par position</text></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/vraisemblance.html" aria-label="Probabilité de la cible observée"><rect x="620" y="480" width="260" height="90" rx="12"/><text x="634" y="502" class="flow-kicker">CIBLE</text><text x="634" y="528" class="flow-title">Log-probabilité</text><text x="634" y="550" class="flow-subtitle">du token suivant</text></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/vraisemblance.html" aria-label="Score de la séquence"><rect x="920" y="480" width="280" height="90" rx="12"/><text x="934" y="502" class="flow-kicker">AGRÉGATION</text><text x="934" y="528" class="flow-title">Score de séquence</text><text x="934" y="550" class="flow-subtitle">sans sélection ni mise à jour</text></g>
+<text x="20" y="606" class="flow-note">Les préfixes observés servent à scorer chaque cible ; θ reste fixe et aucune prédiction n'est réinjectée.</text>
+
+<text x="20" y="648" class="flow-kicker">4 · ÉVALUATION — FONCTION TRANSVERSALE</text>
+<text x="20" y="806" class="flow-hint">Les résultats de validation peuvent guider les choix de données, d'entraînement et de décodage ; le jeu de test reste réservé à l'évaluation finale.</text>
+<text x="20" y="830" class="flow-hint">Chaque bloc bordé est cliquable et ouvre une page canonique. Les flèches pleines indiquent le flux de calcul ; les boucles indiquent une répétition ou une mise à jour.</text>
+</svg>
+<script>
+(() => {
+  const svg = document.currentScript?.previousElementSibling;
+  if (!svg || !svg.matches(".llm-flow")) return;
+  const findNode = target => target instanceof Element
+    ? target.closest(".flow-node[role='link']")
+    : null;
+  const activate = node => {
+    const href = node?.getAttribute("data-href");
+    if (href) window.location.assign(href);
+  };
+  svg.addEventListener("click", event => {
+    const node = findNode(event.target);
+    if (node) activate(node);
+  });
+  svg.addEventListener("keydown", event => {
+    if (event.key !== "Enter") return;
+    const node = findNode(event.target);
+    if (node) {
+      event.preventDefault();
+      activate(node);
+    }
+  });
+})();
+</script>
+<figcaption>Génération et scoring : paramètres fixes · Apprentissage : paramètres mis à jour · Évaluation : analyse transversale sur données tenues à l'écart</figcaption>
+</figure>
+```
+
+## Explorer davantage
+
+**Dans LLM Lab :** [Glossaire](fr/glossary.qmd) · [Exercices](fr/exercises.qmd) · [Histoire des Transformers](fr/transformer-history.qmd) · [Évaluation expérimentale](fr/evaluation-experimentale.qmd) · [Bibliographie commentée](references.qmd).
+
+**Références externes :** [3Blue1Brown — Transformers](https://www.youtube.com/watch?v=LPZh9BOjkQs&t=10s) pour l’intuition visuelle ; [Sebastian Raschka — LLMs from Scratch](https://github.com/rasbt/LLMs-from-scratch/) pour les détails d’implémentation ; [The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/) et [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/) de Jay Alammar pour les explications visuelles.
+
+Pour le programme complet, consultez la [carte du curriculum](https://github.com/JM-Brun/llm-lab/blob/main/docs/full-curriculum-plan.md) et le [parcours d’apprentissage](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md).
+
+::: {.language-switch}
+[Français](index.qmd) · [English](en/index.qmd)
+:::<text x="20" y="606" class="flow-hint">Les résultats de validation peuvent guider les choix de données, d'entraînement et de décodage ; le jeu de test reste réservé à l'évaluation finale.</text>
 <text x="20" y="630" class="flow-hint">Chaque bloc bordé est cliquable et ouvre une page canonique. Les flèches pleines indiquent le flux de calcul ; les boucles indiquent une répétition ou une mise à jour.</text>
 </svg>
 <script>
