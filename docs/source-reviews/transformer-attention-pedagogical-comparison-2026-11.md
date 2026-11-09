@@ -15,7 +15,7 @@ Review depth is deliberately explicit:
 | Jay Alammar, *The Illustrated Transformer* | Full article text | Fresh asset-level rights review |
 | Jay Alammar, *The Illustrated GPT-2* | Full article text via indexed page content | Fresh asset-level rights review |
 | Jay Alammar / Maarten Grootendorst, *How Transformer LLMs Work* (2025) | Official course outline and course announcement | Full videos, code examples and quiz |
-| 3Blue1Brown, *Attention in Transformers, step by step* | Full text adaptation, lesson structure, embedded questions, YouTube description and timestamps | Independent audiovisual viewing and animation timing review |
+| 3Blue1Brown, *Attention in Transformers, step by step* (lesson by Grant Sanderson; text adaptation by Justin Sun) | Full text adaptation, lesson structure, embedded questions, YouTube description and timestamps | Independent audiovisual viewing and animation timing review |
 | Polo Club, *Transformer Explainer* | CHI 2026 paper, README, MIT licence, selected Svelte components, sampling/data code and model metadata | Live browser testing, keyboard/mobile checks and numerical parity run |
 
 A text adaptation is not equivalent to watching a video. Static source inspection is not equivalent to executing the deployed interactive tool.
