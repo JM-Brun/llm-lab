@@ -122,7 +122,7 @@ Evaluate the probability assigned to a known target, build a sequence likelihood
 
 ### 08 · Learn and update parameters
 
-Connect observed targets to the aggregated loss, gradients, and parameter updates; deepen teacher forcing and shifted examples through the Build branch without making them prerequisites for inference.
+Connect observed targets to the aggregated loss, gradients, and parameter updates; understand teacher forcing conceptually without making shifted-example preparation a stage of the Theory path.
 
 **Core pages**
 
@@ -132,7 +132,6 @@ Connect observed targets to the aggregated loss, gradients, and parameter update
 **Optional resources**
 
 - [Cross-entropy: the token-prediction objective](cross-entropy.html) *(recap)*
-- [From tokenized corpus to training examples](training-examples.html)
 - [Scaling laws: parameters, data, and compute](scaling-laws.html)
 
 :::
