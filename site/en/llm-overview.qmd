@@ -27,6 +27,16 @@ tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "
 A **large language model** (LLM) is a language model trained at scale on large text corpora using a substantial compute budget. There is no agreed parameter-count threshold for the category: the training data and compute also matter ([scaling laws](scaling-laws.qmd); [Zhao et al., 2023](https://arxiv.org/abs/2303.18223); [Hoffmann et al., 2022](https://proceedings.neurips.cc/paper_files/paper/2022/hash/c1e2faff6f588870935f114ebe04a3e5-Abstract.html)). The term LLM does not specify a particular architecture or training objective.
 :::
 
+::: {.callout-tip title="The one-minute mental model"}
+- **Categories:** LLM names a model category; GPT names an autoregressive model family; Transformer names an architecture family. They are not synonyms.
+- **Prediction:** a GPT computes a conditional distribution $p_\theta(x_t\mid x_{<t})$ over the next token from the available prefix.
+- **Shared computation, distinct uses:** generation selects and feeds back a token; scoring assigns probability to an observed target; training computes a loss and updates parameters.
+- **Three dimensions:** architecture, parameter learning, and model use answer different questions.
+- **Limit:** a probable continuation is not guaranteed to be factually true or reliable.
+
+**Check yourself:** can you explain what generation, scoring, and training share, then distinguish their operations and effects on parameters?
+:::
+
 ## 1. LLM, GPT, and Transformer are different concepts
 
 A **language model** assigns a probability or score to token sequences given a context. In an autoregressive model, this computation is repeated one token at a time: the model does not enumerate every possible complete continuation. **GPT** (*Generative Pre-trained Transformer*) is a family of pretrained models based on the Transformer architecture. Classic GPT models are **decoder-only** Transformers pretrained to predict the next token.
@@ -85,7 +95,7 @@ The model maps the context to **logits** (unnormalized scores); the *softmax* fu
 
 These three uses share the same predictive computation, but they are not one execution loop: generation feeds a selected token back into the context, scoring evaluates an observed target, and training updates the parameters.
 
-*Prefill* and *decode* are inference execution phases. *Teacher forcing* describes conditioning on reference tokens during scoring or training; it is not a generation phase. When scoring or training on a known sequence, a forward pass produces a distribution at each position. Each distribution is aligned with the next target token; the causal mask prevents the model from accessing future tokens. [Training examples](training-examples.qmd), [loss](loss.qmd), and [gradients](gradients.qmd) explain the training branch; [likelihood](likelihood.qmd) explains scoring.
+*Prefill* and *decode* are inference execution phases. Scoring a known sequence and training can both condition the computation on reference prefixes; during training, this strategy is called *teacher forcing*. It is not a generation phase. When scoring or training on a known sequence, a forward pass produces a distribution at each position. Each distribution is aligned with the next target token; the causal mask prevents the model from accessing future tokens. [Training examples](training-examples.qmd), [loss](loss.qmd), and [gradients](gradients.qmd) explain the training branch; [likelihood](likelihood.qmd) explains scoring.
 
 **Target scoring** and **model evaluation** are not synonyms. Scoring computes probabilities for observed targets; evaluation aggregates scores or metrics under a defined data protocol. It may also assess generated outputs. The following view illustrates evaluation based on scoring, without updating parameters.
 

@@ -84,15 +84,15 @@ Les leçons utilisent trois repères pour distinguer les types de contenu :
 
 Ces repères décrivent les preuves disponibles ; ils ne rendent pas toutes les preuves équivalentes. Un schéma rend une structure lisible sans démontrer une propriété ; une dérivation établit un résultat sous des hypothèses explicites ; un test vérifie les cas qu’il couvre ; une expérience compare des configurations selon un protocole, des métriques et des limites documentés.
 
-## Deux parcours opérationnels et une évaluation transversale
+## Trois usages opérationnels et une évaluation transversale
 
-Le même modèle intervient dans plusieurs processus, mais leurs objectifs et leurs dynamiques diffèrent :
+Le même calcul prédictif produit une distribution conditionnelle. Cette distribution sert à trois usages opérationnels distincts : générer un token, scorer une cible observée ou apprendre en ajustant les paramètres. L'évaluation est transversale : elle agrège des mesures sur des données et selon un protocole définis. Le schéma détaille les boucles de génération et d'apprentissage ; le scoring est distingué juste après.
 
 ```{=html}
 <figure class="llm-flow-figure">
 <svg class="llm-flow" viewBox="0 0 1220 650" role="group" aria-labelledby="llm-flow-title-fr" aria-describedby="llm-flow-desc-fr" xmlns="http://www.w3.org/2000/svg">
 <title id="llm-flow-title-fr">Carte interactive des processus d'inférence, d'apprentissage et d'évaluation</title>
-<desc id="llm-flow-desc-fr">La ligne supérieure décrit l'inférence autorégressive avec des paramètres fixes, du contexte textuel au choix du prochain token puis son ajout au contexte. La deuxième ligne décrit l'apprentissage : corpus et tokenizer, exemples, passe avant, perte, gradients et mise à jour des paramètres. La troisième ligne présente l'évaluation sur des données tenues à l'écart. Chaque bloc cliquable ouvre une page de référence.</desc>
+<desc id="llm-flow-desc-fr">Le schéma détaille la génération autorégressive à paramètres fixes, l'apprentissage avec mise à jour des paramètres et l'évaluation sur données tenues à l'écart. Le scoring d'une séquence observée est un troisième usage du calcul prédictif ; il ne sélectionne pas de token et ne met pas à jour les paramètres.</desc>
 <defs>
 <marker id="flow-arrow-fr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#7b91a6"/></marker>
 <marker id="flow-feedback-fr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#39845b"/></marker>
@@ -163,6 +163,14 @@ Le même modèle intervient dans plusieurs processus, mais leurs objectifs et le
 <figcaption>Inférence : paramètres fixes · Apprentissage : paramètres mis à jour · Évaluation : analyse transversale sur des données tenues à l'écart</figcaption>
 </figure>
 ```
+ 
+::: {.callout-note title="Trois usages frères du même calcul prédictif"}
+- **Génération :** le modèle sélectionne un token, le réinjecte dans le contexte et recommence ; les paramètres restent fixes.
+- **Scoring :** le préfixe observé conditionne la probabilité de chaque cible ; on agrège les log-probabilités sans sélectionner de token ni modifier les paramètres ([vraisemblance](fr/vraisemblance.qmd)).
+- **Apprentissage :** la loss compare les prédictions aux cibles, puis les gradients servent à mettre à jour les paramètres.
+
+**Évaluation :** elle n'est pas une quatrième branche équivalente. Elle réutilise notamment le scoring sur des données tenues à l'écart et agrège les résultats selon un protocole ; elle peut aussi évaluer des sorties générées.
+:::
 
 ## Explorer davantage
 

@@ -27,6 +27,15 @@ tags: ["type:concept-lesson", "destination:understand", "topic:transformer-archi
 Un Transformer peut utiliser un encodeur, un décodeur ou les deux. Ce choix détermine quelles positions peuvent échanger de l'information et comment le modèle traite une séquence. Il ne fixe pas, à lui seul, l'objectif d'entraînement ni la tâche réalisée.
 :::
 
+::: {.callout-tip title="L'idée à retenir en une minute"}
+- **Encodeur seul :** contextualise l'entrée avec une attention généralement bidirectionnelle ; BERT et RoBERTa en sont des exemples.
+- **Encodeur-décodeur :** l'encodeur représente l'entrée ; le décodeur génère la sortie avec une attention causale et une attention croisée vers l'encodeur ; T5 en est un exemple.
+- **Décodeur seul :** utilise une attention causale pour prolonger un préfixe ; GPT en est l'exemple pédagogique central ici.
+- **Trois notions distinctes :** architecture (organisation du calcul), objectif d'entraînement (ce qui est optimisé) et tâche (ce que le système doit accomplir).
+
+**Question de contrôle :** pouvez-vous expliquer quel contexte chaque architecture autorise et pourquoi l'objectif de prédiction ne définit pas à lui seul l'architecture ?
+:::
+
 Cette comparaison est facultative : pour suivre le fil principal, passer directement du [panorama des LLM](llm-overview.qmd) à la [génération](generation.qmd).
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
@@ -94,7 +103,9 @@ Ces trois familles décrivent les principales configurations du **Transformer**,
 
 Le Transformer n'est pas non plus synonyme de LLM : l'architecture ne détermine ni l'échelle, ni les données, ni les capacités du modèle. Pour un exemple d'architecture hybride combinant plusieurs mécanismes, voir l'[étude de cas Nemotron](hybrid-llm-architectures.qmd). Pour replacer ces familles dans l'évolution du domaine, consulter l'[historique des Transformers](transformer-history.qmd).
 
+::: {.callout-note collapse="true" title="Approfondissement — coût et parallélisme"}
 À largeur du modèle fixée, l'attention dense réalise un travail arithmétique en \(O(T^2 d)\) par couche, soit \(O(T^2)\) lorsque la dimension \(d\) est considérée comme constante. Les interactions entre paires de positions peuvent être parallélisées au sein d'une couche pendant l'entraînement et le préremplissage : un travail quadratique n'implique donc pas une exécution position par position. Une récurrence à taille d'état fixée peut ramener le travail total à \(O(T)\), mais une récurrence naïve conserve une chaîne de dépendances séquentielles entre états. Certaines structures permettent un *parallel scan* et réduisent cette profondeur. Enfin, en génération autorégressive standard, chaque token généré dépend du précédent. Ces ordres décrivent des coûts différents sous des hypothèses précises ; ils ne suffisent pas à comparer les temps d'exécution. Le [guide sur la complexité et le parallélisme](llm-computational-complexity.qmd) détaille ces compromis de calcul, de mémoire et de dépendances. Le calcul interne du GPT décodeur seul du projet est présenté dans [GPT et Transformer](transformer.qmd).
+:::
 
 ## Observer les trois familles en pratique
 

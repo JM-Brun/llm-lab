@@ -83,15 +83,15 @@ Lessons use three markers to distinguish different kinds of material:
 
 These markers describe the evidence available; they do not make all evidence equivalent. A diagram makes a structure readable but does not prove a property; a derivation establishes a result under stated assumptions; a test checks the cases it covers; an experiment compares configurations under a documented protocol, metrics and limitations.
 
-## Two operational pathways and cross-cutting evaluation
+## Three operational uses and cross-cutting evaluation
 
-The same model participates in several processes, but their objectives and dynamics differ:
+The same predictive computation produces a conditional distribution. This distribution supports three distinct operational uses: generate a token, score an observed target, or learn by updating parameters. Evaluation is cross-cutting: it aggregates measurements on data under a defined protocol. The diagram details the generation and learning loops; scoring is distinguished immediately below.
 
 ```{=html}
 <figure class="llm-flow-figure">
 <svg class="llm-flow" viewBox="0 0 1220 650" role="group" aria-labelledby="llm-flow-title-en" aria-describedby="llm-flow-desc-en" xmlns="http://www.w3.org/2000/svg">
 <title id="llm-flow-title-en">Interactive map of inference, learning, and evaluation</title>
-<desc id="llm-flow-desc-en">The top lane describes autoregressive inference with fixed parameters, from text context through next-token selection and appending it to the context. The second lane describes learning: corpus and tokenizer, examples, forward pass, loss, gradients, and parameter updates. The third lane shows evaluation on held-out data. Each clickable block opens a canonical lesson.</desc>
+<desc id="llm-flow-desc-en">The diagram details autoregressive generation with fixed parameters, learning with parameter updates, and evaluation on held-out data. Scoring an observed sequence is a third use of predictive computation; it neither selects a token nor updates parameters.</desc>
 <defs>
 <marker id="flow-arrow-en" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#7b91a6"/></marker>
 <marker id="flow-feedback-en" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#39845b"/></marker>
@@ -162,6 +162,14 @@ The same model participates in several processes, but their objectives and dynam
 <figcaption>Inference: fixed parameters · Learning: updated parameters · Evaluation: cross-cutting analysis on held-out data</figcaption>
 </figure>
 ```
+ 
+::: {.callout-note title="Three sibling uses of the same predictive computation"}
+- **Generation:** the model selects a token, feeds it back into the context, and repeats; parameters stay fixed.
+- **Scoring:** the observed prefix conditions the probability of each target; log-probabilities are aggregated without selecting a token or changing parameters ([likelihood](likelihood.qmd)).
+- **Learning:** the loss compares predictions with targets, then gradients update the parameters.
+
+**Evaluation:** it is not a fourth equivalent branch. It reuses scoring on held-out data among other methods and aggregates results under a protocol; it can also evaluate generated outputs.
+:::
 
 ## Explore further
 

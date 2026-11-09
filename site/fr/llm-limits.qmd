@@ -60,6 +60,16 @@ Les discussions sur les capacités dites *émergentes* demandent de préciser la
 
 La taille du modèle ne suffit pas non plus à expliquer ses performances. La qualité, la diversité et la provenance des données, l’objectif, l’architecture, le procédé d’entraînement, l’adaptation et le protocole d’évaluation contribuent ensemble aux résultats.
 
+::: {.callout-tip title="L'idée à retenir en une minute"}
+- **Objectif :** prédire des continuations plausibles ne revient pas à vérifier leur vérité.
+- **Calibration :** une probabilité élevée n'est pas, à elle seule, une garantie de fiabilité.
+- **Compréhension :** une compétence opérationnelle mesurée sur une tâche ne démontre pas une compréhension humaine.
+- **Émergence :** une rupture apparente dépend de la métrique, des seuils, des modèles comparés et du protocole.
+- **Méthode :** formuler les limites comme des hypothèses testables et les examiner avec des baselines, des contrôles et une évaluation adaptée.
+
+**Question de contrôle :** quelle observation permettrait de distinguer une amélioration mesurée d'une véritable transition qualitative ?
+:::
+
 ## Sources principales et rôle
 
 - [Bommasani et al. (2021), *On the Opportunities and Risks of Foundation Models*](https://arxiv.org/abs/2108.07258) — cadrage des modèles de fondation et de leurs risques.

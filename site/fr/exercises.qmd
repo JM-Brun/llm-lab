@@ -40,7 +40,7 @@ Les pages de cours utilisent un composant homogène **« Vérifier sa compréhen
 | [Préentraînement](#preentrainement) | Objectif, entraînement/validation, perplexité, checkpoints et reproductibilité | Structure à compléter |
 | [Génération](#generation) | Décodage, température, top-k/top-p, arrêt, contexte et cache KV | Structure à compléter |
 | [Fine-tuning](#fine-tuning) | Classification, SFT, masquage de loss, qualité des données et surapprentissage | Structure à compléter |
-| [Évaluation](#evaluation) | Baselines, métriques, contamination, incertitude et analyse d’erreurs | Structure à compléter |
+| [Évaluation](#evaluation) | Baselines, métriques, contamination, incertitude et analyse d’erreurs | Un exercice de transfert autonome est publié dans [Évaluation expérimentale](evaluation-experimentale.qmd) ; la collection complète reste à construire |
 | [Efficacité](#efficacite) | LoRA/QLoRA, mémoire, coût et compromis | Structure à compléter |
 | [Sujets avancés](#avances) | DPO, variantes d’attention, lecture critique et conception d’expériences | Structure à compléter |
 

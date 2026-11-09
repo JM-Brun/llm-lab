@@ -1,6 +1,6 @@
 # Audit pédagogique du parcours LLM — 2026-11-09
 
-**Statut :** audit initial en cours, fondé sur les sources de `main` consultées le 2026-11-09. Ce document distingue explicitement l'inventaire, la lecture effective du contenu et la validation du rendu. Il ne constitue pas encore une validation complète page par page.
+**Statut au 2026-11-09 :** huit passes de revue FR/EN couvrent l'entrée du site, le parcours Understand principal, le parcours Build et l'exercice d'évaluation. Les pages facultatives listées comme « À lire » restent à auditer en profondeur. Le rendu Quarto et l'audit navigateur ont réussi pour le lot principal #754 et pour le commit `4ca9088` du complément #760 ; les modifications de la passe I doivent encore être validées sur le commit courant. L'accessibilité manuelle et la validation avec un apprenant indépendant ne sont pas encore réalisées. Ce document distingue inventaire, lecture de source, validation technique et preuve pédagogique.
 
 ## 1. Périmètre et sources canoniques
 
@@ -46,8 +46,10 @@ Légende :
 
 | Étape | Page FR / EN | Rôle et transition à contrôler | Synthèse / révision : premier constat | État |
 |---|---|---|---|---|
-| Orientation | `llm-overview` | Définir LLM/GPT/Transformer, situer le modèle pédagogique et annoncer le noyau prédictif ; conduire vers l'aperçu de génération | Le corps FR a été parcouru partiellement ; vérifier la présence d'une synthèse qui distingue architecture, objectif, paramètres et usages frères | Lecture source partielle |
-| Aperçu d'inférence | `generation` | Donner la boucle complète avec paramètres fixes ; transition vers texte/tokens sans exiger les détails internes | Le corps FR contient objectifs, rappel « une minute », boucle, prefill/decode et frontière teacher forcing ; éviter de recopier la même fiche au retour détaillé | Lecture source partielle |
+| Entrée du site | `index` | Orienter vers Understand, Build, Deepen et Practice ; rendre visibles les parcours et les preuves attendues | Page d'orientation, pas une leçon : les quatre portes d'entrée et la carte des notions remplissent la fonction de synthèse | Revue FR/EN effectuée |
+| Orientation | `llm-overview` | Définir LLM/GPT/Transformer, situer le modèle pédagogique et annoncer le noyau prédictif ; conduire vers l'aperçu de génération | Ajout d'un rappel d'une minute FR/EN distinguant catégories, distribution conditionnelle, trois usages et architecture/apprentissage/utilisation | Revue FR/EN effectuée + synthèse ajoutée |
+| Comparaison d'architectures (optionnel) | `transformer-architectures` | Comparer encodeur seul, encodeur-décodeur et décodeur seul ; distinguer architecture, objectif et tâche | Ajout d'un rappel d'une minute FR/EN ; le paragraphe de complexité est désormais un approfondissement replié, l'activité pratique reste explicitement facultative | Revue FR/EN effectuée + niveaux clarifiés |
+| Aperçu d'inférence | `generation` | Donner la boucle complète avec paramètres fixes ; transition vers texte/tokens sans exiger les détails internes | Rappel d'une minute et self-check FR/EN ; aperçu du loop puis retour détaillé sur la même page canonique | Revue FR/EN effectuée |
 | Entrée texte | `text-data` | Texte → tokens → IDs → lookup ; distinguer prompt d'inférence et corpus d'entraînement | Rappel bref et self-check présents ; vocabulaire nuancé pour ne pas présenter tout tokenizer comme doté d'un vocabulaire appris | Revue FR/EN effectuée |
 | Stratégies de tokenisation | `tokenization-strategies` | Comparer unités, algorithmes et compromis ; préparer le passage des IDs aux vecteurs | Section « À retenir » et self-check présents ; le Deepen sur l'évaluation évite de surcharger Understand | Revue FR/EN effectuée |
 | Unicode (optionnel) | `unicode-text` | Approfondissement sur encodage, normalisation et texte ; ne pas bloquer la route principale | Une fiche n'est pas requise si une courte conclusion et des liens suffisent | À lire |
@@ -56,10 +58,10 @@ Légende :
 | Représentations contextualisées | `contextualized-representations` | Distinguer lookup initial et états dépendant du contexte ; conduire vers le calcul du Transformer | Ajout d'un rappel « une minute » distinguant ID, embedding initial, position, contexte et masque d'architecture ; self-check existant conservé | Revue FR/EN effectuée + synthèse ajoutée |
 | Tenseurs (optionnel) | `tensors` | Support de formes et opérations ; ne pas en faire un prérequis général | Vérifier que la fiche sert le Build / Deepen sans interrompre Understand | À lire |
 | RoPE (optionnel) | `rope` | Approfondir la géométrie et les variantes positionnelles | Fiche de référence facultative ; vérifier les hypothèses et les conventions | À lire |
-| Vue d'ensemble Transformer | `transformer` | Replacer les opérations dans le bloc et le forward pass, jusqu'aux logits | Self-check repéré ; vérifier une synthèse du flux et la séparation Understand / Build / Deepen | Lecture source partielle |
-| Q/K/V | `queries-keys-values` | Projections depuis les états d'entrée de chaque bloc ; Q/K déterminent les poids, V fournit le contenu | Rappel bref et self-check repérés ; vérifier que les exercices couvrent les rôles, projections, apprentissage des paramètres et transfert | Lecture source partielle |
-| Attention | `scaled-dot-product-attention` | Scores, mise à l'échelle, softmax, agrégation ; réutiliser Q/K/V sans redéfinir leurs rôles | Rappel bref et self-check repérés ; vérifier que le calcul canonique et les limites sont synthétisés | Lecture source partielle |
-| Masque causal | `causal-masking` | Contraindre l'accès au futur ; distinguer masque causal, padding et convention d'API | Rappel bref et self-check repérés ; exemples numériques et invariance de préfixe à vérifier | Lecture source partielle |
+| Vue d'ensemble Transformer | `transformer` | Replacer les opérations dans le bloc et le forward pass, jusqu'aux logits | Ajout d'un rappel d'une minute FR/EN sur entrée, bloc, répétition et logits ; self-check conservé | Revue FR/EN effectuée + synthèse ajoutée |
+| Q/K/V | `queries-keys-values` | Projections depuis les états d'entrée de chaque bloc ; Q/K déterminent les poids, V fournit le contenu | Rappel enrichi FR/EN : projections, apprentissage conjoint, routage/contenu, invariance et périmètre ; self-check conservé | Revue FR/EN effectuée + synthèse renforcée |
+| Attention | `scaled-dot-product-attention` | Scores, mise à l'échelle, softmax, agrégation ; réutiliser Q/K/V sans redéfinir leurs rôles | Rappel d'une minute, exemple numérique et self-check présents ; la page prend le relais exact des projections Q/K/V | Revue FR/EN effectuée |
+| Masque causal | `causal-masking` | Contraindre l'accès au futur ; distinguer masque causal, padding et convention d'API | Rappel d'une minute, micro-vérification d'invariance et self-check ; distingue visibilité et contribution à la loss | Revue FR/EN effectuée |
 | Cross-attention (optionnel) | `cross-attention` | Extension distincte, non requise pour le GPT décodeur seul | Garder l'optionnalité explicite ; pas de fiche imposée | À lire |
 | Mise à l'échelle (optionnel) | `attention-score-scaling` | Dérivation et propriétés de la mise à l'échelle ; approfondissement après attention | Fiche courte facultative, surtout si elle aide à réactiver la dérivation | À lire |
 | Logits | `logits` | Projection vocabulaire et scores non normalisés ; transition vers softmax | Rappel bref et self-check présents ; distingue classement, score et probabilité | Revue FR/EN effectuée |
@@ -69,11 +71,13 @@ Légende :
 | Stratégies avancées (optionnel) | `decoding-strategies` | Top-k/top-p, beam, contrastif, compromis et reproductibilité | Pas de rappel bref repéré dans le premier relevé ; à examiner après la route centrale | À lire |
 | Vraisemblance | `vraisemblance` / `likelihood` | Scorer une cible observée, factoriser une séquence ; pas de sélection de token | Ajout d'un rappel d'une minute FR/EN distinguant scoring, règle de chaîne, log-vraisemblance, NLL et conventions de comparaison | Revue FR/EN effectuée + synthèse ajoutée |
 | Entropie croisée | `cross-entropy` | Mesurer l'écart entre distribution prédite et cible ; relier au NLL | Ajout d'un rappel d'une minute FR/EN sur cible one-hot/générale, alignement, masques et réduction | Revue FR/EN effectuée + synthèse ajoutée |
-| Loss | `loss` | Agréger les pertes token par token avec masque et réduction | Rappel bref et self-check repérés ; vérifier la séparation entre score, objectif et mise à jour | Lecture source partielle |
-| Gradients | `gradients` | Dériver l'objectif et expliquer la mise à jour des paramètres | Rappel bref et self-check repérés ; vérifier la frontière avec l'optimiseur et le training loop | Lecture source partielle |
-| Corpus (branche Build) | `corpus-preparation` | Provenance, filtrage, déduplication, splits, tokenizer figé ; branche de données | Aucun rappel/self-check repéré ; candidate à une fiche opérationnelle de sortie et de contrôle | Lecture source partielle |
-| Exemples d'entraînement (branche Build) | `training-examples` | Fenêtres, cibles décalées, teacher forcing, packing/padding/masks ; rejoint G8 | Aucun rappel/self-check repéré ; candidate prioritaire à une synthèse opérationnelle et à un auto-diagnostic | Lecture source partielle |
-| Évaluation / pratique | `evaluation-experimentale` et collections d'exercices | Évaluer une tâche et un protocole ; ne pas présenter l'exercice existant comme benchmark d'un GPT entraîné | Réutiliser le hub d'exercices et expliciter les limites ; vérifier le renvoi depuis les pages scoring/training | À lire |
+| Loss | `loss` | Agréger les pertes token par token avec masque et réduction | Rappel d'une minute et self-check présents ; distingue perte locale, objectif de batch, masques, réduction et métriques | Revue FR/EN effectuée |
+| Gradients | `gradients` | Dériver l'objectif et expliquer la mise à jour des paramètres | Rappel d'une minute et self-check présents ; distingue sensibilité locale, rétropropagation, SGD et choix d'optimiseur | Revue FR/EN effectuée |
+| Parcours de construction | `build-path` | Ordonner les visites du code, jalons G0–G9, branche de données et preuves attendues | Tableau des jalons et statuts déjà synthétique ; distingue référence, implémentation partielle, plan conceptuel et critères non démontrés | Revue FR/EN effectuée |
+| Corpus (branche Build) | `corpus-preparation` | Provenance, filtrage, déduplication, splits, tokenizer figé ; branche de données | Fiche de révision et self-check FR/EN ajoutés ; contrat de sortie et séparation corpus/tokenizer/exemples explicites | Revue FR/EN effectuée + fiche ajoutée |
+| Exemples d'entraînement (branche Build) | `training-examples` | Fenêtres, cibles décalées, teacher forcing, packing/padding/masks ; rejoint G8 | Fiche de révision et self-check FR/EN ajoutés ; distingue teacher forcing, causal mask et loss mask ; contrat de formes et checklist de débogage | Revue FR/EN effectuée + fiche ajoutée |
+| Évaluation / pratique | `evaluation-experimentale` et collections d'exercices | Évaluer une tâche et un protocole ; ne pas présenter l'exercice existant comme benchmark d'un GPT entraîné | Exercice autonome FR/EN relu : questions, grille de correction et auto-évaluation ; collection plus large encore à construire | Revue FR/EN effectuée |
+| Catalogue d'exercices | `exercises` | Orienter vers les collections disponibles et distinguer self-checks et exercices multi-étapes | Registre des disponibilités relu ; statut de la collection Évaluation clarifié pour signaler l'exercice autonome déjà publié | Revue FR/EN effectuée |
 
 Les pages listées comme optionnelles ne deviennent pas des étapes obligatoires. Les pages Build ne doivent pas être évaluées avec exactement le même gabarit que les leçons conceptuelles.
 
@@ -290,58 +294,169 @@ Revue source FR/EN et contrôle des frontières éditoriales effectués. Rendu n
 Revue source FR/EN et cohérence conceptuelle effectuées. Les vérifications de rendu, d'accessibilité et d'apprentissage restent ouvertes.
 
 
-
-## 12. Passe E — revue du groupe « exemples → objectif → gradients → apprentissage » (2026-11-09)
+## 12. Passe E — revue de l'apprentissage et de la branche Build (2026-11-09)
 
 ### Pages relues en français et en anglais
 
-- `training-examples` : construction de fenêtres entrée-cible décalées, teacher forcing comme conditionnement sur le préfixe observé, stride, packing, frontières documentaires, padding, masques et formes `[B,L]` / `[B,L,V]`.
-- `loss` : agrégation des pénalités par token valide, conventions de réduction, masquage des cibles, perplexité et limites d'interprétation des courbes.
-- `gradients` : dérivée de la cross-entropie par rapport aux logits, règle de chaîne jusqu'aux paramètres, rétropropagation, mise à jour SGD élémentaire et vérification par différences finies.
-- G8 dans `docs/learning-path.md` et sa spécification [#656](https://github.com/JM-Brun/llm-lab/issues/656) : contrat d'implémentation attendu et limites de la référence publique actuelle.
+- `loss` : pénalité locale par token, objectif scalaire de batch, positions valides, décalage des cibles, masques, réductions, perplexité et diagnostic d'une courbe.
+- `gradients` : dérivée de la cross-entropy par rapport aux logits, effet de la réduction, règle de chaîne, rétropropagation, mise à jour SGD et vérification par différences finies.
+- `corpus-preparation` : provenance, parsing, filtrage, déduplication, splits, ajustement/fixation du tokenizer et contrat de sortie.
+- `training-examples` : décalage entrée-cible, teacher forcing, fenêtres/stride, frontières documentaires, packing, padding, masques, formes et débogage.
+- `build-path` : ordre des visites du code, jalons G0–G9, branche de données G1b/G2 et niveaux de preuve attendus.
 
-### Décisions et frontières confirmées
+### Décisions et modifications de cette passe
 
-1. **Construction des exemples (Build/G2) :** `training-examples` est la page propriétaire du décalage entrée-cible et du teacher forcing. Ce dernier est correctement défini comme une stratégie de conditionnement sur le préfixe de référence ; ce n'est ni la loss, ni l'optimiseur, ni une mise à jour des paramètres.
-2. **Objectif (Understand) :** `loss` prend le relais pour définir le scalaire obtenu après agrégation des pertes par token. Elle distingue correctement masque de visibilité et masque de contribution à l'objectif, ainsi que moyenne par token valide et autres réductions.
-3. **Dérivation (Understand) :** `gradients` relie la loss aux logits puis aux paramètres par la règle de chaîne. La formule $p_i-\mathbb{1}[i=y]$ est locale aux logits ; elle ne constitue pas le backward du GPT complet.
-4. **Implémentation (Build/G8) :** le code public fournit actuellement les fenêtres décalées, la cross-entropie moyenne et son gradient par rapport aux logits, ainsi qu'un forward GPT NumPy/float64. Il ne fournit pas encore le backward à travers les opérations et les paramètres du GPT, un optimiseur, une boucle d'entraînement, un runner de validation ou un checkpoint.
-5. **Gate G8 :** la spécification #656 maintient une revue préalable des acquis comme condition d'entrée. Les audits de sources Wolfe et Raschka enrichissent les choix de conception, mais ne lèvent pas cette condition et ne justifient pas de commencer l'implémentation.
-6. **Pas de duplication :** les pages existantes couvrent déjà les explications conceptuelles et les contrôles formatifs nécessaires. Aucun nouveau chapitre teacher forcing, aucune nouvelle fiche loss/gradient et aucun nouveau jalon ne sont justifiés par cette passe.
+1. **Loss et gradients :** leurs rappels d'une minute et leurs auto-vérifications existent déjà en FR/EN ; pas de nouvelle fiche ni de duplication.
+2. **Corpus et exemples :** les fiches opérationnelles et self-checks FR/EN ajoutés dans le lot précédent sont cohérents avec les contrats d'entrée/sortie de ces pages Build.
+3. **Teacher forcing :** dans la page de vraisemblance FR/EN, ajout d'un lien explicite vers `training-examples`. Le même préfixe de référence est utilisé pour scorer une séquence et comme conditionnement pendant l'entraînement, mais le scoring ne sélectionne pas de token, ne réinjecte pas de prédiction et ne met pas à jour les paramètres.
+4. **Aucune fiche distincte pour build-path :** cette page est un guide de réalisation et de preuve, pas une leçon conceptuelle. Son tableau de jalons et ses critères de vérification remplissent déjà une fonction de synthèse opérationnelle.
 
-### Cohérence des relations et de la séquence
+### Cohérence des transitions et du parcours Build
 
-La relation pédagogique peut se lire :
+- La préparation du corpus et le tokenizer figé sont une branche de données ; ils ne sont pas des prérequis pour comprendre l'inférence depuis un prompt.
+- La construction des exemples transforme le flux d'IDs en entrées/cibles alignées. Teacher forcing décrit le préfixe observé fourni au modèle ; le masque causal empêche l'accès au futur.
+- Le masque d'attention contrôle la visibilité dans le forward pass ; le masque de perte contrôle les cibles qui contribuent à l'objectif. Une cible ignorée peut néanmoins influencer une représentation utilisée par une cible valide si le masque d'attention l'autorise : la distinction est explicitée dans loss/gradients.
+- La cross-entropy donne les pénalités par cible ; loss les agrège selon une convention documentée ; gradients transportent la dérivée vers les paramètres ; l'optimiseur définit ensuite la mise à jour effective.
+- Le guide Build rend explicite que G2 est une branche parallèle requise avant l'entraînement, mais non avant la génération.
+- L'état du projet est présenté sans surpromesse : fenêtres et cibles décalées sont partiellement implémentées/testées ; packing, padding, batching et masques restent à construire ; le calcul de loss existe mais pas une boucle d'entraînement complète, un optimiseur ou un pipeline de validation automatisé.
+- G9 (parité avec une référence indépendante compatible) et E1 (évaluation complète d'un GPT entraîné) sont des critères définis, pas des capacités déjà démontrées.
 
-\[
-\text{Corpus tokenisé}
-\rightarrow \text{Exemples entrée-cible}
-\rightarrow \text{Forward GPT}
-\rightarrow \text{Logits}
-\rightarrow \text{Cross-entropy par cible}
-\rightarrow \text{Loss agrégée}
-\rightarrow \text{Gradient des logits}
-\rightarrow \text{Backward à travers les paramètres}
-\rightarrow \text{Mise à jour}
-\]
+### Points de vigilance
 
-Cette représentation décrit les dépendances de calcul, pas une séquence de lecture imposant de maîtriser tout G8 avant de comprendre l'inférence.
+- Ne pas présenter teacher forcing comme une règle de sélection du token, une fonction de perte ou une mise à jour de paramètres.
+- Ne pas laisser entendre que le masque de perte empêche une fuite d'information dans le forward pass.
+- Maintenir les conventions de réduction (somme, moyenne par token valide, moyenne par séquence) explicites dans tout résultat quantitatif.
+- Le guide Build indique que le modèle de référence est initialisé aléatoirement : il démontre des mécanismes et des formes, pas une qualité de langage apprise.
+- Les pages `build-path`, `loss` et `gradients` ne doivent pas être interprétées comme preuve d'un entraînement de bout en bout déjà disponible.
 
-- `training-examples` fournit les entrées et cibles ; le forward produit des logits par position ; la loss compare ces logits aux cibles alignées.
-- Le masque causal contrôle les informations visibles pendant le forward ; le masque de perte contrôle les cibles supervisées. Une cible ignorée peut malgré tout fournir une représentation utile à un autre calcul autorisé : une dérivée nulle sur ses propres logits ne coupe pas nécessairement tous les chemins du graphe.
-- Le gradient de la loss par rapport aux logits est disponible dans `losses.py`. La règle de chaîne doit encore le propager à travers les opérations du GPT pour obtenir les gradients des paramètres.
-- L'optimiseur transforme ces gradients en mises à jour ; il n'est ni la rétropropagation ni la loss.
-- La validation mesure le comportement sur des données tenues à l'écart de l'optimisation ; elle ne remplace ni les tests de gradients ni la vérification de la bonne construction des exemples.
-- Le checkpoint doit permettre de transférer les paramètres effectivement entraînés vers la boucle de génération. Il ne peut être revendiqué avant un test de sauvegarde, rechargement et génération.
+### Validation
 
-### Décisions éditoriales
+Revue source FR/EN des pages conceptuelles et Build, vérification des contrats et des statuts de jalons effectuées. Les tests automatisés du dépôt ne remplacent pas une validation formative par apprenant ; le rendu navigateur et l'accessibilité restent à vérifier sur le dernier commit.
 
-- **Conserver** les trois pages à leur niveau actuel : le contraste Understand/Build est utile et cohérent.
-- **Ne pas déplacer** teacher forcing vers `loss` ou `gradients` : son propriétaire est la construction des exemples et son articulation avec l'inférence.
-- **Ne pas transformer** la chaîne ci-dessus en nouveau parcours linéaire ou en nouvelle ontologie ; elle complète le graphe computationnel existant.
-- **Maintenir** les détails d'optimiseur et de vérification numérique dans les approfondissements conceptuels tant que G8 n'a pas franchi sa gate.
-- **Déférer** toute nouvelle leçon ou modification de code à la levée explicite du prérequis G8 et à une lacune démontrée.
+
+## 13. Passe F — revue de la page d'orientation et du noyau partagé (2026-11-09)
+
+### Pages relues en français et en anglais
+
+- `llm-overview` : définition de LLM, distinction LLM/GPT/Transformer, prédiction autorégressive, distribution conditionnelle, tronc computationnel partagé, usages génération/scoring/apprentissage, architecture/apprentissage/utilisation, adaptation et choix RAG/fine-tuning.
+
+### Décisions et modifications de cette passe
+
+1. **Synthèse initiale :** ajout d'un rappel d'une minute FR/EN, qui fixe les distinctions de catégorie, la distribution prédictive, les trois usages du même calcul et les trois dimensions descriptives d'un modèle.
+2. **Teacher forcing :** reformulation FR/EN pour éviter d'en faire une phase d'inférence ou une étiquette indifférenciée du scoring. Le scoring d'une séquence connue et l'entraînement utilisent tous deux des préfixes de référence ; pendant l'entraînement, ce conditionnement est appelé teacher forcing.
+3. **Pas de duplication du graphe :** la page réutilise les fragments générés du graphe computationnel partagé et de l'évaluation. La fiche résume le sens de ce graphe sans reproduire ses détails.
+4. **Auto-vérification :** les deux questions existantes sont conservées ; elles testent déjà le choix RAG/fine-tuning et la distinction entre architecture et adaptation.
+
+### Cohérence de l'entrée du parcours
+
+`llm-overview → generation (aperçu) → text-data → … → generation (retour détaillé)`
+
+- L'aperçu de génération sert de motivation initiale, pas de prérequis aux détails internes.
+- La page d'orientation distingue désormais explicitement le forward pass partagé des trois usages et leurs effets sur les paramètres.
+- Le retour détaillé à `generation` est une réutilisation de la même page canonique, pas une seconde leçon.
+- La branche Build et les approfondissements restent des destinations parallèles ; ils ne sont pas présentés comme des étapes obligatoires avant de comprendre l'inférence.
+
+### Points de vigilance
+
+- La définition de LLM ne doit pas être réduite à un nombre de paramètres ou à une architecture unique.
+- Les modèles de fondation, les GPT et les Transformers sont des catégories qui se recoupent, mais ne sont pas synonymes.
+- L'aperçu du noyau partagé doit rester cohérent avec `docs/canonical-computational-spine.md` et les fragments générés ; ne pas recréer une chaîne linéaire qui fusionnerait génération, scoring et apprentissage.
+- La page d'orientation est une vue d'ensemble : les équations, formes et détails de chaque mécanisme restent dans leurs pages propriétaires.
+
+### Validation
+
+Revue source FR/EN et cohérence avec le noyau computationnel effectuées. Rendu final et navigation générée à vérifier dans le workflow Quarto/browser en cours ; aucune validation apprenant n'est revendiquée.
+
+
+## 14. Passe G — ressource de comparaison des architectures et exercice d'évaluation (2026-11-09)
+
+### Pages relues en français et en anglais
+
+- `transformer-architectures` : tableau comparatif, schéma de flux d'information, encodeur seul, encodeur-décodeur, décodeur seul, distinction architecture/objectif/tâche, architectures hybrides et compromis de complexité.
+- `evaluation-experimentale` / `experimental-evaluation` : exercice de transfert sur le protocole d'évaluation d'un classement de passages scientifiques, avec estimande, dépendances, fuite, sélection de modèle, AP, calibration, incertitude et reproductibilité.
+
+### Décisions et modifications de cette passe
+
+1. **Architectures Transformer :** ajout d'une synthèse FR/EN des trois configurations et de la distinction architecture/objectif/tâche.
+2. **Séparation des niveaux :** le paragraphe sur la complexité asymptotique, le parallélisme et les dépendances séquentielles est conservé intégralement mais placé dans un callout replié « approfondissement ». La comparaison principale reste lisible sans imposer le niveau Deepen.
+3. **Pratique :** la comparaison pratique BERT/GPT-2/T5 reste un renvoi facultatif séparé, explicitement hors du parcours conceptuel et du Build.
+4. **Évaluation expérimentale :** pas de fiche « une minute » ajoutée. La page est un exercice de transfert : l'énoncé, les questions, la grille de correction et l'auto-évaluation forment déjà un dispositif complet de révision active.
+
+### Cohérence
+
+- La page architectures est une ressource facultative liée depuis le panorama ; elle ne devient pas un prérequis avant la génération.
+- Le résumé fixe les distinctions nécessaires avant que le lecteur explore les détails ou l'activité pratique.
+- Le contenu de complexité conserve son lien vers le guide spécialisé, sans interrompre la comparaison des flux d'information.
+- L'exercice d'évaluation intervient après les fondations et les exercices ; il teste le transfert vers un protocole scientifique, pas la construction du GPT pédagogique.
+- L'AP, la calibration et l'incertitude sont traitées comme des dimensions d'évaluation distinctes de la loss d'entraînement.
+
+### Validation
+
+Revue source FR/EN effectuée. La page d'architecture a été réorganisée sans suppression de contenu ; les liens et le rendu responsive du tableau restent à vérifier dans le navigateur. L'exercice d'évaluation est vérifié comme ressource pédagogique, pas comme résultat expérimental.
+
+
+## 15. Passe H — point d'entrée, catalogue d'exercices et ressources de transfert (2026-11-09)
+
+### Pages relues en français et en anglais
+
+- `index` : portes d'entrée Understand/Build/Deepen/Practice, carte des notions, repères épistémiques, schéma interactif des processus et liens vers les ressources.
+- `exercises` : registre des collections, prérequis, disponibilité, exercices corrigés et séparation entre self-checks courts et exercices approfondis.
+- `evaluation-experimentale` / `experimental-evaluation` : exercice autonome de transfert évaluant la conception d'un protocole, sans implémenter ni rapporter un benchmark.
+
+### Décisions et modifications de cette passe
+
+1. **Point d'entrée :** aucune fiche de révision ajoutée à la page d'accueil. Sa fonction est de choisir un parcours et de rendre visibles les relations et les niveaux de preuve ; un résumé conceptuel y serait redondant avec `llm-overview`.
+2. **Catalogue d'exercices :** clarification de la ligne « Évaluation » FR/EN. Un exercice autonome est déjà publié, tandis que la collection complète (baselines, métriques, contamination, incertitude et analyse d'erreurs) reste à construire.
+3. **Exercice d'évaluation :** pas de fiche additionnelle ; les questions, la grille de correction et l'auto-évaluation constituent déjà un cycle de rappel actif et de transfert.
+4. **Parcours Build :** le tableau G0–G9 est conservé comme synthèse opérationnelle. Il distingue clairement ce qui est testé, partiellement implémenté, planifié ou non démontré.
+
+### Cohérence globale observée
+
+- Le site commence par des portes d'entrée non linéaires, puis le parcours Understand fournit la progression conceptuelle ; Build et Deepen restent des voies complémentaires.
+- Les self-checks intégrés aux pages servent la récupération immédiate ; le catalogue regroupe les exercices multi-étapes et les transferts. Il ne faut pas les fusionner en une seule collection de quiz.
+- La page d'évaluation pratique est accessible depuis l'accueil et l'exercice hub, mais n'est pas présentée comme un benchmark du petit GPT.
+- Les statuts d'implémentation du Build et de disponibilité des exercices restent explicites : la présence d'une page ou d'un exercice ne prouve pas qu'un pipeline complet existe.
+
+### État de couverture à ce stade
+
+- **Revu FR/EN et transitions vérifiées :** entrée, panorama, architectures principales, représentation, Transformer/attention, prédiction, scoring, objectif de perte, gradients, corpus, exemples d'entraînement, Build path et exercice de protocole expérimental.
+- **À poursuivre comme ressources facultatives :** Unicode, tenseurs, RoPE, cross-attention, mise à l'échelle détaillée, variantes de décodage, histoire, limites des LLM, fondements mathématiques, complexité et activité pratique des trois architectures.
+- **À valider techniquement :** rendu final et navigation des pages modifiées, liens générés, interaction des schémas et tableaux responsive, clavier et lecteur d'écran.
+- **À valider pédagogiquement :** test de parcours par un lecteur indépendant, notamment capacité à reconstruire le tronc computationnel et à distinguer génération, scoring et apprentissage sans consulter les fiches.
+
+### Validation
+
+Revue des pages d'entrée et du catalogue FR/EN effectuée. Le workflow Quarto/browser du lot précédent est encore en cours au moment de cette mise à jour ; le nouveau lot doit être validé sur son propre commit. Aucun test utilisateur n'est revendiqué.
+
+
+## 16. Passe I — architecture conceptuelle et approfondissements facultatifs (2026-11-09)
+
+### Pages et ressources relues
+
+- `index` FR/EN : représentation d'ensemble des processus et frontière entre scoring et évaluation.
+- `tensors` FR/EN : rôle de référence technique, place dans le parcours et parité linguistique.
+- `decoding-strategies` FR/EN : transformations de distribution, recherche de séquences et compromis.
+- `llm-limits` FR/EN : limites de l'objectif prédictif, définition de la compréhension et interprétation des capacités émergentes.
+
+### Décisions éditoriales et conceptuelles
+
+1. **Scoring rendu explicite sur la page d'accueil :** le texte d'introduction et un rappel placé après le schéma identifient trois usages frères du calcul prédictif : génération, scoring et apprentissage. Le rappel précise les paramètres fixes pour génération/scoring, la mise à jour pour l'apprentissage et le statut transversal de l'évaluation.
+2. **Pas de quatrième branche « évaluation » :** l'évaluation agrège des mesures sous un protocole ; elle peut réutiliser le scoring sur des données tenues à l'écart et peut aussi porter sur des sorties générées. Elle n'est pas une opération homologue à génération, scoring et apprentissage.
+3. **Schéma d'accueil conservé :** le diagramme interactif existant détaille les boucles de génération, d'apprentissage et le processus d'évaluation. Plutôt que d'étendre le SVG et d'en augmenter fortement la hauteur, le scoring est distingué dans un rappel adjacent. Cette solution évite de surcharger le point d'entrée ; une représentation visuelle intégrée pourra être réévaluée si elle apporte un bénéfice pédagogique démontré.
+4. **Parité `tensors` :** le rappel « Place dans le parcours » est ajouté en français, aligné sur le contenu anglais. La page reste une référence Deepen facultative et n'est pas promue au rang de prérequis général du Build.
+5. **`decoding-strategies` :** ajout d'un rappel FR/EN qui distingue transformation locale de distribution et recherche de séquence, et résume température, top-k/top-p, greedy/beam et limites. Les détails, exemples, implémentation et références sont conservés.
+6. **`llm-limits` :** ajout d'un rappel FR/EN qui sépare vérité, calibration, compétence opérationnelle et émergence mesurée. Les sources et les auto-vérifications existantes sont conservées.
+
+### Cohérence des relations
+
+- La génération sélectionne et réinjecte une prédiction ; le scoring attribue une probabilité à une cible observée à partir de préfixes connus ; l'apprentissage utilise des cibles pour calculer une loss et mettre à jour les paramètres.
+- Le teacher forcing est un mode de conditionnement sur les préfixes de référence pendant l'entraînement ; le fait que le scoring utilise également des préfixes observés ne transforme pas le scoring en entraînement.
+- Le prefill et le decode restent des phases d'inférence ; les stratégies de décodage transforment la distribution ou recherchent des séquences, sans constituer une mise à jour des paramètres.
+- L'évaluation reste une démarche expérimentale transversale, avec choix des données, baselines, métriques, contrôles, incertitude et analyse d'erreurs.
 
 ### Validation et limites
 
-La revue source FR/EN et le contrôle des frontières avec G8 sont effectués. La table des jalons et l'audit d'implémentation confirment les limites du code public ; ils ne constituent pas une revue scientifique indépendante ni une validation apprenant. La revue préalable privée de G8 n'est pas considérée comme satisfaite dans cette passe. Aucun code d'entraînement, backward, optimiseur ou checkpoint n'a été ajouté.
+- Revue de source FR/EN effectuée pour les pages listées.
+- Le workflow Quarto/browser sur le commit précédent du PR #760 a réussi, y compris la revue Playwright ciblée. Cette réussite ne valide pas automatiquement les modifications de cette passe, qui doivent être testées sur leur propre commit.
+- Rendu Quarto, liens locaux, navigation au clavier et captures de cette nouvelle passe restent à vérifier.
+- Aucun test avec apprenant indépendant n'est revendiqué.

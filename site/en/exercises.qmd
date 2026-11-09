@@ -40,7 +40,7 @@ Lesson pages use a consistent **“Check your understanding”** component: shor
 | [Pretraining](#pretraining) | Objective, train/validation, perplexity, checkpoints and reproducibility | Structure to be filled |
 | [Generation](#generation) | Decoding, temperature, top-k/top-p, stopping, context and KV cache | Structure to be filled |
 | [Fine-tuning](#fine-tuning) | Classification, SFT, loss masking, data quality and overfitting | Structure to be filled |
-| [Evaluation](#evaluation) | Baselines, metrics, contamination, uncertainty and error analysis | Structure to be filled |
+| [Evaluation](#evaluation) | Baselines, metrics, contamination, uncertainty and error analysis | One standalone transfer exercise is published in [Experimental evaluation](experimental-evaluation.qmd); the full collection remains to be built |
 | [Efficiency](#efficiency) | LoRA/QLoRA, memory, cost and trade-offs | Structure to be filled |
 | [Advanced topics](#advanced) | DPO, attention variants, critical reading and experimental design | Structure to be filled |
 

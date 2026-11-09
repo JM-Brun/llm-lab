@@ -60,6 +60,16 @@ Discussions of so-called *emergent* abilities require specifying the task, the m
 
 Model size alone does not explain performance either. Data quality, diversity, and provenance, the objective, the architecture, the training procedure, adaptation, and the evaluation protocol jointly shape the results.
 
+::: {.callout-tip title="Key ideas in one minute"}
+- **Objective:** predicting plausible continuations is not the same as verifying their truth.
+- **Calibration:** a high probability is not, by itself, a guarantee of reliability.
+- **Understanding:** operational competence measured on a task does not establish human-like understanding.
+- **Emergence:** an apparent discontinuity depends on the metric, thresholds, compared models, and protocol.
+- **Method:** frame limitations as testable hypotheses and examine them with baselines, controls, and task-appropriate evaluation.
+
+**Check your understanding:** what observation would distinguish measured improvement from a genuine qualitative transition?
+:::
+
 ## Primary sources and their role
 
 - [Bommasani et al. (2021), *On the Opportunities and Risks of Foundation Models*](https://arxiv.org/abs/2108.07258) — framing of foundation models and their risks.

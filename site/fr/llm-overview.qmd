@@ -27,6 +27,16 @@ tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "
 Un **grand modèle de langage** (*large language model*, LLM) est un modèle de langage entraîné à grande échelle sur de grands corpus, avec un budget de calcul conséquent. Aucun seuil de paramètres ne fait consensus pour définir cette catégorie : il faut aussi considérer les données et le calcul mobilisés ([lois d'échelle](scaling-laws.qmd) ; [Zhao et al., 2023](https://arxiv.org/abs/2303.18223) ; [Hoffmann et al., 2022](https://proceedings.neurips.cc/paper_files/paper/2022/hash/c1e2faff6f588870935f114ebe04a3e5-Abstract.html)). Le terme LLM ne désigne ni une architecture ni un objectif d'entraînement particuliers.
 :::
 
+::: {.callout-tip title="L'idée à retenir en une minute"}
+- **Catégories :** LLM désigne une catégorie de modèles ; GPT désigne une famille autorégressive ; Transformer désigne une famille d'architectures. Ces termes ne sont pas synonymes.
+- **Prédiction :** un GPT calcule une distribution conditionnelle $p_\theta(x_t\mid x_{<t})$ sur le prochain token à partir du préfixe disponible.
+- **Calcul partagé, usages distincts :** génération sélectionne puis réinjecte un token ; scoring attribue une probabilité à une cible observée ; apprentissage calcule une loss et met à jour les paramètres.
+- **Trois dimensions :** architecture, apprentissage des paramètres et utilisation du modèle répondent à des questions différentes.
+- **Limite :** une distribution probable n'est pas une garantie de vérité factuelle ou de fiabilité.
+
+**Question de contrôle :** pouvez-vous expliquer ce qui est commun à génération, scoring et apprentissage, puis ce qui distingue leurs opérations et leurs effets sur les paramètres ?
+:::
+
 ## 1. LLM, GPT et Transformer : trois notions différentes
 
 Un **modèle de langage** attribue une probabilité ou un score à des séquences de tokens en fonction d'un contexte. Dans un modèle autorégressif, ce calcul est répété token après token : le modèle n'énumère pas toutes les continuations complètes possibles. Un **GPT** (*Generative Pre-trained Transformer*) est une famille de modèles pré-entraînés fondés sur l'architecture Transformer. Les GPT classiques sont des Transformers **décodeur seul**, pré-entraînés à prédire le prochain token.
@@ -85,7 +95,7 @@ Le calcul du modèle transforme le contexte en **logits** (scores non normalisé
 
 Ces trois usages partagent le même calcul prédictif, mais ne forment pas une seule boucle d'exécution : la génération réinjecte un token sélectionné, le scoring évalue une cible observée et l'apprentissage met à jour les paramètres.
 
-Le *prefill* et le *decode* sont deux phases d'exécution de l'inférence. Le *teacher forcing* décrit le conditionnement sur les tokens de référence pendant le scoring ou l'apprentissage : ce n'est pas une phase de génération. Pour scorer ou entraîner une séquence connue, un passage avant produit une distribution à chaque position. Chaque distribution est alignée sur le token cible suivant ; le masque causal empêche le modèle d'accéder aux tokens futurs. Les [exemples d'entraînement](training-examples.qmd), la [loss](loss.qmd) et les [gradients](gradients.qmd) détaillent la branche apprentissage ; la [vraisemblance](vraisemblance.qmd) détaille le scoring.
+Le *prefill* et le *decode* sont deux phases d'exécution de l'inférence. Le scoring d'une séquence connue et l'entraînement peuvent tous deux conditionner le calcul sur les préfixes de référence ; pendant l'entraînement, cette stratégie est appelée *teacher forcing*. Ce n'est pas une phase de génération. Pour scorer ou entraîner une séquence connue, un passage avant produit une distribution à chaque position. Chaque distribution est alignée sur le token cible suivant ; le masque causal empêche le modèle d'accéder aux tokens futurs. Les [exemples d'entraînement](training-examples.qmd), la [loss](loss.qmd) et les [gradients](gradients.qmd) détaillent la branche apprentissage ; la [vraisemblance](vraisemblance.qmd) détaille le scoring.
 
 Le **scoring** d'une cible et l'**évaluation** d'un modèle ne sont pas synonymes. Le scoring calcule des probabilités pour des cibles observées ; l'évaluation agrège des scores ou des métriques sur un protocole et des données définis. Elle peut aussi porter sur des sorties générées. La vue suivante illustre une évaluation fondée sur le scoring, sans mise à jour des paramètres.
 
