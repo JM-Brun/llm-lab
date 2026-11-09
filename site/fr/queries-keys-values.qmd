@@ -111,7 +111,7 @@ Les matrices $W_Q$, $W_K$ et $W_V$ ne reçoivent pas chacune une cible explicite
 
 Dans le chemin d'attention considéré ici :
 
-- le gradient qui atteint **Q et K** passe par les scores de compatibilité, puis par leur normalisation ;
+- le gradient qui atteint **Q et K** passe par les scores de compatibilité, puis par le softmax qui les normalise ;
 - le gradient qui atteint **V** passe par l'agrégation pondérée : il indique comment le contenu transmis contribue à l'erreur finale.
 
 Pour une entrée $X$ fixée, sans biais et avec les projections linéaires écrites plus haut, la règle de dérivation prend la forme :
