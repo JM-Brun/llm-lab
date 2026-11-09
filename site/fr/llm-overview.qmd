@@ -49,7 +49,7 @@ LLM Lab utilise un petit GPT décodeur seul comme **modèle pédagogique** : son
 
 Quelques termes suffisent pour suivre ce calcul :
 
-- **Token et tokenizer :** le token est une unité discrète de texte ; le tokenizer découpe le texte et associe chaque token à un identifiant entier. Un token n'est pas nécessairement un mot. Voir [texte et données](text-data.qmd).
+- **Token et tokenizer :** le token est une unité discrète de texte ; le tokenizer découpe le texte et associe chaque token à un identifiant entier. Un token n'est pas nécessairement un mot. Voir [texte et données](text-data.qmd), puis les [stratégies de tokenisation](tokenization-strategies.qmd) pour les méthodes de découpage.
 - **Contexte :** les tokens disponibles pour calculer la suite. En génération, il contient le prompt puis les tokens déjà produits ; voir [génération](generation.qmd).
 - **Paramètres :** les valeurs apprises — poids et biais notamment — qui déterminent le calcul du réseau. Ils restent fixes pendant l'inférence ordinaire ; voir la [configuration d'un petit GPT](gpt-config-walkthrough.qmd).
 
@@ -68,7 +68,7 @@ La figure résume la génération : le texte est tokenisé, le réseau calcule u
 *Les probabilités représentées sont illustratives ; elles ne proviennent pas d'un modèle particulier.*
 
 - **Entrée :** texte, tokens et identifiants — [texte et données](text-data.qmd).
-- **Calcul du réseau :** embeddings, information positionnelle et blocs Transformer — [GPT et Transformer](transformer.qmd), [représentations contextualisées](contextualized-representations.qmd) et [parcours d'un bloc Transformer](transformer-block-walkthrough.qmd).
+- **Calcul du réseau :** embeddings, information positionnelle et blocs Transformer — [GPT et Transformer](transformer.qmd), [embeddings](embedding-space.qmd), [information positionnelle](positional-encoding.qmd), [Q/K/V et attention](queries-keys-values.qmd), [représentations contextualisées](contextualized-representations.qmd) et [parcours d'un bloc Transformer](transformer-block-walkthrough.qmd).
 - **Sortie :** logits, distribution et sélection du token — [génération](generation.qmd).
 
 ### Un calcul partagé, trois usages
