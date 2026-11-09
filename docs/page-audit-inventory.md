@@ -1123,3 +1123,22 @@ Updated the FR/EN collection introduction to state that the first exercises can 
 
 The exercise IDs and prerequisite descriptions are aligned in the inspected FR/EN source. The contents and numerical solutions of every exercise have not been independently re-derived in this pass. The existing #329 browser review remains responsible for rendered desktop/mobile, keyboard and disclosure checks; no new test suite or workflow was added.
 
+## 2026-11-09: optional-resource boundary audit
+
+**Scope.** Inspected the FR/EN metadata and section structure of the ten optional page pairs linked from the guided route: `llm-limits`, `transformer-architectures`, `unicode-text`, `tokenizer-design-evaluation`, `tensors`, `rope`, `cross-attention`, `attention-score-scaling`, `decoding-strategies` and `scaling-laws`.
+
+| Optional resource | Boundary checked |
+|---|---|
+| LLM limits | Critical reading of the next-token objective, truth, understanding and emergence; does not replace the evaluation-protocol lesson. |
+| Transformer architectures | Compares encoder-only, encoder–decoder and decoder-only information flow; keeps architecture, objective and task distinct. Hands-on comparison is linked to Practice rather than becoming a code prerequisite. |
+| Unicode text | Covers code points, UTF-8 bytes and normalization before tokenization; does not duplicate tokenization algorithms or embeddings. |
+| Tokenizer design/evaluation | Deepens BPE/WordPiece/Unigram mechanisms, budgets, metrics and multilingual trade-offs beyond the core strategy comparison. |
+| Tensors | Optional reference for shapes and axes, including the warning that shape compatibility does not prove semantic correctness; explicitly not a prerequisite for the Build path. |
+| RoPE | Derives relative-offset dependence and locates rotations in Q/K; does not repeat the general positional-information introduction. |
+| Cross-attention | Explains distinct Q versus K/V provenance across representation streams and encoder–decoder/multimodal contexts; remains outside the core self-attention prerequisite path. |
+| Attention score scaling | Develops the Gaussian variance argument and its assumptions; does not repeat the four-step attention lesson or become a prerequisite for it. |
+| Advanced decoding | Separates distribution transformations from sequence search and discusses reproducibility and quality/diversity; remains optional after core generation. |
+| Scaling laws | Treats empirical parameter/data/compute/loss relationships without defining a universal LLM threshold; remains optional rather than a prerequisite to training mechanics. |
+
+The inspected page scopes and headings support their optional/deepening roles in both languages. No optional resource needs to be inserted into the core guided route as a mandatory step. This check does not certify every external citation, equation, figure or rendered layout on these pages; those require their own bounded content/render reviews.
+
