@@ -62,10 +62,10 @@ Légende :
 | Masque causal | `causal-masking` | Contraindre l'accès au futur ; distinguer masque causal, padding et convention d'API | Rappel bref et self-check repérés ; exemples numériques et invariance de préfixe à vérifier | Lecture source partielle |
 | Cross-attention (optionnel) | `cross-attention` | Extension distincte, non requise pour le GPT décodeur seul | Garder l'optionnalité explicite ; pas de fiche imposée | À lire |
 | Mise à l'échelle (optionnel) | `attention-score-scaling` | Dérivation et propriétés de la mise à l'échelle ; approfondissement après attention | Fiche courte facultative, surtout si elle aide à réactiver la dérivation | À lire |
-| Logits | `logits` | Projection vocabulaire et scores non normalisés ; transition vers softmax | Rappel bref et self-check repérés | Lecture source partielle |
-| Probabilités | `probabilites` / `probabilities` | Softmax et distribution conditionnelle ; ne pas confondre probabilité et vérité | Rappel bref et self-check repérés ; contrôler la séparation avec la politique de décodage | Lecture source partielle |
-| Entropie | `entropy` | Incertitude de la distribution prédictive ; distinguer entropie et score d'une cible observée | Self-check repéré, rappel bref non repéré ; candidate à une synthèse de 3–4 points | Lecture source partielle |
-| Génération détaillée | `generation` (réutilisée) | Revenir sur prefill, decode, cache, sélection, feedback et arrêt | Une seule page canonique ; l'étape doit pointer vers les sections pertinentes plutôt que dupliquer une fiche | Lecture source partielle |
+| Logits | `logits` | Projection vocabulaire et scores non normalisés ; transition vers softmax | Rappel bref et self-check présents ; distingue classement, score et probabilité | Revue FR/EN effectuée |
+| Probabilités | `probabilites` / `probabilities` | Softmax et distribution conditionnelle ; ne pas confondre probabilité et vérité | Rappel bref, exemple numérique, explorateur de température et self-check présents ; température présentée comme transformation de distribution, non comme apprentissage | Revue FR/EN effectuée |
+| Entropie | `entropy` | Incertitude de la distribution prédictive ; distinguer entropie et score d'une cible observée | Ajout d'un rappel d'une minute FR/EN distinguant entropie prédictive, surprise observée, bornes et limites d'interprétation ; self-check conservé | Revue FR/EN effectuée + synthèse ajoutée |
+| Génération détaillée | `generation` (réutilisée) | Revenir sur prefill, decode, cache, sélection, feedback et arrêt | Rappel bref et self-check présents ; distingue prefill/decode (phases) de decoding (règle de sélection) et du forward pass | Revue FR/EN effectuée |
 | Stratégies avancées (optionnel) | `decoding-strategies` | Top-k/top-p, beam, contrastif, compromis et reproductibilité | Pas de rappel bref repéré dans le premier relevé ; à examiner après la route centrale | À lire |
 | Vraisemblance | `vraisemblance` / `likelihood` | Scorer une cible observée, factoriser une séquence ; pas de sélection de token | Self-check repéré ; vérifier une distinction synthétique probabilité conditionnelle / log-vraisemblance / NLL | Lecture source partielle |
 | Entropie croisée | `cross-entropy` | Mesurer l'écart entre distribution prédite et cible ; relier au NLL | Self-check repéré ; vérifier la synthèse et le lien vers la réduction de batch | Lecture source partielle |
@@ -209,3 +209,45 @@ Cette passe est une revue de source FR/EN et des transitions déclarées. Elle n
 ### Validation
 
 Cette passe établit la cohérence de contenu et des transitions à partir des sources FR/EN. Elle ne vérifie pas encore le rendu des diagrammes, la navigation au clavier, les liens générés par les includes, ni la compréhension par un lecteur indépendant.
+
+
+## 10. Passe C — revue du groupe « logits → distribution → génération » (2026-11-09)
+
+### Pages relues en français et en anglais
+
+- `logits` : vecteur \(z\in\mathbb R^V\), scores non normalisés, classement local, projection de sortie et interface avec la cross-entropie.
+- `probabilites` / `probabilities` : softmax, distribution conditionnelle, exemple numérique, température, calibration et vérité factuelle.
+- `entropy` : entropie prédictive conditionnelle, surprise d'un token observé, factorisation de séquence, dépendance au tokenizer et à la température.
+- `generation` : boucle autorégressive, prefill, decode incrémental, KV cache, sélection du token, feedback et critères d'arrêt.
+
+### Décisions et modifications de cette passe
+
+1. **Logits :** rappel d'une minute et self-check déjà présents en FR/EN ; aucune duplication.
+2. **Probabilités :** rappel d'une minute, exemple, exploration interactive de la température et self-check déjà présents ; aucune duplication.
+3. **Entropie :** ajout d'un rappel d'une minute en FR/EN, car la page disposait d'un self-check mais pas d'une synthèse rapide. La fiche sépare l'entropie de la distribution de la surprise du token cible et rappelle les bornes en nats.
+4. **Précision de traduction :** la formulation anglaise du rappel précise qu'une faible entropie ne garantit ni correction factuelle ni calibration.
+5. **Génération :** rappel et self-check déjà présents ; la page distingue bien les phases prefill/decode, la règle de decoding et la boucle complète.
+
+### Cohérence des transitions observée
+
+`causal-masking → logits → probabilities → entropy → likelihood / cross-entropy`
+
+La page `generation` est volontairement réutilisée à deux endroits : d'abord comme aperçu du comportement global, puis comme retour détaillé après la distribution. Elle ne doit pas être dupliquée.
+
+- Les logits restent des scores non normalisés ; la page probabilités prend explicitement en charge leur transformation par softmax.
+- La distribution est conditionnée par le préfixe ; elle porte sur les IDs du tokenizer et non directement sur des propositions sémantiques.
+- La température transforme la distribution de décodage sans modifier les paramètres appris ; elle ne doit pas être présentée comme un mécanisme d'entraînement.
+- L'entropie mesure la dispersion de toute la distribution avant observation ; la surprise \(-\log p(x_t\mid x_{<t})\) concerne une cible réalisée.
+- La vraisemblance de séquence est obtenue par factorisation des probabilités conditionnelles ; elle ne doit pas être confondue avec l'entropie prédictive.
+- La génération sélectionne un token puis le réinjecte dans le contexte ; scoring et entraînement utilisent la même distribution prédictive mais n'effectuent pas cette sélection de la même manière.
+
+### Points de vigilance
+
+- La température apparaît dans probabilités, entropie et génération avec trois fonctions pédagogiques : transformation mathématique de la distribution, effet sur l'entropie, puis effet sur la sélection en boucle. Garder ces niveaux distincts plutôt que supprimer les répétitions utiles.
+- La page probabilités présente déjà des exemples et une exploration interactive ; vérifier leur rendu réel et leur accessibilité au clavier lors de la passe navigateur.
+- Les pages scoring et training restent à auditer dans le groupe suivant : vraisemblance, cross-entropy, loss et gradients.
+- La génération depuis un checkpoint local est explicitement décrite comme non encore disponible dans l'état du dépôt ; ne pas laisser entendre que le parcours Build a déjà livré cette capacité.
+
+### Validation
+
+Revue source FR/EN et contrôle des frontières éditoriales effectués. Rendu navigateur, fonctionnement de l'explorateur interactif, accessibilité et validation par apprenant non réalisés dans cette passe.
