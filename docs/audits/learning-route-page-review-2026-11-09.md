@@ -69,10 +69,10 @@ Légende :
 | Stratégies avancées (optionnel) | `decoding-strategies` | Top-k/top-p, beam, contrastif, compromis et reproductibilité | Pas de rappel bref repéré dans le premier relevé ; à examiner après la route centrale | À lire |
 | Vraisemblance | `vraisemblance` / `likelihood` | Scorer une cible observée, factoriser une séquence ; pas de sélection de token | Ajout d'un rappel d'une minute FR/EN distinguant scoring, règle de chaîne, log-vraisemblance, NLL et conventions de comparaison | Revue FR/EN effectuée + synthèse ajoutée |
 | Entropie croisée | `cross-entropy` | Mesurer l'écart entre distribution prédite et cible ; relier au NLL | Ajout d'un rappel d'une minute FR/EN sur cible one-hot/générale, alignement, masques et réduction | Revue FR/EN effectuée + synthèse ajoutée |
-| Loss | `loss` | Agréger les pertes token par token avec masque et réduction | Rappel bref et self-check repérés ; vérifier la séparation entre score, objectif et mise à jour | Lecture source partielle |
-| Gradients | `gradients` | Dériver l'objectif et expliquer la mise à jour des paramètres | Rappel bref et self-check repérés ; vérifier la frontière avec l'optimiseur et le training loop | Lecture source partielle |
-| Corpus (branche Build) | `corpus-preparation` | Provenance, filtrage, déduplication, splits, tokenizer figé ; branche de données | Aucun rappel/self-check repéré ; candidate à une fiche opérationnelle de sortie et de contrôle | Lecture source partielle |
-| Exemples d'entraînement (branche Build) | `training-examples` | Fenêtres, cibles décalées, teacher forcing, packing/padding/masks ; rejoint G8 | Aucun rappel/self-check repéré ; candidate prioritaire à une synthèse opérationnelle et à un auto-diagnostic | Lecture source partielle |
+| Loss | `loss` | Agréger les pertes token par token avec masque et réduction | Rappel d'une minute et self-check présents ; distingue perte locale, objectif de batch, masques, réduction et métriques | Revue FR/EN effectuée |
+| Gradients | `gradients` | Dériver l'objectif et expliquer la mise à jour des paramètres | Rappel d'une minute et self-check présents ; distingue sensibilité locale, rétropropagation, SGD et choix d'optimiseur | Revue FR/EN effectuée |
+| Corpus (branche Build) | `corpus-preparation` | Provenance, filtrage, déduplication, splits, tokenizer figé ; branche de données | Fiche de révision et self-check FR/EN ajoutés ; contrat de sortie et séparation corpus/tokenizer/exemples explicites | Revue FR/EN effectuée + fiche ajoutée |
+| Exemples d'entraînement (branche Build) | `training-examples` | Fenêtres, cibles décalées, teacher forcing, packing/padding/masks ; rejoint G8 | Fiche de révision et self-check FR/EN ajoutés ; distingue teacher forcing, causal mask et loss mask ; contrat de formes et checklist de débogage | Revue FR/EN effectuée + fiche ajoutée |
 | Évaluation / pratique | `evaluation-experimentale` et collections d'exercices | Évaluer une tâche et un protocole ; ne pas présenter l'exercice existant comme benchmark d'un GPT entraîné | Réutiliser le hub d'exercices et expliciter les limites ; vérifier le renvoi depuis les pages scoring/training | À lire |
 
 Les pages listées comme optionnelles ne deviennent pas des étapes obligatoires. Les pages Build ne doivent pas être évaluées avec exactement le même gabarit que les leçons conceptuelles.
@@ -288,3 +288,43 @@ Revue source FR/EN et contrôle des frontières éditoriales effectués. Rendu n
 ### Validation
 
 Revue source FR/EN et cohérence conceptuelle effectuées. Les vérifications de rendu, d'accessibilité et d'apprentissage restent ouvertes.
+
+
+## 12. Passe E — revue de l'apprentissage et de la branche Build (2026-11-09)
+
+### Pages relues en français et en anglais
+
+- `loss` : pénalité locale par token, objectif scalaire de batch, positions valides, décalage des cibles, masques, réductions, perplexité et diagnostic d'une courbe.
+- `gradients` : dérivée de la cross-entropy par rapport aux logits, effet de la réduction, règle de chaîne, rétropropagation, mise à jour SGD et vérification par différences finies.
+- `corpus-preparation` : provenance, parsing, filtrage, déduplication, splits, ajustement/fixation du tokenizer et contrat de sortie.
+- `training-examples` : décalage entrée-cible, teacher forcing, fenêtres/stride, frontières documentaires, packing, padding, masques, formes et débogage.
+- `build-path` : ordre des visites du code, jalons G0–G9, branche de données G1b/G2 et niveaux de preuve attendus.
+
+### Décisions et modifications de cette passe
+
+1. **Loss et gradients :** leurs rappels d'une minute et leurs auto-vérifications existent déjà en FR/EN ; pas de nouvelle fiche ni de duplication.
+2. **Corpus et exemples :** les fiches opérationnelles et self-checks FR/EN ajoutés dans le lot précédent sont cohérents avec les contrats d'entrée/sortie de ces pages Build.
+3. **Teacher forcing :** dans la page de vraisemblance FR/EN, ajout d'un lien explicite vers `training-examples`. Le même préfixe de référence est utilisé pour scorer une séquence et comme conditionnement pendant l'entraînement, mais le scoring ne sélectionne pas de token, ne réinjecte pas de prédiction et ne met pas à jour les paramètres.
+4. **Aucune fiche distincte pour build-path :** cette page est un guide de réalisation et de preuve, pas une leçon conceptuelle. Son tableau de jalons et ses critères de vérification remplissent déjà une fonction de synthèse opérationnelle.
+
+### Cohérence des transitions et du parcours Build
+
+- La préparation du corpus et le tokenizer figé sont une branche de données ; ils ne sont pas des prérequis pour comprendre l'inférence depuis un prompt.
+- La construction des exemples transforme le flux d'IDs en entrées/cibles alignées. Teacher forcing décrit le préfixe observé fourni au modèle ; le masque causal empêche l'accès au futur.
+- Le masque d'attention contrôle la visibilité dans le forward pass ; le masque de perte contrôle les cibles qui contribuent à l'objectif. Une cible ignorée peut néanmoins influencer une représentation utilisée par une cible valide si le masque d'attention l'autorise : la distinction est explicitée dans loss/gradients.
+- La cross-entropy donne les pénalités par cible ; loss les agrège selon une convention documentée ; gradients transportent la dérivée vers les paramètres ; l'optimiseur définit ensuite la mise à jour effective.
+- Le guide Build rend explicite que G2 est une branche parallèle requise avant l'entraînement, mais non avant la génération.
+- L'état du projet est présenté sans surpromesse : fenêtres et cibles décalées sont partiellement implémentées/testées ; packing, padding, batching et masques restent à construire ; le calcul de loss existe mais pas une boucle d'entraînement complète, un optimiseur ou un pipeline de validation automatisé.
+- G9 (parité avec une référence indépendante compatible) et E1 (évaluation complète d'un GPT entraîné) sont des critères définis, pas des capacités déjà démontrées.
+
+### Points de vigilance
+
+- Ne pas présenter teacher forcing comme une règle de sélection du token, une fonction de perte ou une mise à jour de paramètres.
+- Ne pas laisser entendre que le masque de perte empêche une fuite d'information dans le forward pass.
+- Maintenir les conventions de réduction (somme, moyenne par token valide, moyenne par séquence) explicites dans tout résultat quantitatif.
+- Le guide Build indique que le modèle de référence est initialisé aléatoirement : il démontre des mécanismes et des formes, pas une qualité de langage apprise.
+- Les pages `build-path`, `loss` et `gradients` ne doivent pas être interprétées comme preuve d'un entraînement de bout en bout déjà disponible.
+
+### Validation
+
+Revue source FR/EN des pages conceptuelles et Build, vérification des contrats et des statuts de jalons effectuées. Les tests automatisés du dépôt ne remplacent pas une validation formative par apprenant ; le rendu navigateur et l'accessibilité restent à vérifier sur le dernier commit.
