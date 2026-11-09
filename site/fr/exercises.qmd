@@ -38,7 +38,7 @@ Les pages de cours utilisent un composant homogène **« Vérifier sa compréhen
 | [Attention](#attention) | Q/K/V, scores, mise à l’échelle, masque causal, multi-têtes, invariants | Somme pondérée et projections Q/K/V ; CA-A sur le masque causal et l’invariance de préfixe ; trois exercices formatifs AT-A à AT-C publiés (attention multi-têtes) ; variantes avancées à construire |
 | [Transformer](#transformer) | Embeddings, position, résidus, normalisation, MLP et variantes d’architecture | Trois exercices formatifs TF-A à TF-C publiés (formes et normalisation d'un bloc pré-LN, paramètres du bloc, diagnostic et interventions) ; variantes d'architecture à construire |
 | [Préentraînement](#preentrainement) | Objectif, entraînement/validation, perplexité, checkpoints et reproductibilité | Structure à compléter |
-| [Génération](#generation) | Prédiction d'un token, décodage, boucle autoregressive, arrêt, contexte et cache KV | Trois exercices GE-A à GE-C publiés ; prefill/decode et KV cache à approfondir |
+| [Génération](#generation) | Prédiction d'un token, décodage, boucle autoregressive, arrêt, contexte et cache KV | Cinq exercices GE-A à GE-E publiés ; GE-D couvre prefill/decode et GE-E le cache KV |
 | [Fine-tuning](#fine-tuning) | Classification, SFT, masquage de loss, qualité des données et surapprentissage | Structure à compléter |
 | [Évaluation](#evaluation) | Baselines, métriques, contamination, incertitude et analyse d’erreurs | Un exercice de transfert autonome est publié dans [Évaluation expérimentale](evaluation-experimentale.qmd) ; la collection complète reste à construire |
 | [Efficacité](#efficacite) | LoRA/QLoRA, mémoire, coût et compromis | Structure à compléter |
