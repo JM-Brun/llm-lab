@@ -1290,3 +1290,9 @@ Explicitly bounded the conclusion: exhaustive enumeration is feasible here only 
 - Execute the snippet in CI or an equivalent checked environment; verify the four sequence scores and bilingual parity.
 - Quarto render, local-link checks and targeted browser review on the PR head.
 - This example satisfies the issue's greedy-versus-sequence-MAP challenge; it does not claim to implement beam search or establish a general decoding-quality ranking.
+
+### Evaluation metrics: likelihood is not task quality
+
+Extended the evaluation section with explicit bilingual links and a bounded example: likelihood/NLL (and derived perplexity) scores observed tokens on a corpus; it does not directly measure factuality, instruction following or user utility. Task metrics only measure the operationalized property and protocol. The existing experimental-evaluation exercise's Average Precision measures ranking quality, not probability calibration. This reuses existing lessons rather than introducing a new metric or page.
+
+The user-supplied YouTube URL in issue #84 could not be verified through the available source retrieval: the direct page fetch returned a cache miss and exact video-ID search returned no result. It is therefore not cited or incorporated; its title/transcript and timestamps remain unverified.
