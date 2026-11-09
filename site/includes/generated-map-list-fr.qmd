@@ -59,6 +59,7 @@
   - Formalisation probabiliste et chaîne de l’entraînement
     - [Formaliser mathématiquement la modélisation du langage](language-modeling-math.html)
     - [La chaîne mathématique de l’entraînement d’un LLM](mathematical-foundations.html)
+    - [Centrage du score en apprentissage par renforcement hors politique](score-centering.html)
   - Inférence et efficacité
     - [Apprentissage en contexte (in-context learning)](in-context-learning.html)
     - [Stratégies avancées de décodage](decoding-strategies.html)
