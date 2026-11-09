@@ -35,7 +35,7 @@ By the end of this page, you will be able to:
 - predict how greedy selection, sampling, and temperature affect generated text.
 :::
 
-::: {.callout-tip title="The idea to remember in one minute"}
+::: {.callout-tip title="The one-minute mental model"}
 An LLM does not write text in one block: it produces **one token at a time**. At each step, it estimates a probability distribution over the vocabulary, conditioned on the current context; a **decoding rule** turns this distribution into a single token; the token is appended to the context, and the loop starts again. Changing the decoding rule changes the generated text **without changing the model**.
 
 On the first pass, in the **Orientation** stage, focus on this loop and on the fact that parameters stay fixed. Return to this page in the **Inference** stage to study prefill, incremental decode, and selection strategies in detail.
