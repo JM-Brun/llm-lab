@@ -141,12 +141,21 @@ print("softmax-first:", softmax_first_loss.item())  # 0.946560...
 La dernière position est ignorée par `ignore_index` ; elle ne contribue ni à la somme ni au dénominateur de la moyenne. `reduction="none"` permet d'inspecter les pertes locales, tandis que `reduction="mean"` moyenne les cibles valides (sans poids de classes dans cet exemple). La softmax préalable est incorrecte pour l'usage attendu de cette API : elle transforme les logits en nouvelles entrées de scores et change la loss. Cet exemple illustre l'API et l'agrégation ; il ne remplace ni le masque causal, ni l'alignement des cibles, ni une boucle d'entraînement.
 
 PyTorch accepte aussi des cibles sous forme de distributions de probabilité (par exemple pour le *label smoothing*), mais `ignore_index` ne s'applique qu'aux cibles sous forme d'indices. Cet exemple utilise volontairement des indices entiers.
+:::
 
 ### Erreur fréquente de dimension : normaliser sur le temps plutôt que sur le vocabulaire
 
 Pour des logits de forme `(B,T,V)`, chaque position temporelle doit définir une distribution de probabilité sur le **vocabulaire**. La softmax doit donc utiliser `dim=-1` (l'axe du vocabulaire). Une normalisation sur `dim=1` répartit au contraire les probabilités dans le temps pour chaque entrée du vocabulaire ; elle ne produit pas une distribution catégorielle sur les tokens à chaque position.
 
 ```python
+import torch
+
+logits = torch.tensor(
+    [[[2.0, 0.0, -1.0], [0.0, 1.0, 0.0], [1.0, 0.0, 2.0]]],
+    dtype=torch.float64,
+)
+batch_size, seq_len, vocab_size = logits.shape
+
 correct_probs = logits.softmax(dim=-1)
 wrong_axis_probs = logits.softmax(dim=1)
 
@@ -170,6 +179,9 @@ C'est pourquoi l'exemple aplatit d'abord `(B,T,V)` en `(B×T,V) : la dimension d
 Une opération `softmax` directe peut faire sous-déborder à zéro la probabilité d'une cible très improbable. Son logarithme vaut alors l'infini, même si la cross-entropie mathématique est finie. La cross-entropie fusionnée et numériquement stable calcule l'expression équivalente via log-softmax sans matérialiser d'abord cette probabilité nulle.
 
 ```python
+import torch
+import torch.nn.functional as F
+
 extreme_logits = torch.tensor(
     [[1000.0, 0.0, -1000.0]], dtype=torch.float64
 )
@@ -188,7 +200,6 @@ assert torch.isinf(naive_loss)
 ```
 
 Le résultat infini est un échec du calcul naïf en virgule flottante, pas une perte mathématique infinie : pour ces logits, la perte exacte vaut 2000 nats. En pratique, passer directement les logits à `CrossEntropyLoss` ou utiliser `log_softmax` suivi de l'extraction de la cible ; ne pas calculer soi-même `log(softmax(logits))`.
-:::
 
 ## Lien avec la perplexité
 
