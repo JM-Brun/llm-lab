@@ -21,6 +21,8 @@ See [the learning path](docs/learning-path.md) for the authoritative module-leve
 
 Sebastian Raschka's [*Build a Large Language Model (From Scratch)*](https://github.com/rasbt/LLMs-from-scratch) provides a major implementation and scope reference, not a mandatory table of contents. The lab also draws on visual explanations such as [Jay Alammar's Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/) and the practical perspective of the [Hugging Face LLM Course](https://huggingface.co/learn/llm-course/). The [annotated references](docs/references.md) describe these and other sources, their roles, and reuse boundaries; primary papers and official documentation remain important for checking technical claims.
 
+For how this lab positions itself against comparable public learning projects, see the [comparable-projects landscape](docs/comparable-projects-landscape.md).
+
 ## Current state
 
 The NumPy reference implements inference with a small, randomly initialized decoder-only GPT, plus loss, training-window, and decoding helpers. Its output demonstrates generation mechanics, not learned language quality. A complete tokenizer/corpus pipeline, training loop, and trained-model evaluation are still planned. See [project status](docs/project-status.md) for evidence and limitations.
