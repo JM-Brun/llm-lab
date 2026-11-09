@@ -1074,3 +1074,30 @@ The progression is mathematically coherent when each question remains distinct:
 
 No mathematical correction was justified by this spot-check. The implementation boundary remains important: the conceptual pages describe sequence-level alignment and masking, while the current NumPy loss primitive is intentionally narrower and does not implement a complete sequence training loop.
 
+## 2026-11-09: Build data branch audit — corpus → tokenizer → training examples
+
+**Scope.** Compared the FR/EN `corpus-preparation` and `training-examples` pages, including the worked input-target examples, teacher-forcing explanation, split/tokenizer protocol, windowing contract, document-boundary discussion, mask distinctions and stated implementation limits.
+
+| Area | Source-level check | Result |
+|---|---|---|
+| Corpus preparation | The page separates source eligibility/provenance, parsing, filtering, deduplication, evaluation splitting, tokenizer fitting/freezing and encoding. | The sequence is presented as a set of decisions, not a universal fixed recipe. It explicitly allows deduplication before splitting or group-aware splitting followed by cross-partition near-duplicate checks, depending on the generalization claim. |
+| Held-out protocol | For a conventional held-out experiment, tokenizer fitting uses the training partition only; the tokenizer is then frozen before validation/test encoding. | Correctly scoped as a conventional protocol, not claimed to describe every industrial pretraining pipeline. |
+| Input-target shift | For `[t0,t1,t2,t3,t4]` with input length 4, the page pairs `[t0,t1,t2,t3]` with `[t1,t2,t3,t4]`. | Alignment is correct: each input position predicts its next token; the final input token is not its own target. |
+| Stride example | For stream `[8,3,3,9,2,7]`, length 3 and stride 1, the first two pairs are `[8,3,3] → [3,3,9]` and `[3,3,9] → [3,9,2]`. | Both FR/EN examples are correct. The prose distinguishes input-window length from stride and states that the last input token needs a successor. |
+| Teacher forcing | Reference tokens form the observed prefix; the causal mask restricts each position to its available prefix; the shifted targets provide the next-token labels. | The page distinguishes this conditioning strategy from the objective, loss, optimizer and inference-time generated-token feedback. |
+| Document boundaries | Packing, boundary markers and cross-document attention masking are listed as separate decisions. | The important caveat is explicit: an end-of-document token does not by itself block attention. Cross-document masking is implementation- and objective-dependent. |
+| Padding and masks | Padding, attention visibility and loss inclusion are treated separately. | The page states that ignored targets should not contribute to the loss, and that flattening/reduction must preserve logits-target-mask alignment. |
+| Implementation evidence | `sliding_input_target_pairs` builds complete sliding windows and shifted targets; incomplete corpus tails are dropped. | Scope is not overstated: tokenizer/corpus loading, packing, padding, masks, batching, train/validation splitting and a training loop are not implemented by this helper. |
+
+### Pedagogical hand-off
+
+The Build branch has a coherent responsibility split:
+
+`corpus-preparation → frozen tokenizer / token stream → training-examples → model forward pass → cross-entropy / loss → gradients`.
+
+This is a **construction dependency**, not a prerequisite chain for the conceptual inference route. The short `text-data` lesson remains the prompt-to-token-IDs entry point; the Build pages own corpus governance and training-example construction.
+
+### Findings and next action
+
+No scientific or bilingual correction was justified by this pass. The worked examples, key distinctions and implementation boundaries agree in the inspected FR/EN sources. Continue with the remaining page groups and rendered evidence under the existing #347/#320/#337 reviews; do not create a second data pipeline or duplicate the Build implementation.
+
