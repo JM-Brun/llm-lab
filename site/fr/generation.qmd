@@ -40,6 +40,14 @@ Un LLM génère du texte **un token à la fois**. À partir du contexte disponib
 Le modèle n'effectue pas directement un choix de mot dans le texte : il attribue une probabilité à chaque token possible, compte tenu du contexte. Une règle de sélection transforme ensuite cette distribution en un token concret.
 :::
 
+::: {.callout-note collapse="true" title="Cette page intervient à deux moments du parcours"}
+Lors de la première étape (**Situer le système**), cette page sert uniquement à observer le principe général : contexte, distribution, sélection et répétition. Vous pouvez vous limiter au modèle mental ci-dessus.
+
+Lors de l'étape **Exécuter l'inférence et générer du texte**, revenez à cette page pour étudier les détails : passe avant, boucle autorégressive, prefill, decode incrémental, cache KV et stratégies de décodage.
+
+Il s'agit d'une reprise volontaire du même phénomène à deux niveaux de profondeur, et non de deux notions ou de deux parcours différents.
+:::
+
 ## 1. Une étape élémentaire : prédire et sélectionner un token
 
 Considérons un contexte courant composé des tokens déjà disponibles, qu'ils proviennent du prompt ou d'étapes de génération précédentes. Notons-le :
