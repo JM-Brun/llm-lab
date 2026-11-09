@@ -2492,8 +2492,8 @@ sources:
           - "Official implementation README: loss contract, top-k sampler-logprob approximation, importance-sampling composition, supported correction families and test command"
           - "Public implementation notes and independent technical explanations used only as cross-checks"
         limitations:
-          - "The complete paper PDF and appendices were not read line by line; theorem assumptions, exact derivations and all experimental tables remain to be audited."
-          - "The official code was not cloned, executed or tested in this pass."
+          - "The canonical arXiv PDF and all appendices were not independently audited; a full-text rendering was inspected for the method and selected experiment sections."
+          - "The official test suite was not executed; implementation source was inspected but not independently reproduced."
           - "Reported model-scale and stability results are author-reported, not independently reproduced."
           - "The paper's reuse licence and rights for figures/data were not independently established."
     related:
