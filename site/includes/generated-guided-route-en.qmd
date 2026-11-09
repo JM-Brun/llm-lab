@@ -22,15 +22,15 @@ Understand what an LLM is and follow a complete generation loop as a black box w
 
 ### 02 · From text to tokens
 
-Distinguish text, tokenization, vocabulary, and token IDs that form the discrete context supplied to the model.
+Distinguish text, tokens, and token IDs that form the model's discrete input without needing to study segmentation algorithms.
 
 **Core pages**
 
 - [From text to tokens: representing language](text-data.html)
-- [Tokenization strategies: granularity, algorithms, and trade-offs](tokenization-strategies.html)
 
 **Optional resources**
 
+- [Tokenization strategies: granularity, algorithms, and trade-offs](tokenization-strategies.html)
 - [Unicode, UTF-8, and text normalization](unicode-text.html)
 - [Designing and evaluating a tokenizer](tokenizer-design-evaluation.html)
 
@@ -44,7 +44,7 @@ Trace embedding lookup and the addition of positional information, then distingu
 
 **Core pages**
 
-- [The embedding space](embedding-space.html)
+- [From token IDs to vectors: embeddings](embedding-space.html)
 - [Positional encoding: giving tokens an order](positional-encoding.html)
 - [Why can the same token have different contextualized representations?](contextualized-representations.html)
 

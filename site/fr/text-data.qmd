@@ -13,11 +13,11 @@ scope: "Présente les étapes et objets qui relient un texte source à l’entr�
 purpose: "Le lecteur doit pouvoir retracer la chaîne texte → tokens → IDs → vecteurs initiaux, distinguer les opérations d’encodage d’un prompt de celles de préparation des données d’entraînement, et identifier ce que chaque étape ne permet pas de conclure."
 suggested_route:
   previous: "fr/generation"
-  next: "fr/tokenization-strategies"
+  next: "fr/embedding-space"
 hierarchy:
-  parents: ["fr/generation"]
+  parents: []
   children: ["fr/unicode-text", "fr/tokenization-strategies", "fr/embedding-space"]
-related: ["fr/transformer"]
+related: ["fr/generation", "fr/transformer"]
 tags: ["type:concept-lesson", "destination:understand", "topic:text-data", "level:core", "language:fr", "status:published"]
 -->
 
@@ -34,19 +34,17 @@ Pensez à un **catalogue avec des numéros de référence**. Le tokenizer décou
 
 **Première lecture :** suivez le schéma et retenez le rôle distinct du token, de l'ID et de l'embedding. Vous pouvez remettre à plus tard les détails Unicode, les algorithmes BPE/WordPiece et le pipeline de préparation des corpus.
 
-Les [stratégies de tokenisation](tokenization-strategies.qmd) comparent les compromis de tokenizers réels ; l’[espace des embeddings](embedding-space.qmd) décrit le lookup qui associe ensuite un vecteur à chaque ID.
+Pour comprendre le mécanisme minimal, passez directement à [Des identifiants aux vecteurs](embedding-space.qmd). Pour aller plus loin sur les choix de segmentation, consultez les [stratégies de tokenisation](tokenization-strategies.qmd).
 :::
 
 <div class="pipeline-stepper" role="navigation" aria-label="Étapes de l'entrée du modèle">
-  <span class="step-item active" aria-current="step" aria-label="Texte, tokens et identifiants">1. Texte et IDs</span>
+  <span class="step-item active" aria-current="step" aria-label="Texte, tokens et identifiants">1. Texte → IDs</span>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="tokenization-strategies.qmd" aria-label="Stratégies de tokenisation">2. Tokenisation</a>
+  <a class="step-item" href="embedding-space.qmd" aria-label="Lookup dans la table d'embeddings">2. Vecteurs</a>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="embedding-space.qmd" aria-label="Vecteurs d'embedding">3. Embeddings</a>
+  <a class="step-item" href="positional-encoding.qmd" aria-label="Information positionnelle">3. Position</a>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="positional-encoding.qmd" aria-label="Information positionnelle">4. Position</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="contextualized-representations.qmd" aria-label="Représentations contextualisées">5. Contexte</a>
+  <a class="step-item" href="contextualized-representations.qmd" aria-label="Représentations contextualisées">4. Contexte</a>
 </div>
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}

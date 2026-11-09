@@ -17,7 +17,7 @@ const visualCases = [
 ];
 
 const routeContextCases = visualCases.filter(testCase => testCase.theme === "light" && testCase.label === "desktop");
-const textDataResponsiveCases = visualCases.filter(testCase => testCase.label === "mobile");
+const representationResponsiveCases = visualCases.filter(testCase => testCase.label === "mobile");
 const transformerOverviewResponsiveCases = visualCases.filter(testCase => testCase.label === "mobile");
 
 // #329: the bilingual exercise hub contains the TR, TF and AT collections.
@@ -43,11 +43,13 @@ const cases = [
       ...testCase, page, kind: "route-context",
     }))
   ),
-  // The text-input stepper is a local process aid; check its responsive layout
-  // in both languages, not only the desktop keyboard/Axe baseline.
-  ...textDataResponsiveCases.map(testCase => ({
-    ...testCase, page: "text-data.html", kind: "route-context",
-  })),
+  // #320: inspect the complete text → representations entry chain on mobile
+  // in both languages, in addition to the desktop route-context baseline.
+  ...representationResponsiveCases.flatMap(testCase =>
+    ["text-data.html", "embedding-space.html", "positional-encoding.html", "tensors.html"].map(page => ({
+      ...testCase, page, kind: "route-context",
+    }))
+  ),
   // #347: review the Build bridge and desktop training entry without
   // treating either as an additional guided-route stage. Only light is a
   // rendered site theme; color-scheme dark is not dark-theme coverage.
@@ -102,7 +104,7 @@ if (process.env.SITE_BROWSER_PROFILE === "targeted") {
 
   if (hasGlobalSiteChange || changedPages.size === 0) {
     const smokePages = new Set(["learning-map.html", "llm-overview.html", "index.html", "text-data.html"]);
-    const targetedReviewPages = new Set(["exercises.html", "transformer.html", "decoding-strategies.html", "entropy.html", "scaled-dot-product-attention.html", "transformer-architectures.html", "likelihood.html", "vraisemblance.html", "cross-entropy.html", "loss.html", "gradients.html", "generation.html", "training-examples.html", "experimental-evaluation.html", "evaluation-experimentale.html", "build-path.html"]);
+    const targetedReviewPages = new Set(["exercises.html", "transformer.html", "decoding-strategies.html", "entropy.html", "scaled-dot-product-attention.html", "transformer-architectures.html", "likelihood.html", "vraisemblance.html", "cross-entropy.html", "loss.html", "gradients.html", "generation.html", "text-data.html", "tokenization-strategies.html", "embedding-space.html", "positional-encoding.html", "contextualized-representations.html", "tensors.html", "training-examples.html", "experimental-evaluation.html", "evaluation-experimentale.html", "build-path.html"]);
     // A browser-review script change must exercise the focused lesson pages:
     // they share page-navigation, responsive, and rendered-math assertions.
     const selectedPages = new Set([
@@ -305,6 +307,20 @@ for (const testCase of cases) {
       };
       return { previous: readLink("previous"), next: readLink("next") };
     });
+    const expectedCoreNavigation = {
+      "text-data.html": { previous: "generation.html", next: "embedding-space.html" },
+      "embedding-space.html": { previous: "text-data.html", next: "positional-encoding.html" },
+    }[pagePath];
+    if (expectedCoreNavigation) {
+      for (const [direction, expectedTarget] of Object.entries(expectedCoreNavigation)) {
+        const actualTarget = item.pageNavigation[direction].href
+          ? new URL(item.pageNavigation[direction].href).pathname.split("/").pop()
+          : null;
+        if (actualTarget !== expectedTarget) {
+          throw new Error(`${pagePath} ${direction} navigation should target ${expectedTarget}, got ${actualTarget}`);
+        }
+      }
+    }
     for (const [direction, navigation] of Object.entries(item.pageNavigation)) {
       const visible = Boolean(navigation.href);
       if (visible) {
@@ -810,7 +826,7 @@ for (const testCase of cases) {
             "llm-limits.html": "guided-stage-orientation",
           }[pagePath];
           const optionalPages = new Set([
-            "unicode-text.html", "tokenizer-design-evaluation.html", "tensors.html", "rope.html",
+            "unicode-text.html", "tokenization-strategies.html", "tokenizer-design-evaluation.html", "tensors.html", "rope.html",
             "cross-attention.html", "attention-score-scaling.html", "decoding-strategies.html", "scaling-laws.html",
             "transformer-architectures.html", "llm-limits.html",
           ]);
