@@ -29,7 +29,7 @@ Un **grand modèle de langage** (*large language model*, LLM) est un modèle de 
 
 ## 1. LLM, GPT et Transformer : trois notions différentes
 
-Un **modèle de langage** attribue une probabilité ou un score à des séquences de tokens en fonction d'un contexte. Dans un modèle autorégressif, ce calcul est répété token après token : le modèle n'énumère pas toutes les continuations complètes possibles. Un **GPT** (*Generative Pre-trained Transformer*) est une famille de modèles pré-entraînés fondés sur l'architecture Transformer. Les GPT classiques sont des Transformers **décodeur seul** entraînés à prédire le prochain token.
+Un **modèle de langage** attribue une probabilité ou un score à des séquences de tokens en fonction d'un contexte. Dans un modèle autorégressif, ce calcul est répété token après token : le modèle n'énumère pas toutes les continuations complètes possibles. Un **GPT** (*Generative Pre-trained Transformer*) est une famille de modèles pré-entraînés fondés sur l'architecture Transformer. Les GPT classiques sont des Transformers **décodeur seul**, pré-entraînés à prédire le prochain token.
 
 Un **Transformer** est une famille d'architectures, pas un synonyme de GPT ni de LLM. L'article fondateur présente d'abord une architecture encodeur-décodeur ([Vaswani et al., 2017](https://arxiv.org/abs/1706.03762)). On distingue notamment :
 
