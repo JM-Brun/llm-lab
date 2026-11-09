@@ -1321,3 +1321,15 @@ The four labels are `[1, 0, 1, 0]`. Score set A is `[0.65, 0.55, 0.45, 0.35]`; s
 A standard-library Python snippet in each language page computes AP and this two-bin ECE and asserts the expected values. The text states that ECE depends on binning and that the four-observation example is illustrative, not a reliable calibration estimate or an empirical LLM evaluation.
 
 **Validation still required:** execute both snippets, verify FR/EN semantic parity, run Python CI and Quarto render/local-link checks, then inspect the exact rendered changes. Mobile layout is intentionally not a gate for this source/content slice and remains a later release-review task.
+
+## 2026-11-09: execution of decoding/evaluation teaching examples
+
+**Scope.** Executed the exact Python code blocks from the FR and EN `decoding-strategies.qmd` pages for the greedy-versus-sequence-MAP counterexample and the AP-versus-ECE calibration counterexample. The corresponding FR/EN code blocks were compared and are identical.
+
+**Results.**
+- Greedy counterexample: `('A', 'x')`, sequence probability 0.306; exhaustive fixed-horizon MAP sequence `('B', 'z')`, probability 0.396.
+- Calibration counterexample: AP = 0.833 for both strictly rank-preserving score sets; two-bin size-weighted ECE = 0.10 and 0.44, respectively. The source assertions passed.
+
+**Rendered/build evidence.** The AP/ECE lesson changes are integrated through PR #740; its final-head Python CI and Quarto site workflows both succeeded. The targeted responsive browser evidence for the FR/EN page pair is separately recorded above from PR #736. It covers desktop/mobile at 390 × 844 and 1440 × 1000 in the light theme; it does not establish dark-theme, screen-reader or learner-comprehension behavior.
+
+**Limits.** The greedy snippet prints its expected values but does not contain assertions; this pass verified the outputs manually. The examples are deterministic teaching counterexamples, not model benchmarks or reliable calibration estimates. This execution does not audit the complete top-k/top-p/beam-search implementations or establish learner transfer.
