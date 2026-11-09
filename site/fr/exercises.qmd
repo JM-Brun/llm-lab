@@ -222,7 +222,7 @@ Une comparaison exige notamment de contrôler le tokenizer et sa segmentation, l
 
 ### Données textuelles {#donnees-textuelles}
 
-**Notions préalables :** [texte et tokenisation](text-data.qmd), [espace des embeddings](embedding-space.qmd) et [exemples d'entraînement et décalage entrée-cible](training-examples.qmd).
+**Repères pour commencer :** [texte et données](text-data.qmd) et [espace des embeddings](embedding-space.qmd) suffisent pour aborder les premiers exercices ; les prérequis supplémentaires sont indiqués pour chaque exercice ci-dessous. En particulier, TR-D mobilise les [exemples d'entraînement et le décalage entrée-cible](training-examples.qmd), TR-E la page de tokenisation et TR-F la préparation du corpus.
 
 **Périmètre actuel :** six exercices formatifs bilingues, aux identifiants stables TR-A à TR-F, couvrent la chaîne texte → représentations (TR-A à TR-C), les fenêtres et le décalage entrée-cible (TR-D), le calcul de fusions BPE (TR-E), puis le diagnostic des fuites entre partitions et de l'ajustement du tokenizer (TR-F). Ordre conseillé : TR-A, TR-B, TR-C, puis TR-D, TR-E et TR-F après les pages de préparation correspondantes.
 
