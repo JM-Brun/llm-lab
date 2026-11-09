@@ -28,12 +28,12 @@ Module family of the reference implementation:
 - ``llm_lab.foundations.generate``: the autoregressive decoding loop.
 
 Line-by-line walkthrough (bilingual site pages):
-- https://jm-brun.github.io/llm-lab/fr/gpt-config-walkthrough/
-- https://jm-brun.github.io/llm-lab/en/gpt-config-walkthrough/
+- https://jm-brun.github.io/llm-lab/fr/gpt-config-walkthrough.html
+- https://jm-brun.github.io/llm-lab/en/gpt-config-walkthrough.html
 
 Related concept pages (decoder-only architecture):
-- https://jm-brun.github.io/llm-lab/fr/transformer/
-- https://jm-brun.github.io/llm-lab/en/transformer/
+- https://jm-brun.github.io/llm-lab/fr/transformer.html
+- https://jm-brun.github.io/llm-lab/en/transformer.html
 """
 
 from dataclasses import dataclass

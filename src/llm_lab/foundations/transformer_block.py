@@ -17,14 +17,14 @@ This module contains no training code: the parameters are drawn once in
 ``__init__`` and never updated.
 
 Line-by-line walkthrough (bilingual site pages):
-- https://jm-brun.github.io/llm-lab/fr/transformer-block-walkthrough/
-- https://jm-brun.github.io/llm-lab/en/transformer-block-walkthrough/
+- https://jm-brun.github.io/llm-lab/fr/transformer-block-walkthrough.html
+- https://jm-brun.github.io/llm-lab/en/transformer-block-walkthrough.html
 
 Related concept pages:
-- Q/K/V: https://jm-brun.github.io/llm-lab/fr/queries-keys-values/
+- Q/K/V: https://jm-brun.github.io/llm-lab/fr/queries-keys-values.html
 - scaled dot-product attention:
-  https://jm-brun.github.io/llm-lab/fr/scaled-dot-product-attention/
-- causal masking: https://jm-brun.github.io/llm-lab/fr/causal-masking/
+  https://jm-brun.github.io/llm-lab/fr/scaled-dot-product-attention.html
+- causal masking: https://jm-brun.github.io/llm-lab/fr/causal-masking.html
 """
 
 import math

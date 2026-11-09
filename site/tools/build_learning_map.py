@@ -249,7 +249,13 @@ def slugify_area_id(title: str) -> str:
 
 
 def sidebar_page_id(entry: object, language: str) -> str | None:
-    """Resolve one Quarto sidebar entry to a published page identifier."""
+    """Resolve one Quarto sidebar entry to a published page identifier.
+
+    An entry is either a page path or a ``{text, href}`` item whose ``text``
+    relabels the page in the sidebar and breadcrumbs without changing its id.
+    """
+    if isinstance(entry, dict) and "section" not in entry:
+        entry = entry.get("href")
     if not isinstance(entry, str) or not entry.endswith(".qmd"):
         return None
     slug = entry.removesuffix(".qmd")

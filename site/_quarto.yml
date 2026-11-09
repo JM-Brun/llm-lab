@@ -183,7 +183,8 @@ website:
                 - fr/llm-limits.qmd
         - section: "Construire un petit GPT"
           contents:
-            - fr/build-path.qmd
+            - text: "Vue d’ensemble du parcours"
+              href: fr/build-path.qmd
             - section: "Préparer les données d'entraînement"
               contents:
                 - fr/corpus-preparation.qmd
@@ -284,7 +285,8 @@ website:
                 - en/llm-limits.qmd
         - section: "Build a small GPT"
           contents:
-            - en/build-path.qmd
+            - text: "Path overview"
+              href: en/build-path.qmd
             - section: "Prepare training data"
               contents:
                 - en/corpus-preparation.qmd
@@ -351,6 +353,8 @@ format:
       - styles.scss
     template-partials:
       - includes/title-metadata.html
+    filters:
+      - filters/meta-description.lua
     include-after-body:
       - includes/language-switch.html
       - includes/learning-map.html

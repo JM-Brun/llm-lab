@@ -26,14 +26,14 @@ Scope and limitations:
   learning.
 
 Line-by-line walkthrough (bilingual site pages):
-- https://jm-brun.github.io/llm-lab/fr/gpt-model-walkthrough/
-- https://jm-brun.github.io/llm-lab/en/gpt-model-walkthrough/
+- https://jm-brun.github.io/llm-lab/fr/gpt-model-walkthrough.html
+- https://jm-brun.github.io/llm-lab/en/gpt-model-walkthrough.html
 
 Related concept pages:
-- Transformer overview: https://jm-brun.github.io/llm-lab/fr/transformer/
-- Embedding space: https://jm-brun.github.io/llm-lab/fr/embedding-space/
-- Positional information: https://jm-brun.github.io/llm-lab/fr/positional-encoding/
-- Logits: https://jm-brun.github.io/llm-lab/fr/logits/
+- Transformer overview: https://jm-brun.github.io/llm-lab/fr/transformer.html
+- Embedding space: https://jm-brun.github.io/llm-lab/fr/embedding-space.html
+- Positional information: https://jm-brun.github.io/llm-lab/fr/positional-encoding.html
+- Logits: https://jm-brun.github.io/llm-lab/fr/logits.html
 """
 
 import numpy as np
