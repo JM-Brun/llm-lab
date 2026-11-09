@@ -5,7 +5,7 @@
 
 ## 1. Provenance and retrieval
 
-1. Cameron R. Wolfe, [Score Centering](https://cameronrwolfe.substack.com/p/score-centering). Direct retrieval still returns a cache miss. Search indexing and Wolfe's public Substack profile confirm the author identity and publication context, but do not expose the body of this specific post. Its equations, examples, illustrations and added interpretation remain **uninspected**. No technical claims below are attributed to Wolfe.
+1. Cameron R. Wolfe, [Score Centering](https://cameronrwolfe.substack.com/p/score-centering). Direct retrieval still returns a cache miss. The [public archive](https://cameronrwolfe.substack.com/archive) inspected on 2026-11-09 does not list a post with this title, while the [publication description](https://cameronrwolfe.substack.com/about) explains the newsletter's general educational purpose. The specific post may be unlisted or otherwise inaccessible; its equations, examples, illustrations and added interpretation remain **uninspected**. No technical claims below are attributed to Wolfe.
 2. Martin Marek and Max Ryabinin, [Score Centering Stabilizes Off-policy Reinforcement Learning](https://arxiv.org/abs/2609.20807), submitted 2026-09-17. The abstract and a full-text rendering on [alphaXiv](https://www.alphaxiv.org/abs/2609.20807) were inspected, including the method discussion and selected experiment/implementation sections (pp. 1, 5–9 and 12). The canonical arXiv PDF could not be fetched directly; not all appendices and tables were independently audited.
 3. [Official implementation](https://github.com/martin-marek/score-centering): README and public losses.py inspected. The test command and expected scope were checked, but tests were not run.
 
