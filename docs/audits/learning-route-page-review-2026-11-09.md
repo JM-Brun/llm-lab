@@ -1,6 +1,6 @@
 # Audit pédagogique du parcours LLM — 2026-11-09
 
-**Statut :** audit initial en cours, fondé sur les sources de `main` consultées le 2026-11-09. Ce document distingue explicitement l'inventaire, la lecture effective du contenu et la validation du rendu. Il ne constitue pas encore une validation complète page par page.
+**Statut au 2026-11-09 :** huit passes de revue FR/EN couvrent l'entrée du site, le parcours Understand principal, le parcours Build et l'exercice d'évaluation. Les pages facultatives listées comme « À lire » restent à auditer en profondeur. Le rendu Quarto et l'audit navigateur ont réussi pour le lot principal #754 ; les vérifications du complément #760 sont en cours. L'accessibilité manuelle et la validation avec un apprenant indépendant ne sont pas encore réalisées. Ce document distingue inventaire, lecture de source, validation technique et preuve pédagogique.
 
 ## 1. Périmètre et sources canoniques
 
