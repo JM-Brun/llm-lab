@@ -6,6 +6,10 @@
 
 This plan defines two paths with different completion evidence, not one sequence of paired theory-and-code modules. A Theory lesson is complete when its explanation, assumptions, examples, sources and conceptual checks are sound; a Build milestone is complete when its implementation, tests, expected outputs and limitations are evidenced. Neither path claims learner mastery merely because its materials exist. See [project status](project-status.md) for the current inventory and the [roadmap](roadmap.md) for priorities and acceptance criteria.
 
+## Reader-facing short overview
+
+For a concise, learner-facing explanation of the Understand route and its navigation, see the [simplified path overview and audit](understand-path-overview.md). This is an orientation layer only; the eight-stage route below remains canonical in `data/guided-route.yml`.
+
 ## Theory / Understand guided route — machine-readable map source
 
 The eight-stage **Theory / Understand route** displayed above the exploratory graphs on the bilingual learning-map pages is maintained in [`data/guided-route.yml`](../data/guided-route.yml), a versioned bilingual YAML registry. It is not the Build route. This file is the **single machine-readable source** for stage IDs, titles, objectives, core page links and optional resources. A resource's optional role in a stage is distinct from its destination: it can be an Understand page or a Deepen page. The present document remains the narrative curriculum and explains the conceptual order; do not duplicate the stage registry here or in JavaScript.
