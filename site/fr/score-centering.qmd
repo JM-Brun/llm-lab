@@ -1,0 +1,150 @@
+---
+title: "Centrage du score en apprentissage par renforcement hors politique"
+subtitle: "Corriger la dérive induite par le sampler sous décalage entraînement–inférence"
+keywords: ["type:deep-dive", "destination:deepen", "topic:score-centering", "domain:probabilistic-foundations-training", "importance:specialized", "level:advanced", "language:fr", "status:published"]
+lang: fr
+---
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/score-centering"
+scope: "Explique le centrage du score comme correction additive par préfixe de la dérive du gradient de politique sous décalage entraînement-inférence ; le distingue des scores d'attention, du centrage des avantages de groupe et de l'échantillonnage par importance."
+purpose: "Dériver le score de politique centré, expliquer le décalage visé et évaluer la composition avec les corrections par échantillonnage d'importance."
+domain: "probabilistic-foundations-training"
+suggested_route:
+  previous: "fr/gradients"
+  next: null
+hierarchy:
+  parents: ["fr/gradients"]
+  children: []
+related: ["fr/llm-evolution"]
+tags: ["type:deep-dive", "destination:deepen", "topic:score-centering", "domain:probabilistic-foundations-training", "importance:specialized", "level:advanced", "language:fr", "status:published"]
+-->
+
+::: {.chapter-lead}
+Le **centrage du score** est une correction additive des mises à jour par gradient de politique lorsque le moteur d'inférence qui a généré une trajectoire et le moteur d'entraînement qui calcule son gradient implémentent des distributions effectives différentes. À chaque préfixe, il soustrait l'espérance sous le sampler du score de la politique entraînée afin de supprimer un terme de dérive identifié.
+:::
+
+::: {.callout-note}
+**Périmètre des sources.** Cette leçon synthétise l'article de Marek et Ryabinin et son implémentation officielle. L'article de Cameron R. Wolfe, [*Score Centering*](https://cameronrwolfe.substack.com/p/score-centering), est catalogué séparément, mais son corps n'a pas pu être récupéré pendant cet audit. Aucune explication ci-dessous ne lui est attribuée tant que cette source n'a pas été inspectée.
+:::
+
+## 1. Le décalage : qui échantillonne, qui apprend ?
+
+Le **sampler** génère les tokens de la trajectoire, avec une distribution du prochain token \(q(\cdot\mid h)\) au préfixe \(h\). Le **trainer** évalue ces tokens et calcule les gradients des paramètres, avec une distribution \(p_\theta(\cdot\mid h)\). Idéalement, elles coïncident. En pratique, elles peuvent différer à cause des écarts numériques entre les noyaux d'inférence et d'entraînement, de la quantification ou de poids obsolètes du sampler dans un entraînement asynchrone.
+
+L'article soutient qu'un écart persistant peut créer une composante systématique dans la mise à jour. Lorsque le sampler est actualisé à partir du trainer, cette composante peut se réinjecter et s'accumuler sous forme de dérive. Éliminer toutes les sources de décalage peut imposer un coût important à l'efficacité de génération des trajectoires.
+
+## 2. L'objet centré est un gradient
+
+Pour un token \(v\) au préfixe \(h\), définissons la **fonction score** du trainer :
+
+\[
+s_v(h)=\nabla_\theta \log p_\theta(v\mid h).
+\]
+
+C'est un vecteur dans l'espace des paramètres. Ce n'est ni la log-probabilité du token, ni une récompense, ni un avantage, ni un score de compatibilité d'attention.
+
+L'espérance du score du trainer sous le sampler est
+
+\[
+\bar{s}(h)=
+\mathbb{E}_{v\sim q(\cdot\mid h)}[s_v(h)].
+\]
+
+Le centrage du score remplace le score du token échantillonné par
+
+\[
+\widetilde{s}_v(h)=s_v(h)-\bar{s}(h),
+\qquad
+\mathbb{E}_{v\sim q(\cdot\mid h)}[\widetilde{s}_v(h)]=0.
+\]
+
+Lorsque \(q=p_\theta\), l'identité usuelle du score donne
+
+\[
+\mathbb{E}_{v\sim p_\theta(\cdot\mid h)}
+[\nabla_\theta\log p_\theta(v\mid h)]
+=\nabla_\theta\sum_v p_\theta(v\mid h)=0,
+\]
+
+la correction est donc inactive dans le cas on-policy. En présence d'un décalage, l'espérance du score du trainer sous le sampler n'est pas nécessairement nulle.
+
+L'interprétation de l'article est que la soustraction de cette espérance par préfixe élimine une composante de mise à jour qui peut rapprocher le trainer du sampler indépendamment des tokens échantillonnés qui ont obtenu une récompense. Avec un signal de récompense ou d'avantage, la mise à jour espérée restante est une covariance récompense–score sous \(q\). **Ce n'est pas, en général, la covariance sous \(p_\theta\)**. Le centrage supprime le terme de dérive identifié ; il ne rend pas des échantillons hors politique arbitraires équivalents à des échantillons on-policy.
+
+## 3. Un petit exemple de Bernoulli
+
+Considérons une politique binaire à un paramètre, avec \(p_\theta(v=1)=p\) et \(p_\theta(v=0)=1-p\). Ses scores sont \(s_1=1-p\) et \(s_0=-p\). Supposons que le sampler utilise plutôt \(q(v=1)=r\). Alors
+
+\[
+\bar{s}_q=r(1-p)+(1-r)(-p)=r-p.
+\]
+
+Pour \(p=0{,}6\) et \(r=0{,}8\), les scores du trainer sont \(0{,}4\) et \(-0{,}6\), et leur espérance sous le sampler vaut \(0{,}2\). Les scores centrés deviennent \(0{,}2\) et \(-0{,}8\), donc
+
+\[
+0{,}8(0{,}2)+0{,}2(-0{,}8)=0.
+\]
+
+Cet exemple isole le mécanisme : la moyenne non nulle vient du fait que le score du trainer est moyenné sous une autre distribution. Ce n'est pas une dérivation complète du gradient d'un LLM.
+
+## 4. Trois opérations différentes appelées « centrage »
+
+- **Centrage du score :** soustrait le gradient du trainer attendu sous le sampler à chaque préfixe.
+- **Centrage des récompenses ou avantages par groupe :** rend la somme des avantages nulle parmi les trajectoires échantillonnées pour un prompt ; il ne garantit pas que l'avantage espéré soit nul à chaque préfixe.
+- **Traitement des scores d'attention :** opère sur des scores de compatibilité tels que \(QK^\top/\sqrt{d_k}\) avant le softmax d'attention.
+
+Le premier est une correction du gradient de politique, le deuxième concerne le signal de récompense utilisé par des méthodes comme GRPO, et le troisième appartient à l'attention du Transformer. La similitude des mots ne signifie pas que les objets mathématiques sont identiques.
+
+## 5. Relation avec l'échantillonnage par importance
+
+L'échantillonnage par importance applique des pondérations multiplicatives fondées sur un rapport entre les probabilités du trainer et du sampler. Le clipping ou le masquage peuvent contrôler les grands rapports, mais aussi introduire ou conserver un biais. Le centrage du score est additif : il soustrait un score espéré.
+
+L'article et l'implémentation de référence permettent de le combiner avec des corrections compatibles fondées sur des rapports. Dans ce cas, le centrage est effectué sous la **masse d'échantillonnage effective** \(q\,w\), où \(w\) est le poids d'importance détaché du graphe de gradient.
+
+L'implémentation décrit des rapports par token ou par séquence, des bandes de confiance, le comportement hors bande (clamp/drop) et la sélection des signes. Ses configurations nommées comprennent PG, IS naïf, TIS, MIS, PPO, DAPO, GSPO, TOPR et DPPO. Limite importante : le centrage se compose avec les corrections utilisant stat=ratio, mais l'implémentation rejette explicitement la composition avec stat=tv (correction DPPO fondée sur la distance TV). « Compatible avec l'échantillonnage par importance » ne signifie donc pas « compatible avec toutes les corrections hors politique ».
+
+Le centrage des avantages par groupe dans les méthodes de type GRPO est orthogonal au centrage du score ; l'un ne remplace pas l'autre.
+
+## 6. Estimation efficace : top-k et queue du vocabulaire
+
+Le centrage exact nécessite la distribution complète du prochain token du sampler. L'implémentation de référence prend aussi en charge une tête top-k du sampler (valeur par défaut du README : \(k=128\)) et modélise la queue restante comme proportionnelle à la distribution de queue du trainer, remise à l'échelle pour correspondre à la masse de queue du sampler.
+
+Le contrat d'implémentation précise que les log-probabilités du trainer sont calculées en float32 ; les log-probabilités sampler du top-k ne sont pas renormalisées ; la log-probabilité sampler du token échantillonné est conservée même si ce token est hors de la tête top-k ; les poids/résidus de centrage dérivés du sampler et les avantages sont détachés ; et le masque des tokens générés est appliqué à la perte par token.
+
+Le rendu de l'article indique que les estimations top-32/top-128 sont proches du centrage sur tout le vocabulaire dans les configurations testées, que top-128 couvre plus de 99,9 % de la masse du sampler dans la plupart de ces configurations et que le surcoût est inférieur à 1 % dans l'environnement matériel contrôlé des auteurs. Le surcoût avec vLLM ou SGLang n'a pas été mesuré. Ce sont des résultats rapportés par les auteurs, non reproduits indépendamment.
+
+## 7. Ce que les expériences établissent — et ce qu'elles n'établissent pas
+
+L'article rapporte des expériences sur des modèles de 0,6 à 30 milliards de paramètres, avec des samplers quantifiés et des trajectoires obsolètes.
+
+- Dans une configuration sévère du sampler Qwen3-30B-A3B-Base (poids/activations INT8 et cache KV INT4), l'article rapporte une précision d'entraînement de 30 % pour le centrage du score contre 12 % pour TIS, les autres méthodes restant sous 5 %.
+- Ici, la **précision d'entraînement désigne la récompense moyenne sur les trajectoires échantillonnées**, pas la précision sur un benchmark de test indépendant.
+- Avec un décalage FP8 plus modéré, le gradient de politique simple peut rester stable ; le centrage du score n'est pas toujours nécessaire.
+- Dans une expérience Qwen3-0.6B Countdown avec actualisation du sampler toutes les 64 étapes, le centrage combiné à TIS/MIS obtient les meilleurs résultats dans la comparaison de vétusté rapportée.
+- Le nombre de seeds varie selon certaines comparaisons.
+
+Ces résultats étayent la méthode dans les régimes de décalage testés. Ils n'établissent ni une supériorité universelle, ni l'élimination de tous les écarts entraînement–inférence, ni des gains de généralisation sur données réservées.
+
+## 8. Place dans l'architecture pédagogique de LLM Lab
+
+Il s'agit d'un **approfondissement avancé sur le post-entraînement et le RL**, à l'interface entre optimisation probabiliste et systèmes d'inférence. Il relève du domaine de l'entraînement probabiliste, avec un lien secondaire vers l'efficacité de l'inférence.
+
+Un ordre d'apprentissage raisonnable : espérance de récompense et objectif de gradient de politique ; gradient de log-probabilité / fonction score ; identité du score on-policy ; politique de comportement versus politique du trainer ; vétusté des trajectoires et décalage entraînement–inférence ; dérive par préfixe et centrage du score ; distinction avec les avantages centrés par groupe ; échantillonnage par importance et contraintes de composition PPO ; estimation top-k et limites empiriques.
+
+Ce sujet n'est pas une nouvelle étape du fil computationnel central de prédiction du prochain token et ne remplace pas l'entraînement supervisé par teacher forcing.
+
+## Pour approfondir
+
+- Marek et Ryabinin, [*Score Centering Stabilizes Off-policy Reinforcement Learning*](https://arxiv.org/abs/2609.20807).
+- [Rendu intégral consulté pour cet audit](https://www.alphaxiv.org/abs/2609.20807).
+- [Implémentation officielle et README](https://github.com/martin-marek/score-centering), notamment le [code de la loss](https://github.com/martin-marek/score-centering/blob/main/losses.py).
+- Cameron R. Wolfe, [*Score Centering*](https://cameronrwolfe.substack.com/p/score-centering) — commentaire distinct ; récupération du corps en attente.
+- Étude connexe ultérieure : [*On the Origin and Evolution of Training-Inference Mismatch in LLM Reinforcement Learning*](https://arxiv.org/abs/2610.40945), à examiner séparément.
+
+::: {.callout-warning}
+**Limites de l'audit :** le PDF arXiv canonique et toutes ses annexes n'ont pas encore été vérifiés indépendamment, les tests officiels n'ont pas été exécutés et le corps de l'article de Cameron Wolfe reste indisponible. Les chiffres expérimentaux sont rapportés par les auteurs et l'approximation de la queue top-k reste une hypothèse d'implémentation.
+:::
+
+:::: {.language-switch}
+[Français](score-centering.qmd) · [English](../en/score-centering.qmd)
+::::
