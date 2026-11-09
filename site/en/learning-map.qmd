@@ -23,7 +23,7 @@ related: []
 tags: ["type:entry-point", "destination:orient", "topic:learning-map", "level:overview", "language:en", "status:published"]
 -->
 
-This page separates a compact **guided route** from a **progressive map**. The route is derived from the canonical curriculum; the map starts from the high-level territories, then reveals sections and pages as you click. The reading notes below collapse by default; the map mirrors the search, filter, and selection in the URL, and the "Copy link" button shares that exact view.
+This page presents the eight-stage **Theory / Understand path**, followed by a progressive resource map. The **Build path is independent**: it has its own implementation order and entry point. The route is derived from the canonical curriculum; the map starts from the high-level territories, then reveals sections and pages as you click. The reading notes below collapse by default; the map mirrors the search, filter, and selection in the URL, and the "Copy link" button shares that exact view.
 
 ::: {.callout-note collapse="true" title="How to read this map"}
 
@@ -38,15 +38,15 @@ Section headings shown in a page's details are editorial landmarks, not canonica
 
 ::: {.guided-route-section}
 
-## Guided route
+## Theory path — Understand
 
-Eight conceptual stages provide an entry point and a suggested progression. Core pages cover each stage's main ideas; optional resources offer further context or depth and can belong to any destination. Pages within a stage are complementary resources, not a list of strict prerequisites.
+Eight conceptual stages provide a suggested progression for understanding how LLMs work. They do not describe the Build path. Core pages cover each stage's main ideas; optional resources offer further context or depth and can belong to any destination. Pages within a stage are complementary resources, not a list of strict prerequisites.
 
 {{< include ../includes/generated-guided-route-en.qmd >}}
 
 ::: {.guided-route-companion}
 
-**Practical companion:** If you want to build a small GPT, follow the [guided build path](build-path.html). Corpus preparation and training-example construction form a dedicated model-learning branch, not a prerequisite for inference.
+**Other primary path — Build:** To build a small GPT, follow the [independent Build path](build-path.html). It has its own implementation milestones and prerequisites; it is not a required continuation of the Theory path. Corpus preparation and training-example construction form a dedicated model-learning branch, not a prerequisite for inference.
 
 :::
 
