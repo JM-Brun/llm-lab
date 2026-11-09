@@ -62,7 +62,7 @@ La somme, la moyenne par séquence ou une moyenne pondérée sont également pos
 
 ## Masquage et cibles décalées
 
-En langage causal, les logits à la position $t$ prédisent généralement le token à la position $t+1$. La perte doit comparer les logits au bon token cible décalé. Les tokens de padding ou les positions explicitement ignorées doivent être exclus du numérateur **et** du dénominateur d'une moyenne sur les cibles valides.
+En langage causal, les logits à la position $t$ prédisent généralement le token à la position $t+1$. La perte doit comparer les logits au bon token cible décalé. Les tokens de padding ou les positions explicitement ignorées doivent être exclus du numérateur **et** du dénominateur d'une moyenne sur les cibles valides. Le masque de perte détermine uniquement quelles cibles contribuent à l'objectif ; il ne détermine pas quels tokens peuvent influencer les représentations utilisées pour prédire ces cibles. Cette visibilité relève du masque d'attention (masque causal, de padding ou de frontière documentaire, selon le cas). Exclure une cible de la loss ne suffit donc pas, à lui seul, à empêcher son information d'entrer dans le contexte. Voir aussi [les exemples d'entraînement](training-examples.qmd) et [le masquage causal](causal-masking.qmd).
 
 Une erreur d'alignement d'un token peut donner une loss finie et décroissante tout en entraînant la mauvaise tâche.
 
