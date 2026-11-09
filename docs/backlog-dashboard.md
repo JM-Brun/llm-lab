@@ -52,9 +52,9 @@ Do not infer that an entire issue is blocked when only one component is waiting 
 
 ## Now — active
 
-**Current active slice: reconcile [PR #760](https://github.com/JM-Brun/llm-lab/pull/760) against current `main`.** It is the only pre-existing content PR (the other open PR, #778, is this documentation handoff), but GitHub reports `mergeable_state=dirty`; its branch is 31 commits ahead and 3 behind current main. Earlier-head CI/browser success is not evidence for the current head. Rebase or perform a three-way reconciliation, preserve already-merged #767/#777 changes, then rerun and inspect checks on the new head.
+**Current active slice: finish current-head validation of [PR #760](https://github.com/JM-Brun/llm-lab/pull/760).** It is the only pre-existing content PR (the other open PR, #778, is this documentation handoff). The branch is now based on current `main` (35 commits ahead, 0 behind); Python CI passed, while the Quarto/Chromium browser review is still running. Inspect the final artifact and full diff before merge. Do not reuse earlier-head browser evidence.
 
-There is deliberately no P0 issue. Do not start another implementation or source-ingestion slice while this PR's current-head status is unresolved.
+There is deliberately no P0 issue. Do not start another implementation or source-ingestion slice while this PR's current-head review is unresolved.
 
 ## Next — at most three follow-up work items
 
