@@ -29,7 +29,7 @@ A **large language model** (LLM) is a language model trained at large scale usin
 
 ## 1. LLM, GPT, and Transformer are different concepts
 
-A **language model** assigns a probability or score to token sequences given a context. **GPT** (*Generative Pre-trained Transformer*) is a family of pretrained models based on the Transformer architecture. Classic GPT models are **decoder-only** Transformers trained to predict the next token.
+A **language model** assigns a probability or score to token sequences given a context. In an autoregressive model, this computation is repeated one token at a time: the model does not enumerate every possible complete continuation. **GPT** (*Generative Pre-trained Transformer*) is a family of pretrained models based on the Transformer architecture. Classic GPT models are **decoder-only** Transformers trained to predict the next token.
 
 A **Transformer** is an architecture family, not a synonym for GPT or LLM. Its main configurations include:
 
@@ -41,7 +41,7 @@ A **Transformer** is an architecture family, not a synonym for GPT or LLM. Its m
 
 These architectures and their differences are explained in the [Transformer architecture comparison](transformer-architectures.qmd). Natural language processing (NLP) is a **problem domain**, whereas deep learning is a **family of methods**: an LLM is one possible approach to language tasks. For historical context, see the [history of Transformers](transformer-history.qmd).
 
-LLM Lab uses a small decoder-only GPT as a **teaching model**: its autoregressive computation can be inspected and implemented end to end. This is a pedagogical choice, not a claim that all LLMs are GPTs or decoder-only Transformers. The [Build path](build-path.qmd) develops this implementation step by step.
+LLM Lab uses a small decoder-only GPT as a **teaching model**: its autoregressive computation can be inspected and implemented end to end. Its dimensions and optimizations are not intended to reproduce a production system. This is a pedagogical choice, not a claim that all LLMs are GPTs or decoder-only Transformers. The [Build path](build-path.qmd) develops this implementation step by step.
 
 ## 2. What an autoregressive GPT predicts
 
@@ -73,7 +73,7 @@ The figure summarizes generation: text is tokenized, the network computes a dist
 
 ### One shared computation, three uses
 
-The model maps the context to **logits**, then to a probability distribution over the vocabulary. This forward pass is shared by the uses below; what changes is what we do with the distribution.
+The model maps the context to **logits** (unnormalized scores); the *softmax* function converts them into a probability distribution over the vocabulary. This forward pass is shared by the uses below; what changes is what we do with the distribution.
 
 {{< include ../includes/generated-computational-graph-en-persistent-spine.qmd >}}
 
@@ -83,7 +83,7 @@ The model maps the context to **logits**, then to a probability distribution ove
 | **Observed-target scoring** | Compute the probability of a known token from its observed prefix, then the sequence likelihood or NLL | Fixed |
 | **Training** | Supply prefixes from the reference sequence (*teacher forcing*), compare distributions with target tokens, compute the loss and its gradients, then update parameters | Updated at the update step |
 
-*Prefill* and *decode* are inference execution phases. *Teacher forcing* describes conditioning on reference tokens during scoring or training; it is not a generation phase. [Training examples](training-examples.qmd), [loss](loss.qmd), and [gradients](gradients.qmd) explain the training branch; [likelihood](likelihood.qmd) explains scoring.
+*Prefill* and *decode* are inference execution phases. *Teacher forcing* describes conditioning on reference tokens during scoring or training; it is not a generation phase. For scoring and training on a known sequence, a forward pass produces distributions at each position; the causal mask ensures that each prediction depends only on the preceding prefix. [Training examples](training-examples.qmd), [loss](loss.qmd), and [gradients](gradients.qmd) explain the training branch; [likelihood](likelihood.qmd) explains scoring.
 
 **Target scoring** and **model evaluation** are not synonyms. Scoring computes probabilities for observed targets; evaluation aggregates scores or metrics under a defined data protocol. It may also assess generated outputs. The following view illustrates evaluation based on scoring, without updating parameters.
 
