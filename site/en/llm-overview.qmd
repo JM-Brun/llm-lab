@@ -53,7 +53,7 @@ A few terms are enough to follow this computation:
 - **Context:** the tokens available to compute a continuation. During generation, it contains the prompt followed by tokens already produced; see [generation](generation.qmd).
 - **Parameters:** learned values — including weights and biases — that determine the network's computation. They remain fixed during ordinary inference; see the [configuration of a small GPT](gpt-config-walkthrough.qmd).
 
-For a GPT, the probability of a sequence factorizes into successive conditional probabilities. The [mathematical formulation of language modeling](language-modeling-math.qmd) presents this factorization. [Autoregressive generation](generation.qmd) explains how a distribution becomes a continuation, one token at a time.
+For a GPT, the probability of a sequence factorizes into successive conditional probabilities. The [mathematical formulation of language modeling](language-modeling-math.qmd) presents this factorization. The mathematical tools used throughout the course are collected in the [mathematical foundations](mathematical-foundations.qmd). [Autoregressive generation](generation.qmd) explains how a distribution becomes a continuation, one token at a time.
 
 Predicting a plausible continuation is not the same as verifying that it is true. The prediction objective guarantees neither factual outputs nor human-like understanding of the world; these limits are discussed in [The training objective: guarantees and limits](llm-limits.qmd).
 
