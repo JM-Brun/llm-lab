@@ -15,6 +15,8 @@ pedagogical_model:
     nodes:
       - {id: src-raw-text, kind: input, description: "Unlabelled text corpus or inference prompt.", locator: "Tokens and Vocabularies; Language Model Pretraining; Autoregressive Inference Process"}
       - {id: src-tokenization, kind: operation, description: "Maps raw text to discrete tokens and token IDs using a tokenizer with a fixed vocabulary.", locator: "Tokens and Vocabularies"}
+      - {id: src-token-ids, kind: representation, description: "Discrete token identifiers produced by the tokenizer.", locator: "Tokens and Vocabularies"}
+      - {id: src-token-context, kind: state, description: "Ordered token-ID prefix supplied to the model at an inference step.", locator: "Autoregressive Inference Process"}
       - {id: src-token-embeddings, kind: representation, description: "Learned token vectors looked up from the model embedding matrix.", locator: "Tokens and Vocabularies"}
       - {id: src-positional-embeddings, kind: representation, description: "Learned position vectors added to token embeddings in the described GPT-2/NanoGPT setup.", locator: "Tokens and Vocabularies"}
       - {id: src-contextual-states, kind: representation, description: "Per-position outputs of the decoder-only Transformer.", locator: "Language Model Pretraining; The Decoder-Only Transformer"}
@@ -26,6 +28,7 @@ pedagogical_model:
       - {id: src-parameter-learning, kind: process, description: "Backpropagation and optimizer updates that change model parameters during pretraining.", locator: "NanoGPT Training"}
       - {id: src-decoding-policy, kind: policy, description: "Temperature scaling and optional top-k filtering before sampling the next token.", locator: "Autoregressive Inference Process; Implementing Next Token Prediction"}
       - {id: src-generated-token, kind: output, description: "Selected token appended to the current context for the next autoregressive step.", locator: "Autoregressive Inference Process"}
+      - {id: src-model-parameters, kind: parameter-set, description: "Learnable embedding, positional, attention, feed-forward and output-head weights.", locator: "The Decoder-Only Transformer; NanoGPT Training"}
       - {id: src-training-infrastructure, kind: implementation, description: "Mini-batch data loading, DDP/FSDP, gradient accumulation, AMP, gradient clipping and learning-rate scheduling.", locator: "NanoGPT Training"}
     edges:
       - {from: src-raw-text, type: tokenized-by, to: src-tokenization}
@@ -38,10 +41,10 @@ pedagogical_model:
       - {from: src-next-token-distribution, type: scored-against, to: src-observed-targets}
       - {from: src-observed-targets, type: contributes-to, to: src-token-loss}
       - {from: src-token-loss, type: differentiated-through, to: src-parameter-learning}
-      - {from: src-parameter-learning, type: updates, to: src-contextual-states}
+      - {from: src-parameter-learning, type: updates, to: src-model-parameters}
       - {from: src-next-token-distribution, type: transformed-by, to: src-decoding-policy}
       - {from: src-decoding-policy, type: selects, to: src-generated-token}
-      - {from: src-generated-token, type: appended-to, to: src-raw-text}
+      - {from: src-generated-token, type: appended-to, to: src-token-context}
       - {from: src-training-infrastructure, type: supports, to: src-parameter-learning}
     interpretation: "A source-local reconstruction from the article's prose, equations and section sequence. The graph is an editorial interpretation, not a formal graph supplied by the author. The training-infrastructure node is intentionally supporting context, not a stage in the model's per-token forward computation."
   learning_outcomes:
