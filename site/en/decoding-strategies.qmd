@@ -102,6 +102,56 @@ The tests check renormalization, top-k(1) equivalence with greedy selection, inc
 
 **Greedy decoding** selects the most likely token at each step. It is simple and deterministic, but a local choice does not necessarily maximize the probability of the best complete sequence. A myopic choice can steer the entire continuation.
 
+### Deterministic example: the best first token does not give the best sequence
+
+Consider a two-token generation tree with no early stopping. The values below are conditional probabilities produced by the model (they could be obtained by applying softmax to logits):
+
+| Prefix | Candidate token | Conditional probability |
+|---|---:|---:|
+| start | A | 0.60 |
+| start | B | 0.40 |
+| A | x | 0.51 |
+| A | y | 0.49 |
+| B | z | 0.99 |
+| B | w | 0.01 |
+
+Greedy decoding first selects **A**, because $0.60>0.40$, and then **x**. The sequence probability is $0.60\times0.51=0.306$. However, sequence **B z** has probability $0.40\times0.99=0.396$: it is more likely over the two-token horizon.
+
+This does not contradict greedy selection: it optimizes each local decision, not the product of conditional probabilities over the complete sequence.
+
+```python
+import numpy as np
+
+def softmax(logits):
+    shifted = logits - np.max(logits)
+    exp = np.exp(shifted)
+    return exp / exp.sum()
+
+# Log-probabilities used as logits: softmax(log(p)) = p.
+p_first = softmax(np.log([0.60, 0.40]))       # A, B
+p_after_a = softmax(np.log([0.51, 0.49]))     # x, y
+p_after_b = softmax(np.log([0.99, 0.01]))     # z, w
+
+sequence_scores = {
+    ("A", "x"): p_first[0] * p_after_a[0],
+    ("A", "y"): p_first[0] * p_after_a[1],
+    ("B", "z"): p_first[1] * p_after_b[0],
+    ("B", "w"): p_first[1] * p_after_b[1],
+}
+greedy = (
+    ("A", "B")[int(np.argmax(p_first))],
+    ("x", "y")[int(np.argmax(p_after_a))]
+    if np.argmax(p_first) == 0
+    else ("z", "w")[int(np.argmax(p_after_b))],
+)
+best_sequence = max(sequence_scores, key=sequence_scores.get)
+
+print("greedy:", greedy, sequence_scores[greedy])  # ('A', 'x'), 0.306
+print("best:  ", best_sequence, sequence_scores[best_sequence])  # ('B', 'z'), 0.396
+```
+
+This example is exhaustive because the tree contains only four sequences of fixed length two. For a longer horizon or a large vocabulary, exhaustive enumeration quickly becomes expensive; beam search then explores a subset of prefixes and remains an approximate search method. With variable-length sequences, stopping rules and any length normalization also affect the score being compared.
+
 **Beam search** retains several candidate prefixes and expands the best-scoring continuations according to an accumulated score. It performs approximate search in sequence space; it is not merely an independent argmax at each position. It is useful in some constrained problems (translation, transcription, structured outputs), but likelihood maximization can produce short, generic, or repetitive open-ended text.
 
 Holtzman et al. show that maximization methods, including beam search in their open-ended generation experiments, can degenerate despite high local likelihood. This does not mean beam search is always poor: task, score, constraints, and evaluation protocol determine its relevance.
