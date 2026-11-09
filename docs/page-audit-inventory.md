@@ -1367,3 +1367,16 @@ A standard-library Python snippet in each language page computes AP and this two
 - Local implementation: `src/llm_lab/foundations/decoding_filters.py`; tests: `tests/unit/test_decoding_filters.py`.
 
 **Validation boundary.** The top-k/top-p code and tests were inspected at source level in this pass; no new local test run is claimed. PR CI and Quarto render are required for this documentation change. This does not close the outstanding mobile/dark-theme, screen-reader or independent learner-evidence tasks in #84/#584/#447.
+
+
+## 2026-11-09: PyTorch cross-entropy API example (FR/EN)
+
+**Scope.** Add one bounded, self-contained PyTorch example to the bilingual cross-entropy lessons, complementing rather than replacing the project's NumPy reference.
+
+**Teaching contract.** The snippet uses logits `(B,T,V)` and integer targets `(B,T)` already aligned to the prediction positions; it flattens `(B,T)` to the batch axis required by `CrossEntropyLoss`. It shows per-position losses with `reduction='none'`, a valid-target mean with `ignore_index=-100`, agreement with an explicit `log_softmax`/gather calculation, and the numerical change caused by incorrectly applying softmax before the loss API. It explicitly does not implement autoregressive shifting, attention masks, or a training loop.
+
+**Execution.** The exact example was executed locally with PyTorch 2.10.0+cpu. Per-token losses were `[0.169846..., 1.551444..., 0.0]`; mean loss and manual calculation both equalled `0.860645...`; applying softmax first yielded `0.946560...`. All `torch.testing.assert_close` assertions and the negative-control assertion passed.
+
+**Boundaries.** This is a documentation example, not a new runtime dependency or package implementation. The existing maintained NumPy reference remains limited to `(B,C)` row-wise mean loss; the PyTorch snippet demonstrates sequence-shaped API adaptation and ignored targets. It assumes the caller has already aligned labels and logits.
+
+**Sources.** PyTorch `CrossEntropyLoss` API: https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html ; PyTorch `LogSoftmax`: https://docs.pytorch.org/docs/stable/generated/torch.nn.LogSoftmax.html.
