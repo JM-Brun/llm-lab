@@ -290,20 +290,21 @@ Revue source FR/EN et contrôle des frontières éditoriales effectués. Rendu n
 Revue source FR/EN et cohérence conceptuelle effectuées. Les vérifications de rendu, d'accessibilité et d'apprentissage restent ouvertes.
 
 
+
 ## 12. Passe E — revue du groupe « exemples → objectif → gradients → apprentissage » (2026-11-09)
 
 ### Pages relues en français et en anglais
 
-- `training-examples` : construction de fenêtres entrée-cible décalées, teacher forcing comme conditionnement sur le préfixe observé, stride, packing, frontières documentaires, padding, masques et formes `[B,L]` / `[B,L,V]`.
-- `loss` : agrégation des pénalités par token valide, conventions de réduction, masquage des cibles, perplexité et limites d'interprétation des courbes.
-- `gradients` : dérivée de la cross-entropie par rapport aux logits, règle de chaîne jusqu'aux paramètres, rétropropagation, mise à jour SGD élémentaire et vérification par différences finies.
-- G8 dans `docs/learning-path.md` et sa spécification [#656](https://github.com/JM-Brun/llm-lab/issues/656) : contrat d'implémentation attendu et limites de la référence publique actuelle.
+- \`training-examples\` : construction de fenêtres entrée-cible décalées, teacher forcing comme conditionnement sur le préfixe observé, stride, packing, frontières documentaires, padding, masques et formes \`[B,L]\` / \`[B,L,V]\`.
+- \`loss\` : agrégation des pénalités par token valide, conventions de réduction, masquage des cibles, perplexité et limites d'interprétation des courbes.
+- \`gradients\` : dérivée de la cross-entropie par rapport aux logits, règle de chaîne jusqu'aux paramètres, rétropropagation, mise à jour SGD élémentaire et vérification par différences finies.
+- G8 dans \`docs/learning-path.md\` et sa spécification [#656](https://github.com/JM-Brun/llm-lab/issues/656) : contrat d'implémentation attendu et limites de la référence publique actuelle.
 
 ### Décisions et frontières confirmées
 
-1. **Construction des exemples (Build/G2) :** `training-examples` est la page propriétaire du décalage entrée-cible et du teacher forcing. Ce dernier est correctement défini comme une stratégie de conditionnement sur le préfixe de référence ; ce n'est ni la loss, ni l'optimiseur, ni une mise à jour des paramètres.
-2. **Objectif (Understand) :** `loss` prend le relais pour définir le scalaire obtenu après agrégation des pertes par token. Elle distingue correctement masque de visibilité et masque de contribution à l'objectif, ainsi que moyenne par token valide et autres réductions.
-3. **Dérivation (Understand) :** `gradients` relie la loss aux logits puis aux paramètres par la règle de chaîne. La formule (p_i-\mathbb{1}[i=y]) est locale aux logits ; elle ne constitue pas le backward du GPT complet.
+1. **Construction des exemples (Build/G2) :** \`training-examples\` est la page propriétaire du décalage entrée-cible et du teacher forcing. Ce dernier est correctement défini comme une stratégie de conditionnement sur le préfixe de référence ; ce n'est ni la loss, ni l'optimiseur, ni une mise à jour des paramètres.
+2. **Objectif (Understand) :** \`loss\` prend le relais pour définir le scalaire obtenu après agrégation des pertes par token. Elle distingue correctement masque de visibilité et masque de contribution à l'objectif, ainsi que moyenne par token valide et autres réductions.
+3. **Dérivation (Understand) :** \`gradients\` relie la loss aux logits puis aux paramètres par la règle de chaîne. La formule $p_i-\mathbb{1}[i=y]$ est locale aux logits ; elle ne constitue pas le backward du GPT complet.
 4. **Implémentation (Build/G8) :** le code public fournit actuellement les fenêtres décalées, la cross-entropie moyenne et son gradient par rapport aux logits, ainsi qu'un forward GPT NumPy/float64. Il ne fournit pas encore le backward à travers les opérations et les paramètres du GPT, un optimiseur, une boucle d'entraînement, un runner de validation ou un checkpoint.
 5. **Gate G8 :** la spécification #656 maintient une revue préalable des acquis comme condition d'entrée. Les audits de sources Wolfe et Raschka enrichissent les choix de conception, mais ne lèvent pas cette condition et ne justifient pas de commencer l'implémentation.
 6. **Pas de duplication :** les pages existantes couvrent déjà les explications conceptuelles et les contrôles formatifs nécessaires. Aucun nouveau chapitre teacher forcing, aucune nouvelle fiche loss/gradient et aucun nouveau jalon ne sont justifiés par cette passe.
@@ -312,13 +313,23 @@ Revue source FR/EN et cohérence conceptuelle effectuées. Les vérifications de
 
 La relation pédagogique peut se lire :
 
-`corpus tokenisé → exemples entrée-cible → forward GPT → logits → cross-entropy par cible → loss agrégée → gradient des logits → backward à travers les paramètres → mise à jour`
+\[
+\text{Corpus tokenisé}
+\rightarrow \text{Exemples entrée-cible}
+\rightarrow \text{Forward GPT}
+\rightarrow \text{Logits}
+\rightarrow \text{Cross-entropy par cible}
+\rightarrow \text{Loss agrégée}
+\rightarrow \text{Gradient des logits}
+\rightarrow \text{Backward à travers les paramètres}
+\rightarrow \text{Mise à jour}
+\]
 
 Cette représentation décrit les dépendances de calcul, pas une séquence de lecture imposant de maîtriser tout G8 avant de comprendre l'inférence.
 
-- `training-examples` fournit les entrées et cibles ; le forward produit des logits par position ; la loss compare ces logits aux cibles alignées.
+- \`training-examples\` fournit les entrées et cibles ; le forward produit des logits par position ; la loss compare ces logits aux cibles alignées.
 - Le masque causal contrôle les informations visibles pendant le forward ; le masque de perte contrôle les cibles supervisées. Une cible ignorée peut malgré tout fournir une représentation utile à un autre calcul autorisé : une dérivée nulle sur ses propres logits ne coupe pas nécessairement tous les chemins du graphe.
-- Le gradient de la loss par rapport aux logits est disponible dans `losses.py`. La règle de chaîne doit encore le propager à travers les opérations du GPT pour obtenir les gradients des paramètres.
+- Le gradient de la loss par rapport aux logits est disponible dans \`losses.py\`. La règle de chaîne doit encore le propager à travers les opérations du GPT pour obtenir les gradients des paramètres.
 - L'optimiseur transforme ces gradients en mises à jour ; il n'est ni la rétropropagation ni la loss.
 - La validation mesure le comportement sur des données tenues à l'écart de l'optimisation ; elle ne remplace ni les tests de gradients ni la vérification de la bonne construction des exemples.
 - Le checkpoint doit permettre de transférer les paramètres effectivement entraînés vers la boucle de génération. Il ne peut être revendiqué avant un test de sauvegarde, rechargement et génération.
@@ -326,7 +337,7 @@ Cette représentation décrit les dépendances de calcul, pas une séquence de l
 ### Décisions éditoriales
 
 - **Conserver** les trois pages à leur niveau actuel : le contraste Understand/Build est utile et cohérent.
-- **Ne pas déplacer** teacher forcing vers `loss` ou `gradients` : son propriétaire est la construction des exemples et son articulation avec l'inférence.
+- **Ne pas déplacer** teacher forcing vers \`loss\` ou \`gradients\` : son propriétaire est la construction des exemples et son articulation avec l'inférence.
 - **Ne pas transformer** la chaîne ci-dessus en nouveau parcours linéaire ou en nouvelle ontologie ; elle complète le graphe computationnel existant.
 - **Maintenir** les détails d'optimiseur et de vérification numérique dans les approfondissements conceptuels tant que G8 n'a pas franchi sa gate.
 - **Déférer** toute nouvelle leçon ou modification de code à la levée explicite du prérequis G8 et à une lacune démontrée.
