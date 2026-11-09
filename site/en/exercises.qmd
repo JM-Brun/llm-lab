@@ -1402,7 +1402,7 @@ A prompt contains the token IDs $(A,B,C)$. Assume a causal Transformer with KV c
 1. During prefill, how many prompt positions are processed?
 2. Which position's logits are used to select the first generated token $D$?
 3. To predict the following token $E$, which token is newly supplied during incremental decode?
-4. Why is prefill not teacher forcing?
+4. Why is prefill not the same operation as teacher forcing?
 5. Are the model parameters updated during these inference phases?
 
 <details>
