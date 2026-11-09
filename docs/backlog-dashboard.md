@@ -14,7 +14,7 @@
 - [P3 — deferred](https://github.com/JM-Brun/llm-lab/issues?q=is%3Aissue+state%3Aopen+label%3AP3)
 - [Issues needing attention / unclassified](https://github.com/JM-Brun/llm-lab/issues?q=is%3Aissue+state%3Aopen+-label%3AP0+-label%3AP1+-label%3AP2+-label%3AP3)
 
-Live snapshot 2026-11-09: **62 open issues**; priority labels P0=0, P1=6, P2=49, P3=7; **0 unclassified**. There is one open PR: [#760](https://github.com/JM-Brun/llm-lab/pull/760), currently diverged from `main` and not mergeable. The dated handoff linked above is the current ordered plan; older sections and snapshots are historical unless refreshed.
+Live snapshot 2026-11-09: **62 open issues**; priority labels P0=0, P1=6, P2=49, P3=7; **0 unclassified**. The pre-existing content PR [#760](https://github.com/JM-Brun/llm-lab/pull/760) is diverged from `main` and not mergeable; this dashboard/handoff refresh is proposed in [#778](https://github.com/JM-Brun/llm-lab/pull/778). The dated handoff linked above is the current ordered plan; older sections and snapshots are historical unless refreshed.
 
 ## Historical handoff — PR reconciliation (2026-11-04; superseded by the current handoff above)
 
@@ -52,7 +52,7 @@ Do not infer that an entire issue is blocked when only one component is waiting 
 
 ## Now — active
 
-**Current active slice: reconcile [PR #760](https://github.com/JM-Brun/llm-lab/pull/760) against current `main`.** It is the only open PR, but GitHub reports `mergeable_state=dirty`; its branch is 31 commits ahead and 3 behind current main. Earlier-head CI/browser success is not evidence for the current head. Rebase or perform a three-way reconciliation, preserve already-merged #767/#777 changes, then rerun and inspect checks on the new head.
+**Current active slice: reconcile [PR #760](https://github.com/JM-Brun/llm-lab/pull/760) against current `main`.** It is the only pre-existing content PR (the other open PR, #778, is this documentation handoff), but GitHub reports `mergeable_state=dirty`; its branch is 31 commits ahead and 3 behind current main. Earlier-head CI/browser success is not evidence for the current head. Rebase or perform a three-way reconciliation, preserve already-merged #767/#777 changes, then rerun and inspect checks on the new head.
 
 There is deliberately no P0 issue. Do not start another implementation or source-ingestion slice while this PR's current-head status is unresolved.
 
