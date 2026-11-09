@@ -30,7 +30,7 @@ In an autoregressive LLM, entropy describes how spread out the predicted next-to
 - **Predictive entropy:** $H(p)=-\sum_v p(v)\log p(v)$ summarizes the spread of the entire next-token distribution for a given prefix.
 - **Observed surprise:** $-\log p(x_t\mid x_{<t})$ concerns the token that was actually observed; it is not the entropy of the distribution.
 - **Bounds:** for a finite vocabulary of size $V$, $0\leq H(p)\leq\log V$ nats (natural logarithm).
-- **Interpretation:** low entropy means neither truth nor calibration; tokenizer, context, and temperature affect the quantity being measured.
+- **Interpretation:** low entropy guarantees neither factual correctness nor calibration; tokenizer, context, and temperature affect the quantity being measured.
 
 **Check yourself:** can you distinguish uncertainty before observing a token from surprise after observing a target?
 :::
