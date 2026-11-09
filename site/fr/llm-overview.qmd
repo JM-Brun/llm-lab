@@ -53,7 +53,7 @@ Quelques termes suffisent pour suivre ce calcul :
 - **Contexte :** les tokens disponibles pour calculer la suite. En génération, il contient le prompt puis les tokens déjà produits ; voir [génération](generation.qmd).
 - **Paramètres :** les valeurs apprises — poids et biais notamment — qui déterminent le calcul du réseau. Ils restent fixes pendant l'inférence ordinaire ; voir la [configuration d'un petit GPT](gpt-config-walkthrough.qmd).
 
-Pour un GPT, la probabilité d'une séquence se décompose en probabilités conditionnelles successives : la [formalisation mathématique du langage](language-modeling-math.qmd) présente cette factorisation. La [génération autorégressive](generation.qmd) explique comment une distribution devient une continuation, token après token.
+Pour un GPT, la probabilité d'une séquence se décompose en probabilités conditionnelles successives : la [formalisation mathématique du langage](language-modeling-math.qmd) présente cette factorisation. Les outils mathématiques mobilisés dans le cours sont regroupés dans les [fondements mathématiques](mathematical-foundations.qmd). La [génération autorégressive](generation.qmd) explique comment une distribution devient une continuation, token après token.
 
 Prédire une continuation plausible ne revient pas à vérifier qu'elle est vraie. L'objectif de prédiction ne garantit ni la factualité des sorties ni une compréhension humaine du monde ; ces limites sont examinées dans [Objectif d'entraînement : garanties et limites](llm-limits.qmd).
 
