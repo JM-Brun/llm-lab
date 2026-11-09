@@ -187,7 +187,7 @@ items:
     disposition: integrate
     disposition_rationale: "This is the central equation and should appear in the advanced conceptual lesson, with the distribution q explicitly named."
   - id: marek-ryabinin-score-centering-off-policy-rl-2026:group-reward-centering-distinction
-    kind: distinction
+    kind: misconception
     summary: "Group-centering rewards/advantages and score centering are different operations. Group-centering makes advantages sum to zero across a prompt's rollouts; it does not guarantee that the expected advantage is zero at every prefix. Score centering instead subtracts the sampler-expected trainer score at each prefix."
     locator: {type: section, value: "alphaXiv full-text rendering, p. 5; arXiv:2609.20807", label: "Group-centered rewards versus score centering"}
     evidence:
@@ -217,7 +217,7 @@ items:
     locator: {type: section, value: "alphaXiv full-text rendering, pp. 6 and 12; official README", label: "Top-k approximation and efficiency"}
     evidence:
       kind: primary-paper-mirror-and-official-implementation
-      confidence: qualified
+      confidence: context-dependent
       scope: "Top-k data contract, tail approximation and reported overhead."
       assumptions: ["The tail approximation q_tail proportional to p_tail is adequate for the relevant distribution and regime."]
       limitations: ["Coverage and overhead are author-reported, not independently reproduced or established for other inference engines."]
@@ -259,7 +259,7 @@ items:
       pages: [fr/score-centering, en/score-centering]
       concepts: [training-inference-mismatch, score-centering]
       route_ids: []
-    disposition: integrate-with-caveats
+    disposition: integrate
     disposition_rationale: "Keep metric and seed caveats beside comparisons to prevent overclaiming generalization or universal superiority."
 
 canonical_mapping:
