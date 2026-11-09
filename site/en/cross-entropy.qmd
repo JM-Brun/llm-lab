@@ -26,6 +26,15 @@ tags: ["type:concept-lesson", "destination:understand", "topic:cross-entropy", "
 For a one-hot target, cross-entropy at one position is the negative log-probability of the observed token. During autoregressive training, this quantity is computed for allowed target positions and then aggregated using a convention that must be stated explicitly.
 :::
 
+::: {.callout-tip title="The one-minute mental model"}
+- **One target:** for a one-hot target $y$, $\ell=-\log p_\theta(y\mid x_{<t})$; assigning low probability to the observed token is costly.
+- **A target distribution:** more generally, $H(q,p)=-\sum_i q_i\log p_i$. Cross-entropy is not predictive entropy $H(p)$.
+- **A sequence:** align each logit with the correct target token, shift inputs and targets consistently, then exclude invalid positions from both numerator and denominator.
+- **A batch:** a sum, mean over valid tokens, and mean over sequences have different scales; state the convention before comparing.
+
+**Check yourself:** can you recover a token's NLL and explain why a loss mask cannot replace the causal mask?
+:::
+
 To connect this formula to training, also inspect how [input-target examples](training-examples.qmd) are built and how loss masking is applied. Do not confuse it with the [entropy of the predicted distribution](entropy.qmd): entropy describes the spread of probabilities before the next token is observed, while cross-entropy loss scores the probability assigned to the observed target (or a target distribution).
 
 ## Objective for one token
