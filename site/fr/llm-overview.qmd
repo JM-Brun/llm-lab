@@ -67,9 +67,7 @@ La figure résume la génération : le texte est tokenisé, le réseau calcule u
 
 *Les probabilités représentées sont illustratives ; elles ne proviennent pas d'un modèle particulier.*
 
-- **Entrée :** texte, tokens et identifiants — [texte et données](text-data.qmd).
-- **Calcul du réseau :** embeddings, information positionnelle et blocs Transformer — [GPT et Transformer](transformer.qmd), [embeddings](embedding-space.qmd), [information positionnelle](positional-encoding.qmd), [Q/K/V et attention](queries-keys-values.qmd), [représentations contextualisées](contextualized-representations.qmd) et [parcours d'un bloc Transformer](transformer-block-walkthrough.qmd).
-- **Sortie :** logits, distribution et sélection du token — [génération](generation.qmd).
+Pour approfondir les étapes du schéma : [texte et données](text-data.qmd) pour l'entrée, [GPT et Transformer](transformer.qmd) et le [parcours d'un bloc](transformer-block-walkthrough.qmd) pour le calcul, puis [génération](generation.qmd) pour la distribution et la sélection du token.
 
 ### Un calcul partagé, trois usages
 
@@ -82,7 +80,7 @@ Le modèle transforme le contexte en **logits** (scores associés à chaque toke
 
 Le calcul prédictif est commun ; **la suite dépend de la question posée** :
 
-- **Générer :** choisir un token selon une règle de décodage, l'ajouter au contexte, puis recommencer. Au début, le *prefill* traite le prompt fourni ; le *decode* produit ensuite les tokens un par un. Ces deux termes désignent des phases d'inférence, pas deux mécanismes d'apprentissage. Voir [génération](generation.qmd).
+- **Générer :** choisir un token selon une règle de décodage, l'ajouter au contexte, puis recommencer. Le *prefill* traite le prompt initial en une passe pour préparer la première prédiction ; le *decode* produit ensuite les tokens un par un. Ce sont les deux phases de l'inférence. Voir [génération](generation.qmd).
 - **Scorer :** regarder la probabilité que le modèle attribue au token qui suit réellement dans un texte connu. On peut ainsi mesurer à quel point le modèle attribue une forte probabilité à une séquence. Voir [vraisemblance](vraisemblance.qmd).
 - **Apprendre :** comparer les probabilités aux tokens attendus, calculer une *loss* (mesure de l'erreur de prédiction), puis ajuster les paramètres grâce aux gradients. Pour apprendre sur un texte connu, les préfixes sont construits avec les tokens réels du texte, plutôt qu'avec des tokens générés par le modèle : c'est le *teacher forcing*. Voir les [exemples d'entraînement](training-examples.qmd), la [loss](loss.qmd) et les [gradients](gradients.qmd).
 
