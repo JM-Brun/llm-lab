@@ -122,7 +122,14 @@ Prerequisites: conditional distributions, log-likelihood, gradients, sampling vs
 
 No learner-facing bilingual page or canonical graph concepts are added in this pass: first inspect existing RL, policy-gradient, PPO/GRPO, importance-sampling and training/inference pages/registries, then reuse their IDs and avoid duplicate ontology.
 
-## 9. Remaining work
+## 9. Integration completed
+
+- Added bilingual advanced lesson pages: `site/fr/score-centering.qmd` and `site/en/score-centering.qmd`.
+- Added six reusable concepts: policy gradient, score function, off-policy RL, training-inference mismatch, score centering, and importance sampling; linked them using existing relation types.
+- Added both pages to the Deepen maps and Quarto render/sidebar configuration.
+- Left the core guided route and canonical computational graph unchanged; the topic is an advanced optimization method, not a new forward-pass stage.
+
+## 10. Remaining work
 
 1. Retrieve the actual Cameron Wolfe Substack body through a functioning canonical or author-provided route; compare its added pedagogical value with the paper. Keep its record partially scanned until then.
 2. Obtain the canonical arXiv PDF and audit all derivation assumptions, appendices, complete experiment tables and figure captions against the alphaXiv rendering.
