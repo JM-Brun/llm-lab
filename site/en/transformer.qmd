@@ -160,9 +160,9 @@ Window construction, shifted inputs and targets, and training masks are detailed
 - [Harvard NLP — *The Annotated Transformer*](https://nlp.seas.harvard.edu/annotated-transformer/): an executable, annotated implementation tied to the original paper. It helps connect equations to code, but its architecture and training choices do not define all modern LLMs.
 - [PyTorch — scaled dot-product attention](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html): the API contract of one operation, not a full explanation or implementation of a Transformer.
 
-### Following a structured path
+### Optional books and courses
 
-- [Sebastian Raschka — *Build a Large Language Model (From Scratch)*](https://www.sebastianraschka.com/llms-from-scratch/) and [the source repository](https://github.com/rasbt/LLMs-from-scratch): a book-and-code path through data, attention, GPT implementation, pretraining, and fine-tuning. Use it as a substantial reference, not as the mandatory order of this site.
+- [Sebastian Raschka — *Build a Large Language Model (From Scratch)*](https://www.sebastianraschka.com/llms-from-scratch/) and [the source repository](https://github.com/rasbt/LLMs-from-scratch): a book-and-code path through data, attention, GPT implementation, pretraining, and fine-tuning. Use it as a substantial reference, not as the mandatory order of this site. These resources are optional deep dives, not steps in the main learning path.
 - [Raschka — reading recommendations](https://github.com/rasbt/LLMs-from-scratch/blob/main/ch01/reading-recommendations.md): advice on first building a big-picture understanding, then reading alongside code.
 - [DeepLearning.AI — *How Transformer LLMs Work*](https://www.deeplearning.ai/courses/how-transformer-llms-work): a compact video course by Jay Alammar and Maarten Grootendorst covering tokenization, embeddings, attention, modern block components, and selected efficiency variants. Course access and terms may change.
 
