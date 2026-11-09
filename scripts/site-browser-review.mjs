@@ -809,7 +809,7 @@ for (const testCase of cases) {
             "llm-limits.html": "guided-stage-orientation",
           }[pagePath];
           const optionalPages = new Set([
-            "unicode-text.html", "tokenizer-design-evaluation.html", "tensors.html", "rope.html",
+            "unicode-text.html", "tokenization-strategies.html", "tokenizer-design-evaluation.html", "tensors.html", "rope.html",
             "cross-attention.html", "attention-score-scaling.html", "decoding-strategies.html", "scaling-laws.html",
             "transformer-architectures.html", "llm-limits.html",
           ]);
