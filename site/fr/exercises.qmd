@@ -1408,7 +1408,7 @@ Un prompt contient les identifiants de tokens $(A,B,C)$. On suppose un Transform
 <details>
 <summary>Afficher le corrigé</summary>
 
-Le prefill traite les trois positions du prompt en un passage séquentiel. Les logits de la dernière position du prompt (celle de $C$) définissent la distribution à partir de laquelle $D$ est sélectionné. L'étape de decode suivante fournit $D$ comme nouveau token pour prédire $E$. Il ne s'agit pas de teacher forcing : $D$ a été sélectionné par le modèle, il ne provient pas d'une cible de référence observée. Les paramètres restent fixes pendant le prefill et le decode.
+Le prefill traite les trois positions du prompt en un passage séquentiel et remplit le cache KV. Les logits de la dernière position du prompt (celle de $C$) définissent la distribution à partir de laquelle $D$ est sélectionné. L'étape de decode suivante fournit $D$ comme nouveau token et réutilise les clés et valeurs en cache pour prédire $E$. Il ne s'agit pas de teacher forcing : $D$ a été sélectionné par le modèle, il ne provient pas d'une cible de référence observée. Les paramètres restent fixes pendant le prefill et le decode.
 
 </details>
 
