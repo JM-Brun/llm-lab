@@ -1142,3 +1142,41 @@ The exercise IDs and prerequisite descriptions are aligned in the inspected FR/E
 
 The inspected page scopes and headings support their optional/deepening roles in both languages. No optional resource needs to be inserted into the core guided route as a mandatory step. This check does not certify every external citation, equation, figure or rendered layout on these pages; those require their own bounded content/render reviews.
 
+## 2026-11-09: Transformer block and attention — scientific and exercise spot-check
+
+**Scope.** Read the FR/EN source bodies for the Transformer overview, Q/K/V, scaled dot-product attention, causal masking, and the reference pre-LN block walkthrough. Re-derived the displayed one-head attention example, the Q/K/V projection-gradient identities, and the published multi-head exercise calculations AT-A–AT-C. Checked the causal-mask workbench logic against its stated invariant. This remains a bounded source/math audit, not a full certification of every Transformer variant or a rendered accessibility review.
+
+### Conceptual dependency chain
+
+The inspected pages support a coherent division of responsibilities:
+
+1. **Transformer overview:** locates attention, the position-wise MLP, residual paths, normalization, depth/width and the output logits inside the GPT computation. It deliberately does not reteach tokenization or decoding.
+2. **Q/K/V:** starts from the current attention input (X), which is not necessarily a raw embedding: it is the hidden state at that block. It defines learned projections and distinguishes routing (Q/K) from transmitted content (V).
+3. **Scaled dot-product attention:** calculates (QK^T), scales by the key width, applies an optional additive mask before softmax, and aggregates V. It keeps scores, normalized weights and output vectors distinct.
+4. **Causal masking:** specializes the allowed-position relation to (j\leq i), explains why the diagonal is valid under shifted next-token targets, and distinguishes causal, padding, document-boundary and loss masks.
+5. **Reference block walkthrough:** makes one concrete GPT-2-like pre-LN implementation inspectable without presenting it as a universal Transformer specification.
+
+The page sequence is pedagogically defensible: Q/K/V establishes the inputs and their provenance; the attention page performs the calculation with a generic optional mask; the causal-mask page then explains the autoregressive restriction. The attention equation already includes (M), so the next page is a specialization of that slot, not a new operation appended after softmax.
+
+### Numerical and algebraic checks
+
+- **Single-head worked example:** (q=(1,0)), (k_1=(1,0)), (k_2=(0,1)), (d_k=2) gives scaled scores ((1/\sqrt2,0)), weights approximately ((0.6698,0.3302)), and output approximately ((6.698,6.604)). The displayed rounded values ((0.67,0.33)) and ((6.7,6.6)) are consistent.
+- **Attention self-check:** scores ((2,0)) with (d_k=4) become ((1,0)), giving softmax approximately ((0.731,0.269)). Correct.
+- **Projection gradients:** for (Q=XW_Q), (K=XW_K), (V=XW_V), with fixed (X), no bias and the stated matrix orientation, (partial\mathcal L/\partial W_Q=X^T\partial\mathcal L/\partial Q), and analogously for K and V. The page correctly qualifies this as a local linear-projection identity inside the full network.
+- **AT-A:** the two head softmaxes are ((3/4,1/4)) and ((1/4,3/4)); their outputs and concatenated vector are correct. (W_O=I) is correctly identified as a special case that does not mix head channels.
+- **AT-B:** all batch/sequence/head shapes and the (1/\sqrt{d_{head}}) scale are consistent with the reference implementation, where the combined (d\times d) projections are sliced into heads.
+- **AT-C:** the claim classifications and three controlled interventions are consistent with that same reference parameterization. In particular, changing (H) while keeping the packed projection matrices fixed changes the slice width and scaling, not the parameter count or reassembled ((B,T,d)) shape.
+- **Causal-mask workbench:** for each query row the diagonal remains allowed, so the row maximum used by the stable softmax is finite. Modifying future K/V positions cannot affect earlier outputs in the isolated head calculation. The page correctly says this is a test of the example, not a proof that a complete model has no other leakage path.
+
+### Targeted editorial corrections
+
+1. The Build walkthrough described pre-LN as simply “more stable” than post-LN when stacking many blocks. Replaced that categorical comparison in FR/EN with a scoped statement: Xiong et al. (2020) analyze better-behaved gradients at initialization for pre-LN in their theoretical/experimental setting, which can reduce warm-up dependence; this is not a universal guarantee. Added the primary PMLR citation.
+2. The Q/K/V page said the gradient to Q/K passes through “their normalization”. Replaced this ambiguous phrase in FR/EN with “the softmax that normalizes them”, making clear that it means score normalization rather than LayerNorm.
+
+### Remaining checks
+
+- This pass does not certify the full implementation against every modern attention family (MQA/GQA, grouped or latent attention, sliding-window, sparse, multi-latent, etc.); those remain architecture-specific deep dives.
+- The full multi-head causal-mask interaction and padding-query behavior deserve a dedicated bounded exercise/test review before being treated as covered.
+- The main conceptual pages and the Build walkthrough have distinct purposes and should remain distinct. Do not fold code-level initialization details into the core learning route.
+- Rendered diagrams, equation layout, keyboard behavior and screen-reader output still require the existing browser/manual review workflow. No new workflow or registry was added.
+
