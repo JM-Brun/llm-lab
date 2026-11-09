@@ -83,6 +83,8 @@ Le calcul du modèle transforme le contexte en **logits** (scores non normalisé
 | **Scoring d'une cible observée** | On calcule la probabilité d'un token connu à partir de son préfixe observé, puis la vraisemblance ou la NLL de la séquence | Fixes |
 | **Apprentissage** | On fournit les préfixes de la séquence de référence (*teacher forcing*), compare les distributions aux tokens cibles, calcule la *loss* et ses gradients, puis met à jour les paramètres | Modifiés lors de la mise à jour |
 
+Ces trois usages partagent le même calcul prédictif, mais ne forment pas une seule boucle d'exécution : la génération réinjecte un token sélectionné, le scoring évalue une cible observée et l'apprentissage met à jour les paramètres.
+
 Le *prefill* et le *decode* sont deux phases d'exécution de l'inférence. Le *teacher forcing* décrit le conditionnement sur les tokens de référence pendant le scoring ou l'apprentissage : ce n'est pas une phase de génération. Pour scorer ou entraîner une séquence connue, un passage avant produit une distribution à chaque position. Chaque distribution est alignée sur le token cible suivant ; le masque causal empêche le modèle d'accéder aux tokens futurs. Les [exemples d'entraînement](training-examples.qmd), la [loss](loss.qmd) et les [gradients](gradients.qmd) détaillent la branche apprentissage ; la [vraisemblance](vraisemblance.qmd) détaille le scoring.
 
 Le **scoring** d'une cible et l'**évaluation** d'un modèle ne sont pas synonymes. Le scoring calcule des probabilités pour des cibles observées ; l'évaluation agrège des scores ou des métriques sur un protocole et des données définis. Elle peut aussi porter sur des sorties générées. La vue suivante illustre une évaluation fondée sur le scoring, sans mise à jour des paramètres.
