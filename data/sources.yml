@@ -2765,6 +2765,7 @@ sources:
         inspected_scope:
           - "Text adaptation by Justin Sun: lesson sequence, embedded retrieval questions and mathematical notation"
           - "Video description and published timestamps"
+          - "Public Manim scene source for the lesson: scene sequence, Q/K projection visuals, attention matrix, masking, value factorization, cross-attention, multi-head output matrix and parallelizability"
           - "Column-vector convention, value-map factorization, multi-head output projection and parallel next-token training explanation"
         limitations:
           - "The full audiovisual video was not independently watched; animation timing and visual details remain unreviewed."
