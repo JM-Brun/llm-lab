@@ -19,13 +19,16 @@ The practical GPT construction route remains the separate [Build path](../site/f
 
 The learner-facing course and the implementation dependency graph answer different questions. **The conceptual course starts with what a model does; the build route follows the dependencies needed to construct one.** Do not force these into one identical chapter order.
 
-1. **Orient:** what the broad term LLM covers, where GPT fits, and how architecture differs from objective and task. Use the landing page's interactive process map to distinguish inference, learning and evaluation; trace text → tokens/IDs → embeddings → positional information → Transformer → contextualized states → logits → probabilities → selection. Open the dedicated architecture comparison only when that distinction needs detail. Keep optional weight adaptation distinct from prompting/RAG at inference.
-2. **Preview inference:** follow one complete request through input, model computation, next-token prediction, selection and repeated generation. At this stage, treat the model as a system with fixed parameters; do not require training theory.
-3. **Unpack the input:** raw text, tokenization, vocabulary, token IDs and the prompt/context supplied at inference. Unicode/UTF-8 representation and normalization are optional technical depth, not a prerequisite in the linear route.
-4. **Unpack representations and computation:** embeddings, positional information, contextual states, Transformer blocks, attention and causal masking.
-5. **Unpack prediction and decoding:** output logits, probabilities, selection strategies, stopping and inference-time efficiency.
-6. **Explain learning:** the next-token prediction objective, sequence likelihood, cross-entropy/loss, gradients, backpropagation, optimization, pretraining and validation. Introduce the parameter-update loop only after the inference path is understood; do not turn corpus engineering or batch construction into prerequisites for this conceptual explanation.
-7. **Explain adaptation and use:** pretrained checkpoints, supervised fine-tuning, instruction tuning, prompting and retrieval-augmented generation; keep these distinct.
+1. **Orient:** what the broad term LLM covers, where GPT fits, and how architecture differs from objective and task. Use the landing page's system map to distinguish inference, learning and evaluation.
+2. **Preview inference:** follow one complete request through input, model computation, next-token prediction, selection and repeated generation. Treat the model as a system with fixed parameters; do not require training theory.
+3. **Unpack the input:** raw text, tokenization, vocabulary, token IDs and the prompt/context supplied at inference. Unicode/UTF-8 representation and normalization are optional technical depth, not a prerequisite in the core route.
+4. **Understand representations:** embeddings, positional information and the distinction between initial and contextualized hidden states.
+5. **Understand Transformer computation:** Transformer blocks, Q/K/V projections, attention, causal masking, MLP, residual connections and normalization.
+6. **Understand prediction and inference:** final hidden states, vocabulary logits, probabilities, decoding/selection strategies, stopping and the autoregressive loop.
+7. **Score observed targets:** target probabilities, sequence likelihood, log-likelihood, negative log-likelihood and cross-entropy; distinguish scoring/evaluation from generation and parameter updates.
+8. **Explain learning:** the next-token objective, loss aggregation, gradients, backpropagation, optimization, pretraining and validation. Explain teacher forcing as the use of the observed prefix; do not turn corpus engineering or batch construction into prerequisites for this conceptual explanation.
+
+**Optional extension — adaptation and use:** pretrained checkpoints, supervised fine-tuning, instruction tuning, prompting and retrieval-augmented generation. Keep context-only methods, parameter updates and model use distinct; this extension is discoverable from the core route but is not an additional mandatory stage in the eight-stage guided route.
 
 ### Reader-facing sequence and operational branches
 
