@@ -26,13 +26,15 @@ tags: ["type:concept-lesson", "destination:understand", "topic:tokenization-stra
 Un tokenizer est un choix de représentation et d'ingénierie. Il doit couvrir les entrées attendues et maîtriser la taille du vocabulaire et le coût en séquence. Aucun découpage — mot, caractère, octet ou sous-mot — n'est optimal sur tous les corpus et toutes les tâches.
 :::
 
-## À retenir
-
+::: {.callout-tip title="L'idée à retenir en une minute"}
 - **Granularité** : mot, caractère, octet ou fragment appris.
 - **Algorithme** : BPE, WordPiece, unigramme et variantes ne sont pas interchangeables.
 - **Pipeline** : normalisation, pré-tokenisation, vocabulaire et tokens spéciaux affectent le résultat.
 - **Compatibilité** : les IDs n'ont de sens opérationnel qu'avec le tokenizer et les poids associés.
 - **Évaluation** : moins de tokens peut réduire le coût, mais ne prouve pas une meilleure qualité en aval.
+
+**Question de contrôle :** deux tokenizers réduisent le nombre de tokens d'un même texte ; pourquoi cela ne suffit-il pas à conclure que l'un donne un meilleur modèle en aval ?
+:::
 
 ## 1. Carte conceptuelle
 
