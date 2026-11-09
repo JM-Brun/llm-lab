@@ -2,12 +2,13 @@ schema_version: 1
 source_id: marek-ryabinin-score-centering-off-policy-rl-2026
 scan:
   accessed_at: "2026-11-09"
-  retrieval_method: indexed-fulltext-mirror-and-official-repository
+  retrieval_method: canonical-arxiv-pdf-and-official-repository
   author_text:
-    status: partial
-    coverage: "arXiv abstract plus alphaXiv full-text rendering, including method and selected experiment/implementation sections pp. 1, 5–9 and 12; canonical PDF and all appendices were not independently audited."
+    status: complete
+    coverage: "Canonical arXiv v1 PDF (16 pages) inspected end-to-end, including main derivation, all appendices A.1–A.4 and B.1–B.3, both experimental tables and all five figures; the official repository README and implementation were cross-checked separately."
     notes:
-      - "The Cameron R. Wolfe Substack article is a separate source record. Its body was not retrievable and no claims below are attributed to Wolfe."
+      - "No formal theorem, lemma, proposition, corollary, assumption block or proof is stated. The central result is an algebraic per-prefix decomposition (Eqs. 3–5); its regularity requirements follow from normalized differentiable finite-vocabulary categorical probabilities and well-defined expectations."
+      - "The Cameron R. Wolfe Substack article is a separate source record. Its body remains unavailable; no claims below are attributed to Wolfe."
   figures_media:
     status: not-inspected
     coverage: null
@@ -32,8 +33,8 @@ scan:
     coverage: "Canonical paper and official repository links retained."
     notes: ["No text or figures reproduced; reuse licence was not independently verified."]
   unresolved_questions:
-    - "What are the exact assumptions and derivation steps for the drift decomposition and score-centering correction in the full paper?"
-    - "How do the main results vary across quantization, sampler staleness, model scale and reward settings in the complete experimental tables?"
+    - "Which claims in the Cameron Wolfe article add interpretation or pedagogical value beyond the paper and official repository?"
+    - "Do current framework integrations preserve the paper's estimator and masking semantics?"
     - "Which claims in the Cameron Wolfe article add interpretation or pedagogical value beyond the paper and official repository?"
     - "Do current framework integrations preserve the paper's estimator and masking semantics?"
 items:
@@ -65,16 +66,16 @@ items:
   - id: marek-ryabinin-score-centering-off-policy-rl-2026:score-function-zero-mean
     kind: derivation
     summary: "For a policy sampled from its own distribution, the expected score function is zero: E_{a~p_theta(.|x)}[∇_theta log p_theta(a|x)] = 0, assuming the usual regularity conditions that permit exchanging differentiation and integration/summation. Under a different sampler distribution q, the trainer score ∇_theta log p_theta evaluated on q-sampled actions need not have zero expectation."
-    locator: {type: section, value: "arXiv abstract and official project description; derivation signposted in the paper", label: "Score-function centering principle"}
+    locator: {type: section, value: "Canonical arXiv PDF, §4, pp. 3–5, Eqs. (3)–(5)", label: "Score-function centering principle"}
     evidence:
       kind: mathematical-property-cross-checked
       confidence: well-supported
       scope: "The zero-expected-score property and its relevance to off-policy mismatch."
       assumptions: ["p_theta is a normalized differentiable categorical policy over the action/token support.", "Differentiation and summation may be interchanged."]
-      limitations: ["The canonical PDF and full appendix assumptions were not independently checked; the full-text mirror supplies the per-prefix equation and residual covariance interpretation."]
+      limitations: ["The manuscript gives an algebraic derivation rather than a formal theorem with a separately enumerated assumption list; regularity follows from the normalized finite categorical policy and well-defined expectations."]
     technical_assessment:
       status: qualified
-      rationale: "The identity follows directly from normalization of p_theta; the paper-specific estimator and correction are not fully audited in this pass."
+      rationale: "The canonical PDF derives the per-prefix identity and distinguishes the sampler-distribution residual covariance from the trainer-distribution covariance; no stronger theorem claim is made."
       corroborating_sources: ["https://arxiv.org/abs/2609.20807", "https://github.com/martin-marek/score-centering"]
     classification:
       primary_theme: probabilistic-foundations-training
@@ -96,7 +97,7 @@ items:
       confidence: well-supported
       scope: "High-level purpose and mechanism of score centering."
       assumptions: ["The sampler's relevant probability information is available or estimated."]
-      limitations: ["The implementation uses detached sampler-derived centering weights/residuals; top-k tail mass is modeled as proportional to the trainer tail. The canonical PDF and complete tests were not independently audited."]
+      limitations: ["The top-k implementation approximates the sampler tail using a rescaled trainer tail; the CPU test run is qualified because the available JAX version is below the upstream README's declared minimum. Large-scale experiments were not reproduced."]
     technical_assessment:
       status: qualified
       rationale: "The correction's purpose is explicit in the paper abstract and official repository; implementation-level derivation remains pending."
@@ -140,13 +141,13 @@ items:
   - id: marek-ryabinin-score-centering-off-policy-rl-2026:top-k-estimator
     kind: implementation-pattern
     summary: "The official reference implementation documents a practical estimator that stores sampler top-k log-probabilities and token IDs, while modelling the remaining vocabulary tail using the trainer distribution rescaled to match the sampler's tail mass. It documents full-vocabulary log-probabilities as the exact-centering alternative."
-    locator: {type: section, value: "Official repository README, Score Centering loss function", label: "Top-k sampler probability approximation"}
+    locator: {type: section, value: "Canonical arXiv PDF, §4.1 and Appendix A.1, pp. 5 and 11–12, Eqs. (6)–(8)", label: "Top-k sampler probability approximation"}
     evidence:
       kind: reference-implementation-contract
       confidence: established
       scope: "Data contract and approximation described by the official implementation."
       assumptions: ["Sampler top-k IDs and log-probabilities are available; sampled-token log-probability is retained even when the sampled token is outside the top-k head."]
-      limitations: ["Source code was inspected but tests were not run; numerical behavior and approximation error were not independently reproduced."]
+      limitations: ["The upstream CPU test module passed 7 cases in the available environment, but JAX 0.9.0.1 is below the README-declared jax>=0.11.1. Paper-scale experiments and approximation behavior outside tested settings were not reproduced."]
     technical_assessment:
       status: qualified
       rationale: "The README specifies the estimator contract, including tail handling; this record does not claim independent reproduction."
@@ -166,17 +167,17 @@ items:
   - id: marek-ryabinin-score-centering-off-policy-rl-2026:score-centering-equation
     kind: derivation
     summary: "At prefix h, let p_theta(.|h) be the trainer distribution and q(.|h) the rollout sampler distribution. For token v, the trainer score is s_v = grad_theta log p_theta(v|h), and the sampler-expected trainer score is s_bar = E_{v~q(.|h)}[s_v]. Score centering replaces s_v by s_tilde_v = s_v - s_bar. Therefore E_q[s_tilde_v|h] = 0. With a reward/advantage A, the remaining expected update is the reward-score covariance under q; it is not in general the covariance under p_theta."
-    locator: {type: section, value: "alphaXiv full-text rendering, p. 5; arXiv:2609.20807", label: "Update decomposition and score-centering equation"}
+    locator: {type: section, value: "Canonical arXiv PDF, §4, pp. 4–5, Eqs. (3)–(5)", label: "Update decomposition and score-centering equation"}
     evidence:
       kind: primary-paper-fulltext-mirror
       confidence: well-supported
       scope: "The per-prefix score-centering definition, zero sampler expectation and residual reward-score covariance described in the rendered paper text."
       assumptions: ["The sampler distribution q(.|h) and trainer distribution p_theta(.|h) are defined on the relevant token support.", "The expectation and gradient terms are well-defined."]
-      limitations: ["The alphaXiv rendering is a secondary full-text mirror; the canonical arXiv PDF was not directly fetched in this pass."]
+      limitations: ["The paper's derivation is algebraic and does not provide a separately formalized theorem/proof; the residual covariance is measured under q, not p."]
     technical_assessment:
       status: qualified
       rationale: "The method equation and interpretation are available in the full-text rendering; claims about exact theorem assumptions remain bounded by that rendering."
-      corroborating_sources: ["https://arxiv.org/abs/2609.20807", "https://www.alphaxiv.org/abs/2609.20807"]
+      corroborating_sources: ["https://arxiv.org/pdf/2609.20807v1", "https://github.com/martin-marek/score-centering"]
     classification:
       primary_theme: probabilistic-foundations-training
       secondary_themes: [inference-efficiency]
@@ -191,17 +192,17 @@ items:
   - id: marek-ryabinin-score-centering-off-policy-rl-2026:group-reward-centering-distinction
     kind: misconception
     summary: "Group-centering rewards/advantages and score centering are different operations. Group-centering makes advantages sum to zero across a prompt's rollouts; it does not guarantee that the expected advantage is zero at every prefix. Score centering instead subtracts the sampler-expected trainer score at each prefix."
-    locator: {type: section, value: "alphaXiv full-text rendering, p. 5; arXiv:2609.20807", label: "Group-centered rewards versus score centering"}
+    locator: {type: section, value: "Canonical arXiv PDF, §3–4, pp. 3–5, Eqs. (3)–(5) and footnotes 3–4", label: "Group-centered rewards versus score centering"}
     evidence:
       kind: primary-paper-fulltext-mirror
       confidence: well-supported
       scope: "Explicit distinction between reward/advantage centering and score centering."
       assumptions: []
-      limitations: ["Exact notation for group construction should be checked against the canonical PDF before reproducing the full derivation."]
+      limitations: ["Group centering is defined per prompt's rollout group; it does not imply zero expected advantage at every individual prefix."]
     technical_assessment:
       status: correct
       rationale: "The paper explicitly distinguishes the two centering operations; this is important for GRPO-oriented readers."
-      corroborating_sources: ["https://www.alphaxiv.org/abs/2609.20807"]
+      corroborating_sources: ["https://arxiv.org/pdf/2609.20807v1"]
     classification:
       primary_theme: probabilistic-foundations-training
       secondary_themes: [mathematical-tools-geometry]
@@ -216,17 +217,17 @@ items:
   - id: marek-ryabinin-score-centering-off-policy-rl-2026:topk-and-compute
     kind: implementation-pattern
     summary: "The practical approximation transmits sampler top-k log-probabilities and reconstructs the remaining tail by assuming it is proportional to the trainer distribution, scaled to match sampler tail mass. The rendering reports top-k values of 32 or 128 as close to full-vocabulary centering in tested settings; the README defaults to k=128. It reports top-128 covering more than 99.9% of sampler mass in most tested configurations and under-1% added overhead in the authors' matched-hardware setup; overhead was not measured for vLLM or SGLang."
-    locator: {type: section, value: "alphaXiv full-text rendering, pp. 6 and 12; official README", label: "Top-k approximation and efficiency"}
+    locator: {type: section, value: "Canonical arXiv PDF, §4.1 and Appendix A.1/A.4, pp. 5 and 11–13, Eqs. (6)–(8), Figure 5", label: "Top-k approximation and efficiency"}
     evidence:
       kind: primary-paper-mirror-and-official-implementation
       confidence: context-dependent
       scope: "Top-k data contract, tail approximation and reported overhead."
       assumptions: ["The tail approximation q_tail proportional to p_tail is adequate for the relevant distribution and regime."]
-      limitations: ["Coverage and overhead are author-reported, not independently reproduced or established for other inference engines."]
+      limitations: ["The paper reports top-128 sampler-mass coverage above 99.9% on average except the 30B INT8 W/A + INT4 KV setting (99.45% average, 95.8% worst batch). k=32 and k=128 match full-vocabulary centering in tested settings; this is not a guarantee outside those settings. Overhead was not measured for vLLM or SGLang."]
     technical_assessment:
       status: qualified
       rationale: "The estimator contract is corroborated by the official README; performance numbers retain their original measurement scope."
-      corroborating_sources: ["https://github.com/martin-marek/score-centering", "https://www.alphaxiv.org/abs/2609.20807"]
+      corroborating_sources: ["https://github.com/martin-marek/score-centering", "https://arxiv.org/pdf/2609.20807v1"]
     classification:
       primary_theme: probabilistic-foundations-training
       secondary_themes: [inference-efficiency]
@@ -241,17 +242,17 @@ items:
   - id: marek-ryabinin-score-centering-off-policy-rl-2026:empirical-boundaries
     kind: limitation
     summary: "In a severe Qwen3-30B-A3B-Base sampler configuration (INT8 weights/activations and INT4 KV cache), the rendering reports 30% training accuracy for score centering versus 12% for TIS, with other methods below 5%; training accuracy is mean reward on sampled rollouts, not held-out benchmark accuracy. Under milder FP8 mismatch plain policy gradient can remain stable. In Qwen3-0.6B Countdown with sampler refresh every 64 steps, score centering combined with TIS/MIS performs best in the reported staleness comparison. Seed counts vary across some experiments."
-    locator: {type: section, value: "alphaXiv full-text rendering, pp. 7-9; arXiv:2609.20807", label: "Experimental comparisons and limitations"}
+    locator: {type: section, value: "Canonical arXiv PDF, §5 and Appendix B, pp. 5–9 and 13–16, Figures 1–5 and Tables 1–2", label: "Experimental comparisons and limitations"}
     evidence:
       kind: primary-paper-fulltext-mirror
       confidence: context-dependent
       scope: "Selected headline experimental outcomes and explicit qualifications."
       assumptions: ["The paper setup, reward metric and seed counts are preserved when citing values."]
-      limitations: ["Complete tables and appendices were not independently transcribed; no result was reproduced."]
+      limitations: ["30B comparisons have unequal and selectively expanded seed counts; some baselines remain single-seed. Table 2 reports approximate total compute of 6,180 H100-hours. Figures 1, 4 and 5 show training accuracy (mean sampled-rollout reward), not held-out benchmark accuracy. No paper-scale result was reproduced."]
     technical_assessment:
       status: qualified
       rationale: "Numbers are author-reported and must not be generalized beyond tested model, task, mismatch severity and metric."
-      corroborating_sources: ["https://www.alphaxiv.org/abs/2609.20807"]
+      corroborating_sources: ["https://arxiv.org/pdf/2609.20807v1"]
     classification:
       primary_theme: probabilistic-foundations-training
       secondary_themes: [inference-efficiency]
@@ -294,4 +295,4 @@ canonical_mapping:
   route_implications:
     - "Future advanced RL/post-training path: policy gradient → score function and zero-mean identity → on-policy vs off-policy sampling → training-inference mismatch and drift → score centering → importance-sampling comparison → implementation/top-k approximation."
     - "Do not add this to the core eight-stage predictive spine or the Transformer attention path."
-  decision_summary: "The source cluster establishes a high-value advanced topic at the intersection of probabilistic policy gradients, asynchronous/off-policy LLM training and inference-engine numerics. The full-text mirror supports the per-prefix correction equation, residual covariance interpretation, distinction from group reward centering, selected experiment qualifications and top-k approximation. Canonical PDF/appendix verification and official test execution remain open. The Cameron Wolfe article itself remains partially scanned because its canonical Substack body was not retrievable; its content must not be conflated with the primary paper."
+  decision_summary: "The source cluster establishes a high-value advanced topic at the intersection of probabilistic policy gradients, asynchronous/off-policy LLM training and inference-engine numerics. The canonical arXiv PDF now supports the per-prefix correction equation, residual covariance interpretation, distinction from group reward centering, complete Appendix A/B audit, and experimental-table/seed/compute qualifications. The official CPU test module passed 7 cases, with the JAX-version compatibility caveat recorded above; no large-scale results were reproduced. The Cameron Wolfe article remains partially scanned because its canonical Substack body was not retrievable; its content must not be conflated with the primary paper."
