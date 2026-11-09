@@ -48,12 +48,12 @@ Légende :
 |---|---|---|---|---|
 | Orientation | `llm-overview` | Définir LLM/GPT/Transformer, situer le modèle pédagogique et annoncer le noyau prédictif ; conduire vers l'aperçu de génération | Le corps FR a été parcouru partiellement ; vérifier la présence d'une synthèse qui distingue architecture, objectif, paramètres et usages frères | Lecture source partielle |
 | Aperçu d'inférence | `generation` | Donner la boucle complète avec paramètres fixes ; transition vers texte/tokens sans exiger les détails internes | Le corps FR contient objectifs, rappel « une minute », boucle, prefill/decode et frontière teacher forcing ; éviter de recopier la même fiche au retour détaillé | Lecture source partielle |
-| Entrée texte | `text-data` | Texte → tokens → IDs → lookup ; distinguer prompt d'inférence et corpus d'entraînement | Le corps FR contient rappel bref et objectifs ; vérifier que le résumé distingue ID (indice) et embedding (paramètre vectoriel) | Lecture source partielle |
-| Stratégies de tokenisation | `tokenization-strategies` | Comparer unités, algorithmes et compromis ; préparer le passage des IDs aux vecteurs | Vérifier synthèse, self-check et absence de répétition avec text-data / tokenizer-design-evaluation | À lire |
+| Entrée texte | `text-data` | Texte → tokens → IDs → lookup ; distinguer prompt d'inférence et corpus d'entraînement | Rappel bref et self-check présents ; vocabulaire nuancé pour ne pas présenter tout tokenizer comme doté d'un vocabulaire appris | Revue FR/EN effectuée |
+| Stratégies de tokenisation | `tokenization-strategies` | Comparer unités, algorithmes et compromis ; préparer le passage des IDs aux vecteurs | Section « À retenir » et self-check présents ; le Deepen sur l'évaluation évite de surcharger Understand | Revue FR/EN effectuée |
 | Unicode (optionnel) | `unicode-text` | Approfondissement sur encodage, normalisation et texte ; ne pas bloquer la route principale | Une fiche n'est pas requise si une courte conclusion et des liens suffisent | À lire |
-| Embeddings | `embedding-space` | ID → ligne de matrice ; distinguer table statique, vecteur initial et états contextualisés | Rappel « une minute » et self-check repérés ; vérifier le raccord explicite à la position | Lecture source partielle |
-| Position | `positional-encoding` | Expliquer le besoin d'ordre, distinguer position explicite, RoPE et masque causal | Self-check repéré ; rappel court à ajouter seulement si la conclusion ne suffit pas | Lecture source partielle |
-| Représentations contextualisées | `contextualized-representations` | Distinguer lookup initial et états dépendant du contexte ; conduire vers le calcul du Transformer | Self-check repéré ; figure externe conservée avec provenance et réserve de droits déjà documentées | Lecture source partielle |
+| Embeddings | `embedding-space` | ID → ligne de matrice ; distinguer table statique, vecteur initial et états contextualisés | Rappel « une minute », exemple matriciel calculable et self-check présents ; transition vers position explicite | Revue FR/EN effectuée |
+| Position | `positional-encoding` | Expliquer le besoin d'ordre, distinguer position explicite, RoPE et masque causal | Ajout d'un rappel « une minute » distinguant injection absolue/relative/RoPE et visibilité causale ; self-check existant conservé | Revue FR/EN effectuée + synthèse ajoutée |
+| Représentations contextualisées | `contextualized-representations` | Distinguer lookup initial et états dépendant du contexte ; conduire vers le calcul du Transformer | Ajout d'un rappel « une minute » distinguant ID, embedding initial, position, contexte et masque d'architecture ; self-check existant conservé | Revue FR/EN effectuée + synthèse ajoutée |
 | Tenseurs (optionnel) | `tensors` | Support de formes et opérations ; ne pas en faire un prérequis général | Vérifier que la fiche sert le Build / Deepen sans interrompre Understand | À lire |
 | RoPE (optionnel) | `rope` | Approfondir la géométrie et les variantes positionnelles | Fiche de référence facultative ; vérifier les hypothèses et les conventions | À lire |
 | Vue d'ensemble Transformer | `transformer` | Replacer les opérations dans le bloc et le forward pass, jusqu'aux logits | Self-check repéré ; vérifier une synthèse du flux et la séparation Understand / Build / Deepen | Lecture source partielle |
@@ -128,3 +128,43 @@ Aucune information existante ne doit être supprimée sans cartographie de sa de
 | À venir | Relecture complète FR/EN et validation des transitions | Non réalisée |
 | À venir | Rendu navigateur et accessibilité | Non réalisé dans cet audit |
 | À venir | Validation formative avec apprenant indépendant | Non réalisée |
+
+
+## 8. Passe A — revue du groupe « texte → représentations » (2026-11-09)
+
+### Pages relues en français et en anglais
+
+- `text-data` : rôle d'orientation, chaîne texte → tokens → IDs → lookup, distinction prompt/corpus, et frontières vers les pages spécialisées.
+- `tokenization-strategies` : granularités, composants du pipeline, familles BPE/WordPiece/unigramme, exemple pas à pas, limites et séparation apprentissage du tokenizer / encodage.
+- `embedding-space` : lookup matriciel, dimensions \(V\) et \(d\), distinction Word2Vec statique / embedding initial / état contextualisé, exemple calculable et prudence géométrique.
+- `positional-encoding` : équivariance par permutation, encodages absolus, mécanismes relatifs, RoPE et distinction avec le masque causal.
+- `contextualized-representations` : même ID et même lookup initial, effets de position et du contexte, causalité du décodeur, comparaison avec les encodeurs bidirectionnels.
+
+### Décisions et modifications de cette passe
+
+1. **Pas de réécriture globale :** les pages text-data, tokenization-strategies et embedding-space ont déjà une synthèse adaptée à leur niveau et un contrôle formatif. Leur ajouter une seconde fiche aurait créé de la redondance.
+2. **Position :** ajout d'un rappel d'une minute en FR/EN. Il résume le besoin d'ordre, l'emplacement des mécanismes absolus/relatifs et le rôle distinct du masque causal.
+3. **Représentations contextualisées :** ajout d'un rappel d'une minute en FR/EN. Il fixe la distinction entre ID, embedding initial et état caché contextualisé, sans attribuer au lookup une compréhension du contexte.
+4. **Précision de vocabulaire :** dans text-data FR/EN, remplacer l'affirmation trop générale d'un « vocabulaire appris » par un vocabulaire défini, souvent appris pour les tokenizers modernes à sous-mots.
+5. **Parité linguistique :** les ajouts et la nuance terminologique ont été appliqués en parallèle en FR et EN.
+
+### Cohérence des transitions observée
+
+`text-data → tokenization-strategies → embedding-space → positional-encoding → contextualized-representations → transformer`
+
+- La première page établit les objets et renvoie aux spécialisations ; elle ne fait pas de l'apprentissage du tokenizer un prérequis à l'encodage d'un prompt.
+- La page tokenisation s'arrête avant le lookup ; l'embedding-space prend explicitement le relais avec une matrice \(E\in\mathbb{R}^{V\times d}\).
+- L'embedding-space introduit le vecteur initial et laisse à positional-encoding le traitement de l'ordre.
+- Positional-encoding distingue les mécanismes d'injection positionnelle du masque causal ; contextualized-representations explique ensuite comment les blocs transforment les états.
+- Contextualized-representations prépare le passage vers Transformer et Q/K/V sans prétendre détailler les opérations internes du bloc.
+
+### Points à conserver en surveillance
+
+- Le stepper de text-data présente les étapes en vue d'ensemble, tandis que tokenization-strategies est une page spécialisée : ne pas interpréter cette juxtaposition comme deux tokenisations successives.
+- Le pipeline général ne doit pas laisser croire que RoPE est un vecteur ajouté au lookup ; les pages text-data, positional-encoding et contextualized-representations portent maintenant explicitement cette réserve.
+- La figure externe de contextualized-representations reste soumise à la vérification de provenance et de droits déjà suivie dans l'issue #156 ; cette passe ne tranche pas cette question.
+- Unicode, les détails du tokenizer et les métriques de comparaison restent des approfondissements ; ils ne sont pas requis pour comprendre le lookup et la contextualisation.
+
+### Validation
+
+Cette passe est une revue de source FR/EN et des transitions déclarées. Elle ne constitue pas une preuve de rendu navigateur, de conformité d'accessibilité ou d'efficacité d'apprentissage auprès d'un lecteur indépendant. Les vérifications Quarto/CI sont à relever sur le commit final de la branche.
