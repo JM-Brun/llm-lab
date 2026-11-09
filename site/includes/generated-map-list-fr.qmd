@@ -3,7 +3,6 @@
   - Comment le modèle calcule sa prédiction
     - Du texte aux identifiants
       - [Du texte aux tokens : représenter le langage](text-data.html)
-      - [Stratégies de tokenisation : granularité, algorithmes et compromis](tokenization-strategies.html)
     - Des identifiants aux représentations
       - [Des identifiants aux vecteurs : les embeddings](embedding-space.html)
       - [Encodage positionnel : donner un ordre aux tokens](positional-encoding.html)
@@ -51,6 +50,7 @@
     - [Architectures hybrides : Nemotron 3 et 3.5](hybrid-llm-architectures.html)
     - [Next-Concept Modeling : générer par niveaux de représentation](next-concept-modeling.html)
   - Texte et tokenisation
+    - [Stratégies de tokenisation : granularité, algorithmes et compromis](tokenization-strategies.html)
     - [Unicode, UTF-8 et normalisation du texte](unicode-text.html)
     - [Concevoir et évaluer un tokenizer](tokenizer-design-evaluation.html)
   - Outils mathématiques et géométrie
