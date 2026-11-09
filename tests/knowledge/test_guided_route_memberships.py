@@ -121,6 +121,18 @@ def test_guided_route_stage_anchors_are_stable(language: str) -> None:
         assert f"#guided-stage-{stage.id}" in rendered
 
 
+@pytest.mark.parametrize("language", ["fr", "en"])
+def test_route_projection_parts_match_the_canonical_route(language: str) -> None:
+    pages = [page for page in GENERATOR["load_pages"]() if page["language"] in {language, "shared"}]
+    stages = GENERATOR["load_guided_route"](language, pages)
+
+    GENERATOR["validate_route_projection"](stages)
+
+    rendered = GENERATOR["render_guided_route_markdown"](stages, language)
+    for part_id in ("discover", "prediction", "usages"):
+        assert f"#guided-part-{part_id}" in rendered
+
+
 def test_single_membership_renders_as_context_not_as_a_parent_claim() -> None:
     membership = GENERATOR["GuidedRouteMembership"](
         stage_id="representations",
