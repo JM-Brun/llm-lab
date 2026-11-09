@@ -165,7 +165,7 @@ Line by line:
 Each position goes on its own through `d -> mlp_hidden_dim` (often `4d`), then GELU, then back to `d`. The intermediate widening gives each position a larger space in which to compute its non-linear transformation.
 
 ::: {.callout-warning}
-**Common misconceptions.** (1) "Heads see what the others do": no — each head is isolated until `w_o`. (2) "Normalization is cosmetic": no — it sits inside the branch to keep the residual trunk stable as the stack grows.
+**Common misconceptions.** (1) "Heads see what the others do": no — each head is isolated until `w_o`. (2) "Normalization is cosmetic": no — placing it inside the branch leaves the residual path direct. Its optimization effects have been studied, including by Xiong et al. (2020); they are not a configuration-independent guarantee.
 :::
 
 ## What the tests verify
