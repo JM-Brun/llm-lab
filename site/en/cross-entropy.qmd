@@ -141,12 +141,21 @@ print("softmax-first:", softmax_first_loss.item())  # 0.946560...
 The final position is ignored by `ignore_index`; it contributes neither to the sum nor to the mean denominator. `reduction="none"` exposes local losses, while `reduction="mean"` averages valid targets (with no class weights in this example). Applying softmax first is incorrect for the intended API use: it turns probabilities into a new set of input scores and changes the loss. This example demonstrates the API and reduction; it does not replace causal masking, target alignment, or a training loop.
 
 PyTorch also accepts probability-distribution targets (for example with *label smoothing*), but `ignore_index` applies only to class-index targets. This example deliberately uses integer indices.
+:::
 
 ### A common shape bug: normalizing over time instead of vocabulary
 
 For logits shaped `(B,T,V)`, each time position needs a probability distribution over the **vocabulary**. Therefore softmax must use `dim=-1` (the vocabulary axis). Normalizing over `dim=1` instead makes probabilities sum to one across time for each vocabulary entry; it does not produce a categorical distribution over tokens at each position.
 
 ```python
+import torch
+
+logits = torch.tensor(
+    [[[2.0, 0.0, -1.0], [0.0, 1.0, 0.0], [1.0, 0.0, 2.0]]],
+    dtype=torch.float64,
+)
+batch_size, seq_len, vocab_size = logits.shape
+
 correct_probs = logits.softmax(dim=-1)
 wrong_axis_probs = logits.softmax(dim=1)
 
@@ -170,6 +179,9 @@ This is why the example first flattens `(B,T,V)` to `(B×T,V)`: the class/vocabu
 A direct `softmax` can underflow a very small target probability to zero. Taking its logarithm then produces infinity, even though the mathematically correct cross-entropy is finite. The fused, numerically stable cross-entropy computes the equivalent log-softmax expression without first materializing that zero probability.
 
 ```python
+import torch
+import torch.nn.functional as F
+
 extreme_logits = torch.tensor(
     [[1000.0, 0.0, -1000.0]], dtype=torch.float64
 )
@@ -188,7 +200,6 @@ assert torch.isinf(naive_loss)
 ```
 
 The infinite result is a floating-point failure of the naïve computation, not an infinite mathematical loss: for these logits, the exact loss is 2000 nats. In practice, pass logits directly to `CrossEntropyLoss` or use `log_softmax` followed by the target gather; do not compute `log(softmax(logits))` yourself.
-:::
 
 ## Connection to perplexity
 
