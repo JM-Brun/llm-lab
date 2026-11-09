@@ -50,10 +50,6 @@ The repository is an independent learning and experimentation project. These sou
 
 ## Practical model training
 
-- **Cameron R. Wolfe — Language Model Training and Inference: From Concept to Code** (Deep (Learning) Focus, 4 September 2023): https://cameronrwolfe.substack.com/p/language-model-training-and-inference
-  - **Use for:** a conceptual-to-code walkthrough connecting causal next-token prediction in pretraining and autoregressive inference, plus a NanoGPT/PyTorch example of forward passes, cross-entropy, and practical training infrastructure.
-  - **Limitations:** GPT-2/NanoGPT-specific and dated implementation context; not a current training recipe or evidence of LLM Lab implementation. See the [source comparison dossier](source-reviews/language-model-training-inference-cameron-wolfe-2026-11.md). Figures and code are linked only; reuse rights were not established.
-
 6. **Hugging Face LLM Course**
    - French course: https://huggingface.co/learn/llm-course/fr
    - English course: https://huggingface.co/learn/llm-course/en
@@ -67,6 +63,10 @@ The repository is an independent learning and experimentation project. These sou
 8. **EleutherAI Language Model Evaluation Harness**
    - Repository: https://github.com/EleutherAI/lm-evaluation-harness
    - **Use for:** understanding standardized evaluation tasks and reproducible benchmark execution. Benchmark scores still depend on task versions, prompts, model/tokenizer details, and evaluation configuration.
+
+9. **Cameron R. Wolfe — Language Model Training and Inference: From Concept to Code** (Deep (Learning) Focus, 4 September 2023): https://cameronrwolfe.substack.com/p/language-model-training-and-inference
+   - **Use for:** a conceptual-to-code walkthrough connecting causal next-token prediction in pretraining and autoregressive inference, plus a NanoGPT/PyTorch example of forward passes, cross-entropy, and practical training infrastructure.
+   - **Limitations:** GPT-2/NanoGPT-specific and dated implementation context; not a current training recipe or evidence of LLM Lab implementation. See the [source comparison dossier](source-reviews/language-model-training-inference-cameron-wolfe-2026-11.md). Figures and code are linked only; reuse rights were not established.
 
 ## Additional perspectives
 
