@@ -24,11 +24,13 @@ The shared [reader-experience and editorial method](reader-experience-and-editor
 
 ## 2. Target information architecture
 
-Organize the learning experience around **conceptual understanding, experimentation, and flexible navigation**, not language count or chapter-by-chapter parity with a source book. Maintain one conceptual source of truth; translations are alternate presentations of the same structure, not separate pedagogical tracks.
+Organize the learning experience around **two distinct learning paths** that share one evolving knowledge corpus. The Theory / Understand path teaches the conceptual and scientific account of LLMs; the Build path teaches the implementation and experimental construction of a small GPT from scratch. They have different learning outcomes, progression orders, prerequisites and completion criteria. Neither is a required continuation of the other. Maintain one conceptual source of truth; translations are alternate presentations of the same structure, not separate pedagogical tracks.
 
-### Three complementary learning depths
+Deepen and Practice & experiment are supporting destinations that can enrich either path; they are not additional linear curricula.
 
-#### Level 1 — Big-picture overview
+### Path A — Theory / Understand
+
+#### Entry and progression of the Theory path — big-picture overview
 
 Purpose: form a correct mental model of the complete system before studying every detail.
 
@@ -40,9 +42,9 @@ Purpose: form a correct mental model of the complete system before studying ever
 
 The 3Blue1Brown video is a useful reference for the role of a visual overview, not a template to copy or a substitute for LLM Lab's own map.
 
-#### Level 2 — Guided model-building path
+### Path B — Build: guided model construction
 
-Purpose: provide a dependency-aware route from text to a working small language model. This is the **implementation route**, not the learner-facing conceptual order. It follows the minimal inference dependency chain first, then joins the separate training-data branch when parameter learning is introduced. The milestone IDs are shared with the bilingual Build path and [the canonical learning-path crosswalk](learning-path.md).
+Purpose: provide an independent, dependency-aware route from text to a working small language model. This is the **Build path**, not a second presentation of the Theory path and not a sequence that Theory learners must complete. It follows the minimal inference dependency chain first, then joins the separate training-data branch when parameter learning is introduced. The milestone IDs are shared with the bilingual Build path and [the canonical learning-path crosswalk](learning-path.md).
 
 **Inference branch — build and inspect a model with fixed parameters:**
 
@@ -68,7 +70,11 @@ Purpose: provide a dependency-aware route from text to a working small language 
 
 Use Raschka's *LLMs from Scratch* as an important implementation and coverage reference, not as a chapter structure to mirror. Connect the build path to concept pages, experiments, mathematical explanations, critical analysis, and tests.
 
-#### Level 3 — Deep dives and open exploration
+### Supporting destinations — Deepen and Practice
+
+**Deepen** provides optional advanced mathematical, technical, architectural and research detail relevant to either path. **Practice & experiment** provides exercises, executable experiments and tests that may reinforce either path. Each resource should identify its target path(s); neither destination creates a third or fourth mandatory curriculum.
+
+### Supporting destination — Deepen and open exploration
 
 Purpose: let readers pursue a question without completing the guided path first.
 
