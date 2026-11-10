@@ -45,7 +45,7 @@ This example is adapted from [Neha KK](https://medium.com/@nkk18072004/understan
 The three projections are easiest to distinguish by following the flow of information:
 
 - **Q — the query:** what the current position is looking to match in the context;
-- **K — the key:** the representation that lets a position participate in the compatibility calculation;
+- **K — the key:** what each position presents for comparison with a query;
 - **V — the value:** the information carried by that position and available to be transmitted.
 
 Q and K therefore determine **how attention is distributed**. V supplies **the content that is aggregated** using that distribution. A key is not a readable label, and a value is not a ready-made answer: they are learned numerical vectors.
