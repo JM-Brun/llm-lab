@@ -64,7 +64,7 @@ The pedagogical context keeps its own visual grammar: a labelled, numbered stage
 
 ### 3.4 Local steppers describe content, not location
 
-A `.pipeline-stepper` is optional and page-specific. Retain it only when it accurately describes a process or representation sequence. Place it after the chapter lead and the short “idea to retain” explanation, so it supports the explanation rather than competing with the title and location cues.
+A `.pipeline-stepper` is page-specific and describes a process or representation sequence, not the curriculum. **Every published core page listed in `data/guided-route.yml` must expose exactly one concise local meta-flow**, so the reader can see the current concept in its immediate transformation chain and connect it to adjacent pages. Reuse the same sequence and terminology across pages that belong to the same process; change the active step and the amount of detail to match the page's learning objective. The flow must be technically faithful (do not imply a universal architecture-specific operation), use localized labels, and link to canonical neighbouring pages where useful. It may include unlinked stages when those stages are context rather than separate lessons. Place it after the chapter lead and the short “idea to retain” explanation, so it supports the explanation rather than competing with the title and location cues. This requirement applies to the core Understand route; optional deep dives and the separate Build path use a stepper when their own process genuinely benefits from one.
 
 Its accessible label must identify the process it describes (for example, “Étapes de l’entrée du modèle” or “Étapes du calcul de l’attention”). Do not label a local process stepper “learning path” / “parcours pédagogique”.
 
