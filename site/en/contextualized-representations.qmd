@@ -63,9 +63,7 @@ Suppose the visible word `bank` is represented by the same token ID in two sente
 
 Under that explicit assumption, both occurrences retrieve the same initial embedding:
 
-\[
-e_{\mathrm{bank}} = E[\mathrm{ID}_{\mathrm{bank}}].
-\]
+`e_bank = E[ID_bank]`
 
 The embedding lookup is a table access. It does not inspect the surrounding words, infer which sense is intended, or produce a sentence-specific vector.
 
