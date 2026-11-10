@@ -1,6 +1,5 @@
 from pathlib import Path
 
-
 root = Path(__file__).resolve().parents[2]
 batch = __import__("runpy").run_path(str(root / "scripts" / "quarto_render_batch.py"))
 scope = __import__("runpy").run_path(str(root / "scripts" / "quarto_render_scope.py"))
