@@ -35,6 +35,27 @@ Un Transformer doit disposer d'un signal d'ordre pour distinguer, par exemple, �
 **Question de contrôle :** pouvez-vous expliquer pourquoi inverser deux tokens doit pouvoir changer le calcul, et indiquer à quel endroit chaque mécanisme introduit cette information ?
 :::
 
+:::: {.pipeline-stepper .meta-flow .meta-flow--branch role="navigation" aria-label="Deux façons courantes d’injecter l’information positionnelle"}
+::: {.meta-flow__source}
+<strong>Embeddings de tokens</strong><span>Vecteurs de contenu avant traitement positionnel</span>
+:::
+::: {.meta-flow__source .meta-flow__branch--active aria-current="step"}
+<strong>Traitement de la position</strong><span>Le mécanisme dépend de l’architecture</span>
+:::
+::: {.meta-flow__comparison}
+::: {.meta-flow__comparison-item}
+<strong>Encodage absolu</strong><small>Ajouter un vecteur de position à l’embedding, puis calculer Q/K/V</small>
+:::
+::: {.meta-flow__comparison-item}
+<strong>RoPE</strong><small>Projeter Q/K, puis les faire tourner selon leur position ; V n’est pas tourné par RoPE</small>
+:::
+:::
+::: {.meta-flow__result}
+<strong>Scores d’attention sensibles à la position</strong> · [Projections Q/K/V](queries-keys-values.qmd)
+:::
+::::
+
+
 ## Pourquoi ajouter une information de position ?
 
 La page précédente a montré que le lookup fournit un vecteur de contenu, mais pas l'emplacement du token dans la séquence. Or, dans une phrase, le rôle d'un token dépend souvent de sa place : permuter « le chat poursuit le chien » peut changer qui poursuit qui. Le modèle doit donc disposer d'un signal d'ordre.

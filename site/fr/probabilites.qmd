@@ -34,6 +34,20 @@ La softmax transforme les logits en une **distribution conditionnée par le pré
 
 **Pour approfondir :** distinguez normalisation, calibration et vérité, puis comparez argmax et échantillonnage. La distribution sert à générer ; pendant l'entraînement, les logits sont confrontés aux tokens cibles par une fonction de perte.
 :::
+
+<div class="pipeline-stepper meta-flow" role="navigation" aria-label="Des logits au token sélectionné">
+  <a class="step-item" href="logits.qmd">Logits</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">Transformations facultatives : température, top-k ou top-p</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item active" aria-current="step">Distribution finale normalisée</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">Politique de sélection : argmax ou échantillonnage</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="generation.qmd">Token choisi et réinjecté</a>
+</div>
+<p class="meta-flow__relation">L’ordre exact des transformations dépend de la stratégie de décodage et de son implémentation ; une distribution n’est pas encore un token sélectionné.</p>
+
 ## Des logits à une distribution catégorielle
 
 À une position donnée, le modèle produit un logit \(z_i\) pour chaque token \(i\) du vocabulaire. Les logits sont des scores non normalisés : ils peuvent être négatifs ou positifs et ne somment pas à un.

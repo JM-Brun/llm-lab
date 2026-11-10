@@ -457,8 +457,31 @@ for (const testCase of cases) {
       disclosures: document.querySelectorAll("details").length,
       links: document.querySelectorAll("a[href]").length,
       buttons: document.querySelectorAll("button").length,
+      metaFlows: [...document.querySelectorAll(".pipeline-stepper")].map(el => {
+        const r = el.getBoundingClientRect();
+        return {
+          label: el.getAttribute("aria-label"),
+          left: Math.round(r.left),
+          right: Math.round(r.right),
+          width: Math.round(r.width),
+          scrollWidth: el.scrollWidth,
+          clientWidth: el.clientWidth,
+          display: getComputedStyle(el).display,
+          direction: getComputedStyle(el).flexDirection,
+        };
+      }),
       languageSwitchLinks: [...document.querySelectorAll("a[href]")].filter(a => { const href = a.getAttribute("href") || ""; return href.includes("/en/") || href.includes("/fr/"); }).length,
     }));
+
+    if (label === "mobile") {
+      const clippedMetaFlow = (item.layout.metaFlows || []).find(flow =>
+        flow.left < -1 || flow.right > item.layout.viewportWidth + 1 ||
+        flow.scrollWidth > flow.clientWidth + 1
+      );
+      if (clippedMetaFlow) {
+        throw new Error("meta-flow is clipped or horizontally scrollable on mobile: " + JSON.stringify(clippedMetaFlow));
+      }
+    }
 
     const capturePage = kind !== "route-context" || label === "desktop" ||
       ["text-data.html", "embedding-space.html", "positional-encoding.html", "tensors.html"].includes(pagePath);
@@ -751,6 +774,18 @@ for (const testCase of cases) {
           throw new Error(`deep-dive page does not expose a link back to canonical parent ${parent}`);
         }
       }
+      if (pagePath === "entropy.html") {
+        const map = page.locator("main .pipeline-stepper.meta-flow").first();
+        const audit = await map.evaluate(el => ({
+          comparisonCount: el.querySelectorAll(".meta-flow__comparison-item").length,
+          text: el.textContent || "",
+          className: el.className,
+        })).catch(() => ({ comparisonCount: 0, text: "", className: "missing map" }));
+        if (audit.comparisonCount !== 2 || !/surprise/i.test(audit.text) ||
+            !/cross-entropy|entropie croisée/i.test(audit.text)) {
+          throw new Error("entropy map must distinguish predictive entropy, observed-token surprise, and cross-entropy; rendered map: " + JSON.stringify(audit));
+        }
+      }
     }
 
     if (kind === "route-context") {
@@ -925,9 +960,42 @@ for (const testCase of cases) {
           }
         }
         if (["embedding-space.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "logits.html", "cross-entropy.html"].includes(pagePath)) {
-          item.routeContext.legacyStepperCount = await page.locator(".pipeline-stepper").count();
-          if (item.routeContext.legacyStepperCount !== 0) {
-            throw new Error("misleading legacy five-step pipeline stepper is still rendered");
+          const localStepper = page.locator(".pipeline-stepper");
+          item.routeContext.localStepperCount = await localStepper.count();
+          item.routeContext.localStepperLabel = await localStepper.getAttribute("aria-label");
+          item.routeContext.localStepperCurrentCount = await localStepper.locator('[aria-current="step"]').count();
+          if (item.routeContext.localStepperCount !== 1 ||
+              !item.routeContext.localStepperLabel ||
+              /learning path|parcours pédagogique/i.test(item.routeContext.localStepperLabel) ||
+              item.routeContext.localStepperCurrentCount !== 1) {
+            throw new Error("core lesson must expose exactly one correctly labelled local process stepper with one active stage");
+          }
+        }
+        if (pagePath === "queries-keys-values.html") {
+          const audit = await page.locator("main .pipeline-stepper.meta-flow").first().evaluate(el => ({
+            branchCount: el.querySelectorAll(".meta-flow__branches .meta-flow__branch").length,
+            currentCount: el.querySelectorAll("[aria-current='step']").length,
+            text: el.textContent || "",
+            className: el.className,
+          })).catch(() => ({ branchCount: 0, currentCount: 0, text: "", className: "missing map" }));
+          if (audit.branchCount !== 3 || audit.currentCount !== 1) {
+            throw new Error("Q/K/V must be shown as three parallel branches with one current concept; rendered map: " + JSON.stringify(audit));
+          }
+        }
+        if (pagePath === "positional-encoding.html") {
+          const audit = await page.locator("main .pipeline-stepper.meta-flow").first().evaluate(el => ({
+            comparisonCount: el.querySelectorAll(".meta-flow__comparison-item").length,
+            text: el.textContent || "",
+            className: el.className,
+          })).catch(() => ({ comparisonCount: 0, text: "", className: "missing map" }));
+          if (audit.comparisonCount !== 2 || !/RoPE/i.test(audit.text) ||
+              !/absolute|absolu/i.test(audit.text)) {
+            throw new Error("positional map must present absolute encodings and RoPE as alternatives, not consecutive stages; rendered map: " + JSON.stringify(audit));
+          }
+        }
+        if (pagePath === "generation.html") {
+          if (await page.locator(".meta-flow__loop").count() !== 1) {
+            throw new Error("autoregressive generation map must expose its feedback loop");
           }
         }
         if (pagePath === "text-data.html") {

@@ -39,14 +39,18 @@ Pensez à un **catalogue avec des numéros de référence**. Le tokenizer décou
 Pour comprendre le mécanisme minimal, passez directement à [Des identifiants aux vecteurs](embedding-space.qmd). Pour aller plus loin sur les choix de segmentation, consultez les [stratégies de tokenisation](tokenization-strategies.qmd).
 :::
 
-<div class="pipeline-stepper" role="navigation" aria-label="Étapes de l'entrée du modèle">
-  <span class="step-item active" aria-current="step" aria-label="Texte, tokens et identifiants">1. Texte → IDs</span>
+<div class="pipeline-stepper" role="navigation" aria-label="Étapes de transformation du texte en entrée du modèle">
+  <span class="step-item">1. Texte source</span>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="embedding-space.qmd" aria-label="Lookup dans la table d'embeddings">2. Vecteurs</a>
+  <span class="step-item">2. Tokens</span>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="positional-encoding.qmd" aria-label="Information positionnelle">3. Position</a>
+  <span class="step-item active" aria-current="step">3. IDs</span>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="contextualized-representations.qmd" aria-label="Représentations contextualisées">4. Contexte</a>
+  <a class="step-item" href="embedding-space.qmd">4. Embeddings</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="positional-encoding.qmd">5. Position</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="contextualized-representations.qmd">6. Contexte</a>
 </div>
 
 ## 1. Le parcours, du texte au modèle
