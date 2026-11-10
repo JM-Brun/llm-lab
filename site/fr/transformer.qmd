@@ -195,17 +195,24 @@ Après le dernier bloc, la normalisation finale et la tête de sortie produisent
 <span id="ce-que-cette-démonstration-permet-et-ne-permet-pas-de-conclure"></span>
 <span id="observer-un-transformer-en-fonctionnement"></span>
 
-## Explorer en pratique
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Ressources complémentaires</span>
+  <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
+</summary>
+<div class="learning-resources__content">
 
-L'[atelier d'exploration de GPT-2](transformer-explainer.qmd) permet d'observer ces mécanismes sur un modèle réel : conduire des expériences contrôlées et examiner les limites de la visualisation.
+<h3>Explorer en pratique</h3>
+<p>L'<a href="transformer-explainer.qmd">atelier d'exploration de GPT-2</a> permet d'observer ces mécanismes sur un modèle réel : conduire des expériences contrôlées et examiner les limites de la visualisation. C'est un exercice d'analyse indépendant — utile, mais non nécessaire pour suivre cette leçon.</p>
 
-## Pour approfondir
+<h3 id="pour-approfondir">Pour approfondir</h3>
+<p>Pour retrouver les visualisations, l'article fondateur et les ressources d'implémentation, consultez la <a href="deepen.qmd#ressources-transformer">rubrique Approfondir consacrée au Transformer</a>. Pour une première vue d'ensemble complémentaire, voir aussi <a href="https://dev.to/nishanthan-k/understanding-transformer-the-architecture-behind-modern-ai-55o8">Understanding Transformer: The Architecture Behind Modern AI</a>. Ces ressources sont facultatives et ne font pas partie du parcours principal.</p>
 
-Pour retrouver les visualisations, l'article fondateur et les ressources d'implémentation, consultez la [rubrique Approfondir consacrée au Transformer](deepen.qmd#ressources-transformer). Pour une première vue d'ensemble complémentaire, voir aussi [Understanding Transformer: The Architecture Behind Modern AI](https://dev.to/nishanthan-k/understanding-transformer-the-architecture-behind-modern-ai-55o8).
+<h3>Exercices</h3>
+<p>Les questions et exercices de cette leçon sont regroupés sur sa <a href="exercises/transformer.qmd">page d'exercices dédiée</a>.</p>
 
-## Exercices
-
-Les questions et exercices de cette leçon sont regroupés sur sa [page d'exercices dédiée](exercises/transformer.qmd).
+</div>
+</details>
 
 {{< include ../includes/generated-suggested-route-fr-transformer.qmd >}}
 
