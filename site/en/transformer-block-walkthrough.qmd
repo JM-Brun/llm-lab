@@ -219,7 +219,7 @@ Each position goes on its own through `d -> mlp_hidden_dim` (often `4d`), then G
 
 ### Practice
 
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/transformer-block-walkthrough.qmd).
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/transformer-block-walkthrough.qmd).
 
 </div>
 </details>
