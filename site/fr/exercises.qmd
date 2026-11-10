@@ -777,6 +777,30 @@ Oui : le vocabulaire et l'ordre des fusions BPE ont été ajustés à partir de 
 
 **Périmètre actuel :** CA-A introduit le masque causal, le décalage des cibles et l'invariance de préfixe à partir d'une matrice et des tests existants. Trois exercices formatifs progressifs, aux identifiants stables AT-A, AT-B et AT-C partagés avec la version anglaise, couvrent séparément le calcul d'une attention multi-têtes, la trace des formes, puis le diagnostic d'affirmations et la prédiction d'interventions. Les variantes spécifiques au masquage multi-têtes et les invariants avancés restent à approfondir. Ordre conseillé : CA-A pour le masque causal, puis AT-A, AT-B et AT-C pour la progression multi-têtes.
 
+#### Exercice — des scores Q/K à la sortie d'attention
+
+On considère une requête et deux clés/valeurs :
+
+$
+q=(1,0),\quad k_1=(1,0),\quad k_2=(0,1),\quad
+v_1=(10,0),\quad v_2=(0,20).
+$
+
+1. Calculez les scores $qk_1^\top$ et $qk_2^\top$.
+2. Appliquez la mise à l'échelle avec $d_k=2$.
+3. Calculez les poids softmax (approximativement).
+4. Calculez la combinaison pondérée des valeurs.
+5. Expliquez pourquoi les poids ne mesurent pas une pertinence sémantique absolue.
+
+<details>
+<summary>Afficher le corrigé raisonné</summary>
+
+Les scores bruts valent $(1,0)$. Après division par $\sqrt{2}$, ils valent environ $(0{,}707,0)$. Le softmax donne environ $(0{,}67,0{,}33)$. La sortie vaut donc $0{,}67(10,0)+0{,}33(0,20)\approx(6{,}7,6{,}6)$.
+
+Q et K déterminent les poids ; V détermine le contenu agrégé. Les poids sont relatifs aux clés accessibles dans cette ligne, pas une mesure universelle de pertinence ou de causalité.
+
+</details>
+
 #### Calculer une agrégation à la main
 
 Une position reçoit les poids d’attention $(0{,}75,\,0{,}25)$ et les vecteurs de valeur sont $v_1=(2,0)$ et $v_2=(0,4)$. Calculez la sortie. Si l’on échange $v_1$ et $v_2$ sans changer les poids, la sortie reste-t-elle identique ?
