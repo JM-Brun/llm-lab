@@ -208,7 +208,14 @@ The shape journey, line by line:
 2. Per block: `4×16×16 + 4×16 + 2×32×16 + 32 + 16 + 4×16 = 1024+64+1024+48+64+64 = 2288`. Two blocks: `4576`. Embeddings: `2×50×16 = 1600` (table + untied head); positions `16×16 = 256`; final norm `32`; head bias `50`. Total: `4576 + 1600 + 256 + 32 + 50 = 6514`.
 </details>
 
-## Connections
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Supplementary resources</span>
+  <span class="learning-resources__description">Experiment, explore further, and practise the ideas from this lesson.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Further reading
 
 - **Previous stop**: [the Transformer block (`transformer_block.py`)](transformer-block-walkthrough.qmd).
 - **Next stop**: [generation (`generate.py`)](gpt-generation-walkthrough.qmd).
@@ -216,9 +223,12 @@ The shape journey, line by line:
 - **Back to the path**: [Build a small GPT](build-path.qmd).
 - **Source**: [`gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt.py) · **Tests**: [`test_gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt.py).
 
-## Practice
+### Practice
 
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/gpt-model-walkthrough.qmd).
+
+</div>
+</details>
 
 ::: {.language-switch}
 **Language:** [Français](../fr/gpt-model-walkthrough.qmd) · [English](gpt-model-walkthrough.qmd)
