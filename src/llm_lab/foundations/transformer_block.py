@@ -6,12 +6,14 @@ GPT-2 it computes::
     x = x + attention(layer_norm_1(x))   # residual attention branch
     x = x + mlp(layer_norm_2(x))         # residual MLP branch
 
-The normalization sits *inside* each residual branch, not on the trunk.
-The trunk (``x + ...``) therefore always carries an unmodified copy of the
-input towards the output: identity is the default, and each branch only
-*adds* a correction. This keeps activations and gradients stable when many
-blocks are stacked, which is why the post-LN order of the original
-Transformer is no longer preferred in GPT-style models.
+The normalization sits *inside* each residual branch, not on the identity
+path. The input can therefore bypass each sublayer directly, and the
+branch output is added to that path. This provides a direct route for
+signal and gradient propagation, but the addition does not guarantee that
+every input component is preserved or that activations and gradients are
+stable. Pre-LN and post-LN have different optimization properties; their
+suitability depends on the architecture, initialization, and training
+protocol.
 
 This module contains no training code: the parameters are drawn once in
 ``__init__`` and never updated.
