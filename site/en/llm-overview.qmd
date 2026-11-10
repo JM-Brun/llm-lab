@@ -25,7 +25,9 @@ tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "
 {{< include ../includes/generated-guided-context-en-llm-overview.qmd >}}
 
 ::: {.chapter-lead}
-A **large language model** (LLM) is a language model trained at scale on large text corpora using a substantial compute budget. There is no agreed parameter-count threshold for the category: the training data and compute also matter ([scaling laws](scaling-laws.qmd); [Zhao et al., 2023](https://arxiv.org/abs/2303.18223); [Hoffmann et al., 2022](https://proceedings.neurips.cc/paper_files/paper/2022/hash/c1e2faff6f588870935f114ebe04a3e5-Abstract.html)). The term LLM does not specify a particular architecture or training objective.
+You ask an assistant: “The report indicates that the concentration…” and it suggests a continuation. How does it produce that text? It does not write the whole response in one step: it first estimates which tokens could follow the context, then uses that prediction to continue.
+
+That is the basic idea of a **language model**: assigning probabilities to possible continuations of a sequence. A **large language model** (LLM) is a language model trained at scale on large corpora with a substantial compute budget. No parameter-count threshold defines the category on its own; data and compute matter too ([scaling laws](scaling-laws.qmd); [Zhao et al., 2023](https://arxiv.org/abs/2303.18223); [Hoffmann et al., 2022](https://proceedings.neurips.cc/paper_files/paper/2022/hash/c1e2faff6f588870935f114ebe04a3e5-Abstract.html)). LLM therefore does not specify a particular architecture or training objective.
 :::
 
 ::: {.callout-tip title="The one-minute mental model"}
