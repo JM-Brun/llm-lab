@@ -88,18 +88,8 @@ The formulation is presented in [Vaswani et al. (2017), *Attention Is All You Ne
 ::: {.self-check}
 ## Check your understanding
 
-[Extended exercises on this topic](../en/exercises.qmd#attention).
-
-1. A row of scores is $(2,0)$ and the key dimension is $d_k=4$. Calculate the softmax weights after scaling.
-
-<details>
-<summary>Show the reasoning</summary>
-
-First divide the scores by $\sqrt{4}=2$, giving $(1,0)$. Softmax is approximately $(0.731,0.269)$. Scaling precedes normalization; the weights remain relative to the scores in this row only. The variant where one position is forbidden by a causal mask is covered in the self-check on [causal masking](causal-masking.qmd).
-
-</details>
+Calculations involving scores, scaling, normalization, and aggregation are grouped in the [Attention exercise collection](exercises.qmd#attention), keeping this page focused on the mechanism and its invariants.
 :::
-
 
 ## Optional Build-path companion
 
