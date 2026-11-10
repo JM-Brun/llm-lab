@@ -79,6 +79,12 @@ A capability may be new from a user's perspective while arising from mechanisms 
 - Schaeffer, Miranda, and Koyejo (2023), [*Are Emergent Abilities of Large Language Models a Mirage?*](https://arxiv.org/abs/2304.15004).
 - Srivastava et al. (2022), [*Beyond the Imitation Game: Quantifying and extrapolating the capabilities of language models*](https://arxiv.org/abs/2206.04615).
 
+
+
+::: {.language-switch}
+**Language:** [Français](../fr/emergence.qmd) · [English](emergence.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -92,7 +98,3 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 </div>
 </details>
-
-::: {.language-switch}
-**Language:** [Français](../fr/emergence.qmd) · [English](emergence.qmd)
-:::
