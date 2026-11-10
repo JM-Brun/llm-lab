@@ -53,6 +53,9 @@ Deux phrases peuvent contenir le même token sans lui donner le même rôle : *b
 ![Pipeline du texte aux représentations contextualisées.](../images/contextualization-pipeline-fr.svg){.pipeline-figure fig-alt="Le texte est tokenisé en IDs ; les IDs sélectionnent des vecteurs dans la table d'embeddings ; le modèle traite la position puis les blocs Transformer produisent des états contextualisés." fig-cap="Du texte aux états contextualisés : chaque étape transforme ou enrichit la représentation, du symbole jusqu'aux états cachés dépendant du contexte." width=100%}
 
 
+Ce schéma est une illustration originale et simplifiée, et non une reproduction de la figure de Rushang Chauhan. Le traitement positionnel dépend de l'architecture : par exemple, RoPE ne consiste pas à ajouter simplement un vecteur de position à chaque embedding. Pour une autre présentation pédagogique du passage des tokens au contexte, voir l'article de [Rushang Chauhan, *Embeddings: The Bridge Between Tokens and Context*](https://www.linkedin.com/pulse/embeddings-bridge-between-tokens-context-rushang-chauhan-oqpzf/).
+
+
 ## Ce qui reste identique
 
 Supposons que le token visible `bank` soit représenté par le même ID dans deux phrases :
