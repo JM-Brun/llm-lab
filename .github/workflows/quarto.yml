@@ -152,11 +152,12 @@ jobs:
         env:
           RENDER_TARGETS: ${{ steps.site_changes.outputs.render_targets }}
         run: |
-          while IFS= read -r page; do
-            [ -n "$page" ] || continue
-            echo "Incrementally rendering $page"
-            quarto render "$page" --no-clean
-          done <<< "$RENDER_TARGETS"
+          if [ -z "$RENDER_TARGETS" ]; then
+            echo "Incremental mode has no safe page targets; falling back to a full render."
+            quarto render site
+          else
+            .venv/bin/python scripts/quarto_render_batch.py
+          fi
 
       - name: Render full site
         if: ${{ github.event_name != 'pull_request' || (steps.site_changes.outputs.site_relevant == 'true' && (steps.site_changes.outputs.render_mode != 'incremental' || steps.verify_site_cache.outputs.cache_restored != 'true')) }}
