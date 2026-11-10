@@ -29,7 +29,7 @@ La page précédente, [Le Transformer dans un GPT : architecture et calcul](tran
 
 :::: {.pipeline-stepper .meta-flow .meta-flow--branch role="navigation" aria-label="Carte des projections parallèles Q, K et V et de leur recombinaison"}
 ::: {.meta-flow__source}
-<strong>Entrée commune</strong><span>États contextualisés de chaque position</span>
+<strong>Entrée commune</strong><span>Représentations d'entrée de chaque position</span>
 :::
 ::: {.meta-flow__source .meta-flow__branch--active aria-current="step"}
 <strong>Projections apprises Q, K et V</strong><span>Trois transformations parallèles du même état d’entrée</span>
@@ -134,7 +134,7 @@ Pour mettre en pratique les compétences associées à cette leçon, les [exerci
 
 ## Exercices
 
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/queries-keys-values.qmd).
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/queries-keys-values.qmd).
 
 
 {{< include ../includes/generated-suggested-route-fr-queries-keys-values.qmd >}}

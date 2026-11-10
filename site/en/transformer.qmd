@@ -117,23 +117,6 @@ Attention is therefore part of a block; the block is the repeated unit; the Tran
 
 After the final block, the final normalization and output head produce the **logits**: one unnormalized score for every vocabulary token. The [logits lesson](logits.qmd) explains what these scores represent; the [output probabilities lesson](probabilities.qmd) shows how *softmax* converts them into a distribution. The network stops at these scores: choosing a token, appending it to the context, and running the model again belong to [autoregressive generation](generation.qmd).
 
-## Check your understanding
-
-To extend this check with progressive problems on embeddings, residuals, normalization, and the MLP, see the [Transformer exercises](exercises-transformer.qmd#transformer).
-
-This check focuses on the block structure and the role of residual connections.
-
-1. Which operation lets a position incorporate information from other positions, and which one transforms each position independently?
-2. Why does a residual connection not replace the transformation computed by a sublayer?
-
-<details>
-<summary>Show answers and reasoning</summary>
-
-1. Self-attention mixes information across permitted positions; the MLP applies a position-wise transformation with shared weights.
-2. The residual connection adds the sublayer output to its input: $x_{out}=x_{in}+F(x_{in})$. It preserves a direct path through the block while allowing the sublayer to contribute a learned transformation.
-
-</details>
-
 <!-- Legacy section anchors: see the linked companion page. -->
 <span id="a-guided-four-part-exploration"></span>
 <span id="controlled-experiments-move-from-observation-to-testing"></span>
@@ -172,7 +155,7 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 <summary>Show the answers</summary>
 
 1. Self-attention mixes information across permitted positions; the MLP applies a position-wise transformation with shared weights.
-2. The residual connection adds the sublayer output to its input, preserving a direct path while allowing the learned transformation to contribute.
+2. The residual connection adds the sublayer output to its input: $x_{out}=x_{in}+F(x_{in})$. It preserves a direct path through the block while allowing the sublayer to contribute a learned transformation.
 
 </details>
 :::
