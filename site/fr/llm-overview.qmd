@@ -153,6 +153,13 @@ Pour une tâche donnée, trois options se présentent : utiliser un modèle gén
 
 Le choix se fait sur des critères mesurés : qualité, erreurs, robustesse, coût, latence, confidentialité, provenance des données, maintenance. Quelques prompts réussis ne constituent pas une évaluation.
 
+::: {.callout-tip title="Pour approfondir"}
+- **Voir le modèle en configuration :** [visite guidée de la configuration d'un GPT](gpt-config-walkthrough.qmd).
+- **Revoir les outils mathématiques :** [fondements mathématiques](mathematical-foundations.qmd).
+- **Comparer les méthodes de découpage du texte :** [stratégies de tokenisation](tokenization-strategies.qmd).
+- **Suivre une implémentation :** [visite guidée du bloc Transformer](transformer-block-walkthrough.qmd).
+:::
+
 ::: {.self-check}
 ## Vérifier sa compréhension
 
