@@ -48,7 +48,7 @@ You will be able to:
 
 ## The Transformer: the network at the heart of a GPT
 
-![Architecture of a decoder-only GPT: input representations pass through a stack of Transformer blocks, then a final normalization and output head produce logits. The right panel expands one typical pre-LN block.](../images/transformer-stack-en.svg){#fig-transformer-stack fig-alt="On the left, the complete network: token IDs, embeddings and positional information, a stack of N Transformer blocks, final normalization, vocabulary projection and logits. On the right, one pre-LN block: normalization, causal multi-head self-attention, a residual connection, then normalization, a position-wise MLP and a second residual connection." width=100%}
+![Architecture of a decoder-only GPT: input representations pass through a stack of Transformer blocks, then a final normalization and output head produce logits. The lower panel expands one typical pre-LN block.](../images/transformer-stack-en.svg){#fig-transformer-stack fig-alt="At the top, the complete network: token IDs, embeddings and positional information, a stack of N Transformer blocks, final normalization, vocabulary projection and logits. At the bottom, one pre-LN block: normalization, causal multi-head self-attention, a residual connection, then normalization, a position-wise MLP and a second residual connection." width=100%}
 
 *The stack of blocks is the Transformer in the GPT shown here. The expanded view shows a common pre-LN arrangement; sublayer order and normalization variants differ across models.*
 
@@ -60,7 +60,7 @@ This diagram represents the **decoder-only** family used by autoregressive GPT m
 
 ![Simplified flow of an autoregressive GPT, from tokens to next-token selection.](../images/gpt-data-flow-en.svg){fig-alt="Complete pipeline: text, tokenization, embeddings and positional information, repeated Transformer blocks, logits, softmax, next-token selection, then addition to the context." width=100%}
 
-This second diagram answers a different question: it places the network in the complete process. **The stack of blocks in the middle is the Transformer shown above**; upstream operations prepare its input, while softmax, token selection, and feedback happen downstream. The [autoregressive generation lesson](generation.qmd) explains this decoding loop.
+This second diagram answers a different question: it places the network in the complete process. **The stack of blocks in the middle is the Transformer shown above**; upstream operations prepare its input, while softmax, token selection, and feedback happen downstream. The decoding loop takes place after the network output.
 
 ## 1. From token IDs to input representations
 
@@ -130,7 +130,9 @@ After the final block, the final normalization and output head produce the **log
 
 ## Check your understanding
 
-This check focuses on the network computation, not on decoding, which is covered in the [generation lesson](generation.qmd).
+To extend this check with progressive problems on embeddings, residuals, normalization, and the MLP, see the [Transformer exercises](exercises.qmd#transformer).
+
+This check focuses on the block structure and the role of residual connections.
 
 1. Which operation lets a position incorporate information from other positions, and which one transforms each position independently?
 2. Why does a residual connection not replace the transformation computed by a sublayer?
