@@ -24,8 +24,6 @@ tags: ["type:deep-dive", "destination:deepen", "topic:contextualized-representat
 -->
 
 
-{{< include ../includes/generated-guided-context-fr-contextualized-representations-advanced.qmd >}}
-
 Cette page prolonge la [présentation introductive des représentations contextualisées](contextualized-representations.qmd). Elle suppose que le lecteur distingue déjà l'ID du token, le vecteur obtenu par lookup et l'état caché produit par le réseau.
 
 ## 1. De l'embedding initial à l'entrée du réseau
