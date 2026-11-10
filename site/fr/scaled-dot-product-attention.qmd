@@ -40,6 +40,21 @@ L'attention n'est pas une opération unique : elle enchaîne **scores → mise �
 **Pour approfondir :** la dérivation du facteur d'échelle — pourquoi diviser par $\sqrt{d_k}$ et ce que cet argument ne garantit pas — est développée dans [Pourquoi mettre les scores à l'échelle ?](attention-score-scaling.qmd) ; la modification des positions accessibles avant le softmax est le rôle du [masque causal](causal-masking.qmd).
 :::
 
+<div class="pipeline-stepper" role="navigation" aria-label="Étapes du calcul de l’attention avec masque éventuel">
+  <a class="step-item" href="queries-keys-values.qmd">Q, K, V</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">Scores QKᵀ</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">Mise à l’échelle</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="causal-masking.qmd">Masque éventuel</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item active" aria-current="step">Softmax par requête</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">Somme pondérée de V</span>
+</div>
+
+
 ## Calcul en quatre étapes
 
 Pour une tête, $Q,K\in\mathbb{R}^{T\times d_k}$ et $V\in\mathbb{R}^{T\times d_v}$.

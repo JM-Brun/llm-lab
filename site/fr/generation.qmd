@@ -27,6 +27,24 @@ Quand vous envoyez un prompt, le modèle ne rédige pas toute la réponse d'un s
 Cette boucle est la **génération autorégressive**. Pendant l'inférence, les paramètres du modèle restent fixes : produire une réponse n'est pas apprendre.
 :::
 
+<div class="pipeline-stepper" role="navigation" aria-label="Boucle de génération autorégressive">
+  <a class="step-item" href="text-data.qmd">Prompt tokenisé</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">Prefill : traitement du prompt</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="probabilites.qmd">Distribution du prochain token</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">Sélection et ajout au contexte</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item active" aria-current="step">Decode incrémental</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">Nouvelle distribution</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">Arrêt : EOS ou limite</span>
+  <span class="meta-flow__loop" aria-label="La sélection et le decode se répètent tant que le critère d’arrêt n’est pas atteint">↺ Sélectionner, ajouter au contexte et recommencer le decode</span>
+</div>
+
+
 Cette page apparaît une première fois comme aperçu du fonctionnement général, juste après le panorama. L'étude détaillée de la boucle, du *prefill*, du *decode* et des stratégies de sélection intervient lorsque le parcours revient à l'inférence.
 
 ## 1. Une étape élémentaire : prédire et sélectionner un token

@@ -36,6 +36,17 @@ Pour une cible one-hot, la cross-entropie d'une position est la négative log-pr
 **Question de contrôle :** pouvez-vous retrouver la NLL d'un token et expliquer pourquoi le masque de perte ne remplace pas le masque causal ?
 :::
 
+<div class="pipeline-stepper" role="navigation" aria-label="Étapes du calcul de l’entropie croisée">
+  <a class="step-item" href="vraisemblance.qmd">1. Cible observée</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="probabilites.qmd">2. Probabilité prédite</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">3. NLL</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item active" aria-current="step">4. Moyenne sur les tokens</span>
+</div>
+
+
 Pour relier cette formule à l’entraînement, voir aussi la construction des [exemples entrée-cible](training-examples.qmd) et les règles de masquage de la perte. À ne pas confondre avec l'[entropie de la distribution prédite](entropy.qmd) : l'entropie décrit la dispersion des probabilités avant de connaître le token suivant ; la perte de cross-entropie évalue la probabilité donnée à la cible observée (ou à une distribution cible).
 
 ## Objectif pour un token
