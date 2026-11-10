@@ -23,7 +23,6 @@ tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-re
 
 
 {{< include ../includes/generated-guided-context-en-contextualized-representations.qmd >}}
-:::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 By the end of this lesson, you should be able to:
@@ -62,7 +61,7 @@ Suppose the visible word `bank` is represented by the same token ID in two sente
 Under that explicit assumption, both occurrences retrieve the same initial embedding:
 
 \[
-e_{\text{bank}} = E[\text{ID}_{\text{bank}}].
+e_{\mathrm{bank}} = E[\mathrm{ID}_{\mathrm{bank}}].
 \]
 
 The embedding lookup is a table access. It does not inspect the surrounding words, infer which sense is intended, or produce a sentence-specific vector.
