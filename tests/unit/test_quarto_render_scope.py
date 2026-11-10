@@ -58,7 +58,7 @@ def test_large_safe_batch_stays_incremental():
     assert len(result["render_targets"]) == 49
 
 
-def test_modified_svg_assets_can_be_copied_with_incremental_page_render():
+def test_modified_static_images_can_be_copied_with_incremental_page_render():
     result = classify_changed_files(
         [
             {"filename": "site/fr/example.qmd", "status": "modified"},
@@ -72,7 +72,17 @@ def test_modified_svg_assets_can_be_copied_with_incremental_page_render():
     assert result["render_assets"] == ["site/images/diagram.svg"]
 
 
-def test_multiple_modified_svg_assets_are_deduplicated_and_sorted():
+def test_supported_static_image_extensions_are_incremental():
+    for extension in (".svg", ".png", ".jpg", ".jpeg", ".webp", ".gif"):
+        result = classify_changed_files(
+            [{"filename": f"site/images/diagram{extension}", "status": "modified"}],
+            CONFIG,
+        )
+        assert result["render_mode"] == "incremental"
+        assert result["render_assets"] == [f"site/images/diagram{extension}"]
+
+
+def test_multiple_modified_static_images_are_deduplicated_and_sorted():
     result = classify_changed_files(
         [
             {"filename": "site/en/example.qmd", "status": "modified"},
@@ -87,9 +97,8 @@ def test_multiple_modified_svg_assets_are_deduplicated_and_sorted():
     assert result["render_assets"] == ["site/images/a.svg", "site/images/z.svg"]
 
 
-def test_non_svg_or_non_image_assets_force_full_render():
+def test_unsupported_assets_force_full_render():
     for path in (
-        "site/images/diagram.png",
         "site/images/diagram.css",
         "site/assets/diagram.svg",
     ):
@@ -125,15 +134,15 @@ def test_historical_four_page_two_svg_change_set_is_incremental():
     assert len(result["render_assets"]) == 2
 
 
-def test_svg_only_change_stays_full_until_a_page_is_rendered():
+def test_static_image_only_change_uses_copy_only_incremental_mode():
     result = classify_changed_files(
-        [{"filename": "site/images/diagram.svg", "status": "modified"}],
+        [{"filename": "site/images/diagram.webp", "status": "modified"}],
         CONFIG,
     )
 
-    assert result["render_mode"] == "full"
+    assert result["render_mode"] == "incremental"
     assert result["render_targets"] == []
-    assert result["render_assets"] == []
+    assert result["render_assets"] == ["site/images/diagram.webp"]
 
 
 def test_svg_asset_paths_cannot_escape_the_images_directory():
