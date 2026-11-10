@@ -122,7 +122,7 @@ The `topic` tag is a stable page-grouping identifier shared by translated counte
 
 Use these dimensions consistently:
 
-- **`type`**: `entry-point`, `system-overview`, `concept-lesson`, `concept-bridge`, `guided-build`, `deep-dive`, `exercise-hub`, `experiment-guide`, `glossary`, `historical-reference`, `bibliography`.
+- **`type`**: `entry-point`, `system-overview`, `concept-lesson`, `concept-bridge`, `guided-build`, `deep-dive`, `exercise-hub`, `exercise-collection`, `experiment-guide`, `glossary`, `historical-reference`, `bibliography`.
 - **`destination`**: `orient`, `understand`, `build`, `deepen`, `practice`, `reference`.
 - **`topic`**: a stable kebab-case subject/grouping identifier for the page; use the same identifier for French and English counterparts even when their filenames differ. It is not a canonical concept ID.
 - **`level`**: `overview`, `core`, `applied`, `advanced`, `reference`. This describes the page's editorial depth or role, **not whether it is mandatory in the guided route**. Route membership and optionality are defined independently by `pages` and `optional_pages` in `data/guided-route.yml`. A page can therefore be `level:core` and still be an optional route companion: it may explain a foundational idea without being required to follow the main sequence.
@@ -135,10 +135,6 @@ Use these dimensions consistently:
 - Use repository-relative IDs in relations, not rendered HTML URLs. This keeps the graph stable if output paths or navigation labels change.
 - Only reference pages that exist in the current source tree. If a destination is planned but not yet published, record it as planned work in the curriculum/backlog rather than as a live relation.
 - Keep French and English metadata semantically equivalent. Wording can differ, but scope, purpose, relation structure, and tag dimensions should remain aligned.
-
-### Dedicated lesson exercise pages
-
-Each published lesson with a question set may have a companion page under `site/<language>/exercises/<lesson-slug>.qmd`. Its stable page ID is `<language>/<lesson-slug>-exercises` and its `topic` tag is the lesson topic with the `-exercises` suffix. The companion uses `type:exercise-hub` and `destination:practice`, links back to its canonical lesson, and is listed under the corresponding language's “Exercises by lesson” navigation section. The lesson links to the companion and records the cross-reference in `related`. This convention keeps the URL hierarchy aligned with the practice destination while preserving the existing one-segment stable-ID contract and bilingual topic uniqueness.
 
 ## 6. Maintenance rules
 

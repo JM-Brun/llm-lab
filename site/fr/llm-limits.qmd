@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/llm-overview"]
   children: []
-related: ["fr/evaluation-experimentale", "fr/emergence"]
+related: ["fr/evaluation-experimentale", "fr/emergence", "fr/llm-limits-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:llm-limits", "level:overview", "language:fr", "status:published"]
 -->
 
@@ -77,10 +77,9 @@ La taille du modèle ne suffit pas non plus à expliquer ses performances. La qu
 
 Citez le protocole, pas seulement la conclusion.
 
-## S’exercer
+## Exercices
 
-Les questions de cette leçon sont regroupées sur sa [page d’exercices dédiée](exercises/llm-limits.qmd).
-
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/llm-limits.qmd).
 
 
 ::: {.language-switch}

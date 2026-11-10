@@ -61,6 +61,7 @@ project:
     - fr/scaling-laws.qmd
     - fr/llm-evolution.qmd
     - fr/emergence.qmd
+    - fr/jepa-platonic-representation.qmd
     - fr/in-context-learning.qmd
     - en/llm-overview.qmd
     - en/deepen.qmd
@@ -68,6 +69,7 @@ project:
     - en/scaling-laws.qmd
     - en/llm-evolution.qmd
     - en/emergence.qmd
+    - en/jepa-platonic-representation.qmd
     - en/in-context-learning.qmd
     - fr/transformer-architectures.qmd
     - fr/cross-attention.qmd
@@ -92,8 +94,8 @@ project:
     - fr/transformer-history.qmd
     - en/transformer-history.qmd
     - fr/queries-keys-values.qmd
-    - fr/queries-keys-values-advanced.qmd
     - en/queries-keys-values.qmd
+    - fr/queries-keys-values-advanced.qmd
     - en/queries-keys-values-advanced.qmd
     - fr/scaled-dot-product-attention.qmd
     - fr/attention-score-scaling.qmd
@@ -116,73 +118,83 @@ project:
     - en/positional-encoding.qmd
     - en/rope.qmd
     - fr/exercises.qmd
-    - fr/exercises/causal-masking.qmd
-    - fr/exercises/transformer-architectures.qmd
-    - fr/exercises/llm-limits.qmd
-    - fr/exercises/contextualized-representations.qmd
-    - fr/exercises/corpus-preparation.qmd
-    - fr/exercises/cross-attention.qmd
-    - fr/exercises/cross-entropy.qmd
-    - fr/exercises/embedding-space.qmd
-    - fr/exercises/emergence.qmd
-    - fr/exercises/entropy.qmd
+    - fr/exercises-foundations.qmd
+    - fr/exercises-text-data.qmd
+    - fr/exercises-attention.qmd
+    - fr/exercises-transformer.qmd
+    - fr/exercises-generation.qmd
+    - en/exercises.qmd
+    - en/exercises-foundations.qmd
+    - en/exercises-text-data.qmd
+    - en/exercises-attention.qmd
+    - en/exercises-transformer.qmd
+    - en/exercises-generation.qmd
     - fr/exercises/llm-overview.qmd
     - fr/exercises/generation.qmd
-    - fr/exercises/gpt-config-walkthrough.qmd
-    - fr/exercises/gpt-generation-walkthrough.qmd
-    - fr/exercises/gpt-model-walkthrough.qmd
-    - fr/exercises/gpt-ops-walkthrough.qmd
-    - fr/exercises/gradients.qmd
-    - fr/exercises/hybrid-llm-architectures.qmd
-    - fr/exercises/in-context-learning.qmd
-    - fr/exercises/llm-computational-complexity.qmd
-    - fr/exercises/llm-evolution.qmd
-    - fr/exercises/logits.qmd
-    - fr/exercises/loss.qmd
+    - fr/exercises/text-data.qmd
+    - fr/exercises/embedding-space.qmd
     - fr/exercises/positional-encoding.qmd
-    - fr/exercises/probabilites.qmd
+    - fr/exercises/contextualized-representations.qmd
+    - fr/exercises/transformer.qmd
     - fr/exercises/queries-keys-values.qmd
     - fr/exercises/scaled-dot-product-attention.qmd
-    - fr/exercises/text-data.qmd
-    - fr/exercises/tokenization-strategies.qmd
-    - fr/exercises/training-examples.qmd
-    - fr/exercises/transformer-block-walkthrough.qmd
-    - fr/exercises/transformer.qmd
+    - fr/exercises/causal-masking.qmd
+    - fr/exercises/logits.qmd
+    - fr/exercises/probabilites.qmd
+    - fr/exercises/entropy.qmd
     - fr/exercises/vraisemblance.qmd
-    - en/exercises.qmd
-    - en/exercises/causal-masking.qmd
-    - en/exercises/transformer-architectures.qmd
-    - en/exercises/llm-limits.qmd
-    - en/exercises/contextualized-representations.qmd
-    - en/exercises/corpus-preparation.qmd
-    - en/exercises/cross-attention.qmd
-    - en/exercises/cross-entropy.qmd
-    - en/exercises/embedding-space.qmd
-    - en/exercises/emergence.qmd
-    - en/exercises/entropy.qmd
+    - fr/exercises/cross-entropy.qmd
+    - fr/exercises/loss.qmd
+    - fr/exercises/gradients.qmd
+    - fr/exercises/transformer-architectures.qmd
+    - fr/exercises/llm-limits.qmd
+    - fr/exercises/corpus-preparation.qmd
+    - fr/exercises/training-examples.qmd
+    - fr/exercises/gpt-config-walkthrough.qmd
+    - fr/exercises/gpt-ops-walkthrough.qmd
+    - fr/exercises/transformer-block-walkthrough.qmd
+    - fr/exercises/gpt-model-walkthrough.qmd
+    - fr/exercises/gpt-generation-walkthrough.qmd
+    - fr/exercises/cross-attention.qmd
+    - fr/exercises/hybrid-llm-architectures.qmd
+    - fr/exercises/tokenization-strategies.qmd
+    - fr/exercises/in-context-learning.qmd
+    - fr/exercises/llm-computational-complexity.qmd
+    - fr/exercises/emergence.qmd
+    - fr/exercises/llm-evolution.qmd
     - en/exercises/llm-overview.qmd
     - en/exercises/generation.qmd
-    - en/exercises/gpt-config-walkthrough.qmd
-    - en/exercises/gpt-generation-walkthrough.qmd
-    - en/exercises/gpt-model-walkthrough.qmd
-    - en/exercises/gpt-ops-walkthrough.qmd
-    - en/exercises/gradients.qmd
-    - en/exercises/hybrid-llm-architectures.qmd
-    - en/exercises/in-context-learning.qmd
-    - en/exercises/likelihood.qmd
-    - en/exercises/llm-computational-complexity.qmd
-    - en/exercises/llm-evolution.qmd
-    - en/exercises/logits.qmd
-    - en/exercises/loss.qmd
+    - en/exercises/text-data.qmd
+    - en/exercises/embedding-space.qmd
     - en/exercises/positional-encoding.qmd
-    - en/exercises/probabilities.qmd
+    - en/exercises/contextualized-representations.qmd
+    - en/exercises/transformer.qmd
     - en/exercises/queries-keys-values.qmd
     - en/exercises/scaled-dot-product-attention.qmd
-    - en/exercises/text-data.qmd
-    - en/exercises/tokenization-strategies.qmd
+    - en/exercises/causal-masking.qmd
+    - en/exercises/logits.qmd
+    - en/exercises/probabilities.qmd
+    - en/exercises/entropy.qmd
+    - en/exercises/likelihood.qmd
+    - en/exercises/cross-entropy.qmd
+    - en/exercises/loss.qmd
+    - en/exercises/gradients.qmd
+    - en/exercises/transformer-architectures.qmd
+    - en/exercises/llm-limits.qmd
+    - en/exercises/corpus-preparation.qmd
     - en/exercises/training-examples.qmd
+    - en/exercises/gpt-config-walkthrough.qmd
+    - en/exercises/gpt-ops-walkthrough.qmd
     - en/exercises/transformer-block-walkthrough.qmd
-    - en/exercises/transformer.qmd
+    - en/exercises/gpt-model-walkthrough.qmd
+    - en/exercises/gpt-generation-walkthrough.qmd
+    - en/exercises/cross-attention.qmd
+    - en/exercises/hybrid-llm-architectures.qmd
+    - en/exercises/tokenization-strategies.qmd
+    - en/exercises/in-context-learning.qmd
+    - en/exercises/llm-computational-complexity.qmd
+    - en/exercises/emergence.qmd
+    - en/exercises/llm-evolution.qmd
     - fr/evaluation-experimentale.qmd
     - en/experimental-evaluation.qmd
     - references.qmd
@@ -229,7 +241,6 @@ website:
                   contents:
                     - fr/transformer.qmd
                     - fr/queries-keys-values.qmd
-                    - fr/queries-keys-values-advanced.qmd
                     - fr/scaled-dot-product-attention.qmd
                     - fr/causal-masking.qmd
                 - section: "Des scores aux probabilités"
@@ -267,69 +278,56 @@ website:
         - section: "S'exercer et expérimenter"
           contents:
             - fr/exercises.qmd
-            - section: "Comprendre les LLM"
+            - section: "Fondations mathématiques"
+              contents:
+                - fr/exercises-foundations.qmd
+            - section: "Données textuelles"
+              contents:
+                - fr/exercises-text-data.qmd
+            - section: "Attention"
+              contents:
+                - fr/exercises-attention.qmd
+            - section: "Transformer"
+              contents:
+                - fr/exercises-transformer.qmd
+            - section: "Génération"
+              contents:
+                - fr/exercises-generation.qmd
+            - section: "Exercices par leçon"
               contents:
                 - fr/exercises/llm-overview.qmd
                 - fr/exercises/generation.qmd
-                - section: "Des identifiants aux représentations"
-                  contents:
-                    - fr/exercises/text-data.qmd
-                    - fr/exercises/embedding-space.qmd
-                    - fr/exercises/positional-encoding.qmd
-                    - fr/exercises/contextualized-representations.qmd
-                - section: "Transformer les représentations"
-                  contents:
-                    - fr/exercises/transformer.qmd
-                    - fr/exercises/queries-keys-values.qmd
-                    - fr/exercises/scaled-dot-product-attention.qmd
-                    - fr/exercises/causal-masking.qmd
-                - section: "Des scores aux probabilités"
-                  contents:
-                    - fr/exercises/logits.qmd
-                    - fr/exercises/probabilites.qmd
-                    - fr/exercises/entropy.qmd
-                - section: "Scoring des tokens observés"
-                  contents:
-                    - fr/exercises/vraisemblance.qmd
-                    - fr/exercises/cross-entropy.qmd
-                - section: "Loss et gradients"
-                  contents:
-                    - fr/exercises/loss.qmd
-                    - fr/exercises/gradients.qmd
-                - section: "Architectures Transformer et limites des LLM"
-                  contents:
-                    - fr/exercises/transformer-architectures.qmd
-                    - fr/exercises/llm-limits.qmd
-            - section: "Construire un petit GPT"
-              contents:
-                - section: "Préparer les données d'entraînement"
-                  contents:
-                    - fr/exercises/corpus-preparation.qmd
-                    - fr/exercises/training-examples.qmd
-                - section: "Visite guidée du code de référence"
-                  contents:
-                    - fr/exercises/gpt-config-walkthrough.qmd
-                    - fr/exercises/gpt-ops-walkthrough.qmd
-                    - fr/exercises/transformer-block-walkthrough.qmd
-                    - fr/exercises/gpt-model-walkthrough.qmd
-                    - fr/exercises/gpt-generation-walkthrough.qmd
-            - section: "Approfondir"
-              contents:
-                - section: "Attention et architectures"
-                  contents:
-                    - fr/exercises/cross-attention.qmd
-                    - fr/exercises/hybrid-llm-architectures.qmd
-                - section: "Texte et tokenisation"
-                  contents:
-                    - fr/exercises/tokenization-strategies.qmd
-                - section: "Inférence et efficacité"
-                  contents:
-                    - fr/exercises/in-context-learning.qmd
-                    - fr/exercises/llm-computational-complexity.qmd
-                - section: "Échelle et questions de recherche"
-                  contents:
-                    - fr/exercises/emergence.qmd
-                    - fr/exercises/llm-evolution.qmd
+                - fr/exercises/text-data.qmd
+                - fr/exercises/embedding-space.qmd
+                - fr/exercises/positional-encoding.qmd
+                - fr/exercises/contextualized-representations.qmd
+                - fr/exercises/transformer.qmd
+                - fr/exercises/queries-keys-values.qmd
+                - fr/exercises/scaled-dot-product-attention.qmd
+                - fr/exercises/causal-masking.qmd
+                - fr/exercises/logits.qmd
+                - fr/exercises/probabilites.qmd
+                - fr/exercises/entropy.qmd
+                - fr/exercises/vraisemblance.qmd
+                - fr/exercises/cross-entropy.qmd
+                - fr/exercises/loss.qmd
+                - fr/exercises/gradients.qmd
+                - fr/exercises/transformer-architectures.qmd
+                - fr/exercises/llm-limits.qmd
+                - fr/exercises/corpus-preparation.qmd
+                - fr/exercises/training-examples.qmd
+                - fr/exercises/gpt-config-walkthrough.qmd
+                - fr/exercises/gpt-ops-walkthrough.qmd
+                - fr/exercises/transformer-block-walkthrough.qmd
+                - fr/exercises/gpt-model-walkthrough.qmd
+                - fr/exercises/gpt-generation-walkthrough.qmd
+                - fr/exercises/cross-attention.qmd
+                - fr/exercises/hybrid-llm-architectures.qmd
+                - fr/exercises/tokenization-strategies.qmd
+                - fr/exercises/in-context-learning.qmd
+                - fr/exercises/llm-computational-complexity.qmd
+                - fr/exercises/emergence.qmd
+                - fr/exercises/llm-evolution.qmd
             - fr/transformer-explainer.qmd
             - fr/evaluation-experimentale.qmd
         - section: "Approfondir"
@@ -338,6 +336,7 @@ website:
             - section: "Attention, position et architectures"
               contents:
                 - fr/attention-score-scaling.qmd
+                - fr/queries-keys-values-advanced.qmd
                 - fr/cross-attention.qmd
                 - fr/rope.qmd
                 - fr/hybrid-llm-architectures.qmd
@@ -367,6 +366,7 @@ website:
                 - fr/scaling-laws.qmd
                 - fr/emergence.qmd
                 - fr/llm-evolution.qmd
+                - fr/jepa-platonic-representation.qmd
         - section: "Glossaire et histoire"
           contents:
             - fr/glossary.qmd
@@ -394,7 +394,6 @@ website:
                   contents:
                     - en/transformer.qmd
                     - en/queries-keys-values.qmd
-                    - en/queries-keys-values-advanced.qmd
                     - en/scaled-dot-product-attention.qmd
                     - en/causal-masking.qmd
                 - section: "From scores to probabilities"
@@ -432,69 +431,56 @@ website:
         - section: "Practice and experiment"
           contents:
             - en/exercises.qmd
-            - section: "Understand LLMs"
+            - section: "Mathematical foundations"
+              contents:
+                - en/exercises-foundations.qmd
+            - section: "Text data"
+              contents:
+                - en/exercises-text-data.qmd
+            - section: "Attention"
+              contents:
+                - en/exercises-attention.qmd
+            - section: "Transformer"
+              contents:
+                - en/exercises-transformer.qmd
+            - section: "Generation"
+              contents:
+                - en/exercises-generation.qmd
+            - section: "Exercises by lesson"
               contents:
                 - en/exercises/llm-overview.qmd
                 - en/exercises/generation.qmd
-                - section: "From IDs to representations"
-                  contents:
-                    - en/exercises/text-data.qmd
-                    - en/exercises/embedding-space.qmd
-                    - en/exercises/positional-encoding.qmd
-                    - en/exercises/contextualized-representations.qmd
-                - section: "Transforming representations"
-                  contents:
-                    - en/exercises/transformer.qmd
-                    - en/exercises/queries-keys-values.qmd
-                    - en/exercises/scaled-dot-product-attention.qmd
-                    - en/exercises/causal-masking.qmd
-                - section: "From scores to probabilities"
-                  contents:
-                    - en/exercises/logits.qmd
-                    - en/exercises/probabilities.qmd
-                    - en/exercises/entropy.qmd
-                - section: "Observed-target scoring"
-                  contents:
-                    - en/exercises/likelihood.qmd
-                    - en/exercises/cross-entropy.qmd
-                - section: "Loss and gradients"
-                  contents:
-                    - en/exercises/loss.qmd
-                    - en/exercises/gradients.qmd
-                - section: "Transformer architectures and LLM limitations"
-                  contents:
-                    - en/exercises/transformer-architectures.qmd
-                    - en/exercises/llm-limits.qmd
-            - section: "Build a small GPT"
-              contents:
-                - section: "Prepare training data"
-                  contents:
-                    - en/exercises/corpus-preparation.qmd
-                    - en/exercises/training-examples.qmd
-                - section: "Guided tour of the reference code"
-                  contents:
-                    - en/exercises/gpt-config-walkthrough.qmd
-                    - en/exercises/gpt-ops-walkthrough.qmd
-                    - en/exercises/transformer-block-walkthrough.qmd
-                    - en/exercises/gpt-model-walkthrough.qmd
-                    - en/exercises/gpt-generation-walkthrough.qmd
-            - section: "Deepen your understanding"
-              contents:
-                - section: "Attention and architectures"
-                  contents:
-                    - en/exercises/cross-attention.qmd
-                    - en/exercises/hybrid-llm-architectures.qmd
-                - section: "Text and tokenization"
-                  contents:
-                    - en/exercises/tokenization-strategies.qmd
-                - section: "Inference and efficiency"
-                  contents:
-                    - en/exercises/in-context-learning.qmd
-                    - en/exercises/llm-computational-complexity.qmd
-                - section: "Scale and research questions"
-                  contents:
-                    - en/exercises/emergence.qmd
-                    - en/exercises/llm-evolution.qmd
+                - en/exercises/text-data.qmd
+                - en/exercises/embedding-space.qmd
+                - en/exercises/positional-encoding.qmd
+                - en/exercises/contextualized-representations.qmd
+                - en/exercises/transformer.qmd
+                - en/exercises/queries-keys-values.qmd
+                - en/exercises/scaled-dot-product-attention.qmd
+                - en/exercises/causal-masking.qmd
+                - en/exercises/logits.qmd
+                - en/exercises/probabilities.qmd
+                - en/exercises/entropy.qmd
+                - en/exercises/likelihood.qmd
+                - en/exercises/cross-entropy.qmd
+                - en/exercises/loss.qmd
+                - en/exercises/gradients.qmd
+                - en/exercises/transformer-architectures.qmd
+                - en/exercises/llm-limits.qmd
+                - en/exercises/corpus-preparation.qmd
+                - en/exercises/training-examples.qmd
+                - en/exercises/gpt-config-walkthrough.qmd
+                - en/exercises/gpt-ops-walkthrough.qmd
+                - en/exercises/transformer-block-walkthrough.qmd
+                - en/exercises/gpt-model-walkthrough.qmd
+                - en/exercises/gpt-generation-walkthrough.qmd
+                - en/exercises/cross-attention.qmd
+                - en/exercises/hybrid-llm-architectures.qmd
+                - en/exercises/tokenization-strategies.qmd
+                - en/exercises/in-context-learning.qmd
+                - en/exercises/llm-computational-complexity.qmd
+                - en/exercises/emergence.qmd
+                - en/exercises/llm-evolution.qmd
             - en/transformer-explainer.qmd
             - en/experimental-evaluation.qmd
         - section: "Deepen your understanding"
@@ -503,6 +489,7 @@ website:
             - section: "Attention, position, and architectures"
               contents:
                 - en/attention-score-scaling.qmd
+                - en/queries-keys-values-advanced.qmd
                 - en/cross-attention.qmd
                 - en/rope.qmd
                 - en/hybrid-llm-architectures.qmd
@@ -532,6 +519,7 @@ website:
                 - en/scaling-laws.qmd
                 - en/emergence.qmd
                 - en/llm-evolution.qmd
+                - en/jepa-platonic-representation.qmd
         - section: "Glossary and history"
           contents:
             - en/glossary.qmd

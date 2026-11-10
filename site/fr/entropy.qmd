@@ -102,10 +102,9 @@ Une température plus faible tend à concentrer la distribution ; une températu
 - Une entropie ou une perplexité calculée avec un tokenizer différent n'est pas directement comparable sans précautions.
 - L'entropie moyenne observée sous un modèle n'est pas automatiquement l'entropie vraie de la source des données.
 
-## S’exercer
+## Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/entropy.qmd).
-
 
 
 ## Pour poursuivre

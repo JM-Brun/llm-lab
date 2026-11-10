@@ -45,7 +45,7 @@ p_\theta(\cdot \mid c_t) = \operatorname{softmax}(z_t).
 
 For a candidate token \(v\), \(p_\theta(v \mid c_t)\) is the probability that it is the next token given the current context. Each probability lies between 0 and 1, and the probabilities across the vocabulary sum to 1. The distribution depends on the context; generation uses the distribution at the final context position.
 
-The probabilities are assigned to vocabulary tokens and sum to 1. They describe the next position, not complete sentences. Computing a distribution and distinguishing greedy selection from sampling are practised in [exercise GE-A](exercises.qmd#generation).
+The probabilities are assigned to vocabulary tokens and sum to 1. They describe the next position, not complete sentences. Computing a distribution and distinguishing greedy selection from sampling are practised in [exercise GE-A](exercises-generation.qmd#generation).
 
 A decoding policy then selects a token from this distribution:
 
@@ -94,6 +94,29 @@ Inference systems generally distinguish processing the initial prompt from gener
 
 **Decode** refers to an execution phase after prefill; **decoding** refers to the token-selection rule. The concepts are related, but they are not synonyms.
 
+### Why can inference feel slow?
+
+Visible latency comes from two different phases. Two metrics help distinguish them:
+
+- **TTFT (*time to first token*)**: the delay from request receipt to the first generated token. It commonly includes queueing, input preparation, and *prefill*, so it is strongly affected by the tokenized prompt length.
+- **ITL (*inter-token latency*)**: the delay between successive generated tokens after the first. It primarily characterizes incremental *decode* and determines how smooth streaming feels. It is often reported as a mean or percentile because delays can vary across tokens.
+
+A longer prompt tends to increase *prefill* work and therefore TTFT; a longer answer requires more *decode* steps and increases total generation time. These are tendencies, not absolute laws: queueing, cached prefixes, batch size, hardware, and kernels can change the result.
+
+The **KV cache** retains the keys (K) and values (V) already computed for each previous position and layer. It avoids recomputing attention over the entire prefix for every new token, at the cost of memory that grows with context length and the number of concurrent sequences. For a standard, unquantized K/V cache, a useful estimate is:
+
+\[
+M_{KV} \approx 2 \, L \, B \, T \, n_{KV} \, d_{head} \, s,
+\]
+
+where \(L\) is the number of layers, \(B\) the batch size, \(T\) the number of cached positions, \(n_{KV}\) the number of K/V heads, \(d_{head}\) their dimension, and \(s\) the bytes per element. This approximation omits allocation overhead and implementation-specific details. *Grouped-Query Attention* notably reduces the number of K/V heads relative to the number of query heads.
+
+*Prefill* is often compute-bound, while *decode* can become memory-bandwidth-bound because each step reads the accumulated cache to produce only a small amount of new output. The actual bottleneck depends on hardware, batch size, context length, and kernels: measure rather than assume.
+
+An advanced optimization, **speculative decoding**, has a draft model propose several tokens and a target model verify them. A proposed prefix can be accepted in one go; at the first mismatch, the procedure continues under a rule designed to preserve the target model's distribution. Speedup depends on verification cost and acceptance rate, so it is not automatically faster. This is an optional deep dive, not a prerequisite for understanding the basic loop.
+
+[Brij Pandey's inference-path diagram](https://www.linkedin.com/posts/brijpandeyji_you-ask-llm-a-question-it-pauses-then-share-7525787285829804032-YNEl) is a useful overview of these phases and diagnostics. It is cited as an external resource; its figure is not reproduced here.
+
 Prefill is not [*teacher forcing*](training-examples.qmd), either. With teacher forcing, predictions are conditioned on the observed prefix from reference data, especially during training. During generation, the prefix grows with tokens selected by the model. The prediction computation is related, but the source of the context differs.
 
 To see how this distinction appears in the reference program, read the [guided tour of the generation code](gpt-generation-walkthrough.qmd). It documents prompt processing, context-window recomputation, and optimizations deliberately absent from this teaching implementation.
@@ -138,60 +161,21 @@ This is the central distinction from [learning](loss.qmd): inference uses the av
 
 ## 6. Limits to keep in mind
 
-- **Context window:** the model processes only the supplied context, up to its maximum window. Information no longer present in that context no longer directly influences the prediction.
+- **Context window:** the model processes only the supplied context, up to its maximum window. The budget covers all tokens actually supplied—instructions, history, tool messages, prompt, and any multimodal tokens—as well as generated tokens. The advertised capacity is therefore not necessarily fully available for the response: an application may reserve an output allowance and apply a truncation or history-selection strategy. Information no longer present in the supplied context no longer directly influences the prediction. A larger window is not persistent memory and does not guarantee that every item will be used correctly.
 - **No intrinsic memory across generations:** each generation depends on the context it receives. An application may reinsert history or retain external state, but this does not mean the model weights have memorized the conversation.
 - **Quality depends on learned parameters:** the generation loop can run with an untrained model, but that does not make its outputs useful. Generation mechanics and the quality acquired through learning are distinct questions.
+- **Result validity:** a fluent answer—or even syntactically valid, executable SQL—does not guarantee that it answers the intended business question. Check the schema, the definitions being used (for example, how refunds and failed payments are treated), the assumptions, and the results before making a decision or taking action.
 
-::: {.self-check}
-## Check your understanding
+## Practice
 
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/generation.qmd).
 
-
-Try to answer the following questions before revealing the explanations.
-
-1. Why can the same model with the same context produce different texts?
-
-<details>
-<summary>Show the answer</summary>
-
-Because sampling can draw different tokens from the distribution. Each selected token then changes the context of subsequent predictions.
-
-</details>
-
-2. Why does a very low temperature make sampling approach greedy selection?
-
-<details>
-<summary>Show the answer</summary>
-
-It amplifies differences between logits. The distribution becomes highly concentrated on the highest-scoring token, making other choices very unlikely (except for ties and numerical effects).
-
-</details>
-
-3. Why cannot generation correct a poorly trained model?
-
-<details>
-<summary>Show the answer</summary>
-
-Parameters remain fixed during inference: no update takes place, no matter how many tokens are generated.
-
-</details>
-
-4. What is the difference between prefill and teacher forcing?
-
-<details>
-<summary>Show the answer</summary>
-
-Prefill is an execution phase that processes the initial prompt as a sequence. Teacher forcing is a conditioning strategy that supplies the observed prefix as context during training (and some scoring uses). They are not two names for the same operation.
-
-</details>
-:::
 
 ::: {.callout-tip title="Go further"}
 These links serve three different purposes:
 
 - **Understand the preceding computations:** [from text to tokens](text-data.qmd), then [representations and Transformer computation](transformer.qmd), [logits](logits.qmd), and [probabilities](probabilities.qmd).
-- **Study alternative selection rules:** [advanced decoding strategies](decoding-strategies.qmd).
+- **Study alternative selection rules:** [advanced decoding strategies](decoding-strategies.qmd), alongside this introductory overview of [tokens, context windows, temperature, and sampling](https://dev.to/nishanthan-k/core-elements-of-large-language-models-llms-tokens-context-windows-temperature-and-sampling-2m45).
 - **See a concrete implementation:** [guided tour of `generate.py`](gpt-generation-walkthrough.qmd).
 
 To compare generation with learning, read [training examples and teacher forcing](training-examples.qmd), followed by [the loss function](loss.qmd).

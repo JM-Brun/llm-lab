@@ -157,9 +157,17 @@ Le voyage des formes, ligne par ligne :
 
 [`tests/unit/test_gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt.py) : formes `(B, T, V)` attendues et valeurs finies ; toutes les erreurs de validation nommées ; déterminisme **à graine égale** (et différence à graine différente) ; invariance de préfixe ; comptage de paramètres conforme à la formule indépendante.
 
-## S’exercer
+## Exercices
 
-Les exercices de cette visite guidée sont regroupés sur sa [page d’exercices dédiée](exercises/gpt-model-walkthrough.qmd).
+1. Pourquoi `position_embedding[:seq_len]` et non `position_embedding` tout court ?
+2. Avec `V=50, T=16, d=16, H=2, L=2, hidden=32`, calculez le nombre total de paramètres sans exécuter le code.
+
+<details>
+<summary>Afficher les réponses et le raisonnement</summary>
+
+1. La table a toujours `context_length` lignes ; une séquence plus courte n'utilise que les premières `seq_len`. Sans la tranche, l'addition `(B, T, d) + (T_max, d)` échouerait dès que `T < T_max`.
+2. Par bloc : `4×16×16 + 4×16 + 2×32×16 + 32 + 16 + 4×16 = 1024+64+1024+48+64+64 = 2288`. Deux blocs : `4576`. Embeddings : `2×50×16 = 1600` (table + tête non liée) ; positions `16×16 = 256` ; norme finale `32` ; biais de sortie `50`. Total : `4576 + 1600 + 256 + 32 + 50 = 6514`.
+</details>
 
 ## Connexions
 
@@ -168,6 +176,10 @@ Les exercices de cette visite guidée sont regroupés sur sa [page d’exercices
 - **Pages conceptuelles** : [GPT et Transformer](transformer.qmd), [espace des embeddings](embedding-space.qmd), [position](positional-encoding.qmd), [logits](logits.qmd).
 - **Retour au parcours** : [Construire un petit GPT](build-path.qmd).
 - **Code source** : [`gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt.py) · **Tests** : [`test_gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt.py).
+
+## Exercices
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/gpt-model-walkthrough.qmd).
 
 ::: {.language-switch}
 **Langue :** [Français](gpt-model-walkthrough.qmd) · [English](../en/gpt-model-walkthrough.qmd)

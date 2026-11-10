@@ -229,8 +229,7 @@ To revisit the input stage, see [From text to tokens](text-data.qmd). To continu
 
 ## Practice
 
-This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/training-examples.qmd).
-
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/training-examples.qmd).
 
 
 ## Limitations

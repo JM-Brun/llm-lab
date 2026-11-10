@@ -190,9 +190,17 @@ Each position goes on its own through `d -> mlp_hidden_dim` (often `4d`), then G
 
 [`tests/unit/test_transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_transformer_block.py): `forward` preserves the shape and stays finite; a non-3D input is rejected; a head count inconsistent with the width is rejected.
 
-## Practice
+## Exercises
 
-Exercises for this guided tour are collected on its [dedicated practice page](exercises/transformer-block-walkthrough.qmd).
+1. With `d=16` and `H=2`, which columns of `q` does head 1 read?
+2. Why is `attended` allocated with `np.empty_like(x)` instead of zeros?
+
+<details>
+<summary>Show answers and reasoning</summary>
+
+1. Columns 8 to 15 (`slice(8, 16)`): every column belongs to exactly one head, and the split is contiguous.
+2. Every cell of `attended` is written exactly once by the loop (each `(b, h)` pair writes its slice for all positions); no cell is read before being written, so zero-initialization would be wasted work.
+</details>
 
 ## Connections
 
@@ -201,6 +209,10 @@ Exercises for this guided tour are collected on its [dedicated practice page](ex
 - **Concept pages**: [GPT and Transformer overview](transformer.qmd), [Q/K/V](queries-keys-values.qmd), [scaled dot-product attention](scaled-dot-product-attention.qmd), [causal masking](causal-masking.qmd), [contextualized representations](contextualized-representations.qmd).
 - **Back to the path**: [Build a small GPT](build-path.qmd).
 - **Source**: [`transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/transformer_block.py) · **Tests**: [`test_transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_transformer_block.py).
+
+## Practice
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/transformer-block-walkthrough.qmd).
 
 ::: {.language-switch}
 **Language:** [Français](../fr/transformer-block-walkthrough.qmd) · [English](transformer-block-walkthrough.qmd)

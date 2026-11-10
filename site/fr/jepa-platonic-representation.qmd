@@ -1,0 +1,151 @@
+---
+title: "Des observations partagées aux représentations partagées : JEPA et l'hypothèse de représentation platonique"
+subtitle: "Pourquoi les paires d'entraînement, et non la seule échelle, décident de l'accord entre modèles"
+keywords: ["type:concept-lesson", "destination:deepen", "topic:jepa-platonic-representation", "level:advanced", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/jepa-platonic-representation"
+scope: "Développe l'hypothèse de représentation platonique à travers le théorème de convergence conditionnelle de Balestriero et LeCun pour les JEPA : graphes de paires positives, bonnes et mauvaises vues, plongement spectral, variables de nuisance, interprétation de la prédiction du prochain token et lecture qualifiée des expériences d'alignement intermodal. La contextualisation au niveau du token reste sur fr/contextualized-representations ; les régularités ressources-performance restent sur fr/scaling-laws."
+purpose: "Permettre aux lecteurs avancés de relier la conception des paires d'entraînement à la géométrie des représentations, d'énoncer les hypothèses du théorème avant sa conclusion et d'interpréter les résultats d'alignement et d'efficacité en échantillons sans les généraliser abusivement."
+domain: "scale-research"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/contextualized-representations", "fr/linearite-embeddings", "fr/scaling-laws", "fr/llm-limits"]
+tags: ["type:concept-lesson", "destination:deepen", "topic:jepa-platonic-representation", "level:advanced", "language:fr", "status:published"]
+-->
+
+::: {.chapter-lead}
+Si un modèle apprend à partir de photographies et un autre à partir de texte, finiront-ils par organiser le monde de la même façon ? L'**hypothèse de représentation platonique** conjecture que oui, de plus en plus, à mesure que les modèles gagnent en capacité. Un théorème de Balestriero et LeCun (2026) rend précise une partie de cette conjecture : ce qui décide de la convergence n'est pas la seule échelle, mais les observations que l'objectif d'entraînement déclare liées.
+:::
+
+::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d'apprentissage"}
+Après cette étude, vous devriez savoir distinguer les paires positives à bonnes et à mauvaises vues et expliquer pourquoi ces étiquettes sont relatives à la tâche ; énoncer les hypothèses du théorème de représentation platonique avant sa conclusion ; suivre le mécanisme spectral qui relie le graphe des paires positives à l'ambiguïté de rotation ; et lire les résultats d'alignement et d'efficacité en échantillons sans confondre échantillons, tokens, calcul et intelligence.
+:::
+
+::: {.callout-note}
+**Périmètre des sources.** Cette leçon synthétise l'article primaire de Balestriero et LeCun (arXiv:2610.39302) et l'article AI Scientist de Mayank Kejriwal, qui en est une explication secondaire. Les enregistrements d'ingestion et le dossier de revue des sources se trouvent dans le dépôt sous `data/extractions/` et `docs/source-reviews/`. Tous les chiffres expérimentaux ci-dessous sont rapportés par les auteurs et propres à leur protocole ; ils n'ont pas été reproduits indépendamment.
+:::
+
+## La question : des capteurs différents peuvent-ils apprendre le même monde ?
+
+L'[hypothèse de représentation platonique](https://arxiv.org/abs/2405.07987) observe qu'à mesure que les modèles et les données grandissent, les représentations internes se ressemblent de plus en plus, au-delà des architectures, des jeux de données et même des modalités. Le nom évoque la caverne de Platon : des modèles différents voient des projections différentes d'un même monde, mais semblent converger vers un modèle statistique partagé de ce monde.
+
+La conjecture est suggestive mais, seule, elle n'offre ni garantie ni recette. Elle ne dit pas dans quelles conditions d'entraînement la convergence doit se produire, ni à quelle distance les représentations peuvent diverger quand ces conditions échouent. L'article étudié ici transforme l'hypothèse en un énoncé conditionnel.
+
+## Les paires positives définissent un graphe de ce qui compte comme lié
+
+Une **architecture à plongements joints prédictifs (JEPA)** apprend des représentations en prédisant, à partir d'une observation, l'embedding d'une autre observation déclarée liée, tandis qu'une contrainte anti-effondrement empêche tous les embeddings de devenir identiques. Les paires, dites **paires positives**, constituent le signal d'apprentissage : l'objectif rapproche leurs embeddings et écarte les autres.
+
+Lue géométriquement, la relation de paires positives est un graphe pondéré : les observations sont les sommets, les probabilités de paires sont les arêtes. La représentation apprise par l'encodeur respecte ce graphe. C'est le geste central de l'article : la convergence entre deux encodeurs entraînés indépendamment dépend du fait que leurs graphes de paires positives encodent les mêmes relations sous-jacentes entre états du monde.
+
+## Bonnes vues et mauvaises vues
+
+L'article distingue deux façons de construire les paires positives :
+
+| Construction des paires | Exemple | Ce que la paire peut partager |
+|---|---|---|
+| **Bonnes vues** | Deux légendes décrivant la même scène ; une légende et une image du même clip vidéo | La scène sous-jacente, avec des différences superficielles indépendantes |
+| **Mauvaises vues** | Deux fragments masqués d'une même légende ; deux recadrages d'une même photographie | L'observation d'origine, y compris son accident : choix de mots, style, angle de caméra, éclairage |
+
+Une paire à mauvaises vues relie deux corruptions d'*une seule* observation. Les corruptions retirent de l'information, mais tout ce qui survit, y compris les facteurs de nuisance propres à l'observation d'origine, se retrouve des deux côtés de la paire. L'objectif n'a alors aucune pression pour retirer cette nuisance de la représentation.
+
+Deux précautions maintiennent la distinction honnête :
+
+- **Les étiquettes sont relatives à la tâche.** Un recadrage ou un masquage n'est pas intrinsèquement mauvais ; ce peut être exactement la bonne augmentation pour apprendre une invariance. Il est dit mauvais ici parce que la relation qu'il induit correspond mal à la structure intermodale des scènes que l'on veut retrouver. Même des encodeurs d'images performants entraînés par recadrages, comme DINOv2, sont à mauvaises vues au sens de cette définition ; de bonnes vues d'images peuvent exiger des observations réellement différentes, comme plusieurs images d'une vidéo.
+- **La couverture des données interagit avec la construction des vues.** Des corruptions faibles ne relient que des observations proches : il faut alors beaucoup d'échantillons pour que le graphe couvre une scène. Des corruptions fortes peuvent relier des observations de scènes différentes via un contenu de nuisance partagé, plafonnant l'alignement quelle que soit l'échelle. Le signal d'apprentissage est un graphe sur les exemples, que la couverture et la conception des vues déterminent ensemble.
+
+## Le théorème : un énoncé conditionnel
+
+Sous ses hypothèses idéalisées, l'article prouve un **théorème de représentation platonique** :
+
+1. Un ensemble fini d'états du monde, chacun de probabilité strictement positive.
+2. Chaque modalité observe le monde par un rendu injectif : une observation détermine son état.
+3. La distribution de paires positives de chaque modalité est symétrique et partage la même marginale sur les états du monde.
+4. L'objectif combine une perte par paires d'embeddings et un terme anti-effondrement, tous deux invariants par rotation de la représentation.
+5. L'optimisation est considérée au niveau de la population, et les optima sont uniques à une rotation près.
+
+**Conclusion :** des encodeurs entraînés séparément, sur un nombre quelconque de modalités, apprennent la même représentation, à une rotation orthogonale près. Pensez à deux cartes de la même région imprimées dans des orientations différentes : en faire tourner une fait coïncider chaque repère avec l'autre.
+
+C'est une condition *suffisante*, pas une loi d'échelle. L'article borne aussi la divergence possible des représentations quand les relations de paires diffèrent, et formule le résultat au niveau de la population, pas pour un optimiseur donné ou un entraînement fini.
+
+## Pourquoi « à une rotation près » : le mécanisme spectral
+
+Pour les contraintes anti-effondrement du second ordre, l'annexe A de l'article rend le mécanisme explicite. La distribution de paires positives définit un opérateur de Markov sur l'espace des états du monde ; après normalisation, il prend la forme $K = D^{-1/2}\,\Pi\,D^{-1/2}$, où $\Pi$ est la distribution de paires et $D$ la matrice diagonale des probabilités des états. L'objectif contraint devient une maximisation de trace contre $K$, et le principe de Ky Fan sélectionne le sous-espace propre non constant de plus haut niveau de $K$ comme sous-espace d'embedding optimal.
+
+Deux conséquences suivent :
+
+- Si un **trou spectral** strict sépare la dernière valeur propre sélectionnée de la première exclue, le sous-espace sélectionné est unique, et deux bases optimales de ce sous-espace diffèrent d'une matrice orthogonale. Cette matrice orthogonale est exactement la « rotation » du théorème.
+- Si la condition d'écart échoue à la frontière de dimensionnalité, le sous-espace optimal lui-même peut ne pas être unique : des encodeurs différents peuvent sélectionner des géométries distinctes, également optimales. L'ambiguïté de rotation au sein d'un sous-espace fixe et la non-unicité du sous-espace sont deux phénomènes différents.
+
+Quand deux modalités induisent des noyaux de paires différents, une borne de type Davis-Kahan dit que le désaccord après rotation croît avec l'écart entre les noyaux et se dégrade quand le trou spectral pertinent diminue. Cela donne l'épine dorsale de l'analyse : **graphe de paires positives, opérateur de Markov, sous-espace spectral, trou spectral, ambiguïté de rotation, erreur d'alignement**.
+
+## Variables de nuisance : ce que l'observation ajoute à l'état
+
+L'article formalise une observation comme le rendu d'un état du monde accompagné d'une nuisance propre à la modalité : $x = g_m(z, u)$. Les nuisances ne sont pas du bruit en général ; ce sont des facteurs que la modalité transporte, comme le choix de mots, le style, le point de vue ou l'éclairage.
+
+Pour les paires à bonnes vues, les deux nuisances sont indépendantes : les directions de nuisance ne sont pas récompensées de façon cohérente, et la capacité d'embedding se concentre sur la structure de la scène. Pour les paires à mauvaises vues, la nuisance partagée est présente des deux côtés : une partie de la capacité la représente. La preuve borne ce coût : la capacité dépensée sur les directions de nuisance réduit la part de l'embedding expliquée par la scène et impose une borne inférieure à l'erreur d'alignement intermodal.
+
+Qu'un facteur soit une nuisance dépend de la tâche. Le point de vue de la caméra est une nuisance pour l'alignement sémantique intermodal, mais il est essentiel pour un modèle du monde conditionné par les actions.
+
+## La prédiction du prochain token comme JEPA à mauvaises vues, avec précautions
+
+L'article montre que la prédiction du prochain token peut s'écrire sous une forme JEPA généralisée : la paire positive est un préfixe de document et sa suite, et la log-partition du softmax joue le rôle d'un terme anti-effondrement (d'uniformité) dans la factorisation.
+
+L'interprétation proposée est que de telles paires ne relient les descriptions d'un même état du monde qu'indirectement, par des chaînes de contextes qui se recouvrent, tout en reliant des scènes différentes via des tokens fréquents partagés ou le style du document. Selon cette lecture, les modèles de langage ne s'alignent avec la vision qu'à force d'échelle, parce que leur graphe de paires positives est un graphe à mauvaises vues relativement à la structure intermodale des scènes.
+
+Trois précautions importent :
+
+- Cette reformulation est une interprétation théorique soutenue par des expériences, pas une conséquence directe du théorème de rotation. L'article lui-même note que la prédiction du prochain token n'est pas une JEPA spectrale au sens de la preuve.
+- Elle n'établit pas que les modèles de langage ne peuvent pas apprendre la structure du monde à partir du texte.
+- L'analogie anti-effondrement est exacte dans la factorisation, mais l'argument de nuisance reste heuristique dans ce cadre.
+
+## Ce que rapportent les expériences, et comment le lire
+
+L'article valide la théorie de 145k légendes jusqu'aux textes de 940M images du web. Les résultats rapportés incluent :
+
+- Sur le même corpus, une JEPA texte à bonnes vues atteint un alignement mesuré comparable après 21,6M échantillons d'entraînement, contre 900M pour la prédiction du prochain token : environ 42 fois moins d'**échantillons**. La même comparaison représente environ 14 fois moins de tokens de texte et 435 fois moins d'images uniques. Des échantillons ne sont pas des FLOPs, du temps ou de l'énergie ; les exécutions comparées utilisent en outre des recettes de taille de lot et de taux d'apprentissage différentes.
+- À l'échelle du web, une JEPA texte de 109M paramètres obtient 0,184 sur le principal banc d'alignement de voisinage, devant Qwen2.5-72B (0,154) et Llama-3-70B (0,151) dans la même évaluation, et devant l'encodeur de texte de CLIP. C'est une métrique d'alignement propre à la tâche, pas un classement de capacité générale.
+- Une rotation apprise transforme les encodeurs de texte et d'image, entraînés séparément, en générateur de légendes, atteignant 0,838 de CIDEr sur COCO. La rotation est ajustée sur 30 000 paires image-légende ; les encodeurs restent entraînés séparément, mais la démonstration n'est pas entièrement sans paires.
+- Sur un banc séparé d'alignement sans paires, la JEPA texte atteint 64 % de top-5 sur ImageNet-100, contre au plus 56 % pour les modèles de langage évalués jusqu'à 8 milliards de paramètres. Le protocole est spécifique et ne doit pas être généralisé.
+- L'article rapporte aussi une loi d'échelle de l'alignement qui prédit des exécutions inédites dans la variation entre graines (seed noise), mais elle est ajustée sur une seule recette et surestime certains régimes où les données répétées comptent.
+
+Une précaution de provenance accompagne les chiffres à l'échelle du web : une grande partie du texte d'entraînement se compose de descriptions générées par un générateur de légendes vision-langage en amont. L'encodeur de texte ne voit jamais de pixels, mais sa supervision hérite de connaissances image-texte de ce système amont.
+
+## Ce que cela n'établit pas
+
+- **L'idéalisation du rendu.** Les vraies légendes omettent ce que les images montrent, et inversement ; l'hypothèse de rendu injectif du théorème ne tient pas littéralement, et les bornes de désaccord entre noyaux sont l'outil de l'article pour cet écart.
+- **Les prédicteurs conditionnés par les actions.** L'analyse formelle utilise un prédicteur identité ; les variantes de modèles du monde JEPA qui prédisent des embeddings conditionnés par des actions ne sont pas couvertes par le théorème.
+- **L'alignement n'est pas le raisonnement.** Les scores d'alignement de voisinage, de retrieval et de légendes n'établissent ni capacité de raisonnement, ni interaction ancrée, ni intelligence générale, ni modèle du monde complet.
+- **Pas de loi universelle de convergence.** Rien ici ne prouve que tous les modèles suffisamment grands convergent. Le théorème isole la condition sous laquelle ils le feraient : des relations partagées entre les observations que l'objectif apparie.
+
+## Sources et place dans LLM Lab
+
+- Balestriero et LeCun, [Proving and Improving the Platonic Representation Hypothesis with JEPAs](https://arxiv.org/abs/2610.39302), arXiv:2610.39302 (2026). Source primaire.
+- Kejriwal, [Do AI models trained on different modalities converge to the same representation of the world?](https://aiscientist.substack.com/p/do-ai-models-trained-on-different), AI Scientist (2026). Synthèse secondaire ; utilisez-la pour s'orienter, l'article pour les affirmations.
+- Huh, Cheung, Wang et Isola, [The Platonic Representation Hypothesis](https://arxiv.org/abs/2405.07987) (2024). La conjecture d'origine.
+
+**Place dans LLM Lab :** un approfondissement avancé facultatif dans le domaine des questions de recherche. Il ne modifie pas le parcours Understand principal et n'est pas un prérequis pour construire le petit GPT. Il relie trois pages voisines : les [représentations contextualisées](contextualized-representations.qmd) (comment un modèle construit des états au niveau du token), la [linéarité des embeddings](linearite-embeddings.qmd) (géométrie supposée des espaces de représentation) et les [lois d'échelle](scaling-laws.qmd) (régularités ressources-performance, auxquelles cette page ne réduit volontairement pas l'alignement).
+
+::: {.callout-warning}
+**Limite de recherche.** Les annexes de preuve de l'article ont été auditées sélectivement, l'implémentation officielle n'a pas été exécutée et aucun résultat n'a été reproduit indépendamment. Traitez les chiffres rapportés comme des éléments de preuve rapportés par les auteurs et propres à leur protocole, conformément au dossier de revue des sources du dépôt.
+:::
+
+::: {.self-check}
+## Vérifiez votre compréhension
+
+1. Deux légendes décrivent la même photographie ; deux fragments masqués proviennent d'une même légende. Quelles paires sont des bonnes vues, et pourquoi l'étiquette bonne/mauvaise est-elle relative à la tâche plutôt qu'absolue ?
+2. Donnez deux hypothèses du théorème de représentation platonique sans lesquelles la conclusion « même représentation à une rotation près » ne suit pas.
+3. L'article rapporte 42 fois moins d'échantillons d'entraînement pour une JEPA à bonnes vues. Pourquoi cela n'est-il pas une affirmation sur 42 fois moins de calcul ?
+4. Pourquoi l'interprétation de la prédiction du prochain token comme JEPA à mauvaises vues est-elle heuristique plutôt qu'un théorème ?
+:::
+
+::: {.language-switch}
+**Langue :** [Français](jepa-platonic-representation.qmd) · [English](../en/jepa-platonic-representation.qmd)
+:::

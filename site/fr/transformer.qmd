@@ -72,6 +72,10 @@ Le schéma décrit le rôle des composants sans imposer une implémentation uniq
 
 L'attention mélange l'information entre les positions autorisées ; le MLP transforme localement chaque représentation, avec des poids partagés entre les positions. Les deux opérations sont apprises. L'attention calcule une somme pondérée de vecteurs de valeur : elle ne recherche pas littéralement des informations dans des notes lisibles par un humain.
 
+### Parallélisme à l'entraînement, génération séquentielle
+
+Le Transformer permet de calculer en parallèle les représentations de plusieurs positions d'une séquence d'entraînement : les tokens d'entrée sont disponibles et le masque causal empêche chaque position de voir le futur. Cela supprime la dépendance récurrente position par position propre aux RNN. **Cela ne rend pas la génération GPT entièrement parallèle** : au moment de produire une réponse, le token suivant dépend des tokens déjà générés ; les étapes de décodage restent donc autorégressives. Le cache clé-valeur (*KV cache*) évite de recalculer certaines clés et valeurs du passé, mais ne supprime pas cette dépendance séquentielle. Voir [la boucle de génération](generation.qmd) pour distinguer *prefill* et *decode*.
+
 L'**attention multi-têtes** effectue plusieurs calculs en parallèle à partir de projections apprises distinctes, puis combine leurs résultats. Cette diversité ne garantit pas que chaque tête développe une spécialisation nette et interprétable par un humain.
 
 ### Profondeur et largeur : deux dimensions de l’architecture
@@ -103,10 +107,7 @@ Après le dernier bloc, la normalisation finale et la tête de sortie produisent
 
 ## Vérifier sa compréhension
 
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/transformer.qmd).
-
-
-Pour prolonger cette vérification par des problèmes progressifs sur les embeddings, les résidus, la normalisation et le MLP, consultez les [exercices consacrés au Transformer](exercises.qmd#transformer).
+Pour prolonger cette vérification par des problèmes progressifs sur les embeddings, les résidus, la normalisation et le MLP, consultez les [exercices consacrés au Transformer](exercises-transformer.qmd#transformer).
 
 Cette vérification porte sur la structure du bloc et le rôle des connexions résiduelles.
 
@@ -135,7 +136,11 @@ L'[atelier d'exploration de GPT-2](transformer-explainer.qmd) permet d'observer 
 
 ## Pour approfondir
 
-Pour retrouver les visualisations, l'article fondateur et les ressources d'implémentation, consultez la [rubrique Approfondir consacrée au Transformer](deepen.qmd#ressources-transformer). Ces ressources sont facultatives et ne font pas partie du parcours principal.
+Pour retrouver les visualisations, l'article fondateur et les ressources d'implémentation, consultez la [rubrique Approfondir consacrée au Transformer](deepen.qmd#ressources-transformer). Pour une première vue d'ensemble complémentaire, voir aussi [Understanding Transformer: The Architecture Behind Modern AI](https://dev.to/nishanthan-k/understanding-transformer-the-architecture-behind-modern-ai-55o8). Ces ressources sont facultatives et ne font pas partie du parcours principal.
+
+## Exercices
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/transformer.qmd).
 
 {{< include ../includes/generated-suggested-route-fr-transformer.qmd >}}
 

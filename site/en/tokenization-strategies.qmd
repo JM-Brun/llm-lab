@@ -249,8 +249,7 @@ This page is an **optional deepening** of [From text to tokens](text-data.qmd): 
 
 ## Practice
 
-This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/tokenization-strategies.qmd).
-
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/tokenization-strategies.qmd).
 
 
 ::: {.language-switch}

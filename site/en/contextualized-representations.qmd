@@ -106,6 +106,8 @@ States then evolve from block to block: \(h_t^{(0)}\) denotes the initial input 
 MICRO-WORKBENCH · CONTEXTUAL DIVERGENCE OF A SHARED TOKEN (NUMPY)
 :::
 ::: {.micro-workbench-body}
+This deliberately minimal experiment illustrates that a state can depend on other positions. It does not compute a real Transformer layer (no Q/K/V projections, softmax-normalized scores, residual connections, normalization, or MLP).
+
 ```python
 import numpy as np
 
@@ -137,7 +139,8 @@ z_A = x_A + P
 z_B = x_B + P
 assert np.array_equal(z_A[1], z_B[1])
 
-# 3. Causal contextual aggregation: position 1 integrates its context (pos 0)
+# 3. Toy causal contextual aggregation (not an attention implementation)
+# Fixed illustrative weights make the context dependency visible.
 # Illustrative causal attention weights: 40% context (pos 0), 60% self (pos 1)
 h_A_1 = 0.4 * z_A[0] + 0.6 * z_A[1]
 h_B_1 = 0.4 * z_B[0] + 0.6 * z_B[1]
@@ -152,14 +155,14 @@ print(f"Divergence induced by context: {diff:.4f}")
 ```
 :::
 ::: {.micro-workbench-footer}
-Context transforms hidden states: identical initial lookups ($E[\text{ID}]$) produce distinct activations after sequence aggregation.
+This toy isolates a dependency: identical lookups ($E[\text{ID}]$) can produce different states after contextual aggregation. The weighted average above does not implement a Transformer's self-attention.
 :::
 :::
 
 <details class="spot-the-fallacy">
 <summary>Common Fallacy: “For two senses of a word like 'bank' to be captured, the tokenizer must assign them different token IDs”</summary>
 <div class="fallacy-content">
-<p><strong>Counterexample:</strong> The tokenizer operates purely on surface statistics and byte sequences (e.g. BPE) without sentence-level comprehension; it assigns the exact same integer ID to "bank" whether it refers to a financial institution or a river bank. Attention layers subsequently mix context-specific information to specialize the hidden representation $h_t^{(\ell)}$. Demanding separate IDs for different meanings would require solving semantic disambiguation before the model even begins.</p>
+<p><strong>Counterexample:</strong> A tokenizer segments text using its vocabulary and segmentation rules; it does not perform sentence-level semantic disambiguation. In this example, we explicitly assume that both occurrences of “bank” receive the same ID. The model's layers can then build different hidden states from their accessible contexts. Requiring separate IDs for each sense confuses token segmentation with contextual disambiguation.</p>
 </div>
 </details>
 
@@ -194,23 +197,10 @@ To place this transformation in the full learning path:
 
 The [embedding-space lookup](embedding-space.qmd) maps IDs to initial vectors. To see how the network then transforms these vectors into contextualized states, continue with [The Transformer in a GPT](transformer.qmd): that page locates the stack of blocks and distinguishes attention from the MLP. The [Q/K/V](queries-keys-values.qmd) and [scaled dot-product attention](scaled-dot-product-attention.qmd) pages then unpack the attention mechanism.
 
-::: {.self-check}
-## Check your understanding
+## Practice
 
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/contextualized-representations.qmd).
 
-[Extended exercises on this topic](../en/exercises.qmd#transformer).
-
-Two occurrences of the **same token ID** appear in two different sentences. Assume the embedding matrix is unchanged:
-
-1. Are the vectors returned by the embedding lookup identical?
-2. Must the hidden states after the Transformer layers also be identical? Why?
-3. At which stage does contextual information enter the computation?
-4. In the *bank* example, what is held constant to isolate the effect of context?
-
-You have understood this step if you can explain the difference between **identity of the initial vector** and **context-dependence of hidden states**, without attributing sentence understanding to the lookup itself.
-
-:::
 
 {{< include ../includes/generated-suggested-route-en-contextualized-representations.qmd >}}
 

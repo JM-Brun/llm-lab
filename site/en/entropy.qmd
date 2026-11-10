@@ -104,8 +104,7 @@ Lower temperature tends to concentrate the distribution; higher temperature tend
 
 ## Practice
 
-This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/entropy.qmd).
-
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/entropy.qmd).
 
 
 ## Further reading

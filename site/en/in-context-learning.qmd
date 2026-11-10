@@ -108,8 +108,7 @@ A good protocol separates success on seen examples from generalization to unseen
 
 ## Practice
 
-This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/in-context-learning.qmd).
-
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/in-context-learning.qmd).
 
 
 ::: {.language-switch}

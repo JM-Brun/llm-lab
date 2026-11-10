@@ -227,10 +227,9 @@ Pour revenir en amont, consulter [Du texte aux tokens](text-data.qmd). Pour pour
 - **Formes :** `input_ids` et `targets` ont la forme \([B,L]\), les logits \([B,L,V]\). L'alignement doit être conservé jusqu'au calcul de la perte.
 :::
 
-## S’exercer
+## Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/training-examples.qmd).
-
 
 
 ## Limites

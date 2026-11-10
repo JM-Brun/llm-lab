@@ -166,8 +166,7 @@ Connect this case to [Transformer architectures](transformer-architectures.qmd),
 
 ## Practice
 
-This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/hybrid-llm-architectures.qmd).
-
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/hybrid-llm-architectures.qmd).
 
 
 ::: {.language-switch}

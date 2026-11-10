@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["en/llm-overview"]
   children: []
-related: ["en/experimental-evaluation", "en/emergence"]
+related: ["en/experimental-evaluation", "en/emergence", "en/llm-limits-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:llm-limits", "level:overview", "language:en", "status:published"]
 -->
 
@@ -79,8 +79,7 @@ Cite the protocol, not just the conclusion.
 
 ## Practice
 
-This lesson’s questions are collected on its [dedicated practice page](exercises/llm-limits.qmd).
-
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/llm-limits.qmd).
 
 
 ::: {.language-switch}

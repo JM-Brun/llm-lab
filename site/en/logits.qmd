@@ -64,40 +64,10 @@ The final hidden representation is projected to a vector of dimension $V$, usual
 
 The [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) documentation specifies unnormalized logits as the expected input.
 
-::: {.self-check}
-## Check your understanding
+## Practice
 
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/logits.qmd).
 
-
-1. If the vocabulary contains $V$ tokens, how many components does the logit vector contain at one position?
-
-<details>
-<summary>Show answer</summary>
-
-It contains $V$ components, one for each vocabulary token.
-
-</details>
-
-2. Why does a logit with value 8 not mean an 80% probability?
-
-<details>
-<summary>Show answer</summary>
-
-A logit is an unnormalized real-valued score. It is neither bounded between 0 and 1 nor constrained to sum to one. A separate transformation is needed to obtain a probability distribution.
-
-</details>
-
-3. What does the argmax of a logit vector identify?
-
-<details>
-<summary>Show answer</summary>
-
-It identifies the token with the highest score in that vector. By itself, it does not measure confidence or truth.
-
-</details>
-
-:::
 
 {{< include ../includes/generated-suggested-route-en-logits.qmd >}}
 

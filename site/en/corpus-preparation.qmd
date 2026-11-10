@@ -94,8 +94,7 @@ The prepared corpus can then be encoded into token streams. The [training exampl
 
 ## Practice
 
-This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/corpus-preparation.qmd).
-
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/corpus-preparation.qmd).
 
 
 ## Limitations

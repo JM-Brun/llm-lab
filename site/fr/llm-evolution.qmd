@@ -179,10 +179,9 @@ Le meilleur modèle mental reste donc celui d'un **modèle prédictif au cœur d
 - OpenAI, [Async tool calling](https://developers.openai.com/api/docs/guides/async-tool-calling) — contrat d'exécution asynchrone.
 - OpenAI, [Mid-turn steering](https://developers.openai.com/api/docs/guides/steering) — contrôle d'une réponse en cours.
 
-## S’exercer
+## Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/llm-evolution.qmd).
-
 
 
 ::: {.language-switch}

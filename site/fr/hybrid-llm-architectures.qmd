@@ -164,10 +164,9 @@ Nemotron 3 ne rend pas le Transformer obsolète. Il montre qu'un système peut c
 
 Pour relier ce cas au parcours : [architectures Transformer](transformer-architectures.qmd), [bloc Transformer](transformer.qmd), [génération autorégressive](generation.qmd) et [lois d'échelle](scaling-laws.qmd).
 
-## S’exercer
+## Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/hybrid-llm-architectures.qmd).
-
 
 
 ::: {.language-switch}

@@ -190,9 +190,17 @@ Chaque position passe seule dans `d → mlp_hidden_dim` (souvent `4d`), puis GEL
 
 [`tests/unit/test_transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_transformer_block.py) : le `forward` préserve la forme et reste fini ; une entrée non 3D est rejetée ; un nombre de têtes incohérent avec la largeur est rejeté.
 
-## S’exercer
+## Exercices
 
-Les exercices de cette visite guidée sont regroupés sur sa [page d’exercices dédiée](exercises/transformer-block-walkthrough.qmd).
+1. Avec `d=16` et `H=2`, quelles colonnes de `q` la tête 1 lit-elle ?
+2. Pourquoi `attended` est-il alloué avec `np.empty_like(x)` plutôt que rempli de zéros ?
+
+<details>
+<summary>Afficher les réponses et le raisonnement</summary>
+
+1. Les colonnes 8 à 15 (`slice(8, 16)`) : chaque colonne n'appartient qu'à une tête, la répartition est contiguë.
+2. Chaque position de `attended` est écrite exactement une fois par la boucle (chaque couple `(b, h)` écrit sa tranche pour toutes les positions) ; aucune cellule n'est lue avant d'être écrite, donc l'initialisation à zéro serait du travail inutile.
+</details>
 
 ## Connexions
 
@@ -201,6 +209,10 @@ Les exercices de cette visite guidée sont regroupés sur sa [page d’exercices
 - **Pages conceptuelles** : [vue d'ensemble GPT et Transformer](transformer.qmd), [Q/K/V](queries-keys-values.qmd), [attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd), [masquage causal](causal-masking.qmd), [représentations contextualisées](contextualized-representations.qmd).
 - **Retour au parcours** : [Construire un petit GPT](build-path.qmd).
 - **Code source** : [`transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/transformer_block.py) · **Tests** : [`test_transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_transformer_block.py).
+
+## Exercices
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/transformer-block-walkthrough.qmd).
 
 ::: {.language-switch}
 **Langue :** [Français](transformer-block-walkthrough.qmd) · [English](../en/transformer-block-walkthrough.qmd)

@@ -156,8 +156,7 @@ The mechanism is not limited to translation. It also appears in multimodal model
 
 ## Practice
 
-This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/cross-attention.qmd).
-
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/cross-attention.qmd).
 
 
 ::: {.language-switch}

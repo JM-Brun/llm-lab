@@ -45,7 +45,7 @@ p_\theta(\cdot \mid c_t) = \operatorname{softmax}(z_t).
 
 Pour un token candidat \(v\), \(p_\theta(v \mid c_t)\) désigne la probabilité qu'il soit le prochain token sachant le contexte courant. Chaque probabilité est comprise entre 0 et 1 et leur somme, sur tout le vocabulaire, vaut 1. La distribution dépend du contexte ; la génération utilise celle de la dernière position du contexte.
 
-Les probabilités portent sur les tokens du vocabulaire et leur somme vaut 1. Elles décrivent la prochaine position, pas des phrases complètes. Le calcul d'une distribution et la distinction entre sélection gloutonne et échantillonnage sont travaillés dans l'[exercice GE-A](exercises.qmd#generation).
+Les probabilités portent sur les tokens du vocabulaire et leur somme vaut 1. Elles décrivent la prochaine position, pas des phrases complètes. Le calcul d'une distribution et la distinction entre sélection gloutonne et échantillonnage sont travaillés dans l'[exercice GE-A](exercises-generation.qmd#generation).
 
 Une politique de décodage sélectionne ensuite un token à partir de cette distribution :
 
@@ -94,6 +94,29 @@ Les systèmes d'inférence distinguent généralement le traitement initial du p
 
 **Decode** désigne donc une phase d'exécution après le prefill ; **décodage** désigne la règle de sélection du token. Les deux notions sont liées, mais ne sont pas synonymes.
 
+### Pourquoi l'inférence semble-t-elle parfois lente ?
+
+La latence visible dépend de deux phases différentes. Deux métriques permettent de les distinguer :
+
+- **TTFT (*time to first token*)** : délai entre la réception de la requête et le premier token généré. Il inclut généralement la file d'attente, la préparation de l'entrée et le *prefill* ; il dépend donc fortement de la longueur du prompt tokenisé.
+- **ITL (*inter-token latency*)** : délai entre deux tokens générés successivement, après le premier. Il caractérise surtout le *decode* incrémental et conditionne la fluidité du streaming. On rapporte souvent une moyenne ou des percentiles, car les délais peuvent varier d'un token à l'autre.
+
+Un prompt plus long tend à augmenter le travail de *prefill* et donc le TTFT ; une réponse plus longue demande davantage d'étapes de *decode* et augmente la durée totale. Ce sont des tendances, pas des lois absolues : mise en file d'attente, préfixes déjà mis en cache, taille de batch, matériel et kernels peuvent changer le résultat.
+
+Le **KV cache** conserve, pour chaque couche et chaque position passée, les clés (*K*) et valeurs (*V*) déjà calculées. Il évite de recalculer l'attention sur tout le préfixe à chaque nouveau token, au prix d'une mémoire qui augmente avec la longueur du contexte et le nombre de séquences simultanées. Pour un cache K/V standard non quantifié, une estimation utile est :
+
+\[
+M_{KV} \approx 2 \, L \, B \, T \, n_{KV} \, d_{head} \, s,
+\]
+
+où \(L\) est le nombre de couches, \(B\) le batch size, \(T\) le nombre de positions mises en cache, \(n_{KV}\) le nombre de têtes K/V, \(d_{head}\) leur dimension et \(s\) le nombre d'octets par élément. Cette approximation ignore les surcoûts d'allocation et les détails propres aux implémentations. Le *Grouped-Query Attention* réduit notamment le nombre de têtes K/V par rapport au nombre de têtes de requête.
+
+Le *prefill* est souvent limité par la capacité de calcul, tandis que le *decode* peut devenir limité par la bande passante mémoire, car chaque étape lit le cache accumulé pour produire peu de nouveaux tokens. Ce diagnostic dépend toutefois du matériel, du batch, de la longueur du contexte et des kernels : il faut mesurer plutôt que supposer.
+
+Une optimisation avancée, le **speculative decoding**, fait proposer plusieurs tokens par un modèle brouillon, puis les fait vérifier par le modèle cible. Un préfixe proposé peut être accepté en bloc ; à la première divergence, la procédure reprend selon une règle conçue pour préserver la distribution du modèle cible. Le gain dépend du coût de vérification et du taux d'acceptation : ce n'est pas automatiquement plus rapide. Cette technique est un approfondissement, pas une étape nécessaire pour comprendre la boucle de base.
+
+Le schéma de [Brij Pandey sur le chemin d'inférence](https://www.linkedin.com/posts/brijpandeyji_you-ask-llm-a-question-it-pauses-then-share-7525787285829804032-YNEl) fournit une vue d'ensemble utile de ces phases et de ces diagnostics. Il est cité comme ressource externe ; sa figure n'est pas reproduite ici.
+
 Le prefill n'est pas non plus du [*teacher forcing*](training-examples.qmd). En teacher forcing, les prédictions sont conditionnées par le préfixe observé dans les données de référence, notamment pendant l'entraînement. En génération, le préfixe s'allonge avec les tokens sélectionnés par le modèle. Le calcul de prédiction est apparenté, mais la source du contexte diffère.
 
 Pour voir comment cette distinction se traduit dans le programme de référence, consultez la [visite guidée du code de génération](gpt-generation-walkthrough.qmd). Elle documente notamment le traitement du prompt, le recalcul de la fenêtre de contexte et les optimisations volontairement absentes de cette implémentation pédagogique.
@@ -138,60 +161,21 @@ C'est la distinction centrale avec l'[apprentissage](loss.qmd) : l'inférence ut
 
 ## 6. Limites à garder en tête
 
-- **Fenêtre de contexte :** le modèle ne traite que le contexte fourni, dans la limite de sa fenêtre maximale. Une information qui n'y figure plus n'influence plus directement la prédiction.
+- **Fenêtre de contexte :** le modèle ne traite que le contexte fourni, dans la limite de sa fenêtre maximale. Le budget porte sur l'ensemble des tokens effectivement transmis — instructions, historique, messages d'outils, prompt et éventuels tokens multimodaux — ainsi que sur les tokens générés. La capacité annoncée n'est donc pas nécessairement disponible intégralement pour la réponse : l'application peut réserver une longueur de sortie et appliquer une stratégie de troncature ou de sélection de l'historique. Une information qui n'est plus présente dans le contexte transmis n'influence plus directement la prédiction. Une fenêtre plus grande n'est pas une mémoire persistante et ne garantit pas que chaque élément sera utilisé correctement.
 - **Pas de mémoire intrinsèque entre deux générations :** chaque génération dépend du contexte qui lui est transmis. Une application peut réinjecter un historique ou conserver un état externe, mais cela ne signifie pas que les poids du modèle ont mémorisé la conversation.
 - **Qualité dépendante des paramètres appris :** la boucle de génération peut fonctionner avec un modèle non entraîné, mais ses sorties ne deviennent pas utiles pour autant. La mécanique de génération et la qualité acquise par apprentissage sont deux questions distinctes.
+- **Validité du résultat :** une réponse fluide, ou même une requête SQL syntaxiquement valide et exécutable, ne garantit pas qu'elle répond à la bonne question métier. Vérifiez le schéma, les définitions utilisées (par exemple le traitement des remboursements et paiements échoués), les hypothèses et les résultats avant toute décision ou action.
 
-::: {.self-check}
-## Vérifier sa compréhension
+## Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/generation.qmd).
 
-
-Répondez aux questions suivantes sans consulter immédiatement les réponses.
-
-1. Pourquoi un même modèle avec un même contexte peut-il produire des textes différents ?
-
-<details>
-<summary>Afficher la réponse</summary>
-
-Parce que l'échantillonnage peut tirer des tokens différents selon la distribution. Chaque token sélectionné modifie ensuite le contexte des prédictions suivantes.
-
-</details>
-
-2. Pourquoi une température très basse rapproche-t-elle l'échantillonnage d'une sélection gloutonne ?
-
-<details>
-<summary>Afficher la réponse</summary>
-
-Elle accentue les différences entre logits. La distribution devient très concentrée sur le token de score maximal, de sorte que les autres choix deviennent très peu probables (hors égalités et effets numériques).
-
-</details>
-
-3. Pourquoi la génération ne peut-elle pas corriger un modèle mal entraîné ?
-
-<details>
-<summary>Afficher la réponse</summary>
-
-Les paramètres restent fixes pendant l'inférence : aucune mise à jour n'a lieu, quel que soit le nombre de tokens générés.
-
-</details>
-
-4. Quelle est la différence entre prefill et teacher forcing ?
-
-<details>
-<summary>Afficher la réponse</summary>
-
-Le prefill est une phase d'exécution qui traite le prompt initial comme une séquence. Le teacher forcing est une stratégie de conditionnement qui fournit le préfixe observé comme contexte pendant l'entraînement (et certains usages de scoring). Ce ne sont pas deux noms pour la même opération.
-
-</details>
-:::
 
 ::: {.callout-tip title="Pour aller plus loin"}
 Ces liens correspondent à trois besoins différents :
 
 - **Comprendre les étapes en amont :** [du texte aux tokens](text-data.qmd), puis [les représentations et le calcul du Transformer](transformer.qmd), [les logits](logits.qmd) et [les probabilités](probabilites.qmd).
-- **Étudier d'autres règles de sélection :** [stratégies avancées de décodage](decoding-strategies.qmd).
+- **Étudier d'autres règles de sélection :** [stratégies avancées de décodage](decoding-strategies.qmd), avec un complément introductif sur les [tokens, fenêtres de contexte, température et méthodes d'échantillonnage](https://dev.to/nishanthan-k/core-elements-of-large-language-models-llms-tokens-context-windows-temperature-and-sampling-2m45).
 - **Voir une implémentation concrète :** [visite guidée de `generate.py`](gpt-generation-walkthrough.qmd).
 
 Pour comparer la génération avec l'apprentissage, consultez [les exemples d'entraînement et le teacher forcing](training-examples.qmd), puis [la fonction de perte](loss.qmd).

@@ -95,8 +95,7 @@ Before interpreting a curve, document the objective, input/target shift, ignore 
 
 ## Practice
 
-This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/loss.qmd).
-
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/loss.qmd).
 
 
 ## Further reading

@@ -226,12 +226,16 @@ La dérivée de la cross-entropie one-hot par rapport aux logits est $p_i-\mathb
 - **« Une loss d'entraînement qui baisse prouve que le modèle s'améliore. »** Non : il faut examiner la validation, les fuites, les baselines et la généralisation.
 - **« La perplexité compare directement n'importe quels modèles. »** Non sans contrôler le tokenizer, les données et les conventions d'évaluation.
 
-## S’exercer
+## Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/cross-entropy.qmd).
 
 
+## Exercices complémentaires
 
+La [collection de fondations mathématiques](exercises.qmd#fondations) contient des exercices corrigés sur les logits, la perte et le masquage ; d'autres thèmes restent prévus.
+
+## Références
 
 - [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) — comportement de l'API, pas définition générale de la cross-entropie.
 - [PyTorch — LogSoftmax](https://docs.pytorch.org/docs/stable/generated/torch.nn.LogSoftmax.html) — transformation log-softmax utilisée pour calculer des log-probabilités de façon stable.

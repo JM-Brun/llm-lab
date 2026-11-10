@@ -83,8 +83,7 @@ If the probabilities assigned to three observed tokens are $(0.5, 0.25, 0.8)$, t
 
 ## Practice
 
-This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/likelihood.qmd).
-
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/likelihood.qmd).
 
 
 ## Further reading

@@ -81,8 +81,7 @@ A capability may be new from a user's perspective while arising from mechanisms 
 
 ## Practice
 
-This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/emergence.qmd).
-
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/emergence.qmd).
 
 
 ::: {.language-switch}

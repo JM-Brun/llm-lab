@@ -140,9 +140,31 @@ Use these resources as complementary explanations and study aids, not as substit
     - **Use policy:** do not treat this mirror as the canonical edition, redistribute it, or assume it is authorized. Prefer the publisher page and the author's official repository/video materials. This reference is recorded for provenance transparency only; no copied book text, figures, or exercises should enter LLM Lab.
 
 
+
+## Inference performance and generation systems
+
+- **Brij Pandey — “You ask LLM a question. It pauses. Then the answer starts appearing, piece by piece.”** (LinkedIn post, 10 November 2026): https://www.linkedin.com/posts/brijpandeyji_you-ask-llm-a-question-it-pauses-then-share-7525787285829804032-YNEl
+  - **Use for:** a compact end-to-end inference diagram connecting tokenization, embeddings, decoder layers, KV caching, next-token selection, streaming, TTFT/ITL diagnostics, and speculative decoding.
+  - **Integration:** used as a secondary pedagogical overview in the bilingual generation lesson to motivate prefill/decode latency, KV-cache memory growth, and the distinction between first-token latency and inter-token latency. Technical details are qualified against the model architecture and serving configuration; the LinkedIn figure is linked, not copied.
+  - **Review status:** post text and supplied diagram inspected on 10 November 2026. This is a pedagogical secondary source, not an implementation specification or benchmark. See [the source review](source-reviews/linkedin-inference-generation-2026-11.md).
+
 ## Joint embeddings and cross-modal representation alignment
 
 - **Mayank Kejriwal — Do AI models trained on different modalities converge to the same representation of the world?** (AI Scientist, 8 November 2026): https://aiscientist.substack.com/p/do-ai-models-trained-on-different
   - **Use for:** an accessible synthesis of the Platonic Representation Hypothesis, good-view versus bad-view JEPA training, the conditional convergence theorem, cross-modal alignment experiments, and their limitations.
   - **Primary research:** Balestriero & LeCun, [*Proving and Improving the Platonic Representation Hypothesis with JEPAs*](https://arxiv.org/abs/2610.39302), arXiv:2610.39302 (2026).
   - **Review status:** first-pass extraction recorded in `data/extractions/ai-scientist-platonic-representation-jepa-2026.yml` and `data/extractions/balestriero-lecun-platonic-representation-jepas-2026.yml`; the primary paper's proof appendices and experimental sections still require full audit. See [the source review](source-reviews/platonic-representation-jepa-2026-11.md). Treat reported alignment scores and sample-efficiency comparisons as author-reported, task-specific results, not independent reproductions or general-intelligence evidence.
+
+
+- **Eleventh Hour Enthusiast — Proving and Improving the Platonic Representation Hypothesis with JEPAs** (Medium, full article inspected 10 November 2026): https://medium.com/@EleventhHourEnthusiast/proving-and-improving-the-platonic-representation-hypothesis-with-jepas-80a88aa3766d
+  - **Use for:** a worked derivation from positive-pair probabilities to the graph Laplacian, normalized adjacency, whitened spectral optimization and eigengap condition. Its four-state cycle is particularly useful for teaching why a tied eigenvalue at the dimensionality boundary can yield different optimal geometries.
+  - **Relationship to the other sources:** a pedagogical secondary explanation of arXiv:2610.39302, not an independent proof or independent experimental replication. The article explicitly distinguishes its second-order spectral proof from the LeJEPA/SIGReg experiments.
+  - **Review status:** full body ingested in `data/extractions/eleventh-hour-enthusiast-platonic-representation-jepa-2026.yml`; figures were not downloaded and reuse rights are unknown.
+
+- **Hugging Face Papers — arXiv:2610.39302 record:** https://huggingface.co/papers/2610.39302
+  - **Use for:** an alternate discovery/access page for the same Balestriero–LeCun paper, including its abstract, author-submitted summary and discussion. This is not a separate research publication and is not counted as an additional independent source.
+  - **Figure locator supplied for review:** https://huggingface.co/papers/2610.39302?image-viewer=7E717904F1535C836EA2DEC65DD6993C6356BA9A
+  - **Reuse caution:** the viewer URL identifies a hosted figure asset, but asset provenance and reuse permission were not established. Link to it rather than copying it until rights are checked.
+
+- **YouTube video — video ID `j0O8Aq6ducw`:** https://www.youtube.com/watch?v=j0O8Aq6ducw
+  - **Review status:** URL recorded at the user's request. YouTube watch-page and oEmbed metadata could not be retrieved in this pass; title, creator, transcript, date and contents remain unverified. Do not use it as evidence until inspected.

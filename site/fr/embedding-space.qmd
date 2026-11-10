@@ -46,7 +46,7 @@ Un ID est une **adresse de ligne**, pas une coordonnée sémantique. La matrice 
 
 **Première lecture :** retenez qu'un ID sélectionne une ligne de la table ; il n'est pas lui-même une coordonnée sémantique.
 
-**Pour pratiquer :** le calcul du lookup et la trace reproductible texte → IDs → vecteurs sont regroupés dans la [collection Données textuelles](exercises.qmd#tr-b-lookup). Les propriétés géométriques sont développées dans les pages sur la similarité cosinus et la linéarité.
+**Pour pratiquer :** le calcul du lookup et la trace reproductible texte → IDs → vecteurs sont regroupés dans la [collection Données textuelles](exercises-text-data.qmd#tr-b-lookup). Les propriétés géométriques sont développées dans les pages sur la similarité cosinus et la linéarité.
 :::
 
 
@@ -74,7 +74,7 @@ Cette comparaison est conceptuelle : elle ne signifie pas que les embeddings des
 
 ## Du principe au calcul
 
-Le lookup est une opération simple : chaque ID sélectionne la ligne correspondante dans la table, sans mélanger les positions ni interpréter la valeur numérique de l'ID. Pour vérifier concrètement cette opération, suivre les formes d'un batch et distinguer indice et coordonnée, passez à l'[exercice TR-B](exercises.qmd#tr-b-lookup). La trace de tokenisation et les manipulations de BPE sont également regroupées dans la collection [Données textuelles](exercises.qmd#donnees-textuelles).
+Le lookup est une opération simple : chaque ID sélectionne la ligne correspondante dans la table, sans mélanger les positions ni interpréter la valeur numérique de l'ID. Pour vérifier concrètement cette opération, suivre les formes d'un batch et distinguer indice et coordonnée, passez à l'[exercice TR-B](exercises-text-data.qmd#tr-b-lookup). La trace de tokenisation et les manipulations de BPE sont également regroupées dans la collection [Données textuelles](exercises-text-data.qmd#donnees-textuelles).
 
 ::: {.micro-workbench}
 ::: {.micro-workbench-header}
@@ -145,31 +145,10 @@ La proximité géométrique dépend du modèle, de la couche, de l'entraînement
 
 Pour approfondir ces questions sans les confondre avec le mécanisme de lookup, voir la page sur la [similarité cosinus](cosine-similarity.qmd) et celle sur l'[hypothèse de linéarité des représentations](linearite-embeddings.qmd).
 
-::: {.self-check}
-## Vérifier sa compréhension
+## Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/embedding-space.qmd).
 
-Entraînez-vous avec l'[Exercice TR-B — Calculer un lookup et suivre les formes des tenseurs](exercises.qmd#donnees-textuelles).
-
-1. Une matrice contient \(V\) lignes et des vecteurs de dimension \(d\). Combien de paramètres contient-elle, et que sélectionne l'ID \(i\) ?
-
-<details>
-<summary>Afficher le raisonnement</summary>
-
-La matrice contient \(V\times d\) paramètres. L'ID \(i\) sélectionne la ligne \(E_i\) ; sa valeur entière sert d'indice, pas de coordonnée sémantique. Le traitement positionnel et la contextualisation interviennent ensuite, selon l'architecture (voir les deux pages dédiées).
-
-</details>
-
-2. Une projection 2D montre deux groupes de points bien séparés. Cela prouve-t-il que le modèle distingue correctement ces catégories sur de nouvelles données ?
-
-<details>
-<summary>Afficher le raisonnement</summary>
-
-Non. Une projection 2D ne préserve qu’une partie de la géométrie et peut créer ou accentuer des séparations visuelles. Il faut définir une tâche, une métrique et un protocole d’évaluation sur des données pertinentes tenues à l’écart ; une figure exploratoire ne constitue pas une preuve de performance.
-
-</details>
-:::
 
 ## Références
 

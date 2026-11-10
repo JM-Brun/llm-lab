@@ -46,7 +46,7 @@ An ID is a **row address**, not a semantic coordinate. The embedding matrix stor
 
 **First pass:** remember that an ID selects a row in the table; it is not itself a semantic coordinate.
 
-**For practice:** the lookup calculation and reproducible text → IDs → vectors trace are grouped in the [Text data collection](exercises.qmd#tr-b-lookup). Geometric properties are developed in the cosine-similarity and linearity lessons.
+**For practice:** the lookup calculation and reproducible text → IDs → vectors trace are grouped in the [Text data collection](exercises-text-data.qmd#tr-b-lookup). Geometric properties are developed in the cosine-similarity and linearity lessons.
 :::
 
 ## Where do the vectors come from?
@@ -73,7 +73,7 @@ This is a conceptual contrast, not a claim that modern Transformer embeddings ar
 
 ## From the principle to the calculation
 
-Embedding lookup is simple: each ID selects its corresponding row in the table, without mixing positions or interpreting the numerical value of the ID. To work through this operation, trace a batch's shapes, and distinguish an index from a coordinate, use [exercise TR-B](exercises.qmd#tr-b-lookup). Tokenization traces and BPE calculations are also grouped in the [Text data collection](exercises.qmd#text-data).
+Embedding lookup is simple: each ID selects its corresponding row in the table, without mixing positions or interpreting the numerical value of the ID. To work through this operation, trace a batch's shapes, and distinguish an index from a coordinate, use [exercise TR-B](exercises-text-data.qmd#tr-b-lookup). Tokenization traces and BPE calculations are also grouped in the [Text data collection](exercises-text-data.qmd#text-data).
 
 ::: {.micro-workbench}
 ::: {.micro-workbench-header}
@@ -144,31 +144,10 @@ Geometric proximity depends on the model, layer, training objective, and metric.
 
 For a deeper treatment without conflating geometry with the lookup mechanism, see the pages on [cosine similarity](cosine-similarity.qmd) and the [linearity hypothesis for representations](embedding-linearity.qmd).
 
-::: {.self-check}
-## Check your understanding
+## Practice
 
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/embedding-space.qmd).
 
-Practice with [Exercise TR-B — Calculate lookup and trace tensor shapes](../en/exercises.qmd#text-data).
-
-1. An embedding matrix has \(V\) rows and vectors of dimension \(d\). How many parameters does it contain, and what does ID \(i\) select?
-
-<details>
-<summary>Show the reasoning</summary>
-
-The matrix contains \(V\times d\) parameters. ID \(i\) selects row \(E_i\); its integer value is an index, not a semantic coordinate. Positional processing and contextualization happen afterwards, depending on the architecture (see the two dedicated lessons).
-
-</details>
-
-2. A 2D projection shows two clearly separated point clusters. Does this prove that the model correctly distinguishes these categories on new data?
-
-<details>
-<summary>Show the reasoning</summary>
-
-No. A 2D projection preserves only selected aspects of the geometry and may create or exaggerate visual separation. Define a task, metric, and evaluation protocol on relevant held-out data; an exploratory plot is not evidence of predictive performance.
-
-</details>
-:::
 
 ## References
 

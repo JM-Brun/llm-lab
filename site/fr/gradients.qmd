@@ -104,10 +104,9 @@ Comparer ce résultat au gradient analytique avec des tolérances absolue et rel
 - **« Une différence finie qui passe prouve tout le backward pass. »** Elle vérifie un cas, une fonction, une précision et une configuration ; elle ne remplace pas les tests de formes, de cas limites et d'intégration.
 :::
 
-## S’exercer
+## Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/gradients.qmd).
-
 
 
 ## Pour approfondir

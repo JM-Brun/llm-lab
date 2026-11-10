@@ -554,6 +554,30 @@ concepts:
       en: "Learned tokenization procedure that encodes a sequence into multiple levels of residual discrete codes, each level adding further reconstruction information."
     domains: [architectures-mechanisms, mathematical-tools-geometry]
     resources: [fr/next-concept-modeling, en/next-concept-modeling]
+  - id: joint-embedding-predictive-architecture
+    importance: supporting
+    labels: {fr: "Architecture à plongements joints prédictifs (JEPA)", en: "Joint-Embedding Predictive Architecture (JEPA)"}
+    definitions:
+      fr: "Famille d'architectures qui apprend des représentations en prédisant l'embedding d'une observation déclarée liée, sous une contrainte anti-effondrement qui empêche tous les embeddings de devenir identiques."
+      en: "Family of architectures that learns representations by predicting the embedding of a declared-related observation, under an anti-collapse constraint that prevents all embeddings from becoming identical."
+    domains: [architectures-mechanisms, mathematical-tools-geometry]
+    resources: [fr/jepa-platonic-representation, en/jepa-platonic-representation]
+  - id: positive-pair-distribution
+    importance: supporting
+    labels: {fr: "Distribution de paires positives", en: "Positive-pair distribution"}
+    definitions:
+      fr: "Distribution des paires d'observations qu'un objectif d'entraînement déclare liées ; lue géométriquement, elle définit un graphe pondéré sur les observations."
+      en: "Distribution of observation pairs that a training objective declares related; read geometrically, it defines a weighted graph over observations."
+    domains: [probabilistic-foundations-training, mathematical-tools-geometry]
+    resources: [fr/jepa-platonic-representation, en/jepa-platonic-representation]
+  - id: platonic-representation-hypothesis
+    importance: specialized
+    labels: {fr: "Hypothèse de représentation platonique", en: "Platonic Representation Hypothesis"}
+    definitions:
+      fr: "Conjecture selon laquelle les représentations internes de modèles entraînés sur des modalités ou architectures différentes se ressemblent de plus en plus à mesure que les modèles et les données gagnent en échelle ; un théorème conditionnel la rend précise pour les JEPA dont les paires positives partagent les mêmes relations d'états du monde."
+      en: "Conjecture that internal representations of models trained on different modalities or architectures increasingly resemble each other as models and data scale; a conditional theorem makes it precise for JEPAs whose positive pairs share the same world-state relations."
+    domains: [scale-research, mathematical-tools-geometry]
+    resources: [fr/jepa-platonic-representation, en/jepa-platonic-representation]
 
 relation_types:
   represented-by:
@@ -803,3 +827,8 @@ relations:
   - {from: hierarchical-discrete-codes, type: part-of, to: next-concept-modeling}
   - {from: coarse-to-fine-generation, type: part-of, to: next-concept-modeling}
   - {from: multiscale-residual-vector-quantization, type: part-of, to: next-concept-modeling}
+
+  - {from: positive-pair-distribution, type: part-of, to: joint-embedding-predictive-architecture}
+  - {from: positive-pair-distribution, type: constrains, to: training-objective}
+  - {from: joint-embedding-predictive-architecture, type: contrasts-with, to: next-token-prediction}
+  - {from: platonic-representation-hypothesis, type: evaluated-by, to: held-out-evaluation}

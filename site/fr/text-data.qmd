@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: ["fr/unicode-text", "fr/tokenization-strategies", "fr/embedding-space"]
-related: ["fr/generation","fr/transformer","fr/text-data-exercises"]
+related: ["fr/generation", "fr/transformer", "fr/text-data-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:text-data", "level:core", "language:fr", "status:published"]
 -->
 
@@ -95,9 +95,11 @@ La segmentation détermine la séquence d'IDs fournie au modèle. Elle influe no
 
 Un même texte peut produire des séquences différentes selon le vocabulaire, la pré-tokenisation et les règles du tokenizer. Pour comprendre et comparer ces mécanismes, consultez la page canonique sur les [stratégies de tokenisation](tokenization-strategies.qmd), qui rassemble les granularités, les composants, les algorithmes et les exemples comparatifs. Les métriques empiriques et les compromis avancés sont traités dans [la conception et l'évaluation des tokenizers](tokenizer-design-evaluation.qmd).
 
-## S’exercer
+## Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/text-data.qmd).
+
+
 ## Frontières entre les pages
 
 - **Cette page** : chaîne texte → tokens → IDs → vecteurs initiaux ; rôle de chaque objet et compatibilité du tokenizer avec le modèle.

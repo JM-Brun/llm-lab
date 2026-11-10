@@ -5,7 +5,7 @@ description: "A guided route in three questions detailed as eight conceptual sta
 keywords: ["type:entry-point", "destination:orient", "topic:learning-map", "level:overview", "language:en", "status:published"]
 lang: en
 toc: true
-include-in-header: /includes/learning-map-hreflang.html
+include-in-header: includes/learning-map-hreflang.html
 ---
 
 <!--

@@ -9,7 +9,6 @@
     - Transforming representations
       - [The Transformer in a GPT: architecture and computation](transformer.html)
       - [Queries, keys, and values (Q, K, V)](queries-keys-values.html)
-      - [Q/K/V: mathematical formulation and variants](queries-keys-values-advanced.html)
       - [Scaled dot-product attention](scaled-dot-product-attention.html)
       - [Causal masking](causal-masking.html)
     - From scores to probabilities
@@ -39,12 +38,23 @@
     - [Guided tour: generation (`generate.py`)](gpt-generation-walkthrough.html)
   - [Build a small GPT](build-path.html)
 - **Practice and experiment**
+  - Mathematical foundations
+    - [Mathematical foundations exercises](exercises-foundations.html)
+  - Text data
+    - [Text data exercises](exercises-text-data.html)
+  - Attention
+    - [Attention exercises](exercises-attention.html)
+  - Transformer
+    - [Transformer exercises](exercises-transformer.html)
+  - Generation
+    - [Generation exercises](exercises-generation.html)
   - [Exercise catalogue](exercises.html)
   - [Explore and compare Transformers](transformer-explainer.html)
   - [Evaluating a model: from score to experimental protocol](experimental-evaluation.html)
 - **Deepen your understanding**
   - Attention, position, and architectures
     - [Why scale attention scores?](attention-score-scaling.html)
+    - [Q/K/V: mathematical formulation and variants](queries-keys-values-advanced.html)
     - [Cross-attention: connecting two sequences](cross-attention.html)
     - [RoPE: geometry, derivation, and limitations](rope.html)
     - [Hybrid LLM architectures: Nemotron 3 and 3.5](hybrid-llm-architectures.html)
@@ -69,6 +79,7 @@
     - [Scaling laws: parameters, data, and compute](scaling-laws.html)
     - [Emergent capabilities: what changes with scale?](emergence.html)
     - [From GPT-2 to contemporary LLM systems](llm-evolution.html)
+    - [From shared observations to shared representations: JEPA and the Platonic Representation Hypothesis](jepa-platonic-representation.html)
   - [Deep-dive map](deepen.html)
 - **Glossary and history**
   - [LLM and Transformer glossary](glossary.html)

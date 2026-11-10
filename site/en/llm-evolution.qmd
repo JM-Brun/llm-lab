@@ -181,8 +181,7 @@ The most useful mental model is therefore **a predictive model at the core of a 
 
 ## Practice
 
-This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/llm-evolution.qmd).
-
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/llm-evolution.qmd).
 
 
 ::: {.language-switch}

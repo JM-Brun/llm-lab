@@ -178,8 +178,7 @@ Apply these distinctions to concrete architecture choices: [hybrid architectures
 
 ## Practice
 
-This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/llm-computational-complexity.qmd).
-
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/llm-computational-complexity.qmd).
 
 
 **Canonical lesson:** [LLM overview](llm-overview.qmd). This page deepens the computational and memory costs of LLMs; it complements the overview without being a required step.

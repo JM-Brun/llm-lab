@@ -119,18 +119,12 @@ Les LLM sont notamment utilisés pour générer ou reformuler du texte, résumer
 
 Réutiliser un modèle généraliste est intéressant lorsqu'il couvre plusieurs tâches ou lorsque les exemples étiquetés sont rares. Le choix entre réutiliser un modèle, récupérer des documents avec un RAG ou adapter ses paramètres dépend ensuite de la tâche. Un système RAG peut fournir des informations actualisées si son corpus ou son index documentaire est mis à jour, sans réentraîner le modèle ([Lewis et al., 2020](https://arxiv.org/abs/2005.11401)). Une adaptation peut être utile pour un format, un domaine ou un comportement spécifique. Il faut comparer ces options sur des critères mesurés : qualité, erreurs, robustesse, coût, latence, confidentialité, provenance des données et maintenance. Une démonstration sur quelques prompts ne constitue pas une évaluation.
 
-::: {.self-check}
-[Exercices et mises en pratique](exercises.qmd).
-
-1. **Le fine-tuning change-t-il nécessairement l'architecture ?** Non : il modifie d'abord les paramètres. Certaines méthodes ajoutent aussi des modules ; il faut distinguer la famille du modèle de la structure complète du système adapté.
-2. **Une documentation change chaque jour : RAG ou fine-tuning ?** Le RAG peut récupérer les nouveaux documents à l'inférence sans modifier les poids. Il ne garantit toutefois ni la pertinence des documents récupérés ni la fidélité de la réponse.
-:::
-
-{{< include ../includes/generated-suggested-route-fr-llm-overview.qmd >}}
-
-## S’exercer
+## Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/llm-overview.qmd).
+
+
+{{< include ../includes/generated-suggested-route-fr-llm-overview.qmd >}}
 
 ::: {.language-switch}
 **Langue :** [Français](llm-overview.qmd) · [English](../en/llm-overview.qmd)

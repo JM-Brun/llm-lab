@@ -125,6 +125,7 @@ Le parcours principal présente la génération autorégressive et ses opératio
 - [De GPT-2 aux systèmes LLM contemporains](llm-evolution.qmd) — synthèse transversale des évolutions de l'échelle au post-entraînement, du raisonnement aux systèmes utilisant des outils.
 - [Lois d'échelle : paramètres, données et calcul](scaling-laws.qmd) — relations empiriques entre ressources d'entraînement et perte, et limites d'extrapolation.
 - [Émergence](emergence.qmd) — amélioration graduelle, effets de seuil liés aux métriques et véritables discontinuités.
+- [JEPA et l'hypothèse de représentation platonique](jepa-platonic-representation.qmd) — graphes de paires positives, bonnes et mauvaises vues, théorème de convergence conditionnel et lecture qualifiée des preuves d'alignement intermodal.
 
 Distinguer systématiquement observations, hypothèses explicatives et conclusions dépendantes du protocole.
 

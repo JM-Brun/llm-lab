@@ -92,10 +92,9 @@ Le corpus préparé peut alors être encodé en flux de tokens. La page [Du corp
 - **Contrat de sortie :** transmettre les IDs avec provenance, version du tokenizer, paramètres d'encodage, statistiques et règles de frontière documentaire.
 :::
 
-## S’exercer
+## Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/corpus-preparation.qmd).
-
 
 
 ## Limites

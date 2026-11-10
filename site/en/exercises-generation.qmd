@@ -1,0 +1,124 @@
+---
+title: "Generation exercises"
+subtitle: "Extended practice, worked solutions, and transfer"
+keywords: ["type:exercise-collection", "destination:practice", "topic:exercise-generation", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/exercises-generation"
+scope: "Practice on next-token selection, autoregressive decoding, stopping, prefill, and KV caching."
+purpose: "Work through the generation exercise collection independently of the conceptual lesson sequence, using preparation links, worked solutions, and transfer prompts."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: ["en/exercises"]
+  children: []
+related: []
+tags: ["type:exercise-collection", "destination:practice", "topic:exercise-generation", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the exercise catalogue](exercises.qmd)
+
+## Generation {#generation}
+
+**Prerequisites:** [logits](logits.qmd), [output probabilities](probabilities.qmd), [next-token prediction and autoregressive generation](generation.qmd).
+
+**Five formative exercises published:** GE-A–GE-E. They cover next-token selection, the autoregressive loop and stopping, then prefill/decode and the purpose and limits of the KV cache.
+
+### GE-A — Distribution and selection
+
+A model produces logits $z=(0,\ln 2,\ln 3)$ for vocabulary $\{A,B,C\}$.
+
+1. Compute the softmax distribution.
+2. Which token does greedy decoding select?
+3. With sampling, must the selected token be the highest-probability one?
+
+<details>
+<summary>Show the solution</summary>
+
+The exponentials are $(1,2,3)$ and sum to $6$. Thus $p=(1/6,1/3,1/2)$. Greedy decoding selects $C$. With sampling, any token with nonzero probability may be selected: $C$ is most likely, but not certain. The distribution is the model's probabilistic output; the token is the result of the selection policy.
+
+</details>
+
+### GE-B — Trace the autoregressive loop
+
+We start with $c_1=(A,B)$. Decoding is greedy and the distributions are given:
+
+| Current context | Distribution |
+|---|---|
+| $(A,B)$ | $P(C)=0.8$, $P(D)=0.2$ |
+| $(A,B,C)$ | $P(D)=0.7$, $P(E)=0.3$ |
+| $(A,B,C,D)$ | $P(\mathrm{EOS})=0.9$, $P(E)=0.1$ |
+
+1. Give the selected token at each step.
+2. Write the context after each selection.
+3. How many elementary steps are executed?
+4. What is repeated and what changes?
+
+<details>
+<summary>Show the solution</summary>
+
+The selections are $C$, then $D$, then EOS. The contexts become $(A,B,C)$, $(A,B,C,D)$, then $(A,B,C,D,\mathrm{EOS})$ if EOS is explicitly represented in the sequence. Three elementary steps are executed. The prediction-selection mechanism repeats; the context changes after each feedback step. Model parameters remain fixed.
+
+</details>
+
+### GE-C — Stopping criteria
+
+A generation uses max_new_tokens = 4. EOS is selected at the second step.
+
+1. What is the maximum number of new tokens allowed?
+2. How many are actually generated if EOS counts?
+3. What happens if EOS is never selected?
+4. Why are EOS and the length limit distinct criteria?
+
+<details>
+<summary>Show the solution</summary>
+
+The limit allows at most four new tokens. Since EOS is selected at the second step, two tokens are generated, including EOS, and the loop stops. Without EOS, generation stops after four new tokens. EOS is a semantic criterion carried by a token; the limit is an external execution constraint.
+
+</details>
+
+### GE-D — Trace prefill and incremental decode
+
+A prompt contains the token IDs $(A,B,C)$. Assume a causal Transformer with KV caching enabled.
+
+1. During prefill, how many prompt positions are processed?
+2. Which position's logits are used to select the first generated token $D$?
+3. To predict the following token $E$, which token is newly supplied during incremental decode?
+4. Why is prefill not the same operation as teacher forcing?
+5. Are the model parameters updated during these inference phases?
+
+<details>
+<summary>Show the solution</summary>
+
+Prefill processes the three prompt positions in one sequence pass and populates the KV cache. The logits at the final prompt position (the position of $C$) define the distribution from which $D$ is selected. The next decode step supplies $D$ as the new token and reuses the cached keys and values to predict $E$. The prompt is supplied as inference context, but prefill is not teacher forcing: it computes the first next-token distribution without using a reference continuation as the next input or computing a training loss. $D$ is selected by the model and then becomes the next context token. In teacher forcing, successive predictions are conditioned on reference-sequence prefixes. Parameters remain fixed during both prefill and decode.
+
+</details>
+
+### GE-E — What does the KV cache save?
+
+Assume a prompt of three tokens $(A,B,C)$ and generate three tokens $D,E,F$. Ignore context-window eviction and count only token positions newly passed through the model:
+
+1. Without a KV cache, how many token positions are processed across the prompt pass and the two subsequent predictions?
+2. With a KV cache, how many new token positions are processed after prefill?
+3. What information is retained in the cache?
+4. Does the cache change the model parameters or the conditional distribution being computed?
+5. Why does the count above not represent the total attention computation?
+
+<details>
+<summary>Show the solution</summary>
+
+Without a cache, the model processes lengths $3$, then $4$ (to predict $E$), then $5$ (to predict $F$): $3+4+5=12$ token positions. With a cache, prefill processes the three prompt tokens; the decode steps then process only $D$ and $E$ as new positions: $3+1+1=5$ newly processed positions. The cache retains previously computed keys and values at each Transformer layer. It does not update parameters or change the intended conditional prediction; it avoids recomputing the prefix. The new query at each decode step still attends to the cached keys and values, so counting new positions is not a count of all attention operations or total FLOPs.
+
+</details>
+
+**Remaining scope:** temperature, top-k and top-p.
+
+---
+
+[← Back to the exercise catalogue](exercises.qmd)
+
+**Language:** [Français](../fr/exercises.qmd) · [English](exercises-generation.qmd)

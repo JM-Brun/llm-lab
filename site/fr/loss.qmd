@@ -93,10 +93,9 @@ La formule avec $\exp$ suppose que la NLL moyenne est calculée avec le logarith
 Avant d'interpréter une courbe, documenter : définition de l'objectif, décalage entrée/cible, masque d'ignorance, réduction, split train/validation, et éventuels termes de régularisation. Vérifier qu'un mini-batch peut être surappris est un test de pipeline utile, mais pas une validation de la généralisation.
 :::
 
-## S’exercer
+## Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/loss.qmd).
-
 
 
 ## Pour approfondir

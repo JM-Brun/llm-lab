@@ -81,10 +81,9 @@ Si les probabilités attribuées à trois tokens observés sont $(0.5, 0.25, 0.8
 - **« La NLL est comparable sans préciser le tokenizer. »** Pas toujours : les segmentations différentes modifient le nombre et la granularité des événements évalués.
 :::
 
-## S’exercer
+## Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/vraisemblance.qmd).
-
 
 
 ## Pour approfondir

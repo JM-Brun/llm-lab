@@ -176,9 +176,17 @@ Ligne par ligne :
 
 [`tests/unit/test_gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt_config.py) vérifie exactement les promesses de ce fichier : les dimensions nulles ou négatives sont rejetées avec le bon message, la divisibilité est exigée, l'objet est réellement immuable (`FrozenInstanceError`), et la graine vaut `0` par défaut.
 
-## S’exercer
+## Exercices
 
-Les exercices de cette visite guidée sont regroupés sur sa [page d’exercices dédiée](exercises/gpt-config-walkthrough.qmd).
+1. Quelle erreur obtient-on avec `embedding_dim=10, num_heads=4` ? Et avec `embedding_dim=12, num_heads=4` ?
+2. Combien de lignes a la table de positions d'une configuration `context_length=256, embedding_dim=64` ?
+
+<details>
+<summary>Afficher les réponses et le raisonnement</summary>
+
+1. `10 % 4 == 2` : la divisibilité échoue, donc `ValueError` à la construction. Avec `12 % 4 == 0` : configuration acceptée, chaque tête reçoit `12/4 = 3` colonnes.
+2. `256 × 64 = 16384` valeurs, soit 16384 paramètres appris — un par position et par dimension. Ce nombre est indépendant du vocabulaire et du nombre de têtes.
+</details>
 
 ## Connexions
 
@@ -186,6 +194,10 @@ Les exercices de cette visite guidée sont regroupés sur sa [page d’exercices
 - **Page conceptuelle** : [GPT et Transformer](transformer.qmd) — l'architecture que ces dimensions paramètrent.
 - **Retour au parcours** : [Construire un petit GPT](build-path.qmd) — le parcours qui motive ce code.
 - **Code source** : [`gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt_config.py) · **Tests** : [`test_gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt_config.py).
+
+## Exercices
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/gpt-config-walkthrough.qmd).
 
 ::: {.language-switch}
 **Langue :** [Français](gpt-config-walkthrough.qmd) · [English](../en/gpt-config-walkthrough.qmd)

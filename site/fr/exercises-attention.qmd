@@ -1,0 +1,505 @@
+---
+title: "Exercices — Attention"
+subtitle: "Entraînement approfondi, corrigés détaillés et transfert"
+keywords: ["type:exercise-collection", "destination:practice", "topic:exercise-attention", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/exercises-attention"
+scope: "Exercices sur Q/K/V, l'agrégation pondérée, le masque causal et l'attention multi-têtes."
+purpose: "Travailler la collection d'exercices attention indépendamment du parcours conceptuel, avec des prérequis, des corrigés détaillés et des questions de transfert."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: ["fr/exercises"]
+  children: []
+related: []
+tags: ["type:exercise-collection", "destination:practice", "topic:exercise-attention", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour au catalogue des exercices](exercises.qmd)
+
+### Attention {#attention}
+
+**Préparation :** les exercices Q/K/V mobilisent la page [projections Q/K/V](queries-keys-values.qmd), les formes matricielles et NumPy ; les [tenseurs](tensors.qmd) sont une référence facultative. Les exercices de score, softmax et agrégation s'appuient sur l'[attention à produit scalaire](scaled-dot-product-attention.qmd). Les exercices Q/K/V et AT-A à AT-C ne supposent pas d'avoir étudié le masque causal ; CA-A introduit et travaille lui-même cet invariant.
+
+**Compétences Q/K/V évaluées :** reconnaître les rôles, reconstruire les projections, expliquer leur apprentissage, prédire les effets d'une modification de paramètres et transférer le raisonnement à l'attention croisée. La somme pondérée existante reste l'exercice de calcul de l'agrégation.
+
+**Périmètre actuel :** CA-A introduit le masque causal, le décalage des cibles et l'invariance de préfixe à partir d'une matrice et des tests existants. Trois exercices formatifs progressifs, aux identifiants stables AT-A, AT-B et AT-C partagés avec la version anglaise, couvrent séparément le calcul d'une attention multi-têtes, la trace des formes, puis le diagnostic d'affirmations et la prédiction d'interventions. Les variantes spécifiques au masquage multi-têtes et les invariants avancés restent à approfondir. Ordre conseillé : CA-A pour le masque causal, puis AT-A, AT-B et AT-C pour la progression multi-têtes.
+
+### Exercice — des scores Q/K à la sortie d'attention {#at-0-scores-to-output}
+
+On considère une requête et deux clés/valeurs :
+
+$$
+q=(1,0),\quad k_1=(1,0),\quad k_2=(0,1),\quad
+v_1=(10,0),\quad v_2=(0,20).
+$$
+
+1. Calculez les scores $qk_1^\top$ et $qk_2^\top$.
+2. Appliquez la mise à l'échelle avec $d_k=2$.
+3. Calculez les poids softmax (approximativement).
+4. Calculez la combinaison pondérée des valeurs.
+5. Expliquez pourquoi les poids ne mesurent pas une pertinence sémantique absolue.
+
+<details>
+<summary>Afficher le corrigé raisonné</summary>
+
+Les scores bruts valent $(1,0)$. Après division par $\sqrt{2}$, ils valent environ $(0{,}707,0)$. Le softmax donne environ $(0{,}67,0{,}33)$. La sortie vaut donc $0{,}67(10,0)+0{,}33(0,20)\approx(6{,}7,6{,}6)$.
+
+Q et K déterminent les poids ; V détermine le contenu agrégé. Les poids sont relatifs aux clés accessibles dans cette ligne, pas une mesure universelle de pertinence ou de causalité.
+
+</details>
+
+### Calculer une agrégation à la main
+
+Une position reçoit les poids d’attention $(0{,}75,\,0{,}25)$ et les vecteurs de valeur sont $v_1=(2,0)$ et $v_2=(0,4)$. Calculez la sortie. Si l’on échange $v_1$ et $v_2$ sans changer les poids, la sortie reste-t-elle identique ?
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+La sortie est la somme pondérée : $0{,}75(2,0)+0{,}25(0,4)=(1{,}5;1)$. Après échange des valeurs, elle devient $0{,}75(0,4)+0{,}25(2,0)=(0{,}5;3)$. Les poids déterminent la contribution relative des positions ; les valeurs déterminent le contenu agrégé. Les poids seuls ne suffisent donc pas à déterminer la sortie.
+
+</details>
+
+### Exercice — distinguer mélange pondéré et sélection
+
+Après le softmax d'une ligne d'attention, les poids valent $(0{,}95,\,0{,}05)$ sur deux positions, avec $v_1=(10,0)$ et $v_2=(0,20)$.
+
+1. Un collègue affirme que l'attention « sélectionne la position 1 et ignore le reste ». Calculez la sortie et indiquez si elle coïncide avec $v_1$.
+2. Quelle distribution de poids donnerait exactement $v_1$ en sortie ? Le softmax d'une ligne de scores finis peut-il produire exactement cette distribution ?
+3. Dans quel cas limite l'attention se rapproche-t-elle d'une sélection, et pourquoi ce cas n'est-il pas le comportement général ?
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+1. La sortie vaut $0{,}95(10,0)+0{,}05(0,20)=(9{,}5,1)$ : elle ne coïncide pas avec $v_1$. Même avec un poids de $0{,}95$, la position 2 transmet $5\,\%$ de son vecteur de valeur : la sortie est un mélange pondéré, pas une sélection. Comparez avec l'exercice précédent, où des poids plus équilibrés produisaient aussi un mélange.
+2. Seule la distribution $(1,0)$ redonnerait exactement $v_1$. Le softmax d'une ligne de scores finis produit des poids strictement positifs : il ne peut pas atteindre exactement $(1,0)$, seulement s'en approcher.
+3. Lorsqu'un score domine très largement les autres après mise à l'échelle, les poids tendent vers un vecteur one-hot et le mélange se rapproche d'une sélection. C'est un cas limite : en général les poids ne sont pas proches de one-hot, et lire l'attention comme « la position gagnante » néglige les contributions non nulles des autres positions. Les poids restent des coefficients de pondération, pas des décisions de sélection.
+
+</details>
+
+### Exercice — projeter une séquence en Q, K et V
+
+On considère trois positions décrites chacune par un vecteur de dimension 4. Les matrices W_Q et W_K projettent vers une dimension 2, tandis que W_V projette vers une dimension 3.
+
+1. Avant d'exécuter le code, déduire les formes de Q, K et V.
+2. Exécuter le calcul et vérifier les formes obtenues.
+3. Expliquer pourquoi changer W_V ne modifie pas les scores calculés à partir de Q et K.
+
+<details>
+<summary>Afficher le calcul NumPy et le résultat attendu</summary>
+
+```python
+import numpy as np
+
+# Trois positions d'entrée, chacune représentée par un vecteur de dimension 4
+X = np.array([
+    [1.0, 0.5, 0.2, 0.1],
+    [0.1, 0.9, 0.8, 0.3],
+    [0.4, 0.2, 0.7, 0.9],
+])
+T, d_model = X.shape
+
+# Projections apprises : clés/requêtes de dimension 2 ; valeurs de dimension 3
+W_Q = np.array([[0.5, 0.1], [0.2, 0.8], [0.1, 0.3], [0.9, 0.4]])
+W_K = np.array([[0.2, 0.7], [0.4, 0.1], [0.6, 0.5], [0.3, 0.2]])
+W_V = np.array([[1.0, 0.0, 0.2], [0.0, 1.0, 0.5], [0.5, 0.2, 0.0], [0.1, 0.8, 0.4]])
+
+# Chaque projection transforme indépendamment toutes les positions
+Q = X @ W_Q
+K = X @ W_K
+V = X @ W_V
+
+assert Q.shape == (T, 2)
+assert K.shape == (T, 2)
+assert V.shape == (T, 3)
+print("Q:", Q.shape, "K:", K.shape, "V:", V.shape)
+```
+
+Résultat attendu : Q=(3, 2), K=(3, 2), V=(3, 3). Les projections s'appliquent indépendamment à chaque position ; les trois matrices partagent ici le même nombre de lignes, mais pas nécessairement le même nombre de colonnes.
+
+Modifier W_V peut changer V et la sortie agrégée, mais ne change pas les scores ni les poids, qui dépendent de Q et K.
+
+</details>
+
+
+### Exercice — calculer Q, K et V puis isoler l'effet de V
+
+On considère une seule représentation d'entrée, avec la convention des vecteurs-lignes :
+
+\[
+x_t=\begin{bmatrix}1&2\end{bmatrix},\qquad
+W_Q=\begin{bmatrix}1&0\\0&1\end{bmatrix},\qquad
+W_K=\begin{bmatrix}0&1\\1&0\end{bmatrix},\qquad
+W_V=\begin{bmatrix}1&1\\0&1\end{bmatrix}.
+\]
+
+1. Calculer à la main $q_t=x_tW_Q$, $k_t=x_tW_K$ et $v_t=x_tW_V$.
+2. Remplacer uniquement $W_V$ par $W'_V=\begin{bmatrix}2&0\\0&1\end{bmatrix}$. Calculer $v'_t$.
+3. Quelles quantités parmi Q, K, V, les scores et les poids peuvent changer ? Justifier à partir des dépendances du mécanisme.
+4. Expliquer pourquoi la sortie agrégée peut changer même si les poids restent identiques.
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+Les produits matriciels donnent :
+
+\[
+q_t=x_tW_Q=\begin{bmatrix}1&2\end{bmatrix},\qquad
+k_t=x_tW_K=\begin{bmatrix}2&1\end{bmatrix},\qquad
+v_t=x_tW_V=\begin{bmatrix}1&3\end{bmatrix}.
+\]
+
+Avec la nouvelle projection de valeur :
+
+\[
+v'_t=x_tW'_V=\begin{bmatrix}2&2\end{bmatrix}.
+\]
+
+Seul V change directement. Q et K restent identiques ; les scores et les poids calculés à partir de Q et K restent donc identiques eux aussi. En revanche, la somme pondérée porte sur les vecteurs V : modifier ces vecteurs peut donc modifier le contenu agrégé. Cela ne signifie pas que la sortie change nécessairement dans tous les cas, car certaines variations peuvent se compenser.
+
+Les matrices sont volontairement petites et fictives pour rendre les multiplications vérifiables à la main ; elles ne représentent pas les paramètres d'un modèle entraîné.
+
+</details>
+
+### Exercice — prévoir l'effet d'une modification de projection
+
+On considère une même entrée $X$ et une attention standard, sans biais. Pour chaque intervention, indiquez si $Q$, $K$, $V$, les scores, les poids et la sortie agrégée peuvent changer. Les autres paramètres restent fixes.
+
+| Intervention | Quantités qui peuvent changer | Quantités invariantes |
+|---|---|---|
+| Modifier $W_Q$ seul |  |  |
+| Modifier $W_K$ seul |  |  |
+| Modifier $W_V$ seul |  |  |
+
+Justifiez chaque ligne à partir des dépendances fonctionnelles.
+
+<details>
+<summary>Afficher le corrigé raisonné</summary>
+
+- **$W_Q$ seul :** Q peut changer ; les scores calculés à partir de Q et K peuvent donc changer, puis les poids et la sortie. K et V restent invariants.
+- **$W_K$ seul :** K peut changer ; les scores, les poids et la sortie peuvent donc changer. Q et V restent invariants.
+- **$W_V$ seul :** V et généralement la sortie agrégée peuvent changer. Q, K, les scores et les poids restent invariants.
+
+« Peut changer » ne signifie pas « change nécessairement » : une perturbation particulière peut être annulée par les données ou les poids d'agrégation. La sortie dépend à la fois des poids et des valeurs.
+
+</details>
+
+### Exercice — relier les projections à l'apprentissage
+
+Dans le mécanisme standard, les matrices $W_Q$, $W_K$ et $W_V$ sont entraînées à partir de la perte finale du modèle. Répondez sans supposer qu'une cible Q, K ou V est fournie directement.
+
+1. Pourquoi parle-t-on d'apprentissage indirect des projections ?
+2. Par quelles opérations le gradient associé à Q et K remonte-t-il ?
+3. Par quelle opération le gradient associé à V remonte-t-il ?
+4. Pour $Q=XW_Q$ avec $X$ fixé et sans biais, quelle est la forme de $\partial\mathcal L/\partial W_Q$ ? Même question pour K et V.
+
+<details>
+<summary>Afficher le corrigé raisonné</summary>
+
+Les projections n'ont pas de cibles indépendantes : elles sont ajustées pour réduire la perte de prédiction du modèle. Le gradient vers Q et K traverse le calcul des scores de compatibilité et leur normalisation ; celui vers V traverse l'agrégation pondérée. Pour une projection linéaire $Q=XW_Q$, la règle de chaîne donne :
+
+$$
+\frac{\partial\mathcal L}{\partial W_Q}
+=X^\top\frac{\partial\mathcal L}{\partial Q}.
+$$
+
+De même, $\partial\mathcal L/\partial W_K=X^\top(\partial\mathcal L/\partial K)$ et $\partial\mathcal L/\partial W_V=X^\top(\partial\mathcal L/\partial V)$. Ce sont des gradients locaux de la couche linéaire ; les gradients de Q, K et V proviennent du calcul complet de l'attention et du réseau.
+
+</details>
+
+### Exercice — transférer Q/K/V à l'attention croisée
+
+Un décodeur consulte les représentations produites par un encodeur. On note $X_D$ les états du décodeur et $X_E$ ceux de l'encodeur.
+
+1. Écrire les expressions de Q, K et V en attention croisée.
+2. Si l'on modifie uniquement $X_D$, quelles projections sont directement affectées ?
+3. Si l'on modifie uniquement $X_E$, quelles projections sont directement affectées ?
+4. Expliquer pourquoi la formule à entrée unique $Q=XW_Q$, $K=XW_K$, $V=XW_V$ décrit l'auto-attention, mais pas cette provenance croisée.
+5. En MQA et GQA, qu'est-ce qui change concernant le nombre ou le partage des têtes K/V ? Quelle distinction fonctionnelle entre Q/K et V demeure ?
+
+<details>
+<summary>Afficher le corrigé raisonné</summary>
+
+En attention croisée, Q provient du flux qui consulte et K/V du flux consulté :
+
+$$
+Q=X_DW_Q,\qquad K=X_EW_K,\qquad V=X_EW_V.
+$$
+
+À paramètres fixés, modifier $X_D$ affecte directement Q ; modifier $X_E$ affecte directement K et V. Les scores et la sortie peuvent ensuite changer en conséquence. La distinction fonctionnelle demeure, mais les projections ne partagent plus une entrée commune. En MQA, plusieurs têtes de requête partagent une seule tête K/V ; en GQA, des groupes de têtes de requête partagent des têtes K/V. Le nombre ou le partage des têtes K/V change, mais la distinction fonctionnelle demeure : Q/K déterminent les poids et V fournit le contenu agrégé. Il faut décrire la paramétrisation exacte plutôt que recopier mécaniquement le cas standard.
+
+</details>
+
+### Exercice CA-A — Masque causal et invariance de préfixe {#ca-a-prefix-invariance}
+
+On considère quatre tokens d'entrée \(x_0,x_1,x_2,x_3\). À la position de requête \(i\), l'auto-attention causale n'autorise que les clés des positions \(j\leq i\).
+
+1. Compléter la matrice \(A\) des positions **autorisées**, définie par \(A_{ij}=1\) si \(j\leq i\), et \(A_{ij}=0\) sinon.
+2. En déduire la matrice \(B\) des positions **bloquées**. Quelle relation relie \(A\) et \(B\) ?
+3. Avec des cibles décalées d'un token, la position \(i\) prédit \(x_{i+1}\). Pourquoi la diagonale de \(A\) doit-elle être autorisée sans révéler la cible ?
+4. On ajoute \(x_4\) à la fin de la séquence. Quelles sorties aux positions \(0,1,2,3\) doivent rester invariantes ? La sortie à la position 4 est-elle soumise à la même contrainte ?
+5. Distinguer le rôle d'un masque causal, d'un masque de padding, d'un masque de loss/cible et d'un masque de frontière de document.
+
+<details>
+<summary>Afficher le corrigé raisonné</summary>
+
+La matrice des positions autorisées est triangulaire inférieure :
+
+\[
+A=
+\begin{pmatrix}
+1&0&0&0\\
+1&1&0&0\\
+1&1&1&0\\
+1&1&1&1
+\end{pmatrix}.
+\]
+
+La matrice bloquée est son complément :
+
+\[
+B=
+\begin{pmatrix}
+0&1&1&1\\
+0&0&1&1\\
+0&0&0&1\\
+0&0&0&0
+\end{pmatrix},
+\qquad B_{ij}=1-A_{ij}.
+\]
+
+La diagonale est autorisée parce qu'à la position \(i\), l'entrée contient déjà \(x_i\) et le modèle prédit le token suivant \(x_{i+1}\). Le décalage entrée-cible est essentiel : le modèle ne reçoit pas \(x_{i+1}\) comme entrée à cette position. Sans ce décalage, autoriser la diagonale pourrait exposer la cible.
+
+Après ajout de \(x_4\), les sorties des positions \(0\) à \(3\) doivent rester inchangées dans une auto-attention causale, à paramètres fixes et avec les mêmes entrées/positions pour le préfixe. Les clés et valeurs du futur token \(x_4\) sont bloquées pour ces requêtes. La nouvelle position 4 peut, elle, consulter les positions \(0\) à \(4\) : sa sortie n'est pas tenue d'être identique à celle de la position 3.
+
+Les masques ne sont pas interchangeables :
+
+- **Causal :** interdit à une requête de consulter une clé future.
+- **Padding :** empêche généralement de consulter des positions de clé qui ne correspondent qu'au remplissage ; le traitement des positions de requête paddées dépend de l'implémentation.
+- **Loss/cible :** exclut certaines cibles de l'objectif et de son dénominateur ; il ne définit pas à lui seul la visibilité dans l'attention.
+- **Frontière de document :** peut empêcher l'attention entre documents concaténés ; c'est une politique de préparation/attention, pas une conséquence universelle du masque causal.
+
+Les tests existants apportent deux niveaux de preuve complémentaires :
+
+- **test_scaled_dot_product_attention_causal_invariance** dans **tests/unit/test_attention.py** perturbe une clé et une valeur futures et vérifie que les sorties des positions antérieures restent inchangées. Il teste le primitive d'attention.
+- **test_prefix_invariance_future_tokens_do_not_change_earlier_logits** dans **tests/unit/test_gpt.py** compare les logits d'un préfixe aux logits correspondants d'une séquence prolongée avec le même GPT. Il couvre le chemin complet du modèle pour ce cas.
+
+Ces tests sont des vérifications ciblées, pas une preuve formelle pour toute entrée, architecture ou implémentation. Ils ne testent ni le masquage du padding ni les frontières de documents. Le GPT de référence construit son masque causal en interne et son interface `forward` n'expose pas de masque de padding ; ces politiques restent hors du périmètre de cette implémentation. Pour les exécuter :
+
+~~~bash
+uv run --locked pytest --no-cov -q tests/unit/test_attention.py tests/unit/test_gpt.py
+~~~
+
+
+**Vérification autonome facultative — une tête d'attention.** Le script suivant isole le mécanisme : il perturbe une clé et une valeur futures et vérifie que les sorties du préfixe restent identiques. Il ne remplace pas les tests du modèle complet ci-dessus.
+
+```python
+import numpy as np
+
+T = 4
+mask = np.full((T, T), -np.inf)
+mask[np.tril_indices(T)] = 0.0
+
+rng = np.random.default_rng(42)
+Q = rng.standard_normal((T, 4))
+K = rng.standard_normal((T, 4))
+V = rng.standard_normal((T, 4))
+
+def causal_attention(q, k, v, additive_mask):
+    scores = (q @ k.T) / np.sqrt(k.shape[-1]) + additive_mask
+    scores = scores - np.max(scores, axis=-1, keepdims=True)
+    weights = np.exp(scores)
+    weights[~np.isfinite(additive_mask)] = 0.0
+    weights /= weights.sum(axis=-1, keepdims=True)
+    return weights @ v
+
+reference = causal_attention(Q, K, V, mask)
+K_changed, V_changed = K.copy(), V.copy()
+K_changed[3] += 100.0
+V_changed[3] += 100.0
+altered = causal_attention(Q, K_changed, V_changed, mask)
+
+assert np.allclose(reference[:3], altered[:3])
+assert not np.allclose(reference[3], altered[3])
+```
+</details>
+
+### Exercice AT-A — Calculer une attention multi-têtes à la main
+
+**Préparation :** les quatre étapes du calcul d'une tête dans [attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd) ; le découpage en têtes et le recollement dans la [visite guidée du bloc de référence](transformer-block-walkthrough.qmd). L'exercice porte sur une seule position requête d'une séquence de $T=2$ positions, avec $d=4$ et $H=2$ têtes ($\text{head\_dim}=2$), sans masque. Les scores ci-dessous sont déjà mis à l'échelle.
+
+Pour la requête étudiée :
+
+- **Tête 0 :** scores mis à l'échelle $(\ln 3,\,0)$ ; tranche $V$ : $v_1=(2,0)$, $v_2=(0,4)$.
+- **Tête 1 :** scores mis à l'échelle $(0,\,\ln 3)$ ; tranche $V$ : $v_1=(0,2)$, $v_2=(4,0)$.
+
+La projection de sortie est posée $w_o=I_4$ pour cet exercice.
+
+1. Calculer les poids d'attention de chaque tête.
+2. Calculer la sortie de chaque tête.
+3. Écrire le vecteur recollé `attended` dans $\mathbb{R}^{4}$.
+4. Les poids de la tête 0 dépendent-ils des scores de la tête 1 ? Sa sortie dépend-elle des valeurs de la tête 1 ?
+5. Quelle opération est la première à mélanger l'information entre têtes ? Pourquoi $w_o=I_4$ est-il un cas particulier ?
+
+<details>
+<summary>Afficher les indices</summary>
+
+1. Chaque tête applique son propre softmax à ses propres scores.
+2. La sortie d'une tête est la somme pondérée de sa tranche $V$.
+3. Le recollement juxtapose les tranches : la tête 0 dans les colonnes $0$ à $1$, la tête 1 dans les colonnes $2$ à $3$.
+4. Revenez aux dépendances du calcul, pas à l'intuition d'une attention unique.
+
+</details>
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+1. Tête 0 : $e^{\ln 3}=3$ et $e^0=1$, somme $4$, d'où des poids $(3/4,\,1/4)$. Tête 1 : $(1/4,\,3/4)$.
+2. Sortie de la tête 0 : $\frac34(2,0)+\frac14(0,4)=(1{,}5,\,1)$. Sortie de la tête 1 : $\frac14(0,2)+\frac34(4,0)=(3,\,0{,}5)$.
+3. `attended`$=(1{,}5,\,1,\,3,\,0{,}5)$ : les deux composantes de la tête 0, puis celles de la tête 1.
+4. Non, et non : chaque tête ne lit que ses tranches de $Q$, $K$ et $V$ ; ses scores et sa sortie ne dépendent que de ces tranches.
+5. La projection $w_o$ : c'est la première opération dont les poids lisent des colonnes provenant des deux têtes. Avec $w_o=I_4$, chaque colonne reste dans sa tête et aucun mélange ne se produit : c'est un choix d'exercice, pas le cas général. Dans le bloc réel, $w_o$ est apprise et mélange les colonnes des têtes.
+
+**Erreurs fréquentes :**
+
+- Additionner les sorties des deux têtes au lieu de les juxtaposer : le recollement concatène, il n'additionne pas.
+- Normaliser les quatre scores ensemble : chaque tête a son propre softmax sur ses deux scores.
+- Croire que les poids d'une tête dépendent de l'autre tête ou de ses valeurs : jusqu'à $w_o$, les têtes sont indépendantes.
+
+**Critère de réussite :** poids et sorties exacts pour chaque tête ; recollement par juxtaposition ; isolation des têtes jusqu'à $w_o$.
+
+</details>
+
+### Exercice AT-B — Tracer les formes d'une attention multi-têtes
+
+**Préparation :** la trace de formes de la collection Transformer (TF-A) ou la [visite guidée du bloc](transformer-block-walkthrough.qmd) pour le découpage en têtes ; [attention à produit scalaire](scaled-dot-product-attention.qmd) pour les formes d'une tête ($T\times T$ puis $T\times d_v$).
+
+Un batch contient $B=2$ séquences de $T=3$ positions, avec $d=6$ et $H=2$ têtes. Complétez les formes manquantes :
+
+| Objet | Forme |
+|---|---:|
+| Entrée $x$ | $(2,3,6)$ |
+| $Q$ (idem $K$, $V$) | ? |
+| Tranche de $Q$ pour la tête 0 (tout le batch) | ? |
+| Scores de la tête 0 pour un élément du batch | ? |
+| Poids de la tête 0 pour un élément (après masque causal et softmax) | ? |
+| Sortie de la tête 0 (tout le batch) | ? |
+| `attended` (têtes recollées) | ? |
+| Sortie de la projection $w_o$ | ? |
+
+Puis répondez :
+
+1. Que vaut $\text{head\_dim}$ ? Par quel facteur les scores d'une tête sont-ils mis à l'échelle ?
+2. Si $H$ passe à $3$ (avec $d=6$), quelles formes changent, et lesquelles restent $(3,3)$ ?
+3. Si $H=4$, la configuration est-elle réalisable dans le bloc de référence ? Pourquoi ?
+4. Le nombre total de paramètres d'attention change-t-il quand $H$ change ?
+
+<details>
+<summary>Afficher les indices</summary>
+
+1. Les projections restent $(d,d)$ ; les têtes sont des tranches de colonnes.
+2. Les scores comparent des requêtes et des clés de même largeur : comptez les positions, pas les caractéristiques.
+3. $\text{head\_dim}=d/H$ doit être un entier dans le bloc de référence.
+
+</details>
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+$Q$, $K$ et $V$ ont la forme $(2,3,6)$. La tranche de la tête 0 : $(2,3,3)$. Les scores de la tête 0 pour un élément du batch : $(3,3)$ ; les poids après masque causal et softmax aussi. La sortie de la tête 0 (batch complet) : $(2,3,3)$. `attended` : $(2,3,6)$. La sortie de $w_o$ : $(2,3,6)$.
+
+1. $\text{head\_dim}=6/2=3$ ; les scores d'une tête sont divisés par $\sqrt{3}$ : la largeur des clés d'une tête est $\text{head\_dim}$, pas $d$.
+2. Les tranches deviennent $(2,3,2)$ ; les scores d'une tête restent $(3,3)$ (trois requêtes comparées à trois clés) ; `attended` reste $(2,3,6)$. Le facteur d'échelle passe de $1/\sqrt{3}$ à $1/\sqrt{2}$ : les poids d'une tête peuvent changer.
+3. $H=4$ donnerait $\text{head\_dim}=1{,}5$, qui n'est pas un entier : le découpage en tranches de colonnes du bloc de référence exige que $H$ divise $d$. Des implémentations avec des projections par tête n'ont pas exactement cette contrainte.
+4. Non : dans le bloc de référence, les projections restent $(d,d)$ et les têtes en sont des tranches ; seul le nombre de tranches change (cf. TF-B).
+
+**Erreurs fréquentes :**
+
+- Donner aux scores d'une tête la largeur $\text{head\_dim}$ : les scores croisent des requêtes et des clés, leur forme est $(T,T)$.
+- Mettre les scores à l'échelle par $\sqrt{d}$ : la largeur des clés d'une tête est $\text{head\_dim}$.
+- Ajouter un axe des têtes au tenseur recollé : le bloc de référence recolle par colonnes dans un tenseur $(B,T,d)$.
+
+</details>
+
+### Exercice AT-C — Diagnostiquer des affirmations multi-têtes et prédire des interventions
+
+**Préparation :** [attention à produit scalaire](scaled-dot-product-attention.qmd) et [projections Q/K/V](queries-keys-values.qmd) après AT-A et AT-B ; la [visite guidée du bloc](transformer-block-walkthrough.qmd) pour la paramétrisation de référence. « Le bloc de référence » désigne le bloc pré-LN de la visite guidée.
+
+**Étape 1 — Classifier des affirmations.** Classez chaque affirmation comme **valide**, **invalide** ou **dépendante de l'architecture**, puis justifiez.
+
+A. Chaque tête calcule ses propres poids à partir de ses tranches de $Q$ et $K$.
+B. Les têtes échangent de l'information avant la projection de sortie $w_o$.
+C. Dans le bloc de référence, les scores d'une tête sont mis à l'échelle par $1/\sqrt{\text{head\_dim}}$, pas par $1/\sqrt{d}$.
+D. Les poids d'une tête dépendent des valeurs de sa tranche $V$.
+E. Doubler le nombre de têtes double la taille des scores par tête.
+F. Une attention à $H$ têtes de largeur $\text{head\_dim}=d/H$ équivaut à une seule tête de largeur $d$.
+G. Tous les modèles ont autant de têtes de requête que de têtes clés/valeurs.
+
+<details>
+<summary>Afficher les indices</summary>
+
+1. Distinguez le calcul d'une tête du recollement et de $w_o$.
+2. Pour l'échelle, repensez à la largeur des clés d'une tête.
+3. Pour la question G, relisez la note sur MQA et GQA de la page Q/K/V.
+
+</details>
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+- **A — Valide :** chaque tête calcule ses scores et son softmax sur ses propres tranches.
+- **B — Invalide :** les têtes restent isolées jusqu'à $w_o$, première opération qui mélange des colonnes provenant de plusieurs têtes.
+- **C — Valide pour le bloc de référence :** la largeur des clés d'une tête est $\text{head\_dim}$ ; la mise à l'échelle suit la largeur des clés. La convention précise dépend de la paramétrisation.
+- **D — Invalide :** les poids dépendent des tranches $Q$ et $K$ ; la tranche $V$ fournit le contenu agrégé.
+- **E — Invalide :** les scores d'une tête croisent des requêtes et des clés, forme $(T,T)$ ; quand $H$ change, c'est $\text{head\_dim}$ qui change, pas la forme des scores.
+- **F — Invalide :** $H$ têtes calculent $H$ matrices de scores sur des produits scalaires de largeur $\text{head\_dim}$ ; une seule tête de largeur $d$ calculerait des produits scalaires différents. Ce ne sont pas les mêmes fonctions.
+- **G — Dépendante de l'architecture :** la formulation standard équilibre têtes de requête et têtes clés/valeurs, mais MQA et GQA partagent des têtes K/V entre plusieurs têtes de requête pour réduire le coût du cache KV à l'inférence.
+
+**Erreur fréquente :** décrire l'attention multi-têtes comme « plusieurs attentions à la même échelle » : chaque tête travaille dans un sous-espace de largeur $\text{head\_dim}$, avec son propre facteur d'échelle et sa propre normalisation.
+
+</details>
+
+**Étape 2 — Prédire des interventions.** On part du bloc de référence à l'initialisation standard. Pour chaque intervention, prévoyez ce qui change et ce qui reste invariant :
+
+1. On met à zéro la tranche $V$ de la tête 1, et seulement elle. Que deviennent les poids de la tête 1 ? Sa sortie ? Le tenseur recollé ? La sortie du bloc ?
+2. On échange l'ordre de recollement : la sortie de la tête 0 atterrit dans les colonnes de la tête 1, et inversement. Que deviennent les poids et les sorties de chaque tête ? Le tenseur recollé ? La sortie de $w_o$ ?
+3. $H$ passe de $2$ à $3$, avec $d=6$ et les mêmes matrices de projection. Le nombre de paramètres d'attention change-t-il ? $\text{head\_dim}$ ? Le facteur d'échelle ? Les poids d'une tête peuvent-ils changer ? La forme du tenseur recollé ?
+
+<details>
+<summary>Afficher les indices</summary>
+
+1. Les poids d'une tête ne lisent que ses tranches $Q$ et $K$.
+2. L'intervention a lieu après le calcul des têtes, mais avant $w_o$.
+3. Reprenez le raisonnement de TF-B sur les paramètres, puis celui d'AT-B sur le facteur d'échelle.
+
+</details>
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+1. Les poids de la tête 1 ne changent pas : ils dépendent de ses tranches $Q$ et $K$. Sa sortie devient le vecteur nul (somme pondérée de valeurs nulles). Le tenseur recollé garde sa forme : colonnes de la tête 0 inchangées, colonnes de la tête 1 nulles. La sortie du bloc change généralement : la branche d'attention n'apporte plus que la contribution de la tête 0.
+2. Poids et sorties de chaque tête sont inchangés : l'intervention a lieu après le calcul des têtes. Le tenseur recollé change : les tranches atterrissent dans les mauvaises colonnes. $w_o$ applique des poids appris à des colonnes précises ; appliquée à un recollement permuté, elle produit généralement une sortie différente. Le recollement n'est pas une permutation neutre.
+3. Les paramètres d'attention ne changent pas : les projections restent $(d,d)$ et les têtes en sont des tranches (cf. TF-B). $\text{head\_dim}$ passe de $3$ à $2$ ; le facteur d'échelle passe de $1/\sqrt{3}$ à $1/\sqrt{2}$ ; des scores divisés par un autre facteur donnent des poids généralement différents. La forme du tenseur recollé reste $(2,3,6)$.
+
+**Erreurs fréquentes :**
+
+- « Une tranche $V$ nulle tue la tête » : la tête produit toujours des poids ; c'est son contenu agrégé qui devient nul.
+- « Réordonner le recollement est sans effet » : $w_o$ lit des colonnes précises, et la correspondance entre tranches et colonnes compte.
+- « Changer $H$ ne change que les formes » : le facteur d'échelle des scores change aussi, donc les poids.
+
+**Critère de réussite :** prédictions correctes sur les trois interventions ; distinction entre poids et contenu ; correspondance tranches-colonnes dans le recollement ; effet de $H$ sur le facteur d'échelle.
+
+</details>
+
+**Pour aller plus loin :** les exercices sur le masque causal multi-têtes, les invariants de normalisation et les variantes MQA/GQA complèteront cette collection.
+
+---
+
+[← Retour au catalogue des exercices](exercises.qmd)
+
+**Langue :** [Français](exercises-attention.qmd) · [English](../en/exercises-attention.qmd)

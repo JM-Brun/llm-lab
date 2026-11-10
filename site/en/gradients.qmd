@@ -106,8 +106,7 @@ Compare this with the analytical gradient using absolute and relative tolerances
 
 ## Practice
 
-This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/gradients.qmd).
-
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/gradients.qmd).
 
 
 ## Further reading

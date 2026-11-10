@@ -202,8 +202,7 @@ A probability of 0.9 therefore does not automatically mean “a 90% chance that 
 
 ## Practice
 
-This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/probabilities.qmd).
-
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/probabilities.qmd).
 
 
 ## Further reading
@@ -211,7 +210,7 @@ This lesson’s questions and exercises are collected on its [dedicated practice
 
 - [Likelihood](likelihood.qmd) — probability of observed tokens and sequences.
 - [Cross-entropy](cross-entropy.qmd) — the training objective.
-- [Mathematical foundations exercises](exercises/probabilities.qmd) — worked exercises on softmax, loss and related topics; further topics remain planned.
+- [Mathematical foundations exercises](exercises-foundations.qmd#foundations) — worked exercises on softmax, loss and related topics; further topics remain planned.
 
 ## References
 

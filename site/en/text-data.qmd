@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: ["en/unicode-text", "en/tokenization-strategies", "en/embedding-space"]
-related: ["en/generation","en/transformer","en/text-data-exercises"]
+related: ["en/generation", "en/transformer", "en/text-data-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:text-data", "level:core", "language:en", "status:published"]
 -->
 
@@ -97,7 +97,9 @@ The same text can produce different sequences depending on the vocabulary, pre-t
 
 ## Practice
 
-This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/text-data.qmd).
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/text-data.qmd).
+
+
 ## Boundaries between pages
 
 - **This page:** text string → tokens → IDs → initial vectors; the role of each object and tokenizer/model compatibility.

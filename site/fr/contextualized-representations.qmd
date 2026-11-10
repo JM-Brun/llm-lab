@@ -108,6 +108,8 @@ Les états évoluent ensuite de bloc en bloc : \(h_t^{(0)}\) désigne l'entrée 
 MICRO-WORKBENCH · DIVERGENCE CONTEXTUELLE D'UN MÊME TOKEN (NUMPY)
 :::
 ::: {.micro-workbench-body}
+Cette expérience est volontairement minimale : elle illustre qu'un état peut dépendre d'autres positions. Elle ne calcule pas une couche Transformer réelle (pas de projections Q/K/V, de scores normalisés par softmax, de connexions résiduelles, de normalisation ni de MLP).
+
 ```python
 import numpy as np
 
@@ -139,7 +141,8 @@ z_A = x_A + P
 z_B = x_B + P
 assert np.array_equal(z_A[1], z_B[1])
 
-# 3. Agrégation contextuelle causale : la position 1 intègre son contexte (pos 0)
+# 3. Agrégation contextuelle causale jouet (pas une implémentation d'attention)
+# On fixe des poids illustratifs pour rendre visible la dépendance au contexte.
 # Poids d'attention causale illustratifs : 40% contexte (pos 0), 60% soi-même (pos 1)
 h_A_1 = 0.4 * z_A[0] + 0.6 * z_A[1]
 h_B_1 = 0.4 * z_B[0] + 0.6 * z_B[1]
@@ -196,23 +199,10 @@ Pour replacer cette transformation dans le parcours complet :
 
 Le [lookup dans l’espace des plongements (embeddings)](embedding-space.qmd) associe les IDs aux vecteurs initiaux. Pour voir comment le réseau transforme ensuite ces vecteurs en états contextualisés, poursuivez avec [Le Transformer dans un GPT](transformer.qmd) : cette page situe la pile de blocs et distingue l'attention du MLP. Les pages sur [Q/K/V](queries-keys-values.qmd) et l'[attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd) détaillent ensuite le mécanisme d'attention.
 
-::: {.self-check}
-## Vérifier sa compréhension
+## Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/contextualized-representations.qmd).
 
-[Exercices approfondis sur ce thème](exercises.qmd#transformer).
-
-Deux occurrences du **même ID de token** apparaissent dans deux phrases différentes. Sans changement de matrice d'embeddings :
-
-1. Les vecteurs obtenus par lookup sont-ils identiques ?
-2. Les états cachés après les couches du Transformer doivent-ils être identiques ? Pourquoi ?
-3. À quelle étape l'information du contexte intervient-elle ?
-4. Dans l'exemple *bank*, qu'est-ce qui est maintenu identique pour isoler l'effet du contexte ?
-
-Vous avez compris cette étape si vous pouvez expliquer la différence entre **identité du vecteur initial** et **dépendance contextuelle des états cachés**, sans attribuer au lookup lui-même une compréhension de la phrase.
-
-:::
 
 {{< include ../includes/generated-suggested-route-fr-contextualized-representations.qmd >}}
 

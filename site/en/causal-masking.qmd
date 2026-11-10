@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/scaled-dot-product-attention"]
   children: []
-related: ["en/logits","en/causal-masking-exercises"]
+related: ["en/logits", "en/causal-masking-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:causal-masking", "level:core", "language:en", "status:published"]
 -->
 
@@ -111,7 +111,7 @@ Decoder-only Transformers such as GPT use this constraint to learn next-token pr
 </details>
 
 ::: {.callout-note collapse="true" title="Check prefix invariance in practice"}
-The causal rule can also be stated as a prefix property: with parameters and a prefix held fixed, appending or changing future tokens must not change the outputs already computed for that prefix. [Exercise CA-A](exercises.qmd#ca-a-prefix-invariance) asks you to construct the mask, examine the target shift, and interpret the reference implementation's invariance tests. It also distinguishes a test of an attention primitive from a test of the complete model.
+The causal rule can also be stated as a prefix property: with parameters and a prefix held fixed, appending or changing future tokens must not change the outputs already computed for that prefix. [Exercise CA-A](exercises-attention.qmd#ca-a-prefix-invariance) asks you to construct the mask, examine the target shift, and interpret the reference implementation's invariance tests. It also distinguishes a test of an attention primitive from a test of the complete model.
 :::
 
 ## Connections to other concepts
@@ -123,7 +123,9 @@ The causal rule can also be stated as a prefix property: with parameters and a p
 
 ## Practice
 
-This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/causal-masking.qmd).
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/causal-masking.qmd).
+
+
 ::: {.callout-note collapse="true" title="Reference code and tests (advanced)"}
 A tested reference implementation is available in `src/llm_lab/foundations/attention.py` (`causal_mask` and `scaled_dot_product_attention`). The attention function accepts an additive 2D mask of exact shape `(T_q, T_k)`; it does not support boolean masks or batch/head broadcasting. The test suite in `tests/unit/test_attention.py` includes a similar single-head invariance case and mask and shape checks; it does not test a complete GPT.
 
