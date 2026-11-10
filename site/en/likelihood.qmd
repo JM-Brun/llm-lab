@@ -47,6 +47,8 @@ Likelihood measures the probability of observed data for fixed parameters. In au
 </div>
 
 
+In the running example, the likelihood of the continuation is built from the conditional probabilities of its successive tokens: each probability is evaluated using the prefix available at that step, extended with the previously observed tokens.
+
 ## Autoregressive factorization
 
 The derivation of this factorization from the chain rule, and the interpretation of conditional probabilities, are developed in [the mathematical formalization of language modeling](language-modeling-math.qmd). Here, the focus is on likelihood as an evaluation criterion for observed sequences and on its connection to the loss.

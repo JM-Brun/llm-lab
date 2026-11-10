@@ -53,6 +53,8 @@ Before interpreting the loss, check how [training inputs and targets are constru
 **Implementation note:** standard cross-entropy functions expect unnormalized logits; do not apply softmax first when the API expects logits directly.
 :::
 
+On the reference continuation, the model computes a loss for each valid target position. The batch loss aggregates these penalties according to the chosen reduction and mask: padding or explicitly ignored positions must not contribute to the average.
+
 ## From local penalty to batch loss
 
 Let $p_{b,t,:}$ be the predicted distribution at position $(b,t)$ and $y_{b,t}$ the target-token ID. For each valid target position $(b,t)\in\mathcal{M}$, the loss is:
