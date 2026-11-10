@@ -61,6 +61,8 @@ The first command validates the canonical page/concept metadata and generates th
 
 - Ownership, cross-document references, and update rules: [information architecture](docs/information-architecture.md). The map above is an index; the linked documents remain authoritative for their own subject.
 
+For pedagogical reviews, the project includes two focused agent skills under `.agents/skills/`: [Understand Path Audit](.agents/skills/understand-path-audit/SKILL.md) reviews the conceptual reader journey, page-to-page transitions, readability and editorial harmonization; [Build Path Audit](.agents/skills/build-path-audit/SKILL.md) reviews implementation dependencies, milestone handoffs, code, tests and reproducibility. They preserve the distinction between the two pathways in [the learning path](docs/learning-path.md); neither treats one as a prerequisite for the other.
+
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution modes, setup, Git hooks, and checks. The toolchain uses pytest for tests, Ruff for linting and formatting, mypy for type checking, pre-commit hooks, and GitHub Actions for Python and site checks. Passing these checks or rendering the site does not by itself establish scientific correctness, learner understanding, or visual quality.
 
 The [roadmap](docs/roadmap.md) records priorities; the [information architecture](docs/information-architecture.md) indexes the metadata, page composition, and audit contracts. Site sources are in `site/`; project guidance and research notes are in `docs/`.
