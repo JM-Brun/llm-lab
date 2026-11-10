@@ -50,7 +50,7 @@ Deux phrases peuvent contenir le même token sans lui donner le même rôle : *b
 :::
 
 
-![Pipeline du texte aux représentations contextualisées.](../images/contextualization-pipeline-fr.svg ){.pipeline-figure fig-alt="Le texte est tokenisé en IDs ; les IDs sélectionnent des vecteurs dans la table d'embeddings ; le modèle traite la position puis les blocs Transformer produisent des états contextualisés." fig-cap="Du texte aux états contextualisés : chaque étape transforme ou enrichit la représentation, du symbole jusqu'aux états cachés dépendant du contexte." width=100%}
+![Pipeline du texte aux représentations contextualisées.](../images/contextualization-pipeline-fr.svg){.pipeline-figure fig-alt="Le texte est tokenisé en IDs ; les IDs sélectionnent des vecteurs dans la table d'embeddings ; le modèle traite la position puis les blocs Transformer produisent des états contextualisés." fig-cap="Du texte aux états contextualisés : chaque étape transforme ou enrichit la représentation, du symbole jusqu'aux états cachés dépendant du contexte." width=100%}
 
 
 ## Ce qui reste identique
