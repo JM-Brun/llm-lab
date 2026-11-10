@@ -57,5 +57,5 @@ Le gradient décrit une variation locale. Un pas trop grand peut dépasser la r�
 **Retour :** [Vue d'ensemble](../mathematical-foundations.qmd) · [Loss](../loss.qmd)
 
 ::: {.language-switch}
-**Langue :** [Français](../exercises/gradients.qmd) · [English](../../en/exercises/gradients.qmd)
+**Langue :** [Français](gradients.qmd) · [English](../../en/exercises/gradients.qmd)
 :::

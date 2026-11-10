@@ -32,5 +32,5 @@ tags: ["type:exercise-hub", "destination:practice", "topic:llm-computational-com
 5. **Un MoE avec peu d'experts actifs ne stocke-t-il que ces experts ?** Non : tous les poids experts doivent être hébergés ou accessibles.
 
 ::: {.language-switch}
-**Langue :** [Français](../exercises/llm-computational-complexity.qmd) · [English](../../en/exercises/llm-computational-complexity.qmd)
+**Langue :** [Français](llm-computational-complexity.qmd) · [English](../../en/exercises/llm-computational-complexity.qmd)
 :::

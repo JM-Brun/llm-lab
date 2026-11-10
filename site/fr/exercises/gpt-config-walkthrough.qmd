@@ -36,5 +36,5 @@ tags: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-config-
 </details>
 
 ::: {.language-switch}
-**Langue :** [Français](../exercises/gpt-config-walkthrough.qmd) · [English](../../en/exercises/gpt-config-walkthrough.qmd)
+**Langue :** [Français](gpt-config-walkthrough.qmd) · [English](../../en/exercises/gpt-config-walkthrough.qmd)
 :::

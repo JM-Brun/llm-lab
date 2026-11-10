@@ -36,5 +36,5 @@ tags: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-ops-exe
 </details>
 
 ::: {.language-switch}
-**Langue :** [Français](../exercises/gpt-ops-walkthrough.qmd) · [English](../../en/exercises/gpt-ops-walkthrough.qmd)
+**Langue :** [Français](gpt-ops-walkthrough.qmd) · [English](../../en/exercises/gpt-ops-walkthrough.qmd)
 :::

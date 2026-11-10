@@ -32,5 +32,5 @@ tags: ["type:exercise-hub", "destination:practice", "topic:in-context-learning-e
 [Exercices et expérimentations](../exercises.qmd).
 
 ::: {.language-switch}
-**Langue :** [Français](../exercises/in-context-learning.qmd) · [English](../../en/exercises/in-context-learning.qmd)
+**Langue :** [Français](in-context-learning.qmd) · [English](../../en/exercises/in-context-learning.qmd)
 :::

@@ -36,5 +36,5 @@ tags: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-model-e
 </details>
 
 ::: {.language-switch}
-**Langue :** [Français](../exercises/gpt-model-walkthrough.qmd) · [English](../../en/exercises/gpt-model-walkthrough.qmd)
+**Langue :** [Français](gpt-model-walkthrough.qmd) · [English](../../en/exercises/gpt-model-walkthrough.qmd)
 :::

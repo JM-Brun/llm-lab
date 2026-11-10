@@ -32,5 +32,5 @@ tags: ["type:exercise-hub", "destination:practice", "topic:hybrid-llm-architectu
 5. **Un gain de débit publié est-il une loi générale ?** Non : il dépend du matériel et du protocole.
 
 ::: {.language-switch}
-**Langue :** [Français](../exercises/hybrid-llm-architectures.qmd) · [English](../../en/exercises/hybrid-llm-architectures.qmd)
+**Langue :** [Français](hybrid-llm-architectures.qmd) · [English](../../en/exercises/hybrid-llm-architectures.qmd)
 :::
