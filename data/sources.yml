@@ -2964,3 +2964,88 @@ sources:
       audit_records:
         - docs/source-reviews/platonic-representation-jepa-2026-11.md
         - data/extractions/balestriero-lecun-platonic-representation-jepas-2026.yml
+
+  - id: eleventh-hour-enthusiast-platonic-representation-jepa-2026
+    title: "Proving and Improving the Platonic Representation Hypothesis with JEPAs"
+    creators: ["Eleventh Hour Enthusiast"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://medium.com/@EleventhHourEnthusiast/proving-and-improving-the-platonic-representation-hypothesis-with-jepas-80a88aa3766d"
+    publisher: "Medium"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: "Full article body inspected on 2026-11-10"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [architectures-mechanisms, scale-research]
+      tags: [topic:platonic-representation-hypothesis, topic:jepa, topic:spectral-embedding, topic:cross-modal-alignment, method:positive-pairs, method:laplacian-eigenmaps]
+      concept_ids: [contextualized-representation, training-objective]
+    metadata:
+      technical_level: advanced
+      contribution_types: [mathematical-derivation, pedagogy, paper-review]
+      audiences: [practitioner, researcher, educator]
+    scan_status: scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-10"
+        status: scanned
+        inspected_scope:
+          - "Complete article body from introduction through references, including the four-state cycle example and derivation of the centered/whitened squared-distance objective"
+          - "Explanation of the graph Laplacian, normalized adjacency matrix, eigenvalue selection, eigengap and rotation/reflection ambiguity"
+          - "Flickr30k experiment description, mutual-neighbor alignment scores, LeJEPA/SIGReg qualification and web-scale sample comparison"
+          - "References to Balestriero–LeCun (2022), Belkin–Niyogi (2001), Huh et al. (2024) and the 2026 primary paper"
+        limitations:
+          - "The article's embedded mathematical figures were not separately retrieved as image files; the text descriptions and equations were inspected."
+          - "The derivation was checked for consistency with the primary paper's Appendix A framing, but not independently peer reviewed."
+          - "The article is a secondary explanation; the arXiv paper remains authoritative for theorem assumptions and experimental protocol."
+          - "No licence or permission to reproduce the article's figures or prose was established."
+    related:
+      pages: []
+      concepts: [contextualized-representation, training-objective]
+      audit_records:
+        - docs/source-reviews/platonic-representation-jepa-2026-11.md
+        - data/extractions/eleventh-hour-enthusiast-platonic-representation-jepa-2026.yml
+
+  - id: youtube-jepa-platonic-representation-j0o8a6ducw
+    title: "YouTube video (video ID j0O8Aq6ducw; title and creator unverified)"
+    creators: []
+    source_type: video
+    identifiers: {youtube_video_id: "j0O8Aq6ducw"}
+    canonical_url: "https://www.youtube.com/watch?v=j0O8Aq6ducw"
+    publisher: "YouTube"
+    publication_date: null
+    updated_date: null
+    language: null
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:jepa, topic:platonic-representation-hypothesis, topic:cross-modal-alignment]
+      concept_ids: [contextualized-representation]
+    metadata:
+      technical_level: unknown
+      contribution_types: [audiovisual]
+      audiences: [learner, practitioner, researcher]
+    scan_status: inaccessible
+    integration_status: deferred
+    scan_history:
+      - accessed_at: "2026-11-10"
+        status: inaccessible
+        inspected_scope:
+          - "User-supplied YouTube watch URL and video identifier recorded"
+          - "Direct watch-page and oEmbed metadata retrieval attempted but unavailable in this environment"
+        limitations:
+          - "Title, creator, publication date, transcript, duration and technical contents remain unverified."
+          - "Do not cite or summarize the video until its metadata and content can be inspected."
+    related:
+      pages: []
+      concepts: [contextualized-representation]
+      audit_records:
+        - docs/source-reviews/platonic-representation-jepa-2026-11.md
