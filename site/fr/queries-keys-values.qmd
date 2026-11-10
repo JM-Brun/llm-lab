@@ -24,7 +24,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-valu
 {{< include ../includes/generated-guided-context-fr-queries-keys-values.qmd >}}
 
 ::: {.chapter-lead}
-La page précédente, [GPT et Transformer : architecture et flux des données](transformer.qmd), situe l'auto-attention dans la passe avant du réseau. Ici, on isole les trois projections qui l'alimentent : **Q**, **K** et **V**. Ce ne sont pas trois catégories de tokens, mais trois transformations apprises d'une représentation. Q et K déterminent les poids ; V fournit le contenu agrégé. La page suivante détaille le calcul de ces poids et de cette agrégation.
+La page précédente, [GPT et Transformer : architecture et flux des données](transformer.qmd), situe l'auto-attention dans la passe avant du réseau. Partons maintenant d'une difficulté simple : comment une position peut-elle exploiter le contexte fourni par les autres tokens ?
 :::
 
 ## Le problème : utiliser le contexte
@@ -52,21 +52,7 @@ Q et K servent donc à déterminer **la répartition de l'attention**. V fournit
 
 ![Schéma des projections Q, K et V : Q et K déterminent les poids d'attention, qui servent à combiner les valeurs V.](../images/queries-keys-values.svg){fig-alt="Deux chemins partent de la même entrée : les vecteurs Q et K sont comparés pour calculer les poids d'attention ; ces poids sont ensuite appliqués aux vecteurs V pour produire une représentation agrégée." width=100%}
 
-Le schéma résume la distinction à garder en tête : **Q et K construisent le chemin de pondération ; V alimente le chemin du contenu**. La leçon suivante détaillera le calcul des scores, leur normalisation et l'agrégation.
-
-::: {.callout-note collapse="true" title="Autre point de vue : visualiser Q et K dans l'espace vectoriel"}
-Codefinity propose une intuition géométrique : représenter Q et K comme des vecteurs dont l'orientation et l'alignement participent au score de compatibilité. Cette vue aide à passer des rôles conceptuels aux objets numériques.
-
-Pour deux vecteurs, le produit scalaire s'écrit :
-
-$$
-q^\top k = \lVert q\rVert\,\lVert k\rVert\cos(\theta).
-$$
-
-L'angle n'est qu'une partie du score : **le produit scalaire dépend aussi des normes** de Q et K. Il ne s'agit pas, en général, d'une similarité cosinus. Cette intuition est une passerelle vers le [calcul de l'attention à produit scalaire](scaled-dot-product-attention.qmd), pas un substitut à sa définition mathématique.
-
-Source : [Codefinity, *Queries, Keys, and Values: The Building Blocks*](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b).
-:::
+Le schéma fait apparaître deux chemins : l'un détermine la pondération, l'autre fournit le contenu. **Pourquoi faut-il trois projections distinctes pour construire ces deux chemins à partir d'une même entrée ?**
 
 ## Pourquoi trois projections à partir de la même entrée ?
 
@@ -92,6 +78,21 @@ Avec $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ et $W_V\in\mathbb{R}^{d_{model
 Chaque ligne correspond à une position. Les mêmes matrices de projection sont appliquées à toutes les positions, mais les représentations d'entrée varient. Les dimensions $d_k$ et $d_v$ ne sont pas nécessairement égales ; les biais éventuels sont omis dans cette écriture. Pour suivre ces projections dans le code du bloc, voir la [visite guidée du bloc Transformer](transformer-block-walkthrough.qmd) ; les conventions générales de dimensions et d'axes sont détaillées dans [Tenseurs](tensors.qmd).
 
 ## Pour approfondir
+
+::: {.callout-note collapse="true" title="Autre point de vue : visualiser Q et K dans l'espace vectoriel"}
+Codefinity propose une intuition géométrique : représenter Q et K comme des vecteurs dont l'orientation et l'alignement participent au score de compatibilité. Cette vue aide à passer des rôles conceptuels aux objets numériques.
+
+Pour deux vecteurs, le produit scalaire s'écrit :
+
+$$
+q^\top k = \lVert q\rVert\,\lVert k\rVert\cos(\theta).
+$$
+
+L'angle n'est qu'une partie du score : **le produit scalaire dépend aussi des normes** de Q et K. Il ne s'agit pas, en général, d'une similarité cosinus. Cette intuition est une passerelle vers le [calcul de l'attention à produit scalaire](scaled-dot-product-attention.qmd), pas un substitut à sa définition mathématique.
+
+Source : [Codefinity, *Queries, Keys, and Values: The Building Blocks*](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b).
+:::
+
 
 
 
