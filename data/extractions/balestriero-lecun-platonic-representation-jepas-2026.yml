@@ -273,7 +273,7 @@ items:
     locator: {type: section, value: "5.1", label: "Captioning Without Training a Network on Image–Caption Pairs"}
     evidence:
       kind: author-reported-method
-      confidence well-supported
+      confidence: well-supported
       scope: "Full section 5.1, including the map, decoder noise and transfer results."
       assumptions: ["The map is constrained to preserve the geometry assumed by the representation alignment."]
       limitations: ["The 30k paired examples mean the headline captioning demonstration is not pair-free.", "The result is not state-of-the-art captioning; it demonstrates composability of independently trained components."]
@@ -291,7 +291,7 @@ items:
     locator: {type: section, value: "5.2", label: "Alignment Without Any Pair"}
     evidence:
       kind: author-reported-experiment
-      confidence context-dependent
+      confidence: context-dependent
       scope: "Unpaired COCO alignment protocol and zero-shot classification benchmark."
       assumptions: ["The benchmark protocol and baselines are those defined by the cited work and reproduced by the authors."]
       limitations: ["This is not a zero-pair training procedure for all components in the paper; it is a particular post-hoc alignment evaluation.", "The comparison is protocol-specific and author-reported.", "Flickr results show substantial seed variability."]
@@ -299,6 +299,60 @@ items:
       primary_theme: scale-research
       secondary_themes: [mathematical-tools-geometry]
       tags: [topic:cross-modal-alignment, method:optimal-transport, application:zero-shot-classification]
+    candidate_destinations:
+      pages: []
+      concepts: []
+    disposition: pending
+
+  - id: balestriero-lecun-platonic-representation-jepas-2026:spectral-gap-uniqueness
+    kind: derivation
+    summary: "Under the paper's centered and whitened second-order constraint, minimizing expected squared distance over positive pairs reduces to maximizing the sum of Rayleigh quotients of the positive-pair Markov operator. Ky Fan's maximum principle selects its top-k non-constant eigenfunctions; a strict gap between eigenvalues k and k+1 makes that subspace unique, while different orthonormal bases of the same subspace differ only by an orthogonal rotation."
+    locator: {type: section, value: "Appendix A.2", label: "Proof of the Platonic Representation Theorem"}
+    evidence:
+      kind: formal-proof
+      confidence: well-supported
+      scope: "Appendix A.1–A.2, including the Markov operator, normalized kernel, objective expansion and Ky Fan argument."
+      assumptions: ["Finite world and symmetric positive-pair distribution with marginal p", "Centered, whitened embedding constraints", "Strict spectral gap mu_k > mu_(k+1)"]
+      limitations: ["This is the second-order constrained case; the paper leaves uniqueness under the full-distribution SIGReg constraint as an assumption.", "A reader-facing page should unpack the variational argument rather than state 'JEPA learns eigenvectors' without conditions."]
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:jepa, topic:spectral-embedding, method:whitening]
+    candidate_destinations:
+      pages: []
+      concepts: []
+    disposition: pending
+  - id: balestriero-lecun-platonic-representation-jepas-2026:rotation-identification
+    kind: mechanism
+    summary: "Once two finite-world representations agree up to an unknown orthogonal rotation, generic paired examples can identify that rotation: k pairs in general position suffice for a k-dimensional embedding, whereas k-1 pairs may leave another exact fit. For ideal rotation-invariant continuous embedding distributions, unpaired moments cannot identify the rotation; finite-world higher-order geometry can nevertheless support post-hoc unpaired alignment."
+    locator: {type: section, value: "Appendix A.3", label: "When Positives Differ and what pairs identify"}
+    evidence:
+      kind: mathematical-derivation
+      confidence: well-supported
+      scope: "Appendix A.3 and the discussion of pair-free alignment in section 5.2."
+      assumptions: ["Orthogonal Procrustes alignment", "Paired points in general position for the k-pair sufficiency statement"]
+      limitations: ["The pair-free procedure is a separate post-hoc method based on geometric matching and optimal transport; it is not implied by first- and second-moment matching.", "The finite-world result is not a universal guarantee for arbitrary datasets."]
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [scale-research]
+      tags: [topic:cross-modal-alignment, method:orthogonal-alignment, method:optimal-transport]
+    candidate_destinations:
+      pages: []
+      concepts: []
+    disposition: pending
+  - id: balestriero-lecun-platonic-representation-jepas-2026:objective-family-scope
+    kind: limitation
+    summary: "The paper's rotation-invariant JEPA objective form includes spectral contrastive learning and whitened MSE; VICReg and Barlow Twins fit only in specific whitened hard-constraint limits, while LeJEPA's SIGReg is rotation-invariant in expectation over projection directions. The spectral uniqueness proof should not be generalized indiscriminately to every anti-collapse loss."
+    locator: {type: section, value: "Appendix A.1", label: "Objectives of the form used by the theorem"}
+    evidence:
+      kind: formal-scope-qualification
+      confidence: well-supported
+      scope: "Appendix A.1 objective-family discussion."
+      assumptions: ["The stated hard-constraint or expectation limits for each objective."]
+      limitations: ["The complete derivations for all named objectives are not reproduced in this extraction.", "The paper explicitly leaves uniqueness under the full SIGReg distributional constraint as an assumption."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:jepa, method:whitening, method:anti-collapse]
     candidate_destinations:
       pages: []
       concepts: []
