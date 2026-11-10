@@ -101,3 +101,31 @@ After the branch is rendered, inspect both language versions at desktop and narr
 - ask a learner unfamiliar with Q/K/V to explain why changing only V cannot change the attention weights, then compare the explanation with the page's learning outcomes.
 
 **Audit verdict:** the conceptual route was already coherent, but the opening and the transition from equations to operational understanding had avoidable friction. The revision addresses the narrative gap while keeping numerical manipulation in the practice route, without broadening the concept page's scope or duplicating the next lesson.
+
+
+## Q/K/V reading-flow revision — 2026-11-10
+
+A second editorial pass focused on the requested reader-experience criteria: an understandable opening problem, short intuitive definitions, a narrative in which each section prepares the next, and fewer interruptions or digressions. It follows the same source-level evidence boundary as the first audit.
+
+### Changes applied to the bilingual concept lessons
+
+- **Opening hook:** the coreference sentence now introduces the need for contextual information before any Q/K/V terminology. The learning-outcomes disclosure no longer precedes the hook; it is placed after the explanatory sequence.
+- **Intuitive definitions:** Q, K, and V are introduced in parallel, one short role statement each, followed immediately by the routing-versus-content distinction.
+- **Visual sequence:** the existing project-owned two-path diagram now follows those definitions directly. A short reading cue explicitly tells the learner what to follow in the figure.
+- **Narrative hand-off:** the next section answers the question raised by the diagram—why three projections are needed from one input—then introduces the symbolic equations and tensor shapes. The following scaled-dot-product lesson is named as the owner of score, normalization, and aggregation calculations.
+- **Reduced interruptions:** the duplicate one-minute summary, source-hosted supplementary illustration note, standalone history aside, repeated routing/content callout, and operational checklist that invited matrix calculation on a conceptual page were removed from the central reading path. Geometry, training, architecture variants, and lexical ambiguity remain available as optional depth.
+- **Scope retained:** cross-attention is explicitly preserved in the collapsed architecture/scope note. The conceptual pages remain qualitative; numerical manipulation remains in the Attention exercise collection.
+
+### Editorial trade-offs and further proposals
+
+1. Keep the first screen focused on the learner's question. Avoid placing a summary, external references, or advanced terminology before the motivating problem.
+2. Treat the Q/K/V diagram as the central explanatory visual, not as one illustration among several competing illustrations. The source-hosted article image was therefore removed from the main lesson; its reference remains in the audit history.
+3. Keep the gradient, GQA/MQA, projection-sharing, vector-geometry, and lexical-ambiguity material collapsed. If rendered review shows that the page still feels long, the next candidate is to move gradient derivation and projection-variant research to the dedicated advanced pages—not to delete them or interrupt the core explanation.
+4. Validate the hook with a learner unfamiliar with attention: after reading only the opening and the three role definitions, ask them to explain why the model needs both a weighting path and a content path.
+
+### Source-level checks
+
+- French and English pages use the same section sequence and preserve matching conceptual outcomes.
+- The concept pages contain no worked numerical projection example and no instruction to calculate matrix products.
+- Both pages retain symbolic Q/K/V equations, tensor-shape information, the existing diagram, cross-attention scope note, and links to the next concept lesson and the separate exercise collection.
+- This pass does not claim a fresh Quarto render, responsive/browser review, accessibility check, or learner study.
