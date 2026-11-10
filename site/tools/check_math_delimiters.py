@@ -37,10 +37,7 @@ def _is_fence(stripped: str) -> bool:
 def mask_inline_code(line: str) -> str:
     """Replace inline code spans with spaces so their content is not scanned."""
     parts = line.split("`")
-    masked = [
-        part if index % 2 == 0 else " " * len(part)
-        for index, part in enumerate(parts)
-    ]
+    masked = [part if index % 2 == 0 else " " * len(part) for index, part in enumerate(parts)]
     return "`".join(masked)
 
 
