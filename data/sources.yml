@@ -3143,10 +3143,10 @@ sources:
     identifiers: {}
     canonical_url: "https://huggingface.co/spaces/hesamation/primer-llm-embedding"
     publisher: "Hugging Face Spaces"
-    publication_date: "2025"
+    publication_date: null
     updated_date: null
     language: en
-    version: "Interactive Space; article cites 2025"
+    version: "Interactive Space; article citation states 2025"
     revision: null
     licence: {identifier: null, url: null, status: unknown}
     reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
