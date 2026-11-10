@@ -27,6 +27,17 @@ tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-valu
 The previous page, [The Transformer in a GPT: architecture and computation](transformer.qmd), showed that self-attention is a sublayer within the repeated block. We now start with a simple question: how can one position use the context provided by the other tokens?
 :::
 
+<div class="pipeline-stepper" role="navigation" aria-label="Steps in Q, K, and V projections">
+  <a class="step-item" href="contextualized-representations.qmd">1. Input states</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item active" aria-current="step">2. Q/K/V projections</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="scaled-dot-product-attention.qmd">3. Q·K scores</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="scaled-dot-product-attention.qmd">4. V aggregation</a>
+</div>
+
+
 ## The problem: using context
 
 In “The cat chased the dog because it was fast,” the pronoun **it** could refer to either the cat or the dog. A model therefore cannot always interpret a token from its local representation alone: it needs to use information carried by other positions in the sequence.
