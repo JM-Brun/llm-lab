@@ -1,8 +1,6 @@
 name: Quarto site
 
 on:
-  push:
-    branches: [main]
   pull_request:
   workflow_dispatch:
   schedule:
@@ -96,11 +94,11 @@ jobs:
           uv pip install --python .venv/bin/python -r docs/requirements-history-validation.txt
 
       - name: Validate page metadata learning graph
-        if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
+        if: github.event_name != 'pull_request'
         run: .venv/bin/python site/tools/check_page_metadata.py
 
       - name: Validate first-class learning resources
-        if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
+        if: github.event_name != 'pull_request'
         run: .venv/bin/python site/tools/check_resource_registry.py
 
       - name: Generate bilingual history timeline fragments
