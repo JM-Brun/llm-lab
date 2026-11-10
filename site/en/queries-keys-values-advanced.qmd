@@ -21,8 +21,6 @@ related: ["en/scaled-dot-product-attention", "en/cross-attention", "en/transform
 tags: ["type:deep-dive", "destination:deepen", "topic:queries-keys-values-advanced", "level:advanced", "language:en", "status:published"]
 -->
 
-{{< include ../includes/generated-guided-context-en-queries-keys-values-advanced.qmd >}}
-
 ::: {.chapter-lead}
 This deep dive extends [Queries, keys, and values (Q, K, V)](queries-keys-values.qmd). The core lesson provides the mental model and essential dimensions; this page makes the per-position notation, mathematical dependencies, and parameterization variants explicit. It assumes that the roles of Q, K, and V and the general attention computation are already familiar.
 :::
