@@ -58,13 +58,22 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
     ]
 
     targets: list[str] = []
+    assets: list[str] = []
     safe = site_relevant and bool(render_inputs) and len(render_inputs) <= MAX_INCREMENTAL_PAGES
     configured_targets = _render_targets(config)
 
     for item in render_inputs:
         path = str(item.get("filename", ""))
         status = str(item.get("status", ""))
-        if not path.startswith("site/") or not path.endswith(".qmd") or status != "modified":
+        if status != "modified":
+            safe = False
+            break
+
+        if path.startswith("site/images/") and PurePosixPath(path).suffix.lower() == ".svg":
+            assets.append(path)
+            continue
+
+        if not path.startswith("site/") or not path.endswith(".qmd"):
             safe = False
             break
 
@@ -89,6 +98,7 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
         "browser_relevant": browser_relevant,
         "render_mode": mode,
         "render_targets": sorted(set(targets)) if mode == "incremental" else [],
+        "render_assets": sorted(set(assets)) if mode == "incremental" else [],
         "files": paths,
     }
 
@@ -109,7 +119,7 @@ def main() -> None:
             if isinstance(value, bool):
                 value = str(value).lower()
             output.write(f"{key}={value}\n")
-        for key in ("files", "render_targets"):
+        for key in ("files", "render_targets", "render_assets"):
             output.write(f"{key}<<EOF\n")
             output.write("\n".join(result[key]))
             output.write("\nEOF\n")
