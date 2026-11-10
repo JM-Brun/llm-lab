@@ -36,6 +36,17 @@ For a one-hot target, cross-entropy at one position is the negative log-probabil
 **Check yourself:** can you recover a token's NLL and explain why a loss mask cannot replace the causal mask?
 :::
 
+<div class="pipeline-stepper" role="navigation" aria-label="Steps in calculating cross-entropy">
+  <a class="step-item" href="likelihood.qmd">1. Observed target</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="probabilities.qmd">2. Predicted probability</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">3. NLL</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item active" aria-current="step">4. Mean over tokens</span>
+</div>
+
+
 To connect this formula to training, also inspect how [input-target examples](training-examples.qmd) are built and how loss masking is applied. Do not confuse it with the [entropy of the predicted distribution](entropy.qmd): entropy describes the spread of probabilities before the next token is observed, while cross-entropy loss scores the probability assigned to the observed target (or a target distribution).
 
 ## Objective for one token
