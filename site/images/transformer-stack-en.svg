@@ -51,7 +51,7 @@
 <path d="M705 985H735" class="arrow"/>
 <rect x="735" y="950" width="110" height="70" rx="9" class="stack"/><text x="790" y="979" text-anchor="middle" class="label">H′</text><text x="790" y="1002" text-anchor="middle" class="note">intermediate</text>
 
-<path d="M790 1020V1108H127V1165" class="arrow"/>
+<path d="M790 1020V1110H35V1200H55" class="arrow"/>
 <text x="75" y="1140" class="label">Sublayer 2 · position-wise transformation</text>
 <rect x="55" y="1165" width="145" height="70" rx="9" class="input"/><text x="127" y="1193" text-anchor="middle" class="label">Input H′</text><text x="127" y="1217" text-anchor="middle" class="note">flux résiduel</text>
 <path d="M200 1200H235" class="arrow"/>
