@@ -34,7 +34,7 @@ Short self-checks no longer sit inside lesson pages: each lesson that has questi
 | Collection | Scope | Status |
 |---|---|---|
 | [Mathematical foundations](#foundations) | Tensors, probability, logits, entropy, cross-entropy, likelihood, gradients, numerical stability | 7 progressive exercises drafted; gradient checking and other topics remain to be developed |
-| [Text data](#text-data) | Tokenization, BPE, special tokens, windows, input-target shift, batching and leakage | Self-checks in the text/embedding lessons; six formative exercises TR-A–TR-F published |
+| [Text data](#text-data) | Tokenization, BPE, special tokens, windows, input-target shift, batching and leakage | Self-checks collected in per-lesson exercise pages; six formative exercises TR-A–TR-F published |
 | [Attention](#attention) | Q/K/V, scores, scaling, causal masks, multi-head attention, invariants | Weighted aggregation and Q/K/V projections; CA-A on causal masking and prefix invariance; three formative multi-head exercises AT-A–AT-C published; advanced variants remain to be developed |
 | [Transformer](#transformer) | Embeddings, position, residuals, normalization, MLP and architecture variants | Three formative exercises TF-A–TF-C published (shapes and normalization of a pre-LN block, block parameter count, diagnosis and interventions); architecture-variant exercises to be developed |
 | [Pretraining](#pretraining) | Objective, train/validation, perplexity, checkpoints and reproducibility | Structure to be filled |

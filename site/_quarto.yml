@@ -115,6 +115,9 @@ project:
     - en/rope.qmd
     - fr/exercises.qmd
     - fr/exercises/causal-masking.qmd
+    - fr/exercises/transformer-architectures.qmd
+    - fr/exercises/llm-limits.qmd
+    - fr/exercises/contextualized-representations.qmd
     - fr/exercises/corpus-preparation.qmd
     - fr/exercises/cross-attention.qmd
     - fr/exercises/cross-entropy.qmd
@@ -145,6 +148,9 @@ project:
     - fr/exercises/vraisemblance.qmd
     - en/exercises.qmd
     - en/exercises/causal-masking.qmd
+    - en/exercises/transformer-architectures.qmd
+    - en/exercises/llm-limits.qmd
+    - en/exercises/contextualized-representations.qmd
     - en/exercises/corpus-preparation.qmd
     - en/exercises/cross-attention.qmd
     - en/exercises/cross-entropy.qmd
@@ -259,6 +265,9 @@ website:
             - section: "Exercices par leçon"
               contents:
                 - fr/exercises/causal-masking.qmd
+                - fr/exercises/transformer-architectures.qmd
+                - fr/exercises/llm-limits.qmd
+                - fr/exercises/contextualized-representations.qmd
                 - fr/exercises/corpus-preparation.qmd
                 - fr/exercises/cross-attention.qmd
                 - fr/exercises/cross-entropy.qmd
@@ -391,6 +400,9 @@ website:
             - section: "Exercises by lesson"
               contents:
                 - en/exercises/causal-masking.qmd
+                - en/exercises/transformer-architectures.qmd
+                - en/exercises/llm-limits.qmd
+                - en/exercises/contextualized-representations.qmd
                 - en/exercises/corpus-preparation.qmd
                 - en/exercises/cross-attention.qmd
                 - en/exercises/cross-entropy.qmd
