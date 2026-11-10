@@ -133,13 +133,24 @@ Un ordre d'apprentissage raisonnable : espérance de récompense et objectif de 
 
 Ce sujet n'est pas une nouvelle étape du fil computationnel central de prédiction du prochain token et ne remplace pas l'entraînement supervisé par teacher forcing.
 
-## Pour approfondir
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Ressources complémentaires</span>
+  <span class="learning-resources__description">Pour approfondir les mécanismes et les références de cette leçon.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Pour approfondir
 
 - Marek et Ryabinin, [*Score Centering Stabilizes Off-policy Reinforcement Learning*](https://arxiv.org/abs/2609.20807).
 - [Rendu intégral consulté pour cet audit](https://www.alphaxiv.org/abs/2609.20807).
 - [Implémentation officielle et README](https://github.com/martin-marek/score-centering), notamment le [code de la loss](https://github.com/martin-marek/score-centering/blob/main/losses.py).
 - Cameron R. Wolfe, [*Score Centering*](https://cameronrwolfe.substack.com/p/score-centering) — commentaire distinct ; récupération du corps en attente.
 - Étude connexe ultérieure : [*On the Origin and Evolution of Training-Inference Mismatch in LLM Reinforcement Learning*](https://arxiv.org/abs/2610.40945), à examiner séparément.
+
+</div>
+</details>
+
 
 ::: {.callout-warning}
 **Limites de l'audit :** le PDF arXiv canonique et toutes ses annexes n'ont pas encore été vérifiés indépendamment, les tests officiels n'ont pas été exécutés et le corps de l'article de Cameron Wolfe reste indisponible. Les chiffres expérimentaux sont rapportés par les auteurs et l'approximation de la queue top-k reste une hypothèse d'implémentation.
