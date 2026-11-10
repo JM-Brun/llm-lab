@@ -134,7 +134,7 @@ La règle causale se formule aussi comme une propriété de préfixe : à param�
 
 ## Exercices
 
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/causal-masking.qmd).
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/causal-masking.qmd).
 
 
 ::: {.callout-note collapse="true" title="Code et tests de référence (approfondissement)"}
