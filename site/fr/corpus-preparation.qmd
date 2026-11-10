@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/build-path"]
   children: ["fr/training-examples"]
-related: ["fr/text-data", "fr/tokenization-strategies", "fr/tokenizer-design-evaluation", "fr/evaluation-experimentale"]
+related: ["fr/text-data", "fr/tokenization-strategies", "fr/tokenizer-design-evaluation", "fr/evaluation-experimentale", "fr/exercises/corpus-preparation"]
 tags: ["type:guided-build", "destination:build", "topic:corpus-preparation", "level:core", "language:fr", "status:published"]
 -->
 
@@ -92,45 +92,11 @@ Le corpus préparé peut alors être encodé en flux de tokens. La page [Du corp
 - **Contrat de sortie :** transmettre les IDs avec provenance, version du tokenizer, paramètres d'encodage, statistiques et règles de frontière documentaire.
 :::
 
-::: {.self-check}
-## Vérifier sa compréhension
+## S’exercer
 
-1. Pourquoi un découpage aléatoire de fragments ne garantit-il pas l'indépendance entre train et test ?
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/corpus-preparation.qmd).
 
-<details>
-<summary>Afficher la réponse</summary>
 
-Des fragments d'un même document, d'une même source ou d'une même famille peuvent se retrouver dans plusieurs partitions. L'unité de séparation doit correspondre à la généralisation que l'évaluation prétend mesurer, puis les recouvrements doivent être audités.
-
-</details>
-
-2. Pourquoi figer le tokenizer après l'avoir ajusté sur la partition d'entraînement ?
-
-<details>
-<summary>Afficher la réponse</summary>
-
-Pour éviter que le vocabulaire ou les règles du tokenizer incorporent des informations issues des textes réservés à la validation ou au test dans une expérience held-out.
-
-</details>
-
-3. La déduplication est-elle toujours bénéfique ?
-
-<details>
-<summary>Afficher la réponse</summary>
-
-Non. Elle peut réduire la surreprésentation, mais aussi modifier la distribution du corpus ou supprimer des répétitions légitimes. La méthode et ses effets doivent être documentés.
-
-</details>
-
-4. Quelles informations doivent accompagner le flux de tokens transmis à l'étape suivante ?
-
-<details>
-<summary>Afficher la réponse</summary>
-
-Au minimum, la provenance du corpus, la révision exacte du tokenizer, les paramètres d'encodage, les statistiques utiles et les règles de frontière documentaire.
-
-</details>
-:::
 
 ## Limites
 

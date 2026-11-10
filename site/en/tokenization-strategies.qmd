@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: ["en/text-data"]
   children: []
-related: ["en/training-examples"]
+related: ["en/training-examples", "en/exercises/tokenization-strategies"]
 tags: ["type:deep-dive", "destination:deepen", "topic:tokenization-strategies", "level:advanced", "language:en", "status:published"]
 -->
 
@@ -247,40 +247,11 @@ This page is an **optional deepening** of [From text to tokens](text-data.qmd): 
 - [tiktoken](https://github.com/openai/tiktoken)
 
 
-::: {.self-check}
-## Check your understanding
+## Practice
 
-Formative exercises extend this page, notably on BPE merges, in the [Text-data collection](exercises.qmd#text-data).
+This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/tokenization-strategies.qmd).
 
-1. One tokenizer produces fewer tokens than another on the same text. Does that prove it is better?
 
-<details>
-<summary>Show the answer</summary>
-
-No: a shorter sequence first demonstrates a difference in granularity and compression. Length is neither a quality metric nor a guarantee of linguistic analysis; the useful comparison concerns the corpus, tokenizer, and objective together.
-
-</details>
-
-2. Is training the tokenizer already pretraining the language model?
-
-<details>
-<summary>Show the answer</summary>
-
-No. The tokenizer has its own training (merge rules, vocabulary, normalization) on its own data, and is then frozen. Pretraining the language model optimizes the network weights to predict tokens, with the tokenizer frozen. The two trainings share neither objective nor parameters.
-
-</details>
-
-3. Can the same token ID denote different fragments in two models?
-
-<details>
-<summary>Show the answer</summary>
-
-Generally yes: an ID only has meaning relative to the vocabulary of the tokenizer that produced it. Unless the tokenizer or its revision is identical, the same integer can correspond to different fragments; IDs do not transfer as-is between models.
-
-</details>
-
-You have understood this step if you can distinguish training the tokenizer from encoding at inference, and explain why IDs depend on the vocabulary and its version.
-:::
 
 ::: {.language-switch}
 **Language:** [Français](../fr/tokenization-strategies.qmd) · [English](tokenization-strategies.qmd)

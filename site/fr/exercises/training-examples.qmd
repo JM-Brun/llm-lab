@@ -1,0 +1,66 @@
+---
+title: "Exercices — Exemples d'entraînement"
+subtitle: "Questions de vérification, exercices et corrigés"
+keywords: ["type:exercise-hub", "destination:practice", "topic:training-examples", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/exercises/training-examples"
+summary: "Questions de vérification et exercices associés à la leçon Exemples d'entraînement."
+scope: "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle."
+purpose: "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/training-examples"]
+tags: ["type:exercise-hub", "destination:practice", "topic:training-examples", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour à la leçon : Exemples d'entraînement](../training-examples.qmd)
+
+## Vérifier sa compréhension
+
+1. Pour le flux `[4, 7, 2, 9]` et une longueur d'entrée de 3, quelle est la première paire entrée-cible ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Entrée `[4, 7, 2]`, cible `[7, 2, 9]`. Chaque cible est le token immédiatement suivant à la même position de prédiction.
+
+</details>
+
+2. Pourquoi le teacher forcing ne donne-t-il pas accès aux tokens futurs ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Le modèle reçoit le préfixe observé, mais le masque causal limite chaque position aux tokens précédents et au token courant. Sans cette contrainte, la cible pourrait fuiter dans le calcul.
+
+</details>
+
+3. Quelle différence entre masque d'attention et masque de perte ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Le premier détermine quelles positions peuvent être consultées ; le second détermine quelles cibles contribuent à l'objectif. Ils ne sont pas interchangeables.
+
+</details>
+
+4. Si les logits ont la forme \([B,L,V]\), que représentent les trois axes ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Le lot, la position dans la séquence et le token candidat du vocabulaire. Il y a une distribution de scores sur les \(V\) tokens à chaque position de chaque séquence.
+
+</details>
+
+::: {.language-switch}
+**Langue :** [Français](../exercises/training-examples.qmd) · [English](../../en/exercises/training-examples.qmd)
+:::

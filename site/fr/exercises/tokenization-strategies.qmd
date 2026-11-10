@@ -1,0 +1,61 @@
+---
+title: "Exercices — Stratégies de tokenisation"
+subtitle: "Questions de vérification, exercices et corrigés"
+keywords: ["type:exercise-hub", "destination:practice", "topic:tokenization-strategies", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/exercises/tokenization-strategies"
+summary: "Questions de vérification et exercices associés à la leçon Stratégies de tokenisation."
+scope: "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle."
+purpose: "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/tokenization-strategies"]
+tags: ["type:exercise-hub", "destination:practice", "topic:tokenization-strategies", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour à la leçon : Stratégies de tokenisation](../tokenization-strategies.qmd)
+
+## Vérifier sa compréhension
+
+Des exercices formatifs prolongent cette page, notamment sur les fusions BPE, dans la [collection Données textuelles](../exercises.qmd#donnees-textuelles).
+
+1. Un tokenizer produit moins de tokens qu'un autre sur le même texte. Cela prouve-t-il qu'il est meilleur ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Non : une séquence plus courte démontre d'abord une différence de granularité et de compression. La longueur n'est ni une métrique de qualité ni une garantie d'analyse linguistique ; la comparaison utile porte sur le couple corpus, tokenizer et objectif.
+
+</details>
+
+2. Entraîner le tokenizer, est-ce déjà préentraîner le modèle de langage ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Non. Le tokenizer a son propre apprentissage (règles de fusion, vocabulaire, normalisation) sur ses propres données, puis il est figé. Le préentraînement du modèle de langage optimise ensuite les poids du réseau pour prédire des tokens, avec le tokenizer figé. Les deux entraînements ne partagent ni objectif ni paramètres.
+
+</details>
+
+3. Un même identifiant de token peut-il désigner des fragments différents dans deux modèles ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Oui en général : un identifiant n'a de sens que relativement au vocabulaire du tokenizer qui l'a produit. Sauf tokenizer ou révision identiques, le même entier peut correspondre à des fragments différents ; les identifiants ne se transfèrent pas tels quels entre modèles.
+
+</details>
+
+Vous avez compris cette étape si vous pouvez distinguer l'entraînement du tokenizer de l'encodage à l'inférence, et expliquer pourquoi les identifiants dépendent du vocabulaire et de sa version.
+
+::: {.language-switch}
+**Langue :** [Français](../exercises/tokenization-strategies.qmd) · [English](../../en/exercises/tokenization-strategies.qmd)
+:::

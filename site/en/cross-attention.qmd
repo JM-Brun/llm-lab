@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/transformer-architectures"]
   children: []
-related: ["en/queries-keys-values", "en/scaled-dot-product-attention", "en/causal-masking"]
+related: ["en/queries-keys-values", "en/scaled-dot-product-attention", "en/causal-masking", "en/exercises/cross-attention"]
 tags: ["type:deep-dive", "destination:deepen", "topic:cross-attention", "level:advanced", "language:en", "status:published"]
 -->
 
@@ -154,18 +154,11 @@ The mechanism is not limited to translation. It also appears in multimodal model
 - [Causal masking](causal-masking.qmd) explains the temporal constraint in decoder self-attention.
 - [Transformer history](transformer-history.qmd) places the encoder–decoder in the original Transformer paper.
 
-::: {.self-check}
-## Check your understanding
+## Practice
 
-**In decoder cross-attention, where do Q, K, and V come from?**
+This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/cross-attention.qmd).
 
-<details>
-<summary>Show the reasoning</summary>
 
-Q is projected from decoder states, because those are the positions doing the reading. K and V are projected from encoder outputs, which form the memory being read. The score matrix therefore has one row per target position and one column per source position.
-
-</details>
-:::
 
 ::: {.language-switch}
 **Language:** [Français](../fr/cross-attention.qmd) · [English](cross-attention.qmd)

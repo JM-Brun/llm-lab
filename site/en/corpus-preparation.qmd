@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["en/build-path"]
   children: ["en/training-examples"]
-related: ["en/text-data", "en/tokenization-strategies", "en/tokenizer-design-evaluation", "en/experimental-evaluation"]
+related: ["en/text-data", "en/tokenization-strategies", "en/tokenizer-design-evaluation", "en/experimental-evaluation", "en/exercises/corpus-preparation"]
 tags: ["type:guided-build", "destination:build", "topic:corpus-preparation", "level:core", "language:en", "status:published"]
 -->
 
@@ -92,45 +92,11 @@ The prepared corpus can then be encoded into token streams. The [training exampl
 - **Handoff contract:** pass token IDs with provenance, tokenizer version, encoding parameters, useful statistics, and document-boundary rules.
 :::
 
-::: {.self-check}
-## Check your understanding
+## Practice
 
-1. Why does a random split of text chunks not guarantee independence between train and test?
+This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/corpus-preparation.qmd).
 
-<details>
-<summary>Show answer</summary>
 
-Chunks from the same document, source, or family may appear in multiple partitions. The split unit must match the generalization claim being tested, and overlap must then be audited.
-
-</details>
-
-2. Why freeze the tokenizer after fitting it on the training partition?
-
-<details>
-<summary>Show answer</summary>
-
-To prevent its vocabulary or rules from incorporating information from texts reserved for validation or test in a held-out experiment.
-
-</details>
-
-3. Is deduplication always beneficial?
-
-<details>
-<summary>Show answer</summary>
-
-No. It can reduce over-representation, but it can also alter the corpus distribution or remove legitimate repetitions. The method and its effects should be documented.
-
-</details>
-
-4. What information should accompany the token stream handed to the next stage?
-
-<details>
-<summary>Show answer</summary>
-
-At minimum, corpus provenance, the exact tokenizer revision, encoding parameters, useful statistics, and document-boundary rules.
-
-</details>
-:::
 
 ## Limitations
 

@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/transformer-architectures"]
   children: []
-related: ["fr/queries-keys-values", "fr/scaled-dot-product-attention", "fr/causal-masking"]
+related: ["fr/queries-keys-values", "fr/scaled-dot-product-attention", "fr/causal-masking", "fr/exercises/cross-attention"]
 tags: ["type:deep-dive", "destination:deepen", "topic:cross-attention", "level:advanced", "language:fr", "status:published"]
 -->
 
@@ -154,18 +154,11 @@ Le mécanisme n'est pas réservé à la traduction. Il apparaît notamment dans 
 - [Masque causal](causal-masking.qmd) explique la contrainte temporelle dans l'auto-attention du décodeur.
 - [Historique des Transformers](transformer-history.qmd) replace l'encodeur-décodeur dans le papier fondateur.
 
-::: {.self-check}
-## Vérifier sa compréhension
+## S’exercer
 
-**Dans l'attention croisée du décodeur, d'où viennent Q, K et V ?**
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/cross-attention.qmd).
 
-<details>
-<summary>Afficher le raisonnement</summary>
 
-Q est projeté depuis les états du décodeur, car ce sont les positions qui consultent. K et V sont projetés depuis les sorties de l'encodeur, qui constituent la mémoire consultée. La matrice des scores a donc une ligne par position cible et une colonne par position source.
-
-</details>
-:::
 
 ::: {.language-switch}
 **Langue :** [Français](cross-attention.qmd) · [English](../en/cross-attention.qmd)

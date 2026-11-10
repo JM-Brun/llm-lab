@@ -1,0 +1,39 @@
+---
+title: "Exercices — Attention croisée"
+subtitle: "Questions de vérification, exercices et corrigés"
+keywords: ["type:exercise-hub", "destination:practice", "topic:cross-attention", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/exercises/cross-attention"
+summary: "Questions de vérification et exercices associés à la leçon Attention croisée."
+scope: "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle."
+purpose: "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/cross-attention"]
+tags: ["type:exercise-hub", "destination:practice", "topic:cross-attention", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour à la leçon : Attention croisée](../cross-attention.qmd)
+
+## Vérifier sa compréhension
+
+**Dans l'attention croisée du décodeur, d'où viennent Q, K et V ?**
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+Q est projeté depuis les états du décodeur, car ce sont les positions qui consultent. K et V sont projetés depuis les sorties de l'encodeur, qui constituent la mémoire consultée. La matrice des scores a donc une ligne par position cible et une colonne par position source.
+
+</details>
+
+::: {.language-switch}
+**Langue :** [Français](../exercises/cross-attention.qmd) · [English](../../en/exercises/cross-attention.qmd)
+:::

@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/loss"]
   children: []
-related: []
+related: ["fr/exercises/gradients"]
 tags: ["type:concept-lesson", "destination:understand", "topic:gradients", "level:core", "language:fr", "status:published"]
 -->
 
@@ -104,40 +104,11 @@ Comparer ce résultat au gradient analytique avec des tolérances absolue et rel
 - **« Une différence finie qui passe prouve tout le backward pass. »** Elle vérifie un cas, une fonction, une précision et une configuration ; elle ne remplace pas les tests de formes, de cas limites et d'intégration.
 :::
 
-::: {.self-check}
-## Vérifier sa compréhension
+## S’exercer
 
-Pour des exercices complémentaires séparés du cours, voir l’[espace d’exercices — fondations mathématiques](exercises.qmd#fondations).
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/gradients.qmd).
 
-1. Pourquoi la dérivée de la cross-entropie par rapport aux logits se simplifie-t-elle en $p_i-\mathbb{1}[i=y]$ ?
 
-<details>
-<summary>Afficher la réponse</summary>
-
-Pour une cible one-hot, la dérivée du log-softmax combine le terme de normalisation $p_i$ et le terme de la classe cible $-\mathbb{1}[i=y]$. La différence donne le gradient par logit.
-
-</details>
-
-2. Que révèle un désaccord entre gradient analytique et différence finie ?
-
-<details>
-<summary>Afficher la réponse</summary>
-
-Il peut signaler une erreur de dérivation ou d'implémentation, mais aussi un pas $\epsilon$ mal choisi, des erreurs d'arrondi, une fonction non déterministe ou une comparaison de conventions différentes. Il faut isoler le cas et vérifier les tolérances.
-
-</details>
-
-3. Pourquoi une descente de gradient peut-elle ne pas réduire la loss après une mise à jour trop grande ?
-
-<details>
-<summary>Afficher la réponse</summary>
-
-Le gradient décrit une variation locale. Un pas trop grand peut dépasser la région où cette approximation est utile, franchir un minimum ou augmenter l'objectif ; le taux d'apprentissage doit être contrôlé.
-
-</details>
-
-**Retour :** [Vue d'ensemble](mathematical-foundations.qmd) · [Loss](loss.qmd)
-:::
 
 ## Pour approfondir
 

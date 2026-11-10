@@ -1,0 +1,39 @@
+---
+title: "Exercises — Cross-attention"
+subtitle: "Self-check questions, exercises, and worked answers"
+keywords: ["type:exercise-hub", "destination:practice", "topic:cross-attention", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/exercises/cross-attention"
+summary: "Self-check questions and exercises associated with the Cross-attention lesson."
+scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
+purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/cross-attention"]
+tags: ["type:exercise-hub", "destination:practice", "topic:cross-attention", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the lesson: Cross-attention](../cross-attention.qmd)
+
+## Check your understanding
+
+**In decoder cross-attention, where do Q, K, and V come from?**
+
+<details>
+<summary>Show the reasoning</summary>
+
+Q is projected from decoder states, because those are the positions doing the reading. K and V are projected from encoder outputs, which form the memory being read. The score matrix therefore has one row per target position and one column per source position.
+
+</details>
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/cross-attention.qmd) · [English](../exercises/cross-attention.qmd)
+:::
