@@ -2188,3 +2188,29 @@ p:has(.pipeline-stepper) {
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 600px) {
+  /* On narrow screens, turn linear flows into a readable vertical sequence.
+     This avoids clipped labels and makes the direction unambiguous. */
+  .pipeline-stepper:not(.meta-flow--branch) {
+    flex-direction: column;
+    align-items: stretch;
+    overflow: visible;
+    white-space: normal;
+  }
+
+  .pipeline-stepper:not(.meta-flow--branch) .step-item {
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  .pipeline-stepper:not(.meta-flow--branch) .step-arrow {
+    align-self: center;
+    transform: rotate(90deg);
+  }
+
+  p:has(.pipeline-stepper) {
+    overflow: visible;
+  }
+}
