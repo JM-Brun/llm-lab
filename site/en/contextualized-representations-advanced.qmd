@@ -24,8 +24,6 @@ tags: ["type:deep-dive", "destination:deepen", "topic:contextualized-representat
 -->
 
 
-{{< include ../includes/generated-guided-context-en-contextualized-representations-advanced.qmd >}}
-
 This page extends the [introductory explanation of contextualized representations](contextualized-representations.qmd). It assumes readers can already distinguish a token ID, its lookup vector, and a hidden state produced by the network.
 
 ## 1. From the initial embedding to the network input
