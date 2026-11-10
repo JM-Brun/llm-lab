@@ -114,7 +114,7 @@ L'article valide la théorie de 145k légendes jusqu'aux textes de 940M images d
 - À l'échelle du web, une JEPA texte de 109M paramètres obtient 0,184 sur le principal banc d'alignement de voisinage, devant Qwen2.5-72B (0,154) et Llama-3-70B (0,151) dans la même évaluation, et devant l'encodeur de texte de CLIP. C'est une métrique d'alignement propre à la tâche, pas un classement de capacité générale.
 - Une rotation apprise transforme les encodeurs de texte et d'image, entraînés séparément, en générateur de légendes, atteignant 0,838 de CIDEr sur COCO. La rotation est ajustée sur 30 000 paires image-légende ; les encodeurs restent entraînés séparément, mais la démonstration n'est pas entièrement sans paires.
 - Sur un banc séparé d'alignement sans paires, la JEPA texte atteint 64 % de top-5 sur ImageNet-100, contre au plus 56 % pour les modèles de langage évalués jusqu'à 8 milliards de paramètres. Le protocole est spécifique et ne doit pas être généralisé.
-- L'article rapporte aussi une loi d'échelle de l'alignement qui prédit des exécutions inédites dans le bruit de germination, mais elle est ajustée sur une seule recette et surestime certains régimes où les données répétées comptent.
+- L'article rapporte aussi une loi d'échelle de l'alignement qui prédit des exécutions inédites dans la variation entre graines (seed noise), mais elle est ajustée sur une seule recette et surestime certains régimes où les données répétées comptent.
 
 Une précaution de provenance accompagne les chiffres à l'échelle du web : une grande partie du texte d'entraînement se compose de descriptions générées par un générateur de légendes vision-langage en amont. L'encodeur de texte ne voit jamais de pixels, mais sa supervision hérite de connaissances image-texte de ce système amont.
 
@@ -134,7 +134,7 @@ Une précaution de provenance accompagne les chiffres à l'échelle du web : une
 **Place dans LLM Lab :** un approfondissement avancé facultatif dans le domaine des questions de recherche. Il ne modifie pas le parcours Understand principal et n'est pas un prérequis pour construire le petit GPT. Il relie trois pages voisines : les [représentations contextualisées](contextualized-representations.qmd) (comment un modèle construit des états au niveau du token), la [linéarité des embeddings](linearite-embeddings.qmd) (géométrie supposée des espaces de représentation) et les [lois d'échelle](scaling-laws.qmd) (régularités ressources-performance, auxquelles cette page ne réduit volontairement pas l'alignement).
 
 ::: {.callout-warning}
-**Limite de recherche.** Les annexes de preuve de l'article ont été auditées sélectivement, l'implémentation officielle n'a pas été exécutée et aucun résultat n'a été reproduit indépendamment. Traitez les chiffres rapportés comme des éléments d' preuve rapportés par les auteurs et propres à leur protocole, conformément au dossier de revue des sources du dépôt.
+**Limite de recherche.** Les annexes de preuve de l'article ont été auditées sélectivement, l'implémentation officielle n'a pas été exécutée et aucun résultat n'a été reproduit indépendamment. Traitez les chiffres rapportés comme des éléments de preuve rapportés par les auteurs et propres à leur protocole, conformément au dossier de revue des sources du dépôt.
 :::
 
 ::: {.self-check}

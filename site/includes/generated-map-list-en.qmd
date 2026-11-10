@@ -69,6 +69,7 @@
     - [Scaling laws: parameters, data, and compute](scaling-laws.html)
     - [Emergent capabilities: what changes with scale?](emergence.html)
     - [From GPT-2 to contemporary LLM systems](llm-evolution.html)
+    - [From shared observations to shared representations: JEPA and the Platonic Representation Hypothesis](jepa-platonic-representation.html)
   - [Deep-dive map](deepen.html)
 - **Glossary and history**
   - [LLM and Transformer glossary](glossary.html)
