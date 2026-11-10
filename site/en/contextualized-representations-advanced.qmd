@@ -2,7 +2,7 @@
 title: "Contextualized representations: dependencies across positions and layers"
 subtitle: "Formalizing accessible context, masks, and successive transformations"
 description: "A mathematical deep dive into how Transformer blocks build hidden states that depend on position and accessible context."
-keywords: ["type:deep-dive", "destination:deepen", "topic:contextualized-representations", "level:advanced", "language:en", "status:published"]
+keywords: ["type:deep-dive", "destination:deepen", "topic:contextualized-representations-advanced", "level:advanced", "language:en", "status:published"]
 lang: en
 ---
 
@@ -14,13 +14,13 @@ scope: "Deepens contextualization after the initial lookup: positional handling,
 domain: "architectures-mechanisms"
 purpose: "Formalize which positions may contribute to a hidden state, distinguish causal decoders from bidirectional encoders, and explain the limits of a simplified block representation."
 suggested_route:
-  previous: "en/contextualized-representations"
+  previous: null
   next: null
 hierarchy:
-  parents: ["en/contextualized-representations"]
+  parents: ["en/deepen"]
   children: []
 related: ["en/queries-keys-values-advanced", "en/rope", "en/transformer"]
-tags: ["type:deep-dive", "destination:deepen", "topic:contextualized-representations", "level:advanced", "language:en", "status:published"]
+tags: ["type:deep-dive", "destination:deepen", "topic:contextualized-representations-advanced", "level:advanced", "language:en", "status:published"]
 -->
 
 
