@@ -171,7 +171,9 @@ def test_rendered_graph_validator_reports_dangling_references() -> None:
     assert any("urn:missing" in error for error in errors)
 
 
-def test_exports_first_class_resources_with_stable_ids_and_typed_metadata(graph_payload: dict[str, Any]) -> None:
+def test_exports_first_class_resources_with_stable_ids_and_typed_metadata(
+    graph_payload: dict[str, Any],
+) -> None:
     payload = graph_payload
     graph = payload["@graph"]
     resources = [node for node in graph if node.get("@type") == "schema:SoftwareSourceCode"]
@@ -225,7 +227,9 @@ def test_resource_concept_and_bilingual_page_links_resolve(graph_payload: dict[s
     assert logits_uri in {item["@id"] for item in generation["schema:about"]}
 
 
-def test_page_nodes_are_unique_and_resource_registry_is_in_provenance(graph_payload: dict[str, Any]) -> None:
+def test_page_nodes_are_unique_and_resource_registry_is_in_provenance(
+    graph_payload: dict[str, Any],
+) -> None:
     payload = graph_payload
     graph = payload["@graph"]
     page_ids = [
@@ -243,7 +247,9 @@ def test_page_nodes_are_unique_and_resource_registry_is_in_provenance(graph_payl
     assert "https://github.com/JM-Brun/llm-lab/blob/main/data/resources.yml" in derived_from
 
 
-def test_attention_subgraph_exports_intermediate_concepts_and_typed_relations(graph_payload: dict[str, Any]) -> None:
+def test_attention_subgraph_exports_intermediate_concepts_and_typed_relations(
+    graph_payload: dict[str, Any],
+) -> None:
     payload = graph_payload
     graph = payload["@graph"]
     identifiers = {node.get("@id") for node in graph}
