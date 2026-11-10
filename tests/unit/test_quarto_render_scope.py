@@ -1,9 +1,12 @@
-import sys
+import importlib.util
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-
-from scripts.quarto_render_scope import classify_changed_files
+module_path = Path(__file__).resolve().parents[2] / "scripts" / "quarto_render_scope.py"
+module_spec = importlib.util.spec_from_file_location("quarto_render_scope", module_path)
+assert module_spec is not None and module_spec.loader is not None
+module = importlib.util.module_from_spec(module_spec)
+module_spec.loader.exec_module(module)
+classify_changed_files = module.classify_changed_files
 
 
 CONFIG = """project:
