@@ -281,7 +281,7 @@ for (const testCase of cases) {
           : ["foundations", "text-data", "attention", "transformer", "generation"];
         const collectionLinks = [...document.querySelectorAll("main a[href]")].map(link => ({
           href: link.href,
-          text: link.textContent.trim().replace(/\\s+/g, " "),
+          text: link.textContent.trim().replace(/\s+/g, " "),
         }));
         const missingCollectionPages = expectedPages.filter(expected =>
           !collectionLinks.some(link => new URL(link.href).pathname.endsWith("/" + expected))
