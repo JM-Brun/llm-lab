@@ -302,6 +302,51 @@ Il s'agit de prédictions qualitatives, pas de garanties sur l'amplitude d'un ch
 
 </details>
 
+
+
+**Étape 3 — Calcul numérique contrôlé (agrégation jouet, pas une couche d'attention).**
+
+Deux séquences réduites au préfixe et au token bank : A = [river, bank], B = [financial, bank]. La matrice synthétique contient :
+\[
+E[\text{river}]=(0.1,0.2),\quad E[\text{financial}]=(0.9,-0.4),\quad E[\text{bank}]=(0.5,0.5).
+\]
+Les occurrences de bank sont à la position 1 (indexation à partir de zéro). On ajoute le même vecteur \(P_1=(0.02,0.05)\). Pour isoler l'effet du contexte, on définit une agrégation **fixe et illustrative** :
+\[
+h_{\text{bank}}=0.4\,z_{\text{préfixe}}+0.6\,z_{\text{bank}},\qquad z=x+P.
+\]
+1. Vérifiez que le lookup et le terme positionnel de bank sont identiques dans A et B.
+2. Calculez les vecteurs positionnés des préfixes avec \(P_0=(0.01,0.00)\), puis \(z_{\text{bank}}\).
+3. Calculez \(h_A\), \(h_B\) et leur distance euclidienne.
+4. Expliquez ce que l'exemple démontre et ce qu'il ne démontre pas.
+
+<details>
+<summary>Afficher le corrigé et le code NumPy</summary>
+
+Le lookup de bank vaut \((0.5,0.5)\) dans les deux contextes ; \(z_{\text{bank}}=(0.52,0.55)\). Les préfixes donnent \(z_{\text{river}}=(0.11,0.22)\) et \(z_{\text{financial}}=(0.91,-0.40)\).
+\[
+h_A=(0.356,0.418),\qquad h_B=(0.676,0.170).
+\]
+La distance vaut \(\sqrt{0.320^2+0.248^2}\approx0.4049\).
+
+~~~python
+import numpy as np
+E = {"river": np.array([0.1, 0.2]),
+     "financial": np.array([0.9, -0.4]),
+     "bank": np.array([0.5, 0.5])}
+P0, P1 = np.array([0.01, 0.00]), np.array([0.02, 0.05])
+z_bank = E["bank"] + P1
+z_river, z_financial = E["river"] + P0, E["financial"] + P0
+h_A = 0.4 * z_river + 0.6 * z_bank
+h_B = 0.4 * z_financial + 0.6 * z_bank
+assert np.allclose(h_A, [0.356, 0.418])
+assert np.allclose(h_B, [0.676, 0.170])
+print("distance:", np.linalg.norm(h_A - h_B))
+~~~
+
+**Limite :** cette moyenne pondérée à coefficients fixes n'est **pas** l'auto-attention d'un Transformer. Elle ne calcule ni projections Q/K/V, ni scores dépendant du contenu, ni softmax, ni connexions résiduelles, normalisation ou MLP. C'est un exercice d'isolation d'une dépendance, pas une simulation fidèle d'un bloc.
+
+</details>
+
 ### Exercice TR-D — Construire des fenêtres et aligner les cibles
 
 **Préparation :** la section « fenêtres glissantes et stride » de [du corpus tokenisé aux exemples d'entraînement](training-examples.qmd), après TR-A et TR-B. Cet exercice porte sur le contrat entrée-cible ; il ne demande pas d'implémenter un tokenizer ni un chargeur de données.
