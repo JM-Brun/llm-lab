@@ -17,6 +17,7 @@ import re
 import sys
 import unicodedata
 from collections import deque
+from collections.abc import Sequence
 from html import escape
 from pathlib import Path
 from typing import Any, Literal
@@ -601,12 +602,35 @@ def write_guided_page_context_fragments(
     return list(artifacts)
 
 
+ROUTE_CONTINUATION_PAGE = "build-path"
+ROUTE_CONTINUATION_LABEL = {
+    "fr": "Parcours terminé · ensuite : construire →",
+    "en": "Path complete · next: build →",
+}
+
+
+def final_core_page_id(stages: Sequence[ResolvedGuidedRouteStage]) -> str | None:
+    """Return the last core page of the guided route, where the route ends."""
+    for stage in reversed(stages):
+        if stage.pages:
+            return stage.pages[-1].id
+    return None
+
+
 def render_suggested_route_markdown(
     page: dict[str, Any],
     page_by_id: dict[str, dict[str, Any]],
     language: str,
+    *,
+    completes_route: bool = False,
 ) -> str:
-    """Render local previous/next links from the page's canonical suggested route."""
+    """Render local previous/next links from the page's canonical suggested route.
+
+    ``completes_route`` marks the last core page of the guided route. Its
+    suggested route has no next page, so the reader would be left with a
+    single backward link; it gets one forward card to the Build path instead.
+    That is one concrete next step, not a list repeating the site menu.
+    """
     if language not in {"fr", "en"}:
         raise ValueError(f"unsupported suggested-route language: {language!r}")
 
@@ -621,9 +645,19 @@ def render_suggested_route_markdown(
             "Étape suivante →" if language == "fr" else "Next step →",
         ),
     )
+    targets: list[tuple[str, str, object]] = [
+        (direction, label, route.get(direction)) for direction, label in directions
+    ]
+    if completes_route and route.get("next") is None:
+        targets.append(
+            (
+                "continuation",
+                ROUTE_CONTINUATION_LABEL[language],
+                f"{language}/{ROUTE_CONTINUATION_PAGE}",
+            )
+        )
     cards: list[str] = []
-    for direction, label in directions:
-        target_id = route.get(direction)
+    for direction, label, target_id in targets:
         if target_id is None:
             continue
         if not isinstance(target_id, str):
@@ -650,14 +684,29 @@ def render_suggested_route_markdown(
 
 
 def prepare_suggested_route_fragments(
-    language: str, pages: list[dict[str, Any]]
+    language: str,
+    pages: list[dict[str, Any]],
+    stages: Sequence[ResolvedGuidedRouteStage] = (),
 ) -> dict[Path, str]:
-    """Render generated local-navigation partials for pages with route metadata."""
+    """Render generated local-navigation partials for pages with route metadata.
+
+    ``stages`` identifies the last core page of the guided route, which gets a
+    forward card to the Build path.
+    """
     page_by_id = {page["id"]: page for page in pages}
+    final_page_id = final_core_page_id(stages)
+    continuation_id = f"{language}/{ROUTE_CONTINUATION_PAGE}"
     includes = SITE / "includes"
     outputs: dict[Path, str] = {}
     for page in pages:
-        rendered = render_suggested_route_markdown(page, page_by_id, language)
+        rendered = render_suggested_route_markdown(
+            page,
+            page_by_id,
+            language,
+            # A site without a Build path (test fixtures) keeps its plain ending;
+            # the published route is guarded by its own test.
+            completes_route=page["id"] == final_page_id and continuation_id in page_by_id,
+        )
         if not rendered:
             continue
         output = includes / (f"generated-suggested-route-{page['id'].replace('/', '-')}.qmd")
@@ -665,9 +714,13 @@ def prepare_suggested_route_fragments(
     return outputs
 
 
-def write_suggested_route_fragments(language: str, pages: list[dict[str, Any]]) -> list[Path]:
+def write_suggested_route_fragments(
+    language: str,
+    pages: list[dict[str, Any]],
+    stages: Sequence[ResolvedGuidedRouteStage] = (),
+) -> list[Path]:
     """Write generated local-navigation partials for pages with route metadata."""
-    artifacts = prepare_suggested_route_fragments(language, pages)
+    artifacts = prepare_suggested_route_fragments(language, pages, stages)
     write_artifacts(artifacts)
     return list(artifacts)
 
@@ -843,7 +896,7 @@ def prepare_build(language: str) -> dict[Path, str]:
     navigation = load_navigation(language, pages)
     artifacts = prepare_guided_route_fragment(language, guided_route)
     artifacts.update(prepare_guided_page_context_fragments(language, guided_route))
-    artifacts.update(prepare_suggested_route_fragments(language, pages))
+    artifacts.update(prepare_suggested_route_fragments(language, pages, guided_route))
     payload = {
         "language": language,
         "source": "LLM-LAB-PAGE-MAP v1 + data/guided-route.yml + data/concepts.yml",

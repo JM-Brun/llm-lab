@@ -141,3 +141,84 @@ def test_writer_creates_page_specific_route_partials(language: str, tmp_path: Pa
     assert "route-nav-cards" in rendered
     assert ("EN Étape précédente" if language == "en" else "Étape précédente") in rendered
     assert ("EN Étape suivante" if language == "en" else "Étape suivante") in rendered
+
+
+def _last_page_fixture(language: str) -> tuple[dict[str, Any], dict[str, dict[str, Any]]]:
+    last = {
+        "id": f"{language}/last",
+        "title": "Last",
+        "href": "last.html",
+        "route": {"previous": f"{language}/before", "next": None},
+    }
+    before = {"id": f"{language}/before", "title": "Before", "href": "before.html", "route": {}}
+    build = {
+        "id": f"{language}/build-path",
+        "title": "Build <a small> GPT",
+        "href": "build-path.html",
+        "route": {},
+    }
+    return last, {page["id"]: page for page in (last, before, build)}
+
+
+@pytest.mark.parametrize(
+    ("language", "label"),
+    [
+        ("en", "Path complete · next: build →"),
+        ("fr", "Parcours terminé · ensuite : construire →"),
+    ],
+)
+def test_last_route_page_gets_one_forward_card_to_the_build_path(language: str, label: str) -> None:
+    last, page_by_id = _last_page_fixture(language)
+
+    rendered = GENERATOR["render_suggested_route_markdown"](
+        last, page_by_id, language, completes_route=True
+    )
+
+    assert rendered.count('<a class="route-nav-card"') == 2
+    assert 'href="before.qmd"' in rendered
+    assert 'href="build-path.qmd"' in rendered
+    assert label in rendered
+    assert "Build &lt;a small&gt; GPT" in rendered
+    # One concrete next step; no end-of-page list repeating the site menu.
+    assert "<ul" not in rendered
+    assert "<li" not in rendered
+
+
+def test_forward_card_never_competes_with_a_declared_next_page() -> None:
+    last, page_by_id = _last_page_fixture("en")
+    last["route"]["next"] = "en/before"
+
+    rendered = GENERATOR["render_suggested_route_markdown"](
+        last, page_by_id, "en", completes_route=True
+    )
+
+    assert "build-path.qmd" not in rendered
+
+
+def test_forward_card_requires_a_published_build_path() -> None:
+    last, page_by_id = _last_page_fixture("en")
+    del page_by_id["en/build-path"]
+
+    with pytest.raises(ValueError, match="unresolved continuation route"):
+        GENERATOR["render_suggested_route_markdown"](last, page_by_id, "en", completes_route=True)
+
+
+@pytest.mark.parametrize("language", ["fr", "en"])
+def test_published_route_ends_with_exactly_one_forward_card(language: str) -> None:
+    pages = [page for page in GENERATOR["load_pages"]() if page["language"] == language]
+    stages = GENERATOR["load_guided_route"](language, pages)
+    fragments = {
+        path.name: text
+        for path, text in GENERATOR["prepare_suggested_route_fragments"](
+            language, pages, stages
+        ).items()
+    }
+    label = GENERATOR["ROUTE_CONTINUATION_LABEL"][language]
+
+    final_id = GENERATOR["final_core_page_id"](stages)
+    assert final_id is not None
+    final_name = f"generated-suggested-route-{final_id.replace('/', '-')}.qmd"
+    assert label in fragments[final_name]
+    assert [name for name, text in fragments.items() if label in text] == [final_name]
+    source = (ROOT / "site" / f"{final_id}.qmd").read_text(encoding="utf-8")
+    assert f"includes/{final_name}" in source
