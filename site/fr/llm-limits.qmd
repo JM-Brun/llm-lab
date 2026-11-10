@@ -77,31 +77,11 @@ La taille du modèle ne suffit pas non plus à expliquer ses performances. La qu
 
 Citez le protocole, pas seulement la conclusion.
 
-::: {.self-check}
+## S’exercer
 
-[Exercices et mises en pratique](exercises.qmd).
+Les questions de cette leçon sont regroupées sur sa [page d’exercices dédiée](exercises/llm-limits.qmd).
 
-Essayez de répondre avant d’ouvrir les raisonnements. L’objectif est de manipuler le modèle mental, pas de mémoriser des étiquettes.
 
-1. Un modèle génère avec un ton assuré une affirmation fausse. Est-ce nécessairement un défaut de réalisation, ou une conséquence possible de l’objectif d’entraînement ?
-
-<details>
-<summary>Afficher le raisonnement</summary>
-
-Ce n’est pas nécessairement un défaut de réalisation. L’objectif de prédiction attribue des probabilités aux continuations observées sans mécanisme de vérification de la vérité : une continuation statistiquement plausible peut être fausse. Traiter ce risque suppose une évaluation adaptée à l’usage visé.
-
-</details>
-
-2. Une capacité passe de 0 % à 60 % entre deux tailles de modèles sur une métrique à seuil. Que faut-il examiner avant de conclure à une capacité émergente ?
-
-<details>
-<summary>Afficher le raisonnement</summary>
-
-La métrique, son seuil et le protocole. Une métrique continue ou lissée peut montrer une amélioration graduelle là où une métrique à seuil suggère une rupture ; le [débat sur l’émergence des capacités](emergence.qmd) détaille ces analyses et les contrôles nécessaires.
-
-</details>
-
-:::
 
 ::: {.language-switch}
 **Langue :** [Français](llm-limits.qmd) · [English](../en/llm-limits.qmd)

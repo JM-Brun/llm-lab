@@ -118,20 +118,11 @@ The learning path is:
 
 The [embedding-space lookup](embedding-space.qmd) maps IDs to initial vectors; [queries, keys, and values](queries-keys-values.qmd) and [scaled dot-product attention](scaled-dot-product-attention.qmd) describe how the sequence is processed contextually.
 
-::: {.self-check}
-## Check your understanding
+## Practice
 
-[Extended exercises on this topic](../en/exercises.qmd#transformer).
+This lesson’s questions are collected on its [dedicated practice page](exercises/contextualized-representations.qmd).
 
-Two occurrences of the **same token ID** appear in two different sentences. Assume the embedding matrix is unchanged:
 
-1. Are the vectors returned by the embedding lookup identical?
-2. Must the hidden states after the Transformer layers also be identical? Why?
-3. At which stage does contextual information enter the computation?
-
-You have understood this step if you can explain the difference between **identity of the initial vector** and **context-dependence of hidden states**, without attributing sentence understanding to the lookup itself.
-
-:::
 
 {{< include ../includes/generated-suggested-route-en-contextualized-representations.qmd >}}
 

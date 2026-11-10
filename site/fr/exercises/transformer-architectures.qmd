@@ -1,0 +1,37 @@
+---
+title: "Exercices — Architectures Transformer"
+subtitle: "Questions de vérification et corrigés"
+keywords: ["type:exercise-hub", "destination:practice", "topic:transformer-architectures-exercises", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/transformer-architectures-exercises"
+summary: "Questions de vérification associées à la leçon Architectures Transformer."
+scope: "Regroupe les questions de compréhension de la leçon sans dupliquer son explication conceptuelle."
+purpose: "Vérifier la compréhension et distinguer les idées centrales de la leçon par des questions ciblées."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/transformer-architectures"]
+tags: ["type:exercise-hub", "destination:practice", "topic:transformer-architectures-exercises", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour à la leçon : Architectures Transformer](../transformer-architectures.qmd)
+
+## Vérifier sa compréhension
+
+[Exercices approfondis sur ce thème](exercises.qmd#transformer).
+
+1. **Pourquoi BERT peut-il exploiter des tokens situés après le token à représenter ?** Parce que son encodeur utilise généralement une attention bidirectionnelle sur toute l'entrée ; il n'est pas soumis au masque causal d'un GPT.
+2. **Quelle opération distingue particulièrement un décodeur d'un encodeur-décodeur ?** Dans le second, le décodeur dispose d'une attention croisée vers les représentations produites par l'encodeur.
+3. **La prédiction du prochain token définit-elle tous les Transformers ?** Non. C'est un objectif typique des décodeurs autorégressifs, pas une propriété de tous les Transformers.
+4. **Un Transformer est-il nécessairement un LLM ?** Non. L'architecture ne détermine ni la taille du modèle ni son statut de LLM.
+
+::: {.language-switch}
+**Langue :** [Français](transformer-architectures.qmd) · [English](../../en/exercises/transformer-architectures.qmd)
+:::

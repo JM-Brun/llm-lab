@@ -1,0 +1,40 @@
+---
+title: "Exercises — Contextualized representations"
+subtitle: "Self-check questions and worked answers"
+keywords: ["type:exercise-hub", "destination:practice", "topic:contextualized-representations-exercises", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/contextualized-representations-exercises"
+summary: "Self-check questions associated with the Contextualized representations lesson."
+scope: "Collects the lesson's comprehension questions without duplicating its conceptual explanation."
+purpose: "Check understanding and distinguish the lesson's central ideas through focused questions."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/contextualized-representations"]
+tags: ["type:exercise-hub", "destination:practice", "topic:contextualized-representations-exercises", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the lesson: Contextualized representations](../contextualized-representations.qmd)
+
+## Check your understanding
+
+[Extended exercises on this topic](../en/exercises.qmd#transformer).
+
+Two occurrences of the **same token ID** appear in two different sentences. Assume the embedding matrix is unchanged:
+
+1. Are the vectors returned by the embedding lookup identical?
+2. Must the hidden states after the Transformer layers also be identical? Why?
+3. At which stage does contextual information enter the computation?
+
+You have understood this step if you can explain the difference between **identity of the initial vector** and **context-dependence of hidden states**, without attributing sentence understanding to the lookup itself.
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/contextualized-representations.qmd) · [English](contextualized-representations.qmd)
+:::

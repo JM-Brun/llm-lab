@@ -120,20 +120,11 @@ Le parcours est le suivant :
 
 Le [lookup dans l’espace des plongements (embeddings)](embedding-space.qmd) associe les IDs aux vecteurs initiaux ; [requêtes, clés et valeurs](queries-keys-values.qmd) puis l’[attention à produit scalaire mise à l’échelle](scaled-dot-product-attention.qmd) décrivent le traitement contextuel de la séquence.
 
-::: {.self-check}
-## Vérifier sa compréhension
+## S’exercer
 
-[Exercices approfondis sur ce thème](exercises.qmd#transformer).
+Les questions de cette leçon sont regroupées sur sa [page d’exercices dédiée](exercises/contextualized-representations.qmd).
 
-Deux occurrences du **même ID de token** apparaissent dans deux phrases différentes. Sans changement de matrice d'embeddings :
 
-1. Les vecteurs obtenus par lookup sont-ils identiques ?
-2. Les états cachés après les couches du Transformer doivent-ils être identiques ? Pourquoi ?
-3. À quelle étape l'information du contexte intervient-elle ?
-
-Vous avez compris cette étape si vous pouvez expliquer la différence entre **identité du vecteur initial** et **dépendance contextuelle des états cachés**, sans attribuer au lookup lui-même une compréhension de la phrase.
-
-:::
 
 {{< include ../includes/generated-suggested-route-fr-contextualized-representations.qmd >}}
 

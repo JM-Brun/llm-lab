@@ -111,17 +111,11 @@ Le Transformer n'est pas non plus synonyme de LLM : l'architecture ne détermine
 
 La comparaison conceptuelle suffit pour situer les architectures. Pour exécuter un exemple représentatif de chacune, installer les dépendances et interpréter les sorties, poursuivre avec l’[activité pratique : comparer BERT, GPT-2 et T5](transformer-explainer.qmd#comparer-trois-familles-transformer). Cette activité facultative relève de la pratique, pas du parcours conceptuel ni de la construction du petit GPT.
 
-::: {.self-check}
+## S’exercer
 
-## Vérifier sa compréhension
+Les questions de cette leçon sont regroupées sur sa [page d’exercices dédiée](exercises/transformer-architectures.qmd).
 
-[Exercices approfondis sur ce thème](exercises.qmd#transformer).
 
-1. **Pourquoi BERT peut-il exploiter des tokens situés après le token à représenter ?** Parce que son encodeur utilise généralement une attention bidirectionnelle sur toute l'entrée ; il n'est pas soumis au masque causal d'un GPT.
-2. **Quelle opération distingue particulièrement un décodeur d'un encodeur-décodeur ?** Dans le second, le décodeur dispose d'une attention croisée vers les représentations produites par l'encodeur.
-3. **La prédiction du prochain token définit-elle tous les Transformers ?** Non. C'est un objectif typique des décodeurs autorégressifs, pas une propriété de tous les Transformers.
-4. **Un Transformer est-il nécessairement un LLM ?** Non. L'architecture ne détermine ni la taille du modèle ni son statut de LLM.
-:::
 
 ::: {.language-switch}
 **Langue :** [Français](transformer-architectures.qmd) · [English](../en/transformer-architectures.qmd)
