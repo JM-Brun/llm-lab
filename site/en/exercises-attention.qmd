@@ -31,7 +31,8 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-atten
 **Current scope:** CA-A introduces causal masking, shifted targets, and prefix invariance using a mask matrix and the existing tests. Three separate progressive formative exercises, with stable IDs AT-A, AT-B and AT-C shared with the French version, cover multi-head attention calculation, shape tracing, then claim diagnosis and intervention prediction. Multi-head-specific masking variants and advanced invariants remain to be developed. Suggested order: CA-A for causal masking, then AT-A, AT-B and AT-C for the multi-head sequence.
 
 <a id="at-0-scores-to-output"></a>
-### Exercise — from Q/K scores to the attention output {#ex-attention-scores-to-output}
+<a id="ex-attention-scores-to-output"></a>
+### Exercise — from Q/K scores to the attention output
 
 Consider one query and two key/value pairs:
 
@@ -56,7 +57,8 @@ Q and K determine the weights; V determines the aggregated content. The weights 
 </details>
 
 <a id="calculate-an-aggregation-by-hand"></a>
-### Calculate an aggregation by hand {#ex-attention-manual-aggregation}
+<a id="ex-attention-manual-aggregation"></a>
+### Calculate an aggregation by hand
 
 A position receives attention weights $(0.75,\,0.25)$ and the value vectors are $v_1=(2,0)$ and $v_2=(0,4)$. Calculate the output. If you swap $v_1$ and $v_2$ while keeping the weights fixed, does the output stay the same?
 
@@ -68,7 +70,8 @@ The output is the weighted sum: $0.75(2,0)+0.25(0,4)=(1.5,1)$. After swapping th
 </details>
 
 <a id="exercise-distinguish-a-weighted-mixture-from-selection"></a>
-### Exercise — distinguish a weighted mixture from selection {#ex-attention-weighted-mixture-vs-selection}
+<a id="ex-attention-weighted-mixture-vs-selection"></a>
+### Exercise — distinguish a weighted mixture from selection
 
 After the softmax of one attention row, the weights are $(0.95,\,0.05)$ over two positions, with $v_1=(10,0)$ and $v_2=(0,20)$.
 
@@ -86,7 +89,8 @@ After the softmax of one attention row, the weights are $(0.95,\,0.05)$ over two
 </details>
 
 <a id="exercise-project-a-sequence-into-q-k-and-v"></a>
-### Exercise — project a sequence into Q, K, and V {#ex-attention-project-qkv}
+<a id="ex-attention-project-qkv"></a>
+### Exercise — project a sequence into Q, K, and V
 
 Consider three positions, each represented by a 4-dimensional vector. The matrices W_Q and W_K project to dimension 2, while W_V projects to dimension 3.
 
@@ -132,7 +136,8 @@ Changing W_V can change V and the resulting aggregated output, but it does not c
 
 
 <a id="exercise-calculate-q-k-and-v-then-isolate-the-effect-of-v"></a>
-### Exercise — calculate Q, K, and V, then isolate the effect of V {#ex-attention-calculate-qkv-isolate-values}
+<a id="ex-attention-calculate-qkv-isolate-values"></a>
+### Exercise — calculate Q, K, and V, then isolate the effect of V
 
 Consider one input representation, using the row-vector convention:
 
@@ -172,7 +177,8 @@ The matrices are deliberately small and fictional so that the multiplications ca
 </details>
 
 <a id="exercise-predict-the-effect-of-changing-a-projection"></a>
-### Exercise — predict the effect of changing a projection {#ex-attention-predict-projection-change}
+<a id="ex-attention-predict-projection-change"></a>
+### Exercise — predict the effect of changing a projection
 
 Consider the same input $X$ and standard attention, without biases. For each intervention, state whether $Q$, $K$, $V$, the scores, the weights, and the aggregated output can change. Keep all other parameters fixed.
 
@@ -196,7 +202,8 @@ Justify each row from the functional dependencies.
 </details>
 
 <a id="exercise-connect-the-projections-to-learning"></a>
-### Exercise — connect the projections to learning {#ex-attention-connect-projections-learning}
+<a id="ex-attention-connect-projections-learning"></a>
+### Exercise — connect the projections to learning
 
 In the standard mechanism, $W_Q$, $W_K$, and $W_V$ are trained from the model's final loss. Answer without assuming that separate Q, K, or V targets are provided.
 
@@ -220,7 +227,8 @@ Likewise, $\partial\mathcal L/\partial W_K=X^\top(\partial\mathcal L/\partial K)
 </details>
 
 <a id="exercise-transfer-q-k-v-to-cross-attention"></a>
-### Exercise — transfer Q/K/V to cross-attention {#ex-attention-cross-attention-transfer}
+<a id="ex-attention-cross-attention-transfer"></a>
+### Exercise — transfer Q/K/V to cross-attention
 
 A decoder consults representations produced by an encoder. Let $X_D$ denote decoder states and $X_E$ encoder states.
 
@@ -244,7 +252,8 @@ With parameters fixed, changing $X_D$ directly affects Q; changing $X_E$ directl
 </details>
 
 <a id="ca-a-prefix-invariance"></a>
-### Exercise — Causal masking and prefix invariance {#ex-attention-causal-prefix-invariance}
+<a id="ex-attention-causal-prefix-invariance"></a>
+### Exercise — Causal masking and prefix invariance
 
 Consider four input tokens $x_0,x_1,x_2,x_3$. At query position $i$, causal self-attention allows only keys at positions $j\leq i$.
 
@@ -339,7 +348,8 @@ assert not np.allclose(reference[3], altered[3])
 </details>
 
 <a id="exercise-at-a-compute-a-multi-head-attention-by-hand"></a>
-### Exercise — Compute a multi-head attention by hand {#ex-attention-multihead-manual-calculation}
+<a id="ex-attention-multihead-manual-calculation"></a>
+### Exercise — Compute a multi-head attention by hand
 
 **Preparation:** the four computation steps of one head in [scaled dot-product attention](scaled-dot-product-attention.qmd); head slicing and reassembly in the [reference block walkthrough](transformer-block-walkthrough.qmd). The exercise covers a single query position of a $T=2$-position sequence, with $d=4$ and $H=2$ heads ($\text{head\_dim}=2$), no mask. The scores below are already scaled.
 
@@ -386,7 +396,8 @@ The output projection is set to $w_o=I_4$ for this exercise.
 </details>
 
 <a id="exercise-at-b-trace-the-shapes-of-a-multi-head-attention"></a>
-### Exercise — Trace the shapes of a multi-head attention {#ex-attention-multihead-shape-trace}
+<a id="ex-attention-multihead-shape-trace"></a>
+### Exercise — Trace the shapes of a multi-head attention
 
 **Preparation:** the shape trace from the Transformer collection (TF-A) or the [block walkthrough](transformer-block-walkthrough.qmd) for head slicing; [scaled dot-product attention](scaled-dot-product-attention.qmd) for one head's shapes ($T\times T$ then $T\times d_v$).
 
@@ -438,7 +449,8 @@ $Q$, $K$ and $V$ have shape $(2,3,6)$. Head 0's slice: $(2,3,3)$. Head 0's score
 </details>
 
 <a id="exercise-at-c-diagnose-multi-head-claims-and-predict-interventions"></a>
-### Exercise — Diagnose multi-head claims and predict interventions {#ex-attention-multihead-diagnosis}
+<a id="ex-attention-multihead-diagnosis"></a>
+### Exercise — Diagnose multi-head claims and predict interventions
 
 **Preparation:** [scaled dot-product attention](scaled-dot-product-attention.qmd) and [Q/K/V projections](queries-keys-values.qmd) after AT-A and AT-B; the [block walkthrough](transformer-block-walkthrough.qmd) for the reference parameterization. "The reference block" means the pre-LN block of the walkthrough.
 
