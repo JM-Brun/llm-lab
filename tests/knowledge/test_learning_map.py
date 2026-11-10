@@ -357,7 +357,9 @@ def test_load_navigation_preserves_nested_sidebar_sections(tmp_path: Path, monke
     ]
 
 
-def test_load_navigation_accepts_sidebar_items_with_custom_text(tmp_path: Path, monkeypatch) -> None:
+def test_load_navigation_accepts_sidebar_items_with_custom_text(
+    tmp_path: Path, monkeypatch
+) -> None:
     """A ``{text, href}`` item relabels a page in Quarto's sidebar and breadcrumbs only."""
     site = tmp_path / "site"
     _write_page(site, page_id="fr/attention", language="fr", title="Attention")
@@ -479,7 +481,9 @@ def test_render_resource_list_nests_areas_sections_and_pages() -> None:
     assert "      - [Attention \\*elle\\*](attention.html)" in nested
 
 
-def test_load_guided_route_resolves_language_specific_page_links(tmp_path: Path, monkeypatch) -> None:
+def test_load_guided_route_resolves_language_specific_page_links(
+    tmp_path: Path, monkeypatch
+) -> None:
     route = tmp_path / "data" / "guided-route.yml"
     route.parent.mkdir(parents=True)
     route.write_text(
@@ -793,7 +797,9 @@ def test_learning_map_keyboard_activation_uses_node_selection() -> None:
     assert 'if (event.key !== "Escape" || !data) {' in script
 
 
-def test_load_concept_graph_serializes_localized_relation_semantics(tmp_path: Path, monkeypatch) -> None:
+def test_load_concept_graph_serializes_localized_relation_semantics(
+    tmp_path: Path, monkeypatch
+) -> None:
     _write_concept_registry(tmp_path)
     monkeypatch.setitem(MODULE["load_concept_graph"].__globals__, "ROOT", tmp_path)
     pages = [
@@ -880,7 +886,9 @@ def test_load_concept_graph_exports_localized_domains(tmp_path: Path, monkeypatc
     assert french["concepts"][1]["domains"] == []
 
 
-def test_load_concept_graph_falls_back_when_domain_registry_is_missing(tmp_path: Path, monkeypatch) -> None:
+def test_load_concept_graph_falls_back_when_domain_registry_is_missing(
+    tmp_path: Path, monkeypatch
+) -> None:
     _write_concept_registry(tmp_path)
     monkeypatch.setitem(MODULE["load_concept_graph"].__globals__, "ROOT", tmp_path)
     pages = [{"id": "fr/attention", "title": "Attention", "href": "attention.html"}]
