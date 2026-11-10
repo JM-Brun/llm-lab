@@ -210,6 +210,9 @@ The shape journey, line by line:
 
 ## Build path navigation
 
+
+## Connections
+
 - **Previous stop**: [the Transformer block (`transformer_block.py`)](transformer-block-walkthrough.qmd).
 - **Next stop**: [generation (`generate.py`)](gpt-generation-walkthrough.qmd).
 
