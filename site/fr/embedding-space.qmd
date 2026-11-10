@@ -42,7 +42,7 @@ Après la tokenisation, chaque token reçoit un **identifiant entier** (*Token I
 
 
 ::: {.callout-tip title="L'idée à retenir en une minute"}
-Un ID est une **référence numérique**, pas une représentation du sens. Il permet de retrouver le vecteur que le modèle a appris à associer à ce token. Ce vecteur contient plusieurs nombres réels : c'est sur ces nombres que le réseau effectue ses calculs. Deux occurrences du même ID récupèrent le même vecteur initial ; le contexte est pris en compte plus tard, par le Transformer.
+Un ID est un entier qui sert d'**indice de ligne** (parfois appelé *adresse de ligne*) dans la matrice d'embeddings : il indique quelle ligne sélectionner, pas où se trouve le token dans l'espace vectoriel. La ligne sélectionnée contient le vecteur appris associé au token. Ce vecteur, et non l'ID, peut être représenté comme un point dans l'espace de plongement. Deux occurrences du même ID récupèrent le même vecteur initial ; le contexte est pris en compte plus tard, par le Transformer.
 
 **À retenir :** le token est l'unité de vocabulaire, l'ID l'identifie, et le vecteur d'embedding est sa représentation numérique apprise.
 

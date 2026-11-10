@@ -42,7 +42,7 @@ By the end of this lesson, you should be able to:
 
 
 ::: {.callout-tip title="The one-minute mental model"}
-An ID is a **numeric reference**, not a representation of meaning. It lets the model retrieve the vector it has learned to associate with a token. That vector contains real numbers, which the neural network can process mathematically. Two occurrences of the same ID retrieve the same initial vector; context is incorporated later by the Transformer.
+An ID is an integer used as a **row index** (sometimes called a *row address*) in the embedding matrix: it tells the model which row to select, not where the token lies in vector space. The selected row contains the learned vector associated with the token. That vector—not the ID—can be represented as a point in embedding space. Two occurrences of the same ID retrieve the same initial vector; context is incorporated later by the Transformer.
 
 **Key idea:** the token is a vocabulary unit, the ID identifies it, and the embedding vector is its learned numerical representation.
 
