@@ -43,7 +43,7 @@ The [Tokenization strategies](tokenization-strategies.qmd) page already introduc
 
 In the common WordPiece training explanation, candidate adjacent units are ranked with a score related to how strongly they co-occur relative to the frequencies of their individual parts. A simplified form is:
 
-\\[\\operatorname{score}(a,b)=\\frac{f(ab)}{f(a)\\,f(b)}\\]
+$$\operatorname{score}(a,b)=\frac{f(ab)}{f(a)\,f(b)}$$
 
 where frequencies are estimated from the training corpus. This favours a pair whose joint frequency is high relative to the frequencies of its parts; it is not simply the most frequent pair, as in basic BPE. **Caveat:** Google's original WordPiece training procedure is not fully specified in a public reference implementation. Hugging Face presents its account as a reconstruction, so this formula is explanatory rather than a guarantee that every WordPiece trainer uses exactly this procedure.
 
@@ -60,7 +60,7 @@ At encoding time, several segmentations may be possible. The Viterbi algorithm f
 
 ## 1. Vocabulary size: architecture and budget
 
-A larger subword vocabulary can represent some texts with fewer tokens, but it changes more than sequence length. With hidden dimension \\(d\\) and vocabulary size \\(V\\), an input embedding table has \\(Vd\\) parameters. A separate output projection over the vocabulary commonly has another \\(Vd\\) parameters; this second count does not apply in the same way when input and output weights are tied. A larger \\(V\\) can therefore increase parameter and memory costs even as it shortens sequences.
+A larger subword vocabulary can represent some texts with fewer tokens, but it changes more than sequence length. With hidden dimension $d$ and vocabulary size $V$, an input embedding table has $Vd$ parameters. A separate output projection over the vocabulary commonly has another $Vd$ parameters; this second count does not apply in the same way when input and output weights are tied. A larger $V$ can therefore increase parameter and memory costs even as it shortens sequences.
 
 The training budget also changes what a comparison means:
 

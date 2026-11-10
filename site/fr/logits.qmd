@@ -60,9 +60,9 @@ Dans le fil rouge, une fois le préfixe « C'est une bonne situation, ça, scrib
 ## Définition et dimensions
 
 Pour une position donnée, on note le vecteur des scores :
-\[
+$$
 z=(z_1,\ldots,z_V)\in\mathbb{R}^{V},
-\]
+$$
 où $V$ est la taille du vocabulaire. Chaque composante $z_i$ est associée à l'identifiant du token $i$. Les logits peuvent être négatifs ou positifs ; ils ne sont pas contraints à l'intervalle $[0,1]$ et leur somme n'a pas à valoir un.
 
 Pour un lot de séquences, la tête de sortie peut produire un tenseur de forme $(B,T,V)$ : $B$ séquences, $T$ positions et $V$ scores par position. En génération autorégressive, on exploite généralement les scores de la position courante pour choisir le token suivant.

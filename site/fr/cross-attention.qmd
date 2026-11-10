@@ -80,9 +80,9 @@ Notons :
 
 Les projections apprises sont distinctes :
 
-\[
+$$
 Q=YW_Q,\qquad K=XW_K,\qquad V=XW_V.
-\]
+$$
 
 Avec (W_Q\in\mathbb{R}^{d_d\times d_k}), (W_K\in\mathbb{R}^{d_e\times d_k}) et (W_V\in\mathbb{R}^{d_e\times d_v}), on obtient :
 
@@ -94,10 +94,10 @@ Les longueurs (T) et (S) peuvent être différentes. C'est attendu : le décodeu
 
 L'attention croisée à produit scalaire mise à l'échelle s'écrit :
 
-\[
+$$
 \operatorname{CrossAttention}(Y,X)
 =\operatorname{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)V.
-\]
+$$
 
 La matrice des scores (QK^\top) a la forme (T\times S) : chaque ligne correspond à une position cible, chaque colonne à une position source. Une ligne fournit donc la distribution de poids avec laquelle une position du décodeur agrège les valeurs de l'encodeur.
 

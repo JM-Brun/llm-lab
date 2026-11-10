@@ -32,61 +32,61 @@ Each pair of dimensions traces a circle at a different speed. Fast dimensions ch
 
 ## 1. From an index to a vector
 
-In the original Transformer, the position is an integer \(p\) (conventionally zero-indexed), and the positional vector has the same dimension \(d_{\text{model}}\) as the token embedding. Each coordinate pair uses a sine and a cosine:
+In the original Transformer, the position is an integer $p$ (conventionally zero-indexed), and the positional vector has the same dimension $d_{\text{model}}$ as the token embedding. Each coordinate pair uses a sine and a cosine:
 
-\[
+$$
 \begin{aligned}
 PE(p,2i) &= \sin\left(\frac{p}{10000^{2i/d_{\text{model}}}}\right),\\
 PE(p,2i+1) &= \cos\left(\frac{p}{10000^{2i/d_{\text{model}}}}\right).
 \end{aligned}
-\]
+$$
 
-Let the angular frequency be \(\omega_i = 10000^{-2i/d_{\text{model}}}\). A pair can then be written as:
+Let the angular frequency be $\omega_i = 10000^{-2i/d_{\text{model}}}$. A pair can then be written as:
 
-\[
+$$
 PE_i(p)=
 \begin{bmatrix}
 \sin(\omega_i p)\\
 \cos(\omega_i p)
 \end{bmatrix}.
-\]
+$$
 
-The full vector concatenates \(d_{\text{model}}/2\) pairs. The formula therefore assumes an even model dimension. The sine and cosine arguments are measured in radians.
+The full vector concatenates $d_{\text{model}}/2$ pairs. The formula therefore assumes an even model dimension. The sine and cosine arguments are measured in radians.
 
 ### Why a sine-cosine pair?
 
-A sine value alone does not uniquely determine a phase across an entire cycle: several angles have the same sine. The pair \((\sin\theta,\cos\theta)\) gives a point on the unit circle, since \(\sin^2\theta+\cos^2\theta=1\). As the position increases, this point rotates around the circle.
+A sine value alone does not uniquely determine a phase across an entire cycle: several angles have the same sine. The pair $(\sin\theta,\cos\theta)$ gives a point on the unit circle, since $\sin^2\theta+\cos^2\theta=1$. As the position increases, this point rotates around the circle.
 
-At \(p=0\), every pair is \([0,1]^\top\). As \(p\) increases, each pair rotates at angular speed \(\omega_i\).
+At $p=0$, every pair is $[0,1]^\top$. As $p$ increases, each pair rotates at angular speed $\omega_i$.
 
 ## 2. Why use multiple frequencies?
 
 The original Transformer chooses geometrically spaced frequencies:
 
-\[
+$$
 \omega_i = 10000^{-2i/d_{\text{model}}}.
-\]
+$$
 
-The index \(i\) increases by two coordinates at a time. Frequency therefore decreases by a constant factor between successive pairs:
+The index $i$ increases by two coordinates at a time. Frequency therefore decreases by a constant factor between successive pairs:
 
-\[
+$$
 \frac{\omega_{i+1}}{\omega_i}=10000^{-2/d_{\text{model}}}.
-\]
+$$
 
 The wavelength—the number of positions required for one full cycle—is:
 
-\[
+$$
 \lambda_i=\frac{2\pi}{\omega_i}
 =2\pi\,10000^{2i/d_{\text{model}}}.
-\]
+$$
 
-Wavelengths are geometrically spaced as well. The shortest is \(2\pi\) positions. The longest is \(2\pi\,10000^{1-2/d_{\text{model}}}\), which approaches \(2\pi\cdot10000\) for large dimensions. The paper describes this range approximately.
+Wavelengths are geometrically spaced as well. The shortest is $2\pi$ positions. The longest is $2\pi\,10000^{1-2/d_{\text{model}}}$, which approaches $2\pi\cdot10000$ for large dimensions. The paper describes this range approximately.
 
-### Numerical example: \(d_{\text{model}}=8\)
+### Numerical example: $d_{\text{model}}=8$
 
 There are four pairs, hence four timescales. The values below follow directly from the formula.
 
-| Pair \(i\) | Frequency \(\omega_i\) | Wavelength \(\lambda_i\) |
+| Pair $i$ | Frequency $\omega_i$ | Wavelength $\lambda_i$ |
 |---:|---:|---:|
 | 0 | 1 | 6.28 positions |
 | 1 | 0.1 | 62.83 positions |
@@ -105,17 +105,17 @@ A linear frequency spacing would devote many dimensions to one part of the range
 
 For one pair, write:
 
-\[
+$$
 v_i(p)=
 \begin{bmatrix}
 \sin(\omega_i p)\\
 \cos(\omega_i p)
 \end{bmatrix}.
-\]
+$$
 
-For an offset \(k\), the angle-addition identities give:
+For an offset $k$, the angle-addition identities give:
 
-\[
+$$
 \begin{aligned}
 \sin(\omega_i(p+k))
 &=\sin(\omega_i p)\cos(\omega_i k)
@@ -124,11 +124,11 @@ For an offset \(k\), the angle-addition identities give:
 &=\cos(\omega_i p)\cos(\omega_i k)
  -\sin(\omega_i p)\sin(\omega_i k).
 \end{aligned}
-\]
+$$
 
 Grouping the two coordinates:
 
-\[
+$$
 v_i(p+k)=
 \begin{bmatrix}
 \cos(\omega_i k) & \sin(\omega_i k)\\
@@ -136,15 +136,15 @@ v_i(p+k)=
 \end{bmatrix}
 v_i(p)
 =R_i(k)v_i(p).
-\]
+$$
 
-**For a fixed offset \(k\), the matrix \(R_i(k)\) does not depend on the starting position \(p\).** It depends only on the offset and the pair's frequency.
+**For a fixed offset $k$, the matrix $R_i(k)$ does not depend on the starting position $p$.** It depends only on the offset and the pair's frequency.
 
 For the full vector, assemble these matrices into a block-diagonal matrix:
 
-\[
+$$
 PE(p+k)=R(k)\,PE(p).
-\]
+$$
 
 This identity explains the motivation given by Vaswani et al.: a fixed offset can be represented by a linear transformation of the positional vector. The model is therefore given a mathematical structure it can use to relate relative positions.
 
@@ -156,33 +156,33 @@ This does not mean that the Transformer explicitly computes the distance between
 
 For one pair:
 
-\[
+$$
 \begin{aligned}
 v_i(p)^\top v_i(q)
 &=\sin(\omega_i p)\sin(\omega_i q)
  +\cos(\omega_i p)\cos(\omega_i q)\\
 &=\cos(\omega_i(p-q)).
 \end{aligned}
-\]
+$$
 
 Summing over pairs:
 
-\[
+$$
 PE(p)^\top PE(q)
 =\sum_i \cos(\omega_i(p-q)).
-\]
+$$
 
-The dot product therefore depends on the offset \(p-q\), not on the absolute positions separately. Each frequency contributes its own periodicity; together they produce a multi-scale similarity function.
+The dot product therefore depends on the offset $p-q$, not on the absolute positions separately. Each frequency contributes its own periodicity; together they produce a multi-scale similarity function.
 
-This quantity is the dot product of the **positional vectors alone**. It is not directly a Transformer's \(QK^\top\) attention score: token embeddings are added to the positional signal, then representations are projected and transformed by the network layers.
+This quantity is the dot product of the **positional vectors alone**. It is not directly a Transformer's $QK^\top$ attention score: token embeddings are added to the positional signal, then representations are projected and transformed by the network layers.
 
 ## 5. How does the signal enter the Transformer?
 
 In the original Transformer, the positional vector is added to the token embedding at the input of both encoder and decoder:
 
-\[
+$$
 X_0 = E[\text{token IDs}] + PE.
-\]
+$$
 
 Both vectors have the same dimension, so they can be added. The positional signal is not a second token sequence and does not replace lexical content: it modifies the input representation by adding information about location.
 
@@ -283,17 +283,17 @@ Training length, data distributions, attention mechanisms, numerical precision, 
 ## 8. Check your understanding
 
 ::: {.callout-tip title="Your turn"}
-1. If \(d_{\text{model}}\) doubles, how many frequency pairs are used?
-2. As pair index \(i\) increases, does wavelength increase or decrease?
-3. Why does the transformation associated with offset \(k\) not depend on the starting position \(p\)?
+1. If $d_{\text{model}}$ doubles, how many frequency pairs are used?
+2. As pair index $i$ increases, does wavelength increase or decrease?
+3. Why does the transformation associated with offset $k$ not depend on the starting position $p$?
 4. What is the difference between “computing the signal at position 20,000” and “successfully performing a task with a 20,000-token context”?
-5. Is \(PE(p)^\top PE(q)\) a learned attention score?
+5. Is $PE(p)^\top PE(q)$ a learned attention score?
 :::
 
 ::: {.callout-note collapse="true" title="Answer sketch"}
-1. The number of pairs changes from \(d_{\text{model}}/2\) to \(d_{\text{model}}\).
-2. It increases: \(\lambda_i=2\pi\,10000^{2i/d_{\text{model}}}\).
-3. Addition identities express the sine and cosine at \(p+k\) as a linear combination of those at \(p\), with coefficients depending only on \(k\) and \(\omega_i\).
+1. The number of pairs changes from $d_{\text{model}}/2$ to $d_{\text{model}}$.
+2. It increases: $\lambda_i=2\pi\,10000^{2i/d_{\text{model}}}$.
+3. Addition identities express the sine and cosine at $p+k$ as a linear combination of those at $p$, with coefficients depending only on $k$ and $\omega_i$.
 4. The first is a property of the formula; the second depends on the model's learned behaviour and must be evaluated empirically.
 5. No. It is a similarity between fixed positional vectors; an attention score depends on learned projections of representations.
 :::

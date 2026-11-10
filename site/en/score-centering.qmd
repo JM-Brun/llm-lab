@@ -30,60 +30,60 @@ tags: ["type:deep-dive", "destination:deepen", "topic:score-centering", "level:a
 
 ## 1. The mismatch: who sampled, and who learns?
 
-The **sampler** generates rollout tokens, with next-token distribution \(q(\cdot\mid h)\) at prefix \(h\). The **trainer** evaluates those tokens and computes parameter gradients, with distribution \(p_\theta(\cdot\mid h)\). Ideally they match. In practice they can differ because of numerical differences between inference and training kernels, quantization, or stale sampler weights in asynchronous training.
+The **sampler** generates rollout tokens, with next-token distribution $q(\cdot\mid h)$ at prefix $h$. The **trainer** evaluates those tokens and computes parameter gradients, with distribution $p_\theta(\cdot\mid h)$. Ideally they match. In practice they can differ because of numerical differences between inference and training kernels, quantization, or stale sampler weights in asynchronous training.
 
 The paper argues that a persistent discrepancy can create a systematic update component. As the sampler is refreshed from the trainer, that component can feed back and accumulate as drift. Eliminating every mismatch may impose a substantial cost on rollout efficiency.
 
 ## 2. The object being centered is a gradient
 
-For token \(v\) at prefix \(h\), define the trainer's **score function**
+For token $v$ at prefix $h$, define the trainer's **score function**
 
-\[
+$$
 s_v(h)=\nabla_\theta \log p_\theta(v\mid h).
-\]
+$$
 
 This is a vector in parameter space. It is not the token's log-probability, a reward, an advantage, or an attention compatibility score.
 
 The sampler-expected trainer score is
 
-\[
+$$
 \bar{s}(h)=
 \mathbb{E}_{v\sim q(\cdot\mid h)}[s_v(h)].
-\]
+$$
 
 Score centering replaces the sampled token's score by
 
-\[
+$$
 \widetilde{s}_v(h)=s_v(h)-\bar{s}(h),
 \qquad
 \mathbb{E}_{v\sim q(\cdot\mid h)}[\widetilde{s}_v(h)]=0.
-\]
+$$
 
-When \(q=p_\theta\), the usual score identity gives
+When $q=p_\theta$, the usual score identity gives
 
-\[
+$$
 \mathbb{E}_{v\sim p_\theta(\cdot\mid h)}
 [\nabla_\theta\log p_\theta(v\mid h)]
 =\nabla_\theta\sum_v p_\theta(v\mid h)=0,
-\]
+$$
 
 so the correction is inactive on-policy. Under mismatch, the trainer score averaged under the sampler need not have zero expectation.
 
-The paper's interpretation is that subtracting this per-prefix expectation removes an update component that can pull the trainer toward the sampler independently of which sampled tokens earned reward. With a reward or advantage signal, the remaining expected update is a reward–score covariance under \(q\). It is **not generally the covariance under \(p_\theta\)**. Score centering removes the identified drift term; it does not make arbitrary off-policy samples equivalent to on-policy samples.
+The paper's interpretation is that subtracting this per-prefix expectation removes an update component that can pull the trainer toward the sampler independently of which sampled tokens earned reward. With a reward or advantage signal, the remaining expected update is a reward–score covariance under $q$. It is **not generally the covariance under $p_\theta$**. Score centering removes the identified drift term; it does not make arbitrary off-policy samples equivalent to on-policy samples.
 
 ## 3. A small Bernoulli example
 
-Consider a one-parameter binary policy with \(p_\theta(v=1)=p\) and \(p_\theta(v=0)=1-p\). Its scores are \(s_1=1-p\) and \(s_0=-p\). Let the sampler use \(q(v=1)=r\). Then
+Consider a one-parameter binary policy with $p_\theta(v=1)=p$ and $p_\theta(v=0)=1-p$. Its scores are $s_1=1-p$ and $s_0=-p$. Let the sampler use $q(v=1)=r$. Then
 
-\[
+$$
 \bar{s}_q=r(1-p)+(1-r)(-p)=r-p.
-\]
+$$
 
-For \(p=0.6\) and \(r=0.8\), the trainer scores are \(0.4\) and \(-0.6\), and their sampler expectation is \(0.2\). The centered scores are \(0.2\) and \(-0.8\), so
+For $p=0.6$ and $r=0.8$, the trainer scores are $0.4$ and $-0.6$, and their sampler expectation is $0.2$. The centered scores are $0.2$ and $-0.8$, so
 
-\[
+$$
 0.8(0.2)+0.2(-0.8)=0.
-\]
+$$
 
 This isolates the mechanism: the non-zero mean comes from averaging the trainer score under a different distribution. It is not a complete LLM gradient derivation.
 
@@ -91,7 +91,7 @@ This isolates the mechanism: the non-zero mean comes from averaging the trainer 
 
 - **Score centering** subtracts the sampler-expected trainer gradient at each prefix.
 - **Group reward/advantage centering** makes advantages sum to zero across a prompt's sampled rollouts; it does not guarantee zero expected advantage at every prefix.
-- **Attention-score processing** operates on compatibility scores such as \(QK^\top/\sqrt{d_k}\) before attention softmax.
+- **Attention-score processing** operates on compatibility scores such as $QK^\top/\sqrt{d_k}$ before attention softmax.
 
 The first is a policy-gradient correction, the second concerns the reward signal used by methods such as GRPO, and the third belongs to Transformer attention. Similar words do not imply a shared mathematical object.
 
@@ -99,7 +99,7 @@ The first is a policy-gradient correction, the second concerns the reward signal
 
 Importance sampling applies multiplicative weights based on a ratio between trainer and sampler probabilities. Clipping or masking can control large ratios, but may introduce or retain bias. Score centering is additive: it subtracts an expected score.
 
-The paper and reference implementation support composition with compatible ratio-based corrections. In that case, centering is performed under the **effective sampling mass** \(q\,w\), where \(w\) is the detached importance weight.
+The paper and reference implementation support composition with compatible ratio-based corrections. In that case, centering is performed under the **effective sampling mass** $q\,w$, where $w$ is the detached importance weight.
 
 The implementation exposes token- and sequence-level ratios, trust bands, clamp/drop behavior, and sign selection. Its named configurations include PG, naive IS, TIS, MIS, PPO, DAPO, GSPO, TOPR and DPPO. There is an important boundary: score centering composes with corrections using stat=ratio, but the implementation explicitly rejects composition with stat=tv (the TV-based DPPO correction). “Composes with importance sampling” does not mean “composes with every off-policy correction.”
 
@@ -107,7 +107,7 @@ Group-centered rewards in GRPO-style training are orthogonal to score centering;
 
 ## 6. Efficient estimation: top-k and the vocabulary tail
 
-Exact centering requires the sampler's full next-token distribution. The reference implementation also supports a top-k sampler head (README default \(k=128\)) and models the remaining tail as proportional to the trainer's tail distribution, rescaled to match the sampler tail mass.
+Exact centering requires the sampler's full next-token distribution. The reference implementation also supports a top-k sampler head (README default $k=128$) and models the remaining tail as proportional to the trainer's tail distribution, rescaled to match the sampler tail mass.
 
 Implementation details matter: trainer log-probabilities are computed in float32; sampler top-k log-probabilities are not renormalized; the sampled token's sampler log-probability is retained even outside the top-k head; sampler-derived centering weights/residuals and advantages are detached; and the generated-token mask is applied to the token loss.
 

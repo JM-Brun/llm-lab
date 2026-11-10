@@ -41,14 +41,14 @@ La forme d’un tenseur décrit l’organisation numérique des représentations
 
 On utilise souvent les conventions suivantes :
 
-- \(B\) : taille du batch ;
-- \(T\) : longueur de séquence ;
-- \(D\) : dimension cachée ;
-- \(N_{\mathrm{vocab}}\) : taille du vocabulaire ;
-- \(H\) : nombre de têtes d'attention ;
-- \(d_h\) : dimension par tête, souvent telle que \(D=H d_h\).
+- $B$ : taille du batch ;
+- $T$ : longueur de séquence ;
+- $D$ : dimension cachée ;
+- $N_{\mathrm{vocab}}$ : taille du vocabulaire ;
+- $H$ : nombre de têtes d'attention ;
+- $d_h$ : dimension par tête, souvent telle que $D=H d_h$.
 
-Les activations cachées ont souvent la forme \((B,T,D)\), les logits \((B,T,N_{\mathrm{vocab}})\), et les représentations d'attention multi-tête peuvent prendre la forme \((B,H,T,d_h)\). Ces conventions sont fréquentes mais ne sont pas universelles : il faut lire les contrats des fonctions et vérifier les formes réelles.
+Les activations cachées ont souvent la forme $(B,T,D)$, les logits $(B,T,N_{\mathrm{vocab}})$, et les représentations d'attention multi-tête peuvent prendre la forme $(B,H,T,d_h)$. Ces conventions sont fréquentes mais ne sont pas universelles : il faut lire les contrats des fonctions et vérifier les formes réelles.
 
 | Objet dans le modèle | Forme typique | Interprétation |
 |---|---|---|
@@ -59,34 +59,34 @@ Les activations cachées ont souvent la forme \((B,T,D)\), les logits \((B,T,N_{
 
 ## Coût en paramètres : la table d'embeddings et la projection de sortie
 
-La taille du vocabulaire \(N_{\mathrm{vocab}}\) et la dimension d'embedding \(d\) sont deux choix distincts. La matrice d'embeddings \(E\in\mathbb{R}^{N_{\mathrm{vocab}}\times d}\) contient \(N_{\mathrm{vocab}}\) lignes — une par ID — et \(d\) composantes par ligne. Pour une séquence de longueur \(L\), le lookup produit une matrice de forme \(L\times d\) ; pour un lot de \(B\) séquences, la forme usuelle est \(B\times L\times d\).
+La taille du vocabulaire $N_{\mathrm{vocab}}$ et la dimension d'embedding $d$ sont deux choix distincts. La matrice d'embeddings $E\in\mathbb{R}^{N_{\mathrm{vocab}}\times d}$ contient $N_{\mathrm{vocab}}$ lignes — une par ID — et $d$ composantes par ligne. Pour une séquence de longueur $L$, le lookup produit une matrice de forme $L\times d$ ; pour un lot de $B$ séquences, la forme usuelle est $B\times L\times d$.
 
-- **\(N_{\mathrm{vocab}}\)** dépend du tokenizer et du vocabulaire qu'il définit, y compris les tokens spéciaux.
-- **\(d\)** est un hyperparamètre de l'architecture, choisi avec la profondeur, les têtes d'attention et le budget de calcul ; il n'est pas déduit de \(N_{\mathrm{vocab}}\).
-- La table d'embeddings contient \(N_{\mathrm{vocab}}d\) paramètres.
+- **$N_{\mathrm{vocab}}$** dépend du tokenizer et du vocabulaire qu'il définit, y compris les tokens spéciaux.
+- **$d$** est un hyperparamètre de l'architecture, choisi avec la profondeur, les têtes d'attention et le budget de calcul ; il n'est pas déduit de $N_{\mathrm{vocab}}$.
+- La table d'embeddings contient $N_{\mathrm{vocab}}d$ paramètres.
 
-**Ordre de grandeur calculable :** avec \(N_{\mathrm{vocab}}=50\,000\) tokens et \(d=768\), la table contient \(50\,000\times768=38\,400\,000\) paramètres. En précision 32 bits, les poids seuls occupent environ 153,6 MB en unités décimales (ou 146,5 MiB), hors gradients, états de l'optimiseur et autres paramètres. C'est une estimation du coût de la table, pas la description d'un modèle particulier.
-- Si la projection de sortie possède une matrice distincte, elle ajoute typiquement \(dN_{\mathrm{vocab}}\) paramètres, éventuellement plus un biais. Certains modèles partagent les poids d'entrée et de sortie (*weight tying*) : il faut vérifier l'architecture avant d'additionner les deux matrices.
-- Les IDs et les poids associés sont couplés. Modifier le vocabulaire, l'ordre des IDs ou \(N_{\mathrm{vocab}}\) exige une stratégie explicite d'adaptation ou de réentraînement ; ce n'est pas une substitution neutre.
+**Ordre de grandeur calculable :** avec $N_{\mathrm{vocab}}=50\,000$ tokens et $d=768$, la table contient $50\,000\times768=38\,400\,000$ paramètres. En précision 32 bits, les poids seuls occupent environ 153,6 MB en unités décimales (ou 146,5 MiB), hors gradients, états de l'optimiseur et autres paramètres. C'est une estimation du coût de la table, pas la description d'un modèle particulier.
+- Si la projection de sortie possède une matrice distincte, elle ajoute typiquement $dN_{\mathrm{vocab}}$ paramètres, éventuellement plus un biais. Certains modèles partagent les poids d'entrée et de sortie (*weight tying*) : il faut vérifier l'architecture avant d'additionner les deux matrices.
+- Les IDs et les poids associés sont couplés. Modifier le vocabulaire, l'ordre des IDs ou $N_{\mathrm{vocab}}$ exige une stratégie explicite d'adaptation ou de réentraînement ; ce n'est pas une substitution neutre.
 
-À chaque position, la distribution de sortie comporte en général \(N_{\mathrm{vocab}}\) logits ; la [page sur les logits](logits.qmd) approfondit les scores de sortie. Cette section héberge dans le parcours avancé le comptage détaillé des paramètres, dont le rôle conceptuel est présenté dans [l'espace des embeddings](embedding-space.qmd).
+À chaque position, la distribution de sortie comporte en général $N_{\mathrm{vocab}}$ logits ; la [page sur les logits](logits.qmd) approfondit les scores de sortie. Cette section héberge dans le parcours avancé le comptage détaillé des paramètres, dont le rôle conceptuel est présenté dans [l'espace des embeddings](embedding-space.qmd).
 
 ## Lire les dimensions d'une projection
 
-Supposons que \(X\) ait la forme \((B,T,D)\) et que la matrice de projection \(W\) ait la forme \((D,D')\), où \(D'\) est la dimension de sortie. La projection applique la même transformation à chaque position :
+Supposons que $X$ ait la forme $(B,T,D)$ et que la matrice de projection $W$ ait la forme $(D,D')$, où $D'$ est la dimension de sortie. La projection applique la même transformation à chaque position :
 
-\[
+$$
 Y=XW,\qquad \operatorname{shape}(Y)=(B,T,D').
-\]
+$$
 
-Les axes du batch et des positions sont conservés ; le dernier axe passe de \(D\) à \(D'\). Cette notation évite de confondre la dimension de sortie avec \(H\), qui désigne plus loin le nombre de têtes d'attention. Vérifier les formes permet de détecter certaines erreurs, mais ne garantit pas que les axes ont la bonne signification.
+Les axes du batch et des positions sont conservés ; le dernier axe passe de $D$ à $D'$. Cette notation évite de confondre la dimension de sortie avec $H$, qui désigne plus loin le nombre de têtes d'attention. Vérifier les formes permet de détecter certaines erreurs, mais ne garantit pas que les axes ont la bonne signification.
 
 ## Les axes ont une signification
 
-Une forme donne les tailles des axes, pas leur sémantique. Deux tenseurs de forme \((B,T,D)\) peuvent représenter des objets différents.
+Une forme donne les tailles des axes, pas leur sémantique. Deux tenseurs de forme $(B,T,D)$ peuvent représenter des objets différents.
 
-- **Projection linéaire :** transforme généralement le dernier axe des caractéristiques, par exemple \((B,T,D)\to(B,T,N_{\mathrm{vocab}})\) pour produire des logits.
-- **Softmax :** pour une distribution sur le vocabulaire, la normalisation doit porter sur l'axe \(N_{\mathrm{vocab}}\), pas sur l'axe \(T\).
+- **Projection linéaire :** transforme généralement le dernier axe des caractéristiques, par exemple $(B,T,D)\to(B,T,N_{\mathrm{vocab}})$ pour produire des logits.
+- **Softmax :** pour une distribution sur le vocabulaire, la normalisation doit porter sur l'axe $N_{\mathrm{vocab}}$, pas sur l'axe $T$.
 - **Attention :** les scores relient les positions de requête et de clé ; le masque causal doit empêcher l'accès aux positions futures.
 - **Perte :** les logits et les labels doivent aligner les positions et le token cible attendu.
 - **Réduction :** une moyenne sur les tokens valides n'est pas équivalente à une moyenne sur le batch ou sur toutes les positions avec padding.
@@ -102,13 +102,13 @@ position 1 : [0, 1, 2]
 forme       : (B=1, T=2, N_vocab=3)
 ```
 
-Pour chaque position, on veut une distribution sur les **tokens candidats**. La softmax doit donc agir sur l'axe \(N_{\mathrm{vocab}}\), le dernier axe dans cette convention :
+Pour chaque position, on veut une distribution sur les **tokens candidats**. La softmax doit donc agir sur l'axe $N_{\mathrm{vocab}}$, le dernier axe dans cette convention :
 
 ```python
 probs = logits.softmax(dim=-1)  # normalise les 3 tokens, pour chaque position
 ```
 
-La somme des probabilités sur \(N_{\mathrm{vocab}}\) vaut alors 1 à chaque position. Pour ces logits, les lignes valent approximativement `[0.665, 0.245, 0.090]` et `[0.090, 0.245, 0.665]`.
+La somme des probabilités sur $N_{\mathrm{vocab}}$ vaut alors 1 à chaque position. Pour ces logits, les lignes valent approximativement `[0.665, 0.245, 0.090]` et `[0.090, 0.245, 0.665]`.
 
 En revanche :
 
@@ -118,7 +118,7 @@ wrong = logits.softmax(dim=1)  # normalise les 2 positions, token par token
 
 Pour cet exemple, les lignes deviennent approximativement `[0.881, 0.500, 0.119]` et `[0.119, 0.500, 0.881]` ; chacune somme à 1,5 et non à 1. Cette opération est mathématiquement valide et compatible avec la forme, mais elle répond à une autre question : pour chaque token candidat, elle répartit la masse entre les positions. Les lignes ne sont généralement plus des distributions sur le vocabulaire.
 
-**Invariant de débogage :** si la sortie est censée représenter \(p(\text{token}\mid\text{contexte à cette position})\), vérifier que la somme sur l'axe du vocabulaire vaut 1 pour chaque couple batch-position. Une forme correcte ne suffit pas ; l'invariant dépend de l'interprétation attendue.
+**Invariant de débogage :** si la sortie est censée représenter $p(\text{token}\mid\text{contexte à cette position})$, vérifier que la somme sur l'axe du vocabulaire vaut 1 pour chaque couple batch-position. Une forme correcte ne suffit pas ; l'invariant dépend de l'interprétation attendue.
 
 ![Comparaison entre la softmax sur l’axe du vocabulaire N_vocab, qui produit une distribution par position, et sur l’axe de séquence T, qui donne ici des sommes de ligne égales à 1,5.](../images/softmax-axis-comparison-fr.svg){fig-alt="La matrice de gauche, normalisée sur N_vocab, a des sommes de ligne égales à un. La matrice de droite, normalisée sur T, a des sommes de ligne égales à 1,5 : l’opération est compatible avec la forme mais incorrecte pour représenter les probabilités du prochain token." width=100%}
 
@@ -151,7 +151,7 @@ Les assertions rendent explicite la sémantique attendue. Il s'agit d'une vérif
 
 ## Exemple de lecture des dimensions
 
-Pour \(B=2\), \(T=4\) et \(D=8\), les états cachés ont la forme \((2,4,8)\). Une projection vers un vocabulaire de \(N_{\mathrm{vocab}}=1000\) tokens produit des logits de forme \((2,4,1000)\). Le dernier axe correspond aux tokens candidats ; chaque couple batch-position porte ainsi une distribution après softmax sur cet axe.
+Pour $B=2$, $T=4$ et $D=8$, les états cachés ont la forme $(2,4,8)$. Une projection vers un vocabulaire de $N_{\mathrm{vocab}}=1000$ tokens produit des logits de forme $(2,4,1000)$. Le dernier axe correspond aux tokens candidats ; chaque couple batch-position porte ainsi une distribution après softmax sur cet axe.
 
 La compatibilité des formes ne garantit pas que la projection, le masque, le décalage causal ou la réduction soient corrects. Il faut également vérifier le sens des axes et la sémantique des cibles.
 
@@ -164,7 +164,7 @@ Pour les notions réutilisables hors LLM — formes, axes, indexation, réductio
 
 Les axes ne sont pas de simples indices : ils définissent la question posée aux données. Cette idée se retrouve ailleurs, avec des nuances importantes.
 
-- **Traitement du signal :** un tableau \((T,C)\) peut représenter le temps et les canaux d'un capteur. Réduire sur \(T\) calcule une statistique temporelle ; réduire sur \(C\) combine des canaux. Même opération, sens différent. [NumPy — dimensions et tableaux](https://numpy.org/doc/stable/user/basics.creation.html) présente les bases de cette représentation.
+- **Traitement du signal :** un tableau $(T,C)$ peut représenter le temps et les canaux d'un capteur. Réduire sur $T$ calcule une statistique temporelle ; réduire sur $C$ combine des canaux. Même opération, sens différent. [NumPy — dimensions et tableaux](https://numpy.org/doc/stable/user/basics.creation.html) présente les bases de cette représentation.
 - **Bases de données et analyse tabulaire :** lignes et colonnes ont un schéma sémantique. Permuter deux colonnes sans mettre à jour leur interprétation peut conserver un tableau valide tout en corrompant l'analyse. Les dimensions d'un tenseur jouent un rôle analogue, mais les axes numériques peuvent aussi être réordonnés et diffusés implicitement.
 - **Physique et géométrie :** dans un tenseur mathématique au sens strict, les composantes suivent des lois de transformation sous un changement de coordonnées. Un tableau PyTorch de rang élevé n'est pas automatiquement un tel tenseur. Cette distinction devient utile lorsqu'on aborde vecteurs, bases, changements de coordonnées et invariance.
 - **Probabilités et théorie de l'information :** une softmax définit une distribution seulement relativement à un ensemble de catégories précis. Dans un LLM, cet ensemble est souvent le vocabulaire ; normaliser sur les positions produit une autre quantité, pas une distribution de tokens.

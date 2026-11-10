@@ -30,9 +30,9 @@ Cette page prolonge la [présentation introductive des représentations contextu
 
 Pour une architecture qui ajoute des embeddings positionnels absolus, on peut écrire :
 
-\[
+$$
 h_t^{(0)} = E[\text{ID}_t] + P_t.
-\]
+$$
 
 Le même ID sélectionne le même terme d'embedding dans une table fixe, mais une position différente peut fournir un terme positionnel différent. Cette écriture ne décrit pas toutes les architectures. Avec RoPE, par exemple, l'information de position intervient dans les transformations des vecteurs requête et clé au sein de l'attention, plutôt que par l'ajout universel d'un vecteur à l'embedding initial. Voir [position et RoPE](positional-encoding.qmd) et [Q/K/V avancé](queries-keys-values-advanced.qmd).
 
@@ -40,21 +40,21 @@ Le même ID sélectionne le même terme d'embedding dans une table fixe, mais un
 
 On peut résumer conceptuellement la dépendance d'un état à la couche suivante par :
 
-\[
+$$
 h_t^{(\ell+1)} =
 F_\ell\!\left(
 h_t^{(\ell)},
 \{h_j^{(\ell)} : j \in A(t)\}
 \right),
-\]
+$$
 
-où \(A(t)\) désigne les positions accessibles depuis la position \(t\), selon le masque d'attention.
+où $A(t)$ désigne les positions accessibles depuis la position $t$, selon le masque d'attention.
 
-- **Décodeur causal** (GPT) : en indexation à partir de 1, \(A(t)=\{1,\ldots,t\}\). La position peut utiliser son propre état et ceux du préfixe, jamais ceux des tokens futurs.
+- **Décodeur causal** (GPT) : en indexation à partir de 1, $A(t)=\{1,\ldots,t\}$. La position peut utiliser son propre état et ceux du préfixe, jamais ceux des tokens futurs.
 - **Encodeur bidirectionnel** : les positions accessibles peuvent inclure toute la séquence, sous réserve du masque utilisé.
 - **Masques plus spécifiques** : certaines architectures limitent davantage les positions accessibles, par exemple avec des fenêtres locales ou des motifs structurés.
 
-La fonction \(F_\ell\) représente ici un bloc complet. Cette notation décrit les dépendances possibles, pas une implémentation universelle ni une équation exacte de toutes les opérations internes.
+La fonction $F_\ell$ représente ici un bloc complet. Cette notation décrit les dépendances possibles, pas une implémentation universelle ni une équation exacte de toutes les opérations internes.
 
 ## 3. Rôle des sous-couches
 
@@ -81,7 +81,7 @@ Cette comparaison est un dispositif pédagogique contrôlé, pas une affirmation
 
 ## 5. Suivre une position à travers les couches
 
-\(h_t^{(0)}\) désigne l'entrée initiale à la position \(t\). Chaque bloc produit un nouvel état, \(h_t^{(1)}\), puis \(h_t^{(2)}\), et ainsi de suite. L'indice \(t\) reste fixe : c'est la représentation de cette position que l'on suit à travers la profondeur du réseau.
+$h_t^{(0)}$ désigne l'entrée initiale à la position $t$. Chaque bloc produit un nouvel état, $h_t^{(1)}$, puis $h_t^{(2)}$, et ainsi de suite. L'indice $t$ reste fixe : c'est la représentation de cette position que l'on suit à travers la profondeur du réseau.
 
 Le vecteur n'est pas remplacé par une étiquette de sens. Il est transformé par des opérations apprises qui intègrent progressivement l'information autorisée par l'architecture et le masque.
 

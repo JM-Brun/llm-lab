@@ -30,60 +30,60 @@ Le **centrage du score** est une correction additive des mises à jour par gradi
 
 ## 1. Le décalage : qui échantillonne, qui apprend ?
 
-Le **sampler** génère les tokens de la trajectoire, avec une distribution du prochain token \(q(\cdot\mid h)\) au préfixe \(h\). Le **trainer** évalue ces tokens et calcule les gradients des paramètres, avec une distribution \(p_\theta(\cdot\mid h)\). Idéalement, elles coïncident. En pratique, elles peuvent différer à cause des écarts numériques entre les noyaux d'inférence et d'entraînement, de la quantification ou de poids obsolètes du sampler dans un entraînement asynchrone.
+Le **sampler** génère les tokens de la trajectoire, avec une distribution du prochain token $q(\cdot\mid h)$ au préfixe $h$. Le **trainer** évalue ces tokens et calcule les gradients des paramètres, avec une distribution $p_\theta(\cdot\mid h)$. Idéalement, elles coïncident. En pratique, elles peuvent différer à cause des écarts numériques entre les noyaux d'inférence et d'entraînement, de la quantification ou de poids obsolètes du sampler dans un entraînement asynchrone.
 
 L'article soutient qu'un écart persistant peut créer une composante systématique dans la mise à jour. Lorsque le sampler est actualisé à partir du trainer, cette composante peut se réinjecter et s'accumuler sous forme de dérive. Éliminer toutes les sources de décalage peut imposer un coût important à l'efficacité de génération des trajectoires.
 
 ## 2. L'objet centré est un gradient
 
-Pour un token \(v\) au préfixe \(h\), définissons la **fonction score** du trainer :
+Pour un token $v$ au préfixe $h$, définissons la **fonction score** du trainer :
 
-\[
+$$
 s_v(h)=\nabla_\theta \log p_\theta(v\mid h).
-\]
+$$
 
 C'est un vecteur dans l'espace des paramètres. Ce n'est ni la log-probabilité du token, ni une récompense, ni un avantage, ni un score de compatibilité d'attention.
 
 L'espérance du score du trainer sous le sampler est
 
-\[
+$$
 \bar{s}(h)=
 \mathbb{E}_{v\sim q(\cdot\mid h)}[s_v(h)].
-\]
+$$
 
 Le centrage du score remplace le score du token échantillonné par
 
-\[
+$$
 \widetilde{s}_v(h)=s_v(h)-\bar{s}(h),
 \qquad
 \mathbb{E}_{v\sim q(\cdot\mid h)}[\widetilde{s}_v(h)]=0.
-\]
+$$
 
-Lorsque \(q=p_\theta\), l'identité usuelle du score donne
+Lorsque $q=p_\theta$, l'identité usuelle du score donne
 
-\[
+$$
 \mathbb{E}_{v\sim p_\theta(\cdot\mid h)}
 [\nabla_\theta\log p_\theta(v\mid h)]
 =\nabla_\theta\sum_v p_\theta(v\mid h)=0,
-\]
+$$
 
 la correction est donc inactive dans le cas on-policy. En présence d'un décalage, l'espérance du score du trainer sous le sampler n'est pas nécessairement nulle.
 
-L'interprétation de l'article est que la soustraction de cette espérance par préfixe élimine une composante de mise à jour qui peut rapprocher le trainer du sampler indépendamment des tokens échantillonnés qui ont obtenu une récompense. Avec un signal de récompense ou d'avantage, la mise à jour espérée restante est une covariance récompense–score sous \(q\). **Ce n'est pas, en général, la covariance sous \(p_\theta\)**. Le centrage supprime le terme de dérive identifié ; il ne rend pas des échantillons hors politique arbitraires équivalents à des échantillons on-policy.
+L'interprétation de l'article est que la soustraction de cette espérance par préfixe élimine une composante de mise à jour qui peut rapprocher le trainer du sampler indépendamment des tokens échantillonnés qui ont obtenu une récompense. Avec un signal de récompense ou d'avantage, la mise à jour espérée restante est une covariance récompense–score sous $q$. **Ce n'est pas, en général, la covariance sous $p_\theta$**. Le centrage supprime le terme de dérive identifié ; il ne rend pas des échantillons hors politique arbitraires équivalents à des échantillons on-policy.
 
 ## 3. Un petit exemple de Bernoulli
 
-Considérons une politique binaire à un paramètre, avec \(p_\theta(v=1)=p\) et \(p_\theta(v=0)=1-p\). Ses scores sont \(s_1=1-p\) et \(s_0=-p\). Supposons que le sampler utilise plutôt \(q(v=1)=r\). Alors
+Considérons une politique binaire à un paramètre, avec $p_\theta(v=1)=p$ et $p_\theta(v=0)=1-p$. Ses scores sont $s_1=1-p$ et $s_0=-p$. Supposons que le sampler utilise plutôt $q(v=1)=r$. Alors
 
-\[
+$$
 \bar{s}_q=r(1-p)+(1-r)(-p)=r-p.
-\]
+$$
 
-Pour \(p=0{,}6\) et \(r=0{,}8\), les scores du trainer sont \(0{,}4\) et \(-0{,}6\), et leur espérance sous le sampler vaut \(0{,}2\). Les scores centrés deviennent \(0{,}2\) et \(-0{,}8\), donc
+Pour $p=0{,}6$ et $r=0{,}8$, les scores du trainer sont $0{,}4$ et $-0{,}6$, et leur espérance sous le sampler vaut $0{,}2$. Les scores centrés deviennent $0{,}2$ et $-0{,}8$, donc
 
-\[
+$$
 0{,}8(0{,}2)+0{,}2(-0{,}8)=0.
-\]
+$$
 
 Cet exemple isole le mécanisme : la moyenne non nulle vient du fait que le score du trainer est moyenné sous une autre distribution. Ce n'est pas une dérivation complète du gradient d'un LLM.
 
@@ -91,7 +91,7 @@ Cet exemple isole le mécanisme : la moyenne non nulle vient du fait que le scor
 
 - **Centrage du score :** soustrait le gradient du trainer attendu sous le sampler à chaque préfixe.
 - **Centrage des récompenses ou avantages par groupe :** rend la somme des avantages nulle parmi les trajectoires échantillonnées pour un prompt ; il ne garantit pas que l'avantage espéré soit nul à chaque préfixe.
-- **Traitement des scores d'attention :** opère sur des scores de compatibilité tels que \(QK^\top/\sqrt{d_k}\) avant le softmax d'attention.
+- **Traitement des scores d'attention :** opère sur des scores de compatibilité tels que $QK^\top/\sqrt{d_k}$ avant le softmax d'attention.
 
 Le premier est une correction du gradient de politique, le deuxième concerne le signal de récompense utilisé par des méthodes comme GRPO, et le troisième appartient à l'attention du Transformer. La similitude des mots ne signifie pas que les objets mathématiques sont identiques.
 
@@ -99,7 +99,7 @@ Le premier est une correction du gradient de politique, le deuxième concerne le
 
 L'échantillonnage par importance applique des pondérations multiplicatives fondées sur un rapport entre les probabilités du trainer et du sampler. Le clipping ou le masquage peuvent contrôler les grands rapports, mais aussi introduire ou conserver un biais. Le centrage du score est additif : il soustrait un score espéré.
 
-L'article et l'implémentation de référence permettent de le combiner avec des corrections compatibles fondées sur des rapports. Dans ce cas, le centrage est effectué sous la **masse d'échantillonnage effective** \(q\,w\), où \(w\) est le poids d'importance détaché du graphe de gradient.
+L'article et l'implémentation de référence permettent de le combiner avec des corrections compatibles fondées sur des rapports. Dans ce cas, le centrage est effectué sous la **masse d'échantillonnage effective** $q\,w$, où $w$ est le poids d'importance détaché du graphe de gradient.
 
 L'implémentation décrit des rapports par token ou par séquence, des bandes de confiance, le comportement hors bande (clamp/drop) et la sélection des signes. Ses configurations nommées comprennent PG, IS naïf, TIS, MIS, PPO, DAPO, GSPO, TOPR et DPPO. Limite importante : le centrage se compose avec les corrections utilisant stat=ratio, mais l'implémentation rejette explicitement la composition avec stat=tv (correction DPPO fondée sur la distance TV). « Compatible avec l'échantillonnage par importance » ne signifie donc pas « compatible avec toutes les corrections hors politique ».
 
@@ -107,7 +107,7 @@ Le centrage des avantages par groupe dans les méthodes de type GRPO est orthogo
 
 ## 6. Estimation efficace : top-k et queue du vocabulaire
 
-Le centrage exact nécessite la distribution complète du prochain token du sampler. L'implémentation de référence prend aussi en charge une tête top-k du sampler (valeur par défaut du README : \(k=128\)) et modélise la queue restante comme proportionnelle à la distribution de queue du trainer, remise à l'échelle pour correspondre à la masse de queue du sampler.
+Le centrage exact nécessite la distribution complète du prochain token du sampler. L'implémentation de référence prend aussi en charge une tête top-k du sampler (valeur par défaut du README : $k=128$) et modélise la queue restante comme proportionnelle à la distribution de queue du trainer, remise à l'échelle pour correspondre à la masse de queue du sampler.
 
 Le contrat d'implémentation précise que les log-probabilités du trainer sont calculées en float32 ; les log-probabilités sampler du top-k ne sont pas renormalisées ; la log-probabilité sampler du token échantillonné est conservée même si ce token est hors de la tête top-k ; les poids/résidus de centrage dérivés du sampler et les avantages sont détachés ; et le masque des tokens générés est appliqué à la perte par token.
 

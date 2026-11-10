@@ -53,17 +53,17 @@ Dans le fil rouge, le token cible est le prochain token effectivement présent d
 
 ## Objectif pour un token
 
-Ici, \(t\) indexe le **token cible** : les logits sont alignés sur \(x_t\) et représentent \(p_\theta(x_t\mid x_{<t})\). Certaines implémentations indexent plutôt les logits par la position d'entrée ; la ligne correspondant à l'entrée \(t\) prédit alors \(x_{t+1}\). Ces conventions ne sont équivalentes que si les logits et les labels sont décalés de manière cohérente. Pour une cible one-hot, la perte vaut :
+Ici, $t$ indexe le **token cible** : les logits sont alignés sur $x_t$ et représentent $p_\theta(x_t\mid x_{<t})$. Certaines implémentations indexent plutôt les logits par la position d'entrée ; la ligne correspondant à l'entrée $t$ prédit alors $x_{t+1}$. Ces conventions ne sont équivalentes que si les logits et les labels sont décalés de manière cohérente. Pour une cible one-hot, la perte vaut :
 
-\[
+$$
 \ell_t=-\log p_\theta(x_t\mid x_{<t}).
-\]
+$$
 
-Si \(y\) est l'indice du token cible et \(p=\operatorname{softmax}(z)\), on peut écrire :
+Si $y$ est l'indice du token cible et $p=\operatorname{softmax}(z)$, on peut écrire :
 
-\[
+$$
 \ell(z,y)=-z_y+\log\sum_{j=1}^{V}e^{z_j}.
-\]
+$$
 
 Le coût augmente lorsque le modèle attribue une faible probabilité au token observé. Une prédiction incorrecte mais très confiante est donc fortement pénalisée.
 
@@ -71,7 +71,7 @@ Le coût augmente lorsque le modèle attribue une faible probabilité au token o
 
 ![Pour un même token cible, une probabilité prédite de 0,9 produit une perte de 0,105 nat, tandis qu'une probabilité de 0,1 produit une perte de 2,303 nats.](../images/cross-entropy-target-probability-fr.svg){fig-alt="Deux cas pour le même token observé : p(y)=0,9 donne −ln p(y)≈0,105 nat ; p(y)=0,1 donne −ln p(y)≈2,303 nats. Une probabilité cible plus faible entraîne une perte beaucoup plus grande." width=100%}
 
-Les deux cas concernent **le même token cible** : seul le poids de probabilité que le modèle lui attribue change. Quand \(p(y)=0{,}9\), la perte vaut environ \(0{,}105\) nat ; quand \(p(y)=0{,}1\), elle vaut environ \(2{,}303\) nats. La seconde perte est près de 22 fois plus grande. La fonction \(-\log p(y)\) rend donc les erreurs confiantes coûteuses, sans pour autant dire si le token observé est vrai ou utile dans un sens plus large.
+Les deux cas concernent **le même token cible** : seul le poids de probabilité que le modèle lui attribue change. Quand $p(y)=0{,}9$, la perte vaut environ $0{,}105$ nat ; quand $p(y)=0{,}1$, elle vaut environ $2{,}303$ nats. La seconde perte est près de 22 fois plus grande. La fonction $-\log p(y)$ rend donc les erreurs confiantes coûteuses, sans pour autant dire si le token observé est vrai ou utile dans un sens plus large.
 
 Cette image illustre la perte d'un token avec une cible one-hot ; elle ne représente ni la distribution complète du vocabulaire, ni la moyenne sur les positions valides, ni l'ensemble de l'objectif d'entraînement.
 
@@ -81,9 +81,9 @@ Pour une distribution cible générale $q$, l'entropie croisée s'écrit $H(q,p)
 
 ## Plusieurs positions : décalage causal et masques
 
-Dans un modèle autorégressif, la représentation à la position \(t\) sert à prédire le token suivant. Selon la convention du code, les logits et les labels doivent donc être décalés de manière cohérente : le modèle ne doit pas recevoir le token cible comme contexte non masqué pour prédire ce même token.
+Dans un modèle autorégressif, la représentation à la position $t$ sert à prédire le token suivant. Selon la convention du code, les logits et les labels doivent donc être décalés de manière cohérente : le modèle ne doit pas recevoir le token cible comme contexte non masqué pour prédire ce même token.
 
-Pour un batch, les logits ont souvent la forme \((B,T,V)\) et les labels \((B,T)\). Avant d'interpréter la loss, vérifier :
+Pour un batch, les logits ont souvent la forme $(B,T,V)$ et les labels $(B,T)$. Avant d'interpréter la loss, vérifier :
 
 - **Décalage des cibles :** chaque logit est comparé au token qui doit être prédit, pas au token d'entrée par erreur.
 - **Padding et masques :** les positions ignorées ne doivent pas contribuer à la somme ni au dénominateur de la moyenne.
@@ -92,7 +92,7 @@ Pour un batch, les logits ont souvent la forme \((B,T,V)\) et les labels \((B,T)
 - **Comparaison :** préciser le tokenizer, les positions incluses et la convention de moyenne avant de comparer deux valeurs.
 
 ::: {.callout-note collapse="true" title="Implémentation NumPy et tests (approfondissement)"}
-L'[implémentation de référence NumPy](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/losses.py) et ses [tests unitaires](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_losses.py) couvrent volontairement un cas restreint : des logits de forme \((B,C)\), une cible entière par ligne et la **moyenne non pondérée sur les lignes**. La perte utilise le logarithme naturel et s'exprime donc en nats. La fonction de gradient renvoie la dérivée de cette même perte moyenne par rapport aux logits, et non par rapport aux paramètres d'un modèle.
+L'[implémentation de référence NumPy](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/losses.py) et ses [tests unitaires](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_losses.py) couvrent volontairement un cas restreint : des logits de forme $(B,C)$, une cible entière par ligne et la **moyenne non pondérée sur les lignes**. La perte utilise le logarithme naturel et s'exprime donc en nats. La fonction de gradient renvoie la dérivée de cette même perte moyenne par rapport aux logits, et non par rapport aux paramètres d'un modèle.
 
 Cette référence ne met **pas** en œuvre le décalage des entrées/cibles d'une séquence, les masques de tokens ou `ignore_index`, les cibles souples, les poids de classes, ni la perplexité. Pour la modélisation du langage au niveau token, l'appelant doit aligner les logits et les cibles et sélectionner les positions cibles valides avant d'utiliser cette fonction ligne par ligne. Cette implémentation ne doit pas être confondue avec une loss complète d'entraînement d'un LLM.
 
@@ -216,13 +216,13 @@ Le résultat infini est un échec du calcul naïf en virgule flottante, pas une 
 
 ## Lien avec la perplexité
 
-Si \(\bar{\ell}\) est la cross-entropie moyenne en nats sur les tokens valides, la perplexité est :
+Si $\bar{\ell}$ est la cross-entropie moyenne en nats sur les tokens valides, la perplexité est :
 
-\[
+$$
 \operatorname{PPL}=\exp(\bar{\ell}).
-\]
+$$
 
-Avec une moyenne en bits, la formule devient \(2^{\bar{\ell}}\). La perplexité dépend donc de la base du logarithme et de la convention d'évaluation. Elle mesure la performance probabiliste sur les tokens évalués ; elle n'est pas une mesure directe de vérité factuelle ou de qualité globale d'un assistant.
+Avec une moyenne en bits, la formule devient $2^{\bar{\ell}}$. La perplexité dépend donc de la base du logarithme et de la convention d'évaluation. Elle mesure la performance probabiliste sur les tokens évalués ; elle n'est pas une mesure directe de vérité factuelle ou de qualité globale d'un assistant.
 
 ## Lien avec le gradient
 

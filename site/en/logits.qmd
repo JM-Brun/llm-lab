@@ -60,9 +60,9 @@ In the running example, once “What have the Romans ever done for us?” has pa
 ## Definition and dimensions
 
 At a given position, write the score vector as:
-\[
+$$
 z=(z_1,\ldots,z_V)\in\mathbb{R}^{V},
-\]
+$$
 where $V$ is the vocabulary size. Each component $z_i$ is associated with token ID $i$. Logits may be positive or negative; they are not constrained to $[0,1]$ and do not need to sum to one.
 
 For a batch of sequences, the output head may produce a tensor of shape $(B,T,V)$: $B$ sequences, $T$ positions, and $V$ scores per position. During autoregressive generation, the scores at the current position are typically used to choose the next token.

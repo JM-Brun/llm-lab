@@ -40,7 +40,7 @@ Le diagramme du masque causal affiché dans le chapitre est créé pour ce proje
 
 - **Fichiers :** `site/images/cross-entropy-target-probability.svg` (anglais) et `site/images/cross-entropy-target-probability-fr.svg` (français).
 - **Utilisation :** pages française et anglaise sur la cross-entropie.
-- **Intention pédagogique :** comparer, pour un même token observé, les pertes \(-\ln p(y)\) lorsque \(p(y)=0{,}9\) et \(p(y)=0{,}1\).
+- **Intention pédagogique :** comparer, pour un même token observé, les pertes $-\ln p(y)$ lorsque $p(y)=0{,}9$ et $p(y)=0{,}1$.
 - **Provenance :** figures originales créées pour ce dépôt, sans image externe incorporée. L'explication visuelle de [3Blue1Brown — But what is cross-entropy?](https://www.youtube.com/watch?v=GlYgs6v2YfU) est une ressource pédagogique complémentaire, pas la source des illustrations.
 - **Limite :** les barres illustrent la perte d'un token et ne représentent pas la distribution complète, la réduction sur les tokens valides ni un résultat expérimental.
 
@@ -429,7 +429,7 @@ Ces ressources sont utilisées dans l'étude de cas [Architectures hybrides : le
 
 ## Complexité, efficacité et parallélisme des LLM
 
-- **Vaswani et al. (2017), [*Attention Is All You Need*](https://arxiv.org/abs/1706.03762)** — formulation du Transformer et de l'attention multi-tête ; référence de base pour les coûts en \(T^2\).
+- **Vaswani et al. (2017), [*Attention Is All You Need*](https://arxiv.org/abs/1706.03762)** — formulation du Transformer et de l'attention multi-tête ; référence de base pour les coûts en $T^2$.
 - **Dao et al. (2022), [*FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness*](https://arxiv.org/abs/2205.14135)** — réduction des mouvements mémoire et des intermédiaires sans modifier l'attention exacte ni son travail quadratique.
 - **Dao (2023), [*FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning*](https://arxiv.org/abs/2307.08691)** — parallélisme, partitionnement du travail et utilisation du GPU.
 - **Gu & Dao (2023), [*Mamba: Linear-Time Sequence Modeling with Selective State Spaces*](https://arxiv.org/abs/2312.00752)** — modèles à espace d'état sélectifs, scan efficace et inférence récurrente.
