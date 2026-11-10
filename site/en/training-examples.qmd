@@ -208,7 +208,30 @@ When loss is unexpectedly low, high, or unstable, check:
 7. Do axes `B`, `L`, and `V` match the loss function’s expectations?
 8. Can a future target be accessed by the context used to predict it?
 
-## 7. Further resources
+
+
+::: {.callout-tip title="Revision sheet — constructing autoregressive examples"}
+- **Alignment:** for input $x=[t_0,\ldots,t_{L-1}]$, the target is shifted by one token, $y=[t_1,\ldots,t_L]$. Each position predicts its successor.
+- **Teacher forcing:** the observed prefix supplies context; the causal mask prevents access to future tokens. This conditioning strategy is neither the loss nor the optimizer.
+- **Windowing:** length determines the available context; stride determines the displacement between windows and therefore their overlap.
+- **Masks:** the causal mask controls information access; the loss mask controls which targets contribute to the reduction. A document separator does not automatically block attention.
+- **Shapes:** `input_ids` and `targets` have shape $[B,L]$, while logits have shape $[B,L,V]$. Alignment must be preserved through loss calculation.
+:::
+
+
+
+## Limitations
+
+This page explains core mechanisms without prescribing a universal strategy for packing, cross-document masking, padding, or loss reduction. Choices depend on the objective, architecture, data, and implementation.
+
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Supplementary resources</span>
+  <span class="learning-resources__description">Experiment, explore further, and practise the ideas from this lesson.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Further reading
 
 - **Worked examples:** [Sebastian Raschka — constructing input-target examples](https://www.sebastianraschka.com/faq/docs/input-target-pretraining-examples.html).
 - **Interpreting the objective:** [Raschka — what pretraining on unlabeled text teaches](https://www.sebastianraschka.com/faq/docs/what-pretraining-teaches.html).
@@ -219,22 +242,12 @@ When loss is unexpectedly low, high, or unstable, check:
 
 To revisit the input stage, see [From text to tokens](text-data.qmd). To continue the conceptual course, see [cross-entropy](cross-entropy.qmd) and [the Transformer](transformer.qmd). The [tensor](tensors.qmd) and [mathematical training-chain](mathematical-foundations.qmd) pages are supporting references, not prerequisites to master before moving on.
 
-::: {.callout-tip title="Revision sheet — constructing autoregressive examples"}
-- **Alignment:** for input $x=[t_0,\ldots,t_{L-1}]$, the target is shifted by one token, $y=[t_1,\ldots,t_L]$. Each position predicts its successor.
-- **Teacher forcing:** the observed prefix supplies context; the causal mask prevents access to future tokens. This conditioning strategy is neither the loss nor the optimizer.
-- **Windowing:** length determines the available context; stride determines the displacement between windows and therefore their overlap.
-- **Masks:** the causal mask controls information access; the loss mask controls which targets contribute to the reduction. A document separator does not automatically block attention.
-- **Shapes:** `input_ids` and `targets` have shape $[B,L]$, while logits have shape $[B,L,V]$. Alignment must be preserved through loss calculation.
-:::
-
-## Practice
+### Practice
 
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/training-examples.qmd).
 
-
-## Limitations
-
-This page explains core mechanisms without prescribing a universal strategy for packing, cross-document masking, padding, or loss reduction. Choices depend on the objective, architecture, data, and implementation.
+</div>
+</details>
 
 ::: {.language-switch}
 **Language:** [Français](../fr/training-examples.qmd) · [English](training-examples.qmd)
