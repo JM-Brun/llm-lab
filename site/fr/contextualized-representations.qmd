@@ -36,6 +36,19 @@ Deux phrases peuvent contenir le même token sans lui donner le même rôle : *b
 **Question de contrôle :** comment deux occurrences peuvent-elles partager le même vecteur initial tout en ayant des états cachés différents ?
 :::
 
+<div class="pipeline-stepper" role="navigation" aria-label="Étapes de la contextualisation">
+  <a class="step-item" href="text-data.qmd">1. IDs</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="embedding-space.qmd">2. Embeddings</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="positional-encoding.qmd">3. Position</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="transformer.qmd">4. Couches Transformer</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item active" aria-current="step">5. États contextualisés</span>
+</div>
+
+
 
 ![Vue d'ensemble du parcours du texte et des IDs à travers une table d'embeddings et le traitement positionnel jusqu'aux représentations contextualisées.](https://media.licdn.com/dms/image/v2/D4D12AQHkmEd7fMhztQ/article-cover_image-shrink_720_1280/B4DZ3YWKZfI0AM-/0/1777451187827?e=2147483647&t=ETNuRHmhKfKe0FYbI-a9g2NaUZ3QNv9xue4OYjI1qUs&v=beta){fig-alt="Pipeline schématique : le texte est tokenisé en IDs, les IDs sélectionnent des lignes d'une table d'embeddings apprise, l'information positionnelle est traitée, les couches d'attention traitent la séquence et produisent des représentations contextualisées." fig-cap="Vue d'ensemble de Rushang Chauhan. Le traitement positionnel est schématique : des architectures comme RoPE n'ajoutent pas simplement un vecteur de position à chaque embedding de token. Voir les explications ci-dessous et la page sur l'encodage positionnel." width=100%}
 
