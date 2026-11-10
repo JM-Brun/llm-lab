@@ -3,7 +3,7 @@
 **Status:** editorial guidance for new and revised pages.  
 **Purpose:** provide reusable starting points, improve coherence between pages, and make later refactoring inexpensive—without turning a template into a publication checklist.
 
-This is the canonical entry point for page composition. It connects the [reader-experience method](reader-experience-and-editorial-method.md), [visual design system](design-system.md), [page metadata contract](page-metadata-schema.md), [content-section map](content-section-mapping.md), and [contributor principles](contributor-guiding-principles.md). It complements these documents; it does not create a parallel editorial or visual system.
+This is the canonical entry point for page composition. It connects the [reader-experience method](reader-experience-and-editorial-method.md), [visual design system](design-system.md), [page metadata contract](page-metadata-schema.md), [content-section map](content-section-mapping.md), and [contributor principles](contributor-guiding-principles.md). It complements these documents; it does not create a parallel editorial or visual system. The cross-cutting rollout, shared page anatomy, navigation boundaries, and rendered-validation sequence are consolidated in the [page harmonization plan](page-harmonization-plan.md).
 
 ## 1. The target is convergence, not uniformity
 

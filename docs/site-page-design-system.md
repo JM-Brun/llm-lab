@@ -8,6 +8,7 @@
 |---|---|
 | Reader experience, progressive disclosure, editorial method | [Reader-experience and editorial method](reader-experience-and-editorial-method.md) |
 | Shared composition model and soft page templates | [Flexible page-template system](page-template-system.md) |
+| Cross-cutting page anatomy, navigation boundaries, and convergence rollout | [Page harmonization plan](page-harmonization-plan.md) |
 | Scientific explanatory patterns | [Page patterns](page-patterns.md) |
 | Code-facing walkthroughs, verification, experiments, and performance | [Implementation-page patterns](implementation-page-patterns.md) |
 | Visual identity, typography, spacing, responsive behavior, accessibility | [Visual design system](design-system.md) |
