@@ -24,7 +24,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-valu
 {{< include ../includes/generated-guided-context-en-queries-keys-values.qmd >}}
 
 ::: {.chapter-lead}
-The previous page, [GPT and Transformers: architecture and data flow](transformer.qmd), places self-attention within the network's forward pass. Here we isolate the three projections that feed it: **Q**, **K**, and **V**. These are not three token categories, but three learned transformations of a representation. Q and K determine the weights; V supplies the aggregated content. The next page derives the weights and aggregation themselves.
+The previous page, [GPT and Transformers: architecture and data flow](transformer.qmd), places self-attention within the network's forward pass. We now start with a simple question: how can one position use the context provided by the other tokens?
 :::
 
 ## The problem: using context
@@ -52,21 +52,8 @@ Q and K therefore determine **how attention is distributed**. V supplies **the c
 
 ![Diagram of query, key, and value projections: Q and K determine attention weights, which are used to aggregate V.](../images/queries-keys-values-en.svg){fig-alt="Two paths start from the same input: the Q and K vectors are compared to compute attention weights; those weights are then applied to V vectors to produce an aggregated representation." width=100%}
 
-The diagram captures the distinction to keep in mind: **Q and K build the weighting path; V supplies the content path**. The next lesson derives the scores, their normalization, and the aggregation.
+The diagram reveals two paths: one determines the weighting, the other supplies the content. **Why are three distinct projections needed to build these two paths from the same input?**
 
-::: {.callout-note collapse="true" title="Another perspective: viewing Q and K in vector space"}
-Codefinity offers a geometric intuition: picture Q and K as vectors whose orientation and alignment contribute to a compatibility score. This helps bridge conceptual roles and numerical objects.
-
-For two vectors, the dot product can be written as:
-
-$$
-q^\top k = \lVert q\rVert\,\lVert k\rVert\cos(\theta).
-$$
-
-The angle is only part of the score: **the dot product also depends on the norms** of Q and K. It is not, in general, cosine similarity. This intuition is a bridge to the [scaled dot-product attention calculation](scaled-dot-product-attention.qmd), not a substitute for its mathematical definition.
-
-Source: [Codefinity, *Queries, Keys, and Values: The Building Blocks*](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b).
-:::
 ## Why three projections from the same input?
 
 In self-attention, Q, K, and V are three learned transformations of the same representation stream. $X$ denotes the input to the attention sublayer: in the first block it starts from token embeddings; in later blocks it is an already contextualized hidden state. Positional information may be added upstream ([positional embeddings](positional-encoding.qmd)) or incorporated into queries and keys, as with [RoPE](rope.qmd).
@@ -91,6 +78,21 @@ With $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ and $W_V\in\mathbb{R}^{d_{mode
 Each row corresponds to one position. The same projection matrices are applied at every position, while the input representations vary. The dimensions $d_k$ and $d_v$ need not be equal; optional biases are omitted here. To trace these projections in the block implementation, see the [guided Transformer-block walkthrough](transformer-block-walkthrough.qmd); general dimension and axis conventions are covered in the [tensor reference](tensors.qmd).
 
 ## Further depth
+
+::: {.callout-note collapse="true" title="Another perspective: viewing Q and K in vector space"}
+Codefinity offers a geometric intuition: picture Q and K as vectors whose orientation and alignment contribute to a compatibility score. This helps bridge conceptual roles and numerical objects.
+
+For two vectors, the dot product can be written as:
+
+$$
+q^\top k = \lVert q\rVert\,\lVert k\rVert\cos(\theta).
+$$
+
+The angle is only part of the score: **the dot product also depends on the norms** of Q and K. It is not, in general, cosine similarity. This intuition is a bridge to the [scaled dot-product attention calculation](scaled-dot-product-attention.qmd), not a substitute for its mathematical definition.
+
+Source: [Codefinity, *Queries, Keys, and Values: The Building Blocks*](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b).
+:::
+
 
 
 ::: {.callout-note collapse="true" title="How does training learn these projections?"}
