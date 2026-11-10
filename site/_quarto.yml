@@ -120,6 +120,11 @@ project:
     - fr/exercises-transformer.qmd
     - fr/exercises-generation.qmd
     - en/exercises.qmd
+    - en/exercises-foundations.qmd
+    - en/exercises-text-data.qmd
+    - en/exercises-attention.qmd
+    - en/exercises-transformer.qmd
+    - en/exercises-generation.qmd
     - fr/evaluation-experimentale.qmd
     - en/experimental-evaluation.qmd
     - references.qmd
@@ -319,6 +324,21 @@ website:
         - section: "Practice and experiment"
           contents:
             - en/exercises.qmd
+            - section: "Mathematical foundations"
+              contents:
+                - en/exercises-foundations.qmd
+            - section: "Text data"
+              contents:
+                - en/exercises-text-data.qmd
+            - section: "Attention"
+              contents:
+                - en/exercises-attention.qmd
+            - section: "Transformer"
+              contents:
+                - en/exercises-transformer.qmd
+            - section: "Generation"
+              contents:
+                - en/exercises-generation.qmd
             - en/transformer-explainer.qmd
             - en/experimental-evaluation.qmd
         - section: "Deepen your understanding"
