@@ -47,5 +47,5 @@ Pour voir comment la vraisemblance devient une fonction de perte, lire [Entropie
 **Lien complémentaire vers l'objectif agrégé :** [Loss](../loss.qmd).
 
 ::: {.language-switch}
-**Langue :** [Français](../exercises/vraisemblance.qmd) · [English](../../en/exercises/likelihood.qmd)
+**Langue :** [Français](vraisemblance.qmd) · [English](../../en/exercises/likelihood.qmd)
 :::

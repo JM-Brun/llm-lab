@@ -39,5 +39,5 @@ Cette vérification porte sur le calcul interne, et non sur le décodage traité
 </details>
 
 ::: {.language-switch}
-**Langue :** [Français](../exercises/transformer.qmd) · [English](../../en/exercises/transformer.qmd)
+**Langue :** [Français](transformer.qmd) · [English](../../en/exercises/transformer.qmd)
 :::
