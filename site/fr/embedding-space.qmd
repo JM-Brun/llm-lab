@@ -31,9 +31,9 @@ Après la tokenisation, chaque token est représenté par un identifiant entier.
 ::: {.callout-tip title="L'idée à retenir en une minute"}
 Un ID est une **adresse de ligne**, pas une coordonnée sémantique. La matrice d'embeddings — ou table de plongements — contient un vecteur appris par ID ; le lookup sélectionne simplement la bonne ligne. Deux occurrences du même ID récupèrent donc le même vecteur initial. C'est ensuite le traitement par le Transformer qui construit une représentation dépendant du contexte.
 
-**Première lecture :** comprenez le lookup sur la petite matrice et retenez qu’un ID sélectionne une ligne, sans encoder lui-même une coordonnée sémantique.
+**Première lecture :** retenez qu'un ID sélectionne une ligne de la table ; il n'est pas lui-même une coordonnée sémantique.
 
-**Pour approfondir :** la trace Python et le comptage des paramètres sont repliés dans des encadrés facultatifs ; les propriétés géométriques sont développées dans les pages sur la similarité cosinus et la linéarité.
+**Pour pratiquer :** le calcul du lookup et la trace reproductible texte → IDs → vecteurs sont regroupés dans la [collection Données textuelles](exercises.qmd#tr-b-lookup). Les propriétés géométriques sont développées dans les pages sur la similarité cosinus et la linéarité.
 :::
 
 
