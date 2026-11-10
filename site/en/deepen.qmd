@@ -108,9 +108,9 @@ Early neural distributed text representations, followed by methods such as Word2
 
 #### What the historical comparison does—and does not—tell us
 
-Word2Vec learns vectors associated with vocabulary words. CBOW predicts a target word from its context; Skip-gram predicts context words from a target word. Once trained, a given word has a static vector: the vector for `bank` does not change between *the river bank* and *the financial bank*. This limitation helped motivate contextualized representations, but it does not mean that Transformers have done away with input embedding tables: those tables still provide the initial vectors associated with token IDs.
+Word2Vec learns vectors associated with vocabulary words. CBOW predicts a target word from its context; Skip-gram predicts context words from a target word. Once trained, a given word has a static vector: a word's vector does not change from one sentence to another. In the Monty Python exchange, the word “the” has the same static vector in “the Romans” and “the sanitation”. This limitation helped motivate contextualized representations, but it does not mean that Transformers have done away with input embedding tables: those tables still provide the initial vectors associated with token IDs.
 
-The English example `bank` isolates the distinction: if both occurrences are encoded with the same ID, they retrieve the same initial row; subsequent context processing can produce different hidden states. The exact segmentation and ID remain specific to the tokenizer. This is a conceptual example, not a claim about universal tokenization.
+The Monty Python exchange provides a familiar example: if the two occurrences of “the” are encoded with the same ID, they retrieve the same initial row; subsequent context processing can produce different hidden states. The exact segmentation and ID remain specific to the tokenizer. This is a conceptual example, not a claim about universal tokenization.
 
 #### Representation geometry: interpretation caveats
 
