@@ -124,7 +124,7 @@ La règle causale se formule aussi comme une propriété de préfixe : à param�
 ::: {.self-check}
 ## Vérifier sa compréhension
 
-La construction d'une matrice causale, le décalage des cibles et l'analyse de l'invariance de préfixe sont travaillés dans l'[exercice CA-A de la collection Attention](exercises.qmd#attention).
+La construction d'une matrice causale, le décalage des cibles et l'analyse de l'invariance de préfixe sont travaillés dans l'[exercice CA-A](exercises.qmd#ca-a-prefix-invariance).
 :::
 
 ::: {.callout-note collapse="true" title="Code et tests de référence (approfondissement)"}
