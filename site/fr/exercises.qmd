@@ -22,6 +22,74 @@ tags: ["type:exercise-hub", "destination:practice", "topic:exercises", "level:ap
 
 Les auto-vérifications courtes ne sont plus intégrées aux leçons : chaque leçon qui en possède dispose maintenant d’une page dédiée dans la section **Exercices par leçon**, accessible depuis le cours et depuis la navigation. Ce catalogue conserve les collections transversales plus développées (calculs approfondis, problèmes à plusieurs étapes et tâches de transfert), avec leur état de développement indiqué explicitement.
 
+## Exercices par leçon
+
+Les pages sont regroupées selon les trois parcours du site. Ouvrez un parcours pour accéder aux thèmes, puis à l’exercice associé à chaque leçon.
+
+<details>
+<summary>Comprendre les LLM — 19 pages</summary>
+
+- **Vue d'ensemble et génération**
+  - [Panorama des modèles de langage](exercises/llm-overview.qmd)
+  - [Génération autoregressive](exercises/generation.qmd)
+- **Des identifiants aux représentations**
+  - [Texte et données](exercises/text-data.qmd)
+  - [Espace des embeddings](exercises/embedding-space.qmd)
+  - [Encodage positionnel](exercises/positional-encoding.qmd)
+  - [Représentations contextualisées](exercises/contextualized-representations.qmd)
+- **Transformer les représentations**
+  - [GPT et Transformer : architecture et flux des données](exercises/transformer.qmd)
+  - [Queries, Keys et Values](exercises/queries-keys-values.qmd)
+  - [Attention à produit scalaire mise à l'échelle](exercises/scaled-dot-product-attention.qmd)
+  - [Masque causal](exercises/causal-masking.qmd)
+- **Des scores aux probabilités**
+  - [Logits](exercises/logits.qmd)
+  - [Probabilités](exercises/probabilites.qmd)
+  - [Entropie](exercises/entropy.qmd)
+- **Évaluer les tokens observés**
+  - [Vraisemblance et log-vraisemblance](exercises/vraisemblance.qmd)
+  - [Entropie croisée](exercises/cross-entropy.qmd)
+- **Loss et gradients**
+  - [Loss](exercises/loss.qmd)
+  - [Gradients et rétropropagation](exercises/gradients.qmd)
+- **Architectures et limites**
+  - [Architectures Transformer](exercises/transformer-architectures.qmd)
+  - [Limites des LLM](exercises/llm-limits.qmd)
+
+</details>
+
+<details>
+<summary>Construire un petit GPT — 7 pages</summary>
+
+- **Préparer les données d'entraînement**
+  - [Préparation du corpus](exercises/corpus-preparation.qmd)
+  - [Exemples d'entraînement](exercises/training-examples.qmd)
+- **Visite guidée du code de référence**
+  - [Configuration du GPT](exercises/gpt-config-walkthrough.qmd)
+  - [Opérations numériques du GPT](exercises/gpt-ops-walkthrough.qmd)
+  - [Bloc Transformer](exercises/transformer-block-walkthrough.qmd)
+  - [Modèle GPT complet](exercises/gpt-model-walkthrough.qmd)
+  - [Génération du GPT](exercises/gpt-generation-walkthrough.qmd)
+
+</details>
+
+<details>
+<summary>Approfondir — 7 pages</summary>
+
+- **Attention et architectures**
+  - [Attention croisée](exercises/cross-attention.qmd)
+  - [Architectures hybrides de LLM](exercises/hybrid-llm-architectures.qmd)
+- **Texte et tokenisation**
+  - [Stratégies de tokenisation](exercises/tokenization-strategies.qmd)
+- **Inférence et efficacité**
+  - [Apprentissage en contexte](exercises/in-context-learning.qmd)
+  - [Complexité computationnelle des LLM](exercises/llm-computational-complexity.qmd)
+- **Échelle et questions de recherche**
+  - [Capacités émergentes](exercises/emergence.qmd)
+  - [Évolution des modèles de langage](exercises/llm-evolution.qmd)
+
+</details>
+
 ## Comment utiliser cet espace
 
 - Choisir un exercice disponible et consulter la préparation indiquée pour cet exercice ; les autres pages liées servent de références au besoin.
