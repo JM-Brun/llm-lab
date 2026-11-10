@@ -111,57 +111,8 @@ Decoder-only Transformers such as GPT use this constraint to learn next-token pr
 </div>
 </details>
 
-::: {.callout-note collapse="true" title="Causal invariance test (optional)"}
-To look for future information leakage, keep tokens up to position $t$ unchanged, modify a token after $t$, and compare earlier outputs within a numerical tolerance in evaluation mode. Such a test checks the cases tried; it does not by itself prove the whole model has no leakage.
-
-The example below isolates one attention head: it changes future keys and values, not tokens in a complete model.
-
-::: {.micro-workbench}
-::: {.micro-workbench-header}
-<span>NUMERICAL WORKBENCH · CAUSAL INVARIANCE TEST (NO FUTURE LEAKAGE)</span>
-<span>Python 3.12+ / NumPy</span>
-:::
-::: {.micro-workbench-body}
-```python
-import numpy as np
-
-### 1. Additive causal mask matrix (T=4 positions)
-T = 4
-mask = np.full((T, T), -np.inf)
-mask[np.tril_indices(T)] = 0.0
-
-### 2. Synthetic token representations for T=4 in dimension d=4
-np.random.seed(42)
-Q = np.random.randn(T, 4)
-K = np.random.randn(T, 4)
-V = np.random.randn(T, 4)
-
-def run_causal_attention(q, k, v, m):
-    scores = (q @ k.T) / np.sqrt(k.shape[-1]) + m
-    exp_scores = np.exp(scores - np.max(scores, axis=-1, keepdims=True))
-    exp_scores[~np.isfinite(scores)] = 0.0
-    weights = exp_scores / np.sum(exp_scores, axis=-1, keepdims=True)
-    return weights @ v, weights
-
-out_ref, w_ref = run_causal_attention(Q, K, V, mask)
-
-### 3. Massive alteration of a FUTURE token (position 3)
-K_alt = K.copy()
-V_alt = V.copy()
-K_alt[3] += 100.0
-V_alt[3] += 100.0
-
-out_alt, w_alt = run_causal_attention(Q, K_alt, V_alt, mask)
-
-### 4. Numerically compare outputs at positions 0, 1, and 2
-assert np.allclose(out_ref[:3], out_alt[:3]), "Future leakage detected!"
-assert not np.allclose(out_ref[3], out_alt[3]), "Position 3 was expected to change."
-```
-:::
-::: {.micro-workbench-footer}
-In this synthetic case, changing future keys and values leaves earlier outputs unchanged within the `np.allclose` tolerance.
-:::
-:::
+::: {.callout-note collapse="true" title="Check prefix invariance in practice"}
+The causal rule can also be stated as a prefix property: with parameters and a prefix held fixed, appending or changing future tokens must not change the outputs already computed for that prefix. [Exercise CA-A](exercises.qmd#attention) asks you to construct the mask, examine the target shift, and interpret the reference implementation's invariance tests. It also distinguishes a test of an attention primitive from a test of the complete model.
 :::
 
 ## Connections to other concepts
