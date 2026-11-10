@@ -77,15 +77,15 @@ h_t^{(0)} = E[\text{ID}_t] + P_t.
 
 Le même ID donne le même terme d'embedding du token, mais une position différente peut fournir un terme positionnel différent. Les architectures utilisant RoPE traitent la position autrement : le mécanisme modifie les vecteurs requête et clé dans l'attention, au lieu d'ajouter un vecteur positionnel absolu à l'embedding du token. Voir [encodage positionnel et RoPE](positional-encoding.qmd).
 
-Les couches du Transformer traitent ensuite l'information à travers la séquence. À un niveau conceptuel :
+Les blocs Transformer construisent ces états en faisant circuler de l'information entre les positions autorisées. On peut représenter cette dépendance, de façon conceptuelle, par :
 
-\[
-h_t^{(\ell+1)}
-=
-F_\ell\big(h_1^{(\ell)},\ldots,h_t^{(\ell)}\big),
-\]
+\\[
+h_t^{(\\ell+1)} = F_\\ell\\!\\left(h_t^{(\\ell)},\\{h_j^{(\\ell)} : j \\in A(t)\\}\\right),
+\\]
 
-Dans un décodeur causal comme GPT, l'état à la position \(t\) peut utiliser le token courant et son contexte précédent, mais pas les tokens futurs. D'autres architectures, comme les encodeurs bidirectionnels, utilisent des masques d'attention différents. La fonction \(F_\ell\) représente un bloc complet ; cette écriture est conceptuelle et ne spécifie pas son implémentation.
+où \\(A(t)\\) désigne les positions accessibles depuis la position \\(t\\), selon le masque d'attention. Dans un décodeur causal comme GPT, \\(A(t)=\\{1,\\ldots,t\\}\\) : le token courant et son préfixe, jamais les tokens futurs. Dans un encodeur bidirectionnel, les positions accessibles peuvent inclure toute la séquence. La fonction \\(F_\\ell\\) représente ici un bloc complet ; cette écriture résume ses dépendances, pas son implémentation détaillée.
+
+Concrètement, l'auto-attention permet à une position d'agréger de l'information provenant des positions accessibles. Le MLP transforme ensuite chaque position séparément, avec des poids partagés. Répétées à chaque couche, ces opérations font évoluer les états cachés. Pour le détail du calcul, voir [Q/K/V](queries-keys-values.qmd) et [l'architecture du Transformer](transformer.qmd).
 
 Dans l'exemple *bank*, les deux occurrences occupent volontairement la même position dans la phrase (le troisième mot, sous l'hypothèse simplificatrice d'un token par mot). La différence ne vient donc pas d'une position absolue différente : elle vient du contexte qui précède le token. Dans d'autres exemples, position et contexte peuvent tous deux contribuer à la différence.
 
