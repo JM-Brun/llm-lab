@@ -67,7 +67,9 @@ def replace_project_render_targets(config: str, targets: list[str]) -> str:
 
 
 def main() -> None:
-    targets = [line.strip() for line in os.environ.get("RENDER_TARGETS", "").splitlines() if line.strip()]
+    targets = [
+        line.strip() for line in os.environ.get("RENDER_TARGETS", "").splitlines() if line.strip()
+    ]
     config_path = Path("site/_quarto.yml")
     original_config = config_path.read_text(encoding="utf-8")
     incremental_config = replace_project_render_targets(original_config, targets)
