@@ -11,6 +11,7 @@ from typing import Any
 MAX_INCREMENTAL_PAGES = 20
 GLOBAL_RENDER_INPUTS = {
     ".github/workflows/quarto.yml",
+    ".github/workflows/publish-quarto.yml",
     "pyproject.toml",
     "uv.lock",
     "scripts/site-browser-review.mjs",
