@@ -129,3 +129,40 @@ A second editorial pass focused on the requested reader-experience criteria: an 
 - The concept pages contain no worked numerical projection example and no instruction to calculate matrix products.
 - Both pages retain symbolic Q/K/V equations, tensor-shape information, the existing diagram, cross-attention scope note, and links to the next concept lesson and the separate exercise collection.
 - This pass does not claim a fresh Quarto render, responsive/browser review, accessibility check, or learner study.
+
+
+## Content-preservation audit after the reading-flow refactor — 2026-11-10
+
+A line-by-line comparison was made between the pre-refactor Q/K/V lessons and the merged bilingual pages. The refactor did not lose the central mathematical model, but it did remove or compress several secondary explanations. The following disposition distinguishes genuine content preservation from intentional editorial removal.
+
+### Preserved in the concept lessons
+
+- The same-input self-attention formulation, symbolic matrix equations, tensor shapes, and the fact that the same projection matrices are applied at every position.
+- The distinction between separately parameterized projections and joint optimization during training.
+- The gradient pathways through Q/K scores and softmax versus V's weighted aggregation, including the local linear-layer gradient expressions.
+- The boundary between self-attention and cross-attention, including the different provenance of Q versus K/V.
+- GQA/MQA head sharing, KV-cache motivation, and research on sharing projection parameters.
+- The limits of interpreting attention as semantic relevance or nearest-neighbour search in the initial embedding space.
+- The lexical ambiguity example and its caveat: a contextualized representation may help, but an isolated head or attention map does not by itself establish a linguistic explanation.
+
+### Restored in the follow-up
+
+- The previously removed **routing-versus-content** nuance: a key can contribute to deciding whether a position is attended to, while its value determines what that position contributes; the two need not encode the same feature. The hypothetical grammatical-role/semantic-content example is explicitly marked as illustrative, not as an observed head behaviour.
+- The explicit warning that values are not compared with the query or with one another to select a nearest value.
+- A compact practice hand-off that maps the former operational competencies to existing Attention exercises: projection/dimension calculations, parameter interventions, gradient flow, cross-attention, and GQA/MQA.
+- The removed historical route and the external DEV article are retained as collapsed supplementary references, not as competing content in the main narrative.
+
+### Content intentionally compressed or removed
+
+| Earlier content | Disposition | Reason |
+|---|---|---|
+| Index-card analogy | Replaced by direct Q/K/V role definitions | The analogy is not needed to preserve the mechanism and risks making learned vectors sound like literal labels or symbolic records. |
+| Per-position equations $q_t=x_tW_Q$, $k_t=x_tW_K$, $v_t=x_tW_V$ | Equivalent information retained in matrix equations and the statement that each row is one position | The per-position form is a notational expansion, not a separate mechanism. |
+| One-minute mental-model callout and distinction table | Their core statements are present in the opening, role definitions, diagram, and takeaway | Repetition was removed, not the core facts. |
+| Detailed operational learning objectives | Their practice competencies are represented by the Attention exercise set and are now explicitly mapped from the lesson | Matrix calculations and interventions should remain in the practice route. |
+| Dot-product scaling, softmax and accessible-key details | The Q/K/V lesson keeps the role-level explanation; the following scaled-dot-product lesson owns the derivation | Avoids duplicating the next lesson. The no-nearest-neighbour and no-universal-relevance caveats remain. |
+| Separate Nishanthan visual callout and history aside | References retained in a collapsed supplementary-resource callout | The main diagram remains the single central visual; the related resources remain discoverable. |
+
+### Verification boundary
+
+The bilingual exercise pages already contain the corresponding projection, intervention, gradient, cross-attention, and GQA/MQA exercises. The concept pages remain free of worked numerical matrix examples. This is a source-content audit; it does not certify rendered layout, link resolution, accessibility, or learner outcomes.
