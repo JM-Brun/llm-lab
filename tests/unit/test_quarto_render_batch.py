@@ -1,5 +1,18 @@
-from scripts import quarto_render_batch, quarto_render_scope
+from pathlib import Path
+import importlib.util
 
+
+module_path = Path(__file__).resolve().parents[2] / "scripts" / "quarto_render_batch.py"
+spec = importlib.util.spec_from_file_location("quarto_render_batch", module_path)
+assert spec is not None and spec.loader is not None
+batch = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(batch)
+
+scope_path = Path(__file__).resolve().parents[2] / "scripts" / "quarto_render_scope.py"
+scope_spec = importlib.util.spec_from_file_location("quarto_render_scope", scope_path)
+assert scope_spec is not None and scope_spec.loader is not None
+scope = importlib.util.module_from_spec(scope_spec)
+scope_spec.loader.exec_module(scope)
 
 CONFIG = """project:
   type: website
@@ -17,7 +30,7 @@ format:
 
 
 def test_replaces_only_project_render_list():
-    result = quarto_render_batch.replace_project_render_targets(
+    result = batch.replace_project_render_targets(
         CONFIG,
         ["site/fr/new.qmd", "site/en/new.qmd", "site/fr/new.qmd"],
     )
@@ -33,7 +46,7 @@ def test_rejects_unsafe_or_empty_targets():
     targets = ([], ["site/../outside.qmd"], ["site/styles.scss"], ["fr/page.qmd"])
     for invalid_targets in targets:
         try:
-            quarto_render_batch.replace_project_render_targets(CONFIG, invalid_targets)
+            batch.replace_project_render_targets(CONFIG, invalid_targets)
         except ValueError:
             pass
         else:
@@ -46,10 +59,7 @@ def test_requires_existing_project_render_list():
         "",
     )
     try:
-        quarto_render_batch.replace_project_render_targets(
-            config,
-            ["site/fr/new.qmd"],
-        )
+        batch.replace_project_render_targets(config, ["site/fr/new.qmd"])
     except ValueError as error:
         assert "project.render" in str(error)
     else:
@@ -57,7 +67,7 @@ def test_requires_existing_project_render_list():
 
 
 def test_renderer_implementation_change_forces_full_site_validation():
-    result = quarto_render_scope.classify_changed_files(
+    result = scope.classify_changed_files(
         [{"filename": "scripts/quarto_render_batch.py", "status": "modified"}],
         CONFIG,
     )
