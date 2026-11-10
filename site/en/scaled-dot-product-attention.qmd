@@ -102,6 +102,14 @@ The formulation is presented in [Vaswani et al. (2017), *Attention Is All You Ne
 - Softmax connects to [probabilities](probabilities.qmd), but a normalized distribution is not necessarily calibrated.
 - The [Transformer overview](transformer.qmd) places this computation in the model's data flow.
 
+
+
+{{< include ../includes/generated-suggested-route-en-scaled-dot-product-attention.qmd >}}
+
+:::: {.language-switch}
+**Language:** [Français](../fr/scaled-dot-product-attention.qmd) · [English](scaled-dot-product-attention.qmd)
+::::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -120,9 +128,3 @@ This page belongs to the conceptual **Theory / Understand** path: it explains th
 
 </div>
 </details>
-
-{{< include ../includes/generated-suggested-route-en-scaled-dot-product-attention.qmd >}}
-
-:::: {.language-switch}
-**Language:** [Français](../fr/scaled-dot-product-attention.qmd) · [English](scaled-dot-product-attention.qmd)
-::::
