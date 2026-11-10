@@ -15,9 +15,9 @@ suggested_route:
   previous: "fr/contextualized-representations"
   next: "fr/queries-keys-values"
 hierarchy:
-  parents: ["fr/index", "fr/llm-overview"]
-  children: ["fr/embedding-space", "fr/positional-encoding", "fr/contextualized-representations", "fr/queries-keys-values", "fr/scaled-dot-product-attention", "fr/logits", "fr/tensors"]
-related: ["fr/text-data", "fr/transformer-block-walkthrough"]
+  parents: ["fr/index", "fr/llm-overview", "fr/transformer-architectures"]
+  children: ["fr/queries-keys-values", "fr/scaled-dot-product-attention"]
+related: ["fr/text-data", "fr/embedding-space", "fr/positional-encoding", "fr/contextualized-representations", "fr/logits", "fr/tensors", "fr/generation", "fr/transformer-block-walkthrough", "fr/gpt-model-walkthrough"]
 tags: ["type:system-overview", "destination:understand", "topic:transformer", "level:overview", "language:fr", "status:published"]
 -->
 
