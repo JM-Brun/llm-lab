@@ -1,6 +1,6 @@
 # Pedagogical breadcrumb and page-navigation contract
 
-**Status:** canonical contract; native Quarto site-location breadcrumb and generated guided-route contexts integrated across the route; rendered review and learner validation remain open  
+**Status:** canonical contract; native Quarto site-location breadcrumb and generated guided-route contexts integrated; core Understand meta-flows added bilingually, with rendered review and learner validation pending  
 **Scope:** reader-facing navigation across the bilingual LLM Lab site.  
 **Coordination:** [#368 — consistent bilingual lesson-page template](https://github.com/JM-Brun/llm-lab/issues/368), [#225 — conceptual curriculum](https://github.com/JM-Brun/llm-lab/issues/225), [#415 — guided path vs resource graph](https://github.com/JM-Brun/llm-lab/issues/415), [#337 — rendered curriculum/navigation review](https://github.com/JM-Brun/llm-lab/issues/337).
 
