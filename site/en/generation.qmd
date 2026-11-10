@@ -161,7 +161,7 @@ This is the central distinction from [learning](loss.qmd): inference uses the av
 
 ## 6. Limits to keep in mind
 
-- **Context window:** the model processes only the supplied context, up to its maximum window. Information no longer present in that context no longer directly influences the prediction.
+- **Context window:** the model processes only the supplied context, up to its maximum window. The budget covers all tokens actually supplied—instructions, history, tool messages, prompt, and any multimodal tokens—as well as generated tokens. The advertised capacity is therefore not necessarily fully available for the response: an application may reserve an output allowance and apply a truncation or history-selection strategy. Information no longer present in the supplied context no longer directly influences the prediction. A larger window is not persistent memory and does not guarantee that every item will be used correctly.
 - **No intrinsic memory across generations:** each generation depends on the context it receives. An application may reinsert history or retain external state, but this does not mean the model weights have memorized the conversation.
 - **Quality depends on learned parameters:** the generation loop can run with an untrained model, but that does not make its outputs useful. Generation mechanics and the quality acquired through learning are distinct questions.
 - **Result validity:** a fluent answer—or even syntactically valid, executable SQL—does not guarantee that it answers the intended business question. Check the schema, the definitions being used (for example, how refunds and failed payments are treated), the assumptions, and the results before making a decision or taking action.
@@ -212,7 +212,7 @@ Prefill is an execution phase that processes the initial prompt as a sequence. T
 These links serve three different purposes:
 
 - **Understand the preceding computations:** [from text to tokens](text-data.qmd), then [representations and Transformer computation](transformer.qmd), [logits](logits.qmd), and [probabilities](probabilities.qmd).
-- **Study alternative selection rules:** [advanced decoding strategies](decoding-strategies.qmd).
+- **Study alternative selection rules:** [advanced decoding strategies](decoding-strategies.qmd), alongside this introductory overview of [tokens, context windows, temperature, and sampling](https://dev.to/nishanthan-k/core-elements-of-large-language-models-llms-tokens-context-windows-temperature-and-sampling-2m45).
 - **See a concrete implementation:** [guided tour of `generate.py`](gpt-generation-walkthrough.qmd).
 
 To compare generation with learning, read [training examples and teacher forcing](training-examples.qmd), followed by [the loss function](loss.qmd).
