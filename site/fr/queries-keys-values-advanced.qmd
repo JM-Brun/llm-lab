@@ -21,8 +21,6 @@ related: ["fr/scaled-dot-product-attention", "fr/cross-attention", "fr/transform
 tags: ["type:deep-dive", "destination:deepen", "topic:queries-keys-values-advanced", "level:advanced", "language:fr", "status:published"]
 -->
 
-{{< include ../includes/generated-guided-context-fr-queries-keys-values-advanced.qmd >}}
-
 ::: {.chapter-lead}
 Cet approfondissement prolonge la page [Requêtes, clés et valeurs (Q, K, V)](queries-keys-values.qmd). La page principale donne le modèle mental et les dimensions essentielles ; ici, on explicite la notation par position, les dépendances mathématiques et les variantes de paramétrisation. Il suppose connus les rôles de Q, K et V ainsi que le calcul général de l'attention.
 :::
