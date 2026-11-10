@@ -63,6 +63,9 @@ def replace_project_render_targets(config: str, targets: list[str]) -> str:
         ),
         project_end,
     )
+    while render_end > render_start + 1 and not lines[render_end - 1].strip():
+        render_end -= 1
+
     replacement = ["  render:\n", *(f"    - {json.dumps(path)}\n" for path in normalized)]
     return "".join(lines[:render_start] + replacement + lines[render_end:])
 
