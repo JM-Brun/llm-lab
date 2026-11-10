@@ -54,7 +54,7 @@ Un ID est une **référence numérique**, pas une représentation du sens. Il pe
 <div class="pipeline-stepper" role="navigation" aria-label="Du token ID à la représentation contextualisée">
   <a class="step-item" href="text-data.qmd">ID de token</a>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active" aria-current="step">Sélection dans la matrice E</span>
+  <span class="step-item active" aria-current="step">Sélection du vecteur appris</span>
   <span class="step-arrow" aria-hidden="true">→</span>
   <span class="step-item">Vecteur initial</span>
   <span class="step-arrow" aria-hidden="true">→</span>
@@ -64,6 +64,8 @@ Un ID est une **référence numérique**, pas une représentation du sens. Il pe
 </div>
 
 ## Du token au vecteur : suivre un exemple
+
+Dans cette leçon, $E$ désigne la **matrice d'embeddings** : une table de paramètres avec une ligne par ID. Chaque ligne est un vecteur de nombres réels. L'opération qui sélectionne le vecteur correspondant à un ID s'appelle *embedding lookup* (sélection du vecteur d'embedding).
 
 Prenons le token anglais `bank`, utilisé dans les deux phrases de la page sur les [représentations contextualisées](contextualized-representations.qmd) : *The river bank eroded* et *The financial bank collapsed*. Pour isoler le mécanisme, supposons que le tokenizer attribue le même ID aux deux occurrences. L'ID exact dépend du tokenizer ; le nombre ci-dessous est fictif.
 
