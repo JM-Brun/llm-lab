@@ -23,7 +23,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:llm-limits-exercises"
 
 [← Retour à la leçon : Limites des LLM](../llm-limits.qmd)
 
-[Exercices et mises en pratique](exercises.qmd).
+[Exercices et mises en pratique](../exercises.qmd).
 
 Essayez de répondre avant d’ouvrir les raisonnements. L’objectif est de manipuler le modèle mental, pas de mémoriser des étiquettes.
 

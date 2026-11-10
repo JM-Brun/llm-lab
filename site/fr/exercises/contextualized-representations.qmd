@@ -25,7 +25,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:contextualized-repres
 
 ## Vérifier sa compréhension
 
-[Exercices approfondis sur ce thème](exercises.qmd#transformer).
+[Exercices approfondis sur ce thème](../exercises.qmd#transformer).
 
 Deux occurrences du **même ID de token** apparaissent dans deux phrases différentes. Sans changement de matrice d'embeddings :
 
