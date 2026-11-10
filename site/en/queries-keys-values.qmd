@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/transformer"]
   children: ["en/queries-keys-values-advanced"]
-related: ["en/queries-keys-values-advanced", "en/contextualized-representations", "en/scaled-dot-product-attention", "en/cross-attention", "en/transformer-block-walkthrough"]
+related: ["en/contextualized-representations", "en/scaled-dot-product-attention", "en/cross-attention", "en/transformer-block-walkthrough"]
 tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-values", "level:core", "language:en", "status:published"]
 -->
 
