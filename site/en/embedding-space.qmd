@@ -1,6 +1,6 @@
 ---
 title: "From token IDs to vectors: embeddings"
-subtitle: "How an ID retrieves a learned vector that the Transformer later contextualizes"
+subtitle: "How an ID selects a learned row — and why that row is not a coordinate"
 keywords: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:en", "status:published"]
 lang: en
 ---
@@ -8,227 +8,100 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/embedding-space"
-summary: "Introduces the lookup that maps a token ID to an initial learned vector, then distinguishes that vector from the contextualized representations produced by the network."
-scope: "Explains the lookup that maps each token ID to an initial learned vector, then distinguishes this vector from contextualized representations produced by Transformer layers; introduces geometry cautiously without making it a prerequisite."
-purpose: "Readers should be able to explain how an ID selects a row in the embedding matrix, distinguish initial embeddings from contextualized representations, and understand why geometric properties require model- and task-dependent interpretation."
+summary: "Explains how a token ID selects a row in the embedding matrix and how the resulting vector becomes input to later processing."
+scope: "Introduces embedding-matrix lookup, distinguishes a row address from vector coordinates, explains how the matrix is learned, and connects the lookup to contextualized representations. Code, exercises, references, and extended history are moved to Build, Practice, and Deepen."
+purpose: "Readers should be able to explain that a token ID is used as a row index/address in E, identify the vector stored in that row, and distinguish it from a contextualized state."
 suggested_route:
   previous: "en/text-data"
   next: "en/positional-encoding"
 hierarchy:
   parents: ["en/text-data"]
   children: ["en/positional-encoding", "en/contextualized-representations", "en/cosine-similarity", "en/embedding-linearity"]
-related: ["en/transformer", "en/embedding-space-exercises"]
+related: ["en/embedding-space-exercises", "en/gpt-model-walkthrough"]
 tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:en", "status:published"]
 -->
 
 {{< include ../includes/generated-guided-context-en-embedding-space.qmd >}}
 
 ::: {.chapter-lead}
-After tokenization, each token receives an **integer identifier** (*token ID*). The identifier does not express the token's meaning: it retrieves the **learned numerical vector** associated with that token. The model selects this vector from a matrix called the *embedding matrix*. The Transformer then processes these vectors using positional information and context to produce contextualized representations.
+After tokenization, the model receives a sequence of **integer token IDs**. Each ID retrieves a learned vector from a parameter table: the **embedding matrix**. This lesson explains that lookup, then carefully distinguishes the row address, the vector stored in that row, and the representations that the Transformer builds afterwards.
 :::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 By the end of this lesson, you should be able to:
-- explain how an integer token ID acts as a row index in a learned matrix $E \in \mathbb{R}^{V \times d}$;
-- distinguish an initial token embedding vector from the contextualized hidden states produced by Transformer layers;
-- justify why numerical proximity of token IDs implies neither geometric nor semantic closeness in embedding space.
+- explain how a token ID selects a row in the embedding matrix;
+- distinguish the row address from the vector stored in that row;
+- explain why two occurrences of the same ID share the same initial vector but may later have different contextualized states.
 :::
 
+## Start with the prefix supplied to the model
 
-<div class="epistemic-badges">
-  <span class="epistemic-badge badge-concept">Verified concept</span>
-  <span class="epistemic-badge badge-status">Architecture: Transformer Input</span>
-</div>
+For the recurring example, the English pages use the cultural parallel from *Monty Python's Life of Brian*. The text already present in the context is the group's question:
 
+> **Prefix / prompt:** “What have the Romans ever done for us?”
 
-::: {.callout-tip title="The one-minute mental model"}
-An ID is an integer used as a **row index** (sometimes called a *row address*) in the embedding matrix: it tells the model which row to select, not where the token lies in vector space. The selected row contains the learned vector associated with the token. That vector—not the ID—can be represented as a point in embedding space. Two occurrences of the same ID retrieve the same initial vector; context is incorporated later by the Transformer.
+The scene then unfolds through successive replies, including examples such as “Aqueducts”, “sanitation”, “roads” and “irrigation”. In the film these are spoken by different characters, so this is a memorable analogy for context and continuation, not a literal single-speaker autoregressive generation trace. The exact tokenization and IDs depend on the tokenizer; no universal segmentation or ID is assumed here.
 
-**Key idea:** the token is a vocabulary unit, the ID identifies it, and the embedding vector is its learned numerical representation.
+A tokenizer splits the prefix into tokens according to its vocabulary and rules, then assigns an integer ID to each token. A visible word is not necessarily one token: the exact segmentation depends on the tokenizer in use.
 
+## Lookup: select a row, not a coordinate
 
-:::
+The embedding matrix, denoted by (E), is a learned table. It contains one row per vocabulary ID, and each row contains a vector of real numbers.
 
+![From prefix to vector: the ID selects a matrix row, and the vector in that row can then be represented as a point in space.](../images/embedding-lookup-en.svg){fig-alt="The prefix is split into tokens. A token receives ID i, used as a row index or address to select row i of matrix E. That row contains a vector of d numbers, which can be represented as a point in embedding space. The row address and the point are different objects." fig-cap="The token ID retrieves a row from the table; the vector stored in that row is the object represented in vector space." width=100%}
 
-<div class="pipeline-stepper" role="navigation" aria-label="From token ID to contextualized representation">
-  <a class="step-item" href="text-data.qmd">Token ID</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active" aria-current="step">Select the learned vector</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item">Initial vector</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="positional-encoding.qmd">Architecture-dependent position handling</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="contextualized-representations.qmd">Transformer layers → contextualized states</a>
-</div>
+The distinction matters:
 
-## From token to vector: follow one example
+| Object | What it denotes | Role |
+|---|---|---|
+| **Token ID** (i) | An integer assigned to a token by the tokenizer | Identifies a vocabulary entry |
+| **Row index / row address** (i) | That entry's position in matrix (E) | Tells the model which row to select |
+| **Embedding vector** (E_{i,:}) | The (d) real numbers stored in that row | Initial numerical representation of the token |
+| **Point in space** | The geometric interpretation of vector (E_{i,:}) | Supports analysis of distances, directions, and neighbourhoods |
 
-In this lesson, $E$ denotes the **embedding matrix**: a parameter table with one row per ID. Each row is a vector of real numbers. Selecting the vector associated with an ID is called an *embedding lookup*.
+The phrase **row address** therefore describes access to the table, not the token's geometric position. The vector is a list of coordinates; it is the vector that can be represented as a point in a (d)-dimensional space.
 
-Consider the English token `bank`, used in the [contextualized representations](contextualized-representations.qmd) lesson in two sentences: *The river bank eroded* and *The financial bank collapsed*. To isolate the mechanism, assume the tokenizer assigns the same ID to both occurrences. The actual ID depends on the tokenizer; the number below is fictitious.
+## The matrix in one formula
 
-```{mermaid}
-flowchart TD
-    A["Text: « bank »"] --> B["Token: bank"]
-    B --> C["Token ID: 4821 (illustrative)"]
-    C --> D["Embedding lookup: select E[4821]"]
-    subgraph M["Embedding matrix E: V rows × d columns"]
-      R0["Row 4820: d numbers"]
-      R1["Row 4821: d numbers · selected"]
-      R2["Row 4822: d numbers"]
-    end
-    D --> R1
-    R1 --> V["Initial vector x = E[4821]"]
-    V --> P["Architecture-dependent positional handling"]
-    P --> T["Transformer layers and context"]
-    T --> H["Contextualized representation"]
-```
+If the vocabulary contains (V) IDs and each vector has (d) components, the matrix has (V) rows and (d) columns:
 
-The *lookup* does not calculate the meaning of `bank` or inspect neighboring words: it selects the initial vector associated with the ID. Both occurrences therefore have the same initial vector if they share the same ID. Their representations can differ after positional handling and the Transformer's layers.
+$$
+E \in \mathbb{R}^{V \times d}
+$$
 
-For another visualization of the path from tokens to vectors in GPT-2, see [Jay Alammar's The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/). The diagram above is an original, simplified illustration; it does not reproduce an external figure.
+For an ID (i), lookup selects the corresponding row:
 
+$$
+\mathbf{x}_i = E_{i,:} \in \mathbb{R}^{d}
+$$
 
-## Where do the vectors come from?
+- (V) is the size of the vocabulary associated with the model's tokenizer.
+- (d) is the embedding dimension.
+- (E_{i,:}) denotes all components of row (i).
 
-A tokenizer splits text into tokens and assigns each token an **ID**. The model uses that ID to select the corresponding vector from its **embedding matrix**, denoted by $E$:
+The matrix therefore contains (V \times d) parameters. The integer (i) is neither a coordinate in vector space nor a measure of proximity: consecutive IDs may select vectors that are far apart.
 
-\[
-E\in\mathbb{R}^{V\times d}
-\]
+## Where do the table values come from?
 
-- $V$ is the vocabulary size: the matrix has one row per ID.
-- $d$ is the embedding dimension: each row contains $d$ real numbers.
-- $E[i]$ denotes the vector in the row associated with ID $i$.
+The rows of (E) are not hand-written definitions. The matrix is part of the network's **learned parameters**. In a standard training setup, its values are initialized and then adjusted with the other parameters: the model makes predictions, a loss function measures the discrepancy with target tokens, backpropagation computes gradients, and the optimizer updates the parameters.
 
-This selection is called an *embedding lookup*. For example, if the token `bank` receives the fictitious ID 4821, the lookup returns $E[4821]$. The number 4821 does not describe the meaning of `bank`; it only tells the model which row to select.
+The implementation and code belong in the **Build** path: [assembling the GPT and tracing its embedding tables](gpt-model-walkthrough.qmd), within the [guided build route](build-path.qmd). For the roles of loss and gradients, see [the loss function](loss.qmd) and [gradients](gradients.qmd).
 
-### How is this matrix learned?
+## From the initial vector to a contextualized representation
 
-The matrix $E$ is part of the neural network's **parameters**. In a standard training setup, its values are initialized (often randomly) and then adjusted along with the model's other parameters. At each training step, the model predicts the next token, computes a loss from the observed target, and uses backpropagation and an optimizer to update parameters, including the relevant embedding rows.
+With a fixed matrix, two occurrences of the same ID select the same row and therefore retrieve the same initial vector. The lookup does not read neighbouring words or disambiguate the meaning of a sentence.
 
-The table is therefore neither a dictionary of definitions nor a list of hand-written coordinates: its vectors are learned from patterns in the training sequences. For the role of the [loss function](loss.qmd) and [gradients](gradients.qmd), see the dedicated lessons.
+Position and context enter later, depending on the architecture. Transformer layers transform input vectors into **contextualized hidden states**: two occurrences with the same initial vector can therefore have different representations when their positions or accessible contexts differ.
 
-In a Transformer, this representation is then transformed by the network's layers. Three objects should be distinguished:
+For the next steps, see [positional encoding](positional-encoding.qmd), followed by [contextualized representations](contextualized-representations.qmd).
 
-- **Token embedding:** the initial vector retrieved from the vocabulary matrix.
-- **Contextualized representation:** a vector produced after processing context, including through attention.
-- **Sentence or document embedding:** a vector computed by a model and aggregation method designed to represent a longer text.
+## Continue according to your goal
 
-These objects are not interchangeable. A method suited to sentence embeddings for document retrieval does not automatically transfer to a language model's internal activations.
-
-### A historical distinction: static word vectors
-
-Before contextual language models, methods such as Word2Vec learned **one vector per word type** from patterns in its surrounding words. CBOW predicts a target word from its context; Skip-gram predicts surrounding words from a target word. In a trained Word2Vec model, the vector for a vocabulary entry such as `bank` is the same wherever that word appears.
-
-A Transformer starts differently: its embedding table maps each **token ID** (often a subword unit, not a whole word) to an initial vector. The same ID retrieves the same initial row, but subsequent layers combine it with positional and contextual information, so the resulting hidden state can differ across occurrences. Thus, a static Word2Vec word vector, a Transformer token embedding, and a contextualized hidden state are related ideas, but they are not interchangeable.
-
-This is a conceptual contrast, not a claim that modern Transformer embeddings are initialized or trained like Word2Vec. See [Mikolov et al. (2013)](https://arxiv.org/abs/1301.3781) for the original word-representation architectures.
-
-## From the principle to the calculation
-
-Embedding lookup is simple: each ID selects its corresponding row in the table, without mixing positions or interpreting the numerical value of the ID. The micro-workbench below checks these invariants on a small NumPy example.
-
-::: {.micro-workbench}
-::: {.micro-workbench-header}
-MICRO-WORKBENCH · VECTORIZED EMBEDDING LOOKUP (NUMPY)
-:::
-::: {.micro-workbench-body}
-```python
-import numpy as np
-
-# Vocabulary matrix V=5 tokens, dimension d=2
-E = np.array([
-    [0.1, 0.0],   # ID 0
-    [0.0, 0.2],   # ID 1
-    [0.8, -0.1],  # ID 2
-    [-0.2, 0.5],  # ID 3
-    [0.3, 0.7],   # ID 4
-], dtype=np.float64)
-
-# Batch of 2 sequences of length L=3
-token_ids = np.array([
-    [2, 0, 3],  # Sequence A
-    [1, 2, 4],  # Sequence B
-])
-
-# Vectorized lookup via direct NumPy integer indexing (row selection)
-X = E[token_ids]
-
-# Invariant 1: output tensor shape (B=2, L=3, d=2)
-assert X.shape == (2, 3, 2)
-
-# Invariant 2: same ID = exact same row selected in both sequences
-assert np.array_equal(X[0, 0], E[2])
-assert np.array_equal(X[1, 1], E[2])
-assert np.array_equal(X[0, 0], X[1, 1])
-
-# Invariant 3: consecutive IDs (2 and 3) have no geometric distance constraint
-d_2_3 = float(np.linalg.norm(E[2] - E[3]))
-d_0_4 = float(np.linalg.norm(E[0] - E[4]))
-print(f"X shape: {X.shape}")
-print(f"Distance E[2]-E[3]: {d_2_3:.3f} | Distance E[0]-E[4]: {d_0_4:.3f}")
-```
-:::
-::: {.micro-workbench-footer}
-Lookup is row selection: at each position $(b, \ell)$ of the batch, the output vector is exactly row $E[\mathrm{id}]$ of the table; two occurrences of the same token ID therefore retrieve identical initial vectors.
-:::
-:::
-
-<details class="spot-the-fallacy">
-<summary>Common Fallacy: “Two tokens with consecutive numerical IDs (e.g. 2 and 3) have geometrically close embedding vectors”</summary>
-<div class="fallacy-content">
-<p><strong>Counterexample:</strong> The integer ID is solely a <em>row address</em> in the matrix $E \in \mathbb{R}^{V \times d}$. Integer ordering is an artifact of tokenizer construction (frequency ranking, merge order in BPE, or byte values), not vector-space geometry. Adjacent rows $E_2$ and $E_3$ are $d$-dimensional vectors initialized independently and updated along different gradient trajectories. Their geometric distance shares zero relationship with the numerical difference $|3 - 2| = 1$.</p>
-</div>
-</details>
-
-## From initial embeddings to contextualized representations
-
-Lookup ends when a row is selected from the embedding matrix; it does not contextualize the vector. Positional information and processing by Transformer layers come afterwards, with mechanisms that depend on the architecture. To keep these stages distinct, see the dedicated lessons on [positional encoding](positional-encoding.qmd) and [contextualized representations](contextualized-representations.qmd).
-
-During training, gradients can update the embedding-matrix rows used by examples. For tensor shapes and operations, see [tensors](tensors.qmd); for the preceding stages of the input chain, see [from text to tokens](text-data.qmd) and [tokenization strategies](tokenization-strategies.qmd).
-
-## Interpreting geometry with care
-
-![Schematic projection of an embedding space.](../images/embedding-space-en.svg){fig-alt="Points grouped in an abstract plane. The groups are illustrative; the axes do not necessarily correspond to human concepts." width=100%}
-
-This projection is illustrative: real embeddings often have hundreds or thousands of coordinates, and a 2D representation can distort distances and neighbourhoods.
-
-Geometric proximity depends on the model, layer, training objective, and metric. It does not prove that two texts are equivalent or that a document correctly answers a question—negation can reverse meaning even when most of the vocabulary is shared.
-
-For a deeper treatment without conflating geometry with the lookup mechanism, see the pages on [cosine similarity](cosine-similarity.qmd) and the [linearity hypothesis for representations](embedding-linearity.qmd).
-
-## Practice, questions and exercises {#practice}
-
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/embedding-space.qmd) and in the [Text data collection](exercises-text-data.qmd#text-data):
-
-- **Check-your-understanding questions:** counting the parameters of the table $E$ and interpreting a 2D projection, with detailed reasoning ([dedicated practice page](exercises/embedding-space.qmd)).
-- **[Exercise TR-B — Calculate lookup and trace tensor shapes](exercises-text-data.qmd#tr-b-lookup):** perform the lookup, complete a shape trace, generalize to a batch, then follow the reproducible text → IDs → vectors trace.
-- **Related exercises:** TR-A rebuilds the text → IDs → contextualized states chain; TR-C distinguishes identity, position and context.
-
-
-## References
-
-- [Jay Alammar, *The Illustrated GPT-2*](https://jalammar.github.io/illustrated-gpt2/) — a pedagogical visualization of token embeddings and their role in GPT input.
-- [Mikolov et al. (2013), *Efficient Estimation of Word Representations in Vector Space*](https://arxiv.org/abs/1301.3781).
-- [Ethayarajh (2019), *How Contextual are Contextualized Word Representations?*](https://arxiv.org/abs/1909.00512).
-- [Li et al. (2020), *On the Sentence Embeddings from Pre-trained Language Models*](https://aclanthology.org/2020.emnlp-main.733/).
-- [Steck, Ekanadham & Kallus (2024), *Is Cosine-Similarity of Embeddings Really About Similarity?*](https://arxiv.org/abs/2403.05440).
-- [Sentence Transformers — Semantic Textual Similarity](https://sbert.net/docs/sentence_transformer/usage/semantic_textual_similarity.html).
+- **Practice:** [embedding-space exercises](exercises/embedding-space.qmd).
+- **Build:** [guided tour of the GPT model](gpt-model-walkthrough.qmd) — embedding tables, dimensions, and the forward pass.
+- **Deepen:** [mathematical tools and representation geometry](deepen.qmd#mathematical-tools-and-geometry), including the history of static word vectors, cosine similarity, and the limits of geometric interpretations.
 
 {{< include ../includes/generated-suggested-route-en-embedding-space.qmd >}}
-
-<div class="route-nav-cards">
-  <a href="text-data.qmd" class="route-nav-card">
-    <span class="nav-direction">← Previous step</span>
-    <span class="nav-title">From text to tokens</span>
-  </a>
-  <a href="positional-encoding.qmd" class="route-nav-card">
-    <span class="nav-direction">Next step →</span>
-    <span class="nav-title">Positional encoding</span>
-  </a>
-</div>
 
 ::: {.language-switch}
 **Language:** [Français](../fr/embedding-space.qmd) · [English](embedding-space.qmd)
