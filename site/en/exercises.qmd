@@ -982,7 +982,7 @@ With parameters fixed, changing $X_D$ directly affects Q; changing $X_E$ directl
 
 </details>
 
-#### Exercise CA-A — Causal masking and prefix invariance
+#### Exercise CA-A — Causal masking and prefix invariance {#ca-a-prefix-invariance}
 
 Consider four input tokens \(x_0,x_1,x_2,x_3\). At query position \(i\), causal self-attention allows only keys at positions \(j\leq i\).
 
