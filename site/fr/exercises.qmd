@@ -781,10 +781,10 @@ Oui : le vocabulaire et l'ordre des fusions BPE ont été ajustés à partir de 
 
 On considère une requête et deux clés/valeurs :
 
-$
+$$
 q=(1,0),\quad k_1=(1,0),\quad k_2=(0,1),\quad
 v_1=(10,0),\quad v_2=(0,20).
-$
+$$
 
 1. Calculez les scores $qk_1^\top$ et $qk_2^\top$.
 2. Appliquez la mise à l'échelle avec $d_k=2$.
