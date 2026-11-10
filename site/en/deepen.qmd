@@ -97,6 +97,14 @@ The core [Tokenization strategies](tokenization-strategies.qmd) lesson remains t
 - [Cosine similarity](cosine-similarity.qmd) — angular measure and interpretation limits.
 - [Embedding linearity](embedding-linearity.qmd) — assumptions and empirical evidence behind linear relations in representation spaces.
 
+### Historical perspective: from static vectors to contextualized representations
+
+Early neural distributed text representations, followed by methods such as Word2Vec, learned vectors associated with words or lexical units. These so-called **static** vectors did not change with the sentence. Contextualized models later produced different states depending on context, while retaining an initial embedding table for input IDs. This transition is a useful historical marker, not a single linear progression or the replacement of every earlier method.
+
+- [Bengio et al. (2003), *A Neural Probabilistic Language Model*](https://www.jmlr.org/papers/v3/bengio03a.html) — a neural language model with learned distributed representations.
+- [Mikolov et al. (2013), *Efficient Estimation of Word Representations in Vector Space*](https://arxiv.org/abs/1301.3781) — the CBOW and Skip-gram architectures associated with Word2Vec.
+- [Peters et al. (2018), *Deep Contextualized Word Representations*](https://arxiv.org/abs/1802.05365) — ELMo and context-dependent representations.
+
 These pages provide analytical tools; they are not a prerequisite mathematics course to complete before building a small GPT.
 
 ## Probabilistic formalization and the training chain {#probabilistic-foundations-and-training}
