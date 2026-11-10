@@ -10,7 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "fr/queries-keys-values"
 summary: "Distingue les trois projections apprises de l’auto-attention : Q formule les requêtes, K permet de calculer les compatibilités et V porte le contenu agrégé."
 scope: "Explique les rôles et les projections apprises Q, K et V dans l'auto-attention, leur entrée commune et leurs dimensions ; laisse le calcul des scores et de l'agrégation à l'attention à produit scalaire, la contrainte temporelle au masque causal, l'implémentation au parcours de construction et le contexte historique à la page dédiée."
-purpose: "Le lecteur doit pouvoir distinguer les projections Q/K qui déterminent les poids de la projection V qui fournit le contenu, écrire les trois projections de l'auto-attention, en déduire les dimensions et prévoir l'effet d'une modification de V à Q et K constants."
+purpose: "Le lecteur doit pouvoir distinguer les rôles conceptuels de Q, K et V, expliquer pourquoi Q/K déterminent les poids tandis que V fournit le contenu agrégé, et décrire qualitativement leurs dépendances sans effectuer de calcul matriciel."
 suggested_route:
   previous: "fr/transformer"
   next: "fr/scaled-dot-product-attention"
@@ -29,9 +29,9 @@ La page précédente, [GPT et Transformer : architecture et flux des données](t
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
 À la fin de cette leçon, vous devriez pouvoir :
-- distinguer les projections qui déterminent les poids (Q et K) de celle qui fournit le contenu (V) ;
-- écrire les trois projections et vérifier les dimensions de leurs résultats ;
-- prévoir ce qui change — et ce qui reste fixe — lorsque seule une projection est modifiée.
+- distinguer les rôles de Q, K et V dans le mécanisme d'attention ;
+- expliquer pourquoi Q et K déterminent les poids tandis que V fournit le contenu agrégé ;
+- décrire qualitativement les dépendances entre projections, poids et contenu, sans effectuer de calcul matriciel.
 :::
 
 ## Une situation pour poser le problème
@@ -52,7 +52,7 @@ Cet exemple est adapté de [Neha KK](https://medium.com/@nkk18072004/understandi
 - **Invariance utile :** si V change seul, les poids restent fixes ; le contenu agrégé peut changer. Modifier Q ou K peut changer les poids.
 - **Périmètre :** ces équations décrivent l'auto-attention standard. En attention croisée, Q et K/V proviennent de flux différents ; GQA/MQA modifient le partage des têtes K/V.
 
-**Question de contrôle :** pouvez-vous écrire les trois projections, distinguer poids et contenu, puis prédire ce qui change si une seule matrice est modifiée ?
+**Question de contrôle :** pouvez-vous expliquer, sans calcul, pourquoi modifier V seul ne change pas les poids d'attention, mais peut changer le contenu agrégé ?
 :::
 
 ## L'intuition : comparer, puis transmettre
@@ -125,33 +125,7 @@ $$
 
 Les mêmes matrices de projection sont appliquées à toutes les positions ; ce sont les représentations d'entrée qui varient d'une position à l'autre.
 
-## Un exemple numérique des trois projections
-
-Prenons une seule représentation d'entrée, avec des vecteurs-lignes et des matrices de projection choisies uniquement pour l'illustration :
-
-\[
-\begin{aligned}
-x_t &= \begin{bmatrix}1 & 2\end{bmatrix},\\
-W_Q &= \begin{bmatrix}1&0\\0&1\end{bmatrix},\\
-W_K &= \begin{bmatrix}0&1\\1&0\end{bmatrix},\\
-W_V &= \begin{bmatrix}1&1\\0&1\end{bmatrix}.
-\end{aligned}
-\]
-
-Les trois projections donnent :
-
-\[
-\begin{aligned}
-q_t &= x_tW_Q = \begin{bmatrix}1&2\end{bmatrix},\\
-k_t &= x_tW_K = \begin{bmatrix}2&1\end{bmatrix},\\
-v_t &= x_tW_V = \begin{bmatrix}1&3\end{bmatrix}.
-\end{aligned}
-\]
-
-La même entrée produit donc trois représentations différentes, parce que les matrices apprises n'ont pas le même rôle. Les nombres ci-dessus sont fictifs : ils servent à suivre les multiplications, pas à décrire les paramètres d'un modèle entraîné.
-
-Changeons maintenant uniquement la projection de valeur, par exemple avec $W'_V = \begin{bmatrix}2&0\\0&1\end{bmatrix}$. On obtient $v'_t = \begin{bmatrix}2&2\end{bmatrix}$, tandis que $q_t$ et $k_t$ restent inchangés. Les scores et les poids calculés à partir de Q et K ne changent donc pas ; le contenu agrégé à partir de V peut, lui, changer. Le calcul complet des scores, du softmax et de la somme pondérée est volontairement réservé à la page sur l'[attention à produit scalaire](scaled-dot-product-attention.qmd).
-
+## 
 ::: {.callout-note collapse="true" title="Comment l'entraînement apprend-il ces projections ?"}
 Les matrices $W_Q$, $W_K$ et $W_V$ ne reçoivent pas chacune une cible explicite « correcte ». Elles sont ajustées indirectement à partir de la fonction de perte du modèle, par rétropropagation du gradient.
 
