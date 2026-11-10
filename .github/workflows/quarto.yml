@@ -89,25 +89,31 @@ jobs:
             uv.lock
             docs/requirements-*.txt
 
+      - name: Create shared validation environment
+        if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
+        run: |
+          uv venv --python 3.12 .venv
+          uv pip install --python .venv/bin/python -r docs/requirements-history-validation.txt
+
       - name: Validate page metadata learning graph
         if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
-        run: uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/check_page_metadata.py
+        run: .venv/bin/python site/tools/check_page_metadata.py
 
       - name: Validate first-class learning resources
         if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
-        run: uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/check_resource_registry.py
+        run: .venv/bin/python site/tools/check_resource_registry.py
 
       - name: Generate bilingual history timeline fragments
         if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
-        run: uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/render_history_pilot.py
+        run: .venv/bin/python site/tools/render_history_pilot.py
 
       - name: Generate learning-map data and guided-route Markdown
         if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
-        run: uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/build_learning_map.py
+        run: .venv/bin/python site/tools/build_learning_map.py
 
       - name: Generate bilingual computational-graph fragments
         if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
-        run: uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/render_computational_graph.py
+        run: .venv/bin/python site/tools/render_computational_graph.py
 
       - name: Render site
         if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
