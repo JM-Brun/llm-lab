@@ -180,23 +180,14 @@ jobs:
           RENDER_TARGETS: site/fr/deepen.qmd
         run: .venv/bin/python scripts/quarto_render_batch.py
 
-      - name: Diagnose rendered-site output paths
+      - name: Verify isolated render overlays the site root
         if: github.event_name == 'pull_request' && contains(steps.site_changes.outputs.files, 'scripts/quarto_render_batch.py')
         run: |
-          echo "Workspace: $PWD"
-          for candidate in site/_site/index.html site/_site/fr/learning-map.html site/_site/en/learning-map.html _site/index.html _site/fr/learning-map.html _site/en/learning-map.html; do
-            if [ -f "$candidate" ]; then
-              echo "FOUND $candidate"
-            else
-              echo "MISSING $candidate"
-            fi
-          done
-          echo "Files under site/_site:"
-          find site/_site -maxdepth 3 -type f | sort | head -n 80
-          if [ -d _site ]; then
-            echo "Files under workspace _site:"
-            find _site -maxdepth 3 -type f | sort | head -n 80
-          fi
+          test -s site/_site/index.html
+          test -s site/_site/fr/learning-map.html
+          test -s site/_site/en/learning-map.html
+          test ! -e site/_site/_site/index.html
+          echo "The isolated render preserved the expected site root and did not create a nested _site directory."
 
       - name: Check rendered learning-map controls
         if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
