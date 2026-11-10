@@ -195,6 +195,14 @@ Les filtres **top-k** et **top-p** écartent les candidats les moins probables a
 
 **Elle ne valide pas son résultat.** Une réponse fluide, ou même une requête SQL syntaxiquement valide et exécutable, ne garantit pas qu'elle répond à la bonne question métier. Le schéma, les définitions utilisées (le traitement des remboursements et des paiements échoués, par exemple), les hypothèses et les résultats se vérifient avant toute décision.
 
+
+
+{{< include ../includes/generated-suggested-route-fr-generation.qmd >}}
+
+::: {.language-switch}
+[Français](generation.qmd) · [English](../en/generation.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
@@ -208,9 +216,3 @@ Les questions de cette leçon sont regroupées sur sa [page d'exercices dédiée
 
 </div>
 </details>
-
-{{< include ../includes/generated-suggested-route-fr-generation.qmd >}}
-
-::: {.language-switch}
-[Français](generation.qmd) · [English](../en/generation.qmd)
-:::
