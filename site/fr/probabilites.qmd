@@ -221,7 +221,7 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 
 ## Pour poursuivre
 
-
+- [Entropie](entropy.qmd) — dispersion de la distribution prédictive avant l'observation du prochain token.
 - [Vraisemblance](vraisemblance.qmd) — probabilité des tokens observés et des séquences.
 - [Entropie croisée](cross-entropy.qmd) — objectif d'entraînement.
 - [Exercices de fondations mathématiques](exercises-foundations.qmd#fondations) — exercices corrigés sur la softmax, la perte et des notions associées ; d'autres thèmes restent prévus.
