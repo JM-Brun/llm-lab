@@ -3192,8 +3192,6 @@ sources:
         - en/contextualized-representations
         - fr/cosine-similarity
         - en/cosine-similarity
-        - fr/exercises/embedding-space
-        - en/exercises/embedding-space
       concepts: [token, token-embedding, contextualized-representation]
       audit_records:
         - docs/source-reviews/hesam-sheikh-hessani-llm-embeddings-explained-2026-11.md
