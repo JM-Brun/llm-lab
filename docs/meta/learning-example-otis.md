@@ -1,4 +1,4 @@
-# Référence pédagogique transversale — l'exemple d'Otis
+# Référence pédagogique transversale — le fil rouge du scribe
 
 **Statut :** référence éditoriale interne, proposition de fil rouge  
 **Langues :** français et anglais  
@@ -9,41 +9,43 @@
 
 ## 1. Intention
 
-Utiliser comme fil rouge la scène du scribe Otis dans *Astérix et Obélix : Mission Cléopâtre* (Alain Chabat, 2002), interprété par Édouard Baer. Panoramix demande à Otis si être scribe est une bonne situation. Otis amorce alors sa longue réponse par la réplique devenue culte : « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... » La tirade dérive ensuite avec son mélange de digressions, d'associations et de philosophie improvisée.
+Utiliser comme fil rouge la scène du scribe Otis dans *Astérix et Obélix : Mission Cléopâtre* (Alain Chabat, 2002), interprété par Édouard Baer. Le **contexte fourni au modèle (prompt / préfixe)** est la question de Panoramix : « C'est une bonne situation, ça, scribe ? ». La **continuation** commence par : « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... ». C'est cette inversion qui porte la démonstration : le prompt est déjà présent dans le contexte ; la boucle autoregressive produit ensuite la suite, token après token.
 
 La scène est une accroche culturelle, pas une source scientifique. L'exemple pédagogique ci-dessous est une **adaptation originale** : ne pas recopier la tirade du film. La référence IMDb identifie le rôle d'Otis : <https://www.imdb.com/fr/title/tt0250223/characters/nm0046347/>. Une présentation de la scène et de son contexte est également disponible dans [Le Parisien](https://www.leparisien.fr/culture-loisirs/cinema/ressortie-d-asterix-et-obelix-mission-cleopatre-le-monologue-dotis-encore-plus-interminable-04-07-2023-NA6P2W7M2JE6RA5WYVXEND4B4Q.php).
 
 ### Pourquoi cet exemple fonctionne
 
-- **Une entrée familière et courte :** une question simple déclenche une réponse développée.
-- **Une suite de mots prévisible mais non déterministe :** le contexte influence la suite, sans imposer une réponse unique.
+- **Un préfixe familier et court :** la question de Panoramix est le contexte initial ; la tirade d'Otis est la continuation.
+- **Une suite conditionnée mais non déterministe :** le contexte influence les tokens suivants, sans imposer une continuation unique.
 - **Une structure narrative :** question, réponse, associations, digressions et conclusion.
 - **Un potentiel de transformation :** la même phrase peut être examinée comme texte brut, tokens, IDs, vecteurs, états contextualisés, scores, probabilités, puis génération.
 - **Un contrepoint mémorable :** un modèle ne comprend pas une tirade comme un humain ; il calcule des distributions conditionnelles sur des tokens.
 
 ## 2. Scénario canonique à réutiliser
 
-### 2.1 Texte d'entrée
+### 2.1 Préfixe fourni au modèle
 
-Question de Panoramix, conservée comme courte citation de référence :
+Le **prompt / contexte initial** est la question de Panoramix :
 
-> « C'est une bonne situation, ça, scribe ? »
+> **Préfixe :** « C'est une bonne situation, ça, scribe ? »
 
-Pour les démonstrations techniques, utiliser ce prompt original, inspiré de la situation mais rédigé pour LLM Lab :
+Ce préfixe est déjà présent dans le contexte au début de la génération. Il ne doit pas être présenté comme le texte produit par le modèle.
 
-> **Prompt :** « Décris le métier de scribe en une phrase. Commence par parler des rencontres, puis explique pourquoi le contexte compte. »
+### 2.2 Continuation
 
-### 2.2 Continuation pédagogique originale
+La continuation de la scène commence par la réplique d'Otis :
 
-Continuation pédagogique originale (à conserver identique lorsque l'objectif est de comparer plusieurs mécanismes ; elle ne reproduit pas la suite du monologue du film) :
+> **Début de continuation :** « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... »
 
-> **Continuation :** « Être scribe, c'est relier des histoires. Les rencontres apportent de nouveaux récits ; le contexte aide à choisir les mots justes. Chaque phrase prépare la suivante. »
+Pour les démonstrations reproductibles, utiliser aussi une continuation pédagogique originale, indépendante du dialogue du film :
 
-Ce texte n'est **pas** une réplique du film, ni la sortie d'un modèle entraîné. C'est une séquence construite à des fins pédagogiques. Quand une page étudie la génération, elle peut utiliser le prompt et demander au lecteur de comparer plusieurs continuations plausibles ; ne pas présenter la continuation jouet comme une prédiction réelle.
+> **Continuation jouet :** « Être scribe, c'est relier des histoires. Les rencontres apportent de nouveaux récits ; le contexte aide à choisir les mots justes. Chaque phrase prépare la suivante. »
+
+La réplique du film sert d'illustration culturelle du couple préfixe/continuation ; la continuation jouet sert aux calculs et aux tests. Ni l'une ni l'autre ne doit être présentée comme la sortie effective d'un modèle entraîné. Lorsqu'une page étudie la génération, montrer explicitement la boucle : prédire un token, l'ajouter au contexte, puis recalculer le token suivant.
 
 ### 2.3 Unités et conventions
 
-- Le texte exact est encodé en UTF-8 pour les fichiers, mais le modèle reçoit des IDs de tokens produits par **un tokenizer déterminé**.
+- Le préfixe et la continuation sont encodés en UTF-8 pour les fichiers, mais le modèle reçoit des IDs de tokens produits par **un tokenizer déterminé**.
 - Les IDs dépendent du tokenizer et de son vocabulaire : ne jamais publier un ID numérique comme universel.
 - Les vecteurs d'embedding sont des tableaux numériques dont les dimensions dépendent de la configuration du modèle. Ne pas inventer des valeurs ou dimensions comme s'il s'agissait d'un checkpoint réel.
 - Les états cachés après les blocs Transformer dépendent du contexte et des paramètres du modèle ; ils ne sont pas les embeddings initiaux.
@@ -54,8 +56,8 @@ Ce texte n'est **pas** une réplique du film, ni la sortie d'un modèle entraîn
 
 | Étape | Question pédagogique | Déclinaison de l'exemple | Ce qu'il faut faire observer |
 |---|---|---|---|
-| Situation initiale | Que demande-t-on au modèle ? | Panoramix pose une question courte ; notre prompt reformule la tâche en instruction explicite. | Distinguer contexte culturel, préfixe du monologue et texte à compléter. |
-| Texte brut | Quel est le texte fourni ? | Afficher le préfixe canonique exact, ponctuation et accents compris. | Le modèle ne reçoit pas directement des mots comme unités sémantiques ; il reçoit une représentation tokenisée. |
+| Situation initiale | Que demande-t-on au modèle ? | Panoramix pose une question courte ; notre prompt reformule la tâche en instruction explicite. | Distinguer le préfixe déjà fourni (question de Panoramix) des tokens de continuation (réponse d'Otis). |
+| Texte brut | Quel est le texte fourni ? | Afficher la question de Panoramix comme préfixe, puis la réponse d'Otis comme continuation séparée. | Le modèle ne reçoit pas directement des mots comme unités sémantiques ; il reçoit une représentation tokenisée. |
 | Tokenisation | Comment le texte est-il découpé ? | Faire encoder le prompt avec le tokenizer réellement utilisé dans la page ou le code. | Les frontières de tokens ne coïncident pas nécessairement avec les mots ; elles varient selon le tokenizer. |
 | Vocabulaire et IDs | Comment les morceaux sont-ils identifiés ? | Montrer les tokens et leurs IDs obtenus à l'exécution. | Un ID est une adresse de ligne dans la table de vocabulaire/embedding du tokenizer concerné ; ce n'est pas une coordonnée vectorielle. |
 | Embeddings | Comment les IDs deviennent-ils des vecteurs ? | Sélectionner les lignes de la matrice d'embedding correspondant aux IDs. | Même ID = même vecteur initial dans un checkpoint donné ; les lignes ne sont pas des définitions lexicales. |
@@ -85,8 +87,8 @@ Les pages ci-dessous sont les destinations canoniques identifiées dans le parco
 | Page FR | Page EN | Usage précis du fil rouge | Garde-fou / limite |
 |---|---|---|---|
 | `fr/llm-overview.qmd` | `en/llm-overview.qmd` | Accroche : une question courte et une continuation longue illustrent une tâche de modèle de langage. | Ne pas confondre le personnage, un assistant conversationnel et un LLM. |
-| `fr/generation.qmd` | `en/generation.qmd` | Introduire le cycle autoregressif avec le prompt du scribe et plusieurs continuations possibles. | Ne pas faire croire qu'un modèle choisit toute la tirade en un seul bloc. |
-| `fr/text-data.qmd` | `en/text-data.qmd` | Afficher le préfixe « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... » comme texte brut avant tokenisation. | Conserver ponctuation, espaces et accents ; distinguer prompt et cible. |
+| `fr/generation.qmd` | `en/generation.qmd` | Introduire le cycle autoregressif avec le préfixe du scribe et plusieurs continuations possibles. | Ne pas faire croire qu'un modèle choisit toute la tirade en un seul bloc. |
+| `fr/text-data.qmd` | `en/text-data.qmd` | Afficher le préfixe « C'est une bonne situation, ça, scribe ? » comme préfixe brut avant tokenisation, puis distinguer la continuation. | Conserver ponctuation, espaces et accents ; distinguer prompt et cible. |
 | `fr/tokenization-strategies.qmd` | `en/tokenization-strategies.qmd` | Comparer la segmentation effective du prompt avec deux tokenizers si les outils sont disponibles. | Les tokens ne sont pas forcément des mots ; ne pas figer une segmentation universelle. |
 | `fr/embedding-space.qmd` | `en/embedding-space.qmd` | Relier chaque ID obtenu à une ligne de la matrice d'embedding. | Employer « adresse de ligne » pour l'index de la table ; la coordonnée vectorielle est une autre notion. |
 | `fr/positional-encoding.qmd` | `en/positional-encoding.qmd` | Montrer que l'ordre des mots du prompt compte, même si les IDs de tokens sont identiques. | Décrire la méthode positionnelle effectivement étudiée, sans généraliser à toutes les architectures. |
@@ -139,6 +141,18 @@ Le Build path est une voie distincte du parcours Understand. Le même exemple se
 8. **Éviter la personnification trompeuse :** Otis est un personnage de fiction ; le modèle n'a ni souvenirs, ni rencontres, ni goût du travail bien fait. Ces notions appartiennent au récit humain, pas au mécanisme computationnel.
 9. **Provenance :** conserver le lien IMDb comme identification de la scène et ajouter des sources primaires pour toute affirmation sur tokenizers, architectures, entraînement ou évaluation.
 
+## 5 bis. Équivalent anglophone — Monty Python
+
+Pour les pages anglaises, utiliser comme parallèle culturel la scène « What have the Romans ever done for us? » de *Monty Python's Life of Brian* (1979).
+
+- **Prefix / prompt :** “What have the Romans ever done for us?”
+- **Continuation illustrée dans la scène :** les autres membres du groupe répondent successivement par des exemples tels que “Aqueducts”, “sanitation”, “roads” et “irrigation”.
+- **Pourquoi c'est un bon parallèle :** une question initiale contraint le champ des réponses ; les éléments suivants enrichissent progressivement la liste et modifient le contexte disponible pour la suite.
+
+**Précaution pédagogique importante :** dans le film, les éléments sont prononcés par plusieurs personnages dans un dialogue monté. Ce n'est donc pas littéralement une génération autoregressive par un seul locuteur ou un modèle. La scène fournit une analogie mémorable du couple contexte/continuation ; pour les démonstrations de génération token par token, utiliser une séquence textuelle unique et contrôlée, ou la continuation jouet ci-dessus. La phrase anglaise est une adaptation de travail du rôle du prompt, pas une traduction du dialogue d'Astérix.
+
+Source de référence : [Monty Python — *Life of Brian* (1979), citation et contexte](https://fr.wikiquote.org/wiki/Monty_Python_:_La_Vie_de_Brian).
+
 ## 6. Procédure de remplacement ou de réorganisation
 
 Pour changer de fil rouge sans perdre la cohérence du parcours :
@@ -153,7 +167,7 @@ Pour changer de fil rouge sans perdre la cohérence du parcours :
 
 ## 7. Critères d'acceptation pour les intégrations futures
 
-- Le prompt canonique est identique partout où l'on compare des résultats.
+- Le préfixe canonique est identique partout où l'on compare des résultats.
 - La continuation jouet est identifiée comme texte pédagogique original, jamais comme sortie de modèle.
 - Les pages FR/EN sont alignées sur le même objectif et le même niveau de détail.
 - Les identifiants de tokens proviennent du tokenizer montré ; les « adresses de ligne » restent distinctes des coordonnées des vecteurs.
