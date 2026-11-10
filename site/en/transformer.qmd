@@ -29,21 +29,7 @@ A **GPT** is a language model built around a **decoder-only Transformer**. The T
 This page first shows what that architecture looks like, then follows a forward pass through its blocks to the logits. It stops at the network output: converting logits into probabilities and selecting the next token belong to decoding, not to the Transformer's internal computation.
 :::
 
-::: {.callout-tip title="The one-minute mental model"}
-- **Input:** token IDs select embeddings; the architecture introduces positional information according to its mechanism.
-- **Transformer block:** self-attention exchanges information across accessible positions; the MLP transforms each position independently. Residual connections and normalization structure the flow between these sublayers.
-- **Repetition:** stacked blocks progressively transform the states; Q/K/V are projections inside self-attention, not a stage after the final contextualized representations.
-- **Output:** the output head produces logits. Softmax, token selection, and feedback into the context are distinct operations covered by the probability and generation lessons.
-
-**Check yourself:** can you trace one forward pass from token IDs to logits and distinguish the network's internal computation from the generation loop?
-:::
-
-::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
-You will be able to:
-- trace the computation from an input token sequence to the logits, identifying embeddings and positional information;
-- explain the distinct roles of self-attention and the MLP in a Transformer block;
-- distinguish contextualized representations, logits, and the selected token;
-- distinguish depth, width, number of heads, and internal MLP dimensions.
+The diagram below offers two levels of view: the complete GPT, to locate the data flow, and an enlarged block, to understand the repeated operations. We will then follow this flow from the network input to the logits, without retelling tokenization or the generation loop.
 :::
 
 ## The Transformer: the network at the heart of a GPT
