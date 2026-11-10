@@ -1966,6 +1966,204 @@ span.math.inline, .math.inline {
 }
 
 
+/* Meta-flow: page-local conceptual maps. Keep the linear stepper compact,
+   but allow richer topologies where the concept is a branch or comparison. */
+.pipeline-stepper {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+p:has(> .pipeline-stepper),
+p:has(.pipeline-stepper) {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.pipeline-stepper .step-item {
+  min-width: 0;
+  white-space: normal;
+}
+
+.meta-flow--branch {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: stretch;
+  white-space: normal;
+  overflow: visible;
+}
+
+.meta-flow__source,
+.meta-flow__result {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .55rem;
+  min-width: 0;
+  padding: .45rem .6rem;
+  border: 1px solid #CBD5E1;
+  border-radius: .45rem;
+  background: #FFFFFF;
+  color: #334155;
+  text-align: center;
+}
+
+.meta-flow__branches {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .55rem;
+  min-width: 0;
+}
+
+.meta-flow__branch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .25rem;
+  min-width: 0;
+  padding: .55rem .45rem;
+  border: 1px solid #CBD5E1;
+  border-radius: .45rem;
+  background: #FFFFFF;
+  text-align: center;
+}
+
+.meta-flow__branch strong,
+.meta-flow__source strong,
+.meta-flow__result strong {
+  color: #14532D;
+}
+
+.meta-flow__relation {
+  color: #64748B;
+  font-size: .78rem;
+  font-weight: 650;
+  text-align: center;
+}
+
+.meta-flow__branch--active {
+  border-color: #166534;
+  background: #F0FDF4;
+  box-shadow: inset 0 0 0 1px #166534;
+}
+
+.meta-flow__branch--active strong {
+  color: #14532D;
+}
+
+.meta-flow__comparison {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .6rem;
+  min-width: 0;
+}
+
+.meta-flow__comparison-item {
+  min-width: 0;
+  padding: .6rem;
+  border: 1px solid #CBD5E1;
+  border-radius: .45rem;
+  background: #FFFFFF;
+}
+
+.meta-flow__comparison-item strong {
+  display: block;
+  margin-bottom: .2rem;
+  color: #14532D;
+}
+
+.meta-flow__comparison-item small {
+  display: block;
+  color: #64748B;
+  line-height: 1.4;
+}
+
+.meta-flow__loop {
+  color: #14532D;
+  font-size: .8rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .pipeline-stepper {
+    gap: .2rem;
+    padding: .5rem;
+    font-size: .76rem;
+  }
+
+  .pipeline-stepper .step-item {
+    padding: .2rem .35rem;
+  }
+
+  .meta-flow__branches {
+    grid-template-columns: 1fr;
+  }
+
+  .meta-flow__comparison {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  /* On narrow screens, turn linear flows into a readable vertical sequence.
+     This avoids clipped labels and makes the direction unambiguous. */
+  .pipeline-stepper:not(.meta-flow--branch) {
+    flex-direction: column;
+    align-items: stretch;
+    overflow: visible;
+    white-space: normal;
+  }
+
+  .pipeline-stepper:not(.meta-flow--branch) .step-item {
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  .pipeline-stepper:not(.meta-flow--branch) .step-arrow {
+    align-self: center;
+    transform: rotate(90deg);
+  }
+
+  p:has(.pipeline-stepper) {
+    overflow: visible;
+  }
+}
+
+@media (max-width: 600px) {
+  .pipeline-stepper:not(.meta-flow--branch) .step-arrow {
+    display: inline-block;
+  }
+}
+
+.pipeline-stepper .step-item,
+.meta-flow__source,
+.meta-flow__result,
+.meta-flow__branch,
+.meta-flow__comparison-item {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.meta-flow__source[href],
+.meta-flow__result[href] {
+  color: inherit;
+  text-decoration: none;
+}
+
+.meta-flow__source[href]:hover,
+.meta-flow__result[href]:hover {
+  border-color: #166534;
+  background: #F0FDF4;
+}
+
+
 /* Homepage orientation: three clear learning entries and one transversal practice route. */
 .learning-entry-grid {
   display: grid;

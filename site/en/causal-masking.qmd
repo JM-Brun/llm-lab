@@ -40,6 +40,17 @@ Causal masking enforces an information rule: **the output at position $i$ must n
 **Go deeper:** study API-specific boolean-mask conventions, then the invariance test that detects information leakage.
 :::
 
+<div class="pipeline-stepper" role="navigation" aria-label="Steps for applying the causal mask to attention scores">
+  <a class="step-item" href="scaled-dot-product-attention.qmd">QKᵀ scores</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item active" aria-current="step">Causal mask (j ≤ i)</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">Softmax over allowed positions</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">Aggregate values V</span>
+</div>
+
+
 ## Intuition
 
 When training a model to predict the next token, all positions in a sequence can be computed in parallel. Without a mask, however, a position's representation could use tokens that would not yet be known during generation. The mask makes parallel training compatible with the autoregressive objective.

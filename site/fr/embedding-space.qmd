@@ -50,6 +50,21 @@ Un ID est une **adresse de ligne**, pas une coordonnée sémantique. La matrice 
 :::
 
 
+
+<div class="pipeline-stepper" role="navigation" aria-label="Du token ID à la représentation contextualisée">
+  <a class="step-item" href="text-data.qmd">ID de token</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item active" aria-current="step">Lookup dans E</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">Vecteur initial</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="positional-encoding.qmd">Traitement positionnel selon l’architecture</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="contextualized-representations.qmd">Couches Transformer → états contextualisés</a>
+</div>
+
+
+
 ## D'où viennent les vecteurs ?
 
 Un tokenizer découpe le texte en tokens et associe généralement chaque token à un identifiant entier. Une **matrice de plongements** (ou matrice d'embeddings) $E\in\mathbb{R}^{V\times d}$ contient un vecteur par identifiant : $V$ est la taille du vocabulaire et $d$ la dimension du plongement. Pour le token d'identifiant $i$, son **vecteur de plongement initial** est la ligne $E_i$.
