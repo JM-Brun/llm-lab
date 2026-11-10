@@ -136,12 +136,12 @@ Changing W_V can change V and the resulting aggregated output, but it does not c
 
 Consider one input representation, using the row-vector convention:
 
-\[
+$$
 x_t=\begin{bmatrix}1&2\end{bmatrix},\qquad
 W_Q=\begin{bmatrix}1&0\\0&1\end{bmatrix},\qquad
 W_K=\begin{bmatrix}0&1\\1&0\end{bmatrix},\qquad
 W_V=\begin{bmatrix}1&1\\0&1\end{bmatrix}.
-\]
+$$
 
 1. Calculate $q_t=x_tW_Q$, $k_t=x_tW_K$, and $v_t=x_tW_V$ by hand.
 2. Replace only $W_V$ with $W'_V=\begin{bmatrix}2&0\\0&1\end{bmatrix}$. Calculate $v'_t$.
@@ -153,17 +153,17 @@ W_V=\begin{bmatrix}1&1\\0&1\end{bmatrix}.
 
 The matrix products are:
 
-\[
+$$
 q_t=x_tW_Q=\begin{bmatrix}1&2\end{bmatrix},\qquad
 k_t=x_tW_K=\begin{bmatrix}2&1\end{bmatrix},\qquad
 v_t=x_tW_V=\begin{bmatrix}1&3\end{bmatrix}.
-\]
+$$
 
 With the new value projection:
 
-\[
+$$
 v'_t=x_tW'_V=\begin{bmatrix}2&2\end{bmatrix}.
-\]
+$$
 
 Only V changes directly. Q and K remain identical, so the scores and weights computed from Q and K remain identical too. However, the weighted sum operates on the V vectors: changing those vectors may therefore change the aggregated content. This does not mean the output must change in every case, since some variations may cancel.
 
@@ -246,12 +246,12 @@ With parameters fixed, changing $X_D$ directly affects Q; changing $X_E$ directl
 <a id="ca-a-prefix-invariance"></a>
 ### Exercise — Causal masking and prefix invariance {#ex-attention-causal-prefix-invariance}
 
-Consider four input tokens \(x_0,x_1,x_2,x_3\). At query position \(i\), causal self-attention allows only keys at positions \(j\leq i\).
+Consider four input tokens $x_0,x_1,x_2,x_3$. At query position $i$, causal self-attention allows only keys at positions $j\leq i$.
 
-1. Complete the matrix \(A\) of **allowed** positions, defined by \(A_{ij}=1\) when \(j\leq i\), and \(A_{ij}=0\) otherwise.
-2. Derive the matrix \(B\) of **blocked** positions. What relation connects \(A\) and \(B\)?
-3. With targets shifted by one token, position \(i\) predicts \(x_{i+1}\). Why must the diagonal of \(A\) be allowed without revealing the target?
-4. Append \(x_4\) to the sequence. Which outputs at positions \(0,1,2,3\) must remain invariant? Is the output at position 4 subject to the same constraint?
+1. Complete the matrix $A$ of **allowed** positions, defined by $A_{ij}=1$ when $j\leq i$, and $A_{ij}=0$ otherwise.
+2. Derive the matrix $B$ of **blocked** positions. What relation connects $A$ and $B$?
+3. With targets shifted by one token, position $i$ predicts $x_{i+1}$. Why must the diagonal of $A$ be allowed without revealing the target?
+4. Append $x_4$ to the sequence. Which outputs at positions $0,1,2,3$ must remain invariant? Is the output at position 4 subject to the same constraint?
 5. Distinguish the roles of a causal mask, a padding mask, a loss/target mask, and a document-boundary mask.
 
 <details>
@@ -259,7 +259,7 @@ Consider four input tokens \(x_0,x_1,x_2,x_3\). At query position \(i\), causal 
 
 The allowed-position matrix is lower triangular:
 
-\[
+$$
 A=
 \begin{pmatrix}
 1&0&0&0\\
@@ -267,11 +267,11 @@ A=
 1&1&1&0\\
 1&1&1&1
 \end{pmatrix}.
-\]
+$$
 
 The blocked-position matrix is its complement:
 
-\[
+$$
 B=
 \begin{pmatrix}
 0&1&1&1\\
@@ -280,11 +280,11 @@ B=
 0&0&0&0
 \end{pmatrix},
 \qquad B_{ij}=1-A_{ij}.
-\]
+$$
 
-The diagonal is allowed because the input at position \(i\) already contains \(x_i\), and the model predicts the next token \(x_{i+1}\). The input-target shift is essential: the model does not receive \(x_{i+1}\) as input at that position. Without this shift, allowing the diagonal could expose the target.
+The diagonal is allowed because the input at position $i$ already contains $x_i$, and the model predicts the next token $x_{i+1}$. The input-target shift is essential: the model does not receive $x_{i+1}$ as input at that position. Without this shift, allowing the diagonal could expose the target.
 
-After appending \(x_4\), outputs at positions 0–3 must remain unchanged in causal self-attention, with fixed parameters and the same prefix inputs/positions. The future token's key and value are blocked for those queries. The new position 4 may attend to positions 0–4; its output is not required to match the output at position 3.
+After appending $x_4$, outputs at positions 0–3 must remain unchanged in causal self-attention, with fixed parameters and the same prefix inputs/positions. The future token's key and value are blocked for those queries. The new position 4 may attend to positions 0–4; its output is not required to match the output at position 3.
 
 The masks are not interchangeable:
 
