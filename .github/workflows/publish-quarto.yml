@@ -27,8 +27,8 @@ jobs:
         id: quarto_cache
         uses: actions/cache@v4
         with:
-          path: ${{ runner.temp }}/quarto-${{ env.QUARTO_VERSION }}-linux-amd64.tar.gz
-          key: quarto-tarball-${{ runner.os }}-${{ env.QUARTO_VERSION }}
+          path: ${{ runner.temp }}/quarto-1.11.9-linux-amd64.tar.gz
+          key: quarto-tarball-${{ runner.os }}-1.11.9
 
       - name: Set up Quarto
         env:
