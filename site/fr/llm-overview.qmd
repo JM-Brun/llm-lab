@@ -38,6 +38,17 @@ C'est le principe d'un **modèle de langage** : attribuer des probabilités aux 
 **Question de contrôle :** pouvez-vous dire ce que désignent LLM, GPT et Transformer, puis séparer l'architecture (le calcul), l'apprentissage (comment les paramètres sont obtenus) et l'utilisation (ce que l'on fait du modèle à paramètres fixés) ?
 :::
 
+<div class="pipeline-stepper" role="navigation" aria-label="Étapes de compréhension du système">
+  <span class="step-item active" aria-current="step">1. Question</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="transformer-architectures.qmd">2. Architecture</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="generation.qmd">3. Paramètres</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="generation.qmd">4. Usages</a>
+</div>
+
+
 ## 1. LLM, GPT et Transformer : trois notions différentes
 
 Un **modèle de langage** attribue une probabilité ou un score à des séquences de tokens en fonction d'un contexte. Dans un modèle autorégressif, ce calcul est répété token après token : le modèle n'énumère pas toutes les continuations complètes possibles. Un **GPT** (*Generative Pre-trained Transformer*) est une famille de modèles pré-entraînés fondés sur l'architecture Transformer. Les GPT classiques sont des Transformers **décodeur seul**, pré-entraînés à prédire le prochain token.
