@@ -48,16 +48,14 @@ Deux phrases peuvent contenir le même token sans lui donner le même rôle : *b
 **Question de contrôle :** comment deux occurrences peuvent-elles partager le même vecteur initial tout en ayant des états cachés différents ?
 :::
 
-<div class="pipeline-stepper" role="navigation" aria-label="Étapes de la contextualisation">
-  <a class="step-item" href="text-data.qmd">1. IDs</a>
+<div class="pipeline-stepper" role="navigation" aria-label="Construction des représentations contextualisées">
+  <a class="step-item" href="embedding-space.qmd">Vecteurs d’embedding initiaux</a>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="embedding-space.qmd">2. Embeddings</a>
+  <a class="step-item" href="positional-encoding.qmd">Information positionnelle (ajout absolu ou RoPE dans Q/K)</a>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="positional-encoding.qmd">3. Position</a>
+  <a class="step-item" href="transformer.qmd">Couches Transformer répétées (attention, MLP, résidus et normalisation)</a>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="transformer.qmd">4. Couches Transformer</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active" aria-current="step">5. États contextualisés</span>
+  <span class="step-item active" aria-current="step">États contextualisés</span>
 </div>
 
 
