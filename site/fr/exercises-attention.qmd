@@ -31,7 +31,8 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-atten
 **Périmètre actuel :** CA-A introduit le masque causal, le décalage des cibles et l'invariance de préfixe à partir d'une matrice et des tests existants. Trois exercices formatifs progressifs, aux identifiants stables AT-A, AT-B et AT-C partagés avec la version anglaise, couvrent séparément le calcul d'une attention multi-têtes, la trace des formes, puis le diagnostic d'affirmations et la prédiction d'interventions. Les variantes spécifiques au masquage multi-têtes et les invariants avancés restent à approfondir. Ordre conseillé : CA-A pour le masque causal, puis AT-A, AT-B et AT-C pour la progression multi-têtes.
 
 <a id="at-0-scores-to-output"></a>
-### Exercice — des scores Q/K à la sortie d'attention {#ex-attention-scores-to-output}
+<a id="ex-attention-scores-to-output"></a>
+### Exercice — des scores Q/K à la sortie d'attention
 
 On considère une requête et deux clés/valeurs :
 
@@ -56,7 +57,8 @@ Q et K déterminent les poids ; V détermine le contenu agrégé. Les poids sont
 </details>
 
 <a id="calculer-une-agregation-a-la-main"></a>
-### Calculer une agrégation à la main {#ex-attention-manual-aggregation}
+<a id="ex-attention-manual-aggregation"></a>
+### Calculer une agrégation à la main
 
 Une position reçoit les poids d’attention $(0{,}75,\,0{,}25)$ et les vecteurs de valeur sont $v_1=(2,0)$ et $v_2=(0,4)$. Calculez la sortie. Si l’on échange $v_1$ et $v_2$ sans changer les poids, la sortie reste-t-elle identique ?
 
@@ -68,7 +70,8 @@ La sortie est la somme pondérée : $0{,}75(2,0)+0{,}25(0,4)=(1{,}5;1)$. Après 
 </details>
 
 <a id="exercice-distinguer-melange-pondere-et-selection"></a>
-### Exercice — distinguer mélange pondéré et sélection {#ex-attention-weighted-mixture-vs-selection}
+<a id="ex-attention-weighted-mixture-vs-selection"></a>
+### Exercice — distinguer mélange pondéré et sélection
 
 Après le softmax d'une ligne d'attention, les poids valent $(0{,}95,\,0{,}05)$ sur deux positions, avec $v_1=(10,0)$ et $v_2=(0,20)$.
 
@@ -86,7 +89,8 @@ Après le softmax d'une ligne d'attention, les poids valent $(0{,}95,\,0{,}05)$ 
 </details>
 
 <a id="exercice-projeter-une-sequence-en-q-k-et-v"></a>
-### Exercice — projeter une séquence en Q, K et V {#ex-attention-project-qkv}
+<a id="ex-attention-project-qkv"></a>
+### Exercice — projeter une séquence en Q, K et V
 
 On considère trois positions décrites chacune par un vecteur de dimension 4. Les matrices W_Q et W_K projettent vers une dimension 2, tandis que W_V projette vers une dimension 3.
 
@@ -132,7 +136,8 @@ Modifier W_V peut changer V et la sortie agrégée, mais ne change pas les score
 
 
 <a id="exercice-calculer-q-k-et-v-puis-isoler-l-effet-de-v"></a>
-### Exercice — calculer Q, K et V puis isoler l'effet de V {#ex-attention-calculate-qkv-isolate-values}
+<a id="ex-attention-calculate-qkv-isolate-values"></a>
+### Exercice — calculer Q, K et V puis isoler l'effet de V
 
 On considère une seule représentation d'entrée, avec la convention des vecteurs-lignes :
 
@@ -172,7 +177,8 @@ Les matrices sont volontairement petites et fictives pour rendre les multiplicat
 </details>
 
 <a id="exercice-prevoir-l-effet-d-une-modification-de-projection"></a>
-### Exercice — prévoir l'effet d'une modification de projection {#ex-attention-predict-projection-change}
+<a id="ex-attention-predict-projection-change"></a>
+### Exercice — prévoir l'effet d'une modification de projection
 
 On considère une même entrée $X$ et une attention standard, sans biais. Pour chaque intervention, indiquez si $Q$, $K$, $V$, les scores, les poids et la sortie agrégée peuvent changer. Les autres paramètres restent fixes.
 
@@ -196,7 +202,8 @@ Justifiez chaque ligne à partir des dépendances fonctionnelles.
 </details>
 
 <a id="exercice-relier-les-projections-a-l-apprentissage"></a>
-### Exercice — relier les projections à l'apprentissage {#ex-attention-connect-projections-learning}
+<a id="ex-attention-connect-projections-learning"></a>
+### Exercice — relier les projections à l'apprentissage
 
 Dans le mécanisme standard, les matrices $W_Q$, $W_K$ et $W_V$ sont entraînées à partir de la perte finale du modèle. Répondez sans supposer qu'une cible Q, K ou V est fournie directement.
 
@@ -220,7 +227,8 @@ De même, $\partial\mathcal L/\partial W_K=X^\top(\partial\mathcal L/\partial K)
 </details>
 
 <a id="exercice-transferer-q-k-v-a-l-attention-croisee"></a>
-### Exercice — transférer Q/K/V à l'attention croisée {#ex-attention-cross-attention-transfer}
+<a id="ex-attention-cross-attention-transfer"></a>
+### Exercice — transférer Q/K/V à l'attention croisée
 
 Un décodeur consulte les représentations produites par un encodeur. On note $X_D$ les états du décodeur et $X_E$ ceux de l'encodeur.
 
@@ -244,7 +252,8 @@ $$
 </details>
 
 <a id="ca-a-prefix-invariance"></a>
-### Exercice — Masque causal et invariance de préfixe {#ex-attention-causal-prefix-invariance}
+<a id="ex-attention-causal-prefix-invariance"></a>
+### Exercice — Masque causal et invariance de préfixe
 
 On considère quatre tokens d'entrée $x_0,x_1,x_2,x_3$. À la position de requête $i$, l'auto-attention causale n'autorise que les clés des positions $j\leq i$.
 
@@ -339,7 +348,8 @@ assert not np.allclose(reference[3], altered[3])
 </details>
 
 <a id="exercice-at-a-calculer-une-attention-multi-tetes-a-la-main"></a>
-### Exercice — Calculer une attention multi-têtes à la main {#ex-attention-multihead-manual-calculation}
+<a id="ex-attention-multihead-manual-calculation"></a>
+### Exercice — Calculer une attention multi-têtes à la main
 
 **Préparation :** les quatre étapes du calcul d'une tête dans [attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd) ; le découpage en têtes et le recollement dans la [visite guidée du bloc de référence](transformer-block-walkthrough.qmd). L'exercice porte sur une seule position requête d'une séquence de $T=2$ positions, avec $d=4$ et $H=2$ têtes ($\text{head\_dim}=2$), sans masque. Les scores ci-dessous sont déjà mis à l'échelle.
 
@@ -386,7 +396,8 @@ La projection de sortie est posée $w_o=I_4$ pour cet exercice.
 </details>
 
 <a id="exercice-at-b-tracer-les-formes-d-une-attention-multi-tetes"></a>
-### Exercice — Tracer les formes d'une attention multi-têtes {#ex-attention-multihead-shape-trace}
+<a id="ex-attention-multihead-shape-trace"></a>
+### Exercice — Tracer les formes d'une attention multi-têtes
 
 **Préparation :** la trace de formes de la collection Transformer (TF-A) ou la [visite guidée du bloc](transformer-block-walkthrough.qmd) pour le découpage en têtes ; [attention à produit scalaire](scaled-dot-product-attention.qmd) pour les formes d'une tête ($T\times T$ puis $T\times d_v$).
 
@@ -438,7 +449,8 @@ $Q$, $K$ et $V$ ont la forme $(2,3,6)$. La tranche de la tête 0 : $(2,3,3)$. Le
 </details>
 
 <a id="exercice-at-c-diagnostiquer-des-affirmations-multi-tetes-et-predire-des-interventions"></a>
-### Exercice — Diagnostiquer des affirmations multi-têtes et prédire des interventions {#ex-attention-multihead-diagnosis}
+<a id="ex-attention-multihead-diagnosis"></a>
+### Exercice — Diagnostiquer des affirmations multi-têtes et prédire des interventions
 
 **Préparation :** [attention à produit scalaire](scaled-dot-product-attention.qmd) et [projections Q/K/V](queries-keys-values.qmd) après AT-A et AT-B ; la [visite guidée du bloc](transformer-block-walkthrough.qmd) pour la paramétrisation de référence. « Le bloc de référence » désigne le bloc pré-LN de la visite guidée.
 
