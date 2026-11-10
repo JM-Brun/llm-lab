@@ -28,7 +28,8 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-trans
 
 **Current scope:** three progressive formative exercises, with stable IDs TF-A, TF-B and TF-C shared with the French version, cover shape tracing and a by-hand normalization computation in the reference pre-LN block, counting that block's parameters, then claim diagnosis and controlled-intervention prediction. Exercises on architecture variants (post-LN, RMSNorm, MQA/GQA, windowed attention) remain to be developed. Suggested order: TF-A, then TF-B, then TF-C.
 
-### Exercise TF-A — Trace a pre-LN block, from shapes to normalization
+<a id="exercise-tf-a-trace-a-pre-ln-block-from-shapes-to-normalization"></a>
+### Exercise — Trace a pre-LN block, from shapes to normalization {#ex-transformer-preln-block-trace}
 
 **Preparation:** the [Transformer overview](transformer.qmd) for the roles of attention and the MLP; the [reference block walkthrough](transformer-block-walkthrough.qmd) for the pre-LN order and head slicing. The exercise progresses in three stages: normalize by hand, trace the attention branch, trace the MLP branch.
 
@@ -129,7 +130,8 @@ $(1,3,4)$; $(1,3,8)$; $(1,3,8)$; $(1,3,4)$; $(1,3,4)$. The MLP temporarily widen
 
 </details>
 
-### Exercise TF-B — Count the parameters of the reference block
+<a id="exercise-tf-b-count-the-parameters-of-the-reference-block"></a>
+### Exercise — Count the parameters of the reference block {#ex-transformer-parameter-count}
 
 **Preparation:** the initialization section of the [block walkthrough](transformer-block-walkthrough.qmd). The reference block has $d=16$, $H=4$, an MLP intermediate dimension of $64$, biased projections, and two normalizations (each with $\gamma$ and $\beta$).
 
@@ -170,7 +172,8 @@ In the GPT-2 variant, only $w_o$ and `fc2` receive the reduced standard deviatio
 
 </details>
 
-### Exercise TF-C — Diagnose claims and predict interventions
+<a id="exercise-tf-c-diagnose-claims-and-predict-interventions"></a>
+### Exercise — Diagnose claims and predict interventions {#ex-transformer-claim-diagnosis-interventions}
 
 **Preparation:** the [Transformer overview](transformer.qmd), especially its limits and misconceptions, after TF-A and TF-B; [causal masking](causal-masking.qmd) for Stage 2. "The reference block" means the pre-LN block of the walkthrough.
 
