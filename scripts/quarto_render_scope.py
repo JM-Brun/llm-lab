@@ -33,6 +33,18 @@ def _render_targets(config: str) -> set[str]:
     }
 
 
+def _is_static_image_asset(path: str) -> bool:
+    """Return whether a path is a supported image under the copied asset directory."""
+    relative_path = PurePosixPath(path.removeprefix("site/"))
+    return (
+        path.startswith("site/images/")
+        and len(relative_path.parts) > 1
+        and not relative_path.is_absolute()
+        and ".." not in relative_path.parts
+        and relative_path.suffix.lower() in {".svg", ".png", ".jpg", ".jpeg", ".webp", ".gif"}
+    )
+
+
 def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str, Any]:
     """Choose skip, incremental, or full rendering conservatively."""
     paths = [str(item.get("filename", "")) for item in files]
@@ -42,8 +54,13 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
         or (path.startswith("docs/requirements-") and path.endswith(".txt"))
         for path in paths
     )
+    # Static image bytes do not change page structure, styles, or interactions.
+    # Link/output checks still run for site changes, but the generic browser matrix
+    # has no image-specific assertions and is not useful for image-only updates.
     browser_relevant = any(
-        path.startswith("site/") or path == "scripts/site-browser-review.mjs" for path in paths
+        (path.startswith("site/") and not _is_static_image_asset(path))
+        or path == "scripts/site-browser-review.mjs"
+        for path in paths
     )
 
     render_inputs = [
@@ -69,15 +86,7 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
             safe = False
             break
 
-        asset_path = PurePosixPath(path.removeprefix("site/"))
-        if (
-            path.startswith("site/images/")
-            and asset_path.parts[0] == "images"
-            and len(asset_path.parts) > 1
-            and not asset_path.is_absolute()
-            and ".." not in asset_path.parts
-            and asset_path.suffix.lower() in {".svg", ".png", ".jpg", ".jpeg", ".webp", ".gif"}
-        ):
+        if _is_static_image_asset(path):
             assets.append(path)
             continue
 
