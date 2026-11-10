@@ -19,6 +19,47 @@ Use this deletion test during drafting and review:
 
 Apply the test especially to chapter leads, introductory paragraphs, callouts, section transitions, recaps, conclusions, and “next step” blocks. This is not a demand for terse prose: retain explanations, examples, and caveats that carry knowledge, even when they take space. The goal is higher information density, not shorter pages. Keep French and English versions equivalent in substance and apply the same standard to both.
 
+## Preserve information during refactors
+
+A readability refactor may change the order, wording, level of detail, or location of material. It must not silently reduce the knowledge available to the reader. **Shorter is not automatically clearer, and moving a detail is not the same as preserving it if readers can no longer find it.**
+
+Before changing an existing page or group of pages, inventory the material that carries knowledge:
+
+- scientific claims, definitions, mechanisms, and distinctions;
+- assumptions, scope conditions, limitations, failure modes, and counterexamples;
+- worked examples, calculations, diagrams, and interpretations;
+- references and attribution that support claims or enable further study;
+- exercises, self-checks, answers, practical experiments, and implementation links;
+- useful navigation context and links to canonical explanations.
+
+For each meaningful item, choose and verify one disposition:
+
+| Disposition | What to do |
+|---|---|
+| **Keep** | Retain it in the same place when it supports the current learning objective. |
+| **Rephrase** | Improve clarity while preserving the claim, conditions, nuance, and level of certainty. |
+| **Merge** | Combine genuinely overlapping explanations; ensure the merged version retains every distinct qualification or implication. |
+| **Move** | Place advanced but useful material in the appropriate deep-dive, practice, implementation, or reference resource. Add a contextual link from the point where the reader needs it. |
+| **Split** | Separate a dense explanation into progressive levels while keeping the dependency and links explicit. |
+| **Remove** | Remove only when the item is demonstrably incorrect, obsolete, unsupported, redundant without unique value, or outside the project's scope. Record the reason in the change description or review notes. |
+
+A lightweight traceability table is sufficient; do not create a bureaucratic inventory for every typo or purely cosmetic edit:
+
+| Before | Decision | After / destination | Verification |
+|---|---|---|---|
+| Definition or claim | Keep / rephrase / merge | Section and page | Meaning and conditions retained |
+| Advanced detail or limitation | Move | Deep dive or implementation page | Link works and detail remains complete |
+| Exercise or self-check | Keep / move / merge | Exercise page or end-of-page check | Prompt, answer, and intended concept remain available |
+| Reference or figure | Keep / replace | Citation or asset | Attribution and supporting claim remain valid |
+| Removed item | Remove with reason | Rationale | Error, obsolescence, duplication, or scope issue demonstrated |
+
+**Do not move a condition that changes the meaning of a claim behind an optional disclosure or onto a distant page.** The core page must retain the qualification needed to read its main claim correctly. Advanced derivations and secondary cases may be moved, but they must remain discoverable at the point of use.
+
+Apply the same audit to both languages. French and English versions must preserve equivalent claims, qualifications, examples, references, exercises, and destinations; literal sentence-by-sentence translation is not required.
+
+For a multi-page refactor, check the learning graph as well as each page: no prerequisite, exercise, figure, reference, or important limitation should become orphaned. Compare the old and new pages, inspect rendered links, and report intentional removals explicitly. A green build verifies rendering, not information preservation.
+
+
 ## 1. The learning model: a graph with progressive depth
 
 The site has an overall direction—from the problem an LLM solves to its mechanisms, mathematical details, implementations, and evidence—but it is **not a single mandatory reading sequence**. Readers arrive with different questions and backgrounds. They must be able to enter at a useful level, understand where they are, and follow only the branches they need.
