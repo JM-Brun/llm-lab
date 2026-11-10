@@ -110,7 +110,7 @@ Le [lookup dans l'espace des plongements](embedding-space.qmd) associe chaque id
 ::: {.self-check}
 ## Vérifier sa compréhension
 
-Des exercices formatifs mobilisent cette page dans la [collection Transformer](exercises.qmd#transformer).
+Des exercices formatifs mobilisent cette page dans la [collection Transformer](exercises-transformer.qmd#transformer).
 
 1. Deux phrases contiennent les mêmes mots dans un ordre différent. Pourquoi des plongements initiaux seuls ne suffisent-ils pas à les distinguer ?
 

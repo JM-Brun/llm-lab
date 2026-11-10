@@ -29,7 +29,8 @@ The LLM-LAB-PAGE-MAP v1 metadata and controlled type tags remain the repository'
 | concept-bridge | Connect a concept to prerequisites or applications | [Concept](concept-page-template.md), with emphasis on the relevant relationship |
 | deep-dive | Focused technical explanation | [Concept](concept-page-template.md), with the required formal or technical depth |
 | guided-build | Procedural construction and verification | [Guided build](guided-build-page-template.md) |
-| exercise-hub | Sustained practice | [Practice and experiment](practice-page-template.md), exercise-collection prompts |
+| exercise-hub | Catalogue and navigation for multiple practice collections | [Practice and experiment](practice-page-template.md) |
+| exercise-collection | A substantial topic-specific problem set with worked solutions and transfer prompts | [Practice and experiment](practice-page-template.md) |
 | experiment-guide | Reproducible investigation | [Practice and experiment](practice-page-template.md), experiment prompts |
 | glossary | Concise lookup | [Reference](reference-page-template.md) |
 | historical-reference | Chronology and historical context | [Reference](reference-page-template.md) |

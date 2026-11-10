@@ -103,7 +103,7 @@ Après le dernier bloc, la normalisation finale et la tête de sortie produisent
 
 ## Vérifier sa compréhension
 
-Pour prolonger cette vérification par des problèmes progressifs sur les embeddings, les résidus, la normalisation et le MLP, consultez les [exercices consacrés au Transformer](exercises.qmd#transformer).
+Pour prolonger cette vérification par des problèmes progressifs sur les embeddings, les résidus, la normalisation et le MLP, consultez les [exercices consacrés au Transformer](exercises-transformer.qmd#transformer).
 
 Cette vérification porte sur la structure du bloc et le rôle des connexions résiduelles.
 

@@ -33,7 +33,7 @@ Un ID est une **adresse de ligne**, pas une coordonnée sémantique. La matrice 
 
 **Première lecture :** retenez qu'un ID sélectionne une ligne de la table ; il n'est pas lui-même une coordonnée sémantique.
 
-**Pour pratiquer :** le calcul du lookup et la trace reproductible texte → IDs → vecteurs sont regroupés dans la [collection Données textuelles](exercises.qmd#tr-b-lookup). Les propriétés géométriques sont développées dans les pages sur la similarité cosinus et la linéarité.
+**Pour pratiquer :** le calcul du lookup et la trace reproductible texte → IDs → vecteurs sont regroupés dans la [collection Données textuelles](exercises-text-data.qmd#tr-b-lookup). Les propriétés géométriques sont développées dans les pages sur la similarité cosinus et la linéarité.
 :::
 
 
@@ -59,7 +59,7 @@ Cette comparaison est conceptuelle : elle ne signifie pas que les embeddings des
 
 ## Du principe au calcul
 
-Le lookup est une opération simple : chaque ID sélectionne la ligne correspondante dans la table, sans mélanger les positions ni interpréter la valeur numérique de l'ID. Pour vérifier concrètement cette opération, suivre les formes d'un batch et distinguer indice et coordonnée, passez à l'[exercice TR-B](exercises.qmd#tr-b-lookup). La trace de tokenisation et les manipulations de BPE sont également regroupées dans la collection [Données textuelles](exercises.qmd#donnees-textuelles).
+Le lookup est une opération simple : chaque ID sélectionne la ligne correspondante dans la table, sans mélanger les positions ni interpréter la valeur numérique de l'ID. Pour vérifier concrètement cette opération, suivre les formes d'un batch et distinguer indice et coordonnée, passez à l'[exercice TR-B](exercises-text-data.qmd#tr-b-lookup). La trace de tokenisation et les manipulations de BPE sont également regroupées dans la collection [Données textuelles](exercises-text-data.qmd#donnees-textuelles).
 
 ## De l'embedding initial aux représentations contextualisées
 
@@ -80,7 +80,7 @@ Pour approfondir ces questions sans les confondre avec le mécanisme de lookup, 
 ::: {.self-check}
 ## Vérifier sa compréhension
 
-La [collection approfondie sur le Transformer](exercises.qmd#transformer) est prévue ; utilisez les vérifications ci-dessous en attendant.
+La [collection approfondie sur le Transformer](exercises-transformer.qmd#transformer) est prévue ; utilisez les vérifications ci-dessous en attendant.
 
 1. Une matrice contient \(V\) lignes et des vecteurs de dimension \(d\). Combien de paramètres contient-elle, et que sélectionne l'ID \(i\) ?
 

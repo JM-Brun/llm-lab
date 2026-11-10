@@ -93,7 +93,7 @@ The weights are not a universal measure of semantic relevance, and attention is 
 
 The next lesson, [Scaled dot-product attention](scaled-dot-product-attention.qmd), explains how scores become weights and how those weights aggregate V.
 
-To practise the skills associated with this lesson, the [Attention exercises](exercises.qmd#attention) cover projection calculations and dimensions, predicting the effects of changing $W_Q$, $W_K$, or $W_V$, connecting projections to backpropagation, and transferring the reasoning to cross-attention and GQA/MQA. Numerical calculations remain in that practice route.
+To practise the skills associated with this lesson, the [Attention exercises](exercises-attention.qmd#attention) cover projection calculations and dimensions, predicting the effects of changing $W_Q$, $W_K$, or $W_V$, connecting projections to backpropagation, and transferring the reasoning to cross-attention and GQA/MQA. Numerical calculations remain in that practice route.
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 By the end of this lesson, you should be able to:
@@ -105,7 +105,7 @@ By the end of this lesson, you should be able to:
 ::: {.self-check}
 ## Check the essential idea
 
-[Extended exercises on Q/K/V and attention](exercises.qmd#attention).
+[Extended exercises on Q/K/V and attention](exercises-attention.qmd#attention).
 
 **Which projections determine attention weights, and which one supplies the aggregated vectors? What happens if V changes while Q and K stay the same?**
 

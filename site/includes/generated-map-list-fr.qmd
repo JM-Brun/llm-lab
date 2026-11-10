@@ -38,6 +38,16 @@
     - [Visite guidée : la génération (`generate.py`)](gpt-generation-walkthrough.html)
   - [Construire un petit GPT](build-path.html)
 - **S'exercer et expérimenter**
+  - Fondations mathématiques
+    - [Exercices — Fondations mathématiques](exercises-foundations.html)
+  - Données textuelles
+    - [Exercices — Données textuelles](exercises-text-data.html)
+  - Attention
+    - [Exercices — Attention](exercises-attention.html)
+  - Transformer
+    - [Exercices — Transformer](exercises-transformer.html)
+  - Génération
+    - [Exercices — Génération](exercises-generation.html)
   - [Catalogue des exercices](exercises.html)
   - [Explorer et comparer des Transformers](transformer-explainer.html)
   - [Évaluer un modèle : du score au protocole expérimental](evaluation-experimentale.html)

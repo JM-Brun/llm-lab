@@ -110,7 +110,7 @@ The [embedding-space lookup](embedding-space.qmd) maps each ID to an initial vec
 ::: {.self-check}
 ## Check your understanding
 
-Formative exercises use this page in the [Transformer collection](exercises.qmd#transformer).
+Formative exercises use this page in the [Transformer collection](exercises-transformer.qmd#transformer).
 
 1. Two sentences contain the same words in a different order. Why are initial embeddings alone not enough to distinguish them?
 

@@ -33,7 +33,7 @@ An ID is a **row address**, not a semantic coordinate. The embedding matrix stor
 
 **First pass:** remember that an ID selects a row in the table; it is not itself a semantic coordinate.
 
-**For practice:** the lookup calculation and reproducible text → IDs → vectors trace are grouped in the [Text data collection](exercises.qmd#tr-b-lookup). Geometric properties are developed in the cosine-similarity and linearity lessons.
+**For practice:** the lookup calculation and reproducible text → IDs → vectors trace are grouped in the [Text data collection](exercises-text-data.qmd#tr-b-lookup). Geometric properties are developed in the cosine-similarity and linearity lessons.
 :::
 
 ## Where do the vectors come from?
@@ -58,7 +58,7 @@ This is a conceptual contrast, not a claim that modern Transformer embeddings ar
 
 ## From the principle to the calculation
 
-Embedding lookup is simple: each ID selects its corresponding row in the table, without mixing positions or interpreting the numerical value of the ID. To work through this operation, trace a batch's shapes, and distinguish an index from a coordinate, use [exercise TR-B](exercises.qmd#tr-b-lookup). Tokenization traces and BPE calculations are also grouped in the [Text data collection](exercises.qmd#text-data).
+Embedding lookup is simple: each ID selects its corresponding row in the table, without mixing positions or interpreting the numerical value of the ID. To work through this operation, trace a batch's shapes, and distinguish an index from a coordinate, use [exercise TR-B](exercises-text-data.qmd#tr-b-lookup). Tokenization traces and BPE calculations are also grouped in the [Text data collection](exercises-text-data.qmd#text-data).
 
 ## From initial embeddings to contextualized representations
 
@@ -79,7 +79,7 @@ For a deeper treatment without conflating geometry with the lookup mechanism, se
 ::: {.self-check}
 ## Check your understanding
 
-The [extended Transformer collection](../en/exercises.qmd#transformer) is planned; use the checks below for now.
+The [extended Transformer collection](exercises-transformer.qmd#transformer) is planned; use the checks below for now.
 
 1. An embedding matrix has \(V\) rows and vectors of dimension \(d\). How many parameters does it contain, and what does ID \(i\) select?
 
