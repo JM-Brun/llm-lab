@@ -61,3 +61,15 @@ The disclosure is not a dumping ground. A link should remain beside the relevant
 3. Reuse the same class names and category order in French and English.
 4. Preserve all public fragment IDs and check incoming links.
 5. Render both language versions and verify the block is closed on initial load.
+
+## Build-path application
+
+The Build path uses the same disclosure, but its editorial boundary needs extra care:
+
+- Keep worked examples, executable code, inline questions, and their answer explanations in the main lesson when they teach or verify the current implementation step.
+- Move only the separate exercise-page link into the **Exercises / Practice** category. Do not move the lesson's own problem statements or inline answer key.
+- Move navigation collections (next/previous stops, related concept pages, source files, and test files) into **Further reading** when they are optional orientation rather than required steps in the explanation.
+- Move curated external references and companion material into **Further reading**; keep a link inline when the current explanation depends on it.
+- In pages with a revision sheet or recap, keep it in the main flow: it consolidates the lesson rather than pointing to another destination.
+
+This distinction is particularly important in implementation walkthroughs: an inline exercise is part of the teaching sequence, while a link to a separate exercise page is supplementary navigation.
