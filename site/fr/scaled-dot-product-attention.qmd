@@ -35,7 +35,7 @@ L'attention à produit scalaire compare les requêtes aux clés pour calculer de
 ::: {.callout-tip title="L'idée à retenir en une minute"}
 L'attention n'est pas une opération unique : elle enchaîne **scores → mise à l'échelle → masque éventuel → softmax → agrégation**. Les scores comparent Q et K ; les poids sont normalisés ligne par ligne ; la sortie est une combinaison des V.
 
-**Première lecture :** suivez les quatre étapes et refaites l'exemple avec une requête et deux clés. Vérifiez séparément la forme de chaque matrice : les scores sont de taille $T\times T$, la sortie de taille $T\times d_v$.
+**Première lecture :** suivez le passage des scores aux poids, puis des poids à la sortie. Gardez ces trois objets distincts ; les calculs numériques et les formes détaillées sont travaillés dans la [collection d'exercices Attention](exercises.qmd#at-0-scores-to-output).
 
 **Pour approfondir :** la dérivation du facteur d'échelle — pourquoi diviser par $\sqrt{d_k}$ et ce que cet argument ne garantit pas — est développée dans [Pourquoi mettre les scores à l'échelle ?](attention-score-scaling.qmd) ; la modification des positions accessibles avant le softmax est le rôle du [masque causal](causal-masking.qmd).
 :::
