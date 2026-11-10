@@ -98,6 +98,14 @@ La page [Stratégies de tokenisation](tokenization-strategies.qmd) du parcours p
 - [Similarité cosinus](cosine-similarity.qmd) — mesure angulaire et limites d'interprétation.
 - [Linéarité des embeddings](linearite-embeddings.qmd) — hypothèses et preuves empiriques associées aux relations linéaires dans les espaces de représentation.
 
+### Repères historiques : des vecteurs statiques aux représentations contextualisées
+
+Les premières représentations neuronales distribuées du texte, puis des méthodes comme Word2Vec, ont appris des vecteurs associés à des mots ou à des unités lexicales. Ces vecteurs dits **statiques** ne changeaient pas selon la phrase. Les modèles contextualisés ont ensuite produit des états différents selon le contexte, tout en conservant une table de plongements initiale pour les IDs d'entrée. Cette transition est un repère historique utile, mais pas une évolution linéaire unique ni le remplacement de toutes les méthodes précédentes.
+
+- [Bengio et al. (2003), *A Neural Probabilistic Language Model*](https://www.jmlr.org/papers/v3/bengio03a.html) — modèle neuronal de langage avec représentations distribuées apprises.
+- [Mikolov et al. (2013), *Efficient Estimation of Word Representations in Vector Space*](https://arxiv.org/abs/1301.3781) — architectures CBOW et Skip-gram associées à Word2Vec.
+- [Peters et al. (2018), *Deep Contextualized Word Representations*](https://arxiv.org/abs/1802.05365) — ELMo et représentations dépendantes du contexte.
+
 Ces pages fournissent des outils d'analyse ; elles ne constituent pas un cours de prérequis à terminer avant de construire un petit GPT.
 
 ## Formalisation probabiliste et chaîne de l’entraînement {#fondements-probabilistes-et-entrainement}
