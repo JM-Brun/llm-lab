@@ -135,8 +135,8 @@ Check the current Deepen domain, page-map IDs, related-page edges, concept assoc
 
 ## 10. Next research pass
 
-- Read the full proof in Appendix A, especially the exact spectral-gap conditions and mismatch bound.
-- Audit Appendices A–C: proof details, numerical checks, full experimental settings, robustness tables and sensitivity analyses.
+- Independently re-derive Appendix A's Ky Fan and Davis–Kahan steps, checking the spectral-gap and nuisance decomposition conditions.
+- Finish the selective Appendix C audit, then inspect the official implementation and run the released numerical checks if dependencies and compute permit.
 - Inspect the scaling law, its fitting range and extrapolation failure modes.
 - Verify the 14× token-count comparison and the pair-free ImageNet-100 protocol.
 - Inspect official code and demo; record commit/revision and run only if the environment permits reproducible evaluation.
@@ -161,3 +161,18 @@ The full HTML of sections 3–5 has now been inspected. Important refinements:
 - Pair-free alignment is a separate experiment using unpaired pools and a post-hoc geometry/optimal-transport method. The 64.4% ImageNet-100 top-5 result is protocol-specific; it should not be described as evidence that all model training required zero paired information.
 
 These details are now represented as separate extraction items, rather than collapsed into a single headline result.
+
+
+## 12. Proof-level clarification added in the third pass
+
+Appendix A makes the theorem's mathematical mechanism more concrete:
+
+- The symmetric positive-pair distribution defines a self-adjoint Markov operator on `L²(p)`. Conjugating it by `D^{1/2}` yields the normalized symmetric kernel `Kπ = D^{-1/2} Π D^{-1/2}`, with the same eigenvalues.
+- Under centered/whitened second-order constraints, the expected pairwise squared-distance objective becomes `2k − 2 Σⱼ ⟨hⱼ, Tπ hⱼ⟩ₚ`. Ky Fan's maximum principle selects the top `k` non-constant eigenfunctions.
+- A strict eigengap `μₖ > μₖ₊₁` makes the selected subspace unique; orthonormal bases of that subspace differ by an orthogonal matrix. This is the source of the rotation ambiguity in this proof.
+- For different positive kernels, Appendix A.3 applies a Davis–Kahan perturbation bound. The mismatch grows with the kernel difference and worsens as the relevant spectral gap shrinks.
+- The nuisance proof formalizes how embedding capacity spent on nuisance directions reduces the scene-explained fraction and imposes a lower bound on cross-modal alignment error.
+- Appendix A.3 clarifies the role of pairs: `k` generic paired points identify a `k`-dimensional orthogonal map, whereas `k−1` may not. Pair-free alignment uses additional finite-world geometry and a separate matching/optimal-transport procedure.
+- Appendix A.1 is careful about objective families: spectral contrastive learning and whitened MSE fit the stated form; VICReg and Barlow Twins do so only in particular hard-constraint limits; SIGReg's rotation invariance is stated in expectation, while uniqueness under its full-distribution constraint remains an assumption.
+
+This is a much better teaching spine for the advanced page than the informal phrase "the models learn the same representation": the learner can follow **positive-pair graph → Markov operator → spectral subspace → eigengap → rotation ambiguity → alignment error**.
