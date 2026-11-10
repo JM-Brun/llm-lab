@@ -87,7 +87,6 @@ items:
     candidate_destinations:
       pages: [fr/contextualized-representations, en/contextualized-representations]
       concepts: []
-    disposition: pending
   - id: balestriero-lecun-platonic-representation-jepas-2026:spectral-embedding
     kind: mechanism
     summary: "With second-order anti-collapse constraints, the JEPA optimum is characterized by the top eigenvectors of the normalized adjacency matrix of the graph induced by positive pairs; a spectral gap makes the relevant embedding unique up to rotation."
@@ -104,7 +103,6 @@ items:
     candidate_destinations:
       pages: [fr/contextualized-representations, en/contextualized-representations]
       concepts: []
-    disposition: pending
   - id: balestriero-lecun-platonic-representation-jepas-2026:kernel-mismatch
     kind: result
     summary: "When modalities induce different positive-pair kernels over world states, their optimal spectral embeddings need not coincide; the paper bounds their post-rotation mismatch using the difference between kernels and the separation of the relevant spectrum."
@@ -121,7 +119,6 @@ items:
     candidate_destinations:
       pages: [fr/contextualized-representations, en/contextualized-representations]
       concepts: []
-    disposition: pending
   - id: balestriero-lecun-platonic-representation-jepas-2026:modality-nuisance
     kind: mechanism
     summary: "The paper models an observation as a function of both world state and modality-specific nuisance, such as caption wording or camera viewpoint. Pairing two corruptions of one observation can retain that nuisance, consuming embedding dimensions that cannot be aligned with another modality; pairing independent observations of a related scene can remove it from the shared signal."
@@ -139,7 +136,6 @@ items:
     candidate_destinations:
       pages: [fr/contextualized-representations, en/contextualized-representations]
       concepts: []
-    disposition: pending
   - id: balestriero-lecun-platonic-representation-jepas-2026:next-token-as-bad-view
     kind: claim
     summary: "The paper reformulates next-token prediction as a JEPA-like objective whose positive pairs are a document prefix and its continuation and whose anti-collapse term is the softmax log-partition. The authors use this to motivate a heuristic account of weaker alignment with vision; this explanation is not a corollary of the rotation theorem."
@@ -158,7 +154,6 @@ items:
     candidate_destinations:
       pages: [fr/contextualized-representations, en/contextualized-representations]
       concepts: [next-token-prediction, training-objective]
-    disposition: pending
   - id: balestriero-lecun-platonic-representation-jepas-2026:captioning-pairs
     kind: limitation
     summary: "The captioning demonstration fits a constrained linear map between frozen independently trained encoders using image–caption pairs; it does not jointly train the encoders or train the text decoder on image inputs, but it is not a completely pair-free demonstration."
@@ -176,7 +171,6 @@ items:
     candidate_destinations:
       pages: [fr/contextualized-representations, en/contextualized-representations]
       concepts: []
-    disposition: pending
 
   - id: balestriero-lecun-platonic-representation-jepas-2026:matched-flickr-experiment
     kind: result
@@ -195,7 +189,6 @@ items:
     candidate_destinations:
       pages: []
       concepts: []
-    disposition: pending
   - id: balestriero-lecun-platonic-representation-jepas-2026:trimming-and-stability
     kind: result
     summary: "Trimming captions into shorter spans is the most consequential tested adjustment to good-view JEPA: full captions reduce retrieval R@1 from .246 to .185. Other tested settings move the mean less, while training stability remains important: gradient clipping prevents most observed collapses."
@@ -213,7 +206,6 @@ items:
     candidate_destinations:
       pages: []
       concepts: []
-    disposition: pending
   - id: balestriero-lecun-platonic-representation-jepas-2026:video-good-views
     kind: result
     summary: "On MSR-VTT, using different frames of one video clip as image-side views and different captions as text-side views improves mutual 10-NN alignment. This provides evidence that the view design can be applied on both modalities when multiple observations of the same scene are available."
@@ -231,7 +223,6 @@ items:
     candidate_destinations:
       pages: []
       concepts: []
-    disposition: pending
   - id: balestriero-lecun-platonic-representation-jepas-2026:sample-token-compute-distinction
     kind: result
     summary: "The headline comparison is 42 times fewer training samples for good-view JEPA than next-token prediction to reach a comparable WIT alignment score. Because each good-view sample reads three texts, the paper reports a smaller 14-fold text-token difference and 435 times fewer unique images. These are not total-compute or wall-clock ratios."
@@ -249,7 +240,6 @@ items:
     candidate_destinations:
       pages: []
       concepts: [training-objective]
-    disposition: pending
   - id: balestriero-lecun-platonic-representation-jepas-2026:alignment-scaling-law
     kind: result
     summary: "The authors fit an empirical alignment law combining the fraction q of good-view training items, sample count M and number of images N. It predicts 85 held-out runs with RMSE .0093, comparable to seed-to-seed variation .0096, within the tested range. It overestimates good-view-only runs when extrapolated to 320M samples because the fitted form lacks a repeated-data term."
@@ -266,7 +256,6 @@ items:
     candidate_destinations:
       pages: []
       concepts: []
-    disposition: pending
   - id: balestriero-lecun-platonic-representation-jepas-2026:captioning-linear-map
     kind: mechanism
     summary: "The captioning system trains a text decoder on text alone to reconstruct captions from frozen text-JEPA embeddings. At inference, frozen image embeddings are transformed by a constrained orthogonal map and decoded. No network is trained on image-caption pairs, but the map is fitted on paired Flickr data; the main reported COCO CIDEr .838 configuration uses 30k Flickr pairs."
@@ -284,7 +273,6 @@ items:
     candidate_destinations:
       pages: []
       concepts: []
-    disposition: pending
   - id: balestriero-lecun-platonic-representation-jepas-2026:pair-free-alignment
     kind: result
     summary: "A separate experiment aligns unpaired image and caption sets using geometric structure and optimal transport. The 109M good-view text JEPA reaches 64.4% ImageNet-100 top-5 in the reported pair-free setup, compared with at most 56% among the language-model results in the cited benchmark; the authors also report that next-token prediction is unstable in half of its runs."
@@ -302,7 +290,6 @@ items:
     candidate_destinations:
       pages: []
       concepts: []
-    disposition: pending
 
   - id: balestriero-lecun-platonic-representation-jepas-2026:spectral-gap-uniqueness
     kind: derivation
@@ -320,7 +307,6 @@ items:
     candidate_destinations:
       pages: []
       concepts: []
-    disposition: pending
   - id: balestriero-lecun-platonic-representation-jepas-2026:rotation-identification
     kind: mechanism
     summary: "Once two finite-world representations agree up to an unknown orthogonal rotation, generic paired examples can identify that rotation: k pairs in general position suffice for a k-dimensional embedding, whereas k-1 pairs may leave another exact fit. For ideal rotation-invariant continuous embedding distributions, unpaired moments cannot identify the rotation; finite-world higher-order geometry can nevertheless support post-hoc unpaired alignment."
@@ -338,7 +324,6 @@ items:
     candidate_destinations:
       pages: []
       concepts: []
-    disposition: pending
   - id: balestriero-lecun-platonic-representation-jepas-2026:objective-family-scope
     kind: limitation
     summary: "The paper's rotation-invariant JEPA objective form includes spectral contrastive learning and whitened MSE; VICReg and Barlow Twins fit only in specific whitened hard-constraint limits, while LeJEPA's SIGReg is rotation-invariant in expectation over projection directions. The spectral uniqueness proof should not be generalized indiscriminately to every anti-collapse loss."
@@ -356,4 +341,3 @@ items:
     candidate_destinations:
       pages: []
       concepts: []
-    disposition: pending
