@@ -95,3 +95,13 @@ Le vecteur n'est pas remplacé par une étiquette de sens. Il est transformé pa
 - Les variantes de blocs peuvent modifier l'ordre, la normalisation, les connexions résiduelles et les mécanismes d'attention.
 
 **À retenir :** le lookup fixe l'identité du vecteur token initial ; l'architecture positionnelle et les blocs déterminent ensuite comment l'état à chaque position dépend des autres états accessibles.
+
+## Pour continuer
+
+- [Revenir à la leçon sur les représentations contextualisées](contextualized-representations.qmd) — le modèle mental essentiel.
+- [Approfondir Q/K/V](queries-keys-values-advanced.qmd) — les projections et le calcul de l'attention.
+- [Revenir à la carte des approfondissements](deepen.qmd).
+
+::: {.language-switch}
+**Langue :** [Français](contextualized-representations-advanced.qmd) · [English](../en/contextualized-representations-advanced.qmd)
+:::
