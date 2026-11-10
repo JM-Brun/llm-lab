@@ -106,6 +106,26 @@ Les premières représentations neuronales distribuées du texte, puis des méth
 - [Mikolov et al. (2013), *Efficient Estimation of Word Representations in Vector Space*](https://arxiv.org/abs/1301.3781) — architectures CBOW et Skip-gram associées à Word2Vec.
 - [Peters et al. (2018), *Deep Contextualized Word Representations*](https://arxiv.org/abs/1802.05365) — ELMo et représentations dépendantes du contexte.
 
+
+#### Ce que la comparaison historique permet — et ne permet pas — de conclure
+
+Word2Vec apprend des vecteurs associés aux mots du vocabulaire. Dans CBOW, le modèle prédit un mot cible à partir de son contexte ; dans Skip-gram, il prédit des mots de contexte à partir du mot cible. Une fois le modèle entraîné, un mot donné possède un vecteur statique : le vecteur de `bank` ne change pas entre *the river bank* et *the financial bank*. Cette limite motive notamment les représentations contextualisées, mais ne signifie pas que les tables d'embeddings d'entrée des Transformers ont disparu : elles fournissent toujours les vecteurs initiaux associés aux IDs.
+
+Pour isoler cette distinction, l'exemple anglais `bank` est utile : si les deux occurrences sont bien encodées par le même ID, elles récupèrent la même ligne initiale ; le contexte traité ensuite par le réseau peut produire des états cachés différents. La segmentation et l'ID exacts restent propres au tokenizer considéré. Il s'agit d'un exemple conceptuel, pas d'une affirmation sur une tokenisation universelle.
+
+#### Géométrie des représentations : précautions d'interprétation
+
+Un vecteur de dimension (d) peut être interprété comme un point dans un espace vectoriel, mais les visualisations en deux dimensions sont des projections : elles ne conservent généralement qu'une partie des distances et des voisinages. Des groupes visuellement séparés sur une figure 2D ne prouvent donc ni une séparation robuste dans l'espace d'origine, ni une capacité de classification sur des données nouvelles.
+
+La proximité dépend de l'objet comparé (embedding initial, couche et position d'un état contextualisé, ou embedding de phrase), du modèle, de la couche, du corpus, de la méthode de pooling éventuelle et de la métrique choisie. Une similarité cosinus élevée n'implique pas une équivalence de sens : la négation ou une relation logique peuvent changer le sens avec un vocabulaire presque identique. De même, les résultats sur les embeddings de phrases ne se transposent pas automatiquement aux activations internes d'un LLM.
+
+- [Ethayarajh (2019), *How Contextual are Contextualized Word Representations?*](https://arxiv.org/abs/1909.00512) — analyse du caractère contextuel des représentations selon les couches.
+- [Li et al. (2020), *On the Sentence Embeddings from Pre-trained Language Models*](https://aclanthology.org/2020.emnlp-main.733/) — étude des propriétés et limites des embeddings de phrases issus de modèles préentraînés.
+- [Steck, Ekanadham & Kallus (2024), *Is Cosine-Similarity of Embeddings Really About Similarity?*](https://arxiv.org/abs/2403.05440) — mise en question de l'interprétation naïve de la similarité cosinus.
+- [Sentence Transformers — Semantic Textual Similarity](https://sbert.net/docs/sentence_transformer/usage/semantic_textual_similarity.html) — exemple de tâche et de protocole conçus pour comparer des embeddings de phrases.
+
+Pour les outils de mesure, voir [la similarité cosinus](cosine-similarity.qmd) ; pour les relations géométriques et leurs preuves empiriques, voir [la linéarité des embeddings](linearite-embeddings.qmd). Pour une introduction visuelle à l'entrée d'un GPT, consulter aussi [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/).
+
 Ces pages fournissent des outils d'analyse ; elles ne constituent pas un cours de prérequis à terminer avant de construire un petit GPT.
 
 ## Formalisation probabiliste et chaîne de l’entraînement {#fondements-probabilistes-et-entrainement}
