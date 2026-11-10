@@ -48,7 +48,7 @@ Select, combine, and reorder only the modules that serve the subject.
 | Limitations | Where does the explanation stop applying? | Material caveats kept visible |
 | Misconceptions | Which plausible interpretation is wrong? | Counterexample or boundary case |
 | History / provenance | Who introduced it, and what supports the account? | Optional, sourced historical context |
-| Exercises | Can I recall, calculate, interpret, or transfer? | Existing self-check pattern; answers collapsed |
+| Exercises | Can I recall, calculate, interpret, or transfer? | Dedicated per-lesson practice page linked from the lesson; answers collapsed |
 | Connections | Which neighbouring concepts clarify or use it? | Contextual links in relevant paragraphs |
 | References | Which sources support the claims? | Primary / official and pedagogical sources |
 
