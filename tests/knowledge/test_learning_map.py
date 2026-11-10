@@ -264,7 +264,7 @@ def test_load_pages_extracts_published_pages_and_section_headings(tmp_path: Path
         headings=("## Intuition", "## Query, Key and Value"),
     )
 
-    MODULE["load_pages"].__globals__["SITE"] = site
+    monkeypatch.setitem(MODULE["load_pages"].__globals__, "SITE", site)
     pages = MODULE["load_pages"]()
 
     assert [page["id"] for page in pages] == ["en/attention", "fr/attention"]
@@ -714,7 +714,7 @@ def test_load_pages_preserves_primary_deepen_domain(tmp_path: Path, monkeypatch)
     assert pages[0]["domain"] == "architectures-mechanisms"
 
 
-def test_build_serializes_deepen_domain(tmp_path: Path) -> None:
+def test_build_serializes_deepen_domain(tmp_path: Path, monkeypatch) -> None:
     site = tmp_path / "site"
     _write_page(
         site,
@@ -735,8 +735,8 @@ def test_build_serializes_deepen_domain(tmp_path: Path) -> None:
     _write_page(site, page_id="en/index", language="en", title="Home", topic="overview")
     _write_guided_route(tmp_path, fr_core=["fr/rope"], en_core=["en/index"])
     _write_sidebar(site)
-    MODULE["build"].__globals__["SITE"] = site
-    MODULE["build"].__globals__["ROOT"] = tmp_path
+    monkeypatch.setitem(MODULE["build"].__globals__, "SITE", site)
+    monkeypatch.setitem(MODULE["build"].__globals__, "ROOT", tmp_path)
     _write_concept_registry(tmp_path)
 
     output = MODULE["build"]("fr")
