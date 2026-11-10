@@ -23,7 +23,19 @@ tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-re
 
 
 {{< include ../includes/generated-guided-context-en-contextualized-representations.qmd >}}
-::: {.chapter-lead}
+:::
+
+::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
+By the end of this lesson, you should be able to:
+- explain why two occurrences of the same token ID share an initial embedding yet produce distinct contextualized hidden states;
+- identify exactly when positional information and sequential interactions transform internal activations;
+- refute the misconception that attributes semantic comprehension or contextual disambiguation to the initial embedding lookup.
+:::
+
+<div class="epistemic-badges">
+  <span class="epistemic-badge badge-concept">Verified concept</span>
+  <span class="epistemic-badge badge-status">Architecture: Transformer Blocks</span>
+</div> {.chapter-lead}
 Two sentences can contain the same token without giving it the same role: *bank* refers to a river edge in one and a financial institution in the other. Yet the tokenizer may assign the same ID to both occurrences. **The lookup does not change; the Transformer's processing of the sequence builds hidden states that depend on context.**
 :::
 
@@ -88,6 +100,68 @@ More concretely, self-attention lets a position aggregate information from acces
 In the *bank* example, both occurrences deliberately occupy the same position in the sentence (the third word, under the simplifying assumption of one token per word). With learned absolute position embeddings, they therefore receive the same positional term; with a mechanism such as RoPE, their position is also identical. For a causal decoder, the difference in their states then comes from the accessible prefix (*The river* or *The financial*), not from a different absolute position. In other examples, position and context may both contribute.
 
 States then evolve from block to block: \(h_t^{(0)}\) denotes the initial input at position \(t\), and each block produces \(h_t^{(1)}\), \(h_t^{(2)}\), and so on. The vector is not replaced by a sense label; it is transformed by learned operations that progressively integrate information.
+
+::: {.micro-workbench}
+::: {.micro-workbench-header}
+MICRO-WORKBENCH · CONTEXTUAL DIVERGENCE OF A SHARED TOKEN (NUMPY)
+:::
+::: {.micro-workbench-body}
+```python
+import numpy as np
+
+# Vocabulary matrix V=6, dimension d=2
+E = np.array([
+    [0.1, 0.2],   # 0: river
+    [0.9, -0.4],  # 1: financial
+    [0.5, 0.5],   # 2: bank (same ID in both contexts)
+    [0.0, 0.1],   # 3: eroded
+    [0.8, 0.2],   # 4: collapsed
+    [0.2, 0.7],   # 5: pad
+], dtype=np.float64)
+
+# Two sequences containing the same token (ID 2) at position 1
+seq_A = np.array([0, 2])  # [river, bank]
+seq_B = np.array([1, 2])  # [financial, bank]
+
+# 1. Initial embedding lookup
+x_A = E[seq_A]
+x_B = E[seq_B]
+
+# Invariant 1: initial embedding of 'bank' is strictly identical
+assert np.array_equal(x_A[1], x_B[1])
+assert np.array_equal(x_A[1], E[2])
+
+# 2. Add absolute position encoding (identical at position 1)
+P = np.array([[0.01, 0.00], [0.02, 0.05]], dtype=np.float64)
+z_A = x_A + P
+z_B = x_B + P
+assert np.array_equal(z_A[1], z_B[1])
+
+# 3. Causal contextual aggregation: position 1 integrates its context (pos 0)
+# Illustrative causal attention weights: 40% context (pos 0), 60% self (pos 1)
+h_A_1 = 0.4 * z_A[0] + 0.6 * z_A[1]
+h_B_1 = 0.4 * z_B[0] + 0.6 * z_B[1]
+
+# Invariant 2: contextualized representations are now distinct!
+assert not np.allclose(h_A_1, h_B_1)
+diff = float(np.linalg.norm(h_A_1 - h_B_1))
+print(f"Identical initial embedding: {x_A[1]}")
+print(f"Contextualized state A (river bank): {h_A_1}")
+print(f"Contextualized state B (financial bank): {h_B_1}")
+print(f"Divergence induced by context: {diff:.4f}")
+```
+:::
+::: {.micro-workbench-footer}
+Context transforms hidden states: identical initial lookups ($E[\text{ID}]$) produce distinct activations after sequence aggregation.
+:::
+:::
+
+<details class="spot-the-fallacy">
+<summary>Common Fallacy: “For two senses of a word like 'bank' to be captured, the tokenizer must assign them different token IDs”</summary>
+<div class="fallacy-content">
+<p><strong>Counterexample:</strong> The tokenizer operates purely on surface statistics and byte sequences (e.g. BPE) without sentence-level comprehension; it assigns the exact same integer ID to "bank" whether it refers to a financial institution or a river bank. Attention layers subsequently mix context-specific information to specialize the hidden representation $h_t^{(\ell)}$. Demanding separate IDs for different meanings would require solving semantic disambiguation before the model even begins.</p>
+</div>
+</details>
 
 ![The same token can receive different contextualized representations depending on the sentence.](../images/contextualized-embeddings-en.svg){fig-alt="Two sequences place bank at the same simplified position. Both occurrences share the same initial lookup, while each Transformer block combines that state with the sequence-specific accessible context before producing a hidden state that may differ." fig-cap="Same token ID and same simplified position: the lookup is identical. The accessible prefixes differ, so hidden states may differ." width=100%}
 
