@@ -1,0 +1,173 @@
+schema_version: 1
+source_id: hesam-sheikh-hessani-llm-embeddings-explained-2025
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "The complete text exposed by the Hugging Face Space's embedded static article was retrieved on 2026-11-10, including the section headings, prose, code descriptions, figure captions and citation block."
+      - "The page's linked LLM Mechanics repository was identified, but its source code and notebooks were not audited."
+      - "The reconstruction follows the author's visible article sequence; it does not claim that the interactive atlas or its underlying calculations were independently reproduced."
+    inferred_elements:
+      - "Learning outcomes and prerequisites are inferred from the explanatory sequence; the article does not publish a formal outcome list."
+      - "The article's local graph and teaching functions are editorial reconstructions, not a graph supplied by the author."
+  source_graph:
+    nodes:
+      - {id: src-data-representation, kind: representation-problem, description: "Represent text or other data as numerical vectors for downstream computation.", locator: "What Are Embeddings?"}
+      - {id: src-static-token-vector, kind: representation, description: "A learned input-table vector associated with a token ID before contextual processing.", locator: "What Are Embeddings?; Embeddings in Modern LLMs"}
+      - {id: src-contextual-state, kind: representation, description: "A hidden representation transformed by the model layers and dependent on surrounding context.", locator: "What Are Embeddings?; BERT; Embeddings in Modern LLMs"}
+      - {id: src-statistical-methods, kind: method-family, description: "Count-based representations such as TF-IDF, based on term occurrence and document frequency.", locator: "Traditional Embedding Techniques"}
+      - {id: src-predictive-methods, kind: method-family, description: "Prediction-trained word representations such as CBOW and Skip-gram Word2Vec.", locator: "word2vec"}
+      - {id: src-transformer-methods, kind: architecture-family, description: "Transformer input embeddings and layer-wise contextual representations.", locator: "BERT; Embeddings in Modern LLMs"}
+      - {id: src-embedding-table, kind: mechanism, description: "A vocabulary-indexed parameter matrix from which token vectors are retrieved by integer IDs.", locator: "torch.nn.Embedding"}
+      - {id: src-neighbour-graph, kind: visualization, description: "A token graph formed by connecting vectors selected as nearest neighbours under cosine similarity.", locator: "Embeddings as Graphs: A Network Analysis"}
+      - {id: src-deepseek-case-study, kind: case-study, description: "An interactive inspection of the input embedding table of DeepSeek-R1-Distill-Qwen-1.5B.", locator: "Embeddings in Action"}
+    edges:
+      - {from: src-data-representation, type: instantiated-by, to: src-statistical-methods}
+      - {from: src-data-representation, type: instantiated-by, to: src-predictive-methods}
+      - {from: src-data-representation, type: instantiated-by, to: src-transformer-methods}
+      - {from: src-transformer-methods, type: uses, to: src-embedding-table}
+      - {from: src-embedding-table, type: inspected-through, to: src-deepseek-case-study}
+      - {from: src-deepseek-case-study, type: visualized-as, to: src-neighbour-graph}
+      - {from: src-static-token-vector, type: transformed-into, to: src-contextual-state}
+    interpretation: "Source-local pedagogical reconstruction. Relations summarize the article's narrative and are not formal relations defined by the author; in particular, the method-family comparison does not imply that TF-IDF, Word2Vec, token embeddings and sentence embeddings are interchangeable objects."
+  learning_outcomes:
+    - {status: inferred, outcome: "Distinguish count-based, prediction-trained, token-table and contextualized representations.", basis: "Historical overview and static-versus-contextual distinction."}
+    - {status: inferred, outcome: "Explain how a token ID retrieves a row from an embedding table in a Transformer.", basis: "torch.nn.Embedding and modern LLM sections."}
+    - {status: inferred, outcome: "Interpret a nearest-neighbour visualization as a model- and metric-dependent inspection rather than a universal semantic map.", basis: "DeepSeek case study and token-neighbour graph."}
+    - {status: inferred, outcome: "Identify memory and computation as relevant embedding-dimension trade-offs without assuming that larger dimensions always improve quality.", basis: "What Makes a Good Embedding? section, critically qualified."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Basic familiarity with vectors, tokens and vocabulary IDs.", basis: "The article uses these terms before formally defining them."}
+    - {status: inferred, topic: "Basic understanding of Transformer layers and cosine similarity.", basis: "The modern LLM case study assumes both concepts."}
+  teaching_route:
+    - {order: 1, section: "What Are Embeddings?", function: establish-terminology, moves: ["Define data-to-vector representation", "Separate input token vectors from contextual hidden states", "Warn that the word embedding is used for several different objects"]}
+    - {order: 2, section: "What Makes a Good Embedding?", function: introduce-quality-criteria, moves: ["Introduce task-relevant relationships", "Raise vector dimensionality and resource trade-offs"]}
+    - {order: 3, section: "Traditional Embedding Techniques — TF-IDF", function: contrast-count-based-methods, moves: ["Derive term frequency and inverse document frequency", "Show a small corpus example", "Visualize the result after dimensionality reduction"]}
+    - {order: 4, section: "word2vec", function: explain-predictive-learning, moves: ["Introduce CBOW and Skip-gram objectives", "Locate the learned vectors in the network", "Connect negative sampling to efficient training"]}
+    - {order: 5, section: "BERT", function: introduce-contextualization, moves: ["Place embeddings inside an encoder architecture", "Explain masked-language modeling and the original BERT next-sentence objective", "Show layer-wise contextual representations"]}
+    - {order: 6, section: "Embeddings in Modern LLMs", function: connect-to-llm-input, moves: ["Distinguish token lookup from contextual hidden states", "Describe training of the input table", "Relate token IDs to indexed vector retrieval"]}
+    - {order: 7, section: "Embeddings in Action — DeepSeek-R1-Distill-Qwen-1.5B", function: demonstrate-model-inspection, moves: ["Load a concrete model's input embedding table", "Tokenize an example sentence", "Inspect token vectors and cosine neighbours"]}
+    - {order: 8, section: "Embeddings as Graphs", function: visualize-local-neighbourhoods, moves: ["Connect tokens to nearest neighbours", "Inspect token spelling and subword variants", "Close with a visual atlas of local neighbourhoods"]}
+  pedagogical_strengths:
+    - "Combines a historical comparison with a concrete modern-model case study rather than treating embeddings as one timeless technique."
+    - "Uses an interactive visual atlas and a trace from tokenization to actual model vectors to make a high-dimensional parameter table tangible."
+    - "Makes the distinction between initial token vectors and contextual hidden states explicit in more than one section."
+    - "Connects vector representations to practical inspection with PyTorch and cosine-neighbour retrieval."
+  pedagogical_limits:
+    - "The quality discussion overstates semantic closeness as a universal criterion; usefulness is objective-, data-, model- and task-dependent."
+    - "The dimensionality discussion implies that larger vectors inherently capture more intricate relationships and are more prone to overfitting; this is not a general law."
+    - "The TF-IDF example's description of a ten-dimensional embedding appears to confuse the number of documents with the vocabulary feature dimension; PCA output dimensionality is a separate choice."
+    - "The article's BERT summary presents next-sentence prediction without noting that it is specific to original BERT and was removed in variants such as RoBERTa."
+    - "The nearest-neighbour graph does not by itself establish semantic equivalence; graph directionality, tokenization variants, metric choices and model-specific geometry need explicit treatment."
+    - "Several citations and figure-source placeholders are missing in the retrieved page text, limiting independent verification of some historical and implementation claims."
+  comparison:
+    dossier: docs/source-reviews/hesam-sheikh-hessani-llm-embeddings-explained-2026-11.md
+    canonical_graph: "data/concepts.yml"
+    canonical_routes: [data/guided-route.yml, docs/learning-path.md]
+    decision: "Treat as a complementary visual tutorial and model-inspection case study. The core token-lookup and contextualization content is already present in the bilingual embedding-space lessons; do not create a duplicate core lesson. After inspecting the linked code and checking the dimension/TF-IDF claims, consider a contextual external link or an optional reproducible nearest-neighbour exercise."
+    structures_kept_separate: [source-explanatory-graph, canonical-concept-graph, page-navigation-graph, pedagogical-route]
+items:
+  - id: hesam-sheikh-hessani-llm-embeddings-explained-2025:static-and-contextualized
+    kind: definition
+    summary: "The article distinguishes a token's fixed input-table vector from the contextual hidden representations produced by later Transformer layers. The same token ID retrieves the same initial row, while its hidden state can differ across contexts."
+    locator: {type: section, value: "What Are Embeddings?; Embeddings in Modern LLMs", label: "Static and contextualized representations"}
+    evidence:
+      kind: secondary-technical-explanation
+      confidence: well-supported
+      scope: "The article's terminology distinction, consistent with the existing embedding-space lesson."
+      assumptions: ["The comparison concerns a fixed model checkpoint and its input embedding table."]
+      limitations: ["The word embedding is overloaded in the literature; sentence/document encoders and internal hidden states require separate definitions."]
+    classification:
+      concept_ids: [token-embedding, contextualized-representation]
+    candidate_destinations:
+      pages: [fr/embedding-space, en/embedding-space, fr/contextualized-representations, en/contextualized-representations]
+    disposition: already-covered
+    disposition_rationale: "The bilingual core lesson already teaches this distinction and explicitly warns against conflating token, contextual and sentence/document embeddings."
+  - id: hesam-sheikh-hessani-llm-embeddings-explained-2025:embedding-quality-and-dimension
+    kind: misconception
+    summary: "The tutorial proposes semantic representation and dimensionality as two quality properties, but these should be reframed as task-dependent evaluation and resource trade-offs. Higher dimensionality does not by itself guarantee richer semantic structure or imply overfitting."
+    locator: {type: section, value: "What Makes a Good Embedding?", label: "Semantic Representation; Dimensionality"}
+    evidence:
+      kind: critical-source-review
+      confidence: well-supported
+      scope: "Review of the article's two stated quality criteria against standard representation-learning distinctions."
+      assumptions: ["Embedding quality is evaluated for a specified task, dataset, model and downstream use."]
+      limitations: ["No model comparison or dimensionality ablation was run for this source review."]
+    candidate_destinations:
+      pages: [fr/embedding-space, en/embedding-space, fr/cosine-similarity, en/cosine-similarity]
+    disposition: clarify
+    disposition_rationale: "The existing lessons emphasize task- and model-dependent geometry; the tutorial's dimensionality paragraph is a useful prompt for a concise qualification, not a claim to reproduce."
+    pedagogical_profile:
+      learner_question: "Does a larger embedding dimension automatically make representations better?"
+      explanatory_lens: computational
+      teaching_form: [misconception, critical-comparison]
+      abstraction_level: introductory
+      prerequisites: [token-embedding]
+      distinctive_value: "Connects representational capacity to memory and compute costs."
+      limitations: ["The source's overfitting statement is not substantiated by a controlled experiment."]
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "The resource trade-off is a useful addition to the current lookup-focused core explanation."}
+      complementarity: {level: moderate, rationale: "It introduces a design consideration adjacent to, but not central to, the current token lookup mechanism."}
+      pedagogical_value: {level: moderate, rationale: "The question can help learners avoid equating vector size with quality."}
+      applicability: {level: moderate, rationale: "A short caveat could fit the existing lesson or a later model-comparison activity."}
+      redundancy: {level: low, rationale: "The current lesson does not develop embedding dimension as a model-design trade-off."}
+      evidence_quality: {level: moderate, rationale: "The tutorial states the trade-off but does not provide a controlled dimensionality experiment."}
+  - id: hesam-sheikh-hessani-llm-embeddings-explained-2025:tfidf-geometry
+    kind: limitation
+    summary: "The TF-IDF visualization illustrates a count-based representation, but the article's wording that it has a ten-dimensional embedding because it uses ten document chunks appears inaccurate: TF-IDF feature vectors are indexed by vocabulary terms, while document count determines the number of rows; PCA then chooses a separate projection dimension."
+    locator: {type: section, value: "TF-IDF example using TinyShakespeare", label: "Ten document chunks and 2D PCA projection"}
+    evidence:
+      kind: technical-correction
+      confidence: well-supported
+      scope: "Dimensional interpretation of a standard document-term TF-IDF matrix."
+      assumptions: ["The described pipeline uses documents as samples and vocabulary terms as features."]
+      limitations: ["The notebook implementation was not inspected, so this corrects the article's prose as retrieved rather than asserting the actual array shape in its code."]
+    candidate_destinations:
+      pages: [fr/embedding-space, en/embedding-space, fr/cosine-similarity, en/cosine-similarity]
+    disposition: defer
+    disposition_rationale: "The current core lesson does not teach TF-IDF; verify the source notebook before using this as a worked correction."
+  - id: hesam-sheikh-hessani-llm-embeddings-explained-2025:deepseek-token-atlas
+    kind: visualization
+    summary: "The tutorial demonstrates inspection of the input embedding matrix from DeepSeek-R1-Distill-Qwen-1.5B, including tokenization of a sample sentence and cosine-based nearest-token lookup, then visualizes local token neighbourhoods as a graph."
+    locator: {type: section, value: "Embeddings in Action; Embeddings as Graphs: A Network Analysis", label: "DeepSeek embedding extraction and nearest-token graph"}
+    evidence:
+      kind: author-demonstration
+      confidence: context-dependent
+      scope: "The article's described workflow and visible interactive atlas; the underlying code and interactive runtime were not independently executed."
+      assumptions: ["Nearest neighbours are computed from rows of the selected model's input embedding table using the stated cosine-similarity procedure."]
+      limitations: ["The selected model, tokenizer, layer, normalization, precision and neighbour graph construction are model-specific.", "Nearest input-token vectors are not sentence embeddings and do not establish retrieval quality or semantic equivalence.", "The graph may be directed unless neighbour edges are explicitly symmetrized."]
+    classification:
+      tags: [topic:embedding-geometry, method:cosine-similarity, ecosystem:pytorch]
+      concept_ids: [token-embedding]
+    candidate_destinations:
+      pages: [fr/embedding-space, en/embedding-space, fr/cosine-similarity, en/cosine-similarity]
+    disposition: integrate-by-reference
+    disposition_rationale: "The interactive atlas is a useful optional visual companion to the existing explanation, but its figures/code should not be copied and its quantitative claims should not be treated as independently reproduced."
+    pedagogical_profile:
+      learner_question: "What do the learned input vectors of a real LLM look like, and what can their nearest neighbours tell us?"
+      explanatory_lens: visual
+      teaching_form: [interactive-visualization, case-study]
+      abstraction_level: intermediate
+      prerequisites: [token-embedding, cosine-similarity]
+      distinctive_value: "Moves from a schematic lookup table to a concrete model's vocabulary embedding matrix."
+      limitations: ["The case study visualizes token-level input parameters, not contextual states or a sentence-embedding model."]
+    pedagogical_assessment:
+      novelty: {level: high, rationale: "The live model-specific atlas is a concrete complement to the lesson's synthetic NumPy lookup example."}
+      complementarity: {level: high, rationale: "It adds a real pretrained-model inspection without changing the core mechanism being taught."}
+      pedagogical_value: {level: high, rationale: "A visual neighbourhood exploration can make vector geometry tangible when paired with caveats."}
+      applicability: {level: high, rationale: "A contextual link can be added without copying assets or duplicating the lesson."}
+      redundancy: {level: low, rationale: "No equivalent live real-model atlas is embedded in the current core page."}
+      evidence_quality: {level: moderate, rationale: "The article text is inspectable but the interactive runtime and notebook implementation were not reproduced."}
+  - id: hesam-sheikh-hessani-llm-embeddings-explained-2025:historical-method-comparison
+    kind: teaching-sequence
+    summary: "The tutorial contrasts count-based TF-IDF, prediction-trained Word2Vec, contextual Transformer representations and modern LLM input embeddings as a historical and methodological progression."
+    locator: {type: section, value: "Traditional Embedding Techniques; word2vec; BERT; Embeddings in Modern LLMs", label: "From count-based vectors to contextual representations"}
+    evidence:
+      kind: secondary-pedagogical-synthesis
+      confidence: context-dependent
+      scope: "The article's historical narrative and high-level method comparison."
+      assumptions: ["The methods are compared as families of representation techniques, not as directly interchangeable embedding spaces."]
+      limitations: ["The history is compressed and some references are missing from the retrieved page.", "Original BERT used next-sentence prediction, but later variants such as RoBERTa changed the pretraining objective."]
+    candidate_destinations:
+      pages: [fr/embedding-space, en/embedding-space, fr/deepen, en/deepen]
+    disposition: link
+    disposition_rationale: "Useful optional historical perspective, but the existing core lesson already has a shorter Word2Vec-to-Transformer distinction; do not expand the core page into a survey of all embedding methods."
