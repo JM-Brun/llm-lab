@@ -27,18 +27,21 @@ When you send a prompt, the model does not write the whole response in one go. I
 This loop is called **autoregressive generation**. During inference, the model's parameters remain fixed: producing a response is not learning.
 :::
 
-<div class="pipeline-stepper" role="navigation" aria-label="Steps in autoregressive generation">
-  <a class="step-item" href="text-data.qmd">1. Prompt</a>
+<div class="pipeline-stepper" role="navigation" aria-label="Autoregressive generation loop">
+  <a class="step-item" href="text-data.qmd">Tokenized prompt</a>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="transformer.qmd">2. Prefill</a>
+  <span class="step-item">Prefill: process the prompt</span>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active" aria-current="step">3. Decode</span>
+  <a class="step-item" href="probabilities.qmd">Next-token distribution</a>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="probabilities.qmd">4. Selection</a>
+  <span class="step-item">Select and append token</span>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item">5. Feedback</span>
+  <span class="step-item active" aria-current="step">Incremental decode</span>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item">6. Stop</span>
+  <span class="step-item">Next distribution</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">Stop: EOS or limit</span>
+  <span class="meta-flow__loop" aria-label="Selection and decoding repeat until a stopping criterion is reached">↺ Select, append to context, and decode again</span>
 </div>
 
 
