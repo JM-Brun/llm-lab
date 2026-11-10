@@ -17,6 +17,7 @@ import re
 import sys
 import unicodedata
 from collections import deque
+from collections.abc import Sequence
 from html import escape
 from pathlib import Path
 from typing import Any, Literal
@@ -601,12 +602,140 @@ def write_guided_page_context_fragments(
     return list(artifacts)
 
 
+ROUTE_COMPLETION_COPY: dict[str, dict[str, Any]] = {
+    "en": {
+        "kicker": "Theory path — Understand",
+        "title": "You have reached the end of the path",
+        "summary": (
+            "You followed one prediction from text to a probability distribution, "
+            "saw how an observed target is scored, and how a gradient points to a "
+            "parameter update. Choose what to do with it:"
+        ),
+        "exits": (
+            (
+                "build-path.qmd",
+                "Build",
+                "read and run the small GPT that implements these stages",
+            ),
+            (
+                "exercises.qmd",
+                "Practice",
+                "check that you can redo the calculations without the page",
+            ),
+            (
+                "deepen.qmd",
+                "Deepen",
+                "follow the derivations and variants that the path left aside",
+            ),
+            (
+                "learning-map.qmd",
+                "Review",
+                "see the eight stages again and return to any of them",
+            ),
+        ),
+    },
+    "fr": {
+        "kicker": "Parcours Théorie — Comprendre",
+        "title": "Vous êtes arrivé au bout du parcours",
+        "summary": (
+            "Vous avez suivi une prédiction du texte à une distribution de "
+            "probabilité, vu comment une cible observée est évaluée et comment "
+            "un gradient indique une mise à jour des paramètres. À vous de "
+            "choisir la suite :"
+        ),
+        "exits": (
+            (
+                "build-path.qmd",
+                "Construire",
+                "lire et exécuter le petit GPT qui implémente ces étapes",
+            ),
+            (
+                "exercises.qmd",
+                "Pratiquer",
+                "vérifier que vous savez refaire les calculs sans la page",
+            ),
+            (
+                "deepen.qmd",
+                "Approfondir",
+                "suivre les dérivations et variantes laissées de côté",
+            ),
+            (
+                "learning-map.qmd",
+                "Revoir",
+                "retrouver les huit étapes et revenir à l'une d'elles",
+            ),
+        ),
+    },
+}
+
+
+def render_route_completion_markdown(language: str) -> str:
+    """Render the closing block shown on the last core page of the guided route.
+
+    Without it the route ends on a page whose only onward link points
+    backwards, so a reader who finishes has nowhere to go.
+    """
+    if language not in ROUTE_COMPLETION_COPY:
+        raise ValueError(f"unsupported suggested-route language: {language!r}")
+    copy = ROUTE_COMPLETION_COPY[language]
+    lines = [
+        # A div, not <aside>: Quarto moves <aside> elements into the page margin.
+        '<div class="route-complete" role="region" aria-labelledby="route-complete-title">',
+        f'  <p class="route-complete__kicker">{escape(copy["kicker"])}</p>',
+        f'  <p class="route-complete__title" id="route-complete-title">{escape(copy["title"])}</p>',
+        f"  <p>{escape(copy['summary'])}</p>",
+        '  <ul class="route-complete__exits">',
+    ]
+    for href, label, description in copy["exits"]:
+        lines.append(
+            f'    <li><a href="{escape(href, quote=True)}"><strong>{escape(label)}</strong></a>'
+            f" — {escape(description)}</li>"
+        )
+    lines.extend(["  </ul>", "</div>", ""])
+    return "\n".join(lines)
+
+
+def render_route_return_cards(
+    memberships: Sequence[GuidedRouteMembership], language: str
+) -> list[str]:
+    """Render one way back to the path for each stage that lists the page as optional.
+
+    The card targets the stage on the path page rather than one core page:
+    the registry does not record which core page the reader came from.
+    """
+    label = "↩ Retour au parcours" if language == "fr" else "↩ Back to the learning path"
+    cards: list[str] = []
+    for membership in memberships:
+        if membership.role != "optional":
+            continue
+        cards.extend(
+            [
+                '  <a class="route-nav-card route-nav-card--return" '
+                f'href="learning-map.html#guided-stage-{membership.stage_id}">',
+                f'    <span class="nav-direction">{escape(label)}</span>',
+                f'    <span class="nav-title">{membership.stage_index:02d} · '
+                f"{escape(membership.stage_title)}</span>",
+                "  </a>",
+            ]
+        )
+    return cards
+
+
 def render_suggested_route_markdown(
     page: dict[str, Any],
     page_by_id: dict[str, dict[str, Any]],
     language: str,
+    *,
+    return_memberships: Sequence[GuidedRouteMembership] = (),
+    completes_route: bool = False,
 ) -> str:
-    """Render local previous/next links from the page's canonical suggested route."""
+    """Render the local navigation shown at the bottom of a page.
+
+    Previous/next cards come from the page's canonical suggested route.
+    ``return_memberships`` adds a way back for pages that are only optional
+    resources of the guided route; ``completes_route`` adds the closing block
+    of its last core page.
+    """
     if language not in {"fr", "en"}:
         raise ValueError(f"unsupported suggested-route language: {language!r}")
 
@@ -624,7 +753,9 @@ def render_suggested_route_markdown(
     cards: list[str] = []
     for direction, label in directions:
         target_id = route.get(direction)
-        if target_id is None:
+        if target_id is None or return_memberships:
+            # An optional resource shows its way back to the path instead of
+            # edges from another reading order that its page does not surface.
             continue
         if not isinstance(target_id, str):
             raise ValueError(f"invalid {direction} route for {page['id']!r}: {target_id!r}")
@@ -644,20 +775,53 @@ def render_suggested_route_markdown(
             ]
         )
 
-    if not cards:
-        return ""
-    return "\n".join(['<div class="route-nav-cards">', *cards, "</div>", ""])
+    cards.extend(render_route_return_cards(return_memberships, language))
+
+    blocks: list[str] = []
+    if cards:
+        blocks.append("\n".join(['<div class="route-nav-cards">', *cards, "</div>", ""]))
+    if completes_route:
+        blocks.append(render_route_completion_markdown(language))
+    return "\n".join(blocks)
+
+
+def final_core_page_id(stages: Sequence[ResolvedGuidedRouteStage]) -> str | None:
+    """Return the last core page of the guided route, where the route ends."""
+    for stage in reversed(stages):
+        if stage.pages:
+            return stage.pages[-1].id
+    return None
 
 
 def prepare_suggested_route_fragments(
-    language: str, pages: list[dict[str, Any]]
+    language: str,
+    pages: list[dict[str, Any]],
+    stages: Sequence[ResolvedGuidedRouteStage] = (),
 ) -> dict[Path, str]:
-    """Render generated local-navigation partials for pages with route metadata."""
+    """Render generated local-navigation partials.
+
+    A page gets a partial when it has suggested-route edges, when it is only an
+    optional resource of the guided route (way back), or when it is the last
+    core page of the route (closing block).
+    """
     page_by_id = {page["id"]: page for page in pages}
+    memberships = build_guided_route_memberships(list(stages))
+    final_page_id = final_core_page_id(stages)
     includes = SITE / "includes"
     outputs: dict[Path, str] = {}
     for page in pages:
-        rendered = render_suggested_route_markdown(page, page_by_id, language)
+        page_memberships = memberships.get(page["id"], [])
+        optional_only = bool(page_memberships) and all(
+            membership.role == "optional" for membership in page_memberships
+        )
+        route = page.get("route") or {}
+        rendered = render_suggested_route_markdown(
+            page,
+            page_by_id,
+            language,
+            return_memberships=page_memberships if optional_only else (),
+            completes_route=page["id"] == final_page_id and route.get("next") is None,
+        )
         if not rendered:
             continue
         output = includes / (f"generated-suggested-route-{page['id'].replace('/', '-')}.qmd")
@@ -665,9 +829,13 @@ def prepare_suggested_route_fragments(
     return outputs
 
 
-def write_suggested_route_fragments(language: str, pages: list[dict[str, Any]]) -> list[Path]:
-    """Write generated local-navigation partials for pages with route metadata."""
-    artifacts = prepare_suggested_route_fragments(language, pages)
+def write_suggested_route_fragments(
+    language: str,
+    pages: list[dict[str, Any]],
+    stages: Sequence[ResolvedGuidedRouteStage] = (),
+) -> list[Path]:
+    """Write generated local-navigation partials (see the prepare function)."""
+    artifacts = prepare_suggested_route_fragments(language, pages, stages)
     write_artifacts(artifacts)
     return list(artifacts)
 
@@ -843,7 +1011,7 @@ def prepare_build(language: str) -> dict[Path, str]:
     navigation = load_navigation(language, pages)
     artifacts = prepare_guided_route_fragment(language, guided_route)
     artifacts.update(prepare_guided_page_context_fragments(language, guided_route))
-    artifacts.update(prepare_suggested_route_fragments(language, pages))
+    artifacts.update(prepare_suggested_route_fragments(language, pages, guided_route))
     payload = {
         "language": language,
         "source": "LLM-LAB-PAGE-MAP v1 + data/guided-route.yml + data/concepts.yml",

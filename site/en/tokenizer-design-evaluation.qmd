@@ -245,6 +245,8 @@ This published illustration comes from the [Hugging Face course, “Building a t
 - [Raschka — repository, Chapter 2](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch02): implementations and text-data preparation.
 - [Gage (1994), *A New Algorithm for Data Compression*](https://dl.acm.org/doi/10.5555/177910.177914): historical reference for byte-pair compression. Modern LLM tokenizers add conventions not fully specified by that paper alone.
 
+{{< include ../includes/generated-suggested-route-en-tokenizer-design-evaluation.qmd >}}
+
 ::: {.language-switch}
 **Language:** [Français](../fr/tokenizer-design-evaluation.qmd) · [English](tokenizer-design-evaluation.qmd)
 :::

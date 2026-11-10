@@ -167,6 +167,8 @@ Q is projected from decoder states, because those are the positions doing the re
 </details>
 :::
 
+{{< include ../includes/generated-suggested-route-en-cross-attention.qmd >}}
+
 ::: {.language-switch}
 **Language:** [Français](../fr/cross-attention.qmd) · [English](cross-attention.qmd)
 :::

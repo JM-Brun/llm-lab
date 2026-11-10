@@ -123,6 +123,8 @@ The conceptual comparison is sufficient to locate the architectures. To run one 
 4. **Is a Transformer necessarily an LLM?** No. Architecture alone does not determine model scale or whether it qualifies as an LLM.
 :::
 
+{{< include ../includes/generated-suggested-route-en-transformer-architectures.qmd >}}
+
 ::: {.language-switch}
 **Language:** [Français](../fr/transformer-architectures.qmd) · [English](transformer-architectures.qmd)
 :::

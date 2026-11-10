@@ -209,6 +209,8 @@ In deep-learning libraries, “tensor” commonly means a multidimensional numer
 
 **Canonical lesson:** [GPT and the Transformer](transformer.qmd). This page is a technical reference for tensor shapes and axes; it is not a prerequisite for following the build path.
 
+{{< include ../includes/generated-suggested-route-en-tensors.qmd >}}
+
 :::: {.language-switch}
 [Français](../fr/tensors.qmd) · [English](tensors.qmd)
 ::::

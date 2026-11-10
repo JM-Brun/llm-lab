@@ -287,6 +287,8 @@ Parameter labels alone (such as “temperature 0.7” or “top-p 0.9”) are in
 - Li et al. (2023), [*Contrastive Decoding: Open-ended Text Generation as Optimization*](https://aclanthology.org/2023.acl-long.687/), ACL — contrastive scoring between expert and amateur models.
 - Welleck et al. (2020), [*Consistency of a Recurrent Language Model With Respect to Incomplete Decoding*](https://aclanthology.org/2020.emnlp-main.448/), EMNLP — theoretical analysis of inconsistency in certain decoding strategies for recurrent models; do not generalize without care to every Transformer architecture.
 
+{{< include ../includes/generated-suggested-route-en-decoding-strategies.qmd >}}
+
 ::: {.language-switch}
 **Language:** [Français](../fr/decoding-strategies.qmd) · [English](decoding-strategies.qmd)
 :::

@@ -123,6 +123,8 @@ La comparaison conceptuelle suffit pour situer les architectures. Pour exécuter
 4. **Un Transformer est-il nécessairement un LLM ?** Non. L'architecture ne détermine ni la taille du modèle ni son statut de LLM.
 :::
 
+{{< include ../includes/generated-suggested-route-fr-transformer-architectures.qmd >}}
+
 ::: {.language-switch}
 **Langue :** [Français](transformer-architectures.qmd) · [English](../en/transformer-architectures.qmd)
 :::

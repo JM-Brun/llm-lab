@@ -84,6 +84,8 @@ Vérifier les dimensions, l'ordre des paires de coordonnées, les positions util
 
 **Notion canonique :** [Encodage positionnel](positional-encoding.qmd). Cette page approfondit un mécanisme particulier ; elle ne remplace pas l'introduction générale à l'information positionnelle.
 
+{{< include ../includes/generated-suggested-route-fr-rope.qmd >}}
+
 ::: {.language-switch}
 **Langue :** [Français](rope.qmd) · [English](../en/rope.qmd)
 :::

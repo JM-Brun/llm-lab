@@ -82,6 +82,8 @@ NFC/NFD concernent les formes canoniques ; NFKC/NFKD appliquent aussi certaines 
 
 La page [Du texte aux tokens](text-data.qmd) revient au niveau conceptuel. La page [Stratégies de tokenisation](tokenization-strategies.qmd) compare les familles d'algorithmes et leurs compromis.
 
+{{< include ../includes/generated-suggested-route-fr-unicode-text.qmd >}}
+
 :::: {.language-switch}
 **Langue :** [Français](../fr/unicode-text.qmd) · [English](../en/unicode-text.qmd)
 ::::
