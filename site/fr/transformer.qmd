@@ -58,7 +58,7 @@ Cette représentation concerne la famille **décodeur seul**, utilisée notammen
 
 ![Flux simplifié d'un GPT autorégressif, des tokens à la sélection du prochain token.](../images/gpt-data-flow.svg){fig-alt="Pipeline complet : texte, tokenisation, embeddings et information positionnelle, blocs Transformer répétés, logits, softmax, sélection du prochain token puis ajout au contexte." width=100%}
 
-Ce second schéma répond à une autre question : il replace le réseau dans le processus complet. **La pile de blocs au centre est le Transformer montré juste au-dessus** ; les opérations en amont préparent son entrée, tandis que softmax, sélection et réinjection du token se situent en aval. La boucle de décodage intervient après la sortie du réseau.
+Ce second schéma répond à une autre question : il replace le réseau dans le processus complet. **La pile de blocs au centre est le Transformer montré juste-au-dessus** ; les opérations en amont préparent son entrée, tandis que softmax, sélection et réinjection du token se situent en aval. La boucle de décodage intervient après la sortie du réseau.
 
 ## 1. Des identifiants aux représentations d'entrée
 
@@ -78,16 +78,18 @@ Un bloc applique deux corrections successives au flux de représentations : d'ab
 
 La pile représentée plus haut est composée de blocs de même type, répétés en profondeur. Chaque bloc enchaîne deux **sous-couches** principales, encadrées de connexions résiduelles et de normalisations :
 
-- **Auto-attention :** chaque position combine de l'information provenant des positions autorisées par le masque, y compris sa propre position dans un GPT causal. Le masque causal interdit l'accès aux tokens futurs.
-- **Réseau feed-forward (MLP) :** un petit réseau de neurones appliqué à chaque position séparément, avec les mêmes poids partout. *Feed-forward* signale que l'information y circule dans un seul sens, de l'entrée vers la sortie, sans interaction entre positions ni boucle de retour ; *MLP* (*multi-layer perceptron*) est le nom historique d'un enchaînement de couches linéaires et d'activations non linéaires. Concrètement, ce sous-réseau projette la représentation de dimension `d_model` vers une dimension intermédiaire `d_ff`, souvent environ quatre fois plus grande, applique une activation non linéaire, puis ramène le résultat à `d_model` ; sa conception précise varie selon les modèles.
+- **Auto-attention :** chaque position combine de l'information provenant des positions autorisées par le masque, y compris sa propre position. Le masque causal interdit l'accès aux tokens futurs.
+- **Réseau feed-forward (MLP) :** un petit réseau de neurones appliqué à chaque position séparément, avec les mêmes poids partout. Il transforme chaque représentation localement, sans toucher aux autres positions.
 
-Une **connexion résiduelle** ajoute à la représentation qui circule dans le réseau une correction calculée par une sous-couche, au lieu de remplacer entièrement cette représentation. Elle fournit ainsi un chemin direct à l'information et au gradient :
+**Pourquoi *feed-forward*, pourquoi *MLP* ?** *Feed-forward* signale que l'information y circule dans un seul sens, de l'entrée vers la sortie, sans interaction entre positions ni boucle de retour. *MLP* (*multi-layer perceptron*) est le nom historique d'un enchaînement de couches linéaires et d'activations non linéaires. Concrètement, ce sous-réseau projette la représentation de dimension `d_model` vers une dimension intermédiaire `d_ff` (souvent environ quatre fois plus grande, pour donner à chaque position un espace de calcul intermédiaire plus grand), applique une activation non linéaire, puis ramène le résultat à `d_model` ; sa conception précise varie selon les modèles.
+
+**Pourquoi une connexion résiduelle ?** Au lieu de remplacer la représentation qui circule, chaque sous-couche ajoute une correction. Le flux qui traverse ainsi toute la pile sans discontinuité s'appelle le **flux résiduel** ; la connexion résiduelle lui fournit un chemin direct pour l'information et pour le gradient :
 
 $$
 x_{\text{sortie}} = x_{\text{entrée}} + F(x_{\text{entrée}}).
 $$
 
-La **normalisation** (*LayerNorm*, dans les GPT classiques) centre et réduit les composantes du vecteur caché de chaque position, indépendamment des autres positions. Son rôle est de stabiliser le calcul : les connexions résiduelles additionnent des corrections bloc après bloc, ce qui fait croître les magnitudes des représentations ; sans normalisation, activations et gradients deviennent instables, et l'entraînement d'une pile profonde échoue. Dans un bloc **pré-LN**, chaque sous-couche reçoit une entrée normalisée : $x' = x + \operatorname{Attention}(\operatorname{LN}(x))$, puis $x'' = x' + \operatorname{MLP}(\operatorname{LN}(x'))$. La disposition inverse (post-LN) et les variantes de normalisation, comme RMSNorm, diffèrent entre modèles.
+**Pourquoi normaliser ?** La normalisation (*LayerNorm*, dans les GPT classiques) centre et réduit les composantes du vecteur caché de chaque position, indépendamment des autres positions. Son rôle est de stabiliser le calcul : les connexions résiduelles additionnent des corrections bloc après bloc, ce qui fait croître les magnitudes des représentations ; sans normalisation, activations et gradients deviennent instables, et l'entraînement d'une pile profonde échoue. Dans un bloc **pré-LN**, chaque sous-couche reçoit une entrée normalisée : $x' = x + \operatorname{Attention}(\operatorname{LN}(x))$, puis $x'' = x' + \operatorname{MLP}(\operatorname{LN}(x'))$. La disposition inverse (post-LN) et les variantes de normalisation, comme RMSNorm, diffèrent entre modèles.
 
 Le même parcours, en image :
 
@@ -131,6 +133,8 @@ Les deux sous-couches se partagent le travail :
 
 Les deux opérations sont apprises. L'attention calcule une somme pondérée de vecteurs de valeur : elle ne recherche pas littéralement des informations dans des notes lisibles par un humain.
 
+Chaque sous-couche d'attention est en réalité **multi-têtes** : plusieurs attentions s'exécutent en parallèle sur des projections apprises distinctes, puis leurs résultats sont combinés. Chaque tête travaille dans une dimension réduite `d_head` (64 pour GPT-2), avec H × `d_head` = `d_model` : 12 × 64 = 768. Cette diversité ne garantit pas que chaque tête développe une spécialisation nette et interprétable par un humain ; les projections qui alimentent l'attention font l'objet de la [leçon suivante](queries-keys-values.qmd).
+
 ### Parallélisme à l'entraînement, génération séquentielle
 
 Le Transformer permet de calculer en parallèle les représentations de plusieurs positions d'une séquence d'entraînement : les tokens d'entrée sont disponibles et le masque causal empêche chaque position de voir le futur. Cela supprime la dépendance récurrente position par position propre aux RNN.
@@ -140,14 +144,12 @@ Le Transformer permet de calculer en parallèle les représentations de plusieur
 
 **Cela ne rend pas la génération GPT entièrement parallèle** : au moment de produire une réponse, le token suivant dépend des tokens déjà générés ; les étapes de décodage restent donc autorégressives. Le cache clé-valeur (*KV cache*) évite de recalculer certaines clés et valeurs du passé, mais ne supprime pas cette dépendance séquentielle. Voir [la boucle de génération](generation.qmd) pour distinguer *prefill* et *decode*.
 
-L'**attention multi-têtes** effectue plusieurs calculs en parallèle à partir de projections apprises distinctes, puis combine leurs résultats. Cette diversité ne garantit pas que chaque tête développe une spécialisation nette et interprétable par un humain.
-
 ### Profondeur et largeur : deux dimensions de l'architecture
 
-Deux termes reviennent souvent pour décrire la taille d'un Transformer :
+Deux termes reviennent souvent pour décrire la taille d'un Transformer : la profondeur empile des étapes de calcul, la largeur élargit la représentation traitée à chaque étape.
 
 - **Profondeur (*depth*) :** nombre de blocs Transformer empilés dans le réseau.
-- **Largeur (*width*) :** dimension des représentations qui circulent entre les blocs. Dans un GPT classique, elle correspond généralement à `d_model`, souvent appelée *hidden size* ou dimension du flux résiduel.
+- **Largeur (*width*) :** dimension des représentations qui circulent entre les blocs. Dans un GPT classique, elle correspond généralement à `d_model`, souvent appelée *hidden size* ou dimension du **flux résiduel**.
 
 Ces termes ne sont pas interchangeables avec les autres dimensions internes : le **nombre de têtes d'attention** indique combien de mécanismes sont calculés en parallèle ; `d_head` désigne la dimension des vecteurs d'une tête ; `d_ff` désigne la dimension intermédiaire du MLP, celle vers laquelle chaque représentation est provisoirement projetée avant d'être ramenée à `d_model`.
 
@@ -172,6 +174,8 @@ Trois niveaux doivent rester distincts :
 2. **Le bloc Transformer** associe cette attention à un MLP, avec des connexions résiduelles et des normalisations.
 3. **Le GPT complet** assemble les représentations d'entrée, une pile de blocs, puis une normalisation finale et une tête de sortie.
 
+Soit, en un arbre :
+
 ```
 GPT complet
 └── pile de N blocs Transformer
@@ -185,7 +189,13 @@ L'attention est donc une partie du bloc ; le bloc est l'unité répétée ; le T
 
 ## 3. Des représentations aux logits
 
-Après le dernier bloc, la normalisation finale et la tête de sortie produisent les **logits** : un score non normalisé pour chaque token du vocabulaire. La tête de sortie est une simple projection linéaire : chaque représentation de dimension `d_model` devient un vecteur de `vocab_size` scores (50 257 pour GPT-2). La [leçon consacrée aux logits](logits.qmd) explique ce que ces scores représentent ; celle sur les [probabilités de sortie](probabilites.qmd) montre comment *softmax* les convertit en distribution. Le réseau s'arrête à ces scores : choisir un token, l'ajouter au contexte et relancer le calcul relève de la [génération autorégressive](generation.qmd).
+La sortie du dernier bloc est l'**état final** du réseau. La normalisation finale puis la tête de sortie produisent les **logits** : un score non normalisé pour chaque token du vocabulaire. La tête de sortie est une simple projection linéaire : chaque représentation de dimension `d_model` devient un vecteur de `vocab_size` scores (50 257 pour GPT-2).
+
+`sortie du dernier bloc → normalisation finale → projection vers le vocabulaire → logits`
+
+En aval, hors du réseau : `logits → softmax → probabilités → token choisi`.
+
+Pour notre préfixe d'exemple avec les dimensions de GPT-2 : chaque position ressort du dernier bloc comme un vecteur de 768 nombres, qui devient 50 257 scores. En génération, seuls les **logits de la dernière position** servent à choisir le prochain token ; le masque causal garantit qu'ils ne dépendent que des tokens déjà connus. La [leçon consacrée aux logits](logits.qmd) explique ce que ces scores représentent ; celle sur les [probabilités de sortie](probabilites.qmd) montre comment *softmax* les convertit en distribution. Le réseau s'arrête à ces scores : choisir un token, l'ajouter au contexte et relancer le calcul relève de la [génération autorégressive](generation.qmd).
 
 <!-- Legacy section anchors: see the linked companion page. -->
 <span id="une-expérience-guidée-en-quatre-observations"></span>
@@ -229,6 +239,7 @@ Après le dernier bloc, la normalisation finale et la tête de sortie produisent
 2. Pourquoi une connexion résiduelle ne remplace-t-elle pas la transformation de la sous-couche ?
 3. Quel problème la normalisation prévient-elle dans une pile de blocs profonde ?
 4. Dans le MLP d'un bloc, quelles dimensions traverse une représentation, dans quel ordre ?
+5. Pendant la génération, quels logits servent à choisir le prochain token ?
 
 <details>
 <summary>Afficher les réponses</summary>
@@ -237,6 +248,7 @@ Après le dernier bloc, la normalisation finale et la tête de sortie produisent
 2. La connexion résiduelle additionne la sortie de la sous-couche à son entrée : $x_{sortie}=x_{entrée}+F(x_{entrée})$. Elle préserve un chemin direct à travers le bloc tout en laissant la sous-couche apporter une transformation apprise.
 3. Sans normalisation, les additions successives des connexions résiduelles font croître les magnitudes des représentations : activations et gradients deviennent instables et l'entraînement d'une pile profonde échoue. La normalisation recentre et réduit les composantes du vecteur de chaque position, ce qui stabilise l'entraînement.
 4. `d_model` vers `d_ff` (la dimension intermédiaire, souvent environ 4 × `d_model`), puis retour vers `d_model` ; l'activation non linéaire s'applique sur la représentation intermédiaire.
+5. Ceux de la dernière position uniquement : le masque causal garantit qu'ils ne dépendent que des tokens déjà connus. Pendant l'entraînement, en revanche, les logits de toutes les positions sont utilisés, chaque position étant supervisée pour prédire son token suivant.
 
 </details>
 :::
