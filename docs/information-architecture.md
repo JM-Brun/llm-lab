@@ -209,6 +209,7 @@ The standards profile documents the graph-export and rendered-output checks; use
 | Learning-map implementation | `site/tools/build_learning_map.py`, `tests/knowledge/test_learning_map.py` |
 | Metadata validation | `site/tools/check_page_metadata.py`, `tests/knowledge/test_page_metadata.py` |
 | Curriculum and prerequisites | [Learning path](learning-path.md) |
+| Reusable cross-path teaching example and page-by-page mapping | [Otis learning-example reference](meta/learning-example-otis.md) (internal editorial source; not a published lesson) |
 | Page composition | [Page-template system](page-template-system.md) |
 | Page type to template mapping | [Site page design system](site-page-design-system.md) |
 | Visual design | [Design system](design-system.md) |
