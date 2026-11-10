@@ -2214,3 +2214,9 @@ p:has(.pipeline-stepper) {
     overflow: visible;
   }
 }
+
+@media (max-width: 600px) {
+  .pipeline-stepper:not(.meta-flow--branch) .step-arrow {
+    display: inline-block;
+  }
+}
