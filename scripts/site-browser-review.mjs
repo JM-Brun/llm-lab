@@ -1156,7 +1156,6 @@ await Promise.all(Array.from({ length: workerCount }, async () => {
 }));
 
 // Parallel workers complete out of order; keep the report stable and diffable.
-const caseOrder = new Map(cases.map((testCase, index) => [testCase, index]));
 report.cases.sort((a, b) => {
   const aIndex = cases.findIndex(testCase => testCase.page === a.page && testCase.lang === a.lang && testCase.label === a.label && testCase.theme === a.theme && testCase.kind === a.kind);
   const bIndex = cases.findIndex(testCase => testCase.page === b.page && testCase.lang === b.lang && testCase.label === b.label && testCase.theme === b.theme && testCase.kind === b.kind);
