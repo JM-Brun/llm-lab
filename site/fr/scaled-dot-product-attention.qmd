@@ -72,6 +72,8 @@ $$
 
 Ici, $M$ désigne un masque additif strict : $M_{ij}=0$ pour un couple requête-clé autorisé et $M_{ij}=-\infty$ pour un couple interdit. Si aucun masque n'est nécessaire, on omet $M$ (ce qui revient à utiliser une matrice nulle). Le masque agit sur les scores **avant** le softmax : c'est le seul point où il peut modifier les positions accessibles à la normalisation. Quelles positions interdire — la contrainte causale — et comment traiter une ligne entièrement masquée sont définis dans le [masque causal](causal-masking.qmd), prochaine étape du parcours.
 
+Dans le fil rouge, cette opération est répétée pour chaque position qui doit produire une représentation contextualisée. Elle combine des valeurs selon des poids calculés à partir des compatibilités entre Q et K ; elle ne choisit pas directement le prochain token.
+
 ## Passer du mécanisme au calcul
 
 Le calcul complet se lit dans l'ordre : les scores issus de Q et K sont mis à l'échelle, le masque éventuel exclut les positions interdites, le softmax normalise les scores accessibles, puis les poids combinent les vecteurs V. Pour effectuer cette chaîne de calcul à la main, distinguer mélange pondéré et sélection, puis manipuler les projections dans un cas multi-têtes, utilisez les exercices de la collection [Attention](exercises-attention.qmd#at-0-scores-to-output), en particulier AT-A à AT-C.
