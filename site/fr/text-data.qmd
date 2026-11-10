@@ -108,12 +108,19 @@ La segmentation détermine la séquence d'IDs fournie au modèle. Elle influe no
 
 Un même texte peut produire des séquences différentes selon le vocabulaire, la pré-tokenisation et les règles du tokenizer. Pour comprendre et comparer ces mécanismes, consultez la page canonique sur les [stratégies de tokenisation](tokenization-strategies.qmd), qui rassemble les granularités, les composants, les algorithmes et les exemples comparatifs. Les métriques empiriques et les compromis avancés sont traités dans [la conception et l'évaluation des tokenizers](tokenizer-design-evaluation.qmd).
 
-## Exercices
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Ressources complémentaires</span>
+  <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/text-data.qmd).
 
 
-## Frontières entre les pages
+### Frontières entre les pages
 
 - **Cette page** : chaîne texte → tokens → IDs → vecteurs initiaux ; rôle de chaque objet et compatibilité du tokenizer avec le modèle.
 - **[Stratégies de tokenisation](tokenization-strategies.qmd)** : granularités, pré-tokenisation, BPE, WordPiece, unigramme et exemples à tester.
@@ -122,6 +129,9 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 - **[Exemples d'entraînement](training-examples.qmd)** : fenêtres, cibles décalées, packing et masques.
 
 La préparation du corpus (provenance, filtrage, déduplication, partitions et ajustement du tokenizer) a désormais sa page de référence : [Préparer un corpus pour le préentraînement](corpus-preparation.qmd). Cette page conserve uniquement la distinction nécessaire pour situer l'encodage d'un prompt.
+
+</div>
+</details>
 
 {{< include ../includes/generated-suggested-route-fr-text-data.qmd >}}
 
