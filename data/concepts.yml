@@ -430,7 +430,7 @@ concepts:
       en: "Set of procedures applied after pretraining to adapt a model to instructions, preferences, or targeted uses."
     domains: [probabilistic-foundations-training]
     importance: supporting
-    resources: [fr/llm-evolution, en/llm-evolution]
+    resources: [fr/llm-evolution, en/llm-evolution, fr/post-training, en/post-training]
   - id: instruction-tuning
     labels: {fr: "Ajustement supervisé sur instructions", en: "Instruction tuning"}
     definitions:

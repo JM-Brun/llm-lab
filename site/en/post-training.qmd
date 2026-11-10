@@ -1,0 +1,113 @@
+---
+title: "From a base model to an assistant: post-training"
+subtitle: "Adapting pretrained parameters, and what stays in the context"
+keywords: ["type:concept-lesson", "destination:understand", "topic:post-training", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/post-training"
+summary: "Explains post-training as the same training loop applied to a pretrained model with different data and targets, and separates it from prompting and retrieval, which change the context but not the parameters."
+scope: "Distinguish pretraining, supervised fine-tuning on instruction-response pairs, preference-based methods (reward-model RLHF and direct preference optimization), and parameter-efficient adaptation at the level of what data, targets and parameters change; contrast them with in-context learning and retrieval-augmented generation. Algorithms (PPO, DPO objective derivations), recipes of particular models and evaluation of assistant behaviour are out of scope."
+purpose: "State, for each adaptation method, what data it uses, which tokens contribute to the loss, which parameters change, and what stays fixed; choose between changing the context and changing the parameters."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: ["en/training-loop"]
+  children: []
+related: ["en/llm-overview", "en/llm-evolution", "en/in-context-learning", "en/loss", "en/glossary", "en/llm-limits"]
+tags: ["type:concept-lesson", "destination:understand", "topic:post-training", "level:applied", "language:en", "status:published"]
+-->
+
+
+{{< include ../includes/generated-guided-context-en-post-training.qmd >}}
+::: {.chapter-lead}
+A pretrained *base model* predicts likely continuations of text; it was not trained to follow instructions or to hold a conversation. Post-training adapts its parameters to that end. The mechanism is the [training loop](training-loop.qmd) already studied, applied to a model that starts from learned parameters and uses different data, targets, or training signals.
+:::
+
+::: {.callout-tip title="The one-minute mental model"}
+Two different things can change an answer.
+
+- **Change the parameters** (post-training): run the training loop on new data. The change persists in the checkpoint and applies to every later prompt.
+- **Change the context** (prompting, examples, retrieved documents): supply different input to fixed parameters. The change applies to that request only.
+
+Post-training methods differ in *which data*, *which tokens contribute to the loss*, and *which parameters are updated*. They are not synonyms and are not all used for every model.
+:::
+
+## What stays the same: the loop
+
+Post-training starts from the parameters $\theta_0$ obtained by [pretraining](training-loop.qmd#pretraining-is-the-same-loop-at-scale), not from a random initialization. Each step still performs a forward pass, a [loss](loss.qmd), a [gradient](gradients.qmd) and an update. What changes is the training data and which positions the loss counts.
+
+| Method | Data | Training signal | Parameters changed |
+|---|---|---|---|
+| **Pretraining** | Large unannotated text corpus | Next-token cross-entropy on every position | All |
+| **Supervised fine-tuning (SFT) / instruction tuning** | Curated instruction–response demonstrations | Next-token cross-entropy, typically on the response tokens only | Usually all, or a small added subset (see below) |
+| **Preference-based methods** (RLHF, DPO) | Comparisons between candidate responses to the same prompt | A learned reward (RLHF) or a loss defined directly on the preferred and rejected responses (DPO) | Usually all, or a small added subset |
+| **Prompting, few-shot examples, RAG** | Text placed in the context at request time | None: no training | None |
+
+The table states typical practice; individual systems differ and public documentation does not always say which combination a given model used.
+
+## Supervised fine-tuning: the same loss, a different mask
+
+An instruction–response pair is concatenated into one token sequence, for example a prompt followed by the desired answer. SFT then applies the next-token objective from [Loss](loss.qmd). The common choice is to let only the **response** tokens contribute to the loss: prompt positions provide context through the causal mask but are excluded from the mean through the [loss mask](loss.qmd#masking-and-shifted-targets). Counting the prompt as well is also possible and changes the objective.
+
+This is why the loss mask matters: it selects which targets contribute to the objective; it does not decide which positions the attention can read. Nothing else in the forward pass changes. The result is a model whose most probable continuation of an instruction-shaped prompt is an answer in the demonstrated style.
+
+SFT teaches by imitation of the demonstrations. It does not by itself tell the model which of two acceptable answers a person would prefer, and its quality depends on the quality and coverage of the demonstrations.
+
+## Preference-based methods
+
+Preference data records which of two (or more) candidate responses to the same prompt a person or another judge preferred. Two families are common.
+
+- **Reward-model RLHF.** First, a *reward model* is trained to assign higher scores to preferred responses. Then the language model is optimized with a reinforcement-learning algorithm (often PPO) to produce responses that score well, usually with a penalty that keeps it close to the starting model. The reward is a learned proxy for the preference data, not a measure of truth or quality.
+- **Direct preference optimization (DPO).** The language model is trained directly with a loss on preferred versus rejected responses, without a separate reward model and RL loop.
+
+Both change the parameters, so both are post-training. They differ from SFT in that the signal is a comparison, not a single target sequence. Both remain optimizing a proxy: data collected from particular raters, prompts and criteria. Their derivations, variants and trade-offs are outside this lesson; see the glossary entries and the sources below.
+
+## Updating fewer parameters
+
+Fine-tuning every parameter of a large model requires storing gradients and optimizer state for all of them. **Parameter-efficient** methods freeze the pretrained weights and train a small number of added parameters. LoRA, for example, learns a low-rank correction to selected weight matrices ([Hu et al., 2021](https://arxiv.org/abs/2106.09685)). This changes how many parameters the optimizer updates, not the objective: the loop is the same, and the result is the pretrained weights plus a small trained addition.
+
+## Changing the context instead
+
+Some methods leave the parameters untouched.
+
+- **Prompting and in-context examples:** instructions or demonstrations placed in the prompt shape the continuation without any update. See [In-context learning](in-context-learning.qmd) for what examples can and cannot do.
+- **Retrieval-augmented generation (RAG):** a retrieval step fetches documents and inserts them into the prompt ([Lewis et al., 2020](https://arxiv.org/abs/2005.11401)). New information can be added by updating the document store, without training; the answer is only as good as retrieval and the model's use of the retrieved text.
+
+::: {.callout-warning title="Misconceptions"}
+- **“Fine-tuning adds knowledge the way a database insert does.”** It adjusts parameters toward the training signal; it may shape style and format reliably, and facts less reliably, and can degrade behaviour outside the tuning data.
+- **“Instruction tuning changes the architecture.”** The network is the same; the parameters differ.
+- **“RLHF and DPO are interchangeable names for fine-tuning.”** They use comparison data and different objectives; SFT uses demonstrations.
+- **“A model that follows instructions is therefore truthful.”** Post-training shapes the distribution toward preferred outputs; it does not guarantee factual accuracy. See [LLM limits](llm-limits.qmd).
+:::
+
+## Choosing between context and parameters
+
+Start with the cheapest change that your measurements justify: the model as is, then context (examples, retrieval), then parameters. Adapting is justified when a format, domain or behaviour is not obtained from the context alone and enough good data exists. The decision rests on measured quality, cost, latency, confidentiality, data provenance and maintenance, as in the [LLM panorama](llm-overview.qmd). A few successful prompts are not an evaluation; see [Experimental evaluation](experimental-evaluation.qmd).
+
+For the position of these methods in the history of assistant models, see [LLM evolution](llm-evolution.qmd#from-pretraining-to-post-training). The from-scratch Build path does not cover adaptation; its status is tracked in the [Build path](build-path.qmd).
+
+:::: {.language-switch}
+[Français](../fr/post-training.qmd) · [English](post-training.qmd)
+::::
+
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Supplementary resources</span>
+  <span class="learning-resources__description">Experiment, explore further, and practise the ideas from this lesson.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Further reading
+
+- [Ouyang et al. — Training language models to follow instructions with human feedback](https://arxiv.org/abs/2203.02155): supervised fine-tuning, a reward model and PPO in one documented pipeline.
+- [Wei et al. — Finetuned Language Models Are Zero-Shot Learners (FLAN)](https://arxiv.org/abs/2109.01652): instruction tuning on many tasks phrased as instructions.
+- [Rafailov et al. — Direct Preference Optimization](https://arxiv.org/abs/2305.18290): preference learning without a separate reward model.
+- [Hu et al. — LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685): parameter-efficient adaptation by low-rank updates.
+- [Lewis et al. — Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401): retrieval inserted into the context at inference time.
+
+</div>
+</details>

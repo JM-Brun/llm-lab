@@ -22,6 +22,7 @@
     - [Loss : de la perte par token à l'objectif](loss.html)
     - [Gradients : relier la perte aux paramètres](gradients.html)
     - [La boucle d'entraînement : des gradients au modèle entraîné](training-loop.html)
+    - [D'un modèle de base à un assistant : le post-entraînement](post-training.html)
   - Architectures Transformer et limites des LLM
     - [Architectures Transformer : encodeur, encodeur-décodeur et décodeur](transformer-architectures.html)
     - [Objectif d'entraînement : garanties et limites](llm-limits.html)
