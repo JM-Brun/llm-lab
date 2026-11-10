@@ -13,7 +13,7 @@ Inspected:
 
 - `site/fr/queries-keys-values.qmd` and `site/en/queries-keys-values.qmd`;
 - `site/images/queries-keys-values.svg` and its English counterpart;
-- the French Transformer overview and scaled dot-product attention lesson;
+- the French and English Transformer overviews and scaled dot-product attention lessons;
 - the bilingual page metadata and their stated learning objectives.
 
 This is a **source-level review**. It establishes what the Quarto sources and SVGs specify. The published pages could not be inspected in a browser during this pass; no claim is made about rendered typography, responsive behavior, keyboard interaction, or actual learner comprehension. No learner study was conducted.
