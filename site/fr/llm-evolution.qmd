@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/scaling-laws", "fr/emergence", "fr/in-context-learning", "fr/hybrid-llm-architectures", "fr/llm-computational-complexity", "fr/llm-limits", "fr/evaluation-experimentale"]
+related: ["fr/scaling-laws", "fr/emergence", "fr/in-context-learning", "fr/hybrid-llm-architectures", "fr/llm-computational-complexity", "fr/llm-limits", "fr/evaluation-experimentale", "fr/exercises/llm-evolution"]
 tags: ["type:concept-lesson", "destination:deepen", "topic:llm-evolution", "level:advanced", "language:fr", "status:published"]
 -->
 
@@ -179,17 +179,11 @@ Le meilleur modèle mental reste donc celui d'un **modèle prédictif au cœur d
 - OpenAI, [Async tool calling](https://developers.openai.com/api/docs/guides/async-tool-calling) — contrat d'exécution asynchrone.
 - OpenAI, [Mid-turn steering](https://developers.openai.com/api/docs/guides/steering) — contrôle d'une réponse en cours.
 
-::: {.self-check}
-## Vérifier sa compréhension
+## S’exercer
 
-1. Pourquoi GPT-3 illustre-t-il l'apprentissage en contexte plutôt qu'un fine-tuning à chaque tâche few-shot ?
-2. Pourquoi le post-entraînement ne doit-il pas être confondu avec le pré-entraînement ?
-3. Une API expose un appel d'outil asynchrone : qu'est-ce qui reste sous la responsabilité de l'application ?
-4. Une amélioration de benchmark suffit-elle à démontrer une modification d'architecture ? Pourquoi ?
-5. Classez MoE, KV cache, RLHF et inference-time compute selon l'axe principal auquel ils appartiennent.
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/llm-evolution.qmd).
 
-[Exercices et expérimentations](exercises.qmd).
-:::
+
 
 ::: {.language-switch}
 **Langue :** [Français](llm-evolution.qmd) · [English](../en/llm-evolution.qmd)

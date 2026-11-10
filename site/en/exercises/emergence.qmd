@@ -1,0 +1,36 @@
+---
+title: "Exercises — Emergent capabilities"
+subtitle: "Self-check questions, exercises, and worked answers"
+keywords: ["type:exercise-hub", "destination:practice", "topic:emergence", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/exercises/emergence"
+summary: "Self-check questions and exercises associated with the Emergent capabilities lesson."
+scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
+purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/emergence"]
+tags: ["type:exercise-hub", "destination:practice", "topic:emergence", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the lesson: Emergent capabilities](../emergence.qmd)
+
+## Check your understanding
+
+1. Exact-match accuracy jumps from 0% to 60%, while a graded similarity measure increases steadily. Which conclusion is justified?
+2. Why is a comparison between only two model sizes insufficient to isolate the effect of scale?
+3. Propose a protocol for testing whether a capability truly appears discontinuously.
+
+[Exercises and experiments](../exercises.qmd).
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/emergence.qmd) · [English](../exercises/emergence.qmd)
+:::

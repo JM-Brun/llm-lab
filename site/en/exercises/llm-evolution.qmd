@@ -1,0 +1,38 @@
+---
+title: "Exercises — Evolution of language models"
+subtitle: "Self-check questions, exercises, and worked answers"
+keywords: ["type:exercise-hub", "destination:practice", "topic:llm-evolution", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/exercises/llm-evolution"
+summary: "Self-check questions and exercises associated with the Evolution of language models lesson."
+scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
+purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/llm-evolution"]
+tags: ["type:exercise-hub", "destination:practice", "topic:llm-evolution", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the lesson: Evolution of language models](../llm-evolution.qmd)
+
+## Check your understanding
+
+1. Why does GPT-3 illustrate in-context learning rather than fine-tuning for every few-shot task?
+2. Why should post-training not be confused with pretraining?
+3. An API exposes asynchronous tool calling: what remains the application's responsibility?
+4. Is a benchmark improvement enough to demonstrate an architectural change? Why?
+5. Classify MoE, KV cache, RLHF, and inference-time compute by their primary axis.
+
+[Exercises and practice](../exercises.qmd).
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/llm-evolution.qmd) · [English](../exercises/llm-evolution.qmd)
+:::

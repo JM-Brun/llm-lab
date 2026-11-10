@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["en/scaling-laws", "en/emergence", "en/in-context-learning", "en/hybrid-llm-architectures", "en/llm-computational-complexity", "en/llm-limits", "en/experimental-evaluation"]
+related: ["en/scaling-laws", "en/emergence", "en/in-context-learning", "en/hybrid-llm-architectures", "en/llm-computational-complexity", "en/llm-limits", "en/experimental-evaluation", "en/exercises/llm-evolution"]
 tags: ["type:concept-lesson", "destination:deepen", "topic:llm-evolution", "level:advanced", "language:en", "status:published"]
 -->
 
@@ -179,17 +179,11 @@ The most useful mental model is therefore **a predictive model at the core of a 
 - OpenAI, [Async tool calling](https://developers.openai.com/api/docs/guides/async-tool-calling) — asynchronous execution contract.
 - OpenAI, [Mid-turn steering](https://developers.openai.com/api/docs/guides/steering) — steering an ongoing response.
 
-::: {.self-check}
-## Check your understanding
+## Practice
 
-1. Why does GPT-3 illustrate in-context learning rather than fine-tuning for every few-shot task?
-2. Why should post-training not be confused with pretraining?
-3. An API exposes asynchronous tool calling: what remains the application's responsibility?
-4. Is a benchmark improvement enough to demonstrate an architectural change? Why?
-5. Classify MoE, KV cache, RLHF, and inference-time compute by their primary axis.
+This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/llm-evolution.qmd).
 
-[Exercises and practice](exercises.qmd).
-:::
+
 
 ::: {.language-switch}
 **Language:** [Français](../fr/llm-evolution.qmd) · [English](llm-evolution.qmd)

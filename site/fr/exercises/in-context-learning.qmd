@@ -1,0 +1,36 @@
+---
+title: "Exercices — Apprentissage en contexte"
+subtitle: "Questions de vérification, exercices et corrigés"
+keywords: ["type:exercise-hub", "destination:practice", "topic:in-context-learning", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/exercises/in-context-learning"
+summary: "Questions de vérification et exercices associés à la leçon Apprentissage en contexte."
+scope: "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle."
+purpose: "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/in-context-learning"]
+tags: ["type:exercise-hub", "destination:practice", "topic:in-context-learning", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour à la leçon : Apprentissage en contexte](../in-context-learning.qmd)
+
+## Vérifier sa compréhension
+
+1. Pourquoi l'ICL n'est-il pas une mise à jour des poids ?
+2. Une démonstration améliore le format de sortie mais pas l'exactitude. Qu'est-ce que cela indique sur la différence entre imitation et généralisation ?
+3. Concevez une expérience qui distingue l'apprentissage d'une règle de la simple reproduction de motifs présents dans les exemples.
+
+[Exercices et expérimentations](../exercises.qmd).
+
+::: {.language-switch}
+**Langue :** [Français](../exercises/in-context-learning.qmd) · [English](../../en/exercises/in-context-learning.qmd)
+:::

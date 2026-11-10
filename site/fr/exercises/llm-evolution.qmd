@@ -1,0 +1,38 @@
+---
+title: "Exercices — Évolution des modèles de langage"
+subtitle: "Questions de vérification, exercices et corrigés"
+keywords: ["type:exercise-hub", "destination:practice", "topic:llm-evolution", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/exercises/llm-evolution"
+summary: "Questions de vérification et exercices associés à la leçon Évolution des modèles de langage."
+scope: "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle."
+purpose: "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/llm-evolution"]
+tags: ["type:exercise-hub", "destination:practice", "topic:llm-evolution", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour à la leçon : Évolution des modèles de langage](../llm-evolution.qmd)
+
+## Vérifier sa compréhension
+
+1. Pourquoi GPT-3 illustre-t-il l'apprentissage en contexte plutôt qu'un fine-tuning à chaque tâche few-shot ?
+2. Pourquoi le post-entraînement ne doit-il pas être confondu avec le pré-entraînement ?
+3. Une API expose un appel d'outil asynchrone : qu'est-ce qui reste sous la responsabilité de l'application ?
+4. Une amélioration de benchmark suffit-elle à démontrer une modification d'architecture ? Pourquoi ?
+5. Classez MoE, KV cache, RLHF et inference-time compute selon l'axe principal auquel ils appartiennent.
+
+[Exercices et expérimentations](../exercises.qmd).
+
+::: {.language-switch}
+**Langue :** [Français](../exercises/llm-evolution.qmd) · [English](../../en/exercises/llm-evolution.qmd)
+:::

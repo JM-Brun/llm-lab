@@ -1,0 +1,68 @@
+---
+title: "Exercises — Autoregressive generation"
+subtitle: "Self-check questions, exercises, and worked answers"
+keywords: ["type:exercise-hub", "destination:practice", "topic:inference-generation", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/exercises/generation"
+summary: "Self-check questions and exercises associated with the Autoregressive generation lesson."
+scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
+purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/generation"]
+tags: ["type:exercise-hub", "destination:practice", "topic:inference-generation", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the lesson: Autoregressive generation](../generation.qmd)
+
+## Check your understanding
+
+Try to answer the following questions before revealing the explanations.
+
+1. Why can the same model with the same context produce different texts?
+
+<details>
+<summary>Show the answer</summary>
+
+Because sampling can draw different tokens from the distribution. Each selected token then changes the context of subsequent predictions.
+
+</details>
+
+2. Why does a very low temperature make sampling approach greedy selection?
+
+<details>
+<summary>Show the answer</summary>
+
+It amplifies differences between logits. The distribution becomes highly concentrated on the highest-scoring token, making other choices very unlikely (except for ties and numerical effects).
+
+</details>
+
+3. Why cannot generation correct a poorly trained model?
+
+<details>
+<summary>Show the answer</summary>
+
+Parameters remain fixed during inference: no update takes place, no matter how many tokens are generated.
+
+</details>
+
+4. What is the difference between prefill and teacher forcing?
+
+<details>
+<summary>Show the answer</summary>
+
+Prefill is an execution phase that processes the initial prompt as a sequence. Teacher forcing is a conditioning strategy that supplies the observed prefix as context during training (and some scoring uses). They are not two names for the same operation.
+
+</details>
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/generation.qmd) · [English](../exercises/generation.qmd)
+:::

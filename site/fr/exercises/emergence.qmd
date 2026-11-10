@@ -1,0 +1,36 @@
+---
+title: "Exercices — Émergence des capacités"
+subtitle: "Questions de vérification, exercices et corrigés"
+keywords: ["type:exercise-hub", "destination:practice", "topic:emergence", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/exercises/emergence"
+summary: "Questions de vérification et exercices associés à la leçon Émergence des capacités."
+scope: "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle."
+purpose: "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/emergence"]
+tags: ["type:exercise-hub", "destination:practice", "topic:emergence", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour à la leçon : Émergence des capacités](../emergence.qmd)
+
+## Vérifier sa compréhension
+
+1. Une exactitude stricte passe de 0 % à 60 %, alors qu'une mesure graduelle de proximité augmente régulièrement. Quelle conclusion est justifiée ?
+2. Pourquoi une comparaison entre deux tailles de modèles ne suffit-elle pas à isoler l'effet de l'échelle ?
+3. Proposez un protocole permettant de tester si une capacité apparaît réellement de façon discontinue.
+
+[Exercices et expérimentations](../exercises.qmd).
+
+::: {.language-switch}
+**Langue :** [Français](../exercises/emergence.qmd) · [English](../../en/exercises/emergence.qmd)
+:::

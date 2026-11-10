@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/llm-overview", "fr/generation", "fr/contextualized-representations"]
+related: ["fr/llm-overview", "fr/generation", "fr/contextualized-representations", "fr/exercises/in-context-learning"]
 tags: ["type:concept-lesson", "destination:deepen", "topic:in-context-learning", "level:advanced", "language:fr", "status:published"]
 -->
 
@@ -106,15 +106,11 @@ Un bon protocole sépare la réussite sur les exemples vus de la généralisatio
 - Xie et al. (2022), [*An Explanation of In-context Learning as Implicit Bayesian Inference*](https://arxiv.org/abs/2111.02080).
 - Min et al. (2022), [*Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?*](https://arxiv.org/abs/2202.12837).
 
-::: {.self-check}
-## Vérifier sa compréhension
+## S’exercer
 
-1. Pourquoi l'ICL n'est-il pas une mise à jour des poids ?
-2. Une démonstration améliore le format de sortie mais pas l'exactitude. Qu'est-ce que cela indique sur la différence entre imitation et généralisation ?
-3. Concevez une expérience qui distingue l'apprentissage d'une règle de la simple reproduction de motifs présents dans les exemples.
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/in-context-learning.qmd).
 
-[Exercices et expérimentations](exercises.qmd).
-:::
+
 
 ::: {.language-switch}
 **Langue :** [Français](in-context-learning.qmd) · [English](../en/in-context-learning.qmd)

@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/llm-overview"]
   children: ["fr/logits", "fr/probabilites"]
-related: ["fr/text-data", "fr/build-path", "fr/decoding-strategies", "fr/gpt-generation-walkthrough", "fr/training-examples"]
+related: ["fr/text-data", "fr/build-path", "fr/decoding-strategies", "fr/gpt-generation-walkthrough", "fr/training-examples", "fr/exercises/generation"]
 tags: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:fr", "status:published"]
 -->
 
@@ -161,47 +161,11 @@ C'est la distinction centrale avec l'[apprentissage](loss.qmd) : l'inférence ut
 - **Pas de mémoire intrinsèque entre deux générations :** chaque génération dépend du contexte qui lui est transmis. Une application peut réinjecter un historique ou conserver un état externe, mais cela ne signifie pas que les poids du modèle ont mémorisé la conversation.
 - **Qualité dépendante des paramètres appris :** la boucle de génération peut fonctionner avec un modèle non entraîné, mais ses sorties ne deviennent pas utiles pour autant. La mécanique de génération et la qualité acquise par apprentissage sont deux questions distinctes.
 
-::: {.self-check}
-## Vérifier sa compréhension
+## S’exercer
 
-Répondez aux questions suivantes sans consulter immédiatement les réponses.
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/generation.qmd).
 
-1. Pourquoi un même modèle avec un même contexte peut-il produire des textes différents ?
 
-<details>
-<summary>Afficher la réponse</summary>
-
-Parce que l'échantillonnage peut tirer des tokens différents selon la distribution. Chaque token sélectionné modifie ensuite le contexte des prédictions suivantes.
-
-</details>
-
-2. Pourquoi une température très basse rapproche-t-elle l'échantillonnage d'une sélection gloutonne ?
-
-<details>
-<summary>Afficher la réponse</summary>
-
-Elle accentue les différences entre logits. La distribution devient très concentrée sur le token de score maximal, de sorte que les autres choix deviennent très peu probables (hors égalités et effets numériques).
-
-</details>
-
-3. Pourquoi la génération ne peut-elle pas corriger un modèle mal entraîné ?
-
-<details>
-<summary>Afficher la réponse</summary>
-
-Les paramètres restent fixes pendant l'inférence : aucune mise à jour n'a lieu, quel que soit le nombre de tokens générés.
-
-</details>
-
-4. Quelle est la différence entre prefill et teacher forcing ?
-
-<details>
-<summary>Afficher la réponse</summary>
-
-Le prefill est une phase d'exécution qui traite le prompt initial comme une séquence. Le teacher forcing est une stratégie de conditionnement qui fournit le préfixe observé comme contexte pendant l'entraînement (et certains usages de scoring). Ce ne sont pas deux noms pour la même opération.
-
-</details>
-:::
 
 ::: {.callout-tip title="Pour aller plus loin"}
 Ces liens correspondent à trois besoins différents :

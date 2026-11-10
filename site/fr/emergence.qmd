@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/scaling-laws", "fr/llm-limits", "fr/evaluation-experimentale"]
+related: ["fr/scaling-laws", "fr/llm-limits", "fr/evaluation-experimentale", "fr/exercises/emergence"]
 tags: ["type:concept-lesson", "destination:deepen", "topic:emergence", "level:advanced", "language:fr", "status:published"]
 -->
 
@@ -79,15 +79,11 @@ Une capacité peut être nouvelle du point de vue de l'usage tout en résultant 
 - Schaeffer, Miranda et Koyejo (2023), [*Are Emergent Abilities of Large Language Models a Mirage?*](https://arxiv.org/abs/2304.15004).
 - Srivastava et al. (2022), [*Beyond the Imitation Game: Quantifying and extrapolating the capabilities of language models*](https://arxiv.org/abs/2206.04615).
 
-::: {.self-check}
-## Vérifier sa compréhension
+## S’exercer
 
-1. Une exactitude stricte passe de 0 % à 60 %, alors qu'une mesure graduelle de proximité augmente régulièrement. Quelle conclusion est justifiée ?
-2. Pourquoi une comparaison entre deux tailles de modèles ne suffit-elle pas à isoler l'effet de l'échelle ?
-3. Proposez un protocole permettant de tester si une capacité apparaît réellement de façon discontinue.
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/emergence.qmd).
 
-[Exercices et expérimentations](exercises.qmd).
-:::
+
 
 ::: {.language-switch}
 **Langue :** [Français](emergence.qmd) · [English](../en/emergence.qmd)
