@@ -23,13 +23,22 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
+      - name: Cache Quarto installer
+        id: quarto_cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}/quarto-1.11.9-linux-amd64.deb
+          key: quarto-${{ runner.os }}-1.11.9
+
       - name: Set up Quarto
         env:
           QUARTO_VERSION: "1.11.9"
         run: |
           installer="$RUNNER_TEMP/quarto-${QUARTO_VERSION}-linux-amd64.deb"
-          url="https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.deb"
-          curl --fail --location --retry 5 --retry-all-errors --retry-delay 5 --retry-max-time 240 --output "$installer" "$url"
+          if [ ! -s "$installer" ]; then
+            url="https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.deb"
+            curl --fail --location --retry 5 --retry-all-errors --retry-delay 5 --retry-max-time 240 --output "$installer" "$url"
+          fi
           sudo apt-get install --yes "$installer"
           quarto --version
 
@@ -38,15 +47,26 @@ jobs:
         with:
           version: "0.13.7"
           python-version: "3.12"
+          enable-cache: true
+          cache-dependency-glob: |
+            pyproject.toml
+            uv.lock
+            docs/requirements-history-validation.txt
+
+      - name: Create shared render environment
+        run: |
+          uv venv --python 3.12 .venv
+          uv pip install --python .venv/bin/python -r docs/requirements-history-validation.txt
 
       - name: Generate bilingual history timeline fragments
-        run: uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/render_history_pilot.py
-
+        run: .venv/bin/python site/tools/render_history_pilot.py
 
       - name: Generate learning-map data and guided-route Markdown
-        run: uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/build_learning_map.py
+        run: .venv/bin/python site/tools/build_learning_map.py
+
       - name: Generate bilingual computational-graph fragments
-        run: uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/render_computational_graph.py
+        run: .venv/bin/python site/tools/render_computational_graph.py
+
       - name: Render site
         run: quarto render site
 
