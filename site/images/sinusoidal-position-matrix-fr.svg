@@ -9,7 +9,7 @@
 <text x="228" y="506" text-anchor="middle" class="tick">0</text><text x="274" y="506" text-anchor="middle" class="tick">1</text><text x="320" y="506" text-anchor="middle" class="tick">2</text><text x="366" y="506" text-anchor="middle" class="tick">3</text><text x="412" y="506" text-anchor="middle" class="tick">4</text><text x="458" y="506" text-anchor="middle" class="tick">5</text><text x="504" y="506" text-anchor="middle" class="tick">6</text><text x="550" y="506" text-anchor="middle" class="tick">7</text><text x="189" y="109" text-anchor="end" class="tick">0</text><text x="189" y="205" text-anchor="end" class="tick">8</text><text x="189" y="301" text-anchor="end" class="tick">16</text><text x="189" y="397" text-anchor="end" class="tick">24</text><text x="189" y="481" text-anchor="end" class="tick">31</text>
 <text transform="translate(164 292) rotate(-90)" text-anchor="middle" class="axis">Position ↓</text>
 <text x="40" y="524" class="note">Chaque paire de colonnes utilise une fréquence différente.</text>
-<defs><linearGradient id="legend"><stop offset="0" stop-color="#2563eb"/><stop offset=".5" stop-color="#f8fafc"/><stop offset="1" stop-color="#f97316"/></linearGradient></defs>
+<defs><linearGradient id="legend" x1="0%" y1="100%" x2="0%" y2="0%"><stop offset="0" stop-color="#2563eb"/><stop offset=".5" stop-color="#f8fafc"/><stop offset="1" stop-color="#f97316"/></linearGradient></defs>
 <rect x="40" y="120" width="14" height="120" rx="3" fill="url(#legend)"/>
 <text x="64" y="132" class="tick">+1</text><text x="64" y="184" class="tick">0</text><text x="64" y="238" class="tick">−1</text>
 </svg>
