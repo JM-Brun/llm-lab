@@ -190,6 +190,9 @@ Line by line:
 
 ## Build path navigation
 
+
+## Connections
+
 - **Next stop**: [building-block operations (`gpt_ops.py`)](gpt-ops-walkthrough.qmd).
 
 <details class="learning-resources">
