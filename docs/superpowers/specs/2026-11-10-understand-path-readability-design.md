@@ -108,91 +108,103 @@ caveat said once, where it applies; an explicit "you can skip this"; one analogy
 
 | Decision | Choice |
 |---|---|
-| Anchor example | The "avocat" pair (section 4) |
+| Anchor example | French: the Otis / Panoramix prefix; English: the *Life of Brian* question about the Romans. Canonical details: `docs/meta/learning-example-otis.md`. |
+| Illustrative numbers | Use the same clearly labelled toy distribution in both languages; never present it as output from a trained model. |
+| Exercises | Lesson questions live on dedicated exercise pages; retain only existing embedded checks where the page already has them. |
 | `generation`, used at stages 01 and 06 | Restructure in place; do not split |
 | Gender of "softmax" in French | Feminine: "la softmax" |
 | "loss" or "perte" in French titles and prose | "perte"; "loss" introduced once, then kept for code and API names |
 
 ## 4. The anchor example
 
-**French.** Two prompts with the same ending and a different left context:
+The canonical scenario is maintained in
+[`docs/meta/learning-example-otis.md`](../../meta/learning-example-otis.md). This design
+uses it as the shared anchor rather than introducing a competing toy example.
 
-- « Dans la salade, l'avocat est bien » → expected continuation « mûr »
-- « Au tribunal, l'avocat est bien » → expected continuation « préparé »
+**French.** The prompt / initial context is Panoramix's question:
 
-Why this pair: "avocat" is one written form with two senses; the disambiguating word comes
-*before* it, so a causal model can use it; the last three words are identical, so every
-difference in the output distribution comes from the left context.
+> « C'est une bonne situation, ça, scribe ? »
 
-**English.** "avocat" does not translate. The English pages use a pair with the same
-structure — one form, two senses, the cue on the left, an identical ending — and the same
-numbers. Proposed: "By the river, the bank was" → "steep" and "After the crash, the bank was"
-→ "closed". This is a builder's call, to be confirmed while writing; the constraint is the
-structure, not the words.
+The continuation is Otis's reply. For calculations and reproducible demonstrations, use the
+original LLM Lab toy continuation defined in the canonical document; do not reproduce the
+film's dialogue beyond the short referenced opening.
+
+**English.** Use the *Life of Brian* question:
+
+> “What have the Romans ever done for us?”
+
+The answers in the scene provide a cultural analogy, not a literal single-speaker autoregressive
+sequence. For token-by-token calculations, use a controlled, original continuation and make
+that distinction explicit. Do not force a translation of the French film dialogue.
 
 **What each stage does with it**
 
 | Stage | Pages | Use of the anchor |
 |---|---|---|
-| 01 Orientation | `llm-overview`, `generation` | The prompt and its continuation; the loop adds « mûr », then the next token |
-| 02 Text input | `text-data` | The prompt split into tokens and IDs; "avocat" has the same ID in both prompts |
-| 03 Representations | `embedding-space`, `positional-encoding`, `contextualized-representations` | Same ID → same row; swapping two words changes the meaning; same row, two different hidden states |
-| 04 Computation | `transformer`, `queries-keys-values`, `scaled-dot-product-attention`, `causal-masking` | The last position gathers information from « salade »; a small worked attention; « avocat » cannot read « mûr » |
-| 05 Prediction | `logits`, `probabilites`, `entropy` | The number chain (section 5) |
-| 06 Inference | `generation` (second visit) | Greedy picks « mûr »; sampling sometimes picks another |
-| 07 Scoring | `vraisemblance`, `cross-entropy` | Scoring the observed sentence « … est bien mûr. » |
-| 08 Training | `loss`, `gradients` | Averaging over positions; the gradient pushes the logit of « mûr » up |
-| Complements | `transformer-architectures`, `llm-limits` | Why a decoder-only model suits this prompt; « mûr » is plausible, not verified |
+| 01 Orientation | `llm-overview`, `generation` | Introduce the prefix as supplied context and the continuation as generated text; show the loop without formulas first. |
+| 02 Text input | `text-data` | Tokenize the supplied prefix and distinguish its tokens from continuation tokens; use IDs from a named tokenizer or label the split illustrative. |
+| 03 Representations | `embedding-space`, `positional-encoding`, `contextualized-representations` | Follow token IDs into embedding rows, positions and contextualized states; retain a secondary example only when it teaches something the anchor cannot. |
+| 04 Computation | `transformer`, `queries-keys-values`, `scaled-dot-product-attention`, `causal-masking` | Follow information through the causal model and show why future continuation tokens are inaccessible. |
+| 05 Prediction | `logits`, `probabilites`, `entropy` | Reuse the shared illustrative candidate distribution and number chain in section 5. |
+| 06 Inference | `generation` (second visit) | Compare greedy selection and sampling on the same distribution. |
+| 07 Scoring | `vraisemblance`, `cross-entropy` | Score an observed continuation token by token; distinguish scoring from choosing a continuation. |
+| 08 Training | `loss`, `gradients` | Aggregate token-level losses and show how gradients change parameters. |
+| Complements | `transformer-architectures`, `llm-limits` | Explain why a decoder-only model fits next-token generation and why plausible output is not verified truth. |
 
 **Rules for the anchor**
 
-- All numbers attached to it are illustrative and are labelled so, once per page, at first use.
-  They do not come from a trained model.
-- The token split shown in `text-data` either comes from a named real tokenizer, run and
-  recorded, or is labelled illustrative. The hypothesis "« avocat » is a single token" is
-  stated wherever the same-ID argument relies on it.
-- The anchor replaces local toys where it can do the same job. A local example stays when it
-  shows something the anchor cannot (for instance the pronoun example in
-  `queries-keys-values`), and is then introduced as a second case, not a restart.
-- Existing NumPy micro-workbenches keep their assertions; their comments and labels switch to
-  the anchor's tokens where the mapping is direct.
-- The existing figures `contextualized-embeddings-fr.svg` and its English twin show "bank".
-  The French figure needs French labels; the builder edits the SVG text or, if that is not
-  clean, keeps the figure and says in the caption that it uses the English counterpart.
+- The canonical document is the source of truth for the scenario, original toy continuation,
+  and bilingual variants.
+- All numbers are illustrative unless they are explicitly computed from a named model,
+  tokenizer and checkpoint. Label synthetic values at first use on each page.
+- Never publish token IDs as universal: they depend on the tokenizer and vocabulary.
+- A token split must come from a named real tokenizer or be labelled illustrative. Do not
+  assume that a word is a single token without checking.
+- Existing local examples may remain when they teach a distinction the anchor cannot; identify
+  them as secondary examples rather than restarting the shared narrative.
+- Existing NumPy micro-workbenches keep their assertions. Change labels only where the mapping
+  to the canonical example is exact.
+- Existing contextualized-embedding figures that still show “bank” may remain as explicitly
+  secondary examples; do not describe them as the shared anchor.
 
 ## 5. The number chain
 
-One small candidate set after « Dans la salade, l'avocat est bien », with probabilities chosen
-so that every step can be checked by hand. Proposed values, to be recomputed by the builder
-before use:
+Use one small, explicitly illustrative candidate set for the first continuation token. The
+French and English labels differ to match their respective cultural anchors; the probabilities
+and calculations remain aligned.
 
-| Candidate | Logit | Probability |
-|---|---|---|
-| mûr | ln 6 ≈ 1.79 | 0.6 |
-| préparé | ln 2 ≈ 0.69 | 0.2 |
-| vert | 0 | 0.1 |
-| frais | 0 | 0.1 |
+| Candidate (FR) | Logit | Probability | Candidate (EN) |
+|---|---:|---:|---|
+| « Être » | ln 6 ≈ 1.79 | 0.6 | “They” |
+| « Vous » | ln 2 ≈ 0.69 | 0.2 | “Aqueducts” |
+| « Oui » | 0 | 0.1 | “Nothing” |
+| « Non » | 0 | 0.1 | “Well” |
 
-- `logits`: the four scores; what can and cannot be read from them.
-- `probabilites`: softmax turns them into (0.6, 0.2, 0.1, 0.1); temperature reshapes them.
-  The tribunal prompt gives a different distribution over the same candidates.
+The logits are illustrative: softmax gives (0.6, 0.2, 0.1, 0.1). The four-candidate
+vocabulary is a deliberate reduction of a real vocabulary of size V.
+
+- `logits`: four unnormalised scores; explain what can and cannot be inferred from them.
+- `probabilites`: softmax gives the shared distribution; temperature reshapes it without
+  changing the model parameters.
 - `entropy`: about 1.09 nats, against a maximum of ln 4 ≈ 1.39 for four candidates.
-- `generation`: greedy selects « mûr »; sampling selects it six times in ten on average.
-- `vraisemblance`: three observed tokens with probabilities (0.5, 0.6, 0.8), the middle one
-  being « mûr »; product 0.24, NLL ≈ 1.43 nats, mean ≈ 0.48 nat per token.
-- `cross-entropy`: the term for « mûr » is −ln 0.6 ≈ 0.51 nat.
+- `generation`: greedy selects the leading candidate; sampling selects it six times in ten on
+  average.
+- `vraisemblance`: score three observed continuation tokens with probabilities (0.6, 0.5,
+  0.8); product 0.24, NLL ≈ 1.43 nats, mean ≈ 0.48 nat per token.
+- `cross-entropy`: the first target-token term is −ln 0.6 ≈ 0.51 nat.
 - `loss`: the mean of the three terms; perplexity ≈ e^0.48 ≈ 1.61.
-- `gradients`: p − one-hot = (−0.4, 0.2, 0.1, 0.1); one small step raises the logit of « mûr ».
+- `gradients`: for the first target candidate, p − one-hot = (−0.4, 0.2, 0.1, 0.1);
+  one small gradient step raises its logit relative to the others.
 
-The four-candidate vocabulary is a deliberate reduction of a real vocabulary of size V; each
-page says so once. The current interactive temperature explorer and its micro-workbench keep
-working; their logits are replaced by the chain's values if the rendered result stays readable.
+The current interactive temperature explorer and its micro-workbench must keep working. Reuse
+these values only if the rendered result remains readable and the calculations are recomputed
+in a test or short script.
 
 ## 6. Voice
 
 - Address the reader as "vous". Short to medium sentences. One idea per sentence.
 - Open a page with the question left by the previous one, phrased from the anchor
-  ("« avocat » a le même identifiant dans les deux phrases. Comment le modèle les distingue-t-il ?").
+  ("Le prompt est déjà fourni : comment le modèle construit-il la continuation, token après token ?").
 - Say what the thing is and does, then what it does not establish. A reservation appears once
   per page, next to the claim it limits. The full treatment of a recurring reservation lives
   on one page and the others link to it at the point of use:
@@ -245,16 +257,16 @@ Listed in route order. "Keep" means the content stays and is only re-voiced.
 | `text-data` | Show the anchor split into tokens and IDs. Drop "Frontières entre les pages" and the stale "collection prévue" line. Corpus preparation shrinks to the one distinction the reader needs. |
 | `embedding-space` | Open on the IDs from the previous page. Fix the duplicated heading. Word2Vec history shortened to what distinguishes a static vector from a lookup row. One term per concept. |
 | `positional-encoding` | Open on the problem: the lookup gives the same vectors whatever the order. Self-check moves after the last content section. Drop the "where does this step sit" section. |
-| `contextualized-representations` | The anchor replaces the English `bank` sentences. The externally hosted figure with unverified reuse rights (issue 156) is left as is and flagged in section 11. Drop the route recap. |
+ | `contextualized-representations` | Use the canonical Otis / *Life of Brian* anchor to explain contextualized states. The legacy externally hosted figure with unverified reuse rights (issue 156) remains a separate rights-check item in section 11. Drop the route recap. |
 | `transformer` | Lead says what the network does to the anchor's vectors. Self-check wrapped and moved to the end. One "three levels" block kept here; the one in `generation` goes. |
-| `queries-keys-values` | Opening question on the anchor: how does the last position get information from « salade »? Outcomes move to the top. "Imagine" → "Imaginez". Self-check heading aligned. |
+ | `queries-keys-values` | Opening question on the anchor: how does the last position combine information from earlier tokens in the supplied prefix? Outcomes move to the top. "Imagine" → "Imaginez". Self-check heading aligned. |
 | `scaled-dot-product-attention` | A hand-checkable worked example on three or four positions of the anchor. Heading, box and list agree on the number of steps. A real self-check. Drop the Build paragraph and the links list. |
-| `causal-masking` | Open on the anchor: « avocat » must not read « mûr ». The API-version note joins the collapsed API block. Drop the links list. A real self-check. |
+ | `causal-masking` | Open on the anchor: a position must not read tokens that come later in the continuation. The API-version note joins the collapsed API block. Drop the links list. A real self-check. |
 | `logits` | Add the four scores of the chain. Otherwise keep. |
 | `probabilites` | The chain replaces (0, ln 3). One home for normalisation vs calibration vs truth. Drop "Pour poursuivre". |
 | `entropy` | The chain replaces the two-token examples, which may stay as a second, contrasting case. The repeated temperature formula becomes one sentence and a link. Drop "Pour poursuivre". |
 | `vraisemblance` | The anchor sentence scored token by token. The self-check stops carrying navigation links. |
-| `cross-entropy` | The term for « mûr ». Keep the collapsed implementation blocks. "entropie croisée" in prose. |
+ | `cross-entropy` | The target-token term for « Être » (French) / “They” (English). Keep the collapsed implementation blocks. "entropie croisée" in prose. |
 | `loss` | Title in French ("Perte : …"). Mean of the three terms from the chain. The prefill vs teacher-forcing distinction is stated once here and linked from `generation`. |
 | `gradients` | The gradient of the chain's distribution; one update step. End of the path: no "Retour" line. |
 | `transformer-architectures` | Re-voice; tie the three families to what each would do with the anchor. |
@@ -297,11 +309,11 @@ Each batch is one commit covering both languages, and leaves the site buildable.
 
 ## 11. Left to the builder, and open points
 
-- Exact wording of the English anchor pair.
+- Whether the English *Life of Brian* analogy is sufficiently clearly distinguished from a single-speaker autoregressive continuation.
 - Whether the token split in `text-data` comes from a real tokenizer or is illustrative.
 - Final values of the number chain, provided they stay hand-checkable and consistent across
   pages.
-- Whether the French "bank" figure is relabelled or captioned.
+- Whether the legacy “bank” contextualized-embedding figures remain as clearly labelled secondary examples or are later replaced.
 - "Concept vérifié" badges: removed by default (section 7).
 - Not addressed here, recorded for the maintainer: sidebar group names differ from stage titles
   (review item E1); French URLs mix languages (E5); the externally hosted figure in
