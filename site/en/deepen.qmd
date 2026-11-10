@@ -13,7 +13,7 @@ suggested_route:
   next: null
 hierarchy:
   parents: []
-  children: ["en/next-concept-modeling"]
+  children: ["en/next-concept-modeling", "en/contextualized-representations-advanced"]
 related: []
 tags:
   - "type:entry-point"
