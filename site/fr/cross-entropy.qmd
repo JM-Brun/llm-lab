@@ -33,7 +33,7 @@ Pour une cible one-hot, la cross-entropie d'une position est la négative log-pr
 - **Une séquence :** aligner chaque logit sur le bon token cible, décaler entrées et cibles de façon cohérente, puis exclure les positions invalides du numérateur et du dénominateur.
 - **Un batch :** somme, moyenne par token valide et moyenne par séquence définissent des échelles différentes ; préciser la convention avant de comparer.
 
-**Question de contrôle :** pouvez-vous retrouver la NLL d'un token et expliquer pourquoi le masque de perte ne remplace pas le masque causal ?
+**Question rapide :** pouvez-vous retrouver la NLL d'un token et expliquer pourquoi le masque de perte ne remplace pas le masque causal ?
 :::
 
 <div class="pipeline-stepper" role="navigation" aria-label="Étapes du calcul de l’entropie croisée">
@@ -258,4 +258,23 @@ La [collection de fondations mathématiques](exercises.qmd#fondations) contient 
 
 ::: {.language-switch}
 [Français](cross-entropy.qmd) · [English](../en/cross-entropy.qmd)
+:::
+
+::: {.self-check}
+## Vérifier sa compréhension
+
+[Exercices dédiés](exercises/cross-entropy.qmd).
+
+1. Pourquoi une probabilité cible égale à 1 donne-t-elle une perte nulle ?
+2. Pourquoi faut-il exclure les positions masquées du dénominateur de la moyenne ?
+3. La perplexité mesure-t-elle directement la vérité ou l'utilité d'une réponse ?
+
+<details>
+<summary>Afficher les réponses</summary>
+
+1. La perte vaut $-\log p_y$ : elle est nulle lorsque $p_y=1$.
+2. Sinon, la moyenne ne porte plus uniquement sur les tokens valides et son échelle est faussée.
+3. Non. Elle mesure l'attribution de probabilités aux tokens d'un jeu de données donné ; elle ne mesure pas directement la vérité, l'utilité ou la sécurité.
+
+</details>
 :::

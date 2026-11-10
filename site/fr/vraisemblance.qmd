@@ -33,7 +33,7 @@ Pour des paramètres fixés, la vraisemblance indique la probabilité que le mod
 - **Objectif :** la NLL est $-\log P_\theta(x_{1:T})$. Pour les mêmes observations et positions, maximiser la log-vraisemblance équivaut à minimiser la NLL.
 - **Comparaison :** préciser tokenizer, positions incluses et somme ou moyenne par token ; ces conventions changent l'échelle.
 
-**Question de contrôle :** pourquoi le scoring d'une séquence observée n'est-il ni une génération ni une mise à jour des paramètres ?
+**Question rapide :** pourquoi le scoring d'une séquence observée n'est-il ni une génération ni une mise à jour des paramètres ?
 :::
 
 <div class="pipeline-stepper" role="navigation" aria-label="Étapes du scoring d’une séquence observée">
@@ -105,4 +105,23 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 
 ::: {.language-switch}
 [Français](vraisemblance.qmd) · [English](../en/likelihood.qmd)
+:::
+
+::: {.self-check}
+## Vérifier sa compréhension
+
+[Exercices dédiés sur la vraisemblance](exercises/vraisemblance.qmd).
+
+1. Pourquoi utiliser la log-vraisemblance plutôt que le produit direct des probabilités ?
+2. La règle de chaîne suppose-t-elle que les tokens sont indépendants ?
+3. Pourquoi documenter le tokenizer et la réduction de la NLL lors d'une comparaison ?
+
+<details>
+<summary>Afficher les réponses</summary>
+
+1. Le logarithme transforme le produit en somme, plus stable numériquement et plus simple à optimiser.
+2. Non. La règle de chaîne factorise une probabilité jointe en probabilités conditionnelles successives, sans hypothèse d'indépendance.
+3. Le tokenizer définit les unités évaluées et la réduction (somme ou moyenne) détermine l'échelle du score.
+
+</details>
 :::

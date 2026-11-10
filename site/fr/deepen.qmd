@@ -1,6 +1,7 @@
 ---
 title: "Carte des approfondissements"
 description: "Carte thématique des approfondissements avancés sur les LLM, organisée par questions et domaines."
+lang: fr
 keywords: ["type:entry-point", "destination:deepen", "topic:deepen-hub", "level:overview", "language:fr", "status:published"]
 ---
 <!--

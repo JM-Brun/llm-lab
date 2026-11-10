@@ -142,3 +142,18 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 ::: {.language-switch}
 **Langue :** [Français](queries-keys-values.qmd) · [English](../en/queries-keys-values.qmd)
 :::
+
+::: {.self-check}
+## Vérifier sa compréhension
+
+[Exercices dédiés sur Q/K/V et l'attention](exercises/queries-keys-values.qmd).
+
+Quelles projections déterminent les poids d'attention, et laquelle fournit le contenu agrégé ? Que se passe-t-il si V change alors que Q et K restent fixes ?
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+Q et K déterminent les scores et donc les poids d'attention. V fournit les vecteurs agrégés. Si seul V change, les poids restent identiques, mais le résultat agrégé peut changer.
+
+</details>
+:::

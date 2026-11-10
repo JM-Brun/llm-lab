@@ -35,7 +35,7 @@ That is the basic idea of a **language model**: assigning probabilities to possi
 - **What a GPT computes:** given a context, it turns text into logits, then into a conditional distribution over the next token, one token at a time, with parameters fixed during ordinary inference.
 - **One shared computation, three uses:** generation feeds a selected token back, scoring evaluates an observed target, and learning compares distributions with target tokens and updates parameters — these are not branches of a single execution loop.
 
-**Check yourself:** can you state what LLM, GPT, and Transformer each refer to, then separate architecture (the computation), learning (how parameters are obtained), and use (what is done with the model with its parameters fixed)?
+**Quick question:** can you state what LLM, GPT, and Transformer each refer to, then separate architecture (the computation), learning (how parameters are obtained), and use (what is done with the model with its parameters fixed)?
 :::
 
 <div class="pipeline-stepper" role="navigation" aria-label="Steps from input to generation">
@@ -141,4 +141,23 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 ::: {.language-switch}
 **Language:** [Français](../fr/llm-overview.qmd) · [English](llm-overview.qmd)
+:::
+
+::: {.self-check}
+## Check your understanding
+
+[Dedicated exercises](exercises/llm-overview.qmd).
+
+1. Does fine-tuning necessarily change the architecture?
+2. If documentation changes daily, must the model be retrained?
+3. What is the difference between architecture, learning, and use?
+
+<details>
+<summary>Show the answers</summary>
+
+1. No. Fine-tuning primarily changes parameters, although some methods also add modules.
+2. No. A RAG system can retrieve recent documents at inference time without changing model weights, though retrieval does not guarantee relevance or answer faithfulness.
+3. Architecture organizes computation, learning determines parameters, and use applies the model with its parameters fixed.
+
+</details>
 :::

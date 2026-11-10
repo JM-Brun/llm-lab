@@ -44,7 +44,7 @@ La page [Générer du texte](generation.qmd) présente le mécanisme indispensab
 - **Recherche :** greedy optimise une décision locale ; beam search conserve plusieurs hypothèses ; le décodage contrastif compare un modèle expert et un modèle amateur.
 - **Évaluation :** qualité et diversité dépendent de la tâche, des métriques et du protocole ; documenter les paramètres est nécessaire à la reproductibilité. Aucune stratégie ne garantit la vérité ou la cohérence globale.
 
-**Question de contrôle :** savez-vous distinguer une transformation de la distribution à une position d'une recherche qui compare plusieurs séquences ?
+**Question rapide :** savez-vous distinguer une transformation de la distribution à une position d'une recherche qui compare plusieurs séquences ?
 :::
 
 ## 1. Où intervient le décodage ?

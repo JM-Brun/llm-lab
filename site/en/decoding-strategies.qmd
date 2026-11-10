@@ -44,7 +44,7 @@ By the end of this page, you will be able to:
 - **Search:** greedy decoding optimizes a local decision; beam search keeps several hypotheses; contrastive decoding compares an expert and an amateur model.
 - **Evaluation:** quality and diversity depend on the task, metrics, and protocol; documenting settings is necessary for reproducibility. No strategy guarantees truth or global coherence.
 
-**Check your understanding:** can you distinguish transforming a distribution at one position from searching over multiple sequences?
+**Quick question:** can you distinguish transforming a distribution at one position from searching over multiple sequences?
 :::
 
 ## 1. Where decoding happens

@@ -67,7 +67,7 @@ La taille du modèle ne suffit pas non plus à expliquer ses performances. La qu
 - **Émergence :** une rupture apparente dépend de la métrique, des seuils, des modèles comparés et du protocole.
 - **Méthode :** formuler les limites comme des hypothèses testables et les examiner avec des baselines, des contrôles et une évaluation adaptée.
 
-**Question de contrôle :** quelle observation permettrait de distinguer une amélioration mesurée d'une véritable transition qualitative ?
+**Question rapide :** quelle observation permettrait de distinguer une amélioration mesurée d'une véritable transition qualitative ?
 :::
 
 ## Sources principales et rôle
@@ -84,4 +84,21 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 
 ::: {.language-switch}
 **Langue :** [Français](llm-limits.qmd) · [English](../en/llm-limits.qmd)
+:::
+
+::: {.self-check}
+## Vérifier sa compréhension
+
+[Exercices et mises en pratique](exercises/llm-limits.qmd).
+
+1. Un modèle génère avec assurance une affirmation fausse. Est-ce nécessairement un défaut d'implémentation ?
+2. Une capacité passe de 0 % à 60 % sur une métrique à seuil. Que faut-il examiner avant de conclure à une émergence ?
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+1. Non. L'objectif de prédiction apprend à attribuer des probabilités aux continuations observées, sans garantir un mécanisme de vérification de la vérité.
+2. Il faut examiner la métrique, son seuil, les modèles comparés et le protocole. Une métrique à seuil peut transformer une progression continue en saut apparent.
+
+</details>
 :::
