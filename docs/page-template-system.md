@@ -77,6 +77,24 @@ Page families are starting points, not exclusive categories. A page may combine 
 
 Do not create a new pattern for every topic. Split or add a family only when its learner question or explanatory structure is materially different.
 
+### Stable exercise references
+
+A collection page has its own bilingual page identity in the `LLM-LAB-PAGE-MAP` block. An exercise embedded in that collection is identified by a **named heading anchor**, not by a numbered position or a short opaque code.
+
+Use this pattern for each exercise heading:
+
+```markdown
+### Calculate an embedding lookup {#ex-text-data-embedding-lookup}
+```
+
+- Use `ex-<collection>-<concept-or-skill>-<action>`: lowercase kebab-case, descriptive, and independent of the display title.
+- Reuse the exact same anchor in the French and English counterpart. The identifier is language-neutral; translate only the heading text.
+- Do not encode order (`1`, `A`, `B`), language (`fr`, `en`), or a temporary section name in the identifier. Reordering, inserting, or removing another exercise must not rename existing anchors.
+- A link to an in-page exercise combines the collection page URL with the anchor. If an exercise moves to another page, preserve the old fragment as an alias where practical and update the canonical link.
+- If an exercise becomes a standalone page, give that page its normal stable page ID through `LLM-LAB-PAGE-MAP`; do not create a parallel exercise registry for headings embedded in pages.
+
+Existing public fragments should be retained as aliases when replacing opaque or automatically generated heading IDs. The page metadata remains the authority for page identity; heading anchors identify only the exercise within that page.
+
 ## 4. A practical starting sequence
 
 1. Write one sentence stating the question the page answers.
