@@ -24,6 +24,8 @@ tags: ["type:concept-lesson", "destination:understand", "topic:entropy", "level:
 {{< include ../includes/generated-guided-context-en-entropy.qmd >}}
 
 ::: {.chapter-lead}
+The previous page, [Output probabilities](probabilities.qmd), showed how logits become a conditional distribution over the next token. This page characterizes how spread out that distribution is before the token is observed.
+
 In an autoregressive LLM, entropy describes how spread out the predicted next-token distribution is for a given context. It characterizes that distribution: it does not tell us whether the answer is true or the model is reliable.
 :::
 

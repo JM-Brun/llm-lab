@@ -221,7 +221,7 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 ## Further reading
 
-
+- [Entropy](entropy.qmd) — spread of the predictive distribution before the next token is observed.
 - [Likelihood](likelihood.qmd) — probability of observed tokens and sequences.
 - [Cross-entropy](cross-entropy.qmd) — the training objective.
 - [Mathematical foundations exercises](exercises-foundations.qmd#foundations) — worked exercises on softmax, loss and related topics; further topics remain planned.

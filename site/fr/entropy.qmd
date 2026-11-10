@@ -24,6 +24,8 @@ tags: ["type:concept-lesson", "destination:understand", "topic:entropy", "level:
 {{< include ../includes/generated-guided-context-fr-entropy.qmd >}}
 
 ::: {.chapter-lead}
+La page précédente, [Probabilités de sortie](probabilites.qmd), a montré comment les logits deviennent une distribution conditionnelle sur le prochain token. Cette page en caractérise la dispersion avant que le token soit observé.
+
 Dans un LLM autorégressif, l'entropie décrit la dispersion de la distribution prédite pour le prochain token, dans un contexte donné. Elle caractérise cette distribution : elle ne dit pas si la réponse est vraie, ni si le modèle est fiable.
 :::
 
