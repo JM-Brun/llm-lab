@@ -28,13 +28,22 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
+      - name: Cache Quarto installer
+        id: quarto_cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}/quarto-1.11.9-linux-amd64.deb
+          key: quarto-${{ runner.os }}-1.11.9
+
       - name: Set up Quarto
         env:
           QUARTO_VERSION: "1.11.9"
         run: |
           installer="$RUNNER_TEMP/quarto-${QUARTO_VERSION}-linux-amd64.deb"
-          url="https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.deb"
-          curl --fail --location --retry 5 --retry-all-errors --retry-delay 5 --retry-max-time 240 --output "$installer" "$url"
+          if [ ! -s "$installer" ]; then
+            url="https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.deb"
+            curl --fail --location --retry 5 --retry-all-errors --retry-delay 5 --retry-max-time 240 --output "$installer" "$url"
+          fi
           sudo apt-get install --yes "$installer"
           quarto --version
 
@@ -43,6 +52,11 @@ jobs:
         with:
           version: "0.13.7"
           python-version: "3.12"
+          enable-cache: true
+          cache-dependency-glob: |
+            pyproject.toml
+            uv.lock
+            docs/requirements-*.txt
 
       - name: Validate page metadata learning graph
         run: uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/check_page_metadata.py
@@ -101,6 +115,13 @@ jobs:
         with:
           node-version: "22"
 
+      - name: Cache npm packages
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.browser_changes.outputs.relevant == 'true')
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: npm-browser-${{ runner.os }}-playwright-1.56.1-axe-4.10.2
+
       - name: Install browser test dependencies
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.browser_changes.outputs.relevant == 'true')
         run: npm install --no-save --package-lock=false playwright@1.56.1 @axe-core/playwright@4.10.2
@@ -112,9 +133,13 @@ jobs:
           path: ~/.cache/ms-playwright
           key: playwright-chromium-${{ runner.os }}-1.56.1
 
-      - name: Install Chromium
+      - name: Install Playwright system dependencies
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.browser_changes.outputs.relevant == 'true')
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install-deps chromium
+
+      - name: Install Chromium when the browser cache is cold
+        if: (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.browser_changes.outputs.relevant == 'true')) && steps.playwright_cache.outputs.cache-hit != 'true'
+        run: npx playwright install chromium
 
       - name: Serve this PR's rendered site
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.browser_changes.outputs.relevant == 'true')
