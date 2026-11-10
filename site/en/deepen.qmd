@@ -105,6 +105,26 @@ Early neural distributed text representations, followed by methods such as Word2
 - [Mikolov et al. (2013), *Efficient Estimation of Word Representations in Vector Space*](https://arxiv.org/abs/1301.3781) — the CBOW and Skip-gram architectures associated with Word2Vec.
 - [Peters et al. (2018), *Deep Contextualized Word Representations*](https://arxiv.org/abs/1802.05365) — ELMo and context-dependent representations.
 
+
+#### What the historical comparison does—and does not—tell us
+
+Word2Vec learns vectors associated with vocabulary words. CBOW predicts a target word from its context; Skip-gram predicts context words from a target word. Once trained, a given word has a static vector: the vector for `bank` does not change between *the river bank* and *the financial bank*. This limitation helped motivate contextualized representations, but it does not mean that Transformers have done away with input embedding tables: those tables still provide the initial vectors associated with token IDs.
+
+The English example `bank` isolates the distinction: if both occurrences are encoded with the same ID, they retrieve the same initial row; subsequent context processing can produce different hidden states. The exact segmentation and ID remain specific to the tokenizer. This is a conceptual example, not a claim about universal tokenization.
+
+#### Representation geometry: interpretation caveats
+
+A vector of dimension (d) can be interpreted as a point in vector space, but two-dimensional visualizations are projections: they generally preserve only some distances and neighbourhoods. Visually separated groups in a 2D plot therefore prove neither robust separation in the original space nor classification ability on unseen data.
+
+Closeness depends on the object being compared (initial embedding, a contextualized state at a particular layer and position, or a sentence embedding), the model, layer, corpus, any pooling method, and the chosen metric. High cosine similarity does not imply semantic equivalence: negation or a logical relation can change meaning while leaving much of the vocabulary unchanged. Likewise, findings about sentence embeddings do not automatically transfer to a language model's internal activations.
+
+- [Ethayarajh (2019), *How Contextual are Contextualized Word Representations?*](https://arxiv.org/abs/1909.00512) — analysis of how contextual representations vary across layers.
+- [Li et al. (2020), *On the Sentence Embeddings from Pre-trained Language Models*](https://aclanthology.org/2020.emnlp-main.733/) — study of properties and limitations of sentence embeddings from pretrained models.
+- [Steck, Ekanadham & Kallus (2024), *Is Cosine-Similarity of Embeddings Really About Similarity?*](https://arxiv.org/abs/2403.05440) — challenges a naïve interpretation of cosine similarity.
+- [Sentence Transformers — Semantic Textual Similarity](https://sbert.net/docs/sentence_transformer/usage/semantic_textual_similarity.html) — an example of a task and protocol designed for comparing sentence embeddings.
+
+For measurement tools, see [cosine similarity](cosine-similarity.qmd); for geometric relations and their empirical evidence, see [embedding linearity](embedding-linearity.qmd). For a visual introduction to a GPT input pipeline, also see [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/).
+
 These pages provide analytical tools; they are not a prerequisite mathematics course to complete before building a small GPT.
 
 ## Probabilistic formalization and the training chain {#probabilistic-foundations-and-training}
