@@ -22,7 +22,6 @@ related: ["fr/rope", "fr/queries-keys-values", "fr/scaled-dot-product-attention"
 tags: ["type:deep-dive", "destination:deepen", "topic:sinusoidal-positional-encoding", "level:advanced", "language:fr", "status:published"]
 -->
 
-{{< include ../includes/generated-guided-context-fr-sinusoidal-positional-encoding.qmd >}}
 ::: {.chapter-lead}
 L'encodage sinusoïdal transforme un indice de position en un vecteur déterministe composé de sinusoïdes à plusieurs fréquences. Cette page reconstruit la formule du Transformer de 2017, explique pourquoi les fréquences sont réparties logarithmiquement et dérive la propriété qui rend un décalage fixe accessible à une transformation linéaire. Elle examine aussi ce que cette propriété ne garantit pas.
 :::
@@ -281,7 +280,7 @@ La longueur d'entraînement, les distributions de données, les mécanismes d'at
 
 ## 8. Vérifier sa compréhension
 
-::: {.callout-question title="À vous de jouer"}
+::: {.callout-tip title="À vous de jouer"}
 1. Si \(d_{\text{model}}\) double, combien de paires de fréquences sont utilisées ?
 2. Si l'indice de paire \(i\) augmente, la longueur d'onde augmente-t-elle ou diminue-t-elle ?
 3. Pourquoi la transformation associée au décalage \(k\) ne dépend-elle pas de la position initiale \(p\) ?
