@@ -2220,3 +2220,12 @@ p:has(.pipeline-stepper) {
     display: inline-block;
   }
 }
+
+.pipeline-stepper .step-item,
+.meta-flow__source,
+.meta-flow__result,
+.meta-flow__branch,
+.meta-flow__comparison-item {
+  box-sizing: border-box;
+  max-width: 100%;
+}
