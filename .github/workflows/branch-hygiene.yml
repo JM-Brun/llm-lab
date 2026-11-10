@@ -37,12 +37,9 @@ jobs:
       - name: Check out full repository history
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          # fetch-depth: 0 fetches all branch tips and their history; a second
+          # explicit fetch of every branch would duplicate the same network work.
           fetch-depth: 0
-
-      - name: Fetch all branch tips
-        run: |
-          set -euo pipefail
-          git fetch --prune origin '+refs/heads/*:refs/remotes/origin/*'
 
       - name: Resolve run mode
         run: |
