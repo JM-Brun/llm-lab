@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/build-path"]
   children: []
-related: ["fr/generation", "fr/logits", "fr/probabilites", "fr/exercises/gpt-generation-walkthrough"]
+related: ["fr/generation", "fr/logits", "fr/probabilites", "fr/gpt-generation-walkthrough-exercises"]
 tags: ["type:guided-build", "destination:build", "topic:reference-gpt-generation", "level:applied", "language:fr", "status:published"]
 -->
 

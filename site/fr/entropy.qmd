@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/probabilites"]
   children: ["fr/cross-entropy"]
-related: ["fr/vraisemblance", "fr/exercises/entropy"]
+related: ["fr/vraisemblance", "fr/entropy-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:entropy", "level:core", "language:fr", "status:published"]
 -->
 

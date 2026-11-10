@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/scaling-laws", "fr/llm-limits", "fr/evaluation-experimentale", "fr/exercises/emergence"]
+related: ["fr/scaling-laws", "fr/llm-limits", "fr/evaluation-experimentale", "fr/emergence-exercises"]
 tags: ["type:concept-lesson", "destination:deepen", "topic:emergence", "level:advanced", "language:fr", "status:published"]
 -->
 
