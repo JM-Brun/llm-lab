@@ -55,43 +55,43 @@ jobs:
         run: uv pip install --python .venv/bin/python -r docs/requirements-history-validation.txt
 
       - name: Install tokenizer example dependency
-        if: github.event_name != 'pull_request' || steps.validation_scope.outputs.domain_checks == 'true'
+        if: steps.validation_scope.outputs.domain_checks == 'true'
         run: uv pip install --python .venv/bin/python -r docs/requirements-tokenizer-example.txt
 
       - name: Validate source catalogue and extraction records
-        if: github.event_name != 'pull_request' || steps.validation_scope.outputs.domain_checks == 'true'
+        if: steps.validation_scope.outputs.domain_checks == 'true'
         run: uv run python site/tools/check_source_catalogue.py
 
       - name: Validate page metadata learning graph
-        if: github.event_name != 'pull_request' || steps.validation_scope.outputs.domain_checks == 'true'
+        if: steps.validation_scope.outputs.domain_checks == 'true'
         run: uv run python site/tools/check_page_metadata.py
 
       - name: Audit page metadata topology
-        if: github.event_name != 'pull_request' || steps.validation_scope.outputs.domain_checks == 'true'
+        if: steps.validation_scope.outputs.domain_checks == 'true'
         run: uv run python site/tools/audit_page_metadata.py
 
       - name: Validate bilingual concept registry
-        if: github.event_name != 'pull_request' || steps.validation_scope.outputs.domain_checks == 'true'
+        if: steps.validation_scope.outputs.domain_checks == 'true'
         run: uv run python site/tools/check_concept_registry.py
 
       - name: Validate first-class learning resources
-        if: github.event_name != 'pull_request' || steps.validation_scope.outputs.domain_checks == 'true'
+        if: steps.validation_scope.outputs.domain_checks == 'true'
         run: uv run python site/tools/check_resource_registry.py
 
       - name: Validate bilingual history pilot dataset
-        if: github.event_name != 'pull_request' || steps.validation_scope.outputs.domain_checks == 'true'
+        if: steps.validation_scope.outputs.domain_checks == 'true'
         run: uv run python site/tools/check_history_pilot.py
 
       - name: Generate bilingual history timeline fragments
-        if: github.event_name != 'pull_request' || steps.validation_scope.outputs.domain_checks == 'true'
+        if: steps.validation_scope.outputs.domain_checks == 'true'
         run: uv run python site/tools/render_history_pilot.py
 
       - name: Execute bilingual tokenizer-to-embedding example
-        if: github.event_name != 'pull_request' || steps.validation_scope.outputs.domain_checks == 'true'
+        if: steps.validation_scope.outputs.domain_checks == 'true'
         run: uv run python site/tools/check_embedding_trace.py
 
       - name: Validate display-math delimiters
-        if: github.event_name != 'pull_request' || steps.validation_scope.outputs.domain_checks == 'true'
+        if: steps.validation_scope.outputs.domain_checks == 'true'
         run: uv run python site/tools/check_math_delimiters.py site
 
       - name: Check formatting
@@ -132,7 +132,9 @@ jobs:
         with:
           version: "0.13.7"
           python-version: "3.12"
-          enable-cache: true
+          # The reference-only CPU PyTorch wheel makes this cache ~255 MB.
+          # Its download is faster than saving/restoring the full cache on every run.
+          enable-cache: false
           cache-dependency-glob: |
             pyproject.toml
             uv.lock
@@ -142,12 +144,12 @@ jobs:
         run: uv sync --locked --dev
 
       - name: Install CPU-only PyTorch
-        if: github.event_name != 'pull_request' || steps.reference_scope.outputs.reference_parity == 'true'
+        if: steps.reference_scope.outputs.reference_parity == 'true'
         # Avoid multi-gigabyte CUDA wheels. The pin matches the reference requirements.
         run: uv pip install --python .venv/bin/python --index-url https://download.pytorch.org/whl/cpu torch==2.15.0
 
       - name: Install GPT-2 reference dependency
-        if: github.event_name != 'pull_request' || steps.reference_scope.outputs.reference_parity == 'true'
+        if: steps.reference_scope.outputs.reference_parity == 'true'
         run: uv pip install --python .venv/bin/python -r docs/requirements-gpt2-reference.txt
 
       - name: Install parallel test runner
