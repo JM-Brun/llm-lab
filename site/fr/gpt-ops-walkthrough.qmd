@@ -180,6 +180,9 @@ def linear(x: FloatArray, weight: FloatArray, bias: FloatArray) -> FloatArray:
 
 ## Navigation dans le parcours
 
+
+## Connexions
+
 - **Étape précédente** : [la configuration (`gpt_config.py`)](gpt-config-walkthrough.qmd) — les dimensions utilisées ici.
 - **Étape suivante** : [le bloc Transformer (`transformer_block.py`)](transformer-block-walkthrough.qmd) — qui consomme ces briques.
 
