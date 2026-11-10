@@ -10,7 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "en/queries-keys-values"
 summary: "Distinguishes the three learned self-attention projections: Q forms queries, K supports compatibility scores, and V carries the content that is aggregated."
 scope: "Explains the roles and learned Q, K, and V projections in self-attention, their shared input and output dimensions; delegates score and aggregation computation to scaled dot-product attention, the temporal constraint to causal masking, implementation to the guided build, and historical context to the dedicated reference."
-purpose: "Readers should be able to distinguish Q/K projections that determine the weights from the V projection that supplies content, write the three self-attention projections, infer their shapes, and predict the effect of changing V while Q and K stay fixed."
+purpose: "Readers should be able to distinguish the conceptual roles of Q, K, and V, explain why Q/K determine the weights while V supplies the aggregated content, and describe their qualitative dependencies without performing matrix calculations."
 suggested_route:
   previous: "en/transformer"
   next: "en/scaled-dot-product-attention"
@@ -29,9 +29,9 @@ The previous page, [GPT and Transformers: architecture and data flow](transforme
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 By the end of this lesson, you should be able to:
-- distinguish the projections that determine the weights (Q and K) from the one that supplies the content (V);
-- write the three projections and check the dimensions of their outputs;
-- predict what changes — and what stays fixed — when only one projection is modified.
+- distinguish the roles of Q, K, and V in the attention mechanism;
+- explain why Q and K determine the weights while V supplies the aggregated content;
+- describe the qualitative dependencies between projections, weights, and content, without performing matrix calculations.
 :::
 
 ## A concrete question to motivate the mechanism
@@ -52,7 +52,7 @@ This example is adapted from [Neha KK](https://medium.com/@nkk18072004/understan
 - **Useful invariance:** if only V changes, the weights stay fixed; the aggregated content may change. Changing Q or K can change the weights.
 - **Scope:** these equations describe standard self-attention. In cross-attention, Q and K/V come from different streams; GQA/MQA change how K/V heads are shared.
 
-**Check yourself:** can you write the three projections, distinguish weights from content, and predict what changes when one matrix alone is modified?
+**Check yourself:** can you explain, without calculating, why changing V alone does not change the attention weights but may change the aggregated content?
 :::
 
 ## Intuition: compare, then transmit
@@ -125,33 +125,7 @@ $$
 
 The same projection matrices are applied at every position; the input representations vary from one position to another.
 
-## A numerical example of the three projections
-
-Take one input representation, using row vectors and projection matrices chosen purely for illustration:
-
-\[
-\begin{aligned}
-x_t &= \begin{bmatrix}1 & 2\end{bmatrix},\\
-W_Q &= \begin{bmatrix}1&0\\0&1\end{bmatrix},\\
-W_K &= \begin{bmatrix}0&1\\1&0\end{bmatrix},\\
-W_V &= \begin{bmatrix}1&1\\0&1\end{bmatrix}.
-\end{aligned}
-\]
-
-The three projections give:
-
-\[
-\begin{aligned}
-q_t &= x_tW_Q = \begin{bmatrix}1&2\end{bmatrix},\\
-k_t &= x_tW_K = \begin{bmatrix}2&1\end{bmatrix},\\
-v_t &= x_tW_V = \begin{bmatrix}1&3\end{bmatrix}.
-\end{aligned}
-\]
-
-The same input therefore produces three different representations because the learned matrices have different roles. These numbers are illustrative, not parameters from a trained model.
-
-Now change only the value projection, for example to $W'_V = \begin{bmatrix}2&0\\0&1\end{bmatrix}$. This gives $v'_t = \begin{bmatrix}2&2\end{bmatrix}$, while $q_t$ and $k_t$ remain unchanged. Scores and weights computed from Q and K therefore stay the same; the content aggregated from V may change. The full score, softmax, and weighted-sum calculation is deliberately left to the [scaled dot-product attention](scaled-dot-product-attention.qmd) lesson.
-
+## 
 ::: {.callout-note collapse="true" title="How does training learn these projections?"}
 The matrices $W_Q$, $W_K$, and $W_V$ do not each receive an explicit “correct” target. They are adjusted indirectly from the model's loss function through backpropagation.
 
