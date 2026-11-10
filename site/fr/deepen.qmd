@@ -109,7 +109,7 @@ Les premières représentations neuronales distribuées du texte, puis des méth
 
 #### Ce que la comparaison historique permet — et ne permet pas — de conclure
 
-Word2Vec apprend des vecteurs associés aux mots du vocabulaire. Dans CBOW, le modèle prédit un mot cible à partir de son contexte ; dans Skip-gram, il prédit des mots de contexte à partir du mot cible. Une fois le modèle entraîné, un mot donné possède un vecteur statique : le vecteur de `bank` ne change pas entre *the river bank* et *the financial bank*. Cette limite motive notamment les représentations contextualisées, mais ne signifie pas que les tables d'embeddings d'entrée des Transformers ont disparu : elles fournissent toujours les vecteurs initiaux associés aux IDs.
+Word2Vec apprend des vecteurs associés aux mots du vocabulaire. Dans CBOW, le modèle prédit un mot cible à partir de son contexte ; dans Skip-gram, il prédit des mots de contexte à partir du mot cible. Une fois le modèle entraîné, un mot donné possède un vecteur statique : dans le dialogue d'Otis, « situation » conserve le même vecteur dans « bonne situation » et « bonne ou mauvaise situation ». Cette limite motive notamment les représentations contextualisées, mais ne signifie pas que les tables d'embeddings d'entrée des Transformers ont disparu : elles fournissent toujours les vecteurs initiaux associés aux IDs.
 
 Le dialogue d'Otis fournit un exemple familier : si les deux occurrences de « situation » sont encodées par le même ID, elles récupèrent la même ligne initiale ; le contexte traité ensuite par le réseau peut produire des états cachés différents. La segmentation et l'ID exacts restent propres au tokenizer considéré. Il s'agit d'un exemple conceptuel, pas d'une affirmation sur une tokenisation universelle.
 
