@@ -75,15 +75,15 @@ h_t^{(0)} = E[\text{ID}_t] + P_t.
 
 The same token ID gives the same token-embedding term, but a different position may give a different positional term. Architectures using RoPE handle position differently: it modifies query and key vectors inside attention rather than adding an absolute position vector to the token embedding. See [positional encoding and RoPE](positional-encoding.qmd).
 
-The Transformer layers then process information across the sequence. At a high level:
+Transformer blocks build these states by allowing information to flow between accessible positions. We can describe this dependency conceptually as:
 
-\[
-h_t^{(\ell+1)}
-=
-F_\ell\big(h_1^{(\ell)},\ldots,h_t^{(\ell)}\big),
-\]
+\\[
+h_t^{(\\ell+1)} = F_\\ell\\!\\left(h_t^{(\\ell)},\\{h_j^{(\\ell)} : j \\in A(t)\\}\\right),
+\\]
 
-For a causal decoder such as GPT, the state at position \(t\) can use the current token and its preceding context, but not future tokens. Other architectures, such as bidirectional encoders, use different attention masks. The function \(F_\ell\) stands for a complete block; this expression is conceptual, not an implementation specification.
+where \\(A(t)\\) denotes the positions accessible from position \\(t\\), as determined by the attention mask. In a causal decoder such as GPT, \\(A(t)=\\{1,\\ldots,t\\}\\): the current token and its prefix, never future tokens. In a bidirectional encoder, accessible positions may include the entire sequence. Here, \\(F_\\ell\\) represents a complete block; the expression summarizes its dependencies, not its detailed implementation.
+
+More concretely, self-attention lets a position aggregate information from accessible positions. The MLP then transforms each position independently, using shared weights. Repeated at every layer, these operations evolve the hidden states. For the detailed computation, see [Q/K/V](queries-keys-values.qmd) and [the Transformer architecture](transformer.qmd).
 
 In the *bank* example, both occurrences deliberately occupy the same position in the sentence (the third word, under the simplifying assumption of one token per word). The difference therefore does not come from a different absolute position: it comes from the context preceding the token. In other examples, position and context may both contribute.
 
