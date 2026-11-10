@@ -27,13 +27,6 @@ tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-valu
 The previous page, [GPT and Transformers: architecture and data flow](transformer.qmd), places self-attention within the network's forward pass. Here we isolate the three projections that feed it: **Q**, **K**, and **V**. These are not three token categories, but three learned transformations of a representation. Q and K determine the weights; V supplies the aggregated content. The next page derives the weights and aggregation themselves.
 :::
 
-::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
-By the end of this lesson, you should be able to:
-- distinguish the roles of Q, K, and V in the attention mechanism;
-- explain why Q and K determine the weights while V supplies the aggregated content;
-- describe the qualitative dependencies between projections, weights, and content, without performing matrix calculations.
-:::
-
 ## The problem: using context
 
 In “The cat chased the dog because it was fast,” the pronoun **it** could refer to either the cat or the dog. A model therefore cannot always interpret a token from its local representation alone: it needs to use information carried by other positions in the sequence.
@@ -95,7 +88,11 @@ With $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ and $W_V\in\mathbb{R}^{d_{mode
 - $Q,K\in\mathbb{R}^{T\times d_k}$;
 - $V\in\mathbb{R}^{T\times d_v}$.
 
-Each row corresponds to one position. The same projection matrices are applied at every position, while the input representations vary. The dimensions $d_k$ and $d_v$ need not be equal; optional biases are omitted here.
+Each row corresponds to one position. The same projection matrices are applied at every position, while the input representations vary. The dimensions $d_k$ and $d_v$ need not be equal; optional biases are omitted here. To trace these projections in the block implementation, see the [guided Transformer-block walkthrough](transformer-block-walkthrough.qmd); general dimension and axis conventions are covered in the [tensor reference](tensors.qmd).
+
+## Further depth
+
+
 ::: {.callout-note collapse="true" title="How does training learn these projections?"}
 The matrices $W_Q$, $W_K$, and $W_V$ do not each receive an explicit “correct” target. They are adjusted indirectly from the model's loss function through backpropagation.
 
@@ -124,12 +121,14 @@ This page presents the standard formulation with separately parameterized Q, K a
 
 For example, **multi-query attention (MQA)** and **grouped-query attention (GQA)** use fewer key/value heads than query heads, sharing each key/value head across multiple query heads to reduce inference-time [KV-cache](llm-computational-complexity.qmd) costs. Other recent work studies tying projection parameters, including sharing the key and value projections. These are architecture variants with empirical trade-offs; they do not invalidate the role distinction taught here.
 
+
+
+**Cross-attention:** in cross-attention, Q comes from the stream doing the querying, while K and V come from the stream being queried. The three projections therefore no longer share a common input stream. See the [advanced cross-attention lesson](cross-attention.qmd).
 - Vaswani et al. (2017), [*Attention Is All You Need*](https://arxiv.org/abs/1706.03762) — standard Transformer attention formulation.
 - Ainslie et al. (2023), [*GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints*](https://arxiv.org/abs/2305.13245) — grouped key/value heads.
 - Kayyam et al. (2026), [*Do Transformers Need Three Projections? Systematic Study of QKV Variants*](https://proceedings.mlr.press/v306/kayyam26a.html) — empirical study of projection sharing.
 :::
 
-The dimensions $d_k$ and $d_v$ therefore need not be equal. Optional biases are omitted here. To trace these projections in the actual block implementation, see the [guided Transformer-block walkthrough](transformer-block-walkthrough.qmd); general dimension and axis conventions are covered in the [tensor reference](tensors.qmd).
 
 
 ::: {.callout-note collapse="true" title="Another example: lexical ambiguity"}
@@ -149,6 +148,13 @@ The functional distinction is simple but fundamental:
 The weights are not a universal measure of semantic relevance, and attention is not nearest-neighbour search in the initial embedding space: it operates on learned projections.
 
 The next lesson, [Scaled dot-product attention](scaled-dot-product-attention.qmd), explains how scores become weights and how those weights aggregate V. The [Attention exercises](exercises.qmd#attention) then let you manipulate the projections and verify these dependencies; numerical calculations remain in that practice route.
+
+::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
+By the end of this lesson, you should be able to:
+- distinguish the roles of Q, K, and V in the attention mechanism;
+- explain why Q and K determine the weights while V supplies the aggregated content;
+- describe the qualitative dependencies between projections, weights, and content, without performing matrix calculations.
+:::
 
 ::: {.self-check}
 ## Check the essential idea
