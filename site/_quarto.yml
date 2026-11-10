@@ -229,7 +229,7 @@ website:
                   contents:
                     - fr/transformer.qmd
                     - fr/queries-keys-values.qmd
-    - fr/queries-keys-values-advanced.qmd
+                    - fr/queries-keys-values-advanced.qmd
                     - fr/scaled-dot-product-attention.qmd
                     - fr/causal-masking.qmd
                 - section: "Des scores aux probabilités"
@@ -394,7 +394,7 @@ website:
                   contents:
                     - en/transformer.qmd
                     - en/queries-keys-values.qmd
-    - en/queries-keys-values-advanced.qmd
+                    - en/queries-keys-values-advanced.qmd
                     - en/scaled-dot-product-attention.qmd
                     - en/causal-masking.qmd
                 - section: "From scores to probabilities"
