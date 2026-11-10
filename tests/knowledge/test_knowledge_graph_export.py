@@ -8,6 +8,8 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Any
 
+import pytest
+
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "site" / "tools"))
 
@@ -22,7 +24,13 @@ from export_knowledge_graph import (  # noqa: E402
 )
 
 
-def test_export_has_stable_skos_schemes_and_bilingual_labels() -> None:
+@pytest.fixture(scope="module")
+def graph_payload() -> dict[str, Any]:
+    """Build the repository-wide graph once for all read-only projection tests."""
+    return build_graph()
+
+
+def test_export_has_stable_skos_schemes_and_bilingual_labels(graph_payload: dict[str, Any]) -> None:
     payload = build_graph()
     nodes = [node for node in payload["@graph"] if "@id" in node]
 
@@ -44,8 +52,8 @@ def test_export_has_stable_skos_schemes_and_bilingual_labels() -> None:
     assert concept["llmlab:importance"] == "core"
 
 
-def test_export_describes_published_pages() -> None:
-    payload = build_graph()
+def test_export_describes_published_pages(graph_payload: dict[str, Any]) -> None:
+    payload = graph_payload
     pages = [
         node
         for node in payload["@graph"]
@@ -67,8 +75,8 @@ def test_relation_mapping_preserves_non_taxonomic_semantics() -> None:
     assert relation_predicate("contrasts-with") == "llmlab:contrastsWith"
 
 
-def test_export_provenance_names_canonical_sources() -> None:
-    payload = build_graph()
+def test_export_provenance_names_canonical_sources(graph_payload: dict[str, Any]) -> None:
+    payload = graph_payload
     export = next(
         node for node in payload["@graph"] if node.get("@id") == f"{BASE}/knowledge-graph.jsonld"
     )
@@ -83,8 +91,8 @@ def test_export_provenance_names_canonical_sources() -> None:
     assert not any("/tree/main/site" in source for source in sources)
 
 
-def test_jsonld_context_is_explicit() -> None:
-    payload: dict[str, Any] = build_graph()
+def test_jsonld_context_is_explicit(graph_payload: dict[str, Any]) -> None:
+    payload = graph_payload
     assert payload["@context"]["skos"] == "http://www.w3.org/2004/02/skos/core#"
     assert payload["@context"]["schema"] == "https://schema.org/"
     assert payload["@context"]["prov"] == "http://www.w3.org/ns/prov#"
@@ -163,8 +171,8 @@ def test_rendered_graph_validator_reports_dangling_references() -> None:
     assert any("urn:missing" in error for error in errors)
 
 
-def test_exports_first_class_resources_with_stable_ids_and_typed_metadata() -> None:
-    payload = build_graph()
+def test_exports_first_class_resources_with_stable_ids_and_typed_metadata(graph_payload: dict[str, Any]) -> None:
+    payload = graph_payload
     graph = payload["@graph"]
     resources = [node for node in graph if node.get("@type") == "schema:SoftwareSourceCode"]
     assert len(resources) == 5
@@ -188,8 +196,8 @@ def test_exports_first_class_resources_with_stable_ids_and_typed_metadata() -> N
     assert "dcterms:license" not in block
 
 
-def test_resource_concept_and_bilingual_page_links_resolve() -> None:
-    payload = build_graph()
+def test_resource_concept_and_bilingual_page_links_resolve(graph_payload: dict[str, Any]) -> None:
+    payload = graph_payload
     graph = payload["@graph"]
     identifiers = {node["@id"] for node in graph}
     by_id = {
@@ -217,8 +225,8 @@ def test_resource_concept_and_bilingual_page_links_resolve() -> None:
     assert logits_uri in {item["@id"] for item in generation["schema:about"]}
 
 
-def test_page_nodes_are_unique_and_resource_registry_is_in_provenance() -> None:
-    payload = build_graph()
+def test_page_nodes_are_unique_and_resource_registry_is_in_provenance(graph_payload: dict[str, Any]) -> None:
+    payload = graph_payload
     graph = payload["@graph"]
     page_ids = [
         node["@id"]
@@ -235,8 +243,8 @@ def test_page_nodes_are_unique_and_resource_registry_is_in_provenance() -> None:
     assert "https://github.com/JM-Brun/llm-lab/blob/main/data/resources.yml" in derived_from
 
 
-def test_attention_subgraph_exports_intermediate_concepts_and_typed_relations() -> None:
-    payload = build_graph()
+def test_attention_subgraph_exports_intermediate_concepts_and_typed_relations(graph_payload: dict[str, Any]) -> None:
+    payload = graph_payload
     graph = payload["@graph"]
     identifiers = {node.get("@id") for node in graph}
     concept_ids = {
