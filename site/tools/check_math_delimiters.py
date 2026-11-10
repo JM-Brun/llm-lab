@@ -97,9 +97,7 @@ def check_site(site_root: Path) -> list[str]:
         hits = raw_delimiter_hits(text)
         if hits:
             locations = ", ".join(f"{number} ('{token}')" for number, token in hits)
-            errors.append(
-                f"{page.relative_to(root)}: raw LaTeX delimiter(s) at {locations}"
-            )
+            errors.append(f"{page.relative_to(root)}: raw LaTeX delimiter(s) at {locations}")
     return errors
 
 
