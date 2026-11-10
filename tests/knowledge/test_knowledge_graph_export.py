@@ -31,7 +31,7 @@ def graph_payload() -> dict[str, Any]:
 
 
 def test_export_has_stable_skos_schemes_and_bilingual_labels(graph_payload: dict[str, Any]) -> None:
-    payload = build_graph()
+    payload = graph_payload
     nodes = [node for node in payload["@graph"] if "@id" in node]
 
     assert any(
