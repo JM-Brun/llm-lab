@@ -4,55 +4,134 @@ The temporary output directory is overlaid onto the published site only after
 Quarto succeeds. This preserves shared assets still referenced by untouched
 pages, unlike rendering the batch directly into the cached site tree.
 """
+
 from __future__ import annotations
-import json, os, shutil, subprocess, tempfile
+
+import json
+import os
+import shutil
+import subprocess
+import sys
+import tempfile
 from pathlib import Path, PurePosixPath
 
+
 def replace_project_render_targets(config: str, targets: list[str]) -> str:
+    """Replace only project.render while preserving the rest of the YAML."""
     normalized: list[str] = []
     for target in targets:
         path = PurePosixPath(target)
-        if not target.startswith("site/") or path.suffix != ".qmd" or path.is_absolute() or ".." in path.parts:
+        if (
+            not target.startswith("site/")
+            or path.suffix != ".qmd"
+            or path.is_absolute()
+            or ".." in path.parts
+        ):
             raise ValueError(f"Unsafe Quarto render target: {target!r}")
         relative = path.as_posix().removeprefix("site/")
         if relative not in normalized:
             normalized.append(relative)
+
     if not normalized:
         raise ValueError("At least one Quarto render target is required")
+
     lines = config.splitlines(keepends=True)
-    project_start = next((i for i, line in enumerate(lines) if line.rstrip("\n") == "project:"), None)
+    project_start = next(
+        (index for index, line in enumerate(lines) if line.rstrip("\\n") == "project:"),
+        None,
+    )
     if project_start is None:
         raise ValueError("Could not find top-level project section in site/_quarto.yml")
-    project_end = next((i for i in range(project_start + 1, len(lines)) if lines[i].strip() and not lines[i].startswith((" ", "#"))), len(lines))
-    render_start = next((i for i in range(project_start + 1, project_end) if lines[i].rstrip("\n") == "  render:"), None)
+
+    project_end = next(
+        (
+            index
+            for index in range(project_start + 1, len(lines))
+            if lines[index].strip() and not lines[index].startswith((" ", "#"))
+        ),
+        len(lines),
+    )
+    render_start = next(
+        (
+            index
+            for index in range(project_start + 1, project_end)
+            if lines[index].rstrip("\\n") == "  render:"
+        ),
+        None,
+    )
     if render_start is None:
         raise ValueError("Could not find project.render in site/_quarto.yml")
-    render_end = next((i for i in range(render_start + 1, project_end) if lines[i].strip() and len(lines[i]) - len(lines[i].lstrip(" ")) <= 2), project_end)
+
+    render_end = next(
+        (
+            index
+            for index in range(render_start + 1, project_end)
+            if lines[index].strip()
+            and len(lines[index]) - len(lines[index].lstrip(" ")) <= 2
+        ),
+        project_end,
+    )
     while render_end > render_start + 1 and not lines[render_end - 1].strip():
         render_end -= 1
-    replacement = ["  render:\n", *(f"    - {json.dumps(path)}\n" for path in normalized)]
+
+    replacement = [
+        "  render:\\n",
+        *(f"    - {json.dumps(path)}\\n" for path in normalized),
+    ]
     return "".join(lines[:render_start] + replacement + lines[render_end:])
 
+
 def main() -> None:
-    targets = [line.strip() for line in os.environ.get("RENDER_TARGETS", "").splitlines() if line.strip()]
+    """Render the selected pages separately, then safely overlay their outputs."""
+    targets = [
+        line.strip()
+        for line in os.environ.get("RENDER_TARGETS", "").splitlines()
+        if line.strip()
+    ]
     project_dir = Path("site")
     config_path = project_dir / "_quarto.yml"
     original_config = config_path.read_text(encoding="utf-8")
     incremental_config = replace_project_render_targets(original_config, targets)
     output_dir = project_dir / "_site"
-    with tempfile.TemporaryDirectory(prefix="_quarto_incremental_", dir=project_dir) as temp_name:
+
+    with tempfile.TemporaryDirectory(
+        prefix="_quarto_incremental_",
+        dir=project_dir,
+    ) as temp_name:
         temp_output = Path(temp_name)
         relative_output = temp_output.relative_to(project_dir)
+
         try:
             config_path.write_text(incremental_config, encoding="utf-8")
-            print(f"Rendering {len(targets)} changed page(s) into isolated output {relative_output}", flush=True)
-            subprocess.run(["quarto", "render", "site", "--no-clean", "--output-dir", relative_output.as_posix()], check=True)
+            sys.stdout.write(
+                f"Rendering {len(targets)} changed page(s) into isolated output "
+                f"{relative_output}\\n"
+            )
+            subprocess.run(
+                [
+                    "quarto",
+                    "render",
+                    "site",
+                    "--no-clean",
+                    "--output-dir",
+                    relative_output.as_posix(),
+                ],
+                check=True,
+            )
         finally:
             config_path.write_text(original_config, encoding="utf-8")
+
         if not temp_output.is_dir() or not any(temp_output.iterdir()):
             raise RuntimeError("Quarto succeeded but produced no isolated output")
+
+        # Overlay generated files only. Never delete from the existing site:
+        # untouched pages may still depend on shared Quarto assets.
         shutil.copytree(temp_output, output_dir, dirs_exist_ok=True)
-        print(f"Overlaid isolated render output into {output_dir}; existing shared assets were preserved", flush=True)
+        sys.stdout.write(
+            f"Overlaid isolated render output into {output_dir}; "
+            "existing shared assets were preserved\\n"
+        )
+
 
 if __name__ == "__main__":
     main()
