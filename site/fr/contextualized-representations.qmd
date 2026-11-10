@@ -24,14 +24,14 @@ tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-re
 
 {{< include ../includes/generated-guided-context-fr-contextualized-representations.qmd >}}
 ::: {.chapter-lead}
-La page précédente expliquait comment l'ordre des tokens entre dans le calcul. Reste à comprendre ce que les couches du réseau font de ces vecteurs initiaux : **un même ID fournit le même embedding de départ, mais son état caché peut évoluer selon les autres tokens accessibles**. C'est cette transformation qui produit les représentations contextualisées.
+Deux phrases peuvent contenir le même token sans lui donner le même rôle : *bank* désigne une rive dans l'une, un établissement financier dans l'autre. Pourtant, le tokenizer peut attribuer le même ID aux deux occurrences. **Le lookup ne change pas ; c'est le traitement de la séquence par le Transformer qui construit des états cachés dépendant du contexte.**
 :::
 
 ::: {.callout-tip title="L'idée à retenir en une minute"}
-- **Lookup :** un ID fixe et une matrice fixe donnent le même embedding initial, quelle que soit l'occurrence.
-- **Position et contexte :** l'architecture ajoute ou injecte l'information positionnelle ; les blocs Transformer transforment ensuite les états en fonction des autres tokens accessibles.
-- **Architecture :** dans un décodeur causal comme GPT, une position ne consulte pas le futur ; un encodeur bidirectionnel suit un autre masque.
-- **Limite d'interprétation :** contextualisé ne signifie pas automatiquement « sens humain isolé » ou géométrie sémantique garantie.
+- **Même ID, même lookup :** avec une matrice fixe, les deux occurrences sélectionnent la même ligne.
+- **Position :** l'architecture introduit l'ordre selon son mécanisme (embedding absolu, RoPE, etc.).
+- **Contexte :** chaque bloc transforme l'état d'une position à partir des tokens auxquels elle peut accéder.
+- **Résultat :** les états cachés peuvent différer, sans garantir une représentation géométrique nette des « sens » humains.
 
 **Question de contrôle :** comment deux occurrences peuvent-elles partager le même vecteur initial tout en ayant des états cachés différents ?
 :::
@@ -67,7 +67,7 @@ Cet exemple est repris comme motivation pédagogique dans le tutoriel de [Nishan
 
 ## Ce qui change avec la position et le contexte
 
-Les deux occurrences occupent des positions différentes et sont entourées de tokens différents. Le traitement exact de la position dépend de l'architecture.
+Les deux occurrences apparaissent dans des séquences différentes et sont entourées de tokens différents. Leur position absolue peut varier selon la phrase et la tokenisation ; le traitement exact de la position dépend de l'architecture.
 
 Dans un modèle utilisant des embeddings positionnels absolus appris, l'entrée initiale à la position \(t\) peut s'écrire :
 
@@ -87,19 +87,21 @@ F_\ell\big(h_1^{(\ell)},\ldots,h_t^{(\ell)}\big),
 
 Dans un décodeur causal comme GPT, l'état à la position \(t\) peut utiliser le token courant et son contexte précédent, mais pas les tokens futurs. D'autres architectures, comme les encodeurs bidirectionnels, utilisent des masques d'attention différents. La fonction \(F_\ell\) représente un bloc complet ; cette écriture est conceptuelle et ne spécifie pas son implémentation.
 
-Les deux occurrences peuvent donc produire des états cachés différents, même si leur lookup initial du token est identique.
+Dans l'exemple *bank*, les deux occurrences occupent volontairement la même position dans la phrase (le troisième mot, sous l'hypothèse simplificatrice d'un token par mot). La différence ne vient donc pas d'une position absolue différente : elle vient du contexte qui précède le token. Dans d'autres exemples, position et contexte peuvent tous deux contribuer à la différence.
+
+Les états évoluent ensuite de bloc en bloc : \(h_t^{(0)}\) désigne l'entrée initiale à la position \(t\), puis chaque bloc produit \(h_t^{(1)}\), \(h_t^{(2)}\), etc. Le vecteur n'est pas remplacé par une étiquette de sens ; il est transformé par des opérations apprises qui intègrent progressivement de l'information.
 
 ![Un même token peut recevoir des représentations contextualisées différentes selon la phrase.](../images/contextualized-embeddings-fr.svg){fig-alt="Deux phrases utilisent le token anglais bank dans des contextes différents. En supposant le même ID, les deux occurrences partagent l'embedding initial, puis peuvent produire des états contextualisés différents." fig-cap="Même ID, même lookup initial ; des informations positionnelles et contextuelles différentes peuvent conduire à des états cachés différents." width=100%}
 
 Cette illustration originale s'inspire de [Ethayarajh (2019), *How Contextual are Contextualized Word Representations?*](https://arxiv.org/abs/1909.00512). Elle illustre le principe, pas des vecteurs mesurés. Selon le tokenizer, un mot visible peut être constitué de plusieurs tokens.
 
-## Distinguer trois objets
+## Distinguer les étapes et les représentations
 
 | Objet | De quoi dépend-il ? | Dépend-il du contexte ? |
 |---|---|---|
 | ID du token | Vocabulaire et règles du tokenizer | Non ; il identifie une entrée du vocabulaire |
 | Vecteur de plongement initial du token (embedding) | Ligne sélectionnée dans la matrice de plongements | Non, pour une matrice et un ID fixes |
-| État caché contextualisé | Représentation initiale, traitement positionnel, séquence environnante, architecture et couche | Oui, en général |
+| État caché à la couche \(\ell\) | État de la couche précédente, information positionnelle et tokens accessibles selon le masque | Oui, en général |
 
 Deux confusions fréquentes viennent du mélange de ces étapes :
 
@@ -110,7 +112,7 @@ Cela ne garantit pas non plus que le modèle représente les sens interprétés 
 
 ## Où se situe cette étape dans le modèle ?
 
-Le parcours est le suivant :
+Pour replacer cette transformation dans le parcours complet :
 
 1. Le tokenizer transforme le texte en IDs de tokens.
 2. La table de plongements (table d'embeddings) associe un vecteur initial à chaque ID.
