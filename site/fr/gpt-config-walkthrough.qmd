@@ -188,16 +188,26 @@ Ligne par ligne :
 2. `256 × 64 = 16384` valeurs, soit 16384 paramètres appris — un par position et par dimension. Ce nombre est indépendant du vocabulaire et du nombre de têtes.
 </details>
 
-## Connexions
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Ressources complémentaires</span>
+  <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Pour approfondir
 
 - **Étape suivante** : [les briques numériques (`gpt_ops.py`)](gpt-ops-walkthrough.qmd).
 - **Page conceptuelle** : [GPT et Transformer](transformer.qmd) — l'architecture que ces dimensions paramètrent.
 - **Retour au parcours** : [Construire un petit GPT](build-path.qmd) — le parcours qui motive ce code.
 - **Code source** : [`gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt_config.py) · **Tests** : [`test_gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt_config.py).
 
-## Exercices
+### Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/gpt-config-walkthrough.qmd).
+
+</div>
+</details>
 
 ::: {.language-switch}
 **Langue :** [Français](gpt-config-walkthrough.qmd) · [English](../en/gpt-config-walkthrough.qmd)
