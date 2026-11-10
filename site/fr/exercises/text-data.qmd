@@ -46,5 +46,5 @@ Non. Les IDs ne sont définis qu’à l’intérieur du vocabulaire de leur toke
 </details>
 
 ::: {.language-switch}
-**Langue :** [Français](../exercises/text-data.qmd) · [English](../../en/exercises/text-data.qmd)
+**Langue :** [Français](text-data.qmd) · [English](../../en/exercises/text-data.qmd)
 :::

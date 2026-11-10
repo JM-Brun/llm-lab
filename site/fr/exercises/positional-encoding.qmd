@@ -57,5 +57,5 @@ Non. Le masque causal est une contrainte de visibilité : il limite chaque posit
 Vous avez compris cette étape si vous pouvez expliquer pourquoi l'ordre doit être pris en compte, distinguer les trois familles de mécanismes, et séparer l'information positionnelle explicite de la contrainte de visibilité causale.
 
 ::: {.language-switch}
-**Langue :** [Français](../exercises/positional-encoding.qmd) · [English](../../en/exercises/positional-encoding.qmd)
+**Langue :** [Français](positional-encoding.qmd) · [English](../../en/exercises/positional-encoding.qmd)
 :::

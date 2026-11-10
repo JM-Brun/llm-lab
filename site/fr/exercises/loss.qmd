@@ -59,5 +59,5 @@ Il faut notamment une même convention de logarithme et de réduction, un tokeni
 **Lien complémentaire vers la probabilité des séquences observées :** [Vraisemblance](../vraisemblance.qmd).
 
 ::: {.language-switch}
-**Langue :** [Français](../exercises/loss.qmd) · [English](../../en/exercises/loss.qmd)
+**Langue :** [Français](loss.qmd) · [English](../../en/exercises/loss.qmd)
 :::

@@ -62,5 +62,5 @@ Le lot, la position dans la séquence et le token candidat du vocabulaire. Il y 
 </details>
 
 ::: {.language-switch}
-**Langue :** [Français](../exercises/training-examples.qmd) · [English](../../en/exercises/training-examples.qmd)
+**Langue :** [Français](training-examples.qmd) · [English](../../en/exercises/training-examples.qmd)
 :::

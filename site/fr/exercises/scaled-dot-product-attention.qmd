@@ -37,5 +37,5 @@ On divise d’abord les scores par $\sqrt{4}=2$, ce qui donne $(1,0)$. Le softma
 </details>
 
 ::: {.language-switch}
-**Langue :** [Français](../exercises/scaled-dot-product-attention.qmd) · [English](../../en/exercises/scaled-dot-product-attention.qmd)
+**Langue :** [Français](scaled-dot-product-attention.qmd) · [English](../../en/exercises/scaled-dot-product-attention.qmd)
 :::

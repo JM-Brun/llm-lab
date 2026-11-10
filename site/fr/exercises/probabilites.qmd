@@ -43,5 +43,5 @@ tags: ["type:exercise-hub", "destination:practice", "topic:probabilites-exercise
 </details>
 
 ::: {.language-switch}
-**Langue :** [Français](../exercises/probabilites.qmd) · [English](../../en/exercises/probabilities.qmd)
+**Langue :** [Français](probabilites.qmd) · [English](../../en/exercises/probabilities.qmd)
 :::

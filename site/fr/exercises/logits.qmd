@@ -53,5 +53,5 @@ Il identifie le token dont le score est le plus élevé dans ce vecteur. Il ne d
 </details>
 
 ::: {.language-switch}
-**Langue :** [Français](../exercises/logits.qmd) · [English](../../en/exercises/logits.qmd)
+**Langue :** [Français](logits.qmd) · [English](../../en/exercises/logits.qmd)
 :::
