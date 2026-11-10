@@ -36,12 +36,20 @@ Dans un LLM autorégressif, l'entropie décrit la dispersion de la distribution 
 **Question de contrôle :** pouvez-vous distinguer l'incertitude avant observation de la surprise après observation d'une cible ?
 :::
 
-<div class="pipeline-stepper" role="navigation" aria-label="Étapes de l’interprétation de l’entropie">
-  <a class="step-item" href="probabilites.qmd">1. Distribution</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active" aria-current="step">2. Entropie</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item">3. Incertitude</span>
+<div class="pipeline-stepper meta-flow meta-flow--branch" role="navigation" aria-label="Carte des notions liées à la distribution prédictive">
+  <div class="meta-flow__source"><strong>Distribution prédictive</strong><span>p(token suivant | contexte)</span></div>
+  <div class="meta-flow__relation">Deux questions différentes selon que le token est observé ou non</div>
+  <div class="meta-flow__comparison">
+    <div class="meta-flow__comparison-item meta-flow__branch--active" aria-current="step">
+      <strong>Avant observation · Entropie H(p)</strong>
+      <small>Dispersion moyenne de toute la distribution : incertitude prédictive</small>
+    </div>
+    <div class="meta-flow__comparison-item">
+      <strong>Après observation · Surprise −log p(y)</strong>
+      <small>Score du token effectivement observé ; voir la <a href="vraisemblance.qmd">vraisemblance</a></small>
+    </div>
+  </div>
+  <div class="meta-flow__result"><strong>Avec une distribution cible q : entropie croisée H(q, p)</strong> · <a href="cross-entropy.qmd">Comparer prédiction et cible</a></div>
 </div>
 
 
