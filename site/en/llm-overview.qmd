@@ -30,6 +30,13 @@ You ask an assistant: “The report indicates that the concentration…” and i
 That is the basic idea of a **language model**: assigning probabilities to possible continuations of a sequence. A **large language model** (LLM) is a language model trained at scale on large corpora with a substantial compute budget. No parameter-count threshold defines the category on its own; data and compute matter too ([scaling laws](scaling-laws.qmd); [Zhao et al., 2023](https://arxiv.org/abs/2303.18223); [Hoffmann et al., 2022](https://proceedings.neurips.cc/paper_files/paper/2022/hash/c1e2faff6f588870935f114ebe04a3e5-Abstract.html)). LLM therefore does not specify a particular architecture or training objective.
 :::
 
+::: {.callout-note title="Running example: a question and its continuation"}
+A useful English-language parallel is the question from *Monty Python's Life of Brian*: **“What have the Romans ever done for us?”** The scene then accumulates answers such as aqueducts, sanitation, roads, and irrigation. In *Monty Python and the Holy Grail*, the Bridge of Death offers a complementary example of a conversation shaped by successive questions and answers.
+
+Both are cultural analogies, not literal single-speaker model generations. For reproducible token-by-token calculations, this course uses a separate, original continuation.
+:::
+
+
 ::: {.callout-tip title="The one-minute mental model"}
 - **Three different notions:** an **LLM** is a language model trained at scale — no agreed parameter-count threshold exists, data and compute matter; a **GPT** is a family of pretrained decoder-only Transformers; the **Transformer** is an architecture family. These three terms are not interchangeable.
 - **What a GPT computes:** given a context, it turns text into logits, then into a conditional distribution over the next token, one token at a time, with parameters fixed during ordinary inference.

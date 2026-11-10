@@ -55,6 +55,8 @@ By the end of this page, you will be able to:
 </div>
 
 
+In the running example, once “What have the Romans ever done for us?” has passed through the Transformer, the output head assigns a logit to every vocabulary token for the next position.
+
 ## Definition and dimensions
 
 At a given position, write the score vector as:

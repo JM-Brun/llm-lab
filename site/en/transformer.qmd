@@ -63,6 +63,8 @@ This second diagram answers a different question: it places the network in the c
 
 At the first block's input, each token ID has already been mapped to a vector, and the model has information about token order. The pages on [embeddings](embedding-space.qmd) and [positional information](positional-encoding.qmd) explain these initial representations; the page on [contextualized representations](contextualized-representations.qmd) shows what Transformer layers do with them. Here, we follow that computation at the block level.
 
+In our example, “What have the Romans ever done for us?” passes through this stack of blocks before the model produces the logits for the next token. The continuation is not already written in the prompt: it is built one step at a time by the generation loop.
+
 ## 2. Transformer blocks
 
 The stack shown above consists of blocks of the same general type, repeated in depth. Each block combines two main operations:

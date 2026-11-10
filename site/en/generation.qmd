@@ -27,6 +27,15 @@ When you send a prompt, the model does not write the whole response in one go. I
 This loop is called **autoregressive generation**. During inference, the model's parameters remain fixed: producing a response is not learning.
 :::
 
+::: {.callout-note title="Running example: prompt versus continuation"}
+**Initial context (prompt):** “What have the Romans ever done for us?” — the question from *Monty Python's Life of Brian*.
+
+The scene's answers (aqueducts, sanitation, roads, irrigation, and others) are spoken by several characters. It is therefore a memorable context-and-response analogy, not a literal one-speaker autoregressive trace. The Bridge of Death in *Monty Python and the Holy Grail* is another useful analogy for how each new question and answer depends on the conversation so far.
+
+For the token-by-token demonstration, use this separate, original continuation: “They built roads between distant towns. Those roads made travel easier.” It is teaching text, not a film quotation or a model output.
+:::
+
+
 <div class="pipeline-stepper" role="navigation" aria-label="Autoregressive generation loop">
   <a class="step-item" href="text-data.qmd">Tokenized prompt</a>
   <span class="step-arrow" aria-hidden="true">→</span>

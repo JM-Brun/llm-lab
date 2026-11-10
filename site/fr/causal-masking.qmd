@@ -55,6 +55,8 @@ Le masque causal impose une règle d'information : **la sortie à la position $i
 
 Lorsqu'on entraîne un modèle à prédire le token suivant, toutes les positions d'une séquence peuvent être calculées en parallèle. Sans masque, cependant, la représentation d'une position pourrait utiliser des tokens qui ne seraient pas encore connus au moment de la génération. Le masque rend donc l'entraînement parallèle compatible avec l'objectif autorégressif.
 
+Ainsi, lorsqu'on entraîne le modèle sur le préfixe et sa continuation, la position qui prédit un token ne peut pas consulter les tokens qui viennent après lui dans la séquence cible. En génération, ces tokens futurs ne sont tout simplement pas encore présents.
+
 ## Définition
 
 Pour une séquence de longueur $T$, la position $i$ peut accéder aux positions $j\leq i$. On peut représenter cette relation par deux conventions booléennes complémentaires : $\mathrm{allowed}_{ij}=\mathbf{1}[j\leq i]$ (clé autorisée) et $\mathrm{blocked}_{ij}=\mathbf{1}[j>i]$ (clé interdite). On peut aussi utiliser le masque additif $M$ :

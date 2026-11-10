@@ -47,6 +47,8 @@ La page [Générer du texte](generation.qmd) présente le mécanisme indispensab
 **Question rapide :** savez-vous distinguer une transformation de la distribution à une position d'une recherche qui compare plusieurs séquences ?
 :::
 
+Pour le préfixe « C'est une bonne situation, ça, scribe ? », le modèle fournit des scores pour le prochain token ; le décodage détermine comment transformer ces scores et choisir ce token. Le token retenu est ensuite ajouté au contexte, puis le processus recommence.
+
 ## 1. Où intervient le décodage ?
 
 À une étape donnée, le modèle produit des logits $z$ pour le prochain token. Une chaîne de traitements peut ensuite :
