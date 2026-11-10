@@ -133,6 +133,17 @@ A sensible learning order is: expected reward and policy-gradient objective; log
 
 It is not a new stage in the core next-token predictive spine and does not replace supervised teacher-forced training.
 
+
+
+
+::: {.callout-warning}
+**Research boundary:** the canonical arXiv PDF and all appendices have not yet been independently audited, official tests have not been executed, and the Cameron Wolfe article body remains unavailable. Treat empirical figures as author-reported and the top-k tail as an implementation approximation.
+:::
+
+:::: {.language-switch}
+[Français](../fr/score-centering.qmd) · [English](score-centering.qmd)
+::::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -150,12 +161,3 @@ It is not a new stage in the core next-token predictive spine and does not repla
 
 </div>
 </details>
-
-
-::: {.callout-warning}
-**Research boundary:** the canonical arXiv PDF and all appendices have not yet been independently audited, official tests have not been executed, and the Cameron Wolfe article body remains unavailable. Treat empirical figures as author-reported and the top-k tail as an implementation approximation.
-:::
-
-:::: {.language-switch}
-[Français](../fr/score-centering.qmd) · [English](score-centering.qmd)
-::::
