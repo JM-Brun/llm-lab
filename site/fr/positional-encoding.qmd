@@ -35,12 +35,12 @@ Un Transformer doit disposer d'un signal d'ordre pour distinguer, par exemple, �
 **Question de contrôle :** pouvez-vous expliquer pourquoi inverser deux tokens doit pouvoir changer le calcul, et indiquer à quel endroit chaque mécanisme introduit cette information ?
 :::
 
-<div class="pipeline-stepper" role="navigation" aria-label="Étapes du traitement positionnel">
+<div class="pipeline-stepper" role="navigation" aria-label="Étapes d’injection de l’information positionnelle">
   <a class="step-item" href="embedding-space.qmd">1. Embeddings</a>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active" aria-current="step">2. Position</span>
+  <a class="step-item" href="queries-keys-values.qmd">2. Projections Q/K</a>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="queries-keys-values.qmd">3. Projections Q/K</a>
+  <span class="step-item active" aria-current="step">3. Position (entrée ou Q/K)</span>
   <span class="step-arrow" aria-hidden="true">→</span>
   <a class="step-item" href="scaled-dot-product-attention.qmd">4. Scores d’attention</a>
 </div>
