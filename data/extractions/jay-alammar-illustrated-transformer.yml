@@ -1,0 +1,71 @@
+schema_version: 1
+source_id: jay-alammar-illustrated-transformer
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Inspected the positional-encoding section, toy embedding-size-4 example, matrix visualization description, implementation pointer, and July 2020 clarification."
+    inferred_elements:
+      - "Learning outcomes and prerequisites are inferred from the section's explanatory sequence."
+  source_graph:
+    nodes:
+      - {id: src-token-order-problem, kind: pedagogical-anchor, description: "The Transformer needs a representation of token order.", locator: "Representing The Order of The Sequence Using Positional Encoding"}
+      - {id: src-position-vector, kind: representation, description: "A vector associated with each sequence position is added to the token embedding.", locator: "Positional Encoding section"}
+      - {id: src-sinusoidal-pattern, kind: mechanism, description: "Different coordinates use sine or cosine signals with different frequencies.", locator: "Positional Encoding section"}
+      - {id: src-visual-matrix, kind: visualization, description: "Rows show positions and columns show dimensions in a positional-encoding matrix.", locator: "20-word, 512-dimension figure description"}
+    edges:
+      - {from: src-token-order-problem, type: motivates, to: src-position-vector}
+      - {from: src-sinusoidal-pattern, type: represented-by, to: src-visual-matrix}
+      - {from: src-position-vector, type: illustrated-by, to: src-visual-matrix}
+    interpretation: "Source-local reconstruction from the inspected article section; not an author-specified formal graph."
+  learning_outcomes:
+    - {status: inferred, outcome: "Explain why a Transformer needs positional information.", basis: "The section opens with the missing-order problem."}
+    - {status: inferred, outcome: "Recognize the multi-frequency pattern in a positional-encoding matrix.", basis: "Toy and 20-by-512 visual examples."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Token embeddings and sequence positions.", basis: "The section assumes familiarity with the embedding stage."}
+  teaching_route:
+    - {order: 1, section: "Representing The Order of The Sequence Using Positional Encoding", function: motivate, moves: ["State the missing-order problem", "Introduce an added position vector"]}
+    - {order: 2, section: "Toy embedding size 4", function: make-concrete, moves: ["Show a small vector example"]}
+    - {order: 3, section: "20 positions and 512 dimensions", function: visualize-scale, moves: ["Interpret rows as positions and columns as dimensions", "Explain sine/cosine signal groups"]}
+    - {order: 4, section: "July 2020 update", function: qualify-visualization, moves: ["Clarify concatenated visualization versus interleaved paper formula"]}
+  pedagogical_strengths:
+    - "Excellent visual progression from the missing-order problem to a small vector and then a full matrix."
+    - "Makes the different timescales visible without beginning with equations."
+    - "The update explicitly corrects a potentially misleading visual convention."
+  pedagogical_limits:
+    - "The visual section does not derive the frequency schedule or wavelength progression."
+    - "The first visualization uses a concatenated arrangement, unlike the interleaved equation in the original paper."
+    - "The page's broad claims about longer unseen sequences need to be qualified as model generalization is not guaranteed."
+  comparison:
+    dossier: docs/source-reviews/sinusoidal-positional-encoding-2026-11.md
+    canonical_graph: "data/concepts.yml and generated JSON-LD projection"
+    canonical_routes: [data/guided-route.yml, docs/learning-path.md, "Page-level suggested_route metadata"]
+    decision: "Use as a visual intuition reference and explain its interleaving caveat; do not copy its figures."
+    structures_kept_separate: [source-pedagogical-model, canonical-concept-graph, canonical-learning-routes, site-navigation]
+items:
+  - id: jay-alammar-illustrated-transformer:visual-matrix-mental-model
+    kind: mental-model
+    summary: "A positional-encoding matrix can be read with sequence positions as rows and embedding dimensions as columns; the sine/cosine signals form visible multi-frequency patterns across the matrix."
+    locator: {type: section, value: "Representing The Order of The Sequence Using Positional Encoding", label: "Positional encoding visualization"}
+    evidence:
+      kind: pedagogical-explanation
+      confidence: well-supported
+      scope: "The article's textual explanation of its toy and full positional-encoding visualizations."
+      assumptions: ["The plotted matrix is generated from a sinusoidal positional signal."]
+      limitations: ["The source's initial illustration uses a concatenated signal arrangement; the paper interleaves sine and cosine across even and odd dimensions."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:positional-encoding, modality:visualization]
+      concept_ids: []
+    candidate_destinations:
+      pages: [fr/sinusoidal-positional-encoding, en/sinusoidal-positional-encoding]
+    pedagogical_assessment:
+      novelty: {level: high, rationale: "The matrix-reading mental model is a distinct visual aid beyond the existing conceptual overview."}
+      complementarity: {level: high, rationale: "It complements the new page's frequency derivation with a concrete visual interpretation."}
+      pedagogical_value: {level: high, rationale: "It helps learners map a formula to a position-by-dimension pattern."}
+      applicability: {level: high, rationale: "Use as a link and design inspiration; generate an original figure rather than reusing the asset."}
+      redundancy: {level: low, rationale: "The current page does not provide a full matrix visualization."}
+      evidence_quality: {level: moderate, rationale: "The visual explanation is clear, but it is a secondary educational source."}
+    disposition: integrate-by-reference
+    disposition_rationale: "Cite and link the article; the project explains the matrix convention independently and does not reproduce the image."

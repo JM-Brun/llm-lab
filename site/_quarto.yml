@@ -116,8 +116,10 @@ project:
     - fr/contextualized-representations.qmd
     - en/contextualized-representations.qmd
     - fr/positional-encoding.qmd
+    - fr/sinusoidal-positional-encoding.qmd
     - fr/rope.qmd
     - en/positional-encoding.qmd
+    - en/sinusoidal-positional-encoding.qmd
     - en/rope.qmd
     - fr/exercises.qmd
     - fr/exercises-foundations.qmd
@@ -371,6 +373,7 @@ website:
                 - fr/queries-keys-values-advanced.qmd
                 - fr/cross-attention.qmd
                 - fr/rope.qmd
+                - fr/sinusoidal-positional-encoding.qmd
                 - fr/hybrid-llm-architectures.qmd
                 - fr/next-concept-modeling.qmd
             - section: "Texte et tokenisation"
@@ -554,6 +557,7 @@ website:
                 - en/queries-keys-values-advanced.qmd
                 - en/cross-attention.qmd
                 - en/rope.qmd
+                - en/sinusoidal-positional-encoding.qmd
                 - en/hybrid-llm-architectures.qmd
                 - en/next-concept-modeling.qmd
             - section: "Text and tokenization"

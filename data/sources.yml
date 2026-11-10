@@ -2628,14 +2628,14 @@ sources:
     classification:
       primary_theme: architectures-mechanisms
       secondary_themes: [mathematical-tools-geometry]
-      tags: [topic:transformer, topic:self-attention, topic:multi-head-attention, modality:illustration]
+      tags: [topic:transformer, topic:self-attention, topic:multi-head-attention, topic:positional-encoding, method:sinusoidal-encoding, modality:illustration, modality:visualization]
       concept_ids: [token-embedding, self-attention, multi-head-attention, causal-mask]
     metadata:
       technical_level: introductory
-      contribution_types: [architecture, visualization, pedagogy, historical-context]
+      contribution_types: [architecture, visualization, pedagogy, historical-context, implementation]
       audiences: [beginner, learner, educator]
     scan_status: partially-scanned
-    integration_status: deferred
+    integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-09"
         status: partially-scanned
@@ -2647,10 +2647,18 @@ sources:
           - "No fresh asset-level provenance or licence review was performed."
           - "The article primarily explains the original encoder-decoder Transformer, not a decoder-only GPT architecture."
           - "Visuals were not copied or independently assessed for reuse."
+      - accessed_at: "2026-11-10"
+        status: partially-scanned
+        inspected_scope:
+          - "Positional-encoding section, toy embedding-size-4 example, 20-by-512 encoding visualization description, implementation pointer, and July 2020 clarification"
+        limitations:
+          - "Only the positional-encoding section was assessed for this ingestion."
+          - "The article explicitly distinguishes its earlier concatenated visualization from the interleaved formulation in the original paper."
+          - "Embedded image assets were not separately audited; no reuse rights were established."
     related:
-      pages: [en/transformer, fr/transformer, en/queries-keys-values, fr/queries-keys-values, en/scaled-dot-product-attention, fr/scaled-dot-product-attention, en/transformer-architectures, fr/transformer-architectures]
+      pages: [en/transformer, fr/transformer, en/queries-keys-values, fr/queries-keys-values, en/scaled-dot-product-attention, fr/scaled-dot-product-attention, en/transformer-architectures, fr/transformer-architectures, fr/sinusoidal-positional-encoding, en/sinusoidal-positional-encoding]
       concepts: [token-embedding, self-attention, multi-head-attention, causal-mask]
-      audit_records: [docs/source-reviews/transformer-attention-pedagogical-comparison-2026-11.md]
+      audit_records: [docs/source-reviews/transformer-attention-pedagogical-comparison-2026-11.md, docs/source-reviews/sinusoidal-positional-encoding-2026-11.md]
 
   - id: jay-alammar-illustrated-gpt2
     title: "The Illustrated GPT-2"
@@ -3196,3 +3204,118 @@ sources:
       audit_records:
         - docs/source-reviews/hesam-sheikh-hessani-llm-embeddings-explained-2026-11.md
         - data/extractions/hesam-sheikh-hessani-llm-embeddings-explained-2025.yml
+
+  - id: vaswani-et-al-attention-is-all-you-need-2017
+    title: "Attention Is All You Need"
+    creators: ["Ashish Vaswani", "Noam Shazeer", "Niki Parmar", "Jakob Uszkoreit", "Llion Jones", "Aidan N. Gomez", "Lukasz Kaiser", "Illia Polosukhin"]
+    source_type: paper
+    identifiers: {arxiv: "1706.03762"}
+    canonical_url: "https://arxiv.org/abs/1706.03762"
+    publisher: "NeurIPS"
+    publication_date: "2017-06-12"
+    updated_date: null
+    language: en
+    version: "arXiv preprint"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:positional-encoding, method:sinusoidal-encoding, topic:transformer]
+      concept_ids: []
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, mathematical-derivation, architecture]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-10"
+        status: partially-scanned
+        inspected_scope:
+          - "Section 3.5, Positional Encoding: equations, frequency/wavelength statement, motivation for fixed-offset linear transformations, and learned-embedding comparison"
+        limitations:
+          - "The complete paper and supplementary references were not re-audited in this source-ingestion pass."
+          - "The paper's reported extrapolation motivation is a hypothesis, not a guarantee of long-context generalization."
+          - "No figure, text passage, code, or dataset was copied; reuse rights were not assessed."
+    related:
+      pages: [fr/positional-encoding, en/positional-encoding, fr/sinusoidal-positional-encoding, en/sinusoidal-positional-encoding]
+      concepts: []
+      audit_records: [docs/source-reviews/sinusoidal-positional-encoding-2026-11.md]
+  - id: harvardnlp-annotated-transformer
+    title: "The Annotated Transformer"
+    creators: ["Sasha Rush", "Austin Huang", "Suraj Subramanian", "Jonathan Sum", "Khalid Almubarak", "Stella Biderman"]
+    source_type: tutorial
+    identifiers: {}
+    canonical_url: "https://nlp.seas.harvard.edu/annotated-transformer/"
+    publisher: "Harvard NLP"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: "2022 annotated implementation"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:positional-encoding, method:sinusoidal-encoding, ecosystem:pytorch, topic:transformer]
+      concept_ids: []
+    metadata:
+      technical_level: intermediate
+      contribution_types: [pedagogy, implementation, mathematical-derivation]
+      audiences: [learner, practitioner, educator, researcher]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-10"
+        status: partially-scanned
+        inspected_scope:
+          - "Positional Encoding explanation, equations, frequency/wavelength statement, and PyTorch PositionalEncoding implementation"
+        limitations:
+          - "Only the positional-encoding section and its associated code were assessed."
+          - "The implementation uses a finite precomputed max_len buffer; this is an implementation choice, not a mathematical limit of the formula."
+          - "No code was copied into the project without adaptation; reuse rights were not independently assessed."
+    related:
+      pages: [fr/sinusoidal-positional-encoding, en/sinusoidal-positional-encoding]
+      concepts: []
+      audit_records: [docs/source-reviews/sinusoidal-positional-encoding-2026-11.md]
+  - id: stanford-ee269-transformers-signal-prediction
+    title: "Transformers for Signal Prediction"
+    creators: []
+    source_type: course
+    identifiers: {}
+    canonical_url: "https://web.stanford.edu/class/ee269/Lecture_Transformers.pdf"
+    publisher: "Stanford University"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: "Lecture PDF"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:positional-encoding, method:sinusoidal-encoding, topic:signal-processing]
+      concept_ids: []
+    metadata:
+      technical_level: intermediate
+      contribution_types: [pedagogy, mathematical-derivation]
+      audiences: [learner, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-10"
+        status: partially-scanned
+        inspected_scope:
+          - "Lecture passage defining sinusoidal position embeddings, angular frequencies, wavelength, and logarithmic frequency spacing"
+        limitations:
+          - "Only the indexed lecture passage was inspected; the complete PDF and surrounding lecture context were not audited."
+          - "The source is a teaching note, not the original Transformer specification."
+          - "No figures or text were copied; reuse rights were not assessed."
+    related:
+      pages: [fr/sinusoidal-positional-encoding, en/sinusoidal-positional-encoding]
+      concepts: []
+      audit_records: [docs/source-reviews/sinusoidal-positional-encoding-2026-11.md]

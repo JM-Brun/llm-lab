@@ -1,0 +1,69 @@
+schema_version: 1
+source_id: harvardnlp-annotated-transformer
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Inspected the positional-encoding explanation, equations, wavelength statement, and PyTorch PositionalEncoding implementation."
+    inferred_elements:
+      - "Learning outcomes, prerequisites, and teaching sequence are inferred from the selected section."
+  source_graph:
+    nodes:
+      - {id: src-sinusoidal-equations, kind: mathematical-definition, description: "Alternating sine and cosine coordinates use a dimension-dependent frequency schedule.", locator: "Positional Encoding"}
+      - {id: src-fixed-offset-property, kind: mathematical-property, description: "A fixed position offset can be represented as a linear function of the encoding.", locator: "Positional Encoding"}
+      - {id: src-precomputed-buffer, kind: implementation, description: "The implementation precomputes a finite position matrix and registers it as a module buffer.", locator: "PositionalEncoding class"}
+      - {id: src-input-addition, kind: operation, description: "The position signal is added to the input embedding sequence.", locator: "PositionalEncoding.forward"}
+    edges:
+      - {from: src-sinusoidal-equations, type: motivates, to: src-fixed-offset-property}
+      - {from: src-sinusoidal-equations, type: implemented-by, to: src-precomputed-buffer}
+      - {from: src-precomputed-buffer, type: added-to, to: src-input-addition}
+    interpretation: "Source-local reconstruction of the inspected tutorial section; not an author-specified formal graph."
+  learning_outcomes:
+    - {status: inferred, outcome: "Relate the sinusoidal formula to its pairwise frequency schedule.", basis: "Equations and explanatory prose."}
+    - {status: inferred, outcome: "Trace a precomputed positional matrix into a PyTorch forward pass.", basis: "PositionalEncoding implementation."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Basic tensor operations and PyTorch modules.", basis: "The implementation uses tensor construction, buffers, and module forward methods."}
+  teaching_route:
+    - {order: 1, section: "Positional Encoding explanation", function: state-and-motivate, moves: ["Explain why positions are added", "Present the original formula"]}
+    - {order: 2, section: "PositionalEncoding implementation", function: translate-to-code, moves: ["Build positions and frequency terms", "Fill alternating sine/cosine columns", "Register the tensor as a buffer", "Add the selected prefix to input embeddings"]}
+  pedagogical_strengths:
+    - "The implementation is short and closely mirrors the mathematical definition."
+    - "Shows how a fixed encoding is stored without making it a trainable parameter."
+    - "Connects the formula directly to the model's forward computation."
+  pedagogical_limits:
+    - "The precomputed max_len buffer is an implementation limit, not a limit of the mathematical formula."
+    - "The tutorial does not include property-based tests or an empirical long-context evaluation."
+    - "The code explanation does not by itself establish generalization beyond training length."
+  comparison:
+    dossier: docs/source-reviews/sinusoidal-positional-encoding-2026-11.md
+    canonical_graph: "data/concepts.yml and generated JSON-LD projection"
+    canonical_routes: [data/guided-route.yml, docs/learning-path.md, "Page-level suggested_route metadata"]
+    decision: "Use the implementation as a reference for a readable PyTorch example, while adding explicit shape, dtype, max_len, and test caveats."
+    structures_kept_separate: [source-pedagogical-model, canonical-concept-graph, canonical-learning-routes, site-navigation]
+items:
+  - id: harvardnlp-annotated-transformer:buffer-implementation
+    kind: implementation-pattern
+    summary: "The tutorial precomputes a [max_len, d_model] positional tensor, fills even columns with sine and odd columns with cosine, adds a batch dimension, registers it as a buffer, and adds the selected positions to the input sequence."
+    locator: {type: code, value: "PositionalEncoding.__init__ and PositionalEncoding.forward", label: "PyTorch implementation"}
+    evidence:
+      kind: implementation
+      confidence: well-supported
+      scope: "The displayed PyTorch implementation in the positional-encoding section."
+      assumptions: ["The input uses [batch, sequence_length, d_model] layout in the shown implementation."]
+      limitations: ["The precomputed maximum length is finite.", "The snippet's surrounding model conventions must be checked before transplanting it into another codebase."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:positional-encoding, method:sinusoidal-encoding, ecosystem:pytorch]
+      concept_ids: []
+    candidate_destinations:
+      pages: [fr/sinusoidal-positional-encoding, en/sinusoidal-positional-encoding]
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "The code translation is useful, but the project already has a code-first orientation."}
+      complementarity: {level: high, rationale: "It provides a concrete reference for the new page's implementation section."}
+      pedagogical_value: {level: high, rationale: "Readers can compare vectorized tensor construction with the equations."}
+      applicability: {level: high, rationale: "The project adapts the pattern and adds explicit shape, dtype, and maximum-length checks."}
+      redundancy: {level: moderate, rationale: "The same standard algorithm appears in many Transformer tutorials."}
+      evidence_quality: {level: high, rationale: "The displayed code is inspectable, although it was not executed in this source scan."}
+    disposition: integrate-by-reference
+    disposition_rationale: "Use as an implementation reference, not copied code; the page includes an independently written NumPy/PyTorch version and a mathematical property test."

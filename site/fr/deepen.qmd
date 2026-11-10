@@ -50,11 +50,19 @@ Chaque entrée répond à une question plus précise : pourquoi un mécanisme fo
 - [Représentations contextualisées : dépendances entre positions et couches](contextualized-representations-advanced.qmd) — formalisation du contexte accessible, des masques et de l'évolution des états cachés.
 - [Q/K/V : formulation mathématique et variantes](queries-keys-values-advanced.qmd) — équations par position, dimensions avec lot, géométrie des compatibilités, chemins de gradient et partage des têtes/projections.
 - [Attention croisée](cross-attention.qmd) — transfert d'information entre deux séquences, notamment dans les architectures encodeur-décodeur et multimodales.
+- [Encodages positionnels sinusoïdaux](sinusoidal-positional-encoding.qmd) — fréquences logarithmiques, longueurs d'onde, dérivation de la propriété de décalage linéaire, implémentation et limites d'extrapolation.
 - [RoPE : encodage positionnel rotatif](rope.qmd) — géométrie des rotations, dépendance aux positions relatives et limites d'extrapolation.
 - [Architectures hybrides : Nemotron 3 et 3.5](hybrid-llm-architectures.qmd) — combinaison de récurrence, attention, experts et prédiction multi-token dans un cas concret.
 - [Next-Concept Modeling](next-concept-modeling.qmd) — génération non autorégressive par niveaux de codes discrets, comparée à GPT et aux modèles de diffusion.
 
 Les variantes spécialisées ne rejoignent pas le parcours principal simplement parce qu'un modèle récent les utilise. Il faut démontrer qu'elles sont indispensables à la compréhension générale.
+
+### Ressources dédiées aux encodages sinusoïdaux
+
+- [Vaswani et al. (2017), section 3.5](https://arxiv.org/abs/1706.03762) — source primaire pour la formule, les fréquences et la motivation mathématique.
+- [Jay Alammar — *The Illustrated Transformer*](https://jalammar.github.io/illustrated-transformer/) — visualisation des signaux positionnels ; distinguer la première représentation concaténée de la formule entrelacée du papier.
+- [Harvard NLP — *The Annotated Transformer*](https://nlp.seas.harvard.edu/annotated-transformer/) — code PyTorch annoté qui relie la formule à son implémentation.
+- [Stanford — *Transformers for Signal Prediction*](https://web.stanford.edu/class/ee269/Lecture_Transformers.pdf) — lecture orientée signaux des fréquences logarithmiques et des longueurs d'onde.
 
 ### Ressources complémentaires pour comprendre le Transformer {#ressources-transformer}
 

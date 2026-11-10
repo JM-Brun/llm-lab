@@ -58,6 +58,7 @@
     - [Q/K/V: mathematical formulation and variants](queries-keys-values-advanced.html)
     - [Cross-attention: connecting two sequences](cross-attention.html)
     - [RoPE: geometry, derivation, and limitations](rope.html)
+    - [Sinusoidal positional encodings: frequencies, geometry, and limits](sinusoidal-positional-encoding.html)
     - [Hybrid LLM architectures: Nemotron 3 and 3.5](hybrid-llm-architectures.html)
     - [Next-Concept Modeling: generation over representation levels](next-concept-modeling.html)
   - Text and tokenization
