@@ -48,7 +48,7 @@ Vous pourrez :
 
 ## Le Transformer : le réseau au cœur d'un GPT
 
-![Architecture d'un GPT décodeur seul : les représentations d'entrée traversent une pile de blocs Transformer, puis une normalisation finale et une tête de sortie produisent les logits. Le panneau de droite agrandit un bloc pré-LN typique.](../images/transformer-stack-fr.svg){#fig-transformer-stack fig-alt="À gauche, le réseau complet : identifiants de tokens, embeddings et information positionnelle, pile de N blocs Transformer, normalisation finale, projection vers le vocabulaire et logits. À droite, le détail d'un bloc pré-LN : une normalisation puis une auto-attention multi-têtes causale, une connexion résiduelle, puis une normalisation, un MLP appliqué position par position et une seconde connexion résiduelle." width=100%}
+![Architecture d'un GPT décodeur seul : les représentations d'entrée traversent une pile de blocs Transformer, puis une normalisation finale et une tête de sortie produisent les logits. Le panneau inférieur agrandit un bloc pré-LN typique.](../images/transformer-stack-fr.svg){#fig-transformer-stack fig-alt="En haut, le réseau complet : identifiants de tokens, embeddings et information positionnelle, pile de N blocs Transformer, normalisation finale, projection vers le vocabulaire et logits. En bas, le détail d'un bloc pré-LN : une normalisation puis une auto-attention multi-têtes causale, une connexion résiduelle, puis une normalisation, un MLP appliqué position par position et une seconde connexion résiduelle." width=100%}
 
 *La pile de blocs constitue le Transformer du GPT représenté ici. Le détail agrandi montre une organisation pré-LN courante ; l'ordre des sous-couches et les variantes de normalisation peuvent différer selon les modèles.*
 
@@ -60,7 +60,7 @@ Cette représentation concerne la famille **décodeur seul**, utilisée notammen
 
 ![Flux simplifié d'un GPT autorégressif, des tokens à la sélection du prochain token.](../images/gpt-data-flow.svg){fig-alt="Pipeline complet : texte, tokenisation, embeddings et information positionnelle, blocs Transformer répétés, logits, softmax, sélection du prochain token puis ajout au contexte." width=100%}
 
-Ce second schéma répond à une autre question : il replace le réseau dans le processus complet. **La pile de blocs au centre est le Transformer montré juste au-dessus** ; les opérations en amont préparent son entrée, tandis que softmax, sélection et réinjection du token se situent en aval. La [génération autorégressive](generation.qmd) explique cette boucle de décodage.
+Ce second schéma répond à une autre question : il replace le réseau dans le processus complet. **La pile de blocs au centre est le Transformer montré juste au-dessus** ; les opérations en amont préparent son entrée, tandis que softmax, sélection et réinjection du token se situent en aval. La boucle de décodage intervient après la sortie du réseau.
 
 ## 1. Des identifiants aux représentations d'entrée
 
@@ -130,7 +130,9 @@ Après le dernier bloc, la normalisation finale et la tête de sortie produisent
 
 ## Vérifier sa compréhension
 
-Cette vérification porte sur le calcul interne, et non sur le décodage traité dans [la leçon sur la génération](generation.qmd).
+Pour prolonger cette vérification par des problèmes progressifs sur les embeddings, les résidus, la normalisation et le MLP, consultez les [exercices consacrés au Transformer](exercises.qmd#transformer).
+
+Cette vérification porte sur la structure du bloc et le rôle des connexions résiduelles.
 
 1. Quelle opération permet à une position d'intégrer de l'information provenant d'autres positions, et laquelle transforme chaque position indépendamment ?
 2. Pourquoi les connexions résiduelles ne remplacent-elles pas la transformation calculée par une sous-couche ?
