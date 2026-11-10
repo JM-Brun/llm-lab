@@ -150,11 +150,24 @@ const report = {
   generatedAt: new Date().toISOString(),
   baseUrl: BASE,
   browser: "Chromium",
-  cases: [],
+  cases: new Array(cases.length),
   failures: [],
 };
 
-async function runCase(testCase) {
+async function waitForFonts(page) {
+  let timeoutId;
+  try {
+    await Promise.race([
+      page.evaluate(() => document.fonts?.ready.then(() => true)),
+      new Promise(resolve => { timeoutId = setTimeout(resolve, 1000); }),
+    ]);
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
+async function runCase(testCase, caseIndex) {
+  const startedAt = performance.now();
   const { lang, viewport, label, theme, page: pagePath, kind } = testCase;
   const context = await browser.newContext({ viewport, deviceScaleFactor: 1, colorScheme: theme });
   const page = await context.newPage();
@@ -177,10 +190,7 @@ async function runCase(testCase) {
     // Do not wait for networkidle: analytics, remote fonts, and persistent requests
     // can keep the network busy after the DOM is already auditable.
     // A remote font or stylesheet must not stall the entire audit indefinitely.
-    await Promise.race([
-      page.evaluate(() => document.fonts?.ready.then(() => true)),
-      new Promise(resolve => setTimeout(resolve, 1000)),
-    ]);
+    await waitForFonts(page);
     // Let layout and paint settle without an unconditional wall-clock sleep.
     await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
 
@@ -882,16 +892,20 @@ async function runCase(testCase) {
           links.map(link => (link.getAttribute("href").split("#")[1] || ""))
         );
         if (!stageAnchorCache.has(lang)) {
-          const routeMapPage = await page.context().newPage();
-          try {
-            await routeMapPage.goto(`${BASE}/${lang}/learning-map.html`, { waitUntil: "domcontentloaded", timeout: 30000 });
-            const ids = await routeMapPage.locator("[id^='guided-stage-']").evaluateAll(nodes => nodes.map(node => node.id));
-            stageAnchorCache.set(lang, new Set(ids));
-          } finally {
-            await routeMapPage.close();
-          }
+          // Cache the in-flight load, not only its result: parallel cases for
+          // the same language must share one learning-map navigation.
+          stageAnchorCache.set(lang, (async () => {
+            const routeMapPage = await page.context().newPage();
+            try {
+              await routeMapPage.goto(`${BASE}/${lang}/learning-map.html`, { waitUntil: "domcontentloaded", timeout: 30000 });
+              const ids = await routeMapPage.locator("[id^='guided-stage-']").evaluateAll(nodes => nodes.map(node => node.id));
+              return new Set(ids);
+            } finally {
+              await routeMapPage.close();
+            }
+          })());
         }
-        const availableStageAnchors = stageAnchorCache.get(lang);
+        const availableStageAnchors = await stageAnchorCache.get(lang);
         item.routeContext.stageAnchorsResolve = stageFragments.every(id => availableStageAnchors.has(id));
         if (!item.routeContext.stageAnchorsResolve) throw new Error("guided-route stage link points to a missing anchor");
         const multiStagePages = {
@@ -1140,7 +1154,8 @@ async function runCase(testCase) {
     item.error = String(error);
     report.failures.push(`${pagePath}/${lang}/${label}/${theme}: ${String(error)}`);
   } finally {
-    report.cases.push(item);
+    item.durationMs = Math.round(performance.now() - startedAt);
+    report.cases[caseIndex] = item;
     await context.close();
   }
 }
@@ -1150,26 +1165,22 @@ async function runCase(testCase) {
 // Keep the limit conservative to avoid CPU/memory contention on GitHub runners.
 const workerCount = Math.min(3, cases.length);
 let nextCaseIndex = 0;
+const auditStartedAt = performance.now();
 await Promise.all(Array.from({ length: workerCount }, async () => {
   while (nextCaseIndex < cases.length) {
     const index = nextCaseIndex++;
-    await runCase(cases[index]);
+    await runCase(cases[index], index);
   }
 }));
-
-// Parallel workers complete out of order; keep the report stable and diffable.
-report.cases.sort((a, b) => {
-  const aIndex = cases.findIndex(testCase => testCase.page === a.page && testCase.lang === a.lang && testCase.label === a.label && testCase.theme === a.theme && testCase.kind === a.kind);
-  const bIndex = cases.findIndex(testCase => testCase.page === b.page && testCase.lang === b.lang && testCase.label === b.label && testCase.theme === b.theme && testCase.kind === b.kind);
-  return aIndex - bIndex;
-});
+report.durationMs = Math.round(performance.now() - auditStartedAt);
 
 await browser.close();
 fs.writeFileSync(path.join(OUT, "report.json"), JSON.stringify(report, null, 2));
 console.log(JSON.stringify({
   generatedAt: report.generatedAt,
+  durationMs: report.durationMs,
   cases: report.cases.map(c => ({
-    page: c.page, lang: c.lang, viewport: c.viewport, theme: c.theme, status: c.httpStatus, title: c.title,
+    page: c.page, lang: c.lang, viewport: c.viewport, theme: c.theme, status: c.httpStatus, title: c.title, durationMs: c.durationMs,
     overflow: c.layout?.horizontalOverflow,
     overflowCandidates: c.layout?.overflowCandidates,
     routeContext: c.routeContext,
