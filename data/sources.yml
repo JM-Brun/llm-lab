@@ -3136,3 +3136,65 @@ sources:
       audit_records:
         - docs/source-reviews/platonic-representation-jepa-2026-11.md
         - data/extractions/balestriero-lecun-contrastive-non-contrastive-ssl-spectral-2022.yml
+- id: hesam-sheikh-hessani-llm-embeddings-explained-2025
+    title: "LLM Embeddings Explained: A Visual and Intuitive Guide"
+    creators: ["Hesam Sheikh Hessani"]
+    source_type: tutorial
+    identifiers: {}
+    canonical_url: "https://huggingface.co/spaces/hesamation/primer-llm-embedding"
+    publisher: "Hugging Face Spaces"
+    publication_date: "2025"
+    updated_date: null
+    language: en
+    version: "Interactive Space; article cites 2025"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [text-tokenization, mathematical-tools-geometry]
+      tags:
+        - topic:token-embedding
+        - topic:contextualized-representations
+        - topic:embedding-geometry
+        - topic:sentence-embeddings
+        - method:tf-idf
+        - method:word2vec
+        - method:cosine-similarity
+        - ecosystem:pytorch
+        - ecosystem:huggingface
+      concept_ids: [token, token-embedding, contextualized-representation]
+    metadata:
+      technical_level: introductory
+      contribution_types: [pedagogy, visualization, implementation, historical-context]
+      audiences: [beginner, learner, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-10"
+        status: partially-scanned
+        inspected_scope:
+          - "Complete article text exposed by the Hugging Face Space's embedded static page, from overview through conclusion and citation block"
+          - "Sections on embedding terminology, TF-IDF, Word2Vec, BERT, modern LLM token embeddings, torch.nn.Embedding, DeepSeek-R1-Distill-Qwen-1.5B extraction, cosine nearest neighbours and token-neighbour graphs"
+          - "Interactive page metadata and link to the author's LLM Mechanics repository"
+        limitations:
+          - "The interactive atlas was not manually operated; its underlying data, rendering parameters and exact graph construction were not independently inspected."
+          - "The linked LLM Mechanics repository and notebook code were not audited or executed."
+          - "Several source/reference links in the article extraction are empty or unresolved; the cited original sources for some diagrams and historical claims could not be verified."
+          - "Embedded visual assets were represented by captions/placeholders in the retrieved text; individual image bytes, authorship and reuse rights were not audited."
+          - "No licence or permission to reproduce article text, figures, code or model-derived data was established."
+          - "The article is a secondary tutorial; simplified claims about semantic quality, dimensionality, TF-IDF geometry and BERT objectives require qualification against primary sources."
+    related:
+      pages:
+        - fr/embedding-space
+        - en/embedding-space
+        - fr/contextualized-representations
+        - en/contextualized-representations
+        - fr/cosine-similarity
+        - en/cosine-similarity
+        - fr/exercises/embedding-space
+        - en/exercises/embedding-space
+      concepts: [token, token-embedding, contextualized-representation]
+      audit_records:
+        - docs/source-reviews/hesam-sheikh-hessani-llm-embeddings-explained-2026-11.md
+        - data/extractions/hesam-sheikh-hessani-llm-embeddings-explained-2025.yml
