@@ -82,6 +82,8 @@ $$
 
 For fixed sequences and the same included positions, maximizing log-likelihood is equivalent to minimizing NLL. Averaging per token is a common scaling, useful for comparing sequences of different lengths, but it is not the same as the raw sum.
 
+The next page decomposes this NLL at one target position and generalizes the one-hot case to a target distribution: [cross-entropy](cross-entropy.qmd).
+
 ## Example
 
 If the probabilities assigned to three observed tokens are $(0.5, 0.25, 0.8)$, then the sequence likelihood (under the model and prefix) is $0.1$, and NLL is $-\log(0.1)\approx2.303$. Log-likelihood is approximately $-2.303$.
