@@ -171,6 +171,15 @@ jobs:
         if: ${{ github.event_name != 'pull_request' || (steps.site_changes.outputs.site_relevant == 'true' && (steps.site_changes.outputs.render_mode != 'incremental' || steps.verify_site_cache.outputs.cache_restored != 'true')) }}
         run: quarto render site
 
+      # Exercise the isolated one-process incremental renderer after a full render
+      # has provided a complete site tree. The temp output must overlay without
+      # deleting shared assets still referenced by untouched pages.
+      - name: Smoke-test isolated batched incremental renderer
+        if: github.event_name == 'pull_request' && contains(steps.site_changes.outputs.files, 'scripts/quarto_render_batch.py')
+        env:
+          RENDER_TARGETS: site/fr/deepen.qmd
+        run: .venv/bin/python scripts/quarto_render_batch.py
+
       - name: Check rendered learning-map controls
         if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
         run: python3 site/tools/check_learning_map_rendered.py site/_site
