@@ -52,7 +52,12 @@
       return;
     }
     const disclosure = target?.closest("details.learning-resources");
-    if (disclosure) disclosure.open = true;
+    if (disclosure) {
+      disclosure.open = true;
+      // The browser may have attempted fragment scrolling while the target
+      // was still hidden inside the closed disclosure.
+      window.requestAnimationFrame(() => target.scrollIntoView({ block: "start" }));
+    }
   };
 
   const enhanceAccessibility = () => {
