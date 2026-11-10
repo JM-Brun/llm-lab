@@ -1,0 +1,152 @@
+---
+title: "Q/K/V : formulation mathématique et variantes"
+subtitle: "Projections par position, géométrie des scores, gradients et architectures"
+keywords: ["type:deep-dive", "destination:deepen", "topic:queries-keys-values-advanced", "level:advanced", "language:fr", "status:published"]
+lang: fr
+---
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/queries-keys-values-advanced"
+summary: "Approfondit les projections Q/K/V par position, leur géométrie, leurs gradients et leurs variantes architecturales."
+scope: "Formalise les projections individuelles et matricielles, les dimensions par tête, la géométrie du produit scalaire, les chemins de gradient dans l'attention standard et les variantes de partage des têtes/projections ; ne reprend pas l'introduction intuitive ni le calcul complet de l'attention, et renvoie l'attention croisée à sa page dédiée."
+purpose: "Le lecteur doit pouvoir passer des équations matricielles aux équations par position, dériver les dépendances de forme et de gradient de Q/K/V, distinguer partage des têtes et partage des paramètres, et interpréter correctement les scores sans leur attribuer une sémantique directe."
+domain: "architectures-mechanisms"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: ["fr/queries-keys-values"]
+  children: []
+related: ["fr/scaled-dot-product-attention", "fr/cross-attention", "fr/transformer-block-walkthrough", "fr/tensors", "fr/gradients"]
+tags: ["type:deep-dive", "destination:deepen", "topic:queries-keys-values-advanced", "level:advanced", "language:fr", "status:published"]
+-->
+
+::: {.chapter-lead}
+Cet approfondissement prolonge la page [Requêtes, clés et valeurs (Q, K, V)](queries-keys-values.qmd). La page principale donne le modèle mental et les dimensions essentielles ; ici, on explicite la notation par position, les dépendances mathématiques et les variantes de paramétrisation. Il suppose connus les rôles de Q, K et V ainsi que le calcul général de l'attention.
+:::
+
+## Des matrices aux équations individuelles par position
+
+La formulation matricielle compacte calcule toutes les positions simultanément. Elle applique simplement les mêmes projections linéaires à chaque ligne de l'entrée.
+
+Pour une séquence de \(T\) positions, notons \(X\in\mathbb{R}^{T\times d_{model}}\). La ligne \(x_t\in\mathbb{R}^{1\times d_{model}}\) représente l'état d'entrée de la position \(t\). En omettant les biais :
+
+\[
+q_t=x_tW_Q,\qquad k_t=x_tW_K,\qquad v_t=x_tW_V.
+\]
+
+En empilant les lignes obtenues pour toutes les positions, on retrouve :
+
+\[
+Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
+\]
+
+Avec \(W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}\) et \(W_V\in\mathbb{R}^{d_{model}\times d_v}\), les dimensions sont :
+
+| Objet | Dimension | Interprétation |
+|---|---:|---|
+| \(x_t\) | \(1\times d_{model}\) | état d'entrée d'une position |
+| \(W_Q,W_K\) | \(d_{model}\times d_k\) | projections vers les espaces des requêtes et des clés |
+| \(W_V\) | \(d_{model}\times d_v\) | projection vers l'espace des valeurs |
+| \(q_t,k_t\) | \(1\times d_k\) | requête et clé d'une position |
+| \(v_t\) | \(1\times d_v\) | valeur d'une position |
+| \(Q,K\) | \(T\times d_k\) | toutes les requêtes et clés |
+| \(V\) | \(T\times d_v\) | toutes les valeurs |
+
+Pour un lot de \(B\) séquences de longueur \(T\), la forme usuelle de l'entrée est \(X\in\mathbb{R}^{B\times T\times d_{model}}\). Les projections s'appliquent sur le dernier axe et préservent les deux premiers : \(Q,K\in\mathbb{R}^{B\times T\times d_k}\) et \(V\in\mathbb{R}^{B\times T\times d_v}\). Les biais, lorsqu'ils existent, sont ajoutés à chaque position ; ils ne changent pas ces dimensions.
+
+Cette écriture est une expansion de la formule matricielle, pas un autre mécanisme. Elle aide à suivre l'indexation des positions et à éviter de confondre la longueur de séquence \(T\) avec les dimensions de représentation.
+
+## Géométrie des compatibilités Q–K
+
+Pour une requête \(q_i\) et une clé \(k_j\), le score non normalisé standard est leur produit scalaire :
+
+\[
+s_{ij}=q_i k_j^\top
+=\lVert q_i\rVert\,\lVert k_j\rVert\cos(\theta_{ij}).
+\]
+
+L'angle ne suffit donc pas à déterminer le score : les normes des deux vecteurs interviennent également. Le produit scalaire n'est pas, en général, une similarité cosinus normalisée.
+
+Les projections apprises transforment l'espace d'entrée afin que les compatibilités utiles à la tâche puissent être représentées. Il ne faut pas en déduire que le modèle recherche nécessairement des tokens sémantiquement proches dans l'espace des embeddings initiaux. Après mise à l'échelle, éventuel masquage et softmax, les poids sont en outre relatifs aux positions accessibles dans la ligne considérée. Le calcul complet appartient à [l'attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd).
+
+## Routage et contenu : portée de la distinction
+
+Une clé contribue à déterminer si une position reçoit du poids d'attention ; la valeur associée détermine ce que cette position apporte à l'agrégation. K et V sont calculées à partir du même état d'entrée dans l'auto-attention standard, mais leurs matrices distinctes leur permettent de représenter des caractéristiques différentes.
+
+À titre d'illustration hypothétique, une clé pourrait contribuer à repérer une position ayant un rôle grammatical utile, tandis que sa valeur transporterait une information sémantique. Cet exemple décrit une possibilité fonctionnelle ; il ne prétend pas qu'une tête entraînée particulière a été observée en train de réaliser cette séparation.
+
+Les valeurs ne sont pas comparées entre elles, ni directement à la requête, pour choisir la plus proche. La sélection relative passe par les scores Q–K ; les poids qui en résultent sont ensuite appliqués aux V. Cette distinction évite de confondre la compatibilité utilisée pour router l'information et le contenu effectivement transmis.
+
+## Chemins de gradient dans l'attention
+
+Les matrices \(W_Q,W_K,W_V\) n'ont pas chacune une cible supervisée indépendante. Elles sont optimisées conjointement à partir de la fonction de perte du réseau. Pour préciser le chemin, considérons une tête d'attention standard :
+
+\[
+S=\frac{QK^\top}{\sqrt{d_k}}+M,\qquad
+A=\operatorname{softmax}(S),\qquad O=AV,
+\]
+
+où le softmax est appliqué ligne par ligne et \(M\) est un masque additif fixe. On suppose que chaque ligne possède au moins une clé accessible.
+
+En notant \(G_O=\partial\mathcal L/\partial O\), la règle de chaîne donne :
+
+\[
+\frac{\partial\mathcal L}{\partial V}=A^\top G_O,
+\qquad
+\frac{\partial\mathcal L}{\partial A}=G_OV^\top.
+\]
+
+Le gradient par rapport aux scores passe ensuite par le Jacobien du softmax ligne par ligne. En notant \(G_S=\partial\mathcal L/\partial S\) :
+
+\[
+\frac{\partial\mathcal L}{\partial Q}
+=\frac{G_SK}{\sqrt{d_k}},
+\qquad
+\frac{\partial\mathcal L}{\partial K}
+=\frac{G_S^\top Q}{\sqrt{d_k}}.
+\]
+
+Enfin, pour les projections linéaires sans biais, à entrée \(X\) fixée :
+
+\[
+\frac{\partial\mathcal L}{\partial W_Q}
+=X^\top\frac{\partial\mathcal L}{\partial Q},\quad
+\frac{\partial\mathcal L}{\partial W_K}
+=X^\top\frac{\partial\mathcal L}{\partial K},\quad
+\frac{\partial\mathcal L}{\partial W_V}
+=X^\top\frac{\partial\mathcal L}{\partial V}.
+\]
+
+Ces expressions isolent les chemins locaux d'une tête : le gradient de V passe directement par l'agrégation pondérée ; ceux de Q et K passent par les scores puis le softmax. Dans le réseau complet, les gradients se propagent aussi à travers les projections de sortie, les connexions résiduelles, les normalisations et les couches précédentes. Les paramètres sont distincts, mais leurs mises à jour sont coordonnées par la même fonction de perte.
+
+## Têtes multiples et partage des projections
+
+Dans une attention multi-tête classique, chaque tête dispose de sous-projections qui produisent ses propres Q, K et V. Les sorties des têtes sont concaténées puis transformées par une projection de sortie. Les implémentations peuvent stocker ces sous-projections dans de grandes matrices fusionnées plutôt que dans trois modules séparés : la disposition mémoire ne change pas le contrat mathématique.
+
+**MQA** (*multi-query attention*) et **GQA** (*grouped-query attention*) réduisent le nombre de têtes K/V par rapport au nombre de têtes Q. En MQA, les têtes de requête partagent une tête K/V ; en GQA, elles sont réparties en groupes qui partagent chacun une tête K/V. Ce partage réduit notamment la quantité de clés et valeurs à conserver dans le cache KV pendant le décodage. Il ne signifie pas que Q, K et V deviennent un seul vecteur.
+
+Il faut distinguer ce partage de têtes du **partage des paramètres de projection** : lier, par exemple, des paramètres de projection K et V est une autre modification de la paramétrisation. Les résultats empiriques dépendent de l'architecture et du protocole ; ils ne démontrent pas qu'une variante est universellement supérieure. Pour la provenance distincte des flux, voir la page dédiée à [l'attention croisée](cross-attention.qmd) ; pour le coût mémoire du cache, [Complexité et parallélisme dans les LLM](llm-computational-complexity.qmd).
+
+## Interpréter les représentations sans surinterpréter les poids
+
+Un contexte lexical peut modifier l'interprétation d'un token : dans « He sat by the bank », le contexte d'une rivière rend plus probable le sens de *bank* comme rive plutôt que celui d'établissement financier. Cela illustre l'intérêt des représentations contextualisées, mais ne prouve pas qu'une tête isolée effectue seule la désambiguïsation. Une carte d'attention ne suffit pas, à elle seule, à expliquer une décision du modèle ou à établir une relation causale.
+
+Pour approfondir la place du contexte dans les états cachés, voir [Représentations contextualisées](contextualized-representations.qmd). Pour le contexte historique et d'autres visualisations Q/K/V, consulter [l'historique des Transformers](transformer-history.qmd) et les ressources complémentaires : [Nishanthan K](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a), [Brenndoerfer](https://mbrenndoerfer.com/writing/query-key-value-attention-mechanism) et [Codefinity](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b).
+
+## Références
+
+- Vaswani et al. (2017), [*Attention Is All You Need*](https://arxiv.org/abs/1706.03762) — formulation standard et attention multi-tête.
+- Ainslie et al. (2023), [*GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints*](https://arxiv.org/abs/2305.13245) — partage des têtes clé/valeur.
+- Kayyam et al. (2026), [*Do Transformers Need Three Projections? Systematic Study of QKV Variants*](https://proceedings.mlr.press/v306/kayyam26a.html) — étude empirique de variantes de partage des projections.
+
+## Pour continuer
+
+- [Revenir à la leçon Q/K/V](queries-keys-values.qmd) — modèle mental et périmètre essentiel.
+- [Calculer les scores et agréger les valeurs](scaled-dot-product-attention.qmd) — calcul complet de l'attention.
+- [Attention croisée](cross-attention.qmd) — provenance distincte des requêtes, clés et valeurs.
+- [Visite guidée du bloc Transformer](transformer-block-walkthrough.qmd) — organisation concrète des têtes dans une implémentation.
+
+::: {.language-switch}
+**Langue :** [Français](queries-keys-values-advanced.qmd) · [English](../en/queries-keys-values-advanced.qmd)
+:::

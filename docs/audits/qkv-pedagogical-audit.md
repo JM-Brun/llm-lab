@@ -166,3 +166,18 @@ A line-by-line comparison was made between the pre-refactor Q/K/V lessons and th
 ### Verification boundary
 
 The bilingual exercise pages already contain the corresponding projection, intervention, gradient, cross-attention, and GQA/MQA exercises. The concept pages remain free of worked numerical matrix examples. This is a source-content audit; it does not certify rendered layout, link resolution, accessibility, or learner outcomes.
+
+ 
+## Advanced Q/K/V material relocation — 2026-11-10
+
+The follow-up review identified that the core Q/K/V lesson still carried several advanced explanations in collapsed callouts. These were moved into a dedicated bilingual Deepen page, rather than deleted or left as a secondary layer inside the core route.
+
+- **Moved:** per-position equations $q_t=x_tW_Q$, $k_t=x_tW_K$, $v_t=x_tW_V$ and their equivalence to the matrix formulation; batched dimensions; dot-product geometry and the distinction from cosine similarity; detailed routing-versus-content nuance and the no-nearest-value warning; gradient paths through $A=\operatorname{softmax}(QK^\top/\sqrt{d_k}+M)$; multi-head projection layout; MQA/GQA and projection-parameter tying; lexical ambiguity and limits of attention-map interpretation; supplementary resources.
+- **Kept in the core lesson:** the motivating context problem, concise parallel Q/K/V definitions, the two-path diagram, matrix projection equations and essential dimensions, the fact that K and V may represent different features, the Q/K versus V dependency, and links to the next attention lesson and practice collection.
+- **Kept elsewhere:** cross-attention's detailed source provenance remains in cross-attention.qmd; full score/softmax/aggregation computation remains in scaled-dot-product-attention.qmd; numerical projection calculations and parameter interventions remain in the Attention exercise collection.
+
+The new page is classified as type:deep-dive, destination:deepen, level:advanced, in the existing architectures-mechanisms domain. It is linked as a child of the core Q/K/V concept and is added to the bilingual Deepen map, Quarto render list and sidebar. No new top-level category is introduced.
+
+**Technical scope:** gradient identities are stated for one standard attention head, row-wise softmax, fixed additive mask, at least one accessible key per row, and bias-free linear Q/K/V projections when expressing gradients with respect to projection matrices. The page distinguishes MQA/GQA head sharing from tying projection parameters. It does not claim that an attention map establishes semantic relevance or causal importance.
+
+**Validation boundary:** source-level changes only. Run the repository's Quarto render, generated page-map/context checks, link validation and CI; then inspect FR/EN desktop and narrow layouts. This update does not claim those checks have passed.

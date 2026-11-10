@@ -16,7 +16,7 @@ suggested_route:
   next: "fr/scaled-dot-product-attention"
 hierarchy:
   parents: ["fr/transformer"]
-  children: []
+  children: ["fr/queries-keys-values-advanced"]
 related: ["fr/contextualized-representations", "fr/scaled-dot-product-attention", "fr/cross-attention", "fr/transformer-block-walkthrough"]
 tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-values", "level:core", "language:fr", "status:published"]
 -->
@@ -48,7 +48,7 @@ On peut distinguer les trois projections en suivant le trajet de l'information :
 - **K — la clé :** ce que chaque position présente pour être comparé à la requête ;
 - **V — la valeur :** l'information portée par cette position et susceptible d'être transmise.
 
-Q et K servent donc à déterminer **la répartition de l'attention**. V fournit **le contenu agrégé** à l'aide de cette répartition. Une clé n'est pas une étiquette lisible et une valeur n'est pas une réponse toute faite : ce sont des vecteurs numériques appris.
+Q et K servent donc à déterminer **la répartition de l'attention**. V fournit **le contenu agrégé** à l'aide de cette répartition. K et V peuvent représenter des caractéristiques différentes : la compatibilité sert au routage, tandis que la valeur porte le contenu transmis. Ce sont des vecteurs numériques appris, pas des étiquettes lisibles ni des réponses toutes faites.
 
 ![Schéma des projections Q, K et V : Q et K déterminent les poids d'attention, qui servent à combiner les valeurs V.](../images/queries-keys-values.svg){fig-alt="Deux chemins partent de la même entrée : les vecteurs Q et K sont comparés pour calculer les poids d'attention ; ces poids sont ensuite appliqués aux vecteurs V pour produire une représentation agrégée." width=100%}
 
@@ -68,93 +68,18 @@ V &= XW_V.
 \end{aligned}
 $$
 
-Les matrices $W_Q$, $W_K$ et $W_V$ sont **distinctes, mais apprises conjointement**. Elles donnent au modèle la possibilité de construire, à partir de la même entrée, des représentations adaptées à deux fonctions différentes : calculer les compatibilités (Q et K) et transporter le contenu (V). Cette paramétrisation suit la formulation de [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762).
+Les matrices $W_Q$, $W_K$ et $W_V$ sont **distinctes, mais apprises conjointement**. Elles donnent au modèle la possibilité de construire, à partir de la même entrée, des représentations adaptées à deux fonctions différentes : calculer les compatibilités (Q et K) et transporter le contenu (V). Cette paramétrisation suit la formulation de [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762). Pour développer les équations individuelles par position, les dimensions avec lot et les variantes de paramétrisation, voir l'[approfondissement Q/K/V](queries-keys-values-advanced.qmd).
 
 Avec $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ et $W_V\in\mathbb{R}^{d_{model}\times d_v}$, les sorties ont les formes suivantes :
 
 - $Q,K\in\mathbb{R}^{T\times d_k}$ ;
 - $V\in\mathbb{R}^{T\times d_v}$.
 
-Chaque ligne correspond à une position. Les mêmes matrices de projection sont appliquées à toutes les positions, mais les représentations d'entrée varient. Les dimensions $d_k$ et $d_v$ ne sont pas nécessairement égales ; les biais éventuels sont omis dans cette écriture. Pour suivre ces projections dans le code du bloc, voir la [visite guidée du bloc Transformer](transformer-block-walkthrough.qmd) ; les conventions générales de dimensions et d'axes sont détaillées dans [Tenseurs](tensors.qmd).
+Chaque ligne correspond à une position. Les mêmes matrices de projection sont appliquées à toutes les positions, mais les représentations d'entrée varient. Les dimensions $d_k$ et $d_v$ ne sont pas nécessairement égales ; les biais éventuels sont omis dans cette écriture. Cette provenance commune caractérise l'auto-attention ; en [attention croisée](cross-attention.qmd), Q provient du flux qui consulte, tandis que K et V proviennent du flux consulté. Pour suivre ces projections dans le code du bloc, voir la [visite guidée du bloc Transformer](transformer-block-walkthrough.qmd) ; les conventions générales de dimensions et d'axes sont détaillées dans [Tenseurs](tensors.qmd).
 
-## Pour approfondir
+## Approfondissement mathématique et architectural
 
-::: {.callout-note collapse="true" title="Ressources complémentaires et contexte historique"}
-Pour une autre présentation visuelle des rôles Q/K/V, voir [Nishanthan K, *How Query, Key, and Value (QKV) Work in Transformers*](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a) (illustration hébergée par la source).
-
-Pour replacer les mécanismes d'attention dans leur évolution avant l'architecture Transformer, consulter [l'historique des Transformers](transformer-history.qmd).
-:::
-
-
-
-::: {.callout-note collapse="true" title="Autre point de vue : visualiser Q et K dans l'espace vectoriel"}
-Codefinity propose une intuition géométrique : représenter Q et K comme des vecteurs dont l'orientation et l'alignement participent au score de compatibilité. Cette vue aide à passer des rôles conceptuels aux objets numériques.
-
-Pour deux vecteurs, le produit scalaire s'écrit :
-
-$$
-q^\top k = \lVert q\rVert\,\lVert k\rVert\cos(\theta).
-$$
-
-L'angle n'est qu'une partie du score : **le produit scalaire dépend aussi des normes** de Q et K. Il ne s'agit pas, en général, d'une similarité cosinus. Cette intuition est une passerelle vers le [calcul de l'attention à produit scalaire](scaled-dot-product-attention.qmd), pas un substitut à sa définition mathématique.
-
-Source : [Codefinity, *Queries, Keys, and Values: The Building Blocks*](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b).
-:::
-
-
-
-
-::: {.callout-note collapse="true" title="Une distinction importante : le routage n'est pas le contenu"}
-Une clé contribue à déterminer **si une position reçoit de l'attention** ; la valeur associée détermine **ce que cette position apporte** à la représentation agrégée. Ces deux vecteurs n'ont donc pas besoin de coder la même caractéristique.
-
-Par exemple, dans un scénario hypothétique, une clé pourrait aider à repérer une position portant un rôle grammatical utile, tandis que sa valeur transporterait une information sémantique. Ce n'est pas l'affirmation qu'une tête entraînée a été observée en train de réaliser ce comportement.
-
-Les valeurs ne sont pas comparées entre elles, ni directement à la requête, pour sélectionner la plus proche : les scores dépendent de Q et K, puis les poids obtenus sont appliqués à V. Perspective complémentaire : [Brenndoerfer, *Query, Key, Value: The Foundation of Transformer Attention*](https://mbrenndoerfer.com/writing/query-key-value-attention-mechanism).
-:::
-
-::: {.callout-note collapse="true" title="Comment l'entraînement apprend-il ces projections ?"}
-Les matrices $W_Q$, $W_K$ et $W_V$ ne reçoivent pas chacune une cible explicite « correcte ». Elles sont ajustées indirectement à partir de la fonction de perte du modèle, par rétropropagation du gradient.
-
-Dans le chemin d'attention considéré ici :
-
-- le gradient qui atteint **Q et K** passe par les scores de compatibilité, puis par le softmax qui les normalise ;
-- le gradient qui atteint **V** passe par l'agrégation pondérée : il indique comment le contenu transmis contribue à l'erreur finale.
-
-Pour une entrée $X$ fixée, sans biais et avec les projections linéaires écrites plus haut, la règle de dérivation prend la forme :
-
-$$
-\frac{\partial\mathcal L}{\partial W_Q}
-=X^\top\frac{\partial\mathcal L}{\partial Q},
-\qquad
-\frac{\partial\mathcal L}{\partial W_K}
-=X^\top\frac{\partial\mathcal L}{\partial K},
-\qquad
-\frac{\partial\mathcal L}{\partial W_V}
-=X^\top\frac{\partial\mathcal L}{\partial V}.
-$$
-
-Ces gradients sont calculés dans le contexte du réseau complet, puis l'optimiseur met à jour les paramètres. Les trois projections sont donc **paramétrées séparément, mais apprises conjointement** : modifier l'une peut changer la sortie et, au fil de l'entraînement, les autres paramètres s'adaptent aussi. Cette vue explique le principe ; elle ne remplace pas la dérivation complète de l'attention ni celle de la rétropropagation.
-:::
-::: {.callout-note collapse="true" title="Périmètre : formulation standard et variantes"}
-Cette page présente la formulation standard avec des projections Q, K et V paramétrées séparément. C'est un modèle de référence utile, pas l'affirmation que tous les Transformers utilisent trois matrices de projection entièrement indépendantes ou le même nombre de têtes de requête et de clés/valeurs.
-
-Par exemple, **l'attention multi-query (MQA)** et **l'attention à requêtes groupées (GQA)** utilisent moins de têtes clé/valeur que de têtes de requête : chaque tête clé/valeur est partagée entre plusieurs têtes de requête afin de réduire le coût du [cache KV](llm-computational-complexity.qmd) à l'inférence. D'autres travaux récents étudient le partage des paramètres de projection, notamment entre les projections clé et valeur. Ce sont des variantes d'architecture avec des compromis empiriques ; elles ne remettent pas en cause la distinction fonctionnelle présentée ici.
-
-
-
-**Attention croisée :** en attention croisée, Q provient du flux qui consulte, tandis que K et V proviennent du flux consulté. La provenance des trois projections n'est donc plus commune. Voir l'[approfondissement sur l'attention croisée](cross-attention.qmd).
-- Vaswani et al. (2017), [*Attention Is All You Need*](https://arxiv.org/abs/1706.03762) — formulation standard de l'attention dans les Transformers.
-- Ainslie et al. (2023), [*GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints*](https://arxiv.org/abs/2305.13245) — partage de têtes clé/valeur.
-- Kayyam et al. (2026), [*Do Transformers Need Three Projections? Systematic Study of QKV Variants*](https://proceedings.mlr.press/v306/kayyam26a.html) — étude empirique du partage des projections.
-:::
-
-
-
-::: {.callout-note collapse="true" title="Autre exemple : l'ambiguïté lexicale"}
-Un autre cas est l'ambiguïté lexicale : dans « He sat by the bank », avec un contexte de rivière, *bank* peut désigner une rive ou un établissement financier. Cet exemple de [Codefinity](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b) illustre une autre tâche à laquelle des représentations contextualisées peuvent contribuer. Il ne montre pas qu'une tête d'attention isolée effectue la désambiguïsation lexicale : aucun modèle, aucune tête ni aucun poids mesuré n'est fourni. Une carte d'attention ne suffit pas non plus, à elle seule, à expliquer une décision du modèle.
-
-Pour le rôle plus général du contexte dans les représentations, voir [Représentations contextualisées](contextualized-representations.qmd).
-:::
+Les équations par position, la géométrie des compatibilités, les chemins de gradient et les variantes multi-têtes sont utiles une fois le modèle mental acquis. Ils sont regroupés dans l'[approfondissement avancé sur Q/K/V](queries-keys-values-advanced.qmd), plutôt que dispersés dans plusieurs encadrés repliés sur cette page.
 
 ## À retenir et pour aller plus loin
 
@@ -164,7 +89,7 @@ La distinction fonctionnelle est simple, mais fondamentale :
 - **V** fournit les vecteurs combinés à l'aide de ces poids ;
 - changer V seul ne change donc pas les poids, même si le contenu agrégé peut changer.
 
-Les poids ne sont pas une mesure universelle de pertinence sémantique et l'attention n'est pas une recherche du plus proche voisin dans les embeddings initiaux : elle opère sur des projections apprises.
+Les poids ne sont pas une mesure universelle de pertinence sémantique et l'attention n'est pas une recherche du plus proche voisin dans les embeddings initiaux : elle opère sur des projections apprises. Les limites de cette interprétation et les chemins de gradient sont détaillés dans l'[approfondissement Q/K/V](queries-keys-values-advanced.qmd).
 
 La page suivante, [Attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd), explique comment les scores deviennent des poids et comment ceux-ci agrègent V.
 
