@@ -51,6 +51,9 @@ Two sentences can contain the same token without giving it the same role: *bank*
 
 ![Pipeline from text to contextualized representations.](../images/contextualization-pipeline-en.svg){.pipeline-figure fig-alt="Text is tokenized into IDs; IDs select vectors from the embedding table; the model handles position and Transformer blocks produce contextualized states." fig-cap="From text to contextualized states: each stage transforms or enriches the representation, from symbols to context-dependent hidden states." width=100%}
 
+This is an original, simplified illustration, not a reproduction of Rushang Chauhan's figure. Positional handling depends on the architecture: RoPE, for example, does not simply add a positional vector to each embedding. For another pedagogical overview of the path from tokens to context, see [Rushang Chauhan's article, *Embeddings: The Bridge Between Tokens and Context*](https://www.linkedin.com/pulse/embeddings-bridge-between-tokens-context-rushang-chauhan-oqpzf/).
+
+
 ## Start with what stays the same
 
 Suppose the visible word `bank` is represented by the same token ID in two sentences:
