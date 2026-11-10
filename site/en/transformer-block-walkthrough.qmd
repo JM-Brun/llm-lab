@@ -30,7 +30,7 @@ By the end of this tour, you will be able to:
 - describe the role of each Q, K, V and O projection, and why heads stay isolated until `w_o`.
 :::
 
-## The block's recipe: pre-LN with residuals
+## The block's recipe: pre-LN with residuals {#block-recipe}
 
 ```python
 x = x + self._attention(layer_norm(x, self.ln1_gamma, self.ln1_beta))
@@ -127,7 +127,7 @@ The factor $1/\sqrt{2L}$ accounts for the two residual contributions per block a
 
 Parameter creation follows: normalizations start at identity (`gamma` ones, `beta` zeros), then four `(d, d)` matrices for the Q, K, V and O projections, and two matrices for the MLP (`d -> mlp_hidden_dim -> d`).
 
-## Attention: explicit loops, not by accident
+## Attention: explicit loops, not by accident {#attention-sublayer}
 
 ```python
         q = linear(x, self.w_q, self.b_q)
