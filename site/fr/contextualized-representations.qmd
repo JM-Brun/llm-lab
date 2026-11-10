@@ -100,7 +100,7 @@ Pour comprendre les dépendances entre positions, les masques causaux et les rô
 <details class="spot-the-fallacy">
 <summary>Piège fréquent : « Pour que deux sens d'un mot comme "bank" soient reconnus, le tokenizer doit leur attribuer des IDs distincts »</summary>
 <div class="fallacy-content">
-<p><strong>Contre-exemple :</strong> Le tokenizer découpe le texte selon des règles de vocabulaire indépendantes du sens de la phrase ; il attribue le même ID au mot « bank » quel que soit son sens financier ou fluvial. C'est l'agrégation pondérée par l'attention au fil des couches qui spécialise la représentation interne $h_t^{(\ell)}$. Attribuer des IDs distincts selon le sens réintroduirait une étape de désambiguïsation symbolique manuelle avant le modèle.</p>
+<p><strong>Contre-exemple :</strong> Dans cet exemple, on suppose explicitement que les deux occurrences de « bank » reçoivent le même ID. Le tokenizer segmente le texte selon son vocabulaire et ses règles ; il ne réalise pas de désambiguïsation sémantique à l'échelle de la phrase. Les couches du modèle peuvent ensuite construire des états cachés différents à partir des contextes accessibles. Exiger des IDs distincts pour chaque sens confondrait segmentation des tokens et désambiguïsation contextuelle.</p>
 </div>
 </details>
 
