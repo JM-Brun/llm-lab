@@ -131,6 +131,7 @@ La règle causale se formule aussi comme une propriété de préfixe : à param�
 - [Attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd) explique l'ordre score → masque → softmax → agrégation.
 - [Objectif et fondations mathématiques](mathematical-foundations.qmd) relie la contrainte au prochain-token et à la loss.
 - [Synthèse Transformer](transformer.qmd) replace le masque dans l'architecture globale.
+- [Logits](logits.qmd) présente les scores produits par la tête de sortie après le calcul des blocs Transformer.
 
 ## Exercices
 
