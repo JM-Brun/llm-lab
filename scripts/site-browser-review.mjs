@@ -174,12 +174,15 @@ async function runCase(testCase) {
     const response = await page.goto(url, { waitUntil: "domcontentloaded", timeout: 30000 });
     item.httpStatus = response?.status() ?? null;
     if (!response || !response.ok()) throw new Error(`HTTP status ${item.httpStatus}`);
-    // Do not wait for networkidle: analytics, remote fonts, and persistent requests\n    // can keep the network busy after the DOM is already auditable.\n    // A remote font or stylesheet must not stall the entire audit indefinitely.
+    // Do not wait for networkidle: analytics, remote fonts, and persistent requests
+    // can keep the network busy after the DOM is already auditable.
+    // A remote font or stylesheet must not stall the entire audit indefinitely.
     await Promise.race([
       page.evaluate(() => document.fonts?.ready.then(() => true)),
       new Promise(resolve => setTimeout(resolve, 1000)),
     ]);
-    // Let layout and paint settle without an unconditional wall-clock sleep.\n    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    // Let layout and paint settle without an unconditional wall-clock sleep.
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
 
     item.title = await page.title();
     if (kind === "homepage") {
