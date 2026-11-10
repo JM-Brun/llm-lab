@@ -38,6 +38,17 @@ That is the basic idea of a **language model**: assigning probabilities to possi
 **Check yourself:** can you state what LLM, GPT, and Transformer each refer to, then separate architecture (the computation), learning (how parameters are obtained), and use (what is done with the model with its parameters fixed)?
 :::
 
+<div class="pipeline-stepper" role="navigation" aria-label="Steps for understanding the system">
+  <span class="step-item active" aria-current="step">1. Question</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="transformer-architectures.qmd">2. Architecture</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="generation.qmd">3. Parameters</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="generation.qmd">4. Uses</a>
+</div>
+
+
 ## 1. LLM, GPT, and Transformer are different concepts
 
 A **language model** assigns a probability or score to token sequences given a context. In an autoregressive model, this computation is repeated one token at a time: the model does not enumerate every possible complete continuation. **GPT** (*Generative Pre-trained Transformer*) is a family of pretrained models based on the Transformer architecture. Classic GPT models are **decoder-only** Transformers pretrained to predict the next token.
