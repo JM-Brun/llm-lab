@@ -27,6 +27,10 @@ tags: ["type:concept-lesson", "destination:understand", "topic:logits", "level:c
 Un **logit** est un score réel associé à une classe ou à un token du vocabulaire, avant sa conversion en probabilité. Dans un LLM, la dernière projection produit généralement un vecteur $z\in\mathbb{R}^{V}$ à chaque position où le modèle doit prédire un token.
 :::
 
+
+La page précédente a montré comment le masque causal limite les positions accessibles dans l'attention. Une fois les blocs du Transformer calculés, la tête de sortie projette la représentation finale vers ce vecteur de scores.
+
+
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
 À l’issue de cette page, vous pourrez :
 - interpréter un vecteur de logits et expliquer pourquoi ses valeurs ne sont pas des probabilités ;
