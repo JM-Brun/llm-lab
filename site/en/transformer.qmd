@@ -73,6 +73,10 @@ The diagram describes the role of the components without prescribing one univers
 
 Attention mixes information across permitted positions; the MLP transforms each representation locally, with weights shared across positions. Both operations are learned. Attention computes a weighted sum of learned value vectors: it does not literally search through human-readable notes.
 
+### Parallel training, sequential generation
+
+A Transformer can compute representations for many positions of a training sequence in parallel: the input tokens are available, and the causal mask prevents each position from seeing the future. This removes the position-by-position recurrent dependency found in RNNs. **It does not make GPT generation fully parallel**: when producing a response, the next token depends on tokens already generated, so decoding steps remain autoregressive. The key-value cache (*KV cache*) avoids recomputing some past keys and values, but it does not remove this sequential dependency. See [the generation loop](generation.qmd) for the distinction between *prefill* and *decode*.
+
 **Multi-head attention** performs several computations in parallel using distinct learned projections, then combines their results. This diversity does not guarantee that each head develops a clear, human-interpretable specialization.
 
 ### Depth and width: two architectural dimensions
@@ -133,7 +137,7 @@ The [GPT-2 exploration workshop](transformer-explainer.qmd) lets you observe the
 
 ## Further reading
 
-For visualizations, the foundational paper, and implementation resources, see the [Transformer resources in Deepen](deepen.qmd#transformer-resources). These resources are optional and are not part of the core learning path.
+For visualizations, the foundational paper, and implementation resources, see the [Transformer resources in Deepen](deepen.qmd#transformer-resources). For a complementary first overview, see [Understanding Transformer: The Architecture Behind Modern AI](https://dev.to/nishanthan-k/understanding-transformer-the-architecture-behind-modern-ai-55o8). These resources are optional and are not part of the core learning path.
 
 {{< include ../includes/generated-suggested-route-en-transformer.qmd >}}
 

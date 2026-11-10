@@ -101,6 +101,10 @@ La méthode a été proposée pour éviter de choisir dans la longue traîne peu
 
 Top-k et top-p redistribuent la probabilité conditionnelle sur un sous-ensemble. Ils peuvent réduire certains tokens indésirables, mais ils excluent aussi des continuations possibles. C'est un compromis entre précision et rappel au niveau des continuations : une distribution filtrée n'est plus la distribution originale du modèle.
 
+### Pénalités de répétition : une autre famille de réglages
+
+Une *repetition penalty* ne sélectionne pas un nombre fixe de candidats ni un noyau de masse cumulée. Elle modifie les logits associés à des tokens déjà présents dans une fenêtre d'historique, selon une convention propre au moteur d'inférence, avant la sélection. Elle peut limiter certaines boucles de répétition, mais une pénalité trop forte peut aussi déformer une réponse, pénaliser des termes nécessaires ou empêcher une répétition légitime. Il faut donc documenter sa valeur, la fenêtre d'historique concernée et l'implémentation utilisée. **Cette pénalité n'est pas implémentée dans le filtre NumPy de référence de ce projet**, qui couvre uniquement top-k et top-p.
+
 ::: {.callout-note collapse="true" title="Implémentation NumPy et tests (approfondissement)"}
 L'[implémentation de référence NumPy](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/decoding_filters.py) et ses [tests unitaires](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_decoding_filters.py) couvrent les deux filtres de cette section : `top_k_filter` (support fixe de $k$ candidats) et `top_p_filter` (plus petit ensemble dont la masse cumulée atteint ou dépasse $p$, token franchissant le seuil inclus). Les deux renormalisent la distribution conservée ; les égalités sont départagées par l'indice le plus bas (tri stable), donc de façon déterministe.
 

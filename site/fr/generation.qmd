@@ -161,7 +161,7 @@ C'est la distinction centrale avec l'[apprentissage](loss.qmd) : l'inférence ut
 
 ## 6. Limites à garder en tête
 
-- **Fenêtre de contexte :** le modèle ne traite que le contexte fourni, dans la limite de sa fenêtre maximale. Une information qui n'y figure plus n'influence plus directement la prédiction.
+- **Fenêtre de contexte :** le modèle ne traite que le contexte fourni, dans la limite de sa fenêtre maximale. Le budget porte sur l'ensemble des tokens effectivement transmis — instructions, historique, messages d'outils, prompt et éventuels tokens multimodaux — ainsi que sur les tokens générés. La capacité annoncée n'est donc pas nécessairement disponible intégralement pour la réponse : l'application peut réserver une longueur de sortie et appliquer une stratégie de troncature ou de sélection de l'historique. Une information qui n'est plus présente dans le contexte transmis n'influence plus directement la prédiction. Une fenêtre plus grande n'est pas une mémoire persistante et ne garantit pas que chaque élément sera utilisé correctement.
 - **Pas de mémoire intrinsèque entre deux générations :** chaque génération dépend du contexte qui lui est transmis. Une application peut réinjecter un historique ou conserver un état externe, mais cela ne signifie pas que les poids du modèle ont mémorisé la conversation.
 - **Qualité dépendante des paramètres appris :** la boucle de génération peut fonctionner avec un modèle non entraîné, mais ses sorties ne deviennent pas utiles pour autant. La mécanique de génération et la qualité acquise par apprentissage sont deux questions distinctes.
 - **Validité du résultat :** une réponse fluide, ou même une requête SQL syntaxiquement valide et exécutable, ne garantit pas qu'elle répond à la bonne question métier. Vérifiez le schéma, les définitions utilisées (par exemple le traitement des remboursements et paiements échoués), les hypothèses et les résultats avant toute décision ou action.
@@ -212,7 +212,7 @@ Le prefill est une phase d'exécution qui traite le prompt initial comme une sé
 Ces liens correspondent à trois besoins différents :
 
 - **Comprendre les étapes en amont :** [du texte aux tokens](text-data.qmd), puis [les représentations et le calcul du Transformer](transformer.qmd), [les logits](logits.qmd) et [les probabilités](probabilites.qmd).
-- **Étudier d'autres règles de sélection :** [stratégies avancées de décodage](decoding-strategies.qmd).
+- **Étudier d'autres règles de sélection :** [stratégies avancées de décodage](decoding-strategies.qmd), avec un complément introductif sur les [tokens, fenêtres de contexte, température et méthodes d'échantillonnage](https://dev.to/nishanthan-k/core-elements-of-large-language-models-llms-tokens-context-windows-temperature-and-sampling-2m45).
 - **Voir une implémentation concrète :** [visite guidée de `generate.py`](gpt-generation-walkthrough.qmd).
 
 Pour comparer la génération avec l'apprentissage, consultez [les exemples d'entraînement et le teacher forcing](training-examples.qmd), puis [la fonction de perte](loss.qmd).
