@@ -125,6 +125,7 @@ project:
     - fr/exercises/emergence.qmd
     - fr/exercises/entropy.qmd
     - fr/exercises/generation.qmd
+    - fr/exercises/llm-overview.qmd
     - fr/exercises/gpt-config-walkthrough.qmd
     - fr/exercises/gpt-generation-walkthrough.qmd
     - fr/exercises/gpt-model-walkthrough.qmd
@@ -158,6 +159,7 @@ project:
     - en/exercises/emergence.qmd
     - en/exercises/entropy.qmd
     - en/exercises/generation.qmd
+    - en/exercises/llm-overview.qmd
     - en/exercises/gpt-config-walkthrough.qmd
     - en/exercises/gpt-generation-walkthrough.qmd
     - en/exercises/gpt-model-walkthrough.qmd
@@ -265,6 +267,7 @@ website:
             - section: "Comprendre les LLM"
               contents:
                 - fr/exercises/generation.qmd
+                - fr/exercises/llm-overview.qmd
                 - section: "Des identifiants aux représentations"
                   contents:
                     - fr/exercises/text-data.qmd
@@ -428,6 +431,7 @@ website:
             - section: "Understand LLMs"
               contents:
                 - en/exercises/generation.qmd
+                - en/exercises/llm-overview.qmd
                 - section: "From IDs to representations"
                   contents:
                     - en/exercises/text-data.qmd
