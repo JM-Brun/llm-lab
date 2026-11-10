@@ -29,6 +29,17 @@ A **GPT** is a language model built around a **decoder-only Transformer**. The T
 This page first shows what that architecture looks like, then follows a forward pass through its blocks to the logits. It stops at the network output: converting logits into probabilities and selecting the next token belong to decoding, not to the Transformer's internal computation.
 :::
 
+<div class="pipeline-stepper" role="navigation" aria-label="Steps in Transformer computation">
+  <a class="step-item" href="contextualized-representations.qmd">1. Represented input</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item active" aria-current="step">2. Transformer block</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">3. Final state</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="logits.qmd">4. Logits</a>
+</div>
+
+
 The diagram below offers two levels of view: the complete GPT, to locate the data flow, and an enlarged block, to understand the repeated operations. We will then follow this flow from the network input to the logits, without retelling tokenization or the generation loop.
 :::
 
