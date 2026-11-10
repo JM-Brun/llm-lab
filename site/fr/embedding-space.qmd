@@ -46,7 +46,7 @@ Le tokenizer découpe le préfixe en tokens selon son vocabulaire et ses règles
 
 ## Le lookup : sélectionner une ligne, pas une coordonnée
 
-La matrice de plongements, notée (E), est une table apprise. Elle contient une ligne par ID du vocabulaire ; chaque ligne contient un vecteur de nombres réels.
+La matrice de plongements, notée $E$, est une table apprise. Elle contient une ligne par ID du vocabulaire ; chaque ligne contient un vecteur de nombres réels.
 
 ![Du préfixe au vecteur : l'ID sélectionne une ligne de la matrice, puis le vecteur de cette ligne peut être représenté comme un point dans l'espace.](../images/embedding-lookup-fr.svg){fig-alt="Le préfixe est découpé en tokens. Un token reçoit un ID i, utilisé comme indice ou adresse de ligne pour sélectionner la ligne i de la matrice E. Cette ligne contient un vecteur de d nombres, représentable comme un point dans l'espace de plongement. L'adresse de ligne et le point sont deux objets différents." fig-cap="Le Token ID sert à retrouver une ligne dans la table ; le vecteur contenu dans cette ligne est l'objet représenté dans l'espace vectoriel." width=100%}
 
@@ -54,36 +54,36 @@ La distinction est essentielle :
 
 | Objet | Ce qu'il désigne | Rôle |
 |---|---|---|
-| **Token ID** (i) | Un entier associé à un token par le tokenizer | Identifie une entrée du vocabulaire |
-| **Indice / adresse de ligne** (i) | La position de cette entrée dans la matrice (E) | Indique quelle ligne sélectionner |
-| **Vecteur d'embedding** (E_{i,:}) | Les (d) nombres réels stockés sur cette ligne | Représentation numérique initiale du token |
-| **Point dans l'espace** | L'interprétation géométrique du vecteur (E_{i,:}) | Permet d'étudier distances, directions et voisinages |
+| **Token ID** $i$ | Un entier associé à un token par le tokenizer | Identifie une entrée du vocabulaire |
+| **Indice / adresse de ligne** $i$ | La position de cette entrée dans la matrice $E$ | Indique quelle ligne sélectionner |
+| **Vecteur d'embedding** $E_{i,:}$ | Les $d$ nombres réels stockés sur cette ligne | Représentation numérique initiale du token |
+| **Point dans l'espace** | L'interprétation géométrique du vecteur $E_{i,:}$ | Permet d'étudier distances, directions et voisinages |
 
-L'expression **adresse de ligne** décrit donc l'accès à la table, pas la position géométrique du token. Le vecteur est une liste de coordonnées ; c'est lui que l'on peut représenter comme un point dans un espace de dimension (d).
+L'expression **adresse de ligne** décrit donc l'accès à la table, pas la position géométrique du token. Le vecteur est une liste de coordonnées ; c'est lui que l'on peut représenter comme un point dans un espace de dimension $d$.
 
 ## La matrice en une formule
 
-Si le vocabulaire contient (V) IDs et si chaque vecteur contient (d) composantes, la matrice a (V) lignes et (d) colonnes :
+Si le vocabulaire contient $V$ IDs et si chaque vecteur contient $d$ composantes, la matrice a $V$ lignes et $d$ colonnes :
 
 $$
 E \in \mathbb{R}^{V \times d}
 $$
 
-Pour un ID (i), le lookup sélectionne la ligne correspondante :
+Pour un ID $i$, le lookup sélectionne la ligne correspondante :
 
 $$
 \mathbf{x}_i = E_{i,:} \in \mathbb{R}^{d}
 $$
 
-- (V) est la taille du vocabulaire du tokenizer associé au modèle.
-- (d) est la dimension des vecteurs d'embedding.
-- (E_{i,:}) désigne toutes les composantes de la ligne (i).
+- $V$ est la taille du vocabulaire du tokenizer associé au modèle.
+- $d$ est la dimension des vecteurs d'embedding.
+- $E_{i,:}$ désigne toutes les composantes de la ligne $i$.
 
-La matrice contient donc (V \times d) paramètres. L'entier (i) n'est ni une coordonnée de l'espace vectoriel, ni une mesure de proximité : deux IDs consécutifs peuvent sélectionner deux vecteurs très éloignés.
+La matrice contient donc $V \times d$ paramètres. L'entier $i$ n'est ni une coordonnée de l'espace vectoriel, ni une mesure de proximité : deux IDs consécutifs peuvent sélectionner deux vecteurs très éloignés.
 
 ## D'où viennent les valeurs de la table ?
 
-Les lignes de (E) ne sont pas des définitions écrites à la main. La matrice fait partie des **paramètres appris** du réseau. Dans un entraînement classique, ses valeurs sont initialisées, puis ajustées avec les autres paramètres : le modèle produit des prédictions, une fonction de perte mesure l'écart avec les tokens cibles, la rétropropagation calcule des gradients et l'optimiseur met à jour les paramètres.
+Les lignes de $E$ ne sont pas des définitions écrites à la main. La matrice fait partie des **paramètres appris** du réseau. Dans un entraînement classique, ses valeurs sont initialisées, puis ajustées avec les autres paramètres : le modèle produit des prédictions, une fonction de perte mesure l'écart avec les tokens cibles, la rétropropagation calcule des gradients et l'optimiseur met à jour les paramètres.
 
 Le détail du calcul et du code appartient au parcours **Build** : [assembler le GPT et suivre les tables d'embeddings](gpt-model-walkthrough.qmd), dans la [visite guidée de construction](build-path.qmd). Pour le rôle de la loss et des gradients, voir aussi [la fonction de perte](loss.qmd) et [les gradients](gradients.qmd).
 
