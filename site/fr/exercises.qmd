@@ -22,6 +22,12 @@ tags: ["type:exercise-hub", "destination:practice", "topic:exercises", "level:ap
 
 Les leçons conservent un composant **« Vérifier sa compréhension »** : quelques questions ciblées avec des réponses repliées, destinées au rappel actif et à la consolidation immédiate des concepts. Ce catalogue donne accès aux **exercices approfondis** : calculs, problèmes en plusieurs étapes, diagnostics, raisonnements orientés implémentation et tâches de transfert. Chaque collection dispose de sa propre page afin de pouvoir s'enrichir sans transformer ce catalogue en une longue feuille d'exercices.
 
+<a id="fondations"></a>
+<a id="donnees-textuelles"></a>
+<a id="attention"></a>
+<a id="transformer"></a>
+<a id="generation"></a>
+
 ## Comment utiliser cet espace
 
 - Commencez par les prérequis indiqués dans la collection ; consultez les autres références seulement si nécessaire.
@@ -37,7 +43,7 @@ Les leçons conservent un composant **« Vérifier sa compréhension »** : quel
 | [Données textuelles](exercises-text-data.qmd) | [Texte et données](text-data.qmd), [espace des embeddings](embedding-space.qmd), [exemples d'entraînement](training-examples.qmd) et leçons sur la tokenisation | Six exercices formatifs TR-A–TR-F publiés : chaîne des représentations, lookup et formes, identité/position/contexte, fenêtres et décalage des cibles, fusions BPE et fuites entre partitions. |
 | [Attention](exercises-attention.qmd) | [Q/K/V](queries-keys-values.qmd), [attention à produit scalaire](scaled-dot-product-attention.qmd) et [masquage causal](causal-masking.qmd) | Agrégation pondérée, calculs et interventions sur Q/K/V, CA-A sur le masque causal et l'invariance de préfixe, AT-A–AT-C sur l'attention multi-têtes publiés. Les variantes avancées restent à développer. |
 | [Transformer](exercises-transformer.qmd) | [Vue d'ensemble du Transformer](transformer.qmd) et [parcours du bloc](transformer-block-walkthrough.qmd) | Trois exercices formatifs TF-A–TF-C publiés : formes et normalisation d'un bloc pré-LN, comptage des paramètres, diagnostic et interventions. Les variantes architecturales restent à développer. |
-| [Génération](exercises-generation.qmd) | [Génération](generation.qmd), [logits](logits.qmd) et [probabilités](probabilities.qmd) | Cinq exercices formatifs GE-A–GE-E publiés : distribution et sélection, boucle autoregressive, arrêt, prefill/decode et cache KV. La température, top-k et top-p restent à développer. |
+| [Génération](exercises-generation.qmd) | [Génération](generation.qmd), [logits](logits.qmd) et [probabilités](probabilites.qmd) | Cinq exercices formatifs GE-A–GE-E publiés : distribution et sélection, boucle autoregressive, arrêt, prefill/decode et cache KV. La température, top-k et top-p restent à développer. |
 
 ## Collections prévues
 
