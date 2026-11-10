@@ -127,6 +127,6 @@ jobs:
         run: uv pip install --python .venv/bin/python pytest-xdist==3.8.0
 
       - name: Test
-        # Four workers match the hosted runner's available CPU parallelism.
+        # loadscope schedules whole test classes/modules while balancing work across workers.
         # pytest-cov combines worker coverage; the global threshold remains.
-        run: uv run pytest -n 2 --dist loadfile --durations=20
+        run: uv run pytest -n 2 --dist loadscope --durations=20
