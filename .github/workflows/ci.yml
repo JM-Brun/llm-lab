@@ -22,6 +22,27 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
+      - name: Detect domain-validation scope
+        id: validation_scope
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          git fetch --no-tags --depth=1 origin "$BASE_SHA"
+          changed_files="$(git diff --name-only "$BASE_SHA" HEAD)"
+          if printf '%s\n' "$changed_files" | grep -Eq '^(site/|data/|src/|scripts/|docs/|pyproject.toml$|uv.lock$|.github/workflows/ci.yml$)'; then
+            echo "domain_checks=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "domain_checks=false" >> "$GITHUB_OUTPUT"
+          fi
+
+          if printf '%s\n' "$changed_files" | grep -Eq '^(src/llm_lab/foundations/|tests/unit/test_gpt2_reference_parity\.py$|docs/requirements-gpt2-reference\.txt$|pyproject\.toml$|uv\.lock$|.github/workflows/ci\.yml$)'; then
+            echo "reference_parity=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "reference_parity=false" >> "$GITHUB_OUTPUT"
+          fi
+
+
       - name: Install uv and Python
         uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
         with:
@@ -36,44 +57,57 @@ jobs:
       - name: Install dependencies
         run: uv sync --locked --dev
 
-      - name: Install documentation example dependency
-        run: uv pip install --python .venv/bin/python -r docs/requirements-tokenizer-example.txt
-
-      - name: Install YAML data validation dependencies
+      - name: Install YAML validation dependencies
+        # Also required by the static type check for the repository's YAML helpers.
         run: uv pip install --python .venv/bin/python -r docs/requirements-history-validation.txt
 
-      - name: Install GPT-2 reference-parity dependencies
-        # torch comes from the CPU-only index to avoid multi-gigabyte CUDA wheels;
-        # its pin matches docs/requirements-gpt2-reference.txt.
-        run: |
-          uv pip install --python .venv/bin/python --index-url https://download.pytorch.org/whl/cpu torch==2.15.0
-          uv pip install --python .venv/bin/python -r docs/requirements-gpt2-reference.txt
+      - name: Install tokenizer example dependency
+        if: github.event_name != 'pull_request' || steps.validation_scope.outputs.domain_checks == 'true'
+        run: uv pip install --python .venv/bin/python -r docs/requirements-tokenizer-example.txt
+
+      - name: Install CPU-only PyTorch
+        if: github.event_name != 'pull_request' || steps.validation_scope.outputs.reference_parity == 'true'
+        # Avoid multi-gigabyte CUDA wheels. The pin matches the reference requirements.
+        run: uv pip install --python .venv/bin/python --index-url https://download.pytorch.org/whl/cpu torch==2.15.0
+
+      - name: Install GPT-2 reference dependency
+        if: github.event_name != 'pull_request' || steps.validation_scope.outputs.reference_parity == 'true'
+        run: uv pip install --python .venv/bin/python -r docs/requirements-gpt2-reference.txt
 
       - name: Validate source catalogue and extraction records
+        if: github.event_name != 'pull_request' || steps.validation_scope.outputs.domain_checks == 'true'
         run: uv run python site/tools/check_source_catalogue.py
 
       - name: Validate page metadata learning graph
+        if: github.event_name != 'pull_request' || steps.validation_scope.outputs.domain_checks == 'true'
         run: uv run python site/tools/check_page_metadata.py
 
       - name: Audit page metadata topology
+        if: github.event_name != 'pull_request' || steps.validation_scope.outputs.domain_checks == 'true'
         run: uv run python site/tools/audit_page_metadata.py
 
       - name: Validate bilingual concept registry
+        if: github.event_name != 'pull_request' || steps.validation_scope.outputs.domain_checks == 'true'
         run: uv run python site/tools/check_concept_registry.py
 
       - name: Validate first-class learning resources
+        if: github.event_name != 'pull_request' || steps.validation_scope.outputs.domain_checks == 'true'
         run: uv run python site/tools/check_resource_registry.py
 
       - name: Validate bilingual history pilot dataset
+        if: github.event_name != 'pull_request' || steps.validation_scope.outputs.domain_checks == 'true'
         run: uv run python site/tools/check_history_pilot.py
 
       - name: Generate bilingual history timeline fragments
+        if: github.event_name != 'pull_request' || steps.validation_scope.outputs.domain_checks == 'true'
         run: uv run python site/tools/render_history_pilot.py
 
       - name: Execute bilingual tokenizer-to-embedding example
+        if: github.event_name != 'pull_request' || steps.validation_scope.outputs.domain_checks == 'true'
         run: uv run python site/tools/check_embedding_trace.py
 
       - name: Validate display-math delimiters
+        if: github.event_name != 'pull_request' || steps.validation_scope.outputs.domain_checks == 'true'
         run: uv run python site/tools/check_math_delimiters.py site
 
       - name: Check formatting
