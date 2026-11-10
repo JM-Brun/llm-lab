@@ -81,10 +81,19 @@ The final hidden representation is projected to a vector of dimension $V$, usual
 
 The [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) documentation specifies unnormalized logits as the expected input.
 
-## Practice
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Supplementary resources</span>
+  <span class="learning-resources__description">Experiment, explore further, and practise the ideas from this lesson.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Practice
 
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/logits.qmd).
 
+</div>
+</details>
 
 {{< include ../includes/generated-suggested-route-en-logits.qmd >}}
 

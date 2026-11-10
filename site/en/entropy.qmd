@@ -127,23 +127,33 @@ Lower temperature tends to concentrate the distribution; higher temperature tend
 - Entropy or perplexity computed with different tokenizers is not directly comparable without care.
 - The average entropy observed under a model is not automatically the true entropy of the data source.
 
-## Practice
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Supplementary resources</span>
+  <span class="learning-resources__description">Experiment, explore further, and practise the ideas from this lesson.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Practice
 
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/entropy.qmd).
 
 
-## Further reading
+### Further reading
 
 - [Probabilities and softmax](probabilities.qmd) — how logits become a conditional distribution.
 - [Likelihood](likelihood.qmd) — probability of an observed token and sequence.
 - [Cross-entropy and KL divergence](cross-entropy.qmd) — the probabilistic objective used to train the model.
 - [Loss](loss.qmd) — target shifting, masks, and loss reduction.
 
-## References
+### References
 
 - Claude E. Shannon (1948), [*A Mathematical Theory of Communication*](https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf) — foundational information-theory source.
 - Cover & Thomas, [*Elements of Information Theory*](https://onlinelibrary.wiley.com/doi/book/10.1002/047174882X) — entropy and coding.
 - [3Blue1Brown — Reinventing Entropy](https://www.youtube.com/watch?v=l6DKRf-fAAM) — complementary visual intuition.
+
+</div>
+</details>
 
 {{< include ../includes/generated-suggested-route-en-entropy.qmd >}}
 

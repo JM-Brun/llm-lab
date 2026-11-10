@@ -239,22 +239,32 @@ The derivative of one-hot cross-entropy with respect to the logits is $p_i-\math
 - **“A falling training loss proves that the model is improving.”** No: validation, leakage, baselines, and generalization still need to be examined.
 - **“Perplexity directly compares any models.”** Not without controlling for tokenizer, data, and evaluation conventions.
 
-## Practice
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Supplementary resources</span>
+  <span class="learning-resources__description">Experiment, explore further, and practise the ideas from this lesson.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Practice
 
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/cross-entropy.qmd).
 
 
-## Further practice
+### Further practice
 
 The [mathematical foundations collection](exercises.qmd#foundations) includes worked exercises on logits, loss and masking; further topics remain planned.
 
-## References
+### References
 
 - [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) — API behaviour, not the general mathematical definition.
 - [PyTorch — LogSoftmax](https://docs.pytorch.org/docs/stable/generated/torch.nn.LogSoftmax.html) — log-softmax operation used to compute log-probabilities in a numerically stable way.
 - C. E. Shannon (1948), [*A Mathematical Theory of Communication*](https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf).
 - Cover & Thomas, [*Elements of Information Theory*](https://onlinelibrary.wiley.com/doi/book/10.1002/047174882X).
 - [3Blue1Brown — But what is cross-entropy?](https://www.youtube.com/watch?v=GlYgs6v2YfU) — visual intuition complementary to the derivation above.
+
+</div>
+</details>
 
 {{< include ../includes/generated-suggested-route-en-cross-entropy.qmd >}}
 
