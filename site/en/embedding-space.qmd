@@ -46,7 +46,7 @@ A tokenizer splits the prefix into tokens according to its vocabulary and rules,
 
 ## Lookup: select a row, not a coordinate
 
-The embedding matrix, denoted by (E), is a learned table. It contains one row per vocabulary ID, and each row contains a vector of real numbers.
+The embedding matrix, denoted by $E$, is a learned table. It contains one row per vocabulary ID, and each row contains a vector of real numbers.
 
 ![From prefix to vector: the ID selects a matrix row, and the vector in that row can then be represented as a point in space.](../images/embedding-lookup-en.svg){fig-alt="The prefix is split into tokens. A token receives ID i, used as a row index or address to select row i of matrix E. That row contains a vector of d numbers, which can be represented as a point in embedding space. The row address and the point are different objects." fig-cap="The token ID retrieves a row from the table; the vector stored in that row is the object represented in vector space." width=100%}
 
@@ -54,36 +54,36 @@ The distinction matters:
 
 | Object | What it denotes | Role |
 |---|---|---|
-| **Token ID** (i) | An integer assigned to a token by the tokenizer | Identifies a vocabulary entry |
-| **Row index / row address** (i) | That entry's position in matrix (E) | Tells the model which row to select |
-| **Embedding vector** (E_{i,:}) | The (d) real numbers stored in that row | Initial numerical representation of the token |
-| **Point in space** | The geometric interpretation of vector (E_{i,:}) | Supports analysis of distances, directions, and neighbourhoods |
+| **Token ID** $i$ | An integer assigned to a token by the tokenizer | Identifies a vocabulary entry |
+| **Row index / row address** $i$ | That entry's position in matrix $E$ | Tells the model which row to select |
+| **Embedding vector** $E_{i,:}$ | The $d$ real numbers stored in that row | Initial numerical representation of the token |
+| **Point in space** | The geometric interpretation of vector $E_{i,:}$ | Supports analysis of distances, directions, and neighbourhoods |
 
-The phrase **row address** therefore describes access to the table, not the token's geometric position. The vector is a list of coordinates; it is the vector that can be represented as a point in a (d)-dimensional space.
+The phrase **row address** therefore describes access to the table, not the token's geometric position. The vector is a list of coordinates; it is the vector that can be represented as a point in a $d$-dimensional space.
 
 ## The matrix in one formula
 
-If the vocabulary contains (V) IDs and each vector has (d) components, the matrix has (V) rows and (d) columns:
+If the vocabulary contains $V$ IDs and each vector has $d$ components, the matrix has $V$ rows and $d$ columns:
 
 $$
 E \in \mathbb{R}^{V \times d}
 $$
 
-For an ID (i), lookup selects the corresponding row:
+For an ID $i$, lookup selects the corresponding row:
 
 $$
 \mathbf{x}_i = E_{i,:} \in \mathbb{R}^{d}
 $$
 
-- (V) is the size of the vocabulary associated with the model's tokenizer.
-- (d) is the embedding dimension.
-- (E_{i,:}) denotes all components of row (i).
+- $V$ is the size of the vocabulary associated with the model's tokenizer.
+- $d$ is the embedding dimension.
+- $E_{i,:}$ denotes all components of row $i$.
 
-The matrix therefore contains (V \times d) parameters. The integer (i) is neither a coordinate in vector space nor a measure of proximity: consecutive IDs may select vectors that are far apart.
+The matrix therefore contains $V \times d$ parameters. The integer $i$ is neither a coordinate in vector space nor a measure of proximity: consecutive IDs may select vectors that are far apart.
 
 ## Where do the table values come from?
 
-The rows of (E) are not hand-written definitions. The matrix is part of the network's **learned parameters**. In a standard training setup, its values are initialized and then adjusted with the other parameters: the model makes predictions, a loss function measures the discrepancy with target tokens, backpropagation computes gradients, and the optimizer updates the parameters.
+The rows of $E$ are not hand-written definitions. The matrix is part of the network's **learned parameters**. In a standard training setup, its values are initialized and then adjusted with the other parameters: the model makes predictions, a loss function measures the discrepancy with target tokens, backpropagation computes gradients, and the optimizer updates the parameters.
 
 The implementation and code belong in the **Build** path: [assembling the GPT and tracing its embedding tables](gpt-model-walkthrough.qmd), within the [guided build route](build-path.qmd). For the roles of loss and gradients, see [the loss function](loss.qmd) and [gradients](gradients.qmd).
 
