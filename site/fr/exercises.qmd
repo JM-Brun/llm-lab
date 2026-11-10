@@ -810,6 +810,45 @@ Modifier W_V peut changer V et la sortie agrégée, mais ne change pas les score
 </details>
 
 
+#### Exercice — calculer Q, K et V puis isoler l'effet de V
+
+On considère une seule représentation d'entrée, avec la convention des vecteurs-lignes :
+
+\[
+x_t=\begin{bmatrix}1&2\end{bmatrix},\qquad
+W_Q=\begin{bmatrix}1&0\\0&1\end{bmatrix},\qquad
+W_K=\begin{bmatrix}0&1\\1&0\end{bmatrix},\qquad
+W_V=\begin{bmatrix}1&1\\0&1\end{bmatrix}.
+\]
+
+1. Calculer à la main $q_t=x_tW_Q$, $k_t=x_tW_K$ et $v_t=x_tW_V$.
+2. Remplacer uniquement $W_V$ par $W'_V=\begin{bmatrix}2&0\\0&1\end{bmatrix}$. Calculer $v'_t$.
+3. Quelles quantités parmi Q, K, V, les scores et les poids peuvent changer ? Justifier à partir des dépendances du mécanisme.
+4. Expliquer pourquoi la sortie agrégée peut changer même si les poids restent identiques.
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+Les produits matriciels donnent :
+
+\[
+q_t=x_tW_Q=\begin{bmatrix}1&2\end{bmatrix},\qquad
+k_t=x_tW_K=\begin{bmatrix}2&1\end{bmatrix},\qquad
+v_t=x_tW_V=\begin{bmatrix}1&3\end{bmatrix}.
+\]
+
+Avec la nouvelle projection de valeur :
+
+\[
+v'_t=x_tW'_V=\begin{bmatrix}2&2\end{bmatrix}.
+\]
+
+Seul V change directement. Q et K restent identiques ; les scores et les poids calculés à partir de Q et K restent donc identiques eux aussi. En revanche, la somme pondérée porte sur les vecteurs V : modifier ces vecteurs peut donc modifier le contenu agrégé. Cela ne signifie pas que la sortie change nécessairement dans tous les cas, car certaines variations peuvent se compenser.
+
+Les matrices sont volontairement petites et fictives pour rendre les multiplications vérifiables à la main ; elles ne représentent pas les paramètres d'un modèle entraîné.
+
+</details>
+
 #### Exercice — prévoir l'effet d'une modification de projection
 
 On considère une même entrée $X$ et une attention standard, sans biais. Pour chaque intervention, indiquez si $Q$, $K$, $V$, les scores, les poids et la sortie agrégée peuvent changer. Les autres paramètres restent fixes.
