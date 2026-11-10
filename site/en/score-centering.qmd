@@ -133,13 +133,24 @@ A sensible learning order is: expected reward and policy-gradient objective; log
 
 It is not a new stage in the core next-token predictive spine and does not replace supervised teacher-forced training.
 
-## Further reading
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Supplementary resources</span>
+  <span class="learning-resources__description">Further reading on the mechanisms and sources discussed in this lesson.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Further reading
 
 - Marek & Ryabinin, [*Score Centering Stabilizes Off-policy Reinforcement Learning*](https://arxiv.org/abs/2609.20807).
 - [Full-text rendering inspected for this review](https://www.alphaxiv.org/abs/2609.20807).
 - [Official implementation and README](https://github.com/martin-marek/score-centering), including the [loss implementation](https://github.com/martin-marek/score-centering/blob/main/losses.py).
 - Cameron R. Wolfe, [*Score Centering*](https://cameronrwolfe.substack.com/p/score-centering) — separate commentary source; body retrieval pending.
 - Related follow-up, [*On the Origin and Evolution of Training-Inference Mismatch in LLM Reinforcement Learning*](https://arxiv.org/abs/2610.40945), to review separately.
+
+</div>
+</details>
+
 
 ::: {.callout-warning}
 **Research boundary:** the canonical arXiv PDF and all appendices have not yet been independently audited, official tests have not been executed, and the Cameron Wolfe article body remains unavailable. Treat empirical figures as author-reported and the top-k tail as an implementation approximation.

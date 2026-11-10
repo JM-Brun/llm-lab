@@ -99,27 +99,37 @@ def cosine_similarity(x: np.ndarray, y: np.ndarray) -> float:
 
 Ce fragment suppose des tableaux finis, unidimensionnels et de même forme ; il explicite la définition et le cas limite des vecteurs nuls, mais ne valide pas ces préconditions. Il ne constitue ni un benchmark ni une implémentation numérique durcie pour la production. Les normes et produits scalaires directs peuvent déborder pour des valeurs finies extrêmement grandes ou sous-déborder pour des valeurs extrêmement petites ; un code de production doit s'appuyer sur une implémentation testée dont le comportement numérique est documenté.
 
-## 5. Lecture critique des sources
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Ressources complémentaires</span>
+  <span class="learning-resources__description">Lectures scientifiques et illustrations pour approfondir l'interprétation du cosinus.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
 
-### Articles scientifiques
+#### Lectures critiques
+
+#### Articles scientifiques
 
 - **Steck, Ekanadham & Kallus (2024).** [Is Cosine-Similarity of Embeddings Really About Similarity? — arXiv:2403.05440](https://arxiv.org/abs/2403.05440), également publié dans les actes *WWW 2024 Companion* ([DOI](https://doi.org/10.1145/3589335.3651526)). Analyse théorique de l'effet de la régularisation sur les similarités calculées à partir d'embeddings.
 - **Li et al. (2020).** [On the Sentence Embeddings from Pre-trained Language Models — EMNLP 2020](https://aclanthology.org/2020.emnlp-main.733/). Étudie l'anisotropie des embeddings de phrases BERT et propose BERT-flow.
 - **Ethayarajh (2019).** [How Contextual are Contextualized Word Representations? — arXiv:1909.00512](https://arxiv.org/abs/1909.00512). Compare la géométrie des représentations de BERT, ELMo et GPT-2.
 - **Nastase & Merlo (2025).** [Testing the assumptions about the geometry of sentence embedding spaces: the cosine measure need not apply — arXiv:2509.01606](https://arxiv.org/abs/2509.01606). Examine si la géométrie des embeddings de phrases prédit les performances sur diverses tâches linguistiques ; à lire en distinguant ses résultats empiriques de toute généralisation universelle.
 
-### Compléments scientifiques et illustrations
+#### Compléments scientifiques et illustrations
 
 - **Zhelezniak et al. (2019).** [Correlation Coefficients and Semantic Textual Similarity — arXiv:1905.07790](https://arxiv.org/abs/1905.07790). Montre que cosinus et corrélation de Pearson sont liés pour certaines représentations, et évalue des cas où les corrélations de rang sont plus adaptées. Utile pour rappeler que la métrique doit être validée sur la tâche et le type de vecteurs.
 - **Nielsen & Hansen (2024).** [Hubness Reduction Improves Sentence-BERT Semantic Spaces — PMLR](https://proceedings.mlr.press/v233/nielsen24a.html) ([arXiv](https://arxiv.org/abs/2311.18364)). Étudie le phénomène de *hubness* et des méthodes pour le réduire dans des espaces Sentence-BERT.
 - **Illustration interactive.** [A Fifth of Your Corpus Is Unreachable. It Isn’t the Dimensions](https://sugeerth.github.io/blog/hubness/). Simulation reproductible dans le navigateur montrant comment la *hubness* des plus proches voisins peut émerger de la géométrie seule. Le corpus gaussien synthétique est un modèle pédagogique, pas une estimation des performances d’un système de recherche réel.
 
-### Documentation et explications techniques
+#### Documentation et explications techniques
 
 - **Sentence Transformers.** [Semantic Textual Similarity](https://sbert.net/docs/sentence_transformer/usage/semantic_textual_similarity.html) et [fonctions de similarité disponibles](https://sbert.net/docs/package_reference/util/similarity.html). Référence pratique pour comprendre les métriques exposées par la bibliothèque et la différence entre cosinus, produit scalaire et distances.
 - **Sentence Transformers.** [Modèles pré-entraînés](https://sbert.net/docs/sentence_transformer/pretrained_models.html). Exemples de modèles de recherche conçus pour le produit scalaire : le choix de métrique peut faire partie du contrat d'utilisation du modèle.
 
 La documentation d'une bibliothèque décrit un comportement d'implémentation ; elle ne remplace pas une évaluation scientifique. Les articles cités portent sur des modèles, des objectifs et des protocoles différents : leurs résultats ne doivent pas être fusionnés en une conclusion unique sans tenir compte de ces différences.
+
+</div>
+</details>
 
 ## Vérifications qui discriminent les interprétations
 

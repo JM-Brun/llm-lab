@@ -101,9 +101,16 @@ For a language model and a precisely defined property:
 
 Do not treat a performance difference between probes as proof that information is “absent” or “used” without additional assumptions.
 
-## 6. Research and technical reading
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Supplementary resources</span>
+  <span class="learning-resources__description">Additional papers and explanations on linear representation hypotheses.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
 
-### Papers and preprints
+#### Research and technical reading
+
+#### Papers and preprints
 
 - **Engels et al. (2025).** [Not All Language Model Features Are One-Dimensionally Linear — arXiv:2405.14860](https://arxiv.org/abs/2405.14860), published at ICLR 2025. Defines irreducible multidimensional features and reports, among other results, circular representations of days and months studied with intervention experiments.
 - **Tiblias et al. (2026; 2025 preprint).** [Hypothesis-Driven Feature Manifold Analysis in LLMs via Supervised Multi-Dimensional Scaling — arXiv:2510.01025](https://arxiv.org/abs/2510.01025). The v1 preprint was titled *Shape Happens: Automatic Feature Manifold Discovery in LLMs via Supervised Multi-Dimensional Scaling*; the paper was published in TMLR in 2026. Introduces SMDS to compare candidate geometries for activations; results focus on temporal reasoning and should be interpreted within the studied protocol.
@@ -113,11 +120,14 @@ Do not treat a performance difference between probes as proof that information i
 - **Garg, Kleinberg & Peng (2026).** [How Many Features Can a Language Model Store Under the Linear Representation Hypothesis? — arXiv:2602.11246](https://arxiv.org/abs/2602.11246). Theoretical analysis of the gap between linear representation and linear accessibility under sparsity assumptions.
 - **Barin-Pacela et al. (2026).** [Published UAI 2026 version, PMLR 337](https://proceedings.mlr.press/v337/barin-pacela26a.html); compare with the [author-updated arXiv v2, including corrigendum](https://arxiv.org/abs/2603.28744v2). The versions differ in their explanation of SAE compositional failures: the later version identifies dictionary learning, rather than amortized inference alone, as the binding constraint in the reported experiments.
 
-### Accessible explanations
+#### Accessible explanations
 
 - **Transformer Circuits / Anthropic.** [Toy Models of Superposition](https://transformer-circuits.pub/2022/toy_model/). The *Features as Directions* and *The Geometry of Superposition* sections are especially useful for connecting intuition, geometry, and experiments.
 - **Hewitt.** [Designing and Interpreting Probes with Control Tasks](https://www.cs.columbia.edu/~johnhew/interpreting-probes.html). Supplementary educational material on probe selectivity.
 - **Distill.** [A Mathematical Framework for Transformer Circuits](https://transformer-circuits.pub/2021/framework/index.html). A visual introduction to analysing linear and nonlinear transformations in Transformers.
+
+</div>
+</details>
 
 ## Checks that distinguish competing interpretations
 

@@ -250,10 +250,19 @@ Cette page est un **approfondissement facultatif** de [Du texte aux tokens](text
 - [tiktoken](https://github.com/openai/tiktoken)
 
 
-## Exercices
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Ressources complémentaires</span>
+  <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/tokenization-strategies.qmd).
 
+</div>
+</details>
 
 ::: {.language-switch}
 **Langue :** [Français](tokenization-strategies.qmd) · [English](../en/tokenization-strategies.qmd)

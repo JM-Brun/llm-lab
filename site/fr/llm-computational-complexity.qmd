@@ -176,12 +176,22 @@ Ce tableau donne des tendances, pas un benchmark. Constantes, dimensions, bande 
 
 Pour appliquer ces distinctions à des choix d'architecture : [architectures hybrides et Nemotron](hybrid-llm-architectures.qmd), [génération autorégressive](generation.qmd), [bloc Transformer](transformer.qmd) et [lois d'échelle](scaling-laws.qmd).
 
-## Exercices
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Ressources complémentaires</span>
+  <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/llm-computational-complexity.qmd).
 
 
 **Notion canonique :** [Panorama des modèles de langage](llm-overview.qmd). Cette page approfondit les coûts de calcul et de mémoire des LLM ; elle complète la vue générale sans être une étape obligatoire.
+
+</div>
+</details>
 
 ::: {.language-switch}
 **Langue :** [Français](llm-computational-complexity.qmd) · [English](../en/llm-computational-complexity.qmd)

@@ -191,7 +191,14 @@ Dans les bibliothèques de deep learning, le mot « tenseur » désigne couramme
 - **« Même forme signifie même signification. »** Non : des axes de même taille peuvent représenter des quantités différentes, et la forme ne code pas leur sémantique.
 - **« Des dimensions compatibles prouvent que l'opération est correcte. »** Non : une opération peut s'exécuter en utilisant le mauvais axe, le mauvais alignement de cible ou le mauvais masque.
 
-## Pour poursuivre
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Ressources complémentaires</span>
+  <span class="learning-resources__description">Approfondir les liens avec les notions voisines et consulter les références techniques.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Pour poursuivre
 
 - [Requêtes, clés et valeurs](queries-keys-values.qmd).
 - [Attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd).
@@ -199,7 +206,7 @@ Dans les bibliothèques de deep learning, le mot « tenseur » désigne couramme
 - [Loss](loss.qmd) et [Gradients](gradients.qmd).
 - [Fondations mathématiques](mathematical-foundations.qmd) — chaîne logits → perte → gradients.
 
-## Références
+### Références
 
 - [PyTorch — Tensors](https://docs.pytorch.org/tutorials/beginner/introyt/tensors_deeper_tutorial.html).
 - [PyTorch — Tensor documentation](https://docs.pytorch.org/docs/stable/tensors.html).
@@ -208,6 +215,9 @@ Dans les bibliothèques de deep learning, le mot « tenseur » désigne couramme
 - [Visualisation des tenseurs, partie 1](https://www.youtube.com/watch?v=YxXyN2ifK8A) — point de vue mathématique et physique, à distinguer de l'usage plus simple de « tenseur » dans les bibliothèques de deep learning.
 
 **Notion canonique :** [GPT et Transformer](transformer.qmd). Cette page fournit une référence technique sur les formes et les axes des tenseurs ; elle ne constitue pas un prérequis à la lecture du parcours de construction.
+
+</div>
+</details>
 
 ::: {.language-switch}
 [Français](tensors.qmd) · [English](../en/tensors.qmd)

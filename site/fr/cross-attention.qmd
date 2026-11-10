@@ -154,10 +154,19 @@ Le mécanisme n'est pas réservé à la traduction. Il apparaît notamment dans 
 - [Masque causal](causal-masking.qmd) explique la contrainte temporelle dans l'auto-attention du décodeur.
 - [Historique des Transformers](transformer-history.qmd) replace l'encodeur-décodeur dans le papier fondateur.
 
-## Exercices
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Ressources complémentaires</span>
+  <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/cross-attention.qmd).
 
+</div>
+</details>
 
 ::: {.language-switch}
 **Langue :** [Français](cross-attention.qmd) · [English](../en/cross-attention.qmd)
