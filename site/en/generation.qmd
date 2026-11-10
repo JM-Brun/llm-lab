@@ -45,7 +45,7 @@ p_\theta(\cdot \mid c_t) = \operatorname{softmax}(z_t).
 
 For a candidate token \(v\), \(p_\theta(v \mid c_t)\) is the probability that it is the next token given the current context. Each probability lies between 0 and 1, and the probabilities across the vocabulary sum to 1. The distribution depends on the context; generation uses the distribution at the final context position.
 
-For example, with four candidate tokens, the model might assign probabilities of 0.50, 0.30, 0.15, and 0.05. They sum to 1: this distribution describes the next position, not complete sentences.
+The probabilities are assigned to vocabulary tokens and sum to 1. They describe the next position, not complete sentences. Computing a distribution and distinguishing greedy selection from sampling are practised in [exercise GE-A](exercises.qmd#generation).
 
 A decoding policy then selects a token from this distribution:
 
