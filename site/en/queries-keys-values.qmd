@@ -27,6 +27,19 @@ tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-valu
 The previous page, [GPT and Transformers: architecture and data flow](transformer.qmd), places self-attention within the network's forward pass. Here we isolate the three projections that feed it: **Q**, **K**, and **V**. These are not three token categories, but three learned transformations of a representation. Q and K determine the weights; V supplies the aggregated content. The next page derives the weights and aggregation themselves.
 :::
 
+::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
+By the end of this lesson, you should be able to:
+- distinguish the projections that determine the weights (Q and K) from the one that supplies the content (V);
+- write the three projections and check the dimensions of their outputs;
+- predict what changes — and what stays fixed — when only one projection is modified.
+:::
+
+## A concrete question to motivate the mechanism
+
+In “The cat chased the dog because it was fast,” the pronoun **it** could refer to either the cat or the dog. To use context, a position needs to compare its representation with those at other positions, then combine information from them. Q, K, and V play distinct roles: the first two projections contribute to computing the weights; the third supplies the vectors to which those weights are applied.
+
+This example motivates the mechanism; it does not mean that one isolated attention head necessarily resolves coreference. Nor is it an observation of a trained model's attention weights.
+
 <div class="epistemic-badges">
   <span class="epistemic-badge badge-concept">Verified concept</span>
   <span class="epistemic-badge badge-status">Architecture: Transformer</span>
@@ -68,7 +81,7 @@ This geometric intuition is a bridge to the [scaled dot-product attention calcul
 Source of this perspective: [Codefinity, *Queries, Keys, and Values: The Building Blocks*](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b).
 :::
 
-![Diagram of query, key, and value projections: Q and K determine attention weights, which are used to aggregate V.](../images/queries-keys-values-en.svg){fig-alt="An input representation is projected into a query, key, and value. Queries are compared with keys; the resulting weights are applied to values." width=100%}
+![Diagram of query, key, and value projections: Q and K determine attention weights, which are used to aggregate V.](../images/queries-keys-values-en.svg){fig-alt="Two paths start from the same input: Q and K are compared to compute attention weights; those weights are then applied to V vectors to produce an aggregated representation." width=100%}
 
 ::: {.callout-note title="A complementary illustration in the source"}
 Nishanthan K provides a complementary visual explanation of the Q/K/V roles in the article. [Open the article and its original illustration on Medium](https://nishanthan-k.medium.com/how-query-key-and-value-qkv-work-in-transformers-1274bfa14ea8) (a mirror of the [DEV Community article](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a)).
@@ -112,6 +125,29 @@ $$
 
 The same projection matrices are applied at every position; the input representations vary from one position to another.
 
+## A numerical example of the three projections
+
+Take one input representation, using row vectors and projection matrices chosen purely for illustration:
+
+$
+x_t = \begin{bmatrix}1 & 2\end{bmatrix},\qquad
+W_Q = \begin{bmatrix}1&0\\0&1\end{bmatrix},\qquad
+W_K = \begin{bmatrix}0&1\\1&0\end{bmatrix},\qquad
+W_V = \begin{bmatrix}1&1\\0&1\end{bmatrix}.
+$
+
+The three projections give:
+
+$
+q_t = x_tW_Q = \begin{bmatrix}1&2\end{bmatrix},\qquad
+k_t = x_tW_K = \begin{bmatrix}2&1\end{bmatrix},\qquad
+v_t = x_tW_V = \begin{bmatrix}1&3\end{bmatrix}.
+$
+
+The same input therefore produces three different representations because the learned matrices have different roles. These numbers are illustrative, not parameters from a trained model.
+
+Now change only the value projection, for example to $W'_V = \begin{bmatrix}2&0\\0&1\end{bmatrix}$. This gives $v'_t = \begin{bmatrix}2&2\end{bmatrix}$, while $q_t$ and $k_t$ remain unchanged. Scores and weights computed from Q and K therefore stay the same; the content aggregated from V may change. The full score, softmax, and weighted-sum calculation is deliberately left to the [scaled dot-product attention](scaled-dot-product-attention.qmd) lesson.
+
 ::: {.callout-note collapse="true" title="How does training learn these projections?"}
 The matrices $W_Q$, $W_K$, and $W_V$ do not each receive an explicit “correct” target. They are adjusted indirectly from the model's loss function through backpropagation.
 
@@ -149,26 +185,18 @@ The dimensions $d_k$ and $d_v$ therefore need not be equal. Optional biases are 
 
 **Cross-attention:** this single-input formula describes self-attention, not every attention mechanism. In cross-attention, Q comes from the stream doing the querying, while K and V come from the stream being queried. See the [advanced cross-attention lesson](cross-attention.qmd).
 
-::: {.callout-note collapse="true" title="A linguistic example: when a token needs context"}
-Consider: “The animal didn't cross the road because it was tired.” The pronoun **it** is understood in context. As an intuition, a query formed at that position can be compared with keys from several earlier tokens; the resulting weights then combine their value vectors.
+::: {.callout-note collapse="true" title="Two examples of context — and their limits"}
+Two language phenomena illustrate why a representation may need context:
 
-This is an illustration of contextual information flow, not a report of measured attention. The article by [Neha KK](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b) gives this example but reports no model, head, attention weights or experiment. It therefore does not establish that a particular attention head resolves coreference, nor that an attention map explains the model's decision.
-:::
-
-::: {.callout-note collapse="true" title="Two contextual phenomena: coreference and lexical ambiguity"}
-The Q/K/V sources examined here illustrate two different language challenges:
-
-| Phenomenon | Example | What context helps interpret |
+| Phenomenon | Example | Interpretation question |
 |---|---|---|
-| Coreference | “The animal didn't cross the road because it was tired.” | Which referent does the pronoun “it” refer to? |
-| Lexical ambiguity | “He sat by the bank,” in a river context | Which sense of *bank* is intended: riverbank or financial institution? |
+| Coreference | “The animal didn't cross the road because it was tired.” | Which referent does “it” refer to? |
+| Lexical ambiguity | “He sat by the bank,” in a river context | Does *bank* mean a riverbank or a financial institution? |
 
-The first example, used by [Neha KK](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b), emphasizes relations between tokens. The second, used by [Codefinity](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b), emphasizes competing senses of the same word. They are not interchangeable: they provide two examples of tasks to which contextualized representations may contribute.
+The first example is used by [Neha KK](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b); the second by [Codefinity](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b). They illustrate two different tasks to which contextualized representations may contribute. They do not show that one isolated attention head resolves coreference or lexical ambiguity: neither example supplies a model, a head, or measured weights. An attention map alone is also insufficient to explain a model decision.
 
-In both cases, the Q/K/V explanation remains an illustration of information flow. These examples do not prove that one identified attention head alone performs coreference resolution or lexical disambiguation. For the broader role of context in representations, see [Contextualized representations](contextualized-representations.qmd).
+For the broader role of context in representations, see [Contextualized representations](contextualized-representations.qmd).
 :::
-
-
 
 ::: {.callout-note collapse="true" title="A useful distinction: what attracts attention is not necessarily what gets transmitted"}
 Brenndoerfer makes the separation between **routing** and **content** especially explicit. A key participates in deciding whether a position receives attention; the corresponding value determines what that position contributes if selected. These roles need not encode the same feature.
