@@ -38,7 +38,6 @@
     - [Guided tour: generation (`generate.py`)](gpt-generation-walkthrough.html)
   - [Build a small GPT](build-path.html)
 - **Practice and experiment**
-  - [Exercise catalogue](exercises.html)
   - Mathematical foundations
     - [Exercises — Mathematical foundations](exercises-foundations.html)
   - Text data
@@ -49,6 +48,7 @@
     - [Exercises — Transformer](exercises-transformer.html)
   - Generation
     - [Exercises — Generation](exercises-generation.html)
+  - [Exercise catalogue](exercises.html)
   - [Explore and compare Transformers](transformer-explainer.html)
   - [Evaluating a model: from score to experimental protocol](experimental-evaluation.html)
 - **Deepen your understanding**
