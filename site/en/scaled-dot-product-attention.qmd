@@ -40,6 +40,19 @@ Attention is not one indivisible operation: it is the sequence **scores → scal
 **Go deeper:** the derivation of the scaling factor — why divide by $\sqrt{d_k}$ and what the argument does not guarantee — is developed in [Why scale attention scores?](attention-score-scaling.qmd); changing which positions are accessible before softmax is the role of [causal masking](causal-masking.qmd).
 :::
 
+<div class="pipeline-stepper" role="navigation" aria-label="Steps in scaled dot-product attention">
+  <a class="step-item" href="queries-keys-values.qmd">1. Q, K, V</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">2. QKᵀ scores</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">3. Scaling</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item active" aria-current="step">4. Softmax</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">5. Value aggregation</span>
+</div>
+
+
 ## Four computation steps
 
 For one head, $Q,K\in\mathbb{R}^{T\times d_k}$ and $V\in\mathbb{R}^{T\times d_v}$.
