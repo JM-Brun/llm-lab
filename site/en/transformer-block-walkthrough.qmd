@@ -204,6 +204,9 @@ Each position goes on its own through `d -> mlp_hidden_dim` (often `4d`), then G
 
 ## Build path navigation
 
+
+## Connections
+
 - **Previous stop**: [building-block operations (`gpt_ops.py`)](gpt-ops-walkthrough.qmd).
 - **Next stop**: [assembling the GPT (`gpt.py`)](gpt-model-walkthrough.qmd) — where blocks get stacked.
 
