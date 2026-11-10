@@ -207,7 +207,7 @@ The [embedding-space lookup](embedding-space.qmd) maps IDs to initial vectors. T
 ::: {.self-check}
 ## Check your understanding
 
-Practice with [Exercise TR-C — Distinguish identity, position, and context](../en/exercises.qmd#donnees-textuelles).
+Practice with [Exercise TR-C — Distinguish identity, position, and context](../en/exercises.qmd#text-data).
 
 Two occurrences of the **same token ID** appear in two different sentences. Assume the embedding matrix is unchanged:
 
