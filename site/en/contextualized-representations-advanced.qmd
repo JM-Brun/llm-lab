@@ -1,0 +1,93 @@
+---
+title: "Contextualized representations: dependencies across positions and layers"
+subtitle: "Formalizing accessible context, masks, and successive transformations"
+description: "A mathematical deep dive into how Transformer blocks build hidden states that depend on position and accessible context."
+keywords: ["type:concept-deep-dive", "destination:deepen", "topic:contextualized-representations", "level:advanced", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/contextualized-representations-advanced"
+summary: "Formalizes contextual dependencies of hidden states, masking constraints, and representation changes across blocks."
+scope: "Deepens contextualization after the initial lookup: positional handling, accessible positions, Transformer-block dependencies, and the distinction between self-attention and the MLP."
+purpose: "Formalize which positions may contribute to a hidden state, distinguish causal decoders from bidirectional encoders, and explain the limits of a simplified block representation."
+suggested_route:
+  previous: "en/contextualized-representations"
+  next: null
+hierarchy:
+  parents: ["en/deepen"]
+  children: []
+related: ["en/queries-keys-values-advanced", "en/rope", "en/transformer"]
+tags: ["type:concept-deep-dive", "destination:deepen", "topic:contextualized-representations", "level:advanced", "language:en", "status:published"]
+-->
+
+This page extends the [introductory explanation of contextualized representations](contextualized-representations.qmd). It assumes readers can already distinguish a token ID, its lookup vector, and a hidden state produced by the network.
+
+## 1. From the initial embedding to the network input
+
+For an architecture that adds absolute positional embeddings, we can write:
+
+\[
+h_t^{(0)} = E[\text{ID}_t] + P_t.
+\]
+
+The same ID selects the same token-embedding term from a fixed table, but a different position may provide a different positional term. This expression does not describe every architecture. With RoPE, for example, positional information enters through transformations of query and key vectors inside attention, rather than through a universal vector addition to the initial embedding. See [positional encoding and RoPE](positional-encoding.qmd) and [advanced Q/K/V](queries-keys-values-advanced.qmd).
+
+## 2. Formalizing accessible context
+
+We can summarize the conceptual dependency of a state on the next layer as:
+
+\[
+h_t^{(\ell+1)} =
+F_\ell\!\left(
+h_t^{(\ell)},
+\{h_j^{(\ell)} : j \in A(t)\}
+\right),
+\]
+
+where \(A(t)\) denotes the positions accessible from position \(t\), as determined by the attention mask.
+
+- **Causal decoder** (GPT): using 1-based indexing, \(A(t)=\{1,\ldots,t\}\). A position can use its own state and the prefix, never future tokens.
+- **Bidirectional encoder**: accessible positions may include the entire sequence, subject to the mask in use.
+- **More specific masks**: some architectures further restrict accessible positions, for example through local windows or structured patterns.
+
+Here, \(F_\ell\) represents a complete block. This notation describes possible dependencies, not a universal implementation or an exact equation for every internal operation.
+
+## 3. Roles of the sublayers
+
+In a standard Transformer block, the operations have distinct roles:
+
+1. **Self-attention**: each position computes mixing weights over accessible positions and aggregates their value vectors. Q/K/V projections, masking, and score normalization determine this mixture.
+2. **MLP / feed-forward network**: then transforms each position independently of other positions at that sublayer, using parameters shared across positions.
+3. **Residual connections and normalization**: organize information flow and transformation stability; their exact order depends on the block variant (pre-LN, post-LN, etc.).
+
+Repeating these sublayers evolves hidden states. For the detailed computation, see [Q/K/V](queries-keys-values.qmd), [advanced Q/K/V](queries-keys-values-advanced.qmd), and [the Transformer](transformer.qmd).
+
+## 4. Isolating the effect of context in the *bank* example
+
+Consider:
+
+- “The river bank eroded.”
+- “The financial bank collapsed.”
+
+To isolate the effect of context, assume a single *bank* token and place both occurrences at the same position (the third word, under the simplifying assumption of one token per word). They therefore share the same ID, initial lookup, and positional treatment at that position, in an architecture whose positional mechanism depends on position.
+
+In a causal decoder, the representational difference at that position can then come from the accessible prefix (*The river* or *The financial*), rather than from a different absolute position. In another example, position and context may both contribute to the difference.
+
+This comparison is a controlled pedagogical setup, not a claim that a model encodes human word senses in sharply separated geometric regions.
+
+## 5. Following one position through the layers
+
+\(h_t^{(0)}\) denotes the initial input at position \(t\). Each block produces a new state, \(h_t^{(1)}\), then \(h_t^{(2)}\), and so on. The index \(t\) stays fixed: we follow the representation at that position through network depth.
+
+The vector is not replaced by a sense label. It is transformed by learned operations that progressively integrate information allowed by the architecture and mask.
+
+## Limits of this formalization
+
+- Hidden states are learned vectors; this notation does not assign them a unique semantic interpretation.
+- A computational dependency does not imply that one particular head independently performs an identifiable linguistic task.
+- Accessible positions depend on architecture and masking; GPT's causal constraint must not be generalized to bidirectional encoders.
+- Block variants may change operation order, normalization, residual connections, and attention mechanisms.
+
+**Takeaway:** lookup fixes the identity of the initial token vector; positional architecture and Transformer blocks then determine how each position's state depends on other accessible states.
