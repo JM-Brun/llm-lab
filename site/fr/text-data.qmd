@@ -29,6 +29,8 @@ La génération commence avec un prompt écrit en langage courant. Pourtant, le 
 La **tokenisation** découpe le texte en unités appelées *tokens* et associe chacune à un identifiant. Cette étape est distincte du réseau neuronal, mais elle détermine son vocabulaire, la longueur des séquences et une partie du coût de calcul.
 :::
 
+Dans la page précédente, la génération a été présentée comme une boucle qui s'appuie sur les tokens déjà présents dans le contexte. Cette page remonte d'une étape : elle explique comment le prompt devient une séquence de tokens, puis d'IDs entiers que le modèle peut convertir en vecteurs d'entrée.
+
 ::: {.callout-tip title="L'idée à retenir en une minute"}
 Pensez à un **catalogue avec des numéros de référence**. Le tokenizer découpe le texte en unités (les tokens) et attribue à chacune un ID. L'ID sert à retrouver une ligne dans la table d'embeddings : ce n'est ni un score, ni une mesure de sens. Le Transformer transforme ensuite ces vecteurs en tenant compte du contexte.
 

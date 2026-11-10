@@ -90,6 +90,14 @@ The repository is an independent learning and experimentation project. These sou
     - https://cyber.sites.beta.gouv.fr/nous-connaitre/publications/publications-internationales/design-principles-for-llm-based-systems-with-zero-trust/
     - **Use for:** a security perspective for later system-level experiments. Model construction and application security are related but distinct topics.
 
+
+## Embedding primers and visual explorations
+
+- **Hesam Sheikh Hessani — LLM Embeddings Explained: A Visual and Intuitive Guide** (Hugging Face Space, 2025): https://huggingface.co/spaces/hesamation/primer-llm-embedding
+  - **Use for:** an introductory visual tour from TF-IDF and Word2Vec to BERT and modern LLM input embeddings, with an interactive nearest-token atlas for the input embedding table of DeepSeek-R1-Distill-Qwen-1.5B. The author's companion code is in [LLM Mechanics](https://github.com/hesamsheikh/llm-mechanics).
+  - **Relationship to LLM Lab:** the token-ID lookup and initial-versus-contextualized distinction are already covered in the bilingual [embedding-space lessons](../site/fr/embedding-space.qmd) / [English version](../site/en/embedding-space.qmd). Treat the atlas as an optional real-model visual companion, not a duplicate explanation or a sentence-embedding benchmark.
+  - **Review status:** complete article text inspected on 10 November 2026; interactive runtime, companion code, image assets and reuse rights not audited. The TF-IDF dimensionality and embedding-dimension claims need qualification. See the [source review](source-reviews/hesam-sheikh-hessani-llm-embeddings-explained-2026-11.md).
+
 ## Research notes on embedding geometry
 
 These papers underpin the bilingual critical notes in the Quarto site. Treat each conclusion within its stated assumptions, models, tasks, and evaluation protocol.

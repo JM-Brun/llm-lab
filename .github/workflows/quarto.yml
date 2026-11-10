@@ -7,6 +7,7 @@ on:
     - cron: "17 3 * * *"
 
 permissions:
+  actions: read
   contents: read
   pull-requests: read
 
@@ -26,8 +27,8 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      # Decide whether this PR can affect the rendered site. Keep the full
-      # render for site inputs, Quarto workflow changes, and render dependencies.
+      # Only modified, already-listed .qmd pages qualify for incremental rendering.
+      # Any shared input, deletion, rename, addition, or config change falls back to full.
       - name: Detect site and browser review scope
         id: site_changes
         if: github.event_name == 'pull_request'
@@ -35,45 +36,78 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
-          changed_files="$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/files" --paginate --jq '.[].filename')"
-          {
-            echo "files<<EOF"
-            printf '%s\n' "$changed_files"
-            echo "EOF"
-          } >> "$GITHUB_OUTPUT"
+          changed_files_json="$(gh api --paginate "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/files?per_page=100" --jq '.[] | {filename, status}' | jq -s '.')"
+          PR_CHANGED_FILES_JSON="$changed_files_json" python3 scripts/quarto_render_scope.py
 
-          if printf '%s\n' "$changed_files" | grep -Eq '^(site/|data/|src/|scripts/site-browser-review\.mjs$|\.github/workflows/quarto\.yml$|pyproject\.toml$|uv\.lock$|docs/requirements-.*\.txt$)'; then
-            echo "site_relevant=true" >> "$GITHUB_OUTPUT"
+      - name: Find latest published site cache
+        id: site_cache
+        if: github.event_name == 'pull_request' && steps.site_changes.outputs.render_mode == 'incremental'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          # Never restore a site built from an older main commit than this PR's base.
+          for run_id in $(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/publish-quarto.yml/runs?branch=main&status=success&per_page=100" --jq ".workflow_runs[] | select(.head_sha == \"$BASE_SHA\") | .id"); do
+            artifact_id="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$run_id/artifacts?per_page=100" --jq '.artifacts[] | select(.name == "quarto-site-cache" and .expired == false) | .id' | head -n 1)"
+            if [ -n "$artifact_id" ]; then
+              echo "available=true" >> "$GITHUB_OUTPUT"
+              echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
+              echo "Found published site cache in workflow run $run_id."
+              exit 0
+            fi
+          done
+          echo "available=false" >> "$GITHUB_OUTPUT"
+          echo "No recent published site cache; falling back to a full render."
+
+      - name: Restore latest published site
+        id: restore_site
+        if: github.event_name == 'pull_request' && steps.site_changes.outputs.render_mode == 'incremental' && steps.site_cache.outputs.available == 'true'
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: quarto-site-cache
+          run-id: ${{ steps.site_cache.outputs.run_id }}
+          github-token: ${{ github.token }}
+          path: site/_site
+
+      - name: Verify restored site cache
+        id: verify_site_cache
+        if: github.event_name == 'pull_request' && steps.site_changes.outputs.render_mode == 'incremental'
+        run: |
+          if [ -s site/_site/index.html ] && [ -d site/_site/site_libs ]; then
+            echo "cache_restored=true" >> "$GITHUB_OUTPUT"
+            echo "Restored a complete Quarto site; changed pages can be rendered incrementally."
           else
-            echo "site_relevant=false" >> "$GITHUB_OUTPUT"
+            echo "cache_restored=false" >> "$GITHUB_OUTPUT"
+            echo "Site cache unavailable or incomplete; using a full render."
           fi
 
-          if printf '%s\n' "$changed_files" | grep -Eq '^(site/|data/|scripts/site-browser-review\.mjs$)'; then
-            echo "browser_relevant=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "browser_relevant=false" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Cache Quarto installer
+      - name: Cache Quarto Linux tarball
         if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
         id: quarto_cache
         uses: actions/cache@v4
         with:
-          path: ${{ runner.temp }}/quarto-1.11.9-linux-amd64.deb
-          key: quarto-${{ runner.os }}-1.11.9
+          path: ${{ runner.temp }}/quarto-1.11.9-linux-amd64.tar.gz
+          key: quarto-tarball-${{ runner.os }}-1.11.9
 
       - name: Set up Quarto
         if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
         env:
           QUARTO_VERSION: "1.11.9"
+          QUARTO_SHA256: "9d037baa3b38ffac7217edca1d2e53760b0fab4d5749220740a32056e03a1530"
         run: |
-          installer="$RUNNER_TEMP/quarto-${QUARTO_VERSION}-linux-amd64.deb"
-          if [ ! -s "$installer" ]; then
-            url="https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.deb"
-            curl --fail --location --retry 5 --retry-all-errors --retry-delay 5 --retry-max-time 240 --output "$installer" "$url"
+          archive="$RUNNER_TEMP/quarto-${QUARTO_VERSION}-linux-amd64.tar.gz"
+          if [ ! -s "$archive" ] || ! echo "$QUARTO_SHA256  $archive" | sha256sum --check --status; then
+            rm -f "$archive"
+            url="https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.tar.gz"
+            curl --fail --location --retry 5 --retry-all-errors --retry-delay 5 --retry-max-time 240 --output "$archive" "$url"
           fi
-          sudo apt-get install --yes "$installer"
-          quarto --version
+          echo "$QUARTO_SHA256  $archive" | sha256sum --check
+          install_dir="$RUNNER_TEMP/quarto-${QUARTO_VERSION}"
+          mkdir -p "$install_dir"
+          tar -xzf "$archive" --strip-components=1 -C "$install_dir"
+          echo "$install_dir/bin" >> "$GITHUB_PATH"
+          "$install_dir/bin/quarto" --version
 
       - name: Set up uv and Python
         if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
@@ -113,8 +147,19 @@ jobs:
         if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
         run: .venv/bin/python site/tools/render_computational_graph.py
 
-      - name: Render site
-        if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
+      - name: Render changed pages incrementally
+        if: ${{ github.event_name == 'pull_request' && steps.site_changes.outputs.render_mode == 'incremental' && steps.verify_site_cache.outputs.cache_restored == 'true' }}
+        env:
+          RENDER_TARGETS: ${{ steps.site_changes.outputs.render_targets }}
+        run: |
+          while IFS= read -r page; do
+            [ -n "$page" ] || continue
+            echo "Incrementally rendering $page"
+            quarto render "$page" --no-clean
+          done <<< "$RENDER_TARGETS"
+
+      - name: Render full site
+        if: ${{ github.event_name != 'pull_request' || (steps.site_changes.outputs.site_relevant == 'true' && (steps.site_changes.outputs.render_mode != 'incremental' || steps.verify_site_cache.outputs.cache_restored != 'true')) }}
         run: quarto render site
 
       - name: Check rendered learning-map controls
