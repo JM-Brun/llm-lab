@@ -114,7 +114,7 @@ def main() -> None:
             output.write("\nEOF\n")
 
     sys.stdout.write(
-        f"Quarto scope: {result['render_mode']}; {len(result['render_targets'])} page(s) selected\\n"
+        f"Quarto scope: {result['render_mode']}; {len(result['render_targets'])} page(s) selected\n"
     )
 
 
