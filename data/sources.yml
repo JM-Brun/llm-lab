@@ -2947,6 +2947,15 @@ sources:
           - "No code or live demo was executed."
           - "The theorem's assumptions and scope must be preserved; it is not a universal theorem about arbitrary trained models."
           - "No independent reproduction of reported results has been performed."
+      - accessed_at: "2026-11-10"
+        status: partially-scanned
+        inspected_scope:
+          - "Full HTML sections 3–5: Flickr30k and MSR-VTT protocols, alignment metrics, ablations, web-scale experiments, 42x sample comparison, empirical scaling law, captioning and pair-free alignment"
+          - "Cross-check of headline values, denominators and experimental caveats against the article and arXiv paper text"
+        limitations:
+          - "Appendices A–C, implementation code and live demo remain unaudited."
+          - "No independent reproduction has been run; results remain author-reported."
+          - "Compute, energy and wall-clock costs were not independently measured."
     related:
       pages: ["fr/contextualized-representations","en/contextualized-representations"]
       concepts: ["contextualized-representation","next-token-prediction","training-objective"]
