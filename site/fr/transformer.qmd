@@ -8,9 +8,9 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/transformer"
-summary: "Présente l’architecture d’un GPT décodeur seul, du réseau de blocs Transformer à la tête de sortie, puis suit une passe avant jusqu’aux logits. Distingue l’attention, le bloc répété et le modèle complet."
-scope: "Suit le calcul d’un GPT autorégressif à l’intérieur du réseau, depuis les représentations d’entrée jusqu’aux logits, en se concentrant sur les blocs Transformer, l’auto-attention, le MLP, les connexions résiduelles et la normalisation ; la préparation du texte et la boucle de génération sont seulement situées, pas réenseignées."
-purpose: "Le lecteur doit pouvoir reconnaître la structure d’un Transformer décodeur seul, distinguer sous-couche d’attention, bloc et réseau complet, puis suivre une passe avant jusqu’aux logits sans la confondre avec la génération."
+summary: "Présente l'architecture d'un GPT décodeur seul, du réseau de blocs Transformer à la tête de sortie, puis suit une passe avant jusqu'aux logits. Distingue l'attention, le bloc répété et le modèle complet."
+scope: "Suit le calcul d'un GPT autorégressif à l'intérieur du réseau, depuis les représentations d'entrée jusqu'aux logits, en se concentrant sur les blocs Transformer, l'auto-attention, le MLP, les connexions résiduelles et la normalisation ; la préparation du texte et la boucle de génération sont seulement situées, pas réenseignées."
+purpose: "Le lecteur doit pouvoir reconnaître la structure d'un Transformer décodeur seul, distinguer sous-couche d'attention, bloc et réseau complet, puis suivre une passe avant jusqu'aux logits sans la confondre avec la génération."
 suggested_route:
   previous: "fr/contextualized-representations"
   next: "fr/queries-keys-values"
@@ -44,11 +44,13 @@ Le schéma qui suit présente deux niveaux de lecture : le GPT complet, pour sit
 
 ## Le Transformer : le réseau au cœur d'un GPT
 
-![Architecture d'un GPT décodeur seul : les représentations d'entrée traversent une pile de blocs Transformer, puis une normalisation finale et une tête de sortie produisent les logits. Le panneau inférieur agrandit un bloc pré-LN typique.](../images/transformer-stack-fr.svg){#fig-transformer-stack fig-alt="En haut, le réseau complet : identifiants de tokens, embeddings et information positionnelle, pile de N blocs Transformer, normalisation finale, projection vers le vocabulaire et logits. En bas, le détail d'un bloc pré-LN : une normalisation puis une auto-attention multi-têtes causale, une connexion résiduelle, puis une normalisation, un MLP appliqué position par position et une seconde connexion résiduelle." width=100%}
+![Architecture d'un GPT décodeur seul : les représentations d'entrée traversent une pile de blocs Transformer, puis une normalisation finale et une tête de sortie produisent les logits. Le panneau inférieur agrandit un bloc typique.](../images/transformer-stack-fr.svg){#fig-transformer-stack fig-alt="En haut, le réseau complet : identifiants de tokens, embeddings et information positionnelle, pile de N blocs Transformer, normalisation finale, projection vers le vocabulaire et logits. En bas, le détail d'un bloc pré-LN : une normalisation puis une auto-attention multi-têtes causale, une connexion résiduelle, puis une normalisation, un MLP appliqué position par position et une seconde connexion résiduelle." width=100%}
 
-*La pile de blocs constitue le Transformer du GPT représenté ici. Le détail agrandi montre une organisation pré-LN courante ; l'ordre des sous-couches et les variantes de normalisation peuvent différer selon les modèles.*
+*La pile de blocs constitue le Transformer du GPT représenté ici. Le détail agrandi montre une organisation dite **pré-LN** : chaque sous-couche est précédée de sa normalisation. C'est une disposition courante ; l'ordre des sous-couches et les variantes de normalisation peuvent différer selon les modèles.*
 
 Dans un GPT décodeur seul, les blocs sont **empilés** : la sortie de l'un devient l'entrée du suivant. Chaque bloc transforme la séquence de représentations, sans choisir lui-même le prochain token. Après le dernier bloc, une normalisation finale et une projection vers le vocabulaire produisent les logits.
+
+Si vous avez déjà croisé le schéma classique de l'article fondateur (*Attention Is All You Need*), vous y retrouverez les mêmes briques : les boîtes *Multi-Head Attention*, *Feed Forward* et *Add & Norm* correspondent à l'attention multi-têtes, au MLP et au couple connexion résiduelle + normalisation décrits ici. L'article et ses visualisations sont référencés dans la [rubrique Approfondir](deepen.qmd#ressources-transformer).
 
 Cette représentation concerne la famille **décodeur seul**, utilisée notamment par les GPT autorégressifs. Les Transformers ne se limitent pas à cette architecture : la [comparaison des architectures Transformer](transformer-architectures.qmd) montre ce qui change dans un encodeur seul ou un modèle encodeur-décodeur.
 
@@ -62,47 +64,105 @@ Ce second schéma répond à une autre question : il replace le réseau dans le 
 
 À l'entrée du premier bloc, chaque identifiant a déjà été converti en vecteur et le modèle dispose d'une information sur l'ordre des tokens. Les pages sur les [embeddings](embedding-space.qmd) et l'[information positionnelle](positional-encoding.qmd) expliquent ces représentations initiales ; celle sur les [représentations contextualisées](contextualized-representations.qmd) montre ce que les couches du Transformer en font. Ici, nous suivons ce traitement à l'échelle du bloc.
 
+En une ligne :
+
+`identifiants → table d'embeddings → + information positionnelle → entrée du premier bloc`
+
 Dans notre exemple, le préfixe « C'est une bonne situation, ça, scribe ? » traverse cette pile de blocs avant que le modèle ne produise les logits du prochain token. La continuation n'est pas écrite à l'avance dans le prompt : elle se construit au fil de la boucle de génération.
 
 ## 2. Les blocs Transformer
 
-La pile représentée plus haut est composée de blocs de même type, répétés en profondeur. Chaque bloc combine deux opérations principales :
+::: {.callout-tip title="Le bloc en une phrase"}
+Un bloc applique deux corrections successives au flux de représentations : d'abord l'attention mélange l'information entre positions, puis le MLP transforme chaque position. Chaque correction est calculée sur une copie normalisée de ce flux, puis **ajoutée** au flux : celui-ci traverse le bloc sans jamais être remplacé.
+:::
+
+La pile représentée plus haut est composée de blocs de même type, répétés en profondeur. Chaque bloc enchaîne deux **sous-couches** principales, encadrées de connexions résiduelles et de normalisations :
 
 - **Auto-attention :** chaque position combine de l'information provenant des positions autorisées par le masque, y compris sa propre position dans un GPT causal. Le masque causal interdit l'accès aux tokens futurs.
-- **Réseau feed-forward (MLP) :** un petit réseau de neurones appliqué à chaque position séparément, avec les mêmes poids partout. Il combine typiquement des projections linéaires et une activation non linéaire pour produire une représentation transformée ; sa conception précise varie selon l'architecture.
+- **Réseau feed-forward (MLP) :** un petit réseau de neurones appliqué à chaque position séparément, avec les mêmes poids partout. *Feed-forward* signale que l'information y circule dans un seul sens, de l'entrée vers la sortie, sans interaction entre positions ni boucle de retour ; *MLP* (*multi-layer perceptron*) est le nom historique d'un enchaînement de couches linéaires et d'activations non linéaires. Concrètement, ce sous-réseau projette la représentation de dimension `d_model` vers une dimension intermédiaire `d_ff`, souvent environ quatre fois plus grande, applique une activation non linéaire, puis ramène le résultat à `d_model` ; sa conception précise varie selon les modèles.
 
-Les blocs utilisent aussi des **connexions résiduelles** et des **normalisations**. Une connexion résiduelle ajoute à la représentation qui circule dans le réseau une correction calculée par une sous-couche, au lieu de remplacer entièrement cette représentation. Elle fournit ainsi un chemin direct à l'information et au gradient :
+Une **connexion résiduelle** ajoute à la représentation qui circule dans le réseau une correction calculée par une sous-couche, au lieu de remplacer entièrement cette représentation. Elle fournit ainsi un chemin direct à l'information et au gradient :
 
 $$
 x_{\text{sortie}} = x_{\text{entrée}} + F(x_{\text{entrée}}).
 $$
 
-La normalisation (*LayerNorm*, dans les GPT classiques) centre et normalise les composantes du vecteur caché de chaque position, indépendamment des autres positions. Selon l'architecture, elle est placée avant ou après certaines sous-couches. Dans un bloc **pré-LN** typique, on a par exemple $x' = x + \operatorname{Attention}(\operatorname{LN}(x))$, puis $x'' = x' + \operatorname{MLP}(\operatorname{LN}(x'))$. C'est un exemple de conception, pas une formule universelle : l'ordre pré-LN/post-LN et les variantes de normalisation diffèrent entre modèles.
+La **normalisation** (*LayerNorm*, dans les GPT classiques) centre et réduit les composantes du vecteur caché de chaque position, indépendamment des autres positions. Son rôle est de stabiliser le calcul : les connexions résiduelles additionnent des corrections bloc après bloc, ce qui fait croître les magnitudes des représentations ; sans normalisation, activations et gradients deviennent instables, et l'entraînement d'une pile profonde échoue. Dans un bloc **pré-LN**, chaque sous-couche reçoit une entrée normalisée : $x' = x + \operatorname{Attention}(\operatorname{LN}(x))$, puis $x'' = x' + \operatorname{MLP}(\operatorname{LN}(x'))$. La disposition inverse (post-LN) et les variantes de normalisation, comme RMSNorm, diffèrent entre modèles.
 
-Le schéma décrit le rôle des composants sans imposer une implémentation unique. Pour passer à une implémentation précise — ordre pré-LN, projections et chemins résiduels — consultez la [visite guidée du bloc Transformer](transformer-block-walkthrough.qmd), dans le parcours **Build**. Elle complète cette page sans constituer une étape obligatoire du parcours conceptuel.
+Le même parcours, en image :
+
+```{mermaid}
+#| label: fig-bloc-prefln
+#| fig-cap: "Une passe dans un bloc pré-LN : chaque sous-couche lit une copie normalisée du flux, et sa sortie vient s'ajouter au flux (connexion résiduelle)."
+#| fig-alt: "Diagramme de flux : x entre dans le bloc ; une copie passe par LayerNorm puis l'attention multi-têtes, et rejoint x par une addition ; le résultat x prime passe par LayerNorm puis le MLP, qui projette de d_model vers d_ff puis revient à d_model, et rejoint x prime par une seconde addition, donnant x seconde, sortie du bloc."
+flowchart LR
+    X(["x (entrée du bloc)"]) --> LN1["LayerNorm"]
+    LN1 --> ATT["Attention multi-têtes"]
+    ATT --> ADD1((" + "))
+    X -- "chemin résiduel" --> ADD1
+    ADD1 --> X2(["x′ (après l'attention)"])
+    X2 --> LN2["LayerNorm"]
+    LN2 --> MLP["MLP : d_model vers d_ff vers d_model"]
+    MLP --> ADD2((" + "))
+    X2 -- "chemin résiduel" --> ADD2
+    ADD2 --> Y(["x″ (sortie du bloc)"])
+```
+
+En résumé, chaque composant du bloc a un rôle distinct :
+
+- l'**auto-attention** mélange l'information entre les positions autorisées ;
+- le **MLP** transforme chaque position séparément, avec des poids partagés ;
+- la **connexion résiduelle** préserve un chemin direct pour l'information et le gradient ;
+- la **normalisation** stabilise les magnitudes pour que la pile profonde s'entraîne.
+
+Pour une implémentation précise (ordre pré-LN, projections et chemins résiduels), consultez la [visite guidée du bloc Transformer](transformer-block-walkthrough.qmd).
 
 ![Comparaison des rôles de l'auto-attention et du réseau feed-forward dans un bloc Transformer.](../images/attention-vs-mlp.svg){fig-alt="L'auto-attention permet des échanges entre positions autorisées ; le même réseau feed-forward est appliqué séparément à chaque position." width=100%}
 
-L'attention mélange l'information entre les positions autorisées ; le MLP transforme localement chaque représentation, avec des poids partagés entre les positions. Les deux opérations sont apprises. L'attention calcule une somme pondérée de vecteurs de valeur : elle ne recherche pas littéralement des informations dans des notes lisibles par un humain.
+Les deux sous-couches se partagent le travail :
+
+| | Auto-attention | Réseau feed-forward (MLP) |
+|---|---|---|
+| Portée | toutes les positions autorisées par le masque | chaque position, séparément |
+| Liens entre positions | oui ; le masque causal fixe les accès autorisés | aucun |
+| Poids entre positions | partagés | partagés |
+| Dimensions traversées | `d_model` vers `d_model` | `d_model` vers `d_ff`, puis retour vers `d_model` |
+| Question à laquelle il répond | que retenir du contexte ? | comment transformer ce qui a été retenu ? |
+
+Les deux opérations sont apprises. L'attention calcule une somme pondérée de vecteurs de valeur : elle ne recherche pas littéralement des informations dans des notes lisibles par un humain.
 
 ### Parallélisme à l'entraînement, génération séquentielle
 
-Le Transformer permet de calculer en parallèle les représentations de plusieurs positions d'une séquence d'entraînement : les tokens d'entrée sont disponibles et le masque causal empêche chaque position de voir le futur. Cela supprime la dépendance récurrente position par position propre aux RNN. **Cela ne rend pas la génération GPT entièrement parallèle** : au moment de produire une réponse, le token suivant dépend des tokens déjà générés ; les étapes de décodage restent donc autorégressives. Le cache clé-valeur (*KV cache*) évite de recalculer certaines clés et valeurs du passé, mais ne supprime pas cette dépendance séquentielle. Voir [la boucle de génération](generation.qmd) pour distinguer *prefill* et *decode*.
+Le Transformer permet de calculer en parallèle les représentations de plusieurs positions d'une séquence d'entraînement : les tokens d'entrée sont disponibles et le masque causal empêche chaque position de voir le futur. Cela supprime la dépendance récurrente position par position propre aux RNN.
+
+- **Entraînement** : `t₁ t₂ t₃ t₄` → une seule passe ; toutes les positions sont calculées en parallèle, le masque causal interdit à chacune de voir les suivantes.
+- **Génération** : `t₁` → `t₂` → `t₃` → … une position par étape ; chaque token dépend des tokens déjà générés.
+
+**Cela ne rend pas la génération GPT entièrement parallèle** : au moment de produire une réponse, le token suivant dépend des tokens déjà générés ; les étapes de décodage restent donc autorégressives. Le cache clé-valeur (*KV cache*) évite de recalculer certaines clés et valeurs du passé, mais ne supprime pas cette dépendance séquentielle. Voir [la boucle de génération](generation.qmd) pour distinguer *prefill* et *decode*.
 
 L'**attention multi-têtes** effectue plusieurs calculs en parallèle à partir de projections apprises distinctes, puis combine leurs résultats. Cette diversité ne garantit pas que chaque tête développe une spécialisation nette et interprétable par un humain.
 
-### Profondeur et largeur : deux dimensions de l’architecture
+### Profondeur et largeur : deux dimensions de l'architecture
 
-Deux termes reviennent souvent pour décrire la taille d’un Transformer :
+Deux termes reviennent souvent pour décrire la taille d'un Transformer :
 
 - **Profondeur (*depth*) :** nombre de blocs Transformer empilés dans le réseau.
 - **Largeur (*width*) :** dimension des représentations qui circulent entre les blocs. Dans un GPT classique, elle correspond généralement à `d_model`, souvent appelée *hidden size* ou dimension du flux résiduel.
 
-Ces termes ne sont pas interchangeables avec les autres dimensions internes : le **nombre de têtes d’attention** indique combien de mécanismes sont calculés en parallèle ; `d_head` désigne la dimension des vecteurs d’une tête ; `d_ff` désigne la dimension intermédiaire du MLP, qui peut être plus grande que `d_model`.
+Ces termes ne sont pas interchangeables avec les autres dimensions internes : le **nombre de têtes d'attention** indique combien de mécanismes sont calculés en parallèle ; `d_head` désigne la dimension des vecteurs d'une tête ; `d_ff` désigne la dimension intermédiaire du MLP, celle vers laquelle chaque représentation est provisoirement projetée avant d'être ramenée à `d_model`.
 
-Le mot *width* est parfois utilisé plus largement pour d’autres dimensions internes : il faut donc vérifier quelle dimension est visée dans un article ou une fiche modèle. Pour les formes des tenseurs et les dimensions des projections, voir [Tenseurs](tensors.qmd) ; pour une configuration concrète, voir la [visite guidée de la configuration GPT](gpt-config-walkthrough.qmd). Profondeur et largeur décrivent la structure, mais ne suffisent pas à prédire les performances.
+::: {.callout-note title="Ordres de grandeur : GPT-2 (la version de référence à 124 M de paramètres)"}
+- profondeur : 12 blocs ;
+- largeur : `d_model` = 768 ;
+- attention : 12 têtes de `d_head` = 64, et 12 × 64 = 768 = `d_model` ;
+- MLP : `d_ff` = 3072 = 4 × `d_model`.
 
-Pour approfondir cette sous-couche, le parcours suit trois questions successives : [quelles projections alimentent l'attention ?](queries-keys-values.qmd) (Q, K et V), [comment les scores deviennent-ils une agrégation ?](scaled-dot-product-attention.qmd), puis [quelles positions un GPT a-t-il le droit de consulter ?](causal-masking.qmd) (masque causal). Ces pages détaillent le mécanisme d'attention à l'intérieur d'un bloc ; elles ne décrivent pas une autre architecture.
+Ces valeurs servent de repère ; les modèles récents varient. Le parcours de construction nomme ces dimensions `embedding_dim` et `mlp_hidden_dim` : voir la [visite guidée de la configuration GPT](gpt-config-walkthrough.qmd).
+:::
+
+Le mot *width* est parfois utilisé plus largement pour d'autres dimensions internes : il faut donc vérifier quelle dimension est visée dans un article ou une fiche modèle. Pour les formes des tenseurs et les dimensions des projections, voir [Tenseurs](tensors.qmd) ; pour une configuration concrète, voir la [visite guidée de la configuration GPT](gpt-config-walkthrough.qmd). Profondeur et largeur décrivent la structure, mais ne suffisent pas à prédire les performances.
+
+Pour approfondir la sous-couche d'attention, le parcours suit trois questions successives : [quelles projections alimentent l'attention ?](queries-keys-values.qmd) (Q, K et V), [comment les scores deviennent-ils une agrégation ?](scaled-dot-product-attention.qmd), puis [quelles positions un GPT a-t-il le droit de consulter ?](causal-masking.qmd) (masque causal). Ces pages détaillent le mécanisme d'attention à l'intérieur d'un bloc ; elles ne décrivent pas une autre architecture.
 
 ### Trois niveaux à ne pas confondre
 
@@ -112,11 +172,20 @@ Trois niveaux doivent rester distincts :
 2. **Le bloc Transformer** associe cette attention à un MLP, avec des connexions résiduelles et des normalisations.
 3. **Le GPT complet** assemble les représentations d'entrée, une pile de blocs, puis une normalisation finale et une tête de sortie.
 
-L'attention est donc une partie du bloc ; le bloc est l'unité répétée ; le Transformer n'est pas à lui seul le GPT complet. Dans le parcours **Build**, la [visite guidée du bloc](transformer-block-walkthrough.qmd) examine une implémentation particulière, puis la [visite guidée de l'assemblage GPT](gpt-model-walkthrough.qmd) montre comment les blocs s'intègrent au modèle.
+```
+GPT complet
+└── pile de N blocs Transformer
+    └── un bloc
+        ├── sous-couche d'attention
+        ├── sous-couche MLP
+        └── connexions résiduelles + normalisations
+```
+
+L'attention est donc une partie du bloc ; le bloc est l'unité répétée ; le Transformer n'est pas à lui seul le GPT complet. La [visite guidée du bloc](transformer-block-walkthrough.qmd) examine une implémentation particulière, puis la [visite guidée de l'assemblage GPT](gpt-model-walkthrough.qmd) montre comment les blocs s'intègrent au modèle.
 
 ## 3. Des représentations aux logits
 
-Après le dernier bloc, la normalisation finale et la tête de sortie produisent les **logits** : un score non normalisé pour chaque token du vocabulaire. La [leçon consacrée aux logits](logits.qmd) explique ce que ces scores représentent ; celle sur les [probabilités de sortie](probabilites.qmd) montre comment *softmax* les convertit en distribution. Le réseau s'arrête à ces scores : choisir un token, l'ajouter au contexte et relancer le calcul relève de la [génération autorégressive](generation.qmd).
+Après le dernier bloc, la normalisation finale et la tête de sortie produisent les **logits** : un score non normalisé pour chaque token du vocabulaire. La tête de sortie est une simple projection linéaire : chaque représentation de dimension `d_model` devient un vecteur de `vocab_size` scores (50 257 pour GPT-2). La [leçon consacrée aux logits](logits.qmd) explique ce que ces scores représentent ; celle sur les [probabilités de sortie](probabilites.qmd) montre comment *softmax* les convertit en distribution. Le réseau s'arrête à ces scores : choisir un token, l'ajouter au contexte et relancer le calcul relève de la [génération autorégressive](generation.qmd).
 
 <!-- Legacy section anchors: see the linked companion page. -->
 <span id="une-expérience-guidée-en-quatre-observations"></span>
@@ -128,15 +197,15 @@ Après le dernier bloc, la normalisation finale et la tête de sortie produisent
 
 ## Explorer en pratique
 
-L'[atelier d'exploration de GPT-2](transformer-explainer.qmd) permet d'observer ces mécanismes sur un modèle réel : conduire des expériences contrôlées et examiner les limites de la visualisation. C'est un exercice d'analyse indépendant — utile, mais pas nécessaire pour suivre le flux décrit ici.
+L'[atelier d'exploration de GPT-2](transformer-explainer.qmd) permet d'observer ces mécanismes sur un modèle réel : conduire des expériences contrôlées et examiner les limites de la visualisation.
 
 ## Pour approfondir
 
-Pour retrouver les visualisations, l'article fondateur et les ressources d'implémentation, consultez la [rubrique Approfondir consacrée au Transformer](deepen.qmd#ressources-transformer). Pour une première vue d'ensemble complémentaire, voir aussi [Understanding Transformer: The Architecture Behind Modern AI](https://dev.to/nishanthan-k/understanding-transformer-the-architecture-behind-modern-ai-55o8). Ces ressources sont facultatives et ne font pas partie du parcours principal.
+Pour retrouver les visualisations, l'article fondateur et les ressources d'implémentation, consultez la [rubrique Approfondir consacrée au Transformer](deepen.qmd#ressources-transformer). Pour une première vue d'ensemble complémentaire, voir aussi [Understanding Transformer: The Architecture Behind Modern AI](https://dev.to/nishanthan-k/understanding-transformer-the-architecture-behind-modern-ai-55o8).
 
 ## Exercices
 
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/transformer.qmd).
+Les questions et exercices de cette leçon sont regroupés sur sa [page d'exercices dédiée](exercises/transformer.qmd).
 
 {{< include ../includes/generated-suggested-route-fr-transformer.qmd >}}
 
@@ -151,12 +220,16 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 
 1. Quelle opération mélange l'information entre positions, et laquelle transforme chaque position indépendamment ?
 2. Pourquoi une connexion résiduelle ne remplace-t-elle pas la transformation de la sous-couche ?
+3. Quel problème la normalisation prévient-elle dans une pile de blocs profonde ?
+4. Dans le MLP d'un bloc, quelles dimensions traverse une représentation, dans quel ordre ?
 
 <details>
 <summary>Afficher les réponses</summary>
 
 1. L'auto-attention mélange l'information entre positions autorisées ; le MLP applique une transformation position par position avec des poids partagés.
 2. La connexion résiduelle additionne la sortie de la sous-couche à son entrée : $x_{sortie}=x_{entrée}+F(x_{entrée})$. Elle préserve un chemin direct à travers le bloc tout en laissant la sous-couche apporter une transformation apprise.
+3. Sans normalisation, les additions successives des connexions résiduelles font croître les magnitudes des représentations : activations et gradients deviennent instables et l'entraînement d'une pile profonde échoue. La normalisation recentre et réduit les composantes du vecteur de chaque position, ce qui stabilise l'entraînement.
+4. `d_model` vers `d_ff` (la dimension intermédiaire, souvent environ 4 × `d_model`), puis retour vers `d_model` ; l'activation non linéaire s'applique sur la représentation intermédiaire.
 
 </details>
 :::
