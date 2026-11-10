@@ -139,7 +139,9 @@ jobs:
         run: |
           marker="site/_site/.llm-lab-source-sha"
           source_sha=""
-          if [ -s "$marker" ]; then source_sha="$(cat "$marker")"; fi
+          if [ -s "$marker" ] && [ -s site/_site/index.html ] && [ -d site/_site/site_libs ]; then
+            source_sha="$(cat "$marker")"
+          fi
 
           if [ "$source_sha" = "$GITHUB_SHA" ]; then
             echo "state=current" >> "$GITHUB_OUTPUT"
@@ -211,7 +213,7 @@ jobs:
 
       # Cache is saved only after a successful render/deploy-artifact preparation.
       - name: Save rendered site for the next publish
-        if: success() && github.event_name == 'push'
+        if: success() && github.event_name == 'push' && steps.site_cache.outputs.cache-hit != 'true'
         uses: actions/cache/save@v4
         with:
           path: site/_site
