@@ -60,27 +60,27 @@ This page appears at two points in the route. **On the first pass**, immediately
 
 Consider the current context, consisting of tokens already available from the prompt or previous generation steps. Write it as:
 
-\[
+$$
 c_t = (x_1, \ldots, x_{t-1}).
-\]
+$$
 
 In this notation, each $x_i$ denotes the **token** at position $i$, not its numerical ID. In practice, the tokenizer maps that token to an integer ID, which is used to retrieve its vector from the embedding table. The equations use token notation for readability rather than writing the IDs explicitly.
 
-For **one generation step**, the model runs a forward pass with fixed parameters. It produces logits at every context position; to predict the continuation, we use the logits at the final position, denoted by \(z_t\). Softmax defines the conditional distribution:
+For **one generation step**, the model runs a forward pass with fixed parameters. It produces logits at every context position; to predict the continuation, we use the logits at the final position, denoted by $z_t$. Softmax defines the conditional distribution:
 
-\[
+$$
 p_\theta(\cdot \mid c_t) = \operatorname{softmax}(z_t).
-\]
+$$
 
-For a candidate token \(v\), \(p_\theta(v \mid c_t)\) is the probability that it is the next token given the current context. Each probability lies between 0 and 1, and the probabilities across the vocabulary sum to 1. The distribution depends on the context; generation uses the distribution at the final context position.
+For a candidate token $v$, $p_\theta(v \mid c_t)$ is the probability that it is the next token given the current context. Each probability lies between 0 and 1, and the probabilities across the vocabulary sum to 1. The distribution depends on the context; generation uses the distribution at the final context position.
 
 The probabilities are assigned to vocabulary tokens and sum to 1. They describe the next position, not complete sentences. Computing a distribution and distinguishing greedy selection from sampling are practised in [exercise GE-A](exercises-generation.qmd#generation).
 
 A decoding policy then selects a token from this distribution:
 
-\[
+$$
 x_t = \operatorname{Dec}\!\left(p_\theta(\cdot \mid c_t)\right).
-\]
+$$
 
 Selection may be deterministic (for example, *argmax*) or stochastic (sampling). The selection strategies are explained later.
 
@@ -90,13 +90,13 @@ If tokens and token IDs are not yet familiar, start with [From text to tokens](t
 
 ## 2. The generation loop: repeat this step
 
-Autoregressive generation reuses the elementary step with an expanding context. After selecting \(x_t\), the context becomes:
+Autoregressive generation reuses the elementary step with an expanding context. After selecting $x_t$, the context becomes:
 
-\[
+$$
 c_{t+1} = (x_1, \ldots, x_{t-1}, x_t).
-\]
+$$
 
-The model then computes a new distribution conditioned on this updated context, another token is selected, and the process repeats. The parameters \(\theta\) remain fixed throughout this loop.
+The model then computes a new distribution conditioned on this updated context, another token is selected, and the process repeats. The parameters $\theta$ remain fixed throughout this loop.
 
 Complete generation therefore alternates four operations:
 
@@ -136,11 +136,11 @@ A longer prompt tends to increase *prefill* work and therefore TTFT; a longer an
 
 The **KV cache** retains the keys (K) and values (V) already computed for each previous position and layer. It avoids recomputing attention over the entire prefix for every new token, at the cost of memory that grows with context length and the number of concurrent sequences. For a standard, unquantized K/V cache, a useful estimate is:
 
-\[
+$$
 M_{KV} \approx 2 \, L \, B \, T \, n_{KV} \, d_{head} \, s,
-\]
+$$
 
-where \(L\) is the number of layers, \(B\) the batch size, \(T\) the number of cached positions, \(n_{KV}\) the number of K/V heads, \(d_{head}\) their dimension, and \(s\) the bytes per element. This approximation omits allocation overhead and implementation-specific details. *Grouped-Query Attention* notably reduces the number of K/V heads relative to the number of query heads.
+where $L$ is the number of layers, $B$ the batch size, $T$ the number of cached positions, $n_{KV}$ the number of K/V heads, $d_{head}$ their dimension, and $s$ the bytes per element. This approximation omits allocation overhead and implementation-specific details. *Grouped-Query Attention* notably reduces the number of K/V heads relative to the number of query heads.
 
 *Prefill* is often compute-bound, while *decode* can become memory-bandwidth-bound because each step reads the accumulated cache to produce only a small amount of new output. The actual bottleneck depends on hardware, batch size, context length, and kernels: measure rather than assume.
 

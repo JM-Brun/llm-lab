@@ -50,19 +50,19 @@ Softmax turns logits into a **distribution conditioned on the prefix**. It guara
 
 ## From logits to a categorical distribution
 
-At a given position, the model produces a logit \(z_i\) for each vocabulary token \(i\). Logits are unnormalized scores: they may be positive or negative and do not sum to one.
+At a given position, the model produces a logit $z_i$ for each vocabulary token $i$. Logits are unnormalized scores: they may be positive or negative and do not sum to one.
 
 Softmax transforms these scores into probabilities:
 
-\[
+$$
 p_i=\operatorname{softmax}(z)_i=\frac{e^{z_i}}{\sum_{j=1}^{V}e^{z_j}}.
-\]
+$$
 
 Probabilities are positive and sum to one. This normalization does not prove that the values are calibrated or that the most probable token is factually correct. Numerical implementations use stable softmax/log-softmax forms to reduce overflow risk.
 
 ### Numerical example
 
-With two logits \(z=(0,\log 3)\), softmax gives \(p=(0.25,0.75)\). The second token is more probable, but this distribution does not mean that it is three times more true: it reflects the model's scores in this context.
+With two logits $z=(0,\log 3)$, softmax gives $p=(0.25,0.75)$. The second token is more probable, but this distribution does not mean that it is three times more true: it reflects the model's scores in this context.
 
 In our example, the distribution is conditioned on “What have the Romans ever done for us?” After a generated token is appended, the prefix changes, and the model computes a new distribution for the next step.
 
@@ -70,21 +70,21 @@ In our example, the distribution is conditioned on “What have the Romans ever 
 
 The next-token distribution depends on the prefix:
 
-\[
+$$
 p_\theta(x_t\mid x_{<t}).
-\]
+$$
 
 The same token can therefore receive different probabilities depending on the prefix. The likelihood of a complete sequence combines these conditional probabilities position by position; the product and its logarithm are covered in the [likelihood](likelihood.qmd) lesson. Tokenization also matters: probabilities are assigned to tokenized units, not directly to words or semantic propositions.
 
 ## Temperature and decoding strategy
 
-For temperature \(\tau>0\), the distribution becomes:
+For temperature $\tau>0$, the distribution becomes:
 
-\[
+$$
 p_i^{(\tau)}=\operatorname{softmax}(z/\tau)_i.
-\]
+$$
 
-Lower temperature tends to make the distribution more concentrated; higher temperature tends to flatten it. For \(\tau>0\), logit ordering and argmax remain unchanged, but probabilities change. Temperature changes the distribution used for decoding, not the model parameters; it cannot establish the truth of an output.
+Lower temperature tends to make the distribution more concentrated; higher temperature tends to flatten it. For $\tau>0$, logit ordering and argmax remain unchanged, but probabilities change. Temperature changes the distribution used for decoding, not the model parameters; it cannot establish the truth of an output.
 
 Softmax also has two useful properties: it preserves logit ordering and is invariant to adding the same constant to every score. At $\tau=1$, probability ratios satisfy $p_i/p_j=e^{z_i-z_j}$; more generally, $p_i^{(\tau)}/p_j^{(\tau)}=e^{(z_i-z_j)/\tau}$.
 

@@ -52,12 +52,12 @@ The former determines which positions may be attended to; the latter determines 
 
 </details>
 
-4. If logits have shape \([B,L,V]\), what do the three axes represent?
+4. If logits have shape $[B,L,V]$, what do the three axes represent?
 
 <details>
 <summary>Show answer</summary>
 
-Batch, sequence position, and candidate vocabulary token. Each position in each sequence has scores over all \(V\) vocabulary tokens.
+Batch, sequence position, and candidate vocabulary token. Each position in each sequence has scores over all $V$ vocabulary tokens.
 
 </details>
 

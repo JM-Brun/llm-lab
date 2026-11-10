@@ -50,19 +50,19 @@ La softmax transforme les logits en une **distribution conditionnée par le pré
 
 ## Des logits à une distribution catégorielle
 
-À une position donnée, le modèle produit un logit \(z_i\) pour chaque token \(i\) du vocabulaire. Les logits sont des scores non normalisés : ils peuvent être négatifs ou positifs et ne somment pas à un.
+À une position donnée, le modèle produit un logit $z_i$ pour chaque token $i$ du vocabulaire. Les logits sont des scores non normalisés : ils peuvent être négatifs ou positifs et ne somment pas à un.
 
 La softmax transforme ces scores en probabilités :
 
-\[
+$$
 p_i=\operatorname{softmax}(z)_i=\frac{e^{z_i}}{\sum_{j=1}^{V}e^{z_j}}.
-\]
+$$
 
 Les probabilités sont positives et leur somme vaut un. Cette normalisation ne prouve ni que les valeurs sont calibrées, ni que le token le plus probable est factuellement correct. Les implémentations numériques utilisent des formes stables de softmax/log-softmax pour limiter les débordements.
 
 ### Exemple numérique
 
-Avec deux logits \(z=(0,\log 3)\), la softmax donne \(p=(0.25,0.75)\). Le second token est plus probable, mais cette distribution ne signifie pas qu'il est trois fois plus vrai : elle reflète les scores du modèle dans ce contexte.
+Avec deux logits $z=(0,\log 3)$, la softmax donne $p=(0.25,0.75)$. Le second token est plus probable, mais cette distribution ne signifie pas qu'il est trois fois plus vrai : elle reflète les scores du modèle dans ce contexte.
 
 Dans notre exemple, la distribution est conditionnée par le préfixe « C'est une bonne situation, ça, scribe ? ». Après l'ajout d'un token généré, le préfixe change : le modèle recalcule alors une nouvelle distribution pour l'étape suivante.
 
@@ -70,21 +70,21 @@ Dans notre exemple, la distribution est conditionnée par le préfixe « C'est u
 
 La distribution du token suivant dépend du préfixe :
 
-\[
+$$
 p_\theta(x_t\mid x_{<t}).
-\]
+$$
 
 Un même token peut donc recevoir des probabilités différentes selon le préfixe. La probabilité d'une séquence entière combine ces probabilités conditionnelles position par position ; le produit et son logarithme sont traités dans la page sur la [vraisemblance](vraisemblance.qmd). Le tokenizer compte également : les probabilités portent sur les unités tokenisées, pas directement sur les mots ou les propositions sémantiques.
 
 ## Température et stratégie de génération
 
-Pour une température \(\tau>0\), la distribution devient :
+Pour une température $\tau>0$, la distribution devient :
 
-\[
+$$
 p_i^{(\tau)}=\operatorname{softmax}(z/\tau)_i.
-\]
+$$
 
-Une température plus faible tend à rendre la distribution plus concentrée ; une température plus élevée tend à l'aplatir. Pour \(\tau>0\), l'ordre des logits et l'argmax restent inchangés, mais les probabilités changent. La température modifie la distribution utilisée pour le décodage, pas les paramètres du modèle ; elle ne peut pas établir la vérité d'une sortie.
+Une température plus faible tend à rendre la distribution plus concentrée ; une température plus élevée tend à l'aplatir. Pour $\tau>0$, l'ordre des logits et l'argmax restent inchangés, mais les probabilités changent. La température modifie la distribution utilisée pour le décodage, pas les paramètres du modèle ; elle ne peut pas établir la vérité d'une sortie.
 
 La softmax possède également deux propriétés utiles : elle conserve l'ordre des logits et elle est invariante à l'ajout d'une même constante à tous les scores. Pour $\tau=1$, les rapports de probabilités vérifient $p_i/p_j=e^{z_i-z_j}$ ; plus généralement, $p_i^{(\tau)}/p_j^{(\tau)}=e^{(z_i-z_j)/\tau}$.
 

@@ -52,12 +52,12 @@ Le premier détermine quelles positions peuvent être consultées ; le second d�
 
 </details>
 
-4. Si les logits ont la forme \([B,L,V]\), que représentent les trois axes ?
+4. Si les logits ont la forme $[B,L,V]$, que représentent les trois axes ?
 
 <details>
 <summary>Afficher la réponse</summary>
 
-Le lot, la position dans la séquence et le token candidat du vocabulaire. Il y a une distribution de scores sur les \(V\) tokens à chaque position de chaque séquence.
+Le lot, la position dans la séquence et le token candidat du vocabulaire. Il y a une distribution de scores sur les $V$ tokens à chaque position de chaque séquence.
 
 </details>
 

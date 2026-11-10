@@ -93,6 +93,8 @@ This example is used as a pedagogical motivation in [Nishanthan K's tutorial on 
 
 The initial lookup is not the whole network input: the architecture must also handle position, and Transformer blocks then build states that depend on accessible context. Positional mechanisms vary across models; a position vector is therefore not always added directly to the embedding.
 
+In the running example, “What have the Romans ever done for us?” is already in the context. As the response is generated, each new token is processed against the context available at that step, which grows throughout the loop.
+
 For the dependencies between positions, causal masks, and the distinct roles of self-attention and the MLP, see the [deep dive on contextualized representations](contextualized-representations-advanced.qmd). The detailed formalization is deliberately separated from this first explanation.
 
 <details class="spot-the-fallacy">
@@ -112,7 +114,7 @@ This original illustration is motivated by [Ethayarajh (2019), *How Contextual a
 |---|---|---|
 | Token ID | Tokenizer vocabulary and rules | No; it identifies a vocabulary entry |
 | Initial token embedding | The selected row of the embedding matrix | No, for a fixed matrix and token ID |
-| Hidden state at layer \(\ell\) | Previous layer's state, positional information, and tokens accessible under the mask | Yes, in general |
+| Hidden state at layer $\ell$ | Previous layer's state, positional information, and tokens accessible under the mask | Yes, in general |
 
 Two common confusions follow from collapsing these stages:
 

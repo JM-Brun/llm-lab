@@ -32,61 +32,61 @@ Chaque paire de dimensions suit un cercle à une vitesse différente. Les dimens
 
 ## 1. De l'indice à un vecteur
 
-Dans le Transformer original, la position est un entier \(p\) (conventionnellement indexé à partir de zéro), et le vecteur positionnel a la même dimension \(d_{\text{model}}\) que l'embedding du token. Pour chaque paire de coordonnées, on utilise un sinus et un cosinus :
+Dans le Transformer original, la position est un entier $p$ (conventionnellement indexé à partir de zéro), et le vecteur positionnel a la même dimension $d_{\text{model}}$ que l'embedding du token. Pour chaque paire de coordonnées, on utilise un sinus et un cosinus :
 
-\[
+$$
 \begin{aligned}
 PE(p,2i) &= \sin\left(\frac{p}{10000^{2i/d_{\text{model}}}}\right),\\
 PE(p,2i+1) &= \cos\left(\frac{p}{10000^{2i/d_{\text{model}}}}\right).
 \end{aligned}
-\]
+$$
 
-Posons la fréquence angulaire \(\omega_i = 10000^{-2i/d_{\text{model}}}\). Une paire s'écrit alors :
+Posons la fréquence angulaire $\omega_i = 10000^{-2i/d_{\text{model}}}$. Une paire s'écrit alors :
 
-\[
+$$
 PE_i(p)=
 \begin{bmatrix}
 \sin(\omega_i p)\\
 \cos(\omega_i p)
 \end{bmatrix}.
-\]
+$$
 
-Le vecteur complet concatène \(d_{\text{model}}/2\) paires. La formule suppose donc une dimension paire. Les arguments des sinus et cosinus sont en radians.
+Le vecteur complet concatène $d_{\text{model}}/2$ paires. La formule suppose donc une dimension paire. Les arguments des sinus et cosinus sont en radians.
 
 ### Pourquoi une paire sinus-cosinus ?
 
-Le sinus seul ne permet pas de distinguer simplement la phase sur tout le cycle : plusieurs angles ont la même valeur de sinus. Le couple \((\sin\theta,\cos\theta)\) donne un point sur le cercle unité, car \(\sin^2\theta+\cos^2\theta=1\). Lorsque la position augmente, ce point tourne autour du cercle.
+Le sinus seul ne permet pas de distinguer simplement la phase sur tout le cycle : plusieurs angles ont la même valeur de sinus. Le couple $(\sin\theta,\cos\theta)$ donne un point sur le cercle unité, car $\sin^2\theta+\cos^2\theta=1$. Lorsque la position augmente, ce point tourne autour du cercle.
 
-Pour \(p=0\), chaque paire vaut \([0,1]^\top\). Lorsque \(p\) augmente, la paire tourne à la vitesse \(\omega_i\).
+Pour $p=0$, chaque paire vaut $[0,1]^\top$. Lorsque $p$ augmente, la paire tourne à la vitesse $\omega_i$.
 
 ## 2. Pourquoi plusieurs fréquences ?
 
 Le Transformer original choisit des fréquences géométriquement espacées :
 
-\[
+$$
 \omega_i = 10000^{-2i/d_{\text{model}}}.
-\]
+$$
 
-L'indice \(i\) augmente de deux coordonnées en deux coordonnées. La fréquence diminue donc par un facteur constant entre deux paires successives :
+L'indice $i$ augmente de deux coordonnées en deux coordonnées. La fréquence diminue donc par un facteur constant entre deux paires successives :
 
-\[
+$$
 \frac{\omega_{i+1}}{\omega_i}=10000^{-2/d_{\text{model}}}.
-\]
+$$
 
 La longueur d'onde — le nombre de positions nécessaire pour effectuer un tour complet — est :
 
-\[
+$$
 \lambda_i=\frac{2\pi}{\omega_i}
 =2\pi\,10000^{2i/d_{\text{model}}}.
-\]
+$$
 
-Les longueurs d'onde sont elles aussi espacées géométriquement. La plus courte vaut \(2\pi\) positions. La plus longue est \(2\pi\,10000^{1-2/d_{\text{model}}}\), proche de \(2\pi\cdot10000\) lorsque la dimension est grande. La formulation de l'article décrit cette plage de manière approximative.
+Les longueurs d'onde sont elles aussi espacées géométriquement. La plus courte vaut $2\pi$ positions. La plus longue est $2\pi\,10000^{1-2/d_{\text{model}}}$, proche de $2\pi\cdot10000$ lorsque la dimension est grande. La formulation de l'article décrit cette plage de manière approximative.
 
-### Exemple numérique : \(d_{\text{model}}=8\)
+### Exemple numérique : $d_{\text{model}}=8$
 
 Il y a quatre paires, donc quatre échelles temporelles. Les valeurs ci-dessous sont calculées directement à partir de la formule.
 
-| Paire \(i\) | Fréquence \(\omega_i\) | Longueur d'onde \(\lambda_i\) |
+| Paire $i$ | Fréquence $\omega_i$ | Longueur d'onde $\lambda_i$ |
 |---:|---:|---:|
 | 0 | 1 | 6,28 positions |
 | 1 | 0,1 | 62,83 positions |
@@ -105,17 +105,17 @@ Un espacement linéaire des fréquences consacrerait beaucoup de dimensions à u
 
 Pour une paire donnée, notons :
 
-\[
+$$
 v_i(p)=
 \begin{bmatrix}
 \sin(\omega_i p)\\
 \cos(\omega_i p)
 \end{bmatrix}.
-\]
+$$
 
-Pour un décalage entier \(k\), les formules d'addition donnent :
+Pour un décalage entier $k$, les formules d'addition donnent :
 
-\[
+$$
 \begin{aligned}
 \sin(\omega_i(p+k))
 &=\sin(\omega_i p)\cos(\omega_i k)
@@ -124,11 +124,11 @@ Pour un décalage entier \(k\), les formules d'addition donnent :
 &=\cos(\omega_i p)\cos(\omega_i k)
  -\sin(\omega_i p)\sin(\omega_i k).
 \end{aligned}
-\]
+$$
 
 En regroupant les deux coordonnées :
 
-\[
+$$
 v_i(p+k)=
 \begin{bmatrix}
 \cos(\omega_i k) & \sin(\omega_i k)\\
@@ -136,15 +136,15 @@ v_i(p+k)=
 \end{bmatrix}
 v_i(p)
 =R_i(k)v_i(p).
-\]
+$$
 
-**Pour un décalage \(k\) fixé, la matrice \(R_i(k)\) ne dépend pas de la position de départ \(p\).** Elle dépend seulement du décalage et de la fréquence de la paire.
+**Pour un décalage $k$ fixé, la matrice $R_i(k)$ ne dépend pas de la position de départ $p$.** Elle dépend seulement du décalage et de la fréquence de la paire.
 
 Pour le vecteur complet, on assemble ces matrices en une matrice par blocs diagonale :
 
-\[
+$$
 PE(p+k)=R(k)\,PE(p).
-\]
+$$
 
 Cette identité explique la motivation donnée par Vaswani et al. : un décalage fixe est représentable par une transformation linéaire du vecteur positionnel. Le modèle dispose ainsi d'une structure mathématique exploitable pour relier des positions relatives.
 
@@ -156,33 +156,33 @@ Cette propriété ne signifie pas que le Transformer calcule explicitement une d
 
 Pour une paire :
 
-\[
+$$
 \begin{aligned}
 v_i(p)^\top v_i(q)
 &=\sin(\omega_i p)\sin(\omega_i q)
  +\cos(\omega_i p)\cos(\omega_i q)\\
 &=\cos(\omega_i(p-q)).
 \end{aligned}
-\]
+$$
 
 En sommant les paires :
 
-\[
+$$
 PE(p)^\top PE(q)
 =\sum_i \cos(\omega_i(p-q)).
-\]
+$$
 
-Le produit scalaire dépend donc du décalage \(p-q\), et non des positions absolues prises séparément. Chaque fréquence contribue avec sa propre périodicité : la combinaison produit une fonction de similarité multi-échelle.
+Le produit scalaire dépend donc du décalage $p-q$, et non des positions absolues prises séparément. Chaque fréquence contribue avec sa propre périodicité : la combinaison produit une fonction de similarité multi-échelle.
 
-Cette quantité est le produit scalaire des **vecteurs positionnels seuls**. Ce n'est pas directement le score d'attention \(QK^\top\) d'un Transformer : les embeddings de contenu sont ajoutés au signal positionnel, puis les représentations sont projetées et transformées par les couches du réseau.
+Cette quantité est le produit scalaire des **vecteurs positionnels seuls**. Ce n'est pas directement le score d'attention $QK^\top$ d'un Transformer : les embeddings de contenu sont ajoutés au signal positionnel, puis les représentations sont projetées et transformées par les couches du réseau.
 
 ## 5. Comment le signal entre-t-il dans le Transformer ?
 
 Dans le Transformer original, le vecteur positionnel est ajouté à l'embedding du token à l'entrée de l'encodeur et du décodeur :
 
-\[
+$$
 X_0 = E[\text{token IDs}] + PE.
-\]
+$$
 
 Les deux vecteurs ont la même dimension, ce qui rend l'addition possible. Le signal positionnel n'est pas une seconde séquence de tokens et ne remplace pas le contenu lexical : il modifie la représentation d'entrée en lui ajoutant une information liée à l'emplacement.
 
@@ -283,17 +283,17 @@ La longueur d'entraînement, les distributions de données, les mécanismes d'at
 ## 8. Vérifier sa compréhension
 
 ::: {.callout-tip title="À vous de jouer"}
-1. Si \(d_{\text{model}}\) double, combien de paires de fréquences sont utilisées ?
-2. Si l'indice de paire \(i\) augmente, la longueur d'onde augmente-t-elle ou diminue-t-elle ?
-3. Pourquoi la transformation associée au décalage \(k\) ne dépend-elle pas de la position initiale \(p\) ?
+1. Si $d_{\text{model}}$ double, combien de paires de fréquences sont utilisées ?
+2. Si l'indice de paire $i$ augmente, la longueur d'onde augmente-t-elle ou diminue-t-elle ?
+3. Pourquoi la transformation associée au décalage $k$ ne dépend-elle pas de la position initiale $p$ ?
 4. Quelle différence y a-t-il entre « calculer le signal à la position 20 000 » et « réussir une tâche avec un contexte de 20 000 tokens » ?
-5. Le produit scalaire \(PE(p)^\top PE(q)\) est-il un score d'attention appris ?
+5. Le produit scalaire $PE(p)^\top PE(q)$ est-il un score d'attention appris ?
 :::
 
 ::: {.callout-note collapse="true" title="Éléments de réponse"}
-1. Le nombre de paires passe de \(d_{\text{model}}/2\) à \(d_{\text{model}}\).
-2. Elle augmente : \(\lambda_i=2\pi\,10000^{2i/d_{\text{model}}}\).
-3. Les identités d'addition expriment les sinus et cosinus de \(p+k\) comme une combinaison linéaire de ceux de \(p\), avec des coefficients qui ne dépendent que de \(k\) et de \(\omega_i\).
+1. Le nombre de paires passe de $d_{\text{model}}/2$ à $d_{\text{model}}$.
+2. Elle augmente : $\lambda_i=2\pi\,10000^{2i/d_{\text{model}}}$.
+3. Les identités d'addition expriment les sinus et cosinus de $p+k$ comme une combinaison linéaire de ceux de $p$, avec des coefficients qui ne dépendent que de $k$ et de $\omega_i$.
 4. Le premier est une propriété de la formule ; le second dépend du comportement appris du modèle et doit être évalué empiriquement.
 5. Non. C'est une similarité entre vecteurs positionnels fixes ; un score d'attention dépend de projections apprises des représentations.
 :::
