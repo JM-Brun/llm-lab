@@ -16,7 +16,7 @@ Use this structure in Quarto pages, translating labels and descriptions naturall
   <span class="learning-resources__title">Ressources complémentaires</span>
   <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
 </summary>
-<div class="learning-resources__content">
+<div class="learning-resources__content" markdown="1">
 
 <h3>Explorer en pratique</h3>
 <p>Une phrase qui explique l'intérêt de la ressource, puis son <a href="...">lien explicite</a>.</p>
