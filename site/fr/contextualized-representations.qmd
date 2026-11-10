@@ -24,7 +24,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-re
 
 {{< include ../includes/generated-guided-context-fr-contextualized-representations.qmd >}}
 ::: {.chapter-lead}
-Un même ID de token sélectionne toujours la même ligne dans une matrice d'embeddings (ou table de plongements) fixe. Pourtant, ce token peut jouer des rôles différents selon la phrase. La distinction essentielle est la suivante : **le lookup fournit un vecteur de plongement initial ; le Transformer construit ensuite des représentations qui dépendent du contexte**.
+La page précédente expliquait comment l'ordre des tokens entre dans le calcul. Reste à comprendre ce que les couches du réseau font de ces vecteurs initiaux : **un même ID fournit le même embedding de départ, mais son état caché peut évoluer selon les autres tokens accessibles**. C'est cette transformation qui produit les représentations contextualisées.
 :::
 
 ::: {.callout-tip title="L'idée à retenir en une minute"}

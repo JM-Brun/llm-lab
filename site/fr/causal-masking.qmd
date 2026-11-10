@@ -29,7 +29,6 @@ Pour prédire le token suivant à la position $t+1$, le modèle ne doit utiliser
 
 <div class="epistemic-badges">
   <span class="epistemic-badge badge-concept">Concept vérifié</span>
-  <span class="epistemic-badge badge-code">Test d'invariance · à exécuter localement</span>
   <span class="epistemic-badge badge-status">Architecture : Décodeur autorégressif</span>
 </div>
 
@@ -111,57 +110,8 @@ Les Transformers décodeurs comme GPT utilisent cette contrainte pour apprendre 
 </div>
 </details>
 
-::: {.callout-note collapse="true" title="Test d'invariance causale (facultatif)"}
-Pour rechercher une fuite d'information, gardez les tokens jusqu'à $t$ identiques, modifiez un token situé après $t$, puis comparez les sorties jusqu'à $t$ à une tolérance numérique près, en mode évaluation. Un tel test vérifie les cas essayés ; il ne prouve pas à lui seul l'absence de fuite dans tout le modèle.
-
-L’exemple ci-dessous isole une tête d’attention : il modifie les clés et les valeurs futures, pas les tokens d’un modèle complet.
-
-::: {.micro-workbench}
-::: {.micro-workbench-header}
-<span>MICRO-ATELIER NUMÉRIQUE · TEST D'INVARIANCE CAUSALE (NON-FUITE DU FUTUR)</span>
-<span>Python 3.12+ / NumPy</span>
-:::
-::: {.micro-workbench-body}
-```python
-import numpy as np
-
-### 1. Matrice de masque causal additif (T=4 positions)
-T = 4
-mask = np.full((T, T), -np.inf)
-mask[np.tril_indices(T)] = 0.0
-
-### 2. Données synthétiques pour T=4 tokens en dimension d=4
-np.random.seed(42)
-Q = np.random.randn(T, 4)
-K = np.random.randn(T, 4)
-V = np.random.randn(T, 4)
-
-def run_causal_attention(q, k, v, m):
-    scores = (q @ k.T) / np.sqrt(k.shape[-1]) + m
-    exp_scores = np.exp(scores - np.max(scores, axis=-1, keepdims=True))
-    exp_scores[~np.isfinite(scores)] = 0.0
-    weights = exp_scores / np.sum(exp_scores, axis=-1, keepdims=True)
-    return weights @ v, weights
-
-out_ref, w_ref = run_causal_attention(Q, K, V, mask)
-
-### 3. Modification massive d'un token FUTUR (position 3)
-K_alt = K.copy()
-V_alt = V.copy()
-K_alt[3] += 100.0
-V_alt[3] += 100.0
-
-out_alt, w_alt = run_causal_attention(Q, K_alt, V_alt, mask)
-
-### 4. Comparaison numérique des sorties aux positions 0, 1 et 2
-assert np.allclose(out_ref[:3], out_alt[:3]), "Fuite temporelle détectée !"
-assert not np.allclose(out_ref[3], out_alt[3]), "La position 3 devait changer."
-```
-:::
-::: {.micro-workbench-footer}
-Dans ce cas synthétique, modifier les clés et valeurs futures ne change pas les sorties précédentes à la tolérance de `np.allclose`.
-:::
-:::
+::: {.callout-note collapse="true" title="Vérifier l'invariance en pratique"}
+La règle causale se formule aussi comme une propriété de préfixe : à paramètres et préfixe inchangés, ajouter ou modifier des tokens futurs ne doit pas changer les sorties déjà calculées pour ce préfixe. L'[exercice CA-A](exercises.qmd#ca-a-prefix-invariance) fait construire le masque, examiner le décalage des cibles et interpréter les tests d'invariance du code de référence. Il distingue également le test d'une opération élémentaire d'attention de celui du modèle complet.
 :::
 
 ## Liens avec les autres concepts
@@ -174,16 +124,7 @@ Dans ce cas synthétique, modifier les clés et valeurs futures ne change pas le
 ::: {.self-check}
 ## Vérifier sa compréhension
 
-[Exercices approfondis sur ce thème](exercises.qmd#attention).
-
-1. Une ligne de scores déjà mise à l'échelle vaut $(1,0)$. Que deviennent les poids si la deuxième position est interdite par un masque causal ? Pourquoi le masque doit-il être appliqué avant le softmax ?
-
-<details>
-<summary>Afficher le raisonnement</summary>
-
-Le score interdit est masqué avant le softmax (conceptuellement $-\infty$) : les poids deviennent $(1,0)$. Le masque doit intervenir avant la normalisation ; mettre son poids à zéro après le softmax sans renormaliser ne produit pas la même distribution, car la somme restante serait inférieure à un.
-
-</details>
+La construction d'une matrice causale, le décalage des cibles et l'analyse de l'invariance de préfixe sont travaillés dans l'[exercice CA-A](exercises.qmd#ca-a-prefix-invariance).
 :::
 
 ::: {.callout-note collapse="true" title="Code et tests de référence (approfondissement)"}

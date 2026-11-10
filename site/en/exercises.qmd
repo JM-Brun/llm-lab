@@ -266,7 +266,7 @@ The tokenizer maps text to discrete vocabulary entries. The IDs index the embedd
 
 </details>
 
-#### Exercise TR-B — Calculate lookup and trace tensor shapes
+#### Exercise TR-B — Calculate lookup and trace tensor shapes {#tr-b-lookup}
 
 **Preparation:** [embedding space](embedding-space.qmd) for the matrix and the lookup; [tensors](tensors.qmd) is an optional notation reference. The exercise progresses in three stages: calculate, complete, generalize.
 
@@ -391,6 +391,46 @@ Lookup preserves the batch and sequence-position axes and adds the feature axis.
 - Claiming that the lookup contextualizes tokens assigns the Transformer's later computation to the embedding table.
 
 </details>
+
+#### Optional practical trace — from text to vectors
+
+This trace complements TR-B with a real tokenizer and a synthetic embedding table. It follows the successive objects without claiming to reproduce the internal weights of a pretrained GPT-2.
+
+Install the pinned version with `python -m pip install tiktoken==0.14.0`. NumPy is already a project dependency.
+
+```python
+import numpy as np
+import tiktoken
+
+text = "hello world"
+utf8_bytes = text.encode("utf-8")
+encoding = tiktoken.get_encoding("gpt2")
+token_ids = encoding.encode(text)
+token_bytes = [encoding.decode_single_token_bytes(i) for i in token_ids]
+token_strings = [part.decode("utf-8") for part in token_bytes]
+
+assert utf8_bytes == b"hello world"
+assert token_ids == [31373, 995]
+assert token_strings == ["hello", " world"]
+assert encoding.decode(token_ids) == text
+
+# Synthetic table: real GPT-2 uses different dimensions and learned weights.
+vocab_size, d = 50_257, 2
+E = np.zeros((vocab_size, d), dtype=np.float32)
+E[31373] = [0.1, 0.2]
+E[995] = [-0.3, 0.4]
+X = E[token_ids]
+assert X.shape == (2, 2)
+assert np.allclose(X, [[0.1, 0.2], [-0.3, 0.4]])
+
+# Illustrative positional vectors, not GPT-2's actual parameters.
+P = np.array([[0.01, 0.02], [0.03, 0.04]], dtype=np.float32)
+Z = X + P
+assert Z.shape == (2, 2)
+assert np.allclose(Z, [[0.11, 0.22], [-0.27, 0.44]])
+```
+
+Interpret this carefully: IDs depend on the tokenizer; the vectors in `E` and `P` are invented. The script checks the path text → IDs → lookup → positional addition, but runs no Transformer block and therefore computes no contextualized states. For byte-level details and BPE merges, see TR-E.
 
 #### Exercise TR-C — Diagnose identity, position and context
 
@@ -737,6 +777,30 @@ Yes: the BPE vocabulary and merge order were fitted using validation text. For a
 
 **Current scope:** CA-A introduces causal masking, shifted targets, and prefix invariance using a mask matrix and the existing tests. Three separate progressive formative exercises, with stable IDs AT-A, AT-B and AT-C shared with the French version, cover multi-head attention calculation, shape tracing, then claim diagnosis and intervention prediction. Multi-head-specific masking variants and advanced invariants remain to be developed. Suggested order: CA-A for causal masking, then AT-A, AT-B and AT-C for the multi-head sequence.
 
+#### Exercise — from Q/K scores to the attention output {#at-0-scores-to-output}
+
+Consider one query and two key/value pairs:
+
+$$
+q=(1,0),\quad k_1=(1,0),\quad k_2=(0,1),\quad
+v_1=(10,0),\quad v_2=(0,20).
+$$
+
+1. Compute the scores $qk_1^\top$ and $qk_2^\top$.
+2. Apply scaling with $d_k=2$.
+3. Compute the softmax weights (approximately).
+4. Compute the weighted combination of the values.
+5. Explain why the weights are not an absolute measure of semantic relevance.
+
+<details>
+<summary>Show the worked solution</summary>
+
+The raw scores are $(1,0)$. After division by $\sqrt{2}$, they are approximately $(0.707,0)$. Softmax gives approximately $(0.67,0.33)$. The output is therefore $0.67(10,0)+0.33(0,20)\approx(6.7,6.6)$.
+
+Q and K determine the weights; V determines the aggregated content. The weights are relative to the accessible keys in this row, not a universal measure of relevance or causality.
+
+</details>
+
 #### Calculate an aggregation by hand
 
 A position receives attention weights $(0.75,\,0.25)$ and the value vectors are $v_1=(2,0)$ and $v_2=(0,4)$. Calculate the output. If you swap $v_1$ and $v_2$ while keeping the weights fixed, does the output stay the same?
@@ -918,7 +982,7 @@ With parameters fixed, changing $X_D$ directly affects Q; changing $X_E$ directl
 
 </details>
 
-#### Exercise CA-A — Causal masking and prefix invariance
+#### Exercise CA-A — Causal masking and prefix invariance {#ca-a-prefix-invariance}
 
 Consider four input tokens \(x_0,x_1,x_2,x_3\). At query position \(i\), causal self-attention allows only keys at positions \(j\leq i\).
 
@@ -977,6 +1041,39 @@ These tests are targeted checks, not formal proofs for every input, architecture
 ~~~bash
 uv run --locked pytest --no-cov -q tests/unit/test_attention.py tests/unit/test_gpt.py
 ~~~
+
+**Optional standalone check — one attention head.** The following script isolates the mechanism: it perturbs a future key and value and checks that prefix outputs remain unchanged. It does not replace the complete-model tests above.
+
+```python
+import numpy as np
+
+T = 4
+mask = np.full((T, T), -np.inf)
+mask[np.tril_indices(T)] = 0.0
+
+rng = np.random.default_rng(42)
+Q = rng.standard_normal((T, 4))
+K = rng.standard_normal((T, 4))
+V = rng.standard_normal((T, 4))
+
+def causal_attention(q, k, v, additive_mask):
+    scores = (q @ k.T) / np.sqrt(k.shape[-1]) + additive_mask
+    scores = scores - np.max(scores, axis=-1, keepdims=True)
+    weights = np.exp(scores)
+    weights[~np.isfinite(additive_mask)] = 0.0
+    weights /= weights.sum(axis=-1, keepdims=True)
+    return weights @ v
+
+reference = causal_attention(Q, K, V, mask)
+K_changed, V_changed = K.copy(), V.copy()
+K_changed[3] += 100.0
+V_changed[3] += 100.0
+altered = causal_attention(Q, K_changed, V_changed, mask)
+
+assert np.allclose(reference[:3], altered[:3])
+assert not np.allclose(reference[3], altered[3])
+```
+
 
 </details>
 

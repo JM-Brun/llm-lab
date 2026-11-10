@@ -35,7 +35,7 @@ Scaled dot-product attention turns learned compatibility scores between queries 
 ::: {.callout-tip title="The one-minute mental model"}
 Attention is not one indivisible operation: it is the sequence **scores → scaling → optional mask → softmax → aggregation**. Scores compare Q and K; weights are normalized row by row; the output is a weighted combination of V.
 
-**First pass:** follow the four steps and work through the one-query, two-key example. Check the shape of each matrix separately: scores have shape $T\times T$, while the output has shape $T\times d_v$.
+**First pass:** follow the transition from scores to weights, then from weights to the output. Keep these three objects distinct; numerical calculations and detailed shapes are practised in the [Attention exercise collection](exercises.qmd#at-0-scores-to-output).
 
 **Go deeper:** the derivation of the scaling factor — why divide by $\sqrt{d_k}$ and what the argument does not guarantee — is developed in [Why scale attention scores?](attention-score-scaling.qmd); changing which positions are accessible before softmax is the role of [causal masking](causal-masking.qmd).
 :::
@@ -57,42 +57,9 @@ $$
 
 Here $M$ denotes an additive hard mask: $M_{ij}=0$ for an allowed query-key pair and $M_{ij}=-\infty$ for a disallowed pair. If no mask is needed, omit $M$ (equivalently, use an all-zero matrix). The mask acts on scores **before** softmax: that is the only point where it can change which positions are accessible to normalization. Which positions to forbid — the causal constraint — and how to handle a fully masked row are defined in [causal masking](causal-masking.qmd), the next step on the route.
 
-## Worked numerical example
+## From the mechanism to the calculation
 
-Consider one query and two accessible keys, with no mask:
-
-$$
-\begin{aligned}
-q&=(1,0),\quad k_1=(1,0),\quad k_2=(0,1),\\
-v_1&=(10,0),\quad v_2=(0,20).
-\end{aligned}
-$$
-
-Here $d_k=2$. The raw scores are $qk_1^\top=1$ and $qk_2^\top=0$. After scaling, the scores are $(1/\sqrt{2},0)\approx(0.707,0)$. Applying softmax gives weights approximately $(0.67,0.33)$, which sum to one. The output is their weighted sum of the values:
-
-$$
-o\approx0.67(10,0)+0.33(0,20)=(6.7,6.6).
-$$
-
-This small example separates the roles: the query and keys determine the weights; the values determine what is combined. The weights are relative to the keys available in this row, not a measure of semantic relevance.
-
-![Visual overview of attention: scores, optional mask, softmax, and weighted sum of values.](../images/attention-calculation-flow-en.svg){fig-alt="Queries and keys produce scores. After scaling and optional masking, softmax creates weights that combine the values." width=100%}
-
-The diagram also shows why three objects must not be conflated: **scores** (raw compatibility values), **weights** (normalized relative to accessible positions), and **outputs** (weighted combinations of values). In non-causal attention, the mask may be absent or encode another constraint. Softmax normalization does not turn the weights into a universal measure of semantic relevance.
-
-
-
-::: {.callout-note collapse="true" title="Two complementary views: message passing and convex combinations"}
-**Message passing.** Think of each token position as a node that can send a message: its value vector $v_j$. A query at position $i$ assigns weights to the accessible positions, and the output is the weighted mixture it receives. In this sense, self-attention is a content-dependent message-passing operation: the values are messages, while query-key scores determine their routing weights. This is an analogy for the computation, not a claim that the model uses a fixed graph.
-
-**Convex geometry.** If at least one key is accessible, the row-wise softmax weights satisfy $\alpha_{ij}\geq 0$ and $\sum_j\alpha_{ij}=1$. Therefore
-$$
-o_i=\sum_j\alpha_{ij}v_j
-$$
-is a convex combination of the accessible value vectors: before any subsequent output projection or residual addition, $o_i$ lies in their convex hull. This gives a precise geometric interpretation of the weighted sum. It does not mean that the final Transformer-block representation must remain inside that convex hull.
-
-This perspective is adapted from [Brenndoerfer's Q/K/V tutorial](https://mbrenndoerfer.com/writing/query-key-value-attention-mechanism); the property follows directly from the nonnegative, normalized softmax weights.
-:::
+Read the full computation in order: scores from Q and K are scaled, an optional mask excludes forbidden positions, softmax normalizes the accessible scores, and the resulting weights combine the V vectors. To work through this sequence by hand, distinguish weighted mixing from selection, and manipulate projections in a multi-head setting, use the [Attention collection](exercises.qmd#at-0-scores-to-output), especially exercises AT-A to AT-C.
 
 ## Provenance and purpose
 
@@ -121,18 +88,8 @@ The formulation is presented in [Vaswani et al. (2017), *Attention Is All You Ne
 ::: {.self-check}
 ## Check your understanding
 
-[Extended exercises on this topic](../en/exercises.qmd#attention).
-
-1. A row of scores is $(2,0)$ and the key dimension is $d_k=4$. Calculate the softmax weights after scaling.
-
-<details>
-<summary>Show the reasoning</summary>
-
-First divide the scores by $\sqrt{4}=2$, giving $(1,0)$. Softmax is approximately $(0.731,0.269)$. Scaling precedes normalization; the weights remain relative to the scores in this row only. The variant where one position is forbidden by a causal mask is covered in the self-check on [causal masking](causal-masking.qmd).
-
-</details>
+Calculations involving scores, scaling, normalization, and aggregation are grouped in the [Attention exercise collection](exercises.qmd#attention), keeping this page focused on the mechanism and its invariants.
 :::
-
 
 ## Optional Build-path companion
 

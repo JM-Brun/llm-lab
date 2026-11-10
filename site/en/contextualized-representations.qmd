@@ -24,7 +24,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-re
 
 {{< include ../includes/generated-guided-context-en-contextualized-representations.qmd >}}
 ::: {.chapter-lead}
-The same token ID always selects the same row from a fixed embedding matrix. Yet the token can play different roles in different sentences. The distinction is that **lookup provides an initial vector; the Transformer subsequently builds representations that depend on context**.
+The previous page explained how token order enters the computation. The next question is what the network's layers do with these initial vectors: **the same ID provides the same starting embedding, but its hidden state can change according to the other accessible tokens**. This transformation produces contextualized representations.
 :::
 
 ::: {.callout-tip title="The one-minute mental model"}
