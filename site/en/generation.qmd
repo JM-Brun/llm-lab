@@ -45,7 +45,7 @@ This loop is called **autoregressive generation**. During inference, the model's
 </div>
 
 
-This page first appears as a preview of the overall process, immediately after the overview. The detailed treatment of the loop, *prefill*, *decode*, and selection strategies comes when the route returns to inference.
+This page appears at two points in the route. **On the first pass**, immediately after the overview, focus on the autoregressive loop in sections 1 and 2: predict, select, feed the token back, and repeat. **When the route returns to inference**, explore the following sections on *prefill*, *decode*, and selection rules in more depth. Performance details are kept in an optional, collapsed deep dive.
 
 ## 1. One elementary step: predict and select a token
 
@@ -54,6 +54,8 @@ Consider the current context, consisting of tokens already available from the pr
 \[
 c_t = (x_1, \ldots, x_{t-1}).
 \]
+
+In this notation, each $x_i$ denotes the **token** at position $i$, not its numerical ID. In practice, the tokenizer maps that token to an integer ID, which is used to retrieve its vector from the embedding table. The equations use token notation for readability rather than writing the IDs explicitly.
 
 For **one generation step**, the model runs a forward pass with fixed parameters. It produces logits at every context position; to predict the continuation, we use the logits at the final position, denoted by \(z_t\). Softmax defines the conditional distribution:
 
@@ -112,6 +114,8 @@ Inference systems generally distinguish processing the initial prompt from gener
 
 **Decode** refers to an execution phase after prefill; **decoding** refers to the token-selection rule. The concepts are related, but they are not synonyms.
 
+::: {.callout-note title="Optional deep dive: inference latency and optimizations" collapse="true"}
+
 ### Why can inference feel slow?
 
 Visible latency comes from two different phases. Two metrics help distinguish them:
@@ -134,6 +138,8 @@ where \(L\) is the number of layers, \(B\) the batch size, \(T\) the number of c
 An advanced optimization, **speculative decoding**, has a draft model propose several tokens and a target model verify them. A proposed prefix can be accepted in one go; at the first mismatch, the procedure continues under a rule designed to preserve the target model's distribution. Speedup depends on verification cost and acceptance rate, so it is not automatically faster. This is an optional deep dive, not a prerequisite for understanding the basic loop.
 
 [Brij Pandey's inference-path diagram](https://www.linkedin.com/posts/brijpandeyji_you-ask-llm-a-question-it-pauses-then-share-7525787285829804032-YNEl) is a useful overview of these phases and diagnostics. It is cited as an external resource; its figure is not reproduced here.
+
+:::
 
 Prefill is not [*teacher forcing*](training-examples.qmd), either. With teacher forcing, predictions are conditioned on the observed prefix from reference data, especially during training. During generation, the prefix grows with tokens selected by the model. The prediction computation is related, but the source of the context differs.
 
