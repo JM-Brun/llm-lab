@@ -196,6 +196,7 @@ jobs:
         if: steps.publish_strategy.outputs.mode == 'incremental'
         env:
           RENDER_TARGETS: ${{ steps.render_scope.outputs.render_targets }}
+          RENDER_ASSETS: ${{ steps.render_scope.outputs.render_assets }}
         run: |
           if [ -z "$RENDER_TARGETS" ]; then
             echo "Incremental mode has no safe page targets; falling back to a full render."
@@ -207,6 +208,15 @@ jobs:
               quarto render "$page" --no-clean
             done <<< "$RENDER_TARGETS"
           fi
+
+          while IFS= read -r asset; do
+            [ -n "$asset" ] || continue
+            relative="${asset#site/}"
+            destination="site/_site/$relative"
+            mkdir -p "$(dirname "$destination")"
+            cp -- "$asset" "$destination"
+            echo "Copied updated static asset $relative"
+          done <<< "$RENDER_ASSETS"
 
       - name: Render full site
         if: steps.publish_strategy.outputs.mode == 'full'
