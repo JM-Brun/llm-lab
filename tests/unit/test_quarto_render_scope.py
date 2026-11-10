@@ -58,6 +58,63 @@ def test_large_safe_batch_stays_incremental():
     assert len(result["render_targets"]) == 49
 
 
+def test_modified_svg_assets_can_be_copied_with_incremental_page_render():
+    result = classify_changed_files(
+        [
+            {"filename": "site/fr/example.qmd", "status": "modified"},
+            {"filename": "site/images/diagram.svg", "status": "modified"},
+        ],
+        CONFIG,
+    )
+
+    assert result["render_mode"] == "incremental"
+    assert result["render_targets"] == ["site/fr/example.qmd"]
+    assert result["render_assets"] == ["site/images/diagram.svg"]
+
+
+def test_multiple_modified_svg_assets_are_deduplicated_and_sorted():
+    result = classify_changed_files(
+        [
+            {"filename": "site/en/example.qmd", "status": "modified"},
+            {"filename": "site/images/z.svg", "status": "modified"},
+            {"filename": "site/images/a.svg", "status": "modified"},
+            {"filename": "site/images/z.svg", "status": "modified"},
+        ],
+        CONFIG,
+    )
+
+    assert result["render_mode"] == "incremental"
+    assert result["render_assets"] == ["site/images/a.svg", "site/images/z.svg"]
+
+
+def test_non_svg_or_non_image_assets_force_full_render():
+    for path in (
+        "site/images/diagram.png",
+        "site/images/diagram.css",
+        "site/assets/diagram.svg",
+    ):
+        result = classify_changed_files(
+            [
+                {"filename": "site/fr/example.qmd", "status": "modified"},
+                {"filename": path, "status": "modified"},
+            ],
+            CONFIG,
+        )
+        assert result["render_mode"] == "full"
+
+
+def test_added_or_deleted_svg_asset_forces_full_render():
+    for status in ("added", "removed", "renamed"):
+        result = classify_changed_files(
+            [
+                {"filename": "site/fr/example.qmd", "status": "modified"},
+                {"filename": "site/images/diagram.svg", "status": status},
+            ],
+            CONFIG,
+        )
+        assert result["render_mode"] == "full"
+
+
 def test_deleted_or_added_page_forces_full_render():
     for status in ("added", "removed", "renamed"):
         result = classify_changed_files(
