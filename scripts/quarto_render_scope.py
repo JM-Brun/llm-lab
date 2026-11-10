@@ -5,7 +5,8 @@ from __future__ import annotations
 import json
 import os
 import re
-from pathlib import PurePosixPath
+import sys
+from pathlib import Path, PurePosixPath
 from typing import Any
 
 MAX_INCREMENTAL_PAGES = 20
@@ -97,21 +98,23 @@ def main() -> None:
     if not isinstance(files, list):
         raise ValueError("PR_CHANGED_FILES_JSON must contain a JSON array")
 
-    config = open("site/_quarto.yml", encoding="utf-8").read()
+    with Path("site/_quarto.yml").open(encoding="utf-8") as config_file:
+        config = config_file.read()
     result = classify_changed_files(files, config)
 
     with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
         for key in ("site_relevant", "browser_relevant", "render_mode"):
-            output.write(
-                f"{key}={str(result[key]).lower() if isinstance(result[key], bool) else result[key]}\n"
-            )
+            value = result[key]
+            if isinstance(value, bool):
+                value = str(value).lower()
+            output.write(f"{key}={value}\n")
         for key in ("files", "render_targets"):
             output.write(f"{key}<<EOF\n")
             output.write("\n".join(result[key]))
             output.write("\nEOF\n")
 
-    print(
-        f"Quarto scope: {result['render_mode']}; {len(result['render_targets'])} page(s) selected"
+    sys.stdout.write(
+        f"Quarto scope: {result['render_mode']}; {len(result['render_targets'])} page(s) selected\n"
     )
 
 
