@@ -175,8 +175,7 @@ jobs:
           fi
 
       - name: Create shared render environment
-        if: steps.publish_strategy.outputs.mode != 'skip'
-        if: steps.verify_render_venv.outputs.valid != 'true'
+        if: steps.publish_strategy.outputs.mode != 'skip' && steps.verify_render_venv.outputs.valid != 'true'
         run: |
           uv venv --python 3.12.16 .venv
           uv pip install --python .venv/bin/python -r docs/requirements-history-validation.txt
