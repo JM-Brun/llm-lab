@@ -34,6 +34,17 @@ Softmax turns logits into a **distribution conditioned on the prefix**. It guara
 
 **Go deeper:** distinguish normalization, calibration, and truth, then compare argmax with sampling. The distribution is used for generation; during training, logits are compared with target tokens through a loss function.
 :::
+
+<div class="pipeline-stepper" role="navigation" aria-label="Steps in the predictive distribution">
+  <a class="step-item" href="logits.qmd">1. Logits</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">2. Softmax</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item active" aria-current="step">3. Distribution</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="generation.qmd">4. Selection</a>
+</div>
+
 ## From logits to a categorical distribution
 
 At a given position, the model produces a logit \(z_i\) for each vocabulary token \(i\). Logits are unnormalized scores: they may be positive or negative and do not sum to one.
