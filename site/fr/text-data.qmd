@@ -24,7 +24,9 @@ tags: ["type:concept-lesson", "destination:understand", "topic:text-data", "leve
 {{< include ../includes/generated-guided-context-fr-text-data.qmd >}}
 
 ::: {.chapter-lead}
-Un modèle de langage reçoit une séquence d'identifiants numériques, pas du texte brut. La tokenisation définit comment le texte est converti en identifiants et comment ceux-ci sont décodés. Elle est distincte du réseau neuronal, mais conditionne son vocabulaire, la longueur des séquences, le coût de calcul et certains comportements observables.
+La génération commence avec un prompt écrit en langage courant. Pourtant, le réseau neuronal ne traite pas directement les lettres ni les mots tels qu'ils apparaissent à l'écran : il reçoit une séquence d'identifiants numériques. Comment passe-t-on de l'un à l'autre ?
+
+La **tokenisation** découpe le texte en unités appelées *tokens* et associe chacune à un identifiant. Cette étape est distincte du réseau neuronal, mais elle détermine son vocabulaire, la longueur des séquences et une partie du coût de calcul.
 :::
 
 ::: {.callout-tip title="L'idée à retenir en une minute"}
