@@ -18,7 +18,7 @@
 <text x="450" y="177" text-anchor="middle" class="label">Token IDs</text><text x="450" y="200" text-anchor="middle" class="small">[x₁, x₂, …, xₜ]</text>
 <path d="M450 212V238" class="arrow"/>
 <rect x="260" y="238" width="380" height="78" rx="11" class="input"/>
-<text x="450" y="269" text-anchor="middle" class="label">Embeddings</text><text x="450" y="294" text-anchor="middle" class="small">positional information integrated according to the model</text>
+<text x="450" y="269" text-anchor="middle" class="label">Embeddings</text><text x="450" y="294" text-anchor="middle" class="small">with positional information, depending on the model</text>
 <path d="M450 316V345" class="arrow"/>
 <rect x="190" y="345" width="520" height="178" rx="14" class="stack"/>
 <text x="450" y="377" text-anchor="middle" class="label">Transformer · stack of N blocks</text>
