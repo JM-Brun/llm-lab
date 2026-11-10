@@ -158,7 +158,7 @@ For a deeper treatment without conflating geometry with the lookup mechanism, se
 ::: {.self-check}
 ## Check your understanding
 
-Practice with [Exercise TR-B — Calculate lookup and trace tensor shapes](../en/exercises.qmd#donnees-textuelles).
+Practice with [Exercise TR-B — Calculate lookup and trace tensor shapes](../en/exercises.qmd#text-data).
 
 1. An embedding matrix has \(V\) rows and vectors of dimension \(d\). How many parameters does it contain, and what does ID \(i\) select?
 
