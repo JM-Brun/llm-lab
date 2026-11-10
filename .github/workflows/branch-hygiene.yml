@@ -37,12 +37,9 @@ jobs:
       - name: Check out full repository history
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          # fetch-depth: 0 fetches all branch tips and their history; a second
+          # explicit fetch of every branch would duplicate the same network work.
           fetch-depth: 0
-
-      - name: Fetch all branch tips
-        run: |
-          set -euo pipefail
-          git fetch --prune origin '+refs/heads/*:refs/remotes/origin/*'
 
       - name: Resolve run mode
         run: |
@@ -74,9 +71,9 @@ jobs:
         run: |
           set -euo pipefail
           {
-            printf 'main\n'
+            printf 'main\\n'
             gh pr list --repo "$GITHUB_REPOSITORY" --state open --limit 200 --json headRefName --jq '.[].headRefName'
-            printf '%s\n' "$EXCLUDE"
+            printf '%s\\n' "$EXCLUDE"
           } | sed 's/[[:space:]]//g' | grep -v '^$' | sort -u > "$RUNNER_TEMP/protected.txt"
           echo "Protected branches:"
           cat "$RUNNER_TEMP/protected.txt"
@@ -96,34 +93,34 @@ jobs:
               continue
             fi
             if grep -qx "$branch" "$RUNNER_TEMP/protected.txt"; then
-              printf '%s\tprotected (main, open pull request, or explicit exclusion)\n' "$branch" >> "$kept"
+              printf '%s\\tprotected (main, open pull request, or explicit exclusion)\\n' "$branch" >> "$kept"
               continue
             fi
             branch_ref="refs/remotes/origin/$branch"
-            if printf '%s' "$DELETE_LIST" | tr ',' '\n' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | grep -qx "$branch"; then
+            if printf '%s' "$DELETE_LIST" | tr ',' '\\n' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | grep -qx "$branch"; then
               tip="$(git rev-parse --short "$branch_ref")"
-              printf '%s\tobsolete (tip %s): explicit human arbitration on issue #652\n' "$branch" "$tip" >> "$redundant"
+              printf '%s\\tobsolete (tip %s): explicit human arbitration on issue #652\\n' "$branch" "$tip" >> "$redundant"
               continue
             fi
             ahead="$(git rev-list --count "refs/remotes/origin/main..$branch_ref")"
             if git merge-base --is-ancestor "$branch_ref" refs/remotes/origin/main; then
               behind="$(git rev-list --count "$branch_ref..refs/remotes/origin/main")"
               if [ "$behind" -eq 0 ]; then
-                printf '%s\ttip equals the current main tip (fresh or unchanged branch); never deleted automatically\n' "$branch" >> "$kept"
+                printf '%s\\ttip equals the current main tip (fresh or unchanged branch); never deleted automatically\\n' "$branch" >> "$kept"
               else
-                printf '%s\tbranch tip is an ancestor of main (fully merged)\n' "$branch" >> "$redundant"
+                printf '%s\\tbranch tip is an ancestor of main (fully merged)\\n' "$branch" >> "$redundant"
               fi
               continue
             fi
             merge_status=0
             merge_output="$(git merge-tree --write-tree refs/remotes/origin/main "$branch_ref")" || merge_status=$?
-            merge_tree="$(printf '%s\n' "$merge_output" | sed -n '1p')"
+            merge_tree="$(printf '%s\\n' "$merge_output" | sed -n '1p')"
             if [ "$merge_status" -eq 0 ] && [ "$merge_tree" = "$main_tree" ]; then
-              printf '%s\tmerging into main reproduces the exact main tree (changes already integrated)\n' "$branch" >> "$redundant"
+              printf '%s\\tmerging into main reproduces the exact main tree (changes already integrated)\\n' "$branch" >> "$redundant"
             elif [ "$merge_status" -ne 0 ]; then
-              printf '%s\t%s unique commit(s); merging conflicts with current main\n' "$branch" "$ahead" >> "$kept"
+              printf '%s\\t%s unique commit(s); merging conflicts with current main\\n' "$branch" "$ahead" >> "$kept"
             else
-              printf '%s\t%s unique commit(s); merge result differs from main (content not fully integrated)\n' "$branch" "$ahead" >> "$kept"
+              printf '%s\\t%s unique commit(s); merge result differs from main (content not fully integrated)\\n' "$branch" "$ahead" >> "$kept"
             fi
           done
 
@@ -168,13 +165,13 @@ jobs:
             echo
             echo "| Branch | Proof of redundancy |"
             echo "| --- | --- |"
-            awk -F'\t' 'NF >= 2 { printf "| \`%s\` | %s |\n", $1, $2 }' "$redundant"
+            awk -F'\\t' 'NF >= 2 { printf "| \`%s\` | %s |\\n", $1, $2 }' "$redundant"
             echo
             echo "### Kept branches"
             echo
             echo "| Branch | Reason |"
             echo "| --- | --- |"
-            awk -F'\t' 'NF >= 2 { printf "| \`%s\` | %s |\n", $1, $2 }' "$kept"
+            awk -F'\\t' 'NF >= 2 { printf "| \`%s\` | %s |\\n", $1, $2 }' "$kept"
           } > "$RUNNER_TEMP/report.md"
           cat "$RUNNER_TEMP/report.md" >> "$GITHUB_STEP_SUMMARY"
           gh issue comment 652 --repo "$GITHUB_REPOSITORY" --body-file "$RUNNER_TEMP/report.md"
