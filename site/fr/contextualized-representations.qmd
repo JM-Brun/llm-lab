@@ -48,14 +48,15 @@ Deux phrases peuvent contenir le même token sans lui donner le même rôle : *b
 **Question de contrôle :** comment deux occurrences peuvent-elles partager le même vecteur initial tout en ayant des états cachés différents ?
 :::
 
-<div class="pipeline-stepper" role="navigation" aria-label="Construction des représentations contextualisées">
-  <a class="step-item" href="embedding-space.qmd">Vecteurs d’embedding initiaux</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="positional-encoding.qmd">Information positionnelle (ajout absolu ou RoPE dans Q/K)</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="transformer.qmd">Couches Transformer répétées (attention, MLP, résidus et normalisation)</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active" aria-current="step">États contextualisés</span>
+<div class="pipeline-stepper meta-flow meta-flow--branch" role="navigation" aria-label="Des embeddings aux représentations contextualisées selon le traitement positionnel">
+  <div class="meta-flow__source"><strong>Embeddings de tokens</strong><span>Vecteurs initiaux issus du lookup</span></div>
+  <div class="meta-flow__source"><strong>Signal positionnel</strong><span>Injecté à un endroit qui dépend de l’architecture</span></div>
+  <div class="meta-flow__comparison">
+    <div class="meta-flow__comparison-item"><strong>Encodage absolu</strong><small>Ajout du vecteur de position à l’entrée, avant les couches Transformer</small></div>
+    <div class="meta-flow__comparison-item"><strong>RoPE</strong><small>Rotation de Q/K à l’intérieur des mécanismes d’attention des couches Transformer</small></div>
+  </div>
+  <div class="meta-flow__result"><strong>Couches Transformer répétées</strong><small>Attention, MLP, connexions résiduelles et normalisation</small></div>
+  <div class="meta-flow__result meta-flow__branch--active" aria-current="step"><strong>Représentations contextualisées</strong><small>Chaque état dépend du contenu et des interactions autorisées avec le contexte</small></div>
 </div>
 
 
