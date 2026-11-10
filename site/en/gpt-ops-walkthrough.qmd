@@ -186,6 +186,12 @@ def linear(x: FloatArray, weight: FloatArray, bias: FloatArray) -> FloatArray:
 - **Previous stop**: [GPT configuration (`gpt_config.py`)](gpt-config-walkthrough.qmd) — the dimensions used here.
 - **Next stop**: [the Transformer block (`transformer_block.py`)](transformer-block-walkthrough.qmd) — which consumes these blocks.
 
+
+
+::: {.language-switch}
+**Language:** [Français](../fr/gpt-ops-walkthrough.qmd) · [English](gpt-ops-walkthrough.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -205,7 +211,3 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 </div>
 </details>
-
-::: {.language-switch}
-**Language:** [Français](../fr/gpt-ops-walkthrough.qmd) · [English](gpt-ops-walkthrough.qmd)
-:::
