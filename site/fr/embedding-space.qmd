@@ -34,17 +34,6 @@ Après la tokenisation, chaque token est représenté par un identifiant entier.
 - justifier pourquoi la proximité numérique des identifiants n'implique aucune proximité géométrique ou sémantique dans l'espace latent.
 :::
 
-<div class="pipeline-stepper">
-  <span class="step-item step-completed">1. Texte brut</span>
-  <span class="step-arrow">→</span>
-  <span class="step-item step-completed">2. IDs de tokens</span>
-  <span class="step-arrow">→</span>
-  <span class="step-item active">3. Embeddings initiaux</span>
-  <span class="step-arrow">→</span>
-  <span class="step-item">4. Position & Contexte</span>
-  <span class="step-arrow">→</span>
-  <span class="step-item">5. Logits & Sortie</span>
-</div>
 
 <div class="epistemic-badges">
   <span class="epistemic-badge badge-concept">Concept vérifié</span>
