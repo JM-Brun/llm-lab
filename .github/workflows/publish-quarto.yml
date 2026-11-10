@@ -204,7 +204,7 @@ jobs:
         run: quarto render site
 
       - name: Mark rendered site source commit
-        if: always() && steps.publish_strategy.outputs.mode != ''
+        if: success() && steps.publish_strategy.outputs.mode != ''
         run: |
           mkdir -p site/_site
           echo "$GITHUB_SHA" > site/_site/.llm-lab-source-sha
