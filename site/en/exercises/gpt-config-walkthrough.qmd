@@ -1,13 +1,13 @@
 ---
 title: "Exercises — Configuration du GPT"
 subtitle: "Comprehension and code-reading exercises"
-keywords: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-config", "level:applied", "language:en", "status:published"]
+keywords: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-config-exercises", "level:applied", "language:en", "status:published"]
 lang: en
 ---
 
 <!--
 LLM-LAB-PAGE-MAP v1
-id: "en/exercises/gpt-config-walkthrough"
+id: "en/gpt-config-walkthrough-exercises"
 summary: "Exercises associated with the Configuration du GPT guided tour."
 scope: "Collects exercises and worked answers for the guided tour without duplicating its code explanation."
 purpose: "Check understanding of the invariants, shapes, and implementation choices presented in the guided tour."

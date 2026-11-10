@@ -1,13 +1,13 @@
 ---
 title: "Exercises — Embedding space"
 subtitle: "Self-check questions, exercises, and worked answers"
-keywords: ["type:exercise-hub", "destination:practice", "topic:embedding-space", "level:applied", "language:en", "status:published"]
+keywords: ["type:exercise-hub", "destination:practice", "topic:embedding-space-exercises", "level:applied", "language:en", "status:published"]
 lang: en
 ---
 
 <!--
 LLM-LAB-PAGE-MAP v1
-id: "en/exercises/embedding-space"
+id: "en/embedding-space-exercises"
 summary: "Self-check questions and exercises associated with the Embedding space lesson."
 scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
 purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."

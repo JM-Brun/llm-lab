@@ -1,13 +1,13 @@
 ---
 title: "Exercises — Corpus preparation"
 subtitle: "Self-check questions, exercises, and worked answers"
-keywords: ["type:exercise-hub", "destination:practice", "topic:corpus-preparation", "level:applied", "language:en", "status:published"]
+keywords: ["type:exercise-hub", "destination:practice", "topic:corpus-preparation-exercises", "level:applied", "language:en", "status:published"]
 lang: en
 ---
 
 <!--
 LLM-LAB-PAGE-MAP v1
-id: "en/exercises/corpus-preparation"
+id: "en/corpus-preparation-exercises"
 summary: "Self-check questions and exercises associated with the Corpus preparation lesson."
 scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
 purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."

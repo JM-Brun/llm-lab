@@ -1,13 +1,13 @@
 ---
 title: "Exercises — Entropy: uncertainty over the next token"
 subtitle: "Self-check questions, exercises, and worked answers"
-keywords: ["type:exercise-hub", "destination:practice", "topic:entropy", "level:applied", "language:en", "status:published"]
+keywords: ["type:exercise-hub", "destination:practice", "topic:entropy-exercises", "level:applied", "language:en", "status:published"]
 lang: en
 ---
 
 <!--
 LLM-LAB-PAGE-MAP v1
-id: "en/exercises/entropy"
+id: "en/entropy-exercises"
 summary: "Self-check questions and exercises associated with the Entropy: uncertainty over the next token lesson."
 scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
 purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
