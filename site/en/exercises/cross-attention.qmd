@@ -35,5 +35,5 @@ Q is projected from decoder states, because those are the positions doing the re
 </details>
 
 ::: {.language-switch}
-**Language:** [Français](../../fr/exercises/cross-attention.qmd) · [English](../exercises/cross-attention.qmd)
+**Language:** [Français](../../fr/exercises/cross-attention.qmd) · [English](cross-attention.qmd)
 :::

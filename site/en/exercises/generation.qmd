@@ -64,5 +64,5 @@ Prefill is an execution phase that processes the initial prompt as a sequence. T
 </details>
 
 ::: {.language-switch}
-**Language:** [Français](../../fr/exercises/generation.qmd) · [English](../exercises/generation.qmd)
+**Language:** [Français](../../fr/exercises/generation.qmd) · [English](generation.qmd)
 :::

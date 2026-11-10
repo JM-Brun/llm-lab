@@ -37,5 +37,5 @@ The forbidden score is masked before softmax (conceptually set to $-\infty$): th
 </details>
 
 ::: {.language-switch}
-**Language:** [Français](../../fr/exercises/causal-masking.qmd) · [English](../exercises/causal-masking.qmd)
+**Language:** [Français](../../fr/exercises/causal-masking.qmd) · [English](causal-masking.qmd)
 :::

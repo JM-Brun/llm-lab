@@ -25,7 +25,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:embedding-space-exerc
 
 ## Check your understanding
 
-The [extended Transformer collection](../en/exercises.qmd#transformer) is planned; use the checks below for now.
+The [extended Transformer collection](../exercises.qmd#transformer) is planned; use the checks below for now.
 
 1. An embedding matrix has \(V\) rows and vectors of dimension \(d\). How many parameters does it contain, and what does ID \(i\) select?
 
@@ -46,5 +46,5 @@ No. A 2D projection preserves only selected aspects of the geometry and may crea
 </details>
 
 ::: {.language-switch}
-**Language:** [Français](../../fr/exercises/embedding-space.qmd) · [English](../exercises/embedding-space.qmd)
+**Language:** [Français](../../fr/exercises/embedding-space.qmd) · [English](embedding-space.qmd)
 :::

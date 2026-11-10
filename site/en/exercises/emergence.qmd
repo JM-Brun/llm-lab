@@ -32,5 +32,5 @@ tags: ["type:exercise-hub", "destination:practice", "topic:emergence-exercises",
 [Exercises and experiments](../exercises.qmd).
 
 ::: {.language-switch}
-**Language:** [Français](../../fr/exercises/emergence.qmd) · [English](../exercises/emergence.qmd)
+**Language:** [Français](../../fr/exercises/emergence.qmd) · [English](emergence.qmd)
 :::
