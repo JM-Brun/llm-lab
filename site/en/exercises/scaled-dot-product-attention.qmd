@@ -1,13 +1,13 @@
 ---
 title: "Exercises — Scaled dot-product attention"
 subtitle: "Self-check questions, exercises, and worked answers"
-keywords: ["type:exercise-hub", "destination:practice", "topic:scaled-dot-product-attention", "level:applied", "language:en", "status:published"]
+keywords: ["type:exercise-hub", "destination:practice", "topic:scaled-dot-product-attention-exercises", "level:applied", "language:en", "status:published"]
 lang: en
 ---
 
 <!--
 LLM-LAB-PAGE-MAP v1
-id: "en/exercises/scaled-dot-product-attention"
+id: "en/scaled-dot-product-attention-exercises"
 summary: "Self-check questions and exercises associated with the Scaled dot-product attention lesson."
 scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
 purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
@@ -18,7 +18,7 @@ hierarchy:
   parents: []
   children: []
 related: ["en/scaled-dot-product-attention"]
-tags: ["type:exercise-hub", "destination:practice", "topic:scaled-dot-product-attention", "level:applied", "language:en", "status:published"]
+tags: ["type:exercise-hub", "destination:practice", "topic:scaled-dot-product-attention-exercises", "level:applied", "language:en", "status:published"]
 -->
 
 [← Back to the lesson: Scaled dot-product attention](../scaled-dot-product-attention.qmd)

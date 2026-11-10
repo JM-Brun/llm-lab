@@ -1,13 +1,13 @@
 ---
 title: "Exercises — Training examples"
 subtitle: "Self-check questions, exercises, and worked answers"
-keywords: ["type:exercise-hub", "destination:practice", "topic:training-examples", "level:applied", "language:en", "status:published"]
+keywords: ["type:exercise-hub", "destination:practice", "topic:training-examples-exercises", "level:applied", "language:en", "status:published"]
 lang: en
 ---
 
 <!--
 LLM-LAB-PAGE-MAP v1
-id: "en/exercises/training-examples"
+id: "en/training-examples-exercises"
 summary: "Self-check questions and exercises associated with the Training examples lesson."
 scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
 purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
@@ -18,7 +18,7 @@ hierarchy:
   parents: []
   children: []
 related: ["en/training-examples"]
-tags: ["type:exercise-hub", "destination:practice", "topic:training-examples", "level:applied", "language:en", "status:published"]
+tags: ["type:exercise-hub", "destination:practice", "topic:training-examples-exercises", "level:applied", "language:en", "status:published"]
 -->
 
 [← Back to the lesson: Training examples](../training-examples.qmd)

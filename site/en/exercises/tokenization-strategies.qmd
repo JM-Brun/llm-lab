@@ -1,13 +1,13 @@
 ---
 title: "Exercises — Tokenization strategies"
 subtitle: "Self-check questions, exercises, and worked answers"
-keywords: ["type:exercise-hub", "destination:practice", "topic:tokenization-strategies", "level:applied", "language:en", "status:published"]
+keywords: ["type:exercise-hub", "destination:practice", "topic:tokenization-strategies-exercises", "level:applied", "language:en", "status:published"]
 lang: en
 ---
 
 <!--
 LLM-LAB-PAGE-MAP v1
-id: "en/exercises/tokenization-strategies"
+id: "en/tokenization-strategies-exercises"
 summary: "Self-check questions and exercises associated with the Tokenization strategies lesson."
 scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
 purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
@@ -18,7 +18,7 @@ hierarchy:
   parents: []
   children: []
 related: ["en/tokenization-strategies"]
-tags: ["type:exercise-hub", "destination:practice", "topic:tokenization-strategies", "level:applied", "language:en", "status:published"]
+tags: ["type:exercise-hub", "destination:practice", "topic:tokenization-strategies-exercises", "level:applied", "language:en", "status:published"]
 -->
 
 [← Back to the lesson: Tokenization strategies](../tokenization-strategies.qmd)
