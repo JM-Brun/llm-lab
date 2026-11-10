@@ -96,6 +96,14 @@ Si les probabilités attribuées à trois tokens observés sont $(0.5, 0.25, 0.8
 - **« La NLL est comparable sans préciser le tokenizer. »** Pas toujours : les segmentations différentes modifient le nombre et la granularité des événements évalués.
 :::
 
+
+
+{{< include ../includes/generated-suggested-route-fr-vraisemblance.qmd >}}
+
+::: {.language-switch}
+[Français](vraisemblance.qmd) · [English](../en/likelihood.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
@@ -112,14 +120,7 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 
 - [Goodfellow, Bengio et Courville — *Deep Learning*, §5.5 : Maximum Likelihood Estimation](https://www.deeplearningbook.org/contents/ml.html) : traitement mathématique général de la vraisemblance, de la log-vraisemblance et de l'estimation par maximum de vraisemblance. La factorisation autorégressive présentée ici applique ce cadre aux séquences de tokens.
 
-</div>
-</details>
 
-{{< include ../includes/generated-suggested-route-fr-vraisemblance.qmd >}}
-
-::: {.language-switch}
-[Français](vraisemblance.qmd) · [English](../en/likelihood.qmd)
-:::
 
 ::: {.self-check}
 ## Vérifier sa compréhension
@@ -139,3 +140,7 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 
 </details>
 :::
+
+
+</div>
+</details>
