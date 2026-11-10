@@ -3136,7 +3136,7 @@ sources:
       audit_records:
         - docs/source-reviews/platonic-representation-jepa-2026-11.md
         - data/extractions/balestriero-lecun-contrastive-non-contrastive-ssl-spectral-2022.yml
-- id: hesam-sheikh-hessani-llm-embeddings-explained-2025
+  - id: hesam-sheikh-hessani-llm-embeddings-explained-2025
     title: "LLM Embeddings Explained: A Visual and Intuitive Guide"
     creators: ["Hesam Sheikh Hessani"]
     source_type: tutorial
