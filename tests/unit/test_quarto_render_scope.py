@@ -71,9 +71,9 @@ def test_unlisted_page_forces_full_render():
 
 def test_more_than_twenty_pages_force_full_render():
     config = (
-        "project:\\n  render:\\n"
-        + "".join(f"    - fr/page-{index}.qmd\\n" for index in range(21))
-        + "\\nwebsite:\\n  title: Example\\n"
+        "project:\n  render:\n"
+        + "".join(f"    - fr/page-{index}.qmd\n" for index in range(21))
+        + "\nwebsite:\n  title: Example\n"
     )
     files = [{"filename": f"site/fr/page-{index}.qmd", "status": "modified"} for index in range(21)]
 
