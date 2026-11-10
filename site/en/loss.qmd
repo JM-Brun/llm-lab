@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/cross-entropy"]
   children: ["en/gradients"]
-related: ["en/exercises/loss"]
+related: ["en/loss-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:loss", "level:core", "language:en", "status:published"]
 -->
 

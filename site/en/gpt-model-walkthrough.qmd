@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["en/build-path"]
   children: []
-related: ["en/transformer", "en/embedding-space", "en/positional-encoding", "en/logits", "en/exercises/gpt-model-walkthrough"]
+related: ["en/transformer", "en/embedding-space", "en/positional-encoding", "en/logits", "en/gpt-model-walkthrough-exercises"]
 tags: ["type:guided-build", "destination:build", "topic:reference-gpt-model", "level:applied", "language:en", "status:published"]
 -->
 

@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/llm-overview"]
   children: []
-related: ["en/transformer", "en/generation", "en/hybrid-llm-architectures", "en/scaling-laws", "en/exercises/llm-computational-complexity"]
+related: ["en/transformer", "en/generation", "en/hybrid-llm-architectures", "en/scaling-laws", "en/llm-computational-complexity-exercises"]
 tags: ["type:deep-dive", "destination:deepen", "topic:llm-computational-complexity", "level:advanced", "language:en", "status:published"]
 -->
 
