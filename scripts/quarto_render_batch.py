@@ -101,19 +101,22 @@ def main() -> None:
         relative_output = temp_output.name
 
         try:
-            config_path.write_text(incremental_config, encoding="utf-8")
+            # Quarto combines its CLI --output-dir with project.output-dir
+            # for website projects. Override the project setting itself so
+            # the temporary directory is the output root, not its parent.
+            isolated_config = incremental_config.replace(
+                "  output-dir: _site\n",
+                f"  output-dir: {json.dumps(relative_output)}\n",
+                1,
+            )
+            if isolated_config == incremental_config:
+                raise ValueError("Could not find the expected project.output-dir: _site")
+            config_path.write_text(isolated_config, encoding="utf-8")
             sys.stdout.write(
                 f"Rendering {len(targets)} changed page(s) into isolated output {relative_output}\n"
             )
             subprocess.run(
-                [
-                    "quarto",
-                    "render",
-                    "site",
-                    "--no-clean",
-                    "--output-dir",
-                    relative_output,
-                ],
+                ["quarto", "render", "site", "--no-clean"],
                 check=True,
             )
         finally:
