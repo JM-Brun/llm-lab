@@ -440,3 +440,42 @@ Ces ressources sont utilisées dans l'étude de cas [Architectures hybrides : le
 - **Shoeybi et al. (2019), [*Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism*](https://arxiv.org/abs/1909.08053)** — parallélisme tensoriel et entraînement distribué.
 - **Huang et al. (2019), [*GPipe: Efficient Training of Giant Neural Networks using Pipeline Parallelism*](https://arxiv.org/abs/1811.06965)** — parallélisme pipeline et micro-lots.
 - **Korthikanti et al. (2022), [*Reducing Activation Recomputation in Large Transformer Models*](https://arxiv.org/abs/2205.05198)** — parallélisme de séquence et mémoire d'activation.
+
+
+## Série pédagogique — AI: Under the Hood (Nishanthan, DEV Community)
+
+Trois articles de vulgarisation technique consultés le 10 novembre 2026. Ils constituent une porte d'entrée progressive ; ils ne remplacent pas les références primaires et les précisions techniques ci-dessous.
+
+- **Nishanthan**, [*Understanding Transformer: The Architecture Behind Modern AI*](https://dev.to/nishanthan-k/understanding-transformer-the-architecture-behind-modern-ai-55o8) — motivations historiques du Transformer, limites des RNN/LSTM, self-attention, parallélisme à l'entraînement, multi-head attention et familles encoder-only, decoder-only et encoder-decoder.
+- **Nishanthan**, [*How Query, Key, and Value (QKV) Work in Transformers*](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a) — projections apprises (Q=XW_Q), (K=XW_K), (V=XW_V), scores (QK^T), mise à l'échelle par (sqrt{d_k}), softmax, agrégation pondérée des valeurs et multi-head attention.
+- **Nishanthan**, [*Core Elements of Large Language Models (LLMs): Tokens, Context Windows, Temperature, and Sampling*](https://dev.to/nishanthan-k/core-elements-of-large-language-models-llms-tokens-context-windows-temperature-and-sampling-2m45) — tokenisation, longueur de contexte, température, Top-K, Top-P et pénalité de répétition.
+
+### Synthèse pédagogique à réutiliser dans le parcours
+
+La progression naturelle entre ces ressources est :
+
+1. **Pourquoi un Transformer ?** Remplacer la récurrence séquentielle des RNN/LSTM par des interactions attentionnelles entre positions, ce qui permet le calcul parallèle des représentations d'entrée pendant l'entraînement.
+2. **Comment le contexte est-il construit ?** Chaque représentation d'entrée est projetée en Query, Key et Value. Les produits (QK^T) produisent des scores de compatibilité ; après mise à l'échelle et softmax, les poids résultants agrègent les vecteurs Value. Les têtes multiples apprennent plusieurs sous-espaces/projections.
+3. **Comment le modèle génère-t-il ?** Le texte est converti en tokens puis en IDs et représentations numériques ; le modèle prédit une distribution sur le prochain token. La stratégie de décodage (température, Top-K, Top-P, pénalité de répétition) transforme cette distribution en choix effectif.
+4. **Quelles contraintes à l'inférence ?** La fenêtre de contexte borne les tokens utilisables dans une requête donnée ; elle ne constitue pas une mémoire persistante. La longueur de séquence affecte fortement le coût de l'attention et le cache KV en génération.
+
+### Précisions et garde-fous éditoriaux
+
+- Un token n'est pas nécessairement un mot : les tokenizers courants utilisent des unités sous-lexicales, des octets ou d'autres segments. BPE est un algorithme/famille de tokenisation, pas une catégorie parallèle aux mots et aux sous-mots. Les « phrase tokens » ne sont pas une catégorie universelle.
+- Les images ne sont généralement pas représentées par « un pixel = un token » dans les modèles vision-langage modernes : elles passent par des patches, crops ou encodeurs visuels qui produisent des représentations/tokens visuels.
+- Une grande fenêtre de contexte n'implique pas automatiquement une meilleure exactitude ni moins d'hallucinations. Elle augmente la capacité d'entrée, avec des compromis de coût, de latence, de mémoire et de qualité d'utilisation du contexte.
+- Le coût quadratique en longueur concerne le calcul/mémoire de l'attention dense standard (scores de taille (T\times T)), pas l'ensemble du calcul d'un LLM dans toutes les configurations. FlashAttention réduit les mouvements mémoire et les intermédiaires, sans rendre l'attention dense exacte linéaire en (T).
+- La température agit sur les logits avant softmax : (p_i=\mathrm{softmax}(z_i/\tau)). Elle modifie la concentration de la distribution, sans garantir à elle seule la factualité ou la cohérence.
+- Top-K et Top-P sont des filtres de candidats ; leur ordre d'application et leurs interactions avec les autres paramètres dépendent du moteur d'inférence. Ils ne garantissent pas qu'une réponse soit « plus factuelle ».
+- Une repetition penalty est une heuristique de décodage appliquée aux logits selon une convention propre à l'implémentation ; une pénalité excessive peut dégrader la formulation et pénaliser des répétitions légitimes.
+- Les scores d'attention ne sont pas des mesures directes de similarité sémantique ni, à eux seuls, des explications causales du comportement du modèle.
+
+### Références primaires et approfondissements associés
+
+- Vaswani et al. (2017), [*Attention Is All You Need*](https://arxiv.org/abs/1706.03762) — définition de l'architecture et de l'attention à produits scalaires.
+- Dao et al. (2022), [*FlashAttention*](https://arxiv.org/abs/2205.14135) — coûts mémoire et mouvements de données de l'attention.
+- Ainslie et al. (2023), [*GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints*](https://arxiv.org/abs/2305.13245) — variantes de têtes Q/K/V et cache KV.
+- [Hugging Face — Tokenizers](https://huggingface.co/docs/tokenizers/) — vocabulaire et algorithmes de tokenisation.
+- [Hugging Face — Generation strategies](https://huggingface.co/docs/transformers/generation_strategies) — paramètres et stratégies de génération.
+
+**Usage recommandé :** exploiter les trois articles comme supports d'accroche et de première intuition, puis faire suivre chaque affirmation structurante par les équations, les schémas originaux et les références primaires déjà présentes dans LLM Lab. Les articles sont référencés, non reproduits ; leurs illustrations ne sont pas importées.
