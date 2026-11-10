@@ -6,6 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
+  actions: read
   contents: read
 
 concurrency:
@@ -91,17 +92,130 @@ jobs:
           uv venv --python 3.12.16 .venv
           uv pip install --python .venv/bin/python -r docs/requirements-history-validation.txt
 
+      # A site cache is reusable only when it was built from the exact parent
+      # commit of this push. The cache key is immutable; restore-keys only
+      # locate a candidate, and the marker below validates its provenance.
+      - name: Restore previous rendered site
+        id: site_cache
+        if: github.event_name == 'push'
+        uses: actions/cache/restore@v4
+        with:
+          path: site/_site
+          key: quarto-publish-site-${{ runner.os }}-${{ github.sha }}
+          restore-keys: |
+            quarto-publish-site-${{ runner.os }}-
+
+      - name: Detect publish render scope
+        id: render_scope
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BEFORE_SHA: ${{ github.event.before }}
+        run: |
+          if [ "$GITHUB_EVENT_NAME" != "push" ] || [ -z "$BEFORE_SHA" ] || [ "$BEFORE_SHA" = "0000000000000000000000000000000000000000" ]; then
+            echo "mode=full" >> "$GITHUB_OUTPUT"
+            echo "Manual dispatch or missing parent commit: requiring a full render."
+            exit 0
+          fi
+
+          changed_files_json="$(gh api "repos/$GITHUB_REPOSITORY/compare/$BEFORE_SHA...$GITHUB_SHA" --jq '.files[] | {filename, status}' | jq -s '.')"
+          changed_count="$(jq 'length' <<< "$changed_files_json")"
+          if [ "$changed_count" -ge 300 ]; then
+            echo "mode=full" >> "$GITHUB_OUTPUT"
+            echo "GitHub truncated the changed-file list; requiring a full render."
+            exit 0
+          fi
+
+          PR_CHANGED_FILES_JSON="$changed_files_json" .venv/bin/python scripts/quarto_render_scope.py
+          # The shared classifier writes render_mode to GITHUB_OUTPUT.
+          # Copy it to a publish-specific output for clarity in later steps.
+          mode="$(sed -n 's/^render_mode=//p' "$GITHUB_OUTPUT" | tail -n 1)"
+          echo "mode=${mode:-full}" >> "$GITHUB_OUTPUT"
+
+      - name: Validate restored site provenance
+        id: site_provenance
+        if: github.event_name == 'push'
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+        run: |
+          marker="site/_site/.llm-lab-source-sha"
+          source_sha=""
+          if [ -s "$marker" ]; then source_sha="$(cat "$marker")"; fi
+
+          if [ "$source_sha" = "$GITHUB_SHA" ]; then
+            echo "state=current" >> "$GITHUB_OUTPUT"
+            echo "The restored site already matches this commit."
+          elif [ -n "$BEFORE_SHA" ] && [ "$source_sha" = "$BEFORE_SHA" ]; then
+            echo "state=parent" >> "$GITHUB_OUTPUT"
+            echo "The restored site matches the exact parent commit."
+          else
+            echo "state=invalid" >> "$GITHUB_OUTPUT"
+            echo "No site cache from the exact parent commit; requiring a full render."
+          fi
+
+      - name: Select publish render strategy
+        id: publish_strategy
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          REQUESTED_MODE: ${{ steps.render_scope.outputs.mode }}
+          CACHE_STATE: ${{ steps.site_provenance.outputs.state }}
+        run: |
+          if [ "$EVENT_NAME" != "push" ]; then
+            mode=full
+          elif [ "$CACHE_STATE" = "current" ]; then
+            mode=skip
+          elif [ "$CACHE_STATE" = "parent" ]; then
+            mode="${REQUESTED_MODE:-full}"
+          else
+            mode=full
+          fi
+          echo "mode=$mode" >> "$GITHUB_OUTPUT"
+          echo "Publish strategy: $mode"
+
       - name: Generate bilingual history timeline fragments
+        if: steps.publish_strategy.outputs.mode != 'skip'
         run: .venv/bin/python site/tools/render_history_pilot.py
 
       - name: Generate learning-map data and guided-route Markdown
+        if: steps.publish_strategy.outputs.mode != 'skip'
         run: .venv/bin/python site/tools/build_learning_map.py
 
       - name: Generate bilingual computational-graph fragments
+        if: steps.publish_strategy.outputs.mode != 'skip'
         run: .venv/bin/python site/tools/render_computational_graph.py
 
-      - name: Render site
+      - name: Render changed pages incrementally
+        if: steps.publish_strategy.outputs.mode == 'incremental'
+        env:
+          RENDER_TARGETS: ${{ steps.render_scope.outputs.render_targets }}
+        run: |
+          if [ -z "$RENDER_TARGETS" ]; then
+            echo "Incremental mode has no safe page targets; falling back to a full render."
+            quarto render site
+          else
+            while IFS= read -r page; do
+              [ -n "$page" ] || continue
+              echo "Incrementally rendering $page"
+              quarto render "$page" --no-clean
+            done <<< "$RENDER_TARGETS"
+          fi
+
+      - name: Render full site
+        if: steps.publish_strategy.outputs.mode == 'full'
         run: quarto render site
+
+      - name: Mark rendered site source commit
+        if: always() && steps.publish_strategy.outputs.mode != ''
+        run: |
+          mkdir -p site/_site
+          echo "$GITHUB_SHA" > site/_site/.llm-lab-source-sha
+
+      # Cache is saved only after a successful render/deploy-artifact preparation.
+      - name: Save rendered site for the next publish
+        if: success() && github.event_name == 'push'
+        uses: actions/cache/save@v4
+        with:
+          path: site/_site
+          key: quarto-publish-site-${{ runner.os }}-${{ github.sha }}
 
       # Keep a short-lived copy of the latest complete site so PRs that
       # touch only a few pages can render those pages against the real site.
@@ -132,4 +246,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346c9 # v5.0.1
