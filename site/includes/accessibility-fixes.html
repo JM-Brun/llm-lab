@@ -41,10 +41,27 @@
     });
   };
 
+  // Preserve deep links into optional resource sections: opening a hash target
+  // must reveal its containing disclosure before the browser scrolls to it.
+  const openResourceDisclosureForHash = () => {
+    if (!window.location.hash) return;
+    let target;
+    try {
+      target = document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
+    } catch {
+      return;
+    }
+    const disclosure = target?.closest("details.learning-resources");
+    if (disclosure) disclosure.open = true;
+  };
+
   const enhanceAccessibility = () => {
     enhanceCalloutButtons();
     enhancePageNavigation();
+    openResourceDisclosureForHash();
   };
+
+  window.addEventListener("hashchange", openResourceDisclosureForHash);
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", enhanceAccessibility, { once: true });
