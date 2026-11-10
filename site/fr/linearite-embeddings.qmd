@@ -101,9 +101,16 @@ Sur un modèle de langage et une propriété définie précisément :
 
 Ne pas présenter une différence de performance entre probes comme une preuve que l'information est « absente » ou « utilisée » sans hypothèses supplémentaires.
 
-## 6. Lectures scientifiques et techniques
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Ressources complémentaires</span>
+  <span class="learning-resources__description">Articles et explications complémentaires sur les hypothèses de représentation linéaire.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
 
-### Articles et prépublications
+#### Lectures scientifiques et techniques
+
+#### Articles et prépublications
 
 - **Engels et al. (2025).** [Not All Language Model Features Are One-Dimensionally Linear — arXiv:2405.14860](https://arxiv.org/abs/2405.14860), publié à ICLR 2025. Définit les caractéristiques multidimensionnelles irréductibles et présente notamment des représentations circulaires des jours et des mois, analysées dans des expériences d'intervention.
 - **Tiblias et al. (2026 ; prépublication 2025).** [Hypothesis-Driven Feature Manifold Analysis in LLMs via Supervised Multi-Dimensional Scaling — arXiv:2510.01025](https://arxiv.org/abs/2510.01025). La version v1 était intitulée *Shape Happens: Automatic Feature Manifold Discovery in LLMs via Supervised Multi-Dimensional Scaling* ; l’article est publié dans TMLR en 2026. Propose SMDS pour comparer plusieurs géométries candidates des activations ; résultats centrés sur le raisonnement temporel et à interpréter selon le protocole étudié.
@@ -113,11 +120,14 @@ Ne pas présenter une différence de performance entre probes comme une preuve q
 - **Garg, Kleinberg & Peng (2026).** [How Many Features Can a Language Model Store Under the Linear Representation Hypothesis? — arXiv:2602.11246](https://arxiv.org/abs/2602.11246). Analyse théorique de la différence entre représentation linéaire et accessibilité linéaire sous des hypothèses de parcimonie.
 - **Barin-Pacela et al. (2026).** [Version publiée à UAI 2026, PMLR 337](https://proceedings.mlr.press/v337/barin-pacela26a.html) ; à comparer avec la [version arXiv v2 des auteurs, qui inclut un corrigendum](https://arxiv.org/abs/2603.28744v2). Les versions diffèrent sur l'explication des échecs compositionnels des SAE : la version ultérieure identifie l'apprentissage du dictionnaire, plutôt que la seule inférence amortie, comme contrainte déterminante dans les expériences rapportées.
 
-### Explications accessibles
+#### Explications accessibles
 
 - **Transformer Circuits / Anthropic.** [Toy Models of Superposition](https://transformer-circuits.pub/2022/toy_model/). Les sections *Features as Directions* et *The Geometry of Superposition* sont particulièrement utiles pour relier intuition, géométrie et expériences.
 - **Hewitt.** [Designing and Interpreting Probes with Control Tasks](https://www.cs.columbia.edu/~johnhew/interpreting-probes.html). Matériel pédagogique complémentaire sur la sélectivité des probes.
 - **Distill.** [A Mathematical Framework for Transformer Circuits](https://transformer-circuits.pub/2021/framework/index.html). Une introduction visuelle à l'analyse mécaniste des transformations linéaires et non linéaires dans les Transformers.
+
+</div>
+</details>
 
 ## Vérifications qui discriminent les interprétations
 
