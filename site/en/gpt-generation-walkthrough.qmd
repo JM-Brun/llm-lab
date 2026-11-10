@@ -143,6 +143,10 @@ Line by line:
 2. The parameters are random: the logits encode no language statistics. The loop itself works perfectly (shapes, causality, selection) — exactly what this milestone separates: **the mechanics** of generation from **the quality acquired through learning**.
 </details>
 
+## Build path navigation
+
+- **Previous stop**: [assembling the GPT (`gpt.py`)](gpt-model-walkthrough.qmd).
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -152,7 +156,6 @@ Line by line:
 
 ### Further reading
 
-- **Previous stop**: [assembling the GPT (`gpt.py`)](gpt-model-walkthrough.qmd).
 - **Concept pages**: [generating text step by step](generation.qmd), [logits](logits.qmd), [probabilities](probabilities.qmd).
 - **Back to the path**: [Build a small GPT](build-path.qmd).
 - **Source**: [`generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/generate.py) · **Tests**: [`test_generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_generate.py).
