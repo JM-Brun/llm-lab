@@ -65,9 +65,9 @@ When used, the causal mask indicates which positions may be attended to (`j ≤ 
 ::: {.callout-note collapse="true" title="Why is self-attention alone not enough?"}
 For content-only self-attention, with no positional bias or order-dependent mask, permuting the input rows permutes the output rows in the same way. If $P$ is a permutation matrix, then:
 
-\[
+$$
 \operatorname{Attention}(PX)=P\,\operatorname{Attention}(X).
-\]
+$$
 
 To verify this, let $S=QK^\top/\sqrt{d_k}$ and $A=\operatorname{softmax}(S)$, with softmax applied row-wise. For the permuted input, $Q'=PQ$, $K'=PK$, and $V'=PV$. Hence $A'=\operatorname{softmax}(PSP^\top)=PAP^\top$, and $A'V'=PAP^\top PV=PAV$.
 
@@ -82,31 +82,31 @@ This property assumes that no positional signal or order-dependent constraint is
 
 - **Absolute encoding added to the vector:** add a position-specific vector to the token representation. The original Transformer used sinusoidal encodings; other models learn positional embeddings.
 - **Relative mechanisms:** introduce the offset between positions into the attention computation, for example through a bias added to attention scores or through relative representations.
-- **RoPE:** this rotary method applies position-dependent rotations to queries and keys after their projections and before the \(QK^\top\) product. The resulting score depends on the relative offset. RoPE is therefore a relative-position mechanism; it is separated here to make its particular insertion point clear.
+- **RoPE:** this rotary method applies position-dependent rotations to queries and keys after their projections and before the $QK^\top$ product. The resulting score depends on the relative offset. RoPE is therefore a relative-position mechanism; it is separated here to make its particular insertion point clear.
 
 These approaches inject positional information at different points and do not have exactly the same properties. The diagram compares two explicit positional mechanisms; it does not depict the causal mask, which is a separate visibility constraint. At this stage, it is enough to understand their role and approximate location in the computation. For relative-offset dependence, rotation conventions, and long-sequence limitations, see the [advanced RoPE deep dive](rope.qmd).
 
 ::: {.callout-note collapse="true" title="Optional deepening — the geometry of sinusoidal encodings"}
 In the original sinusoidal encoding, each coordinate pair uses its own frequency. Let $\omega_i=10000^{-2i/d}$. The pair associated with index $i$ is:
 
-\[
+$$
 p_i(t)=
 \begin{bmatrix}
 \sin(\omega_i t)\\
 \cos(\omega_i t)
 \end{bmatrix}.
-\]
+$$
 
 For a fixed offset $k$, trigonometric identities give:
 
-\[
+$$
 p_i(t+k)=
 \begin{bmatrix}
 \cos(\omega_i k) & \sin(\omega_i k)\\
 -\sin(\omega_i k) & \cos(\omega_i k)
 \end{bmatrix}
 p_i(t).
-\]
+$$
 
 Thus, a fixed offset corresponds to a fixed rotation **for a given pair and frequency**. For example, with $d=2$, the only pair has $\omega_0=1$: $p_0(0)=[0,1]^\top$ and $p_0(1)=[\sin(1),\cos(1)]^\top\approx[0.8415,0.5403]^\top$.
 

@@ -112,7 +112,7 @@ This original illustration is motivated by [Ethayarajh (2019), *How Contextual a
 |---|---|---|
 | Token ID | Tokenizer vocabulary and rules | No; it identifies a vocabulary entry |
 | Initial token embedding | The selected row of the embedding matrix | No, for a fixed matrix and token ID |
-| Hidden state at layer \(\ell\) | Previous layer's state, positional information, and tokens accessible under the mask | Yes, in general |
+| Hidden state at layer $\ell$ | Previous layer's state, positional information, and tokens accessible under the mask | Yes, in general |
 
 Two common confusions follow from collapsing these stages:
 
