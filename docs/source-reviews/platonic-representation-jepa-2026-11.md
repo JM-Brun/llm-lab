@@ -79,15 +79,15 @@ Do not present this as a direct consequence of the Platonic Representation Theor
 
 ## 7. Experimental findings recorded for follow-up verification
 
-The abstract and secondary article report:
+The inspected paper sections and abstract report:
 
 - On the same corpus, good-view JEPA reaches a comparable alignment after 21.6M samples versus 900M for next-token prediction: approximately 42 times fewer **samples**.
-- The token-count gap is smaller (the article reports about 14-fold); neither figure establishes a 42-fold reduction in FLOPs, wall-clock time or energy.
+- The token-count gap is smaller: about 14-fold, because a good-view sample reads three texts. The authors also report 435 times fewer unique images. Neither figure establishes a 42-fold reduction in FLOPs, wall-clock time or energy.
 - At web scale, a 109M-parameter text JEPA scores 0.184 on the paper's principal neighborhood-alignment benchmark, compared with 0.154 for Qwen2.5-72B and 0.151 for Llama-3-70B.
 - The text JEPA's reported captioning demonstration reaches CIDEr 0.838 on COCO. The linear map is fitted using 30,000 image–caption pairs; encoder networks are not jointly trained on those pairs.
 - The abstract reports 64% top-5 on ImageNet-100 in a pair-free alignment benchmark, versus at most 56% among the cited language-model zero-shot results up to 8B parameters.
 
-These are paper-reported results. The exact metrics, benchmark construction, splits, model checkpoints, baselines, uncertainty and compute accounting must be checked in sections 3–5 and appendices before being used as definitive comparison claims.
+These are paper-reported results. The experimental sections now provide the benchmark construction and many protocol details. Appendix-level robustness, all baseline comparability, compute accounting and independent reproduction remain open.
 
 ## 8. Critical limitations and potential misconceptions
 
@@ -136,7 +136,7 @@ Check the current Deepen domain, page-map IDs, related-page edges, concept assoc
 ## 10. Next research pass
 
 - Read the full proof in Appendix A, especially the exact spectral-gap conditions and mismatch bound.
-- Audit sections 3–5: datasets, splits, model architectures, objectives, optimization, metrics, baselines and confidence/seed variation.
+- Audit Appendices A–C: proof details, numerical checks, full experimental settings, robustness tables and sensitivity analyses.
 - Inspect the scaling law, its fitting range and extrapolation failure modes.
 - Verify the 14× token-count comparison and the pair-free ImageNet-100 protocol.
 - Inspect official code and demo; record commit/revision and run only if the environment permits reproducible evaluation.
@@ -146,3 +146,18 @@ Check the current Deepen domain, page-map IDs, related-page edges, concept assoc
 ## Provenance and reuse
 
 The Substack article and arXiv paper are linked, not copied. No figures, article prose, datasets, code or weights have been redistributed. The arXiv page declares CC BY 4.0; article asset rights remain unknown. Any future figure reuse must be checked against the source licence and credited at point of use.
+
+
+## 11. Experimental detail added in the second pass
+
+The full HTML of sections 3–5 has now been inspected. Important refinements:
+
+- The Flickr30k comparison uses separately trained image/text encoders; the text JEPA variants differ in their positive-pair construction. On the reported test set, good-view JEPA reaches R@1 .044 in the small initial setup, versus .027 for masked-span JEPA and .021 for next-token prediction. The later DINOv2 comparison reports .246 R@1 with a rotation fitted on 1k validation pairs.
+- Trimming is the strongest tested recipe change: full-caption views reduce R@1 from .246 to .185. Several other knobs move the mean less, while gradient clipping materially affects collapse/stability.
+- The video experiment (MSR-VTT) uses different frames and captions of the same clip as good views; the best mutual 10-NN occurs when both image and text sides use good views. However, the image JEPA trained from only 7k clips is not competitive with DINOv2.
+- The 42× figure is samples (21.6M vs 900M); the paper explicitly gives about 14× fewer text tokens and 435× fewer unique images. The two runs use different batch-size and learning-rate recipes, so do not relabel these as FLOPs or wall-clock efficiency.
+- The scaling law is fitted on one BERT-S/Recap recipe. It predicts 85 runs with RMSE .0093 versus seed variation .0096, but overestimates good-view-only performance at 320M samples because it omits repeated-data effects. This is not a universal scaling law.
+- The captioning system trains the decoder on text alone and fits an orthogonal map on paired Flickr examples. The .838 COCO CIDEr result is a composition demonstration, not a fully pair-free pipeline or a state-of-the-art captioning claim.
+- Pair-free alignment is a separate experiment using unpaired pools and a post-hoc geometry/optimal-transport method. The 64.4% ImageNet-100 top-5 result is protocol-specific; it should not be described as evidence that all model training required zero paired information.
+
+These details are now represented as separate extraction items, rather than collapsed into a single headline result.
