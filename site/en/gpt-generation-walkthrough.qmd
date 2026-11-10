@@ -145,6 +145,9 @@ Line by line:
 
 ## Build path navigation
 
+
+## Connections
+
 - **Previous stop**: [assembling the GPT (`gpt.py`)](gpt-model-walkthrough.qmd).
 
 <details class="learning-resources">
