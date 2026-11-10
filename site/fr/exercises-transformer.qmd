@@ -28,7 +28,9 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-trans
 
 **Périmètre actuel :** trois exercices formatifs progressifs, aux identifiants stables TF-A, TF-B et TF-C partagés avec la version anglaise, couvrent le suivi des formes et un calcul de normalisation à la main dans le bloc de référence pré-LN, le comptage des paramètres de ce bloc, puis le diagnostic d'affirmations et la prédiction d'interventions contrôlées. Les exercices sur les variantes d'architecture (post-LN, RMSNorm, MQA/GQA, attention fenêtrée) restent à construire. Ordre conseillé : TF-A, puis TF-B, puis TF-C.
 
-### Exercice TF-A — Tracer un bloc pré-LN, des formes à la normalisation
+<a id="exercice-tf-a-tracer-un-bloc-pre-ln-des-formes-a-la-normalisation"></a>
+<a id="ex-transformer-preln-block-trace"></a>
+### Exercice — Tracer un bloc pré-LN, des formes à la normalisation
 
 **Préparation :** la [synthèse Transformer](transformer.qmd) pour les rôles de l'attention et du MLP ; la [visite guidée du bloc de référence](transformer-block-walkthrough.qmd) pour l'ordre pré-LN et le découpage en têtes. L'exercice progresse en trois étapes : normaliser à la main, tracer la branche d'attention, tracer la branche MLP.
 
@@ -129,7 +131,9 @@ $(1,3,4)$ ; $(1,3,8)$ ; $(1,3,8)$ ; $(1,3,4)$ ; $(1,3,4)$. Le MLP élargit tempo
 
 </details>
 
-### Exercice TF-B — Compter les paramètres du bloc de référence
+<a id="exercice-tf-b-compter-les-parametres-du-bloc-de-reference"></a>
+<a id="ex-transformer-parameter-count"></a>
+### Exercice — Compter les paramètres du bloc de référence
 
 **Préparation :** la section d'initialisation de la [visite guidée du bloc](transformer-block-walkthrough.qmd). Le bloc de référence possède $d=16$, $H=4$, une dimension intermédiaire de MLP de $64$, des projections avec biais et deux normalisations (chacune avec $\gamma$ et $\beta$).
 
@@ -170,7 +174,9 @@ Dans la variante GPT-2, seules $w_o$ et `fc2` reçoivent l'écart-type réduit $
 
 </details>
 
-### Exercice TF-C — Diagnostiquer des affirmations et prédire des interventions
+<a id="exercice-tf-c-diagnostiquer-des-affirmations-et-predire-des-interventions"></a>
+<a id="ex-transformer-claim-diagnosis-interventions"></a>
+### Exercice — Diagnostiquer des affirmations et prédire des interventions
 
 **Préparation :** la [synthèse Transformer](transformer.qmd), en particulier ses limites et idées reçues, après TF-A et TF-B ; le [masque causal](causal-masking.qmd) pour l'étape 2. « Le bloc de référence » désigne le bloc pré-LN de la visite guidée.
 

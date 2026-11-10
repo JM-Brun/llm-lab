@@ -30,7 +30,9 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-atten
 
 **Current scope:** CA-A introduces causal masking, shifted targets, and prefix invariance using a mask matrix and the existing tests. Three separate progressive formative exercises, with stable IDs AT-A, AT-B and AT-C shared with the French version, cover multi-head attention calculation, shape tracing, then claim diagnosis and intervention prediction. Multi-head-specific masking variants and advanced invariants remain to be developed. Suggested order: CA-A for causal masking, then AT-A, AT-B and AT-C for the multi-head sequence.
 
-### Exercise — from Q/K scores to the attention output {#at-0-scores-to-output}
+<a id="at-0-scores-to-output"></a>
+<a id="ex-attention-scores-to-output"></a>
+### Exercise — from Q/K scores to the attention output
 
 Consider one query and two key/value pairs:
 
@@ -54,6 +56,8 @@ Q and K determine the weights; V determines the aggregated content. The weights 
 
 </details>
 
+<a id="calculate-an-aggregation-by-hand"></a>
+<a id="ex-attention-manual-aggregation"></a>
 ### Calculate an aggregation by hand
 
 A position receives attention weights $(0.75,\,0.25)$ and the value vectors are $v_1=(2,0)$ and $v_2=(0,4)$. Calculate the output. If you swap $v_1$ and $v_2$ while keeping the weights fixed, does the output stay the same?
@@ -65,6 +69,8 @@ The output is the weighted sum: $0.75(2,0)+0.25(0,4)=(1.5,1)$. After swapping th
 
 </details>
 
+<a id="exercise-distinguish-a-weighted-mixture-from-selection"></a>
+<a id="ex-attention-weighted-mixture-vs-selection"></a>
 ### Exercise — distinguish a weighted mixture from selection
 
 After the softmax of one attention row, the weights are $(0.95,\,0.05)$ over two positions, with $v_1=(10,0)$ and $v_2=(0,20)$.
@@ -82,6 +88,8 @@ After the softmax of one attention row, the weights are $(0.95,\,0.05)$ over two
 
 </details>
 
+<a id="exercise-project-a-sequence-into-q-k-and-v"></a>
+<a id="ex-attention-project-qkv"></a>
 ### Exercise — project a sequence into Q, K, and V
 
 Consider three positions, each represented by a 4-dimensional vector. The matrices W_Q and W_K project to dimension 2, while W_V projects to dimension 3.
@@ -127,16 +135,18 @@ Changing W_V can change V and the resulting aggregated output, but it does not c
 </details>
 
 
+<a id="exercise-calculate-q-k-and-v-then-isolate-the-effect-of-v"></a>
+<a id="ex-attention-calculate-qkv-isolate-values"></a>
 ### Exercise — calculate Q, K, and V, then isolate the effect of V
 
 Consider one input representation, using the row-vector convention:
 
-\[
+$$
 x_t=\begin{bmatrix}1&2\end{bmatrix},\qquad
 W_Q=\begin{bmatrix}1&0\\0&1\end{bmatrix},\qquad
 W_K=\begin{bmatrix}0&1\\1&0\end{bmatrix},\qquad
 W_V=\begin{bmatrix}1&1\\0&1\end{bmatrix}.
-\]
+$$
 
 1. Calculate $q_t=x_tW_Q$, $k_t=x_tW_K$, and $v_t=x_tW_V$ by hand.
 2. Replace only $W_V$ with $W'_V=\begin{bmatrix}2&0\\0&1\end{bmatrix}$. Calculate $v'_t$.
@@ -148,17 +158,17 @@ W_V=\begin{bmatrix}1&1\\0&1\end{bmatrix}.
 
 The matrix products are:
 
-\[
+$$
 q_t=x_tW_Q=\begin{bmatrix}1&2\end{bmatrix},\qquad
 k_t=x_tW_K=\begin{bmatrix}2&1\end{bmatrix},\qquad
 v_t=x_tW_V=\begin{bmatrix}1&3\end{bmatrix}.
-\]
+$$
 
 With the new value projection:
 
-\[
+$$
 v'_t=x_tW'_V=\begin{bmatrix}2&2\end{bmatrix}.
-\]
+$$
 
 Only V changes directly. Q and K remain identical, so the scores and weights computed from Q and K remain identical too. However, the weighted sum operates on the V vectors: changing those vectors may therefore change the aggregated content. This does not mean the output must change in every case, since some variations may cancel.
 
@@ -166,6 +176,8 @@ The matrices are deliberately small and fictional so that the multiplications ca
 
 </details>
 
+<a id="exercise-predict-the-effect-of-changing-a-projection"></a>
+<a id="ex-attention-predict-projection-change"></a>
 ### Exercise — predict the effect of changing a projection
 
 Consider the same input $X$ and standard attention, without biases. For each intervention, state whether $Q$, $K$, $V$, the scores, the weights, and the aggregated output can change. Keep all other parameters fixed.
@@ -189,6 +201,8 @@ Justify each row from the functional dependencies.
 
 </details>
 
+<a id="exercise-connect-the-projections-to-learning"></a>
+<a id="ex-attention-connect-projections-learning"></a>
 ### Exercise — connect the projections to learning
 
 In the standard mechanism, $W_Q$, $W_K$, and $W_V$ are trained from the model's final loss. Answer without assuming that separate Q, K, or V targets are provided.
@@ -212,6 +226,8 @@ Likewise, $\partial\mathcal L/\partial W_K=X^\top(\partial\mathcal L/\partial K)
 
 </details>
 
+<a id="exercise-transfer-q-k-v-to-cross-attention"></a>
+<a id="ex-attention-cross-attention-transfer"></a>
 ### Exercise — transfer Q/K/V to cross-attention
 
 A decoder consults representations produced by an encoder. Let $X_D$ denote decoder states and $X_E$ encoder states.
@@ -235,14 +251,16 @@ With parameters fixed, changing $X_D$ directly affects Q; changing $X_E$ directl
 
 </details>
 
-### Exercise CA-A — Causal masking and prefix invariance {#ca-a-prefix-invariance}
+<a id="ca-a-prefix-invariance"></a>
+<a id="ex-attention-causal-prefix-invariance"></a>
+### Exercise — Causal masking and prefix invariance
 
-Consider four input tokens \(x_0,x_1,x_2,x_3\). At query position \(i\), causal self-attention allows only keys at positions \(j\leq i\).
+Consider four input tokens $x_0,x_1,x_2,x_3$. At query position $i$, causal self-attention allows only keys at positions $j\leq i$.
 
-1. Complete the matrix \(A\) of **allowed** positions, defined by \(A_{ij}=1\) when \(j\leq i\), and \(A_{ij}=0\) otherwise.
-2. Derive the matrix \(B\) of **blocked** positions. What relation connects \(A\) and \(B\)?
-3. With targets shifted by one token, position \(i\) predicts \(x_{i+1}\). Why must the diagonal of \(A\) be allowed without revealing the target?
-4. Append \(x_4\) to the sequence. Which outputs at positions \(0,1,2,3\) must remain invariant? Is the output at position 4 subject to the same constraint?
+1. Complete the matrix $A$ of **allowed** positions, defined by $A_{ij}=1$ when $j\leq i$, and $A_{ij}=0$ otherwise.
+2. Derive the matrix $B$ of **blocked** positions. What relation connects $A$ and $B$?
+3. With targets shifted by one token, position $i$ predicts $x_{i+1}$. Why must the diagonal of $A$ be allowed without revealing the target?
+4. Append $x_4$ to the sequence. Which outputs at positions $0,1,2,3$ must remain invariant? Is the output at position 4 subject to the same constraint?
 5. Distinguish the roles of a causal mask, a padding mask, a loss/target mask, and a document-boundary mask.
 
 <details>
@@ -250,7 +268,7 @@ Consider four input tokens \(x_0,x_1,x_2,x_3\). At query position \(i\), causal 
 
 The allowed-position matrix is lower triangular:
 
-\[
+$$
 A=
 \begin{pmatrix}
 1&0&0&0\\
@@ -258,11 +276,11 @@ A=
 1&1&1&0\\
 1&1&1&1
 \end{pmatrix}.
-\]
+$$
 
 The blocked-position matrix is its complement:
 
-\[
+$$
 B=
 \begin{pmatrix}
 0&1&1&1\\
@@ -271,11 +289,11 @@ B=
 0&0&0&0
 \end{pmatrix},
 \qquad B_{ij}=1-A_{ij}.
-\]
+$$
 
-The diagonal is allowed because the input at position \(i\) already contains \(x_i\), and the model predicts the next token \(x_{i+1}\). The input-target shift is essential: the model does not receive \(x_{i+1}\) as input at that position. Without this shift, allowing the diagonal could expose the target.
+The diagonal is allowed because the input at position $i$ already contains $x_i$, and the model predicts the next token $x_{i+1}$. The input-target shift is essential: the model does not receive $x_{i+1}$ as input at that position. Without this shift, allowing the diagonal could expose the target.
 
-After appending \(x_4\), outputs at positions 0–3 must remain unchanged in causal self-attention, with fixed parameters and the same prefix inputs/positions. The future token's key and value are blocked for those queries. The new position 4 may attend to positions 0–4; its output is not required to match the output at position 3.
+After appending $x_4$, outputs at positions 0–3 must remain unchanged in causal self-attention, with fixed parameters and the same prefix inputs/positions. The future token's key and value are blocked for those queries. The new position 4 may attend to positions 0–4; its output is not required to match the output at position 3.
 
 The masks are not interchangeable:
 
@@ -329,7 +347,9 @@ assert not np.allclose(reference[3], altered[3])
 ```
 </details>
 
-### Exercise AT-A — Compute a multi-head attention by hand
+<a id="exercise-at-a-compute-a-multi-head-attention-by-hand"></a>
+<a id="ex-attention-multihead-manual-calculation"></a>
+### Exercise — Compute a multi-head attention by hand
 
 **Preparation:** the four computation steps of one head in [scaled dot-product attention](scaled-dot-product-attention.qmd); head slicing and reassembly in the [reference block walkthrough](transformer-block-walkthrough.qmd). The exercise covers a single query position of a $T=2$-position sequence, with $d=4$ and $H=2$ heads ($\text{head\_dim}=2$), no mask. The scores below are already scaled.
 
@@ -375,7 +395,9 @@ The output projection is set to $w_o=I_4$ for this exercise.
 
 </details>
 
-### Exercise AT-B — Trace the shapes of a multi-head attention
+<a id="exercise-at-b-trace-the-shapes-of-a-multi-head-attention"></a>
+<a id="ex-attention-multihead-shape-trace"></a>
+### Exercise — Trace the shapes of a multi-head attention
 
 **Preparation:** the shape trace from the Transformer collection (TF-A) or the [block walkthrough](transformer-block-walkthrough.qmd) for head slicing; [scaled dot-product attention](scaled-dot-product-attention.qmd) for one head's shapes ($T\times T$ then $T\times d_v$).
 
@@ -426,7 +448,9 @@ $Q$, $K$ and $V$ have shape $(2,3,6)$. Head 0's slice: $(2,3,3)$. Head 0's score
 
 </details>
 
-### Exercise AT-C — Diagnose multi-head claims and predict interventions
+<a id="exercise-at-c-diagnose-multi-head-claims-and-predict-interventions"></a>
+<a id="ex-attention-multihead-diagnosis"></a>
+### Exercise — Diagnose multi-head claims and predict interventions
 
 **Preparation:** [scaled dot-product attention](scaled-dot-product-attention.qmd) and [Q/K/V projections](queries-keys-values.qmd) after AT-A and AT-B; the [block walkthrough](transformer-block-walkthrough.qmd) for the reference parameterization. "The reference block" means the pre-LN block of the walkthrough.
 

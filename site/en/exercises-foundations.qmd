@@ -36,7 +36,8 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-found
 
 **Current scope:** seven worked exercises cover softmax/NLL, masking and reduction, gradients, soft targets and KL, tensor shapes, log-sum-exp/log-softmax stability, and perplexity. Finite-difference gradient checking remains to be developed.
 
-### Exercise 1 — From logits to loss
+<a id="exercise-1-from-logits-to-loss"></a>
+### From logits to loss {#ex-foundations-logits-to-loss}
 
 Consider three logits $z=(0,\ln 3,\ln 5)$ and a target corresponding to the second class.
 
@@ -55,7 +56,8 @@ For a one-hot target, $\partial\ell/\partial z_i=p_i-\mathbb{1}[i=2]$. The gradi
 
 </details>
 
-### Exercise 2 — Masking and the denominator
+<a id="exercise-2-masking-and-the-denominator"></a>
+### Masking and the denominator {#ex-foundations-masking-denominator}
 
 A batch contains three valid target positions with losses $\ln 2$, $\ln 4$, and $\ln 8$, plus one padding position whose incorrectly computed loss would be $\ln 100$.
 
@@ -72,7 +74,8 @@ If padding remains in the denominator, the incorrect result is $(\ln 2+\ln 4+\ln
 
 </details>
 
-### Exercise 3 — From logit gradients to parameter gradients
+<a id="exercise-3-from-logit-gradients-to-parameter-gradients"></a>
+### From logit gradients to parameter gradients {#ex-foundations-logit-to-parameter-gradients}
 
 For one position, the gradient with respect to the logits is $g=\nabla_z\ell=(0.2,-0.3,0.1)$. In a simplified model, the logits depend on two parameters $\theta=(\theta_1,\theta_2)$ with Jacobian:
 
@@ -107,7 +110,8 @@ The gradient $g$ describes loss sensitivity to the three logits. The parameter g
 
 </details>
 
-### Exercise 4 — Soft targets and KL divergence
+<a id="exercise-4-soft-targets-and-kl-divergence"></a>
+### Soft targets and KL divergence {#ex-foundations-soft-targets-kl}
 
 Consider a target $q=(3/4,1/4)$ and a prediction $p=(1/2,1/2)$.
 
@@ -126,7 +130,8 @@ For fixed $q$, $H(q)$ is constant with respect to $p$. Minimizing $H(q,p)=H(q)+D
 
 </details>
 
-### Exercise 5 — Track a batch's shapes
+<a id="exercise-5-track-a-batch-s-shapes"></a>
+### Track a batch's shapes {#ex-foundations-batch-shape-trace}
 
 A batch contains $B=2$ sequences of length $T=4$. The hidden dimension is $D=6$ and the vocabulary contains $V=10$ tokens. Activations $X$ have shape $(B,T,D)$ and the output projection $W$ has shape $(D,V)$.
 
@@ -146,7 +151,8 @@ Shape compatibility alone does not guarantee that targets are shifted correctly 
 
 </details>
 
-### Exercise 6 — Stabilize log-sum-exp and log-softmax
+<a id="exercise-6-stabilize-log-sum-exp-and-log-softmax"></a>
+### Stabilize log-sum-exp and log-softmax {#ex-foundations-log-sum-exp-stability}
 
 Consider logits $z=(1000,1001,999)$.
 
@@ -171,7 +177,8 @@ For the second class, $\log p_2=z_2-\operatorname{LSE}(z)=-\log S\approx-0.4076$
 
 </details>
 
-### Exercise 7 — From mean NLL to perplexity
+<a id="exercise-7-from-mean-nll-to-perplexity"></a>
+### From mean NLL to perplexity {#ex-foundations-mean-nll-to-perplexity}
 
 On an evaluation corpus, mean per-token NLL is $1.2$ nats, computed with the natural logarithm and averaged over valid targets only.
 

@@ -106,6 +106,40 @@ La page [Stratégies de tokenisation](tokenization-strategies.qmd) du parcours p
 - [Similarité cosinus](cosine-similarity.qmd) — mesure angulaire et limites d'interprétation.
 - [Linéarité des embeddings](linearite-embeddings.qmd) — hypothèses et preuves empiriques associées aux relations linéaires dans les espaces de représentation.
 
+### Repères historiques : des vecteurs statiques aux représentations contextualisées
+
+Les premières représentations neuronales distribuées du texte, puis des méthodes comme Word2Vec, ont appris des vecteurs associés à des mots ou à des unités lexicales. Ces vecteurs dits **statiques** ne changeaient pas selon la phrase. Les modèles contextualisés ont ensuite produit des états différents selon le contexte, tout en conservant une table de plongements initiale pour les IDs d'entrée. Cette transition est un repère historique utile, mais pas une évolution linéaire unique ni le remplacement de toutes les méthodes précédentes.
+
+- [Bengio et al. (2003), *A Neural Probabilistic Language Model*](https://www.jmlr.org/papers/v3/bengio03a.html) — modèle neuronal de langage avec représentations distribuées apprises.
+- [Mikolov et al. (2013), *Efficient Estimation of Word Representations in Vector Space*](https://arxiv.org/abs/1301.3781) — architectures CBOW et Skip-gram associées à Word2Vec.
+- [Peters et al. (2018), *Deep Contextualized Word Representations*](https://arxiv.org/abs/1802.05365) — ELMo et représentations dépendantes du contexte.
+
+
+#### Ce que la comparaison historique permet — et ne permet pas — de conclure
+
+Word2Vec apprend des vecteurs associés aux mots du vocabulaire. Dans CBOW, le modèle prédit un mot cible à partir de son contexte ; dans Skip-gram, il prédit des mots de contexte à partir du mot cible. Une fois le modèle entraîné, un mot donné possède un vecteur statique : dans le dialogue d'Otis, « situation » conserve le même vecteur dans « bonne situation » et « bonne ou mauvaise situation ». Cette limite motive notamment les représentations contextualisées, mais ne signifie pas que les tables d'embeddings d'entrée des Transformers ont disparu : elles fournissent toujours les vecteurs initiaux associés aux IDs.
+
+Le dialogue d'Otis fournit un exemple familier : si les deux occurrences de « situation » sont encodées par le même ID, elles récupèrent la même ligne initiale ; le contexte traité ensuite par le réseau peut produire des états cachés différents. La segmentation et l'ID exacts restent propres au tokenizer considéré. Il s'agit d'un exemple conceptuel, pas d'une affirmation sur une tokenisation universelle.
+
+#### Géométrie des représentations : précautions d'interprétation
+
+![Projection schématique d'un espace d'embeddings.](../images/embedding-space-fr.svg){fig-alt="Des vecteurs sont projetés dans un plan abstrait ; les regroupements sont illustratifs et ne garantissent pas une proximité sémantique." fig-cap="Une projection 2D est un outil exploratoire, pas une preuve de séparation dans l'espace d'origine." width=100%}
+
+
+
+Un vecteur de dimension $d$ peut être interprété comme un point dans un espace vectoriel, mais les visualisations en deux dimensions sont des projections : elles ne conservent généralement qu'une partie des distances et des voisinages. Des groupes visuellement séparés sur une figure 2D ne prouvent donc ni une séparation robuste dans l'espace d'origine, ni une capacité de classification sur des données nouvelles.
+
+La proximité dépend de l'objet comparé (embedding initial, couche et position d'un état contextualisé, ou embedding de phrase), du modèle, de la couche, du corpus, de la méthode de pooling éventuelle et de la métrique choisie.
+
+Il faut également distinguer trois niveaux : l'**embedding de token** est le vecteur initial récupéré dans la table ; l'**état contextualisé** est produit par les couches du réseau pour une position donnée ; l'**embedding de phrase ou de document** est une représentation d'un texte plus long, obtenue par une méthode propre au modèle (par exemple un pooling ou une tête dédiée). Ces objets ont des usages et des propriétés différents. Une méthode validée pour comparer des embeddings de phrases ne s'applique pas automatiquement aux états cachés internes d'un LLM. Une similarité cosinus élevée n'implique pas une équivalence de sens : la négation ou une relation logique peuvent changer le sens avec un vocabulaire presque identique.
+
+- [Ethayarajh (2019), *How Contextual are Contextualized Word Representations?*](https://arxiv.org/abs/1909.00512) — analyse du caractère contextuel des représentations selon les couches.
+- [Li et al. (2020), *On the Sentence Embeddings from Pre-trained Language Models*](https://aclanthology.org/2020.emnlp-main.733/) — étude des propriétés et limites des embeddings de phrases issus de modèles préentraînés.
+- [Steck, Ekanadham & Kallus (2024), *Is Cosine-Similarity of Embeddings Really About Similarity?*](https://arxiv.org/abs/2403.05440) — mise en question de l'interprétation naïve de la similarité cosinus.
+- [Sentence Transformers — Semantic Textual Similarity](https://sbert.net/docs/sentence_transformer/usage/semantic_textual_similarity.html) — exemple de tâche et de protocole conçus pour comparer des embeddings de phrases.
+
+Pour les outils de mesure, voir [la similarité cosinus](cosine-similarity.qmd) ; pour les relations géométriques et leurs preuves empiriques, voir [la linéarité des embeddings](linearite-embeddings.qmd). Pour une introduction visuelle à l'entrée d'un GPT, consulter aussi [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/).
+
 Ces pages fournissent des outils d'analyse ; elles ne constituent pas un cours de prérequis à terminer avant de construire un petit GPT.
 
 ## Formalisation probabiliste et chaîne de l’entraînement {#fondements-probabilistes-et-entrainement}

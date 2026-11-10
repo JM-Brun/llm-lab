@@ -24,11 +24,13 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-text-
 
 ## Text data {#text-data}
 
-**Starting points:** [text and data](text-data.qmd) and [embedding space](embedding-space.qmd) are enough to begin the first exercises; each exercise below lists any additional preparation. In particular, TR-D uses [training examples and input-target shifting](training-examples.qmd), TR-E uses the tokenization lesson, and TR-F uses corpus preparation.
+**Starting points:** [text and data](text-data.qmd) and [embedding space](embedding-space.qmd) are enough to begin the first exercises; each exercise below lists any additional preparation. In particular, the training-windows exercise uses [training examples and input-target shifting](training-examples.qmd), the BPE-merges exercise uses the tokenization lesson, and the data-leakage exercise uses corpus preparation.
 
-**Current scope:** six bilingual formative exercises, with stable IDs TR-A–TR-F, cover the text → representations pipeline (TR-A–TR-C), windows and input-target shifting (TR-D), BPE merge counting (TR-E), and finally split-leakage diagnosis and tokenizer fitting (TR-F). Suggested order: TR-A, TR-B, TR-C, then TR-D, TR-E, and TR-F after their corresponding preparation lessons.
+**Current scope:** six bilingual formative exercises cover the text → representations pipeline, windows and input-target shifting, BPE merge counting, and finally split-leakage diagnosis and tokenizer fitting. Each exercise has a descriptive, stable anchor independent of its title and position in the collection. Prerequisites on each exercise guide the suggested order.
 
-### Exercise TR-A — Reconstruct the representation pipeline
+<a id="ex-representation-pipeline"></a>
+<a id="ex-text-data-representation-pipeline"></a>
+### Reconstruct the representation pipeline
 
 **Preparation:** a first pass through [text and data](text-data.qmd) and [embedding space](embedding-space.qmd) is enough.
 
@@ -68,7 +70,9 @@ The tokenizer maps text to discrete vocabulary entries. The IDs index the embedd
 
 </details>
 
-### Exercise TR-B — Calculate lookup and trace tensor shapes {#tr-b-lookup}
+<a id="ex-embedding-lookup"></a>
+<a id="ex-text-data-embedding-lookup"></a>
+### Calculate lookup and trace tensor shapes
 
 **Preparation:** [embedding space](embedding-space.qmd) for the matrix and the lookup; [tensors](tensors.qmd) is an optional notation reference. The exercise progresses in three stages: calculate, complete, generalize.
 
@@ -196,7 +200,7 @@ Lookup preserves the batch and sequence-position axes and adds the feature axis.
 
 #### Optional practical trace — from text to vectors
 
-This trace complements TR-B with a real tokenizer and a synthetic embedding table. It follows the successive objects without claiming to reproduce the internal weights of a pretrained GPT-2.
+This trace complements the lookup exercise with a real tokenizer and a synthetic embedding table. It follows the successive objects without claiming to reproduce the internal weights of a pretrained GPT-2.
 
 Install the pinned version with `python -m pip install tiktoken==0.14.0`. NumPy is already a project dependency.
 
@@ -232,11 +236,13 @@ assert Z.shape == (2, 2)
 assert np.allclose(Z, [[0.11, 0.22], [-0.27, 0.44]])
 ```
 
-Interpret this carefully: IDs depend on the tokenizer; the vectors in `E` and `P` are invented. The script checks the path text → IDs → lookup → positional addition, but runs no Transformer block and therefore computes no contextualized states. For byte-level details and BPE merges, see TR-E.
+Interpret this carefully: IDs depend on the tokenizer; the vectors in `E` and `P` are invented. The script checks the path text → IDs → lookup → positional addition, but runs no Transformer block and therefore computes no contextualized states. For byte-level details and BPE merges, see the BPE-merges exercise.
 
-### Exercise TR-C — Diagnose identity, position and context
+<a id="ex-representation-context"></a>
+<a id="ex-text-data-representation-context"></a>
+### Diagnose identity, position and context
 
-**Preparation:** [contextualized representations](contextualized-representations.qmd) and [position and RoPE](positional-encoding.qmd), after TR-A and TR-B. For the mathematical framing of Stage 3, the [deep dive on dependencies across positions and layers](contextualized-representations-advanced.qmd) is an optional reference. The exercise progresses in three stages: diagnose claims, predict under controlled changes, then calculate a toy numerical example.
+**Preparation:** [contextualized representations](contextualized-representations.qmd) and [position and RoPE](positional-encoding.qmd), after the representation-pipeline exercise and the lookup exercise. For the mathematical framing of Stage 3, the [deep dive on dependencies across positions and layers](contextualized-representations-advanced.qmd) is an optional reference. The exercise progresses in three stages: diagnose claims, predict under controlled changes, then calculate a toy numerical example.
 
 **Stage 1 — Classify claims.** For a fixed tokenizer and fixed embedding matrix, classify each statement as **valid**, **invalid**, or **architecture-dependent**, and justify your choice. No specific model configuration is supplied: when a statement refers to "this model", decide whether the information given is sufficient to determine its behavior.
 
@@ -306,40 +312,40 @@ These are qualitative predictions, not guarantees about the magnitude of a numer
 
 **Stage 3 — Controlled numerical calculation (toy aggregation, not an attention layer).**
 
-Take two sequences reduced to the prefix and the token bank: A = [river, bank], B = [financial, bank]. The synthetic embedding table contains:
-\[
-E[\text{river}]=(0.1,0.2),\quad E[\text{financial}]=(0.9,-0.4),\quad E[\text{bank}]=(0.5,0.5).
-\]
-Both occurrences of bank are at position 1 (zero-based indexing). Add the same positional vector \(P_1=(0.02,0.05)\). To isolate the context effect, define a **fixed illustrative** aggregation:
-\[
-h_{\text{bank}}=0.4\,z_{\text{prefix}}+0.6\,z_{\text{bank}},\qquad z=x+P.
-\]
-1. Verify that the lookup and positional term for bank are identical in A and B.
-2. Compute the position-adjusted prefix vectors using \(P_0=(0.01,0.00)\), then compute \(z_{\text{bank}}\).
-3. Compute \(h_A\), \(h_B\), and their Euclidean distance.
+Reuse short fragments from the Monty Python exchange: “the Romans” and “the sanitation”. For the calculation, represent them as two simplified lexical windows, A = [the, Romans] and B = [the, sanitation]. These are pedagogical units, **not a tokenization claimed for any real tokenizer**. The synthetic embedding table contains:
+$$
+E[\text{the}]=(0.5,0.5),\quad E[\text{Romans}]=(0.1,0.2),\quad E[\text{sanitation}]=(0.9,-0.4).
+$$
+The shared target “the” is at position 0 in both windows. Add the same positional vector $P_0=(0.01,0.00)$; the context words are at position 1 and use $P_1=(0.02,0.05)$. To isolate the context effect, define a **fixed illustrative** aggregation:
+$$
+h_{\text{target}}=0.4\,z_{\text{context}}+0.6\,z_{\text{target}},\qquad z=x+P.
+$$
+1. Verify that the lookup and positional term for “the” are identical in A and B.
+2. Compute the position-adjusted context vectors, then compute $z_{\text{target}}$.
+3. Compute $h_A$, $h_B$, and their Euclidean distance.
 4. Explain what the example demonstrates and what it does not demonstrate.
 
 <details>
 <summary>Show the worked solution and NumPy code</summary>
 
-The lookup for bank is \((0.5,0.5)\) in both contexts; \(z_{\text{bank}}=(0.52,0.55)\). The prefixes give \(z_{\text{river}}=(0.11,0.22)\) and \(z_{\text{financial}}=(0.91,-0.40)\).
-\[
-h_A=(0.356,0.418),\qquad h_B=(0.676,0.170).
-\]
-The distance is \(\sqrt{0.320^2+0.248^2}\approx0.4049\).
+The lookup for “the” is $(0.5,0.5)$ in both windows; $z_{\text{target}}=(0.51,0.50)$. The context vectors are $z_{\text{Romans}}=(0.12,0.25)$ and $z_{\text{sanitation}}=(0.92,-0.35)$.
+$$
+h_A=(0.354,0.400),\qquad h_B=(0.674,0.160).
+$$
+The distance is $\sqrt{0.320^2+0.240^2}=0.4$.
 
 ~~~python
 import numpy as np
-E = {"river": np.array([0.1, 0.2]),
-     "financial": np.array([0.9, -0.4]),
-     "bank": np.array([0.5, 0.5])}
+E = {"the": np.array([0.5, 0.5]),
+     "Romans": np.array([0.1, 0.2]),
+     "sanitation": np.array([0.9, -0.4])}
 P0, P1 = np.array([0.01, 0.00]), np.array([0.02, 0.05])
-z_bank = E["bank"] + P1
-z_river, z_financial = E["river"] + P0, E["financial"] + P0
-h_A = 0.4 * z_river + 0.6 * z_bank
-h_B = 0.4 * z_financial + 0.6 * z_bank
-assert np.allclose(h_A, [0.356, 0.418])
-assert np.allclose(h_B, [0.676, 0.170])
+z_target = E["the"] + P0
+z_romans, z_sanitation = E["Romans"] + P1, E["sanitation"] + P1
+h_A = 0.4 * z_romans + 0.6 * z_target
+h_B = 0.4 * z_sanitation + 0.6 * z_target
+assert np.allclose(h_A, [0.354, 0.400])
+assert np.allclose(h_B, [0.674, 0.160])
 print("distance:", np.linalg.norm(h_A - h_B))
 ~~~
 
@@ -347,9 +353,11 @@ print("distance:", np.linalg.norm(h_A - h_B))
 
 </details>
 
-### Exercise TR-D — Build windows and align targets
+<a id="ex-training-windows"></a>
+<a id="ex-text-data-training-windows"></a>
+### Build windows and align targets
 
-**Preparation:** the “sliding windows and stride” section of [from tokenized corpus to training examples](training-examples.qmd), after TR-A and TR-B. This exercise focuses on the input-target contract; it does not ask you to implement a tokenizer or data loader.
+**Preparation:** the “sliding windows and stride” section of [from tokenized corpus to training examples](training-examples.qmd), after the representation-pipeline exercise and the lookup exercise. This exercise focuses on the input-target contract; it does not ask you to implement a tokenizer or data loader.
 
 Consider the token-ID stream:
 
@@ -455,7 +463,9 @@ A direct test checks, for every window, that the target at position $(k,i)$ equa
 
 **Further work:** partition leakage remains for a separate exercise. Batching and loss masks are distinct topics; they are not implemented by the reference function used here.
 
-### Exercise TR-E — Count BPE merges and encode a new word
+<a id="ex-bpe-merges"></a>
+<a id="ex-text-data-bpe-merges"></a>
+### Count BPE merges and encode a new word
 
 **Preparation:** the “Worked example: BPE merges on a tiny corpus” section in [Tokenization strategies](tokenization-strategies.qmd). We reuse its word-level teaching convention: initial characters plus an end-of-word marker `</w>`. This is not a specification of a production byte-level tokenizer.
 
@@ -561,7 +571,9 @@ At encoding time, the tokenizer reuses the merge order learned from the corpus. 
 
 **Success criterion:** initial frequencies are exact, sequences are updated before the second count, merge order is respected on the unseen word, and training/encoding are distinguished.
 
-### Exercise TR-F — Diagnose split leakage
+<a id="ex-data-leakage"></a>
+<a id="ex-text-data-data-leakage"></a>
+### Diagnose split leakage
 
 **Preparation:** [Preparing a corpus for pretraining](corpus-preparation.qmd), especially its sections on deduplication, split design, and tokenizer fitting; [windows and stride](training-examples.qmd). This exercise distinguishes evaluation leakage from an explicitly chosen temporal-continuation protocol.
 

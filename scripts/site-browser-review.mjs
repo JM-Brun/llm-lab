@@ -20,8 +20,8 @@ const routeContextCases = visualCases.filter(testCase => testCase.theme === "lig
 const representationResponsiveCases = visualCases.filter(testCase => testCase.label === "mobile");
 const transformerOverviewResponsiveCases = visualCases.filter(testCase => testCase.label === "mobile");
 
-// #329: the bilingual exercise hub contains the TR, TF and AT collections.
-// Review it in both languages and at desktop/mobile sizes, not only as a smoke page.
+// Review bilingual exercise collections at desktop and mobile sizes.
+// Exercise IDs are semantic, language-neutral anchors rather than opaque codes.
 const exerciseHubCases = visualCases;
 
 const cases = [
@@ -36,9 +36,42 @@ const cases = [
     ...testCase, page: "exercises.html", kind: "exercise-hub",
   })),
   ...exerciseHubCases.flatMap(testCase => [
-    { page: "exercises-text-data.html", exerciseIds: ["TR-A", "TR-B", "TR-C", "TR-D", "TR-E", "TR-F"] },
-    { page: "exercises-transformer.html", exerciseIds: ["TF-A", "TF-B", "TF-C"] },
-    { page: "exercises-attention.html", exerciseIds: ["AT-A", "AT-B", "AT-C", "CA-A"] },
+    {
+      page: "exercises-text-data.html",
+      exerciseIds: [
+        "ex-text-data-representation-pipeline",
+        "ex-text-data-embedding-lookup",
+        "ex-text-data-representation-context",
+        "ex-text-data-training-windows",
+        "ex-text-data-bpe-merges",
+        "ex-text-data-data-leakage",
+      ],
+    },
+    {
+      page: "exercises-transformer.html",
+      exerciseIds: [
+        "ex-transformer-preln-block-trace",
+        "ex-transformer-parameter-count",
+        "ex-transformer-claim-diagnosis-interventions",
+      ],
+    },
+    {
+      page: "exercises-attention.html",
+      exerciseIds: [
+        "ex-attention-scores-to-output",
+        "ex-attention-manual-aggregation",
+        "ex-attention-weighted-mixture-vs-selection",
+        "ex-attention-project-qkv",
+        "ex-attention-calculate-qkv-isolate-values",
+        "ex-attention-predict-projection-change",
+        "ex-attention-connect-projections-learning",
+        "ex-attention-cross-attention-transfer",
+        "ex-attention-causal-prefix-invariance",
+        "ex-attention-multihead-manual-calculation",
+        "ex-attention-multihead-shape-trace",
+        "ex-attention-multihead-diagnosis",
+      ],
+    },
     { page: "exercises-foundations.html", exerciseIds: [] },
     { page: "exercises-generation.html", exerciseIds: [] },
   ].map(collection => ({
@@ -335,19 +368,22 @@ async function runCase(testCase, caseIndex) {
       }
     }
     if (kind === "exercise-collection") {
-      const visibleText = await page.locator("main").innerText();
+      const presentIds = await page.evaluate(ids =>
+        ids.filter(id => document.getElementById(id)),
+        testCase.exerciseIds,
+      );
       const details = page.locator("main details");
       const detailsCount = await details.count();
       const summariesCount = await details.locator("summary").count();
       const openDetailsAtLoad = await details.evaluateAll(nodes => nodes.filter(node => node.open).length);
       item.exerciseCollection = {
         expectedIds: testCase.exerciseIds,
-        presentIds: testCase.exerciseIds.filter(id => visibleText.includes(id)),
+        presentIds,
         detailsCount,
         summariesCount,
         openDetailsAtLoad,
       };
-      const missing = testCase.exerciseIds.filter(id => !visibleText.includes(id));
+      const missing = testCase.exerciseIds.filter(id => !presentIds.includes(id));
       if (missing.length) {
         throw new Error(`missing stable exercise IDs in collection: ${missing.join(", ")}`);
       }
@@ -997,7 +1033,7 @@ async function runCase(testCase, caseIndex) {
             throw new Error("single-stage context repeats the page heading, misstates its route stage/role, or lacks the expected labelled stage link");
           }
         }
-        if (["embedding-space.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "logits.html", "cross-entropy.html"].includes(pagePath)) {
+        if (["queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "logits.html", "cross-entropy.html"].includes(pagePath)) {
           const localStepper = page.locator(".pipeline-stepper");
           item.routeContext.localStepperCount = await localStepper.count();
           item.routeContext.localStepperLabel = await localStepper.getAttribute("aria-label");

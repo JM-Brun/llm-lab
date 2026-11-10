@@ -36,7 +36,8 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-found
 
 **Périmètre actuel :** sept exercices corrigés couvrent softmax/NLL, masquage et réduction, gradients, cibles souples et KL, formes de tenseurs, stabilité de log-sum-exp/log-softmax et perplexité. La vérification de gradients par différences finies reste à construire.
 
-### Exercice 1 — Du logit à la perte
+<a id="exercice-1-du-logit-a-la-perte"></a>
+### Du logit à la perte {#ex-foundations-logits-to-loss}
 
 On considère trois logits $z=(0,\ln 3,\ln 5)$ et une cible correspondant à la deuxième classe.
 
@@ -55,7 +56,8 @@ Pour une cible one-hot, $\partial\ell/\partial z_i=p_i-\mathbb{1}[i=2]$. Le grad
 
 </details>
 
-### Exercice 2 — Masquage et dénominateur
+<a id="exercice-2-masquage-et-denominateur"></a>
+### Masquage et dénominateur {#ex-foundations-masking-denominator}
 
 Un batch contient trois positions cibles valides, dont les pertes sont respectivement $\ln 2$, $\ln 4$ et $\ln 8$, ainsi qu'une position de padding dont la valeur de perte calculée par erreur serait $\ln 100$.
 
@@ -72,7 +74,8 @@ Si le padding reste dans le dénominateur, on obtient à tort $(\ln 2+\ln 4+\ln 
 
 </details>
 
-### Exercice 3 — Du gradient des logits au gradient des paramètres
+<a id="exercice-3-du-gradient-des-logits-au-gradient-des-parametres"></a>
+### Du gradient des logits au gradient des paramètres {#ex-foundations-logit-to-parameter-gradients}
 
 Pour une position, on connaît le gradient par rapport aux logits $g=\nabla_z\ell=(0{,}2,-0{,}3,0{,}1)$. Dans un modèle simplifié, les logits dépendent de deux paramètres $\theta=(\theta_1,\theta_2)$ avec le jacobien :
 
@@ -107,7 +110,8 @@ Le gradient $g$ décrit la sensibilité de la perte aux trois logits. Le gradien
 
 </details>
 
-### Exercice 4 — Cible souple et divergence KL
+<a id="exercice-4-cible-souple-et-divergence-kl"></a>
+### Cible souple et divergence KL {#ex-foundations-soft-targets-kl}
 
 On considère une cible $q=(3/4,1/4)$ et une prédiction $p=(1/2,1/2)$.
 
@@ -126,7 +130,8 @@ Pour $q$ fixé, $H(q)$ est constant par rapport à $p$. Minimiser $H(q,p)=H(q)+D
 
 </details>
 
-### Exercice 5 — Suivre les formes d'un batch
+<a id="exercice-5-suivre-les-formes-d-un-batch"></a>
+### Suivre les formes d'un batch {#ex-foundations-batch-shape-trace}
 
 On traite un batch de $B=2$ séquences de longueur $T=4$. La dimension cachée vaut $D=6$ et le vocabulaire contient $V=10$ tokens. Les activations $X$ ont la forme $(B,T,D)$ et la projection de sortie $W$ la forme $(D,V)$.
 
@@ -146,7 +151,8 @@ Une forme compatible ne garantit pas à elle seule que les cibles sont correctem
 
 </details>
 
-### Exercice 6 — Stabiliser log-sum-exp et log-softmax
+<a id="exercice-6-stabiliser-log-sum-exp-et-log-softmax"></a>
+### Stabiliser log-sum-exp et log-softmax {#ex-foundations-log-sum-exp-stability}
 
 On considère les logits $z=(1000,1001,999)$.
 
@@ -171,7 +177,8 @@ Pour la deuxième classe, $\log p_2=z_2-\operatorname{LSE}(z)=-\log S\approx-0{,
 
 </details>
 
-### Exercice 7 — De la NLL moyenne à la perplexité
+<a id="exercice-7-de-la-nll-moyenne-a-la-perplexite"></a>
+### De la NLL moyenne à la perplexité {#ex-foundations-mean-nll-to-perplexity}
 
 Sur un corpus d'évaluation, la NLL moyenne par token vaut $1{,}2$ nat, calculée avec le logarithme naturel et une moyenne sur les seules cibles valides.
 

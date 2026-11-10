@@ -28,7 +28,8 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-gener
 
 **Cinq exercices formatifs publiés :** GE-A à GE-E. Ils couvrent la sélection du prochain token, la boucle autoregressive et l'arrêt, puis le prefill/decode et le rôle ainsi que les limites du cache KV.
 
-### GE-A — Distribution et sélection
+<a id="ge-a-distribution-et-selection"></a>
+### Distribution et sélection {#ex-generation-distribution-selection}
 
 Un modèle produit les logits $z=(0,\ln 2,\ln 3)$ pour le vocabulaire $\{A,B,C\}$.
 
@@ -43,7 +44,8 @@ Les exponentielles valent $(1,2,3)$ et leur somme vaut $6$. La distribution est 
 
 </details>
 
-### GE-B — Tracer la boucle autoregressive
+<a id="ge-b-tracer-la-boucle-autoregressive"></a>
+### Tracer la boucle autoregressive {#ex-generation-autoregressive-loop}
 
 On commence avec $c_1=(A,B)$. Le décodage est glouton et les distributions sont données :
 
@@ -65,7 +67,8 @@ Les sélections sont $C$, puis $D$, puis EOS. Les contextes deviennent $(A,B,C)$
 
 </details>
 
-### GE-C — Critères d'arrêt
+<a id="ge-c-criteres-d-arret"></a>
+### Critères d'arrêt {#ex-generation-stopping-criteria}
 
 Une génération utilise max_new_tokens = 4. EOS est sélectionné à la deuxième étape.
 
@@ -81,7 +84,8 @@ La limite autorise quatre nouveaux tokens au maximum. EOS étant sélectionné �
 
 </details>
 
-### GE-D — Tracer le prefill et le decode incrémental
+<a id="ge-d-tracer-le-prefill-et-le-decode-incremental"></a>
+### Tracer le prefill et le decode incrémental {#ex-generation-prefill-incremental-decode}
 
 Un prompt contient les identifiants de tokens $(A,B,C)$. On suppose un Transformer causal avec activation du cache KV.
 
@@ -98,7 +102,8 @@ Le prefill traite les trois positions du prompt en un passage séquentiel et rem
 
 </details>
 
-### GE-E — Que permet d'économiser le cache KV ?
+<a id="ge-e-que-permet-d-economiser-le-cache-kv"></a>
+### Que permet d'économiser le cache KV ? {#ex-generation-kv-cache}
 
 On considère un prompt de trois tokens $(A,B,C)$ et la génération de trois tokens $D,E,F$. On ignore l'éviction liée à la fenêtre de contexte et on compte uniquement les positions de tokens nouvellement transmises au modèle :
 

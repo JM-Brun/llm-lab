@@ -57,6 +57,45 @@ Cette page est la quatrième étape (4 sur 5) de la visite guidée du code de r�
 **Écarts par rapport à GPT-2.** Le GPT-2 original réutilise la matrice d'embeddings des tokens, transposée, pour calculer les logits : les poids d'entrée et de sortie sont *liés* (*weight tying*). Ici, `w_head` est une matrice indépendante et possède un biais (`b_head`). Autre différence d'initialisation : GPT-2 initialise la table des positions avec un écart-type de `0.01`, contre `0.02` ici ; la table des tokens utilise `0.02` dans les deux cas. Le modèle de référence du projet est donc un GPT pédagogique de type GPT-2, pas une reproduction exacte de GPT-2. Le comptage des paramètres inclut la matrice et le biais de sortie supplémentaires.
 :::
 
+## Expérience isolée : vérifier le lookup avec NumPy
+
+Avant de suivre le lookup dans le modèle complet, on peut isoler l'opération sur une petite matrice synthétique. **Ces valeurs sont pédagogiques : elles ne sont ni les poids du GPT du projet ni des embeddings appris.** L'expérience vérifie trois invariants : la forme obtenue pour un batch, l'identité des vecteurs récupérés pour un même ID et l'absence de lien entre ordre numérique des IDs et distance géométrique.
+
+```python
+import numpy as np
+
+# Matrice synthétique : V=5 entrées, dimension d=2
+E = np.array([
+    [0.1, 0.0],   # ID 0
+    [0.0, 0.2],   # ID 1
+    [0.8, -0.1],  # ID 2
+    [-0.2, 0.5],  # ID 3
+    [0.3, 0.7],   # ID 4
+], dtype=np.float64)
+
+# Batch de 2 séquences de longueur T=3
+token_ids = np.array([
+    [2, 0, 3],
+    [1, 2, 4],
+])
+
+# Chaque ID sélectionne une ligne de E
+X = E[token_ids]
+
+assert X.shape == (2, 3, 2)       # (B, T, d)
+assert np.array_equal(X[0, 0], E[2])
+assert np.array_equal(X[1, 1], E[2])
+assert np.array_equal(X[0, 0], X[1, 1])
+
+# Des IDs consécutifs n'imposent aucune proximité géométrique
+d_2_3 = float(np.linalg.norm(E[2] - E[3]))
+d_0_4 = float(np.linalg.norm(E[0] - E[4]))
+print(f"X shape: {X.shape}")
+print(f"Distance E[2]-E[3]: {d_2_3:.3f} | Distance E[0]-E[4]: {d_0_4:.3f}")
+```
+
+Le résultat attendu pour la forme est `(2, 3, 2)`. Les deux occurrences de l'ID 2 récupèrent exactement la même ligne. Les distances calculées ne sont que celles de cette matrice synthétique : elles illustrent que la différence entre IDs ne détermine pas la distance entre vecteurs, et ne constituent pas une mesure sur un modèle entraîné.
+
 ## La passe avant : de `(B, T)` à `(B, T, V)`
 
 ```python
