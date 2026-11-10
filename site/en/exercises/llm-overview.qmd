@@ -23,7 +23,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:llm-overview-exercise
 
 [← Back to the lesson: Language model overview](../llm-overview.qmd)
 
-[Exercises and practice](exercises.qmd).
+[Exercises and practice](../exercises.qmd).
 
 1. **Does fine-tuning necessarily change the architecture?** No: it primarily updates parameters. Some methods also add modules, so distinguish the model family from the full structure of the adapted system.
 2. **Documentation changes every day: RAG or fine-tuning?** RAG can retrieve new documents at inference time without changing the weights. It does not guarantee that retrieved documents are relevant or that the answer is faithful to them.
