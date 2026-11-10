@@ -1,13 +1,13 @@
 ---
 title: "Exercices — Évolution des modèles de langage"
 subtitle: "Questions de vérification, exercices et corrigés"
-keywords: ["type:exercise-hub", "destination:practice", "topic:llm-evolution", "level:applied", "language:fr", "status:published"]
+keywords: ["type:exercise-hub", "destination:practice", "topic:llm-evolution-exercises", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---
 
 <!--
 LLM-LAB-PAGE-MAP v1
-id: "fr/exercises/llm-evolution"
+id: "fr/llm-evolution-exercises"
 summary: "Questions de vérification et exercices associés à la leçon Évolution des modèles de langage."
 scope: "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle."
 purpose: "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon."
@@ -18,7 +18,7 @@ hierarchy:
   parents: []
   children: []
 related: ["fr/llm-evolution"]
-tags: ["type:exercise-hub", "destination:practice", "topic:llm-evolution", "level:applied", "language:fr", "status:published"]
+tags: ["type:exercise-hub", "destination:practice", "topic:llm-evolution-exercises", "level:applied", "language:fr", "status:published"]
 -->
 
 [← Retour à la leçon : Évolution des modèles de langage](../llm-evolution.qmd)
