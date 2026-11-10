@@ -123,6 +123,14 @@ In this construction, $P$ is added to the embeddings at the input, $X_0=E[\text{
 
 The [embedding-space lookup](embedding-space.qmd) maps each ID to an initial vector that does not depend on position; this page explains why and how order is then taken into account. [Contextualized representations](contextualized-representations.qmd), the next step in the route, describe how Transformer blocks turn those initial states into context-dependent states. To go further: the [RoPE](rope.qmd) page details the rotary relative mechanism, and [causal masking](causal-masking.qmd) presents a distinct structural constraint: it orders the visible positions without encoding their positions explicitly.
 
+
+
+{{< include ../includes/generated-suggested-route-en-positional-encoding.qmd >}}
+
+::: {.language-switch}
+**Language:** [Français](../fr/positional-encoding.qmd) · [English](positional-encoding.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -141,14 +149,7 @@ The [embedding-space lookup](embedding-space.qmd) maps each ID to an initial vec
 
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/positional-encoding.qmd).
 
-</div>
-</details>
 
-{{< include ../includes/generated-suggested-route-en-positional-encoding.qmd >}}
-
-::: {.language-switch}
-**Language:** [Français](../fr/positional-encoding.qmd) · [English](positional-encoding.qmd)
-:::
 
 ::: {.self-check}
 ## Check your understanding
@@ -168,3 +169,7 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 </details>
 :::
+
+
+</div>
+</details>
