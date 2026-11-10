@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["en/build-path"]
   children: []
-related: ["en/transformer", "en/exercises/gpt-config-walkthrough"]
+related: ["en/transformer", "en/gpt-config-walkthrough-exercises"]
 tags: ["type:guided-build", "destination:build", "topic:reference-gpt-config", "level:applied", "language:en", "status:published"]
 -->
 

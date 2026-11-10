@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/scaled-dot-product-attention"]
   children: []
-related: ["en/logits", "en/exercises/causal-masking"]
+related: ["en/logits", "en/causal-masking-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:causal-masking", "level:core", "language:en", "status:published"]
 -->
 

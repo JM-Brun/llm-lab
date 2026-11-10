@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/text-data", "en/transformer"]
   children: ["en/positional-encoding", "en/contextualized-representations", "en/cosine-similarity", "en/embedding-linearity"]
-related: ["en/exercises/embedding-space"]
+related: ["en/embedding-space-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:en", "status:published"]
 -->
 

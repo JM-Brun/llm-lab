@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/transformer-architectures"]
   children: []
-related: ["en/queries-keys-values", "en/scaled-dot-product-attention", "en/causal-masking", "en/exercises/cross-attention"]
+related: ["en/queries-keys-values", "en/scaled-dot-product-attention", "en/causal-masking", "en/cross-attention-exercises"]
 tags: ["type:deep-dive", "destination:deepen", "topic:cross-attention", "level:advanced", "language:en", "status:published"]
 -->
 

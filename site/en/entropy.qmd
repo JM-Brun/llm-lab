@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/probabilities"]
   children: ["en/cross-entropy"]
-related: ["en/likelihood", "en/exercises/entropy"]
+related: ["en/likelihood", "en/entropy-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:entropy", "level:core", "language:en", "status:published"]
 -->
 
