@@ -45,7 +45,7 @@ Cet exemple est adapté de [Neha KK](https://medium.com/@nkk18072004/understandi
 On peut distinguer les trois projections en suivant le trajet de l'information :
 
 - **Q — la requête :** ce que la position courante cherche à faire correspondre dans le contexte ;
-- **K — la clé :** la représentation qui permet à une position de participer au calcul de compatibilité ;
+- **K — la clé :** ce que chaque position présente pour être comparé à la requête ;
 - **V — la valeur :** l'information portée par cette position et susceptible d'être transmise.
 
 Q et K servent donc à déterminer **la répartition de l'attention**. V fournit **le contenu agrégé** à l'aide de cette répartition. Une clé n'est pas une étiquette lisible et une valeur n'est pas une réponse toute faite : ce sont des vecteurs numériques appris.
