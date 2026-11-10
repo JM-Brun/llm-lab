@@ -2958,6 +2958,15 @@ sources:
           - "Appendix C was inspected selectively rather than exhaustively; implementation code was not executed, and the live demo was not run."
           - "No independent reproduction has been run; results remain author-reported."
           - "Compute, energy and wall-clock costs were not independently measured."
+      - accessed_at: "2026-11-10"
+        status: partially-scanned
+        inspected_scope:
+          - "Hugging Face Papers record for arXiv:2610.39302: bibliographic metadata, abstract-style generated summary and author-submitted discussion"
+          - "User-supplied image-viewer URL associated with a paper figure recorded as a linked visual locator"
+        limitations:
+          - "Hugging Face Papers is an alternate platform record for the same arXiv paper, not an independent publication or independent validation."
+          - "The platform-generated summary and author comment are not treated as peer-reviewed evidence."
+          - "The hosted figure's exact provenance and reuse permissions were not established; link only, do not copy."
     related:
       pages: ["fr/contextualized-representations","en/contextualized-representations"]
       concepts: ["contextualized-representation","next-token-prediction","training-objective"]
