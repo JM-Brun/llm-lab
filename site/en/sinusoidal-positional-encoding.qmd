@@ -93,6 +93,8 @@ There are four pairs, hence four timescales. The values below follow directly fr
 | 2 | 0.01 | 628.32 positions |
 | 3 | 0.001 | 6,283.19 positions |
 
+![Sinusoidal encoding matrix for 32 positions and 8 dimensions. Even columns contain sine values and odd columns cosine values; each pair uses a different frequency.](../images/sinusoidal-position-matrix-en.svg){fig-alt="Heatmap of sinusoidal positional-encoding values for 32 positions and 8 dimensions. Patterns vary with the frequencies of the four coordinate pairs." width=100%}
+
 The first pairs change rapidly and are sensitive to short shifts. The last pairs change slowly and provide a reference that evolves over a wider range. These are not separately learned “near word” and “far word” slots: they are periodic components whose combinations the model may learn to use.
 
 ::: {.callout-note title="Why logarithmic spacing?"}
