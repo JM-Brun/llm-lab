@@ -23,7 +23,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:llm-limits-exercises"
 
 [← Back to the lesson: LLM limitations](../llm-limits.qmd)
 
-[Exercises and practice](exercises.qmd).
+[Exercises and practice](../exercises.qmd).
 
 Try to answer before opening the solutions. The goal is to manipulate the mental model, not to memorize labels.
 
