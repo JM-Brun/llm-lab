@@ -1,6 +1,6 @@
 ---
 title: "Des identifiants aux vecteurs : les embeddings"
-subtitle: "Comment un ID de token sélectionne un vecteur dans une table apprise"
+subtitle: "Comment un ID retrouve un vecteur appris, ensuite contextualisé par le Transformer"
 keywords: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
@@ -24,7 +24,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space",
 {{< include ../includes/generated-guided-context-fr-embedding-space.qmd >}}
 
 ::: {.chapter-lead}
-Après la tokenisation, chaque token est représenté par un identifiant entier. Cet identifiant sert d'indice dans une table apprise : le modèle lit la ligne correspondante et obtient un vecteur. C'est le **lookup d'embedding**. Deux occurrences du même ID sélectionnent le même vecteur initial ; la position et les couches du modèle interviennent ensuite pour construire des représentations dépendant du contexte.
+Après la tokenisation, chaque token reçoit un **identifiant entier** (*Token ID*). Cet identifiant n'exprime pas le sens du token : il sert à retrouver le **vecteur numérique appris** qui lui est associé. Le modèle sélectionne ce vecteur dans une matrice appelée *matrice d'embeddings*. Le Transformer traite ensuite ces vecteurs en tenant compte de la position et du contexte pour produire des représentations contextualisées.
 :::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
@@ -42,9 +42,9 @@ Après la tokenisation, chaque token est représenté par un identifiant entier.
 
 
 ::: {.callout-tip title="L'idée à retenir en une minute"}
-Un ID est une **adresse de ligne**, pas une coordonnée sémantique. La matrice d'embeddings — ou table de plongements — contient un vecteur appris par ID ; le lookup sélectionne simplement la bonne ligne. Deux occurrences du même ID récupèrent donc le même vecteur initial. C'est ensuite le traitement par le Transformer qui construit une représentation dépendant du contexte.
+Un ID est une **référence numérique**, pas une représentation du sens. Il permet de retrouver le vecteur que le modèle a appris à associer à ce token. Ce vecteur contient plusieurs nombres réels : c'est sur ces nombres que le réseau effectue ses calculs. Deux occurrences du même ID récupèrent le même vecteur initial ; le contexte est pris en compte plus tard, par le Transformer.
 
-**Première lecture :** retenez qu'un ID sélectionne une ligne de la table ; il n'est pas lui-même une coordonnée sémantique.
+**À retenir :** le token est l'unité de vocabulaire, l'ID l'identifie, et le vecteur d'embedding est sa représentation numérique apprise.
 
 **Pour pratiquer :** le calcul du lookup et la trace reproductible texte → IDs → vecteurs sont regroupés dans la [collection Données textuelles](exercises-text-data.qmd#tr-b-lookup). Les propriétés géométriques sont développées dans les pages sur la similarité cosinus et la linéarité.
 :::
@@ -54,7 +54,7 @@ Un ID est une **adresse de ligne**, pas une coordonnée sémantique. La matrice 
 <div class="pipeline-stepper" role="navigation" aria-label="Du token ID à la représentation contextualisée">
   <a class="step-item" href="text-data.qmd">ID de token</a>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active" aria-current="step">Lookup dans E</span>
+  <span class="step-item active" aria-current="step">Sélection dans la matrice E</span>
   <span class="step-arrow" aria-hidden="true">→</span>
   <span class="step-item">Vecteur initial</span>
   <span class="step-arrow" aria-hidden="true">→</span>
@@ -63,11 +63,51 @@ Un ID est une **adresse de ligne**, pas une coordonnée sémantique. La matrice 
   <a class="step-item" href="contextualized-representations.qmd">Couches Transformer → états contextualisés</a>
 </div>
 
+## Du token au vecteur : suivre un exemple
+
+Prenons le token anglais `bank`, utilisé dans les deux phrases de la page sur les [représentations contextualisées](contextualized-representations.qmd) : *The river bank eroded* et *The financial bank collapsed*. Pour isoler le mécanisme, supposons que le tokenizer attribue le même ID aux deux occurrences. L'ID exact dépend du tokenizer ; le nombre ci-dessous est fictif.
+
+```{mermaid}
+flowchart TD
+    A["Texte : « bank »"] --> B["Token : bank"]
+    B --> C["Token ID : 4821 (exemple fictif)"]
+    C --> D["Embedding lookup : sélectionner E[4821]"]
+    subgraph M["Matrice d'embeddings E : V lignes × d colonnes"]
+      R0["Ligne 4820 : d nombres"]
+      R1["Ligne 4821 : d nombres · sélectionnée"]
+      R2["Ligne 4822 : d nombres"]
+    end
+    D --> R1
+    R1 --> V["Vecteur initial x = E[4821]"]
+    V --> P["Traitement positionnel selon l'architecture"]
+    P --> T["Couches du Transformer et contexte"]
+    T --> H["Représentation contextualisée"]
+```
+
+Le *lookup* ne calcule pas le sens de `bank` et ne consulte pas les mots voisins : il sélectionne le vecteur initial associé à l'ID. Les deux occurrences ont donc le même vecteur initial si elles partagent le même ID. Leurs représentations peuvent ensuite différer après le traitement positionnel et les couches du Transformer.
+
+Pour une autre visualisation du passage des tokens aux vecteurs dans GPT-2, voir [The Illustrated GPT-2 de Jay Alammar](https://jalammar.github.io/illustrated-gpt2/). La figure ci-dessus est un schéma original et simplifié ; elle ne reproduit pas une illustration externe.
 
 
 ## D'où viennent les vecteurs ?
 
-Un tokenizer découpe le texte en tokens et associe généralement chaque token à un identifiant entier. Une **matrice de plongements** (ou matrice d'embeddings) $E\in\mathbb{R}^{V\times d}$ contient un vecteur par identifiant : $V$ est la taille du vocabulaire et $d$ la dimension du plongement. Pour le token d'identifiant $i$, son **vecteur de plongement initial** est la ligne $E_i$.
+Un tokenizer découpe le texte en tokens et associe chaque token à un **ID**. Le modèle utilise cet ID pour sélectionner le vecteur correspondant dans sa **matrice d'embeddings** (ou matrice de plongements), notée $E$ :
+
+\[
+E\in\mathbb{R}^{V\times d}
+\]
+
+- $V$ est la taille du vocabulaire : la matrice contient une ligne par ID.
+- $d$ est la dimension de l'embedding : chaque ligne contient $d$ nombres réels.
+- $E[i]$ désigne le vecteur de la ligne associée à l'ID $i$.
+
+Cette sélection est appelée *embedding lookup* (recherche ou sélection du vecteur d'embedding). Par exemple, si le token `bank` reçoit l'ID fictif 4821, le lookup renvoie $E[4821]$. Le nombre 4821 ne décrit pas le sens de `bank` : il indique seulement quelle ligne sélectionner.
+
+### Comment cette matrice est-elle apprise ?
+
+La matrice $E$ fait partie des **paramètres du réseau neuronal**. Dans un entraînement classique, ses valeurs sont initialisées (souvent aléatoirement), puis ajustées avec les autres paramètres du modèle. À chaque étape d'entraînement, le modèle prédit le token suivant, calcule une fonction de perte à partir de la cible observée, puis utilise la rétropropagation et l'optimiseur pour modifier les paramètres, y compris les lignes d'embeddings concernées.
+
+La table n'est donc ni un dictionnaire de définitions ni une liste de coordonnées écrites à la main : ses vecteurs sont appris à partir des régularités des séquences d'entraînement. Pour comprendre le rôle de la [fonction de perte](loss.qmd) et des [gradients](gradients.qmd), consultez les pages dédiées.
 
 Dans un Transformer, cette représentation est ensuite transformée par les couches du réseau. Il faut distinguer trois objets :
 
@@ -146,7 +186,7 @@ Le lookup est une sélection de lignes : deux occurrences d'un même ID sélecti
 
 Le lookup s'arrête à la sélection d'une ligne de la matrice : il ne contextualise pas le vecteur. L'information positionnelle et le traitement par les couches du Transformer interviennent ensuite ; leur mécanisme dépend de l'architecture. Pour éviter de confondre ces étapes, voir la page dédiée à [l'encodage positionnel](positional-encoding.qmd), puis celle sur les [représentations contextualisées](contextualized-representations.qmd).
 
-Pendant l'entraînement, les gradients peuvent modifier les lignes de la table d'embeddings utilisées par les exemples. Pour les conventions de dimensions et les opérations sur les tenseurs, voir la page [Tenseurs](tensors.qmd) ; pour les étapes précédentes de la chaîne d’entrée, voir [du texte aux tokens](text-data.qmd) et les [stratégies de tokenisation](tokenization-strategies.qmd).
+Pendant l'entraînement, les gradients peuvent modifier les lignes de la matrice d'embeddings utilisées par les exemples. Pour les conventions de dimensions et les opérations sur les tenseurs, voir la page [Tenseurs](tensors.qmd) ; pour les étapes précédentes de la chaîne d'entrée, voir [du texte aux tokens](text-data.qmd) et les [stratégies de tokenisation](tokenization-strategies.qmd).
 
 ## Interpréter la géométrie avec prudence
 
@@ -165,6 +205,7 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 
 ## Références
 
+- [Jay Alammar, The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/) — visualisation pédagogique des embeddings de tokens et de leur place dans l'entrée d'un GPT.
 - [Mikolov et al. (2013), Efficient Estimation of Word Representations in Vector Space](https://arxiv.org/abs/1301.3781).
 - [Ethayarajh (2019), How Contextual are Contextualized Word Representations?](https://arxiv.org/abs/1909.00512).
 - [Li et al. (2020), On the Sentence Embeddings from Pre-trained Language Models](https://aclanthology.org/2020.emnlp-main.733/).
