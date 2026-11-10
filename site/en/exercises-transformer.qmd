@@ -11,7 +11,7 @@ id: "en/exercises-transformer"
 scope: "Practice on Transformer-block shapes, normalization, parameter counts, and architectural reasoning."
 purpose: "Work through the transformer exercise collection independently of the conceptual lesson sequence, using preparation links, worked solutions, and transfer prompts."
 suggested_route:
-  previous: "en/exercises"
+  previous: null
   next: null
 hierarchy:
   parents: ["en/exercises"]

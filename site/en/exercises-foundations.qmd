@@ -11,7 +11,7 @@ id: "en/exercises-foundations"
 scope: "Worked practice in probability, loss, gradients, tensor shapes, numerical stability, and perplexity."
 purpose: "Work through the mathematical foundations exercise collection independently of the conceptual lesson sequence, using preparation links, worked solutions, and transfer prompts."
 suggested_route:
-  previous: "en/exercises"
+  previous: null
   next: null
 hierarchy:
   parents: ["en/exercises"]

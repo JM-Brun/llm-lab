@@ -11,7 +11,7 @@ id: "en/exercises-text-data"
 scope: "Formative practice on tokenization, embeddings, windows, target alignment, BPE, and data leakage."
 purpose: "Work through the text data exercise collection independently of the conceptual lesson sequence, using preparation links, worked solutions, and transfer prompts."
 suggested_route:
-  previous: "en/exercises"
+  previous: null
   next: null
 hierarchy:
   parents: ["en/exercises"]

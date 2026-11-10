@@ -11,7 +11,7 @@ id: "en/exercises-generation"
 scope: "Practice on next-token selection, autoregressive decoding, stopping, prefill, and KV caching."
 purpose: "Work through the generation exercise collection independently of the conceptual lesson sequence, using preparation links, worked solutions, and transfer prompts."
 suggested_route:
-  previous: "en/exercises"
+  previous: null
   next: null
 hierarchy:
   parents: ["en/exercises"]

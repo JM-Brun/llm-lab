@@ -11,7 +11,7 @@ id: "en/exercises-attention"
 scope: "Practice on Q/K/V, weighted aggregation, causal masking, and multi-head attention."
 purpose: "Work through the attention exercise collection independently of the conceptual lesson sequence, using preparation links, worked solutions, and transfer prompts."
 suggested_route:
-  previous: "en/exercises"
+  previous: null
   next: null
 hierarchy:
   parents: ["en/exercises"]
