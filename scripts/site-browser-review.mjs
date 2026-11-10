@@ -346,7 +346,7 @@ async function runCase(testCase, caseIndex) {
     }
     if (kind === "exercise-collection") {
       const presentIds = await page.evaluate(ids =>
-        ids.filter(id => document.getElementById(id)).sort(),
+        ids.filter(id => document.getElementById(id)),
         testCase.exerciseIds,
       );
       const details = page.locator("main details");
