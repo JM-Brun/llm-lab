@@ -138,3 +138,11 @@ Use these resources as complementary explanations and study aids, not as substit
 15. **Third-party PDF mirror of the Raschka book — provenance not verified**
     - URL supplied for review: https://dl.tehrandata.org/book/Build-a-large-language-models.pdf
     - **Use policy:** do not treat this mirror as the canonical edition, redistribute it, or assume it is authorized. Prefer the publisher page and the author's official repository/video materials. This reference is recorded for provenance transparency only; no copied book text, figures, or exercises should enter LLM Lab.
+
+
+## Joint embeddings and cross-modal representation alignment
+
+- **Mayank Kejriwal — Do AI models trained on different modalities converge to the same representation of the world?** (AI Scientist, 8 November 2026): https://aiscientist.substack.com/p/do-ai-models-trained-on-different
+  - **Use for:** an accessible synthesis of the Platonic Representation Hypothesis, good-view versus bad-view JEPA training, the conditional convergence theorem, cross-modal alignment experiments, and their limitations.
+  - **Primary research:** Balestriero & LeCun, [*Proving and Improving the Platonic Representation Hypothesis with JEPAs*](https://arxiv.org/abs/2610.39302), arXiv:2610.39302 (2026).
+  - **Review status:** first-pass extraction recorded in `data/extractions/ai-scientist-platonic-representation-jepa-2026.yml` and `data/extractions/balestriero-lecun-platonic-representation-jepas-2026.yml`; the primary paper's proof appendices and experimental sections still require full audit. See [the source review](source-reviews/platonic-representation-jepa-2026-11.md). Treat reported alignment scores and sample-efficiency comparisons as author-reported, task-specific results, not independent reproductions or general-intelligence evidence.
