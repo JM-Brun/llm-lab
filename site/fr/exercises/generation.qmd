@@ -1,13 +1,13 @@
 ---
 title: "Exercices — Génération autorégressive"
 subtitle: "Questions de vérification, exercices et corrigés"
-keywords: ["type:exercise-hub", "destination:practice", "topic:inference-generation", "level:applied", "language:fr", "status:published"]
+keywords: ["type:exercise-hub", "destination:practice", "topic:inference-generation-exercises", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---
 
 <!--
 LLM-LAB-PAGE-MAP v1
-id: "fr/exercises/generation"
+id: "fr/generation-exercises"
 summary: "Questions de vérification et exercices associés à la leçon Génération autorégressive."
 scope: "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle."
 purpose: "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon."
@@ -18,7 +18,7 @@ hierarchy:
   parents: []
   children: []
 related: ["fr/generation"]
-tags: ["type:exercise-hub", "destination:practice", "topic:inference-generation", "level:applied", "language:fr", "status:published"]
+tags: ["type:exercise-hub", "destination:practice", "topic:inference-generation-exercises", "level:applied", "language:fr", "status:published"]
 -->
 
 [← Retour à la leçon : Génération autorégressive](../generation.qmd)

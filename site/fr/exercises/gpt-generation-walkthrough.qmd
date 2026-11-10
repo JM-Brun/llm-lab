@@ -1,13 +1,13 @@
 ---
 title: "Exercices — gpt-generation-walkthrough"
 subtitle: "Exercices de compréhension et de lecture du code"
-keywords: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-generation", "level:applied", "language:fr", "status:published"]
+keywords: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-generation-exercises", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---
 
 <!--
 LLM-LAB-PAGE-MAP v1
-id: "fr/exercises/gpt-generation-walkthrough"
+id: "fr/gpt-generation-walkthrough-exercises"
 summary: "Exercices associés à la visite guidée gpt-generation-walkthrough."
 scope: "Regroupe les exercices et corrigés de la visite guidée sans dupliquer l'explication du code."
 purpose: "Vérifier la compréhension des invariants, des formes et des choix d'implémentation présentés dans la visite guidée."
@@ -18,7 +18,7 @@ hierarchy:
   parents: []
   children: []
 related: ["fr/gpt-generation-walkthrough"]
-tags: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-generation", "level:applied", "language:fr", "status:published"]
+tags: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-generation-exercises", "level:applied", "language:fr", "status:published"]
 -->
 
 [← Retour à la visite guidée : gpt-generation-walkthrough](../gpt-generation-walkthrough.qmd)
