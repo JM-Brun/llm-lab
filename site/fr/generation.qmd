@@ -45,7 +45,7 @@ Cette boucle est la **génération autorégressive**. Pendant l'inférence, les 
 </div>
 
 
-Cette page apparaît une première fois comme aperçu du fonctionnement général, juste après le panorama. L'étude détaillée de la boucle, du *prefill*, du *decode* et des stratégies de sélection intervient lorsque le parcours revient à l'inférence.
+Cette page intervient à deux moments du parcours. **Au premier passage**, juste après le panorama, retenez surtout la boucle autorégressive décrite dans les sections 1 et 2 : prédire, sélectionner, réinjecter, puis recommencer. **Lors du retour à l'inférence**, approfondissez les sections suivantes sur le *prefill*, le *decode* et les règles de sélection. Les détails de performance sont repliés dans un approfondissement facultatif.
 
 ## 1. Une étape élémentaire : prédire et sélectionner un token
 
@@ -54,6 +54,8 @@ Considérons un contexte courant composé des tokens déjà disponibles, qu'ils 
 \[
 c_t = (x_1, \ldots, x_{t-1}).
 \]
+
+Dans cette notation, chaque $x_i$ désigne le **token** à la position $i$, pas son identifiant numérique. En pratique, le tokenizer associe ce token à un ID entier, qui sert à sélectionner son vecteur dans la table d'embeddings. Pour alléger les équations, on note ici les tokens plutôt que leurs IDs.
 
 Pour **une étape de génération**, le modèle effectue une passe avant à paramètres fixes. Il produit des logits à chaque position du contexte ; pour prédire la suite, on utilise ceux de la dernière position, notés \(z_t\). La softmax définit alors la distribution conditionnelle :
 
@@ -112,6 +114,8 @@ Les systèmes d'inférence distinguent généralement le traitement initial du p
 
 **Decode** désigne donc une phase d'exécution après le prefill ; **décodage** désigne la règle de sélection du token. Les deux notions sont liées, mais ne sont pas synonymes.
 
+::: {.callout-note title="Approfondissement facultatif : latence et optimisations d'inférence" collapse="true"}
+
 ### Pourquoi l'inférence semble-t-elle parfois lente ?
 
 La latence visible dépend de deux phases différentes. Deux métriques permettent de les distinguer :
@@ -134,6 +138,8 @@ Le *prefill* est souvent limité par la capacité de calcul, tandis que le *deco
 Une optimisation avancée, le **speculative decoding**, fait proposer plusieurs tokens par un modèle brouillon, puis les fait vérifier par le modèle cible. Un préfixe proposé peut être accepté en bloc ; à la première divergence, la procédure reprend selon une règle conçue pour préserver la distribution du modèle cible. Le gain dépend du coût de vérification et du taux d'acceptation : ce n'est pas automatiquement plus rapide. Cette technique est un approfondissement, pas une étape nécessaire pour comprendre la boucle de base.
 
 Le schéma de [Brij Pandey sur le chemin d'inférence](https://www.linkedin.com/posts/brijpandeyji_you-ask-llm-a-question-it-pauses-then-share-7525787285829804032-YNEl) fournit une vue d'ensemble utile de ces phases et de ces diagnostics. Il est cité comme ressource externe ; sa figure n'est pas reproduite ici.
+
+:::
 
 Le prefill n'est pas non plus du [*teacher forcing*](training-examples.qmd). En teacher forcing, les prédictions sont conditionnées par le préfixe observé dans les données de référence, notamment pendant l'entraînement. En génération, le préfixe s'allonge avec les tokens sélectionnés par le modèle. Le calcul de prédiction est apparenté, mais la source du contexte diffère.
 
