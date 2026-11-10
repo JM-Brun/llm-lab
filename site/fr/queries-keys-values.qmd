@@ -93,7 +93,7 @@ Les poids ne sont pas une mesure universelle de pertinence sémantique et l'atte
 
 La page suivante, [Attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd), explique comment les scores deviennent des poids et comment ceux-ci agrègent V.
 
-Pour mettre en pratique les compétences associées à cette leçon, les [exercices de la section Attention](exercises.qmd#attention) proposent de calculer les projections et leurs dimensions, prévoir les effets d'une modification de $W_Q$, $W_K$ ou $W_V$, relier les projections à la rétropropagation, puis transférer le raisonnement à l'attention croisée et à GQA/MQA. Les calculs numériques restent dans ce parcours pratique.
+Pour mettre en pratique les compétences associées à cette leçon, les [exercices de la section Attention](exercises-attention.qmd#attention) proposent de calculer les projections et leurs dimensions, prévoir les effets d'une modification de $W_Q$, $W_K$ ou $W_V$, relier les projections à la rétropropagation, puis transférer le raisonnement à l'attention croisée et à GQA/MQA. Les calculs numériques restent dans ce parcours pratique.
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
 À la fin de cette leçon, vous devriez pouvoir :
@@ -105,7 +105,7 @@ Pour mettre en pratique les compétences associées à cette leçon, les [exerci
 ::: {.self-check}
 ## Vérifier l'idée essentielle
 
-[Exercices approfondis sur Q/K/V et l'attention](exercises.qmd#attention).
+[Exercices approfondis sur Q/K/V et l'attention](exercises-attention.qmd#attention).
 
 **Quelles projections déterminent les poids d'attention, et laquelle fournit les vecteurs agrégés ? Que se passe-t-il si V change alors que Q et K restent fixes ?**
 

@@ -203,7 +203,7 @@ A probability of 0.9 therefore does not automatically mean “a 90% chance that 
 ::: {.self-check}
 ## Check your understanding
 
-[Extended exercises on this topic](../en/exercises.qmd#foundations).
+[Extended exercises on this topic](../en/exercises-foundations.qmd#foundations).
 
 1. Why are logits not probabilities?
 2. Why does \(p_\theta(x_t\mid x_{<t})\) depend on the prefix?
@@ -226,7 +226,7 @@ A probability of 0.9 therefore does not automatically mean “a 90% chance that 
 
 - [Likelihood](likelihood.qmd) — probability of observed tokens and sequences.
 - [Cross-entropy](cross-entropy.qmd) — the training objective.
-- [Mathematical foundations exercises](exercises.qmd#foundations) — worked exercises on softmax, loss and related topics; further topics remain planned.
+- [Mathematical foundations exercises](exercises-foundations.qmd#foundations) — worked exercises on softmax, loss and related topics; further topics remain planned.
 
 ## References
 

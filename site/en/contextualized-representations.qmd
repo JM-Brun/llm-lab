@@ -197,7 +197,7 @@ The [embedding-space lookup](embedding-space.qmd) maps IDs to initial vectors. T
 ::: {.self-check}
 ## Check your understanding
 
-[Extended exercises on this topic](../en/exercises.qmd#transformer).
+[Extended exercises on this topic](exercises-transformer.qmd#transformer).
 
 Two occurrences of the **same token ID** appear in two different sentences. Assume the embedding matrix is unchanged:
 

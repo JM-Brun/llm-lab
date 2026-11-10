@@ -250,7 +250,7 @@ This page is an **optional deepening** of [From text to tokens](text-data.qmd): 
 ::: {.self-check}
 ## Check your understanding
 
-Formative exercises extend this page, notably on BPE merges, in the [Text-data collection](exercises.qmd#text-data).
+Formative exercises extend this page, notably on BPE merges, in the [Text-data collection](exercises-text-data.qmd#text-data).
 
 1. One tokenizer produces fewer tokens than another on the same text. Does that prove it is better?
 

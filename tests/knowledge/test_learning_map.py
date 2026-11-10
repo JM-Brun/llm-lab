@@ -237,7 +237,9 @@ def test_clean_heading_removes_lightweight_markdown() -> None:
     assert clean_heading("  Attention mechanisms:  ") == "Attention mechanisms"
 
 
-def test_load_pages_extracts_published_pages_and_section_headings(tmp_path: Path) -> None:
+def test_load_pages_extracts_published_pages_and_section_headings(
+    tmp_path: Path, monkeypatch
+) -> None:
     site = tmp_path / "site"
     _write_page(
         site,
@@ -264,7 +266,7 @@ def test_load_pages_extracts_published_pages_and_section_headings(tmp_path: Path
         headings=("## Intuition", "## Query, Key and Value"),
     )
 
-    MODULE["load_pages"].__globals__["SITE"] = site
+    monkeypatch.setitem(MODULE["load_pages"].__globals__, "SITE", site)
     pages = MODULE["load_pages"]()
 
     assert [page["id"] for page in pages] == ["en/attention", "fr/attention"]
@@ -313,13 +315,13 @@ def test_assign_route_rank_follows_suggested_route_and_hierarchy() -> None:
     }
 
 
-def test_load_navigation_derives_areas_from_sidebar(tmp_path: Path) -> None:
+def test_load_navigation_derives_areas_from_sidebar(tmp_path: Path, monkeypatch) -> None:
     site = tmp_path / "site"
     _write_page(site, page_id="fr/attention", language="fr", title="Attention")
     _write_sidebar(site)
-    MODULE["load_pages"].__globals__["SITE"] = site
+    monkeypatch.setitem(MODULE["load_pages"].__globals__, "SITE", site)
     pages = MODULE["load_pages"]()
-    MODULE["load_navigation"].__globals__["SITE"] = site
+    monkeypatch.setitem(MODULE["load_navigation"].__globals__, "SITE", site)
 
     navigation = MODULE["load_navigation"]("fr", pages)
 
@@ -333,7 +335,7 @@ def test_load_navigation_derives_areas_from_sidebar(tmp_path: Path) -> None:
     ]
 
 
-def test_load_navigation_preserves_nested_sidebar_sections(tmp_path: Path) -> None:
+def test_load_navigation_preserves_nested_sidebar_sections(tmp_path: Path, monkeypatch) -> None:
     site = tmp_path / "site"
     _write_page(site, page_id="fr/attention", language="fr", title="Attention")
     _write_sidebar(site)
@@ -346,9 +348,9 @@ def test_load_navigation_preserves_nested_sidebar_sections(tmp_path: Path) -> No
         }
     ]
     config_path.write_text(yaml.safe_dump(config, allow_unicode=True), encoding="utf-8")
-    MODULE["load_pages"].__globals__["SITE"] = site
+    monkeypatch.setitem(MODULE["load_pages"].__globals__, "SITE", site)
     pages = MODULE["load_pages"]()
-    MODULE["load_navigation"].__globals__["SITE"] = site
+    monkeypatch.setitem(MODULE["load_navigation"].__globals__, "SITE", site)
 
     navigation = MODULE["load_navigation"]("fr", pages)
 
@@ -357,7 +359,9 @@ def test_load_navigation_preserves_nested_sidebar_sections(tmp_path: Path) -> No
     ]
 
 
-def test_load_navigation_accepts_sidebar_items_with_custom_text(tmp_path: Path) -> None:
+def test_load_navigation_accepts_sidebar_items_with_custom_text(
+    tmp_path: Path, monkeypatch
+) -> None:
     """A ``{text, href}`` item relabels a page in Quarto's sidebar and breadcrumbs only."""
     site = tmp_path / "site"
     _write_page(site, page_id="fr/attention", language="fr", title="Attention")
@@ -368,19 +372,19 @@ def test_load_navigation_accepts_sidebar_items_with_custom_text(tmp_path: Path) 
         {"text": "Vue d'ensemble", "href": "fr/attention.qmd"}
     ]
     config_path.write_text(yaml.safe_dump(config, allow_unicode=True), encoding="utf-8")
-    MODULE["load_pages"].__globals__["SITE"] = site
+    monkeypatch.setitem(MODULE["load_pages"].__globals__, "SITE", site)
     pages = MODULE["load_pages"]()
-    MODULE["load_navigation"].__globals__["SITE"] = site
+    monkeypatch.setitem(MODULE["load_navigation"].__globals__, "SITE", site)
 
     navigation = MODULE["load_navigation"]("fr", pages)
 
     assert navigation[0]["sections"] == [{"title": "Sous-rubrique", "pages": ["fr/attention"]}]
 
 
-def test_load_navigation_requires_matching_sidebar(tmp_path: Path) -> None:
+def test_load_navigation_requires_matching_sidebar(tmp_path: Path, monkeypatch) -> None:
     site = tmp_path / "site"
     _write_sidebar(site)
-    MODULE["load_navigation"].__globals__["SITE"] = site
+    monkeypatch.setitem(MODULE["load_navigation"].__globals__, "SITE", site)
 
     with pytest.raises(ValueError, match="missing Quarto sidebar"):
         MODULE["load_navigation"]("de", [])
@@ -479,7 +483,9 @@ def test_render_resource_list_nests_areas_sections_and_pages() -> None:
     assert "      - [Attention \\*elle\\*](attention.html)" in nested
 
 
-def test_load_guided_route_resolves_language_specific_page_links(tmp_path: Path) -> None:
+def test_load_guided_route_resolves_language_specific_page_links(
+    tmp_path: Path, monkeypatch
+) -> None:
     route = tmp_path / "data" / "guided-route.yml"
     route.parent.mkdir(parents=True)
     route.write_text(
@@ -497,7 +503,7 @@ stages:
 """,
         encoding="utf-8",
     )
-    MODULE["load_guided_route"].__globals__["ROOT"] = tmp_path
+    monkeypatch.setitem(MODULE["load_guided_route"].__globals__, "ROOT", tmp_path)
     pages = [
         {"id": "fr/overview", "title": "Panorama", "href": "overview.html"},
         {"id": "fr/generation", "title": "Génération", "href": "generation.html"},
@@ -522,13 +528,13 @@ stages:
     assert english[0].optional_pages[0].title == "Tensors"
 
 
-def test_load_guided_route_rejects_missing_published_page(tmp_path: Path) -> None:
+def test_load_guided_route_rejects_missing_published_page(tmp_path: Path, monkeypatch) -> None:
     _write_guided_route(
         tmp_path,
         fr_core=["fr/not-published"],
         en_core=["en/not-published"],
     )
-    MODULE["load_guided_route"].__globals__["ROOT"] = tmp_path
+    monkeypatch.setitem(MODULE["load_guided_route"].__globals__, "ROOT", tmp_path)
 
     with pytest.raises(ValueError, match="unpublished or missing core page"):
         MODULE["load_guided_route"]("fr", [])
@@ -616,7 +622,7 @@ def test_repository_guided_route_resolves_against_published_pages(monkeypatch) -
             assert all(page.id in published_ids for page in stage.optional_pages)
 
 
-def test_build_writes_language_specific_json(tmp_path: Path) -> None:
+def test_build_writes_language_specific_json(tmp_path: Path, monkeypatch) -> None:
     site = tmp_path / "site"
     _write_page(site, page_id="fr/index", language="fr", title="Accueil", topic="overview")
     _write_page(site, page_id="fr/attention", language="fr", title="Attention")
@@ -625,8 +631,8 @@ def test_build_writes_language_specific_json(tmp_path: Path) -> None:
     _write_guided_route(tmp_path)
     _write_sidebar(site)
 
-    MODULE["build"].__globals__["SITE"] = site
-    MODULE["build"].__globals__["ROOT"] = tmp_path
+    monkeypatch.setitem(MODULE["build"].__globals__, "SITE", site)
+    monkeypatch.setitem(MODULE["build"].__globals__, "ROOT", tmp_path)
     _write_concept_registry(tmp_path)
     _write_domain_registry(tmp_path)
     output = MODULE["build"]("fr")
@@ -695,7 +701,7 @@ def test_build_writes_language_specific_json(tmp_path: Path) -> None:
     ]
 
 
-def test_load_pages_preserves_primary_deepen_domain(tmp_path: Path) -> None:
+def test_load_pages_preserves_primary_deepen_domain(tmp_path: Path, monkeypatch) -> None:
     site = tmp_path / "site"
     _write_page(
         site,
@@ -706,7 +712,7 @@ def test_load_pages_preserves_primary_deepen_domain(tmp_path: Path) -> None:
         topic="rope",
         domain="architectures-mechanisms",
     )
-    MODULE["load_pages"].__globals__["SITE"] = site
+    monkeypatch.setitem(MODULE["load_pages"].__globals__, "SITE", site)
 
     pages = MODULE["load_pages"]()
 
@@ -714,7 +720,7 @@ def test_load_pages_preserves_primary_deepen_domain(tmp_path: Path) -> None:
     assert pages[0]["domain"] == "architectures-mechanisms"
 
 
-def test_build_serializes_deepen_domain(tmp_path: Path) -> None:
+def test_build_serializes_deepen_domain(tmp_path: Path, monkeypatch) -> None:
     site = tmp_path / "site"
     _write_page(
         site,
@@ -735,8 +741,8 @@ def test_build_serializes_deepen_domain(tmp_path: Path) -> None:
     _write_page(site, page_id="en/index", language="en", title="Home", topic="overview")
     _write_guided_route(tmp_path, fr_core=["fr/rope"], en_core=["en/index"])
     _write_sidebar(site)
-    MODULE["build"].__globals__["SITE"] = site
-    MODULE["build"].__globals__["ROOT"] = tmp_path
+    monkeypatch.setitem(MODULE["build"].__globals__, "SITE", site)
+    monkeypatch.setitem(MODULE["build"].__globals__, "ROOT", tmp_path)
     _write_concept_registry(tmp_path)
 
     output = MODULE["build"]("fr")
@@ -793,9 +799,11 @@ def test_learning_map_keyboard_activation_uses_node_selection() -> None:
     assert 'if (event.key !== "Escape" || !data) {' in script
 
 
-def test_load_concept_graph_serializes_localized_relation_semantics(tmp_path: Path) -> None:
+def test_load_concept_graph_serializes_localized_relation_semantics(
+    tmp_path: Path, monkeypatch
+) -> None:
     _write_concept_registry(tmp_path)
-    MODULE["load_concept_graph"].__globals__["ROOT"] = tmp_path
+    monkeypatch.setitem(MODULE["load_concept_graph"].__globals__, "ROOT", tmp_path)
     pages = [
         {"id": "fr/attention", "title": "Attention", "href": "attention.html"},
         {"id": "fr/queries", "title": "Requêtes", "href": "queries.html"},
@@ -859,10 +867,10 @@ def test_concept_graph_script_exposes_direction_and_relation_legend() -> None:
     assert 'relation.direction === "symmetric" ? "↔ " : "→ "' in source
 
 
-def test_load_concept_graph_exports_localized_domains(tmp_path: Path) -> None:
+def test_load_concept_graph_exports_localized_domains(tmp_path: Path, monkeypatch) -> None:
     _write_concept_registry(tmp_path)
     _write_domain_registry(tmp_path)
-    MODULE["load_concept_graph"].__globals__["ROOT"] = tmp_path
+    monkeypatch.setitem(MODULE["load_concept_graph"].__globals__, "ROOT", tmp_path)
     pages = [{"id": "fr/attention", "title": "Attention", "href": "attention.html"}]
 
     french = MODULE["load_concept_graph"]("fr", pages)
@@ -880,9 +888,11 @@ def test_load_concept_graph_exports_localized_domains(tmp_path: Path) -> None:
     assert french["concepts"][1]["domains"] == []
 
 
-def test_load_concept_graph_falls_back_when_domain_registry_is_missing(tmp_path: Path) -> None:
+def test_load_concept_graph_falls_back_when_domain_registry_is_missing(
+    tmp_path: Path, monkeypatch
+) -> None:
     _write_concept_registry(tmp_path)
-    MODULE["load_concept_graph"].__globals__["ROOT"] = tmp_path
+    monkeypatch.setitem(MODULE["load_concept_graph"].__globals__, "ROOT", tmp_path)
     pages = [{"id": "fr/attention", "title": "Attention", "href": "attention.html"}]
 
     graph = MODULE["load_concept_graph"]("fr", pages)
