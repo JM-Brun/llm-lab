@@ -124,7 +124,7 @@ The causal rule can also be stated as a prefix property: with parameters and a p
 ::: {.self-check}
 ## Check your understanding
 
-Constructing a causal mask, shifting targets, and analysing prefix invariance are covered in [exercise CA-A in the Attention collection](exercises.qmd#attention).
+Constructing a causal mask, shifting targets, and analysing prefix invariance are covered in [exercise CA-A](exercises.qmd#ca-a-prefix-invariance).
 :::
 
 ::: {.callout-note collapse="true" title="Reference code and tests (advanced)"}
