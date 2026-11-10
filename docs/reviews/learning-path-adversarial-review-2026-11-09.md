@@ -55,7 +55,47 @@ work packages in group B should respect or explicitly supersede.
 uv run ruff format --check . && uv run ruff check . && uv run mypy src && uv run pytest
 ```
 
-Expected: 342 passed, 1 skipped, coverage about 98 %.
+Expected: about 350 passed, 1 skipped, coverage about 98 % (342 when first written; the count grows).
+
+### 1.4 What this review must yield to (added 2026-11-10)
+
+This review was written from the outside, before reading the project's own contracts. The
+maintainer then restated the goal and asked for the editorial principles and constraints to be
+respected. Where this document disagrees with the items below, **they win**.
+
+**Goal, as stated by the maintainer (2026-11-10).** A complete panorama to learn and understand
+LLMs and to build one: a main learning path and a Build path, comparable to the best
+learn-and-build projects; separate resources to deepen; others to practise, exercise and question,
+which keep growing over time. The project compiles the best of the field — pedagogical approaches,
+sites and resources, differing and complementary viewpoints — and adds its own extensions.
+
+**Contracts to read before any work package:**
+[contributor guiding principles](../contributor-guiding-principles.md),
+[page-navigation contract](../pedagogical-breadcrumb-and-page-navigation-contract.md),
+[reader-experience and editorial method](../reader-experience-and-editorial-method.md),
+[guided-route membership projection](../guided-route-membership-projection.md),
+[comparable projects](../comparable-projects-landscape.md) and the
+[source syntheses](../source-syntheses/README.md).
+
+**Corrections to this review.**
+
+| Where | What it said | Why it is wrong here | What to do instead |
+|---|---|---|---|
+| §2.5, Deepen | "It is larger than Understand, so the optional layer outweighs the core." | Deepen and Practice are meant to grow; size is not a defect. | Judge them by attachment and discoverability (§3.6, WP-D3), not by size. |
+| §2.3, §2.4 | Fewer links, fewer viewpoints, one example, like a single-author course. | The project's value is synthesis of several sources and viewpoints. | Keep multiple perspectives; make their role explicit on the page. Link density is a problem only where a link does not say which question it answers. |
+| §3.1 item 4, §3.4, WP-B5, WP-B7 | One lesson template with eight fixed sections, checked by a test. | The principles require soft page patterns: "never add empty headings to satisfy a template"; the navigation contract "does not impose a universal lesson template". | Use the existing page patterns; align cues (question, outcome, self-check), not headings. No test on section order. |
+| §3.3, WP-A5 | Remove the pipeline stepper on `text-data`. | The navigation contract (§3.4) allows a local process stepper when it describes the page's process. | Keep it; check only its label and placement against the contract. |
+| §3.3, WP-A2 | "Path complete" card with three exits; "Back to stage N" card on optional pages. | End-of-page lists that duplicate menus are excluded; the badge already gives the way back, and one navigation dimension must not be rendered twice. | Done differently in PR 847: one forward card from the last core page to the Build path, nothing on optional pages. |
+| §3.3, WP-B2 | Position line with reading time (`N min`), numbers in the sidebar. | Reading time is an unvalidated claim about effort. | Done differently in PR 849: position only, core pages only, inside the existing badge. Renumbering stays open and needs the maintainer's decision. |
+| §3.2 | Fold the code tours into the lessons. | Concept teaching and implementation teaching stay separate and linked (principle 5). | Already superseded by §3.6: two paired tracks. |
+| §2.5, Build; WP-D6 | "The name oversells"; rename the track until training exists. | The Build path is a stated goal, with status made visible (principle 14), not a naming problem. | Keep the name; keep the status column honest; prioritise G8 (WP-C5) so the path earns it. |
+
+**Still valid and not affected:** the confirmed defects of §2.2, the measurements, the
+verification of what runs (§2.5), group C, WP-A3, WP-A4, WP-D1 to WP-D5.
+
+**Method for new work.** A change to the paths should name the source or comparable project whose
+approach it adopts, say what it keeps and what it changes, and go through the source-synthesis
+workflow when it adds or reshapes teaching content.
 
 ---
 
