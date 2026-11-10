@@ -37,11 +37,11 @@
 
 Both generation-process illustrations now use the new running example and the same illustrative 60 / 20 / 10 / 10 distribution as the lesson. Their bar widths were subsequently corrected in PR #945 to be proportional to those percentages. This audit does not treat the SVG as an independent source of explanatory detail; the surrounding lesson supplies the explanation.
 
-## Follow-up recommended
+## Follow-up implemented in this branch
 
-Restore the four removed overview destinations as a compact, contextual **“Go further / Pour approfondir”** group in both languages. They are not missing lesson content—the target pages still exist—but removing their entry points makes useful implementation and mathematical material harder to discover. Keep the group short and describe what each destination adds; do not reinstate a long undifferentiated link list. The Build-path link itself is still present in both overview pages and does not need restoration.
+Restored the four removed overview destinations as a compact, contextual **“Pour approfondir / Go further”** group in both languages: GPT configuration, mathematical foundations, tokenization strategies, and the Transformer-block walkthrough. The destination pages were verified to exist in French and English. The Build-path link was already present in both current overview pages and was left unchanged.
 
-Before closing the audit, verify the Build-path link and equivalent French/English destinations, then run the page metadata, link, and Quarto checks. The audit rule in `docs/reader-experience-and-editorial-method.md` should be used for subsequent multi-page refactors.
+Before merging, run the page metadata, link, and Quarto checks. The audit rule in `docs/reader-experience-and-editorial-method.md` should be used for subsequent multi-page refactors.
 
 ## Limits of this audit
 
