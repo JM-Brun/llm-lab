@@ -306,7 +306,7 @@ Il s'agit de prédictions qualitatives, pas de garanties sur l'amplitude d'un ch
 
 **Étape 3 — Calcul numérique contrôlé (agrégation jouet, pas une couche d'attention).**
 
-On reprend les formulations du dialogue d'Otis : « bonne situation » et « bonne ou mauvaise situation ». Pour isoler le mécanisme, on représente ces extraits par deux fenêtres lexicales simplifiées : A = [bonne, situation], B = [mauvaise, situation]. Il s'agit d'unités pédagogiques, **pas d'une segmentation attribuée à un tokenizer réel**. La table synthétique contient :
+On reprend les formulations du dialogue d'Otis : « bonne situation » et « bonne ou mauvaise situation ». Pour isoler le mécanisme, on construit deux fenêtres lexicales simplifiées : A = [bonne, situation], B = [mauvaise, situation]. Dans la seconde, le connecteur « ou » est volontairement omis pour isoler le contraste. Il s'agit d'unités pédagogiques, **pas d'une segmentation attribuée à un tokenizer réel**. La table synthétique contient :
 \[
 E[\text{bonne}]=(0.1,0.2),\quad E[\text{mauvaise}]=(0.9,-0.4),\quad E[\text{situation}]=(0.5,0.5).
 \]
