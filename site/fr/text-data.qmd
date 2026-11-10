@@ -29,6 +29,13 @@ La génération commence avec un prompt écrit en langage courant. Pourtant, le 
 La **tokenisation** découpe le texte en unités appelées *tokens* et associe chacune à un identifiant. Cette étape est distincte du réseau neuronal, mais elle détermine son vocabulaire, la longueur des séquences et une partie du coût de calcul.
 :::
 
+::: {.callout-note title="Fil rouge : le texte à encoder"}
+Le préfixe à encoder est : **« C'est une bonne situation, ça, scribe ? »** La continuation de référence commence séparément par : **« Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... »**
+
+Tokenisez d'abord le préfixe, puis la continuation, avec le tokenizer effectivement étudié. Ne supposez pas que les frontières de tokens correspondent aux mots. Les IDs obtenus dépendent du tokenizer ; ils ne sont pas universels.
+:::
+
+
 Dans la page précédente, la génération a été présentée comme une boucle qui s'appuie sur les tokens déjà présents dans le contexte. Cette page remonte d'une étape : elle explique comment le prompt devient une séquence de tokens, puis d'IDs entiers que le modèle peut convertir en vecteurs d'entrée.
 
 ::: {.callout-tip title="L'idée à retenir en une minute"}
