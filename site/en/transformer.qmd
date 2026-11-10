@@ -127,6 +127,14 @@ After the final block, the final normalization and output head produce the **log
 <span id="what-this-demonstration-does-and-does-not-establish"></span>
 <span id="observe-a-transformer-in-action"></span>
 
+
+
+{{< include ../includes/generated-suggested-route-en-transformer.qmd >}}
+
+::: {.language-switch}
+**Language:** [Français](../fr/transformer.qmd) · [English](transformer.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -143,14 +151,7 @@ After the final block, the final normalization and output head produce the **log
 <h3>Practice</h3>
 <p>The questions and exercises for this lesson are collected on its <a href="exercises/transformer.qmd">dedicated practice page</a>.</p>
 
-</div>
-</details>
 
-{{< include ../includes/generated-suggested-route-en-transformer.qmd >}}
-
-::: {.language-switch}
-**Language:** [Français](../fr/transformer.qmd) · [English](transformer.qmd)
-:::
 
 ::: {.self-check}
 ## Check your understanding
@@ -168,3 +169,7 @@ After the final block, the final normalization and output head produce the **log
 
 </details>
 :::
+
+
+</div>
+</details>
