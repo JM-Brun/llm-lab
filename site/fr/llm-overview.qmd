@@ -30,6 +30,13 @@ Vous demandez à un assistant : « Le rapport indique que la concentration… »
 C'est le principe d'un **modèle de langage** : attribuer des probabilités aux continuations possibles d'une séquence. Un **grand modèle de langage** (*large language model*, LLM) est un modèle de langage entraîné à grande échelle, sur de grands corpus et avec un budget de calcul conséquent. Aucun seuil de paramètres ne définit à lui seul cette catégorie ; les données et le calcul comptent également ([lois d'échelle](scaling-laws.qmd) ; [Zhao et al., 2023](https://arxiv.org/abs/2303.18223) ; [Hoffmann et al., 2022](https://proceedings.neurips.cc/paper_files/paper/2022/hash/c1e2faff6f588870935f114ebe04a3e5-Abstract.html)). LLM ne désigne donc ni une architecture ni un objectif d'entraînement particuliers.
 :::
 
+::: {.callout-note title="Fil rouge : le scribe"}
+Le contexte initial est la question de Panoramix : **« C'est une bonne situation, ça, scribe ? »** La réponse d'Otis commence ensuite par **« Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... »** : cette réponse est la continuation, pas le prompt.
+
+Nous réutiliserons ce couple pour suivre le passage du texte aux tokens, puis la prédiction du token suivant. La réplique du film est une accroche culturelle ; les calculs reproductibles utilisent une continuation pédagogique originale.
+:::
+
+
 ::: {.callout-tip title="L'idée à retenir en une minute"}
 - **Trois notions différentes :** un **LLM** est un modèle de langage entraîné à grande échelle — aucun seuil de paramètres ne fait consensus, les données et le calcul comptent ; un **GPT** est une famille de Transformers pré-entraînés décodeur seul ; le **Transformer** est une famille d'architectures. Ces trois termes ne sont pas interchangeables.
 - **Le calcul d'un GPT :** à partir d'un contexte, il transforme le texte en logits puis en distribution conditionnelle sur le prochain token, un token après l'autre, avec des paramètres fixes pendant l'inférence ordinaire.
