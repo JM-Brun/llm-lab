@@ -1,5 +1,5 @@
 ---
-title: "Exercises — Bloc Transformer"
+title: "Exercises — Transformer block"
 subtitle: "Comprehension and code-reading exercises"
 keywords: ["type:exercise-hub", "destination:practice", "topic:reference-transformer-block-exercises", "level:applied", "language:en", "status:published"]
 lang: en
@@ -8,7 +8,7 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/transformer-block-walkthrough-exercises"
-summary: "Exercises associated with the Bloc Transformer guided tour."
+summary: "Exercises associated with the Transformer block guided tour."
 scope: "Collects exercises and worked answers for the guided tour without duplicating its code explanation."
 purpose: "Check understanding of the invariants, shapes, and implementation choices presented in the guided tour."
 suggested_route:

@@ -1,5 +1,5 @@
 ---
-title: "Exercises — Génération du GPT"
+title: "Exercises — GPT generation"
 subtitle: "Comprehension and code-reading exercises"
 keywords: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-generation-exercises", "level:applied", "language:en", "status:published"]
 lang: en
@@ -8,7 +8,7 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/gpt-generation-walkthrough-exercises"
-summary: "Exercises associated with the Génération du GPT guided tour."
+summary: "Exercises associated with the GPT generation guided tour."
 scope: "Collects exercises and worked answers for the guided tour without duplicating its code explanation."
 purpose: "Check understanding of the invariants, shapes, and implementation choices presented in the guided tour."
 suggested_route:
