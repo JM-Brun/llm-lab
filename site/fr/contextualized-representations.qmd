@@ -108,6 +108,8 @@ Les états évoluent ensuite de bloc en bloc : \(h_t^{(0)}\) désigne l'entrée 
 MICRO-WORKBENCH · DIVERGENCE CONTEXTUELLE D'UN MÊME TOKEN (NUMPY)
 :::
 ::: {.micro-workbench-body}
+Cette expérience est volontairement minimale : elle illustre qu'un état peut dépendre d'autres positions. Elle ne calcule pas une couche Transformer réelle (pas de projections Q/K/V, de scores normalisés par softmax, de connexions résiduelles, de normalisation ni de MLP).
+
 ```python
 import numpy as np
 
@@ -139,7 +141,8 @@ z_A = x_A + P
 z_B = x_B + P
 assert np.array_equal(z_A[1], z_B[1])
 
-# 3. Agrégation contextuelle causale : la position 1 intègre son contexte (pos 0)
+# 3. Agrégation contextuelle causale jouet (pas une implémentation d'attention)
+# On fixe des poids illustratifs pour rendre visible la dépendance au contexte.
 # Poids d'attention causale illustratifs : 40% contexte (pos 0), 60% soi-même (pos 1)
 h_A_1 = 0.4 * z_A[0] + 0.6 * z_A[1]
 h_B_1 = 0.4 * z_B[0] + 0.6 * z_B[1]
