@@ -29,7 +29,7 @@ jobs:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: |
           git fetch --no-tags --depth=1 origin "$BASE_SHA"
-          changed_files="$(git diff --name-only "$BASE_SHA"...HEAD)"
+          changed_files="$(git diff --name-only "$BASE_SHA" HEAD)"
           if printf '%s\n' "$changed_files" | grep -Eq '^(site/|data/|src/|scripts/|docs/|pyproject.toml$|uv.lock$|.github/workflows/ci.yml$)'; then
             echo "domain_checks=true" >> "$GITHUB_OUTPUT"
           else
