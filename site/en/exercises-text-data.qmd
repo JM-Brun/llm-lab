@@ -324,9 +324,9 @@ h_{\text{target}}=0.4\,z_{\text{context}}+0.6\,z_{\text{target}},\qquad z=x+P.
 
 The lookup for “the” is \\(0.5,0.5\\) in both contexts; \\(z_{\\text{target}}=(0.51,0.50)\\). The context vectors are \\(z_{\\text{Romans}}=(0.12,0.25)\\) and \\(z_{\\text{sanitation}}=(0.92,-0.35)\\).
 \[
-h_A=(0.354,0.400),\\qquad h_B=(0.674,0.160).
+h_A=(0.354,0.400),\qquad h_B=(0.674,0.160).
 \]
-The distance is \\(\\sqrt{0.320^2+0.240^2}=0.4\\).
+The distance is \\(\sqrt{0.320^2+0.240^2}=0.4\\).
 
 ~~~python
 import numpy as np
@@ -338,8 +338,8 @@ z_target = E["the"] + P0
 z_romans, z_sanitation = E["Romans"] + P1, E["sanitation"] + P1
 h_A = 0.4 * z_romans + 0.6 * z_target
 h_B = 0.4 * z_sanitation + 0.6 * z_target
-assert np.allclose(h_A, [0.356, 0.418])
-assert np.allclose(h_B, [0.676, 0.170])
+assert np.allclose(h_A, [0.354, 0.400])
+assert np.allclose(h_B, [0.674, 0.160])
 print("distance:", np.linalg.norm(h_A - h_B))
 ~~~
 
