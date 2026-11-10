@@ -18,7 +18,7 @@ hierarchy:
   parents: []
   children: []
 related: ["en/entropy"]
-tags: ["type:exercise-hub", "destination:practice", "topic:entropy", "level:applied", "language:en", "status:published"]
+tags: ["type:exercise-hub", "destination:practice", "topic:entropy-exercises", "level:applied", "language:en", "status:published"]
 -->
 
 [← Back to the lesson: Entropy: uncertainty over the next token](../entropy.qmd)

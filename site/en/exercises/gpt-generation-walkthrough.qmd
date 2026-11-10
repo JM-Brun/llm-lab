@@ -18,7 +18,7 @@ hierarchy:
   parents: []
   children: []
 related: ["en/gpt-generation-walkthrough"]
-tags: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-generation", "level:applied", "language:en", "status:published"]
+tags: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-generation-exercises", "level:applied", "language:en", "status:published"]
 -->
 
 [← Back to the guided tour: Génération du GPT](../gpt-generation-walkthrough.qmd)

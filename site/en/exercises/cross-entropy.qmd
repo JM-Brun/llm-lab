@@ -18,7 +18,7 @@ hierarchy:
   parents: []
   children: []
 related: ["en/cross-entropy"]
-tags: ["type:exercise-hub", "destination:practice", "topic:cross-entropy", "level:applied", "language:en", "status:published"]
+tags: ["type:exercise-hub", "destination:practice", "topic:cross-entropy-exercises", "level:applied", "language:en", "status:published"]
 -->
 
 [← Back to the lesson: Cross-entropy and KL divergence](../cross-entropy.qmd)

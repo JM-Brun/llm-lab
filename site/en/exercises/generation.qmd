@@ -18,7 +18,7 @@ hierarchy:
   parents: []
   children: []
 related: ["en/generation"]
-tags: ["type:exercise-hub", "destination:practice", "topic:inference-generation", "level:applied", "language:en", "status:published"]
+tags: ["type:exercise-hub", "destination:practice", "topic:inference-generation-exercises", "level:applied", "language:en", "status:published"]
 -->
 
 [← Back to the lesson: Autoregressive generation](../generation.qmd)

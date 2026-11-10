@@ -18,7 +18,7 @@ hierarchy:
   parents: []
   children: []
 related: ["en/emergence"]
-tags: ["type:exercise-hub", "destination:practice", "topic:emergence", "level:applied", "language:en", "status:published"]
+tags: ["type:exercise-hub", "destination:practice", "topic:emergence-exercises", "level:applied", "language:en", "status:published"]
 -->
 
 [← Back to the lesson: Emergent capabilities](../emergence.qmd)

@@ -18,7 +18,7 @@ hierarchy:
   parents: []
   children: []
 related: ["en/cross-attention"]
-tags: ["type:exercise-hub", "destination:practice", "topic:cross-attention", "level:applied", "language:en", "status:published"]
+tags: ["type:exercise-hub", "destination:practice", "topic:cross-attention-exercises", "level:applied", "language:en", "status:published"]
 -->
 
 [← Back to the lesson: Cross-attention](../cross-attention.qmd)

@@ -18,7 +18,7 @@ hierarchy:
   parents: []
   children: []
 related: ["en/embedding-space"]
-tags: ["type:exercise-hub", "destination:practice", "topic:embedding-space", "level:applied", "language:en", "status:published"]
+tags: ["type:exercise-hub", "destination:practice", "topic:embedding-space-exercises", "level:applied", "language:en", "status:published"]
 -->
 
 [← Back to the lesson: Embedding space](../embedding-space.qmd)

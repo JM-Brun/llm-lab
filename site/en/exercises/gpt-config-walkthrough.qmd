@@ -18,7 +18,7 @@ hierarchy:
   parents: []
   children: []
 related: ["en/gpt-config-walkthrough"]
-tags: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-config", "level:applied", "language:en", "status:published"]
+tags: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-config-exercises", "level:applied", "language:en", "status:published"]
 -->
 
 [← Back to the guided tour: Configuration du GPT](../gpt-config-walkthrough.qmd)
