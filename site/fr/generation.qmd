@@ -164,6 +164,7 @@ C'est la distinction centrale avec l'[apprentissage](loss.qmd) : l'inférence ut
 - **Fenêtre de contexte :** le modèle ne traite que le contexte fourni, dans la limite de sa fenêtre maximale. Une information qui n'y figure plus n'influence plus directement la prédiction.
 - **Pas de mémoire intrinsèque entre deux générations :** chaque génération dépend du contexte qui lui est transmis. Une application peut réinjecter un historique ou conserver un état externe, mais cela ne signifie pas que les poids du modèle ont mémorisé la conversation.
 - **Qualité dépendante des paramètres appris :** la boucle de génération peut fonctionner avec un modèle non entraîné, mais ses sorties ne deviennent pas utiles pour autant. La mécanique de génération et la qualité acquise par apprentissage sont deux questions distinctes.
+- **Validité du résultat :** une réponse fluide, ou même une requête SQL syntaxiquement valide et exécutable, ne garantit pas qu'elle répond à la bonne question métier. Vérifiez le schéma, les définitions utilisées (par exemple le traitement des remboursements et paiements échoués), les hypothèses et les résultats avant toute décision ou action.
 
 ::: {.self-check}
 ## Vérifier sa compréhension
