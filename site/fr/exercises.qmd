@@ -20,7 +20,58 @@ related: []
 tags: ["type:exercise-hub", "destination:practice", "topic:exercises", "level:applied", "language:fr", "status:published"]
 -->
 
-Les auto-vérifications courtes sont regroupées sur des pages compagnes liées depuis chaque leçon et accessibles dans la section **Exercices par leçon** de la navigation. Les collections thématiques ci-dessous restent dédiées aux calculs approfondis, problèmes en plusieurs étapes, diagnostics, raisonnements orientés implémentation et tâches de transfert. Ce catalogue donne accès aux **exercices approfondis** : calculs, problèmes en plusieurs étapes, diagnostics, raisonnements orientés implémentation et tâches de transfert. Chaque collection dispose de sa propre page afin de pouvoir s'enrichir sans transformer ce catalogue en une longue feuille d'exercices.
+Les auto-vérifications courtes sont regroupées sur des pages compagnes liées depuis chaque leçon. Les collections thématiques restent dédiées à la pratique transversale.
+
+## Exercices par leçon
+
+::: {.callout-note collapse="true" title="Parcourir les 33 pages d’exercices par leçon"}
+
+### Comprendre
+
+- [Panorama des LLM](exercises/llm-overview.qmd)
+- [Génération autorégressive](exercises/generation.qmd)
+- [Texte et données](exercises/text-data.qmd)
+- [Espace des embeddings](exercises/embedding-space.qmd)
+- [Encodage positionnel](exercises/positional-encoding.qmd)
+- [Représentations contextualisées](exercises/contextualized-representations.qmd)
+- [Transformer](exercises/transformer.qmd)
+- [Requêtes, clés et valeurs](exercises/queries-keys-values.qmd)
+- [Attention à produit scalaire](exercises/scaled-dot-product-attention.qmd)
+- [Masquage causal](exercises/causal-masking.qmd)
+- [Logits](exercises/logits.qmd)
+- [Probabilités](exercises/probabilites.qmd)
+- [Entropie](exercises/entropy.qmd)
+- [Vraisemblance](exercises/vraisemblance.qmd)
+- [Entropie croisée](exercises/cross-entropy.qmd)
+- [Fonction de perte](exercises/loss.qmd)
+- [Gradients](exercises/gradients.qmd)
+- [Architectures Transformer](exercises/transformer-architectures.qmd)
+- [Limites des LLM](exercises/llm-limits.qmd)
+
+### Construire
+
+- [Préparation du corpus](exercises/corpus-preparation.qmd)
+- [Exemples d'entraînement](exercises/training-examples.qmd)
+- [Configuration GPT](exercises/gpt-config-walkthrough.qmd)
+- [Opérations GPT](exercises/gpt-ops-walkthrough.qmd)
+- [Bloc Transformer](exercises/transformer-block-walkthrough.qmd)
+- [Modèle GPT](exercises/gpt-model-walkthrough.qmd)
+- [Génération GPT](exercises/gpt-generation-walkthrough.qmd)
+
+### Approfondir
+
+- [Attention croisée](exercises/cross-attention.qmd)
+- [Architectures hybrides](exercises/hybrid-llm-architectures.qmd)
+- [Stratégies de tokenisation](exercises/tokenization-strategies.qmd)
+- [Apprentissage en contexte](exercises/in-context-learning.qmd)
+- [Complexité computationnelle des LLM](exercises/llm-computational-complexity.qmd)
+- [Émergence](exercises/emergence.qmd)
+- [Évolution des LLM](exercises/llm-evolution.qmd)
+
+:::
+
+
+Ce catalogue donne accès aux **exercices approfondis** : calculs, problèmes en plusieurs étapes, diagnostics, raisonnements orientés implémentation et tâches de transfert. Chaque collection dispose de sa propre page afin de pouvoir s'enrichir sans transformer ce catalogue en une longue feuille d'exercices.
 
 <a id="fondations"></a>
 <a id="donnees-textuelles"></a>
