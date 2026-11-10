@@ -2952,8 +2952,10 @@ sources:
         inspected_scope:
           - "Full HTML sections 3–5: Flickr30k and MSR-VTT protocols, alignment metrics, ablations, web-scale experiments, 42x sample comparison, empirical scaling law, captioning and pair-free alignment"
           - "Cross-check of headline values, denominators and experimental caveats against the article and arXiv paper text"
+          - "Appendix A.1–A.6 proof text: Markov operator and spectral kernel, Ky Fan characterization, Davis–Kahan mismatch bound, nuisance-space decomposition, next-token factorization and numerical checks"
+          - "Appendix B experimental details and selected Appendix C tables/analyses: encoder and optimizer configurations, WIT protocol, nuisance estimates, captioner and scaling-law robustness details"
         limitations:
-          - "Appendices A–C, implementation code and live demo remain unaudited."
+          - "Appendix C was inspected selectively rather than exhaustively; implementation code was not executed, and the live demo was not run."
           - "No independent reproduction has been run; results remain author-reported."
           - "Compute, energy and wall-clock costs were not independently measured."
     related:
