@@ -9,9 +9,9 @@
 
 ## 1. Intention
 
-Utiliser comme fil rouge la scène du scribe Otis dans *Astérix et Obélix : Mission Cléopâtre* (Alain Chabat, 2002), interprété par Édouard Baer. Panoramix pose une question très courte sur le métier de scribe — « C'est une bonne situation, ça, scribe ? » — et Otis répond par une tirade étonnamment longue, qui part de son expérience et des rencontres pour dériver vers le goût du travail bien fait et le don de soi.
+Utiliser comme fil rouge la scène du scribe Otis dans *Astérix et Obélix : Mission Cléopâtre* (Alain Chabat, 2002), interprété par Édouard Baer. Panoramix demande à Otis si être scribe est une bonne situation. Otis amorce alors sa longue réponse par la réplique devenue culte : « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... » La tirade dérive ensuite avec son mélange de digressions, d'associations et de philosophie improvisée.
 
-La scène est une accroche culturelle, pas une source scientifique. L'exemple pédagogique ci-dessous est une **adaptation originale** : ne pas recopier la tirade du film. La référence IMDb identifie le rôle et la réplique d'ouverture : <https://www.imdb.com/fr/title/tt0250223/characters/nm0046347/>. Une présentation de la scène et de son contexte est également disponible dans [Le Parisien](https://www.leparisien.fr/culture-loisirs/cinema/ressortie-d-asterix-et-obelix-mission-cleopatre-le-monologue-dotis-encore-plus-interminable-04-07-2023-NA6P2W7M2JE6RA5WYVXEND4B4Q.php).
+La scène est une accroche culturelle, pas une source scientifique. L'exemple pédagogique ci-dessous est une **adaptation originale** : ne pas recopier la tirade du film. La référence IMDb identifie le rôle d'Otis : <https://www.imdb.com/fr/title/tt0250223/characters/nm0046347/>. Une présentation de la scène et de son contexte est également disponible dans [Le Parisien](https://www.leparisien.fr/culture-loisirs/cinema/ressortie-d-asterix-et-obelix-mission-cleopatre-le-monologue-dotis-encore-plus-interminable-04-07-2023-NA6P2W7M2JE6RA5WYVXEND4B4Q.php).
 
 ### Pourquoi cet exemple fonctionne
 
@@ -35,7 +35,7 @@ Pour les démonstrations techniques, utiliser ce prompt original, inspiré de la
 
 ### 2.2 Continuation pédagogique originale
 
-Texte jouet de référence (à conserver identique lorsque l'objectif est de comparer plusieurs mécanismes) :
+Continuation pédagogique originale (à conserver identique lorsque l'objectif est de comparer plusieurs mécanismes ; elle ne reproduit pas la suite du monologue du film) :
 
 > **Continuation :** « Être scribe, c'est relier des histoires. Les rencontres apportent de nouveaux récits ; le contexte aide à choisir les mots justes. Chaque phrase prépare la suivante. »
 
@@ -54,8 +54,8 @@ Ce texte n'est **pas** une réplique du film, ni la sortie d'un modèle entraîn
 
 | Étape | Question pédagogique | Déclinaison de l'exemple | Ce qu'il faut faire observer |
 |---|---|---|---|
-| Situation initiale | Que demande-t-on au modèle ? | Panoramix pose une question courte ; notre prompt reformule la tâche en instruction explicite. | Distinguer contexte culturel, instruction et texte à compléter. |
-| Texte brut | Quel est le texte fourni ? | Afficher le prompt exact, ponctuation et accents compris. | Le modèle ne reçoit pas directement des mots comme unités sémantiques ; il reçoit une représentation tokenisée. |
+| Situation initiale | Que demande-t-on au modèle ? | Panoramix pose une question courte ; notre prompt reformule la tâche en instruction explicite. | Distinguer contexte culturel, préfixe du monologue et texte à compléter. |
+| Texte brut | Quel est le texte fourni ? | Afficher le préfixe canonique exact, ponctuation et accents compris. | Le modèle ne reçoit pas directement des mots comme unités sémantiques ; il reçoit une représentation tokenisée. |
 | Tokenisation | Comment le texte est-il découpé ? | Faire encoder le prompt avec le tokenizer réellement utilisé dans la page ou le code. | Les frontières de tokens ne coïncident pas nécessairement avec les mots ; elles varient selon le tokenizer. |
 | Vocabulaire et IDs | Comment les morceaux sont-ils identifiés ? | Montrer les tokens et leurs IDs obtenus à l'exécution. | Un ID est une adresse de ligne dans la table de vocabulaire/embedding du tokenizer concerné ; ce n'est pas une coordonnée vectorielle. |
 | Embeddings | Comment les IDs deviennent-ils des vecteurs ? | Sélectionner les lignes de la matrice d'embedding correspondant aux IDs. | Même ID = même vecteur initial dans un checkpoint donné ; les lignes ne sont pas des définitions lexicales. |
@@ -86,7 +86,7 @@ Les pages ci-dessous sont les destinations canoniques identifiées dans le parco
 |---|---|---|---|
 | `fr/llm-overview.qmd` | `en/llm-overview.qmd` | Accroche : une question courte et une continuation longue illustrent une tâche de modèle de langage. | Ne pas confondre le personnage, un assistant conversationnel et un LLM. |
 | `fr/generation.qmd` | `en/generation.qmd` | Introduire le cycle autoregressif avec le prompt du scribe et plusieurs continuations possibles. | Ne pas faire croire qu'un modèle choisit toute la tirade en un seul bloc. |
-| `fr/text-data.qmd` | `en/text-data.qmd` | Afficher le prompt comme texte brut avant tokenisation. | Conserver ponctuation, espaces et accents ; distinguer prompt et cible. |
+| `fr/text-data.qmd` | `en/text-data.qmd` | Afficher le préfixe « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... » comme texte brut avant tokenisation. | Conserver ponctuation, espaces et accents ; distinguer prompt et cible. |
 | `fr/tokenization-strategies.qmd` | `en/tokenization-strategies.qmd` | Comparer la segmentation effective du prompt avec deux tokenizers si les outils sont disponibles. | Les tokens ne sont pas forcément des mots ; ne pas figer une segmentation universelle. |
 | `fr/embedding-space.qmd` | `en/embedding-space.qmd` | Relier chaque ID obtenu à une ligne de la matrice d'embedding. | Employer « adresse de ligne » pour l'index de la table ; la coordonnée vectorielle est une autre notion. |
 | `fr/positional-encoding.qmd` | `en/positional-encoding.qmd` | Montrer que l'ordre des mots du prompt compte, même si les IDs de tokens sont identiques. | Décrire la méthode positionnelle effectivement étudiée, sans généraliser à toutes les architectures. |
@@ -131,7 +131,7 @@ Le Build path est une voie distincte du parcours Understand. Le même exemple se
 
 1. **Une source canonique :** modifier ce document lorsque le scénario, le prompt, la continuation jouet ou la couverture des pages change.
 2. **Pas de copier-coller de la tirade :** garder la citation d'ouverture courte et référencée ; employer le texte original de LLM Lab pour les démonstrations.
-3. **Bilinguisme :** chaque ajout dans une page FR doit avoir son équivalent EN dans la même PR. Le prompt de référence peut rester en français lorsqu'il est explicitement présenté comme texte source ; fournir alors une traduction de travail pour les pages anglaises sans la présenter comme citation du film.
+3. **Bilinguisme :** chaque ajout dans une page FR doit avoir son équivalent EN dans la même PR. Le préfixe de référence reste en français lorsqu'il est présenté comme citation source ; fournir une traduction de travail pour les pages anglaises sans la présenter comme citation officielle du film.
 4. **Répétition utile, pas duplication :** chaque page réutilise le même scénario pour enseigner son concept propre. Elle ne répète pas l'explication des pages précédentes.
 5. **Véracité numérique :** aucun ID, vecteur, score, logit, poids ou gradient inventé présenté comme résultat réel. Les chiffres illustratifs sont marqués « jouet », « fictifs » ou calculés.
 6. **Respect des frontières de parcours :** Understand expose la chaîne conceptuelle ; Build suit les dépendances d'implémentation. Deepen ajoute des détails facultatifs ; Practice vérifie le transfert.
