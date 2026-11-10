@@ -59,7 +59,7 @@ Here $M$ denotes an additive hard mask: $M_{ij}=0$ for an allowed query-key pair
 
 ## From the mechanism to the calculation
 
-Read the full computation in order: scores from Q and K are scaled, an optional mask excludes forbidden positions, softmax normalizes the accessible scores, and the resulting weights combine the V vectors. To work through this sequence by hand, distinguish weighted mixing from selection, and manipulate projections in a multi-head setting, use the [Attention collection](exercises.qmd#attention), especially exercises AT-A to AT-C.
+Read the full computation in order: scores from Q and K are scaled, an optional mask excludes forbidden positions, softmax normalizes the accessible scores, and the resulting weights combine the V vectors. To work through this sequence by hand, distinguish weighted mixing from selection, and manipulate projections in a multi-head setting, use the [Attention collection](exercises.qmd#at-0-scores-to-output), especially exercises AT-A to AT-C.
 
 ## Provenance and purpose
 
