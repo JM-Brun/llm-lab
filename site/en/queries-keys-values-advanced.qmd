@@ -29,42 +29,42 @@ This deep dive extends [Queries, keys, and values (Q, K, V)](queries-keys-values
 
 The compact matrix formulation computes all positions at once. It simply applies the same linear projections to every row of the input.
 
-For a sequence of \(T\) positions, let \(X\in\mathbb{R}^{T\times d_{model}}\). Row \(x_t\in\mathbb{R}^{1\times d_{model}}\) is the input state at position \(t\). Omitting biases:
+For a sequence of $T$ positions, let $X\in\mathbb{R}^{T\times d_{model}}$. Row $x_t\in\mathbb{R}^{1\times d_{model}}$ is the input state at position $t$. Omitting biases:
 
-\[
+$$
 q_t=x_tW_Q,\qquad k_t=x_tW_K,\qquad v_t=x_tW_V.
-\]
+$$
 
 Stacking the resulting rows for every position recovers:
 
-\[
+$$
 Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
-\]
+$$
 
-With \(W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}\) and \(W_V\in\mathbb{R}^{d_{model}\times d_v}\), the dimensions are:
+With $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ and $W_V\in\mathbb{R}^{d_{model}\times d_v}$, the dimensions are:
 
 | Object | Shape | Interpretation |
 |---|---:|---|
-| \(x_t\) | \(1\times d_{model}\) | input state at one position |
-| \(W_Q,W_K\) | \(d_{model}\times d_k\) | projections into query and key spaces |
-| \(W_V\) | \(d_{model}\times d_v\) | projection into value space |
-| \(q_t,k_t\) | \(1\times d_k\) | one position's query and key |
-| \(v_t\) | \(1\times d_v\) | one position's value |
-| \(Q,K\) | \(T\times d_k\) | all queries and keys |
-| \(V\) | \(T\times d_v\) | all values |
+| $x_t$ | $1\times d_{model}$ | input state at one position |
+| $W_Q,W_K$ | $d_{model}\times d_k$ | projections into query and key spaces |
+| $W_V$ | $d_{model}\times d_v$ | projection into value space |
+| $q_t,k_t$ | $1\times d_k$ | one position's query and key |
+| $v_t$ | $1\times d_v$ | one position's value |
+| $Q,K$ | $T\times d_k$ | all queries and keys |
+| $V$ | $T\times d_v$ | all values |
 
-For a batch of \(B\) sequences of length \(T\), the usual input shape is \(X\in\mathbb{R}^{B\times T\times d_{model}}\). Projections operate on the last axis and preserve the first two: \(Q,K\in\mathbb{R}^{B\times T\times d_k}\) and \(V\in\mathbb{R}^{B\times T\times d_v}\). When present, biases are added at every position; they do not change these shapes.
+For a batch of $B$ sequences of length $T$, the usual input shape is $X\in\mathbb{R}^{B\times T\times d_{model}}$. Projections operate on the last axis and preserve the first two: $Q,K\in\mathbb{R}^{B\times T\times d_k}$ and $V\in\mathbb{R}^{B\times T\times d_v}$. When present, biases are added at every position; they do not change these shapes.
 
-This is an expansion of the matrix formula, not a different mechanism. Its main use is to make position indexing explicit and avoid confusing sequence length \(T\) with representation dimensions.
+This is an expansion of the matrix formula, not a different mechanism. Its main use is to make position indexing explicit and avoid confusing sequence length $T$ with representation dimensions.
 
 ## Geometry of Q–K compatibility
 
-For a query \(q_i\) and key \(k_j\), the standard unnormalized score is their dot product:
+For a query $q_i$ and key $k_j$, the standard unnormalized score is their dot product:
 
-\[
+$$
 s_{ij}=q_i k_j^\top
 =\lVert q_i\rVert\,\lVert k_j\rVert\cos(\theta_{ij}).
-\]
+$$
 
 The angle alone therefore does not determine the score: both vector norms matter. A dot product is not, in general, normalized cosine similarity.
 
@@ -80,43 +80,43 @@ Values are not compared with one another, or directly with the query, to select 
 
 ## Gradient paths through attention
 
-The matrices \(W_Q,W_K,W_V\) do not each have an independently supervised target. They are optimized jointly from the network's loss. To make the path explicit, consider a standard attention head:
+The matrices $W_Q,W_K,W_V$ do not each have an independently supervised target. They are optimized jointly from the network's loss. To make the path explicit, consider a standard attention head:
 
-\[
+$$
 S=\frac{QK^\top}{\sqrt{d_k}}+M,\qquad
 A=\operatorname{softmax}(S),\qquad O=AV,
-\]
+$$
 
-where softmax is applied row-wise and \(M\) is a fixed additive mask. Assume every row has at least one accessible key.
+where softmax is applied row-wise and $M$ is a fixed additive mask. Assume every row has at least one accessible key.
 
-Writing \(G_O=\partial\mathcal L/\partial O\), the chain rule gives:
+Writing $G_O=\partial\mathcal L/\partial O$, the chain rule gives:
 
-\[
+$$
 \frac{\partial\mathcal L}{\partial V}=A^\top G_O,
 \qquad
 \frac{\partial\mathcal L}{\partial A}=G_OV^\top.
-\]
+$$
 
-The gradient with respect to scores then passes through the row-wise softmax Jacobian. Writing \(G_S=\partial\mathcal L/\partial S\):
+The gradient with respect to scores then passes through the row-wise softmax Jacobian. Writing $G_S=\partial\mathcal L/\partial S$:
 
-\[
+$$
 \frac{\partial\mathcal L}{\partial Q}
 =\frac{G_SK}{\sqrt{d_k}},
 \qquad
 \frac{\partial\mathcal L}{\partial K}
 =\frac{G_S^\top Q}{\sqrt{d_k}}.
-\]
+$$
 
-Finally, for bias-free linear projections and fixed input \(X\):
+Finally, for bias-free linear projections and fixed input $X$:
 
-\[
+$$
 \frac{\partial\mathcal L}{\partial W_Q}
 =X^\top\frac{\partial\mathcal L}{\partial Q},\quad
 \frac{\partial\mathcal L}{\partial W_K}
 =X^\top\frac{\partial\mathcal L}{\partial K},\quad
 \frac{\partial\mathcal L}{\partial W_V}
 =X^\top\frac{\partial\mathcal L}{\partial V}.
-\]
+$$
 
 These expressions isolate the local paths in one head: the gradient to V passes directly through weighted aggregation; gradients to Q and K pass through scores and softmax. In the full network, gradients also propagate through output projections, residual connections, normalization, and earlier layers. The parameters are distinct, but their updates are coordinated by the same loss.
 
