@@ -27,6 +27,15 @@ Quand vous envoyez un prompt, le modèle ne rédige pas toute la réponse d'un s
 Cette boucle est la **génération autorégressive**. Pendant l'inférence, les paramètres du modèle restent fixes : produire une réponse n'est pas apprendre.
 :::
 
+::: {.callout-note title="Fil rouge : le préfixe et la continuation"}
+**Contexte initial (préfixe fourni) :** « C'est une bonne situation, ça, scribe ? »
+
+**Début de la continuation :** « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... »
+
+La question de Panoramix est déjà présente lorsque la génération commence ; les tokens de la réponse d'Otis sont ajoutés ensuite, un par un. Pour les calculs et les expériences, nous utiliserons une continuation pédagogique originale plutôt que la tirade du film.
+:::
+
+
 <div class="pipeline-stepper" role="navigation" aria-label="Boucle de génération autorégressive">
   <a class="step-item" href="text-data.qmd">Prompt tokenisé</a>
   <span class="step-arrow" aria-hidden="true">→</span>
