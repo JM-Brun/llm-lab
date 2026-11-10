@@ -23,8 +23,6 @@ tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-re
 
 
 {{< include ../includes/generated-guided-context-en-contextualized-representations.qmd >}}
-::: {.chapter-lead}
-The previous page explained how token order enters the computation. The next question is what the network's layers do with these initial vectors: **the same ID provides the same starting embedding, but its hidden state can change according to the other accessible tokens**. This transformation produces contextualized representations.
 :::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
@@ -34,28 +32,18 @@ By the end of this lesson, you should be able to:
 - refute the misconception that attributes semantic comprehension or contextual disambiguation to the initial embedding lookup.
 :::
 
-<div class="pipeline-stepper">
-  <span class="step-item step-completed">1. Raw text</span>
-  <span class="step-arrow">→</span>
-  <span class="step-item step-completed">2. Token IDs</span>
-  <span class="step-arrow">→</span>
-  <span class="step-item step-completed">3. Initial embeddings</span>
-  <span class="step-arrow">→</span>
-  <span class="step-item active">4. Position & Context</span>
-  <span class="step-arrow">→</span>
-  <span class="step-item">5. Logits & Output</span>
-</div>
-
 <div class="epistemic-badges">
   <span class="epistemic-badge badge-concept">Verified concept</span>
   <span class="epistemic-badge badge-status">Architecture: Transformer Blocks</span>
-</div>
+</div> {.chapter-lead}
+Two sentences can contain the same token without giving it the same role: *bank* refers to a river edge in one and a financial institution in the other. Yet the tokenizer may assign the same ID to both occurrences. **The lookup does not change; the Transformer's processing of the sequence builds hidden states that depend on context.**
+:::
 
 ::: {.callout-tip title="The one-minute mental model"}
-- **Lookup:** a fixed ID and fixed matrix yield the same initial embedding, regardless of occurrence.
-- **Position and context:** the architecture adds or injects positional information; Transformer blocks then transform states as a function of the other accessible tokens.
-- **Architecture:** in a causal decoder such as GPT, a position cannot attend to the future; a bidirectional encoder uses a different mask.
-- **Interpretation limit:** contextualized does not automatically mean an isolated human-readable “sense” or a guaranteed semantic geometry.
+- **Same ID, same lookup:** with a fixed matrix, both occurrences select the same row.
+- **Position:** the architecture introduces order through its positional mechanism (absolute embeddings, RoPE, etc.).
+- **Context:** each block transforms a position's state using the tokens it can access.
+- **Result:** hidden states can differ, without guaranteeing a clean geometric representation of human “senses.”
 
 **Check yourself:** how can two occurrences share the same initial vector yet have different hidden states?
 :::
@@ -89,7 +77,7 @@ This example is used as a pedagogical motivation in [Nishanthan K's tutorial on 
 
 ## What changes with position and context?
 
-The two occurrences are at different positions and have different neighbours. The exact handling of position depends on the architecture.
+The two occurrences appear in different sequences and have different neighbours. Their absolute positions may vary with the sentence and tokenization; the exact handling of position depends on the architecture.
 
 For a model using learned absolute position embeddings, the initial input at position \(t\) may be written:
 
@@ -99,17 +87,19 @@ h_t^{(0)} = E[\text{ID}_t] + P_t.
 
 The same token ID gives the same token-embedding term, but a different position may give a different positional term. Architectures using RoPE handle position differently: it modifies query and key vectors inside attention rather than adding an absolute position vector to the token embedding. See [positional encoding and RoPE](positional-encoding.qmd).
 
-The Transformer layers then process information across the sequence. At a high level:
+Transformer blocks build these states by allowing information to flow between accessible positions. We can describe this dependency conceptually as:
 
-\[
-h_t^{(\ell+1)}
-=
-F_\ell\big(h_1^{(\ell)},\ldots,h_t^{(\ell)}\big),
-\]
+\\[
+h_t^{(\\ell+1)} = F_\\ell\\!\\left(h_t^{(\\ell)},\\{h_j^{(\\ell)} : j \\in A(t)\\}\\right),
+\\]
 
-For a causal decoder such as GPT, the state at position \(t\) can use the current token and its preceding context, but not future tokens. Other architectures, such as bidirectional encoders, use different attention masks. The function \(F_\ell\) stands for a complete block; this expression is conceptual, not an implementation specification.
+where \\(A(t)\\) denotes the positions accessible from position \\(t\\), as determined by the attention mask. In a causal decoder such as GPT, \\(A(t)=\\{1,\\ldots,t\\}\\): the current token and its prefix, never future tokens. In a bidirectional encoder, accessible positions may include the entire sequence. Here, \\(F_\\ell\\) represents a complete block; the expression summarizes its dependencies, not its detailed implementation.
 
-Consequently, the two occurrences can have different hidden states even though their initial token lookup is identical.
+More concretely, self-attention lets a position aggregate information from accessible positions. The MLP then transforms each position independently, using shared weights. Repeated at every layer, these operations evolve the hidden states. For the detailed computation, see [Q/K/V](queries-keys-values.qmd) and [the Transformer architecture](transformer.qmd).
+
+In the *bank* example, both occurrences deliberately occupy the same position in the sentence (the third word, under the simplifying assumption of one token per word). With learned absolute position embeddings, they therefore receive the same positional term; with a mechanism such as RoPE, their position is also identical. For a causal decoder, the difference in their states then comes from the accessible prefix (*The river* or *The financial*), not from a different absolute position. In other examples, position and context may both contribute.
+
+States then evolve from block to block: \(h_t^{(0)}\) denotes the initial input at position \(t\), and each block produces \(h_t^{(1)}\), \(h_t^{(2)}\), and so on. The vector is not replaced by a sense label; it is transformed by learned operations that progressively integrate information.
 
 ::: {.micro-workbench}
 ::: {.micro-workbench-header}
@@ -173,17 +163,17 @@ Context transforms hidden states: identical initial lookups ($E[\text{ID}]$) pro
 </div>
 </details>
 
-![The same token can receive different contextualized representations depending on the sentence.](../images/contextualized-embeddings-en.svg){fig-alt="Two sentences use bank in different contexts. Assuming the same token ID, both occurrences share the initial embedding, then may produce different contextualized states." fig-cap="Same token ID, same initial lookup; different positional and contextual information can lead to different hidden states." width=100%}
+![The same token can receive different contextualized representations depending on the sentence.](../images/contextualized-embeddings-en.svg){fig-alt="Two sequences place bank at the same simplified position. Both occurrences share the same initial lookup, while each Transformer block combines that state with the sequence-specific accessible context before producing a hidden state that may differ." fig-cap="Same token ID and same simplified position: the lookup is identical. The accessible prefixes differ, so hidden states may differ." width=100%}
 
 This original illustration is motivated by [Ethayarajh (2019), *How Contextual are Contextualized Word Representations?*](https://arxiv.org/abs/1909.00512). It illustrates the principle, not measured vectors. Depending on the tokenizer, a visible word may consist of multiple tokens.
 
-## Keep three distinctions separate
+## Keep the stages and representations separate
 
 | Object | What determines it? | Is it context-dependent? |
 |---|---|---|
 | Token ID | Tokenizer vocabulary and rules | No; it identifies a vocabulary entry |
 | Initial token embedding | The selected row of the embedding matrix | No, for a fixed matrix and token ID |
-| Contextualized hidden state | Initial representation, position handling, surrounding sequence, architecture, and layer | Yes, in general |
+| Hidden state at layer \(\ell\) | Previous layer's state, positional information, and tokens accessible under the mask | Yes, in general |
 
 Two common confusions follow from collapsing these stages:
 
@@ -194,7 +184,7 @@ This also does not guarantee that the model will represent human-interpreted sen
 
 ## Where this fits in the model
 
-The learning path is:
+To place this transformation in the full learning path:
 
 1. The tokenizer maps text to token IDs.
 2. The embedding table maps each ID to an initial vector.
@@ -207,30 +197,20 @@ The [embedding-space lookup](embedding-space.qmd) maps IDs to initial vectors. T
 ::: {.self-check}
 ## Check your understanding
 
-Practice with [Exercise TR-C — Distinguish identity, position, and context](../en/exercises.qmd#text-data).
+[Extended exercises on this topic](../en/exercises.qmd#transformer).
 
 Two occurrences of the **same token ID** appear in two different sentences. Assume the embedding matrix is unchanged:
 
 1. Are the vectors returned by the embedding lookup identical?
 2. Must the hidden states after the Transformer layers also be identical? Why?
 3. At which stage does contextual information enter the computation?
+4. In the *bank* example, what is held constant to isolate the effect of context?
 
 You have understood this step if you can explain the difference between **identity of the initial vector** and **context-dependence of hidden states**, without attributing sentence understanding to the lookup itself.
 
 :::
 
 {{< include ../includes/generated-suggested-route-en-contextualized-representations.qmd >}}
-
-<div class="route-nav-cards">
-  <a href="positional-encoding.qmd" class="route-nav-card">
-    <span class="nav-direction">← Previous step</span>
-    <span class="nav-title">Positional encoding</span>
-  </a>
-  <a href="transformer.qmd" class="route-nav-card">
-    <span class="nav-direction">Next step →</span>
-    <span class="nav-title">GPT and Transformer</span>
-  </a>
-</div>
 
 ::: {.language-switch}
 **Language:** [Français](../fr/contextualized-representations.qmd) · [English](contextualized-representations.qmd)
