@@ -22,31 +22,12 @@ tags: ["type:concept-lesson", "destination:understand", "topic:inference-generat
 -->
 
 ::: {.chapter-lead}
-Un LLM génère du texte **un token à la fois**. À partir du contexte disponible, il estime la probabilité de chacun des tokens du vocabulaire d'apparaître à la position suivante. Ces probabilités forment une **distribution de probabilité conditionnelle sur le prochain token**. Le système sélectionne ensuite un token, l'ajoute au contexte, puis recommence. Pendant cette inférence, **les paramètres du modèle restent fixes** : générer n'est pas apprendre.
+Quand vous envoyez un prompt, le modèle ne rédige pas toute la réponse d'un seul coup. Il traite le contexte disponible, attribue une probabilité à chaque token susceptible de suivre, puis le système en sélectionne un et l'ajoute au contexte. Le cycle recommence jusqu'au critère d'arrêt.
+
+Cette boucle est la **génération autorégressive**. Pendant l'inférence, les paramètres du modèle restent fixes : produire une réponse n'est pas apprendre.
 :::
 
-::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
-À l’issue de cette page, vous pourrez :
-- dérouler une génération autorégressive, du contexte au critère d’arrêt ;
-- distinguer la passe avant, le décodage et la génération complète ;
-- expliquer le rôle du prefill, du decode incrémental et du cache KV ;
-- distinguer l'inférence à paramètres fixes de l'apprentissage ;
-- prévoir l'effet de la sélection gloutonne, de l'échantillonnage et de la température.
-:::
-
-::: {.callout-tip title="Le modèle mental"}
-**Contexte → distribution de probabilité → sélection d'un token → nouveau contexte → répétition.**
-
-Le modèle n'effectue pas directement un choix de mot dans le texte : il attribue une probabilité à chaque token possible, compte tenu du contexte. Une règle de sélection transforme ensuite cette distribution en un token concret.
-:::
-
-::: {.callout-note collapse="true" title="Cette page intervient à deux moments du parcours"}
-Lors de la première étape (**Situer le système**), cette page sert uniquement à observer le principe général : contexte, distribution, sélection et répétition. Vous pouvez vous limiter au modèle mental ci-dessus.
-
-Lors de l'étape **Exécuter l'inférence et générer du texte**, revenez à cette page pour étudier les détails : passe avant, boucle autorégressive, prefill, decode incrémental, cache KV et stratégies de décodage.
-
-Il s'agit d'une reprise volontaire du même phénomène à deux niveaux de profondeur, et non de deux notions ou de deux parcours différents.
-:::
+Cette page apparaît une première fois comme aperçu du fonctionnement général, juste après le panorama. L'étude détaillée de la boucle, du *prefill*, du *decode* et des stratégies de sélection intervient lorsque le parcours revient à l'inférence.
 
 ## 1. Une étape élémentaire : prédire et sélectionner un token
 
