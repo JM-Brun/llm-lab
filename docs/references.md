@@ -40,6 +40,19 @@ The repository is an independent learning and experimentation project. These sou
    - Book overview: https://ayinedjimi-consultants.fr/ouvrages/construire-llm-from-scratch-fr
    - **Use for:** a second explanation in French and visual intuition. Treat implementation details as claims to verify against primary papers, framework documentation, and tests.
 
+## Positional encodings
+
+- **Vaswani et al. — Attention Is All You Need** (2017), section 3.5: https://arxiv.org/abs/1706.03762
+  - **Use for:** primary formulation of sinusoidal positional encodings, frequency schedule, wavelength range, and fixed-offset motivation.
+- **Jay Alammar — The Illustrated Transformer**: https://jalammar.github.io/illustrated-transformer/
+  - **Use for:** visual intuition for positional vectors and the position-by-dimension matrix. Its July 2020 clarification distinguishes the earlier concatenated illustration from the interleaved formula in the original paper.
+- **Harvard NLP — The Annotated Transformer**: https://nlp.seas.harvard.edu/annotated-transformer/
+  - **Use for:** annotated PyTorch implementation connecting the equations to a precomputed buffer and input addition.
+- **Stanford EE269 — Transformers for Signal Prediction**: https://web.stanford.edu/class/ee269/Lecture_Transformers.pdf
+  - **Use for:** a signal-processing interpretation of angular frequency, wavelength, and logarithmically spaced positional scales.
+
+See the [source review and pedagogical synthesis](source-reviews/sinusoidal-positional-encoding-2026-11.md) for inspection scope, technical reconciliation, and reuse limits. The machine-readable scan records remain in [the source catalogue](../data/sources.yml).
+
 ## Q/K/V and attention perspectives
 
 - **Neha KK — Understanding Queries, Keys and Values in Transformers** (Medium, 31 December 2025): https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b

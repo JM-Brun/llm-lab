@@ -1,0 +1,59 @@
+schema_version: 1
+source_id: stanford-ee269-transformers-signal-prediction
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Inspected the indexed lecture passage defining angular frequencies, wavelengths, and logarithmic spacing."
+    inferred_elements:
+      - "The wider lecture sequence and intended prerequisites were not inspected; learning outcomes are inferred only from the excerpt."
+  source_graph:
+    nodes:
+      - {id: src-angular-frequency, kind: mathematical-definition, description: "Each coordinate pair has a position-dependent phase with its own angular frequency.", locator: "Sinusoidal Position Embeddings"}
+      - {id: src-wavelength, kind: mathematical-definition, description: "The wavelength is 2π divided by angular frequency.", locator: "Wavelength definition"}
+      - {id: src-log-spaced-scales, kind: mental-model, description: "Different frequency scales encode local and longer-range positional variation.", locator: "Frequency range explanation"}
+    edges:
+      - {from: src-angular-frequency, type: determines, to: src-wavelength}
+      - {from: src-log-spaced-scales, type: organized-by, to: src-angular-frequency}
+    interpretation: "Partial source-local reconstruction from the inspected lecture passage; not an author-specified formal graph."
+  learning_outcomes:
+    - {status: inferred, outcome: "Convert angular frequency into wavelength.", basis: "The lecture gives the wavelength equation."}
+    - {status: inferred, outcome: "Interpret logarithmically spaced frequencies as multiple positional scales.", basis: "The lecture describes high- and low-frequency roles."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Sine waves, radians, and basic logarithms.", basis: "The excerpt uses angular frequency and wavelength."}
+  teaching_route:
+    - {order: 1, section: "Sinusoidal Position Embeddings", function: define, moves: ["State the frequency formula", "Define the position signal"]}
+    - {order: 2, section: "Wavelength and frequency range", function: interpret, moves: ["Derive wavelength from angular frequency", "Compare fast and slow signals"]}
+  pedagogical_strengths:
+    - "Provides a signal-processing interpretation of the positional frequency schedule."
+    - "Makes the distinction between angular frequency and wavelength explicit."
+  pedagogical_limits:
+    - "Only an indexed passage was inspected; the surrounding lecture and figures were not audited."
+    - "The excerpt does not replace the original paper as the authoritative source for the Transformer formula."
+    - "It does not establish learned-model behaviour at longer context lengths."
+  comparison:
+    dossier: docs/source-reviews/sinusoidal-positional-encoding-2026-11.md
+    canonical_graph: "data/concepts.yml and generated JSON-LD projection"
+    canonical_routes: [data/guided-route.yml, docs/learning-path.md, "Page-level suggested_route metadata"]
+    decision: "Use as a secondary explanation of the frequency/wavelength interpretation, not as a primary source."
+    structures_kept_separate: [source-pedagogical-model, canonical-concept-graph, canonical-learning-routes, site-navigation]
+items:
+  - id: stanford-ee269-transformers-signal-prediction:frequency-wavelength
+    kind: derivation
+    summary: "The angular frequency ω_i = 10000^(-2i/d) corresponds to a wavelength λ_i = 2π/ω_i. Higher frequencies have shorter wavelengths and change more rapidly across adjacent token positions; lower frequencies have longer wavelengths and change more slowly."
+    locator: {type: section, value: "Sinusoidal Position Embeddings", label: "Frequency and wavelength"}
+    evidence:
+      kind: mathematical-explanation
+      confidence: well-supported
+      scope: "The indexed lecture passage and its stated equations."
+      assumptions: ["Position is measured in token steps and phase in radians."]
+      limitations: ["Only the relevant excerpt was inspected; broader lecture context was not audited."]
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:positional-encoding, topic:signal-processing, method:sinusoidal-encoding]
+      concept_ids: []
+    candidate_destinations:
+      pages: [fr/sinusoidal-positional-encoding, en/sinusoidal-positional-encoding]
+    disposition: integrate-by-reference
+    disposition_rationale: "The wavelength interpretation is included with an independently computed small numerical example and a precise endpoint caveat."

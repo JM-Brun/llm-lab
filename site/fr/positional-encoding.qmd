@@ -16,7 +16,7 @@ suggested_route:
   next: "fr/contextualized-representations"
 hierarchy:
   parents: ["fr/embedding-space"]
-  children: ["fr/contextualized-representations", "fr/rope"]
+  children: ["fr/contextualized-representations", "fr/rope", "fr/sinusoidal-positional-encoding"]
 related: ["fr/transformer", "fr/positional-encoding-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:positional-encoding", "level:core", "language:fr", "status:published"]
 -->
@@ -24,7 +24,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:positional-encodi
 
 {{< include ../includes/generated-guided-context-fr-positional-encoding.qmd >}}
 ::: {.chapter-lead}
-Un Transformer doit disposer d'un signal d'ordre pour distinguer, par exemple, « le chat poursuit le chien » de « le chien poursuit le chat ». Cette page présente les mécanismes positionnels et les distingue du masque causal ; la dérivation détaillée de RoPE est réservée à un [approfondissement avancé](rope.qmd).
+Un Transformer doit disposer d'un signal d'ordre pour distinguer, par exemple, « le chat poursuit le chien » de « le chien poursuit le chat ». Cette page présente les mécanismes positionnels et les distingue du masque causal ; la dérivation détaillée de RoPE est réservée à un [approfondissement avancé](rope.qmd). Pour les encodages sinusoïdaux du Transformer original, consultez l'[approfondissement dédié](sinusoidal-positional-encoding.qmd).
 :::
 
 ::: {.callout-tip title="L'idée à retenir en une minute"}
