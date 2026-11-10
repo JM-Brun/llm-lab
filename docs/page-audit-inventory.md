@@ -1434,3 +1434,12 @@ This source-level review resumes the first Transformer slice and focuses on the 
 ### Validation still required
 
 This change is a source-level editorial correction. Run the existing Python CI and Quarto render/static checks, then inspect the changed FR/EN pages at desktop and mobile widths. Verify the new section anchors, math rendering and the G4/G5 links in the built site. This source review does not establish screen-reader usability or learner mastery.
+
+
+## Q/K/V reader-experience audit — 2026-11-10
+
+A focused source-level audit compared the bilingual Q/K/V concept lesson with the preceding Transformer overview, the following scaled dot-product attention lesson, and Nishanthan K's [DEV Community article](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a). The review follows the repository's Understand Path Audit skill. It found a sound conceptual boundary and strong scientific content, but identified two high-impact teaching gaps: no worked numerical example of the projections, and no concrete motivating problem near the opening. The existing two-path SVG was retained and its alt text clarified; repetitive collapsed linguistic-example callouts were consolidated.
+
+The bilingual pages now include observable learning outcomes, an early qualified coreference example, a small matrix-projection calculation, and a controlled W_V-only change that demonstrates the Q/K invariance. The complete audit, route analysis, arithmetic, preservation decisions, and validation limits are recorded in [Q/K/V pedagogical audit and revision](audits/qkv-pedagogical-audit.md).
+
+**Status:** Updated in PR/branch; source-level checks completed. Quarto render, published-page browser review, and learner task testing remain open. This is not a rendered-site or learner-outcome certification.
