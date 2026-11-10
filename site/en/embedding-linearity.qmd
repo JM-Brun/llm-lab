@@ -101,6 +101,22 @@ For a language model and a precisely defined property:
 
 Do not treat a performance difference between probes as proof that information is “absent” or “used” without additional assumptions.
 
+
+
+## Checks that distinguish competing interpretations
+
+- **Misconception:** “An accurate linear probe proves that the model uses the feature.” No: a probe establishes accessibility under its protocol; a functional claim requires additional evidence, such as controlled interventions.
+- **Misconception:** “A failed linear probe proves that the information is absent.” No: the code may be distributed, superposed, or accessible only after a nonlinear transformation. State what the protocol can actually detect.
+- **Counterexample to overgeneralization:** XOR is not linearly separable in its original input coordinates, but becomes linearly separable after adding the product feature. The conclusion is about the chosen representation, not an absolute impossibility.
+
+When auditing a claim, ask: which layer and activation are studied? What capacity does the probe have? Which control task is used? Does performance hold on unseen combinations, and is there an intervention testing causal use?
+
+## Takeaway
+
+Linearity is a useful, testable hypothesis, not a universal law. A rigorous claim must specify the representation, concept, decoding criterion, and evaluation distribution. **Failure of linear decodability does not imply absence of information; linear decodability alone does not establish causality.**
+
+**Canonical lesson:** [Embedding space](embedding-space.qmd). This page examines hypotheses about features in that representation space; it does not replace the general introduction to embeddings.
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -128,17 +144,3 @@ Do not treat a performance difference between probes as proof that information i
 
 </div>
 </details>
-
-## Checks that distinguish competing interpretations
-
-- **Misconception:** “An accurate linear probe proves that the model uses the feature.” No: a probe establishes accessibility under its protocol; a functional claim requires additional evidence, such as controlled interventions.
-- **Misconception:** “A failed linear probe proves that the information is absent.” No: the code may be distributed, superposed, or accessible only after a nonlinear transformation. State what the protocol can actually detect.
-- **Counterexample to overgeneralization:** XOR is not linearly separable in its original input coordinates, but becomes linearly separable after adding the product feature. The conclusion is about the chosen representation, not an absolute impossibility.
-
-When auditing a claim, ask: which layer and activation are studied? What capacity does the probe have? Which control task is used? Does performance hold on unseen combinations, and is there an intervention testing causal use?
-
-## Takeaway
-
-Linearity is a useful, testable hypothesis, not a universal law. A rigorous claim must specify the representation, concept, decoding criterion, and evaluation distribution. **Failure of linear decodability does not imply absence of information; linear decodability alone does not establish causality.**
-
-**Canonical lesson:** [Embedding space](embedding-space.qmd). This page examines hypotheses about features in that representation space; it does not replace the general introduction to embeddings.
