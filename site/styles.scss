@@ -2229,3 +2229,15 @@ p:has(.pipeline-stepper) {
   box-sizing: border-box;
   max-width: 100%;
 }
+
+.meta-flow__source[href],
+.meta-flow__result[href] {
+  color: inherit;
+  text-decoration: none;
+}
+
+.meta-flow__source[href]:hover,
+.meta-flow__result[href]:hover {
+  border-color: #166534;
+  background: #F0FDF4;
+}
