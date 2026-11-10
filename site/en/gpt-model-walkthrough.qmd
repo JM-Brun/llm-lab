@@ -216,6 +216,12 @@ The shape journey, line by line:
 - **Previous stop**: [the Transformer block (`transformer_block.py`)](transformer-block-walkthrough.qmd).
 - **Next stop**: [generation (`generate.py`)](gpt-generation-walkthrough.qmd).
 
+
+
+::: {.language-switch}
+**Language:** [Français](../fr/gpt-model-walkthrough.qmd) · [English](gpt-model-walkthrough.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -235,7 +241,3 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 </div>
 </details>
-
-::: {.language-switch}
-**Language:** [Français](../fr/gpt-model-walkthrough.qmd) · [English](gpt-model-walkthrough.qmd)
-:::
