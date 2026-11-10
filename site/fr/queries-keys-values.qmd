@@ -16,8 +16,8 @@ suggested_route:
   next: "fr/scaled-dot-product-attention"
 hierarchy:
   parents: ["fr/transformer"]
-  children: []
-related: ["fr/contextualized-representations", "fr/scaled-dot-product-attention", "fr/cross-attention", "fr/transformer-block-walkthrough"]
+  children: ["fr/queries-keys-values-advanced"]
+related: ["fr/queries-keys-values-advanced", "fr/contextualized-representations", "fr/scaled-dot-product-attention", "fr/cross-attention", "fr/transformer-block-walkthrough"]
 tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-values", "level:core", "language:fr", "status:published"]
 -->
 
