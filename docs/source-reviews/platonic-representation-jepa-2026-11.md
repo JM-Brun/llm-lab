@@ -203,3 +203,20 @@ The Hugging Face Papers entry is an alternate presentation of arXiv:2610.39302, 
 
 The supplied video URL and ID are recorded in the source catalogue, but direct retrieval of the YouTube page and oEmbed metadata failed. Its title, creator, duration, transcript and content are unknown. It must remain deferred and should not be used to support any claim until it can be watched or a transcript is supplied.
 
+
+## 14. Lineage source added in the fourth pass: the 2022 spectral SSL result
+
+The Medium article recorded in section 13 states that "Balestriero and LeCun had already connected a constrained learning objective to Laplacian eigenmaps, a method for assigning coordinates to graph vertices (Balestriero and LeCun, 2022)". A reader question about that sentence triggered this fourth pass, and the underlying primary paper has been scanned and ingested: [Contrastive and Non-Contrastive Self-Supervised Learning Recover Global and Local Spectral Embedding Methods](https://arxiv.org/abs/2205.11508), arXiv:2205.11508v3 (also published in the NeurIPS 2022 proceedings).
+
+What the 2022 paper establishes, at the population level:
+
+- The invariance term of VICReg is exactly the Dirichlet energy of the embedding signal on the pairwise-similarity graph; minimizing it favors embeddings that are smooth across strongly connected inputs (Section 3.1).
+- The global minimizer of the VICReg loss has a closed form built from the eigenvectors and eigenvalues of the graph operator (Theorem 1), and the linear-network regime recovers Locality Preserving Projections and Linear Discriminant Analysis in closed form (Theorem 3, Section 3.3).
+- Turning the VICReg optimization into a constrained problem recovers (kernel) Laplacian Eigenmaps, the classic spectral method that assigns coordinates to graph vertices so that strongly connected vertices land nearby (Section 3.2).
+- Contrastive objectives such as SimCLR correspond to global spectral embedding methods such as multidimensional scaling, while non-contrastive objectives correspond to local ones such as Laplacian Eigenmaps (Sections 3.2 and 4.3); practical guidance follows, e.g. on the invariance hyper-parameter depending on whether the pairwise relation is aligned with the downstream task.
+
+Why this matters for this dossier: the spectral mechanism used by the 2026 Platonic Representation Theorem (positive-pair kernel, trace maximization, Ky Fan selection, eigengap) is not an ad hoc construction of that paper; it descends from this 2022 single-encoder program. The 2026 theorem's own step is the cross-encoder statement: two independently trained encoders agree up to an orthogonal rotation when their positive-pair kernels agree.
+
+Provenance: the arXiv HTML v3 was retrieved in full and read selectively (abstract, Theorem 1, Figure 1, Sections 3.1-3.3 and the global/local correspondence passages); the licence is CC BY 4.0 as declared on the paper. The paper was not read line by line, its theorems' proofs and experiments were not audited, and no code was executed. The extraction is recorded in `data/extractions/balestriero-lecun-contrastive-non-contrastive-ssl-spectral-2022.yml`.
+
+Page impact: both deep-dive pages gain a short lineage paragraph at the end of the spectral-mechanism section and a source entry; the `laplacian-eigenmaps` concept is registered in the canonical concept graph, related to `positive-pair-distribution` and `joint-embedding-predictive-architecture`.

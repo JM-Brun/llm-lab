@@ -166,5 +166,10 @@ Use these resources as complementary explanations and study aids, not as substit
   - **Figure locator supplied for review:** https://huggingface.co/papers/2610.39302?image-viewer=7E717904F1535C836EA2DEC65DD6993C6356BA9A
   - **Reuse caution:** the viewer URL identifies a hosted figure asset, but asset provenance and reuse permission were not established. Link to it rather than copying it until rights are checked.
 
+- **Randall Balestriero & Yann LeCun — Contrastive and Non-Contrastive Self-Supervised Learning Recover Global and Local Spectral Embedding Methods** (arXiv:2205.11508v3, 2022; also in the NeurIPS 2022 proceedings): https://arxiv.org/abs/2205.11508
+  - **Use for:** the single-encoder spectral lineage behind the Platonic Representation Theorem's mechanism: VICReg's invariance term is the Dirichlet energy of the embedding on the pairwise-similarity graph, the constrained VICReg problem recovers (kernel) Laplacian Eigenmaps, the linear-network regime recovers Locality Preserving Projections and Linear Discriminant Analysis, and contrastive versus non-contrastive SSL corresponds to global versus local spectral embedding.
+  - **Relationship to the other sources:** direct primary precedent for the spectral machinery of arXiv:2610.39302 (positive-pair kernel, eigenspace selection); the 2026 theorem extends this analysis to agreement between separately trained encoders. The Medium article's lineage sentence cites this paper.
+  - **Review status:** first-pass extraction recorded in `data/extractions/balestriero-lecun-contrastive-non-contrastive-ssl-spectral-2022.yml`; the arXiv HTML was retrieved but read selectively, and the theorems' proofs and experiments remain unaudited. See [the source review](source-reviews/platonic-representation-jepa-2026-11.md).
+
 - **YouTube video — video ID `j0O8Aq6ducw`:** https://www.youtube.com/watch?v=j0O8Aq6ducw
   - **Review status:** URL recorded at the user's request. YouTube watch-page and oEmbed metadata could not be retrieved in this pass; title, creator, transcript, date and contents remain unverified. Do not use it as evidence until inspected.

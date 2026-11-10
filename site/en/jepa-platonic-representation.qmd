@@ -86,6 +86,8 @@ Two consequences follow:
 
 When two modalities induce different pair kernels, a Davis-Kahan-type perturbation bound says the post-rotation mismatch grows with the kernel difference and worsens as the relevant spectral gap shrinks. This gives the working spine of the analysis: **positive-pair graph, Markov operator, spectral subspace, eigengap, rotation ambiguity, alignment error**.
 
+This picture did not appear first in 2026. In 2022, the same authors showed that the invariance term of VICReg, a non-contrastive self-supervised objective, is exactly the **Dirichlet energy** of the embedding on the pairwise-similarity graph, and that solving the constrained problem recovers (kernel) **Laplacian eigenmaps**, the classic method that assigns coordinates to graph vertices so that strongly connected vertices land nearby ([Balestriero and LeCun, arXiv:2205.11508](https://arxiv.org/abs/2205.11508)). Contrastive objectives such as SimCLR correspondingly recover global spectral embeddings such as multidimensional scaling. The 2026 theorem inherits this single-encoder machinery and extends it from one embedding to the agreement between two separately trained encoders.
+
 ## Nuisance variables: what the observation adds to the state
 
 The paper formalizes an observation as the rendering of a world state together with a modality-specific nuisance: $x = g_m(z, u)$. Nuisances are not noise in general; they are factors the modality happens to carry, such as wording, style, viewpoint, or lighting.
@@ -130,6 +132,7 @@ A provenance caveat travels with the web-scale numbers: much of the training tex
 - Balestriero and LeCun, [Proving and Improving the Platonic Representation Hypothesis with JEPAs](https://arxiv.org/abs/2610.39302), arXiv:2610.39302 (2026). Primary source.
 - Kejriwal, [Do AI models trained on different modalities converge to the same representation of the world?](https://aiscientist.substack.com/p/do-ai-models-trained-on-different), AI Scientist (2026). Secondary synthesis; use it for orientation, the paper for claims.
 - Huh, Cheung, Wang, and Isola, [The Platonic Representation Hypothesis](https://arxiv.org/abs/2405.07987) (2024). The original conjecture.
+- Balestriero and LeCun, [Contrastive and Non-Contrastive Self-Supervised Learning Recover Global and Local Spectral Embedding Methods](https://arxiv.org/abs/2205.11508), arXiv:2205.11508 (2022). Lineage source for the spectral mechanism; primary precedent for the Dirichlet-energy reading above.
 
 **Position in LLM Lab:** an optional advanced deep dive in the research-questions domain. It does not modify the core Understand route and is not a prerequisite for building the small GPT. It connects three neighbouring pages: [contextualized representations](contextualized-representations.qmd) (how one model builds token-level states), [embedding linearity](embedding-linearity.qmd) (assumed geometry of representation spaces), and [scaling laws](scaling-laws.qmd) (resource-performance regularities, which this page deliberately does not reduce alignment to).
 
