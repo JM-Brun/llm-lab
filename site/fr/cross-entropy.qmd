@@ -24,7 +24,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:cross-entropy", "
 {{< include ../includes/generated-guided-context-fr-cross-entropy.qmd >}}
 
 ::: {.chapter-lead}
-Pour une cible one-hot, la cross-entropie d'une position est la négative log-probabilité du token observé. En entraînement autorégressif, cette quantité est calculée pour les positions cibles autorisées, puis agrégée selon une convention qu'il faut expliciter.
+La page précédente a construit la vraisemblance d'une séquence en combinant les probabilités conditionnelles des tokens observés, puis sa négative log-vraisemblance (NLL). Pour une cible one-hot, la cross-entropie d'une position est la négative log-probabilité du token observé. En entraînement autorégressif, cette quantité est calculée pour les positions cibles autorisées, puis agrégée selon une convention qu'il faut expliciter.
 :::
 
 ::: {.callout-tip title="L'idée à retenir en une minute"}
