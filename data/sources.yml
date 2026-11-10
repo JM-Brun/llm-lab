@@ -2922,7 +2922,7 @@ sources:
     language: en
     version: "arXiv v1"
     revision: "v1"
-    licence: {"identifier":null,"url":"https://creativecommons.org/licenses/by/4.0/","status":"declared"}
+    licence: {"identifier":"CC-BY-4.0","url":"https://creativecommons.org/licenses/by/4.0/","status":"declared"}
     reuse: {"text":"link-only","figures":"link-only","code":"link-only","data":"unknown"}
     classification:
       primary_theme: mathematical-tools-geometry
