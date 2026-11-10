@@ -24,7 +24,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-valu
 {{< include ../includes/generated-guided-context-en-queries-keys-values.qmd >}}
 
 ::: {.chapter-lead}
-The previous page, [GPT and Transformers: architecture and data flow](transformer.qmd), places self-attention within the network's forward pass. We now start with a simple question: how can one position use the context provided by the other tokens?
+The previous page, [The Transformer in a GPT: architecture and computation](transformer.qmd), showed that self-attention is a sublayer within the repeated block. We now start with a simple question: how can one position use the context provided by the other tokens?
 :::
 
 ## The problem: using context

@@ -15,9 +15,9 @@ suggested_route:
   previous: "fr/positional-encoding"
   next: "fr/transformer"
 hierarchy:
-  parents: ["fr/embedding-space", "fr/positional-encoding", "fr/transformer"]
+  parents: ["fr/embedding-space", "fr/positional-encoding"]
   children: []
-related: ["fr/queries-keys-values"]
+related: ["fr/queries-keys-values", "fr/transformer"]
 tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-representations", "level:core", "language:fr", "status:published"]
 -->
 
@@ -118,7 +118,7 @@ Le parcours est le suivant :
 4. Les couches du Transformer produisent des états cachés dépendants du contexte.
 5. Les couches suivantes et la tête de sortie utilisent ces états pour prédire le token suivant.
 
-Le [lookup dans l’espace des plongements (embeddings)](embedding-space.qmd) associe les IDs aux vecteurs initiaux ; [requêtes, clés et valeurs](queries-keys-values.qmd) puis l’[attention à produit scalaire mise à l’échelle](scaled-dot-product-attention.qmd) décrivent le traitement contextuel de la séquence.
+Le [lookup dans l’espace des plongements (embeddings)](embedding-space.qmd) associe les IDs aux vecteurs initiaux. Pour voir comment le réseau transforme ensuite ces vecteurs en états contextualisés, poursuivez avec [Le Transformer dans un GPT](transformer.qmd) : cette page situe la pile de blocs et distingue l'attention du MLP. Les pages sur [Q/K/V](queries-keys-values.qmd) et l'[attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd) détaillent ensuite le mécanisme d'attention.
 
 ::: {.self-check}
 ## Vérifier sa compréhension

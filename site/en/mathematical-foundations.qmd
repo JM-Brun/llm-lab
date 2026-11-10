@@ -16,7 +16,7 @@ suggested_route:
   next: "en/tensors"
 hierarchy:
   parents: ["en/llm-overview"]
-  children: []
+  children: ["en/tensors"]
 related: []
 tags: ["type:deep-dive", "destination:deepen", "topic:mathematical-foundations", "level:advanced", "language:en", "status:published"]
 -->

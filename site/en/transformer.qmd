@@ -15,9 +15,9 @@ suggested_route:
   previous: "en/contextualized-representations"
   next: "en/queries-keys-values"
 hierarchy:
-  parents: ["en/index", "en/llm-overview"]
-  children: ["en/embedding-space", "en/positional-encoding", "en/contextualized-representations", "en/queries-keys-values", "en/scaled-dot-product-attention", "en/logits", "en/tensors"]
-related: ["en/text-data", "en/transformer-block-walkthrough"]
+  parents: ["en/index", "en/llm-overview", "en/transformer-architectures"]
+  children: ["en/queries-keys-values", "en/scaled-dot-product-attention"]
+related: ["en/text-data", "en/embedding-space", "en/positional-encoding", "en/contextualized-representations", "en/logits", "en/tensors", "en/generation", "en/transformer-block-walkthrough", "en/gpt-model-walkthrough"]
 tags: ["type:system-overview", "destination:understand", "topic:transformer", "level:overview", "language:en", "status:published"]
 -->
 
@@ -50,15 +50,13 @@ This second diagram answers a different question: it places the network in the c
 
 ## 1. From token IDs to input representations
 
-The network does not receive raw text: it receives a sequence of token IDs, mapped to vectors by an embedding table. Positional information is also incorporated, either into the embeddings or into the attention computation, depending on the architecture. Transformer blocks then turn these vectors into contextualized representations: the same token can contribute to different states depending on its context.
-
-The transition from text to token IDs is explained in [text and tokenization](text-data.qmd); the [embedding page](embedding-space.qmd) shows how those IDs become vectors. [Positional information](positional-encoding.qmd) explains how the model accounts for token order. Here, we keep these stages as the starting point and focus on what the blocks do with the resulting representations. For the shapes and axes of the arrays involved, see [Tensors](tensors.qmd).
+At the first block's input, each token ID has already been mapped to a vector, and the model has information about token order. The pages on [embeddings](embedding-space.qmd) and [positional information](positional-encoding.qmd) explain these initial representations; the page on [contextualized representations](contextualized-representations.qmd) shows what Transformer layers do with them. Here, we follow that computation at the block level.
 
 ## 2. Transformer blocks
 
 The stack shown above consists of blocks of the same general type, repeated in depth. Each block combines two main operations:
 
-- **Self-attention:** each position draws on the positions allowed by the mask — including its own position in a causal GPT — to refine its representation. For example, when interpreting *it* in “Adam puts the ice cream in the freezer because it was melting”, attention can bring information about *the ice cream* into the representation at *it*. In GPT, a causal mask forbids reading future tokens.
+- **Self-attention:** each position combines information from the positions allowed by the mask, including its own position in a causal GPT. The causal mask prevents access to future tokens.
 - **Feed-forward network (MLP):** a small neural network applied to each position separately, with the same weights everywhere. It typically combines linear projections with a nonlinear activation to produce a transformed representation; the exact design varies by architecture.
 
 Blocks also use **residual connections** and **normalization**. A residual connection adds a correction computed by a sublayer to the representation flowing through the network, rather than replacing that representation entirely. It therefore provides a direct path for information and gradients:
@@ -69,19 +67,13 @@ x_{\text{out}} = x_{\text{in}} + F(x_{\text{in}}).
 
 Normalization (*LayerNorm* in classic GPT models) centers and normalizes the hidden-vector components of each position independently of other positions. Depending on the architecture, it is placed before or after selected sublayers. A typical **pre-LN** block, for example, uses $x' = x + \operatorname{Attention}(\operatorname{LN}(x))$, followed by $x'' = x' + \operatorname{MLP}(\operatorname{LN}(x'))$. This is one design, not a universal formula: pre-LN/post-LN order and normalization variants differ across models.
 
-The diagram describes the role of the components without prescribing one universal implementation. To see how these operations are organized in the reference code — including pre-LN order, projections, and residual paths — follow the [Transformer block walkthrough](transformer-block-walkthrough.qmd).
+The diagram describes the role of the components without prescribing one universal implementation. To move from the conceptual diagram to a specific implementation — pre-LN order, projections, and residual paths — see the [Transformer block walkthrough](transformer-block-walkthrough.qmd) in the **Build** path. It complements this lesson but is not a required step in the conceptual route.
 
 ![Comparison of the roles of self-attention and the feed-forward network in a Transformer block.](../images/attention-vs-mlp-en.svg){fig-alt="Self-attention allows exchanges between allowed positions; the same feed-forward network is applied separately to each position." width=100%}
 
-The useful distinction is not that attention "understands" the tokens while the MLP does not: both transformations are learned. Attention mixes information across positions; the MLP transforms each representation locally, with weights shared across positions.
+Attention mixes information across permitted positions; the MLP transforms each representation locally, with weights shared across positions. Both operations are learned. Attention computes a weighted sum of learned value vectors: it does not literally search through human-readable notes.
 
-A useful mental model is that **attention gathers a context-dependent mixture of information from other positions**, while the **MLP processes the representation now available at each position**. The first operation exchanges information across positions; the second transforms each position independently. This is only an analogy: attention computes weighted sums of learned value vectors, not a literal search or collection of human-readable notes.
-
-**Multi-head attention** performs several attention computations in parallel and then combines their results. For the essential learning path, it is enough to remember that it provides multiple complementary computational pathways.
-
-::: {.callout-note collapse="true" title="Going deeper: how attention heads work"}
-Each head has its own learned query, key, and value projections. Heads *can* therefore learn different matching patterns or exploit different relationships. Their outputs are concatenated and then mixed by an output projection. Do not assume that every head has a clean, human-interpretable specialization: that is an empirical question, not a guarantee of the architecture.
-:::
+**Multi-head attention** performs several computations in parallel using distinct learned projections, then combines their results. This diversity does not guarantee that each head develops a clear, human-interpretable specialization.
 
 ### Depth and width: two architectural dimensions
 
@@ -94,21 +86,17 @@ These terms are not interchangeable with other internal dimensions: the **number
 
 *Width* is sometimes used more broadly for other internal dimensions, so check which dimension an article or model card means. For tensor shapes and projection dimensions, see [Tensors](tensors.qmd); for a concrete configuration, see the [GPT configuration walkthrough](gpt-config-walkthrough.qmd). Depth and width describe network structure, but neither alone predicts model performance.
 
-Self-attention is the sublayer that lets permitted positions exchange information. To follow its computation step by step, [Q/K/V](queries-keys-values.qmd) introduces the three learned projections; [scaled dot-product attention](scaled-dot-product-attention.qmd) details the scores and their normalization; [causal masking](causal-masking.qmd) explains why a GPT cannot consult future tokens. These deep dives concern the attention mechanism inside a block, not the complete architecture.
+To unpack this sublayer, follow three successive questions: [which projections feed attention?](queries-keys-values.qmd) (Q, K, and V), [how do scores become a weighted aggregation?](scaled-dot-product-attention.qmd), and [which positions may a GPT consult?](causal-masking.qmd) (causal masking). These pages examine the attention mechanism inside a block, not a different architecture.
 
 ### Three levels that should not be conflated
 
-It helps to distinguish three scales:
+Three levels should remain distinct:
 
-1. **The attention sublayer** computes how each position combines values from permitted positions. Q/K/V projections and attention-weight computation belong to this sublayer.
-2. **The Transformer block** combines attention with a position-wise feed-forward transformation (MLP), using residual paths and normalization. For the reference pre-LN block, its contract can be written as:
+1. **The attention sublayer** exchanges information between permitted positions.
+2. **The Transformer block** combines attention with an MLP, residual connections, and normalization.
+3. **The complete GPT** assembles input representations, a stack of blocks, then a final normalization and output head.
 
-   \[ H^{(\ell+1)} = \mathcal{B}_{\theta_\ell}(H^{(\ell)}; M), \qquad H^{(\ell)},H^{(\ell+1)} \in \mathbb{R}^{B\times T\times d}. \]
-
-   The block transforms representations; it does not select a token or directly produce a vocabulary distribution.
-3. **The assembled GPT** prepares input representations, applies a stack of blocks, then a final normalization and a vocabulary projection. In the reference model, the stream goes from \(B\times T\) IDs to \(B\times T\times d\) states, then to \(B\times T\times V\) logits.
-
-In short: attention is a sublayer; the block is the repeated unit; GPT is the model that assembles these blocks with its input and output interfaces. The [block walkthrough](transformer-block-walkthrough.qmd) shows one implementation, while the [GPT assembly walkthrough](gpt-model-walkthrough.qmd) traces how blocks are integrated into the complete model.
+Attention is therefore part of a block; the block is the repeated unit; the Transformer alone is not the complete GPT. In the **Build** path, the [block walkthrough](transformer-block-walkthrough.qmd) examines one implementation, then the [GPT assembly walkthrough](gpt-model-walkthrough.qmd) shows how the blocks fit into the complete model.
 
 ## 3. From representations to logits
 
@@ -143,21 +131,9 @@ This check focuses on the block structure and the role of residual connections.
 
 The [GPT-2 exploration workshop](transformer-explainer.qmd) lets you observe these mechanisms on a real model: run controlled experiments and examine the limits of the visualization. It is an independent analysis exercise — useful, but not required to follow the flow described here.
 
-## Training and inference: two different organizations of computation
+## Further reading
 
-During autoregressive training, the causal mask allows predictions for different positions in a sequence to be computed in parallel, using shifted inputs and targets. During generation, successive **token-production steps** are sequential because each new token depends on the previous one; a forward pass can nevertheless process all positions in the currently available context in parallel.
-
-Window construction, shifted inputs and targets, and training masks are detailed in [Training examples](training-examples.qmd). The costs of prefill, decoding, and the KV cache are covered in the [computational complexity deep dive](llm-computational-complexity.qmd).
-
-## Limits and misconceptions
-
-- **"A GPT is just an attention layer."** No: it is an architecture with embeddings, repeated blocks, feed-forward transformations, residual connections, normalizations, and an output head.
-- **"Tokens are words."** Not necessarily: a token can be a word, a word fragment, a punctuation sign, or another fragment.
-- **"A high probability guarantees a true answer."** No: the distribution is learned to predict tokens observed in the data; factual truth and calibration require other evaluations.
-- **"Attention weights alone reveal the model's reasoning."** No: they do not establish the causal influence of a piece of information on the output.
-- **"All Transformers are GPTs."** No: the original 2017 architecture used an encoder and a decoder; GPT is an autoregressive decoder-only family.
-
-For visualizations, the foundational paper, and implementation resources, see the [Transformer resources in the Deepen area](deepen.qmd#transformer-resources). These resources are optional and are not part of the core learning path.
+For visualizations, the foundational paper, and implementation resources, see the [Transformer resources in Deepen](deepen.qmd#transformer-resources). These resources are optional and are not part of the core learning path.
 
 {{< include ../includes/generated-suggested-route-en-transformer.qmd >}}
 

@@ -15,9 +15,9 @@ suggested_route:
   previous: "fr/embedding-space"
   next: "fr/contextualized-representations"
 hierarchy:
-  parents: ["fr/embedding-space", "fr/transformer"]
+  parents: ["fr/embedding-space"]
   children: ["fr/contextualized-representations", "fr/rope"]
-related: []
+related: ["fr/transformer"]
 tags: ["type:concept-lesson", "destination:understand", "topic:positional-encoding", "level:core", "language:fr", "status:published"]
 -->
 
