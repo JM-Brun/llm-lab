@@ -24,7 +24,7 @@ tags: ["type:system-overview", "destination:understand", "topic:transformer", "l
 
 {{< include ../includes/generated-guided-context-fr-transformer.qmd >}}
 ::: {.chapter-lead}
-Un **GPT** est un modèle de langage construit autour d'un **Transformer décodeur seul**. Le Transformer n'est pas une étape de traitement placée entre deux composants : c'est le réseau neuronal lui-même, constitué d'une pile de blocs qui transforment les représentations des tokens. À partir de ces représentations, le réseau calcule des **logits**, c'est-à-dire un score pour chaque token du vocabulaire.
+Un **GPT** est un modèle de langage construit autour d'un **Transformer décodeur seul**. Le Transformer ne désigne pas une étape de traitement placée entre deux composants : c'est une architecture de réseau neuronal. Dans un GPT décodeur seul, son cœur est une pile de blocs Transformer qui transforment les représentations des tokens. À partir de ces représentations, le réseau calcule des **logits**, c'est-à-dire un score pour chaque token du vocabulaire.
 
 Cette page montre d'abord à quoi ressemble cette architecture, puis suit une passe avant à travers ses blocs jusqu'aux logits. Elle s'arrête à la sortie du réseau : la conversion des logits en probabilités et la sélection du prochain token appartiennent au décodage, pas au calcul interne du Transformer.
 :::
