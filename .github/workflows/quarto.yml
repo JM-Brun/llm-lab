@@ -44,13 +44,13 @@ jobs:
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
 
-          if printf '%s\n' "$changed_files" | grep -Eq '^(site/|scripts/site-browser-review\.mjs$|\.github/workflows/quarto\.yml$|pyproject\.toml$|uv\.lock$|docs/requirements-.*\.txt$)'; then
+          if printf '%s\n' "$changed_files" | grep -Eq '^(site/|data/|src/|scripts/site-browser-review\.mjs$|\.github/workflows/quarto\.yml$|pyproject\.toml$|uv\.lock$|docs/requirements-.*\.txt$)'; then
             echo "site_relevant=true" >> "$GITHUB_OUTPUT"
           else
             echo "site_relevant=false" >> "$GITHUB_OUTPUT"
           fi
 
-          if printf '%s\n' "$changed_files" | grep -Eq '^(site/|scripts/site-browser-review\.mjs$)'; then
+          if printf '%s\n' "$changed_files" | grep -Eq '^(site/|data/|scripts/site-browser-review\.mjs$)'; then
             echo "browser_relevant=true" >> "$GITHUB_OUTPUT"
           else
             echo "browser_relevant=false" >> "$GITHUB_OUTPUT"
