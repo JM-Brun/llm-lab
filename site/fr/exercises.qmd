@@ -392,6 +392,46 @@ Le lookup conserve les axes batch et position, et ajoute l'axe des caractéristi
 
 </details>
 
+#### Trace pratique facultative — du texte aux vecteurs
+
+Cette trace complète TR-B avec un tokenizer réel et une table d'embeddings synthétique. Elle permet de suivre les objets successifs sans prétendre reproduire les poids internes d'un GPT-2 préentraîné.
+
+Installez la version figée avec `python -m pip install tiktoken==0.14.0`. NumPy est déjà une dépendance du projet.
+
+```python
+import numpy as np
+import tiktoken
+
+text = "hello world"
+utf8_bytes = text.encode("utf-8")
+encoding = tiktoken.get_encoding("gpt2")
+token_ids = encoding.encode(text)
+token_bytes = [encoding.decode_single_token_bytes(i) for i in token_ids]
+token_strings = [part.decode("utf-8") for part in token_bytes]
+
+assert utf8_bytes == b"hello world"
+assert token_ids == [31373, 995]
+assert token_strings == ["hello", " world"]
+assert encoding.decode(token_ids) == text
+
+# Table synthétique : GPT-2 réel utilise d'autres dimensions et poids appris.
+vocab_size, d = 50_257, 2
+E = np.zeros((vocab_size, d), dtype=np.float32)
+E[31373] = [0.1, 0.2]
+E[995] = [-0.3, 0.4]
+X = E[token_ids]
+assert X.shape == (2, 2)
+assert np.allclose(X, [[0.1, 0.2], [-0.3, 0.4]])
+
+# Vecteurs positionnels illustratifs, pas les paramètres réels de GPT-2.
+P = np.array([[0.01, 0.02], [0.03, 0.04]], dtype=np.float32)
+Z = X + P
+assert Z.shape == (2, 2)
+assert np.allclose(Z, [[0.11, 0.22], [-0.27, 0.44]])
+```
+
+À interpréter avec soin : les IDs dépendent du tokenizer ; les vecteurs de `E` et `P` sont inventés. Le script vérifie le chemin texte → IDs → lookup → ajout positionnel, mais n'exécute aucun bloc Transformer et ne calcule donc pas d'états contextualisés. Pour les détails sur les octets et les fusions BPE, voir TR-E.
+
 #### Exercice TR-C — Distinguer identité, position et contexte
 
 **Préparation :** [représentations contextualisées](contextualized-representations.qmd) et [position et RoPE](positional-encoding.qmd), après TR-A et TR-B. L'exercice progresse en deux étapes : diagnostiquer des affirmations, puis prédire sous modifications contrôlées.
