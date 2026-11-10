@@ -39,8 +39,7 @@ def replace_project_render_targets(config: str, targets: list[str]) -> str:
         (
             index
             for index in range(project_start + 1, len(lines))
-            if lines[index].strip()
-            and not lines[index].startswith((" ", "#"))
+            if lines[index].strip() and not lines[index].startswith((" ", "#"))
         ),
         len(lines),
     )
@@ -59,8 +58,7 @@ def replace_project_render_targets(config: str, targets: list[str]) -> str:
         (
             index
             for index in range(render_start + 1, project_end)
-            if lines[index].strip()
-            and len(lines[index]) - len(lines[index].lstrip(" ")) <= 2
+            if lines[index].strip() and len(lines[index]) - len(lines[index].lstrip(" ")) <= 2
         ),
         project_end,
     )
@@ -69,11 +67,7 @@ def replace_project_render_targets(config: str, targets: list[str]) -> str:
 
 
 def main() -> None:
-    targets = [
-        line.strip()
-        for line in os.environ.get("RENDER_TARGETS", "").splitlines()
-        if line.strip()
-    ]
+    targets = [line.strip() for line in os.environ.get("RENDER_TARGETS", "").splitlines() if line.strip()]
     config_path = Path("site/_quarto.yml")
     original_config = config_path.read_text(encoding="utf-8")
     incremental_config = replace_project_render_targets(original_config, targets)
