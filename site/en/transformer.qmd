@@ -24,7 +24,7 @@ tags: ["type:system-overview", "destination:understand", "topic:transformer", "l
 
 {{< include ../includes/generated-guided-context-en-transformer.qmd >}}
 ::: {.chapter-lead}
-A **GPT** is a language model built around a **decoder-only Transformer**. The Transformer is not a processing step placed between other components: it is the neural network itself, made of stacked blocks that transform token representations. From these representations, the network computes **logits** — one score for every token in the vocabulary.
+A **GPT** is a language model built around a **decoder-only Transformer**. The Transformer does not refer to a processing step placed between other components: it is a neural-network architecture. In a decoder-only GPT, its core is a stack of Transformer blocks that transform token representations. From these representations, the network computes **logits** — one score for every token in the vocabulary.
 
 This page first shows what that architecture looks like, then follows a forward pass through its blocks to the logits. It stops at the network output: converting logits into probabilities and selecting the next token belong to decoding, not to the Transformer's internal computation.
 :::
