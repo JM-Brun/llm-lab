@@ -25,11 +25,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:embedding-space-exerc
 
 ## Check your understanding
 
-Hands-on exercises for the text-to-representation pipeline are available in the [Text data collection](../exercises-text-data.qmd#text-data). Exercises TR-A to TR-C complement this page:
-- [TR-A — Reconstruct the representation pipeline](../exercises-text-data.qmd#exercise-tr-a-reconstruct-the-representation-pipeline): order text, tokens, IDs, initial embeddings, and contextualized states.
-- [TR-B — Calculate lookup and trace tensor shapes](../exercises-text-data.qmd#tr-b-lookup): calculate selected vectors and trace dimensions, including batches.
-- [TR-C — Diagnose identity, position, and context](../exercises-text-data.qmd#exercise-tr-c-diagnose-identity-position-and-context): distinguish what comes from the ID, position, and context.
-
+Hands-on exercises are grouped in the [Text data collection](../exercises-text-data.qmd#text-data), under **Practice**. This page belongs to that section and keeps the self-check questions below; it is not part of the main learning path.
 
 1. An embedding matrix has \(V\) rows and vectors of dimension \(d\). How many parameters does it contain, and what does ID \(i\) select?
 
