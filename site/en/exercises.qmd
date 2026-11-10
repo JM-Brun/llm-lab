@@ -266,7 +266,7 @@ The tokenizer maps text to discrete vocabulary entries. The IDs index the embedd
 
 </details>
 
-#### Exercise TR-B — Calculate lookup and trace tensor shapes
+#### Exercise TR-B — Calculate lookup and trace tensor shapes {#tr-b-lookup}
 
 **Preparation:** [embedding space](embedding-space.qmd) for the matrix and the lookup; [tensors](tensors.qmd) is an optional notation reference. The exercise progresses in three stages: calculate, complete, generalize.
 
