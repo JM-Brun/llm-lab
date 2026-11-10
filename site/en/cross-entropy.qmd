@@ -53,17 +53,17 @@ In the running example, the target token is the next token actually present in t
 
 ## Objective for one token
 
-Here, \(t\) indexes the **target token**: the logits are aligned with \(x_t\) and represent \(p_\theta(x_t\mid x_{<t})\). Some implementations instead index logits by the input position; then the row at input position \(t\) predicts \(x_{t+1}\). These conventions are equivalent only when the logits and labels are shifted consistently. For a one-hot target, the loss is:
+Here, $t$ indexes the **target token**: the logits are aligned with $x_t$ and represent $p_\theta(x_t\mid x_{<t})$. Some implementations instead index logits by the input position; then the row at input position $t$ predicts $x_{t+1}$. These conventions are equivalent only when the logits and labels are shifted consistently. For a one-hot target, the loss is:
 
-\[
+$$
 \ell_t=-\log p_\theta(x_t\mid x_{<t}).
-\]
+$$
 
-If \(y\) is the target-token index and \(p=\operatorname{softmax}(z)\), this can be written as:
+If $y$ is the target-token index and $p=\operatorname{softmax}(z)$, this can be written as:
 
-\[
+$$
 \ell(z,y)=-z_y+\log\sum_{j=1}^{V}e^{z_j}.
-\]
+$$
 
 The cost increases when the model assigns low probability to the observed token. A wrong but highly confident prediction is therefore strongly penalized.
 
@@ -71,7 +71,7 @@ The cost increases when the model assigns low probability to the observed token.
 
 ![For the same target token, predicted probability 0.9 gives loss 0.105 nats, while probability 0.1 gives loss 2.303 nats.](../images/cross-entropy-target-probability.svg){fig-alt="Two cases for the same observed token: p(y)=0.9 gives −ln p(y)≈0.105 nats; p(y)=0.1 gives −ln p(y)≈2.303 nats. Lower target probability produces a much larger loss." width=100%}
 
-Both cases concern **the same target token**: only the probability assigned to it changes. When \(p(y)=0.9\), the loss is about \(0.105\) nats; when \(p(y)=0.1\), it is about \(2.303\) nats. The second loss is nearly 22 times larger. The function \(-\log p(y)\) makes confident errors costly, but it does not tell us whether the observed token is true or useful in a broader sense.
+Both cases concern **the same target token**: only the probability assigned to it changes. When $p(y)=0.9$, the loss is about $0.105$ nats; when $p(y)=0.1$, it is about $2.303$ nats. The second loss is nearly 22 times larger. The function $-\log p(y)$ makes confident errors costly, but it does not tell us whether the observed token is true or useful in a broader sense.
 
 This figure illustrates the loss for one token with a one-hot target. It does not show the full vocabulary distribution, the averaging over valid positions, or the entire training objective.
 
@@ -81,9 +81,9 @@ For a general target distribution $q$, cross-entropy is $H(q,p)=-\sum_{i=1}^{V}q
 
 ## Multiple positions: causal shift and masks
 
-In an autoregressive model, the representation at position \(t\) is used to predict the next token. Depending on the code convention, logits and labels must therefore be shifted consistently: the model must not receive the target token as unmasked context when predicting that same token.
+In an autoregressive model, the representation at position $t$ is used to predict the next token. Depending on the code convention, logits and labels must therefore be shifted consistently: the model must not receive the target token as unmasked context when predicting that same token.
 
-For a batch, logits often have shape \((B,T,V)\) and labels shape \((B,T)\). Before interpreting the loss, check:
+For a batch, logits often have shape $(B,T,V)$ and labels shape $(B,T)$. Before interpreting the loss, check:
 
 - **Target shift:** each logit is compared with the token it is supposed to predict, not accidentally with the input token.
 - **Padding and masks:** ignored positions must contribute neither to the sum nor to the denominator of the mean.
@@ -92,7 +92,7 @@ For a batch, logits often have shape \((B,T,V)\) and labels shape \((B,T)\). Bef
 - **Comparison:** state the tokenizer, included positions, and averaging convention before comparing two values.
 
 ::: {.callout-note collapse="true" title="NumPy implementation and tests (advanced)"}
-The [NumPy reference implementation](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/losses.py) and its [unit tests](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_losses.py) cover a deliberately small case: logits with shape \((B,C)\), one integer target per row, and the **unweighted mean over rows**. The loss uses natural logarithms, so its value is in nats. The gradient function returns the derivative of that same mean loss with respect to the logits; it is not a gradient with respect to a model's parameters.
+The [NumPy reference implementation](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/losses.py) and its [unit tests](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_losses.py) cover a deliberately small case: logits with shape $(B,C)$, one integer target per row, and the **unweighted mean over rows**. The loss uses natural logarithms, so its value is in nats. The gradient function returns the derivative of that same mean loss with respect to the logits; it is not a gradient with respect to a model's parameters.
 
 This reference does **not** implement sequence-level input/target shifting, token masks or `ignore_index`, soft targets, class weights, or perplexity. For token-level language modeling, callers must align logits and targets and select valid target positions before using this row-wise function. The implementation should not be mistaken for a complete LLM training loss.
 
@@ -216,13 +216,13 @@ The infinite result is a floating-point failure of the naïve computation, not a
 
 ## Connection to perplexity
 
-If \(\bar{\ell}\) is mean cross-entropy in nats over valid tokens, perplexity is:
+If $\bar{\ell}$ is mean cross-entropy in nats over valid tokens, perplexity is:
 
-\[
+$$
 \operatorname{PPL}=\exp(\bar{\ell}).
-\]
+$$
 
-For a mean measured in bits, use \(2^{\bar{\ell}}\). Perplexity therefore depends on the logarithm base and evaluation convention. It measures probabilistic performance on the evaluated tokens; it is not a direct measure of factual truth or overall assistant quality.
+For a mean measured in bits, use $2^{\bar{\ell}}$. Perplexity therefore depends on the logarithm base and evaluation convention. It measures probabilistic performance on the evaluated tokens; it is not a direct measure of factual truth or overall assistant quality.
 
 ## Connection to the gradient
 

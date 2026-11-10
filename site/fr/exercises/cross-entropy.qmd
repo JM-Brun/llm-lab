@@ -34,7 +34,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:cross-entropy-exercis
 <details>
 <summary>Afficher les réponses</summary>
 
-1. La perte vaut \(-\log p_y\), donc elle est nulle lorsque \(p_y=1\).
+1. La perte vaut $-\log p_y$, donc elle est nulle lorsque $p_y=1$.
 2. Si les positions masquées sont comptées dans le dénominateur, la moyenne ne correspond plus à la moyenne sur les tokens valides et devient difficile à comparer.
 3. La perplexité mesure l'attribution de probabilité aux tokens d'un jeu donné ; elle ne mesure pas directement la vérité, l'utilité, la sécurité ou la calibration.
 

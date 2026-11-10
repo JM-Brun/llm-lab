@@ -30,9 +30,9 @@ This page extends the [introductory explanation of contextualized representation
 
 For an architecture that adds absolute positional embeddings, we can write:
 
-\[
+$$
 h_t^{(0)} = E[\text{ID}_t] + P_t.
-\]
+$$
 
 The same ID selects the same token-embedding term from a fixed table, but a different position may provide a different positional term. This expression does not describe every architecture. With RoPE, for example, positional information enters through transformations of query and key vectors inside attention, rather than through a universal vector addition to the initial embedding. See [positional encoding and RoPE](positional-encoding.qmd) and [advanced Q/K/V](queries-keys-values-advanced.qmd).
 
@@ -40,21 +40,21 @@ The same ID selects the same token-embedding term from a fixed table, but a diff
 
 We can summarize the conceptual dependency of a state on the next layer as:
 
-\[
+$$
 h_t^{(\ell+1)} =
 F_\ell\!\left(
 h_t^{(\ell)},
 \{h_j^{(\ell)} : j \in A(t)\}
 \right),
-\]
+$$
 
-where \(A(t)\) denotes the positions accessible from position \(t\), as determined by the attention mask.
+where $A(t)$ denotes the positions accessible from position $t$, as determined by the attention mask.
 
-- **Causal decoder** (GPT): using 1-based indexing, \(A(t)=\{1,\ldots,t\}\). A position can use its own state and the prefix, never future tokens.
+- **Causal decoder** (GPT): using 1-based indexing, $A(t)=\{1,\ldots,t\}$. A position can use its own state and the prefix, never future tokens.
 - **Bidirectional encoder**: accessible positions may include the entire sequence, subject to the mask in use.
 - **More specific masks**: some architectures further restrict accessible positions, for example through local windows or structured patterns.
 
-Here, \(F_\ell\) represents a complete block. This notation describes possible dependencies, not a universal implementation or an exact equation for every internal operation.
+Here, $F_\ell$ represents a complete block. This notation describes possible dependencies, not a universal implementation or an exact equation for every internal operation.
 
 ## 3. Roles of the sublayers
 
@@ -81,7 +81,7 @@ This comparison is a controlled pedagogical setup, not a claim that a model enco
 
 ## 5. Following one position through the layers
 
-\(h_t^{(0)}\) denotes the initial input at position \(t\). Each block produces a new state, \(h_t^{(1)}\), then \(h_t^{(2)}\), and so on. The index \(t\) stays fixed: we follow the representation at that position through network depth.
+$h_t^{(0)}$ denotes the initial input at position $t$. Each block produces a new state, $h_t^{(1)}$, then $h_t^{(2)}$, and so on. The index $t$ stays fixed: we follow the representation at that position through network depth.
 
 The vector is not replaced by a sense label. It is transformed by learned operations that progressively integrate information allowed by the architecture and mask.
 

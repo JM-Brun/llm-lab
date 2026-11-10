@@ -10,13 +10,14 @@ from pathlib import Path, PurePosixPath
 from typing import Any
 
 MAX_INCREMENTAL_PAGES = 20
+# Only inputs that can change rendered content belong here. Workflow
+# orchestration and this classifier do not change the site itself. The browser
+# audit script remains included because its checks require a freshly rendered
+# site when the audit implementation changes.
 GLOBAL_RENDER_INPUTS = {
-    ".github/workflows/quarto.yml",
-    ".github/workflows/publish-quarto.yml",
     "pyproject.toml",
     "uv.lock",
     "scripts/site-browser-review.mjs",
-    "scripts/quarto_render_scope.py",
 }
 
 

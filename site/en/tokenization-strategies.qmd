@@ -38,6 +38,10 @@ A tokenizer is a representation and engineering choice. It must cover expected i
 **Check yourself:** two tokenizers reduce the token count on the same text; why is that not enough to conclude that one yields a better downstream model?
 :::
 
+::: {.callout-note title="A text to run through the tokenizer"}
+Try “What have the Romans ever done for us?” with different tokenizers. Inspect the actual pieces and IDs returned: do not infer token boundaries from visible words, or assume they will be identical across tokenizers.
+:::
+
 ## 1. Concept map
 
 The full pipeline—from Unicode text through IDs to embedding lookup—is illustrated on the [text-to-token page](text-data.qmd).

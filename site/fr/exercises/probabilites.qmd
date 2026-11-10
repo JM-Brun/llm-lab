@@ -28,7 +28,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:probabilites-exercise
 [Exercices approfondis sur ce thème](../exercises.qmd#fondations).
 
 1. Pourquoi les logits ne sont-ils pas des probabilités ?
-2. Pourquoi \(p_\theta(x_t\mid x_{<t})\) dépend-il du préfixe ?
+2. Pourquoi $p_\theta(x_t\mid x_{<t})$ dépend-il du préfixe ?
 3. Que change la température, et que ne peut-elle pas garantir ?
 4. Quelle différence entre normalisation, calibration et vérité factuelle ?
 

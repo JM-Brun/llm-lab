@@ -69,6 +69,8 @@ Dans cette leçon, $E$ désigne la **matrice d'embeddings** : une table de param
 
 Prenons le token anglais `bank`, utilisé dans les deux phrases de la page sur les [représentations contextualisées](contextualized-representations.qmd) : *The river bank eroded* et *The financial bank collapsed*. Pour isoler le mécanisme, supposons que le tokenizer attribue le même ID aux deux occurrences. L'ID exact dépend du tokenizer ; le nombre ci-dessous est fictif.
 
+Le même lookup s'applique aux tokens du préfixe « C'est une bonne situation, ça, scribe ? » : chaque ID sélectionne sa ligne dans la matrice. Le contenu de la phrase ne transforme pas le lookup en interprétation du sens.
+
 ```{mermaid}
 flowchart TD
     A["Texte : « bank »"] --> B["Token : bank"]
@@ -95,9 +97,9 @@ Pour une autre visualisation du passage des tokens aux vecteurs dans GPT-2, voir
 
 Un tokenizer découpe le texte en tokens et associe chaque token à un **ID**. Le modèle utilise cet ID pour sélectionner le vecteur correspondant dans sa **matrice d'embeddings** (ou matrice de plongements), notée $E$ :
 
-\[
+$$
 E\in\mathbb{R}^{V\times d}
-\]
+$$
 
 - $V$ est la taille du vocabulaire : la matrice contient une ligne par ID.
 - $d$ est la dimension de l'embedding : chaque ligne contient $d$ nombres réels.

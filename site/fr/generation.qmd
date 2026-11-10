@@ -60,27 +60,27 @@ Cette page intervient à deux moments du parcours. **Au premier passage**, juste
 
 Considérons un contexte courant composé des tokens déjà disponibles, qu'ils proviennent du prompt ou d'étapes de génération précédentes. Notons-le :
 
-\[
+$$
 c_t = (x_1, \ldots, x_{t-1}).
-\]
+$$
 
 Dans cette notation, chaque $x_i$ désigne le **token** à la position $i$, pas son identifiant numérique. En pratique, le tokenizer associe ce token à un ID entier, qui sert à sélectionner son vecteur dans la table d'embeddings. Pour alléger les équations, on note ici les tokens plutôt que leurs IDs.
 
-Pour **une étape de génération**, le modèle effectue une passe avant à paramètres fixes. Il produit des logits à chaque position du contexte ; pour prédire la suite, on utilise ceux de la dernière position, notés \(z_t\). La softmax définit alors la distribution conditionnelle :
+Pour **une étape de génération**, le modèle effectue une passe avant à paramètres fixes. Il produit des logits à chaque position du contexte ; pour prédire la suite, on utilise ceux de la dernière position, notés $z_t$. La softmax définit alors la distribution conditionnelle :
 
-\[
+$$
 p_\theta(\cdot \mid c_t) = \operatorname{softmax}(z_t).
-\]
+$$
 
-Pour un token candidat \(v\), \(p_\theta(v \mid c_t)\) désigne la probabilité qu'il soit le prochain token sachant le contexte courant. Chaque probabilité est comprise entre 0 et 1 et leur somme, sur tout le vocabulaire, vaut 1. La distribution dépend du contexte ; la génération utilise celle de la dernière position du contexte.
+Pour un token candidat $v$, $p_\theta(v \mid c_t)$ désigne la probabilité qu'il soit le prochain token sachant le contexte courant. Chaque probabilité est comprise entre 0 et 1 et leur somme, sur tout le vocabulaire, vaut 1. La distribution dépend du contexte ; la génération utilise celle de la dernière position du contexte.
 
 Les probabilités portent sur les tokens du vocabulaire et leur somme vaut 1. Elles décrivent la prochaine position, pas des phrases complètes. Le calcul d'une distribution et la distinction entre sélection gloutonne et échantillonnage sont travaillés dans l'[exercice GE-A](exercises-generation.qmd#generation).
 
 Une politique de décodage sélectionne ensuite un token à partir de cette distribution :
 
-\[
+$$
 x_t = \operatorname{Dec}\!\left(p_\theta(\cdot \mid c_t)\right).
-\]
+$$
 
 La sélection peut être déterministe (par exemple *argmax*) ou stochastique (échantillonnage). Les stratégies de sélection sont détaillées plus loin.
 
@@ -90,13 +90,13 @@ Si les notions de token et d'identifiant ne sont pas encore familières, commenc
 
 ## 2. La boucle de génération : répéter cette étape
 
-La génération autorégressive consiste à réutiliser l'étape élémentaire avec un contexte qui s'allonge. Après la sélection de \(x_t\), le contexte devient :
+La génération autorégressive consiste à réutiliser l'étape élémentaire avec un contexte qui s'allonge. Après la sélection de $x_t$, le contexte devient :
 
-\[
+$$
 c_{t+1} = (x_1, \ldots, x_{t-1}, x_t).
-\]
+$$
 
-Le modèle calcule alors une nouvelle distribution conditionnée par ce contexte mis à jour, une nouvelle sélection est effectuée, puis le processus recommence. Les paramètres \(\theta\) restent fixes pendant toute cette boucle.
+Le modèle calcule alors une nouvelle distribution conditionnée par ce contexte mis à jour, une nouvelle sélection est effectuée, puis le processus recommence. Les paramètres $\theta$ restent fixes pendant toute cette boucle.
 
 La génération complète alterne donc quatre opérations :
 
@@ -136,11 +136,11 @@ Un prompt plus long tend à augmenter le travail de *prefill* et donc le TTFT ; 
 
 Le **KV cache** conserve, pour chaque couche et chaque position passée, les clés (*K*) et valeurs (*V*) déjà calculées. Il évite de recalculer l'attention sur tout le préfixe à chaque nouveau token, au prix d'une mémoire qui augmente avec la longueur du contexte et le nombre de séquences simultanées. Pour un cache K/V standard non quantifié, une estimation utile est :
 
-\[
+$$
 M_{KV} \approx 2 \, L \, B \, T \, n_{KV} \, d_{head} \, s,
-\]
+$$
 
-où \(L\) est le nombre de couches, \(B\) le batch size, \(T\) le nombre de positions mises en cache, \(n_{KV}\) le nombre de têtes K/V, \(d_{head}\) leur dimension et \(s\) le nombre d'octets par élément. Cette approximation ignore les surcoûts d'allocation et les détails propres aux implémentations. Le *Grouped-Query Attention* réduit notamment le nombre de têtes K/V par rapport au nombre de têtes de requête.
+où $L$ est le nombre de couches, $B$ le batch size, $T$ le nombre de positions mises en cache, $n_{KV}$ le nombre de têtes K/V, $d_{head}$ leur dimension et $s$ le nombre d'octets par élément. Cette approximation ignore les surcoûts d'allocation et les détails propres aux implémentations. Le *Grouped-Query Attention* réduit notamment le nombre de têtes K/V par rapport au nombre de têtes de requête.
 
 Le *prefill* est souvent limité par la capacité de calcul, tandis que le *decode* peut devenir limité par la bande passante mémoire, car chaque étape lit le cache accumulé pour produire peu de nouveaux tokens. Ce diagnostic dépend toutefois du matériel, du batch, de la longueur du contexte et des kernels : il faut mesurer plutôt que supposer.
 
