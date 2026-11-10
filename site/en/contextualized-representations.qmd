@@ -116,7 +116,7 @@ The learning path is:
 4. Transformer layers produce context-dependent hidden states.
 5. Later layers and the output head use those states to predict the next token.
 
-The [embedding-space lookup](embedding-space.qmd) maps IDs to initial vectors; [queries, keys, and values](queries-keys-values.qmd) and [scaled dot-product attention](scaled-dot-product-attention.qmd) describe how the sequence is processed contextually.
+The [embedding-space lookup](embedding-space.qmd) maps IDs to initial vectors. To see how the network then transforms these vectors into contextualized states, continue with [The Transformer in a GPT](transformer.qmd): that page locates the stack of blocks and distinguishes attention from the MLP. The [Q/K/V](queries-keys-values.qmd) and [scaled dot-product attention](scaled-dot-product-attention.qmd) pages then unpack the attention mechanism.
 
 ::: {.self-check}
 ## Check your understanding
