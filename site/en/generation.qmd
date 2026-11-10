@@ -164,6 +164,7 @@ This is the central distinction from [learning](loss.qmd): inference uses the av
 - **Context window:** the model processes only the supplied context, up to its maximum window. Information no longer present in that context no longer directly influences the prediction.
 - **No intrinsic memory across generations:** each generation depends on the context it receives. An application may reinsert history or retain external state, but this does not mean the model weights have memorized the conversation.
 - **Quality depends on learned parameters:** the generation loop can run with an untrained model, but that does not make its outputs useful. Generation mechanics and the quality acquired through learning are distinct questions.
+- **Result validity:** a fluent answer—or even syntactically valid, executable SQL—does not guarantee that it answers the intended business question. Check the schema, the definitions being used (for example, how refunds and failed payments are treated), the assumptions, and the results before making a decision or taking action.
 
 ::: {.self-check}
 ## Check your understanding
