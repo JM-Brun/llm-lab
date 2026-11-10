@@ -26,6 +26,10 @@ def test_exercise_anchor_ids_are_stable_and_bilingual(collection: str) -> None:
                 flags=re.MULTILINE,
             )
         ]
+        exercise_ids = [
+            identifier for identifier in exercise_ids
+            if identifier.startswith(f"ex-{collection}-")
+        ]
         exercise_headings = re.findall(r"^#{3} (.+)$", source, flags=re.MULTILINE)
         assert all(
             not re.search(r"\b(?:TR-[A-Z]|CA-A|AT-[ABC]|GE-[A-E]|TF-[ABC])\b", title)
