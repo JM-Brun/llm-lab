@@ -237,7 +237,9 @@ def test_clean_heading_removes_lightweight_markdown() -> None:
     assert clean_heading("  Attention mechanisms:  ") == "Attention mechanisms"
 
 
-def test_load_pages_extracts_published_pages_and_section_headings(tmp_path: Path) -> None:
+def test_load_pages_extracts_published_pages_and_section_headings(
+    tmp_path: Path, monkeypatch
+) -> None:
     site = tmp_path / "site"
     _write_page(
         site,
