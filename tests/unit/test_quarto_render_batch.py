@@ -1,9 +1,9 @@
-from importlib import util
-from pathlib import Path
+import importlib.util
+import pathlib
 
 
-module_path = Path(__file__).resolve().parents[2] / "scripts" / "quarto_render_batch.py"
-spec = util.spec_from_file_location("quarto_render_batch", module_path)
+module_path = pathlib.Path(__file__).resolve().parents[2] / "scripts" / "quarto_render_batch.py"
+spec = importlib.util.spec_from_file_location("quarto_render_batch", module_path)
 assert spec is not None and spec.loader is not None
 module = util.module_from_spec(spec)
 spec.loader.exec_module(module)
@@ -61,8 +61,8 @@ def test_requires_existing_project_render_list():
 
 
 def test_renderer_implementation_change_forces_full_site_validation():
-    scope_path = Path(__file__).resolve().parents[2] / "scripts" / "quarto_render_scope.py"
-    scope_spec = util.spec_from_file_location("quarto_render_scope", scope_path)
+    scope_path = pathlib.Path(__file__).resolve().parents[2] / "scripts" / "quarto_render_scope.py"
+    scope_spec = importlib.util.spec_from_file_location("quarto_render_scope", scope_path)
     assert scope_spec is not None and scope_spec.loader is not None
     scope = util.module_from_spec(scope_spec)
     scope_spec.loader.exec_module(scope)
