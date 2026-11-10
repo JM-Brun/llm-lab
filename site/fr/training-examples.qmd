@@ -224,6 +224,12 @@ Quand la perte est anormalement basse, élevée ou instable, vérifier :
 
 Cette page décrit les mécanismes de base, sans prescrire une stratégie universelle de packing, de masquage inter-documents, de padding ou de réduction de perte. Les choix dépendent de l’objectif, de l’architecture, des données et de l’implémentation.
 
+
+
+::: {.language-switch}
+**Langue :** [Français](training-examples.qmd) · [English](../en/training-examples.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
@@ -248,7 +254,3 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 
 </div>
 </details>
-
-::: {.language-switch}
-**Langue :** [Français](training-examples.qmd) · [English](../en/training-examples.qmd)
-:::
