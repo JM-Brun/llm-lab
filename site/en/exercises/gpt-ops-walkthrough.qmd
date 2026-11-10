@@ -1,13 +1,13 @@
 ---
 title: "Exercises — Opérations numériques du GPT"
 subtitle: "Comprehension and code-reading exercises"
-keywords: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-ops", "level:applied", "language:en", "status:published"]
+keywords: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-ops-exercises", "level:applied", "language:en", "status:published"]
 lang: en
 ---
 
 <!--
 LLM-LAB-PAGE-MAP v1
-id: "en/exercises/gpt-ops-walkthrough"
+id: "en/gpt-ops-walkthrough-exercises"
 summary: "Exercises associated with the Opérations numériques du GPT guided tour."
 scope: "Collects exercises and worked answers for the guided tour without duplicating its code explanation."
 purpose: "Check understanding of the invariants, shapes, and implementation choices presented in the guided tour."
@@ -18,7 +18,7 @@ hierarchy:
   parents: []
   children: []
 related: ["en/gpt-ops-walkthrough"]
-tags: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-ops", "level:applied", "language:en", "status:published"]
+tags: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-ops-exercises", "level:applied", "language:en", "status:published"]
 -->
 
 [← Back to the guided tour: Opérations numériques du GPT](../gpt-ops-walkthrough.qmd)

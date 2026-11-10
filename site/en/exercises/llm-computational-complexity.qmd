@@ -1,13 +1,13 @@
 ---
 title: "Exercises — Computational complexity of LLMs"
 subtitle: "Self-check questions, exercises, and worked answers"
-keywords: ["type:exercise-hub", "destination:practice", "topic:llm-computational-complexity", "level:applied", "language:en", "status:published"]
+keywords: ["type:exercise-hub", "destination:practice", "topic:llm-computational-complexity-exercises", "level:applied", "language:en", "status:published"]
 lang: en
 ---
 
 <!--
 LLM-LAB-PAGE-MAP v1
-id: "en/exercises/llm-computational-complexity"
+id: "en/llm-computational-complexity-exercises"
 summary: "Self-check questions and exercises associated with the Computational complexity of LLMs lesson."
 scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
 purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
@@ -18,7 +18,7 @@ hierarchy:
   parents: []
   children: []
 related: ["en/llm-computational-complexity"]
-tags: ["type:exercise-hub", "destination:practice", "topic:llm-computational-complexity", "level:applied", "language:en", "status:published"]
+tags: ["type:exercise-hub", "destination:practice", "topic:llm-computational-complexity-exercises", "level:applied", "language:en", "status:published"]
 -->
 
 [← Back to the lesson: Computational complexity of LLMs](../llm-computational-complexity.qmd)

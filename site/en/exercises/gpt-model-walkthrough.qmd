@@ -1,13 +1,13 @@
 ---
 title: "Exercises — Modèle GPT complet"
 subtitle: "Comprehension and code-reading exercises"
-keywords: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-model", "level:applied", "language:en", "status:published"]
+keywords: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-model-exercises", "level:applied", "language:en", "status:published"]
 lang: en
 ---
 
 <!--
 LLM-LAB-PAGE-MAP v1
-id: "en/exercises/gpt-model-walkthrough"
+id: "en/gpt-model-walkthrough-exercises"
 summary: "Exercises associated with the Modèle GPT complet guided tour."
 scope: "Collects exercises and worked answers for the guided tour without duplicating its code explanation."
 purpose: "Check understanding of the invariants, shapes, and implementation choices presented in the guided tour."
@@ -18,7 +18,7 @@ hierarchy:
   parents: []
   children: []
 related: ["en/gpt-model-walkthrough"]
-tags: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-model", "level:applied", "language:en", "status:published"]
+tags: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-model-exercises", "level:applied", "language:en", "status:published"]
 -->
 
 [← Back to the guided tour: Modèle GPT complet](../gpt-model-walkthrough.qmd)

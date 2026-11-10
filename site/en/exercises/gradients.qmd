@@ -1,13 +1,13 @@
 ---
 title: "Exercises — Gradients and backpropagation"
 subtitle: "Self-check questions, exercises, and worked answers"
-keywords: ["type:exercise-hub", "destination:practice", "topic:gradients", "level:applied", "language:en", "status:published"]
+keywords: ["type:exercise-hub", "destination:practice", "topic:gradients-exercises", "level:applied", "language:en", "status:published"]
 lang: en
 ---
 
 <!--
 LLM-LAB-PAGE-MAP v1
-id: "en/exercises/gradients"
+id: "en/gradients-exercises"
 summary: "Self-check questions and exercises associated with the Gradients and backpropagation lesson."
 scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
 purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
@@ -18,7 +18,7 @@ hierarchy:
   parents: []
   children: []
 related: ["en/gradients"]
-tags: ["type:exercise-hub", "destination:practice", "topic:gradients", "level:applied", "language:en", "status:published"]
+tags: ["type:exercise-hub", "destination:practice", "topic:gradients-exercises", "level:applied", "language:en", "status:published"]
 -->
 
 [← Back to the lesson: Gradients and backpropagation](../gradients.qmd)
