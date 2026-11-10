@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import os
 import subprocess
+import sys
 from pathlib import Path, PurePosixPath
 
 
@@ -76,7 +77,7 @@ def main() -> None:
 
     try:
         config_path.write_text(incremental_config, encoding="utf-8")
-        print(f"Rendering {len(targets)} changed page(s) in one Quarto invocation")
+        sys.stdout.write(f"Rendering {len(targets)} changed page(s) in one Quarto invocation\\n")
         subprocess.run(["quarto", "render", "site", "--no-clean"], check=True)
     finally:
         config_path.write_text(original_config, encoding="utf-8")
