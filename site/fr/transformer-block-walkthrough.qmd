@@ -210,6 +210,12 @@ Chaque position passe seule dans `d → mlp_hidden_dim` (souvent `4d`), puis GEL
 - **Étape précédente** : [les briques numériques (`gpt_ops.py`)](gpt-ops-walkthrough.qmd).
 - **Étape suivante** : [l'assemblage du GPT (`gpt.py`)](gpt-model-walkthrough.qmd) — où les blocs sont empilés.
 
+
+
+::: {.language-switch}
+**Langue :** [Français](transformer-block-walkthrough.qmd) · [English](../en/transformer-block-walkthrough.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
@@ -229,7 +235,3 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 
 </div>
 </details>
-
-::: {.language-switch}
-**Langue :** [Français](transformer-block-walkthrough.qmd) · [English](../en/transformer-block-walkthrough.qmd)
-:::
