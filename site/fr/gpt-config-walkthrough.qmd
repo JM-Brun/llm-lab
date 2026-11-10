@@ -190,6 +190,9 @@ Ligne par ligne :
 
 ## Navigation dans le parcours
 
+
+## Connexions
+
 - **Étape suivante** : [les briques numériques (`gpt_ops.py`)](gpt-ops-walkthrough.qmd).
 
 <details class="learning-resources">
