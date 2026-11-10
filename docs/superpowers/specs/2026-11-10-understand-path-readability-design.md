@@ -204,7 +204,7 @@ in a test or short script.
 
 - Address the reader as "vous". Short to medium sentences. One idea per sentence.
 - Open a page with the question left by the previous one, phrased from the anchor
-  ("« avocat » a le même identifiant dans les deux phrases. Comment le modèle les distingue-t-il ?").
+  ("Le prompt est déjà fourni : comment le modèle construit-il la continuation, token après token ?").
 - Say what the thing is and does, then what it does not establish. A reservation appears once
   per page, next to the claim it limits. The full treatment of a recurring reservation lives
   on one page and the others link to it at the point of use:
@@ -257,16 +257,16 @@ Listed in route order. "Keep" means the content stays and is only re-voiced.
 | `text-data` | Show the anchor split into tokens and IDs. Drop "Frontières entre les pages" and the stale "collection prévue" line. Corpus preparation shrinks to the one distinction the reader needs. |
 | `embedding-space` | Open on the IDs from the previous page. Fix the duplicated heading. Word2Vec history shortened to what distinguishes a static vector from a lookup row. One term per concept. |
 | `positional-encoding` | Open on the problem: the lookup gives the same vectors whatever the order. Self-check moves after the last content section. Drop the "where does this step sit" section. |
-| `contextualized-representations` | The anchor replaces the English `bank` sentences. The externally hosted figure with unverified reuse rights (issue 156) is left as is and flagged in section 11. Drop the route recap. |
+ | `contextualized-representations` | Use the canonical Otis / *Life of Brian* anchor to explain contextualized states. The legacy externally hosted figure with unverified reuse rights (issue 156) remains a separate rights-check item in section 11. Drop the route recap. |
 | `transformer` | Lead says what the network does to the anchor's vectors. Self-check wrapped and moved to the end. One "three levels" block kept here; the one in `generation` goes. |
-| `queries-keys-values` | Opening question on the anchor: how does the last position get information from « salade »? Outcomes move to the top. "Imagine" → "Imaginez". Self-check heading aligned. |
+ | `queries-keys-values` | Opening question on the anchor: how does the last position combine information from earlier tokens in the supplied prefix? Outcomes move to the top. "Imagine" → "Imaginez". Self-check heading aligned. |
 | `scaled-dot-product-attention` | A hand-checkable worked example on three or four positions of the anchor. Heading, box and list agree on the number of steps. A real self-check. Drop the Build paragraph and the links list. |
-| `causal-masking` | Open on the anchor: « avocat » must not read « mûr ». The API-version note joins the collapsed API block. Drop the links list. A real self-check. |
+ | `causal-masking` | Open on the anchor: a position must not read tokens that come later in the continuation. The API-version note joins the collapsed API block. Drop the links list. A real self-check. |
 | `logits` | Add the four scores of the chain. Otherwise keep. |
 | `probabilites` | The chain replaces (0, ln 3). One home for normalisation vs calibration vs truth. Drop "Pour poursuivre". |
 | `entropy` | The chain replaces the two-token examples, which may stay as a second, contrasting case. The repeated temperature formula becomes one sentence and a link. Drop "Pour poursuivre". |
 | `vraisemblance` | The anchor sentence scored token by token. The self-check stops carrying navigation links. |
-| `cross-entropy` | The term for « mûr ». Keep the collapsed implementation blocks. "entropie croisée" in prose. |
+ | `cross-entropy` | The target-token term for « Être » (French) / “They” (English). Keep the collapsed implementation blocks. "entropie croisée" in prose. |
 | `loss` | Title in French ("Perte : …"). Mean of the three terms from the chain. The prefill vs teacher-forcing distinction is stated once here and linked from `generation`. |
 | `gradients` | The gradient of the chain's distribution; one update step. End of the path: no "Retour" line. |
 | `transformer-architectures` | Re-voice; tie the three families to what each would do with the anchor. |
