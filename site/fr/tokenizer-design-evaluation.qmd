@@ -43,7 +43,7 @@ La page [Stratégies de tokenisation](tokenization-strategies.qmd) présente dé
 
 Dans l'explication courante de l'apprentissage WordPiece, les paires d'unités adjacentes sont classées au moyen d'un score lié à leur cooccurrence relativement à la fréquence de chaque unité prise séparément. Une forme simplifiée est :
 
-\\[\\operatorname{score}(a,b)=\\frac{f(ab)}{f(a)\\,f(b)}\\]
+$$\operatorname{score}(a,b)=\frac{f(ab)}{f(a)\,f(b)}$$
 
 où les fréquences sont estimées sur le corpus d'apprentissage. Ce score favorise une paire dont la fréquence conjointe est élevée relativement à celle de ses composants ; il ne sélectionne donc pas simplement la paire la plus fréquente, comme dans le BPE de base. **Réserve :** la procédure originale d'apprentissage WordPiece de Google n'est pas entièrement spécifiée dans une implémentation publique de référence. Hugging Face présente sa description comme une reconstruction : cette formule est explicative et ne garantit pas que tous les entraîneurs WordPiece l'utilisent exactement.
 
@@ -60,7 +60,7 @@ Un tokenizer Unigramme commence avec un vocabulaire candidat relativement large,
 
 ## 1. La taille du vocabulaire : architecture et budget
 
-Un vocabulaire de sous-mots plus grand peut représenter certains textes avec moins de tokens, mais son effet ne se limite pas à la longueur des séquences. Avec une dimension cachée \\(d\\) et un vocabulaire de taille \\(V\\), la matrice d'embeddings d'entrée contient \\(Vd\\) paramètres. Une projection de sortie distincte sur le vocabulaire en contient couramment autant ; ce second terme ne s'applique pas de la même manière lorsque les poids d'entrée et de sortie sont partagés. Augmenter \\(V\\) peut donc accroître le nombre de paramètres et la mémoire, même si les séquences raccourcissent.
+Un vocabulaire de sous-mots plus grand peut représenter certains textes avec moins de tokens, mais son effet ne se limite pas à la longueur des séquences. Avec une dimension cachée $d$ et un vocabulaire de taille $V$, la matrice d'embeddings d'entrée contient $Vd$ paramètres. Une projection de sortie distincte sur le vocabulaire en contient couramment autant ; ce second terme ne s'applique pas de la même manière lorsque les poids d'entrée et de sortie sont partagés. Augmenter $V$ peut donc accroître le nombre de paramètres et la mémoire, même si les séquences raccourcissent.
 
 Le budget d'entraînement change également le sens de la comparaison :
 
