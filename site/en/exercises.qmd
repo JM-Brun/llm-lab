@@ -781,10 +781,10 @@ Yes: the BPE vocabulary and merge order were fitted using validation text. For a
 
 Consider one query and two key/value pairs:
 
-$
+$$
 q=(1,0),\quad k_1=(1,0),\quad k_2=(0,1),\quad
 v_1=(10,0),\quad v_2=(0,20).
-$
+$$
 
 1. Compute the scores $qk_1^\top$ and $qk_2^\top$.
 2. Apply scaling with $d_k=2$.
