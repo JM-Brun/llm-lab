@@ -236,7 +236,7 @@ assert np.allclose(Z, [[0.11, 0.22], [-0.27, 0.44]])
 
 ### Exercice TR-C — Distinguer identité, position et contexte
 
-**Préparation :** [représentations contextualisées](contextualized-representations.qmd) et [position et RoPE](positional-encoding.qmd), après TR-A et TR-B. L'exercice progresse en deux étapes : diagnostiquer des affirmations, puis prédire sous modifications contrôlées.
+**Préparation :** [représentations contextualisées](contextualized-representations.qmd) et [position et RoPE](positional-encoding.qmd), après TR-A et TR-B. Pour le cadre mathématique de l'étape 3, l'[approfondissement sur les dépendances entre positions et couches](contextualized-representations-advanced.qmd) est une référence facultative. L'exercice progresse en trois étapes : diagnostiquer des affirmations, prédire sous modifications contrôlées, puis calculer un exemple numérique jouet.
 
 **Étape 1 — Classifier des affirmations.** Pour un tokenizer et une matrice d'embeddings fixés, classez chaque affirmation comme **valide**, **invalide** ou **dépendante de l'architecture**, puis justifiez votre choix. Aucune configuration de modèle particulière n'est fournie : lorsqu'une affirmation parle de « ce modèle », déterminez si les informations données suffisent pour établir son comportement.
 
