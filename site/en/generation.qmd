@@ -76,7 +76,7 @@ Selection may be deterministic (for example, *argmax*) or stochastic (sampling).
 
 **The result of this step is one selected token**, not the complete text. It is important to distinguish the distribution computed by the model from the token actually selected by the decoding policy.
 
-If tokens and token IDs are not yet familiar, start with [From text to tokens](text-data.qmd). To understand **how the model computes** this distribution, continue with the [Transformer overview](transformer.qmd), [Logits](logits.qmd), and [Output probabilities](probabilities.qmd). Those pages explain the internal computation; this page studies what the system does with the resulting distribution.
+If tokens and token IDs are not yet familiar, start with [From text to tokens](text-data.qmd). To understand **how the model computes** this distribution, continue with the [The Transformer in a GPT](transformer.qmd), [Logits](logits.qmd), and [Output probabilities](probabilities.qmd). Those pages explain the internal computation; this page studies what the system does with the resulting distribution.
 
 ## 2. The generation loop: repeat this step
 
