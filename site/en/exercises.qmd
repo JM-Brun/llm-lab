@@ -22,6 +22,12 @@ tags: ["type:exercise-hub", "destination:practice", "topic:exercises", "level:ap
 
 Lesson pages retain a consistent **“Check your understanding”** component: a small number of focused questions with collapsed answers. These are intended for immediate retrieval and conceptual reinforcement. This catalogue is the entry point for **extended exercises**: calculations, multi-step problems, diagnosis, implementation-oriented reasoning, and transfer tasks. The substantial exercise sets live on their own topic pages so that they can grow without turning this page into a long, flat worksheet.
 
+<a id="foundations"></a>
+<a id="text-data"></a>
+<a id="attention"></a>
+<a id="transformer"></a>
+<a id="generation"></a>
+
 ## How to use this space
 
 - Start with the preparation listed in the relevant collection; follow other references only when needed.
