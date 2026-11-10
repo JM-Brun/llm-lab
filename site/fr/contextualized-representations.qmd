@@ -27,6 +27,30 @@ tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-re
 La page précédente expliquait comment l'ordre des tokens entre dans le calcul. Reste à comprendre ce que les couches du réseau font de ces vecteurs initiaux : **un même ID fournit le même embedding de départ, mais son état caché peut évoluer selon les autres tokens accessibles**. C'est cette transformation qui produit les représentations contextualisées.
 :::
 
+::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
+À la fin de cette leçon, vous devriez pouvoir :
+- expliquer pourquoi deux occurrences d’un même ID de token partagent un embedding initial mais développent des états cachés distincts ;
+- identifier à quel moment l'information positionnelle et les interactions séquentielles transforment l'état interne ;
+- réfuter la confusion attribuant au lookup d'embedding une compréhension sémantique ou une désambiguïsation du contexte.
+:::
+
+<div class="pipeline-stepper">
+  <span class="step-item step-completed">1. Texte brut</span>
+  <span class="step-arrow">→</span>
+  <span class="step-item step-completed">2. IDs de tokens</span>
+  <span class="step-arrow">→</span>
+  <span class="step-item step-completed">3. Embeddings initiaux</span>
+  <span class="step-arrow">→</span>
+  <span class="step-item active">4. Position & Contexte</span>
+  <span class="step-arrow">→</span>
+  <span class="step-item">5. Logits & Sortie</span>
+</div>
+
+<div class="epistemic-badges">
+  <span class="epistemic-badge badge-concept">Concept vérifié</span>
+  <span class="epistemic-badge badge-status">Architecture : Blocs Transformer</span>
+</div>
+
 ::: {.callout-tip title="L'idée à retenir en une minute"}
 - **Lookup :** un ID fixe et une matrice fixe donnent le même embedding initial, quelle que soit l'occurrence.
 - **Position et contexte :** l'architecture ajoute ou injecte l'information positionnelle ; les blocs Transformer transforment ensuite les états en fonction des autres tokens accessibles.
@@ -89,6 +113,68 @@ Dans un décodeur causal comme GPT, l'état à la position \(t\) peut utiliser l
 
 Les deux occurrences peuvent donc produire des états cachés différents, même si leur lookup initial du token est identique.
 
+::: {.micro-workbench}
+::: {.micro-workbench-header}
+MICRO-WORKBENCH · DIVERGENCE CONTEXTUELLE D'UN MÊME TOKEN (NUMPY)
+:::
+::: {.micro-workbench-body}
+```python
+import numpy as np
+
+# Matrice de vocabulaire V=6, dimension d=2
+E = np.array([
+    [0.1, 0.2],   # 0: river
+    [0.9, -0.4],  # 1: financial
+    [0.5, 0.5],   # 2: bank (même ID dans les deux contextes)
+    [0.0, 0.1],   # 3: eroded
+    [0.8, 0.2],   # 4: collapsed
+    [0.2, 0.7],   # 5: pad
+], dtype=np.float64)
+
+# Deux séquences contenant le même token (ID 2) à la position 1
+seq_A = np.array([0, 2])  # [river, bank]
+seq_B = np.array([1, 2])  # [financial, bank]
+
+# 1. Lookup d'embedding initial
+x_A = E[seq_A]
+x_B = E[seq_B]
+
+# Invariant 1 : l'embedding initial de 'bank' est strictement identique
+assert np.array_equal(x_A[1], x_B[1])
+assert np.array_equal(x_A[1], E[2])
+
+# 2. Ajout de l'encodage positionnel absolu (identique à la position 1)
+P = np.array([[0.01, 0.00], [0.02, 0.05]], dtype=np.float64)
+z_A = x_A + P
+z_B = x_B + P
+assert np.array_equal(z_A[1], z_B[1])
+
+# 3. Agrégation contextuelle causale : la position 1 intègre son contexte (pos 0)
+# Poids d'attention causale illustratifs : 40% contexte (pos 0), 60% soi-même (pos 1)
+h_A_1 = 0.4 * z_A[0] + 0.6 * z_A[1]
+h_B_1 = 0.4 * z_B[0] + 0.6 * z_B[1]
+
+# Invariant 2 : les représentations contextualisées sont désormais distinctes
+assert not np.allclose(h_A_1, h_B_1)
+diff = float(np.linalg.norm(h_A_1 - h_B_1))
+print(f"Embedding initial identique : {x_A[1]}")
+print(f"État contextualisé A (river bank) : {h_A_1}")
+print(f"État contextualisé B (financial bank) : {h_B_1}")
+print(f"Écart induit par le contexte : {diff:.4f}")
+```
+:::
+::: {.micro-workbench-footer}
+Le contexte transforme les états : un lookup initial identique ($E[\text{ID}]$) produit des états finaux différents après agrégation séquentielle.
+:::
+:::
+
+<details class="spot-the-fallacy">
+<summary>Piège fréquent : « Pour que deux sens d'un mot comme "bank" soient reconnus, le tokenizer doit leur attribuer des IDs distincts »</summary>
+<div class="fallacy-content">
+<p><strong>Contre-exemple :</strong> Le tokenizer découpe le texte selon des règles de vocabulaire indépendantes du sens de la phrase ; il attribue le même ID au mot « bank » quel que soit son sens financier ou fluvial. C'est l'agrégation pondérée par l'attention au fil des couches qui spécialise la représentation interne $h_t^{(\ell)}$. Attribuer des IDs distincts selon le sens réintroduirait une étape de désambiguïsation symbolique manuelle avant le modèle.</p>
+</div>
+</details>
+
 ![Un même token peut recevoir des représentations contextualisées différentes selon la phrase.](../images/contextualized-embeddings-fr.svg){fig-alt="Deux phrases utilisent le token anglais bank dans des contextes différents. En supposant le même ID, les deux occurrences partagent l'embedding initial, puis peuvent produire des états contextualisés différents." fig-cap="Même ID, même lookup initial ; des informations positionnelles et contextuelles différentes peuvent conduire à des états cachés différents." width=100%}
 
 Cette illustration originale s'inspire de [Ethayarajh (2019), *How Contextual are Contextualized Word Representations?*](https://arxiv.org/abs/1909.00512). Elle illustre le principe, pas des vecteurs mesurés. Selon le tokenizer, un mot visible peut être constitué de plusieurs tokens.
@@ -123,7 +209,7 @@ Le [lookup dans l’espace des plongements (embeddings)](embedding-space.qmd) as
 ::: {.self-check}
 ## Vérifier sa compréhension
 
-[Exercices approfondis sur ce thème](exercises.qmd#transformer).
+Entraînez-vous avec l'[Exercice TR-C — Distinguer identité, position et contexte](exercises.qmd#donnees-textuelles).
 
 Deux occurrences du **même ID de token** apparaissent dans deux phrases différentes. Sans changement de matrice d'embeddings :
 
@@ -136,6 +222,17 @@ Vous avez compris cette étape si vous pouvez expliquer la différence entre **i
 :::
 
 {{< include ../includes/generated-suggested-route-fr-contextualized-representations.qmd >}}
+
+<div class="route-nav-cards">
+  <a href="positional-encoding.qmd" class="route-nav-card">
+    <span class="nav-direction">← Étape précédente</span>
+    <span class="nav-title">Encodage positionnel</span>
+  </a>
+  <a href="transformer.qmd" class="route-nav-card">
+    <span class="nav-direction">Étape suivante →</span>
+    <span class="nav-title">GPT et Transformer</span>
+  </a>
+</div>
 
 ::: {.language-switch}
 **Langue :** [Français](contextualized-representations.qmd) · [English](../en/contextualized-representations.qmd)

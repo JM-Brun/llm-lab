@@ -27,6 +27,30 @@ tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-re
 The previous page explained how token order enters the computation. The next question is what the network's layers do with these initial vectors: **the same ID provides the same starting embedding, but its hidden state can change according to the other accessible tokens**. This transformation produces contextualized representations.
 :::
 
+::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
+By the end of this lesson, you should be able to:
+- explain why two occurrences of the same token ID share an initial embedding yet produce distinct contextualized hidden states;
+- identify exactly when positional information and sequential interactions transform internal activations;
+- refute the misconception that attributes semantic comprehension or contextual disambiguation to the initial embedding lookup.
+:::
+
+<div class="pipeline-stepper">
+  <span class="step-item step-completed">1. Raw text</span>
+  <span class="step-arrow">→</span>
+  <span class="step-item step-completed">2. Token IDs</span>
+  <span class="step-arrow">→</span>
+  <span class="step-item step-completed">3. Initial embeddings</span>
+  <span class="step-arrow">→</span>
+  <span class="step-item active">4. Position & Context</span>
+  <span class="step-arrow">→</span>
+  <span class="step-item">5. Logits & Output</span>
+</div>
+
+<div class="epistemic-badges">
+  <span class="epistemic-badge badge-concept">Verified concept</span>
+  <span class="epistemic-badge badge-status">Architecture: Transformer Blocks</span>
+</div>
+
 ::: {.callout-tip title="The one-minute mental model"}
 - **Lookup:** a fixed ID and fixed matrix yield the same initial embedding, regardless of occurrence.
 - **Position and context:** the architecture adds or injects positional information; Transformer blocks then transform states as a function of the other accessible tokens.
@@ -87,6 +111,68 @@ For a causal decoder such as GPT, the state at position \(t\) can use the curren
 
 Consequently, the two occurrences can have different hidden states even though their initial token lookup is identical.
 
+::: {.micro-workbench}
+::: {.micro-workbench-header}
+MICRO-WORKBENCH · CONTEXTUAL DIVERGENCE OF A SHARED TOKEN (NUMPY)
+:::
+::: {.micro-workbench-body}
+```python
+import numpy as np
+
+# Vocabulary matrix V=6, dimension d=2
+E = np.array([
+    [0.1, 0.2],   # 0: river
+    [0.9, -0.4],  # 1: financial
+    [0.5, 0.5],   # 2: bank (same ID in both contexts)
+    [0.0, 0.1],   # 3: eroded
+    [0.8, 0.2],   # 4: collapsed
+    [0.2, 0.7],   # 5: pad
+], dtype=np.float64)
+
+# Two sequences containing the same token (ID 2) at position 1
+seq_A = np.array([0, 2])  # [river, bank]
+seq_B = np.array([1, 2])  # [financial, bank]
+
+# 1. Initial embedding lookup
+x_A = E[seq_A]
+x_B = E[seq_B]
+
+# Invariant 1: initial embedding of 'bank' is strictly identical
+assert np.array_equal(x_A[1], x_B[1])
+assert np.array_equal(x_A[1], E[2])
+
+# 2. Add absolute position encoding (identical at position 1)
+P = np.array([[0.01, 0.00], [0.02, 0.05]], dtype=np.float64)
+z_A = x_A + P
+z_B = x_B + P
+assert np.array_equal(z_A[1], z_B[1])
+
+# 3. Causal contextual aggregation: position 1 integrates its context (pos 0)
+# Illustrative causal attention weights: 40% context (pos 0), 60% self (pos 1)
+h_A_1 = 0.4 * z_A[0] + 0.6 * z_A[1]
+h_B_1 = 0.4 * z_B[0] + 0.6 * z_B[1]
+
+# Invariant 2: contextualized representations are now distinct!
+assert not np.allclose(h_A_1, h_B_1)
+diff = float(np.linalg.norm(h_A_1 - h_B_1))
+print(f"Identical initial embedding: {x_A[1]}")
+print(f"Contextualized state A (river bank): {h_A_1}")
+print(f"Contextualized state B (financial bank): {h_B_1}")
+print(f"Divergence induced by context: {diff:.4f}")
+```
+:::
+::: {.micro-workbench-footer}
+Context transforms hidden states: identical initial lookups ($E[\text{ID}]$) produce distinct activations after sequence aggregation.
+:::
+:::
+
+<details class="spot-the-fallacy">
+<summary>Common Fallacy: “For two senses of a word like 'bank' to be captured, the tokenizer must assign them different token IDs”</summary>
+<div class="fallacy-content">
+<p><strong>Counterexample:</strong> The tokenizer operates purely on surface statistics and byte sequences (e.g. BPE) without sentence-level comprehension; it assigns the exact same integer ID to "bank" whether it refers to a financial institution or a river bank. Attention layers subsequently mix context-specific information to specialize the hidden representation $h_t^{(\ell)}$. Demanding separate IDs for different meanings would require solving semantic disambiguation before the model even begins.</p>
+</div>
+</details>
+
 ![The same token can receive different contextualized representations depending on the sentence.](../images/contextualized-embeddings-en.svg){fig-alt="Two sentences use bank in different contexts. Assuming the same token ID, both occurrences share the initial embedding, then may produce different contextualized states." fig-cap="Same token ID, same initial lookup; different positional and contextual information can lead to different hidden states." width=100%}
 
 This original illustration is motivated by [Ethayarajh (2019), *How Contextual are Contextualized Word Representations?*](https://arxiv.org/abs/1909.00512). It illustrates the principle, not measured vectors. Depending on the tokenizer, a visible word may consist of multiple tokens.
@@ -121,7 +207,7 @@ The [embedding-space lookup](embedding-space.qmd) maps IDs to initial vectors. T
 ::: {.self-check}
 ## Check your understanding
 
-[Extended exercises on this topic](../en/exercises.qmd#transformer).
+Practice with [Exercise TR-C — Distinguish identity, position, and context](../en/exercises.qmd#donnees-textuelles).
 
 Two occurrences of the **same token ID** appear in two different sentences. Assume the embedding matrix is unchanged:
 
@@ -134,6 +220,17 @@ You have understood this step if you can explain the difference between **identi
 :::
 
 {{< include ../includes/generated-suggested-route-en-contextualized-representations.qmd >}}
+
+<div class="route-nav-cards">
+  <a href="positional-encoding.qmd" class="route-nav-card">
+    <span class="nav-direction">← Previous step</span>
+    <span class="nav-title">Positional encoding</span>
+  </a>
+  <a href="transformer.qmd" class="route-nav-card">
+    <span class="nav-direction">Next step →</span>
+    <span class="nav-title">GPT and Transformer</span>
+  </a>
+</div>
 
 ::: {.language-switch}
 **Language:** [Français](../fr/contextualized-representations.qmd) · [English](contextualized-representations.qmd)
