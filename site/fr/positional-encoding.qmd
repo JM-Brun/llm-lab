@@ -35,14 +35,14 @@ Un Transformer doit disposer d'un signal d'ordre pour distinguer, par exemple, �
 **Question de contrôle :** pouvez-vous expliquer pourquoi inverser deux tokens doit pouvoir changer le calcul, et indiquer à quel endroit chaque mécanisme introduit cette information ?
 :::
 
-<div class="pipeline-stepper" role="navigation" aria-label="Étapes d’injection de l’information positionnelle">
-  <a class="step-item" href="embedding-space.qmd">1. Embeddings</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="queries-keys-values.qmd">2. Projections Q/K</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active" aria-current="step">3. Position (entrée ou Q/K)</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="scaled-dot-product-attention.qmd">4. Scores d’attention</a>
+<div class="pipeline-stepper meta-flow meta-flow--branch" role="navigation" aria-label="Deux façons courantes d’injecter l’information positionnelle">
+  <div class="meta-flow__source"><strong>Embeddings de tokens</strong><span>Vecteurs de contenu avant traitement positionnel</span></div>
+  <div class="meta-flow__source meta-flow__branch--active" aria-current="step"><strong>Traitement de la position</strong><span>Le mécanisme dépend de l’architecture</span></div>
+  <div class="meta-flow__comparison">
+    <div class="meta-flow__comparison-item"><strong>Encodage absolu</strong><small>Ajouter un vecteur de position à l’embedding, puis calculer Q/K/V</small></div>
+    <div class="meta-flow__comparison-item"><strong>RoPE</strong><small>Projeter Q/K, puis les faire tourner selon leur position ; V n’est pas tourné par RoPE</small></div>
+  </div>
+  <div class="meta-flow__result"><strong>Scores d’attention sensibles à la position</strong> · <a href="queries-keys-values.qmd">Projections Q/K/V</a></div>
 </div>
 
 
