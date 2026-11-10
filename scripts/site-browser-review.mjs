@@ -154,7 +154,7 @@ const report = {
   failures: [],
 };
 
-for (const testCase of cases) {
+async function runCase(testCase) {
   const { lang, viewport, label, theme, page: pagePath, kind } = testCase;
   const context = await browser.newContext({ viewport, deviceScaleFactor: 1, colorScheme: theme });
   const page = await context.newPage();
@@ -174,13 +174,12 @@ for (const testCase of cases) {
     const response = await page.goto(url, { waitUntil: "domcontentloaded", timeout: 30000 });
     item.httpStatus = response?.status() ?? null;
     if (!response || !response.ok()) throw new Error(`HTTP status ${item.httpStatus}`);
-    await page.waitForLoadState("networkidle", { timeout: 500 }).catch(() => {});
-    // A remote font or stylesheet must not stall the entire audit indefinitely.
+    // Do not wait for networkidle: analytics, remote fonts, and persistent requests\n    // can keep the network busy after the DOM is already auditable.\n    // A remote font or stylesheet must not stall the entire audit indefinitely.
     await Promise.race([
       page.evaluate(() => document.fonts?.ready.then(() => true)),
       new Promise(resolve => setTimeout(resolve, 1000)),
     ]);
-    await page.waitForTimeout(150);
+    // Let layout and paint settle without an unconditional wall-clock sleep.\n    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
 
     item.title = await page.title();
     if (kind === "homepage") {
@@ -1143,6 +1142,26 @@ for (const testCase of cases) {
     await context.close();
   }
 }
+
+// Each case owns its own browser context, so a small worker pool can safely
+// overlap navigation, layout checks, keyboard checks, and Axe analysis.
+// Keep the limit conservative to avoid CPU/memory contention on GitHub runners.
+const workerCount = Math.min(3, cases.length);
+let nextCaseIndex = 0;
+await Promise.all(Array.from({ length: workerCount }, async () => {
+  while (nextCaseIndex < cases.length) {
+    const index = nextCaseIndex++;
+    await runCase(cases[index]);
+  }
+}));
+
+// Parallel workers complete out of order; keep the report stable and diffable.
+const caseOrder = new Map(cases.map((testCase, index) => [testCase, index]));
+report.cases.sort((a, b) => {
+  const aIndex = cases.findIndex(testCase => testCase.page === a.page && testCase.lang === a.lang && testCase.label === a.label && testCase.theme === a.theme && testCase.kind === a.kind);
+  const bIndex = cases.findIndex(testCase => testCase.page === b.page && testCase.lang === b.lang && testCase.label === b.label && testCase.theme === b.theme && testCase.kind === b.kind);
+  return aIndex - bIndex;
+});
 
 await browser.close();
 fs.writeFileSync(path.join(OUT, "report.json"), JSON.stringify(report, null, 2));
