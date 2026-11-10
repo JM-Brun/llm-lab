@@ -54,12 +54,36 @@ jobs:
           version: "0.13.7"
           python-version: "3.12"
           enable-cache: true
-          cache-dependency-glob: |
-            pyproject.toml
-            uv.lock
-            docs/requirements-history-validation.txt
+          cache-dependency-glob: docs/requirements-history-validation.txt
+
+      # Cache the ready-to-use environment, not just uv's downloaded wheels.
+      # Include the resolved Python patch version and exact requirements so a
+      # cache cannot silently cross an interpreter or dependency change.
+      - name: Resolve Python environment cache key
+        id: python_env
+        run: echo "version=$(python -c 'import platform; print(platform.python_version())')" >> "$GITHUB_OUTPUT"
+
+      - name: Cache shared render environment
+        id: render_venv_cache
+        uses: actions/cache@v4
+        with:
+          path: .venv
+          key: quarto-publish-venv-${{ runner.os }}-py${{ steps.python_env.outputs.version }}-uv0.13.7-${{ hashFiles('docs/requirements-history-validation.txt') }}
+
+      - name: Verify cached render environment
+        id: verify_render_venv
+        run: |
+          if [ -x .venv/bin/python ] && .venv/bin/python -c 'import yaml, pydantic'; then
+            echo "valid=true" >> "$GITHUB_OUTPUT"
+            echo "Reusing the cached Python environment."
+          else
+            rm -rf .venv
+            echo "valid=false" >> "$GITHUB_OUTPUT"
+            echo "No usable Python environment cache; creating it now."
+          fi
 
       - name: Create shared render environment
+        if: steps.verify_render_venv.outputs.valid != 'true'
         run: |
           uv venv --python 3.12 .venv
           uv pip install --python .venv/bin/python -r docs/requirements-history-validation.txt
