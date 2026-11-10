@@ -21,7 +21,7 @@ tags: ["type:guided-build", "destination:build", "topic:reference-gpt-model", "l
 -->
 
 ::: {.chapter-lead}
-This page is the fourth stop (4 of 5) of the guided tour. This file assembles the model: the input embeddings, the stacked blocks, the final normalization and the output projection to logits. Best read after the [configuration](gpt-config-walkthrough.qmd) and the [block](transformer-block-walkthrough.qmd). Source: [`src/llm_lab/foundations/gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt.py).
+This page is the fourth stop (4 of 5) of the guided tour. The previous tour ended at the output of one block; this page follows how blocks are stacked and how the complete model's interfaces fit together: input embeddings, repeated blocks, final normalization and the projection to logits. Best read after the [configuration](gpt-config-walkthrough.qmd) and the [block](transformer-block-walkthrough.qmd). Source: [`src/llm_lab/foundations/gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt.py).
 :::
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 By the end of this tour, you will be able to:

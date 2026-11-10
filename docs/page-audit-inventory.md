@@ -1411,3 +1411,26 @@ The source table covers the newly added PyTorch API example only. It does not cl
 **Audit outcome.** The source roles are now explicit: Goodfellow supports the MLE/NLL statistical bridge; Shannon supports the entropy foundation; PyTorch specifies framework/API behavior; local derivations and executable counterexamples support the LLM-specific tensor, axis, masking, and gradient claims. No source should be cited as proving claims outside its stated role.
 
 **Remaining validation.** This source map does not replace a fresh bilingual rendered review of the full page group. The recent #809 browser evidence covers its changed cross-entropy pages on its tested head, not every page in the logits → probabilities → likelihood → cross-entropy → loss chain.
+
+
+## Transformer boundary audit — 2026-11-10
+
+This source-level review resumes the first Transformer slice and focuses on the boundary between the conceptual mechanism, the reference implementation, and the assembled GPT. It does not claim a fresh rendered-page or learner-comprehension review.
+
+| Layer | Canonical ownership | Evidence inspected | Boundary to preserve |
+|---|---|---|---|
+| Conceptual mechanism | `site/fr/transformer.qmd` / `site/en/transformer.qmd`, with component lessons for Q/K/V, scaled attention and causal masking | The overview explains attention versus position-wise MLP, residual paths, normalization, depth/width and the path to logits. | Explain the block's input/output contract and distinguish attention sublayer, complete block and GPT assembly. Do not teach implementation details here. |
+| One block implementation | `site/fr/transformer-block-walkthrough.qmd` / `site/en/transformer-block-walkthrough.qmd` | The walkthrough follows the pre-LN `TransformerBlock` implementation: Q/K/V/O, head slicing, causal attention, residual paths, LayerNorm and GELU MLP. | Keep it code-first: parameter initialization, concrete tensor shapes, source lines and tests. It implements one selected architecture, not every Transformer variant. |
+| GPT integration | `site/fr/gpt-model-walkthrough.qmd` / `site/en/gpt-model-walkthrough.qmd` | The walkthrough traces token/position embeddings, repeated blocks, final normalization and the vocabulary projection from `(B,T)` to `(B,T,V)`. | Do not re-explain block internals; explain repetition, interfaces, output logits and model-level invariants. |
+| Build crosswalk | `site/fr/build-path.qmd` / `site/en/build-path.qmd`; `docs/learning-path.md` | The G4 attention primitive spans `attention.py` and the attention sublayer in `transformer_block.py`; G5 owns full block composition and GPT assembly. | A source file may serve more than one milestone at different scopes. Do not split modules solely to make the curriculum labels look one-to-one. |
+
+### Findings and corrections
+
+- The conceptual overview already had the right high-level ingredients, but did not state the three scales as an explicit contract. A short bilingual section now distinguishes attention sublayer → Transformer block → assembled GPT and gives the block's `(B,T,d)` input/output contract.
+- The Build table previously linked the entire block walkthrough from both G4 and G5 without explaining the different scopes. G4 now points to the attention section and owns the single-head primitive plus its multi-head integration; G5 owns the complete pre-LN block and GPT assembly.
+- The model walkthrough now explicitly starts where the block walkthrough ends: it follows repeated blocks and the model-level input/output interfaces rather than re-teaching the block.
+- No new registry, page, Python module, workflow or diagram framework is introduced. The existing conceptual route, Build milestones and bilingual canonical pages remain the sources of truth.
+
+### Validation still required
+
+This change is a source-level editorial correction. Run the existing Python CI and Quarto render/static checks, then inspect the changed FR/EN pages at desktop and mobile widths. Verify the new section anchors, math rendering and the G4/G5 links in the built site. This source review does not establish screen-reader usability or learner mastery.

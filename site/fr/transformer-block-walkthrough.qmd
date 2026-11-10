@@ -30,7 +30,7 @@ Cette page est la troisième étape (3 sur 5) de la visite guidée du code de r�
 - décrire le rôle de chaque projection Q, K, V et O, et pourquoi les têtes restent isolées jusqu'à `w_o`.
 :::
 
-## La recette du bloc : pré-LN avec résidus
+## La recette du bloc : pré-LN avec résidus {#block-recipe}
 
 ```python
 x = x + self._attention(layer_norm(x, self.ln1_gamma, self.ln1_beta))
@@ -127,7 +127,7 @@ Le facteur $1/\sqrt{2L}$ tient compte des deux contributions résiduelles par bl
 
 Vient ensuite la création des paramètres : les normalisations démarrent à l'identité (`gamma` à uns, `beta` à zéros), puis quatre matrices `(d, d)` pour les projections Q, K, V et O, et deux matrices pour le MLP (`d → mlp_hidden_dim → d`).
 
-## L'attention : des boucles explicites, pas par accident
+## L'attention : des boucles explicites, pas par accident {#attention-sublayer}
 
 ```python
         q = linear(x, self.w_q, self.b_q)
