@@ -111,6 +111,12 @@ Le Transformer n'est pas non plus synonyme de LLM : l'architecture ne détermine
 
 La comparaison conceptuelle suffit pour situer les architectures. Pour exécuter un exemple représentatif de chacune, installer les dépendances et interpréter les sorties, poursuivre avec l’[activité pratique : comparer BERT, GPT-2 et T5](transformer-explainer.qmd#comparer-trois-familles-transformer). Cette activité facultative relève de la pratique, pas du parcours conceptuel ni de la construction du petit GPT.
 
+
+
+::: {.language-switch}
+**Langue :** [Français](transformer-architectures.qmd) · [English](../en/transformer-architectures.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
@@ -122,12 +128,7 @@ La comparaison conceptuelle suffit pour situer les architectures. Pour exécuter
 
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/transformer-architectures.qmd).
 
-</div>
-</details>
 
-::: {.language-switch}
-**Langue :** [Français](transformer-architectures.qmd) · [English](../en/transformer-architectures.qmd)
-:::
 
 ::: {.self-check}
 ## Vérifier sa compréhension
@@ -147,3 +148,7 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 </details>
 :::
+
+
+</div>
+</details>
