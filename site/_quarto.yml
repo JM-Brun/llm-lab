@@ -114,7 +114,65 @@ project:
     - en/positional-encoding.qmd
     - en/rope.qmd
     - fr/exercises.qmd
+    - fr/exercises/causal-masking.qmd
+    - fr/exercises/corpus-preparation.qmd
+    - fr/exercises/cross-attention.qmd
+    - fr/exercises/cross-entropy.qmd
+    - fr/exercises/embedding-space.qmd
+    - fr/exercises/emergence.qmd
+    - fr/exercises/entropy.qmd
+    - fr/exercises/generation.qmd
+    - fr/exercises/gpt-config-walkthrough.qmd
+    - fr/exercises/gpt-generation-walkthrough.qmd
+    - fr/exercises/gpt-model-walkthrough.qmd
+    - fr/exercises/gpt-ops-walkthrough.qmd
+    - fr/exercises/gradients.qmd
+    - fr/exercises/hybrid-llm-architectures.qmd
+    - fr/exercises/in-context-learning.qmd
+    - fr/exercises/llm-computational-complexity.qmd
+    - fr/exercises/llm-evolution.qmd
+    - fr/exercises/logits.qmd
+    - fr/exercises/loss.qmd
+    - fr/exercises/positional-encoding.qmd
+    - fr/exercises/probabilites.qmd
+    - fr/exercises/queries-keys-values.qmd
+    - fr/exercises/scaled-dot-product-attention.qmd
+    - fr/exercises/text-data.qmd
+    - fr/exercises/tokenization-strategies.qmd
+    - fr/exercises/training-examples.qmd
+    - fr/exercises/transformer-block-walkthrough.qmd
+    - fr/exercises/transformer.qmd
+    - fr/exercises/vraisemblance.qmd
     - en/exercises.qmd
+    - en/exercises/causal-masking.qmd
+    - en/exercises/corpus-preparation.qmd
+    - en/exercises/cross-attention.qmd
+    - en/exercises/cross-entropy.qmd
+    - en/exercises/embedding-space.qmd
+    - en/exercises/emergence.qmd
+    - en/exercises/entropy.qmd
+    - en/exercises/generation.qmd
+    - en/exercises/gpt-config-walkthrough.qmd
+    - en/exercises/gpt-generation-walkthrough.qmd
+    - en/exercises/gpt-model-walkthrough.qmd
+    - en/exercises/gpt-ops-walkthrough.qmd
+    - en/exercises/gradients.qmd
+    - en/exercises/hybrid-llm-architectures.qmd
+    - en/exercises/in-context-learning.qmd
+    - en/exercises/likelihood.qmd
+    - en/exercises/llm-computational-complexity.qmd
+    - en/exercises/llm-evolution.qmd
+    - en/exercises/logits.qmd
+    - en/exercises/loss.qmd
+    - en/exercises/positional-encoding.qmd
+    - en/exercises/probabilities.qmd
+    - en/exercises/queries-keys-values.qmd
+    - en/exercises/scaled-dot-product-attention.qmd
+    - en/exercises/text-data.qmd
+    - en/exercises/tokenization-strategies.qmd
+    - en/exercises/training-examples.qmd
+    - en/exercises/transformer-block-walkthrough.qmd
+    - en/exercises/transformer.qmd
     - fr/evaluation-experimentale.qmd
     - en/experimental-evaluation.qmd
     - references.qmd
@@ -198,6 +256,37 @@ website:
         - section: "S'exercer et expérimenter"
           contents:
             - fr/exercises.qmd
+            - section: "Exercices par leçon"
+              contents:
+                - fr/exercises/causal-masking.qmd
+                - fr/exercises/corpus-preparation.qmd
+                - fr/exercises/cross-attention.qmd
+                - fr/exercises/cross-entropy.qmd
+                - fr/exercises/embedding-space.qmd
+                - fr/exercises/emergence.qmd
+                - fr/exercises/entropy.qmd
+                - fr/exercises/generation.qmd
+                - fr/exercises/gpt-config-walkthrough.qmd
+                - fr/exercises/gpt-generation-walkthrough.qmd
+                - fr/exercises/gpt-model-walkthrough.qmd
+                - fr/exercises/gpt-ops-walkthrough.qmd
+                - fr/exercises/gradients.qmd
+                - fr/exercises/hybrid-llm-architectures.qmd
+                - fr/exercises/in-context-learning.qmd
+                - fr/exercises/llm-computational-complexity.qmd
+                - fr/exercises/llm-evolution.qmd
+                - fr/exercises/logits.qmd
+                - fr/exercises/loss.qmd
+                - fr/exercises/positional-encoding.qmd
+                - fr/exercises/probabilites.qmd
+                - fr/exercises/queries-keys-values.qmd
+                - fr/exercises/scaled-dot-product-attention.qmd
+                - fr/exercises/text-data.qmd
+                - fr/exercises/tokenization-strategies.qmd
+                - fr/exercises/training-examples.qmd
+                - fr/exercises/transformer-block-walkthrough.qmd
+                - fr/exercises/transformer.qmd
+                - fr/exercises/vraisemblance.qmd
             - fr/transformer-explainer.qmd
             - fr/evaluation-experimentale.qmd
         - section: "Approfondir"
@@ -299,6 +388,37 @@ website:
         - section: "Practice and experiment"
           contents:
             - en/exercises.qmd
+            - section: "Exercises by lesson"
+              contents:
+                - en/exercises/causal-masking.qmd
+                - en/exercises/corpus-preparation.qmd
+                - en/exercises/cross-attention.qmd
+                - en/exercises/cross-entropy.qmd
+                - en/exercises/embedding-space.qmd
+                - en/exercises/emergence.qmd
+                - en/exercises/entropy.qmd
+                - en/exercises/generation.qmd
+                - en/exercises/gpt-config-walkthrough.qmd
+                - en/exercises/gpt-generation-walkthrough.qmd
+                - en/exercises/gpt-model-walkthrough.qmd
+                - en/exercises/gpt-ops-walkthrough.qmd
+                - en/exercises/gradients.qmd
+                - en/exercises/hybrid-llm-architectures.qmd
+                - en/exercises/in-context-learning.qmd
+                - en/exercises/likelihood.qmd
+                - en/exercises/llm-computational-complexity.qmd
+                - en/exercises/llm-evolution.qmd
+                - en/exercises/logits.qmd
+                - en/exercises/loss.qmd
+                - en/exercises/positional-encoding.qmd
+                - en/exercises/probabilities.qmd
+                - en/exercises/queries-keys-values.qmd
+                - en/exercises/scaled-dot-product-attention.qmd
+                - en/exercises/text-data.qmd
+                - en/exercises/tokenization-strategies.qmd
+                - en/exercises/training-examples.qmd
+                - en/exercises/transformer-block-walkthrough.qmd
+                - en/exercises/transformer.qmd
             - en/transformer-explainer.qmd
             - en/experimental-evaluation.qmd
         - section: "Deepen your understanding"

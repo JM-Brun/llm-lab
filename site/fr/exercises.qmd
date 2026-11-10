@@ -20,7 +20,7 @@ related: []
 tags: ["type:exercise-hub", "destination:practice", "topic:exercises", "level:applied", "language:fr", "status:published"]
 -->
 
-Les pages de cours utilisent un composant homogène **« Vérifier sa compréhension »** : questions courtes avec corrigés repliés, progressant de la restitution vers l’explication, l’application et le transfert lorsque le sujet s’y prête. Chaque vérification renvoie ici vers la collection thématique correspondante. **Les collections ci-dessous regroupent des exercices plus développés** (calculs approfondis, problèmes à plusieurs étapes et tâches de transfert) ; leur état de développement est indiqué explicitement.
+Les auto-vérifications courtes ne sont plus intégrées aux leçons : chaque leçon qui en possède dispose maintenant d’une page dédiée dans la section **Exercices par leçon**, accessible depuis le cours et depuis la navigation. Ce catalogue conserve les collections transversales plus développées (calculs approfondis, problèmes à plusieurs étapes et tâches de transfert), avec leur état de développement indiqué explicitement.
 
 ## Comment utiliser cet espace
 

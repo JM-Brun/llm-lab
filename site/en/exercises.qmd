@@ -20,7 +20,7 @@ related: []
 tags: ["type:exercise-hub", "destination:practice", "topic:exercises", "level:applied", "language:en", "status:published"]
 -->
 
-Lesson pages use a consistent **“Check your understanding”** component: short questions with collapsed solutions, progressing from retrieval to explanation, application and transfer where the topic supports it. Each check links here to its matching topic collection. **The collections below group more substantial exercises** (extended calculations, multi-step problems and transfer tasks); their development status is stated explicitly.
+Short self-checks no longer sit inside lesson pages: each lesson that has questions now has a dedicated companion page under **Exercises by lesson**, linked from the lesson and the site navigation. This catalogue remains the entry point for larger cross-cutting collections (extended calculations, multi-step problems, and transfer tasks), with their development status stated explicitly.
 
 ## How to use this space
 
