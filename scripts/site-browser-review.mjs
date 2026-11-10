@@ -751,11 +751,15 @@ for (const testCase of cases) {
         }
       }
       if (pagePath === "entropy.html") {
-        const comparisons = page.locator(".meta-flow__comparison-item");
-        const text = await page.locator(".meta-flow").innerText();
-        if (await comparisons.count() !== 2 || !/surprise/i.test(text) ||
-            !/cross-entropy|entropie croisée/i.test(text)) {
-          throw new Error("entropy map must distinguish predictive entropy, observed-token surprise, and cross-entropy");
+        const map = page.locator("main .pipeline-stepper.meta-flow").first();
+        const audit = await map.evaluate(el => ({
+          comparisonCount: el.querySelectorAll(".meta-flow__comparison-item").length,
+          text: el.textContent || "",
+          className: el.className,
+        })).catch(() => ({ comparisonCount: 0, text: "", className: "missing map" }));
+        if (audit.comparisonCount !== 2 || !/surprise/i.test(audit.text) ||
+            !/cross-entropy|entropie croisée/i.test(audit.text)) {
+          throw new Error("entropy map must distinguish predictive entropy, observed-token surprise, and cross-entropy; rendered map: " + JSON.stringify(audit));
         }
       }
     }
@@ -944,18 +948,25 @@ for (const testCase of cases) {
           }
         }
         if (pagePath === "queries-keys-values.html") {
-          const branches = page.locator(".meta-flow__branches .meta-flow__branch");
-          const active = page.locator(".meta-flow [aria-current='step']");
-          if (await branches.count() !== 3 || await active.count() !== 1) {
-            throw new Error("Q/K/V must be shown as three parallel branches with one current concept");
+          const audit = await page.locator("main .pipeline-stepper.meta-flow").first().evaluate(el => ({
+            branchCount: el.querySelectorAll(".meta-flow__branches .meta-flow__branch").length,
+            currentCount: el.querySelectorAll("[aria-current='step']").length,
+            text: el.textContent || "",
+            className: el.className,
+          })).catch(() => ({ branchCount: 0, currentCount: 0, text: "", className: "missing map" }));
+          if (audit.branchCount !== 3 || audit.currentCount !== 1) {
+            throw new Error("Q/K/V must be shown as three parallel branches with one current concept; rendered map: " + JSON.stringify(audit));
           }
         }
         if (pagePath === "positional-encoding.html") {
-          const comparisons = page.locator(".meta-flow__comparison-item");
-          const text = await page.locator(".meta-flow").innerText();
-          if (await comparisons.count() !== 2 || !/RoPE/i.test(text) ||
-              !/absolute|absolu/i.test(text)) {
-            throw new Error("positional map must present absolute encodings and RoPE as alternatives, not consecutive stages");
+          const audit = await page.locator("main .pipeline-stepper.meta-flow").first().evaluate(el => ({
+            comparisonCount: el.querySelectorAll(".meta-flow__comparison-item").length,
+            text: el.textContent || "",
+            className: el.className,
+          })).catch(() => ({ comparisonCount: 0, text: "", className: "missing map" }));
+          if (audit.comparisonCount !== 2 || !/RoPE/i.test(audit.text) ||
+              !/absolute|absolu/i.test(audit.text)) {
+            throw new Error("positional map must present absolute encodings and RoPE as alternatives, not consecutive stages; rendered map: " + JSON.stringify(audit));
           }
         }
         if (pagePath === "generation.html") {
