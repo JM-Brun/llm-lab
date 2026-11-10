@@ -116,23 +116,6 @@ L'attention est donc une partie du bloc ; le bloc est l'unité répétée ; le T
 
 Après le dernier bloc, la normalisation finale et la tête de sortie produisent les **logits** : un score non normalisé pour chaque token du vocabulaire. La [leçon consacrée aux logits](logits.qmd) explique ce que ces scores représentent ; celle sur les [probabilités de sortie](probabilites.qmd) montre comment *softmax* les convertit en distribution. Le réseau s'arrête à ces scores : choisir un token, l'ajouter au contexte et relancer le calcul relève de la [génération autorégressive](generation.qmd).
 
-## Vérifier sa compréhension
-
-Pour prolonger cette vérification par des problèmes progressifs sur les embeddings, les résidus, la normalisation et le MLP, consultez les [exercices consacrés au Transformer](exercises-transformer.qmd#transformer).
-
-Cette vérification porte sur la structure du bloc et le rôle des connexions résiduelles.
-
-1. Quelle opération permet à une position d'intégrer de l'information provenant d'autres positions, et laquelle transforme chaque position indépendamment ?
-2. Pourquoi les connexions résiduelles ne remplacent-elles pas la transformation calculée par une sous-couche ?
-
-<details>
-<summary>Afficher les réponses et le raisonnement</summary>
-
-1. L'auto-attention mélange l'information entre positions autorisées ; le MLP applique une transformation position par position, avec des poids partagés.
-2. La connexion résiduelle additionne la sortie de la sous-couche à son entrée : $x_{sortie}=x_{entrée}+F(x_{entrée})$. Elle préserve un chemin direct à travers le bloc tout en laissant la sous-couche apporter une transformation apprise.
-
-</details>
-
 <!-- Legacy section anchors: see the linked companion page. -->
 <span id="une-expérience-guidée-en-quatre-observations"></span>
 <span id="expériences-contrôlées-passer-de-lobservation-au-test"></span>
@@ -171,7 +154,7 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 <summary>Afficher les réponses</summary>
 
 1. L'auto-attention mélange l'information entre positions autorisées ; le MLP applique une transformation position par position avec des poids partagés.
-2. La connexion résiduelle additionne la sortie de la sous-couche à son entrée, préservant un chemin direct tout en laissant la transformation apprise contribuer au résultat.
+2. La connexion résiduelle additionne la sortie de la sous-couche à son entrée : $x_{sortie}=x_{entrée}+F(x_{entrée})$. Elle préserve un chemin direct à travers le bloc tout en laissant la sous-couche apporter une transformation apprise.
 
 </details>
 :::
