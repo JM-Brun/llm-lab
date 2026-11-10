@@ -30,6 +30,30 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-atten
 
 **Current scope:** CA-A introduces causal masking, shifted targets, and prefix invariance using a mask matrix and the existing tests. Three separate progressive formative exercises, with stable IDs AT-A, AT-B and AT-C shared with the French version, cover multi-head attention calculation, shape tracing, then claim diagnosis and intervention prediction. Multi-head-specific masking variants and advanced invariants remain to be developed. Suggested order: CA-A for causal masking, then AT-A, AT-B and AT-C for the multi-head sequence.
 
+### Exercise — from Q/K scores to the attention output {#at-0-scores-to-output}
+
+Consider one query and two key/value pairs:
+
+$$
+q=(1,0),\quad k_1=(1,0),\quad k_2=(0,1),\quad
+v_1=(10,0),\quad v_2=(0,20).
+$$
+
+1. Compute the scores $qk_1^\top$ and $qk_2^\top$.
+2. Apply scaling with $d_k=2$.
+3. Compute the softmax weights (approximately).
+4. Compute the weighted combination of the values.
+5. Explain why the weights are not an absolute measure of semantic relevance.
+
+<details>
+<summary>Show the worked solution</summary>
+
+The raw scores are $(1,0)$. After division by $\sqrt{2}$, they are approximately $(0.707,0)$. Softmax gives approximately $(0.67,0.33)$. The output is therefore $0.67(10,0)+0.33(0,20)\approx(6.7,6.6)$.
+
+Q and K determine the weights; V determines the aggregated content. The weights are relative to the accessible keys in this row, not a universal measure of relevance or causality.
+
+</details>
+
 ### Calculate an aggregation by hand
 
 A position receives attention weights $(0.75,\,0.25)$ and the value vectors are $v_1=(2,0)$ and $v_2=(0,4)$. Calculate the output. If you swap $v_1$ and $v_2$ while keeping the weights fixed, does the output stay the same?
@@ -211,7 +235,7 @@ With parameters fixed, changing $X_D$ directly affects Q; changing $X_E$ directl
 
 </details>
 
-### Exercise CA-A — Causal masking and prefix invariance
+### Exercise CA-A — Causal masking and prefix invariance {#ca-a-prefix-invariance}
 
 Consider four input tokens \(x_0,x_1,x_2,x_3\). At query position \(i\), causal self-attention allows only keys at positions \(j\leq i\).
 
