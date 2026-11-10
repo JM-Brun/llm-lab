@@ -34,7 +34,7 @@ The route boundary is sound and was preserved. The Q/K/V lesson does not need to
 
 | Priority | Finding and source evidence | Reader impact | Decision |
 |---|---|---|---|
-| **P1** | The stated outcomes included reconstructing the projections and predicting parameter-change effects, but the lesson had no small worked projection example. | The reader could repeat the equations without seeing how the same input produces three distinct vectors or how the invariance follows from the dependency structure. | Add a hand-checkable two-dimensional example in both languages. Change only W_V and explicitly show that Q/K remain fixed. Keep score/softmax arithmetic on the next page. |
+| **P1** | The concept lesson had no worked projection example, while its learning outcomes risked implying that matrix calculation belonged to the conceptual route. | The conceptual page should establish the roles and dependencies; numerical manipulation belongs in the practice route. | Keep the concept lesson qualitative. Move the two-dimensional hand calculation and W_V-only intervention into the Attention exercise collection in both languages. |
 | **P1** | The most concrete linguistic motivation was buried in a collapsed note near the end; the opening moved quickly from the page transition to a summary. | A new reader had to accept the three roles before seeing the problem that makes them useful. | Add a short, carefully qualified coreference example near the beginning, before the one-minute mental model. |
 | **P2** | The existing SVG already showed the essential two-path structure: Q and K feed score/weight computation; V feeds weighted aggregation. Its surrounding prose did not explicitly direct the reader to follow those two paths. | The page had a suitable visual anchor, but the reader could treat it as an illustration rather than the central mental model. | Keep the existing project-owned diagram; clarify its alt text and explicitly connect the opening explanation to its two paths. No new visual asset is needed. |
 | **P2** | Two adjacent collapsed callouts repeated the coreference example and its caveat, then contrasted it with lexical ambiguity. | Repetition added reading friction without adding a distinct learning objective. | Move the coreference example and its source attribution to the opening; retain lexical ambiguity as one optional note. Preserve the warning against inferring the behavior of a particular head from an illustration. |
@@ -43,7 +43,7 @@ The route boundary is sound and was preserved. The Q/K/V lesson does not need to
 
 ## 4. Changes applied
 
-The French and English pages now share the same pedagogical sequence:
+The French and English concept pages now share the same qualitative pedagogical sequence:
 
 1. Existing page-to-page orientation.
 2. Collapsed, observable learning outcomes.
@@ -51,37 +51,28 @@ The French and English pages now share the same pedagogical sequence:
 4. The existing one-minute Q/K/V mental model.
 5. The existing role analogy and central two-path diagram.
 6. The learned-projection equations and tensor shapes.
-7. A small numerical example of three projections from one input.
-8. A controlled change to W_V showing that Q/K-derived scores and weights remain fixed, while the aggregated content may change.
-9. One optional lexical-ambiguity example, followed by the existing optional treatments of gradients, vector geometry, and architecture variants.
-10. The existing exercise-hub link and short self-check.
+7. The existing symbolic projection equations and tensor-shape explanation, without a worked numerical calculation.
+8. Optional explanations of learning, geometry, and architecture variants.
+9. A conceptual self-check that asks the reader to explain the Q/K versus V dependency without calculating.
+10. A clear hand-off to the separate exercise collection for numerical projection work.
 
-### Numerical example check
+### Practice exercise relocation
 
-Using row-vector convention and
+The two-dimensional calculation is no longer part of either concept page. It has been moved into the Attention collection in the French and English exercise catalogues as **“calculer Q, K et V puis isoler l'effet de V” / “calculate Q, K, and V, then isolate the effect of V.”** The task asks learners to compute the three projections by hand, change only W_V, verify the unchanged Q/K-derived scores and weights, and explain why the aggregated content may change. A worked solution is collapsed by default.
 
-`x_t = [1, 2]`,
+The arithmetic remains the same and was checked:
 
-`W_Q = [[1, 0], [0, 1]]`,  
-`W_K = [[0, 1], [1, 0]]`,  
-`W_V = [[1, 1], [0, 1]]`,
+- With x=[1, 2], W_Q=identity, W_K=the coordinate swap, and W_V=[[1, 1], [0, 1]], the results are q=[1, 2], k=[2, 1], v=[1, 3].
+- Replacing only W_V with [[2, 0], [0, 1]] gives v'=[2, 2], while q and k remain unchanged.
 
-the projections are:
-
-- `q_t = [1, 2]`;
-- `k_t = [2, 1]`;
-- `v_t = [1, 3]`.
-
-If only `W_V` is replaced by `[[2, 0], [0, 1]]`, then `v_t` becomes `[2, 2]`; `q_t` and `k_t` are unchanged. Therefore the scores and weights derived from Q and K are unchanged. The resulting weighted content may change, although a particular aggregate can remain unchanged if weighted changes cancel.
-
-The matrices are explicitly labelled illustrative, not learned parameters from a real model. The example deliberately stops before computing attention scores or softmax, preserving the next lesson's ownership.
-
+The exercise explicitly identifies the matrices as fictional and hand-computable. The concept lesson retains only the symbolic equations, role distinction, qualitative invariance, and its existing link to the practice hub.
+ 
 ## 5. Preservation and scientific checks
 
 - The page IDs, destination, level, suggested route, hierarchy, and related-page metadata were not changed.
 - The existing project-owned SVGs were retained; no figure was copied from DEV or another external source.
 - The original-paper reference and existing optional explanations of gradients, vector geometry, cross-attention, GQA/MQA, and projection-sharing research were retained.
-- The exercise collection remains separate from the concept lesson; the page links to the existing Attention exercise section rather than embedding a growing exercise bank.
+- Numerical matrix calculations are kept out of the concept lesson and placed in the separate Attention exercise collection; the concept page links to the existing exercise hub.
 - The examples are described as motivation for contextual information flow, not evidence that one attention head independently resolves coreference or lexical ambiguity.
 - The invariance claim is scoped correctly: changing V alone does not change Q/K-derived scores or weights; the aggregate can change, but need not change in every possible numerical case.
 
@@ -89,7 +80,7 @@ The matrices are explicitly labelled illustrative, not learned parameters from a
 
 | Check | Status | Evidence / limitation |
 |---|---|---|
-| French and English source edits | **Done** | Both Quarto sources updated in the same branch. |
+| French and English concept/practice edits | **Done at source level** | Both concept lessons are qualitative; the matching hand-calculation exercise and collapsed solution are present in both exercise catalogues. |
 | Bilingual learning-outcome parity | **Done at source level** | Both versions state the same three observable capabilities. |
 | Worked-example arithmetic | **Checked** | Matrix products and the W_V-only change were independently calculated. |
 | Page-boundary consistency | **Checked at source level** | The current lesson still delegates score/softmax/aggregation to the next lesson and retains its existing route metadata. |
@@ -109,4 +100,4 @@ After the branch is rendered, inspect both language versions at desktop and narr
 - verify the page's first screen, local links, exercise anchor, language switch, and previous/next navigation;
 - ask a learner unfamiliar with Q/K/V to explain why changing only V cannot change the attention weights, then compare the explanation with the page's learning outcomes.
 
-**Audit verdict:** the conceptual route was already coherent, but the opening and the transition from equations to operational understanding had avoidable friction. The revision addresses those two gaps without broadening the page's scope or duplicating the next lesson.
+**Audit verdict:** the conceptual route was already coherent, but the opening and the transition from equations to operational understanding had avoidable friction. The revision addresses the narrative gap while keeping numerical manipulation in the practice route, without broadening the concept page's scope or duplicating the next lesson.
