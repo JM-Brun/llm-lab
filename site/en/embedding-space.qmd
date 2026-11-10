@@ -31,9 +31,9 @@ After tokenization, each token is represented by an integer ID. The ID acts as a
 ::: {.callout-tip title="The one-minute mental model"}
 An ID is a **row address**, not a semantic coordinate. The embedding matrix stores one learned vector per ID; lookup simply selects the corresponding row. Two occurrences of the same ID therefore retrieve the same initial vector. The Transformer then builds a context-dependent representation from it.
 
-**First pass:** understand the lookup in the small matrix and remember that an ID selects a row; it is not itself a semantic coordinate.
+**First pass:** remember that an ID selects a row in the table; it is not itself a semantic coordinate.
 
-**Go deeper:** the Python trace and parameter count are available in optional collapsed sections; geometric properties are developed in the cosine-similarity and linearity lessons.
+**For practice:** the lookup calculation and reproducible text → IDs → vectors trace are grouped in the [Text data collection](exercises.qmd#tr-b-lookup). Geometric properties are developed in the cosine-similarity and linearity lessons.
 :::
 
 ## Where do the vectors come from?
