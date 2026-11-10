@@ -109,8 +109,11 @@ jobs:
           echo "$install_dir/bin" >> "$GITHUB_PATH"
           "$install_dir/bin/quarto" --version
 
+      # Image-only PRs with a verified published-site cache need neither Quarto
+      # nor Python: they copy the changed image and still run output/link checks.
+      # Keep the environment for cache misses and all changes needing a render.
       - name: Set up uv and Python
-        if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
+        if: github.event_name != 'pull_request' || (steps.site_changes.outputs.site_relevant == 'true' && (steps.site_changes.outputs.render_targets != '' || steps.site_changes.outputs.render_assets == '' || steps.verify_site_cache.outputs.cache_restored != 'true'))
         uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
         with:
           version: "0.13.7"
@@ -122,7 +125,7 @@ jobs:
             docs/requirements-*.txt
 
       - name: Create shared validation environment
-        if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
+        if: github.event_name != 'pull_request' || (steps.site_changes.outputs.site_relevant == 'true' && (steps.site_changes.outputs.render_targets != '' || steps.site_changes.outputs.render_assets == '' || steps.verify_site_cache.outputs.cache_restored != 'true'))
         run: |
           uv venv --python 3.12 .venv
           uv pip install --python .venv/bin/python -r docs/requirements-history-validation.txt
