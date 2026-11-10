@@ -27,13 +27,6 @@ tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-valu
 La page précédente, [GPT et Transformer : architecture et flux des données](transformer.qmd), situe l'auto-attention dans la passe avant du réseau. Ici, on isole les trois projections qui l'alimentent : **Q**, **K** et **V**. Ce ne sont pas trois catégories de tokens, mais trois transformations apprises d'une représentation. Q et K déterminent les poids ; V fournit le contenu agrégé. La page suivante détaille le calcul de ces poids et de cette agrégation.
 :::
 
-::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
-À la fin de cette leçon, vous devriez pouvoir :
-- distinguer les rôles de Q, K et V dans le mécanisme d'attention ;
-- expliquer pourquoi Q et K déterminent les poids tandis que V fournit le contenu agrégé ;
-- décrire qualitativement les dépendances entre projections, poids et contenu, sans effectuer de calcul matriciel.
-:::
-
 ## Le problème : utiliser le contexte
 
 Dans « Le chat a poursuivi le chien parce qu'il était rapide », le pronom **il** peut renvoyer au chat ou au chien. Un modèle ne peut donc pas toujours interpréter un token à partir de sa seule représentation locale : il doit pouvoir exploiter l'information portée par d'autres positions de la séquence.
@@ -96,7 +89,11 @@ Avec $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ et $W_V\in\mathbb{R}^{d_{model
 - $Q,K\in\mathbb{R}^{T\times d_k}$ ;
 - $V\in\mathbb{R}^{T\times d_v}$.
 
-Chaque ligne correspond à une position. Les mêmes matrices de projection sont appliquées à toutes les positions, mais les représentations d'entrée varient. Les dimensions $d_k$ et $d_v$ ne sont pas nécessairement égales ; les biais éventuels sont omis dans cette écriture.
+Chaque ligne correspond à une position. Les mêmes matrices de projection sont appliquées à toutes les positions, mais les représentations d'entrée varient. Les dimensions $d_k$ et $d_v$ ne sont pas nécessairement égales ; les biais éventuels sont omis dans cette écriture. Pour suivre ces projections dans le code du bloc, voir la [visite guidée du bloc Transformer](transformer-block-walkthrough.qmd) ; les conventions générales de dimensions et d'axes sont détaillées dans [Tenseurs](tensors.qmd).
+
+## Pour approfondir
+
+
 
 ::: {.callout-note collapse="true" title="Comment l'entraînement apprend-il ces projections ?"}
 Les matrices $W_Q$, $W_K$ et $W_V$ ne reçoivent pas chacune une cible explicite « correcte ». Elles sont ajustées indirectement à partir de la fonction de perte du modèle, par rétropropagation du gradient.
@@ -126,12 +123,14 @@ Cette page présente la formulation standard avec des projections Q, K et V para
 
 Par exemple, **l'attention multi-query (MQA)** et **l'attention à requêtes groupées (GQA)** utilisent moins de têtes clé/valeur que de têtes de requête : chaque tête clé/valeur est partagée entre plusieurs têtes de requête afin de réduire le coût du [cache KV](llm-computational-complexity.qmd) à l'inférence. D'autres travaux récents étudient le partage des paramètres de projection, notamment entre les projections clé et valeur. Ce sont des variantes d'architecture avec des compromis empiriques ; elles ne remettent pas en cause la distinction fonctionnelle présentée ici.
 
+
+
+**Attention croisée :** en attention croisée, Q provient du flux qui consulte, tandis que K et V proviennent du flux consulté. La provenance des trois projections n'est donc plus commune. Voir l'[approfondissement sur l'attention croisée](cross-attention.qmd).
 - Vaswani et al. (2017), [*Attention Is All You Need*](https://arxiv.org/abs/1706.03762) — formulation standard de l'attention dans les Transformers.
 - Ainslie et al. (2023), [*GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints*](https://arxiv.org/abs/2305.13245) — partage de têtes clé/valeur.
 - Kayyam et al. (2026), [*Do Transformers Need Three Projections? Systematic Study of QKV Variants*](https://proceedings.mlr.press/v306/kayyam26a.html) — étude empirique du partage des projections.
 :::
 
-Les dimensions $d_k$ et $d_v$ ne sont donc pas nécessairement égales. Les biais éventuels sont omis dans cette écriture. Pour suivre ces projections dans le code réel du bloc, voir la [visite guidée du bloc Transformer](transformer-block-walkthrough.qmd) ; les conventions générales de dimensions et d'axes sont détaillées dans [Tenseurs](tensors.qmd).
 
 
 ::: {.callout-note collapse="true" title="Autre exemple : l'ambiguïté lexicale"}
@@ -151,6 +150,13 @@ La distinction fonctionnelle est simple, mais fondamentale :
 Les poids ne sont pas une mesure universelle de pertinence sémantique et l'attention n'est pas une recherche du plus proche voisin dans les embeddings initiaux : elle opère sur des projections apprises.
 
 La page suivante, [Attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd), explique comment les scores deviennent des poids et comment ceux-ci agrègent V. Les [exercices de la section Attention](exercises.qmd#attention) proposent ensuite de manipuler les projections et de vérifier ces dépendances ; les calculs numériques restent dans ce parcours pratique.
+
+::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
+À la fin de cette leçon, vous devriez pouvoir :
+- distinguer les rôles de Q, K et V dans le mécanisme d'attention ;
+- expliquer pourquoi Q et K déterminent les poids tandis que V fournit le contenu agrégé ;
+- décrire qualitativement les dépendances entre projections, poids et contenu, sans effectuer de calcul matriciel.
+:::
 
 ::: {.self-check}
 ## Vérifier l'idée essentielle
