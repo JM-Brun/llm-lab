@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/index", "en/llm-overview"]
   children: ["en/embedding-space", "en/positional-encoding", "en/contextualized-representations", "en/queries-keys-values", "en/scaled-dot-product-attention", "en/logits", "en/tensors"]
-related: ["en/text-data", "en/transformer-block-walkthrough"]
+related: ["en/text-data", "en/transformer-block-walkthrough", "en/exercises/transformer"]
 tags: ["type:system-overview", "destination:understand", "topic:transformer", "level:overview", "language:en", "status:published"]
 -->
 
@@ -118,20 +118,9 @@ In short: attention is a sublayer; the block is the repeated unit; GPT is the mo
 
 After the final block, an output projection produces the **logits**: one unnormalized score per vocabulary token. The [logits lesson](logits.qmd) explains how to interpret them; the [output probabilities lesson](probabilities.qmd) covers their transformation into a distribution. This page stops at the network output: selecting the next token, appending it to the context, and repeating the process belong to [autoregressive generation](generation.qmd).
 
-## Check your understanding
+## Practice
 
-This check focuses on the network computation, not on decoding, which is covered in the [generation lesson](generation.qmd).
-
-1. Which operation lets a position incorporate information from other positions, and which one transforms each position independently?
-2. Why does a residual connection not replace the transformation computed by a sublayer?
-
-<details>
-<summary>Show answers and reasoning</summary>
-
-1. Self-attention mixes information across permitted positions; the MLP applies a position-wise transformation with shared weights.
-2. The residual connection adds the sublayer output to its input: $x_{out}=x_{in}+F(x_{in})$. It preserves a direct path through the block while allowing the sublayer to contribute a learned transformation.
-
-</details>
+This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/transformer.qmd).
 
 <!-- Legacy section anchors: see the linked companion page. -->
 <span id="a-guided-four-part-exploration"></span>

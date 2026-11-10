@@ -1,0 +1,50 @@
+---
+title: "Exercices — Espace des embeddings"
+subtitle: "Questions de vérification, exercices et corrigés"
+keywords: ["type:exercise-hub", "destination:practice", "topic:embedding-space", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/exercises/embedding-space"
+summary: "Questions de vérification et exercices associés à la leçon Espace des embeddings."
+scope: "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle."
+purpose: "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/embedding-space"]
+tags: ["type:exercise-hub", "destination:practice", "topic:embedding-space", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour à la leçon : Espace des embeddings](../embedding-space.qmd)
+
+## Vérifier sa compréhension
+
+La [collection approfondie sur le Transformer](../exercises.qmd#transformer) est prévue ; utilisez les vérifications ci-dessous en attendant.
+
+1. Une matrice contient \(V\) lignes et des vecteurs de dimension \(d\). Combien de paramètres contient-elle, et que sélectionne l'ID \(i\) ?
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+La matrice contient \(V\times d\) paramètres. L'ID \(i\) sélectionne la ligne \(E_i\) ; sa valeur entière sert d'indice, pas de coordonnée sémantique. Le traitement positionnel et la contextualisation interviennent ensuite, selon l'architecture (voir les deux pages dédiées).
+
+</details>
+
+2. Une projection 2D montre deux groupes de points bien séparés. Cela prouve-t-il que le modèle distingue correctement ces catégories sur de nouvelles données ?
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+Non. Une projection 2D ne préserve qu’une partie de la géométrie et peut créer ou accentuer des séparations visuelles. Il faut définir une tâche, une métrique et un protocole d’évaluation sur des données pertinentes tenues à l’écart ; une figure exploratoire ne constitue pas une preuve de performance.
+
+</details>
+
+::: {.language-switch}
+**Langue :** [Français](../exercises/embedding-space.qmd) · [English](../../en/exercises/embedding-space.qmd)
+:::

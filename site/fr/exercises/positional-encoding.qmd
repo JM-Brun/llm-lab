@@ -1,0 +1,61 @@
+---
+title: "Exercices — Position et encodage positionnel"
+subtitle: "Questions de vérification, exercices et corrigés"
+keywords: ["type:exercise-hub", "destination:practice", "topic:positional-encoding", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/exercises/positional-encoding"
+summary: "Questions de vérification et exercices associés à la leçon Position et encodage positionnel."
+scope: "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle."
+purpose: "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/positional-encoding"]
+tags: ["type:exercise-hub", "destination:practice", "topic:positional-encoding", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour à la leçon : Position et encodage positionnel](../positional-encoding.qmd)
+
+## Vérifier sa compréhension
+
+Des exercices formatifs mobilisent cette page dans la [collection Transformer](../exercises.qmd#transformer).
+
+1. Deux phrases contiennent les mêmes mots dans un ordre différent. Pourquoi des plongements initiaux seuls ne suffisent-ils pas à les distinguer ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Le lookup associe le même vecteur initial à chaque occurrence d'un token, quelle que soit sa position. Sans information positionnelle explicite ni contrainte structurelle, l'attention fondée sur le contenu ne porte pas l'ordre à elle seule.
+
+</details>
+
+2. RoPE ajoute-t-il un vecteur de position aux plongements des tokens ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Non. RoPE applique des rotations dépendant de la position aux vecteurs requête et clé, après projection et avant le produit scalaire des scores. C'est un mécanisme relatif, distinct des encodages absolus ajoutés aux représentations d'entrée.
+
+</details>
+
+3. Le masque causal remplace-t-il un encodage positionnel ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Non. Le masque causal est une contrainte de visibilité : il limite chaque position à son préfixe et impose ainsi un ordre au calcul, mais il n'encode ni positions absolues ni décalages relatifs. Les deux mécanismes sont distincts et souvent combinés.
+
+</details>
+
+Vous avez compris cette étape si vous pouvez expliquer pourquoi l'ordre doit être pris en compte, distinguer les trois familles de mécanismes, et séparer l'information positionnelle explicite de la contrainte de visibilité causale.
+
+::: {.language-switch}
+**Langue :** [Français](../exercises/positional-encoding.qmd) · [English](../../en/exercises/positional-encoding.qmd)
+:::

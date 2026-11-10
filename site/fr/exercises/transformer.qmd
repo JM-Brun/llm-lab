@@ -1,0 +1,43 @@
+---
+title: "Exercices — GPT et Transformer : architecture et flux des données"
+subtitle: "Questions de vérification, exercices et corrigés"
+keywords: ["type:exercise-hub", "destination:practice", "topic:transformer", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/exercises/transformer"
+summary: "Questions de vérification et exercices associés à la leçon GPT et Transformer : architecture et flux des données."
+scope: "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle."
+purpose: "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/transformer"]
+tags: ["type:exercise-hub", "destination:practice", "topic:transformer", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour à la leçon : GPT et Transformer : architecture et flux des données](../transformer.qmd)
+
+## Vérifier sa compréhension
+
+Cette vérification porte sur le calcul interne, et non sur le décodage traité dans [la leçon sur la génération](../generation.qmd).
+
+1. Quelle opération permet à une position d'intégrer de l'information provenant d'autres positions, et laquelle transforme chaque position indépendamment ?
+2. Pourquoi les connexions résiduelles ne remplacent-elles pas la transformation calculée par une sous-couche ?
+
+<details>
+<summary>Afficher les réponses et le raisonnement</summary>
+
+1. L'auto-attention mélange l'information entre positions autorisées ; le MLP applique une transformation position par position, avec des poids partagés.
+2. La connexion résiduelle additionne la sortie de la sous-couche à son entrée : $x_{sortie}=x_{entrée}+F(x_{entrée})$. Elle préserve un chemin direct à travers le bloc tout en laissant la sous-couche apporter une transformation apprise.
+
+</details>
+
+::: {.language-switch}
+**Langue :** [Français](../exercises/transformer.qmd) · [English](../../en/exercises/transformer.qmd)
+:::

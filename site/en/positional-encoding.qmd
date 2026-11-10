@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/embedding-space", "en/transformer"]
   children: ["en/contextualized-representations", "en/rope"]
-related: []
+related: ["en/exercises/positional-encoding"]
 tags: ["type:concept-lesson", "destination:understand", "topic:positional-encoding", "level:core", "language:en", "status:published"]
 -->
 
@@ -105,40 +105,11 @@ The [embedding-space lookup](embedding-space.qmd) maps each ID to an initial vec
 - [Hugging Face Transformers documentation](https://huggingface.co/docs/transformers/) — implementation details vary by architecture.
 - [Jay Joshi, *The Mathematics of a Transformer… Part 1*](https://medium.com/@jayjj6272/the-mathematics-of-a-transformer-explained-with-numbers-you-can-check-by-hand-with-geometric-96b5873c95be) — complementary pedagogical treatment of embedding and sinusoidal-encoding geometry; the calculations shown here were independently checked.
 
-::: {.self-check}
-## Check your understanding
+## Practice
 
-Formative exercises use this page in the [Transformer collection](exercises.qmd#transformer).
+This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/positional-encoding.qmd).
 
-1. Two sentences contain the same words in a different order. Why are initial embeddings alone not enough to distinguish them?
 
-<details>
-<summary>Show the answer</summary>
-
-The lookup assigns the same initial vector to every occurrence of a token, whatever its position. Without explicit positional information or a structural constraint, content-based attention does not carry the order on its own.
-
-</details>
-
-2. Does RoPE add a position vector to token embeddings?
-
-<details>
-<summary>Show the answer</summary>
-
-No. RoPE applies position-dependent rotations to the query and key vectors, after projection and before the score dot product. It is a relative mechanism, distinct from absolute encodings added to the input representations.
-
-</details>
-
-3. Does the causal mask replace a positional encoding?
-
-<details>
-<summary>Show the answer</summary>
-
-No. The causal mask is a visibility constraint: it restricts each position to its prefix, imposing an order on the computation, but it encodes neither absolute positions nor relative offsets. The two mechanisms are distinct and often combined.
-
-</details>
-
-You have understood this step if you can explain why order must be taken into account, distinguish the three families of mechanisms, and separate explicit positional information from the causal visibility constraint.
-:::
 
 {{< include ../includes/generated-suggested-route-en-positional-encoding.qmd >}}
 

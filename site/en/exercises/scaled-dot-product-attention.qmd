@@ -1,0 +1,41 @@
+---
+title: "Exercises — Scaled dot-product attention"
+subtitle: "Self-check questions, exercises, and worked answers"
+keywords: ["type:exercise-hub", "destination:practice", "topic:scaled-dot-product-attention", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/exercises/scaled-dot-product-attention"
+summary: "Self-check questions and exercises associated with the Scaled dot-product attention lesson."
+scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
+purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/scaled-dot-product-attention"]
+tags: ["type:exercise-hub", "destination:practice", "topic:scaled-dot-product-attention", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the lesson: Scaled dot-product attention](../scaled-dot-product-attention.qmd)
+
+## Check your understanding
+
+[Extended exercises on this topic](../en/exercises.qmd#attention).
+
+1. A row of scores is $(2,0)$ and the key dimension is $d_k=4$. Calculate the softmax weights after scaling.
+
+<details>
+<summary>Show the reasoning</summary>
+
+First divide the scores by $\sqrt{4}=2$, giving $(1,0)$. Softmax is approximately $(0.731,0.269)$. Scaling precedes normalization; the weights remain relative to the scores in this row only. The variant where one position is forbidden by a causal mask is covered in the self-check on [causal masking](../causal-masking.qmd).
+
+</details>
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/scaled-dot-product-attention.qmd) · [English](../exercises/scaled-dot-product-attention.qmd)
+:::

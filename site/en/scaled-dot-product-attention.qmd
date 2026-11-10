@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/transformer"]
   children: ["en/causal-masking", "en/attention-score-scaling"]
-related: ["en/queries-keys-values"]
+related: ["en/queries-keys-values", "en/exercises/scaled-dot-product-attention"]
 tags: ["type:concept-lesson", "destination:understand", "topic:scaled-dot-product-attention", "level:core", "language:en", "status:published"]
 -->
 
@@ -118,20 +118,11 @@ The formulation is presented in [Vaswani et al. (2017), *Attention Is All You Ne
 - Softmax connects to [probabilities](probabilities.qmd), but a normalized distribution is not necessarily calibrated.
 - The [Transformer overview](transformer.qmd) places this computation in the model's data flow.
 
-::: {.self-check}
-## Check your understanding
+## Practice
 
-[Extended exercises on this topic](../en/exercises.qmd#attention).
+This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/scaled-dot-product-attention.qmd).
 
-1. A row of scores is $(2,0)$ and the key dimension is $d_k=4$. Calculate the softmax weights after scaling.
 
-<details>
-<summary>Show the reasoning</summary>
-
-First divide the scores by $\sqrt{4}=2$, giving $(1,0)$. Softmax is approximately $(0.731,0.269)$. Scaling precedes normalization; the weights remain relative to the scores in this row only. The variant where one position is forbidden by a causal mask is covered in the self-check on [causal masking](causal-masking.qmd).
-
-</details>
-:::
 
 
 ## Optional Build-path companion

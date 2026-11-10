@@ -1,0 +1,41 @@
+---
+title: "Exercices — Attention à produit scalaire mise à l’échelle"
+subtitle: "Questions de vérification, exercices et corrigés"
+keywords: ["type:exercise-hub", "destination:practice", "topic:scaled-dot-product-attention", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/exercises/scaled-dot-product-attention"
+summary: "Questions de vérification et exercices associés à la leçon Attention à produit scalaire mise à l’échelle."
+scope: "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle."
+purpose: "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/scaled-dot-product-attention"]
+tags: ["type:exercise-hub", "destination:practice", "topic:scaled-dot-product-attention", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour à la leçon : Attention à produit scalaire mise à l’échelle](../scaled-dot-product-attention.qmd)
+
+## Vérifier sa compréhension
+
+[Exercices approfondis sur ce thème](../exercises.qmd#attention).
+
+1. Une ligne de scores vaut $(2,0)$ et la dimension des clés est $d_k=4$. Calculez les poids softmax après mise à l’échelle.
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+On divise d’abord les scores par $\sqrt{4}=2$, ce qui donne $(1,0)$. Le softmax vaut environ $(0{,}731,0{,}269)$. La mise à l’échelle précède la normalisation ; les poids restent relatifs aux seuls scores de cette ligne. La variante où une position est interdite par un masque causal est traitée dans l’auto-vérification du [masque causal](../causal-masking.qmd).
+
+</details>
+
+::: {.language-switch}
+**Langue :** [Français](../exercises/scaled-dot-product-attention.qmd) · [English](../../en/exercises/scaled-dot-product-attention.qmd)
+:::

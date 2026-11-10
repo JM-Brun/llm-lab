@@ -1,0 +1,50 @@
+---
+title: "Exercises — Text and data"
+subtitle: "Self-check questions, exercises, and worked answers"
+keywords: ["type:exercise-hub", "destination:practice", "topic:text-data", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/exercises/text-data"
+summary: "Self-check questions and exercises associated with the Text and data lesson."
+scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
+purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/text-data"]
+tags: ["type:exercise-hub", "destination:practice", "topic:text-data", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the lesson: Text and data](../text-data.qmd)
+
+## Check your understanding
+
+The [extended text-data collection](../en/exercises.qmd#text-data) is planned; use the checks below for now.
+
+1. A tokenizer assigns ID `17` to the token `cat`. This ID appears twice in a sequence. Do both occurrences select the same initial vector? Can you conclude that the number 17 encodes an amount of meaning?
+
+<details>
+<summary>Show the reasoning</summary>
+
+Yes: the same ID selects the same row of the embedding table, hence the same initial vector (for fixed parameters). No: 17 is an arbitrary identifier in the vocabulary, not a measure of meaning, frequency, or similarity. The representations may later differ depending on the context processed by the Transformer.
+
+</details>
+
+2. Two tokenizers split the same sentence into sequences of different lengths. Can their token IDs be compared directly, token by token?
+
+<details>
+<summary>Show the reasoning</summary>
+
+No. IDs are defined only within a tokenizer's vocabulary; ID 17 in one vocabulary need not denote the same token in another. Compare decoded tokens, conventions, and measured properties (length, coverage, cost), while recording each tokenizer's version.
+
+</details>
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/text-data.qmd) · [English](../exercises/text-data.qmd)
+:::

@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/transformer"]
   children: []
-related: ["en/contextualized-representations", "en/scaled-dot-product-attention", "en/cross-attention", "en/transformer-block-walkthrough"]
+related: ["en/contextualized-representations", "en/scaled-dot-product-attention", "en/cross-attention", "en/transformer-block-walkthrough", "en/exercises/queries-keys-values"]
 tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-values", "level:core", "language:en", "status:published"]
 -->
 
@@ -202,20 +202,11 @@ The associated exercises are grouped in the [Attention](exercises.qmd#attention)
 
 A key is not a human-readable semantic label, and attention is not nearest-neighbour search in the initial embedding space: scores are computed between learned projections. Likewise, the value closest to a query is not automatically the most useful: Q and K determine the weights, which are then applied to V vectors; values are not compared with one another to select the nearest one. The weights are neither the values nor a universal measure of semantic relevance. Their computation and interpretive limits are explained in [scaled dot-product attention](scaled-dot-product-attention.qmd).
 
-::: {.self-check}
-## Check the essential idea
+## Practice
 
-[Extended exercises on Q/K/V and attention](exercises.qmd#attention).
+This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/queries-keys-values.qmd).
 
-**Which projections determine attention weights, and which one supplies the aggregated vectors? What happens if V changes while Q and K stay the same?**
 
-<details>
-<summary>Show the reasoning</summary>
-
-Q and K determine the attention weights; V supplies the vectors whose content is aggregated. Changing Q or K can change the weights. If only V changes, the weights remain unchanged because the scores depend on Q and K; the aggregated content can change, but need not do so: weighted changes can cancel out.
-
-</details>
-:::
 
 {{< include ../includes/generated-suggested-route-en-queries-keys-values.qmd >}}
 

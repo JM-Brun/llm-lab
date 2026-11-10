@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/index", "fr/llm-overview"]
   children: ["fr/embedding-space", "fr/positional-encoding", "fr/contextualized-representations", "fr/queries-keys-values", "fr/scaled-dot-product-attention", "fr/logits", "fr/tensors"]
-related: ["fr/text-data", "fr/transformer-block-walkthrough"]
+related: ["fr/text-data", "fr/transformer-block-walkthrough", "fr/exercises/transformer"]
 tags: ["type:system-overview", "destination:understand", "topic:transformer", "level:overview", "language:fr", "status:published"]
 -->
 
@@ -118,20 +118,9 @@ Autrement dit : l'attention est une sous-couche ; le bloc est l'unité répété
 
 Après le dernier bloc, une projection de sortie produit les **logits**, c'est-à-dire un score non normalisé par token du vocabulaire. La [page dédiée aux logits](logits.qmd) explique leur interprétation ; la [page sur les probabilités de sortie](probabilites.qmd) détaille leur transformation en distribution. Cette page s'arrête à la sortie du réseau : la sélection du prochain token, l'ajout au contexte et la répétition relèvent de la [génération autorégressive](generation.qmd).
 
-## Vérifier sa compréhension
+## S’exercer
 
-Cette vérification porte sur le calcul interne, et non sur le décodage traité dans [la leçon sur la génération](generation.qmd).
-
-1. Quelle opération permet à une position d'intégrer de l'information provenant d'autres positions, et laquelle transforme chaque position indépendamment ?
-2. Pourquoi les connexions résiduelles ne remplacent-elles pas la transformation calculée par une sous-couche ?
-
-<details>
-<summary>Afficher les réponses et le raisonnement</summary>
-
-1. L'auto-attention mélange l'information entre positions autorisées ; le MLP applique une transformation position par position, avec des poids partagés.
-2. La connexion résiduelle additionne la sortie de la sous-couche à son entrée : $x_{sortie}=x_{entrée}+F(x_{entrée})$. Elle préserve un chemin direct à travers le bloc tout en laissant la sous-couche apporter une transformation apprise.
-
-</details>
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/transformer.qmd).
 
 <!-- Legacy section anchors: see the linked companion page. -->
 <span id="une-expérience-guidée-en-quatre-observations"></span>
