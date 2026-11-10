@@ -10,9 +10,11 @@ from pathlib import Path, PurePosixPath
 from typing import Any
 
 MAX_INCREMENTAL_PAGES = 20
+# The publish workflow orchestrates deployment but does not change rendered
+# content; editing it must not force the PR content-render workflow to rebuild
+# the entire bilingual site.
 GLOBAL_RENDER_INPUTS = {
     ".github/workflows/quarto.yml",
-    ".github/workflows/publish-quarto.yml",
     "pyproject.toml",
     "uv.lock",
     "scripts/site-browser-review.mjs",
