@@ -22,7 +22,6 @@ related: ["en/rope", "en/queries-keys-values", "en/scaled-dot-product-attention"
 tags: ["type:deep-dive", "destination:deepen", "topic:sinusoidal-positional-encoding", "level:advanced", "language:en", "status:published"]
 -->
 
-{{< include ../includes/generated-guided-context-en-sinusoidal-positional-encoding.qmd >}}
 ::: {.chapter-lead}
 Sinusoidal encoding maps a position index to a deterministic vector made of sinusoids at multiple frequencies. This page reconstructs the 2017 Transformer formula, explains why frequencies are spaced logarithmically, and derives the property that makes a fixed offset accessible to a linear transformation. It also examines what that property does not guarantee.
 :::
@@ -281,7 +280,7 @@ Training length, data distributions, attention mechanisms, numerical precision, 
 
 ## 8. Check your understanding
 
-::: {.callout-question title="Your turn"}
+::: {.callout-tip title="Your turn"}
 1. If \(d_{\text{model}}\) doubles, how many frequency pairs are used?
 2. As pair index \(i\) increases, does wavelength increase or decrease?
 3. Why does the transformation associated with offset \(k\) not depend on the starting position \(p\)?
