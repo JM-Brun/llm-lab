@@ -208,7 +208,30 @@ Quand la perte est anormalement basse, élevée ou instable, vérifier :
 7. Les axes `B`, `L` et `V` correspondent-ils à ceux attendus par la fonction de perte ?
 8. Une cible future est-elle accessible au contexte qui sert à la prédire ?
 
-## 7. Ressources complémentaires
+
+
+::: {.callout-tip title="Fiche de révision — construire des exemples autorégressifs"}
+- **Alignement :** pour une entrée $x=[t_0,\ldots,t_{L-1}]$, la cible est décalée d'un token, $y=[t_1,\ldots,t_L]$. Chaque position prédit son successeur.
+- **Teacher forcing :** le préfixe observé sert de contexte ; le masque causal interdit l'accès aux tokens futurs. Ce conditionnement n'est ni la loss ni l'optimiseur.
+- **Fenêtrage :** la longueur fixe le contexte disponible ; le stride fixe le déplacement entre fenêtres et donc leur recouvrement.
+- **Masques :** le masque causal règle l'accès à l'information ; le masque de perte règle les cibles qui contribuent à la réduction. Un séparateur de document ne bloque pas automatiquement l'attention.
+- **Formes :** `input_ids` et `targets` ont la forme $[B,L]$, les logits $[B,L,V]$. L'alignement doit être conservé jusqu'au calcul de la perte.
+:::
+
+
+
+## Limites
+
+Cette page décrit les mécanismes de base, sans prescrire une stratégie universelle de packing, de masquage inter-documents, de padding ou de réduction de perte. Les choix dépendent de l’objectif, de l’architecture, des données et de l’implémentation.
+
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Ressources complémentaires</span>
+  <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Pour approfondir
 
 - **Exemples calculés :** [Sebastian Raschka — construire les exemples entrée-cible](https://www.sebastianraschka.com/faq/docs/input-target-pretraining-examples.html).
 - **Interprétation de l’objectif :** [Raschka — ce que le préentraînement sur texte non annoté enseigne](https://www.sebastianraschka.com/faq/docs/what-pretraining-teaches.html).
@@ -219,22 +242,12 @@ Quand la perte est anormalement basse, élevée ou instable, vérifier :
 
 Pour revenir en amont, consulter [Du texte aux tokens](text-data.qmd). Pour poursuivre le cours, voir [la cross-entropie](cross-entropy.qmd) et [le Transformer](transformer.qmd). Les pages sur les [tenseurs](tensors.qmd) et la [chaîne mathématique de l'entraînement](mathematical-foundations.qmd) sont des références complémentaires, pas des prérequis à maîtriser avant de continuer.
 
-::: {.callout-tip title="Fiche de révision — construire des exemples autorégressifs"}
-- **Alignement :** pour une entrée $x=[t_0,\ldots,t_{L-1}]$, la cible est décalée d'un token, $y=[t_1,\ldots,t_L]$. Chaque position prédit son successeur.
-- **Teacher forcing :** le préfixe observé sert de contexte ; le masque causal interdit l'accès aux tokens futurs. Ce conditionnement n'est ni la loss ni l'optimiseur.
-- **Fenêtrage :** la longueur fixe le contexte disponible ; le stride fixe le déplacement entre fenêtres et donc leur recouvrement.
-- **Masques :** le masque causal règle l'accès à l'information ; le masque de perte règle les cibles qui contribuent à la réduction. Un séparateur de document ne bloque pas automatiquement l'attention.
-- **Formes :** `input_ids` et `targets` ont la forme $[B,L]$, les logits $[B,L,V]$. L'alignement doit être conservé jusqu'au calcul de la perte.
-:::
-
-## Exercices
+### Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/training-examples.qmd).
 
-
-## Limites
-
-Cette page décrit les mécanismes de base, sans prescrire une stratégie universelle de packing, de masquage inter-documents, de padding ou de réduction de perte. Les choix dépendent de l’objectif, de l’architecture, des données et de l’implémentation.
+</div>
+</details>
 
 ::: {.language-switch}
 **Langue :** [Français](training-examples.qmd) · [English](../en/training-examples.qmd)
