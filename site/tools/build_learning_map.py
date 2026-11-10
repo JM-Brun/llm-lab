@@ -366,6 +366,11 @@ class GuidedRouteMembership(StrictModel):
     stage_title: str
     stage_objective: str
     role: Literal["core", "optional"]
+    # Position data is optional so that a membership can be built without the
+    # whole route; the page context omits what it does not know.
+    stage_count: int | None = None
+    page_index: int | None = None
+    page_count: int | None = None
 
 
 def build_guided_route_memberships(
@@ -379,7 +384,7 @@ def build_guided_route_memberships(
     """
     memberships: dict[str, list[GuidedRouteMembership]] = {}
     for stage_index, stage in enumerate(stages, start=1):
-        for page in stage.pages:
+        for page_index, page in enumerate(stage.pages, start=1):
             memberships.setdefault(page.id, []).append(
                 GuidedRouteMembership(
                     stage_id=stage.id,
@@ -387,6 +392,9 @@ def build_guided_route_memberships(
                     stage_title=stage.title,
                     stage_objective=stage.objective,
                     role="core",
+                    stage_count=len(stages),
+                    page_index=page_index,
+                    page_count=len(stage.pages),
                 )
             )
         for page in stage.optional_pages:
@@ -397,9 +405,30 @@ def build_guided_route_memberships(
                     stage_title=stage.title,
                     stage_objective=stage.objective,
                     role="optional",
+                    stage_count=len(stages),
                 )
             )
     return memberships
+
+
+def render_membership_position(membership: GuidedRouteMembership, language: str) -> str:
+    """Say where a core page sits: stage out of stages, page out of the stage's pages.
+
+    An optional resource has no rank, and its stage number is already in the
+    stage cue, so it gets no position text.
+    """
+    if (
+        membership.stage_count is None
+        or membership.page_index is None
+        or membership.page_count is None
+    ):
+        return ""
+    of = "sur" if language == "fr" else "of"
+    stage_word = "Étape" if language == "fr" else "Stage"
+    return (
+        f"{stage_word} {membership.stage_index} {of} {membership.stage_count}"
+        f" · page {membership.page_index} {of} {membership.page_count}"
+    )
 
 
 def render_guided_page_context_markdown(
@@ -432,6 +461,9 @@ def render_guided_page_context_markdown(
         ]
         if membership.role == "optional":
             lines.append(f'  <span class="guided-page-context__role">{role_label}</span>')
+        position = render_membership_position(membership, language)
+        if position:
+            lines.append(f'  <span class="guided-page-context__position">{position}</span>')
         lines.extend(["</nav>", ""])
         return "\n".join(lines)
 
@@ -445,8 +477,8 @@ def render_guided_page_context_markdown(
         '         aria-labelledby="guided-page-context-heading">',
         f'  <p id="guided-page-context-heading">{heading} : '
         f"<strong>{escape(page.title)}</strong>.</p>",
-        "  <ul>",
     ]
+    lines.append("  <ul>")
     for membership in memberships:
         role_label = (
             ("Facultatif" if language == "fr" else "Optional")
@@ -462,6 +494,11 @@ def render_guided_page_context_markdown(
                     f"{escape(membership.stage_title)}</a>"
                 ),
                 f'      <span class="guided-page-context__role">{role_label}</span>',
+                *(
+                    [f'      <span class="guided-page-context__position">{position}</span>']
+                    if (position := render_membership_position(membership, language))
+                    else []
+                ),
                 f"      <p>{escape(membership.stage_objective)}</p>",
                 "    </li>",
             ]

@@ -235,3 +235,87 @@ def test_writer_generates_page_contexts_for_every_route_member(
     assert generation_file.read_text(encoding="utf-8") == render_context(
         page_by_id[generation_id], memberships[generation_id], language
     )
+
+
+@pytest.mark.parametrize(
+    ("language", "expected"),
+    [
+        ("en", "Stage 4 of 8 · page 2 of 4"),
+        ("fr", "Étape 4 sur 8 · page 2 sur 4"),
+    ],
+)
+def test_core_page_context_states_position(language: str, expected: str) -> None:
+    membership = GENERATOR["GuidedRouteMembership"](
+        stage_id="computation",
+        stage_index=4,
+        stage_title="Computation",
+        stage_objective="objective",
+        role="core",
+        stage_count=8,
+        page_index=2,
+        page_count=4,
+    )
+    page = GENERATOR["ResolvedPage"](id=f"{language}/qkv", title="QKV", href="qkv.html")
+
+    rendered = GENERATOR["render_guided_page_context_markdown"](page, [membership], language)
+
+    assert f'<span class="guided-page-context__position">{expected}</span>' in rendered
+
+
+def test_optional_page_context_adds_no_position() -> None:
+    membership = GENERATOR["GuidedRouteMembership"](
+        stage_id="representations",
+        stage_index=3,
+        stage_title="Representations",
+        stage_objective="objective",
+        role="optional",
+        stage_count=8,
+    )
+    page = GENERATOR["ResolvedPage"](id="en/rope", title="RoPE", href="rope.html")
+
+    rendered = GENERATOR["render_guided_page_context_markdown"](page, [membership], "en")
+
+    # The stage number is already in the stage cue; an optional page has no rank.
+    assert "guided-page-context__position" not in rendered
+
+
+def test_page_context_omits_position_it_does_not_know() -> None:
+    membership = GENERATOR["GuidedRouteMembership"](
+        stage_id="representations",
+        stage_index=3,
+        stage_title="Representations",
+        stage_objective="objective",
+        role="core",
+    )
+    page = GENERATOR["ResolvedPage"](id="en/x", title="X", href="x.html")
+
+    rendered = GENERATOR["render_guided_page_context_markdown"](page, [membership], "en")
+
+    assert "guided-page-context__position" not in rendered
+
+
+@pytest.mark.parametrize("language", ["fr", "en"])
+def test_real_route_positions_are_complete_and_consistent(language: str) -> None:
+    pages = [page for page in GENERATOR["load_pages"]() if page["language"] in {language, "shared"}]
+    stages = GENERATOR["load_guided_route"](language, pages)
+    memberships = GENERATOR["build_guided_route_memberships"](stages)
+
+    for stage_index, stage in enumerate(stages, start=1):
+        ranks = [
+            membership.page_index
+            for page in stage.pages
+            for membership in memberships[page.id]
+            if membership.role == "core" and membership.stage_index == stage_index
+        ]
+        assert ranks == list(range(1, len(stage.pages) + 1))
+    for page_memberships in memberships.values():
+        for membership in page_memberships:
+            assert membership.stage_count == len(stages)
+            assert (membership.page_count is None) == (membership.role == "optional")
+
+    core_ids = {page.id for stage in stages for page in stage.pages}
+    fragments = GENERATOR["prepare_guided_page_context_fragments"](language, stages)
+    for path, text in fragments.items():
+        page_id = path.name.removeprefix("generated-guided-context-").removesuffix(".qmd")
+        page_id = page_id.replace("-", "/", 1)
+        assert ("guided-page-context__position" in text) == (page_id in core_ids), path.name
