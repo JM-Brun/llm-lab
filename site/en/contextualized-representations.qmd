@@ -133,6 +133,14 @@ This also does not guarantee that the model will represent human-interpreted sen
 
 The [embedding-space lookup](embedding-space.qmd) maps IDs to initial vectors. To see how the network then transforms these vectors into contextualized states, continue with [The Transformer in a GPT](transformer.qmd): that page locates the stack of blocks and distinguishes attention from the MLP. The [Q/K/V](queries-keys-values.qmd) and [scaled dot-product attention](scaled-dot-product-attention.qmd) pages then unpack the attention mechanism.
 
+
+
+{{< include ../includes/generated-suggested-route-en-contextualized-representations.qmd >}}
+
+::: {.language-switch}
+**Language:** [Français](../fr/contextualized-representations.qmd) · [English](contextualized-representations.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -144,14 +152,7 @@ The [embedding-space lookup](embedding-space.qmd) maps IDs to initial vectors. T
 
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/contextualized-representations.qmd).
 
-</div>
-</details>
 
-{{< include ../includes/generated-suggested-route-en-contextualized-representations.qmd >}}
-
-::: {.language-switch}
-**Language:** [Français](../fr/contextualized-representations.qmd) · [English](contextualized-representations.qmd)
-:::
 
 ::: {.self-check}
 ## Check your understanding
@@ -171,3 +172,7 @@ With a fixed embedding matrix, the same token ID selects the same row. Hidden st
 
 </details>
 :::
+
+
+</div>
+</details>
