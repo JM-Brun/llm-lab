@@ -76,7 +76,7 @@ The figure summarizes generation: text is tokenized, the network computes a dist
 
 *The probabilities shown are illustrative; they are not outputs measured from a particular model.*
 
-To explore the stages in more detail: [text and data](text-data.qmd) for the input, [GPT and Transformers](transformer.qmd) and the [Transformer block walkthrough](transformer-block-walkthrough.qmd) for the computation, then [generation](generation.qmd) for the distribution and token selection.
+To explore the stages in more detail: [text and data](text-data.qmd) for the input, [The Transformer in a GPT](transformer.qmd) and the [Transformer block walkthrough](transformer-block-walkthrough.qmd) for the computation, then [generation](generation.qmd) for the distribution and token selection.
 
 ### One shared computation, three uses
 
