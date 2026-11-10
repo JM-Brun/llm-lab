@@ -45,6 +45,8 @@ La qualité du calcul du gradient reste distincte de la généralisation du mod�
   <span class="step-item">4. Mise à jour des paramètres</span>
 </div>
 
+Pour chaque token cible de la continuation, le gradient de la cross-entropie ajuste les logits : il pousse le score du token attendu vers le haut relativement aux autres scores. La mise à jour réelle des paramètres passe ensuite par la règle de chaîne à travers les couches du modèle.
+
 ## Gradient par rapport aux logits
 
 Pour une cible one-hot $y$ et une cross-entropie calculée depuis le softmax :
