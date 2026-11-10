@@ -24,11 +24,11 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-text-
 
 ### Données textuelles {#donnees-textuelles}
 
-**Repères pour commencer :** [texte et données](text-data.qmd) et [espace des embeddings](embedding-space.qmd) suffisent pour aborder les premiers exercices ; les prérequis supplémentaires sont indiqués pour chaque exercice ci-dessous. En particulier, TR-D mobilise les [exemples d'entraînement et le décalage entrée-cible](training-examples.qmd), TR-E la page de tokenisation et TR-F la préparation du corpus.
+**Repères pour commencer :** [texte et données](text-data.qmd) et [espace des embeddings](embedding-space.qmd) suffisent pour aborder les premiers exercices ; les prérequis supplémentaires sont indiqués pour chaque exercice ci-dessous. En particulier, l'exercice sur les fenêtres d'entraînement mobilise les [exemples d'entraînement et le décalage entrée-cible](training-examples.qmd), l'exercice sur les fusions BPE la page de tokenisation et l'exercice sur les fuites entre partitions la préparation du corpus.
 
-**Périmètre actuel :** six exercices formatifs bilingues, aux identifiants stables TR-A à TR-F, couvrent la chaîne texte → représentations (TR-A à TR-C), les fenêtres et le décalage entrée-cible (TR-D), le calcul de fusions BPE (TR-E), puis le diagnostic des fuites entre partitions et de l'ajustement du tokenizer (TR-F). Ordre conseillé : TR-A, TR-B, TR-C, puis TR-D, TR-E et TR-F après les pages de préparation correspondantes.
+**Périmètre actuel :** six exercices formatifs bilingues, aux identifiants stables l'exercice sur la chaîne des représentations à l'exercice sur les fuites entre partitions, couvrent la chaîne texte → représentations (l'exercice sur la chaîne des représentations à l'exercice sur identité, position et contexte), les fenêtres et le décalage entrée-cible (l'exercice sur les fenêtres d'entraînement), le calcul de fusions BPE (l'exercice sur les fusions BPE), puis le diagnostic des fuites entre partitions et de l'ajustement du tokenizer (l'exercice sur les fuites entre partitions). Ordre conseillé : l'exercice sur la chaîne des représentations, l'exercice sur le lookup, l'exercice sur identité, position et contexte, puis l'exercice sur les fenêtres d'entraînement, l'exercice sur les fusions BPE et l'exercice sur les fuites entre partitions après les pages de préparation correspondantes.
 
-### Exercice TR-A — Reconstruire la chaîne des représentations
+### Reconstruire la chaîne des représentations {#ex-representation-pipeline}
 
 **Préparation :** une première lecture de [texte et données](text-data.qmd) et de l'[espace des embeddings](embedding-space.qmd) suffit.
 
@@ -68,7 +68,7 @@ Le tokenizer transforme le texte en unités discrètes du vocabulaire. Les IDs i
 
 </details>
 
-### Exercice TR-B — Calculer un lookup et suivre les formes des tenseurs {#tr-b-lookup}
+### Calculer un lookup et suivre les formes des tenseurs {#ex-embedding-lookup}
 
 **Préparation :** l'[espace des embeddings](embedding-space.qmd) pour la matrice et le lookup ; [tenseurs](tensors.qmd) sert de référence facultative sur les conventions de notation. L'exercice progresse en trois étapes : calculer, compléter, généraliser.
 
@@ -196,7 +196,7 @@ Le lookup conserve les axes batch et position, et ajoute l'axe des caractéristi
 
 #### Trace pratique facultative — du texte aux vecteurs
 
-Cette trace complète TR-B avec un tokenizer réel et une table d'embeddings synthétique. Elle permet de suivre les objets successifs sans prétendre reproduire les poids internes d'un GPT-2 préentraîné.
+Cette trace complète l'exercice sur le lookup avec un tokenizer réel et une table d'embeddings synthétique. Elle permet de suivre les objets successifs sans prétendre reproduire les poids internes d'un GPT-2 préentraîné.
 
 Installez la version figée avec `python -m pip install tiktoken==0.14.0`. NumPy est déjà une dépendance du projet.
 
@@ -232,11 +232,11 @@ assert Z.shape == (2, 2)
 assert np.allclose(Z, [[0.11, 0.22], [-0.27, 0.44]])
 ```
 
-À interpréter avec soin : les IDs dépendent du tokenizer ; les vecteurs de `E` et `P` sont inventés. Le script vérifie le chemin texte → IDs → lookup → ajout positionnel, mais n'exécute aucun bloc Transformer et ne calcule donc pas d'états contextualisés. Pour les détails sur les octets et les fusions BPE, voir TR-E.
+À interpréter avec soin : les IDs dépendent du tokenizer ; les vecteurs de `E` et `P` sont inventés. Le script vérifie le chemin texte → IDs → lookup → ajout positionnel, mais n'exécute aucun bloc Transformer et ne calcule donc pas d'états contextualisés. Pour les détails sur les octets et les fusions BPE, voir l'exercice sur les fusions BPE.
 
-### Exercice TR-C — Distinguer identité, position et contexte
+### Distinguer identité, position et contexte {#ex-representation-context}
 
-**Préparation :** [représentations contextualisées](contextualized-representations.qmd) et [position et RoPE](positional-encoding.qmd), après TR-A et TR-B. Pour le cadre mathématique de l'étape 3, l'[approfondissement sur les dépendances entre positions et couches](contextualized-representations-advanced.qmd) est une référence facultative. L'exercice progresse en trois étapes : diagnostiquer des affirmations, prédire sous modifications contrôlées, puis calculer un exemple numérique jouet.
+**Préparation :** [représentations contextualisées](contextualized-representations.qmd) et [position et RoPE](positional-encoding.qmd), après l'exercice sur la chaîne des représentations et l'exercice sur le lookup. Pour le cadre mathématique de l'étape 3, l'[approfondissement sur les dépendances entre positions et couches](contextualized-representations-advanced.qmd) est une référence facultative. L'exercice progresse en trois étapes : diagnostiquer des affirmations, prédire sous modifications contrôlées, puis calculer un exemple numérique jouet.
 
 **Étape 1 — Classifier des affirmations.** Pour un tokenizer et une matrice d'embeddings fixés, classez chaque affirmation comme **valide**, **invalide** ou **dépendante de l'architecture**, puis justifiez votre choix. Aucune configuration de modèle particulière n'est fournie : lorsqu'une affirmation parle de « ce modèle », déterminez si les informations données suffisent pour établir son comportement.
 
@@ -306,23 +306,23 @@ Il s'agit de prédictions qualitatives, pas de garanties sur l'amplitude d'un ch
 
 **Étape 3 — Calcul numérique contrôlé (agrégation jouet, pas une couche d'attention).**
 
-Deux séquences réduites au préfixe et au token bank : A = [river, bank], B = [financial, bank]. La matrice synthétique contient :
+On reprend les formulations du dialogue d'Otis : « bonne situation » et « bonne ou mauvaise situation ». Pour isoler le mécanisme, on représente ces extraits par deux fenêtres lexicales simplifiées : A = [bonne, situation], B = [mauvaise, situation]. Il s'agit d'unités pédagogiques, **pas d'une segmentation attribuée à un tokenizer réel**. La table synthétique contient :
 \[
-E[\text{river}]=(0.1,0.2),\quad E[\text{financial}]=(0.9,-0.4),\quad E[\text{bank}]=(0.5,0.5).
+E[\text{bonne}]=(0.1,0.2),\quad E[\text{mauvaise}]=(0.9,-0.4),\quad E[\text{situation}]=(0.5,0.5).
 \]
-Les occurrences de bank sont à la position 1 (indexation à partir de zéro). On ajoute le même vecteur \(P_1=(0.02,0.05)\). Pour isoler l'effet du contexte, on définit une agrégation **fixe et illustrative** :
+On place la cible « situation » à la même position 1 dans les deux fenêtres et on ajoute le même vecteur positionnel \(P_1=(0.02,0.05)\). Pour isoler l'effet du préfixe, on définit une agrégation **fixe et illustrative** :
 \[
-h_{\text{bank}}=0.4\,z_{\text{préfixe}}+0.6\,z_{\text{bank}},\qquad z=x+P.
+h_{\text{cible}}=0.4\,z_{\text{préfixe}}+0.6\,z_{\text{cible}},\qquad z=x+P.
 \]
-1. Vérifiez que le lookup et le terme positionnel de bank sont identiques dans A et B.
-2. Calculez les vecteurs positionnés des préfixes avec \(P_0=(0.01,0.00)\), puis \(z_{\text{bank}}\).
+1. Vérifiez que le lookup et le terme positionnel de « situation » sont identiques dans A et B.
+2. Calculez les vecteurs positionnés des préfixes avec \(P_0=(0.01,0.00)\), puis \(z_{\text{cible}}\).
 3. Calculez \(h_A\), \(h_B\) et leur distance euclidienne.
 4. Expliquez ce que l'exemple démontre et ce qu'il ne démontre pas.
 
 <details>
 <summary>Afficher le corrigé et le code NumPy</summary>
 
-Le lookup de bank vaut \((0.5,0.5)\) dans les deux contextes ; \(z_{\text{bank}}=(0.52,0.55)\). Les préfixes donnent \(z_{\text{river}}=(0.11,0.22)\) et \(z_{\text{financial}}=(0.91,-0.40)\).
+Le lookup de « situation » vaut \((0.5,0.5)\) dans les deux contextes ; \(z_{\text{bank}}=(0.52,0.55)\). Les préfixes donnent \(z_{\text{river}}=(0.11,0.22)\) et \(z_{\text{financial}}=(0.91,-0.40)\).
 \[
 h_A=(0.356,0.418),\qquad h_B=(0.676,0.170).
 \]
@@ -330,14 +330,14 @@ La distance vaut \(\sqrt{0.320^2+0.248^2}\approx0.4049\).
 
 ~~~python
 import numpy as np
-E = {"river": np.array([0.1, 0.2]),
-     "financial": np.array([0.9, -0.4]),
-     "bank": np.array([0.5, 0.5])}
+E = {"bonne": np.array([0.1, 0.2]),
+     "mauvaise": np.array([0.9, -0.4]),
+     "situation": np.array([0.5, 0.5])}
 P0, P1 = np.array([0.01, 0.00]), np.array([0.02, 0.05])
-z_bank = E["bank"] + P1
-z_river, z_financial = E["river"] + P0, E["financial"] + P0
-h_A = 0.4 * z_river + 0.6 * z_bank
-h_B = 0.4 * z_financial + 0.6 * z_bank
+z_target = E["situation"] + P1
+z_bonne, z_mauvaise = E["bonne"] + P0, E["mauvaise"] + P0
+h_A = 0.4 * z_bonne + 0.6 * z_target
+h_B = 0.4 * z_mauvaise + 0.6 * z_target
 assert np.allclose(h_A, [0.356, 0.418])
 assert np.allclose(h_B, [0.676, 0.170])
 print("distance:", np.linalg.norm(h_A - h_B))
@@ -347,9 +347,9 @@ print("distance:", np.linalg.norm(h_A - h_B))
 
 </details>
 
-### Exercice TR-D — Construire des fenêtres et aligner les cibles
+### Construire des fenêtres et aligner les cibles {#ex-training-windows}
 
-**Préparation :** la section « fenêtres glissantes et stride » de [du corpus tokenisé aux exemples d'entraînement](training-examples.qmd), après TR-A et TR-B. Cet exercice porte sur le contrat entrée-cible ; il ne demande pas d'implémenter un tokenizer ni un chargeur de données.
+**Préparation :** la section « fenêtres glissantes et stride » de [du corpus tokenisé aux exemples d'entraînement](training-examples.qmd), après l'exercice sur la chaîne des représentations et l'exercice sur le lookup. Cet exercice porte sur le contrat entrée-cible ; il ne demande pas d'implémenter un tokenizer ni un chargeur de données.
 
 On considère le flux d'identifiants :
 
@@ -455,7 +455,7 @@ Un test direct vérifie, pour chaque fenêtre, que la cible à la position $(k,i
 
 **Pour aller plus loin :** les fuites entre partitions restent à traiter dans un exercice distinct. Le batching et les masques de perte sont des sujets séparés ; ils ne sont pas implémentés par la fonction de référence utilisée ici.
 
-### Exercice TR-E — Compter les fusions BPE et encoder un nouveau mot
+### Compter les fusions BPE et encoder un nouveau mot {#ex-bpe-merges}
 
 **Préparation :** la section « Exemple pas à pas : fusions BPE sur un petit corpus » de [Stratégies de tokenisation](tokenization-strategies.qmd). On reprend sa convention pédagogique au niveau du mot : caractères initiaux et marqueur de fin `</w>`. Ce n'est pas une spécification d'un tokenizer byte-level de production.
 
@@ -561,7 +561,7 @@ On applique d'abord `o + w → ow`, puis `l + ow → low`. La segmentation obten
 
 **Critère de réussite :** les fréquences initiales sont exactes, les séquences sont mises à jour avant le second comptage, l'ordre des fusions est respecté sur le mot inédit et apprentissage/encodage sont distingués.
 
-### Exercice TR-F — Diagnostiquer les fuites entre partitions
+### Diagnostiquer les fuites entre partitions {#ex-data-leakage}
 
 **Préparation :** [Préparer un corpus pour le préentraînement](corpus-preparation.qmd), notamment les sections sur la déduplication, le choix des partitions et l'ajustement du tokenizer ; [fenêtres et stride](training-examples.qmd). Cet exercice distingue la fuite d'évaluation d'un protocole de continuation temporelle explicitement choisi.
 
