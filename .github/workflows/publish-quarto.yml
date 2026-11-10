@@ -201,11 +201,7 @@ jobs:
             echo "Incremental mode has no safe page targets; falling back to a full render."
             quarto render site
           else
-            while IFS= read -r page; do
-              [ -n "$page" ] || continue
-              echo "Incrementally rendering $page"
-              quarto render "$page" --no-clean
-            done <<< "$RENDER_TARGETS"
+            .venv/bin/python scripts/quarto_render_batch.py
           fi
 
       - name: Render full site
