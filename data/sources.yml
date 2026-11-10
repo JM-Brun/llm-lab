@@ -2866,3 +2866,90 @@ sources:
       pages: [en/transformer-architectures, fr/transformer-architectures, en/hybrid-llm-architectures, fr/hybrid-llm-architectures, en/generation, fr/generation]
       concepts: [next-concept-modeling, hierarchical-discrete-codes, coarse-to-fine-generation, multiscale-residual-vector-quantization, autoregressive-generation, next-token-prediction, conditional-distribution]
       audit_records: [docs/source-reviews/next-concept-modeling-2026-11.md]
+
+
+  - id: ai-scientist-platonic-representation-jepa-2026
+    title: "Do AI models trained on different modalities converge to the same representation of the world?"
+    creators: ["Mayank Kejriwal"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://aiscientist.substack.com/p/do-ai-models-trained-on-different"
+    publisher: "AI Scientist (Substack)"
+    publication_date: "2026-11-08"
+    updated_date: null
+    language: en
+    version: "Article body retrieved directly on 2026-11-10"
+    revision: null
+    licence: {"identifier":null,"url":null,"status":"unknown"}
+    reuse: {"text":"link-only","figures":"link-only","code":"unknown","data":"unknown"}
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: ["architectures-mechanisms","scale-research"]
+      tags: ["topic:platonic-representation-hypothesis","topic:jepa","topic:cross-modal-alignment","method:positive-pairs","modality:multimodal"]
+      concept_ids: ["contextualized-representation","next-token-prediction","training-objective"]
+    metadata:
+      technical_level: advanced
+      contribution_types: ["theory","experiment","pedagogy"]
+      audiences: ["practitioner","researcher","educator"]
+    scan_status: scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-10"
+        status: scanned
+        inspected_scope:
+          - "Complete directly retrieved article body, including all substantive paragraphs, numerical claims, qualifications and links to the primary paper"
+          - "Cross-checked the article's central theoretical claims and paper metadata against the arXiv HTML and abstract"
+        limitations:
+          - "The article's embedded figures were not independently inspected as image assets; no figure reuse rights were established."
+          - "The linked primary paper was only partially audited in this pass; see its separate source record."
+          - "Reported experiments are author-reported and have not been independently reproduced in LLM Lab."
+    related:
+      pages: ["fr/contextualized-representations","en/contextualized-representations"]
+      concepts: ["contextualized-representation","next-token-prediction","training-objective"]
+      audit_records:
+        - docs/source-reviews/platonic-representation-jepa-2026-11.md
+        - data/extractions/ai-scientist-platonic-representation-jepa-2026.yml
+
+  - id: balestriero-lecun-platonic-representation-jepas-2026
+    title: "Proving and Improving the Platonic Representation Hypothesis with JEPAs"
+    creators: ["Randall Balestriero","Yann LeCun"]
+    source_type: paper
+    identifiers: {"arxiv":"2610.39302","doi":"10.48550/arXiv.2610.39302"}
+    canonical_url: "https://arxiv.org/abs/2610.39302"
+    publisher: "arXiv"
+    publication_date: "2026-10-29"
+    updated_date: null
+    language: en
+    version: "arXiv v1"
+    revision: "v1"
+    licence: {"identifier":null,"url":"https://creativecommons.org/licenses/by/4.0/","status":"declared"}
+    reuse: {"text":"link-only","figures":"link-only","code":"link-only","data":"unknown"}
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: ["architectures-mechanisms","scale-research"]
+      tags: ["topic:platonic-representation-hypothesis","topic:jepa","topic:spectral-embedding","topic:cross-modal-alignment","method:positive-pairs","method:whitening","modality:multimodal"]
+      concept_ids: ["contextualized-representation","next-token-prediction","training-objective"]
+    metadata:
+      technical_level: advanced
+      contribution_types: ["theory","mathematical-derivation","experiment","benchmark"]
+      audiences: ["practitioner","researcher","educator"]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-10"
+        status: partially-scanned
+        inspected_scope:
+          - "arXiv abstract and bibliographic metadata"
+          - "Full HTML sections 1–2.4, including theorem setup, positive-pair distributions, spectral interpretation, nuisance model and next-token-prediction reformulation"
+          - "Sections 3–5 headings and selected claims as summarized in the abstract and article; numerical headline claims cross-checked"
+        limitations:
+          - "Sections 3–5 and appendices were not yet read line by line; detailed experimental protocols, scaling-law fitting and proofs remain to be audited."
+          - "No code or live demo was executed."
+          - "The theorem's assumptions and scope must be preserved; it is not a universal theorem about arbitrary trained models."
+          - "No independent reproduction of reported results has been performed."
+    related:
+      pages: ["fr/contextualized-representations","en/contextualized-representations"]
+      concepts: ["contextualized-representation","next-token-prediction","training-objective"]
+      audit_records:
+        - docs/source-reviews/platonic-representation-jepa-2026-11.md
+        - data/extractions/balestriero-lecun-platonic-representation-jepas-2026.yml
