@@ -36,5 +36,5 @@ tags: ["type:exercise-hub", "destination:practice", "topic:reference-transformer
 </details>
 
 ::: {.language-switch}
-**Language:** [Français](../../fr/exercises/transformer-block-walkthrough.qmd) · [English](../exercises/transformer-block-walkthrough.qmd)
+**Language:** [Français](../../fr/exercises/transformer-block-walkthrough.qmd) · [English](transformer-block-walkthrough.qmd)
 :::

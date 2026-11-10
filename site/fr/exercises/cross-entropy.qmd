@@ -41,5 +41,5 @@ tags: ["type:exercise-hub", "destination:practice", "topic:cross-entropy-exercis
 </details>
 
 ::: {.language-switch}
-**Langue :** [Français](../exercises/cross-entropy.qmd) · [English](../../en/exercises/cross-entropy.qmd)
+**Langue :** [Français](cross-entropy.qmd) · [English](../../en/exercises/cross-entropy.qmd)
 :::

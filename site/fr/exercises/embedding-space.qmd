@@ -46,5 +46,5 @@ Non. Une projection 2D ne préserve qu’une partie de la géométrie et peut cr
 </details>
 
 ::: {.language-switch}
-**Langue :** [Français](../exercises/embedding-space.qmd) · [English](../../en/exercises/embedding-space.qmd)
+**Langue :** [Français](embedding-space.qmd) · [English](../../en/exercises/embedding-space.qmd)
 :::

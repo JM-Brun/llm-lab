@@ -62,5 +62,5 @@ Au minimum, la provenance du corpus, la révision exacte du tokenizer, les param
 </details>
 
 ::: {.language-switch}
-**Langue :** [Français](../exercises/corpus-preparation.qmd) · [English](../../en/exercises/corpus-preparation.qmd)
+**Langue :** [Français](corpus-preparation.qmd) · [English](../../en/exercises/corpus-preparation.qmd)
 :::

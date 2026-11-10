@@ -39,5 +39,5 @@ This check focuses on the network computation, not on decoding, which is covered
 </details>
 
 ::: {.language-switch}
-**Language:** [Français](../../fr/exercises/transformer.qmd) · [English](../exercises/transformer.qmd)
+**Language:** [Français](../../fr/exercises/transformer.qmd) · [English](transformer.qmd)
 :::

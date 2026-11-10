@@ -35,5 +35,5 @@ Q est projeté depuis les états du décodeur, car ce sont les positions qui con
 </details>
 
 ::: {.language-switch}
-**Langue :** [Français](../exercises/cross-attention.qmd) · [English](../../en/exercises/cross-attention.qmd)
+**Langue :** [Français](cross-attention.qmd) · [English](../../en/exercises/cross-attention.qmd)
 :::

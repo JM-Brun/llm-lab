@@ -41,5 +41,5 @@ tags: ["type:exercise-hub", "destination:practice", "topic:entropy-exercises", "
 </details>
 
 ::: {.language-switch}
-**Langue :** [Français](../exercises/entropy.qmd) · [English](../../en/exercises/entropy.qmd)
+**Langue :** [Français](entropy.qmd) · [English](../../en/exercises/entropy.qmd)
 :::
