@@ -2,7 +2,7 @@
 title: "Représentations contextualisées : dépendances entre positions et couches"
 subtitle: "Formaliser le contexte accessible, les masques et les transformations successives"
 description: "Approfondissement mathématique sur la manière dont les blocs Transformer construisent des états cachés dépendants de la position et du contexte accessible."
-keywords: ["type:deep-dive", "destination:deepen", "topic:contextualized-representations", "level:advanced", "language:fr", "status:published"]
+keywords: ["type:deep-dive", "destination:deepen", "topic:contextualized-representations-advanced", "level:advanced", "language:fr", "status:published"]
 lang: fr
 ---
 
@@ -14,13 +14,13 @@ scope: "Approfondit la contextualisation après le lookup initial : traitement p
 domain: "architectures-mechanisms"
 purpose: "Formaliser quelles positions peuvent contribuer à un état caché, distinguer décodeur causal et encodeur bidirectionnel, et expliquer les limites d'une représentation simplifiée du bloc."
 suggested_route:
-  previous: "fr/contextualized-representations"
+  previous: null
   next: null
 hierarchy:
-  parents: ["fr/contextualized-representations"]
+  parents: ["fr/deepen"]
   children: []
 related: ["fr/queries-keys-values-advanced", "fr/rope", "fr/transformer"]
-tags: ["type:deep-dive", "destination:deepen", "topic:contextualized-representations", "level:advanced", "language:fr", "status:published"]
+tags: ["type:deep-dive", "destination:deepen", "topic:contextualized-representations-advanced", "level:advanced", "language:fr", "status:published"]
 -->
 
 
