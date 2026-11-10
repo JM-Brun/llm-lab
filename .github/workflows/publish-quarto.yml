@@ -198,8 +198,8 @@ jobs:
           RENDER_TARGETS: ${{ steps.render_scope.outputs.render_targets }}
           RENDER_ASSETS: ${{ steps.render_scope.outputs.render_assets }}
         run: |
-          if [ -z "$RENDER_TARGETS" ]; then
-            echo "Incremental mode has no safe page targets; falling back to a full render."
+          if [ -z "$RENDER_TARGETS" ] && [ -z "$RENDER_ASSETS" ]; then
+            echo "Incremental mode has no safe page or asset targets; falling back to a full render."
             quarto render site
           else
             while IFS= read -r page; do
