@@ -136,12 +136,13 @@ Evaluate the probability assigned to a known target, build a sequence likelihood
 
 ### 08 · Learn and update parameters
 
-Connect observed targets to the aggregated loss, gradients, and parameter updates; understand teacher forcing conceptually without making shifted-example preparation a stage of the Theory path.
+Connect observed targets to the aggregated loss, gradients, and parameter updates, then to the repeated training loop and validation loss; understand teacher forcing conceptually without making shifted-example preparation a stage of the Theory path.
 
 **Core pages**
 
 - [Loss: from per-token penalty to training objective](loss.html)
 - [Gradients: connecting loss to parameters](gradients.html)
+- [The training loop: from gradients to a trained model](training-loop.html)
 
 **Optional resources**
 

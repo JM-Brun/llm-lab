@@ -13,7 +13,7 @@ scope: "Define derivatives of the training objective with respect to logits and 
 purpose: "Interpret a gradient as local sensitivity of the objective, trace derivatives from logits back to parameters with the chain rule, and explain why the gradient alone neither specifies the optimizer nor guarantees a globally better model."
 suggested_route:
   previous: "en/loss"
-  next: null
+  next: "en/training-loop"
 hierarchy:
   parents: ["en/loss"]
   children: []

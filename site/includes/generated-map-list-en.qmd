@@ -21,6 +21,7 @@
   - Loss and gradients
     - [Loss: from per-token penalty to training objective](loss.html)
     - [Gradients: connecting loss to parameters](gradients.html)
+    - [The training loop: from gradients to a trained model](training-loop.html)
   - Transformer architectures and LLM limitations
     - [Transformer architectures: encoder, encoder–decoder, and decoder](transformer-architectures.html)
     - [The training objective: guarantees and limits](llm-limits.html)

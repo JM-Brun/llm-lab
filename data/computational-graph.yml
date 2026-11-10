@@ -488,7 +488,7 @@ nodes:
       fr: "Applique une règle d'optimisation aux paramètres à partir des gradients."
       en: "Applies an optimization rule to parameters using gradients."
     branches: [training]
-    resources: [fr/gradients, en/gradients]
+    resources: [fr/gradients, en/gradients, fr/training-loop, en/training-loop]
   - id: updated-parameters
     kind: data
     role: parameters

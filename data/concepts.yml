@@ -374,7 +374,7 @@ concepts:
       fr: "Algorithme qui utilise les gradients et son état interne pour calculer une mise à jour des paramètres."
       en: "Algorithm that uses gradients and its internal state to compute a parameter update."
     domains: [probabilistic-foundations-training]
-    resources: [fr/gradients, en/gradients]
+    resources: [fr/gradients, en/gradients, fr/training-loop, en/training-loop]
   - id: parameter-update
     importance: core
     labels: {fr: "Mise à jour des paramètres", en: "Parameter update"}
@@ -382,7 +382,23 @@ concepts:
       fr: "Modification des paramètres du modèle calculée par l'optimiseur à partir des gradients et de son état."
       en: "Modification of model parameters computed by the optimizer from gradients and its state."
     domains: [probabilistic-foundations-training]
-    resources: [fr/gradients, en/gradients]
+    resources: [fr/gradients, en/gradients, fr/training-loop, en/training-loop]
+  - id: training-loop
+    importance: core
+    labels: {fr: "Boucle d'entraînement", en: "Training loop"}
+    definitions:
+      fr: "Répétition du cycle passe avant, loss, gradient et mise à jour des paramètres sur des batchs successifs, accompagnée de mesures sur des données de validation sans mise à jour."
+      en: "Repetition of the cycle of forward pass, loss, gradient and parameter update over successive batches, accompanied by measurements on validation data without updates."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/training-loop, en/training-loop]
+  - id: overfitting
+    importance: core
+    labels: {fr: "Surapprentissage", en: "Overfitting"}
+    definitions:
+      fr: "Situation où la loss d'entraînement continue de baisser alors que la loss de validation cesse de s'améliorer ou remonte, signe d'un ajustement à des détails de l'échantillon d'entraînement."
+      en: "Situation where training loss keeps falling while validation loss stops improving or rises, indicating a fit to details of the training sample."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/training-loop, en/training-loop]
   - id: held-out-evaluation
     importance: core
     labels: {fr: "Évaluation sur données réservées", en: "Held-out evaluation"}
@@ -390,7 +406,7 @@ concepts:
       fr: "Évaluation de prédictions sur des données qui n'ont pas servi à ajuster les paramètres, sans mise à jour de ceux-ci."
       en: "Evaluation of predictions on data not used to fit parameters, without updating those parameters."
     domains: [probabilistic-foundations-training, scale-research]
-    resources: [fr/evaluation-experimentale, en/experimental-evaluation, fr/llm-overview, en/llm-overview]
+    resources: [fr/evaluation-experimentale, en/experimental-evaluation, fr/llm-overview, en/llm-overview, fr/training-loop, en/training-loop]
   - id: in-context-learning
     labels: {fr: "Apprentissage en contexte", en: "In-context learning"}
     definitions:
