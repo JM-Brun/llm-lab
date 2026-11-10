@@ -127,6 +127,14 @@ Une température plus faible tend à concentrer la distribution ; une températu
 - Une entropie ou une perplexité calculée avec un tokenizer différent n'est pas directement comparable sans précautions.
 - L'entropie moyenne observée sous un modèle n'est pas automatiquement l'entropie vraie de la source des données.
 
+
+
+{{< include ../includes/generated-suggested-route-fr-entropy.qmd >}}
+
+::: {.language-switch}
+[Français](entropy.qmd) · [English](../en/entropy.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
@@ -152,14 +160,7 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 - Cover & Thomas, [*Elements of Information Theory*](https://onlinelibrary.wiley.com/doi/book/10.1002/047174882X) — entropie et codage.
 - [3Blue1Brown — Reinventing Entropy](https://www.youtube.com/watch?v=l6DKRf-fAAM) — intuition visuelle complémentaire.
 
-</div>
-</details>
 
-{{< include ../includes/generated-suggested-route-fr-entropy.qmd >}}
-
-::: {.language-switch}
-[Français](entropy.qmd) · [English](../en/entropy.qmd)
-:::
 
 ::: {.self-check}
 ## Vérifier sa compréhension
@@ -179,3 +180,7 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 
 </details>
 :::
+
+
+</div>
+</details>
