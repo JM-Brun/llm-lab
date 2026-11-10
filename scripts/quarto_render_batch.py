@@ -112,7 +112,7 @@ def main() -> None:
                     "site",
                     "--no-clean",
                     "--output-dir",
-                    relative_output.as_posix(),
+                    relative_output,
                 ],
                 check=True,
             )
