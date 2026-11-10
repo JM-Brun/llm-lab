@@ -35,14 +35,14 @@ A Transformer needs an ordering signal to distinguish, for example, “the cat c
 **Check yourself:** can you explain why swapping two tokens must be able to change the computation, and identify where each mechanism introduces that information?
 :::
 
-<div class="pipeline-stepper" role="navigation" aria-label="Steps for injecting positional information">
-  <a class="step-item" href="embedding-space.qmd">1. Embeddings</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="queries-keys-values.qmd">2. Q/K projections</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active" aria-current="step">3. Position (input or Q/K)</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="scaled-dot-product-attention.qmd">4. Attention scores</a>
+<div class="pipeline-stepper meta-flow meta-flow--branch" role="navigation" aria-label="Two common ways to inject positional information">
+  <div class="meta-flow__source"><strong>Token embeddings</strong><span>Content vectors before positional handling</span></div>
+  <div class="meta-flow__source meta-flow__branch--active" aria-current="step"><strong>Positional handling</strong><span>The mechanism depends on the architecture</span></div>
+  <div class="meta-flow__comparison">
+    <div class="meta-flow__comparison-item"><strong>Absolute encoding</strong><small>Add a position vector to the embedding, then compute Q/K/V</small></div>
+    <div class="meta-flow__comparison-item"><strong>RoPE</strong><small>Project Q/K, then rotate them according to position; RoPE does not rotate V</small></div>
+  </div>
+  <div class="meta-flow__result"><strong>Position-aware attention scores</strong> · <a href="queries-keys-values.qmd">Q/K/V projections</a></div>
 </div>
 
 
