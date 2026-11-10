@@ -49,6 +49,8 @@ The previous page built a sequence's likelihood by combining the conditional pro
 
 To connect this formula to training, also inspect how [input-target examples](training-examples.qmd) are built and how loss masking is applied. Do not confuse it with the [entropy of the predicted distribution](entropy.qmd): entropy describes the spread of probabilities before the next token is observed, while cross-entropy loss scores the probability assigned to the observed target (or a target distribution).
 
+In the running example, the target token is the next token actually present in the reference continuation. Cross-entropy penalizes the model when it assigns that token a low probability; it does not directly compare whole sentences as indivisible objects.
+
 ## Objective for one token
 
 Here, \(t\) indexes the **target token**: the logits are aligned with \(x_t\) and represent \(p_\theta(x_t\mid x_{<t})\). Some implementations instead index logits by the input position; then the row at input position \(t\) predicts \(x_{t+1}\). These conventions are equivalent only when the logits and labels are shifted consistently. For a one-hot target, the loss is:

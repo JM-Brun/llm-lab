@@ -53,6 +53,8 @@ Avant d’interpréter la perte, vérifier la construction des [entrées et cibl
 **Repère d'implémentation :** les fonctions usuelles de cross-entropie attendent des logits non normalisés ; ne leur appliquez pas une softmax préalable si l'API attend directement les logits.
 :::
 
+Sur la continuation de référence, le modèle calcule une perte pour chaque position cible valide. La loss du batch agrège ces pertes selon la réduction choisie et le masque : les positions de padding ou explicitement ignorées ne doivent pas contribuer à la moyenne.
+
 ## De la perte locale à la loss du batch
 
 Notons $p_{b,t,:}$ la distribution prédite pour la position $(b,t)$ et $y_{b,t}$ l'identifiant du token cible. Pour chaque position cible valide $(b,t)\in\mathcal{M}$, la perte est :

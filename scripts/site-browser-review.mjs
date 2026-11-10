@@ -166,6 +166,28 @@ async function waitForFonts(page) {
   }
 }
 
+async function waitForMath(page) {
+  // Quarto's MathJax typesetting is asynchronous. DOMContentLoaded plus two
+  // animation frames is not enough: on a cold or contended browser run the
+  // audit can inspect Pandoc's source spans before MathJax has replaced them.
+  // Wait for the actual rendered output, not for a fixed sleep or networkidle.
+  await page.waitForFunction(() => {
+    const spans = [...document.querySelectorAll("span.math")];
+    return spans.length === 0 || spans.every(span => span.querySelector(".katex, mjx-container"));
+  }, null, { timeout: 15000 }).catch(async () => {
+    const state = await page.evaluate(() => ({
+      mathSpans: document.querySelectorAll("span.math").length,
+      renderedSpans: [...document.querySelectorAll("span.math")]
+        .filter(span => span.querySelector(".katex, mjx-container")).length,
+      mathJaxPresent: Boolean(window.MathJax),
+      mathJaxStartup: Boolean(window.MathJax?.startup),
+      mathJaxTypeset: typeof window.MathJax?.typesetPromise,
+      mathJaxScript: [...document.scripts].map(script => script.src).filter(src => /mathjax/i.test(src)),
+    }));
+    throw new Error(`MathJax did not finish rendering within 15s: ${JSON.stringify(state)}`);
+  });
+}
+
 async function runCase(testCase, caseIndex) {
   const startedAt = performance.now();
   const { lang, viewport, label, theme, page: pagePath, kind } = testCase;
@@ -191,6 +213,7 @@ async function runCase(testCase, caseIndex) {
     // can keep the network busy after the DOM is already auditable.
     // A remote font or stylesheet must not stall the entire audit indefinitely.
     await waitForFonts(page);
+    await waitForMath(page);
     // Let layout and paint settle without an unconditional wall-clock sleep.
     await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
 
