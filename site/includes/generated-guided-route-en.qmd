@@ -71,7 +71,7 @@ Connect Q/K/V projections, attention scores and weights, value aggregation, caus
 
 **Core pages**
 
-- [GPT and Transformers: architecture and data flow](transformer.html)
+- [The Transformer in a GPT: architecture and computation](transformer.html)
 - [Queries, keys, and values (Q, K, V)](queries-keys-values.html)
 - [Scaled dot-product attention](scaled-dot-product-attention.html)
 - [Causal masking](causal-masking.html)

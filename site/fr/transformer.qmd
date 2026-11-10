@@ -1,6 +1,6 @@
 ---
-title: "GPT et Transformer : architecture et flux des données"
-subtitle: "Des tokens aux logits"
+title: "Le Transformer dans un GPT : architecture et calcul"
+subtitle: "De la pile de blocs aux logits"
 keywords: ["type:system-overview", "destination:understand", "topic:transformer", "level:overview", "language:fr", "status:published"]
 lang: fr
 ---
@@ -8,9 +8,9 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/transformer"
-summary: "Suit une passe avant de GPT à travers ses représentations, ses blocs Transformer et ses opérations d’attention jusqu’aux logits. Sépare le calcul du réseau de la sélection du prochain token et de la boucle de génération."
+summary: "Présente l’architecture d’un GPT décodeur seul, du réseau de blocs Transformer à la tête de sortie, puis suit une passe avant jusqu’aux logits. Distingue l’attention, le bloc répété et le modèle complet."
 scope: "Suit le calcul d’un GPT autorégressif à l’intérieur du réseau, depuis les représentations d’entrée jusqu’aux logits, en se concentrant sur les blocs Transformer, l’auto-attention, le MLP, les connexions résiduelles et la normalisation ; la préparation du texte et la boucle de génération sont seulement situées, pas réenseignées."
-purpose: "Le lecteur doit pouvoir décrire le calcul d’une passe avant, expliquer les opérations d’un bloc Transformer, distinguer profondeur et largeur, et identifier les logits comme sortie du réseau sans confondre cette passe avec le décodage ou la génération."
+purpose: "Le lecteur doit pouvoir reconnaître la structure d’un Transformer décodeur seul, distinguer sous-couche d’attention, bloc et réseau complet, puis suivre une passe avant jusqu’aux logits sans la confondre avec la génération."
 suggested_route:
   previous: "fr/contextualized-representations"
   next: "fr/queries-keys-values"
@@ -24,7 +24,9 @@ tags: ["type:system-overview", "destination:understand", "topic:transformer", "l
 
 {{< include ../includes/generated-guided-context-fr-transformer.qmd >}}
 ::: {.chapter-lead}
-Un **GPT** est un modèle de langage fondé sur un Transformer autorégressif : il reçoit en entrée une séquence de tokens — le contexte — et calcule, pour chaque position, un score non normalisé (*logit*) pour chaque token du vocabulaire. Une distribution de probabilité peut être obtenue à partir de ces scores. Cette page se concentre sur le calcul effectué par le réseau, des représentations d'entrée aux logits. Elle distingue ce calcul de la boucle d'inférence qui sélectionne et ajoute les tokens successifs.
+Un **GPT** est un modèle de langage construit autour d'un **Transformer décodeur seul**. Le Transformer ne désigne pas une étape de traitement placée entre deux composants : c'est une architecture de réseau neuronal. Dans un GPT décodeur seul, son cœur est une pile de blocs Transformer qui transforment les représentations des tokens. À partir de ces représentations, le réseau calcule des **logits**, c'est-à-dire un score pour chaque token du vocabulaire.
+
+Cette page montre d'abord à quoi ressemble cette architecture, puis suit une passe avant à travers ses blocs jusqu'aux logits. Elle s'arrête à la sortie du réseau : la conversion des logits en probabilités et la sélection du prochain token appartiennent au décodage, pas au calcul interne du Transformer.
 :::
 
 ::: {.callout-tip title="L'idée à retenir en une minute"}
@@ -44,25 +46,33 @@ Vous pourrez :
 - distinguer profondeur, largeur, nombre de têtes et dimensions internes du MLP.
 :::
 
-## Le parcours complet, en un schéma
+## Le Transformer : le réseau au cœur d'un GPT
 
-![Flux simplifié d'un GPT autorégressif, des tokens à la sélection du prochain token.](../images/gpt-data-flow.svg){fig-alt="Pipeline conceptuel : texte, tokenisation, embeddings et position, blocs Transformer répétés, logits, softmax, choix du prochain token puis ajout au contexte." width=100%}
+![Architecture d'un GPT décodeur seul : les représentations d'entrée traversent une pile de blocs Transformer, puis une normalisation finale et une tête de sortie produisent les logits. Le panneau inférieur agrandit un bloc pré-LN typique.](../images/transformer-stack-fr.svg){#fig-transformer-stack fig-alt="En haut, le réseau complet : identifiants de tokens, embeddings et information positionnelle, pile de N blocs Transformer, normalisation finale, projection vers le vocabulaire et logits. En bas, le détail d'un bloc pré-LN : une normalisation puis une auto-attention multi-têtes causale, une connexion résiduelle, puis une normalisation, un MLP appliqué position par position et une seconde connexion résiduelle." width=100%}
 
-Ce schéma situe le Transformer dans le système complet. **Cette page zoome sur le calcul effectué par le réseau**, depuis ses représentations d'entrée jusqu'aux logits ; elle ne reprend ni la préparation détaillée du texte ni la boucle de sélection du prochain token.
+*La pile de blocs constitue le Transformer du GPT représenté ici. Le détail agrandi montre une organisation pré-LN courante ; l'ordre des sous-couches et les variantes de normalisation peuvent différer selon les modèles.*
 
-Pour le panorama des familles et des étapes d’apprentissage, voir le [panorama des LLM](llm-overview.qmd). Pour la boucle d’inférence et le décodage, voir [générer du texte](generation.qmd). La [comparaison des architectures](transformer-architectures.qmd) situe le GPT décodeur seul parmi les autres familles.
+Dans un GPT décodeur seul, les blocs sont **empilés** : la sortie de l'un devient l'entrée du suivant. Chaque bloc transforme la séquence de représentations, sans choisir lui-même le prochain token. Après le dernier bloc, une normalisation finale et une projection vers le vocabulaire produisent les logits.
+
+Cette représentation concerne la famille **décodeur seul**, utilisée notamment par les GPT autorégressifs. Les Transformers ne se limitent pas à cette architecture : la [comparaison des architectures Transformer](transformer-architectures.qmd) montre ce qui change dans un encodeur seul ou un modèle encodeur-décodeur.
+
+### Situer le réseau dans la génération
+
+![Flux simplifié d'un GPT autorégressif, des tokens à la sélection du prochain token.](../images/gpt-data-flow.svg){fig-alt="Pipeline complet : texte, tokenisation, embeddings et information positionnelle, blocs Transformer répétés, logits, softmax, sélection du prochain token puis ajout au contexte." width=100%}
+
+Ce second schéma répond à une autre question : il replace le réseau dans le processus complet. **La pile de blocs au centre est le Transformer montré juste au-dessus** ; les opérations en amont préparent son entrée, tandis que softmax, sélection et réinjection du token se situent en aval. La boucle de décodage intervient après la sortie du réseau.
 
 ## 1. Des identifiants aux représentations d'entrée
 
 Le réseau ne reçoit pas directement du texte : il reçoit une séquence d'identifiants de tokens, convertis en vecteurs par une table d'embeddings. Une information de position est également intégrée, soit aux embeddings, soit au calcul d'attention selon l'architecture. Les blocs Transformer transforment ensuite ces vecteurs en représentations contextualisées : un même token peut contribuer à des états différents selon le contexte.
 
-Cette section donne seulement les repères nécessaires pour lire le calcul du réseau. Les explications de référence sont séparées : [texte et tokenisation](text-data.qmd), [espace des embeddings](embedding-space.qmd), [information positionnelle](positional-encoding.qmd) et [représentations contextualisées](contextualized-representations.qmd). Pour les formes et dimensions des tenseurs, voir [Tenseurs](tensors.qmd).
+Le passage du texte aux identifiants est expliqué dans [texte et tokenisation](text-data.qmd) ; la [page sur les embeddings](embedding-space.qmd) montre comment ces identifiants deviennent des vecteurs. L'[information positionnelle](positional-encoding.qmd) explique comment le modèle tient compte de l'ordre des tokens. Ici, nous gardons ces étapes comme point de départ pour nous concentrer sur ce que les blocs en font. Pour les formes et axes des tableaux manipulés, voir [Tenseurs](tensors.qmd).
 
 ## 2. Les blocs Transformer
 
-Le cœur du réseau est un empilement de blocs identiques. Chaque bloc combine deux opérations :
+La pile représentée plus haut est composée de blocs de même type, répétés en profondeur. Chaque bloc combine deux opérations principales :
 
-- **Auto-attention :** chaque position puise dans les positions autorisées par le masque — y compris sa propre position dans un GPT causal — pour affiner sa représentation. Par exemple, pour interpréter *it* dans « Adam puts the ice cream in the freezer because it was melting », l'attention peut faire entrer l'information sur *the ice cream* dans la représentation de *it*. Dans GPT, un masque causal interdit de lire les tokens futurs.
+- **Auto-attention :** chaque position puise dans les positions autorisées par le masque — y compris sa propre position dans un GPT causal — pour affiner sa représentation. Par exemple, dans « Adam met la glace au congélateur parce qu'elle fond », l'attention peut faire entrer l'information portée par *la glace* dans la représentation du pronom *elle*. Dans GPT, un masque causal interdit de lire les tokens futurs.
 - **Réseau feed-forward (MLP) :** un petit réseau de neurones appliqué à chaque position séparément, avec les mêmes poids partout. Il combine typiquement des projections linéaires et une activation non linéaire pour produire une représentation transformée ; sa conception précise varie selon l'architecture.
 
 Les blocs utilisent aussi des **connexions résiduelles** et des **normalisations**. Une connexion résiduelle ajoute à la représentation qui circule dans le réseau une correction calculée par une sous-couche, au lieu de remplacer entièrement cette représentation. Elle fournit ainsi un chemin direct à l'information et au gradient :
@@ -73,7 +83,7 @@ x_{\text{sortie}} = x_{\text{entrée}} + F(x_{\text{entrée}}).
 
 La normalisation (*LayerNorm*, dans les GPT classiques) centre et normalise les composantes du vecteur caché de chaque position, indépendamment des autres positions. Selon l'architecture, elle est placée avant ou après certaines sous-couches. Dans un bloc **pré-LN** typique, on a par exemple $x' = x + \operatorname{Attention}(\operatorname{LN}(x))$, puis $x'' = x' + \operatorname{MLP}(\operatorname{LN}(x'))$. C'est un exemple de conception, pas une formule universelle : l'ordre pré-LN/post-LN et les variantes de normalisation diffèrent entre modèles.
 
-Pour voir ces opérations dans une implémentation concrète, sans les confondre avec les invariants de tous les Transformers, consulter la [visite guidée du bloc de référence](transformer-block-walkthrough.qmd).
+Le schéma décrit le rôle des composants sans imposer une implémentation unique. Pour voir comment ces opérations sont organisées dans le code de référence — notamment l'ordre pré-LN, les projections et les chemins résiduels — suivez la [visite guidée du bloc Transformer](transformer-block-walkthrough.qmd).
 
 ![Comparaison des rôles de l'auto-attention et du réseau feed-forward dans un bloc Transformer.](../images/attention-vs-mlp.svg){fig-alt="L'auto-attention permet des échanges entre positions autorisées ; le même réseau feed-forward est appliqué séparément à chaque position." width=100%}
 
@@ -98,7 +108,7 @@ Ces termes ne sont pas interchangeables avec les autres dimensions internes : le
 
 Le mot *width* est parfois utilisé plus largement pour d’autres dimensions internes : il faut donc vérifier quelle dimension est visée dans un article ou une fiche modèle. Pour les formes des tenseurs et les dimensions des projections, voir [Tenseurs](tensors.qmd) ; pour une configuration concrète, voir la [visite guidée de la configuration GPT](gpt-config-walkthrough.qmd). Profondeur et largeur décrivent la structure, mais ne suffisent pas à prédire les performances.
 
-L'auto-attention est l'opération qui permet aux positions autorisées d'échanger de l'information. Son calcul détaillé — projections Q/K/V, scores, mise à l'échelle, softmax et masque causal — est traité dans les pages de référence sur [Q/K/V](queries-keys-values.qmd), l'[attention à produit scalaire](scaled-dot-product-attention.qmd) et le [masque causal](causal-masking.qmd). L'information de position peut être ajoutée aux embeddings ou intégrée aux requêtes et aux clés (voir [information positionnelle](positional-encoding.qmd)).
+L'auto-attention est la sous-couche qui permet aux positions autorisées d'échanger de l'information. Pour suivre son calcul étape par étape, la page [Q/K/V](queries-keys-values.qmd) présente les trois projections apprises ; l'[attention à produit scalaire](scaled-dot-product-attention.qmd) détaille les scores et leur normalisation ; le [masque causal](causal-masking.qmd) explique pourquoi un GPT ne consulte pas les tokens futurs. Ces approfondissements portent sur le mécanisme d'attention à l'intérieur d'un bloc, et non sur l'architecture complète.
 
 ### Trois niveaux à ne pas confondre
 
@@ -116,11 +126,13 @@ Autrement dit : l'attention est une sous-couche ; le bloc est l'unité répété
 
 ## 3. Des représentations aux logits
 
-Après le dernier bloc, une projection de sortie produit les **logits**, c'est-à-dire un score non normalisé par token du vocabulaire. La [page dédiée aux logits](logits.qmd) explique leur interprétation ; la [page sur les probabilités de sortie](probabilites.qmd) détaille leur transformation en distribution. Cette page s'arrête à la sortie du réseau : la sélection du prochain token, l'ajout au contexte et la répétition relèvent de la [génération autorégressive](generation.qmd).
+Après le dernier bloc, la normalisation finale et la tête de sortie produisent les **logits** : un score non normalisé pour chaque token du vocabulaire. La [leçon consacrée aux logits](logits.qmd) explique ce que ces scores représentent ; celle sur les [probabilités de sortie](probabilites.qmd) montre comment *softmax* les convertit en distribution. Le réseau s'arrête à ces scores : choisir un token, l'ajouter au contexte et relancer le calcul relève de la [génération autorégressive](generation.qmd).
 
 ## Vérifier sa compréhension
 
-Cette vérification porte sur le calcul interne, et non sur le décodage traité dans [la leçon sur la génération](generation.qmd).
+Pour prolonger cette vérification par des problèmes progressifs sur les embeddings, les résidus, la normalisation et le MLP, consultez les [exercices consacrés au Transformer](exercises.qmd#transformer).
+
+Cette vérification porte sur la structure du bloc et le rôle des connexions résiduelles.
 
 1. Quelle opération permet à une position d'intégrer de l'information provenant d'autres positions, et laquelle transforme chaque position indépendamment ?
 2. Pourquoi les connexions résiduelles ne remplacent-elles pas la transformation calculée par une sous-couche ?
