@@ -57,13 +57,13 @@ $$
 
 This formula gives the derivative of the loss **at one position**. For the unweighted mean over the valid target-position set $\mathcal{M}$ defined in [Loss](loss.qmd), the gradient with respect to each logit is:
 
-\[
+$$
 \frac{\partial\mathcal{L}}{\partial z_{b,t,i}}=
 \begin{cases}
 \frac{1}{|\mathcal{M}|}\left(p_{b,t,i}-\mathbb{1}[i=y_{b,t}]\right) & (b,t)\in\mathcal{M},\\
 0 & (b,t)\notin\mathcal{M}.
 \end{cases}
-\]
+$$
 
 The factor $1/|\mathcal{M}|$ comes from the mean; ignored positions have zero derivative with respect to their logits in this objective. A sum, weighting, or another reduction changes the corresponding factor. The local formula follows from combining softmax and cross-entropy; it does not mean the network parameters are the logits directly, since logits depend on parameters through many differentiable operations.
 
