@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/transformer-architectures", "fr/transformer", "fr/generation", "fr/scaling-laws", "fr/exercises/hybrid-llm-architectures"]
+related: ["fr/transformer-architectures", "fr/transformer", "fr/generation", "fr/scaling-laws", "fr/hybrid-llm-architectures-exercises"]
 tags: ["type:concept-lesson", "destination:deepen", "topic:hybrid-llm-architectures", "level:advanced", "language:fr", "status:published"]
 -->
 

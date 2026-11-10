@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/scaling-laws", "fr/emergence", "fr/in-context-learning", "fr/hybrid-llm-architectures", "fr/llm-computational-complexity", "fr/llm-limits", "fr/evaluation-experimentale", "fr/exercises/llm-evolution"]
+related: ["fr/scaling-laws", "fr/emergence", "fr/in-context-learning", "fr/hybrid-llm-architectures", "fr/llm-computational-complexity", "fr/llm-limits", "fr/evaluation-experimentale", "fr/llm-evolution-exercises"]
 tags: ["type:concept-lesson", "destination:deepen", "topic:llm-evolution", "level:advanced", "language:fr", "status:published"]
 -->
 

@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/build-path"]
   children: []
-related: ["fr/transformer", "fr/tensors", "fr/exercises/gpt-ops-walkthrough"]
+related: ["fr/transformer", "fr/tensors", "fr/gpt-ops-walkthrough-exercises"]
 tags: ["type:guided-build", "destination:build", "topic:reference-gpt-ops", "level:applied", "language:fr", "status:published"]
 -->
 

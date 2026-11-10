@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/loss"]
   children: []
-related: ["fr/exercises/gradients"]
+related: ["fr/gradients-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:gradients", "level:core", "language:fr", "status:published"]
 -->
 
