@@ -29,11 +29,11 @@ def test_replaces_only_project_render_list():
         ["site/fr/new.qmd", "site/en/new.qmd", "site/fr/new.qmd"],
     )
     assert result == CONFIG.replace(
-        "    - fr/old.qmd\\n    - en/old.qmd",
-        '    - "fr/new.qmd"\\n    - "en/new.qmd"',
+        "    - fr/old.qmd\n    - en/old.qmd",
+        '    - "fr/new.qmd"\n    - "en/new.qmd"',
     )
-    assert "website:\\n  title: Example" in result
-    assert "format:\\n  html:\\n    toc: true" in result
+    assert "website:\n  title: Example" in result
+    assert "format:\n  html:\n    toc: true" in result
 
 
 def test_rejects_unsafe_or_empty_targets():
@@ -49,7 +49,7 @@ def test_rejects_unsafe_or_empty_targets():
 
 def test_requires_existing_project_render_list():
     config = CONFIG.replace(
-        "  render:\\n    - fr/old.qmd\\n    - en/old.qmd\\n",
+        "  render:\n    - fr/old.qmd\n    - en/old.qmd\n",
         "",
     )
     try:
