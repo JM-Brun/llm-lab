@@ -901,9 +901,15 @@ for (const testCase of cases) {
           }
         }
         if (["embedding-space.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "logits.html", "cross-entropy.html"].includes(pagePath)) {
-          item.routeContext.legacyStepperCount = await page.locator(".pipeline-stepper").count();
-          if (item.routeContext.legacyStepperCount !== 0) {
-            throw new Error("misleading legacy five-step pipeline stepper is still rendered");
+          const localStepper = page.locator(".pipeline-stepper");
+          item.routeContext.localStepperCount = await localStepper.count();
+          item.routeContext.localStepperLabel = await localStepper.getAttribute("aria-label");
+          item.routeContext.localStepperCurrentCount = await localStepper.locator('[aria-current="step"]').count();
+          if (item.routeContext.localStepperCount !== 1 ||
+              !item.routeContext.localStepperLabel ||
+              /learning path|parcours pédagogique/i.test(item.routeContext.localStepperLabel) ||
+              item.routeContext.localStepperCurrentCount !== 1) {
+            throw new Error("core lesson must expose exactly one correctly labelled local process stepper with one active stage");
           }
         }
         if (pagePath === "text-data.html") {
