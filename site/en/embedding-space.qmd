@@ -83,7 +83,7 @@ The matrix therefore contains $V \times d$ parameters. The integer $i$ is neithe
 
 ## Where do the table values come from?
 
-The rows of $E$ are not hand-written definitions. The matrix is part of the network's **learned parameters**. In a standard training setup, its values are initialized and then adjusted with the other parameters: the model makes predictions, a loss function measures the discrepancy with target tokens, backpropagation computes gradients, and the optimizer updates the parameters.
+The rows of $E$ are not hand-written definitions. The matrix is part of the network's **learned parameters**. In a standard training setup, its values are initialized and then adjusted with the other parameters: the model makes predictions, a loss function measures the discrepancy with target tokens, backpropagation computes gradients, and the optimizer updates the parameters. Gradients from training examples also flow through the lookup operation, so the rows selected by those examples' IDs can be updated during training.
 
 The implementation and code belong in the **Build** path: [assembling the GPT and tracing its embedding tables](gpt-model-walkthrough.qmd), within the [guided build route](build-path.qmd). For the roles of loss and gradients, see [the loss function](loss.qmd) and [gradients](gradients.qmd).
 
