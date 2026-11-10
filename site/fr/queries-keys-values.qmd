@@ -28,7 +28,7 @@ La page précédente, [Le Transformer dans un GPT : architecture et calcul](tran
 :::
 
 <div class="pipeline-stepper meta-flow meta-flow--branch" role="navigation" aria-label="Carte des projections parallèles Q, K et V et de leur recombinaison">
-  <div class="meta-flow__source"><strong>Entrée commune</strong><span>États contextualisés de chaque position</span></div>
+  <a class="meta-flow__source" href="contextualized-representations.qmd"><strong>Entrée commune</strong><span>États contextualisés de chaque position</span></a>
   <div class="meta-flow__source meta-flow__branch--active" aria-current="step"><strong>Projections apprises Q, K et V</strong><span>Trois transformations parallèles du même état d’entrée</span></div>
   <div class="meta-flow__branches">
     <div class="meta-flow__branch"><strong>Q · Query</strong><span>Ce que la position cherche</span></div>
@@ -36,8 +36,8 @@ La page précédente, [Le Transformer dans un GPT : architecture et calcul](tran
     <div class="meta-flow__branch"><strong>V · Value</strong><span>Le contenu qui pourra être agrégé</span></div>
   </div>
   <div class="meta-flow__relation">Q et K déterminent les poids ; V fournit le contenu à mélanger</div>
-  <div class="meta-flow__result"><strong>QKᵀ → scores → softmax → poids d’attention</strong></div>
-  <div class="meta-flow__result"><strong>Poids × V → somme pondérée → sortie de l’attention</strong></div>
+  <a class="meta-flow__result" href="scaled-dot-product-attention.qmd"><strong>QKᵀ → scores → softmax → poids d’attention</strong></a>
+  <a class="meta-flow__result" href="scaled-dot-product-attention.qmd"><strong>Poids × V → somme pondérée → sortie de l’attention</strong></a>
 </div>
 
 
