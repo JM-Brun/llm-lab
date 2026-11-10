@@ -3281,7 +3281,7 @@ sources:
     canonical_url: "https://nlp.seas.harvard.edu/annotated-transformer/"
     publisher: "Harvard NLP"
     publication_date: null
-    updated_date: "2022"
+    updated_date: null
     language: en
     version: "2022 annotated implementation"
     revision: null
