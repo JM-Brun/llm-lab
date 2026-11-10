@@ -58,6 +58,118 @@ def test_large_safe_batch_stays_incremental():
     assert len(result["render_targets"]) == 49
 
 
+def test_modified_static_images_can_be_copied_with_incremental_page_render():
+    result = classify_changed_files(
+        [
+            {"filename": "site/fr/example.qmd", "status": "modified"},
+            {"filename": "site/images/diagram.svg", "status": "modified"},
+        ],
+        CONFIG,
+    )
+
+    assert result["render_mode"] == "incremental"
+    assert result["render_targets"] == ["site/fr/example.qmd"]
+    assert result["render_assets"] == ["site/images/diagram.svg"]
+
+
+def test_supported_static_image_extensions_are_incremental():
+    for extension in (".svg", ".png", ".jpg", ".jpeg", ".webp", ".gif"):
+        result = classify_changed_files(
+            [{"filename": f"site/images/diagram{extension}", "status": "modified"}],
+            CONFIG,
+        )
+        assert result["render_mode"] == "incremental"
+        assert result["render_assets"] == [f"site/images/diagram{extension}"]
+
+
+def test_multiple_modified_static_images_are_deduplicated_and_sorted():
+    result = classify_changed_files(
+        [
+            {"filename": "site/en/example.qmd", "status": "modified"},
+            {"filename": "site/images/z.svg", "status": "modified"},
+            {"filename": "site/images/a.svg", "status": "modified"},
+            {"filename": "site/images/z.svg", "status": "modified"},
+        ],
+        CONFIG,
+    )
+
+    assert result["render_mode"] == "incremental"
+    assert result["render_assets"] == ["site/images/a.svg", "site/images/z.svg"]
+
+
+def test_unsupported_assets_force_full_render():
+    for path in (
+        "site/images/diagram.css",
+        "site/assets/diagram.svg",
+    ):
+        result = classify_changed_files(
+            [
+                {"filename": "site/fr/example.qmd", "status": "modified"},
+                {"filename": path, "status": "modified"},
+            ],
+            CONFIG,
+        )
+        assert result["render_mode"] == "full"
+
+
+def test_historical_four_page_two_svg_change_set_is_incremental():
+    repository_root = Path(__file__).resolve().parents[2]
+    config = (repository_root / "site" / "_quarto.yml").read_text(encoding="utf-8")
+    changed_files = [
+        {"filename": f"site/{language}/{page}.qmd", "status": "modified"}
+        for language in ("en", "fr")
+        for page in ("generation", "llm-overview")
+    ] + [
+        {
+            "filename": f"site/images/llm-generation-process-{language}.svg",
+            "status": "modified",
+        }
+        for language in ("en", "fr")
+    ]
+
+    result = classify_changed_files(changed_files, config)
+
+    assert result["render_mode"] == "incremental"
+    assert len(result["render_targets"]) == 4
+    assert len(result["render_assets"]) == 2
+
+
+def test_static_image_only_change_uses_copy_only_incremental_mode():
+    result = classify_changed_files(
+        [{"filename": "site/images/diagram.webp", "status": "modified"}],
+        CONFIG,
+    )
+
+    assert result["render_mode"] == "incremental"
+    assert result["render_targets"] == []
+    assert result["render_assets"] == ["site/images/diagram.webp"]
+
+
+def test_static_asset_paths_cannot_escape_the_images_directory():
+    result = classify_changed_files(
+        [
+            {"filename": "site/fr/example.qmd", "status": "modified"},
+            {"filename": "site/images/../../outside.svg", "status": "modified"},
+        ],
+        CONFIG,
+    )
+
+    assert result["render_mode"] == "full"
+    assert result["render_assets"] == []
+
+
+def test_added_or_deleted_static_image_forces_full_render():
+    for status in ("added", "removed", "renamed"):
+        result = classify_changed_files(
+            [
+                {"filename": "site/fr/example.qmd", "status": "modified"},
+                {"filename": "site/images/diagram.svg", "status": status},
+            ],
+            CONFIG,
+        )
+        assert result["render_mode"] == "full"
+
+
 def test_deleted_or_added_page_forces_full_render():
     for status in ("added", "removed", "renamed"):
         result = classify_changed_files(

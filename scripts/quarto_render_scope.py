@@ -58,13 +58,30 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
     ]
 
     targets: list[str] = []
+    assets: list[str] = []
     safe = site_relevant and bool(render_inputs) and len(render_inputs) <= MAX_INCREMENTAL_PAGES
     configured_targets = _render_targets(config)
 
     for item in render_inputs:
         path = str(item.get("filename", ""))
         status = str(item.get("status", ""))
-        if not path.startswith("site/") or not path.endswith(".qmd") or status != "modified":
+        if status != "modified":
+            safe = False
+            break
+
+        asset_path = PurePosixPath(path.removeprefix("site/"))
+        if (
+            path.startswith("site/images/")
+            and asset_path.parts[0] == "images"
+            and len(asset_path.parts) > 1
+            and not asset_path.is_absolute()
+            and ".." not in asset_path.parts
+            and asset_path.suffix.lower() in {".svg", ".png", ".jpg", ".jpeg", ".webp", ".gif"}
+        ):
+            assets.append(path)
+            continue
+
+        if not path.startswith("site/") or not path.endswith(".qmd"):
             safe = False
             break
 
@@ -81,7 +98,7 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
         targets.append(path)
 
     mode = "skip" if not site_relevant else "full"
-    if safe and targets:
+    if safe and (targets or assets):
         mode = "incremental"
 
     return {
@@ -89,6 +106,7 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
         "browser_relevant": browser_relevant,
         "render_mode": mode,
         "render_targets": sorted(set(targets)) if mode == "incremental" else [],
+        "render_assets": sorted(set(assets)) if mode == "incremental" else [],
         "files": paths,
     }
 
@@ -109,7 +127,7 @@ def main() -> None:
             if isinstance(value, bool):
                 value = str(value).lower()
             output.write(f"{key}={value}\n")
-        for key in ("files", "render_targets"):
+        for key in ("files", "render_targets", "render_assets"):
             output.write(f"{key}<<EOF\n")
             output.write("\n".join(result[key]))
             output.write("\nEOF\n")

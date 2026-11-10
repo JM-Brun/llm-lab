@@ -151,12 +151,22 @@ jobs:
         if: ${{ github.event_name == 'pull_request' && steps.site_changes.outputs.render_mode == 'incremental' && steps.verify_site_cache.outputs.cache_restored == 'true' }}
         env:
           RENDER_TARGETS: ${{ steps.site_changes.outputs.render_targets }}
+          RENDER_ASSETS: ${{ steps.site_changes.outputs.render_assets }}
         run: |
           while IFS= read -r page; do
             [ -n "$page" ] || continue
             echo "Incrementally rendering $page"
             quarto render "$page" --no-clean
           done <<< "$RENDER_TARGETS"
+
+          while IFS= read -r asset; do
+            [ -n "$asset" ] || continue
+            relative="${asset#site/}"
+            destination="site/_site/$relative"
+            mkdir -p "$(dirname "$destination")"
+            cp -- "$asset" "$destination"
+            echo "Copied updated static asset $relative"
+          done <<< "$RENDER_ASSETS"
 
       - name: Render full site
         if: ${{ github.event_name != 'pull_request' || (steps.site_changes.outputs.site_relevant == 'true' && (steps.site_changes.outputs.render_mode != 'incremental' || steps.verify_site_cache.outputs.cache_restored != 'true')) }}
