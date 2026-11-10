@@ -168,7 +168,7 @@ C'est la distinction centrale avec l'[apprentissage](loss.qmd) : l'inférence ut
 
 ## Exercices
 
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/generation.qmd).
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/generation.qmd).
 
 
 ::: {.callout-tip title="Pour aller plus loin"}

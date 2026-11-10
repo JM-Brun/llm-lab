@@ -101,6 +101,10 @@ The method was proposed to avoid sampling from the unreliable long tail while re
 
 Top-k and top-p redistribute conditional probability over a subset. They can reduce some undesirable tokens, but they also exclude possible continuations. This is a precision-recall trade-off over continuations: a filtered distribution is no longer the model's original distribution.
 
+### Repetition penalties: a different family of controls
+
+A *repetition penalty* does not select a fixed number of candidates or a nucleus with a target cumulative mass. Instead, it modifies logits associated with tokens already present in a history window, according to an inference engine's convention, before selection. It can reduce some repetition loops, but an excessive penalty may distort an answer, penalize necessary terms, or suppress legitimate repetition. Record its value, the history window it applies to, and the implementation used. **This penalty is not implemented in this project's reference NumPy filters**, which cover top-k and top-p only.
+
 ::: {.callout-note collapse="true" title="NumPy implementation and tests (deep dive)"}
 The [reference NumPy implementation](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/decoding_filters.py) and its [unit tests](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_decoding_filters.py) cover the two filters of this section: `top_k_filter` (a fixed support of $k$ candidates) and `top_p_filter` (the smallest set whose cumulative mass reaches or exceeds $p$, including the token that crosses the threshold). Both renormalize the retained distribution; ties are broken by the lowest original index (stable sort), so the result is deterministic.
 

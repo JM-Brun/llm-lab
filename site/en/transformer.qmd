@@ -141,7 +141,7 @@ For visualizations, the foundational paper, and implementation resources, see th
 
 ## Practice
 
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/transformer.qmd).
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/transformer.qmd).
 
 {{< include ../includes/generated-suggested-route-en-transformer.qmd >}}
 

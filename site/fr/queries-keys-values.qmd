@@ -104,7 +104,7 @@ Pour mettre en pratique les compétences associées à cette leçon, les [exerci
 
 ## Exercices
 
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/queries-keys-values.qmd).
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/queries-keys-values.qmd).
 
 
 {{< include ../includes/generated-suggested-route-fr-queries-keys-values.qmd >}}
