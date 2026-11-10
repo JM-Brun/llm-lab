@@ -24,7 +24,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:cross-entropy", "
 {{< include ../includes/generated-guided-context-en-cross-entropy.qmd >}}
 
 ::: {.chapter-lead}
-For a one-hot target, cross-entropy at one position is the negative log-probability of the observed token. During autoregressive training, this quantity is computed for allowed target positions and then aggregated using a convention that must be stated explicitly.
+The previous page built a sequence's likelihood by combining the conditional probabilities of observed tokens, then its negative log-likelihood (NLL). For a one-hot target, cross-entropy at one position is the negative log-probability of the observed token. During autoregressive training, this quantity is computed for allowed target positions and then aggregated using a convention that must be stated explicitly.
 :::
 
 ::: {.callout-tip title="The one-minute mental model"}
