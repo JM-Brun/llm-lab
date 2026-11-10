@@ -93,6 +93,8 @@ Il y a quatre paires, donc quatre échelles temporelles. Les valeurs ci-dessous 
 | 2 | 0,01 | 628,32 positions |
 | 3 | 0,001 | 6 283,19 positions |
 
+![Matrice de l'encodage sinusoïdal pour 32 positions et 8 dimensions. Les colonnes paires contiennent les sinus et les colonnes impaires les cosinus ; chaque paire utilise une fréquence différente.](../images/sinusoidal-position-matrix-fr.svg){fig-alt="Carte thermique des valeurs de l'encodage positionnel sinusoïdal pour 32 positions et 8 dimensions. Les motifs varient selon les fréquences des quatre paires de coordonnées." width=100%}
+
 Les premières paires changent rapidement et sont sensibles aux déplacements courts. Les dernières changent lentement et fournissent un repère qui évolue sur une plage plus large. Ce ne sont pas des cases « mot proche » et « mot lointain » apprises séparément : ce sont des composantes périodiques dont le modèle peut apprendre à exploiter les combinaisons.
 
 ::: {.callout-note title="Pourquoi un espacement logarithmique ?"}
