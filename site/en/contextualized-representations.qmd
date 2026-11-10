@@ -130,6 +130,7 @@ Two occurrences of the **same token ID** appear in two different sentences. Assu
 1. Are the vectors returned by the embedding lookup identical?
 2. Must the hidden states after the Transformer layers also be identical? Why?
 3. At which stage does contextual information enter the computation?
+4. In the *bank* example, what is held constant to isolate the effect of context?
 
 You have understood this step if you can explain the difference between **identity of the initial vector** and **context-dependence of hidden states**, without attributing sentence understanding to the lookup itself.
 
