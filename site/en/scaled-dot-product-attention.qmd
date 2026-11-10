@@ -72,6 +72,8 @@ $$
 
 Here $M$ denotes an additive hard mask: $M_{ij}=0$ for an allowed query-key pair and $M_{ij}=-\infty$ for a disallowed pair. If no mask is needed, omit $M$ (equivalently, use an all-zero matrix). The mask acts on scores **before** softmax: that is the only point where it can change which positions are accessible to normalization. Which positions to forbid — the causal constraint — and how to handle a fully masked row are defined in [causal masking](causal-masking.qmd), the next step on the route.
 
+In the running example, this operation is repeated for each position that needs a contextualized representation. It combines values according to weights computed from Q–K compatibility; it does not directly select the next token.
+
 ## From the mechanism to the calculation
 
 Read the full computation in order: scores from Q and K are scaled, an optional mask excludes forbidden positions, softmax normalizes the accessible scores, and the resulting weights combine the V vectors. To work through this sequence by hand, distinguish weighted mixing from selection, and manipulate projections in a multi-head setting, use the [Attention collection](exercises-attention.qmd#at-0-scores-to-output), especially exercises AT-A to AT-C.
