@@ -878,6 +878,45 @@ Changing W_V can change V and the resulting aggregated output, but it does not c
 </details>
 
 
+#### Exercise — calculate Q, K, and V, then isolate the effect of V
+
+Consider one input representation, using the row-vector convention:
+
+\[
+x_t=\begin{bmatrix}1&2\end{bmatrix},\qquad
+W_Q=\begin{bmatrix}1&0\\0&1\end{bmatrix},\qquad
+W_K=\begin{bmatrix}0&1\\1&0\end{bmatrix},\qquad
+W_V=\begin{bmatrix}1&1\\0&1\end{bmatrix}.
+\]
+
+1. Calculate $q_t=x_tW_Q$, $k_t=x_tW_K$, and $v_t=x_tW_V$ by hand.
+2. Replace only $W_V$ with $W'_V=\begin{bmatrix}2&0\\0&1\end{bmatrix}$. Calculate $v'_t$.
+3. Which of Q, K, V, the scores, and the weights can change? Justify your answer from the mechanism's dependencies.
+4. Explain why the aggregated output may change even when the weights stay the same.
+
+<details>
+<summary>Show the worked solution</summary>
+
+The matrix products are:
+
+\[
+q_t=x_tW_Q=\begin{bmatrix}1&2\end{bmatrix},\qquad
+k_t=x_tW_K=\begin{bmatrix}2&1\end{bmatrix},\qquad
+v_t=x_tW_V=\begin{bmatrix}1&3\end{bmatrix}.
+\]
+
+With the new value projection:
+
+\[
+v'_t=x_tW'_V=\begin{bmatrix}2&2\end{bmatrix}.
+\]
+
+Only V changes directly. Q and K remain identical, so the scores and weights computed from Q and K remain identical too. However, the weighted sum operates on the V vectors: changing those vectors may therefore change the aggregated content. This does not mean the output must change in every case, since some variations may cancel.
+
+The matrices are deliberately small and fictional so that the multiplications can be checked by hand; they are not parameters from a trained model.
+
+</details>
+
 #### Exercise — predict the effect of changing a projection
 
 Consider the same input $X$ and standard attention, without biases. For each intervention, state whether $Q$, $K$, $V$, the scores, the weights, and the aggregated output can change. Keep all other parameters fixed.

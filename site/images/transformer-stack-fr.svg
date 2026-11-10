@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1500" viewBox="0 0 900 1500" role="img" aria-labelledby="title desc">
+<title id="title">Architecture d'un GPT décodeur seul et détail d'un bloc Transformer</title>
+<desc id="desc">En haut, les identifiants de tokens deviennent des embeddings et reçoivent l'information positionnelle selon le mécanisme du modèle. Ils traversent une pile de N blocs Transformer, puis une normalisation finale et une projection vers le vocabulaire produisent les logits. En bas, un bloc pré-LN est détaillé : normalisation, attention multi-têtes causale, addition résiduelle, normalisation, MLP position par position et seconde addition résiduelle.</desc>
+<defs>
+ <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L0 6L9 3z" fill="#475569"/></marker>
+ <style>
+ .title{font:700 30px system-ui,sans-serif;fill:#0f172a}.head{font:700 25px system-ui,sans-serif;fill:#0f172a}
+ .label{font:650 21px system-ui,sans-serif;fill:#172554}.small{font:17px system-ui,sans-serif;fill:#334155}.note{font:15px system-ui,sans-serif;fill:#475569}
+ .panel{fill:#f8fafc;stroke:#cbd5e1;stroke-width:2}.input{fill:#e0f2fe;stroke:#0284c7;stroke-width:2}.stack{fill:#ede9fe;stroke:#7c3aed;stroke-width:2}.norm{fill:#fef3c7;stroke:#d97706;stroke-width:1.8}.attn{fill:#dbeafe;stroke:#2563eb;stroke-width:1.8}.mlp{fill:#dcfce7;stroke:#16a34a;stroke-width:1.8}.out{fill:#ffe4e6;stroke:#e11d48;stroke-width:1.8}.arrow{stroke:#475569;stroke-width:2.5;fill:none;marker-end:url(#arr)}.residual{stroke:#64748b;stroke-width:2.5;fill:none;marker-end:url(#arr);stroke-dasharray:7 5}
+ </style>
+</defs>
+<rect width="900" height="1500" fill="#ffffff"/>
+<text x="450" y="48" text-anchor="middle" class="title">Dans un GPT, le Transformer forme la pile de blocs au cœur du réseau</text>
+
+<rect x="30" y="78" width="840" height="690" rx="18" class="panel"/>
+<text x="450" y="120" text-anchor="middle" class="head">1 · Le modèle complet (vue simplifiée)</text>
+<rect x="260" y="150" width="380" height="62" rx="11" class="input"/>
+<text x="450" y="177" text-anchor="middle" class="label">Identifiants de tokens</text><text x="450" y="200" text-anchor="middle" class="small">[x₁, x₂, …, xₜ]</text>
+<path d="M450 212V238" class="arrow"/>
+<rect x="260" y="238" width="380" height="78" rx="11" class="input"/>
+<text x="450" y="269" text-anchor="middle" class="label">Embeddings</text><text x="450" y="294" text-anchor="middle" class="small">avec information positionnelle selon le modèle</text>
+<path d="M450 316V345" class="arrow"/>
+<rect x="190" y="345" width="520" height="178" rx="14" class="stack"/>
+<text x="450" y="377" text-anchor="middle" class="label">Transformer · pile de N blocs</text>
+<rect x="260" y="392" width="380" height="34" rx="7" fill="#ffffff" stroke="#7c3aed" stroke-width="1.5"/><text x="450" y="416" text-anchor="middle" class="small">Bloc Transformer 1</text>
+<rect x="260" y="435" width="380" height="34" rx="7" fill="#ffffff" stroke="#7c3aed" stroke-width="1.5"/><text x="450" y="459" text-anchor="middle" class="small">Bloc Transformer 2</text>
+<text x="450" y="493" text-anchor="middle" class="head">⋮</text>
+<text x="450" y="516" text-anchor="middle" class="small">Bloc Transformer N</text>
+<path d="M450 523V550" class="arrow"/>
+<rect x="260" y="550" width="380" height="52" rx="10" class="norm"/><text x="450" y="583" text-anchor="middle" class="label">Normalisation finale</text>
+<path d="M450 602V625" class="arrow"/>
+<rect x="260" y="625" width="380" height="52" rx="10" class="out"/><text x="450" y="658" text-anchor="middle" class="label">Projection vers le vocabulaire</text>
+<path d="M450 677V700" class="arrow"/>
+<text x="450" y="730" text-anchor="middle" class="label">Logits · un score par token du vocabulaire</text>
+<text x="450" y="753" text-anchor="middle" class="note">La sélection du prochain token intervient après cette sortie.</text>
+
+<rect x="30" y="795" width="840" height="675" rx="18" class="panel"/>
+<text x="450" y="840" text-anchor="middle" class="head">2 · Zoom sur un bloc Transformer</text>
+<text x="450" y="872" text-anchor="middle" class="small">Exemple courant : organisation pré-LN avec deux chemins résiduels</text>
+
+<text x="75" y="925" class="label">Sous-couche 1 · attention</text>
+<rect x="55" y="950" width="145" height="70" rx="9" class="input"/><text x="127" y="978" text-anchor="middle" class="label">Entrée H⁽ˡ⁾</text><text x="127" y="1002" text-anchor="middle" class="note">flux résiduel</text>
+<path d="M200 985H235" class="arrow"/>
+<rect x="235" y="950" width="135" height="70" rx="9" class="norm"/><text x="302" y="979" text-anchor="middle" class="label">LayerNorm</text><text x="302" y="1002" text-anchor="middle" class="note">pré-LN</text>
+<path d="M370 985H405" class="arrow"/>
+<rect x="405" y="950" width="210" height="70" rx="9" class="attn"/><text x="510" y="979" text-anchor="middle" class="label">Attention multi-têtes</text><text x="510" y="1002" text-anchor="middle" class="note">masquée · causale</text>
+<path d="M615 985H655" class="arrow"/>
+<circle cx="680" cy="985" r="25" fill="#ffffff" stroke="#64748b" stroke-width="2.2"/><text x="680" y="994" text-anchor="middle" class="head">+</text>
+<path d="M127 1020V1060H680V1010" class="residual"/>
+<text x="405" y="1084" text-anchor="middle" class="note">Addition résiduelle : entrée + sortie de l'attention</text>
+<path d="M705 985H735" class="arrow"/>
+<rect x="735" y="950" width="110" height="70" rx="9" class="stack"/><text x="790" y="979" text-anchor="middle" class="label">H′</text><text x="790" y="1002" text-anchor="middle" class="note">intermédiaire</text>
+
+<path d="M790 1020V1110H35V1200H55" class="arrow"/>
+<text x="75" y="1140" class="label">Sous-couche 2 · transformation locale</text>
+<rect x="55" y="1165" width="145" height="70" rx="9" class="input"/><text x="127" y="1193" text-anchor="middle" class="label">Entrée H′</text><text x="127" y="1217" text-anchor="middle" class="note">flux résiduel</text>
+<path d="M200 1200H235" class="arrow"/>
+<rect x="235" y="1165" width="135" height="70" rx="9" class="norm"/><text x="302" y="1194" text-anchor="middle" class="label">LayerNorm</text><text x="302" y="1217" text-anchor="middle" class="note">pré-LN</text>
+<path d="M370 1200H405" class="arrow"/>
+<rect x="405" y="1165" width="210" height="70" rx="9" class="mlp"/><text x="510" y="1194" text-anchor="middle" class="label">MLP / feed-forward</text><text x="510" y="1217" text-anchor="middle" class="note">position par position</text>
+<path d="M615 1200H655" class="arrow"/>
+<circle cx="680" cy="1200" r="25" fill="#ffffff" stroke="#64748b" stroke-width="2.2"/><text x="680" y="1209" text-anchor="middle" class="head">+</text>
+<path d="M127 1235V1275H680V1225" class="residual"/>
+<text x="405" y="1298" text-anchor="middle" class="note">Addition résiduelle : entrée + sortie du MLP</text>
+<path d="M705 1200H735" class="arrow"/>
+<rect x="735" y="1165" width="110" height="70" rx="9" class="stack"/><text x="790" y="1194" text-anchor="middle" class="label">H⁽ˡ⁺¹⁾</text><text x="790" y="1217" text-anchor="middle" class="note">sortie du bloc</text>
+
+<rect x="90" y="1340" width="330" height="85" rx="11" class="attn"/><text x="255" y="1372" text-anchor="middle" class="label">Attention</text><text x="255" y="1398" text-anchor="middle" class="small">mélange l'information entre positions</text>
+<rect x="480" y="1340" width="330" height="85" rx="11" class="mlp"/><text x="645" y="1372" text-anchor="middle" class="label">MLP</text><text x="645" y="1398" text-anchor="middle" class="small">transforme chaque position séparément</text>
+<text x="450" y="1450" text-anchor="middle" class="note">Le pré-LN est une variante courante, pas une règle universelle.</text>
+</svg>

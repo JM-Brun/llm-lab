@@ -38,7 +38,7 @@ return x + self._mlp(layer_norm(x, self.ln2_gamma, self.ln2_beta))
 ```
 
 ```{=html}
-<figure class="wf-fig" id="wf-block-map" data-wf-default="The green stroke crosses the block unchanged: that is the residual trunk. Each branch (attention, MLP) only adds a correction computed on a normalized copy — GPT-2’s pre-LN order.">
+<figure class="wf-fig" id="wf-block-map" data-wf-default="The green stroke represents the identity path that bypasses each sublayer. Each branch (attention, MLP) computes a correction on a normalized copy and adds it to the stream — GPT-2’s pre-LN order. This path facilitates propagation; it does not guarantee that the output preserves every input component.">
 <figcaption class="wf-fig-title">The signal path through the block: every code line has its branch</figcaption>
 <div class="wf-stage">
 <div class="wf-diagram">
@@ -77,12 +77,12 @@ return x + self._mlp(layer_norm(x, self.ln2_gamma, self.ln2_beta))
 <div class="wf-panel">
 <p class="wf-hint">Hover over or select a code line: its branch lights up in the diagram while the rest dims. Keyboard: <kbd>Tab</kbd>, <kbd>Enter</kbd> to pin, <kbd>Esc</kbd> to release.</p>
 <div class="wf-chips" role="group" aria-label="Block lines">
-<button type="button" class="wf-chip" data-wf-links="br1" data-wf-note="Attention branch: ln1 prepares a normalized copy of x, and w_o’s output adds back to the trunk. Identity stays the default path: the block cannot destroy its input.">x + _attention(ln1(x))</button>
+<button type="button" class="wf-chip" data-wf-links="br1" data-wf-note="Attention branch: ln1 prepares a normalized copy of x, and w_o’s output adds back to the trunk. The identity path bypasses the sublayer and facilitates propagation; the addition can still modify or cancel some input components.">x + _attention(ln1(x))</button>
 <button type="button" class="wf-chip" data-wf-links="br2" data-wf-note="MLP branch: ln2 prepares a copy, fc1 widens (d → hidden), GELU activates, fc2 projects back (hidden → d), and the output adds to the trunk, position by position.">x + _mlp(ln2(x))</button>
 <button type="button" class="wf-chip" data-wf-links="heads" data-wf-note="Head h reads columns h·(d/H) to (h+1)·(d/H) of Q, K and V: contiguous slices of the same stream, never mixed before the w_o projection.">columns = slice(h·head_dim, …)</button>
 <button type="button" class="wf-chip" data-wf-links="init" data-wf-note="Only the output projections added to the residual trunk — attention w_o and MLP fc2 — use 0.02/√(2L). Q, K, V and fc1 retain the base standard deviation 0.02.">residual_std = 0.02/√(2L)</button>
 </div>
-<p class="wf-note" aria-live="polite">The green stroke crosses the block unchanged: that is the residual trunk. Each branch (attention, MLP) only adds a correction computed on a normalized copy — GPT-2’s pre-LN order.</p>
+<p class="wf-note" aria-live="polite">The green stroke represents the identity path that bypasses each sublayer. Each branch (attention, MLP) computes a correction on a normalized copy and adds it to the stream — GPT-2’s pre-LN order. The addition can modify or cancel some input components.</p>
 </div>
 </div>
 <figcaption class="wf-legend">
@@ -101,7 +101,7 @@ The block applies two **additive** updates to the same stream `x`:
 1. `x + attention(ln(x))` — the attention branch;
 2. `x + mlp(ln(x))` — the MLP branch.
 
-Normalization sits **inside the branch**, not on the trunk. The trunk (`x + ...`) always carries an unmodified copy of the input towards the output: identity is the default, and each branch only *adds* a correction. This is GPT-2's **pre-LN** order. This placement is often more favorable for optimizing deep Transformers: Xiong et al. (2020) find, in their theoretical and experimental setting, better-behaved gradients at initialization than with post-LN, which can reduce the need for learning-rate *warm-up*. This does not guarantee universal stability or superiority; those also depend on the architecture, initialization, and training protocol. [Xiong et al. (2020), *On Layer Normalization in the Transformer Architecture*](https://proceedings.mlr.press/v119/xiong20b.html).
+Normalization sits **inside the branch**, not on the identity path. This path lets the input bypass the sublayer directly; its output is then added to the correction computed by the branch. This structure facilitates signal and gradient propagation, but the addition does not guarantee that every input component is preserved. This is GPT-2's **pre-LN** order. This placement is often more favorable for optimizing deep Transformers: Xiong et al. (2020) find, in their theoretical and experimental setting, better-behaved gradients at initialization than with post-LN, which can reduce the need for learning-rate *warm-up*. This does not guarantee universal stability or superiority; those also depend on the architecture, initialization, and training protocol. [Xiong et al. (2020), *On Layer Normalization in the Transformer Architecture*](https://proceedings.mlr.press/v119/xiong20b.html).
 
 ## Initializing: why `rng` is an argument
 

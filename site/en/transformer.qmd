@@ -1,6 +1,6 @@
 ---
-title: "GPT and Transformers: architecture and data flow"
-subtitle: "From tokens to logits"
+title: "The Transformer in a GPT: architecture and computation"
+subtitle: "From stacked blocks to logits"
 keywords: ["type:system-overview", "destination:understand", "topic:transformer", "level:overview", "language:en", "status:published"]
 lang: en
 ---
@@ -8,9 +8,9 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/transformer"
-summary: "Traces a GPT forward pass through its representations, Transformer blocks, and attention operations to the logits. Separates network computation from next-token selection and the generation loop."
+summary: "Introduces the architecture of a decoder-only GPT, from its Transformer block stack to the output head, then traces a forward pass to the logits. Distinguishes attention, the repeated block, and the complete model."
 scope: "Follows an autoregressive GPT computation inside the network, from input representations to logits, focusing on Transformer blocks, self-attention, the MLP, residual connections, and normalization; text preparation and the generation loop are located but not retaught."
-purpose: "Readers should be able to describe one forward pass, explain the operations in a Transformer block, distinguish depth from width, and identify logits as the network output without conflating that pass with decoding or generation."
+purpose: "Readers should be able to recognize a decoder-only Transformer architecture, distinguish the attention sublayer, block, and complete network, then trace a forward pass to the logits without conflating it with generation."
 suggested_route:
   previous: "en/contextualized-representations"
   next: "en/queries-keys-values"
@@ -24,7 +24,9 @@ tags: ["type:system-overview", "destination:understand", "topic:transformer", "l
 
 {{< include ../includes/generated-guided-context-en-transformer.qmd >}}
 ::: {.chapter-lead}
-A **GPT** is a language model built on an autoregressive Transformer: it receives a sequence of tokens — the context — and computes, at each position, an unnormalized score (*logit*) for every token in the vocabulary. A probability distribution can be derived from these scores. This page focuses on the computation performed by the network, from input representations to logits. It distinguishes that computation from the inference loop that selects and appends successive tokens.
+A **GPT** is a language model built around a **decoder-only Transformer**. The Transformer does not refer to a processing step placed between other components: it is a neural-network architecture. In a decoder-only GPT, its core is a stack of Transformer blocks that transform token representations. From these representations, the network computes **logits** — one score for every token in the vocabulary.
+
+This page first shows what that architecture looks like, then follows a forward pass through its blocks to the logits. It stops at the network output: converting logits into probabilities and selecting the next token belong to decoding, not to the Transformer's internal computation.
 :::
 
 ::: {.callout-tip title="The one-minute mental model"}
@@ -44,23 +46,31 @@ You will be able to:
 - distinguish depth, width, number of heads, and internal MLP dimensions.
 :::
 
-## The whole path, in one diagram
+## The Transformer: the network at the heart of a GPT
 
-![Simplified flow of an autoregressive GPT, from tokens to next-token selection.](../images/gpt-data-flow-en.svg){fig-alt="Conceptual pipeline: text, tokenization, embeddings and position, repeated Transformer blocks, logits, softmax, next-token choice, then addition to the context." width=100%}
+![Architecture of a decoder-only GPT: input representations pass through a stack of Transformer blocks, then a final normalization and output head produce logits. The lower panel expands one typical pre-LN block.](../images/transformer-stack-en.svg){#fig-transformer-stack fig-alt="At the top, the complete network: token IDs, embeddings and positional information, a stack of N Transformer blocks, final normalization, vocabulary projection and logits. At the bottom, one pre-LN block: normalization, causal multi-head self-attention, a residual connection, then normalization, a position-wise MLP and a second residual connection." width=100%}
 
-This diagram locates the Transformer within the complete system. **This page zooms in on the computation performed by the network**, from its input representations to the logits; it does not reteach text preparation or the next-token selection loop.
+*The stack of blocks is the Transformer in the GPT shown here. The expanded view shows a common pre-LN arrangement; sublayer order and normalization variants differ across models.*
 
-For the model-family overview and learning stages, see the [LLM panorama](llm-overview.qmd). For the inference loop and decoding, see [generating text](generation.qmd). The [architecture comparison](transformer-architectures.qmd) places decoder-only GPT among the other families.
+In a decoder-only GPT, blocks are **stacked**: the output of one becomes the input to the next. Each block transforms the sequence of representations; it does not choose the next token itself. After the final block, a final normalization and a vocabulary projection produce the logits.
+
+This diagram represents the **decoder-only** family used by autoregressive GPT models. Transformers are not limited to this architecture: the [Transformer architecture comparison](transformer-architectures.qmd) shows what changes in encoder-only and encoder-decoder models.
+
+### Placing the network in the generation process
+
+![Simplified flow of an autoregressive GPT, from tokens to next-token selection.](../images/gpt-data-flow-en.svg){fig-alt="Complete pipeline: text, tokenization, embeddings and positional information, repeated Transformer blocks, logits, softmax, next-token selection, then addition to the context." width=100%}
+
+This second diagram answers a different question: it places the network in the complete process. **The stack of blocks in the middle is the Transformer shown above**; upstream operations prepare its input, while softmax, token selection, and feedback happen downstream. The decoding loop takes place after the network output.
 
 ## 1. From token IDs to input representations
 
 The network does not receive raw text: it receives a sequence of token IDs, mapped to vectors by an embedding table. Positional information is also incorporated, either into the embeddings or into the attention computation, depending on the architecture. Transformer blocks then turn these vectors into contextualized representations: the same token can contribute to different states depending on its context.
 
-This section provides only the landmarks needed to follow the network computation. The canonical explanations are separate: [text and tokenization](text-data.qmd), [embedding space](embedding-space.qmd), [positional information](positional-encoding.qmd), and [contextualized representations](contextualized-representations.qmd). For tensor shapes and dimensions, see [Tensors](tensors.qmd).
+The transition from text to token IDs is explained in [text and tokenization](text-data.qmd); the [embedding page](embedding-space.qmd) shows how those IDs become vectors. [Positional information](positional-encoding.qmd) explains how the model accounts for token order. Here, we keep these stages as the starting point and focus on what the blocks do with the resulting representations. For the shapes and axes of the arrays involved, see [Tensors](tensors.qmd).
 
 ## 2. Transformer blocks
 
-The core of the network is a stack of identical blocks. Each block combines two operations:
+The stack shown above consists of blocks of the same general type, repeated in depth. Each block combines two main operations:
 
 - **Self-attention:** each position draws on the positions allowed by the mask — including its own position in a causal GPT — to refine its representation. For example, when interpreting *it* in “Adam puts the ice cream in the freezer because it was melting”, attention can bring information about *the ice cream* into the representation at *it*. In GPT, a causal mask forbids reading future tokens.
 - **Feed-forward network (MLP):** a small neural network applied to each position separately, with the same weights everywhere. It typically combines linear projections with a nonlinear activation to produce a transformed representation; the exact design varies by architecture.
@@ -73,7 +83,7 @@ x_{\text{out}} = x_{\text{in}} + F(x_{\text{in}}).
 
 Normalization (*LayerNorm* in classic GPT models) centers and normalizes the hidden-vector components of each position independently of other positions. Depending on the architecture, it is placed before or after selected sublayers. A typical **pre-LN** block, for example, uses $x' = x + \operatorname{Attention}(\operatorname{LN}(x))$, followed by $x'' = x' + \operatorname{MLP}(\operatorname{LN}(x'))$. This is one design, not a universal formula: pre-LN/post-LN order and normalization variants differ across models.
 
-To see these operations in a concrete implementation without mistaking them for invariants of every Transformer, consult the [guided tour of the reference block](transformer-block-walkthrough.qmd).
+The diagram describes the role of the components without prescribing one universal implementation. To see how these operations are organized in the reference code — including pre-LN order, projections, and residual paths — follow the [Transformer block walkthrough](transformer-block-walkthrough.qmd).
 
 ![Comparison of the roles of self-attention and the feed-forward network in a Transformer block.](../images/attention-vs-mlp-en.svg){fig-alt="Self-attention allows exchanges between allowed positions; the same feed-forward network is applied separately to each position." width=100%}
 
@@ -98,7 +108,7 @@ These terms are not interchangeable with other internal dimensions: the **number
 
 *Width* is sometimes used more broadly for other internal dimensions, so check which dimension an article or model card means. For tensor shapes and projection dimensions, see [Tensors](tensors.qmd); for a concrete configuration, see the [GPT configuration walkthrough](gpt-config-walkthrough.qmd). Depth and width describe network structure, but neither alone predicts model performance.
 
-Self-attention allows permitted positions to exchange information. Its detailed computation — Q/K/V projections, scores, scaling, softmax, and causal masking — is covered in the canonical lessons on [Q/K/V](queries-keys-values.qmd), [scaled dot-product attention](scaled-dot-product-attention.qmd), and [causal masking](causal-masking.qmd). Positional information may be added to embeddings or incorporated into queries and keys (see [positional information](positional-encoding.qmd)).
+Self-attention is the sublayer that lets permitted positions exchange information. To follow its computation step by step, [Q/K/V](queries-keys-values.qmd) introduces the three learned projections; [scaled dot-product attention](scaled-dot-product-attention.qmd) details the scores and their normalization; [causal masking](causal-masking.qmd) explains why a GPT cannot consult future tokens. These deep dives concern the attention mechanism inside a block, not the complete architecture.
 
 ### Three levels that should not be conflated
 
@@ -116,7 +126,7 @@ In short: attention is a sublayer; the block is the repeated unit; GPT is the mo
 
 ## 3. From representations to logits
 
-After the final block, an output projection produces the **logits**: one unnormalized score per vocabulary token. The [logits lesson](logits.qmd) explains how to interpret them; the [output probabilities lesson](probabilities.qmd) covers their transformation into a distribution. This page stops at the network output: selecting the next token, appending it to the context, and repeating the process belong to [autoregressive generation](generation.qmd).
+After the final block, the final normalization and output head produce the **logits**: one unnormalized score for every vocabulary token. The [logits lesson](logits.qmd) explains what these scores represent; the [output probabilities lesson](probabilities.qmd) shows how *softmax* converts them into a distribution. The network stops at these scores: choosing a token, appending it to the context, and running the model again belong to [autoregressive generation](generation.qmd).
 
 ## Practice
 

@@ -1434,3 +1434,15 @@ This source-level review resumes the first Transformer slice and focuses on the 
 ### Validation still required
 
 This change is a source-level editorial correction. Run the existing Python CI and Quarto render/static checks, then inspect the changed FR/EN pages at desktop and mobile widths. Verify the new section anchors, math rendering and the G4/G5 links in the built site. This source review does not establish screen-reader usability or learner mastery.
+
+
+## Q/K/V reader-experience audit — 2026-11-10
+
+A focused source-level audit compared the bilingual Q/K/V concept lesson with the preceding Transformer overview, the following scaled dot-product attention lesson, and Nishanthan K's [DEV Community article](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a). The review follows the repository's Understand Path Audit skill. It found a sound conceptual boundary and strong scientific content, but identified two high-impact teaching gaps: no worked numerical example of the projections, and no concrete motivating problem near the opening. The existing two-path SVG was retained and its alt text clarified; the coreference example was moved to the opening and the lexical-ambiguity example remains as one optional note.
+
+The bilingual concept pages now include observable conceptual learning outcomes and an early qualified coreference example, while keeping numerical matrix calculations out of the conceptual route. The two-dimensional Q/K/V calculation and W_V-only intervention have been moved into the matching French and English Attention exercise collections with collapsed worked solutions. The complete audit, route analysis, arithmetic, preservation decisions, and validation limits are recorded in [Q/K/V pedagogical audit and revision](audits/qkv-pedagogical-audit.md).
+
+**Status:** Updated in PR/branch; source-level checks completed. Quarto render, published-page browser review, and learner task testing remain open. This is not a rendered-site or learner-outcome certification.
+
+
+**Q/K/V reading-flow follow-up — 2026-11-10:** the bilingual concept pages now open with the contextual problem before introducing terminology, define Q/K/V in parallel, place the existing two-path diagram immediately after the definitions, and transition from that diagram to the shared-input projection equations. Repeated summaries and competing illustration/history detours were removed from the core reading path; geometry, training, architecture variants, and lexical ambiguity remain optional. Numerical calculations remain exclusively in the Attention exercises. See [the focused Q/K/V pedagogical audit](audits/qkv-pedagogical-audit.md).
