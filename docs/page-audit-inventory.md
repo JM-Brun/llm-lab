@@ -1456,3 +1456,12 @@ The bilingual concept pages now include observable conceptual learning outcomes 
 A dedicated bilingual Deepen page now owns the material previously scattered across collapsed callouts or compressed out of the core reading flow: individual per-position equations, batched tensor shapes, dot-product geometry, routing/content nuance and the nearest-value caveat, local gradient paths through a standard attention head, multi-head projection layout, MQA/GQA, projection-parameter tying, lexical ambiguity and limits of attention-map interpretation, and supplementary resources. The core Q/K/V lesson retains the essential distinction and links to this page. Cross-attention remains owned by its existing dedicated page; numerical hand calculations remain in the Attention exercises.
 
 **Validation boundary:** source-level editing only at this stage. Quarto render, generated metadata/context validation, link checks, bilingual rendered review, and CI remain pending.
+
+
+## Representations and embedding-lookup audit — 2026-11-10
+
+A source-level pedagogical audit reviewed the bilingual Understand lessons on token embeddings (`embedding-space.qmd`) and contextualized representations (`contextualized-representations.qmd`), together with their transitions from the text-data stage and towards the Transformer overview. The review follows the repository's Understand Path Audit skill and page design guidelines. It identified four high-value teaching enhancements: collapsible learning outcomes, interactive pipeline steppers and epistemic badges, executable NumPy micro-workbenches with shape and equality invariants, and folded active-recall refutations of common fallacies (consecutive integer ID proximity and polysemy ID requirements).
+
+Both French and English pages now incorporate these interactive pedagogical components while strictly preserving existing SVGs, asset reuse reviews, and reproducible tokenizer traces. The self-check sections now cross-link directly to the matching exercises in the catalogue (`Exercise TR-B` for embedding lookup and `Exercise TR-C` for context differentiation). The full methodology and preservation checks are recorded in [Representations and embedding-lookup audit](audits/representations-pedagogical-audit.md).
+
+**Status:** Updated in PR/branch; source-level checks completed. Quarto render, published-page browser review, and learner task testing remain open. This is not a rendered-site or learner-outcome certification.

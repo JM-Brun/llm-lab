@@ -23,7 +23,19 @@ tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-re
 
 
 {{< include ../includes/generated-guided-context-fr-contextualized-representations.qmd >}}
-::: {.chapter-lead}
+:::
+
+::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
+À la fin de cette leçon, vous devriez pouvoir :
+- expliquer pourquoi deux occurrences d’un même ID de token partagent un embedding initial mais développent des états cachés distincts ;
+- identifier à quel moment l'information positionnelle et les interactions séquentielles transforment l'état interne ;
+- réfuter la confusion attribuant au lookup d'embedding une compréhension sémantique ou une désambiguïsation du contexte.
+:::
+
+<div class="epistemic-badges">
+  <span class="epistemic-badge badge-concept">Concept vérifié</span>
+  <span class="epistemic-badge badge-status">Architecture : Blocs Transformer</span>
+</div> {.chapter-lead}
 Deux phrases peuvent contenir le même token sans lui donner le même rôle : *bank* désigne une rive dans l'une, un établissement financier dans l'autre. Pourtant, le tokenizer peut attribuer le même ID aux deux occurrences. **Le lookup ne change pas ; c'est le traitement de la séquence par le Transformer qui construit des états cachés dépendant du contexte.**
 :::
 
@@ -103,6 +115,68 @@ Concrètement, l'auto-attention permet à une position d'agréger de l'informati
 Dans l'exemple *bank*, les deux occurrences occupent volontairement la même position dans la phrase (le troisième mot, sous l'hypothèse simplificatrice d'un token par mot). Avec des embeddings positionnels absolus, elles reçoivent donc le même terme positionnel ; dans un mécanisme comme RoPE, leur position est également identique. Pour un décodeur causal, la différence de leur état vient alors du préfixe accessible (*The river* ou *The financial*), et non d'une position absolue différente. Dans d'autres exemples, position et contexte peuvent tous deux contribuer à la différence.
 
 Les états évoluent ensuite de bloc en bloc : \(h_t^{(0)}\) désigne l'entrée initiale à la position \(t\), puis chaque bloc produit \(h_t^{(1)}\), \(h_t^{(2)}\), etc. Le vecteur n'est pas remplacé par une étiquette de sens ; il est transformé par des opérations apprises qui intègrent progressivement de l'information.
+
+::: {.micro-workbench}
+::: {.micro-workbench-header}
+MICRO-WORKBENCH · DIVERGENCE CONTEXTUELLE D'UN MÊME TOKEN (NUMPY)
+:::
+::: {.micro-workbench-body}
+```python
+import numpy as np
+
+# Matrice de vocabulaire V=6, dimension d=2
+E = np.array([
+    [0.1, 0.2],   # 0: river
+    [0.9, -0.4],  # 1: financial
+    [0.5, 0.5],   # 2: bank (même ID dans les deux contextes)
+    [0.0, 0.1],   # 3: eroded
+    [0.8, 0.2],   # 4: collapsed
+    [0.2, 0.7],   # 5: pad
+], dtype=np.float64)
+
+# Deux séquences contenant le même token (ID 2) à la position 1
+seq_A = np.array([0, 2])  # [river, bank]
+seq_B = np.array([1, 2])  # [financial, bank]
+
+# 1. Lookup d'embedding initial
+x_A = E[seq_A]
+x_B = E[seq_B]
+
+# Invariant 1 : l'embedding initial de 'bank' est strictement identique
+assert np.array_equal(x_A[1], x_B[1])
+assert np.array_equal(x_A[1], E[2])
+
+# 2. Ajout de l'encodage positionnel absolu (identique à la position 1)
+P = np.array([[0.01, 0.00], [0.02, 0.05]], dtype=np.float64)
+z_A = x_A + P
+z_B = x_B + P
+assert np.array_equal(z_A[1], z_B[1])
+
+# 3. Agrégation contextuelle causale : la position 1 intègre son contexte (pos 0)
+# Poids d'attention causale illustratifs : 40% contexte (pos 0), 60% soi-même (pos 1)
+h_A_1 = 0.4 * z_A[0] + 0.6 * z_A[1]
+h_B_1 = 0.4 * z_B[0] + 0.6 * z_B[1]
+
+# Invariant 2 : les représentations contextualisées sont désormais distinctes
+assert not np.allclose(h_A_1, h_B_1)
+diff = float(np.linalg.norm(h_A_1 - h_B_1))
+print(f"Embedding initial identique : {x_A[1]}")
+print(f"État contextualisé A (river bank) : {h_A_1}")
+print(f"État contextualisé B (financial bank) : {h_B_1}")
+print(f"Écart induit par le contexte : {diff:.4f}")
+```
+:::
+::: {.micro-workbench-footer}
+Le contexte transforme les états : un lookup initial identique ($E[\text{ID}]$) produit des états finaux différents après agrégation séquentielle.
+:::
+:::
+
+<details class="spot-the-fallacy">
+<summary>Piège fréquent : « Pour que deux sens d'un mot comme "bank" soient reconnus, le tokenizer doit leur attribuer des IDs distincts »</summary>
+<div class="fallacy-content">
+<p><strong>Contre-exemple :</strong> Le tokenizer découpe le texte selon des règles de vocabulaire indépendantes du sens de la phrase ; il attribue le même ID au mot « bank » quel que soit son sens financier ou fluvial. C'est l'agrégation pondérée par l'attention au fil des couches qui spécialise la représentation interne $h_t^{(\ell)}$. Attribuer des IDs distincts selon le sens réintroduirait une étape de désambiguïsation symbolique manuelle avant le modèle.</p>
+</div>
+</details>
 
 ![Un même token peut recevoir des représentations contextualisées différentes selon la phrase.](../images/contextualized-embeddings-fr.svg){fig-alt="Deux séquences placent bank à la même position simplifiée. Les deux occurrences partagent le même lookup initial, tandis que chaque bloc Transformer combine cet état avec le contexte accessible propre à la séquence avant de produire un état caché qui peut différer." fig-cap="Même ID et même position simplifiée : le lookup est identique. Les préfixes accessibles diffèrent ; les états cachés peuvent donc différer." width=100%}
 
