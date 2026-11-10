@@ -24,9 +24,7 @@ from pathlib import Path
 _PAREN_DELIMS = re.compile(r"[\\]{1,2}[()\\[\\]]")
 # A LaTeX line break with an explicit length argument (e.g. \\[2ex]) is
 # legitimate LaTeX, not a math delimiter.
-_LINE_BREAK_LENGTH = re.compile(
-    r"[\\]{2}\[\s*\d+(?:\.\d+)?\s*(?:pt|mm|cm|in|ex|em|bp|sp|mu)\s*\]"
-)
+_LINE_BREAK_LENGTH = re.compile(r"[\\]{2}\[\s*\d+(?:\.\d+)?\s*(?:pt|mm|cm|in|ex|em|bp|sp|mu)\s*\]")
 
 
 def _is_fence(stripped: str) -> bool:
