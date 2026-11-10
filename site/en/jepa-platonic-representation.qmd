@@ -1,0 +1,151 @@
+---
+title: "From shared observations to shared representations: JEPA and the Platonic Representation Hypothesis"
+subtitle: "Why training pairs, not scale alone, decide whether models agree"
+keywords: ["type:concept-lesson", "destination:deepen", "topic:jepa-platonic-representation", "level:advanced", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/jepa-platonic-representation"
+scope: "Develops the Platonic Representation Hypothesis through the Balestriero-LeCun conditional convergence theorem for JEPAs: positive-pair graphs, good and bad views, spectral embedding, nuisance variables, the next-token-prediction interpretation, and a qualified reading of cross-modal alignment experiments. Token-level contextualization remains on en/contextualized-representations; resource-performance regularities remain on en/scaling-laws."
+purpose: "Let advanced readers connect training-pair design to representation geometry, state the theorem's assumptions before its conclusion, and interpret reported alignment and sample-efficiency results without overgeneralizing them."
+domain: "scale-research"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/contextualized-representations", "en/embedding-linearity", "en/scaling-laws", "en/llm-limits"]
+tags: ["type:concept-lesson", "destination:deepen", "topic:jepa-platonic-representation", "level:advanced", "language:en", "status:published"]
+-->
+
+::: {.chapter-lead}
+If one model learns from photographs and another learns from text, will they end up organizing the world the same way? The **Platonic Representation Hypothesis** conjectures that they increasingly do as models gain capability. A 2026 theorem by Balestriero and LeCun makes part of that conjecture precise: what decides convergence is not scale alone, but which observations the training objective declares to be related.
+:::
+
+::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
+After this study, you should be able to distinguish good-view and bad-view positive pairs and explain why the labels are task-relative; state the assumptions of the Platonic Representation Theorem before its conclusion; follow the spectral mechanism that links positive-pair graphs to rotation ambiguity; and read the reported alignment and sample-efficiency results without conflating samples, tokens, compute, or intelligence.
+:::
+
+::: {.callout-note}
+**Source scope.** This lesson synthesizes the primary paper by Balestriero and LeCun (arXiv:2610.39302) and Mayank Kejriwal's AI Scientist article, a secondary explanation of it. The ingestion records and the source review dossier live in the repository under `data/extractions/` and `docs/source-reviews/`. All experimental figures below are author-reported and protocol-specific; they have not been independently reproduced.
+:::
+
+## The question: can different sensors learn the same world?
+
+The [Platonic Representation Hypothesis](https://arxiv.org/abs/2405.07987) observes that as models and data grow, internal representations become more similar across architectures, datasets, and even modalities. The name evokes Plato's cave: different models see different projections of one world, yet seem to converge on a shared statistical model of it.
+
+The conjecture is suggestive but, by itself, offers neither a guarantee nor a recipe. It does not say under which training conditions convergence should happen, nor how far representations can disagree when those conditions fail. The paper studied here turns the hypothesis into a conditional statement.
+
+## Positive pairs define a graph of what counts as related
+
+A **Joint-Embedding Predictive Architecture (JEPA)** learns representations by predicting, from one observation, the embedding of another observation declared to be related to it, while an anti-collapse constraint prevents all embeddings from becoming identical. The pairs, called **positive pairs**, are the learning signal: the objective pulls their embeddings together and pushes unrelated ones apart.
+
+Read geometrically, the positive-pair relation is a weighted graph: observations are vertices and pair probabilities are edges. The representation the encoder learns respects that graph. This is the paper's central move: convergence between two independently trained encoders depends on whether their positive-pair graphs encode the same underlying relations between world states.
+
+## Good views and bad views
+
+The paper distinguishes two ways of constructing positive pairs:
+
+| Pair construction | Example | What the pair can share |
+|---|---|---|
+| **Good views** | Two captions describing the same scene; a caption and a frame of the same video clip | The underlying scene, with independent superficial differences |
+| **Bad views** | Two masked spans of one caption; two crops of one photograph | The original observation, including its accident: exact wording, style, camera angle, lighting |
+
+A bad-view pair is two corruptions of *one* observation. Corruptions remove information, but whatever survives, including nuisance factors specific to the original observation, appears on both sides of the pair. The objective then has no pressure to remove that nuisance from the representation.
+
+Two cautions keep the distinction honest:
+
+- **The labels are task-relative.** A crop or a mask is not intrinsically bad; it can be exactly the right augmentation for learning invariance. It is called bad here because its induced relation is poorly matched to the cross-modal scene structure one wants to recover. Even strong image encoders trained with crops, such as DINOv2, are bad-view under this definition; good image views may require genuinely different observations, such as multiple frames of a video.
+- **Data coverage interacts with view construction.** Weak corruptions may connect only nearby observations, so many samples are needed for the graph to span a scene. Strong corruptions can connect observations from different scenes through shared nuisance content, capping alignment regardless of scale. The learning signal is a graph over examples, and coverage plus view design jointly determine it.
+
+## The theorem: a conditional statement
+
+Under its idealized assumptions, the paper proves a **Platonic Representation Theorem**:
+
+1. A finite set of world states, each with positive probability.
+2. Each modality observes the world through an injective rendering: an observation determines its state.
+3. Each modality's positive-pair distribution is symmetric and shares the same world-state marginal.
+4. The objective combines a pairwise embedding loss with an anti-collapse term, and both are invariant to rotations of the representation.
+5. Optimization is at the population level, and optima are unique up to rotation.
+
+**Conclusion:** encoders trained separately on any number of modalities learn the same representation, up to one orthogonal rotation. Think of two maps of the same region printed with different orientations: rotating one makes every landmark coincide with the other.
+
+This is a *sufficient condition*, not a law of scale. The paper also bounds how far representations can disagree when the positive-pair relations differ, and it states the result at the population level, not for a specific optimizer or a finite training run.
+
+## Why "up to a rotation": the spectral mechanism
+
+For second-order anti-collapse constraints, Appendix A of the paper makes the mechanism explicit. The positive-pair distribution defines a Markov operator on the space of world states; after normalization it has the form $K = D^{-1/2}\,\Pi\,D^{-1/2}$, where $\Pi$ is the pair distribution and $D$ the diagonal matrix of state probabilities. The constrained objective becomes a trace maximization against $K$, and Ky Fan's maximum principle selects the top non-constant eigenspace of $K$ as the optimal embedding subspace.
+
+Two consequences follow:
+
+- If a strict **spectral gap** separates the last selected eigenvalue from the first excluded one, the selected subspace is unique, and any two optimal bases of that subspace differ by an orthogonal matrix. That orthogonal matrix is exactly the "one rotation" of the theorem.
+- If the gap condition fails at the dimensionality boundary, the optimal subspace itself may not be unique: different encoders can select different, equally optimal geometries. Rotation ambiguity within a fixed subspace and non-uniqueness of the subspace are different phenomena.
+
+When two modalities induce different pair kernels, a Davis-Kahan-type perturbation bound says the post-rotation mismatch grows with the kernel difference and worsens as the relevant spectral gap shrinks. This gives the working spine of the analysis: **positive-pair graph, Markov operator, spectral subspace, eigengap, rotation ambiguity, alignment error**.
+
+## Nuisance variables: what the observation adds to the state
+
+The paper formalizes an observation as the rendering of a world state together with a modality-specific nuisance: $x = g_m(z, u)$. Nuisances are not noise in general; they are factors the modality happens to carry, such as wording, style, viewpoint, or lighting.
+
+For good-view pairs, the two nuisances are independent, so nuisance directions are not consistently rewarded, and embedding capacity concentrates on scene structure. For bad-view pairs, the shared nuisance is consistently present on both sides, so part of the capacity represents it. The proof bounds the resulting cost: capacity spent on nuisance directions reduces the fraction of the embedding explained by the scene and imposes a lower bound on cross-modal alignment error.
+
+Whether a factor is a nuisance depends on the task. Camera viewpoint is a nuisance for cross-modal semantic alignment, but essential for an action-conditioned world model.
+
+## Next-token prediction as a bad-view JEPA, carefully qualified
+
+The paper shows that next-token prediction can be written in a generalized JEPA form: the positive pair is a document prefix and its continuation, and the softmax log-partition plays the role of an anti-collapse (uniformity) term in the factorization.
+
+The proposed interpretation is that such pairs connect descriptions of the same world state only indirectly, through chains of overlapping contexts, while also linking different scenes through shared frequent tokens or document style. On this reading, language models align with vision only through scale, because their positive-pair graph is a bad-view graph relative to cross-modal scene structure.
+
+Three qualifications matter:
+
+- This reformulation is a theoretical interpretation supported by experiments, not a direct consequence of the rotation theorem. The paper itself notes that next-token prediction is not a spectral JEPA in the sense of the proof.
+- It does not establish that language models cannot learn world structure from text.
+- The anti-collapse analogy is exact in the factorization, but the nuisance argument in this setting remains heuristic.
+
+## What the experiments report, and how to read them
+
+The paper validates the theory from 145k captions to the texts of 940M web images. Reported results include:
+
+- On the same corpus, a good-view text JEPA reaches a comparable measured alignment after 21.6M training samples, versus 900M for next-token prediction: about 42 times fewer **samples**. The same comparison is about 14 times fewer text tokens and 435 times fewer unique images. Samples are not FLOPs, wall-clock time, or energy; the compared runs also use different batch-size and learning-rate recipes.
+- At web scale, a 109M-parameter text JEPA scores 0.184 on the principal neighborhood-alignment benchmark, above Qwen2.5-72B (0.154) and Llama-3-70B (0.151) in the same evaluation, and above CLIP's text encoder. This is a task-specific alignment metric, not a general-capability ranking.
+- One learned rotation turns the separately trained text and image encoders into an image captioner, reaching CIDEr 0.838 on COCO. The rotation is fitted on 30,000 image-caption pairs; the encoders remain separately trained, but the demonstration is not fully pair-free.
+- On a separate pair-free alignment benchmark, the text JEPA reaches 64% top-5 on ImageNet-100, versus at most 56% for the evaluated language models up to 8B parameters. The protocol is specific and should not be generalized.
+- The paper also reports a scaling law of alignment that predicts held-out runs within seed noise, but it is fitted on one recipe and overestimates some regimes where repeated data matters.
+
+A provenance caveat travels with the web-scale numbers: much of the training text consists of descriptions generated by an upstream vision-language captioner. The text encoder never sees pixels, but its supervision inherits image-text knowledge from that upstream system.
+
+## What this does not establish
+
+- **The rendering idealization.** Real captions omit what images show, and vice versa; the theorem's injective-rendering assumption does not hold literally, and the kernel-mismatch bounds are the paper's own tool for that gap.
+- **Action-conditioned predictors.** The formal analysis uses an identity predictor; JEPA world-model variants that predict embeddings conditioned on actions are not covered by the theorem.
+- **Alignment is not reasoning.** Neighborhood alignment, retrieval, and captioning scores do not establish reasoning ability, grounded interaction, general intelligence, or a complete world model.
+- **No universal convergence law.** Nothing here proves that all sufficiently large models converge. The theorem isolates the condition under which they would: shared relations between the observations the objective pairs.
+
+## Sources and position in LLM Lab
+
+- Balestriero and LeCun, [Proving and Improving the Platonic Representation Hypothesis with JEPAs](https://arxiv.org/abs/2610.39302), arXiv:2610.39302 (2026). Primary source.
+- Kejriwal, [Do AI models trained on different modalities converge to the same representation of the world?](https://aiscientist.substack.com/p/do-ai-models-trained-on-different), AI Scientist (2026). Secondary synthesis; use it for orientation, the paper for claims.
+- Huh, Cheung, Wang, and Isola, [The Platonic Representation Hypothesis](https://arxiv.org/abs/2405.07987) (2024). The original conjecture.
+
+**Position in LLM Lab:** an optional advanced deep dive in the research-questions domain. It does not modify the core Understand route and is not a prerequisite for building the small GPT. It connects three neighbouring pages: [contextualized representations](contextualized-representations.qmd) (how one model builds token-level states), [embedding linearity](embedding-linearity.qmd) (assumed geometry of representation spaces), and [scaling laws](scaling-laws.qmd) (resource-performance regularities, which this page deliberately does not reduce alignment to).
+
+::: {.callout-warning}
+**Research boundary.** The paper's proof appendices have been audited selectively, the official implementation has not been executed, and no result has been independently reproduced. Treat the reported numbers as author-reported, protocol-specific evidence, per the repository's source review dossier.
+:::
+
+::: {.self-check}
+## Check your understanding
+
+1. Two captions describe the same photograph; two masked spans come from one caption. Which pairs are good views, and why is the good/bad label task-relative rather than absolute?
+2. Give two assumptions of the Platonic Representation Theorem without which the "same representation up to a rotation" conclusion does not follow.
+3. The paper reports 42 times fewer training samples for a good-view JEPA. Why is this not a claim about 42 times less compute?
+4. Why is the interpretation of next-token prediction as a bad-view JEPA heuristic rather than a theorem?
+:::
+
+::: {.language-switch}
+**Language:** [Français](../fr/jepa-platonic-representation.qmd) · [English](jepa-platonic-representation.qmd)
+:::

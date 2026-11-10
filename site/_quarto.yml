@@ -61,6 +61,7 @@ project:
     - fr/scaling-laws.qmd
     - fr/llm-evolution.qmd
     - fr/emergence.qmd
+    - fr/jepa-platonic-representation.qmd
     - fr/in-context-learning.qmd
     - en/llm-overview.qmd
     - en/deepen.qmd
@@ -68,6 +69,7 @@ project:
     - en/scaling-laws.qmd
     - en/llm-evolution.qmd
     - en/emergence.qmd
+    - en/jepa-platonic-representation.qmd
     - en/in-context-learning.qmd
     - fr/transformer-architectures.qmd
     - fr/cross-attention.qmd
@@ -263,6 +265,7 @@ website:
                 - fr/scaling-laws.qmd
                 - fr/emergence.qmd
                 - fr/llm-evolution.qmd
+                - fr/jepa-platonic-representation.qmd
         - section: "Glossaire et histoire"
           contents:
             - fr/glossary.qmd
@@ -380,6 +383,7 @@ website:
                 - en/scaling-laws.qmd
                 - en/emergence.qmd
                 - en/llm-evolution.qmd
+                - en/jepa-platonic-representation.qmd
         - section: "Glossary and history"
           contents:
             - en/glossary.qmd

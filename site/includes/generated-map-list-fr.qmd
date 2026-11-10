@@ -79,6 +79,7 @@
     - [Lois d'échelle : paramètres, données et calcul](scaling-laws.html)
     - [Émergence des capacités : que change l’échelle ?](emergence.html)
     - [De GPT-2 aux systèmes LLM contemporains](llm-evolution.html)
+    - [Des observations partagées aux représentations partagées : JEPA et l'hypothèse de représentation platonique](jepa-platonic-representation.html)
   - [Carte des approfondissements](deepen.html)
 - **Glossaire et histoire**
   - [Glossaire des LLM et des Transformers](glossary.html)

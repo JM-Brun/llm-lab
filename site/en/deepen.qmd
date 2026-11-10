@@ -125,6 +125,7 @@ The core route introduces autoregressive generation and its minimum operations. 
 - [From GPT-2 to contemporary LLM systems](llm-evolution.qmd) — a cross-cutting synthesis from scale and post-training to reasoning and tool-using systems.
 - [Scaling laws: parameters, data, and compute](scaling-laws.qmd) — empirical relationships between training resources and loss, and limits to extrapolation.
 - [Emergence](emergence.qmd) — gradual improvement, metric-induced thresholds, and genuine discontinuities.
+- [From shared observations to shared representations: JEPA and the Platonic Representation Hypothesis](jepa-platonic-representation.qmd) — positive-pair graphs, good versus bad views, a conditional convergence theorem, and a qualified reading of cross-modal alignment evidence.
 
 Always distinguish observations, explanatory hypotheses, and conclusions that depend on the protocol.
 
