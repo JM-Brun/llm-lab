@@ -145,7 +145,7 @@ def test_static_image_only_change_uses_copy_only_incremental_mode():
     assert result["render_assets"] == ["site/images/diagram.webp"]
 
 
-def test_svg_asset_paths_cannot_escape_the_images_directory():
+def test_static_asset_paths_cannot_escape_the_images_directory():
     result = classify_changed_files(
         [
             {"filename": "site/fr/example.qmd", "status": "modified"},
@@ -158,7 +158,7 @@ def test_svg_asset_paths_cannot_escape_the_images_directory():
     assert result["render_assets"] == []
 
 
-def test_added_or_deleted_svg_asset_forces_full_render():
+def test_added_or_deleted_static_image_forces_full_render():
     for status in ("added", "removed", "renamed"):
         result = classify_changed_files(
             [
