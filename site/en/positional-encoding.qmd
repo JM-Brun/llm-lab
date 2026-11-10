@@ -35,6 +35,17 @@ A Transformer needs an ordering signal to distinguish, for example, “the cat c
 **Check yourself:** can you explain why swapping two tokens must be able to change the computation, and identify where each mechanism introduces that information?
 :::
 
+<div class="pipeline-stepper" role="navigation" aria-label="Steps for injecting positional information">
+  <a class="step-item" href="embedding-space.qmd">1. Embeddings</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item active" aria-current="step">2. Position</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="queries-keys-values.qmd">3. Q/K projections</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <a class="step-item" href="scaled-dot-product-attention.qmd">4. Attention scores</a>
+</div>
+
+
 ## Why add positional information?
 
 The previous page showed that lookup provides a content vector, but not the token's location in the sequence. Yet a token's role often depends on its place: swapping the order in “the cat chases the dog” can change who is chasing whom. The model therefore needs an ordering signal.
