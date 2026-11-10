@@ -96,7 +96,7 @@ Before interpreting a curve, document the objective, input/target shift, ignore 
 ::: {.self-check}
 ## Check your understanding
 
-For additional practice outside the lesson, see the [exercise space — mathematical foundations](exercises.qmd#foundations).
+For additional practice outside the lesson, see the [exercise space — mathematical foundations](exercises-foundations.qmd#foundations).
 
 To review the shapes of scores, targets, and batches, see [Tensors](tensors.qmd).
 

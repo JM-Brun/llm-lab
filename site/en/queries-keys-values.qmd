@@ -189,7 +189,7 @@ Understanding Q/K/V should be demonstrated through observable operations, not ju
 4. **Predict the consequences of parameter changes:** identify what changes — and what remains invariant — when $W_Q$, $W_K$, or $W_V$ is modified.
 5. **Transfer the reasoning:** reuse these distinctions in cross-attention and attention variants, making changes in input provenance or projection sharing explicit.
 
-The associated exercises are grouped in the [Attention](exercises.qmd#attention) section. They distinguish Q/K/V-specific competencies from score, softmax, and aggregation calculations, which belong to the [scaled dot-product attention](scaled-dot-product-attention.qmd) lesson.
+The associated exercises are grouped in the [Attention](exercises-attention.qmd#attention) section. They distinguish Q/K/V-specific competencies from score, softmax, and aggregation calculations, which belong to the [scaled dot-product attention](scaled-dot-product-attention.qmd) lesson.
 
 ## Keep these objects distinct
 
@@ -204,7 +204,7 @@ A key is not a human-readable semantic label, and attention is not nearest-neigh
 ::: {.self-check}
 ## Check the essential idea
 
-[Extended exercises on Q/K/V and attention](exercises.qmd#attention).
+[Extended exercises on Q/K/V and attention](exercises-attention.qmd#attention).
 
 **Which projections determine attention weights, and which one supplies the aggregated vectors? What happens if V changes while Q and K stay the same?**
 

@@ -174,7 +174,7 @@ In this synthetic case, changing future keys and values leaves earlier outputs u
 ::: {.self-check}
 ## Check your understanding
 
-[Extended exercises on this topic](exercises.qmd#attention).
+[Extended exercises on this topic](exercises-attention.qmd#attention).
 
 1. A row of already-scaled scores is $(1,0)$. What do the weights become if the second position is forbidden by a causal mask? Why must the mask be applied before softmax?
 

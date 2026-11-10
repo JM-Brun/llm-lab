@@ -121,7 +121,7 @@ The formulation is presented in [Vaswani et al. (2017), *Attention Is All You Ne
 ::: {.self-check}
 ## Check your understanding
 
-[Extended exercises on this topic](../en/exercises.qmd#attention).
+[Extended exercises on this topic](../en/exercises-attention.qmd#attention).
 
 1. A row of scores is $(2,0)$ and the key dimension is $d_k=4$. Calculate the softmax weights after scaling.
 
