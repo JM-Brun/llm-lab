@@ -136,10 +136,6 @@ Use these dimensions consistently:
 - Only reference pages that exist in the current source tree. If a destination is planned but not yet published, record it as planned work in the curriculum/backlog rather than as a live relation.
 - Keep French and English metadata semantically equivalent. Wording can differ, but scope, purpose, relation structure, and tag dimensions should remain aligned.
 
-### Dedicated lesson exercise pages
-
-Each published lesson with a question set may have a companion page under `site/<language>/exercises/<lesson-slug>.qmd`. Its stable page ID is `<language>/<lesson-slug>-exercises` and its `topic` tag is the lesson topic with the `-exercises` suffix. The companion uses `type:exercise-hub` and `destination:practice`, links back to its canonical lesson, and is listed under the corresponding language's “Exercises by lesson” navigation section. The lesson links to the companion and records the cross-reference in `related`. This convention keeps the URL hierarchy aligned with the practice destination while preserving the existing one-segment stable-ID contract and bilingual topic uniqueness. Per-lesson pages hold focused retrieval questions and their worked answers; topic collections remain responsible for integrated, cross-lesson practice. Avoid duplicating a complete exercise in both places: a topic collection may reference the companion when it needs the same prerequisite check.
-
 ## 6. Maintenance rules
 
 1. When adding or renaming a page, update its YAML keywords and comment block in the same change.

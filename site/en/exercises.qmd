@@ -59,7 +59,7 @@ The following topics are part of the longer-term practice curriculum. They are n
 
 ## A note on lesson self-checks
 
-Do not move every question out of a lesson. A short, tightly scoped self-check belongs beside the concept it reinforces. Move an exercise here when it requires sustained calculation, several reasoning steps, a worked solution, comparison of alternatives, or transfer beyond the immediate lesson. The dedicated collections may link back to lesson pages for preparation, but should not duplicate their conceptual explanations.
+Focused retrieval questions and their worked answers live on the companion page for the relevant lesson. Keep explanatory examples and demonstrations in the lesson when they teach the mechanism rather than test the learner. The topic collections here are for integrated, cross-lesson practice; they may refer to a companion check as a prerequisite, but should not reproduce the same prompt and solution.
 
 ## Foundational references
 

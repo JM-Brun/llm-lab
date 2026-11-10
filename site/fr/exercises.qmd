@@ -59,7 +59,7 @@ Les thèmes suivants font partie du programme de pratique à plus long terme. Il
 
 ## Où placer les questions de contrôle ?
 
-Il ne faut pas déplacer toutes les questions hors des leçons. Une courte vérification, étroitement liée au concept présenté, reste à sa place dans la leçon. Déplacez un exercice ici lorsqu'il demande un calcul soutenu, plusieurs étapes de raisonnement, un corrigé détaillé, une comparaison d'alternatives ou un transfert au-delà de la leçon immédiate. Les collections peuvent renvoyer vers les leçons pour la préparation, sans dupliquer leurs explications conceptuelles.
+Les questions de rappel ciblées et leurs corrigés figurent sur la page compagne de la leçon concernée. Les exemples explicatifs et les démonstrations restent dans la leçon lorsqu'ils enseignent le mécanisme plutôt qu'ils n'évaluent l'apprenant. Les collections thématiques sont réservées à la pratique intégrée et transversale ; elles peuvent renvoyer à une vérification compagne comme prérequis, sans reproduire le même énoncé et son corrigé.
 
 ## Références structurantes
 
