@@ -70,6 +70,9 @@ Re-reading the pages before editing showed three findings were overstated. They 
 - **F5 (withdrawn).** `cross-entropy` already warns against confusing it with the entropy of the predicted distribution, and `likelihood` does not depend on `entropy`. A recall adds little.
 - **F6 (withdrawn).** `transformer` already links the block walkthrough (EN line 116, FR line 188) and the worked configuration page. The open question is whether Understand readers should meet a worked block trace without entering Build; that is an editorial choice, not a missing link.
 
+- **F3 (fix reframed).** Chaining `training-loop → transformer-architectures → llm-limits` was tried and rejected. The route generator treats `training-loop` as the final core page and ends the Understand path there with a single forward card to Build (`test_published_route_ends_with_exactly_one_forward_card`); a chain beyond it fails that test and contradicts the design. The pages already carry an "optional in stage 1" context cue (`docs/guided-route-membership-projection.md`, invariant 4: memberships are never inferred from the sidebar). What remains is a menu-placement choice: keep the two pages at the end of the Understand sidebar, or move them beside `llm-overview`. That is a maintainer decision under the navigation contract.
+- **F11 (withdrawn).** `tests/site/test_language_switch.py` already requires an explicit FR/EN mapping for every page, so filename differences are covered.
+
 ## Implemented so far
 
 - F1, option B: new `training-loop` lesson (EN/FR), route stage 8, sidebars, registries, docs.
@@ -81,14 +84,14 @@ Re-reading the pages before editing showed three findings were overstated. They 
 |---|---|---|---|
 | 1 | Decide stage-8 scope: reword (A) or add "From gradients to a trained model" (B) | F1 | P1 |
 | 2 | Optional route stage 9, "From base model to assistant", composed from existing pages | F2, F3 | P1 |
-| 3 | Reconcile sidebar tail and route for `transformer-architectures` / `llm-limits` | F3 | P1 |
+| 3 | Decide sidebar placement of `transformer-architectures` / `llm-limits` (do not chain them after `training-loop`) | F3 | P3 |
 | 4 | Reader-facing signal for the stage-6 revisit of `generation` (not promotion of `decoding-strategies`) | F4 | P2 |
 | 5 | (withdrawn) entropy recall | F5 | — |
 | 6 | Decide whether Understand gets a worked block trace | F6 | P3 |
 | 7 | Per-stage check question in `guided-route.yml`, shown on the learning map | F7 | P2 |
 | 8 | (done on landing pages) prerequisites; consider `llm-overview` | F8 | P3 |
 | 9 | Use five movements as stage groups on the learning map | F9 | P3 |
-| 10 | Parity check keyed on page ID | F11 | P4 |
+| 10 | (withdrawn) parity check keyed on page ID | F11 | — |
 | 11 | Split `docs/learning-path.md` into canonical doc and archive | F12 | P4 |
 
 Findings F10 (in-browser execution) needs a separate decision before an issue is opened.
