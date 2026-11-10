@@ -134,10 +134,19 @@ Pour mettre en pratique les compétences associées à cette leçon, les [exerci
 - décrire qualitativement les dépendances entre projections, poids et contenu, sans effectuer de calcul matriciel.
 :::
 
-## Exercices
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Ressources complémentaires</span>
+  <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/queries-keys-values.qmd).
 
+</div>
+</details>
 
 {{< include ../includes/generated-suggested-route-fr-queries-keys-values.qmd >}}
 

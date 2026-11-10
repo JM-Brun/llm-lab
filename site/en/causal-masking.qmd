@@ -134,7 +134,14 @@ The causal rule can also be stated as a prefix property: with parameters and a p
 - [Objective and mathematical foundations](mathematical-foundations.qmd) connects the constraint to next-token prediction and loss.
 - The [Transformer overview](transformer.qmd) places masking in the full architecture.
 
-## Practice
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Supplementary resources</span>
+  <span class="learning-resources__description">Experiment, explore further, and practise the ideas from this lesson.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Practice
 
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/causal-masking.qmd).
 
@@ -146,6 +153,9 @@ A tested reference implementation is available in `src/llm_lab/foundations/atten
 - [Temporal invariance unit tests](https://github.com/JM-Brun/llm-lab/tree/main/tests/unit/test_attention.py)
 - [Planned acceptance criteria](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
 :::
+
+</div>
+</details>
 
 {{< include ../includes/generated-suggested-route-en-causal-masking.qmd >}}
 

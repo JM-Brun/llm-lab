@@ -102,14 +102,24 @@ La formulation est présentée dans [Vaswani et al. (2017), *Attention Is All Yo
 - La fonction softmax est liée aux [probabilités](probabilites.qmd), mais une distribution normalisée n'est pas nécessairement calibrée.
 - La [synthèse Transformer](transformer.qmd) remet le calcul dans le flux du modèle.
 
-## Exercices
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Ressources complémentaires</span>
+  <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/scaled-dot-product-attention.qmd).
 
 
-## Complément côté Build (facultatif)
+### Complément côté Build (facultatif)
 
 Cette page appartient au parcours conceptuel **Théorie / Understand** : elle explique le mécanisme et ses invariants. Pour voir comment la primitive est appelée dans une implémentation multi-têtes, consultez facultativement la [visite guidée du bloc Transformer](transformer-block-walkthrough.qmd), qui appartient au parcours **Build**, indépendant du parcours conceptuel. Les conventions générales sur les axes et les dimensions sont regroupées dans [Tenseurs](tensors.qmd).
+
+</div>
+</details>
 
 {{< include ../includes/generated-suggested-route-fr-scaled-dot-product-attention.qmd >}}
 

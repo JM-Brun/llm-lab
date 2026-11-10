@@ -134,10 +134,19 @@ By the end of this lesson, you should be able to:
 - describe the qualitative dependencies between projections, weights, and content, without performing matrix calculations.
 :::
 
-## Practice
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Supplementary resources</span>
+  <span class="learning-resources__description">Experiment, explore further, and practise the ideas from this lesson.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Practice
 
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/queries-keys-values.qmd).
 
+</div>
+</details>
 
 {{< include ../includes/generated-suggested-route-en-queries-keys-values.qmd >}}
 

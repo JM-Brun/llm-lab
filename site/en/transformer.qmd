@@ -127,17 +127,24 @@ After the final block, the final normalization and output head produce the **log
 <span id="what-this-demonstration-does-and-does-not-establish"></span>
 <span id="observe-a-transformer-in-action"></span>
 
-## Explore in practice
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Supplementary resources</span>
+  <span class="learning-resources__description">Experiment, explore further, and practise the ideas from this lesson.</span>
+</summary>
+<div class="learning-resources__content">
 
-The [GPT-2 exploration workshop](transformer-explainer.qmd) lets you observe these mechanisms on a real model: run controlled experiments and examine the limits of the visualization. It is an independent analysis exercise — useful, but not required to follow the flow described here.
+<h3>Explore in practice</h3>
+<p>The <a href="transformer-explainer.qmd">GPT-2 exploration workshop</a> lets you observe these mechanisms on a real model: run controlled experiments and examine the limits of the visualization. It is an independent analysis exercise — useful, but not required to follow this lesson.</p>
 
-## Further reading
+<h3 id="further-reading">Further reading</h3>
+<p>For visualizations, the foundational paper, and implementation resources, see the <a href="deepen.qmd#transformer-resources">Transformer resources in Deepen</a>. For a complementary first overview, see <a href="https://dev.to/nishanthan-k/understanding-transformer-the-architecture-behind-modern-ai-55o8">Understanding Transformer: The Architecture Behind Modern AI</a>. These resources are optional and are not part of the core learning path.</p>
 
-For visualizations, the foundational paper, and implementation resources, see the [Transformer resources in Deepen](deepen.qmd#transformer-resources). For a complementary first overview, see [Understanding Transformer: The Architecture Behind Modern AI](https://dev.to/nishanthan-k/understanding-transformer-the-architecture-behind-modern-ai-55o8). These resources are optional and are not part of the core learning path.
+<h3>Practice</h3>
+<p>The questions and exercises for this lesson are collected on its <a href="exercises/transformer.qmd">dedicated practice page</a>.</p>
 
-## Practice
-
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/transformer.qmd).
+</div>
+</details>
 
 {{< include ../includes/generated-suggested-route-en-transformer.qmd >}}
 

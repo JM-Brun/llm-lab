@@ -77,10 +77,19 @@ La taille du modèle ne suffit pas non plus à expliquer ses performances. La qu
 
 Citez le protocole, pas seulement la conclusion.
 
-## Exercices
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Ressources complémentaires</span>
+  <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/llm-limits.qmd).
 
+</div>
+</details>
 
 ::: {.language-switch}
 **Langue :** [Français](llm-limits.qmd) · [English](../en/llm-limits.qmd)

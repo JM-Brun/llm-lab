@@ -117,15 +117,25 @@ Compare this with the analytical gradient using absolute and relative tolerances
 - **“One passing finite-difference check proves the entire backward pass.”** It verifies one function, case, precision, and configuration; it does not replace shape, edge-case, and integration tests.
 :::
 
-## Practice
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Supplementary resources</span>
+  <span class="learning-resources__description">Experiment, explore further, and practise the ideas from this lesson.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Practice
 
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/gradients.qmd).
 
 
-## Further reading
+### Further reading
 
 - [PyTorch — Autograd mechanics](https://docs.pytorch.org/docs/stable/notes/autograd.html): explains reverse-mode automatic differentiation and the computation graph.
 - [PyTorch — `gradcheck`](https://docs.pytorch.org/docs/stable/generated/torch.autograd.gradcheck.gradcheck.html): documents numerical checking of analytical gradients against finite differences.
+
+</div>
+</details>
 
 {{< include ../includes/generated-suggested-route-en-gradients.qmd >}}
 

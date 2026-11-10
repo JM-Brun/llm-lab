@@ -96,14 +96,24 @@ If the probabilities assigned to three observed tokens are $(0.5, 0.25, 0.8)$, t
 - **“NLL is comparable without specifying the tokenizer.”** Not always: different segmentations change the number and granularity of evaluated events.
 :::
 
-## Practice
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Supplementary resources</span>
+  <span class="learning-resources__description">Experiment, explore further, and practise the ideas from this lesson.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Practice
 
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/likelihood.qmd).
 
 
-## Further reading
+### Further reading
 
 - [Goodfellow, Bengio, and Courville — *Deep Learning*, §5.5: Maximum Likelihood Estimation](https://www.deeplearningbook.org/contents/ml.html): a general mathematical treatment of likelihood, log-likelihood, and maximum-likelihood estimation. The autoregressive factorization above applies that general framework to token sequences.
+
+</div>
+</details>
 
 {{< include ../includes/generated-suggested-route-en-likelihood.qmd >}}
 

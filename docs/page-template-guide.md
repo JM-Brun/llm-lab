@@ -58,3 +58,10 @@ Ask only the questions that apply:
 - Has the rendered experience and the other language version been checked?
 
 A justified deviation is not a defect. If a prompt does not fit the page, mark it not applicable or omit it; do not add content to satisfy the guide.
+
+
+## Supplementary resources disclosure
+
+For pages in the guided learning paths, collect optional links that would otherwise form separate end-of-page sections (hands-on exploration, further reading, and dedicated exercises) in one native, collapsed-by-default disclosure. Use the shared `.learning-resources` pattern documented in [the supplementary resource block standard](learning-resource-block.md).
+
+Keep essential explanations, contextual links, and short in-page self-checks in the main reading flow. Do not move a self-check into the disclosure merely because it links to a dedicated exercise page. Omit categories that have no genuinely useful resource; do not create empty headings. Preserve established fragment IDs and ensure links into collapsed content open the disclosure.

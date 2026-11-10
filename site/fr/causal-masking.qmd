@@ -135,7 +135,14 @@ La règle causale se formule aussi comme une propriété de préfixe : à param�
 - [Synthèse Transformer](transformer.qmd) replace le masque dans l'architecture globale.
 - [Logits](logits.qmd) présente les scores produits par la tête de sortie après le calcul des blocs Transformer.
 
-## Exercices
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Ressources complémentaires</span>
+  <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/causal-masking.qmd).
 
@@ -147,6 +154,9 @@ Une implémentation de référence testée est disponible dans `src/llm_lab/foun
 - [Tests d'invariance temporelle](https://github.com/JM-Brun/llm-lab/tree/main/tests/unit/test_attention.py)
 - [Critères d'acceptation prévus](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
 :::
+
+</div>
+</details>
 
 {{< include ../includes/generated-suggested-route-fr-causal-masking.qmd >}}
 

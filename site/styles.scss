@@ -2261,3 +2261,46 @@ p:has(.pipeline-stepper) {
     transition: none;
   }
 }
+
+
+/* Supplementary learning resources: one quiet, native disclosure per lesson.
+   The primary lesson remains visible; optional links stay grouped and collapsed. */
+details.learning-resources {
+  margin: 2.2rem 0 1.5rem;
+  padding: 0;
+  border: 1px solid #D7E5DA;
+  border-radius: .6rem;
+  background: #F8FAFC;
+  box-shadow: none;
+}
+details.learning-resources > summary {
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+  padding: .9rem 1.1rem;
+  color: #14532D;
+  cursor: pointer;
+  list-style-position: inside;
+}
+details.learning-resources > summary::marker { color: #64748B; }
+.learning-resources__title { font-weight: 750; }
+.learning-resources__description {
+  padding-left: 1.15rem;
+  color: #52665A;
+  font-size: .88rem;
+  font-weight: 450;
+}
+.learning-resources__content {
+  padding: .1rem 1.25rem 1rem 2.25rem;
+  border-top: 1px solid #D7E5DA;
+}
+.learning-resources__content h3 {
+  margin: 1rem 0 .35rem;
+  color: #334155;
+  font-size: 1rem;
+}
+.learning-resources__content p { margin: .25rem 0 .65rem; }
+details.learning-resources[open] > summary { border-bottom: 0; }
+@media (max-width: 600px) {
+  .learning-resources__content { padding-left: 1.25rem; }
+}
