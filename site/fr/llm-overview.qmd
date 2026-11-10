@@ -35,7 +35,7 @@ C'est le principe d'un **modèle de langage** : attribuer des probabilités aux 
 - **Le calcul d'un GPT :** à partir d'un contexte, il transforme le texte en logits puis en distribution conditionnelle sur le prochain token, un token après l'autre, avec des paramètres fixes pendant l'inférence ordinaire.
 - **Un calcul partagé, trois usages :** la génération réinjecte un token sélectionné, le scoring évalue une cible observée, l'apprentissage compare les distributions aux tokens cibles et met à jour les paramètres — ce ne sont pas des branches d'une seule boucle d'exécution.
 
-**Question de contrôle :** pouvez-vous dire ce que désignent LLM, GPT et Transformer, puis séparer l'architecture (le calcul), l'apprentissage (comment les paramètres sont obtenus) et l'utilisation (ce que l'on fait du modèle à paramètres fixés) ?
+**Question rapide :** pouvez-vous dire ce que désignent LLM, GPT et Transformer, puis séparer l'architecture (le calcul), l'apprentissage (comment les paramètres sont obtenus) et l'utilisation (ce que l'on fait du modèle à paramètres fixés) ?
 :::
 
 <div class="pipeline-stepper" role="navigation" aria-label="Étapes de l’entrée à la génération">
@@ -141,4 +141,23 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 
 ::: {.language-switch}
 **Langue :** [Français](llm-overview.qmd) · [English](../en/llm-overview.qmd)
+:::
+
+::: {.self-check}
+## Vérifier sa compréhension
+
+[Exercices dédiés](exercises/llm-overview.qmd).
+
+1. Le fine-tuning change-t-il nécessairement l'architecture ?
+2. Une documentation change chaque jour : faut-il nécessairement réentraîner le modèle ?
+3. Quelle différence distinguer entre architecture, apprentissage et utilisation ?
+
+<details>
+<summary>Afficher les réponses</summary>
+
+1. Non. Le fine-tuning modifie principalement les paramètres ; certaines méthodes ajoutent toutefois des modules.
+2. Non. Un système RAG peut récupérer des documents récents à l'inférence sans modifier les poids, sans garantir pour autant leur pertinence ou la fidélité de la réponse.
+3. L'architecture organise le calcul, l'apprentissage détermine les paramètres, et l'utilisation applique le modèle avec ses paramètres fixés.
+
+</details>
 :::

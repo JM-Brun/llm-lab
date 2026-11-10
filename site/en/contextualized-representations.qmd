@@ -46,7 +46,7 @@ Two sentences can contain the same token without giving it the same role: *bank*
 - **Context:** each block transforms a position's state using the tokens it can access.
 - **Result:** hidden states can differ, without guaranteeing a clean geometric representation of human “senses.”
 
-**Check yourself:** how can two occurrences share the same initial vector yet have different hidden states?
+**Quick question:** how can two occurrences share the same initial vector yet have different hidden states?
 :::
 
 
@@ -142,4 +142,23 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 ::: {.language-switch}
 **Language:** [Français](../fr/contextualized-representations.qmd) · [English](contextualized-representations.qmd)
+:::
+
+::: {.self-check}
+## Check your understanding
+
+[Dedicated exercises](exercises/contextualized-representations.qmd).
+
+Two occurrences of the same token ID appear in different sentences.
+
+1. Does the embedding lookup return the same initial vector?
+2. Must their hidden states remain identical after the Transformer layers?
+3. At what stage does contextual information enter the computation?
+
+<details>
+<summary>Show the reasoning</summary>
+
+With a fixed embedding matrix, the same token ID selects the same row. Hidden states can differ after the Transformer layers combine positional information with information from other accessible tokens. The lookup itself does not disambiguate the word's meaning.
+
+</details>
 :::

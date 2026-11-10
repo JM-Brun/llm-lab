@@ -33,7 +33,7 @@ Dans un LLM autorégressif, l'entropie décrit la dispersion de la distribution 
 - **Bornes :** pour un vocabulaire fini de taille $V$, $0\leq H(p)\leq\log V$ nats (logarithme naturel).
 - **Interprétation :** faible entropie ne signifie ni vérité ni calibration ; tokenizer, contexte et température influencent la quantité mesurée.
 
-**Question de contrôle :** pouvez-vous distinguer l'incertitude avant observation de la surprise après observation d'une cible ?
+**Question rapide :** pouvez-vous distinguer l'incertitude avant observation de la surprise après observation d'une cible ?
 :::
 
 :::: {.pipeline-stepper .meta-flow .meta-flow--branch role="navigation" aria-label="Carte des notions liées à la distribution prédictive"}
@@ -145,4 +145,23 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 
 ::: {.language-switch}
 [Français](entropy.qmd) · [English](../en/entropy.qmd)
+:::
+
+::: {.self-check}
+## Vérifier sa compréhension
+
+[Exercices dédiés](exercises/entropy.qmd).
+
+1. Une entropie faible garantit-elle que le token le plus probable est correct ?
+2. En quoi l'entropie diffère-t-elle de la surprise du token observé ?
+3. Pourquoi faut-il documenter le tokenizer pour comparer des perplexités ?
+
+<details>
+<summary>Afficher les réponses</summary>
+
+1. Non. L'entropie décrit la dispersion de la distribution, pas la correction factuelle.
+2. L'entropie moyenne la surprise sur tous les tokens possibles ; la surprise observée utilise la probabilité attribuée à la cible réelle.
+3. Les tokenizers segmentent différemment le texte, ce qui change les unités et le nombre de positions évaluées.
+
+</details>
 :::

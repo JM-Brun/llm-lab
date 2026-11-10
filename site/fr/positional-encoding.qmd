@@ -32,7 +32,7 @@ Un Transformer doit disposer d'un signal d'ordre pour distinguer, par exemple, �
 - **Où :** les encodages absolus sont ajoutés aux représentations d'entrée ; les mécanismes relatifs agissent dans l'attention ; **RoPE** fait tourner les requêtes et les clés après projection.
 - **À ne pas confondre :** le masque causal limite les positions visibles (pas de futur), mais ne remplace pas un mécanisme qui représente les positions ou leurs décalages.
 
-**Question de contrôle :** pouvez-vous expliquer pourquoi inverser deux tokens doit pouvoir changer le calcul, et indiquer à quel endroit chaque mécanisme introduit cette information ?
+**Question rapide :** pouvez-vous expliquer pourquoi inverser deux tokens doit pouvoir changer le calcul, et indiquer à quel endroit chaque mécanisme introduit cette information ?
 :::
 
 :::: {.pipeline-stepper .meta-flow .meta-flow--branch role="navigation" aria-label="Deux façons courantes d’injecter l’information positionnelle"}
@@ -137,4 +137,23 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 
 ::: {.language-switch}
 **Langue :** [Français](positional-encoding.qmd) · [English](../en/positional-encoding.qmd)
+:::
+
+::: {.self-check}
+## Vérifier sa compréhension
+
+[Exercices dédiés](exercises/positional-encoding.qmd).
+
+1. Pourquoi les embeddings de contenu seuls ne suffisent-ils pas à représenter l'ordre ?
+2. RoPE ajoute-t-il un vecteur de position aux embeddings ?
+3. Le masque causal remplace-t-il un mécanisme positionnel ?
+
+<details>
+<summary>Afficher les réponses</summary>
+
+1. Le lookup renvoie le même vecteur pour un token donné, quelle que soit sa position. Un mécanisme positionnel ou une contrainte structurelle doit rendre l'ordre accessible au calcul.
+2. Non. RoPE applique des rotations dépendant de la position aux requêtes et aux clés après projection.
+3. Non. Le masque causal limite les positions visibles ; il n'encode pas à lui seul les positions absolues ou les décalages relatifs.
+
+</details>
 :::

@@ -33,7 +33,7 @@ For a one-hot target, cross-entropy at one position is the negative log-probabil
 - **A sequence:** align each logit with the correct target token, shift inputs and targets consistently, then exclude invalid positions from both numerator and denominator.
 - **A batch:** a sum, mean over valid tokens, and mean over sequences have different scales; state the convention before comparing.
 
-**Check yourself:** can you recover a token's NLL and explain why a loss mask cannot replace the causal mask?
+**Quick question:** can you recover a token's NLL and explain why a loss mask cannot replace the causal mask?
 :::
 
 <div class="pipeline-stepper" role="navigation" aria-label="Steps in calculating cross-entropy">
@@ -259,3 +259,22 @@ The [mathematical foundations collection](exercises.qmd#foundations) includes wo
 :::: {.language-switch}
 [Français](../fr/cross-entropy.qmd) · [English](cross-entropy.qmd)
 ::::
+
+::: {.self-check}
+## Check your understanding
+
+[Dedicated exercises](exercises/cross-entropy.qmd).
+
+1. Why is the loss zero when the target probability is 1?
+2. Why should masked positions be excluded from the denominator of the mean?
+3. Does perplexity directly measure the truth or usefulness of an answer?
+
+<details>
+<summary>Show the answers</summary>
+
+1. The loss is $-\log p_y$, which is zero when $p_y=1$.
+2. Otherwise, the mean is no longer taken only over valid tokens and its scale is distorted.
+3. No. Perplexity measures probability assigned to tokens in a particular dataset; it does not directly measure truth, usefulness, or safety.
+
+</details>
+:::

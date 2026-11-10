@@ -33,7 +33,7 @@ In an autoregressive LLM, entropy describes how spread out the predicted next-to
 - **Bounds:** for a finite vocabulary of size $V$, $0\leq H(p)\leq\log V$ nats (natural logarithm).
 - **Interpretation:** low entropy guarantees neither factual correctness nor calibration; tokenizer, context, and temperature affect the quantity being measured.
 
-**Check yourself:** can you distinguish uncertainty before observing a token from surprise after observing a target?
+**Quick question:** can you distinguish uncertainty before observing a token from surprise after observing a target?
 :::
 
 :::: {.pipeline-stepper .meta-flow .meta-flow--branch role="navigation" aria-label="Map of concepts related to the predictive distribution"}
@@ -146,3 +146,22 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 :::: {.language-switch}
 [Français](../fr/entropy.qmd) · [English](entropy.qmd)
 ::::
+
+::: {.self-check}
+## Check your understanding
+
+[Dedicated exercises](exercises/entropy.qmd).
+
+1. Does low entropy guarantee that the most likely token is correct?
+2. How does entropy differ from the surprise of the observed token?
+3. Why should the tokenizer be documented when comparing perplexities?
+
+<details>
+<summary>Show the answers</summary>
+
+1. No. Entropy describes the spread of the distribution, not factual correctness.
+2. Entropy averages surprise over all possible tokens; observed surprise uses the probability assigned to the actual target.
+3. Tokenizers segment text differently, changing the units and number of positions being evaluated.
+
+</details>
+:::

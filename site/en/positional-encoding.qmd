@@ -32,7 +32,7 @@ A Transformer needs an ordering signal to distinguish, for example, “the cat c
 - **Where:** absolute encodings are added to input representations; relative mechanisms act inside attention; **RoPE** rotates queries and keys after projection.
 - **Do not conflate:** the causal mask limits which positions are visible (no future tokens), but it does not replace a mechanism that represents positions or their offsets.
 
-**Check yourself:** can you explain why swapping two tokens must be able to change the computation, and identify where each mechanism introduces that information?
+**Quick question:** can you explain why swapping two tokens must be able to change the computation, and identify where each mechanism introduces that information?
 :::
 
 :::: {.pipeline-stepper .meta-flow .meta-flow--branch role="navigation" aria-label="Two common ways to inject positional information"}
@@ -137,4 +137,23 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 ::: {.language-switch}
 **Language:** [Français](../fr/positional-encoding.qmd) · [English](positional-encoding.qmd)
+:::
+
+::: {.self-check}
+## Check your understanding
+
+[Dedicated exercises](exercises/positional-encoding.qmd).
+
+1. Why are content embeddings alone insufficient to represent order?
+2. Does RoPE add a positional vector to token embeddings?
+3. Does the causal mask replace a positional mechanism?
+
+<details>
+<summary>Show the answers</summary>
+
+1. The lookup returns the same vector for a given token regardless of its position. A positional mechanism or structural constraint must make order available to the computation.
+2. No. RoPE applies position-dependent rotations to queries and keys after projection.
+3. No. The causal mask limits visible positions; it does not by itself encode absolute positions or relative offsets.
+
+</details>
 :::

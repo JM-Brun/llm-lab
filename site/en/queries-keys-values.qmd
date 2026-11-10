@@ -142,3 +142,18 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 ::: {.language-switch}
 **Language:** [Français](../fr/queries-keys-values.qmd) · [English](queries-keys-values.qmd)
 :::
+
+::: {.self-check}
+## Check your understanding
+
+[Dedicated exercises on Q/K/V and attention](exercises/queries-keys-values.qmd).
+
+Which projections determine attention weights, and which one supplies the aggregated content? What happens if V changes while Q and K remain fixed?
+
+<details>
+<summary>Show the reasoning</summary>
+
+Q and K determine the scores and therefore the attention weights. V supplies the aggregated vectors. If only V changes, the weights remain the same, but the aggregated result can change.
+
+</details>
+:::

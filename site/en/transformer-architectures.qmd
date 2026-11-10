@@ -33,7 +33,7 @@ A Transformer can use an encoder, a decoder, or both. This choice determines whi
 - **Decoder-only:** uses causal attention to extend a prefix; GPT is the central teaching example here.
 - **Three distinct concepts:** architecture (how computation is organized), training objective (what is optimized), and task (what the system must do).
 
-**Check yourself:** can you explain which context each architecture can access and why a prediction objective does not by itself define the architecture?
+**Quick question:** can you explain which context each architecture can access and why a prediction objective does not by itself define the architecture?
 :::
 
 This comparison is optional: to follow the main route, move directly from the [LLM panorama](llm-overview.qmd) to [generation](generation.qmd).
@@ -118,4 +118,23 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 ::: {.language-switch}
 **Language:** [Français](../fr/transformer-architectures.qmd) · [English](transformer-architectures.qmd)
+:::
+
+::: {.self-check}
+## Check your understanding
+
+[Dedicated Transformer architecture exercises](exercises/transformer-architectures.qmd).
+
+1. Why can BERT use tokens that appear after the position being represented?
+2. Which operation particularly distinguishes an encoder–decoder from a decoder-only model?
+3. Does next-token prediction define every Transformer?
+
+<details>
+<summary>Show the answers</summary>
+
+1. Its encoder generally uses bidirectional attention over the input.
+2. The decoder's cross-attention to representations produced by the encoder.
+3. No. It is a typical objective for autoregressive decoders, not a property of every Transformer architecture.
+
+</details>
 :::

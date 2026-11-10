@@ -159,3 +159,20 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 ::: {.language-switch}
 **Language:** [Français](../fr/transformer.qmd) · [English](transformer.qmd)
 :::
+
+::: {.self-check}
+## Check your understanding
+
+[Dedicated Transformer exercises](exercises/transformer.qmd).
+
+1. Which operation mixes information across positions, and which transforms each position independently?
+2. Why does a residual connection not replace the sublayer's transformation?
+
+<details>
+<summary>Show the answers</summary>
+
+1. Self-attention mixes information across permitted positions; the MLP applies a position-wise transformation with shared weights.
+2. The residual connection adds the sublayer output to its input, preserving a direct path while allowing the learned transformation to contribute.
+
+</details>
+:::

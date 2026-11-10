@@ -158,3 +158,20 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 ::: {.language-switch}
 **Langue :** [Français](transformer.qmd) · [English](../en/transformer.qmd)
 :::
+
+::: {.self-check}
+## Vérifier sa compréhension
+
+[Exercices dédiés au Transformer](exercises/transformer.qmd).
+
+1. Quelle opération mélange l'information entre positions, et laquelle transforme chaque position indépendamment ?
+2. Pourquoi une connexion résiduelle ne remplace-t-elle pas la transformation de la sous-couche ?
+
+<details>
+<summary>Afficher les réponses</summary>
+
+1. L'auto-attention mélange l'information entre positions autorisées ; le MLP applique une transformation position par position avec des poids partagés.
+2. La connexion résiduelle additionne la sortie de la sous-couche à son entrée, préservant un chemin direct tout en laissant la transformation apprise contribuer au résultat.
+
+</details>
+:::

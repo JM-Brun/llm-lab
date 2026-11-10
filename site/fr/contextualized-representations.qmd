@@ -46,7 +46,7 @@ Deux phrases peuvent contenir le même token sans lui donner le même rôle : *b
 - **Contexte :** chaque bloc transforme l'état d'une position à partir des tokens auxquels elle peut accéder.
 - **Résultat :** les états cachés peuvent différer, sans garantir une représentation géométrique nette des « sens » humains.
 
-**Question de contrôle :** comment deux occurrences peuvent-elles partager le même vecteur initial tout en ayant des états cachés différents ?
+**Question rapide :** comment deux occurrences peuvent-elles partager le même vecteur initial tout en ayant des états cachés différents ?
 :::
 
 
@@ -144,4 +144,23 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 
 ::: {.language-switch}
 **Langue :** [Français](contextualized-representations.qmd) · [English](../en/contextualized-representations.qmd)
+:::
+
+::: {.self-check}
+## Vérifier sa compréhension
+
+[Exercices dédiés](exercises/contextualized-representations.qmd).
+
+Deux occurrences du même ID de token apparaissent dans deux phrases différentes.
+
+1. Le lookup renvoie-t-il le même vecteur initial ?
+2. Les états cachés après les couches Transformer doivent-ils rester identiques ?
+3. À quelle étape l'information contextuelle intervient-elle ?
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+Avec une matrice d'embeddings fixe, le même ID sélectionne la même ligne. Les états cachés peuvent ensuite différer, car les couches Transformer combinent l'information de la position avec celle des autres tokens accessibles. Le lookup seul ne désambiguïse pas le sens du mot.
+
+</details>
 :::

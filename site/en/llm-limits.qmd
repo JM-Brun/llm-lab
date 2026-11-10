@@ -67,7 +67,7 @@ Model size alone does not explain performance either. Data quality, diversity, a
 - **Emergence:** an apparent discontinuity depends on the metric, thresholds, compared models, and protocol.
 - **Method:** frame limitations as testable hypotheses and examine them with baselines, controls, and task-appropriate evaluation.
 
-**Check your understanding:** what observation would distinguish measured improvement from a genuine qualitative transition?
+**Quick question:** what observation would distinguish measured improvement from a genuine qualitative transition?
 :::
 
 ## Primary sources and their role
@@ -84,4 +84,21 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 ::: {.language-switch}
 **Language:** [Français](../fr/llm-limits.qmd) · [English](llm-limits.qmd)
+:::
+
+::: {.self-check}
+## Check your understanding
+
+[Exercises and practice](exercises/llm-limits.qmd).
+
+1. A model confidently generates a false statement. Is that necessarily an implementation defect?
+2. A capability rises from 0% to 60% on a thresholded metric. What should be examined before claiming emergence?
+
+<details>
+<summary>Show the reasoning</summary>
+
+1. No. The prediction objective learns probabilities for observed continuations; it does not guarantee a truth-verification mechanism.
+2. Examine the metric, threshold, compared models, and protocol. A thresholded metric can turn gradual improvement into an apparent jump.
+
+</details>
 :::
