@@ -86,6 +86,8 @@ Deux conséquences suivent :
 
 Quand deux modalités induisent des noyaux de paires différents, une borne de type Davis-Kahan dit que le désaccord après rotation croît avec l'écart entre les noyaux et se dégrade quand le trou spectral pertinent diminue. Cela donne l'épine dorsale de l'analyse : **graphe de paires positives, opérateur de Markov, sous-espace spectral, trou spectral, ambiguïté de rotation, erreur d'alignement**.
 
+Ce tableau n'est pas apparu pour la première fois en 2026. En 2022, les mêmes auteurs ont montré que le terme d'invariance de VICReg, un objectif auto-supervisé non contrastif, est exactement l'**énergie de Dirichlet** de l'embedding sur le graphe de similarités des paires, et que la résolution du problème contraint retrouve les **cartes propres laplaciennes** (Laplacian eigenmaps), la méthode classique qui attribue des coordonnées aux sommets d'un graphe pour que les sommets fortement reliés reçoivent des coordonnées proches ([Balestriero et LeCun, arXiv:2205.11508](https://arxiv.org/abs/2205.11508)). Les objectifs contrastifs comme SimCLR retrouvent de même des plongements spectraux globaux, tel le multidimensional scaling. Le théorème de 2026 hérite de cette machinerie à encodeur unique et l'étend d'un seul embedding à l'accord entre deux encodeurs entraînés séparément.
+
 ## Variables de nuisance : ce que l'observation ajoute à l'état
 
 L'article formalise une observation comme le rendu d'un état du monde accompagné d'une nuisance propre à la modalité : $x = g_m(z, u)$. Les nuisances ne sont pas du bruit en général ; ce sont des facteurs que la modalité transporte, comme le choix de mots, le style, le point de vue ou l'éclairage.
@@ -130,6 +132,7 @@ Une précaution de provenance accompagne les chiffres à l'échelle du web : une
 - Balestriero et LeCun, [Proving and Improving the Platonic Representation Hypothesis with JEPAs](https://arxiv.org/abs/2610.39302), arXiv:2610.39302 (2026). Source primaire.
 - Kejriwal, [Do AI models trained on different modalities converge to the same representation of the world?](https://aiscientist.substack.com/p/do-ai-models-trained-on-different), AI Scientist (2026). Synthèse secondaire ; utilisez-la pour s'orienter, l'article pour les affirmations.
 - Huh, Cheung, Wang et Isola, [The Platonic Representation Hypothesis](https://arxiv.org/abs/2405.07987) (2024). La conjecture d'origine.
+- Balestriero et LeCun, [Contrastive and Non-Contrastive Self-Supervised Learning Recover Global and Local Spectral Embedding Methods](https://arxiv.org/abs/2205.11508), arXiv:2205.11508 (2022). Source de lignage pour le mécanisme spectral ; précédent primaire de la lecture par l’énergie de Dirichlet utilisée ci-dessus.
 
 **Place dans LLM Lab :** un approfondissement avancé facultatif dans le domaine des questions de recherche. Il ne modifie pas le parcours Understand principal et n'est pas un prérequis pour construire le petit GPT. Il relie trois pages voisines : les [représentations contextualisées](contextualized-representations.qmd) (comment un modèle construit des états au niveau du token), la [linéarité des embeddings](linearite-embeddings.qmd) (géométrie supposée des espaces de représentation) et les [lois d'échelle](scaling-laws.qmd) (régularités ressources-performance, auxquelles cette page ne réduit volontairement pas l'alignement).
 
