@@ -45,8 +45,6 @@ Après la tokenisation, chaque token est représenté par un identifiant entier.
 Un ID est une **adresse de ligne**, pas une coordonnée sémantique. La matrice d'embeddings — ou table de plongements — contient un vecteur appris par ID ; le lookup sélectionne simplement la bonne ligne. Deux occurrences du même ID récupèrent donc le même vecteur initial. C'est ensuite le traitement par le Transformer qui construit une représentation dépendant du contexte.
 
 **Première lecture :** retenez qu'un ID sélectionne une ligne de la table ; il n'est pas lui-même une coordonnée sémantique.
-
-**Pour pratiquer :** le calcul du lookup et la trace reproductible texte → IDs → vecteurs sont regroupés dans la [collection Données textuelles](exercises-text-data.qmd#tr-b-lookup). Les propriétés géométriques sont développées dans les pages sur la similarité cosinus et la linéarité.
 :::
 
 
@@ -87,9 +85,7 @@ Cette comparaison est conceptuelle : elle ne signifie pas que les embeddings des
 
 ## Du principe au calcul
 
-## Du principe au calcul
-
-Le lookup est une opération simple : chaque ID sélectionne la ligne correspondante dans la table, sans mélanger les positions ni interpréter la valeur numérique de l'ID. Pour vérifier concrètement cette opération, suivre les formes d'un batch et distinguer indice et coordonnée, passez à l'[exercice TR-B](exercises-text-data.qmd#tr-b-lookup). La trace de tokenisation et les manipulations de BPE sont également regroupées dans la collection [Données textuelles](exercises-text-data.qmd#donnees-textuelles).
+Le lookup est une opération simple : chaque ID sélectionne la ligne correspondante dans la table, sans mélanger les positions ni interpréter la valeur numérique de l'ID. Le micro-workbench ci-dessous vérifie ces invariants sur un petit exemple NumPy.
 
 ::: {.micro-workbench}
 ::: {.micro-workbench-header}
@@ -133,14 +129,14 @@ print(f"Distance E[2]-E[3] : {d_2_3:.3f} | Distance E[0]-E[4] : {d_0_4:.3f}")
 ```
 :::
 ::: {.micro-workbench-footer}
-Le lookup est une sélection de lignes : deux occurrences d'un même ID sélectionnent des vecteurs strictement identiques ($E[i] \equiv E[i]$).
+Le lookup est une sélection de lignes : à chaque position $(b, \ell)$ du batch, le vecteur de sortie est exactement la ligne $E[\mathrm{id}]$ de la table ; deux occurrences d'un même ID sélectionnent donc des vecteurs strictement identiques.
 :::
 :::
 
 <details class="spot-the-fallacy">
 <summary>Piège fréquent : « Deux tokens ayant des identifiants numériques consécutifs (ex. 2 et 3) ont des vecteurs d'embeddings proches »</summary>
 <div class="fallacy-content">
-<p><strong>Contre-exemple :</strong> L'identifiant entier n'est qu'un <em>indice de ligne</em> dans la matrice $E \in \mathbb{R}^{V \times d}$. L'ordre numérique des entiers résulte uniquement de l'algorithme de tokenisation (fréquence d'apparition dans le corpus, ordre de création du vocabulaire ou code d'octets), et non de la géométrie de l'espace vectoriel. Deux lignes consécutives $E_2$ et $E_3$ sont des vecteurs de dimension $d$ initialisés indépendamment et mis à jour selon leurs gradients respectifs. Leur distance géométrique n'a aucun rapport avec la différence numérique $|3 - 2| = 1$.</p>
+<p><strong>Contre-exemple :</strong> L'identifiant entier n'est qu'un <em>indice de ligne</em> dans la matrice $E \in \mathbb{R}^{V \times d}$. L'ordre numérique des entiers résulte uniquement de l'algorithme de tokenisation (fréquence d'apparition dans le corpus, ordre de création du vocabulaire ou valeurs d'octets), et non de la géométrie de l'espace vectoriel. Deux lignes consécutives $E_2$ et $E_3$ sont des vecteurs de dimension $d$ initialisés indépendamment et mis à jour selon leurs gradients respectifs. Leur distance géométrique n'a aucun rapport avec la différence numérique $|3 - 2| = 1$.</p>
 </div>
 </details>
 
@@ -160,9 +156,13 @@ La proximité géométrique dépend du modèle, de la couche, de l'entraînement
 
 Pour approfondir ces questions sans les confondre avec le mécanisme de lookup, voir la page sur la [similarité cosinus](cosine-similarity.qmd) et celle sur l'[hypothèse de linéarité des représentations](linearite-embeddings.qmd).
 
-## Exercices
+## Pratique, questions et exercices {#exercices}
 
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/embedding-space.qmd).
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/embedding-space.qmd) et dans la [collection Données textuelles](exercises-text-data.qmd#donnees-textuelles) :
+
+- **Questions de vérification :** compter les paramètres de la table $E$ et interpréter une projection 2D, avec le raisonnement détaillé ([page d’exercices dédiée](exercises/embedding-space.qmd)).
+- **[Exercice TR-B — Calculer un lookup et suivre les formes des tenseurs](exercises-text-data.qmd#tr-b-lookup) :** effectuer le lookup, compléter une trace de formes, généraliser au batch, puis suivre la trace reproductible texte → IDs → vecteurs.
+- **Exercices liés :** TR-A reconstruit la chaîne texte → IDs → états contextualisés ; TR-C fait distinguer identité, position et contexte.
 
 
 ## Références
