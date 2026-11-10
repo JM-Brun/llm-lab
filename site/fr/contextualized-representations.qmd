@@ -32,10 +32,12 @@ tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-re
 - réfuter la confusion attribuant au lookup d'embedding une compréhension sémantique ou une désambiguïsation du contexte.
 :::
 
+::: {.chapter-lead}
 <div class="epistemic-badges">
   <span class="epistemic-badge badge-concept">Concept vérifié</span>
   <span class="epistemic-badge badge-status">Architecture : Blocs Transformer</span>
-</div> {.chapter-lead}
+</div>
+
 Deux phrases peuvent contenir le même token sans lui donner le même rôle : *bank* désigne une rive dans l'une, un établissement financier dans l'autre. Pourtant, le tokenizer peut attribuer le même ID aux deux occurrences. **Le lookup ne change pas ; c'est le traitement de la séquence par le Transformer qui construit des états cachés dépendant du contexte.**
 :::
 
@@ -49,9 +51,7 @@ Deux phrases peuvent contenir le même token sans lui donner le même rôle : *b
 :::
 
 
-![Vue d'ensemble du parcours du texte et des IDs à travers une table d'embeddings et le traitement positionnel jusqu'aux représentations contextualisées.](https://media.licdn.com/dms/image/v2/D4D12AQHkmEd7fMhztQ/article-cover_image-shrink_720_1280/B4DZ3YWKZfI0AM-/0/1777451187827?e=2147483647&t=ETNuRHmhKfKe0FYbI-a9g2NaUZ3QNv9xue4OYjI1qUs&v=beta){fig-alt="Pipeline schématique : le texte est tokenisé en IDs, les IDs sélectionnent des lignes d'une table d'embeddings apprise, l'information positionnelle est traitée, les couches d'attention traitent la séquence et produisent des représentations contextualisées." fig-cap="Vue d'ensemble de Rushang Chauhan. Le traitement positionnel est schématique : des architectures comme RoPE n'ajoutent pas simplement un vecteur de position à chaque embedding de token. Voir les explications ci-dessous et la page sur l'encodage positionnel." width=100%}
-
-Cette figure provient de l'article LinkedIn de Rushang Chauhan, [*Embeddings: The Bridge Between Tokens and Context*](https://www.linkedin.com/pulse/embeddings-bridge-between-tokens-context-rushang-chauhan-oqpzf/). Elle sert de carte d'orientation ; les sections suivantes précisent les distinctions architecturales qu'un schéma général simplifie nécessairement. La vérification des droits de réutilisation de cet actif précis est en attente dans [#156](https://github.com/JM-Brun/llm-lab/issues/156) ; l'illustration existante est conservée sans modification pendant cette vérification.
+![Pipeline du texte aux représentations contextualisées.](../images/contextualization-pipeline-fr.svg){fig-alt="Le texte est tokenisé en IDs ; les IDs sélectionnent des vecteurs dans la table d'embeddings ; le modèle traite la position puis les blocs Transformer produisent des états contextualisés." fig-cap="Du texte aux états contextualisés : chaque étape transforme ou enrichit la représentation, du symbole jusqu'aux états cachés dépendant du contexte." width=100%}
 
 
 ## Ce qui reste identique
