@@ -29,42 +29,42 @@ Cet approfondissement prolonge la page [Requêtes, clés et valeurs (Q, K, V)](q
 
 La formulation matricielle compacte calcule toutes les positions simultanément. Elle applique simplement les mêmes projections linéaires à chaque ligne de l'entrée.
 
-Pour une séquence de \(T\) positions, notons \(X\in\mathbb{R}^{T\times d_{model}}\). La ligne \(x_t\in\mathbb{R}^{1\times d_{model}}\) représente l'état d'entrée de la position \(t\). En omettant les biais :
+Pour une séquence de $T$ positions, notons $X\in\mathbb{R}^{T\times d_{model}}$. La ligne $x_t\in\mathbb{R}^{1\times d_{model}}$ représente l'état d'entrée de la position $t$. En omettant les biais :
 
-\[
+$$
 q_t=x_tW_Q,\qquad k_t=x_tW_K,\qquad v_t=x_tW_V.
-\]
+$$
 
 En empilant les lignes obtenues pour toutes les positions, on retrouve :
 
-\[
+$$
 Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
-\]
+$$
 
-Avec \(W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}\) et \(W_V\in\mathbb{R}^{d_{model}\times d_v}\), les dimensions sont :
+Avec $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ et $W_V\in\mathbb{R}^{d_{model}\times d_v}$, les dimensions sont :
 
 | Objet | Dimension | Interprétation |
 |---|---:|---|
-| \(x_t\) | \(1\times d_{model}\) | état d'entrée d'une position |
-| \(W_Q,W_K\) | \(d_{model}\times d_k\) | projections vers les espaces des requêtes et des clés |
-| \(W_V\) | \(d_{model}\times d_v\) | projection vers l'espace des valeurs |
-| \(q_t,k_t\) | \(1\times d_k\) | requête et clé d'une position |
-| \(v_t\) | \(1\times d_v\) | valeur d'une position |
-| \(Q,K\) | \(T\times d_k\) | toutes les requêtes et clés |
-| \(V\) | \(T\times d_v\) | toutes les valeurs |
+| $x_t$ | $1\times d_{model}$ | état d'entrée d'une position |
+| $W_Q,W_K$ | $d_{model}\times d_k$ | projections vers les espaces des requêtes et des clés |
+| $W_V$ | $d_{model}\times d_v$ | projection vers l'espace des valeurs |
+| $q_t,k_t$ | $1\times d_k$ | requête et clé d'une position |
+| $v_t$ | $1\times d_v$ | valeur d'une position |
+| $Q,K$ | $T\times d_k$ | toutes les requêtes et clés |
+| $V$ | $T\times d_v$ | toutes les valeurs |
 
-Pour un lot de \(B\) séquences de longueur \(T\), la forme usuelle de l'entrée est \(X\in\mathbb{R}^{B\times T\times d_{model}}\). Les projections s'appliquent sur le dernier axe et préservent les deux premiers : \(Q,K\in\mathbb{R}^{B\times T\times d_k}\) et \(V\in\mathbb{R}^{B\times T\times d_v}\). Les biais, lorsqu'ils existent, sont ajoutés à chaque position ; ils ne changent pas ces dimensions.
+Pour un lot de $B$ séquences de longueur $T$, la forme usuelle de l'entrée est $X\in\mathbb{R}^{B\times T\times d_{model}}$. Les projections s'appliquent sur le dernier axe et préservent les deux premiers : $Q,K\in\mathbb{R}^{B\times T\times d_k}$ et $V\in\mathbb{R}^{B\times T\times d_v}$. Les biais, lorsqu'ils existent, sont ajoutés à chaque position ; ils ne changent pas ces dimensions.
 
-Cette écriture est une expansion de la formule matricielle, pas un autre mécanisme. Elle aide à suivre l'indexation des positions et à éviter de confondre la longueur de séquence \(T\) avec les dimensions de représentation.
+Cette écriture est une expansion de la formule matricielle, pas un autre mécanisme. Elle aide à suivre l'indexation des positions et à éviter de confondre la longueur de séquence $T$ avec les dimensions de représentation.
 
 ## Géométrie des compatibilités Q–K
 
-Pour une requête \(q_i\) et une clé \(k_j\), le score non normalisé standard est leur produit scalaire :
+Pour une requête $q_i$ et une clé $k_j$, le score non normalisé standard est leur produit scalaire :
 
-\[
+$$
 s_{ij}=q_i k_j^\top
 =\lVert q_i\rVert\,\lVert k_j\rVert\cos(\theta_{ij}).
-\]
+$$
 
 L'angle ne suffit donc pas à déterminer le score : les normes des deux vecteurs interviennent également. Le produit scalaire n'est pas, en général, une similarité cosinus normalisée.
 
@@ -80,43 +80,43 @@ Les valeurs ne sont pas comparées entre elles, ni directement à la requête, p
 
 ## Chemins de gradient dans l'attention
 
-Les matrices \(W_Q,W_K,W_V\) n'ont pas chacune une cible supervisée indépendante. Elles sont optimisées conjointement à partir de la fonction de perte du réseau. Pour préciser le chemin, considérons une tête d'attention standard :
+Les matrices $W_Q,W_K,W_V$ n'ont pas chacune une cible supervisée indépendante. Elles sont optimisées conjointement à partir de la fonction de perte du réseau. Pour préciser le chemin, considérons une tête d'attention standard :
 
-\[
+$$
 S=\frac{QK^\top}{\sqrt{d_k}}+M,\qquad
 A=\operatorname{softmax}(S),\qquad O=AV,
-\]
+$$
 
-où le softmax est appliqué ligne par ligne et \(M\) est un masque additif fixe. On suppose que chaque ligne possède au moins une clé accessible.
+où le softmax est appliqué ligne par ligne et $M$ est un masque additif fixe. On suppose que chaque ligne possède au moins une clé accessible.
 
-En notant \(G_O=\partial\mathcal L/\partial O\), la règle de chaîne donne :
+En notant $G_O=\partial\mathcal L/\partial O$, la règle de chaîne donne :
 
-\[
+$$
 \frac{\partial\mathcal L}{\partial V}=A^\top G_O,
 \qquad
 \frac{\partial\mathcal L}{\partial A}=G_OV^\top.
-\]
+$$
 
-Le gradient par rapport aux scores passe ensuite par le Jacobien du softmax ligne par ligne. En notant \(G_S=\partial\mathcal L/\partial S\) :
+Le gradient par rapport aux scores passe ensuite par le Jacobien du softmax ligne par ligne. En notant $G_S=\partial\mathcal L/\partial S$ :
 
-\[
+$$
 \frac{\partial\mathcal L}{\partial Q}
 =\frac{G_SK}{\sqrt{d_k}},
 \qquad
 \frac{\partial\mathcal L}{\partial K}
 =\frac{G_S^\top Q}{\sqrt{d_k}}.
-\]
+$$
 
-Enfin, pour les projections linéaires sans biais, à entrée \(X\) fixée :
+Enfin, pour les projections linéaires sans biais, à entrée $X$ fixée :
 
-\[
+$$
 \frac{\partial\mathcal L}{\partial W_Q}
 =X^\top\frac{\partial\mathcal L}{\partial Q},\quad
 \frac{\partial\mathcal L}{\partial W_K}
 =X^\top\frac{\partial\mathcal L}{\partial K},\quad
 \frac{\partial\mathcal L}{\partial W_V}
 =X^\top\frac{\partial\mathcal L}{\partial V}.
-\]
+$$
 
 Ces expressions isolent les chemins locaux d'une tête : le gradient de V passe directement par l'agrégation pondérée ; ceux de Q et K passent par les scores puis le softmax. Dans le réseau complet, les gradients se propagent aussi à travers les projections de sortie, les connexions résiduelles, les normalisations et les couches précédentes. Les paramètres sont distincts, mais leurs mises à jour sont coordonnées par la même fonction de perte.
 
