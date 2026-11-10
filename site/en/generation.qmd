@@ -21,20 +21,27 @@ related: ["en/text-data", "en/transformer", "en/build-path", "en/decoding-strate
 tags: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:en", "status:published"]
 -->
 
-::: {.chapter-lead}
-When you send a prompt, the model does not write the whole response in one go. It processes the available context, assigns a probability to each token that could come next, then the system selects one and appends it to the context. The cycle repeats until a stopping condition is met.
+{{< include ../includes/generated-guided-context-en-generation.qmd >}}
 
-This loop is called **autoregressive generation**. During inference, the model's parameters remain fixed: producing a response is not learning.
+::: {.chapter-lead}
+The overview stopped at a table: after “What have the Romans ever done for us?”, the model gives 0.6 to “They” and 0.2 to “Aqueducts”. A table of probabilities is not yet an answer. How do we get from one to the other?
+
+By repeating four moves: predict, select, feed back, then continue or stop. This loop is **autoregressive generation**. While it runs, the model's parameters do not change: producing a response is not learning.
 :::
 
 ::: {.callout-note title="Running example: prompt versus continuation"}
-**Initial context (prompt):** “What have the Romans ever done for us?” — the question from *Monty Python's Life of Brian*.
+**Prefix supplied:** “What have the Romans ever done for us?” The question from *Monty Python's Life of Brian* is already in the context when generation starts. In the film the answers are spoken by several characters, so the scene is an analogy, not a literal one-speaker trace.
 
-The scene's answers (aqueducts, sanitation, roads, irrigation, and others) are spoken by several characters. It is therefore a memorable context-and-response analogy, not a literal one-speaker autoregressive trace. The Bridge of Death in *Monty Python and the Holy Grail* is another useful analogy for how each new question and answer depends on the conversation so far.
-
-For the token-by-token demonstration, use this separate, original continuation: “They built roads between distant towns. Those roads made travel easier.” It is teaching text, not a film quotation or a model output.
+**Continuation followed here:** “They built roads between distant towns.” It is an original LLM Lab text, not a film quotation or a model output. Its tokens are appended afterwards, one at a time.
 :::
 
+::: {.callout-tip title="The one-minute mental model"}
+- **The model computes, a rule chooses.** The model supplies a distribution over the next token. A decoding rule, outside the network, draws a single token from it.
+- **The chosen token becomes context.** It is appended to the text, and the model recomputes a distribution for the next position.
+- **Nothing is learned along the way.** The parameters are the same at the first token and at the last.
+
+**First reading:** the section “The loop on an example” is enough to continue the path. The notation, *prefill*, *decode*, and the selection rules read better on the way back, once you have seen [output probabilities](probabilities.qmd).
+:::
 
 <div class="pipeline-stepper" role="navigation" aria-label="Autoregressive generation loop">
   <a class="step-item" href="text-data.qmd">Tokenized prompt</a>
@@ -53,75 +60,72 @@ For the token-by-token demonstration, use this separate, original continuation: 
   <span class="meta-flow__loop" aria-label="Selection and decoding repeat until a stopping criterion is reached">↺ Select, append to context, and decode again</span>
 </div>
 
+## The loop on an example
 
-This page appears at two points in the route. **On the first pass**, immediately after the overview, focus on the autoregressive loop in sections 1 and 2: predict, select, feed the token back, and repeat. **When the route returns to inference**, explore the following sections on *prefill*, *decode*, and selection rules in more depth. Performance details are kept in an optional, collapsed deep dive.
+Let us follow three turns of the loop. The probabilities are made up, as in the overview, and the decoding rule is the simplest one: take the most probable token.
 
-## 1. One elementary step: predict and select a token
+| Turn | Context | Computed distribution (excerpt) | Chosen token |
+|---|---|---|---|
+| 1 | What have the Romans ever done for us? | “They” 0.6 · “Aqueducts” 0.2 · “Nothing” 0.1 · “Well” 0.1 | “They” |
+| 2 | What have the Romans ever done for us? They | “built” 0.5 · “gave” 0.3 · “made” 0.2 | “built” |
+| 3 | What have the Romans ever done for us? They built | “roads” 0.8 · “bridges” 0.1 · “walls” 0.1 | “roads” |
 
-Consider the current context, consisting of tokens already available from the prompt or previous generation steps. Write it as:
+Each row chains the same moves.
+
+1. **Predict.** The model reads the whole context and computes a distribution over the next token.
+2. **Select.** The decoding rule keeps one.
+3. **Feed back.** That token is appended to the context. At turn 2, “They” is part of what the model reads, just like the question.
+4. **Continue or stop.** The loop stops on an explicit criterion: a special end-of-sequence (EOS) token, a maximum length, or a rule set by the application. Stopping is a rule, not a sign that the model has “finished thinking”.
+
+Two consequences follow from this mechanism.
+
+**A choice commits what follows.** Had the rule kept “Aqueducts” at turn 1, the context at turn 2 would be different, and everything after it too. The model does not go back on a token that has been appended.
+
+**The model keeps nothing from one turn to the next, except the text.** Its parameters are identical at all three turns. What changes is the context it is given.
+
+## One step, in notation
+
+Write the current context, that is, the prompt tokens and those already generated, as:
 
 $$
 c_t = (x_1, \ldots, x_{t-1}).
 $$
 
-In this notation, each $x_i$ denotes the **token** at position $i$, not its numerical ID. In practice, the tokenizer maps that token to an integer ID, which is used to retrieve its vector from the embedding table. The equations use token notation for readability rather than writing the IDs explicitly.
+Each $x_i$ denotes the **token** at position $i$, not its numerical identifier. In practice, the tokenizer maps this token to an integer ID, which selects its vector in the embedding table; the equations write tokens to stay readable.
 
-For **one generation step**, the model runs a forward pass with fixed parameters. It produces logits at every context position; to predict the continuation, we use the logits at the final position, denoted by $z_t$. Softmax defines the conditional distribution:
+The model runs a **forward pass** with fixed parameters $\theta$. It produces a vector of logits for every context position; generation uses the one at the last position, denoted $z_t$. Softmax turns it into a conditional distribution:
 
 $$
 p_\theta(\cdot \mid c_t) = \operatorname{softmax}(z_t).
 $$
 
-For a candidate token $v$, $p_\theta(v \mid c_t)$ is the probability that it is the next token given the current context. Each probability lies between 0 and 1, and the probabilities across the vocabulary sum to 1. The distribution depends on the context; generation uses the distribution at the final context position.
+For a candidate token $v$, $p_\theta(v \mid c_t)$ is the probability that it is the next token given the context. These probabilities are assigned to vocabulary tokens, for the next position only, and they sum to 1. At turn 1 of the example, $p_\theta(\text{“They”} \mid c_t) = 0.6$.
 
-The probabilities are assigned to vocabulary tokens and sum to 1. They describe the next position, not complete sentences. Computing a distribution and distinguishing greedy selection from sampling are practised in [exercise GE-A](exercises-generation.qmd#generation).
-
-A decoding policy then selects a token from this distribution:
+A **decoding** rule then selects a token:
 
 $$
-x_t = \operatorname{Dec}\!\left(p_\theta(\cdot \mid c_t)\right).
+x_t = \operatorname{Dec}\!\left(p_\theta(\cdot \mid c_t)\right),
 $$
 
-Selection may be deterministic (for example, *argmax*) or stochastic (sampling). The selection strategies are explained later.
-
-**The result of this step is one selected token**, not the complete text. It is important to distinguish the distribution computed by the model from the token actually selected by the decoding policy.
-
-If tokens and token IDs are not yet familiar, start with [From text to tokens](text-data.qmd). To understand **how the model computes** this distribution, continue with the [The Transformer in a GPT](transformer.qmd), [Logits](logits.qmd), and [Output probabilities](probabilities.qmd). Those pages explain the internal computation; this page studies what the system does with the resulting distribution.
-
-## 2. The generation loop: repeat this step
-
-Autoregressive generation reuses the elementary step with an expanding context. After selecting $x_t$, the context becomes:
+and the context grows:
 
 $$
 c_{t+1} = (x_1, \ldots, x_{t-1}, x_t).
 $$
 
-The model then computes a new distribution conditioned on this updated context, another token is selected, and the process repeats. The parameters $\theta$ remain fixed throughout this loop.
+Three words thus name three scales: the **forward pass** is the network's computation, from context to distribution; **decoding** is the rule that draws a token from that distribution; **generation** is the whole loop, stopping criterion included. Some libraries use *decoding* in a broader sense; here it means only token selection and the processing that prepares it.
 
-Complete generation therefore alternates four operations:
+Computing the distribution itself occupies the intermediate stages of the path: [the Transformer](transformer.qmd) produces the states, [the logits](logits.qmd) are their projection, and [softmax](probabilities.qmd) normalizes them.
 
-1. **Predict:** compute the next-token distribution from the current context.
-2. **Select:** apply the decoding policy to obtain one token.
-3. **Feed back:** append that token to the context; it will condition the next step.
-4. **Continue or stop:** repeat until an explicit criterion is met, such as an end-of-sequence token, a maximum length, or an application-defined rule. Stopping does not mean that the model has "finished thinking."
+## From the prompt to subsequent tokens: prefill and decode
 
-### Three levels not to confuse
+An inference system does not treat the prompt the way it treats the tokens it generates.
 
-- **Forward pass:** network computation, with fixed parameters, from context to logits and the predictive distribution.
-- **Decoding:** the rule that uses model outputs to select one token, possibly after transforming or filtering the distribution.
-- **Generation:** the complete process that repeats prediction and selection, feeds each token back, and checks the stopping criterion.
+- **Prefill.** The question about the Romans is known in advance. A single forward pass processes all its positions together, under the causal mask; the distribution obtained at the last position is used to choose the first generated token.
+- **Incremental decode.** After that, tokens arrive one at a time. At each step, the model computes the next distribution from the context extended with the last chosen token.
+- **KV cache.** For each position, attention computes vectors called keys and values ([queries, keys, and values](queries-keys-values.qmd)). Those of the prefix no longer change once computed; an optimized implementation keeps them instead of recomputing everything at each turn. This saves time and is not a condition for correctness: without a cache, the result is the same, up to numerical effects.
 
-The word *decoding* is sometimes used more broadly across libraries and publications. Here, it means next-token selection and the processing that prepares it; it does not mean the Transformer's internal computation or the entire generation loop.
-
-## 3. From the initial prompt to subsequent tokens: prefill and decode
-
-Inference systems generally distinguish processing the initial prompt from generating tokens one by one:
-
-- **Prefill:** the model processes the initial prompt as a sequence under the causal mask. One forward pass computes outputs for the prompt positions; the distribution at the final position is used to select the first generated token.
-- **Incremental decode:** after this first selection, the model advances through the generated sequence. At each step, it computes the next distribution from the context augmented with the previous token, then selects another token.
-- **KV cache:** an optimized implementation may retain attention keys and values already computed during prefill and earlier steps. This avoids recomputing the entire prefix. It is an execution optimization, not a requirement for correct generation.
-
-**Decode** refers to an execution phase after prefill; **decoding** refers to the token-selection rule. The concepts are related, but they are not synonyms.
+*Decode* therefore names an execution phase, the one that follows prefill; *decoding* names the selection rule. The two words look alike and do not mean the same thing.
 
 ::: {.callout-note title="Optional deep dive: inference latency and optimizations" collapse="true"}
 
@@ -150,69 +154,52 @@ An advanced optimization, **speculative decoding**, has a draft model propose se
 
 :::
 
-Prefill is not [*teacher forcing*](training-examples.qmd), either. With teacher forcing, predictions are conditioned on the observed prefix from reference data, especially during training. During generation, the prefix grows with tokens selected by the model. The prediction computation is related, but the source of the context differs.
+Prefill resembles the *teacher forcing* used in training, since in both cases the model reads a text it did not produce. The difference lies in what comes next: in generation, the context grows with the tokens chosen by the decoding rule; with teacher forcing, it grows with the tokens of the reference text, whatever the model predicted ([training examples](training-examples.qmd)).
 
-To see how this distinction appears in the reference program, read the [guided tour of the generation code](gpt-generation-walkthrough.qmd). It documents prompt processing, context-window recomputation, and optimizations deliberately absent from this teaching implementation.
+The project's reference program applies this loop without a KV cache; the [guided tour of the generation code](gpt-generation-walkthrough.qmd) shows how it processes the prompt and recomputes the context window.
 
-## 4. How is the next token selected?
+## How is the next token chosen?
 
-The predictive distribution does not by itself determine a unique output. A decoding rule defines how to select the token.
+The distribution at turn 1 does not point to a single output. The decoding rule decides.
 
-### Greedy selection
+**Greedy selection** (*greedy decoding*). Take the most probable token (*argmax*): “They”, on every run. The result is reproducible if the computation is deterministic. This local choice does not optimize the whole sentence and can lead to repetitions.
 
-The token with the highest probability is selected systematically (*argmax*). With deterministic computation and identical conditions, the result is reproducible. This local choice can nevertheless lead to repetitions or an unsatisfactory continuation.
+**Sampling.** Draw the token at random according to the distribution: “They” comes out six times in ten on average, “Aqueducts” twice in ten. Two runs can therefore produce two different texts. Fixing the seed of the random generator, with deterministic computation, makes the draw reproducible.
 
-### Sampling
+**Temperature.** Before the draw, the distribution can be sharpened or flattened by dividing the logits by a number $\tau > 0$.
 
-The token is drawn at random according to the distribution. Two runs can therefore produce different texts; a less likely token may be selected. A fixed seed and deterministic computation allow the draw to be reproduced under the same conditions.
+| Continuation | $\tau = 0.5$ | $\tau = 1$ | $\tau = 2$ |
+|---|---|---|---|
+| “They” | 0.86 | 0.60 | 0.42 |
+| “Aqueducts” | 0.10 | 0.20 | 0.24 |
+| “Nothing” | 0.02 | 0.10 | 0.17 |
+| “Well” | 0.02 | 0.10 | 0.17 |
 
-### Temperature
+A low temperature concentrates probability on the leading token; a high temperature leaves more room for the others. The order of the candidates does not change. As $\tau$ approaches zero, sampling joins greedy selection, except for ties and numerical effects. Temperature acts on the distribution used for the draw, not on the model's parameters, and makes an answer neither truer nor better. Its computation is detailed in [Output probabilities](probabilities.qmd).
 
-Temperature controls the concentration of the distribution used for sampling:
+**Top-k** and **top-p** filters discard the least probable candidates before the draw; beam search and contrastive decoding follow other logics. The basic loop can be understood without them; their trade-offs are compared in [decoding strategies](decoding-strategies.qmd), and an [introduction by Nishanthan K](https://dev.to/nishanthan-k/core-elements-of-large-language-models-llms-tokens-context-windows-temperature-and-sampling-2m45) gives a first overview.
 
-- a low temperature amplifies score differences and favours the most likely tokens more strongly;
-- a high temperature reduces those differences and leaves more room for alternatives;
-- as temperature approaches zero, sampling approaches greedy selection, except for ties and numerical effects.
-
-Temperature changes the distribution used to select the next token, **not the model's parameters**. It guarantees neither factual truth nor output quality.
-
-**Top-k** and **top-p** filters restrict the candidate set more precisely. Beam search and contrastive decoding follow other selection or search strategies. These methods and their trade-offs are covered in the [advanced guide to decoding strategies](decoding-strategies.qmd); they are not needed to understand the basic loop.
-
-::: {.callout-warning title="Three common misconceptions"}
-- **"The model always picks the best token."** Not necessarily: under sampling, a less likely token can be selected. The word "best" also depends on the criterion being used.
-- **"A high probability guarantees a correct token."** No: the distribution reflects learned statistical regularities, not factual truth. A model can assign high probability to a false continuation.
-- **"Repetitions are a bug."** Not necessarily: they can result from the behavior of the decoding rule, especially greedy selection.
+::: {.callout-warning title="Common misconceptions"}
+- **“The model always picks the best token.”** The model does not pick: it supplies a distribution. Under sampling, “Aqueducts” can come out although “They” is more probable.
+- **“A high probability guarantees a correct token.”** The distribution reflects learned regularities, not the state of the world. A model can give 0.6 to a false continuation.
+- **“Repetitions are a bug.”** They can come from the decoding rule, greedy selection in particular, with no programming error.
 :::
 
-## 5. Inference does not update the model
+## What generation does not do
 
-During ordinary generation, the model's parameters remain fixed. There is no gradient computation for learning and no weight update. Generating more tokens therefore cannot, by itself, correct a poorly trained model.
+**It does not correct the model.** No gradient is computed, no weight is updated. Generating more tokens does not improve a poorly trained model; that is the role of [learning](loss.qmd), which compares predictions with known targets and then changes the parameters.
 
-With the same context, parameters, and deterministic computation, a deterministic decoding rule produces the same continuation. Sampling or some nondeterministic computations can introduce variability. An application may retain history or other data outside the model; for that history to influence a new generation, it must be supplied in the context or handled by an external mechanism.
+**It sees only the context supplied.** The model processes at most a window of maximum size. That budget covers all tokens supplied, instructions, history, tool messages, prompt, and any multimodal tokens, as well as generated tokens. The advertised capacity is therefore not fully available for the response: the application may reserve an output allowance, truncate, or select the history. Information absent from the supplied context no longer directly influences the prediction, and a larger window does not guarantee that every item will be used correctly.
 
-This is the central distinction from [learning](loss.qmd): inference uses the available parameters, whereas training evaluates predictions against observed targets, computes a loss, and may then update the parameters. The [build path](build-path.qmd) treats these operations separately.
+**It does not remember from one generation to the next.** If an application seems to retain a conversation, it is because it reinserts the history into the context, or keeps it outside the model. The weights themselves have recorded nothing.
 
-## 6. Limits to keep in mind
+**It does not create quality.** The loop runs just as well with an untrained model; its outputs are then of no interest. The mechanics of generation and the quality acquired through learning are two separate questions.
 
-- **Context window:** the model processes only the supplied context, up to its maximum window. The budget covers all tokens actually supplied—instructions, history, tool messages, prompt, and any multimodal tokens—as well as generated tokens. The advertised capacity is therefore not necessarily fully available for the response: an application may reserve an output allowance and apply a truncation or history-selection strategy. Information no longer present in the supplied context no longer directly influences the prediction. A larger window is not persistent memory and does not guarantee that every item will be used correctly.
-- **No intrinsic memory across generations:** each generation depends on the context it receives. An application may reinsert history or retain external state, but this does not mean the model weights have memorized the conversation.
-- **Quality depends on learned parameters:** the generation loop can run with an untrained model, but that does not make its outputs useful. Generation mechanics and the quality acquired through learning are distinct questions.
-- **Result validity:** a fluent answer—or even syntactically valid, executable SQL—does not guarantee that it answers the intended business question. Check the schema, the definitions being used (for example, how refunds and failed payments are treated), the assumptions, and the results before making a decision or taking action.
+**It does not validate its result.** A fluent answer, or even syntactically valid, executable SQL, does not guarantee that it answers the intended business question. The schema, the definitions used (how refunds and failed payments are treated, for example), the assumptions, and the results are checked before any decision.
 
 ## Practice
 
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/generation.qmd).
-
-
-::: {.callout-tip title="Go further"}
-These links serve three different purposes:
-
-- **Understand the preceding computations:** [from text to tokens](text-data.qmd), then [representations and Transformer computation](transformer.qmd), [logits](logits.qmd), and [probabilities](probabilities.qmd).
-- **Study alternative selection rules:** [advanced decoding strategies](decoding-strategies.qmd), alongside this introductory overview of [tokens, context windows, temperature, and sampling](https://dev.to/nishanthan-k/core-elements-of-large-language-models-llms-tokens-context-windows-temperature-and-sampling-2m45).
-- **See a concrete implementation:** [guided tour of `generate.py`](gpt-generation-walkthrough.qmd).
-
-To compare generation with learning, read [training examples and teacher forcing](training-examples.qmd), followed by [the loss function](loss.qmd).
-:::
+The questions for this lesson are collected on its [dedicated practice page](exercises/generation.qmd); computing a distribution and comparing greedy selection with sampling are practised in [exercise GE-A](exercises-generation.qmd#generation).
 
 {{< include ../includes/generated-suggested-route-en-generation.qmd >}}
 

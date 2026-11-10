@@ -21,20 +21,27 @@ related: ["fr/text-data", "fr/transformer", "fr/build-path", "fr/decoding-strate
 tags: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:fr", "status:published"]
 -->
 
-::: {.chapter-lead}
-Quand vous envoyez un prompt, le modèle ne rédige pas toute la réponse d'un seul coup. Il traite le contexte disponible, attribue une probabilité à chaque token susceptible de suivre, puis le système en sélectionne un et l'ajoute au contexte. Le cycle recommence jusqu'au critère d'arrêt.
+{{< include ../includes/generated-guided-context-fr-generation.qmd >}}
 
-Cette boucle est la **génération autorégressive**. Pendant l'inférence, les paramètres du modèle restent fixes : produire une réponse n'est pas apprendre.
+::: {.chapter-lead}
+Le panorama s'est arrêté sur un tableau : après « C'est une bonne situation, ça, scribe ? », le modèle donne 0,6 à « Être », 0,2 à « Vous ». Un tableau de probabilités n'est pas encore une réponse. Comment passe-t-on de l'un à l'autre ?
+
+En répétant quatre gestes : prédire, sélectionner, réinjecter, puis continuer ou s'arrêter. Cette boucle est la **génération autorégressive**. Pendant qu'elle tourne, les paramètres du modèle ne changent pas : produire une réponse n'est pas apprendre.
 :::
 
 ::: {.callout-note title="Fil rouge : le préfixe et la continuation"}
-**Contexte initial (préfixe fourni) :** « C'est une bonne situation, ça, scribe ? »
+**Préfixe fourni :** « C'est une bonne situation, ça, scribe ? » La question de Panoramix est déjà dans le contexte quand la génération commence.
 
-**Début de la continuation :** « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... »
-
-La question de Panoramix est déjà présente lorsque la génération commence ; les tokens de la réponse d'Otis sont ajoutés ensuite, un par un. Pour les calculs et les expériences, nous utiliserons une continuation pédagogique originale plutôt que la tirade du film.
+**Continuation suivie ici :** « Être scribe, c'est relier des histoires. » C'est un texte original de LLM Lab, pas la tirade d'Otis ni la sortie d'un modèle. Ses tokens sont ajoutés ensuite, un par un.
 :::
 
+::: {.callout-tip title="L'idée à retenir en une minute"}
+- **Le modèle calcule, une règle choisit.** Le modèle fournit une distribution sur le prochain token. Une règle de décodage, extérieure au réseau, en tire un seul token.
+- **Le token choisi devient du contexte.** Il est ajouté au texte, et le modèle recalcule une distribution pour la position suivante.
+- **Rien n'est appris en route.** Les paramètres sont les mêmes au premier et au dernier token.
+
+**Première lecture :** la section « La boucle sur un exemple » suffit pour poursuivre le parcours. La notation, le *prefill*, le *decode* et les règles de sélection se lisent mieux au retour, une fois vues les [probabilités de sortie](probabilites.qmd).
+:::
 
 <div class="pipeline-stepper" role="navigation" aria-label="Boucle de génération autorégressive">
   <a class="step-item" href="text-data.qmd">Prompt tokenisé</a>
@@ -53,75 +60,72 @@ La question de Panoramix est déjà présente lorsque la génération commence ;
   <span class="meta-flow__loop" aria-label="La sélection et le decode se répètent tant que le critère d’arrêt n’est pas atteint">↺ Sélectionner, ajouter au contexte et recommencer le decode</span>
 </div>
 
+## La boucle sur un exemple
 
-Cette page intervient à deux moments du parcours. **Au premier passage**, juste après le panorama, retenez surtout la boucle autorégressive décrite dans les sections 1 et 2 : prédire, sélectionner, réinjecter, puis recommencer. **Lors du retour à l'inférence**, approfondissez les sections suivantes sur le *prefill*, le *decode* et les règles de sélection. Les détails de performance sont repliés dans un approfondissement facultatif.
+Suivons trois tours de boucle. Les probabilités sont fictives, comme dans le panorama, et la règle de décodage est la plus simple : prendre le token le plus probable.
 
-## 1. Une étape élémentaire : prédire et sélectionner un token
+| Tour | Contexte | Distribution calculée (extrait) | Token choisi |
+|---|---|---|---|
+| 1 | C'est une bonne situation, ça, scribe ? | « Être » 0,6 · « Vous » 0,2 · « Oui » 0,1 · « Non » 0,1 | « Être » |
+| 2 | C'est une bonne situation, ça, scribe ? Être | « scribe » 0,5 · « heureux » 0,3 · « ici » 0,2 | « scribe » |
+| 3 | C'est une bonne situation, ça, scribe ? Être scribe | « , » 0,8 · « est » 0,1 · « . » 0,1 | « , » |
 
-Considérons un contexte courant composé des tokens déjà disponibles, qu'ils proviennent du prompt ou d'étapes de génération précédentes. Notons-le :
+Chaque ligne enchaîne les mêmes gestes.
+
+1. **Prédire.** Le modèle lit tout le contexte et calcule une distribution sur le prochain token.
+2. **Sélectionner.** La règle de décodage en retient un.
+3. **Réinjecter.** Ce token est ajouté au contexte. Au tour 2, « Être » fait partie de ce que le modèle lit, au même titre que la question.
+4. **Continuer ou s'arrêter.** La boucle s'arrête sur un critère explicite : un token spécial de fin de séquence (EOS), une longueur maximale, ou une règle fixée par l'application. L'arrêt est une règle, pas le signe que le modèle aurait « fini de réfléchir ».
+
+Deux conséquences découlent de cette mécanique.
+
+**Un choix engage la suite.** Si la règle avait retenu « Vous » au tour 1, le contexte du tour 2 serait différent, et toute la suite avec lui. Le modèle ne revient pas sur un token déjà ajouté.
+
+**Le modèle ne garde rien d'un tour à l'autre, sauf le texte.** Ses paramètres sont identiques aux trois tours. Ce qui change, c'est le contexte qu'on lui présente.
+
+## Une étape, en notation
+
+Notons le contexte courant, c'est-à-dire les tokens du prompt et ceux déjà générés :
 
 $$
 c_t = (x_1, \ldots, x_{t-1}).
 $$
 
-Dans cette notation, chaque $x_i$ désigne le **token** à la position $i$, pas son identifiant numérique. En pratique, le tokenizer associe ce token à un ID entier, qui sert à sélectionner son vecteur dans la table d'embeddings. Pour alléger les équations, on note ici les tokens plutôt que leurs IDs.
+Chaque $x_i$ désigne le **token** à la position $i$, pas son identifiant numérique. En pratique, le tokenizer associe ce token à un ID entier, qui sélectionne son vecteur dans la table d'embeddings ; les équations notent les tokens pour rester lisibles.
 
-Pour **une étape de génération**, le modèle effectue une passe avant à paramètres fixes. Il produit des logits à chaque position du contexte ; pour prédire la suite, on utilise ceux de la dernière position, notés $z_t$. La softmax définit alors la distribution conditionnelle :
+Le modèle effectue une **passe avant** (*forward pass*) à paramètres $\theta$ fixes. Il produit un vecteur de logits pour chaque position du contexte ; la génération utilise celui de la dernière position, noté $z_t$. La softmax en fait une distribution conditionnelle :
 
 $$
 p_\theta(\cdot \mid c_t) = \operatorname{softmax}(z_t).
 $$
 
-Pour un token candidat $v$, $p_\theta(v \mid c_t)$ désigne la probabilité qu'il soit le prochain token sachant le contexte courant. Chaque probabilité est comprise entre 0 et 1 et leur somme, sur tout le vocabulaire, vaut 1. La distribution dépend du contexte ; la génération utilise celle de la dernière position du contexte.
+Pour un token candidat $v$, $p_\theta(v \mid c_t)$ est la probabilité qu'il soit le prochain token sachant le contexte. Ces probabilités portent sur les tokens du vocabulaire, pour la position suivante uniquement, et leur somme vaut 1. Au tour 1 de l'exemple, $p_\theta(\text{« Être »} \mid c_t) = 0{,}6$.
 
-Les probabilités portent sur les tokens du vocabulaire et leur somme vaut 1. Elles décrivent la prochaine position, pas des phrases complètes. Le calcul d'une distribution et la distinction entre sélection gloutonne et échantillonnage sont travaillés dans l'[exercice GE-A](exercises-generation.qmd#generation).
-
-Une politique de décodage sélectionne ensuite un token à partir de cette distribution :
+Une règle de **décodage** sélectionne ensuite un token :
 
 $$
-x_t = \operatorname{Dec}\!\left(p_\theta(\cdot \mid c_t)\right).
+x_t = \operatorname{Dec}\!\left(p_\theta(\cdot \mid c_t)\right),
 $$
 
-La sélection peut être déterministe (par exemple *argmax*) ou stochastique (échantillonnage). Les stratégies de sélection sont détaillées plus loin.
-
-**Le résultat de cette étape est un seul token sélectionné**, pas encore le texte complet. Il faut distinguer la distribution calculée par le modèle du token effectivement choisi par la politique de décodage.
-
-Si les notions de token et d'identifiant ne sont pas encore familières, commencez par [Du texte aux tokens](text-data.qmd). Pour comprendre **comment le modèle calcule** cette distribution, consultez [Le Transformer dans un GPT](transformer.qmd), [Logits](logits.qmd) et [Probabilités de sortie](probabilites.qmd). Ces pages expliquent le calcul interne ; la présente page étudie ce que le système fait de la distribution obtenue.
-
-## 2. La boucle de génération : répéter cette étape
-
-La génération autorégressive consiste à réutiliser l'étape élémentaire avec un contexte qui s'allonge. Après la sélection de $x_t$, le contexte devient :
+et le contexte s'allonge :
 
 $$
 c_{t+1} = (x_1, \ldots, x_{t-1}, x_t).
 $$
 
-Le modèle calcule alors une nouvelle distribution conditionnée par ce contexte mis à jour, une nouvelle sélection est effectuée, puis le processus recommence. Les paramètres $\theta$ restent fixes pendant toute cette boucle.
+Trois mots désignent ainsi trois échelles : la **passe avant** est le calcul du réseau, du contexte à la distribution ; le **décodage** est la règle qui tire un token de cette distribution ; la **génération** est la boucle entière, critère d'arrêt compris. Certaines bibliothèques emploient *décodage* dans un sens plus large ; ici, il désigne seulement la sélection du token et les traitements qui la préparent.
 
-La génération complète alterne donc quatre opérations :
+Le calcul de la distribution lui-même occupe les étapes intermédiaires du parcours : [le Transformer](transformer.qmd) produit les états, [les logits](logits.qmd) en sont la projection, [la softmax](probabilites.qmd) les normalise.
 
-1. **Prédire :** calculer la distribution du prochain token à partir du contexte courant.
-2. **Sélectionner :** appliquer la politique de décodage pour obtenir un token.
-3. **Réinjecter :** ajouter ce token au contexte ; il conditionnera l'étape suivante.
-4. **Continuer ou arrêter :** répéter jusqu'à un critère explicite, par exemple un token de fin, une longueur maximale ou une règle imposée par l'application. L'arrêt ne signifie pas que le modèle aurait « fini de réfléchir ».
+## Du prompt aux tokens suivants : prefill et decode
 
-### Trois niveaux à ne pas confondre
+Un système d'inférence ne traite pas le prompt comme il traite les tokens qu'il génère.
 
-- **Passe avant (*forward pass*) :** calcul du réseau, à paramètres fixes, du contexte jusqu'aux logits et à la distribution prédictive.
-- **Décodage (*decoding*) :** règle qui exploite les sorties du modèle pour sélectionner un token, éventuellement après transformation ou filtrage de la distribution.
-- **Génération (*generation*) :** processus complet qui répète l'étape de prédiction et de sélection, réinjecte chaque token et vérifie le critère d'arrêt.
+- **Prefill.** La question de Panoramix est connue d'avance. Une seule passe avant traite toutes ses positions ensemble, sous la contrainte du masque causal ; la distribution obtenue à la dernière position sert à choisir le premier token généré.
+- **Decode incrémental.** Ensuite, les tokens arrivent un par un. À chaque étape, le modèle calcule la distribution suivante à partir du contexte augmenté du dernier token choisi.
+- **Cache KV.** L'attention calcule, pour chaque position, des vecteurs appelés clés et valeurs ([requêtes, clés et valeurs](queries-keys-values.qmd)). Ceux du préfixe ne changent plus une fois calculés ; une implémentation optimisée les conserve au lieu de tout recalculer à chaque tour. C'est un gain de temps, pas une condition de correction : sans cache, le résultat est le même, aux effets numériques près.
 
-Le mot *décodage* est parfois employé dans un sens plus large selon les bibliothèques et les publications. Ici, il désigne la sélection du prochain token et les traitements qui la préparent ; il ne désigne ni le calcul interne du Transformer, ni toute la boucle de génération.
-
-## 3. Du prompt initial aux tokens suivants : prefill et decode
-
-Les systèmes d'inférence distinguent généralement le traitement initial du prompt de la génération token par token :
-
-- **Prefill :** le modèle traite le prompt initial comme une séquence, sous contrainte du masque causal. Une passe avant calcule les sorties pour les positions du prompt ; la distribution à la dernière position sert à sélectionner le premier token généré.
-- **Decode incrémental :** après cette première sélection, le modèle avance dans la séquence générée. À chaque étape, il calcule la distribution suivante à partir du contexte augmenté du token précédent, puis sélectionne un nouveau token.
-- **Cache KV :** une implémentation optimisée peut conserver les clés et valeurs d'attention déjà calculées pendant le prefill et les étapes précédentes. Elle évite ainsi de recalculer tout le préfixe. C'est une optimisation d'exécution, pas une condition nécessaire à la correction de la génération.
-
-**Decode** désigne donc une phase d'exécution après le prefill ; **décodage** désigne la règle de sélection du token. Les deux notions sont liées, mais ne sont pas synonymes.
+*Decode* nomme donc une phase d'exécution, celle qui suit le prefill ; *décodage* nomme la règle de sélection. Les deux mots se ressemblent et ne désignent pas la même chose.
 
 ::: {.callout-note title="Approfondissement facultatif : latence et optimisations d'inférence" collapse="true"}
 
@@ -150,69 +154,52 @@ Le schéma de [Brij Pandey sur le chemin d'inférence](https://www.linkedin.com/
 
 :::
 
-Le prefill n'est pas non plus du [*teacher forcing*](training-examples.qmd). En teacher forcing, les prédictions sont conditionnées par le préfixe observé dans les données de référence, notamment pendant l'entraînement. En génération, le préfixe s'allonge avec les tokens sélectionnés par le modèle. Le calcul de prédiction est apparenté, mais la source du contexte diffère.
+Le prefill ressemble au *teacher forcing* de l'entraînement, puisque dans les deux cas le modèle lit un texte qu'il n'a pas produit. La différence tient à la suite : en génération, le contexte s'allonge avec les tokens choisis par la règle de décodage ; en teacher forcing, il s'allonge avec les tokens du texte de référence, quoi que le modèle ait prédit ([exemples d'entraînement](training-examples.qmd)).
 
-Pour voir comment cette distinction se traduit dans le programme de référence, consultez la [visite guidée du code de génération](gpt-generation-walkthrough.qmd). Elle documente notamment le traitement du prompt, le recalcul de la fenêtre de contexte et les optimisations volontairement absentes de cette implémentation pédagogique.
+Le programme de référence du projet applique cette boucle sans cache KV ; la [visite guidée du code de génération](gpt-generation-walkthrough.qmd) montre comment il traite le prompt et recalcule la fenêtre de contexte.
 
-## 4. Comment le prochain token est-il choisi ?
+## Comment le prochain token est-il choisi ?
 
-La distribution prédictive ne détermine pas à elle seule une sortie unique. Une règle de décodage définit comment sélectionner le token.
+La distribution du tour 1 ne désigne pas une sortie unique. C'est la règle de décodage qui tranche.
 
-### Sélection gloutonne (*greedy decoding*)
+**Sélection gloutonne** (*greedy decoding*). On prend le token le plus probable (*argmax*) : « Être », à chaque exécution. Le résultat est reproductible si le calcul est déterministe. Ce choix local n'optimise pas la phrase entière et peut conduire à des répétitions.
 
-Le token ayant la probabilité la plus élevée est sélectionné systématiquement (*argmax*). À calcul déterministe et conditions identiques, le résultat est reproductible. Ce choix local peut toutefois conduire à des répétitions ou à une continuation peu satisfaisante.
+**Échantillonnage** (*sampling*). On tire le token au hasard selon la distribution : « Être » sort en moyenne six fois sur dix, « Vous » deux fois sur dix. Deux exécutions peuvent donc produire deux textes différents. Fixer la graine du générateur aléatoire, avec un calcul déterministe, rend le tirage reproductible.
 
-### Échantillonnage (*sampling*)
+**Température.** Avant le tirage, on peut resserrer ou étaler la distribution en divisant les logits par un nombre $\tau > 0$.
 
-Le token est tiré au hasard selon la distribution. Deux exécutions peuvent donc produire des textes différents ; un token moins probable peut être sélectionné. Une graine fixée et un calcul déterministe permettent de reproduire le tirage dans les mêmes conditions.
+| Suite | $\tau = 0{,}5$ | $\tau = 1$ | $\tau = 2$ |
+|---|---|---|---|
+| « Être » | 0,86 | 0,60 | 0,42 |
+| « Vous » | 0,10 | 0,20 | 0,24 |
+| « Oui » | 0,02 | 0,10 | 0,17 |
+| « Non » | 0,02 | 0,10 | 0,17 |
 
-### Température
+Une température basse concentre la probabilité sur le token de tête ; une température élevée laisse plus de place aux autres. L'ordre des candidats ne change pas. Quand $\tau$ tend vers zéro, l'échantillonnage rejoint la sélection gloutonne, hors égalités et effets numériques. La température agit sur la distribution utilisée pour le tirage, pas sur les paramètres du modèle, et ne rend une réponse ni plus vraie ni meilleure. Son calcul est détaillé dans [Probabilités de sortie](probabilites.qmd).
 
-La température règle la concentration de la distribution utilisée pour l'échantillonnage :
+Les filtres **top-k** et **top-p** écartent les candidats les moins probables avant le tirage ; la recherche par faisceau (*beam search*) et le décodage contrastif suivent d'autres logiques. La boucle de base se comprend sans eux ; leurs compromis sont comparés dans les [stratégies de décodage](decoding-strategies.qmd), et une [introduction de Nishanthan K](https://dev.to/nishanthan-k/core-elements-of-large-language-models-llms-tokens-context-windows-temperature-and-sampling-2m45) en donne un premier aperçu.
 
-- une température basse accentue les différences entre les scores et favorise davantage les tokens les plus probables ;
-- une température élevée atténue ces différences et laisse plus de place aux alternatives ;
-- lorsque la température tend vers zéro, l'échantillonnage se rapproche d'une sélection gloutonne, hors cas d'égalité et effets numériques.
-
-La température modifie la distribution utilisée pour choisir le prochain token, **pas les paramètres du modèle**. Elle ne garantit ni la vérité d'une réponse ni sa qualité.
-
-Les filtres **top-k** et **top-p** restreignent plus finement l'ensemble des candidats. La recherche par faisceau (*beam search*) et le décodage contrastif répondent à d'autres logiques de sélection ou de recherche. Ces méthodes et leurs compromis sont présentés dans l'[approfondissement sur les stratégies de décodage](decoding-strategies.qmd) ; elles ne sont pas nécessaires pour comprendre la boucle de base.
-
-::: {.callout-warning title="Trois idées reçues"}
-- **« Le modèle choisit toujours le meilleur token. »** Pas nécessairement : avec l'échantillonnage, un token moins probable peut être sélectionné. Le mot « meilleur » dépend aussi du critère retenu.
-- **« Une probabilité élevée garantit un token correct. »** Non : la distribution reflète des régularités statistiques apprises, pas la vérité factuelle. Un modèle peut attribuer une probabilité élevée à une continuation fausse.
-- **« Les répétitions sont un bug. »** Pas nécessairement : elles peuvent résulter du comportement de la règle de décodage, notamment d'une sélection gloutonne.
+::: {.callout-warning title="Idées reçues"}
+- **« Le modèle choisit toujours le meilleur token. »** Le modèle ne choisit pas : il fournit une distribution. Avec l'échantillonnage, « Vous » peut sortir alors que « Être » est plus probable.
+- **« Une probabilité élevée garantit un token correct. »** La distribution reflète des régularités apprises, pas l'état du monde. Un modèle peut donner 0,6 à une suite fausse.
+- **« Les répétitions sont un bug. »** Elles peuvent venir de la règle de décodage, la sélection gloutonne en particulier, sans erreur de programme.
 :::
 
-## 5. L'inférence ne met pas à jour le modèle
+## Ce que la génération ne fait pas
 
-Pendant la génération ordinaire, les paramètres du modèle restent fixes. Il n'y a ni calcul de gradients destiné à l'apprentissage, ni mise à jour des poids. Générer davantage de tokens ne corrige donc pas, à lui seul, un modèle mal entraîné.
+**Elle ne corrige pas le modèle.** Aucun gradient n'est calculé, aucun poids n'est mis à jour. Générer davantage de tokens n'améliore pas un modèle mal entraîné ; c'est le rôle de l'[apprentissage](loss.qmd), qui compare les prédictions à des cibles connues puis modifie les paramètres.
 
-Avec le même contexte, les mêmes paramètres et un calcul déterministe, une règle de décodage déterministe produit la même continuation. L'échantillonnage ou certains calculs non déterministes peuvent introduire de la variabilité. Une application peut conserver un historique ou d'autres données en dehors du modèle ; pour que cet historique influence une nouvelle génération, il doit être fourni dans le contexte ou traité par un mécanisme externe.
+**Elle ne voit que le contexte fourni.** Le modèle traite au plus une fenêtre de taille maximale. Ce budget couvre tous les tokens transmis, instructions, historique, messages d'outils, prompt et éventuels tokens multimodaux, ainsi que les tokens générés. La capacité annoncée n'est donc pas entièrement disponible pour la réponse : l'application peut réserver une longueur de sortie, tronquer ou sélectionner l'historique. Une information absente du contexte transmis n'influence plus directement la prédiction, et une fenêtre plus grande ne garantit pas que chaque élément sera utilisé correctement.
 
-C'est la distinction centrale avec l'[apprentissage](loss.qmd) : l'inférence utilise les paramètres disponibles, tandis que l'entraînement évalue les prédictions par rapport à des cibles observées, calcule une loss et peut ensuite modifier les paramètres. Le [parcours de construction](build-path.qmd) présente séparément ces deux opérations.
+**Elle ne se souvient pas d'une génération à l'autre.** Si une application semble retenir une conversation, c'est qu'elle en réinjecte l'historique dans le contexte, ou qu'elle le conserve hors du modèle. Les poids, eux, n'ont rien enregistré.
 
-## 6. Limites à garder en tête
+**Elle ne crée pas la qualité.** La boucle tourne aussi bien avec un modèle non entraîné ; ses sorties n'ont alors aucun intérêt. La mécanique de génération et la qualité acquise par apprentissage sont deux questions séparées.
 
-- **Fenêtre de contexte :** le modèle ne traite que le contexte fourni, dans la limite de sa fenêtre maximale. Le budget porte sur l'ensemble des tokens effectivement transmis — instructions, historique, messages d'outils, prompt et éventuels tokens multimodaux — ainsi que sur les tokens générés. La capacité annoncée n'est donc pas nécessairement disponible intégralement pour la réponse : l'application peut réserver une longueur de sortie et appliquer une stratégie de troncature ou de sélection de l'historique. Une information qui n'est plus présente dans le contexte transmis n'influence plus directement la prédiction. Une fenêtre plus grande n'est pas une mémoire persistante et ne garantit pas que chaque élément sera utilisé correctement.
-- **Pas de mémoire intrinsèque entre deux générations :** chaque génération dépend du contexte qui lui est transmis. Une application peut réinjecter un historique ou conserver un état externe, mais cela ne signifie pas que les poids du modèle ont mémorisé la conversation.
-- **Qualité dépendante des paramètres appris :** la boucle de génération peut fonctionner avec un modèle non entraîné, mais ses sorties ne deviennent pas utiles pour autant. La mécanique de génération et la qualité acquise par apprentissage sont deux questions distinctes.
-- **Validité du résultat :** une réponse fluide, ou même une requête SQL syntaxiquement valide et exécutable, ne garantit pas qu'elle répond à la bonne question métier. Vérifiez le schéma, les définitions utilisées (par exemple le traitement des remboursements et paiements échoués), les hypothèses et les résultats avant toute décision ou action.
+**Elle ne valide pas son résultat.** Une réponse fluide, ou même une requête SQL syntaxiquement valide et exécutable, ne garantit pas qu'elle répond à la bonne question métier. Le schéma, les définitions utilisées (le traitement des remboursements et des paiements échoués, par exemple), les hypothèses et les résultats se vérifient avant toute décision.
 
 ## Exercices
 
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/generation.qmd).
-
-
-::: {.callout-tip title="Pour aller plus loin"}
-Ces liens correspondent à trois besoins différents :
-
-- **Comprendre les étapes en amont :** [du texte aux tokens](text-data.qmd), puis [les représentations et le calcul du Transformer](transformer.qmd), [les logits](logits.qmd) et [les probabilités](probabilites.qmd).
-- **Étudier d'autres règles de sélection :** [stratégies avancées de décodage](decoding-strategies.qmd), avec un complément introductif sur les [tokens, fenêtres de contexte, température et méthodes d'échantillonnage](https://dev.to/nishanthan-k/core-elements-of-large-language-models-llms-tokens-context-windows-temperature-and-sampling-2m45).
-- **Voir une implémentation concrète :** [visite guidée de `generate.py`](gpt-generation-walkthrough.qmd).
-
-Pour comparer la génération avec l'apprentissage, consultez [les exemples d'entraînement et le teacher forcing](training-examples.qmd), puis [la fonction de perte](loss.qmd).
-:::
+Les questions de cette leçon sont regroupées sur sa [page d'exercices dédiée](exercises/generation.qmd) ; le calcul d'une distribution et la comparaison entre sélection gloutonne et échantillonnage sont travaillés dans l'[exercice GE-A](exercises-generation.qmd#generation).
 
 {{< include ../includes/generated-suggested-route-fr-generation.qmd >}}
 
