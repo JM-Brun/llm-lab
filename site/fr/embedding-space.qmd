@@ -97,9 +97,9 @@ Pour une autre visualisation du passage des tokens aux vecteurs dans GPT-2, voir
 
 Un tokenizer découpe le texte en tokens et associe chaque token à un **ID**. Le modèle utilise cet ID pour sélectionner le vecteur correspondant dans sa **matrice d'embeddings** (ou matrice de plongements), notée $E$ :
 
-\[
+$$
 E\in\mathbb{R}^{V\times d}
-\]
+$$
 
 - $V$ est la taille du vocabulaire : la matrice contient une ligne par ID.
 - $d$ est la dimension de l'embedding : chaque ligne contient $d$ nombres réels.

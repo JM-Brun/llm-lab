@@ -67,9 +67,9 @@ Dans le préfixe « C'est une bonne situation, ça, scribe ? », l'ordre des tok
 ::: {.callout-note collapse="true" title="Pourquoi l’auto-attention seule ne suffit-elle pas ?"}
 Pour une auto-attention fondée uniquement sur le contenu, sans biais positionnel ni masque dépendant de l’ordre, permuter les lignes de l’entrée permute les lignes de sortie de la même façon. Si $P$ est une matrice de permutation, alors :
 
-\[
+$$
 \operatorname{Attention}(PX)=P\,\operatorname{Attention}(X).
-\]
+$$
 
 On peut le vérifier en posant $S=QK^\top/\sqrt{d_k}$ et $A=\operatorname{softmax}(S)$, avec un softmax appliqué ligne par ligne. Pour l’entrée permutée, $Q'=PQ$, $K'=PK$ et $V'=PV$. Ainsi, $A'=\operatorname{softmax}(PSP^\top)=PAP^\top$, puis $A'V'=PAP^\top PV=PAV$.
 
@@ -84,31 +84,31 @@ Cette propriété suppose l’absence de signal positionnel et de contrainte dé
 
 - **Encodage absolu ajouté au vecteur :** on ajoute à la représentation du token (son vecteur de plongement) un vecteur associé à sa position. Le Transformer original utilisait des encodages sinusoïdaux ; d'autres modèles apprennent leurs embeddings positionnels.
 - **Mécanismes relatifs :** ils introduisent le décalage entre positions dans le calcul de l'attention, par exemple au moyen d'un biais ajouté aux scores ou de représentations relatives.
-- **RoPE :** cette méthode rotative applique des rotations dépendant de la position aux requêtes et aux clés après leurs projections, avant le produit \(QK^\top\). Le score obtenu dépend alors du décalage relatif. RoPE est donc un mécanisme de position relative ; on le distingue ici pour rendre visible son mode d'injection particulier.
+- **RoPE :** cette méthode rotative applique des rotations dépendant de la position aux requêtes et aux clés après leurs projections, avant le produit $QK^\top$. Le score obtenu dépend alors du décalage relatif. RoPE est donc un mécanisme de position relative ; on le distingue ici pour rendre visible son mode d'injection particulier.
 
 Ces approches injectent l'information positionnelle à des endroits différents et n'ont pas exactement les mêmes propriétés. Le schéma compare deux mécanismes positionnels explicites ; il ne représente pas le masque causal, qui constitue une contrainte d'accès distincte. Il suffit ici de retenir leur rôle et leur emplacement général dans le calcul. Pour comprendre la dépendance au décalage relatif, les conventions de rotation et les limites à longue séquence, voir l'[approfondissement avancé sur RoPE](rope.qmd).
 
 ::: {.callout-note collapse="true" title="Approfondissement facultatif — géométrie des encodages sinusoïdaux"}
 Dans l’encodage sinusoïdal original, chaque paire de coordonnées utilise une fréquence propre. En posant $\omega_i=10000^{-2i/d}$, la paire associée à l’indice $i$ s’écrit :
 
-\[
+$$
 p_i(t)=
 \begin{bmatrix}
 \sin(\omega_i t)\\
 \cos(\omega_i t)
 \end{bmatrix}.
-\]
+$$
 
 Pour un décalage fixé $k$, les identités trigonométriques donnent :
 
-\[
+$$
 p_i(t+k)=
 \begin{bmatrix}
 \cos(\omega_i k) & \sin(\omega_i k)\\
 -\sin(\omega_i k) & \cos(\omega_i k)
 \end{bmatrix}
 p_i(t).
-\]
+$$
 
 Le décalage $k$ correspond donc à une rotation fixe **pour une paire et une fréquence données**. Par exemple, avec $d=2$, la seule paire a $\omega_0=1$ : $p_0(0)=[0,1]^\top$ et $p_0(1)=[\sin(1),\cos(1)]^\top\approx[0.8415,0.5403]^\top$.
 

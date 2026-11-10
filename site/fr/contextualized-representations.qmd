@@ -116,7 +116,7 @@ Cette illustration originale s'inspire de [Ethayarajh (2019), *How Contextual ar
 |---|---|---|
 | ID du token | Vocabulaire et règles du tokenizer | Non ; il identifie une entrée du vocabulaire |
 | Vecteur de plongement initial du token (embedding) | Ligne sélectionnée dans la matrice de plongements | Non, pour une matrice et un ID fixes |
-| État caché à la couche \(\ell\) | État de la couche précédente, information positionnelle et tokens accessibles selon le masque | Oui, en général |
+| État caché à la couche $\ell$ | État de la couche précédente, information positionnelle et tokens accessibles selon le masque | Oui, en général |
 
 Deux confusions fréquentes viennent du mélange de ces étapes :
 
