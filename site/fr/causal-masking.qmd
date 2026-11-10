@@ -125,16 +125,7 @@ La règle causale se formule aussi comme une propriété de préfixe : à param�
 ::: {.self-check}
 ## Vérifier sa compréhension
 
-[Exercices approfondis sur ce thème](exercises.qmd#attention).
-
-1. Une ligne de scores déjà mise à l'échelle vaut $(1,0)$. Que deviennent les poids si la deuxième position est interdite par un masque causal ? Pourquoi le masque doit-il être appliqué avant le softmax ?
-
-<details>
-<summary>Afficher le raisonnement</summary>
-
-Le score interdit est masqué avant le softmax (conceptuellement $-\infty$) : les poids deviennent $(1,0)$. Le masque doit intervenir avant la normalisation ; mettre son poids à zéro après le softmax sans renormaliser ne produit pas la même distribution, car la somme restante serait inférieure à un.
-
-</details>
+La construction d'une matrice causale, le décalage des cibles et l'analyse de l'invariance de préfixe sont travaillés dans l'[exercice CA-A de la collection Attention](exercises.qmd#attention).
 :::
 
 ::: {.callout-note collapse="true" title="Code et tests de référence (approfondissement)"}
