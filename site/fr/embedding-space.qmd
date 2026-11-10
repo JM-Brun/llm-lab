@@ -83,7 +83,7 @@ La matrice contient donc $V \times d$ paramètres. L'entier $i$ n'est ni une coo
 
 ## D'où viennent les valeurs de la table ?
 
-Les lignes de $E$ ne sont pas des définitions écrites à la main. La matrice fait partie des **paramètres appris** du réseau. Dans un entraînement classique, ses valeurs sont initialisées, puis ajustées avec les autres paramètres : le modèle produit des prédictions, une fonction de perte mesure l'écart avec les tokens cibles, la rétropropagation calcule des gradients et l'optimiseur met à jour les paramètres.
+Les lignes de $E$ ne sont pas des définitions écrites à la main. La matrice fait partie des **paramètres appris** du réseau. Dans un entraînement classique, ses valeurs sont initialisées, puis ajustées avec les autres paramètres : le modèle produit des prédictions, une fonction de perte mesure l'écart avec les tokens cibles, la rétropropagation calcule des gradients et l'optimiseur met à jour les paramètres. Les gradients issus des exemples traversent aussi l'opération de lookup : les lignes sélectionnées par les IDs de ces exemples peuvent ainsi être ajustées pendant l'entraînement.
 
 Le détail du calcul et du code appartient au parcours **Build** : [assembler le GPT et suivre les tables d'embeddings](gpt-model-walkthrough.qmd), dans la [visite guidée de construction](build-path.qmd). Pour le rôle de la loss et des gradients, voir aussi [la fonction de perte](loss.qmd) et [les gradients](gradients.qmd).
 
