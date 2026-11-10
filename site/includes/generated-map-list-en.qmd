@@ -39,15 +39,15 @@
   - [Build a small GPT](build-path.html)
 - **Practice and experiment**
   - Mathematical foundations
-    - [Exercises — Mathematical foundations](exercises-foundations.html)
+    - [Mathematical foundations exercises](exercises-foundations.html)
   - Text data
-    - [Exercises — Text data](exercises-text-data.html)
+    - [Text data exercises](exercises-text-data.html)
   - Attention
-    - [Exercises — Attention](exercises-attention.html)
+    - [Attention exercises](exercises-attention.html)
   - Transformer
-    - [Exercises — Transformer](exercises-transformer.html)
+    - [Transformer exercises](exercises-transformer.html)
   - Generation
-    - [Exercises — Generation](exercises-generation.html)
+    - [Generation exercises](exercises-generation.html)
   - [Exercise catalogue](exercises.html)
   - [Explore and compare Transformers](transformer-explainer.html)
   - [Evaluating a model: from score to experimental protocol](experimental-evaluation.html)
