@@ -127,6 +127,14 @@ Lower temperature tends to concentrate the distribution; higher temperature tend
 - Entropy or perplexity computed with different tokenizers is not directly comparable without care.
 - The average entropy observed under a model is not automatically the true entropy of the data source.
 
+
+
+{{< include ../includes/generated-suggested-route-en-entropy.qmd >}}
+
+:::: {.language-switch}
+[Français](../fr/entropy.qmd) · [English](entropy.qmd)
+::::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -152,14 +160,7 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 - Cover & Thomas, [*Elements of Information Theory*](https://onlinelibrary.wiley.com/doi/book/10.1002/047174882X) — entropy and coding.
 - [3Blue1Brown — Reinventing Entropy](https://www.youtube.com/watch?v=l6DKRf-fAAM) — complementary visual intuition.
 
-</div>
-</details>
 
-{{< include ../includes/generated-suggested-route-en-entropy.qmd >}}
-
-:::: {.language-switch}
-[Français](../fr/entropy.qmd) · [English](entropy.qmd)
-::::
 
 ::: {.self-check}
 ## Check your understanding
@@ -179,3 +180,7 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 </details>
 :::
+
+
+</div>
+</details>
