@@ -76,7 +76,7 @@ La figure résume la génération : le texte est tokenisé, le réseau calcule u
 
 *Les probabilités représentées sont illustratives ; elles ne proviennent pas d'un modèle particulier.*
 
-Pour approfondir les étapes du schéma : [texte et données](text-data.qmd) pour l'entrée, [Le Transformer dans un GPT](transformer.qmd) et le [parcours d'un bloc](transformer-block-walkthrough.qmd) pour le calcul, puis [génération](generation.qmd) pour la distribution et la sélection du token.
+Pour suivre le parcours conceptuel : [texte et données](text-data.qmd) pour l'entrée, [Le Transformer dans un GPT](transformer.qmd) pour le calcul interne, puis [génération](generation.qmd) pour la distribution et la sélection du token. Pour observer une implémentation du bloc, le [parcours Build du bloc Transformer](transformer-block-walkthrough.qmd) est un complément pratique.
 
 ### Un calcul partagé, trois usages
 
