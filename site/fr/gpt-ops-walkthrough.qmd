@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/build-path"]
   children: []
-related: ["fr/transformer", "fr/tensors"]
+related: ["fr/transformer", "fr/tensors", "fr/gpt-ops-walkthrough-exercises"]
 tags: ["type:guided-build", "destination:build", "topic:reference-gpt-ops", "level:applied", "language:fr", "status:published"]
 -->
 
@@ -166,17 +166,9 @@ def linear(x: FloatArray, weight: FloatArray, bias: FloatArray) -> FloatArray:
 
 [`tests/unit/test_gpt_ops.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt_ops.py) vérifie chaque promesse : `linear` égale le calcul manuel `x @ W.T + b` et diffuse le biais ; `layer_norm` normalise puis retransforme, avec moyenne nulle et variance proche de un à l'identité ; `gelu(0) = 0` et l'approximation reste à moins de 10⁻³ de la définition `erf` exacte ; l'initialisation est reproductible à graine égale.
 
-## Exercices
+## S’exercer
 
-1. Un `x` de forme `(3, 7, 12)` traverse `linear` avec `weight` de forme `(8, 12)` : quelle est la forme de sortie ?
-2. Que se passe-t-il si l'on normalise une position dont les 16 activations sont identiques ? Quel rôle joue `eps` ?
-
-<details>
-<summary>Afficher les réponses et le raisonnement</summary>
-
-1. `(3, 7, 8)` : le dernier axe (12) est remplacé par la largeur de sortie (8) ; les axes de lot (3, 7) sont préservés.
-2. La variance vaut exactement 0 ; sans `eps`, la division par zéro produirait `inf` ou `nan`. Avec `eps`, le dénominateur vaut `sqrt(eps)` et la sortie est finie (proche de la moyenne, ramenée à l'échelle par `gamma` et `beta`).
-</details>
+Les exercices de cette visite guidée sont regroupés sur sa [page d’exercices dédiée](exercises/gpt-ops-walkthrough.qmd).
 
 ## Connexions
 

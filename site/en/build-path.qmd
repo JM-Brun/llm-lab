@@ -89,7 +89,7 @@ At each milestone:
 
 ### Try a tour and check its evidence
 
-Start with the [configuration exercise](gpt-config-walkthrough.qmd#exercises): predict whether the two width/head-count combinations are accepted, then compare your answer with the explanation. After the setup below, run `uv run --locked pytest --no-cov -q tests/unit/test_gpt_config.py` and inspect what the tests actually check. Continue with the exercises and linked tests in the [operations](gpt-ops-walkthrough.qmd#exercises), [block](transformer-block-walkthrough.qmd#exercises), [model](gpt-model-walkthrough.qmd#exercises), and [generation](gpt-generation-walkthrough.qmd#exercises) tours. `--no-cov` disables the whole-project coverage gate for this single-file run; the full test command below retains it. A passing test covers its stated cases; it does not establish independent construction or language quality.
+Start with the [configuration exercise](exercises/gpt-config-walkthrough.qmd): predict whether the two width/head-count combinations are accepted, then compare your answer with the explanation. After the setup below, run `uv run --locked pytest --no-cov -q tests/unit/test_gpt_config.py` and inspect what the tests actually check. Continue with the exercises and linked tests in the [operations](exercises/gpt-ops-walkthrough.qmd), [block](exercises/transformer-block-walkthrough.qmd), [model](exercises/gpt-model-walkthrough.qmd), and [generation](exercises/gpt-generation-walkthrough.qmd) tours. `--no-cov` disables the whole-project coverage gate for this single-file run; the full test command below retains it. A passing test covers its stated cases; it does not establish independent construction or language quality.
 
 ## Generate, score and train: three uses of the same computation
 

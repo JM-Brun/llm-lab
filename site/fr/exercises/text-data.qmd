@@ -1,0 +1,50 @@
+---
+title: "Exercices — Texte et données"
+subtitle: "Questions de vérification, exercices et corrigés"
+keywords: ["type:exercise-hub", "destination:practice", "topic:text-data-exercises", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/text-data-exercises"
+summary: "Questions de vérification et exercices associés à la leçon Texte et données."
+scope: "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle."
+purpose: "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/text-data"]
+tags: ["type:exercise-hub", "destination:practice", "topic:text-data-exercises", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour à la leçon : Texte et données](../text-data.qmd)
+
+## Vérifier sa compréhension
+
+La [collection approfondie sur les données textuelles](../exercises.qmd#donnees-textuelles) est prévue ; utilisez les vérifications ci-dessous en attendant.
+
+1. Un tokenizer attribue l’ID `17` au token `chat`. Dans une séquence, cet ID apparaît deux fois. Les deux occurrences sélectionnent-elles le même vecteur initial ? Peut-on conclure que le nombre 17 encode une quantité de sens ?
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+Oui : un même ID sélectionne la même ligne de la table d’embeddings, donc le même vecteur initial (à paramètres identiques). Non : 17 est un identifiant arbitraire dans le vocabulaire, pas une mesure de sens, de fréquence ou de similarité. Les représentations peuvent ensuite devenir différentes selon le contexte traité par le Transformer.
+
+</details>
+
+2. Deux tokenizers découpent la même phrase en séquences de longueurs différentes. Peut-on comparer directement leurs IDs token par token ?
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+Non. Les IDs ne sont définis qu’à l’intérieur du vocabulaire de leur tokenizer ; l’ID 17 dans un vocabulaire n’a aucune raison de désigner le même token dans un autre. Il faut comparer les tokens décodés, les conventions et les propriétés mesurées (longueur, couverture, coût), en documentant la version de chaque tokenizer.
+
+</details>
+
+::: {.language-switch}
+**Langue :** [Français](text-data.qmd) · [English](../../en/exercises/text-data.qmd)
+:::

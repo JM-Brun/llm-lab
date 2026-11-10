@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/llm-overview"]
   children: ["en/cross-attention", "en/transformer", "en/transformer-explainer"]
-related: ["en/transformer-history", "en/generation", "en/hybrid-llm-architectures", "en/llm-computational-complexity"]
+related: ["en/transformer-history", "en/generation", "en/hybrid-llm-architectures", "en/llm-computational-complexity", "en/transformer-architectures-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:transformer-architectures", "level:core", "language:en", "status:published"]
 -->
 
@@ -114,6 +114,9 @@ The conceptual comparison is sufficient to locate the architectures. To run one 
 ::: {.self-check}
 
 ## Check your understanding
+
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/transformer-architectures.qmd).
+
 
 [Extended exercises on this topic](exercises.qmd#transformer).
 

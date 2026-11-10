@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/embedding-space", "en/positional-encoding"]
   children: []
-related: ["en/queries-keys-values", "en/transformer"]
+related: ["en/queries-keys-values", "en/transformer", "en/contextualized-representations-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-representations", "level:core", "language:en", "status:published"]
 -->
 
@@ -120,6 +120,9 @@ The [embedding-space lookup](embedding-space.qmd) maps IDs to initial vectors. T
 
 ::: {.self-check}
 ## Check your understanding
+
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/contextualized-representations.qmd).
+
 
 [Extended exercises on this topic](../en/exercises.qmd#transformer).
 

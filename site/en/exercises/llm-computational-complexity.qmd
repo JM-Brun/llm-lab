@@ -1,0 +1,36 @@
+---
+title: "Exercises — Computational complexity of LLMs"
+subtitle: "Self-check questions, exercises, and worked answers"
+keywords: ["type:exercise-hub", "destination:practice", "topic:llm-computational-complexity-exercises", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/llm-computational-complexity-exercises"
+summary: "Self-check questions and exercises associated with the Computational complexity of LLMs lesson."
+scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
+purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/llm-computational-complexity"]
+tags: ["type:exercise-hub", "destination:practice", "topic:llm-computational-complexity-exercises", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the lesson: Computational complexity of LLMs](../llm-computational-complexity.qmd)
+
+## Check your understanding
+
+1. **Dense attention is quadratic: why can it still be computed in parallel?** Interactions between positions are parallelizable matrix operations; total work and sequential depth are different.
+2. **Why is standard generation still sequential?** The next token depends on the token just selected.
+3. **Does FlashAttention make attention linear?** No: it retains quadratic work while reducing memory movement and intermediates.
+4. **Is a recurrent model with linear work in \(T\) fully parallel?** No: a naïve recurrence depends on the previous state, although some structures enable parallel scans.
+5. **Does an MoE with few active experts store only those experts?** No: all expert weights must be hosted or accessible.
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/llm-computational-complexity.qmd) · [English](llm-computational-complexity.qmd)
+:::

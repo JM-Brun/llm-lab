@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/llm-overview"]
   children: ["fr/cross-attention", "fr/transformer", "fr/transformer-explainer"]
-related: ["fr/transformer-history", "fr/generation", "fr/hybrid-llm-architectures", "fr/llm-computational-complexity"]
+related: ["fr/transformer-history", "fr/generation", "fr/hybrid-llm-architectures", "fr/llm-computational-complexity", "fr/transformer-architectures-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:transformer-architectures", "level:core", "language:fr", "status:published"]
 -->
 
@@ -114,6 +114,9 @@ La comparaison conceptuelle suffit pour situer les architectures. Pour exécuter
 ::: {.self-check}
 
 ## Vérifier sa compréhension
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/transformer-architectures.qmd).
+
 
 [Exercices approfondis sur ce thème](exercises.qmd#transformer).
 

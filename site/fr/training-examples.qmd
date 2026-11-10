@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/corpus-preparation"]
   children: []
-related: ["fr/tokenization-strategies", "fr/vraisemblance"]
+related: ["fr/tokenization-strategies", "fr/vraisemblance", "fr/training-examples-exercises"]
 tags: ["type:concept-bridge", "destination:build", "topic:training-examples", "level:core", "language:fr", "status:published"]
 -->
 
@@ -227,45 +227,11 @@ Pour revenir en amont, consulter [Du texte aux tokens](text-data.qmd). Pour pour
 - **Formes :** `input_ids` et `targets` ont la forme \([B,L]\), les logits \([B,L,V]\). L'alignement doit être conservé jusqu'au calcul de la perte.
 :::
 
-::: {.self-check}
-## Vérifier sa compréhension
+## S’exercer
 
-1. Pour le flux `[4, 7, 2, 9]` et une longueur d'entrée de 3, quelle est la première paire entrée-cible ?
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/training-examples.qmd).
 
-<details>
-<summary>Afficher la réponse</summary>
 
-Entrée `[4, 7, 2]`, cible `[7, 2, 9]`. Chaque cible est le token immédiatement suivant à la même position de prédiction.
-
-</details>
-
-2. Pourquoi le teacher forcing ne donne-t-il pas accès aux tokens futurs ?
-
-<details>
-<summary>Afficher la réponse</summary>
-
-Le modèle reçoit le préfixe observé, mais le masque causal limite chaque position aux tokens précédents et au token courant. Sans cette contrainte, la cible pourrait fuiter dans le calcul.
-
-</details>
-
-3. Quelle différence entre masque d'attention et masque de perte ?
-
-<details>
-<summary>Afficher la réponse</summary>
-
-Le premier détermine quelles positions peuvent être consultées ; le second détermine quelles cibles contribuent à l'objectif. Ils ne sont pas interchangeables.
-
-</details>
-
-4. Si les logits ont la forme \([B,L,V]\), que représentent les trois axes ?
-
-<details>
-<summary>Afficher la réponse</summary>
-
-Le lot, la position dans la séquence et le token candidat du vocabulaire. Il y a une distribution de scores sur les \(V\) tokens à chaque position de chaque séquence.
-
-</details>
-:::
 
 ## Limites
 

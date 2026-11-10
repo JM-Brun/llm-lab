@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/corpus-preparation"]
   children: []
-related: ["en/tokenization-strategies", "en/likelihood"]
+related: ["en/tokenization-strategies", "en/likelihood", "en/training-examples-exercises"]
 tags: ["type:concept-bridge", "destination:build", "topic:training-examples", "level:core", "language:en", "status:published"]
 -->
 
@@ -227,45 +227,11 @@ To revisit the input stage, see [From text to tokens](text-data.qmd). To continu
 - **Shapes:** `input_ids` and `targets` have shape \([B,L]\), while logits have shape \([B,L,V]\). Alignment must be preserved through loss calculation.
 :::
 
-::: {.self-check}
-## Check your understanding
+## Practice
 
-1. For stream `[4, 7, 2, 9]` and input length 3, what is the first input-target pair?
+This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/training-examples.qmd).
 
-<details>
-<summary>Show answer</summary>
 
-Input `[4, 7, 2]`, target `[7, 2, 9]`. Each target is the immediately following token at the corresponding prediction position.
-
-</details>
-
-2. Why does teacher forcing not expose future tokens?
-
-<details>
-<summary>Show answer</summary>
-
-The model receives the observed prefix, but the causal mask restricts each position to previous tokens and the current token. Without that constraint, the target could leak into the computation.
-
-</details>
-
-3. How do attention masks and loss masks differ?
-
-<details>
-<summary>Show answer</summary>
-
-The former determines which positions may be attended to; the latter determines which targets contribute to the objective. They are not interchangeable.
-
-</details>
-
-4. If logits have shape \([B,L,V]\), what do the three axes represent?
-
-<details>
-<summary>Show answer</summary>
-
-Batch, sequence position, and candidate vocabulary token. Each position in each sequence has scores over all \(V\) vocabulary tokens.
-
-</details>
-:::
 
 ## Limitations
 

@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/embedding-space"]
   children: ["en/contextualized-representations", "en/rope"]
-related: ["en/transformer"]
+related: ["en/transformer", "en/positional-encoding-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:positional-encoding", "level:core", "language:en", "status:published"]
 -->
 
@@ -109,6 +109,9 @@ The [embedding-space lookup](embedding-space.qmd) maps each ID to an initial vec
 
 ::: {.self-check}
 ## Check your understanding
+
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/positional-encoding.qmd).
+
 
 Formative exercises use this page in the [Transformer collection](exercises.qmd#transformer).
 

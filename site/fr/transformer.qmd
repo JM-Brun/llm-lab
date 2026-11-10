@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/index", "fr/llm-overview", "fr/transformer-architectures"]
   children: ["fr/queries-keys-values", "fr/scaled-dot-product-attention"]
-related: ["fr/text-data", "fr/embedding-space", "fr/positional-encoding", "fr/contextualized-representations", "fr/logits", "fr/tensors", "fr/generation", "fr/transformer-block-walkthrough", "fr/gpt-model-walkthrough"]
+related: ["fr/text-data", "fr/embedding-space", "fr/positional-encoding", "fr/contextualized-representations", "fr/logits", "fr/tensors", "fr/generation", "fr/transformer-block-walkthrough", "fr/gpt-model-walkthrough", "fr/transformer-exercises"]
 tags: ["type:system-overview", "destination:understand", "topic:transformer", "level:overview", "language:fr", "status:published"]
 -->
 
@@ -102,6 +102,9 @@ L'attention est donc une partie du bloc ; le bloc est l'unité répétée ; le T
 Après le dernier bloc, la normalisation finale et la tête de sortie produisent les **logits** : un score non normalisé pour chaque token du vocabulaire. La [leçon consacrée aux logits](logits.qmd) explique ce que ces scores représentent ; celle sur les [probabilités de sortie](probabilites.qmd) montre comment *softmax* les convertit en distribution. Le réseau s'arrête à ces scores : choisir un token, l'ajouter au contexte et relancer le calcul relève de la [génération autorégressive](generation.qmd).
 
 ## Vérifier sa compréhension
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/transformer.qmd).
+
 
 Pour prolonger cette vérification par des problèmes progressifs sur les embeddings, les résidus, la normalisation et le MLP, consultez les [exercices consacrés au Transformer](exercises.qmd#transformer).
 

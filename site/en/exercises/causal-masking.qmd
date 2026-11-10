@@ -1,0 +1,41 @@
+---
+title: "Exercises — Causal masking"
+subtitle: "Self-check questions, exercises, and worked answers"
+keywords: ["type:exercise-hub", "destination:practice", "topic:causal-masking-exercises", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/causal-masking-exercises"
+summary: "Self-check questions and exercises associated with the Causal masking lesson."
+scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
+purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/causal-masking"]
+tags: ["type:exercise-hub", "destination:practice", "topic:causal-masking-exercises", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the lesson: Causal masking](../causal-masking.qmd)
+
+## Check your understanding
+
+[Extended exercises on this topic](../exercises.qmd#attention).
+
+1. A row of already-scaled scores is $(1,0)$. What do the weights become if the second position is forbidden by a causal mask? Why must the mask be applied before softmax?
+
+<details>
+<summary>Show the reasoning</summary>
+
+The forbidden score is masked before softmax (conceptually set to $-\infty$): the weights become $(1,0)$. Masking must happen before normalization; setting a weight to zero after softmax without renormalizing does not produce the same distribution, because the remaining sum would be below one.
+
+</details>
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/causal-masking.qmd) · [English](causal-masking.qmd)
+:::

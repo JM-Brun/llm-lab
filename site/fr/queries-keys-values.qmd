@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/transformer"]
   children: ["fr/queries-keys-values-advanced"]
-related: ["fr/contextualized-representations", "fr/scaled-dot-product-attention", "fr/cross-attention", "fr/transformer-block-walkthrough"]
+related: ["fr/contextualized-representations", "fr/scaled-dot-product-attention", "fr/cross-attention", "fr/transformer-block-walkthrough", "fr/queries-keys-values-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-values", "level:core", "language:fr", "status:published"]
 -->
 
@@ -118,6 +118,10 @@ Q et K déterminent les poids d'attention ; V fournit les vecteurs dont le conte
 :::
 
 {{< include ../includes/generated-suggested-route-fr-queries-keys-values.qmd >}}
+
+## S’exercer
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/queries-keys-values.qmd).
 
 ::: {.language-switch}
 **Langue :** [Français](queries-keys-values.qmd) · [English](../en/queries-keys-values.qmd)

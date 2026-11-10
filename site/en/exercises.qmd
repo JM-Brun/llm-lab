@@ -20,7 +20,75 @@ related: []
 tags: ["type:exercise-hub", "destination:practice", "topic:exercises", "level:applied", "language:en", "status:published"]
 -->
 
-Lesson pages use a consistent **“Check your understanding”** component: short questions with collapsed solutions, progressing from retrieval to explanation, application and transfer where the topic supports it. Each check links here to its matching topic collection. **The collections below group more substantial exercises** (extended calculations, multi-step problems and transfer tasks); their development status is stated explicitly.
+Short self-checks no longer sit inside lesson pages: each lesson that has questions now has a dedicated companion page under **Exercises by lesson**, linked from the lesson and the site navigation. This catalogue remains the entry point for larger cross-cutting collections (extended calculations, multi-step problems, and transfer tasks), with their development status stated explicitly.
+
+## Exercises by lesson
+
+The companion pages follow the site's three learning paths. Open a path to browse its topics and then the exercises for each lesson.
+
+<details>
+<summary>Understand LLMs — 19 pages</summary>
+
+- **Overview and generation**
+  - [Language model overview](exercises/llm-overview.qmd)
+  - [Autoregressive generation](exercises/generation.qmd)
+- **From IDs to representations**
+  - [Text and data](exercises/text-data.qmd)
+  - [Embedding space](exercises/embedding-space.qmd)
+  - [Positional encoding](exercises/positional-encoding.qmd)
+  - [Contextualized representations](exercises/contextualized-representations.qmd)
+- **Transforming representations**
+  - [GPT and Transformer: architecture and data flow](exercises/transformer.qmd)
+  - [Queries, Keys and Values](exercises/queries-keys-values.qmd)
+  - [Scaled dot-product attention](exercises/scaled-dot-product-attention.qmd)
+  - [Causal masking](exercises/causal-masking.qmd)
+- **From scores to probabilities**
+  - [Logits](exercises/logits.qmd)
+  - [Probabilities](exercises/probabilities.qmd)
+  - [Entropy](exercises/entropy.qmd)
+- **Scoring observed tokens**
+  - [Likelihood and log-likelihood](exercises/likelihood.qmd)
+  - [Cross-entropy](exercises/cross-entropy.qmd)
+- **Loss and gradients**
+  - [Loss](exercises/loss.qmd)
+  - [Gradients and backpropagation](exercises/gradients.qmd)
+- **Architectures and limitations**
+  - [Transformer architectures](exercises/transformer-architectures.qmd)
+  - [LLM limitations](exercises/llm-limits.qmd)
+
+</details>
+
+<details>
+<summary>Build a small GPT — 7 pages</summary>
+
+- **Prepare training data**
+  - [Corpus preparation](exercises/corpus-preparation.qmd)
+  - [Training examples](exercises/training-examples.qmd)
+- **Guided tour of the reference code**
+  - [GPT configuration](exercises/gpt-config-walkthrough.qmd)
+  - [GPT numerical operations](exercises/gpt-ops-walkthrough.qmd)
+  - [Transformer block](exercises/transformer-block-walkthrough.qmd)
+  - [Complete GPT model](exercises/gpt-model-walkthrough.qmd)
+  - [GPT generation](exercises/gpt-generation-walkthrough.qmd)
+
+</details>
+
+<details>
+<summary>Deepen your understanding — 7 pages</summary>
+
+- **Attention and architectures**
+  - [Cross-attention](exercises/cross-attention.qmd)
+  - [Hybrid LLM architectures](exercises/hybrid-llm-architectures.qmd)
+- **Text and tokenization**
+  - [Tokenization strategies](exercises/tokenization-strategies.qmd)
+- **Inference and efficiency**
+  - [In-context learning](exercises/in-context-learning.qmd)
+  - [Computational complexity of LLMs](exercises/llm-computational-complexity.qmd)
+- **Scale and research questions**
+  - [Emergent capabilities](exercises/emergence.qmd)
+  - [Evolution of language models](exercises/llm-evolution.qmd)
+
+</details>
 
 ## How to use this space
 

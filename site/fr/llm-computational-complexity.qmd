@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/llm-overview"]
   children: []
-related: ["fr/transformer", "fr/generation", "fr/hybrid-llm-architectures", "fr/scaling-laws"]
+related: ["fr/transformer", "fr/generation", "fr/hybrid-llm-architectures", "fr/scaling-laws", "fr/llm-computational-complexity-exercises"]
 tags: ["type:deep-dive", "destination:deepen", "topic:llm-computational-complexity", "level:advanced", "language:fr", "status:published"]
 -->
 
@@ -176,15 +176,11 @@ Ce tableau donne des tendances, pas un benchmark. Constantes, dimensions, bande 
 
 Pour appliquer ces distinctions à des choix d'architecture : [architectures hybrides et Nemotron](hybrid-llm-architectures.qmd), [génération autorégressive](generation.qmd), [bloc Transformer](transformer.qmd) et [lois d'échelle](scaling-laws.qmd).
 
-::: {.self-check}
-## Vérifier sa compréhension
+## S’exercer
 
-1. **L'attention dense est quadratique : pourquoi peut-elle être calculée en parallèle ?** Les interactions entre positions sont des opérations matricielles parallélisables ; travail total et profondeur séquentielle sont différents.
-2. **Pourquoi la génération standard reste-t-elle séquentielle ?** Le token suivant dépend du token qui vient d'être sélectionné.
-3. **FlashAttention rend-elle l'attention linéaire ?** Non : elle conserve le travail quadratique mais réduit les mouvements mémoire et les intermédiaires.
-4. **Un modèle récurrent à travail linéaire en \(T\) est-il entièrement parallèle ?** Non : une récurrence naïve dépend de l'état précédent, même si certaines structures permettent un scan parallèle.
-5. **Un MoE avec peu d'experts actifs ne stocke-t-il que ces experts ?** Non : tous les poids experts doivent être hébergés ou accessibles.
-:::
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/llm-computational-complexity.qmd).
+
+
 
 **Notion canonique :** [Panorama des modèles de langage](llm-overview.qmd). Cette page approfondit les coûts de calcul et de mémoire des LLM ; elle complète la vue générale sans être une étape obligatoire.
 

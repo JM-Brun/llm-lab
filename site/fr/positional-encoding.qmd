@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/embedding-space"]
   children: ["fr/contextualized-representations", "fr/rope"]
-related: ["fr/transformer"]
+related: ["fr/transformer", "fr/positional-encoding-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:positional-encoding", "level:core", "language:fr", "status:published"]
 -->
 
@@ -109,6 +109,9 @@ Le [lookup dans l'espace des plongements](embedding-space.qmd) associe chaque id
 
 ::: {.self-check}
 ## Vérifier sa compréhension
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/positional-encoding.qmd).
+
 
 Des exercices formatifs mobilisent cette page dans la [collection Transformer](exercises.qmd#transformer).
 

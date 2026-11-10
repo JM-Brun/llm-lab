@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/probabilities"]
   children: []
-related: ["en/entropy", "en/cross-entropy"]
+related: ["en/entropy", "en/cross-entropy", "en/likelihood-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:vraisemblance", "level:core", "language:en", "status:published"]
 -->
 
@@ -81,28 +81,11 @@ If the probabilities assigned to three observed tokens are $(0.5, 0.25, 0.8)$, t
 - **“NLL is comparable without specifying the tokenizer.”** Not always: different segmentations change the number and granularity of evaluated events.
 :::
 
-::: {.self-check}
-## Check your understanding
+## Practice
 
-[Practice with the mathematical foundations collection](exercises.qmd#foundations), including worked exercises on negative log-likelihood and perplexity.
+This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/likelihood.qmd).
 
-1. Why use log-likelihood rather than the direct product?
-2. Which rule factorizes a sequence probability into conditional probabilities? Does it require token independence?
-3. Why document the tokenizer and NLL reduction when comparing models?
 
-<details>
-<summary>Show answers</summary>
-
-1. A product of many probabilities can become extremely small and difficult to represent numerically. The logarithm turns it into a sum, which is more stable and easier to optimize. Because the logarithm is increasing, maximizing log-likelihood preserves the ranking induced by likelihood.
-2. The chain rule factorizes any joint probability into successive conditional probabilities. It does not require independence between tokens. Each term is conditioned on the preceding prefix. An independence assumption between separate dataset sequences, sometimes used when constructing total likelihood, is a different issue.
-3. The tokenizer determines which events are evaluated and their granularity. Summed NLL also depends on token count; averaging per token changes the scale and must be distinguished from the sum. Comparisons are meaningful only when these conventions and the evaluated data are compatible.
-
-**Numerical transfer:** for the example probabilities $(0.5, 0.25, 0.8)$, likelihood is $0.1$, total NLL is approximately $2.303$ nats, and mean NLL per token is approximately $0.768$ nat. This mean is the average of the one-hot target cross-entropies at the three positions; a batch loss then adds an aggregation and masking convention.
-
-</details>
-
-**Related connection to the aggregated objective:** [Loss](loss.qmd).
-:::
 
 ## Further reading
 

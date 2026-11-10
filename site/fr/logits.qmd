@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/generation"]
   children: ["fr/probabilites"]
-related: ["fr/causal-masking", "fr/transformer"]
+related: ["fr/causal-masking", "fr/transformer", "fr/logits-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:logits", "level:core", "language:fr", "status:published"]
 -->
 
@@ -66,6 +66,9 @@ La documentation [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/st
 
 ::: {.self-check}
 ## Vérifier sa compréhension
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/logits.qmd).
+
 
 1. Si le vocabulaire contient $V$ tokens, combien de composantes contient le vecteur de logits à une position ?
 

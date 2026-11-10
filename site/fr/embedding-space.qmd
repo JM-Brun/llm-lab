@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/text-data"]
   children: ["fr/positional-encoding", "fr/contextualized-representations", "fr/cosine-similarity", "fr/linearite-embeddings"]
-related: ["fr/transformer"]
+related: ["fr/transformer", "fr/embedding-space-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:fr", "status:published"]
 -->
 
@@ -79,6 +79,9 @@ Pour approfondir ces questions sans les confondre avec le mécanisme de lookup, 
 
 ::: {.self-check}
 ## Vérifier sa compréhension
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/embedding-space.qmd).
+
 
 La [collection approfondie sur le Transformer](exercises.qmd#transformer) est prévue ; utilisez les vérifications ci-dessous en attendant.
 

@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/index", "en/llm-overview", "en/transformer-architectures"]
   children: ["en/queries-keys-values", "en/scaled-dot-product-attention"]
-related: ["en/text-data", "en/embedding-space", "en/positional-encoding", "en/contextualized-representations", "en/logits", "en/tensors", "en/generation", "en/transformer-block-walkthrough", "en/gpt-model-walkthrough"]
+related: ["en/text-data", "en/embedding-space", "en/positional-encoding", "en/contextualized-representations", "en/logits", "en/tensors", "en/generation", "en/transformer-block-walkthrough", "en/gpt-model-walkthrough", "en/transformer-exercises"]
 tags: ["type:system-overview", "destination:understand", "topic:transformer", "level:overview", "language:en", "status:published"]
 -->
 
@@ -103,6 +103,9 @@ Attention is therefore part of a block; the block is the repeated unit; the Tran
 After the final block, the final normalization and output head produce the **logits**: one unnormalized score for every vocabulary token. The [logits lesson](logits.qmd) explains what these scores represent; the [output probabilities lesson](probabilities.qmd) shows how *softmax* converts them into a distribution. The network stops at these scores: choosing a token, appending it to the context, and running the model again belong to [autoregressive generation](generation.qmd).
 
 ## Check your understanding
+
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/transformer.qmd).
+
 
 To extend this check with progressive problems on embeddings, residuals, normalization, and the MLP, see the [Transformer exercises](exercises.qmd#transformer).
 

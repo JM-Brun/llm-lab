@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["en/scaling-laws", "en/llm-limits", "en/experimental-evaluation"]
+related: ["en/scaling-laws", "en/llm-limits", "en/experimental-evaluation", "en/emergence-exercises"]
 tags: ["type:concept-lesson", "destination:deepen", "topic:emergence", "level:advanced", "language:en", "status:published"]
 -->
 
@@ -79,15 +79,11 @@ A capability may be new from a user's perspective while arising from mechanisms 
 - Schaeffer, Miranda, and Koyejo (2023), [*Are Emergent Abilities of Large Language Models a Mirage?*](https://arxiv.org/abs/2304.15004).
 - Srivastava et al. (2022), [*Beyond the Imitation Game: Quantifying and extrapolating the capabilities of language models*](https://arxiv.org/abs/2206.04615).
 
-::: {.self-check}
-## Check your understanding
+## Practice
 
-1. Exact-match accuracy jumps from 0% to 60%, while a graded similarity measure increases steadily. Which conclusion is justified?
-2. Why is a comparison between only two model sizes insufficient to isolate the effect of scale?
-3. Propose a protocol for testing whether a capability truly appears discontinuously.
+This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/emergence.qmd).
 
-[Exercises and experiments](exercises.qmd).
-:::
+
 
 ::: {.language-switch}
 **Language:** [Français](../fr/emergence.qmd) · [English](emergence.qmd)

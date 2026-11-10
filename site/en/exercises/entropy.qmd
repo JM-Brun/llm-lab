@@ -1,0 +1,45 @@
+---
+title: "Exercises — Entropy: uncertainty over the next token"
+subtitle: "Self-check questions, exercises, and worked answers"
+keywords: ["type:exercise-hub", "destination:practice", "topic:entropy-exercises", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/entropy-exercises"
+summary: "Self-check questions and exercises associated with the Entropy: uncertainty over the next token lesson."
+scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
+purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/entropy"]
+tags: ["type:exercise-hub", "destination:practice", "topic:entropy-exercises", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the lesson: Entropy: uncertainty over the next token](../entropy.qmd)
+
+## Check your understanding
+
+[Extended exercises on this topic](../exercises.qmd#foundations).
+
+1. Does low entropy guarantee that the most likely token is correct?
+2. How does entropy differ from the surprisal of the observed token?
+3. Why must the tokenizer and token-counting convention be specified when comparing perplexity?
+
+<details>
+<summary>Show answers</summary>
+
+1. No. Entropy describes the spread of the distribution, not factual correctness.
+2. Entropy averages surprisal over all possible tokens under the predicted distribution; observed-token surprisal uses the probability assigned to the actual target.
+3. Tokenizers segment text differently, changing the units and positions over which the average is computed.
+
+</details>
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/entropy.qmd) · [English](entropy.qmd)
+:::

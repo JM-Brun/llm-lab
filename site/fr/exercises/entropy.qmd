@@ -1,0 +1,45 @@
+---
+title: "Exercices — Entropie : incertitude sur le prochain token"
+subtitle: "Questions de vérification, exercices et corrigés"
+keywords: ["type:exercise-hub", "destination:practice", "topic:entropy-exercises", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/entropy-exercises"
+summary: "Questions de vérification et exercices associés à la leçon Entropie : incertitude sur le prochain token."
+scope: "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle."
+purpose: "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/entropy"]
+tags: ["type:exercise-hub", "destination:practice", "topic:entropy-exercises", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour à la leçon : Entropie : incertitude sur le prochain token](../entropy.qmd)
+
+## Vérifier sa compréhension
+
+[Exercices approfondis sur ce thème](../exercises.qmd#fondations).
+
+1. Une entropie faible garantit-elle que le token le plus probable est correct ?
+2. En quoi l'entropie diffère-t-elle de la surprise du token observé ?
+3. Pourquoi faut-il préciser le tokenizer et la convention de comptage des tokens pour comparer des perplexités ?
+
+<details>
+<summary>Afficher les réponses</summary>
+
+1. Non. L'entropie décrit la dispersion de la distribution, pas la correction factuelle.
+2. L'entropie moyenne la surprise sur tous les tokens possibles selon la distribution prédite ; la surprise observée utilise la probabilité attribuée à la cible réelle.
+3. Les tokenizers segmentent différemment le texte, ce qui change les unités et les positions sur lesquelles la moyenne est calculée.
+
+</details>
+
+::: {.language-switch}
+**Langue :** [Français](entropy.qmd) · [English](../../en/exercises/entropy.qmd)
+:::

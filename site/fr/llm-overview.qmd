@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/index"]
   children: ["fr/transformer", "fr/transformer-architectures", "fr/generation", "fr/build-path", "fr/language-modeling-math", "fr/mathematical-foundations", "fr/llm-limits", "fr/llm-computational-complexity"]
-related: ["fr/transformer-history", "fr/scaling-laws"]
+related: ["fr/transformer-history", "fr/scaling-laws", "fr/llm-overview-exercises"]
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:fr", "status:published"]
 -->
 
@@ -127,6 +127,10 @@ Réutiliser un modèle généraliste est intéressant lorsqu'il couvre plusieurs
 :::
 
 {{< include ../includes/generated-suggested-route-fr-llm-overview.qmd >}}
+
+## S’exercer
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/llm-overview.qmd).
 
 ::: {.language-switch}
 **Langue :** [Français](llm-overview.qmd) · [English](../en/llm-overview.qmd)

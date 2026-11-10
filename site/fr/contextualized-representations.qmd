@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/embedding-space", "fr/positional-encoding"]
   children: []
-related: ["fr/queries-keys-values", "fr/transformer"]
+related: ["fr/queries-keys-values", "fr/transformer", "fr/contextualized-representations-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-representations", "level:core", "language:fr", "status:published"]
 -->
 
@@ -122,6 +122,9 @@ Le [lookup dans l’espace des plongements (embeddings)](embedding-space.qmd) as
 
 ::: {.self-check}
 ## Vérifier sa compréhension
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/contextualized-representations.qmd).
+
 
 [Exercices approfondis sur ce thème](exercises.qmd#transformer).
 

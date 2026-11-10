@@ -1,0 +1,36 @@
+---
+title: "Exercices — Architectures hybrides de LLM"
+subtitle: "Questions de vérification, exercices et corrigés"
+keywords: ["type:exercise-hub", "destination:practice", "topic:hybrid-llm-architectures-exercises", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/hybrid-llm-architectures-exercises"
+summary: "Questions de vérification et exercices associés à la leçon Architectures hybrides de LLM."
+scope: "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle."
+purpose: "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/hybrid-llm-architectures"]
+tags: ["type:exercise-hub", "destination:practice", "topic:hybrid-llm-architectures-exercises", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour à la leçon : Architectures hybrides de LLM](../hybrid-llm-architectures.qmd)
+
+## Vérifier sa compréhension
+
+1. **Pourquoi garder quelques couches d'attention dans un modèle dominé par Mamba ?** Pour préserver des chemins d'accès explicite aux positions antérieures.
+2. **Un MoE 30B avec 3B actifs nécessite-t-il seulement 3B de mémoire de poids ?** Non : les autres experts restent des paramètres à héberger ou rendre accessibles.
+3. **GQA et Mamba réduisent-ils le même coût ?** Non : GQA réduit les têtes K/V et le cache attention ; Mamba maintient un état récurrent borné.
+4. **MTP rend-il la génération non autorégressive ?** Non : les propositions sont vérifiées par le modèle cible.
+5. **Un gain de débit publié est-il une loi générale ?** Non : il dépend du matériel et du protocole.
+
+::: {.language-switch}
+**Langue :** [Français](hybrid-llm-architectures.qmd) · [English](../../en/exercises/hybrid-llm-architectures.qmd)
+:::

@@ -1,0 +1,36 @@
+---
+title: "Exercises — In-context learning"
+subtitle: "Self-check questions, exercises, and worked answers"
+keywords: ["type:exercise-hub", "destination:practice", "topic:in-context-learning-exercises", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/in-context-learning-exercises"
+summary: "Self-check questions and exercises associated with the In-context learning lesson."
+scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
+purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/in-context-learning"]
+tags: ["type:exercise-hub", "destination:practice", "topic:in-context-learning-exercises", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the lesson: In-context learning](../in-context-learning.qmd)
+
+## Check your understanding
+
+1. Why is ICL not a weight update?
+2. A demonstration improves output format but not accuracy. What does this indicate about imitation versus generalization?
+3. Design an experiment that distinguishes learning a rule from reproducing patterns present in the demonstrations.
+
+[Exercises and experiments](../exercises.qmd).
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/in-context-learning.qmd) · [English](in-context-learning.qmd)
+:::

@@ -1,0 +1,41 @@
+---
+title: "Exercises — Queries, keys, and values (Q, K, V)"
+subtitle: "Self-check questions, exercises, and worked answers"
+keywords: ["type:exercise-hub", "destination:practice", "topic:queries-keys-values-exercises", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/queries-keys-values-exercises"
+summary: "Self-check questions and exercises associated with the Queries, keys, and values (Q, K, V) lesson."
+scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
+purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/queries-keys-values"]
+tags: ["type:exercise-hub", "destination:practice", "topic:queries-keys-values-exercises", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the lesson: Queries, keys, and values (Q, K, V)](../queries-keys-values.qmd)
+
+## Check the essential idea
+
+[Extended exercises on Q/K/V and attention](../exercises.qmd#attention).
+
+**Which projections determine attention weights, and which one supplies the aggregated vectors? What happens if V changes while Q and K stay the same?**
+
+<details>
+<summary>Show the reasoning</summary>
+
+Q and K determine the attention weights; V supplies the vectors whose content is aggregated. Changing Q or K can change the weights. If only V changes, the weights remain unchanged because the scores depend on Q and K; the aggregated content can change, but need not do so: weighted changes can cancel out.
+
+</details>
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/queries-keys-values.qmd) · [English](queries-keys-values.qmd)
+:::

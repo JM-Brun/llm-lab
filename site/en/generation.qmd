@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/llm-overview"]
   children: ["en/logits", "en/probabilities"]
-related: ["en/text-data", "en/transformer", "en/build-path", "en/decoding-strategies", "en/gpt-generation-walkthrough", "en/training-examples"]
+related: ["en/text-data", "en/transformer", "en/build-path", "en/decoding-strategies", "en/gpt-generation-walkthrough", "en/training-examples", "en/generation-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:en", "status:published"]
 -->
 
@@ -144,6 +144,9 @@ This is the central distinction from [learning](loss.qmd): inference uses the av
 
 ::: {.self-check}
 ## Check your understanding
+
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/generation.qmd).
+
 
 Try to answer the following questions before revealing the explanations.
 

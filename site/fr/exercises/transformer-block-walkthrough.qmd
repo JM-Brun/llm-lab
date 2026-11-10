@@ -1,0 +1,40 @@
+---
+title: "Exercices — Bloc Transformer"
+subtitle: "Exercices de compréhension et de lecture du code"
+keywords: ["type:exercise-hub", "destination:practice", "topic:reference-transformer-block-exercises", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/transformer-block-walkthrough-exercises"
+summary: "Exercices associés à la visite guidée Bloc Transformer."
+scope: "Regroupe les exercices et corrigés de la visite guidée sans dupliquer l'explication du code."
+purpose: "Vérifier la compréhension des invariants, des formes et des choix d'implémentation présentés dans la visite guidée."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/transformer-block-walkthrough"]
+tags: ["type:exercise-hub", "destination:practice", "topic:reference-transformer-block-exercises", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour à la visite guidée : transformer-block-walkthrough](../transformer-block-walkthrough.qmd)
+
+## Exercices
+
+1. Avec `d=16` et `H=2`, quelles colonnes de `q` la tête 1 lit-elle ?
+2. Pourquoi `attended` est-il alloué avec `np.empty_like(x)` plutôt que rempli de zéros ?
+
+<details>
+<summary>Afficher les réponses et le raisonnement</summary>
+
+1. Les colonnes 8 à 15 (`slice(8, 16)`) : chaque colonne n'appartient qu'à une tête, la répartition est contiguë.
+2. Chaque position de `attended` est écrite exactement une fois par la boucle (chaque couple `(b, h)` écrit sa tranche pour toutes les positions) ; aucune cellule n'est lue avant d'être écrite, donc l'initialisation à zéro serait du travail inutile.
+</details>
+
+::: {.language-switch}
+**Langue :** [Français](transformer-block-walkthrough.qmd) · [English](../../en/exercises/transformer-block-walkthrough.qmd)
+:::

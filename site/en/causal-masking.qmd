@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/scaled-dot-product-attention"]
   children: []
-related: ["en/logits"]
+related: ["en/logits","en/causal-masking-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:causal-masking", "level:core", "language:en", "status:published"]
 -->
 
@@ -121,12 +121,9 @@ The causal rule can also be stated as a prefix property: with parameters and a p
 - [Objective and mathematical foundations](mathematical-foundations.qmd) connects the constraint to next-token prediction and loss.
 - The [Transformer overview](transformer.qmd) places masking in the full architecture.
 
-::: {.self-check}
-## Check your understanding
+## Practice
 
-Constructing a causal mask, shifting targets, and analysing prefix invariance are covered in [exercise CA-A](exercises.qmd#ca-a-prefix-invariance).
-:::
-
+This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/causal-masking.qmd).
 ::: {.callout-note collapse="true" title="Reference code and tests (advanced)"}
 A tested reference implementation is available in `src/llm_lab/foundations/attention.py` (`causal_mask` and `scaled_dot_product_attention`). The attention function accepts an additive 2D mask of exact shape `(T_q, T_k)`; it does not support boolean masks or batch/head broadcasting. The test suite in `tests/unit/test_attention.py` includes a similar single-head invariance case and mask and shape checks; it does not test a complete GPT.
 

@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/scaled-dot-product-attention"]
   children: []
-related: ["fr/logits"]
+related: ["fr/logits","fr/causal-masking-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:causal-masking", "level:core", "language:fr", "status:published"]
 -->
 
@@ -121,12 +121,9 @@ La règle causale se formule aussi comme une propriété de préfixe : à param�
 - [Objectif et fondations mathématiques](mathematical-foundations.qmd) relie la contrainte au prochain-token et à la loss.
 - [Synthèse Transformer](transformer.qmd) replace le masque dans l'architecture globale.
 
-::: {.self-check}
-## Vérifier sa compréhension
+## S’exercer
 
-La construction d'une matrice causale, le décalage des cibles et l'analyse de l'invariance de préfixe sont travaillés dans l'[exercice CA-A](exercises.qmd#ca-a-prefix-invariance).
-:::
-
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/causal-masking.qmd).
 ::: {.callout-note collapse="true" title="Code et tests de référence (approfondissement)"}
 Une implémentation de référence testée est disponible dans `src/llm_lab/foundations/attention.py` (`causal_mask` et `scaled_dot_product_attention`). La fonction d'attention accepte un masque additif 2D de forme exacte `(T_q, T_k)` ; elle ne prend pas en charge les masques booléens ni le broadcasting batch/tête. La suite de tests `tests/unit/test_attention.py` comprend un cas similaire d'invariance sur une tête, ainsi que des vérifications du masque et des formes ; elle ne teste pas un GPT complet.
 

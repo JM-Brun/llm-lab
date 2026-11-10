@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/build-path"]
   children: []
-related: ["fr/transformer", "fr/queries-keys-values", "fr/scaled-dot-product-attention", "fr/causal-masking", "fr/contextualized-representations"]
+related: ["fr/transformer", "fr/queries-keys-values", "fr/scaled-dot-product-attention", "fr/causal-masking", "fr/contextualized-representations", "fr/transformer-block-walkthrough-exercises"]
 tags: ["type:guided-build", "destination:build", "topic:reference-transformer-block", "level:applied", "language:fr", "status:published"]
 -->
 
@@ -190,17 +190,9 @@ Chaque position passe seule dans `d → mlp_hidden_dim` (souvent `4d`), puis GEL
 
 [`tests/unit/test_transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_transformer_block.py) : le `forward` préserve la forme et reste fini ; une entrée non 3D est rejetée ; un nombre de têtes incohérent avec la largeur est rejeté.
 
-## Exercices
+## S’exercer
 
-1. Avec `d=16` et `H=2`, quelles colonnes de `q` la tête 1 lit-elle ?
-2. Pourquoi `attended` est-il alloué avec `np.empty_like(x)` plutôt que rempli de zéros ?
-
-<details>
-<summary>Afficher les réponses et le raisonnement</summary>
-
-1. Les colonnes 8 à 15 (`slice(8, 16)`) : chaque colonne n'appartient qu'à une tête, la répartition est contiguë.
-2. Chaque position de `attended` est écrite exactement une fois par la boucle (chaque couple `(b, h)` écrit sa tranche pour toutes les positions) ; aucune cellule n'est lue avant d'être écrite, donc l'initialisation à zéro serait du travail inutile.
-</details>
+Les exercices de cette visite guidée sont regroupés sur sa [page d’exercices dédiée](exercises/transformer-block-walkthrough.qmd).
 
 ## Connexions
 
