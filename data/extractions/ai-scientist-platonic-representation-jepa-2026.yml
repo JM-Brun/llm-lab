@@ -1,0 +1,137 @@
+schema_version: 1
+source_id: ai-scientist-platonic-representation-jepa-2026
+pedagogical_model:
+  reconstruction:
+    status: complete
+    basis:
+      - "The complete article body was retrieved directly on 2026-11-10, from title and introduction through the final synthesis."
+      - "The article's interpretation was cross-checked against the abstract and the directly inspected opening sections of the linked primary paper."
+      - "The reconstruction covers the article's explanatory sequence, examples, headline results and explicit qualifications; it does not claim a full audit of the primary paper."
+    inferred_elements:
+      - "Learning outcomes and prerequisites are inferred from the article's explanatory structure."
+  source_graph:
+    nodes:
+      - {id: src-platonic-representation-hypothesis, kind: hypothesis, description: "Conjecture that models trained on different modalities may converge toward a shared organization of the world.", locator: "Introduction"}
+      - {id: src-world-state, kind: theoretical-object, description: "Underlying scene or state that can be observed through different modalities.", locator: "Paragraphs 2–4"}
+      - {id: src-modality-specific-observation, kind: observation, description: "A textual, visual or other modality-specific rendering of a world state.", locator: "Paragraphs 2–4"}
+      - {id: src-positive-pair, kind: training-relation, description: "Pair of observations declared related by the training objective.", locator: "Good-view and bad-view explanation"}
+      - {id: src-good-view, kind: training-pattern, description: "Pairing distinct observations that describe the same underlying scene.", locator: "Good-view and bad-view explanation"}
+      - {id: src-bad-view, kind: training-pattern, description: "Pairing altered versions of one observation, which can retain wording or viewpoint nuisances.", locator: "Good-view and bad-view explanation"}
+      - {id: src-jepa, kind: architecture, description: "Joint-embedding predictive architecture learning representations from related views with anti-collapse constraints.", locator: "Paragraphs 5–7"}
+      - {id: src-shared-representation, kind: representation, description: "Common latent organization identified up to an orthogonal rotation under theorem assumptions.", locator: "Mathematical contribution"}
+      - {id: src-cross-modal-alignment, kind: evaluation-target, description: "Agreement between independently learned modality representations under neighborhood and retrieval metrics.", locator: "Experimental results"}
+      - {id: src-next-token-prediction, kind: objective, description: "Language-model objective interpreted in the paper as a bad-view JEPA.", locator: "Paragraphs on language modeling"}
+    edges:
+      - {from: src-world-state, type: rendered-as, to: src-modality-specific-observation}
+      - {from: src-modality-specific-observation, type: paired-by, to: src-positive-pair}
+      - {from: src-good-view, type: instance-of, to: src-positive-pair}
+      - {from: src-bad-view, type: instance-of, to: src-positive-pair}
+      - {from: src-jepa, type: learns-from, to: src-positive-pair}
+      - {from: src-good-view, type: encourages, to: src-shared-representation}
+      - {from: src-bad-view, type: may-preserve, to: src-modality-specific-observation}
+      - {from: src-shared-representation, type: evaluated-by, to: src-cross-modal-alignment}
+      - {from: src-next-token-prediction, type: interpreted-as, to: src-bad-view}
+    interpretation: "Source-local reconstruction of the article's explanation; edges are editorial interpretations, not a formal graph defined by the author."
+  learning_outcomes:
+    - {status: inferred, outcome: "Distinguish positive pairs that connect observations of one scene from augmentations of one observation.", basis: "Central good-view/bad-view explanation."}
+    - {status: inferred, outcome: "Explain why alignment concerns the relations induced by positive pairs, not model scale alone.", basis: "Article synthesis and scaling discussion."}
+    - {status: inferred, outcome: "State the scope and assumptions of the Platonic Representation Theorem without universalizing it.", basis: "Mathematical contribution and explicit caveats."}
+    - {status: inferred, outcome: "Interpret reported alignment and sample-efficiency results without conflating them with total compute or general intelligence.", basis: "Experimental discussion and qualifications."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Basic understanding of embeddings and representation spaces.", basis: "The article uses latent representations and geometric alignment without a primer."}
+    - {status: inferred, topic: "Basic familiarity with self-supervised learning and positive pairs.", basis: "JEPA and view-pair terminology is introduced compactly."}
+  teaching_route:
+    - {order: 1, section: "Introduction and Platonic Representation Hypothesis", function: motivate-cross-modal-convergence, moves: ["Pose the question through image and language observers", "Introduce the shared-world intuition"]}
+    - {order: 2, section: "Good views versus bad views", function: isolate-training-relation, moves: ["Contrast paraphrases of one scene with masked versions of one caption", "Explain why nuisance information can survive corruptions"]}
+    - {order: 3, section: "The theorem and its scope", function: formalize-conditional-convergence, moves: ["Explain agreement up to rotation", "Distinguish sufficient conditions from a universal scaling claim"]}
+    - {order: 4, section: "Experiments and scaling", function: quantify-alignment, moves: ["Compare objectives on matched text data", "Interpret neighborhood alignment and retrieval", "Qualify sample counts versus token and compute costs"]}
+    - {order: 5, section: "Captioning and pair-free alignment", function: demonstrate-composability, moves: ["Describe the constrained linear map", "Separate encoder training from map fitting on paired examples"]}
+    - {order: 6, section: "Limitations and synthesis", function: bound-the-conclusion, moves: ["Identify captioner-derived data and idealized assumptions", "Separate representation alignment from reasoning and world-model claims"]}
+  pedagogical_strengths:
+    - "A memorable contrast makes the training-pair design problem concrete before the mathematics."
+    - "Connects a conditional theorem, controlled comparisons and a downstream composition demonstration."
+    - "Explicitly distinguishes a sufficient theorem from a universal claim about all scaled models."
+    - "Includes useful caveats about sample counts, data provenance and the meaning of alignment metrics."
+  pedagogical_limits:
+    - "The article is a secondary interpretation and cannot replace the paper's proofs, exact objectives or experimental protocol."
+    - "It compresses spectral embedding, whitening, uniqueness and nuisance assumptions into a short explanation."
+    - "It does not provide enough detail to reproduce the experiments or scaling law."
+    - "Its examples can make good-view/bad-view sound like a universal ranking of augmentations; the distinction is task-relative."
+  comparison:
+    dossier: docs/source-reviews/platonic-representation-jepa-2026-11.md
+    canonical_graph: "data/concepts.yml and generated JSON-LD projection"
+    canonical_routes: [data/guided-route.yml, docs/learning-path.md, "Deepen page metadata"]
+    decision: "Use as a research lead for a bilingual Deepen treatment; do not add a new canonical concept or page until the primary paper audit and current-page crosswalk are complete."
+    structures_kept_separate: [article-explanatory-graph, primary-paper-formal-model, canonical-concept-graph, pedagogical-route, page-navigation]
+items:
+  - id: ai-scientist-platonic-representation-jepa-2026:good-view-bad-view
+    kind: mechanism
+    summary: "The article distinguishes good-view pairs, which connect different observations of the same underlying scene, from bad-view pairs, which connect corruptions of one observation. The labels concern cross-modal alignment, not the general usefulness of data augmentation."
+    locator: {type: section, value: "Good-view and bad-view explanation", label: "Two descriptions of one scene versus two altered versions of one description"}
+    evidence:
+      kind: secondary-technical-synthesis
+      confidence: well-supported
+      scope: "The article's central explanatory distinction, checked against arXiv sections 1–2.3."
+      assumptions: ["The paired observations are intended to preserve a relation to underlying world states."]
+      limitations: ["Good/bad is task-relative; a crop or mask can be useful for other objectives.", "The primary paper's formal definitions and nuisance assumptions govern the precise claim."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:jepa, topic:cross-modal-alignment, method:positive-pairs]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [fr/contextualized-representations, en/contextualized-representations]
+      concepts: []
+    disposition: pending
+  - id: ai-scientist-platonic-representation-jepa-2026:rotation-equivalence
+    kind: claim
+    summary: "Under the paper's idealized assumptions, separately trained modality encoders recover the same latent organization up to an orthogonal rotation; this is a sufficient conditional result, not a theorem that arbitrary models converge as they scale."
+    locator: {type: section, value: "Mathematical contribution", label: "Platonic Representation Theorem summary"}
+    evidence:
+      kind: theorem-summary
+      confidence: well-supported
+      scope: "Secondary summary cross-checked with the theorem statement and assumptions in arXiv sections 2.1–2.2."
+      assumptions: ["Finite world-state set with positive probabilities", "Injective modality renderings", "Shared positive-pair distribution over world states", "Population optima and minimizers unique up to rotation"]
+      limitations: ["Full proof and spectral-gap conditions still require detailed audit.", "The article's summary should not be used as a substitute for the theorem statement."]
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:platonic-representation-hypothesis, topic:jepa, method:orthogonal-alignment]
+    candidate_destinations:
+      pages: [fr/contextualized-representations, en/contextualized-representations]
+      concepts: []
+    disposition: pending
+  - id: ai-scientist-platonic-representation-jepa-2026:sample-efficiency
+    kind: result
+    summary: "The article reports that the good-view text JEPA reached a comparable measured alignment after 21.6 million training samples, while next-token prediction required 900 million samples on the same corpus. This is a 42-fold sample-count difference, not a demonstrated 42-fold reduction in total compute."
+    locator: {type: section, value: "Figure 1 and scale discussion", label: "Good views need 42 times fewer samples"}
+    evidence:
+      kind: author-reported-experiment
+      confidence: context-dependent
+      scope: "Reported comparison under the paper's selected corpus, model, objective and alignment benchmark."
+      assumptions: ["The compared runs use the paper's stated matched corpus and evaluation protocol."]
+      limitations: ["Training samples are not equivalent to tokens, FLOPs, wall-clock time or energy.", "Not a universal constant or independently reproduced result."]
+    classification:
+      primary_theme: scale-research
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:jepa, topic:cross-modal-alignment, topic:training-efficiency]
+    candidate_destinations:
+      pages: [fr/contextualized-representations, en/contextualized-representations]
+      concepts: [training-objective]
+    disposition: pending
+  - id: ai-scientist-platonic-representation-jepa-2026:captioner-data-provenance
+    kind: limitation
+    summary: "At web scale, much of the text used to train the text JEPA consists of descriptions generated by an existing vision-language captioner. Although the JEPA encoder does not receive pixels, its training text inherits information from an upstream image–text system."
+    locator: {type: section, value: "Limitations", label: "Where the good views come from"}
+    evidence:
+      kind: author-stated-limitation
+      confidence: well-supported
+      scope: "Article's explicit qualification of the 940M-image text corpus."
+      assumptions: []
+      limitations: ["The exact provenance and filtering pipeline require verification in the paper's experimental details."]
+    classification:
+      primary_theme: scale-research
+      tags: [topic:jepa, topic:data-provenance, modality:multimodal]
+    candidate_destinations:
+      pages: [fr/contextualized-representations, en/contextualized-representations]
+      concepts: []
+    disposition: pending
