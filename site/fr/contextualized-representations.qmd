@@ -132,6 +132,7 @@ Deux occurrences du **même ID de token** apparaissent dans deux phrases différ
 1. Les vecteurs obtenus par lookup sont-ils identiques ?
 2. Les états cachés après les couches du Transformer doivent-ils être identiques ? Pourquoi ?
 3. À quelle étape l'information du contexte intervient-elle ?
+4. Dans l'exemple *bank*, qu'est-ce qui est maintenu identique pour isoler l'effet du contexte ?
 
 Vous avez compris cette étape si vous pouvez expliquer la différence entre **identité du vecteur initial** et **dépendance contextuelle des états cachés**, sans attribuer au lookup lui-même une compréhension de la phrase.
 
