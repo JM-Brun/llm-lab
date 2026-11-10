@@ -38,7 +38,7 @@ La page précédente, [GPT et Transformer : architecture et flux des données](t
 
 Dans « Le chat a poursuivi le chien parce qu'il était rapide », le pronom **il** peut renvoyer au chat ou au chien. Pour traiter le contexte, une position doit pouvoir comparer sa représentation à celles d'autres positions, puis combiner de l'information provenant de ces positions. Q, K et V jouent des rôles distincts dans ce mécanisme : les deux premières projections contribuent au calcul des poids ; la troisième fournit les vecteurs auxquels ces poids s'appliquent.
 
-Cet exemple motive le mécanisme, mais ne signifie pas qu'une tête d'attention isolée résout nécessairement la coréférence. Il ne constitue pas non plus une observation des poids d'un modèle entraîné.
+Cet exemple est adapté de [Neha KK](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b). Il motive le mécanisme, mais ne signifie pas qu'une tête d'attention isolée résout nécessairement la coréférence ni qu'il constitue une observation des poids d'un modèle entraîné.
 
 <div class="epistemic-badges">
   <span class="epistemic-badge badge-concept">Concept vérifié</span>
@@ -81,7 +81,7 @@ Cette intuition géométrique est une passerelle vers le [calcul de l'attention 
 Source de cette perspective : [Codefinity, *Queries, Keys, and Values: The Building Blocks*](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b).
 :::
 
-![Schéma des projections Q, K et V : Q et K déterminent les poids d'attention, qui servent à combiner les valeurs V.](../images/queries-keys-values.svg){fig-alt="Deux chemins partent de la même entrée : Q et K sont comparées pour calculer les poids d'attention ; ces poids sont ensuite appliqués aux vecteurs V pour produire une représentation agrégée." width=100%}
+![Schéma des projections Q, K et V : Q et K déterminent les poids d'attention, qui servent à combiner les valeurs V.](../images/queries-keys-values.svg){fig-alt="Deux chemins partent de la même entrée : les vecteurs Q et K sont comparés pour calculer les poids d'attention ; ces poids sont ensuite appliqués aux vecteurs V pour produire une représentation agrégée." width=100%}
 
 ::: {.callout-note title="Une autre illustration, dans la source"}
 Nishanthan K propose une représentation visuelle complémentaire des rôles Q/K/V dans son article. [Consulter l'article et son illustration originale sur Medium](https://nishanthan-k.medium.com/how-query-key-and-value-qkv-work-in-transformers-1274bfa14ea8) (miroir de l'article publié sur [DEV Community](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a)).
@@ -185,15 +185,8 @@ Les dimensions $d_k$ et $d_v$ ne sont donc pas nécessairement égales. Les biai
 
 **Attention croisée :** cette formule à entrée unique décrit l'auto-attention, pas tous les mécanismes d'attention. En attention croisée, Q provient du flux qui consulte, tandis que K et V proviennent du flux consulté. Voir l'[approfondissement sur l'attention croisée](cross-attention.qmd).
 
-::: {.callout-note collapse="true" title="Deux exemples de contexte — et leurs limites"}
-Deux phénomènes linguistiques illustrent pourquoi une représentation peut avoir besoin du contexte :
-
-| Phénomène | Exemple | Question d'interprétation |
-|---|---|---|
-| Coréférence | « L'animal n'a pas traversé la route parce qu'il était fatigué. » | À quel référent renvoie le pronom « il » ? |
-| Ambiguïté lexicale | « He sat by the bank », dans un contexte de rivière | *Bank* désigne-t-il une rive ou un établissement financier ? |
-
-Le premier exemple est repris de [Neha KK](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b) ; le second de [Codefinity](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b). Ils illustrent deux tâches différentes auxquelles des représentations contextualisées peuvent contribuer. Ils ne montrent pas qu'une tête d'attention isolée résout la coréférence ou la désambiguïsation lexicale : aucun modèle, aucune tête ni aucun poids mesuré n'est fourni par ces exemples. Une carte d'attention ne suffit pas non plus, à elle seule, à expliquer une décision du modèle.
+::: {.callout-note collapse="true" title="Autre exemple : l'ambiguïté lexicale"}
+Un autre cas est l'ambiguïté lexicale : dans « He sat by the bank », avec un contexte de rivière, *bank* peut désigner une rive ou un établissement financier. Cet exemple de [Codefinity](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b) illustre une autre tâche à laquelle des représentations contextualisées peuvent contribuer. Il ne montre pas qu'une tête d'attention isolée effectue la désambiguïsation lexicale : aucun modèle, aucune tête ni aucun poids mesuré n'est fourni. Une carte d'attention ne suffit pas non plus, à elle seule, à expliquer une décision du modèle.
 
 Pour le rôle plus général du contexte dans les représentations, voir [Représentations contextualisées](contextualized-representations.qmd).
 :::
