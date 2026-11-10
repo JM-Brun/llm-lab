@@ -27,6 +27,10 @@ tags: ["type:concept-lesson", "destination:understand", "topic:logits", "level:c
 A **logit** is an unnormalized real-valued score associated with a class or vocabulary token. In an LLM, the final projection usually produces a vector $z\in\mathbb{R}^{V}$ at each prediction position.
 :::
 
+
+The previous page showed how causal masking limits the positions accessible to attention. Once the Transformer blocks have been computed, the output head projects the final representation into this score vector.
+
+
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 By the end of this page, you will be able to:
 - interpret a logit vector and explain why its values are not probabilities;
