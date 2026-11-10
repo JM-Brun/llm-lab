@@ -50,8 +50,15 @@ def test_deleted_or_added_page_forces_full_render():
 
 
 def test_global_configuration_and_shared_references_force_full_render():
-    for path in ("site/_quarto.yml", "site/references.qmd", "site/styles.scss"):
-        result = classify_changed_files([{"filename": path, "status": "modified"}], CONFIG)
+    for path in (
+        "site/_quarto.yml",
+        "site/references.qmd",
+        "site/styles.scss",
+        ".github/workflows/publish-quarto.yml",
+    ):
+        result = classify_changed_files(
+            [{"filename": path, "status": "modified"}], CONFIG
+        )
         assert result["render_mode"] == "full"
 
 
@@ -63,13 +70,12 @@ def test_unlisted_page_forces_full_render():
 
 
 def test_more_than_twenty_pages_force_full_render():
-    config = "project:\n  render:\n" + "".join(
-        f"    - fr/page-{index}.qmd\n" for index in range(21)
-    ) + "\nwebsite:\n  title: Example\n"
-    files = [
-        {"filename": f"site/fr/page-{index}.qmd", "status": "modified"}
-        for index in range(21)
-    ]
+    config = (
+        "project:\\n  render:\\n"
+        + "".join(f"    - fr/page-{index}.qmd\\n" for index in range(21))
+        + "\\nwebsite:\\n  title: Example\\n"
+    )
+    files = [{"filename": f"site/fr/page-{index}.qmd", "status": "modified"} for index in range(21)]
 
     result = classify_changed_files(files, config)
 
@@ -77,7 +83,9 @@ def test_more_than_twenty_pages_force_full_render():
 
 
 def test_unrelated_changes_skip_site_render():
-    result = classify_changed_files([{"filename": "README.md", "status": "modified"}], CONFIG)
+    result = classify_changed_files(
+        [{"filename": "README.md", "status": "modified"}], CONFIG
+    )
 
     assert result["render_mode"] == "skip"
     assert result["site_relevant"] is False
