@@ -94,7 +94,7 @@ items:
       pages: []
       concepts: []
   - id: eleventh-hour-enthusiast-platonic-representation-jepa-2026:four-state-cycle
-    kind: example
+    kind: derivation
     summary: "For a four-state cycle with transition probability 1/2 to stay and 1/4 to either adjacent state, K has eigenvalues 1, 1/2, 1/2, 0. Retaining two coordinates selects the full tied eigenspace and yields a square up to rotation/reflection; retaining one coordinate allows equally optimal but geometrically different cosine- or sine-like solutions because the dimensionality boundary cuts through the eigenvalue tie."
     locator: {type: section, value: "When does the graph determine the geometry?", label: "Four-state cycle and cosine/sine eigenvectors"}
     evidence:
