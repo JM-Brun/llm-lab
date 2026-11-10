@@ -2628,14 +2628,14 @@ sources:
     classification:
       primary_theme: architectures-mechanisms
       secondary_themes: [mathematical-tools-geometry]
-      tags: [topic:transformer, topic:self-attention, topic:multi-head-attention, modality:illustration]
+      tags: [topic:transformer, topic:self-attention, topic:multi-head-attention, topic:positional-encoding, method:sinusoidal-encoding, modality:illustration, modality:visualization]
       concept_ids: [token-embedding, self-attention, multi-head-attention, causal-mask]
     metadata:
       technical_level: introductory
-      contribution_types: [architecture, visualization, pedagogy, historical-context]
+      contribution_types: [architecture, visualization, pedagogy, historical-context, implementation]
       audiences: [beginner, learner, educator]
     scan_status: partially-scanned
-    integration_status: deferred
+    integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-09"
         status: partially-scanned
@@ -2647,10 +2647,18 @@ sources:
           - "No fresh asset-level provenance or licence review was performed."
           - "The article primarily explains the original encoder-decoder Transformer, not a decoder-only GPT architecture."
           - "Visuals were not copied or independently assessed for reuse."
+      - accessed_at: "2026-11-10"
+        status: partially-scanned
+        inspected_scope:
+          - "Positional-encoding section, toy embedding-size-4 example, 20-by-512 encoding visualization description, implementation pointer, and July 2020 clarification"
+        limitations:
+          - "Only the positional-encoding section was assessed for this ingestion."
+          - "The article explicitly distinguishes its earlier concatenated visualization from the interleaved formulation in the original paper."
+          - "Embedded image assets were not separately audited; no reuse rights were established."
     related:
-      pages: [en/transformer, fr/transformer, en/queries-keys-values, fr/queries-keys-values, en/scaled-dot-product-attention, fr/scaled-dot-product-attention, en/transformer-architectures, fr/transformer-architectures]
+      pages: [en/transformer, fr/transformer, en/queries-keys-values, fr/queries-keys-values, en/scaled-dot-product-attention, fr/scaled-dot-product-attention, en/transformer-architectures, fr/transformer-architectures, fr/sinusoidal-positional-encoding, en/sinusoidal-positional-encoding]
       concepts: [token-embedding, self-attention, multi-head-attention, causal-mask]
-      audit_records: [docs/source-reviews/transformer-attention-pedagogical-comparison-2026-11.md]
+      audit_records: [docs/source-reviews/transformer-attention-pedagogical-comparison-2026-11.md, docs/source-reviews/sinusoidal-positional-encoding-2026-11.md]
 
   - id: jay-alammar-illustrated-gpt2
     title: "The Illustrated GPT-2"
@@ -3233,44 +3241,6 @@ sources:
           - "No figure, text passage, code, or dataset was copied; reuse rights were not assessed."
     related:
       pages: [fr/positional-encoding, en/positional-encoding, fr/sinusoidal-positional-encoding, en/sinusoidal-positional-encoding]
-      concepts: []
-      audit_records: [docs/source-reviews/sinusoidal-positional-encoding-2026-11.md]
-  - id: jay-alammar-illustrated-transformer
-    title: "The Illustrated Transformer"
-    creators: ["Jay Alammar"]
-    source_type: blog
-    identifiers: {}
-    canonical_url: "https://jalammar.github.io/illustrated-transformer/"
-    publisher: "Jay Alammar"
-    publication_date: null
-    updated_date: null
-    language: en
-    version: "July 2020 update noted in article"
-    revision: null
-    licence: {identifier: null, url: null, status: unknown}
-    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
-    classification:
-      primary_theme: architectures-mechanisms
-      secondary_themes: [mathematical-tools-geometry]
-      tags: [topic:positional-encoding, method:sinusoidal-encoding, topic:transformer, modality:visualization]
-      concept_ids: []
-    metadata:
-      technical_level: introductory
-      contribution_types: [pedagogy, visualization, implementation]
-      audiences: [beginner, learner, educator]
-    scan_status: partially-scanned
-    integration_status: partially-integrated
-    scan_history:
-      - accessed_at: "2026-11-10"
-        status: partially-scanned
-        inspected_scope:
-          - "Positional-encoding section, toy embedding-size-4 example, 20-by-512 encoding visualization description, implementation pointer, and July 2020 clarification"
-        limitations:
-          - "Only the positional-encoding section was assessed for this ingestion."
-          - "The article explicitly distinguishes its earlier concatenated visualization from the interleaved formulation in the original paper."
-          - "Embedded image assets were not separately audited and are link-only; no reuse rights were established."
-    related:
-      pages: [fr/sinusoidal-positional-encoding, en/sinusoidal-positional-encoding]
       concepts: []
       audit_records: [docs/source-reviews/sinusoidal-positional-encoding-2026-11.md]
   - id: harvardnlp-annotated-transformer
