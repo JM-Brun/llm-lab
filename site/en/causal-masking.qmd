@@ -112,7 +112,7 @@ Decoder-only Transformers such as GPT use this constraint to learn next-token pr
 </details>
 
 ::: {.callout-note collapse="true" title="Check prefix invariance in practice"}
-The causal rule can also be stated as a prefix property: with parameters and a prefix held fixed, appending or changing future tokens must not change the outputs already computed for that prefix. [Exercise CA-A](exercises.qmd#attention) asks you to construct the mask, examine the target shift, and interpret the reference implementation's invariance tests. It also distinguishes a test of an attention primitive from a test of the complete model.
+The causal rule can also be stated as a prefix property: with parameters and a prefix held fixed, appending or changing future tokens must not change the outputs already computed for that prefix. [Exercise CA-A](exercises.qmd#ca-a-prefix-invariance) asks you to construct the mask, examine the target shift, and interpret the reference implementation's invariance tests. It also distinguishes a test of an attention primitive from a test of the complete model.
 :::
 
 ## Connections to other concepts
