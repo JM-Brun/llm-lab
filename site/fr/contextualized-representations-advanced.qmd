@@ -2,7 +2,7 @@
 title: "Représentations contextualisées : dépendances entre positions et couches"
 subtitle: "Formaliser le contexte accessible, les masques et les transformations successives"
 description: "Approfondissement mathématique sur la manière dont les blocs Transformer construisent des états cachés dépendants de la position et du contexte accessible."
-keywords: ["type:concept-deep-dive", "destination:deepen", "topic:contextualized-representations", "level:advanced", "language:fr", "status:published"]
+keywords: ["type:deep-dive", "destination:deepen", "topic:contextualized-representations", "level:advanced", "language:fr", "status:published"]
 lang: fr
 ---
 
@@ -11,16 +11,20 @@ LLM-LAB-PAGE-MAP v1
 id: "fr/contextualized-representations-advanced"
 summary: "Formalise les dépendances contextuelles des états cachés, les contraintes de masque et l'évolution des représentations à travers les blocs."
 scope: "Approfondit la contextualisation après le lookup initial : traitement positionnel, positions accessibles, dépendances d'un bloc Transformer et distinction entre auto-attention et MLP."
+domain: "architectures-mechanisms"
 purpose: "Formaliser quelles positions peuvent contribuer à un état caché, distinguer décodeur causal et encodeur bidirectionnel, et expliquer les limites d'une représentation simplifiée du bloc."
 suggested_route:
   previous: "fr/contextualized-representations"
   next: null
 hierarchy:
-  parents: ["fr/deepen"]
+  parents: ["fr/contextualized-representations"]
   children: []
 related: ["fr/queries-keys-values-advanced", "fr/rope", "fr/transformer"]
-tags: ["type:concept-deep-dive", "destination:deepen", "topic:contextualized-representations", "level:advanced", "language:fr", "status:published"]
+tags: ["type:deep-dive", "destination:deepen", "topic:contextualized-representations", "level:advanced", "language:fr", "status:published"]
 -->
+
+
+{{< include ../includes/generated-guided-context-fr-contextualized-representations-advanced.qmd >}}
 
 Cette page prolonge la [présentation introductive des représentations contextualisées](contextualized-representations.qmd). Elle suppose que le lecteur distingue déjà l'ID du token, le vecteur obtenu par lookup et l'état caché produit par le réseau.
 
