@@ -28,7 +28,8 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-gener
 
 **Five formative exercises published:** GE-A–GE-E. They cover next-token selection, the autoregressive loop and stopping, then prefill/decode and the purpose and limits of the KV cache.
 
-### GE-A — Distribution and selection
+<a id="ge-a-distribution-and-selection"></a>
+### Distribution and selection {#ex-generation-distribution-selection}
 
 A model produces logits $z=(0,\ln 2,\ln 3)$ for vocabulary $\{A,B,C\}$.
 
@@ -43,7 +44,8 @@ The exponentials are $(1,2,3)$ and sum to $6$. Thus $p=(1/6,1/3,1/2)$. Greedy de
 
 </details>
 
-### GE-B — Trace the autoregressive loop
+<a id="ge-b-trace-the-autoregressive-loop"></a>
+### Trace the autoregressive loop {#ex-generation-autoregressive-loop}
 
 We start with $c_1=(A,B)$. Decoding is greedy and the distributions are given:
 
@@ -65,7 +67,8 @@ The selections are $C$, then $D$, then EOS. The contexts become $(A,B,C)$, $(A,B
 
 </details>
 
-### GE-C — Stopping criteria
+<a id="ge-c-stopping-criteria"></a>
+### Stopping criteria {#ex-generation-stopping-criteria}
 
 A generation uses max_new_tokens = 4. EOS is selected at the second step.
 
@@ -81,7 +84,8 @@ The limit allows at most four new tokens. Since EOS is selected at the second st
 
 </details>
 
-### GE-D — Trace prefill and incremental decode
+<a id="ge-d-trace-prefill-and-incremental-decode"></a>
+### Trace prefill and incremental decode {#ex-generation-prefill-incremental-decode}
 
 A prompt contains the token IDs $(A,B,C)$. Assume a causal Transformer with KV caching enabled.
 
@@ -98,7 +102,8 @@ Prefill processes the three prompt positions in one sequence pass and populates 
 
 </details>
 
-### GE-E — What does the KV cache save?
+<a id="ge-e-what-does-the-kv-cache-save"></a>
+### What does the KV cache save? {#ex-generation-kv-cache}
 
 Assume a prompt of three tokens $(A,B,C)$ and generate three tokens $D,E,F$. Ignore context-window eviction and count only token positions newly passed through the model:
 
