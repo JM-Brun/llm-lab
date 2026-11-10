@@ -7,6 +7,7 @@ on:
     - cron: "17 3 * * *"
 
 permissions:
+  actions: read
   contents: read
   pull-requests: read
 
@@ -26,8 +27,8 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      # Decide whether this PR can affect the rendered site. Keep the full
-      # render for site inputs, Quarto workflow changes, and render dependencies.
+      # Only modified, already-listed .qmd pages qualify for incremental rendering.
+      # Any shared input, deletion, rename, addition, or config change falls back to full.
       - name: Detect site and browser review scope
         id: site_changes
         if: github.event_name == 'pull_request'
@@ -35,23 +36,48 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
-          changed_files="$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/files" --paginate --jq '.[].filename')"
-          {
-            echo "files<<EOF"
-            printf '%s\n' "$changed_files"
-            echo "EOF"
-          } >> "$GITHUB_OUTPUT"
+          changed_files_json="$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/files" --paginate --jq '[.[] | {filename, status}]')"
+          PR_CHANGED_FILES_JSON="$changed_files_json" python3 scripts/quarto_render_scope.py
 
-          if printf '%s\n' "$changed_files" | grep -Eq '^(site/|data/|src/|scripts/site-browser-review\.mjs$|\.github/workflows/quarto\.yml$|pyproject\.toml$|uv\.lock$|docs/requirements-.*\.txt$)'; then
-            echo "site_relevant=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "site_relevant=false" >> "$GITHUB_OUTPUT"
-          fi
+      - name: Find latest published site cache
+        id: site_cache
+        if: github.event_name == 'pull_request' && steps.site_changes.outputs.render_mode == 'incremental'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for run_id in $(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/publish-quarto.yml/runs?branch=main&status=success&per_page=20" --jq '.workflow_runs[].id'); do
+            artifact_id="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$run_id/artifacts?per_page=100" --jq '.artifacts[] | select(.name == "quarto-site-cache" and .expired == false) | .id' | head -n 1)"
+            if [ -n "$artifact_id" ]; then
+              echo "available=true" >> "$GITHUB_OUTPUT"
+              echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
+              echo "Found published site cache in workflow run $run_id."
+              exit 0
+            fi
+          done
+          echo "available=false" >> "$GITHUB_OUTPUT"
+          echo "No recent published site cache; falling back to a full render."
 
-          if printf '%s\n' "$changed_files" | grep -Eq '^(site/|data/|scripts/site-browser-review\.mjs$)'; then
-            echo "browser_relevant=true" >> "$GITHUB_OUTPUT"
+      - name: Restore latest published site
+        id: restore_site
+        if: github.event_name == 'pull_request' && steps.site_changes.outputs.render_mode == 'incremental' && steps.site_cache.outputs.available == 'true'
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: quarto-site-cache
+          run-id: ${{ steps.site_cache.outputs.run_id }}
+          github-token: ${{ github.token }}
+          path: site/_site
+
+      - name: Verify restored site cache
+        id: verify_site_cache
+        if: github.event_name == 'pull_request' && steps.site_changes.outputs.render_mode == 'incremental'
+        run: |
+          if [ -s site/_site/index.html ] && [ -d site/_site/site_libs ]; then
+            echo "cache_restored=true" >> "$GITHUB_OUTPUT"
+            echo "Restored a complete Quarto site; changed pages can be rendered incrementally."
           else
-            echo "browser_relevant=false" >> "$GITHUB_OUTPUT"
+            echo "cache_restored=false" >> "$GITHUB_OUTPUT"
+            echo "Site cache unavailable or incomplete; using a full render."
           fi
 
       - name: Cache Quarto Linux tarball
@@ -108,19 +134,30 @@ jobs:
         run: .venv/bin/python site/tools/check_resource_registry.py
 
       - name: Generate bilingual history timeline fragments
-        if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
+        if: ${{ github.event_name != 'pull_request' || (steps.site_changes.outputs.site_relevant == 'true' && !(steps.site_changes.outputs.render_mode == 'incremental' && steps.verify_site_cache.outputs.cache_restored == 'true')) }}
         run: .venv/bin/python site/tools/render_history_pilot.py
 
       - name: Generate learning-map data and guided-route Markdown
-        if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
+        if: ${{ github.event_name != 'pull_request' || (steps.site_changes.outputs.site_relevant == 'true' && !(steps.site_changes.outputs.render_mode == 'incremental' && steps.verify_site_cache.outputs.cache_restored == 'true')) }}
         run: .venv/bin/python site/tools/build_learning_map.py
 
       - name: Generate bilingual computational-graph fragments
-        if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
+        if: ${{ github.event_name != 'pull_request' || (steps.site_changes.outputs.site_relevant == 'true' && !(steps.site_changes.outputs.render_mode == 'incremental' && steps.verify_site_cache.outputs.cache_restored == 'true')) }}
         run: .venv/bin/python site/tools/render_computational_graph.py
 
-      - name: Render site
-        if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
+      - name: Render changed pages incrementally
+        if: ${{ github.event_name == 'pull_request' && steps.site_changes.outputs.render_mode == 'incremental' && steps.verify_site_cache.outputs.cache_restored == 'true' }}
+        env:
+          RENDER_TARGETS: ${{ steps.site_changes.outputs.render_targets }}
+        run: |
+          while IFS= read -r page; do
+            [ -n "$page" ] || continue
+            echo "Incrementally rendering $page"
+            quarto render "$page" --no-clean
+          done <<< "$RENDER_TARGETS"
+
+      - name: Render full site
+        if: ${{ github.event_name != 'pull_request' || (steps.site_changes.outputs.site_relevant == 'true' && (steps.site_changes.outputs.render_mode != 'incremental' || steps.verify_site_cache.outputs.cache_restored != 'true')) }}
         run: quarto render site
 
       - name: Check rendered learning-map controls
