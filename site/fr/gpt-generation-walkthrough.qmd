@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/build-path"]
   children: []
-related: ["fr/generation", "fr/logits", "fr/probabilites"]
+related: ["fr/generation", "fr/logits", "fr/probabilites", "fr/exercises/gpt-generation-walkthrough"]
 tags: ["type:guided-build", "destination:build", "topic:reference-gpt-generation", "level:applied", "language:fr", "status:published"]
 -->
 
@@ -131,17 +131,9 @@ Ligne par ligne :
 
 [`tests/unit/test_generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_generate.py) : le mode glouton est déterministe **et** égal à une chaîne d'`argmax` recalculée indépendamment ; l'échantillonnage est reproductible à graine égale ; les troncations optionnelles suivent la chaîne température → top-k → top-p recalculée indépendamment, `top_k=1` (et un noyau `top_p` très serré) reproduisant la chaîne gloutonne ; un prompt qui remplit toute la fenêtre fonctionne quand même (glissement) ; `max_new_tokens=0` renvoie le prompt inchangé ; toutes les erreurs de validation sont nommées.
 
-## Exercices
+## S’exercer
 
-1. Avec un prompt de 16 tokens, `context_length=16` et 4 tokens à générer : combien de passes avant sont exécutées, et avec quelles longueurs de fenêtre ?
-2. Pourquoi la sortie d'un modèle non entraîné est-elle incohérente, et pourquoi est-ce un résultat **attendu** plutôt qu'un bug ?
-
-<details>
-<summary>Afficher les réponses et le raisonnement</summary>
-
-1. Quatre passes, chacune sur une fenêtre de 16 tokens : après le premier token ajouté (17 tokens), la fenêtre ne retient que les 16 derniers à chaque étape.
-2. Les paramètres sont aléatoires : les logits n'encodent aucune statistique de langue. La boucle, elle, fonctionne parfaitement (formes, causalité, sélection) — c'est exactement ce que ce jalon sépare : **la mécanique** de génération de **la qualité acquise par l'apprentissage**.
-</details>
+Les exercices de cette visite guidée sont regroupés sur sa [page d’exercices dédiée](exercises/gpt-generation-walkthrough.qmd).
 
 ## Connexions
 

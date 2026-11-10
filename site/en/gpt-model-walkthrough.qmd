@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["en/build-path"]
   children: []
-related: ["en/transformer", "en/embedding-space", "en/positional-encoding", "en/logits"]
+related: ["en/transformer", "en/embedding-space", "en/positional-encoding", "en/logits", "en/exercises/gpt-model-walkthrough"]
 tags: ["type:guided-build", "destination:build", "topic:reference-gpt-model", "level:applied", "language:en", "status:published"]
 -->
 
@@ -157,17 +157,9 @@ The shape journey, line by line:
 
 [`tests/unit/test_gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt.py): the expected `(B, T, V)` shape and finite values; every named validation error; determinism **at equal seed** (and difference at a different seed); prefix invariance; a parameter count matching the independent formula.
 
-## Exercises
+## Practice
 
-1. Why `position_embedding[:seq_len]` and not the whole `position_embedding`?
-2. With `V=50, T=16, d=16, H=2, L=2, hidden=32`, compute the total parameter count without running the code.
-
-<details>
-<summary>Show answers and reasoning</summary>
-
-1. The table always has `context_length` rows; a shorter sequence uses only the first `seq_len`. Without the slice, adding `(B, T, d) + (T_max, d)` would fail as soon as `T < T_max`.
-2. Per block: `4×16×16 + 4×16 + 2×32×16 + 32 + 16 + 4×16 = 1024+64+1024+48+64+64 = 2288`. Two blocks: `4576`. Embeddings: `2×50×16 = 1600` (table + untied head); positions `16×16 = 256`; final norm `32`; head bias `50`. Total: `4576 + 1600 + 256 + 32 + 50 = 6514`.
-</details>
+Exercises for this guided tour are collected on its [dedicated practice page](exercises/gpt-model-walkthrough.qmd).
 
 ## Connections
 

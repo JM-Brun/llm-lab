@@ -1,0 +1,40 @@
+---
+title: "Exercises — Opérations numériques du GPT"
+subtitle: "Comprehension and code-reading exercises"
+keywords: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-ops", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/exercises/gpt-ops-walkthrough"
+summary: "Exercises associated with the Opérations numériques du GPT guided tour."
+scope: "Collects exercises and worked answers for the guided tour without duplicating its code explanation."
+purpose: "Check understanding of the invariants, shapes, and implementation choices presented in the guided tour."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/gpt-ops-walkthrough"]
+tags: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-ops", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the guided tour: Opérations numériques du GPT](../gpt-ops-walkthrough.qmd)
+
+## Exercises
+
+1. An `x` of shape `(3, 7, 12)` passes through `linear` with `weight` of shape `(8, 12)`: what is the output shape?
+2. What happens when normalizing a position whose 16 activations are all identical? What role does `eps` play?
+
+<details>
+<summary>Show answers and reasoning</summary>
+
+1. `(3, 7, 8)`: the last axis (12) is replaced by the output width (8); the batch axes (3, 7) are preserved.
+2. The variance is exactly 0; without `eps` the division would produce `inf` or `nan`. With `eps`, the denominator is `sqrt(eps)` and the output stays finite (close to the mean, rescaled by `gamma` and `beta`).
+</details>
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/gpt-ops-walkthrough.qmd) · [English](../exercises/gpt-ops-walkthrough.qmd)
+:::

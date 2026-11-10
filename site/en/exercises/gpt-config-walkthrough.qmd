@@ -1,0 +1,40 @@
+---
+title: "Exercises — Configuration du GPT"
+subtitle: "Comprehension and code-reading exercises"
+keywords: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-config", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/exercises/gpt-config-walkthrough"
+summary: "Exercises associated with the Configuration du GPT guided tour."
+scope: "Collects exercises and worked answers for the guided tour without duplicating its code explanation."
+purpose: "Check understanding of the invariants, shapes, and implementation choices presented in the guided tour."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/gpt-config-walkthrough"]
+tags: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-config", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the guided tour: Configuration du GPT](../gpt-config-walkthrough.qmd)
+
+## Exercises
+
+1. What error do you get with `embedding_dim=10, num_heads=4`? And with `embedding_dim=12, num_heads=4`?
+2. How many entries does the position table of a `context_length=256, embedding_dim=64` configuration have?
+
+<details>
+<summary>Show answers and reasoning</summary>
+
+1. `10 % 4 == 2`: divisibility fails, so `ValueError` at construction. With `12 % 4 == 0`: accepted, and each head receives `12/4 = 3` columns.
+2. `256 × 64 = 16384` values, i.e. 16384 learned parameters — one per position and per dimension. This count is independent of the vocabulary and the head count.
+</details>
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/gpt-config-walkthrough.qmd) · [English](../exercises/gpt-config-walkthrough.qmd)
+:::

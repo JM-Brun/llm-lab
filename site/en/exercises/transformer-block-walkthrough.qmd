@@ -1,0 +1,40 @@
+---
+title: "Exercises — Bloc Transformer"
+subtitle: "Comprehension and code-reading exercises"
+keywords: ["type:exercise-hub", "destination:practice", "topic:reference-transformer-block", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/exercises/transformer-block-walkthrough"
+summary: "Exercises associated with the Bloc Transformer guided tour."
+scope: "Collects exercises and worked answers for the guided tour without duplicating its code explanation."
+purpose: "Check understanding of the invariants, shapes, and implementation choices presented in the guided tour."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/transformer-block-walkthrough"]
+tags: ["type:exercise-hub", "destination:practice", "topic:reference-transformer-block", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the guided tour: Bloc Transformer](../transformer-block-walkthrough.qmd)
+
+## Exercises
+
+1. With `d=16` and `H=2`, which columns of `q` does head 1 read?
+2. Why is `attended` allocated with `np.empty_like(x)` instead of zeros?
+
+<details>
+<summary>Show answers and reasoning</summary>
+
+1. Columns 8 to 15 (`slice(8, 16)`): every column belongs to exactly one head, and the split is contiguous.
+2. Every cell of `attended` is written exactly once by the loop (each `(b, h)` pair writes its slice for all positions); no cell is read before being written, so zero-initialization would be wasted work.
+</details>
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/transformer-block-walkthrough.qmd) · [English](../exercises/transformer-block-walkthrough.qmd)
+:::

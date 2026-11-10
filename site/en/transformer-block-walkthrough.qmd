@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["en/build-path"]
   children: []
-related: ["en/transformer", "en/queries-keys-values", "en/scaled-dot-product-attention", "en/causal-masking", "en/contextualized-representations"]
+related: ["en/transformer", "en/queries-keys-values", "en/scaled-dot-product-attention", "en/causal-masking", "en/contextualized-representations", "en/exercises/transformer-block-walkthrough"]
 tags: ["type:guided-build", "destination:build", "topic:reference-transformer-block", "level:applied", "language:en", "status:published"]
 -->
 
@@ -190,17 +190,9 @@ Each position goes on its own through `d -> mlp_hidden_dim` (often `4d`), then G
 
 [`tests/unit/test_transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_transformer_block.py): `forward` preserves the shape and stays finite; a non-3D input is rejected; a head count inconsistent with the width is rejected.
 
-## Exercises
+## Practice
 
-1. With `d=16` and `H=2`, which columns of `q` does head 1 read?
-2. Why is `attended` allocated with `np.empty_like(x)` instead of zeros?
-
-<details>
-<summary>Show answers and reasoning</summary>
-
-1. Columns 8 to 15 (`slice(8, 16)`): every column belongs to exactly one head, and the split is contiguous.
-2. Every cell of `attended` is written exactly once by the loop (each `(b, h)` pair writes its slice for all positions); no cell is read before being written, so zero-initialization would be wasted work.
-</details>
+Exercises for this guided tour are collected on its [dedicated practice page](exercises/transformer-block-walkthrough.qmd).
 
 ## Connections
 
