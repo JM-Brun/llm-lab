@@ -36,21 +36,25 @@ Dans un LLM autorégressif, l'entropie décrit la dispersion de la distribution 
 **Question de contrôle :** pouvez-vous distinguer l'incertitude avant observation de la surprise après observation d'une cible ?
 :::
 
-<div class="pipeline-stepper meta-flow meta-flow--branch" role="navigation" aria-label="Carte des notions liées à la distribution prédictive">
-  <div class="meta-flow__source"><strong>Distribution prédictive</strong><span>p(token suivant | contexte)</span></div>
-  <div class="meta-flow__relation">Deux questions différentes selon que le token est observé ou non</div>
-  <div class="meta-flow__comparison">
-    <div class="meta-flow__comparison-item meta-flow__branch--active" aria-current="step">
-      <strong>Avant observation · Entropie H(p)</strong>
-      <small>Dispersion moyenne de toute la distribution : incertitude prédictive</small>
-    </div>
-    <div class="meta-flow__comparison-item">
-      <strong>Après observation · Surprise −log p(y)</strong>
-      <small>Score du token effectivement observé ; voir la <a href="vraisemblance.qmd">vraisemblance</a></small>
-    </div>
-  </div>
-  <div class="meta-flow__result"><strong>Avec une distribution cible q : entropie croisée H(q, p)</strong> · <a href="cross-entropy.qmd">Comparer prédiction et cible</a></div>
-</div>
+:::: {.pipeline-stepper .meta-flow .meta-flow--branch role="navigation" aria-label="Carte des notions liées à la distribution prédictive"}
+::: {.meta-flow__source}
+<strong>Distribution prédictive</strong><span>p(token suivant | contexte)</span>
+:::
+::: {.meta-flow__relation}
+Deux questions différentes selon que le token est observé ou non
+:::
+::: {.meta-flow__comparison}
+::: {.meta-flow__comparison-item .meta-flow__branch--active aria-current="step"}
+<strong>Avant observation · Entropie H(p)</strong><small>Dispersion moyenne de toute la distribution : incertitude prédictive</small>
+:::
+::: {.meta-flow__comparison-item}
+<strong>Après observation · Surprise −log p(y)</strong><small>Score du token effectivement observé ; voir la [vraisemblance](vraisemblance.qmd)</small>
+:::
+:::
+::: {.meta-flow__result}
+<strong>Avec une distribution cible q : entropie croisée H(q, p)</strong> · [Comparer prédiction et cible](cross-entropy.qmd)
+:::
+::::
 
 
 ## Entropie de la distribution du prochain token
