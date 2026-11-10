@@ -176,6 +176,12 @@ This table gives trends, not a benchmark. Constants, dimensions, bandwidth, qual
 
 Apply these distinctions to concrete architecture choices: [hybrid architectures and Nemotron](hybrid-llm-architectures.qmd), [autoregressive generation](generation.qmd), the [Transformer block](transformer.qmd), and [scaling laws](scaling-laws.qmd).
 
+
+
+::: {.language-switch}
+**Language:** [Français](../fr/llm-computational-complexity.qmd) · [English](llm-computational-complexity.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -192,7 +198,3 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 </div>
 </details>
-
-::: {.language-switch}
-**Language:** [Français](../fr/llm-computational-complexity.qmd) · [English](llm-computational-complexity.qmd)
-:::

@@ -39,7 +39,7 @@ These files offer focused prompts for recurring page jobs. They complement the c
 
 - Keep the question, essential explanation, definitions, and caveats that change the conclusion visible.
 - Use progressive disclosure for genuinely supplementary derivations, extended examples, historical context, and answer keys—not to hide prerequisites or essential reasoning.
-- Keep short in-page comprehension checks distinct from full exercise collections and experiments. When a check is included, use the shared presentation convention and keep solutions collapsed by default.
+- Keep essential explanations and worked examples in the main flow. Place the page's short comprehension check, its exercise links, and optional answer key in the shared collapsed resource block at the very end of the page; keep solutions independently collapsed by default.
 - Use diagrams, code, and interactive elements only when they answer a concrete reader question better than prose alone.
 - Reuse the [visual design system](design-system.md); a new content pattern does not justify a new visual component by itself.
 - Preserve substantive French/English parity, while allowing natural differences in wording and sectioning.
@@ -64,4 +64,4 @@ A justified deviation is not a defect. If a prompt does not fit the page, mark i
 
 For pages in the guided learning paths, collect optional links that would otherwise form separate end-of-page sections (hands-on exploration, further reading, and dedicated exercises) in one native, collapsed-by-default disclosure. Use the shared `.learning-resources` pattern documented in [the supplementary resource block standard](learning-resource-block.md).
 
-Keep essential explanations, contextual links, and short in-page self-checks in the main reading flow. Do not move a self-check into the disclosure merely because it links to a dedicated exercise page. Omit categories that have no genuinely useful resource; do not create empty headings. Preserve established fragment IDs and ensure links into collapsed content open the disclosure.
+Keep essential explanations, contextual links, and worked examples in the main reading flow. Put the page's “Vérifier sa compréhension” / “Check your understanding” section inside the disclosure, together with optional exercises, experiments, and further reading. Place the complete block at the very end of the page, after visible language and learning-path navigation. Omit categories that have no genuinely useful content; do not create empty headings. Preserve established fragment IDs and ensure links into collapsed content open the disclosure.

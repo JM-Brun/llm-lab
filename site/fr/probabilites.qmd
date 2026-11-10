@@ -216,6 +216,14 @@ Choisir le token argmax à chaque position n'est pas équivalent à rechercher g
 
 Une probabilité de 0,9 ne signifie donc pas automatiquement « 90 % de chances que la réponse soit vraie ». La calibration doit être évaluée sur des données pertinentes tenues à l'écart de l'ajustement, et une bonne calibration globale ne garantit pas la fiabilité de chaque réponse individuelle.
 
+
+
+{{< include ../includes/generated-suggested-route-fr-probabilites.qmd >}}
+
+::: {.language-switch}
+[Français](probabilites.qmd) · [English](../en/probabilities.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
@@ -242,9 +250,3 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 
 </div>
 </details>
-
-{{< include ../includes/generated-suggested-route-fr-probabilites.qmd >}}
-
-::: {.language-switch}
-[Français](probabilites.qmd) · [English](../en/probabilities.qmd)
-:::

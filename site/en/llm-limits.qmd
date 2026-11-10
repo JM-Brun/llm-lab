@@ -77,6 +77,12 @@ Model size alone does not explain performance either. Data quality, diversity, a
 
 Cite the protocol, not just the conclusion.
 
+
+
+::: {.language-switch}
+**Language:** [Français](../fr/llm-limits.qmd) · [English](llm-limits.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -88,12 +94,7 @@ Cite the protocol, not just the conclusion.
 
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/llm-limits.qmd).
 
-</div>
-</details>
 
-::: {.language-switch}
-**Language:** [Français](../fr/llm-limits.qmd) · [English](llm-limits.qmd)
-:::
 
 ::: {.self-check}
 ## Check your understanding
@@ -111,3 +112,7 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 </details>
 :::
+
+
+</div>
+</details>

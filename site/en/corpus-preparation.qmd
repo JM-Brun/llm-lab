@@ -98,6 +98,12 @@ The prepared corpus can then be encoded into token streams. The [training exampl
 
 This page defines a traceability framework and separation of responsibilities, not a legal policy, universal filtering recipe, or ready-made contamination detector. Thresholds, tools, and split units must be justified by the data, applicable rights, and the experimental claim being made.
 
+
+
+::: {.language-switch}
+[Français](../fr/corpus-preparation.qmd) · [English](corpus-preparation.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -111,7 +117,3 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 </div>
 </details>
-
-::: {.language-switch}
-[Français](../fr/corpus-preparation.qmd) · [English](corpus-preparation.qmd)
-:::

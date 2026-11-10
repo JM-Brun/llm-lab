@@ -186,6 +186,12 @@ def linear(x: FloatArray, weight: FloatArray, bias: FloatArray) -> FloatArray:
 - **Étape précédente** : [la configuration (`gpt_config.py`)](gpt-config-walkthrough.qmd) — les dimensions utilisées ici.
 - **Étape suivante** : [le bloc Transformer (`transformer_block.py`)](transformer-block-walkthrough.qmd) — qui consomme ces briques.
 
+
+
+::: {.language-switch}
+**Langue :** [Français](gpt-ops-walkthrough.qmd) · [English](../en/gpt-ops-walkthrough.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
@@ -205,7 +211,3 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 
 </div>
 </details>
-
-::: {.language-switch}
-**Langue :** [Français](gpt-ops-walkthrough.qmd) · [English](../en/gpt-ops-walkthrough.qmd)
-:::

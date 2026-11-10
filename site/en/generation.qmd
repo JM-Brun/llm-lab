@@ -195,6 +195,14 @@ A low temperature concentrates probability on the leading token; a high temperat
 
 **It does not validate its result.** A fluent answer, or even syntactically valid, executable SQL, does not guarantee that it answers the intended business question. The schema, the definitions used (how refunds and failed payments are treated, for example), the assumptions, and the results are checked before any decision.
 
+
+
+{{< include ../includes/generated-suggested-route-en-generation.qmd >}}
+
+::: {.language-switch}
+[Français](../fr/generation.qmd) · [English](generation.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -208,9 +216,3 @@ The questions for this lesson are collected on its [dedicated practice page](exe
 
 </div>
 </details>
-
-{{< include ../includes/generated-suggested-route-en-generation.qmd >}}
-
-::: {.language-switch}
-[Français](../fr/generation.qmd) · [English](generation.qmd)
-:::

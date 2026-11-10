@@ -108,6 +108,14 @@ Segmentation determines the sequence of IDs supplied to the model. It affects in
 
 The same text can produce different sequences depending on the vocabulary, pre-tokenization, and tokenizer rules. The canonical [tokenization strategies](tokenization-strategies.qmd) page explains granularity, components, algorithms, and comparative examples. Advanced empirical metrics and trade-offs belong to [tokenizer design and evaluation](tokenizer-design-evaluation.qmd).
 
+
+
+{{< include ../includes/generated-suggested-route-en-text-data.qmd >}}
+
+:::: {.language-switch}
+**Language:** [Français](../fr/text-data.qmd) · [English](text-data.qmd)
+::::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -132,9 +140,3 @@ Corpus preparation (provenance, filtering, deduplication, splits, and tokenizer 
 
 </div>
 </details>
-
-{{< include ../includes/generated-suggested-route-en-text-data.qmd >}}
-
-:::: {.language-switch}
-**Language:** [Français](../fr/text-data.qmd) · [English](text-data.qmd)
-::::

@@ -99,6 +99,22 @@ def cosine_similarity(x: np.ndarray, y: np.ndarray) -> float:
 
 This snippet assumes equal-shaped, one-dimensional, finite arrays and makes the definition and zero-vector edge case explicit; it does not validate those input contracts. It is not, by itself, a benchmark or a production-hardened numerical implementation. Direct norms and dot products can overflow for extremely large finite values or underflow for extremely small ones; production code should use a tested implementation with documented numerical behaviour.
 
+
+
+## Checks that distinguish competing interpretations
+
+- **Misconception:** “A high cosine proves that two texts mean the same thing.” Counterexample: “the treatment works” and “the treatment does not work” may remain close in an embedding space dominated by shared vocabulary.
+- **Misconception:** “Dot product is always a different alternative.” For normalized vectors, dot product and cosine give the same score; without normalization, vector norms can change the ranking.
+- **Qualification:** anisotropy and *hubness* are possible diagnostics, not automatic explanations for every retrieval error. Measure them on the representations and task in question.
+
+When auditing a conclusion, ask: what assumptions about the encoder and normalization are required? What counterexample would falsify the semantic interpretation? Which target-task metric would distinguish the options?
+
+## Takeaway
+
+For how these vectors are represented and constructed, see also [Embedding space](embedding-space.qmd).
+
+Cosine is a **geometric metric**, not a universal definition of semantics. Treat it as a hypothesis to test against a baseline and concrete errors on the target task; no isolated geometric property guarantees system relevance.
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -130,17 +146,3 @@ Library documentation describes implementation behaviour; it does not replace sc
 
 </div>
 </details>
-
-## Checks that distinguish competing interpretations
-
-- **Misconception:** “A high cosine proves that two texts mean the same thing.” Counterexample: “the treatment works” and “the treatment does not work” may remain close in an embedding space dominated by shared vocabulary.
-- **Misconception:** “Dot product is always a different alternative.” For normalized vectors, dot product and cosine give the same score; without normalization, vector norms can change the ranking.
-- **Qualification:** anisotropy and *hubness* are possible diagnostics, not automatic explanations for every retrieval error. Measure them on the representations and task in question.
-
-When auditing a conclusion, ask: what assumptions about the encoder and normalization are required? What counterexample would falsify the semantic interpretation? Which target-task metric would distinguish the options?
-
-## Takeaway
-
-For how these vectors are represented and constructed, see also [Embedding space](embedding-space.qmd).
-
-Cosine is a **geometric metric**, not a universal definition of semantics. Treat it as a hypothesis to test against a baseline and concrete errors on the target task; no isolated geometric property guarantees system relevance.

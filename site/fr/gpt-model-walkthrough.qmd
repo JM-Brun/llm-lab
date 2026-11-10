@@ -216,6 +216,12 @@ Le voyage des formes, ligne par ligne :
 - **Étape précédente** : [le bloc Transformer (`transformer_block.py`)](transformer-block-walkthrough.qmd).
 - **Étape suivante** : [la génération (`generate.py`)](gpt-generation-walkthrough.qmd).
 
+
+
+::: {.language-switch}
+**Langue :** [Français](gpt-model-walkthrough.qmd) · [English](../en/gpt-model-walkthrough.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
@@ -235,7 +241,3 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 
 </div>
 </details>
-
-::: {.language-switch}
-**Langue :** [Français](gpt-model-walkthrough.qmd) · [English](../en/gpt-model-walkthrough.qmd)
-:::

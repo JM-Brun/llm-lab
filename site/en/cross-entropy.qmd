@@ -239,6 +239,14 @@ The derivative of one-hot cross-entropy with respect to the logits is $p_i-\math
 - **“A falling training loss proves that the model is improving.”** No: validation, leakage, baselines, and generalization still need to be examined.
 - **“Perplexity directly compares any models.”** Not without controlling for tokenizer, data, and evaluation conventions.
 
+
+
+{{< include ../includes/generated-suggested-route-en-cross-entropy.qmd >}}
+
+:::: {.language-switch}
+[Français](../fr/cross-entropy.qmd) · [English](cross-entropy.qmd)
+::::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -263,14 +271,7 @@ The [mathematical foundations collection](exercises.qmd#foundations) includes wo
 - Cover & Thomas, [*Elements of Information Theory*](https://onlinelibrary.wiley.com/doi/book/10.1002/047174882X).
 - [3Blue1Brown — But what is cross-entropy?](https://www.youtube.com/watch?v=GlYgs6v2YfU) — visual intuition complementary to the derivation above.
 
-</div>
-</details>
 
-{{< include ../includes/generated-suggested-route-en-cross-entropy.qmd >}}
-
-:::: {.language-switch}
-[Français](../fr/cross-entropy.qmd) · [English](cross-entropy.qmd)
-::::
 
 ::: {.self-check}
 ## Check your understanding
@@ -290,3 +291,7 @@ The [mathematical foundations collection](exercises.qmd#foundations) includes wo
 
 </details>
 :::
+
+
+</div>
+</details>

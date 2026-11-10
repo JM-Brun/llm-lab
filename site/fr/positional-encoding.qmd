@@ -123,6 +123,14 @@ Dans cette construction, $P$ est ajouté aux embeddings à l’entrée, $X_0=E[\
 
 Le [lookup dans l'espace des plongements](embedding-space.qmd) associe chaque identifiant à un vecteur initial indépendant de la position ; cette page explique pourquoi et comment l'ordre est ensuite pris en compte. Les [représentations contextualisées](contextualized-representations.qmd), prochaine étape du parcours, décrivent comment les blocs Transformer transforment ces états initiaux en états dépendants du contexte. Pour approfondir : la page [RoPE](rope.qmd) détaille le mécanisme rotatif relatif, et le [masque causal](causal-masking.qmd) présente une contrainte structurelle distincte : il ordonne les positions visibles sans encoder leurs positions explicites.
 
+
+
+{{< include ../includes/generated-suggested-route-fr-positional-encoding.qmd >}}
+
+::: {.language-switch}
+**Langue :** [Français](positional-encoding.qmd) · [English](../en/positional-encoding.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
@@ -141,14 +149,7 @@ Le [lookup dans l'espace des plongements](embedding-space.qmd) associe chaque id
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/positional-encoding.qmd).
 
-</div>
-</details>
 
-{{< include ../includes/generated-suggested-route-fr-positional-encoding.qmd >}}
-
-::: {.language-switch}
-**Langue :** [Français](positional-encoding.qmd) · [English](../en/positional-encoding.qmd)
-:::
 
 ::: {.self-check}
 ## Vérifier sa compréhension
@@ -168,3 +169,7 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 
 </details>
 :::
+
+
+</div>
+</details>

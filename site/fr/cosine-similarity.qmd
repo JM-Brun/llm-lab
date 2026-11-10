@@ -99,6 +99,27 @@ def cosine_similarity(x: np.ndarray, y: np.ndarray) -> float:
 
 Ce fragment suppose des tableaux finis, unidimensionnels et de même forme ; il explicite la définition et le cas limite des vecteurs nuls, mais ne valide pas ces préconditions. Il ne constitue ni un benchmark ni une implémentation numérique durcie pour la production. Les normes et produits scalaires directs peuvent déborder pour des valeurs finies extrêmement grandes ou sous-déborder pour des valeurs extrêmement petites ; un code de production doit s'appuyer sur une implémentation testée dont le comportement numérique est documenté.
 
+
+
+## Vérifications qui discriminent les interprétations
+
+- **Idée reçue :** « Un cosinus élevé prouve que deux textes ont le même sens. » Contre-exemple : « le traitement fonctionne » et « le traitement ne fonctionne pas » peuvent rester proches dans un espace dominé par le vocabulaire partagé.
+- **Idée reçue :** « Le produit scalaire est toujours une alternative différente. » Si les deux vecteurs sont normalisés, produit scalaire et cosinus donnent le même score ; sinon, la norme peut changer le classement.
+- **Limite à préserver :** l'anisotropie ou la *hubness* sont des diagnostics possibles, pas des explications automatiques de toute erreur de retrieval. Il faut les mesurer sur les représentations et la tâche concernées.
+
+Pour auditer une conclusion, demander : quelle hypothèse sur l'encodeur et la normalisation est nécessaire ? Quel contre-exemple réfuterait l'interprétation sémantique ? Quelle métrique de tâche cible permettrait de départager les choix ?
+
+## À retenir
+
+Pour comprendre ce que ces vecteurs représentent et comment ils sont construits, voir aussi l'[espace des embeddings](embedding-space.qmd).
+
+Le cosinus est une **métrique géométrique**, pas une définition universelle de la sémantique. Il constitue une hypothèse à confronter à une baseline et à des erreurs concrètes sur la tâche cible ; aucune propriété géométrique isolée ne garantit la pertinence du système.
+
+
+::: {.language-switch}
+**Langue :** [Français](cosine-similarity.qmd) · [English](../en/cosine-similarity.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
@@ -130,22 +151,3 @@ La documentation d'une bibliothèque décrit un comportement d'implémentation ;
 
 </div>
 </details>
-
-## Vérifications qui discriminent les interprétations
-
-- **Idée reçue :** « Un cosinus élevé prouve que deux textes ont le même sens. » Contre-exemple : « le traitement fonctionne » et « le traitement ne fonctionne pas » peuvent rester proches dans un espace dominé par le vocabulaire partagé.
-- **Idée reçue :** « Le produit scalaire est toujours une alternative différente. » Si les deux vecteurs sont normalisés, produit scalaire et cosinus donnent le même score ; sinon, la norme peut changer le classement.
-- **Limite à préserver :** l'anisotropie ou la *hubness* sont des diagnostics possibles, pas des explications automatiques de toute erreur de retrieval. Il faut les mesurer sur les représentations et la tâche concernées.
-
-Pour auditer une conclusion, demander : quelle hypothèse sur l'encodeur et la normalisation est nécessaire ? Quel contre-exemple réfuterait l'interprétation sémantique ? Quelle métrique de tâche cible permettrait de départager les choix ?
-
-## À retenir
-
-Pour comprendre ce que ces vecteurs représentent et comment ils sont construits, voir aussi l'[espace des embeddings](embedding-space.qmd).
-
-Le cosinus est une **métrique géométrique**, pas une définition universelle de la sémantique. Il constitue une hypothèse à confronter à une baseline et à des erreurs concrètes sur la tâche cible ; aucune propriété géométrique isolée ne garantit la pertinence du système.
-
-
-::: {.language-switch}
-**Langue :** [Français](cosine-similarity.qmd) · [English](../en/cosine-similarity.qmd)
-:::

@@ -195,6 +195,12 @@ Ligne par ligne :
 
 - **Étape suivante** : [les briques numériques (`gpt_ops.py`)](gpt-ops-walkthrough.qmd).
 
+
+
+::: {.language-switch}
+**Langue :** [Français](gpt-config-walkthrough.qmd) · [English](../en/gpt-config-walkthrough.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
@@ -214,7 +220,3 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 
 </div>
 </details>
-
-::: {.language-switch}
-**Langue :** [Français](gpt-config-walkthrough.qmd) · [English](../en/gpt-config-walkthrough.qmd)
-:::

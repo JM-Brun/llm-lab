@@ -150,6 +150,12 @@ Line by line:
 
 - **Previous stop**: [assembling the GPT (`gpt.py`)](gpt-model-walkthrough.qmd).
 
+
+
+::: {.language-switch}
+**Language:** [Français](../fr/gpt-generation-walkthrough.qmd) · [English](gpt-generation-walkthrough.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -169,7 +175,3 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 </div>
 </details>
-
-::: {.language-switch}
-**Language:** [Français](../fr/gpt-generation-walkthrough.qmd) · [English](gpt-generation-walkthrough.qmd)
-:::

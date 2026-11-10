@@ -106,6 +106,12 @@ A good protocol separates success on seen examples from generalization to unseen
 - Xie et al. (2022), [*An Explanation of In-context Learning as Implicit Bayesian Inference*](https://arxiv.org/abs/2111.02080).
 - Min et al. (2022), [*Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?*](https://arxiv.org/abs/2202.12837).
 
+
+
+::: {.language-switch}
+**Language:** [Français](../fr/in-context-learning.qmd) · [English](in-context-learning.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -119,7 +125,3 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 </div>
 </details>
-
-::: {.language-switch}
-**Language:** [Français](../fr/in-context-learning.qmd) · [English](in-context-learning.qmd)
-:::

@@ -102,6 +102,14 @@ La formulation est présentée dans [Vaswani et al. (2017), *Attention Is All Yo
 - La fonction softmax est liée aux [probabilités](probabilites.qmd), mais une distribution normalisée n'est pas nécessairement calibrée.
 - La [synthèse Transformer](transformer.qmd) remet le calcul dans le flux du modèle.
 
+
+
+{{< include ../includes/generated-suggested-route-fr-scaled-dot-product-attention.qmd >}}
+
+::: {.language-switch}
+**Langue :** [Français](scaled-dot-product-attention.qmd) · [English](../en/scaled-dot-product-attention.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
@@ -120,9 +128,3 @@ Cette page appartient au parcours conceptuel **Théorie / Understand** : elle ex
 
 </div>
 </details>
-
-{{< include ../includes/generated-suggested-route-fr-scaled-dot-product-attention.qmd >}}
-
-::: {.language-switch}
-**Langue :** [Français](scaled-dot-product-attention.qmd) · [English](../en/scaled-dot-product-attention.qmd)
-:::

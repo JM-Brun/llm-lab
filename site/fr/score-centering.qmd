@@ -133,6 +133,17 @@ Un ordre d'apprentissage raisonnable : espérance de récompense et objectif de 
 
 Ce sujet n'est pas une nouvelle étape du fil computationnel central de prédiction du prochain token et ne remplace pas l'entraînement supervisé par teacher forcing.
 
+
+
+
+::: {.callout-warning}
+**Limites de l'audit :** le PDF arXiv canonique et toutes ses annexes n'ont pas encore été vérifiés indépendamment, les tests officiels n'ont pas été exécutés et le corps de l'article de Cameron Wolfe reste indisponible. Les chiffres expérimentaux sont rapportés par les auteurs et l'approximation de la queue top-k reste une hypothèse d'implémentation.
+:::
+
+:::: {.language-switch}
+[Français](score-centering.qmd) · [English](../en/score-centering.qmd)
+::::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
@@ -150,12 +161,3 @@ Ce sujet n'est pas une nouvelle étape du fil computationnel central de prédict
 
 </div>
 </details>
-
-
-::: {.callout-warning}
-**Limites de l'audit :** le PDF arXiv canonique et toutes ses annexes n'ont pas encore été vérifiés indépendamment, les tests officiels n'ont pas été exécutés et le corps de l'article de Cameron Wolfe reste indisponible. Les chiffres expérimentaux sont rapportés par les auteurs et l'approximation de la queue top-k reste une hypothèse d'implémentation.
-:::
-
-:::: {.language-switch}
-[Français](score-centering.qmd) · [English](../en/score-centering.qmd)
-::::

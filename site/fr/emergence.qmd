@@ -79,6 +79,12 @@ Une capacité peut être nouvelle du point de vue de l'usage tout en résultant 
 - Schaeffer, Miranda et Koyejo (2023), [*Are Emergent Abilities of Large Language Models a Mirage?*](https://arxiv.org/abs/2304.15004).
 - Srivastava et al. (2022), [*Beyond the Imitation Game: Quantifying and extrapolating the capabilities of language models*](https://arxiv.org/abs/2206.04615).
 
+
+
+::: {.language-switch}
+**Langue :** [Français](emergence.qmd) · [English](../en/emergence.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
@@ -92,7 +98,3 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 
 </div>
 </details>
-
-::: {.language-switch}
-**Langue :** [Français](emergence.qmd) · [English](../en/emergence.qmd)
-:::
