@@ -29,22 +29,7 @@ Un **GPT** est un modèle de langage construit autour d'un **Transformer décode
 Cette page montre d'abord à quoi ressemble cette architecture, puis suit une passe avant à travers ses blocs jusqu'aux logits. Elle s'arrête à la sortie du réseau : la conversion des logits en probabilités et la sélection du prochain token appartiennent au décodage, pas au calcul interne du Transformer.
 :::
 
-::: {.callout-tip title="L'idée à retenir en une minute"}
-- **Entrée :** les IDs sélectionnent des embeddings ; l'architecture introduit l'information positionnelle selon son mécanisme.
-- **Bloc Transformer :** l'auto-attention échange de l'information entre positions autorisées ; le MLP transforme chaque position séparément. Résidus et normalisation structurent le flux entre ces sous-couches.
-- **Répétition :** les blocs transforment progressivement les états ; Q/K/V sont des projections internes à l'auto-attention, pas une étape après les représentations contextualisées finales.
-- **Sortie :** la tête de sortie produit des logits. Softmax, sélection du token et réinjection dans le contexte sont des opérations distinctes, traitées dans les pages sur les probabilités et la génération.
-
-**Question de contrôle :** pouvez-vous retracer une passe avant des IDs aux logits et distinguer le calcul interne du réseau de la boucle de génération ?
-:::
-
-::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
-Vous pourrez :
-- retracer le calcul depuis la séquence de tokens jusqu’aux logits, en repérant embeddings et information positionnelle ;
-- expliquer les rôles distincts de l’auto-attention et du MLP dans un bloc Transformer ;
-- distinguer représentations contextualisées, logits et token sélectionné ;
-- distinguer profondeur, largeur, nombre de têtes et dimensions internes du MLP.
-:::
+Le schéma qui suit présente deux niveaux de lecture : le GPT complet, pour situer le flux des données, puis un bloc agrandi, pour comprendre les opérations répétées. Nous suivrons ensuite ce flux de l'entrée du réseau jusqu'aux logits, sans refaire la tokenisation ni la boucle de génération.
 
 ## Le Transformer : le réseau au cœur d'un GPT
 
