@@ -210,6 +210,9 @@ Le voyage des formes, ligne par ligne :
 
 ## Navigation dans le parcours
 
+
+## Connexions
+
 - **Étape précédente** : [le bloc Transformer (`transformer_block.py`)](transformer-block-walkthrough.qmd).
 - **Étape suivante** : [la génération (`generate.py`)](gpt-generation-walkthrough.qmd).
 
