@@ -208,7 +208,14 @@ Le voyage des formes, ligne par ligne :
 2. Par bloc : `4×16×16 + 4×16 + 2×32×16 + 32 + 16 + 4×16 = 1024+64+1024+48+64+64 = 2288`. Deux blocs : `4576`. Embeddings : `2×50×16 = 1600` (table + tête non liée) ; positions `16×16 = 256` ; norme finale `32` ; biais de sortie `50`. Total : `4576 + 1600 + 256 + 32 + 50 = 6514`.
 </details>
 
-## Connexions
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Ressources complémentaires</span>
+  <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Pour approfondir
 
 - **Étape précédente** : [le bloc Transformer (`transformer_block.py`)](transformer-block-walkthrough.qmd).
 - **Étape suivante** : [la génération (`generate.py`)](gpt-generation-walkthrough.qmd).
@@ -216,9 +223,12 @@ Le voyage des formes, ligne par ligne :
 - **Retour au parcours** : [Construire un petit GPT](build-path.qmd).
 - **Code source** : [`gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt.py) · **Tests** : [`test_gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt.py).
 
-## Exercices
+### Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/gpt-model-walkthrough.qmd).
+
+</div>
+</details>
 
 ::: {.language-switch}
 **Langue :** [Français](gpt-model-walkthrough.qmd) · [English](../en/gpt-model-walkthrough.qmd)
