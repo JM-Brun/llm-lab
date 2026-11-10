@@ -30,7 +30,7 @@ jobs:
         run: |
           git fetch --no-tags --depth=1 origin "$BASE_SHA"
           changed_files="$(git diff --name-only "$BASE_SHA" HEAD)"
-          if printf '%s\\n' "$changed_files" | grep -Eq '^(site/|data/|src/|scripts/|docs/|pyproject.toml$|uv.lock$|.github/workflows/ci.yml$)'; then
+          if printf '%s\n' "$changed_files" | grep -Eq '^(site/|data/|src/|scripts/|docs/|pyproject.toml$|uv.lock$|.github/workflows/ci.yml$)'; then
             echo "domain_checks=true" >> "$GITHUB_OUTPUT"
           else
             echo "domain_checks=false" >> "$GITHUB_OUTPUT"
@@ -121,7 +121,7 @@ jobs:
         run: |
           git fetch --no-tags --depth=1 origin "$BASE_SHA"
           changed_files="$(git diff --name-only "$BASE_SHA" HEAD)"
-          if printf '%s\\n' "$changed_files" | grep -Eq '^(src/llm_lab/foundations/|tests/unit/test_gpt2_reference_parity\\.py$|docs/requirements-gpt2-reference\\.txt$|pyproject\\.toml$|uv\\.lock$|.github/workflows/ci\\.yml$)'; then
+          if printf '%s\n' "$changed_files" | grep -Eq '^(src/llm_lab/foundations/|tests/unit/test_gpt2_reference_parity\.py$|docs/requirements-gpt2-reference\.txt$|pyproject\.toml$|uv\.lock$|.github/workflows/ci\.yml$)'; then
             echo "reference_parity=true" >> "$GITHUB_OUTPUT"
           else
             echo "reference_parity=false" >> "$GITHUB_OUTPUT"
