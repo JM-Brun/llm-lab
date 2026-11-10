@@ -208,6 +208,11 @@ Le voyage des formes, ligne par ligne :
 2. Par bloc : `4×16×16 + 4×16 + 2×32×16 + 32 + 16 + 4×16 = 1024+64+1024+48+64+64 = 2288`. Deux blocs : `4576`. Embeddings : `2×50×16 = 1600` (table + tête non liée) ; positions `16×16 = 256` ; norme finale `32` ; biais de sortie `50`. Total : `4576 + 1600 + 256 + 32 + 50 = 6514`.
 </details>
 
+## Navigation dans le parcours
+
+- **Étape précédente** : [le bloc Transformer (`transformer_block.py`)](transformer-block-walkthrough.qmd).
+- **Étape suivante** : [la génération (`generate.py`)](gpt-generation-walkthrough.qmd).
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
@@ -217,8 +222,6 @@ Le voyage des formes, ligne par ligne :
 
 ### Pour approfondir
 
-- **Étape précédente** : [le bloc Transformer (`transformer_block.py`)](transformer-block-walkthrough.qmd).
-- **Étape suivante** : [la génération (`generate.py`)](gpt-generation-walkthrough.qmd).
 - **Pages conceptuelles** : [GPT et Transformer](transformer.qmd), [espace des embeddings](embedding-space.qmd), [position](positional-encoding.qmd), [logits](logits.qmd).
 - **Retour au parcours** : [Construire un petit GPT](build-path.qmd).
 - **Code source** : [`gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt.py) · **Tests** : [`test_gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt.py).
