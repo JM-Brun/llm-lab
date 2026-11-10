@@ -1,0 +1,45 @@
+---
+title: "Exercices — Entropie croisée et divergence KL"
+subtitle: "Questions de vérification, exercices et corrigés"
+keywords: ["type:exercise-hub", "destination:practice", "topic:cross-entropy", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/exercises/cross-entropy"
+summary: "Questions de vérification et exercices associés à la leçon Entropie croisée et divergence KL."
+scope: "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle."
+purpose: "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/cross-entropy"]
+tags: ["type:exercise-hub", "destination:practice", "topic:cross-entropy", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour à la leçon : Entropie croisée et divergence KL](../cross-entropy.qmd)
+
+## Vérifier sa compréhension
+
+[Exercices approfondis sur ce thème](../exercises.qmd#fondations).
+
+1. Pourquoi une probabilité cible égale à 1 donne-t-elle une perte nulle ?
+2. Pourquoi faut-il préciser le dénominateur de la moyenne lorsque des tokens sont masqués ?
+3. Pourquoi la perplexité ne suffit-elle pas à mesurer la qualité globale d'un assistant ?
+
+<details>
+<summary>Afficher les réponses</summary>
+
+1. La perte vaut \(-\log p_y\), donc elle est nulle lorsque \(p_y=1\).
+2. Si les positions masquées sont comptées dans le dénominateur, la moyenne ne correspond plus à la moyenne sur les tokens valides et devient difficile à comparer.
+3. La perplexité mesure l'attribution de probabilité aux tokens d'un jeu donné ; elle ne mesure pas directement la vérité, l'utilité, la sécurité ou la calibration.
+
+</details>
+
+::: {.language-switch}
+**Langue :** [Français](../exercises/cross-entropy.qmd) · [English](../../en/exercises/cross-entropy.qmd)
+:::

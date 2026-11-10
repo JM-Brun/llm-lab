@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/transformer", "fr/generation"]
   children: ["fr/probabilites"]
-related: ["fr/causal-masking"]
+related: ["fr/causal-masking", "fr/exercises/logits"]
 tags: ["type:concept-lesson", "destination:understand", "topic:logits", "level:core", "language:fr", "status:published"]
 -->
 
@@ -64,37 +64,11 @@ La représentation cachée finale est projetée vers un vecteur de dimension $V$
 
 La documentation [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) précise que l'entrée attendue correspond à des logits non normalisés.
 
-::: {.self-check}
-## Vérifier sa compréhension
+## S’exercer
 
-1. Si le vocabulaire contient $V$ tokens, combien de composantes contient le vecteur de logits à une position ?
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/logits.qmd).
 
-<details>
-<summary>Afficher la réponse</summary>
 
-Il contient $V$ composantes, une par token du vocabulaire.
-
-</details>
-
-2. Pourquoi un logit de valeur 8 ne signifie-t-il pas une probabilité de 80 % ?
-
-<details>
-<summary>Afficher la réponse</summary>
-
-Un logit est un score réel non normalisé. Il n'est ni borné entre 0 et 1, ni soumis à une somme égale à un. Une transformation distincte est nécessaire pour obtenir une distribution de probabilité.
-
-</details>
-
-3. Que permet d'identifier l'argmax du vecteur de logits ?
-
-<details>
-<summary>Afficher la réponse</summary>
-
-Il identifie le token dont le score est le plus élevé dans ce vecteur. Il ne donne pas, à lui seul, une mesure de confiance ou de vérité.
-
-</details>
-
-:::
 
 {{< include ../includes/generated-suggested-route-fr-logits.qmd >}}
 

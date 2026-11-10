@@ -1,0 +1,57 @@
+---
+title: "Exercices — Logits"
+subtitle: "Questions de vérification, exercices et corrigés"
+keywords: ["type:exercise-hub", "destination:practice", "topic:logits", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/exercises/logits"
+summary: "Questions de vérification et exercices associés à la leçon Logits."
+scope: "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle."
+purpose: "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/logits"]
+tags: ["type:exercise-hub", "destination:practice", "topic:logits", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour à la leçon : Logits](../logits.qmd)
+
+## Vérifier sa compréhension
+
+1. Si le vocabulaire contient $V$ tokens, combien de composantes contient le vecteur de logits à une position ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Il contient $V$ composantes, une par token du vocabulaire.
+
+</details>
+
+2. Pourquoi un logit de valeur 8 ne signifie-t-il pas une probabilité de 80 % ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Un logit est un score réel non normalisé. Il n'est ni borné entre 0 et 1, ni soumis à une somme égale à un. Une transformation distincte est nécessaire pour obtenir une distribution de probabilité.
+
+</details>
+
+3. Que permet d'identifier l'argmax du vecteur de logits ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Il identifie le token dont le score est le plus élevé dans ce vecteur. Il ne donne pas, à lui seul, une mesure de confiance ou de vérité.
+
+</details>
+
+::: {.language-switch}
+**Langue :** [Français](../exercises/logits.qmd) · [English](../../en/exercises/logits.qmd)
+:::

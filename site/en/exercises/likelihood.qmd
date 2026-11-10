@@ -1,0 +1,49 @@
+---
+title: "Exercises — Likelihood and log-likelihood"
+subtitle: "Self-check questions, exercises, and worked answers"
+keywords: ["type:exercise-hub", "destination:practice", "topic:vraisemblance", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/exercises/likelihood"
+summary: "Self-check questions and exercises associated with the Likelihood and log-likelihood lesson."
+scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
+purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/likelihood"]
+tags: ["type:exercise-hub", "destination:practice", "topic:vraisemblance", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the lesson: Likelihood and log-likelihood](../likelihood.qmd)
+
+## Check your understanding
+
+[Practice with the mathematical foundations collection](../exercises.qmd#foundations), including worked exercises on negative log-likelihood and perplexity.
+
+1. Why use log-likelihood rather than the direct product?
+2. Which rule factorizes a sequence probability into conditional probabilities? Does it require token independence?
+3. Why document the tokenizer and NLL reduction when comparing models?
+
+<details>
+<summary>Show answers</summary>
+
+1. A product of many probabilities can become extremely small and difficult to represent numerically. The logarithm turns it into a sum, which is more stable and easier to optimize. Because the logarithm is increasing, maximizing log-likelihood preserves the ranking induced by likelihood.
+2. The chain rule factorizes any joint probability into successive conditional probabilities. It does not require independence between tokens. Each term is conditioned on the preceding prefix. An independence assumption between separate dataset sequences, sometimes used when constructing total likelihood, is a different issue.
+3. The tokenizer determines which events are evaluated and their granularity. Summed NLL also depends on token count; averaging per token changes the scale and must be distinguished from the sum. Comparisons are meaningful only when these conventions and the evaluated data are compatible.
+
+**Numerical transfer:** for the example probabilities $(0.5, 0.25, 0.8)$, likelihood is $0.1$, total NLL is approximately $2.303$ nats, and mean NLL per token is approximately $0.768$ nat. This mean is the average of the one-hot target cross-entropies at the three positions; a batch loss then adds an aggregation and masking convention.
+
+</details>
+
+**Related connection to the aggregated objective:** [Loss](../loss.qmd).
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/vraisemblance.qmd) · [English](../exercises/likelihood.qmd)
+:::

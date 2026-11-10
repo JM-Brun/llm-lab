@@ -1,0 +1,41 @@
+---
+title: "Exercices — Masque causal"
+subtitle: "Questions de vérification, exercices et corrigés"
+keywords: ["type:exercise-hub", "destination:practice", "topic:causal-masking", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/exercises/causal-masking"
+summary: "Questions de vérification et exercices associés à la leçon Masque causal."
+scope: "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle."
+purpose: "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/causal-masking"]
+tags: ["type:exercise-hub", "destination:practice", "topic:causal-masking", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour à la leçon : Masque causal](../causal-masking.qmd)
+
+## Vérifier sa compréhension
+
+[Exercices approfondis sur ce thème](../exercises.qmd#attention).
+
+1. Une ligne de scores déjà mise à l'échelle vaut $(1,0)$. Que deviennent les poids si la deuxième position est interdite par un masque causal ? Pourquoi le masque doit-il être appliqué avant le softmax ?
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+Le score interdit est masqué avant le softmax (conceptuellement $-\infty$) : les poids deviennent $(1,0)$. Le masque doit intervenir avant la normalisation ; mettre son poids à zéro après le softmax sans renormaliser ne produit pas la même distribution, car la somme restante serait inférieure à un.
+
+</details>
+
+::: {.language-switch}
+**Langue :** [Français](../exercises/causal-masking.qmd) · [English](../../en/exercises/causal-masking.qmd)
+:::

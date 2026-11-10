@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/probabilites"]
   children: ["fr/cross-entropy"]
-related: ["fr/vraisemblance"]
+related: ["fr/vraisemblance", "fr/exercises/entropy"]
 tags: ["type:concept-lesson", "destination:understand", "topic:entropy", "level:core", "language:fr", "status:published"]
 -->
 
@@ -102,24 +102,11 @@ Une température plus faible tend à concentrer la distribution ; une températu
 - Une entropie ou une perplexité calculée avec un tokenizer différent n'est pas directement comparable sans précautions.
 - L'entropie moyenne observée sous un modèle n'est pas automatiquement l'entropie vraie de la source des données.
 
-::: {.self-check}
-## Vérifier sa compréhension
+## S’exercer
 
-[Exercices approfondis sur ce thème](exercises.qmd#fondations).
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/entropy.qmd).
 
-1. Une entropie faible garantit-elle que le token le plus probable est correct ?
-2. En quoi l'entropie diffère-t-elle de la surprise du token observé ?
-3. Pourquoi faut-il préciser le tokenizer et la convention de comptage des tokens pour comparer des perplexités ?
 
-<details>
-<summary>Afficher les réponses</summary>
-
-1. Non. L'entropie décrit la dispersion de la distribution, pas la correction factuelle.
-2. L'entropie moyenne la surprise sur tous les tokens possibles selon la distribution prédite ; la surprise observée utilise la probabilité attribuée à la cible réelle.
-3. Les tokenizers segmentent différemment le texte, ce qui change les unités et les positions sur lesquelles la moyenne est calculée.
-
-</details>
-:::
 
 ## Pour poursuivre
 

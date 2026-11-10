@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/scaled-dot-product-attention"]
   children: []
-related: ["fr/logits"]
+related: ["fr/logits", "fr/exercises/causal-masking"]
 tags: ["type:concept-lesson", "destination:understand", "topic:causal-masking", "level:core", "language:fr", "status:published"]
 -->
 
@@ -171,20 +171,11 @@ Dans ce cas synthétique, modifier les clés et valeurs futures ne change pas le
 - [Objectif et fondations mathématiques](mathematical-foundations.qmd) relie la contrainte au prochain-token et à la loss.
 - [Synthèse Transformer](transformer.qmd) replace le masque dans l'architecture globale.
 
-::: {.self-check}
-## Vérifier sa compréhension
+## S’exercer
 
-[Exercices approfondis sur ce thème](exercises.qmd#attention).
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/causal-masking.qmd).
 
-1. Une ligne de scores déjà mise à l'échelle vaut $(1,0)$. Que deviennent les poids si la deuxième position est interdite par un masque causal ? Pourquoi le masque doit-il être appliqué avant le softmax ?
 
-<details>
-<summary>Afficher le raisonnement</summary>
-
-Le score interdit est masqué avant le softmax (conceptuellement $-\infty$) : les poids deviennent $(1,0)$. Le masque doit intervenir avant la normalisation ; mettre son poids à zéro après le softmax sans renormaliser ne produit pas la même distribution, car la somme restante serait inférieure à un.
-
-</details>
-:::
 
 ::: {.callout-note collapse="true" title="Code et tests de référence (approfondissement)"}
 Une implémentation de référence testée est disponible dans `src/llm_lab/foundations/attention.py` (`causal_mask` et `scaled_dot_product_attention`). La fonction d'attention accepte un masque additif 2D de forme exacte `(T_q, T_k)` ; elle ne prend pas en charge les masques booléens ni le broadcasting batch/tête. La suite de tests `tests/unit/test_attention.py` comprend un cas similaire d'invariance sur une tête, ainsi que des vérifications du masque et des formes ; elle ne teste pas un GPT complet.
