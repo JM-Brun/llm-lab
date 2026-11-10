@@ -35,6 +35,15 @@ const cases = [
   ...exerciseHubCases.map(testCase => ({
     ...testCase, page: "exercises.html", kind: "exercise-hub",
   })),
+  ...exerciseHubCases.flatMap(testCase => [
+    { page: "exercises-text-data.html", exerciseIds: ["TR-A", "TR-B", "TR-C", "TR-D", "TR-E", "TR-F"] },
+    { page: "exercises-transformer.html", exerciseIds: ["TF-A", "TF-B", "TF-C"] },
+    { page: "exercises-attention.html", exerciseIds: ["AT-A", "AT-B", "AT-C", "CA-A"] },
+    { page: "exercises-foundations.html", exerciseIds: [] },
+    { page: "exercises-generation.html", exerciseIds: [] },
+  ].map(collection => ({
+    ...testCase, ...collection, kind: "exercise-collection",
+  }))),
   ...visualCases.map(testCase => ({
     ...testCase, page: "llm-overview.html", kind: "spine-overview",
   })),
@@ -260,7 +269,6 @@ for (const testCase of cases) {
     if (kind === "exercise-hub") {
       const hub = page.locator("main");
       const visibleText = await hub.innerText();
-      const exerciseIds = ["TR-A", "TR-B", "TR-C", "TR-D", "TR-E", "TR-F", "TF-A", "TF-B", "TF-C", "AT-A", "AT-B", "AT-C", "CA-A"];
       item.exerciseHub = await page.evaluate(() => {
         const lang = document.documentElement.lang || "en";
         const anchors = lang.startsWith("fr")
@@ -275,12 +283,6 @@ for (const testCase of cases) {
           tableCount: document.querySelectorAll("main table").length,
         };
       });
-      item.exerciseHub.exerciseIdsPresent = exerciseIds.filter(id =>
-        visibleText.includes(id)
-      );
-      item.exerciseHub.missingExerciseIds = exerciseIds.filter(id =>
-        !visibleText.includes(id)
-      );
       if (item.exerciseHub.collectionAnchors.some(anchor => !anchor.exists)) {
         throw new Error("one or more canonical exercise collection anchors are missing");
       }
@@ -302,6 +304,17 @@ for (const testCase of cases) {
       await page.keyboard.press("Space");
       await page.waitForFunction(() => document.querySelector("main details")?.open === false);
       item.exerciseHub.nativeDisclosureKeyboard = true;
+    }
+    if (kind === "exercise-collection") {
+      const visibleText = await page.locator("main").innerText();
+      item.exerciseCollection = {
+        expectedIds: testCase.exerciseIds,
+        presentIds: testCase.exerciseIds.filter(id => visibleText.includes(id)),
+      };
+      const missing = testCase.exerciseIds.filter(id => !visibleText.includes(id));
+      if (missing.length) {
+        throw new Error(`missing stable exercise IDs in collection: ${missing.join(", ")}`);
+      }
     }
     // Quarto footer navigation follows editorial sidebar order, independently
     // of document-level rel metadata, the guided route, and the computational graph.
