@@ -1,3 +1,8 @@
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
 from scripts.quarto_render_scope import classify_changed_files
 
 
@@ -46,9 +51,7 @@ def test_deleted_or_added_page_forces_full_render():
 
 def test_global_configuration_and_shared_references_force_full_render():
     for path in ("site/_quarto.yml", "site/references.qmd", "site/styles.scss"):
-        result = classify_changed_files(
-            [{"filename": path, "status": "modified"}], CONFIG
-        )
+        result = classify_changed_files([{"filename": path, "status": "modified"}], CONFIG)
         assert result["render_mode"] == "full"
 
 
@@ -74,9 +77,7 @@ def test_more_than_twenty_pages_force_full_render():
 
 
 def test_unrelated_changes_skip_site_render():
-    result = classify_changed_files(
-        [{"filename": "README.md", "status": "modified"}], CONFIG
-    )
+    result = classify_changed_files([{"filename": "README.md", "status": "modified"}], CONFIG)
 
     assert result["render_mode"] == "skip"
     assert result["site_relevant"] is False
