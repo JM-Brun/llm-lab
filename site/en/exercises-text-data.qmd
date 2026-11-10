@@ -29,7 +29,8 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-text-
 **Current scope:** six bilingual formative exercises cover the text → representations pipeline, windows and input-target shifting, BPE merge counting, and finally split-leakage diagnosis and tokenizer fitting. Each exercise has a descriptive, stable anchor independent of its title and position in the collection. Prerequisites on each exercise guide the suggested order.
 
 <a id="ex-representation-pipeline"></a>
-### Reconstruct the representation pipeline {#ex-text-data-representation-pipeline}
+<a id="ex-text-data-representation-pipeline"></a>
+### Reconstruct the representation pipeline
 
 **Preparation:** a first pass through [text and data](text-data.qmd) and [embedding space](embedding-space.qmd) is enough.
 
@@ -70,7 +71,8 @@ The tokenizer maps text to discrete vocabulary entries. The IDs index the embedd
 </details>
 
 <a id="ex-embedding-lookup"></a>
-### Calculate lookup and trace tensor shapes {#ex-text-data-embedding-lookup}
+<a id="ex-text-data-embedding-lookup"></a>
+### Calculate lookup and trace tensor shapes
 
 **Preparation:** [embedding space](embedding-space.qmd) for the matrix and the lookup; [tensors](tensors.qmd) is an optional notation reference. The exercise progresses in three stages: calculate, complete, generalize.
 
@@ -237,7 +239,8 @@ assert np.allclose(Z, [[0.11, 0.22], [-0.27, 0.44]])
 Interpret this carefully: IDs depend on the tokenizer; the vectors in `E` and `P` are invented. The script checks the path text → IDs → lookup → positional addition, but runs no Transformer block and therefore computes no contextualized states. For byte-level details and BPE merges, see the BPE-merges exercise.
 
 <a id="ex-representation-context"></a>
-### Diagnose identity, position and context {#ex-text-data-representation-context}
+<a id="ex-text-data-representation-context"></a>
+### Diagnose identity, position and context
 
 **Preparation:** [contextualized representations](contextualized-representations.qmd) and [position and RoPE](positional-encoding.qmd), after the representation-pipeline exercise and the lookup exercise. For the mathematical framing of Stage 3, the [deep dive on dependencies across positions and layers](contextualized-representations-advanced.qmd) is an optional reference. The exercise progresses in three stages: diagnose claims, predict under controlled changes, then calculate a toy numerical example.
 
@@ -351,7 +354,8 @@ print("distance:", np.linalg.norm(h_A - h_B))
 </details>
 
 <a id="ex-training-windows"></a>
-### Build windows and align targets {#ex-text-data-training-windows}
+<a id="ex-text-data-training-windows"></a>
+### Build windows and align targets
 
 **Preparation:** the “sliding windows and stride” section of [from tokenized corpus to training examples](training-examples.qmd), after the representation-pipeline exercise and the lookup exercise. This exercise focuses on the input-target contract; it does not ask you to implement a tokenizer or data loader.
 
@@ -460,7 +464,8 @@ A direct test checks, for every window, that the target at position $(k,i)$ equa
 **Further work:** partition leakage remains for a separate exercise. Batching and loss masks are distinct topics; they are not implemented by the reference function used here.
 
 <a id="ex-bpe-merges"></a>
-### Count BPE merges and encode a new word {#ex-text-data-bpe-merges}
+<a id="ex-text-data-bpe-merges"></a>
+### Count BPE merges and encode a new word
 
 **Preparation:** the “Worked example: BPE merges on a tiny corpus” section in [Tokenization strategies](tokenization-strategies.qmd). We reuse its word-level teaching convention: initial characters plus an end-of-word marker `</w>`. This is not a specification of a production byte-level tokenizer.
 
@@ -567,7 +572,8 @@ At encoding time, the tokenizer reuses the merge order learned from the corpus. 
 **Success criterion:** initial frequencies are exact, sequences are updated before the second count, merge order is respected on the unseen word, and training/encoding are distinguished.
 
 <a id="ex-data-leakage"></a>
-### Diagnose split leakage {#ex-text-data-data-leakage}
+<a id="ex-text-data-data-leakage"></a>
+### Diagnose split leakage
 
 **Preparation:** [Preparing a corpus for pretraining](corpus-preparation.qmd), especially its sections on deduplication, split design, and tokenizer fitting; [windows and stride](training-examples.qmd). This exercise distinguishes evaluation leakage from an explicitly chosen temporal-continuation protocol.
 
