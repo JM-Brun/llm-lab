@@ -53,6 +53,8 @@ project:
     - en/loss.qmd
     - fr/gradients.qmd
     - en/gradients.qmd
+    - fr/training-loop.qmd
+    - en/training-loop.qmd
     - fr/score-centering.qmd
     - en/score-centering.qmd
     - fr/llm-overview.qmd
@@ -260,6 +262,7 @@ website:
               contents:
                 - fr/loss.qmd
                 - fr/gradients.qmd
+                - fr/training-loop.qmd
             - section: "Architectures Transformer et limites des LLM"
               contents:
                 - fr/transformer-architectures.qmd
@@ -444,6 +447,7 @@ website:
               contents:
                 - en/loss.qmd
                 - en/gradients.qmd
+                - en/training-loop.qmd
             - section: "Transformer architectures and LLM limitations"
               contents:
                 - en/transformer-architectures.qmd

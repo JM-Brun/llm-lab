@@ -39,7 +39,7 @@ Les grands modèles de langage (LLM) sont une famille de modèles neuronaux entr
 
 ## Par où commencer ?
 
-Deux parcours principaux et indépendants sont proposés : **comprendre théoriquement les LLM** ou **construire un petit GPT**. Ils partagent les mêmes notions de référence, mais ont des objectifs, des progressions et des prérequis distincts. Aucun n'est la suite obligatoire de l'autre. La [carte des ressources et des notions](fr/learning-map.qmd) permet de naviguer librement entre les deux.
+Deux parcours principaux et indépendants sont proposés : **comprendre théoriquement les LLM** ou **construire un petit GPT**. Ils partagent les mêmes notions de référence, mais ont des objectifs, des progressions et des prérequis distincts. Aucun n'est la suite obligatoire de l'autre. La [carte des ressources et des notions](fr/learning-map.qmd) permet de naviguer librement entre les deux. Le parcours Comprendre suppose une aisance avec les vecteurs, les matrices et les probabilités élémentaires ; les dérivées et la règle de chaîne interviennent dans les leçons sur la loss et les gradients, et les exemples de code utilisent Python et NumPy de base.
 
 <div class="learning-entry-grid">
   <article class="learning-entry learning-entry-primary">

@@ -38,7 +38,7 @@ Large language models (LLMs) are a family of neural models trained on large amou
 
 ## Where to start
 
-Choose between two independent primary paths: **understand LLMs theoretically** or **build a small GPT**. They share canonical concepts, but have distinct goals, progressions, and prerequisites. Neither is a required continuation of the other. The [resource and concept map](learning-map.qmd) lets you navigate freely between them.
+Choose between two independent primary paths: **understand LLMs theoretically** or **build a small GPT**. They share canonical concepts, but have distinct goals, progressions, and prerequisites. Neither is a required continuation of the other. The [resource and concept map](learning-map.qmd) lets you navigate freely between them. The Understand path assumes comfort with vectors and matrices and basic probability; derivatives and the chain rule appear in the loss and gradients lessons, and the code examples use basic Python and NumPy.
 
 <div class="learning-entry-grid">
   <article class="learning-entry learning-entry-primary">

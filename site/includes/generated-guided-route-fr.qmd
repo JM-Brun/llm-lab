@@ -136,12 +136,13 @@ Distinguer le prefill du prompt du decode itératif, sélectionner un token selo
 
 ### 08 · Apprendre et mettre à jour les paramètres
 
-Relier les cibles observées à la loss agrégée, aux gradients et aux mises à jour des paramètres ; comprendre conceptuellement le teacher forcing, sans faire de la préparation des exemples décalés une étape du parcours théorique.
+Relier les cibles observées à la loss agrégée, aux gradients et aux mises à jour des paramètres, puis à la boucle d'entraînement répétée et à la loss de validation ; comprendre conceptuellement le teacher forcing, sans faire de la préparation des exemples décalés une étape du parcours théorique.
 
 **Pages centrales**
 
 - [Loss : de la perte par token à l'objectif](loss.html)
 - [Gradients : relier la perte aux paramètres](gradients.html)
+- [La boucle d'entraînement : des gradients au modèle entraîné](training-loop.html)
 
 **Ressources facultatives**
 
