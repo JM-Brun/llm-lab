@@ -392,6 +392,46 @@ Lookup preserves the batch and sequence-position axes and adds the feature axis.
 
 </details>
 
+#### Optional practical trace — from text to vectors
+
+This trace complements TR-B with a real tokenizer and a synthetic embedding table. It follows the successive objects without claiming to reproduce the internal weights of a pretrained GPT-2.
+
+Install the pinned version with `python -m pip install tiktoken==0.14.0`. NumPy is already a project dependency.
+
+```python
+import numpy as np
+import tiktoken
+
+text = "hello world"
+utf8_bytes = text.encode("utf-8")
+encoding = tiktoken.get_encoding("gpt2")
+token_ids = encoding.encode(text)
+token_bytes = [encoding.decode_single_token_bytes(i) for i in token_ids]
+token_strings = [part.decode("utf-8") for part in token_bytes]
+
+assert utf8_bytes == b"hello world"
+assert token_ids == [31373, 995]
+assert token_strings == ["hello", " world"]
+assert encoding.decode(token_ids) == text
+
+# Synthetic table: real GPT-2 uses different dimensions and learned weights.
+vocab_size, d = 50_257, 2
+E = np.zeros((vocab_size, d), dtype=np.float32)
+E[31373] = [0.1, 0.2]
+E[995] = [-0.3, 0.4]
+X = E[token_ids]
+assert X.shape == (2, 2)
+assert np.allclose(X, [[0.1, 0.2], [-0.3, 0.4]])
+
+# Illustrative positional vectors, not GPT-2's actual parameters.
+P = np.array([[0.01, 0.02], [0.03, 0.04]], dtype=np.float32)
+Z = X + P
+assert Z.shape == (2, 2)
+assert np.allclose(Z, [[0.11, 0.22], [-0.27, 0.44]])
+```
+
+Interpret this carefully: IDs depend on the tokenizer; the vectors in `E` and `P` are invented. The script checks the path text → IDs → lookup → positional addition, but runs no Transformer block and therefore computes no contextualized states. For byte-level details and BPE merges, see TR-E.
+
 #### Exercise TR-C — Diagnose identity, position and context
 
 **Preparation:** [contextualized representations](contextualized-representations.qmd) and [position and RoPE](positional-encoding.qmd), after TR-A and TR-B. The exercise progresses in two stages: diagnose claims, then predict under controlled changes.
