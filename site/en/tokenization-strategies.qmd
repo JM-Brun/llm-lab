@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: ["en/text-data"]
   children: []
-related: ["en/training-examples", "en/exercises/tokenization-strategies"]
+related: ["en/training-examples", "en/tokenization-strategies-exercises"]
 tags: ["type:deep-dive", "destination:deepen", "topic:tokenization-strategies", "level:advanced", "language:en", "status:published"]
 -->
 

@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/embedding-space", "en/transformer"]
   children: ["en/contextualized-representations", "en/rope"]
-related: ["en/exercises/positional-encoding"]
+related: ["en/positional-encoding-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:positional-encoding", "level:core", "language:en", "status:published"]
 -->
 

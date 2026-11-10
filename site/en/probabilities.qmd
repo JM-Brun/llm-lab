@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/logits", "en/generation"]
   children: ["en/entropy", "en/likelihood"]
-related: ["en/exercises/probabilities"]
+related: ["en/probabilities-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:probabilites", "level:core", "language:en", "status:published"]
 -->
 
