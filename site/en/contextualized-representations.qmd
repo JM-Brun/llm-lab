@@ -15,9 +15,9 @@ suggested_route:
   previous: "en/positional-encoding"
   next: "en/transformer"
 hierarchy:
-  parents: ["en/embedding-space", "en/positional-encoding", "en/transformer"]
+  parents: ["en/embedding-space", "en/positional-encoding"]
   children: []
-related: ["en/queries-keys-values"]
+related: ["en/queries-keys-values", "en/transformer"]
 tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-representations", "level:core", "language:en", "status:published"]
 -->
 
