@@ -67,7 +67,7 @@ Deux phrases peuvent contenir le même token sans lui donner le même rôle : *b
 ![Pipeline du texte aux représentations contextualisées.](../images/contextualization-pipeline-fr.svg){.pipeline-figure fig-alt="Le texte est tokenisé en IDs ; les IDs sélectionnent des vecteurs dans la table d'embeddings ; le modèle traite la position puis les blocs Transformer produisent des états contextualisés." fig-cap="Du texte aux états contextualisés : chaque étape transforme ou enrichit la représentation, du symbole jusqu'aux états cachés dépendant du contexte." width=100%}
 
 
-Ce schéma est une illustration originale et simplifiée, et non une reproduction de la figure de Rushang Chauhan. Le traitement positionnel dépend de l'architecture : par exemple, RoPE ne consiste pas à ajouter simplement un vecteur de position à chaque embedding. Pour une autre présentation pédagogique du passage des tokens au contexte, voir l'article de [Rushang Chauhan, *Embeddings: The Bridge Between Tokens and Context*](https://www.linkedin.com/pulse/embeddings-bridge-between-tokens-context-rushang-chauhan-oqpzf/).
+Ce schéma est une illustration originale et simplifiée, et non une reproduction de la figure de Rushang Chauhan. Pour une autre présentation pédagogique du passage des tokens au contexte, voir l'article de [Rushang Chauhan, *Embeddings: The Bridge Between Tokens and Context*](https://www.linkedin.com/pulse/embeddings-bridge-between-tokens-context-rushang-chauhan-oqpzf/).
 
 
 ## Ce qui reste identique
@@ -79,21 +79,21 @@ Supposons que le token visible `bank` soit représenté par le même ID dans deu
 
 Sous cette hypothèse explicite, les deux occurrences récupèrent le même **vecteur de plongement initial** (embedding) :
 
-`e_bank = E[ID_bank]`
+$e_{\text{bank}} = E[\text{ID}_{\text{bank}}]$
 
 Le lookup est un accès à une table. Il n'examine pas les mots voisins, ne déduit pas le sens visé et ne produit pas un vecteur propre à chaque phrase.
 
-Une précision est nécessaire : un mot visible ne correspond pas nécessairement à un seul token. Un tokenizer peut le découper en plusieurs tokens. Cet exemple isole le principe de contextualisation en supposant un ID commun.
+Une précision : un mot visible ne correspond pas nécessairement à un seul token. Un tokenizer peut le découper en plusieurs tokens. Cet exemple isole le principe de contextualisation en supposant un ID commun.
+
+## Ce qui change avec la position et le contexte
+
+Le lookup initial ne suffit pas à décrire l'entrée du réseau : l'architecture doit aussi traiter la position, puis les blocs Transformer construisent des états dépendant du contexte accessible. Le mécanisme positionnel varie selon les modèles ; un vecteur de position n'est donc pas toujours ajouté directement à l'embedding.
 
 ### Une autre dépendance : la référence pronominale
 
 Considérons maintenant : *“The animal was tired because it had been running.”* Le pronom `it` renvoie ici à `the animal`. Ce cas ne porte pas sur les deux sens possibles d'un même mot : il illustre une dépendance entre des positions différentes de la séquence. Pour construire une représentation contextuelle de `it`, le modèle peut exploiter des informations provenant d'autres tokens du contexte.
 
 Cet exemple est repris comme motivation pédagogique dans le tutoriel de [Nishanthan K sur Q, K et V](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers). Il ne démontre pas qu'une tête d'attention particulière identifie nécessairement l'antécédent, ni que l'attention seule réalise toute la résolution de coréférence. Il sert à distinguer deux motivations complémentaires : lever une ambiguïté lexicale (*bank*) et exploiter une relation entre tokens (*it* / *the animal*).
-
-## Ce qui change avec la position et le contexte
-
-Le lookup initial ne suffit pas à décrire l'entrée du réseau : l'architecture doit aussi traiter la position, puis les blocs Transformer construisent des états dépendant du contexte accessible. Le mécanisme positionnel varie selon les modèles ; un vecteur de position n'est donc pas toujours ajouté directement à l'embedding.
 
 Dans le fil rouge, le préfixe « C'est une bonne situation, ça, scribe ? » est déjà présent. À mesure que « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... » est généré, chaque nouveau token est traité avec le contexte désormais disponible, qui s'allonge au fil de la boucle.
 
@@ -126,8 +126,6 @@ Deux confusions fréquentes viennent du mélange de ces étapes :
 Cela ne garantit pas non plus que le modèle représente les sens interprétés par un humain sous forme de groupes géométriques nettement séparés. La contextualisation est un mécanisme de calcul, pas la garantie d'une géométrie sémantique particulière.
 
 ## Où se situe cette étape dans le modèle ?
-
-Pour replacer cette transformation dans le parcours complet :
 
 1. Le tokenizer transforme le texte en IDs de tokens.
 2. La table de plongements (table d'embeddings) associe un vecteur initial à chaque ID.
