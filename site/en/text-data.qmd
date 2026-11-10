@@ -29,6 +29,13 @@ Generation starts with a prompt written in ordinary language. Yet the neural net
 **Tokenization** splits text into units called *tokens* and assigns each one an ID. This step is separate from the neural network, but it determines the model's vocabulary, sequence length, and part of its compute cost.
 :::
 
+::: {.callout-note title="Running example: the text to encode"}
+For a short prompt, use **“What have the Romans ever done for us?”**, from *Monty Python's Life of Brian*. The answers that follow in the scene are a separate continuation-like dialogue sequence, spoken by several characters. In *Monty Python and the Holy Grail*, the Bridge of Death provides a second example of conversational context accumulating across turns.
+
+Encode the prompt separately from any target continuation. Token boundaries depend on the tokenizer; token IDs are not universal.
+:::
+
+
 The previous page introduced generation as a loop that operates on the tokens already present in the context. This page steps one stage upstream: it explains how a prompt becomes a sequence of tokens, then integer IDs that the model can turn into input vectors.
 
 ::: {.callout-tip title="The one-minute mental model"}
