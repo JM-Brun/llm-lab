@@ -135,3 +135,18 @@ items:
       pages: [fr/contextualized-representations, en/contextualized-representations]
       concepts: []
     disposition: pending
+
+  - id: ai-scientist-platonic-representation-jepa-2026:deepening-page-proposal
+    kind: new-page-proposal
+    summary: "Consider a bilingual optional Deepen page that develops the positive-pair graph, good-view/bad-view distinction, conditional Platonic Representation Theorem, spectral embedding, modality nuisances, and the qualified interpretation of next-token prediction. This proposal is not yet approved: the primary paper's proofs and experiments still require a full audit."
+    locator: {type: section, value: "Complete article synthesis", label: "Final paragraphs and proposed interpretation"}
+    evidence:
+      kind: editorial-synthesis
+      confidence: context-dependent
+      scope: "Proposal derived from the article's complete narrative and a partial audit of the linked paper."
+      assumptions: ["A suitable advanced destination does not already exist.", "The primary-paper audit will support the proposed scope."]
+      limitations: ["The existing contextualized-representations pages are core Understand lessons, not Deepen pages.", "A page should not be created until the current Deepen inventory and bilingual page metadata are cross-checked."]
+    candidate_destinations:
+      pages: []
+      concepts: []
+    disposition: pending
