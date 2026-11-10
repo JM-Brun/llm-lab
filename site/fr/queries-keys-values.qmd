@@ -68,7 +68,7 @@ V &= XW_V.
 \end{aligned}
 $$
 
-Les matrices $W_Q$, $W_K$ et $W_V$ sont **distinctes, mais apprises conjointement**. Elles donnent au modèle la possibilité de construire, à partir de la même entrée, des représentations adaptées à deux fonctions différentes : calculer les compatibilités (Q et K) et transporter le contenu (V). Cette paramétrisation suit la formulation de [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762). Pour développer les équations individuelles par position, les dimensions avec lot et les variantes de paramétrisation, voir l'[approfondissement Q/K/V](queries-keys-values-advanced.qmd).
+Les matrices $W_Q$, $W_K$ et $W_V$ sont **distinctes, mais apprises conjointement**. Elles donnent au modèle la possibilité de construire, à partir de la même entrée, des représentations adaptées à deux fonctions différentes : calculer les compatibilités (Q et K) et transporter le contenu (V). Cette paramétrisation suit la formulation de [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762). Pour une explication visuelle complémentaire, voir [How Query, Key, and Value (QKV) Work in Transformers](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a) ; les équations, dimensions et limites d'interprétation de référence restent celles de cette leçon et de l'[approfondissement Q/K/V](queries-keys-values-advanced.qmd).
 
 Avec $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ et $W_V\in\mathbb{R}^{d_{model}\times d_v}$, les sorties ont les formes suivantes :
 
