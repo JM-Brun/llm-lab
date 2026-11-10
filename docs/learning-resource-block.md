@@ -68,7 +68,8 @@ The Build path uses the same disclosure, but its editorial boundary needs extra 
 
 - Keep worked examples, executable code, inline questions, and their answer explanations in the main lesson when they teach or verify the current implementation step.
 - Move only the separate exercise-page link into the **Exercises / Practice** category. Do not move the lesson's own problem statements or inline answer key.
-- Move navigation collections (next/previous stops, related concept pages, source files, and test files) into **Further reading** when they are optional orientation rather than required steps in the explanation.
+- Keep explicit previous/next links that define a guided sequence visible in the main flow under a concise **Connections** section. They are essential progression controls, not optional resources.
+- Move other navigation collections (related concept pages, source files, and test files) into **Further reading** when they are optional orientation rather than required steps in the explanation.
 - Move curated external references and companion material into **Further reading**; keep a link inline when the current explanation depends on it.
 - In pages with a revision sheet or recap, keep it in the main flow: it consolidates the lesson rather than pointing to another destination.
 
