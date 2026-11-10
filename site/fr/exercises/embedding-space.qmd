@@ -25,11 +25,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:embedding-space-exerc
 
 ## Vérifier sa compréhension
 
-Les exercices de mise en pratique de la chaîne texte → représentations sont déjà disponibles dans la [collection Données textuelles](../exercises-text-data.qmd#donnees-textuelles). Les exercices TR-A à TR-C complètent cette page :
-- [TR-A — Reconstruire la chaîne des représentations](../exercises-text-data.qmd#exercice-tr-a-reconstruire-la-chaine-des-representations) : remettre dans l'ordre texte, tokens, IDs, embeddings initiaux et états contextualisés.
-- [TR-B — Calculer un lookup et suivre les formes des tenseurs](../exercises-text-data.qmd#tr-b-lookup) : calculer les vecteurs sélectionnés et suivre les dimensions, y compris en batch.
-- [TR-C — Distinguer identité, position et contexte](../exercises-text-data.qmd#exercice-tr-c-distinguer-identite-position-et-contexte) : séparer ce qui relève de l'ID, de la position et du contexte.
-
+Les exercices d'application sont regroupés dans la [collection Données textuelles](../exercises-text-data.qmd#donnees-textuelles), dans la partie **Pratiquer**. Cette page appartient à cette partie et conserve les questions de vérification ci-dessous ; elle ne fait pas partie du parcours principal.
 
 1. Une matrice contient \(V\) lignes et des vecteurs de dimension \(d\). Combien de paramètres contient-elle, et que sélectionne l'ID \(i\) ?
 
