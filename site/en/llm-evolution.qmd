@@ -179,10 +179,19 @@ The most useful mental model is therefore **a predictive model at the core of a 
 - OpenAI, [Async tool calling](https://developers.openai.com/api/docs/guides/async-tool-calling) — asynchronous execution contract.
 - OpenAI, [Mid-turn steering](https://developers.openai.com/api/docs/guides/steering) — steering an ongoing response.
 
-## Practice
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Supplementary resources</span>
+  <span class="learning-resources__description">Experiment, explore further, and practise the ideas from this lesson.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Practice
 
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/llm-evolution.qmd).
 
+</div>
+</details>
 
 ::: {.language-switch}
 **Language:** [Français](../fr/llm-evolution.qmd) · [English](llm-evolution.qmd)
