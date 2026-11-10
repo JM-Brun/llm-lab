@@ -287,8 +287,6 @@ Ne comparer que les noms de paramètres (« température 0,7 » ou « top-p 0,9 
 - Li et al. (2023), [*Contrastive Decoding: Open-ended Text Generation as Optimization*](https://aclanthology.org/2023.acl-long.687/), ACL — fonction de score contrastive entre modèle expert et amateur.
 - Welleck et al. (2020), [*Consistency of a Recurrent Language Model With Respect to Incomplete Decoding*](https://aclanthology.org/2020.emnlp-main.448/), EMNLP — analyse théorique de l'incohérence de certaines stratégies de décodage pour les modèles récurrents ; ne pas généraliser sans précaution à toute architecture Transformer.
 
-{{< include ../includes/generated-suggested-route-fr-decoding-strategies.qmd >}}
-
 ::: {.language-switch}
 **Langue :** [Français](decoding-strategies.qmd) · [English](../en/decoding-strategies.qmd)
 :::

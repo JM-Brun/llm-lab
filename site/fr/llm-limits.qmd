@@ -103,8 +103,6 @@ La métrique, son seuil et le protocole. Une métrique continue ou lissée peut 
 
 :::
 
-{{< include ../includes/generated-suggested-route-fr-llm-limits.qmd >}}
-
 ::: {.language-switch}
 **Langue :** [Français](llm-limits.qmd) · [English](../en/llm-limits.qmd)
 :::

@@ -209,8 +209,6 @@ Dans les bibliothèques de deep learning, le mot « tenseur » désigne couramme
 
 **Notion canonique :** [GPT et Transformer](transformer.qmd). Cette page fournit une référence technique sur les formes et les axes des tenseurs ; elle ne constitue pas un prérequis à la lecture du parcours de construction.
 
-{{< include ../includes/generated-suggested-route-fr-tensors.qmd >}}
-
 ::: {.language-switch}
 [Français](tensors.qmd) · [English](../en/tensors.qmd)
 :::

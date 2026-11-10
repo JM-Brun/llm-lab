@@ -167,8 +167,6 @@ Q est projeté depuis les états du décodeur, car ce sont les positions qui con
 </details>
 :::
 
-{{< include ../includes/generated-suggested-route-fr-cross-attention.qmd >}}
-
 ::: {.language-switch}
 **Langue :** [Français](cross-attention.qmd) · [English](../en/cross-attention.qmd)
 :::

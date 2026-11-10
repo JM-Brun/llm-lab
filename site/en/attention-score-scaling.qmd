@@ -85,8 +85,6 @@ In this simulation, dividing by $\sqrt{d_k}$ brings score variance approximately
 
 - [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762) — introduces the $1/\sqrt{d_k}$ scaling factor and compares dot-product with additive attention.
 
-{{< include ../includes/generated-suggested-route-en-attention-score-scaling.qmd >}}
-
 ::: {.language-switch}
 **Language:** [Français](../fr/attention-score-scaling.qmd) · [English](attention-score-scaling.qmd)
 :::

@@ -281,8 +281,6 @@ Oui en général : un identifiant n'a de sens que relativement au vocabulaire du
 Vous avez compris cette étape si vous pouvez distinguer l'entraînement du tokenizer de l'encodage à l'inférence, et expliquer pourquoi les identifiants dépendent du vocabulaire et de sa version.
 :::
 
-{{< include ../includes/generated-suggested-route-fr-tokenization-strategies.qmd >}}
-
 ::: {.language-switch}
 **Langue :** [Français](tokenization-strategies.qmd) · [English](../en/tokenization-strategies.qmd)
 :::

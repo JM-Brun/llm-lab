@@ -103,8 +103,6 @@ The metric, its threshold, and the protocol. A continuous or smoothed metric can
 
 :::
 
-{{< include ../includes/generated-suggested-route-en-llm-limits.qmd >}}
-
 ::: {.language-switch}
 **Language:** [Français](../fr/llm-limits.qmd) · [English](llm-limits.qmd)
 :::

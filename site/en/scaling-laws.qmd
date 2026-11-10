@@ -82,8 +82,6 @@ When comparing results, check the metric, evaluation distribution, compute budge
 - Hoffmann et al. (2022), [*Training Compute-Optimal Large Language Models*](https://arxiv.org/abs/2203.15556).
 - Henighan et al. (2020), [*Scaling Laws for Autoregressive Generative Modeling*](https://arxiv.org/abs/2010.14701).
 
-{{< include ../includes/generated-suggested-route-en-scaling-laws.qmd >}}
-
 ::: {.language-switch}
 **Language:** [Français](../fr/scaling-laws.qmd) · [English](scaling-laws.qmd)
 :::

@@ -85,8 +85,6 @@ Dans cette simulation, la division par $\sqrt{d_k}$ ramène approximativement la
 
 - [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762) — introduction du facteur de mise à l'échelle $1/\sqrt{d_k}$ et comparaison avec l'attention additive.
 
-{{< include ../includes/generated-suggested-route-fr-attention-score-scaling.qmd >}}
-
 ::: {.language-switch}
 **Langue :** [Français](attention-score-scaling.qmd) · [English](../en/attention-score-scaling.qmd)
 :::

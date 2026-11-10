@@ -245,8 +245,6 @@ Cette illustration publiée provient du [cours Hugging Face, « Building a token
 - [Raschka — dépôt, chapitre 2](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch02) : implémentations et préparation des données textuelles.
 - [Gage (1994), *A New Algorithm for Data Compression*](https://dl.acm.org/doi/10.5555/177910.177914) : référence historique de la compression par paires d'octets. Les tokenizers modernes de LLM ajoutent des conventions que ce papier ne spécifie pas à lui seul.
 
-{{< include ../includes/generated-suggested-route-fr-tokenizer-design-evaluation.qmd >}}
-
 ::: {.language-switch}
 **Langue :** [Français](tokenizer-design-evaluation.qmd) · [English](../en/tokenizer-design-evaluation.qmd)
 :::
