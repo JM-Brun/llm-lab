@@ -216,6 +216,14 @@ Selecting the argmax token at each position is not equivalent to globally search
 
 A probability of 0.9 therefore does not automatically mean “a 90% chance that the answer is true.” Calibration must be evaluated on relevant held-out data, and good overall calibration does not guarantee that each individual answer is reliable.
 
+
+
+{{< include ../includes/generated-suggested-route-en-probabilities.qmd >}}
+
+:::: {.language-switch}
+[Français](../fr/probabilites.qmd) · [English](probabilities.qmd)
+::::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -242,9 +250,3 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 </div>
 </details>
-
-{{< include ../includes/generated-suggested-route-en-probabilities.qmd >}}
-
-:::: {.language-switch}
-[Français](../fr/probabilites.qmd) · [English](probabilities.qmd)
-::::
