@@ -1,0 +1,129 @@
+schema_version: 1
+source_id: eleventh-hour-enthusiast-platonic-representation-jepa-2026
+pedagogical_model:
+  reconstruction:
+    status: complete
+    basis:
+      - "Full Medium article body inspected on 2026-11-10, including derivation, four-state cycle example, experimental discussion and references."
+      - "Central mathematical steps cross-checked against the primary Balestriero–LeCun paper and the existing LLM Lab source review."
+    inferred_elements:
+      - "Learning outcomes and the suggested teaching sequence are inferred from the article's structure."
+  source_graph:
+    nodes:
+      - {id: src-positive-pair-graph, kind: weighted-graph, description: "World states are vertices and positive-pair probabilities are symmetric edge weights.", locator: "How do training pairs define a graph?"}
+      - {id: src-pair-laplacian, kind: matrix, description: "D − Π is the weighted graph Laplacian induced by the positive-pair distribution.", locator: "Derivation of expected pair loss"}
+      - {id: src-normalized-adjacency, kind: matrix, description: "K = D^(-1/2) Π D^(-1/2), the symmetric normalized adjacency operator.", locator: "Whitening and normalized adjacency"}
+      - {id: src-whitened-coordinates, kind: representation, description: "U = D^(1/2)H has orthonormal columns and is orthogonal to the constant direction.", locator: "Whitening constraints"}
+      - {id: src-spectral-subspace, kind: representation, description: "The optimal k-dimensional subspace is selected by the k largest non-constant eigenvalues.", locator: "Ky Fan maximization explanation"}
+      - {id: src-four-cycle-example, kind: toy-example, description: "A four-state cycle has eigenvalues 1, 1/2, 1/2, 0 and illustrates tied eigenvalues at a dimensionality boundary.", locator: "Four-state cycle"}
+      - {id: src-eigengap, kind: condition, description: "A strict gap between the last selected and first excluded eigenvalues makes the selected subspace unique.", locator: "When does the graph determine the geometry?"}
+    edges:
+      - {from: src-positive-pair-graph, type: induces, to: src-pair-laplacian}
+      - {from: src-positive-pair-graph, type: induces, to: src-normalized-adjacency}
+      - {from: src-whitened-coordinates, type: optimized-against, to: src-normalized-adjacency}
+      - {from: src-normalized-adjacency, type: selects, to: src-spectral-subspace}
+      - {from: src-four-cycle-example, type: illustrates, to: src-eigengap}
+    interpretation: "Editorial reconstruction of the article's teaching model, not a graph supplied by the author."
+  learning_outcomes:
+    - {status: inferred, outcome: "Derive the expected squared-distance pair loss as a trace involving D − Π.", basis: "Article's matrix derivation."}
+    - {status: inferred, outcome: "Explain how whitening converts the constrained optimization into a spectral subspace selection problem.", basis: "Normalized adjacency and orthonormal-column derivation."}
+    - {status: inferred, outcome: "Use the four-state cycle to distinguish rotation ambiguity from non-unique optimal subspaces.", basis: "Explicit cosine/sine eigenvectors and tied eigenvalues."}
+    - {status: inferred, outcome: "Explain why a spectral gap is required for uniqueness of the selected subspace.", basis: "Four-state example and eigengap discussion."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Matrix algebra, trace and quadratic forms.", basis: "Derivation of the pair loss."}
+    - {status: inferred, topic: "Eigenvalues, eigenvectors and orthogonal transformations.", basis: "Spectral maximization and four-cycle example."}
+    - {status: inferred, topic: "Basic JEPA and positive-pair terminology.", basis: "Opening sections."}
+  teaching_route:
+    - {order: 1, section: "Positive pairs define a weighted graph", function: translate-training-data-into-operator, moves: ["Map world states to vertices", "Interpret pair probabilities as edge weights"]}
+    - {order: 2, section: "From pair loss to graph Laplacian", function: derive-objective, moves: ["Expand squared distances", "Express the expectation with traces", "Identify D − Π"]}
+    - {order: 3, section: "Whitening and normalized adjacency", function: expose-spectral-problem, moves: ["Transform H into U", "Apply orthonormality and centering", "Obtain the trace maximization"]}
+    - {order: 4, section: "Four-state cycle", function: make-eigengap-concrete, moves: ["Compute the four eigenvalues", "Compare one and two retained dimensions", "Separate a rotation from a different optimal subspace"]}
+    - {order: 5, section: "Experiments and caveats", function: connect-theory-to-evidence, moves: ["Read mutual 10-NN results", "Distinguish SIGReg experiments from the second-order proof", "Keep sample count separate from compute"]}
+  pedagogical_strengths:
+    - "Makes the graph induced by positive pairs explicit and follows the algebra from pair loss to spectral coordinates."
+    - "The four-state cycle is a compact counterexample to the idea that equal objective values always imply the same geometry."
+    - "Explains why an eigengap is a uniqueness condition rather than merely a numerical detail."
+    - "Separates the idealized whitening proof from the LeJEPA/SIGReg experiments."
+  pedagogical_limits:
+    - "The article focuses on the second-order centered/whitened derivation and should not be generalized to every anti-collapse objective."
+    - "Its four-state graph is illustrative, not an empirical model of multimodal data."
+    - "The experimental summary is secondary; consult the paper for protocols, full results and caveats."
+    - "The theorem's assumptions, nuisance analysis and proof details require the primary paper."
+  comparison:
+    primary_source: balestriero-lecun-platonic-representation-jepas-2026
+    complementary_source: ai-scientist-platonic-representation-jepa-2026
+    dossier: docs/source-reviews/platonic-representation-jepa-2026-11.md
+    canonical_graph: "data/concepts.yml and generated JSON-LD projection"
+    decision: "Use as the clearest algebraic teaching companion for an advanced JEPA page; do not duplicate the paper's formal claims or create a canonical concept from this source alone."
+    structures_kept_separate: [medium-explanatory-graph, primary-paper-formal-model, canonical-concept-graph, pedagogical-route, page-navigation]
+items:
+  - id: eleventh-hour-enthusiast-platonic-representation-jepa-2026:pair-loss-laplacian
+    kind: derivation
+    summary: "For symmetric pair probabilities Π with marginal distribution p and D = diag(p), the expected squared-distance loss can be written as 2 tr(Hᵀ(D − Π)H). Thus D − Π is the weighted graph Laplacian of the positive-pair graph."
+    locator: {type: section, value: "Which coordinates minimize the loss?", label: "Expansion of the pair loss into a trace"}
+    evidence:
+      kind: secondary-mathematical-derivation
+      confidence: well-supported
+      scope: "Full derivation in the Medium article, cross-checked against the primary paper's second-order objective framing."
+      assumptions: ["Π is symmetric", "Both pair marginals equal p", "D is the diagonal matrix of p"]
+      limitations: ["This is the squared-distance objective before adding anti-collapse constraints.", "The graph is over latent world states in the idealized model."]
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:jepa, topic:positive-pairs, topic:graph-laplacian]
+      concept_ids: [training-objective]
+    candidate_destinations:
+      pages: []
+      concepts: []
+  - id: eleventh-hour-enthusiast-platonic-representation-jepa-2026:whitened-spectral-form
+    kind: derivation
+    summary: "With U = D^(1/2)H, centering and whitening impose UᵀU = I and orthogonality to the constant direction. The loss becomes 2k − 2 tr(UᵀKU), where K = D^(−1/2)ΠD^(−1/2). Ky Fan's maximum principle selects the k largest non-constant eigenvalues."
+    locator: {type: section, value: "Whitening and normalized adjacency", label: "Reduction to a spectral trace maximization"}
+    evidence:
+      kind: secondary-mathematical-derivation
+      confidence: well-supported
+      scope: "Article's matrix derivation and spectral optimization explanation."
+      assumptions: ["Centered, whitened second-order constraints", "Symmetric normalized adjacency matrix"]
+      limitations: ["The spectral characterization applies to this constrained objective family, not automatically to all JEPA regularizers."]
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:jepa, topic:spectral-embedding, method:whitening]
+      concept_ids: [training-objective]
+    candidate_destinations:
+      pages: []
+      concepts: []
+  - id: eleventh-hour-enthusiast-platonic-representation-jepa-2026:four-state-cycle
+    kind: derivation
+    summary: "For a four-state cycle with transition probability 1/2 to stay and 1/4 to either adjacent state, K has eigenvalues 1, 1/2, 1/2, 0. Retaining two coordinates selects the full tied eigenspace and yields a square up to rotation/reflection; retaining one coordinate allows equally optimal but geometrically different cosine- or sine-like solutions because the dimensionality boundary cuts through the eigenvalue tie."
+    locator: {type: section, value: "When does the graph determine the geometry?", label: "Four-state cycle and cosine/sine eigenvectors"}
+    evidence:
+      kind: secondary-mathematical-example
+      confidence: well-supported
+      scope: "Explicit transition matrix and eigenvector calculation in the article."
+      assumptions: ["Four equally likely states on a cycle", "Symmetric transition probabilities as specified in the example"]
+      limitations: ["Toy example illustrates spectral non-uniqueness; it is not an empirical JEPA result."]
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:jepa, topic:eigengap, topic:spectral-embedding]
+      concept_ids: [training-objective]
+    candidate_destinations:
+      pages: []
+      concepts: []
+  - id: eleventh-hour-enthusiast-platonic-representation-jepa-2026:experimental-qualification
+    kind: limitation
+    summary: "The article emphasizes that Flickr30k experiments use LeJEPA with SIGReg, whereas the proof's spectral characterization uses centered/whitened second-order constraints. It reports mutual 10-NN values 0.062 versus 0.047 (chance 0.010) across three seeds and notes that the result remains a task-specific alignment metric."
+    locator: {type: section, value: "What do the experiments show?", label: "Flickr30k protocol and proof/experiment distinction"}
+    evidence:
+      kind: secondary-experimental-summary
+      confidence: context-dependent
+      scope: "Medium article's account of Flickr30k and web-scale comparisons."
+      assumptions: ["Reported values are transcribed from the article and should be checked against the primary paper before citation."]
+      limitations: ["Secondary summary; no independent reproduction.", "Mutual-neighbor alignment is not a measure of reasoning or general intelligence."]
+    classification:
+      primary_theme: scale-research
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:jepa, topic:cross-modal-alignment, method:anti-collapse]
+    candidate_destinations:
+      pages: []
+      concepts: [training-objective]

@@ -176,3 +176,30 @@ Appendix A makes the theorem's mathematical mechanism more concrete:
 - Appendix A.1 is careful about objective families: spectral contrastive learning and whitened MSE fit the stated form; VICReg and Barlow Twins do so only in particular hard-constraint limits; SIGReg's rotation invariance is stated in expectation, while uniqueness under its full-distribution constraint remains an assumption.
 
 This is a much better teaching spine for the advanced page than the informal phrase "the models learn the same representation": the learner can follow **positive-pair graph → Markov operator → spectral subspace → eigengap → rotation ambiguity → alignment error**.
+
+
+## 13. Complementary explanatory and access resources
+
+### Medium: a worked spectral derivation
+
+Eleventh Hour Enthusiast's article is not merely another summary of the PRH thesis. Its distinctive pedagogical value is the complete worked path:
+
+1. Positive-pair probabilities form a symmetric weighted graph over idealized world states.
+2. The expected squared-distance loss expands to a trace involving the graph Laplacian (D-\Pi).
+3. Centering and whitening transform the embedding matrix into orthonormal columns (U).
+4. The normalized adjacency (K=D^{-1/2}\Pi D^{-1/2}) turns the objective into maximizing \(\mathrm{tr}(U^T K U)\).
+5. Ky Fan's principle selects the top non-constant eigenspace.
+6. A four-state cycle makes the eigengap condition tangible: the spectrum (1,1/2,1/2,0) gives a unique two-dimensional selected subspace, but a one-dimensional selection cuts through the tie and permits distinct optimal geometries.
+
+This worked example is a strong candidate for the advanced page's mathematical centerpiece. Preserve the distinction between **rotation/reflection ambiguity within one selected subspace** and **non-uniqueness of the selected subspace itself** when the eigengap condition fails.
+
+The article's experimental section also makes a useful methodological distinction: the formal spectral argument uses centered/whitened second-order constraints, while the reported LeJEPA experiments use SIGReg. These should not be conflated.
+
+### Hugging Face Papers and hosted figure
+
+The Hugging Face Papers entry is an alternate presentation of arXiv:2610.39302, not an independent paper. It contains a generated abstract-style summary and author-submitted discussion. Treat those as platform/user-contributed metadata, not peer-reviewed evidence. The user also supplied a Hugging Face image-viewer URL for a figure associated with the paper. Its exact figure provenance and reuse licence have not been established; retain a link only and do not copy the image into the site at this stage.
+
+### YouTube resource — not yet inspected
+
+The supplied video URL and ID are recorded in the source catalogue, but direct retrieval of the YouTube page and oEmbed metadata failed. Its title, creator, duration, transcript and content are unknown. It must remain deferred and should not be used to support any claim until it can be watched or a transcript is supplied.
+
