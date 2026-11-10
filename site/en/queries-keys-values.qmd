@@ -24,77 +24,41 @@ tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-valu
 {{< include ../includes/generated-guided-context-en-queries-keys-values.qmd >}}
 
 ::: {.chapter-lead}
-The previous page, [GPT and Transformers: architecture and data flow](transformer.qmd), places self-attention within the network's forward pass. Here we isolate the three projections that feed it: **Q**, **K**, and **V**. These are not three token categories, but three learned transformations of a representation. Q and K determine the weights; V supplies the aggregated content. The next page derives the weights and aggregation themselves.
+The previous page, [GPT and Transformers: architecture and data flow](transformer.qmd), places self-attention within the network's forward pass. We now start with a simple question: how can one position use the context provided by the other tokens?
 :::
 
-::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
-By the end of this lesson, you should be able to:
-- distinguish the roles of Q, K, and V in the attention mechanism;
-- explain why Q and K determine the weights while V supplies the aggregated content;
-- describe the qualitative dependencies between projections, weights, and content, without performing matrix calculations.
-:::
+## The problem: using context
 
-## A concrete question to motivate the mechanism
+In “The cat chased the dog because it was fast,” the pronoun **it** could refer to either the cat or the dog. A model therefore cannot always interpret a token from its local representation alone: it needs to use information carried by other positions in the sequence.
 
-In “The cat chased the dog because it was fast,” the pronoun **it** could refer to either the cat or the dog. To use context, a position needs to compare its representation with those at other positions, then combine information from them. Q, K, and V play distinct roles: the first two projections contribute to computing the weights; the third supplies the vectors to which those weights are applied.
+That is what self-attention provides. For each position, the mechanism builds two things: **where to look** in the context and **what information to bring back**. Q, K, and V provide the representations needed for these two operations.
 
-This example is adapted from [Neha KK](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b). It motivates the mechanism, but it does not mean that one isolated attention head necessarily resolves coreference, nor is it an observation of a trained model's attention weights.
+This example is adapted from [Neha KK](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b). It motivates the need for context; it does not prove that one isolated head resolves coreference or describe the attention weights of a trained model.
 
 <div class="epistemic-badges">
   <span class="epistemic-badge badge-concept">Verified concept</span>
   <span class="epistemic-badge badge-status">Architecture: Transformer</span>
 </div>
 
+## Three complementary roles
 
-::: {.callout-tip title="The one-minute mental model"}
-- **Same input, three projections:** in self-attention, $Q=XW_Q$, $K=XW_K$, and $V=XW_V$. The matrices are distinct and learned jointly.
-- **Routing and content:** Q and K determine scores and then attention weights; V supplies the vectors to which those weights are applied.
-- **Useful invariance:** if only V changes, the weights stay fixed; the aggregated content may change. Changing Q or K can change the weights.
-- **Scope:** these equations describe standard self-attention. In cross-attention, Q and K/V come from different streams; GQA/MQA change how K/V heads are shared.
+The three projections are easiest to distinguish by following the flow of information:
 
-**Check yourself:** can you explain, without calculating, why changing V alone does not change the attention weights but may change the aggregated content?
-:::
+- **Q — the query:** what the current position is looking to match in the context;
+- **K — the key:** what each position presents for comparison with a query;
+- **V — the value:** the information carried by that position and available to be transmitted.
 
-## Intuition: compare, then transmit
-
-Imagine a collection of index cards:
-
-- the **query Q** expresses what a position is looking for;
-- the **key K** provides the vector against which that position can be compared;
-- the **value V** carries the information that may be transmitted and aggregated.
-
-The analogy separates the roles, but it is not a literal symbolic search: the model does not manipulate readable questions, labels, or cards. Q, K, and V are learned numerical vectors.
-
-::: {.callout-note collapse="true" title="Another perspective: viewing Q and K in vector space"}
-Codefinity offers a geometric intuition: picture Q and K as vectors whose orientation and alignment contribute to a compatibility score. This complements the index-card analogy by helping bridge conceptual roles and numerical objects.
-
-For two vectors, the dot product can be written as:
-
-$$
-q^\top k = \lVert q\rVert\,\lVert k\rVert\cos(\theta).
-$$
-
-The angle is only part of the score: **the dot product also depends on the norms** of Q and K. It is not, in general, cosine similarity. In attention, these scores are subsequently scaled, normalized with softmax over accessible keys, and used to weight V. There is no requirement to select one nearest neighbour, and no automatic semantic-relevance interpretation.
-
-This geometric intuition is a bridge to the [scaled dot-product attention calculation](scaled-dot-product-attention.qmd), not a substitute for its mathematical definition.
-
-Source of this perspective: [Codefinity, *Queries, Keys, and Values: The Building Blocks*](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b).
-:::
+Q and K therefore determine **how attention is distributed**. V supplies **the content that is aggregated** using that distribution. A key is not a readable label, and a value is not a ready-made answer: they are learned numerical vectors.
 
 ![Diagram of query, key, and value projections: Q and K determine attention weights, which are used to aggregate V.](../images/queries-keys-values-en.svg){fig-alt="Two paths start from the same input: the Q and K vectors are compared to compute attention weights; those weights are then applied to V vectors to produce an aggregated representation." width=100%}
 
-::: {.callout-note title="A complementary illustration in the source"}
-Nishanthan K provides a complementary visual explanation of the Q/K/V roles in the article. [Open the article and its original illustration on Medium](https://nishanthan-k.medium.com/how-query-key-and-value-qkv-work-in-transformers-1274bfa14ea8) (a mirror of the [DEV Community article](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a)).
+The diagram reveals two paths: one determines the weighting, the other supplies the content. **Why are three distinct projections needed to build these two paths from the same input?**
 
-Reference: Nishanthan K, *How Query, Key, and Value (QKV) Work in Transformers*, DEV Community, posted October 22, 2026. The illustration remains hosted by its source; LLM Lab links to it rather than copying the asset because reuse rights have not been established.
-:::
+## Why three projections from the same input?
 
+In self-attention, Q, K, and V are three learned transformations of the same representation stream. $X$ denotes the input to the attention sublayer: in the first block it starts from token embeddings; in later blocks it is an already contextualized hidden state. Positional information may be added upstream ([positional embeddings](positional-encoding.qmd)) or incorporated into queries and keys, as with [RoPE](rope.qmd).
 
-For the historical development of attention before the Transformer architecture, see [A history of Transformers](transformer-history.qmd).
-
-## Where do Q, K, and V come from?
-
-In self-attention, all three projections start from the same representation stream. Here, $X$ denotes the current input to the attention sublayer, not necessarily a raw token embedding. In the first block it starts from token embeddings; positional information is supplied either at the input (for example, by adding [positional embeddings](positional-encoding.qmd)) or inside attention (for example, [RoPE](rope.qmd) rotates queries and keys). In later blocks, $X$ is an already contextualized hidden state. For a sequence of $T$ positions, let this matrix be $X\in\mathbb{R}^{T\times d_{model}}$:
+For a sequence of $T$ positions, write $X\in\mathbb{R}^{T\times d_{model}}$:
 
 $$
 \begin{aligned}
@@ -104,28 +68,33 @@ V &= XW_V.
 \end{aligned}
 $$
 
-This parameterization into three distinct projections follows the Transformer attention formulation presented in [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762).
+The matrices $W_Q$, $W_K$, and $W_V$ are **distinct but learned jointly**. They let the model build, from the same input, representations suited to two different functions: computing compatibility (Q and K) and carrying content (V). This parameterization follows [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762).
 
-The matrices $W_Q$, $W_K$, and $W_V$ are learned jointly during training. They transform each input representation, but play distinct roles in the mechanism. Keeping these projections separately parameterized lets the model represent compatibility (Q and K) and payload (V) in distinct learned spaces. Their parameters are nevertheless optimized jointly during training; separate parameterization does not mean independent learning.
-
-With $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ and $W_V\in\mathbb{R}^{d_{model}\times d_v}$, the resulting shapes are:
+With $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ and $W_V\in\mathbb{R}^{d_{model}\times d_v}$, the outputs have these shapes:
 
 - $Q,K\in\mathbb{R}^{T\times d_k}$;
 - $V\in\mathbb{R}^{T\times d_v}$.
 
-Each row corresponds to one sequence position. At position $t$, the projections produce:
+Each row corresponds to one position. The same projection matrices are applied at every position, while the input representations vary. The dimensions $d_k$ and $d_v$ need not be equal; optional biases are omitted here. To trace these projections in the block implementation, see the [guided Transformer-block walkthrough](transformer-block-walkthrough.qmd); general dimension and axis conventions are covered in the [tensor reference](tensors.qmd).
+
+## Further depth
+
+::: {.callout-note collapse="true" title="Another perspective: viewing Q and K in vector space"}
+Codefinity offers a geometric intuition: picture Q and K as vectors whose orientation and alignment contribute to a compatibility score. This helps bridge conceptual roles and numerical objects.
+
+For two vectors, the dot product can be written as:
 
 $$
-\begin{aligned}
-q_t &= x_tW_Q,\\
-k_t &= x_tW_K,\\
-v_t &= x_tW_V.
-\end{aligned}
+q^\top k = \lVert q\rVert\,\lVert k\rVert\cos(\theta).
 $$
 
-The same projection matrices are applied at every position; the input representations vary from one position to another.
+The angle is only part of the score: **the dot product also depends on the norms** of Q and K. It is not, in general, cosine similarity. This intuition is a bridge to the [scaled dot-product attention calculation](scaled-dot-product-attention.qmd), not a substitute for its mathematical definition.
 
-## 
+Source: [Codefinity, *Queries, Keys, and Values: The Building Blocks*](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b).
+:::
+
+
+
 ::: {.callout-note collapse="true" title="How does training learn these projections?"}
 The matrices $W_Q$, $W_K$, and $W_V$ do not each receive an explicit “correct” target. They are adjusted indirectly from the model's loss function through backpropagation.
 
@@ -154,14 +123,15 @@ This page presents the standard formulation with separately parameterized Q, K a
 
 For example, **multi-query attention (MQA)** and **grouped-query attention (GQA)** use fewer key/value heads than query heads, sharing each key/value head across multiple query heads to reduce inference-time [KV-cache](llm-computational-complexity.qmd) costs. Other recent work studies tying projection parameters, including sharing the key and value projections. These are architecture variants with empirical trade-offs; they do not invalidate the role distinction taught here.
 
+
+
+**Cross-attention:** in cross-attention, Q comes from the stream doing the querying, while K and V come from the stream being queried. The three projections therefore no longer share a common input stream. See the [advanced cross-attention lesson](cross-attention.qmd).
 - Vaswani et al. (2017), [*Attention Is All You Need*](https://arxiv.org/abs/1706.03762) — standard Transformer attention formulation.
 - Ainslie et al. (2023), [*GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints*](https://arxiv.org/abs/2305.13245) — grouped key/value heads.
 - Kayyam et al. (2026), [*Do Transformers Need Three Projections? Systematic Study of QKV Variants*](https://proceedings.mlr.press/v306/kayyam26a.html) — empirical study of projection sharing.
 :::
 
-The dimensions $d_k$ and $d_v$ therefore need not be equal. Optional biases are omitted here. To trace these projections in the actual block implementation, see the [guided Transformer-block walkthrough](transformer-block-walkthrough.qmd); general dimension and axis conventions are covered in the [tensor reference](tensors.qmd).
 
-**Cross-attention:** this single-input formula describes self-attention, not every attention mechanism. In cross-attention, Q comes from the stream doing the querying, while K and V come from the stream being queried. See the [advanced cross-attention lesson](cross-attention.qmd).
 
 ::: {.callout-note collapse="true" title="Another example: lexical ambiguity"}
 Another case is lexical ambiguity: in “He sat by the bank,” with a river context, *bank* may mean a riverbank or a financial institution. This example from [Codefinity](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b) illustrates another task to which contextualized representations may contribute. It does not show that one isolated attention head performs lexical disambiguation: no model, head, or measured weights are provided. An attention map alone is also insufficient to explain a model decision.
@@ -169,37 +139,24 @@ Another case is lexical ambiguity: in “He sat by the bank,” with a river con
 For the broader role of context in representations, see [Contextualized representations](contextualized-representations.qmd).
 :::
 
-::: {.callout-note collapse="true" title="A useful distinction: what attracts attention is not necessarily what gets transmitted"}
-Brenndoerfer makes the separation between **routing** and **content** especially explicit. A key participates in deciding whether a position receives attention; the corresponding value determines what that position contributes if selected. These roles need not encode the same feature.
+## Takeaway and next steps
 
-For example, a hypothetical token could be attended to because its key signals a useful grammatical role, while its value carries semantic content. This is a functional illustration, not a claim that a trained head has been shown to implement that linguistic behavior.
+The functional distinction is simple but fundamental:
 
-This is why Q/K and V are not interchangeable: changing V alone leaves the attention weights unchanged, although it can change the resulting weighted sum. The score and aggregation equations are derived in [scaled dot-product attention](scaled-dot-product-attention.qmd).
+- **Q and K** determine compatibility scores, then attention weights;
+- **V** supplies the vectors combined using those weights;
+- changing V alone therefore leaves the weights unchanged, even though the aggregated content may change.
 
-Source perspective: [Brenndoerfer, *Query, Key, Value: The Foundation of Transformer Attention*](https://mbrenndoerfer.com/writing/query-key-value-attention-mechanism).
+The weights are not a universal measure of semantic relevance, and attention is not nearest-neighbour search in the initial embedding space: it operates on learned projections.
+
+The next lesson, [Scaled dot-product attention](scaled-dot-product-attention.qmd), explains how scores become weights and how those weights aggregate V. The [Attention exercises](exercises-attention.qmd#attention) then let you manipulate the projections and verify these dependencies; numerical calculations remain in that practice route.
+
+::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
+By the end of this lesson, you should be able to:
+- distinguish the roles of Q, K, and V in the attention mechanism;
+- explain why Q and K determine the weights while V supplies the aggregated content;
+- describe the qualitative dependencies between projections, weights, and content, without performing matrix calculations.
 :::
-
-## Operations to master
-
-Understanding Q/K/V should be demonstrated through observable operations, not just recall of definitions. By the end of this lesson, you should be able to:
-
-1. **Recognize the three roles:** distinguish the projections that determine attention weights (Q and K) from the projection that supplies aggregated content (V).
-2. **Reconstruct the projections:** write $Q=XW_Q$, $K=XW_K$, $V=XW_V$, track dimensions, and calculate the resulting representations.
-3. **Understand how they are learned:** explain how the model loss backpropagates gradients to all three matrices, through different paths for Q/K and V.
-4. **Predict the consequences of parameter changes:** identify what changes — and what remains invariant — when $W_Q$, $W_K$, or $W_V$ is modified.
-5. **Transfer the reasoning:** reuse these distinctions in cross-attention and attention variants, making changes in input provenance or projection sharing explicit.
-
-The associated exercises are grouped in the [Attention](exercises-attention.qmd#attention) section. They distinguish Q/K/V-specific competencies from score, softmax, and aggregation calculations, which belong to the [scaled dot-product attention](scaled-dot-product-attention.qmd) lesson.
-
-## Keep these objects distinct
-
-| Object | Role in the computation |
-|---|---|
-| Q and K | Determine comparison scores and then attention weights |
-| V | Supplies the vectors combined using those weights |
-| Attention weights | Determine each value's relative contribution to an output |
-
-A key is not a human-readable semantic label, and attention is not nearest-neighbour search in the initial embedding space: scores are computed between learned projections. Likewise, the value closest to a query is not automatically the most useful: Q and K determine the weights, which are then applied to V vectors; values are not compared with one another to select the nearest one. The weights are neither the values nor a universal measure of semantic relevance. Their computation and interpretive limits are explained in [scaled dot-product attention](scaled-dot-product-attention.qmd).
 
 ::: {.self-check}
 ## Check the essential idea

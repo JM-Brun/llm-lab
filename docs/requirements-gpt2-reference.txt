@@ -1,6 +1,0 @@
-# Pinned dependencies used only by the GPT-2 reference-parity tests (milestone G9):
-# tests/unit/test_gpt2_reference_parity.py compares the NumPy GPT with Hugging Face GPT-2.
-# Install torch from the CPU-only index first (see .github/workflows/ci.yml):
-#   uv pip install --python .venv/bin/python --index-url https://download.pytorch.org/whl/cpu torch==2.15.0
-torch==2.15.0
-transformers==5.22.2
