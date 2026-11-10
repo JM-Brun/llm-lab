@@ -1,0 +1,105 @@
+---
+title: "Représentations contextualisées : dépendances entre positions et couches"
+subtitle: "Formaliser le contexte accessible, les masques et les transformations successives"
+description: "Approfondissement mathématique sur la manière dont les blocs Transformer construisent des états cachés dépendants de la position et du contexte accessible."
+keywords: ["type:deep-dive", "destination:deepen", "topic:contextualized-representations-advanced", "level:advanced", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/contextualized-representations-advanced"
+summary: "Formalise les dépendances contextuelles des états cachés, les contraintes de masque et l'évolution des représentations à travers les blocs."
+scope: "Approfondit la contextualisation après le lookup initial : traitement positionnel, positions accessibles, dépendances d'un bloc Transformer et distinction entre auto-attention et MLP."
+domain: "architectures-mechanisms"
+purpose: "Formaliser quelles positions peuvent contribuer à un état caché, distinguer décodeur causal et encodeur bidirectionnel, et expliquer les limites d'une représentation simplifiée du bloc."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: ["fr/deepen"]
+  children: []
+related: ["fr/queries-keys-values-advanced", "fr/rope", "fr/transformer"]
+tags: ["type:deep-dive", "destination:deepen", "topic:contextualized-representations-advanced", "level:advanced", "language:fr", "status:published"]
+-->
+
+
+Cette page prolonge la [présentation introductive des représentations contextualisées](contextualized-representations.qmd). Elle suppose que le lecteur distingue déjà l'ID du token, le vecteur obtenu par lookup et l'état caché produit par le réseau.
+
+## 1. De l'embedding initial à l'entrée du réseau
+
+Pour une architecture qui ajoute des embeddings positionnels absolus, on peut écrire :
+
+\[
+h_t^{(0)} = E[\text{ID}_t] + P_t.
+\]
+
+Le même ID sélectionne le même terme d'embedding dans une table fixe, mais une position différente peut fournir un terme positionnel différent. Cette écriture ne décrit pas toutes les architectures. Avec RoPE, par exemple, l'information de position intervient dans les transformations des vecteurs requête et clé au sein de l'attention, plutôt que par l'ajout universel d'un vecteur à l'embedding initial. Voir [position et RoPE](positional-encoding.qmd) et [Q/K/V avancé](queries-keys-values-advanced.qmd).
+
+## 2. Formaliser le contexte accessible
+
+On peut résumer conceptuellement la dépendance d'un état à la couche suivante par :
+
+\[
+h_t^{(\ell+1)} =
+F_\ell\!\left(
+h_t^{(\ell)},
+\{h_j^{(\ell)} : j \in A(t)\}
+\right),
+\]
+
+où \(A(t)\) désigne les positions accessibles depuis la position \(t\), selon le masque d'attention.
+
+- **Décodeur causal** (GPT) : en indexation à partir de 1, \(A(t)=\{1,\ldots,t\}\). La position peut utiliser son propre état et ceux du préfixe, jamais ceux des tokens futurs.
+- **Encodeur bidirectionnel** : les positions accessibles peuvent inclure toute la séquence, sous réserve du masque utilisé.
+- **Masques plus spécifiques** : certaines architectures limitent davantage les positions accessibles, par exemple avec des fenêtres locales ou des motifs structurés.
+
+La fonction \(F_\ell\) représente ici un bloc complet. Cette notation décrit les dépendances possibles, pas une implémentation universelle ni une équation exacte de toutes les opérations internes.
+
+## 3. Rôle des sous-couches
+
+Dans un bloc Transformer standard, les opérations ont des rôles distincts :
+
+1. **Auto-attention** : chaque position calcule des poids de mélange sur les positions accessibles et agrège leurs vecteurs valeur. Les projections Q/K/V, le masque et la normalisation des scores déterminent ce mélange.
+2. **MLP / réseau feed-forward** : transforme ensuite chaque position indépendamment des autres positions à cette sous-couche, avec des paramètres partagés entre positions.
+3. **Connexions résiduelles et normalisation** : organisent le flux et la stabilité des transformations ; leur ordre exact dépend de la variante du bloc (pré-LN, post-LN, etc.).
+
+La répétition de ces sous-couches fait évoluer les états cachés. Pour le calcul détaillé, voir [Q/K/V](queries-keys-values.qmd), [Q/K/V avancé](queries-keys-values-advanced.qmd) et [le Transformer](transformer.qmd).
+
+## 4. Isoler l'effet du contexte dans l'exemple *bank*
+
+Considérons :
+
+- “The river bank eroded.”
+- “The financial bank collapsed.”
+
+Pour isoler l'effet du contexte, on suppose un token *bank* unique et on place les deux occurrences à la même position (troisième mot, avec l'hypothèse simplificatrice d'un token par mot). Elles partagent donc le même ID, le même lookup initial et le même traitement positionnel à cette position, dans une architecture dont le mécanisme positionnel dépend de la position.
+
+Dans un décodeur causal, la différence de représentation à cette position peut alors provenir du préfixe accessible (*The river* ou *The financial*), et non d'une différence de position absolue. Dans un autre exemple, position et contexte peuvent tous deux contribuer à la différence.
+
+Cette comparaison est un dispositif pédagogique contrôlé, pas une affirmation selon laquelle le modèle encode les sens humains dans des régions géométriques nettement séparées.
+
+## 5. Suivre une position à travers les couches
+
+\(h_t^{(0)}\) désigne l'entrée initiale à la position \(t\). Chaque bloc produit un nouvel état, \(h_t^{(1)}\), puis \(h_t^{(2)}\), et ainsi de suite. L'indice \(t\) reste fixe : c'est la représentation de cette position que l'on suit à travers la profondeur du réseau.
+
+Le vecteur n'est pas remplacé par une étiquette de sens. Il est transformé par des opérations apprises qui intègrent progressivement l'information autorisée par l'architecture et le masque.
+
+## Limites de cette formalisation
+
+- Les états cachés sont des vecteurs appris ; cette notation ne leur attribue pas une interprétation sémantique unique.
+- Une dépendance computationnelle n'implique pas qu'une tête particulière réalise à elle seule une tâche linguistique identifiable.
+- Les positions accessibles dépendent de l'architecture et du masque ; la causalité de GPT ne doit pas être généralisée aux encodeurs bidirectionnels.
+- Les variantes de blocs peuvent modifier l'ordre, la normalisation, les connexions résiduelles et les mécanismes d'attention.
+
+**À retenir :** le lookup fixe l'identité du vecteur token initial ; l'architecture positionnelle et les blocs déterminent ensuite comment l'état à chaque position dépend des autres états accessibles.
+
+## Pour continuer
+
+- [Revenir à la leçon sur les représentations contextualisées](contextualized-representations.qmd) — le modèle mental essentiel.
+- [Approfondir Q/K/V](queries-keys-values-advanced.qmd) — les projections et le calcul de l'attention.
+- [Revenir à la carte des approfondissements](deepen.qmd).
+
+::: {.language-switch}
+**Langue :** [Français](contextualized-representations-advanced.qmd) · [English](../en/contextualized-representations-advanced.qmd)
+:::

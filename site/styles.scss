@@ -98,6 +98,26 @@ code { font-size: .91em; }
 .principle { padding: 1rem 1.1rem; border-left: 3px solid var(--llm-brand); background: #F1F5F9; border-radius: 0 .7rem .7rem 0; }
 .principle p { margin: .25rem 0 0; }
 .chapter-lead { margin: 0 0 1.8rem; padding: 1.1rem 1.3rem; border-left: 4px solid var(--llm-amber); border-radius: 0 .8rem .8rem 0; background: #FFFBEB; font-size: 1.08rem; }
+
+/* Keep the introductory badges compact inside the chapter lead. */
+.chapter-lead .epistemic-badges {
+  margin: 0 0 .8rem;
+}
+
+/* The seven-stage pipeline is intentionally wider than a phone viewport.
+   Preserve readable labels and let narrow screens scroll within the figure. */
+.pipeline-figure {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+.pipeline-figure img {
+  display: block;
+  width: 100%;
+  min-width: 900px;
+  max-width: 1200px;
+}
+
 .resource-list { padding: .7rem 1.2rem; border: 1px solid var(--llm-line); border-radius: .9rem; background: #fff; }
 .resource-list li { margin: .55rem 0; }
 .reference-card { margin: 1rem 0; padding: 1.1rem 1.35rem; border: 1px solid var(--llm-line); border-radius: .9rem; background: #fff; }

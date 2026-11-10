@@ -13,7 +13,7 @@ suggested_route:
   next: null
 hierarchy:
   parents: []
-  children: ["en/next-concept-modeling"]
+  children: ["en/next-concept-modeling", "en/contextualized-representations-advanced"]
 related: []
 tags:
   - "type:entry-point"
@@ -46,6 +46,7 @@ Each entry answers a more specific question: why a mechanism works, under which 
 **Guiding question:** which variants change information flow or a model's computational structure?
 
 - [Why scale attention scores?](attention-score-scaling.qmd) — dot-product variance under Gaussian assumptions, softmax concentration, and the limits of the $\sqrt{d_k}$ factor.
+- [Contextualized representations: dependencies across positions and layers](contextualized-representations-advanced.qmd) — formalizing accessible context, masks, and hidden-state evolution.
 - [Q/K/V: mathematical formulation and variants](queries-keys-values-advanced.qmd) — per-position equations, batched dimensions, compatibility geometry, gradient paths, and head/projection sharing.
 - [Cross-attention](cross-attention.qmd) — information transfer between two sequences, notably in encoder–decoder and multimodal architectures.
 - [RoPE: rotary positional embeddings](rope.qmd) — rotation geometry, relative-position dependence, and extrapolation limits.

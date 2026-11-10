@@ -54,6 +54,7 @@
 - **Deepen your understanding**
   - Attention, position, and architectures
     - [Why scale attention scores?](attention-score-scaling.html)
+    - [Contextualized representations: dependencies across positions and layers](contextualized-representations-advanced.html)
     - [Q/K/V: mathematical formulation and variants](queries-keys-values-advanced.html)
     - [Cross-attention: connecting two sequences](cross-attention.html)
     - [RoPE: geometry, derivation, and limitations](rope.html)

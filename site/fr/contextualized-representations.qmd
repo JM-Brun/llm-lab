@@ -23,7 +23,6 @@ tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-re
 
 
 {{< include ../includes/generated-guided-context-fr-contextualized-representations.qmd >}}
-:::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
 À la fin de cette leçon, vous devriez pouvoir :
@@ -32,10 +31,12 @@ tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-re
 - réfuter la confusion attribuant au lookup d'embedding une compréhension sémantique ou une désambiguïsation du contexte.
 :::
 
+::: {.chapter-lead}
 <div class="epistemic-badges">
   <span class="epistemic-badge badge-concept">Concept vérifié</span>
   <span class="epistemic-badge badge-status">Architecture : Blocs Transformer</span>
-</div> {.chapter-lead}
+</div>
+
 Deux phrases peuvent contenir le même token sans lui donner le même rôle : *bank* désigne une rive dans l'une, un établissement financier dans l'autre. Pourtant, le tokenizer peut attribuer le même ID aux deux occurrences. **Le lookup ne change pas ; c'est le traitement de la séquence par le Transformer qui construit des états cachés dépendant du contexte.**
 :::
 
@@ -49,9 +50,10 @@ Deux phrases peuvent contenir le même token sans lui donner le même rôle : *b
 :::
 
 
-![Vue d'ensemble du parcours du texte et des IDs à travers une table d'embeddings et le traitement positionnel jusqu'aux représentations contextualisées.](https://media.licdn.com/dms/image/v2/D4D12AQHkmEd7fMhztQ/article-cover_image-shrink_720_1280/B4DZ3YWKZfI0AM-/0/1777451187827?e=2147483647&t=ETNuRHmhKfKe0FYbI-a9g2NaUZ3QNv9xue4OYjI1qUs&v=beta){fig-alt="Pipeline schématique : le texte est tokenisé en IDs, les IDs sélectionnent des lignes d'une table d'embeddings apprise, l'information positionnelle est traitée, les couches d'attention traitent la séquence et produisent des représentations contextualisées." fig-cap="Vue d'ensemble de Rushang Chauhan. Le traitement positionnel est schématique : des architectures comme RoPE n'ajoutent pas simplement un vecteur de position à chaque embedding de token. Voir les explications ci-dessous et la page sur l'encodage positionnel." width=100%}
+![Pipeline du texte aux représentations contextualisées.](../images/contextualization-pipeline-fr.svg){.pipeline-figure fig-alt="Le texte est tokenisé en IDs ; les IDs sélectionnent des vecteurs dans la table d'embeddings ; le modèle traite la position puis les blocs Transformer produisent des états contextualisés." fig-cap="Du texte aux états contextualisés : chaque étape transforme ou enrichit la représentation, du symbole jusqu'aux états cachés dépendant du contexte." width=100%}
 
-Cette figure provient de l'article LinkedIn de Rushang Chauhan, [*Embeddings: The Bridge Between Tokens and Context*](https://www.linkedin.com/pulse/embeddings-bridge-between-tokens-context-rushang-chauhan-oqpzf/). Elle sert de carte d'orientation ; les sections suivantes précisent les distinctions architecturales qu'un schéma général simplifie nécessairement. La vérification des droits de réutilisation de cet actif précis est en attente dans [#156](https://github.com/JM-Brun/llm-lab/issues/156) ; l'illustration existante est conservée sans modification pendant cette vérification.
+
+Ce schéma est une illustration originale et simplifiée, et non une reproduction de la figure de Rushang Chauhan. Le traitement positionnel dépend de l'architecture : par exemple, RoPE ne consiste pas à ajouter simplement un vecteur de position à chaque embedding. Pour une autre présentation pédagogique du passage des tokens au contexte, voir l'article de [Rushang Chauhan, *Embeddings: The Bridge Between Tokens and Context*](https://www.linkedin.com/pulse/embeddings-bridge-between-tokens-context-rushang-chauhan-oqpzf/).
 
 
 ## Ce qui reste identique
@@ -64,7 +66,7 @@ Supposons que le token visible `bank` soit représenté par le même ID dans deu
 Sous cette hypothèse explicite, les deux occurrences récupèrent le même **vecteur de plongement initial** (embedding) :
 
 \[
-e_{\text{bank}} = E[\text{ID}_{\text{bank}}].
+e_{\mathrm{bank}} = E[\mathrm{ID}_{\mathrm{bank}}].
 \]
 
 Le lookup est un accès à une table. Il n'examine pas les mots voisins, ne déduit pas le sens visé et ne produit pas un vecteur propre à chaque phrase.
@@ -79,87 +81,9 @@ Cet exemple est repris comme motivation pédagogique dans le tutoriel de [Nishan
 
 ## Ce qui change avec la position et le contexte
 
-Les deux occurrences apparaissent dans des séquences différentes et sont entourées de tokens différents. Leur position absolue peut varier selon la phrase et la tokenisation ; le traitement exact de la position dépend de l'architecture.
+Le lookup initial ne suffit pas à décrire l'entrée du réseau : l'architecture doit aussi traiter la position, puis les blocs Transformer construisent des états dépendant du contexte accessible. Le mécanisme positionnel varie selon les modèles ; un vecteur de position n'est donc pas toujours ajouté directement à l'embedding.
 
-Dans un modèle utilisant des embeddings positionnels absolus appris, l'entrée initiale à la position \(t\) peut s'écrire :
-
-\[
-h_t^{(0)} = E[\text{ID}_t] + P_t.
-\]
-
-Le même ID donne le même terme d'embedding du token, mais une position différente peut fournir un terme positionnel différent. Les architectures utilisant RoPE traitent la position autrement : le mécanisme modifie les vecteurs requête et clé dans l'attention, au lieu d'ajouter un vecteur positionnel absolu à l'embedding du token. Voir [encodage positionnel et RoPE](positional-encoding.qmd).
-
-Les blocs Transformer construisent ces états en faisant circuler de l'information entre les positions autorisées. On peut représenter cette dépendance, de façon conceptuelle, par :
-
-\\[
-h_t^{(\\ell+1)} = F_\\ell\\!\\left(h_t^{(\\ell)},\\{h_j^{(\\ell)} : j \\in A(t)\\}\\right),
-\\]
-
-où \\(A(t)\\) désigne les positions accessibles depuis la position \\(t\\), selon le masque d'attention. Dans un décodeur causal comme GPT, \\(A(t)=\\{1,\\ldots,t\\}\\) : le token courant et son préfixe, jamais les tokens futurs. Dans un encodeur bidirectionnel, les positions accessibles peuvent inclure toute la séquence. La fonction \\(F_\\ell\\) représente ici un bloc complet ; cette écriture résume ses dépendances, pas son implémentation détaillée.
-
-Concrètement, l'auto-attention permet à une position d'agréger de l'information provenant des positions accessibles. Le MLP transforme ensuite chaque position séparément, avec des poids partagés. Répétées à chaque couche, ces opérations font évoluer les états cachés. Pour le détail du calcul, voir [Q/K/V](queries-keys-values.qmd) et [l'architecture du Transformer](transformer.qmd).
-
-Dans l'exemple *bank*, les deux occurrences occupent volontairement la même position dans la phrase (le troisième mot, sous l'hypothèse simplificatrice d'un token par mot). Avec des embeddings positionnels absolus, elles reçoivent donc le même terme positionnel ; dans un mécanisme comme RoPE, leur position est également identique. Pour un décodeur causal, la différence de leur état vient alors du préfixe accessible (*The river* ou *The financial*), et non d'une position absolue différente. Dans d'autres exemples, position et contexte peuvent tous deux contribuer à la différence.
-
-Les états évoluent ensuite de bloc en bloc : \(h_t^{(0)}\) désigne l'entrée initiale à la position \(t\), puis chaque bloc produit \(h_t^{(1)}\), \(h_t^{(2)}\), etc. Le vecteur n'est pas remplacé par une étiquette de sens ; il est transformé par des opérations apprises qui intègrent progressivement de l'information.
-
-::: {.micro-workbench}
-::: {.micro-workbench-header}
-MICRO-WORKBENCH · DIVERGENCE CONTEXTUELLE D'UN MÊME TOKEN (NUMPY)
-:::
-::: {.micro-workbench-body}
-Cette expérience est volontairement minimale : elle illustre qu'un état peut dépendre d'autres positions. Elle ne calcule pas une couche Transformer réelle (pas de projections Q/K/V, de scores normalisés par softmax, de connexions résiduelles, de normalisation ni de MLP).
-
-```python
-import numpy as np
-
-# Matrice de vocabulaire V=6, dimension d=2
-E = np.array([
-    [0.1, 0.2],   # 0: river
-    [0.9, -0.4],  # 1: financial
-    [0.5, 0.5],   # 2: bank (même ID dans les deux contextes)
-    [0.0, 0.1],   # 3: eroded
-    [0.8, 0.2],   # 4: collapsed
-    [0.2, 0.7],   # 5: pad
-], dtype=np.float64)
-
-# Deux séquences contenant le même token (ID 2) à la position 1
-seq_A = np.array([0, 2])  # [river, bank]
-seq_B = np.array([1, 2])  # [financial, bank]
-
-# 1. Lookup d'embedding initial
-x_A = E[seq_A]
-x_B = E[seq_B]
-
-# Invariant 1 : l'embedding initial de 'bank' est strictement identique
-assert np.array_equal(x_A[1], x_B[1])
-assert np.array_equal(x_A[1], E[2])
-
-# 2. Ajout de l'encodage positionnel absolu (identique à la position 1)
-P = np.array([[0.01, 0.00], [0.02, 0.05]], dtype=np.float64)
-z_A = x_A + P
-z_B = x_B + P
-assert np.array_equal(z_A[1], z_B[1])
-
-# 3. Agrégation contextuelle causale jouet (pas une implémentation d'attention)
-# On fixe des poids illustratifs pour rendre visible la dépendance au contexte.
-# Poids d'attention causale illustratifs : 40% contexte (pos 0), 60% soi-même (pos 1)
-h_A_1 = 0.4 * z_A[0] + 0.6 * z_A[1]
-h_B_1 = 0.4 * z_B[0] + 0.6 * z_B[1]
-
-# Invariant 2 : les représentations contextualisées sont désormais distinctes
-assert not np.allclose(h_A_1, h_B_1)
-diff = float(np.linalg.norm(h_A_1 - h_B_1))
-print(f"Embedding initial identique : {x_A[1]}")
-print(f"État contextualisé A (river bank) : {h_A_1}")
-print(f"État contextualisé B (financial bank) : {h_B_1}")
-print(f"Écart induit par le contexte : {diff:.4f}")
-```
-:::
-::: {.micro-workbench-footer}
-Le contexte transforme les états : un lookup initial identique ($E[\text{ID}]$) produit des états finaux différents après agrégation séquentielle.
-:::
-:::
+Pour comprendre les dépendances entre positions, les masques causaux et les rôles distincts de l'auto-attention et du MLP, consultez l'[approfondissement sur les représentations contextualisées](contextualized-representations-advanced.qmd). La formalisation détaillée est volontairement séparée de cette première explication.
 
 <details class="spot-the-fallacy">
 <summary>Piège fréquent : « Pour que deux sens d'un mot comme "bank" soient reconnus, le tokenizer doit leur attribuer des IDs distincts »</summary>

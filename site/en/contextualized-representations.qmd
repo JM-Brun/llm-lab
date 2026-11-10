@@ -23,7 +23,6 @@ tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-re
 
 
 {{< include ../includes/generated-guided-context-en-contextualized-representations.qmd >}}
-:::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 By the end of this lesson, you should be able to:
@@ -32,10 +31,12 @@ By the end of this lesson, you should be able to:
 - refute the misconception that attributes semantic comprehension or contextual disambiguation to the initial embedding lookup.
 :::
 
+::: {.chapter-lead}
 <div class="epistemic-badges">
   <span class="epistemic-badge badge-concept">Verified concept</span>
   <span class="epistemic-badge badge-status">Architecture: Transformer Blocks</span>
-</div> {.chapter-lead}
+</div>
+
 Two sentences can contain the same token without giving it the same role: *bank* refers to a river edge in one and a financial institution in the other. Yet the tokenizer may assign the same ID to both occurrences. **The lookup does not change; the Transformer's processing of the sequence builds hidden states that depend on context.**
 :::
 
@@ -48,9 +49,10 @@ Two sentences can contain the same token without giving it the same role: *bank*
 **Check yourself:** how can two occurrences share the same initial vector yet have different hidden states?
 :::
 
-![Overview of the path from text and token IDs through an embedding table and positional information to contextual representations.](https://media.licdn.com/dms/image/v2/D4D12AQHkmEd7fMhztQ/article-cover_image-shrink_720_1280/B4DZ3YWKZfI0AM-/0/1777451187827?e=2147483647&t=ETNuRHmhKfKe0FYbI-a9g2NaUZ3QNv9xue4OYjI1qUs&v=beta){fig-alt="A schematic pipeline: text is tokenized into IDs, IDs select rows in a learned embedding table, positional information is handled, attention layers process the sequence, and contextual representations are produced." fig-cap="Overview illustration by Rushang Chauhan. The position-handling stage is schematic: architectures such as RoPE do not simply add a position vector to each token embedding. See the explanation below and the page on positional encoding." width=100%}
+![Pipeline from text to contextualized representations.](../images/contextualization-pipeline-en.svg){.pipeline-figure fig-alt="Text is tokenized into IDs; IDs select vectors from the embedding table; the model handles position and Transformer blocks produce contextualized states." fig-cap="From text to contextualized states: each stage transforms or enriches the representation, from symbols to context-dependent hidden states." width=100%}
 
-The figure is reproduced from Rushang Chauhan's LinkedIn article, [*Embeddings: The Bridge Between Tokens and Context*](https://www.linkedin.com/pulse/embeddings-bridge-between-tokens-context-rushang-chauhan-oqpzf/). It provides an orientation map; the sections below specify the architectural distinctions that a high-level diagram necessarily compresses. Asset-level reuse review is pending in [#156](https://github.com/JM-Brun/llm-lab/issues/156); the existing illustration is retained unchanged while its provenance and applicable permissions are checked.
+This is an original, simplified illustration, not a reproduction of Rushang Chauhan's figure. Positional handling depends on the architecture: RoPE, for example, does not simply add a positional vector to each embedding. For another pedagogical overview of the path from tokens to context, see [Rushang Chauhan's article, *Embeddings: The Bridge Between Tokens and Context*](https://www.linkedin.com/pulse/embeddings-bridge-between-tokens-context-rushang-chauhan-oqpzf/).
+
 
 ## Start with what stays the same
 
@@ -62,7 +64,7 @@ Suppose the visible word `bank` is represented by the same token ID in two sente
 Under that explicit assumption, both occurrences retrieve the same initial embedding:
 
 \[
-e_{\text{bank}} = E[\text{ID}_{\text{bank}}].
+e_{\mathrm{bank}} = E[\mathrm{ID}_{\mathrm{bank}}].
 \]
 
 The embedding lookup is a table access. It does not inspect the surrounding words, infer which sense is intended, or produce a sentence-specific vector.
@@ -75,89 +77,11 @@ Now consider: *“The animal was tired because it had been running.”* Here, th
 
 This example is used as a pedagogical motivation in [Nishanthan K's tutorial on Q, K, and V](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers). It does not show that a particular attention head necessarily identifies the antecedent, or that attention alone performs complete coreference resolution. It complements the lexical-ambiguity example (*bank*) by illustrating a relation between tokens (*it* / *the animal*).
 
-## What changes with position and context?
+## What changes with position and context
 
-The two occurrences appear in different sequences and have different neighbours. Their absolute positions may vary with the sentence and tokenization; the exact handling of position depends on the architecture.
+The initial lookup is not the whole network input: the architecture must also handle position, and Transformer blocks then build states that depend on accessible context. Positional mechanisms vary across models; a position vector is therefore not always added directly to the embedding.
 
-For a model using learned absolute position embeddings, the initial input at position \(t\) may be written:
-
-\[
-h_t^{(0)} = E[\text{ID}_t] + P_t.
-\]
-
-The same token ID gives the same token-embedding term, but a different position may give a different positional term. Architectures using RoPE handle position differently: it modifies query and key vectors inside attention rather than adding an absolute position vector to the token embedding. See [positional encoding and RoPE](positional-encoding.qmd).
-
-Transformer blocks build these states by allowing information to flow between accessible positions. We can describe this dependency conceptually as:
-
-\\[
-h_t^{(\\ell+1)} = F_\\ell\\!\\left(h_t^{(\\ell)},\\{h_j^{(\\ell)} : j \\in A(t)\\}\\right),
-\\]
-
-where \\(A(t)\\) denotes the positions accessible from position \\(t\\), as determined by the attention mask. In a causal decoder such as GPT, \\(A(t)=\\{1,\\ldots,t\\}\\): the current token and its prefix, never future tokens. In a bidirectional encoder, accessible positions may include the entire sequence. Here, \\(F_\\ell\\) represents a complete block; the expression summarizes its dependencies, not its detailed implementation.
-
-More concretely, self-attention lets a position aggregate information from accessible positions. The MLP then transforms each position independently, using shared weights. Repeated at every layer, these operations evolve the hidden states. For the detailed computation, see [Q/K/V](queries-keys-values.qmd) and [the Transformer architecture](transformer.qmd).
-
-In the *bank* example, both occurrences deliberately occupy the same position in the sentence (the third word, under the simplifying assumption of one token per word). With learned absolute position embeddings, they therefore receive the same positional term; with a mechanism such as RoPE, their position is also identical. For a causal decoder, the difference in their states then comes from the accessible prefix (*The river* or *The financial*), not from a different absolute position. In other examples, position and context may both contribute.
-
-States then evolve from block to block: \(h_t^{(0)}\) denotes the initial input at position \(t\), and each block produces \(h_t^{(1)}\), \(h_t^{(2)}\), and so on. The vector is not replaced by a sense label; it is transformed by learned operations that progressively integrate information.
-
-::: {.micro-workbench}
-::: {.micro-workbench-header}
-MICRO-WORKBENCH · CONTEXTUAL DIVERGENCE OF A SHARED TOKEN (NUMPY)
-:::
-::: {.micro-workbench-body}
-This deliberately minimal experiment illustrates that a state can depend on other positions. It does not compute a real Transformer layer (no Q/K/V projections, softmax-normalized scores, residual connections, normalization, or MLP).
-
-```python
-import numpy as np
-
-# Vocabulary matrix V=6, dimension d=2
-E = np.array([
-    [0.1, 0.2],   # 0: river
-    [0.9, -0.4],  # 1: financial
-    [0.5, 0.5],   # 2: bank (same ID in both contexts)
-    [0.0, 0.1],   # 3: eroded
-    [0.8, 0.2],   # 4: collapsed
-    [0.2, 0.7],   # 5: pad
-], dtype=np.float64)
-
-# Two sequences containing the same token (ID 2) at position 1
-seq_A = np.array([0, 2])  # [river, bank]
-seq_B = np.array([1, 2])  # [financial, bank]
-
-# 1. Initial embedding lookup
-x_A = E[seq_A]
-x_B = E[seq_B]
-
-# Invariant 1: initial embedding of 'bank' is strictly identical
-assert np.array_equal(x_A[1], x_B[1])
-assert np.array_equal(x_A[1], E[2])
-
-# 2. Add absolute position encoding (identical at position 1)
-P = np.array([[0.01, 0.00], [0.02, 0.05]], dtype=np.float64)
-z_A = x_A + P
-z_B = x_B + P
-assert np.array_equal(z_A[1], z_B[1])
-
-# 3. Toy causal contextual aggregation (not an attention implementation)
-# Fixed illustrative weights make the context dependency visible.
-# Illustrative causal attention weights: 40% context (pos 0), 60% self (pos 1)
-h_A_1 = 0.4 * z_A[0] + 0.6 * z_A[1]
-h_B_1 = 0.4 * z_B[0] + 0.6 * z_B[1]
-
-# Invariant 2: contextualized representations are now distinct!
-assert not np.allclose(h_A_1, h_B_1)
-diff = float(np.linalg.norm(h_A_1 - h_B_1))
-print(f"Identical initial embedding: {x_A[1]}")
-print(f"Contextualized state A (river bank): {h_A_1}")
-print(f"Contextualized state B (financial bank): {h_B_1}")
-print(f"Divergence induced by context: {diff:.4f}")
-```
-:::
-::: {.micro-workbench-footer}
-This toy isolates a dependency: identical lookups ($E[\text{ID}]$) can produce different states after contextual aggregation. The weighted average above does not implement a Transformer's self-attention.
-:::
-:::
+For the dependencies between positions, causal masks, and the distinct roles of self-attention and the MLP, see the [deep dive on contextualized representations](contextualized-representations-advanced.qmd). The detailed formalization is deliberately separated from this first explanation.
 
 <details class="spot-the-fallacy">
 <summary>Common Fallacy: “For two senses of a word like 'bank' to be captured, the tokenizer must assign them different token IDs”</summary>
