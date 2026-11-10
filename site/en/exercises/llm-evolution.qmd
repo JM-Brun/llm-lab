@@ -34,5 +34,5 @@ tags: ["type:exercise-hub", "destination:practice", "topic:llm-evolution-exercis
 [Exercises and practice](../exercises.qmd).
 
 ::: {.language-switch}
-**Language:** [Français](../../fr/exercises/llm-evolution.qmd) · [English](../exercises/llm-evolution.qmd)
+**Language:** [Français](../../fr/exercises/llm-evolution.qmd) · [English](llm-evolution.qmd)
 :::

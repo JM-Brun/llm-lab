@@ -32,5 +32,5 @@ tags: ["type:exercise-hub", "destination:practice", "topic:hybrid-llm-architectu
 5. **Is a published throughput gain a general law?** No: it depends on hardware and protocol.
 
 ::: {.language-switch}
-**Language:** [Français](../../fr/exercises/hybrid-llm-architectures.qmd) · [English](../exercises/hybrid-llm-architectures.qmd)
+**Language:** [Français](../../fr/exercises/hybrid-llm-architectures.qmd) · [English](hybrid-llm-architectures.qmd)
 :::

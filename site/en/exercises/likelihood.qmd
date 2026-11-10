@@ -45,5 +45,5 @@ tags: ["type:exercise-hub", "destination:practice", "topic:vraisemblance-exercis
 **Related connection to the aggregated objective:** [Loss](../loss.qmd).
 
 ::: {.language-switch}
-**Language:** [Français](../../fr/exercises/vraisemblance.qmd) · [English](../exercises/likelihood.qmd)
+**Language:** [Français](../../fr/exercises/vraisemblance.qmd) · [English](likelihood.qmd)
 :::

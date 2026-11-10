@@ -36,5 +36,5 @@ tags: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-generat
 </details>
 
 ::: {.language-switch}
-**Language:** [Français](../../fr/exercises/gpt-generation-walkthrough.qmd) · [English](../exercises/gpt-generation-walkthrough.qmd)
+**Language:** [Français](../../fr/exercises/gpt-generation-walkthrough.qmd) · [English](gpt-generation-walkthrough.qmd)
 :::

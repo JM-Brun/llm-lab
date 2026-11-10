@@ -57,5 +57,5 @@ The gradient describes a local change. A step that is too large can leave the re
 **Return to:** [Overview](../mathematical-foundations.qmd) · [Loss](../loss.qmd)
 
 ::: {.language-switch}
-**Language:** [Français](../../fr/exercises/gradients.qmd) · [English](../exercises/gradients.qmd)
+**Language:** [Français](../../fr/exercises/gradients.qmd) · [English](gradients.qmd)
 :::

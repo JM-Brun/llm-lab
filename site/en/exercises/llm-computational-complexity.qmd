@@ -32,5 +32,5 @@ tags: ["type:exercise-hub", "destination:practice", "topic:llm-computational-com
 5. **Does an MoE with few active experts store only those experts?** No: all expert weights must be hosted or accessible.
 
 ::: {.language-switch}
-**Language:** [Français](../../fr/exercises/llm-computational-complexity.qmd) · [English](../exercises/llm-computational-complexity.qmd)
+**Language:** [Français](../../fr/exercises/llm-computational-complexity.qmd) · [English](llm-computational-complexity.qmd)
 :::
