@@ -49,7 +49,7 @@ Two sentences can contain the same token without giving it the same role: *bank*
 **Check yourself:** how can two occurrences share the same initial vector yet have different hidden states?
 :::
 
-![Pipeline from text to contextualized representations.](../images/contextualization-pipeline-en.svg){fig-alt="Text is tokenized into IDs; IDs select vectors from the embedding table; the model handles position and Transformer blocks produce contextualized states." fig-cap="From text to contextualized states: each stage transforms or enriches the representation, from symbols to context-dependent hidden states." width=100%}
+![Pipeline from text to contextualized representations.](../images/contextualization-pipeline-en.svg ){.pipeline-figure fig-alt="Text is tokenized into IDs; IDs select vectors from the embedding table; the model handles position and Transformer blocks produce contextualized states." fig-cap="From text to contextualized states: each stage transforms or enriches the representation, from symbols to context-dependent hidden states." width=100%}
 
 ## Start with what stays the same
 
