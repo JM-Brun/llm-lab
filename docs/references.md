@@ -140,6 +140,14 @@ Use these resources as complementary explanations and study aids, not as substit
     - **Use policy:** do not treat this mirror as the canonical edition, redistribute it, or assume it is authorized. Prefer the publisher page and the author's official repository/video materials. This reference is recorded for provenance transparency only; no copied book text, figures, or exercises should enter LLM Lab.
 
 
+
+## Inference performance and generation systems
+
+- **Brij Pandey — “You ask LLM a question. It pauses. Then the answer starts appearing, piece by piece.”** (LinkedIn post, 10 November 2026): https://www.linkedin.com/posts/brijpandeyji_you-ask-llm-a-question-it-pauses-then-share-7525787285829804032-YNEl
+  - **Use for:** a compact end-to-end inference diagram connecting tokenization, embeddings, decoder layers, KV caching, next-token selection, streaming, TTFT/ITL diagnostics, and speculative decoding.
+  - **Integration:** used as a secondary pedagogical overview in the bilingual generation lesson to motivate prefill/decode latency, KV-cache memory growth, and the distinction between first-token latency and inter-token latency. Technical details are qualified against the model architecture and serving configuration; the LinkedIn figure is linked, not copied.
+  - **Review status:** post text and supplied diagram inspected on 10 November 2026. This is a pedagogical secondary source, not an implementation specification or benchmark. See [the source review](source-reviews/linkedin-inference-generation-2026-11.md).
+
 ## Joint embeddings and cross-modal representation alignment
 
 - **Mayank Kejriwal — Do AI models trained on different modalities converge to the same representation of the world?** (AI Scientist, 8 November 2026): https://aiscientist.substack.com/p/do-ai-models-trained-on-different
