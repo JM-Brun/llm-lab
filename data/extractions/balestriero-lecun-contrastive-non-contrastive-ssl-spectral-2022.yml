@@ -1,0 +1,131 @@
+schema_version: 1
+source_id: balestriero-lecun-contrastive-non-contrastive-ssl-spectral-2022
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Inspected the arXiv abstract, bibliographic metadata and licence on 2026-11-10; the full arXiv HTML v3 was retrieved."
+      - "Key passages inspected around Theorem 1, Figure 1, Section 3.1 (VICReg invariance term as Dirichlet energy), Section 3.2 (constrained VICReg recovering kernel Laplacian Eigenmaps), Section 3.3 (Theorem 3 linear-regime parameters, Locality Preserving Projections, Linear Discriminant Analysis) and the global/local correspondence (Sections 3.2 and 4.3)."
+      - "Cross-checked the lineage sentence of the Eleventh Hour Enthusiast Medium article against the paper's own abstract and section text."
+    inferred_elements:
+      - "Learning outcomes, assumed prerequisites and the source-local teaching route are inferred from the inspected paper structure."
+  source_graph:
+    nodes:
+      - {id: src-pairwise-relation, kind: probability-distribution, description: "Distribution over positive pairs of inputs declared related by the SSL objective.", locator: "Sections 1 and 2"}
+      - {id: src-similarity-graph, kind: matrix, description: "Pairwise similarity matrix induced by the positive-pair relation over training inputs.", locator: "Sections 2 and 3"}
+      - {id: src-vicreg-invariance, kind: objective, description: "VICReg invariance term pulling the embeddings of positive pairs together.", locator: "Section 3.1"}
+      - {id: src-dirichlet-energy, kind: objective, description: "Dirichlet energy of the embedding signal on the similarity graph, measuring non-smoothness across connected inputs.", locator: "Section 3.1"}
+      - {id: src-closed-form-optimum, kind: representation, description: "Global minimizer of the VICReg loss expressed in closed form from the eigenvectors and eigenvalues of the graph operator.", locator: "Theorem 1"}
+      - {id: src-laplacian-eigenmaps, kind: representation, description: "Spectral embedding assigning coordinates to graph vertices by minimizing Dirichlet energy; recovered by the constrained VICReg problem.", locator: "Section 3.2"}
+      - {id: src-linear-regime-solution, kind: representation, description: "Closed-form optimal linear-network parameters recovering Locality Preserving Projections and Linear Discriminant Analysis.", locator: "Theorem 3 and Section 3.3"}
+      - {id: src-global-spectral-family, kind: representation, description: "Global spectral embedding methods such as multidimensional scaling, associated with contrastive objectives.", locator: "Sections 3.2 and 4.3"}
+    edges:
+      - {from: src-pairwise-relation, type: defines, to: src-similarity-graph}
+      - {from: src-vicreg-invariance, type: equals, to: src-dirichlet-energy}
+      - {from: src-similarity-graph, type: determines, to: src-dirichlet-energy}
+      - {from: src-similarity-graph, type: determines, to: src-closed-form-optimum}
+      - {from: src-closed-form-optimum, type: recovers, to: src-laplacian-eigenmaps}
+      - {from: src-linear-regime-solution, type: recovers, to: src-laplacian-eigenmaps}
+      - {from: src-closed-form-optimum, type: contrasts-with, to: src-global-spectral-family}
+    interpretation: "Reconstruction of the formal objects and relations in the inspected sections; source-local edge labels are descriptive, not a replacement for the paper's equations or canonical concept relations."
+  learning_outcomes:
+    - {status: inferred, outcome: "Explain why the VICReg invariance term is a Dirichlet energy on the pairwise-similarity graph.", basis: "Section 3.1."}
+    - {status: inferred, outcome: "State that the constrained VICReg problem recovers kernel Laplacian Eigenmaps and read that geometrically: coordinates assigned to graph vertices.", basis: "Section 3.2."}
+    - {status: inferred, outcome: "Distinguish global and local spectral embedding methods and associate them with contrastive and non-contrastive SSL respectively.", basis: "Sections 3.2 and 4.3."}
+    - {status: inferred, outcome: "Reason about the invariance hyper-parameter using the alignment between the pairwise relation and the downstream task.", basis: "Abstract and Section 4."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Linear algebra: eigenvalues, eigenvectors, singular vectors and graph Laplacians.", basis: "Spectral embedding derivations."}
+    - {status: inferred, topic: "Self-supervised objectives: SimCLR-style contrastive losses and VICReg or BarlowTwins-style non-contrastive regularizers.", basis: "The paper's unifying framework."}
+  teaching_route:
+    - {order: 1, section: "Introduction", function: motivate-unification, moves: ["Position the fragmentation of SSL theory", "Announce the spectral manifold-learning unification"]}
+    - {order: 2, section: "3.1", function: connect-invariance-to-dirichlet-energy, moves: ["Read the invariance term as a graph functional", "State Theorem 1's closed-form minimizer"]}
+    - {order: 3, section: "3.2", function: recover-laplacian-eigenmaps, moves: ["Turn the VICReg optimization into a constrained problem", "Identify the recovered method as kernel Laplacian Eigenmaps"]}
+    - {order: 4, section: "3.3", function: linear-network-solutions, moves: ["Derive closed-form optimal network parameters in the linear regime", "Connect to Locality Preserving Projections and Linear Discriminant Analysis"]}
+    - {order: 5, section: "4.3", function: bridge-families, moves: ["Associate contrastive SSL with global spectral embeddings", "Associate non-contrastive SSL with local spectral embeddings", "Draw practical guidance for the invariance hyper-parameter"]}
+    - {order: 6, section: "Sections 5-6", function: pending-full-audit, moves: ["Experiments and design guidelines await a line-by-line audit"]}
+  pedagogical_strengths:
+    - "The Dirichlet-energy reading gives one geometric meaning to non-contrastive invariance terms."
+    - "The recovery results turn named SSL methods into instances of classical spectral embedding methods with closed-form optima."
+    - "The global/local distinction yields actionable design guidance instead of method loyalty."
+  pedagogical_limits:
+    - "Results are population-level and idealized; they do not directly describe finite SGD training of production models."
+    - "The paper was retrieved in full HTML but read selectively; the theorems' proofs and experiments were not audited in this pass."
+    - "The linear-regime results do not transfer verbatim to deep nonlinear networks."
+    - "No code was executed and no independent reproduction was performed."
+  comparison:
+    dossier: docs/source-reviews/platonic-representation-jepa-2026-11.md
+    canonical_graph: "data/concepts.yml and generated JSON-LD projection"
+    canonical_routes: [data/guided-route.yml, docs/learning-path.md, "Deepen page metadata"]
+    decision: "Ingest as the lineage source of the platonic-representation dossier: the 2026 theorem's spectral mechanism descends from this single-encoder program. Register one minimal concept (laplacian-eigenmaps) and reference the source from the spectral-mechanism section of both deep-dive pages."
+    structures_kept_separate: [paper-formal-model, source-pedagogical-route, canonical-concept-graph, curriculum-prerequisites, page-navigation]
+items:
+  - id: balestriero-lecun-contrastive-non-contrastive-ssl-spectral-2022:vicreg-dirichlet-energy
+    kind: mechanism
+    summary: "The invariance term of VICReg equals the Dirichlet energy of the embedding signal on the graph whose weighted edges come from the positive-pair relation; minimizing it favors embeddings that are smooth across strongly connected inputs."
+    locator: {type: section, value: "3.1", label: "Closed-Form Optimal Representation for VICReg"}
+    evidence:
+      kind: mathematical-derivation-summary
+      confidence: well-supported
+      scope: "Section 3.1 passages inspected in the arXiv HTML v3, including the invariance-term/Dirichlet-energy identification and Theorem 1's closed-form minimizer."
+      assumptions: ["Population-level objective", "Pairwise similarity graph induced by the positive-pair relation"]
+      limitations: ["The full derivation was not audited line by line.", "The result describes the idealized objective, not a specific finite training run."]
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [probabilistic-foundations-training]
+      tags: [topic:self-supervised-learning, topic:spectral-embedding, method:dirichlet-energy]
+      concept_ids: [positive-pair-distribution, laplacian-eigenmaps]
+    candidate_destinations:
+      pages: [fr/jepa-platonic-representation, en/jepa-platonic-representation]
+      concepts: [positive-pair-distribution, laplacian-eigenmaps]
+  - id: balestriero-lecun-contrastive-non-contrastive-ssl-spectral-2022:constrained-vicreg-recovers-laplacian-eigenmaps
+    kind: claim
+    summary: "Turning the VICReg optimization into a constrained problem recovers (kernel) Laplacian Eigenmaps, the classic spectral method assigning coordinates to graph vertices; in the linear-network regime the solution recovers Locality Preserving Projections and Linear Discriminant Analysis."
+    locator: {type: section, value: "3.2 and 3.3", label: "Constrained problem and linear-regime solutions"}
+    evidence:
+      kind: formal-theorem
+      confidence: well-supported
+      scope: "Section 3.1-3.3 roadmap and passages inspected in the arXiv HTML v3, including the explicit recovery statements."
+      assumptions: ["Constrained reformulation of the VICReg objective", "Linear parameterization for the Theorem 3 result"]
+      limitations: ["The theorem proofs were not audited in this pass.", "The linear regime does not describe deep nonlinear encoders."]
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:spectral-embedding, topic:laplacian-eigenmaps, topic:self-supervised-learning, method:whitening]
+      concept_ids: [laplacian-eigenmaps, joint-embedding-predictive-architecture]
+    candidate_destinations:
+      pages: [fr/jepa-platonic-representation, en/jepa-platonic-representation]
+      concepts: [laplacian-eigenmaps]
+  - id: balestriero-lecun-contrastive-non-contrastive-ssl-spectral-2022:global-local-correspondence
+    kind: claim
+    summary: "Contrastive and non-contrastive SSL correspond to global and local spectral embedding methods respectively, such as multidimensional scaling versus Laplacian Eigenmaps: contrastive objectives aim to be metric-preserving and suit linear manifolds, while non-contrastive objectives suit locally linear but globally nonlinear manifolds."
+    locator: {type: section, value: "3.2 and 4.3", label: "Global and local spectral embedding methods"}
+    evidence:
+      kind: theorem-summary
+      confidence: well-supported
+      scope: "Introduction, Figure 1 and the global/local correspondence passages inspected in the arXiv HTML v3."
+      assumptions: ["Population-level optimal representations", "The paper's similarity-matrix formulation"]
+      limitations: ["The full Section 4.3 derivation was not audited.", "The correspondence concerns optimal representations, not a claim that training dynamics are identical."]
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:self-supervised-learning, topic:spectral-embedding, topic:contrastive-learning]
+    candidate_destinations:
+      pages: [fr/jepa-platonic-representation, en/jepa-platonic-representation]
+      concepts: []
+  - id: balestriero-lecun-contrastive-non-contrastive-ssl-spectral-2022:pairwise-relation-guidance
+    kind: result
+    summary: "When the pairwise relation is aligned with the downstream task, any SSL method can succeed and recovers the supervised solution, with VICReg's invariance hyper-parameter best set high in the low-data regime; when the relation is misaligned, VICReg with a small invariance hyper-parameter is preferable to SimCLR or BarlowTwins."
+    locator: {type: section, value: "1", label: "Abstract and introduction guidance"}
+    evidence:
+      kind: author-reported-method
+      confidence: context-dependent
+      scope: "Abstract and introduction statements of the practical guidelines; the supporting experiments were not audited in this pass."
+      assumptions: ["The authors' aligned/misaligned relation taxonomy"]
+      limitations: ["Author-stated guidance supported by experiments that this pass did not audit.", "Not a universal recipe; the judgement of relation-task alignment is problem-specific."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:self-supervised-learning, topic:positive-pairs, topic:hyperparameters]
+      concept_ids: [positive-pair-distribution, training-objective]
+    candidate_destinations:
+      pages: []
+      concepts: [positive-pair-distribution]

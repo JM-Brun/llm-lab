@@ -3094,3 +3094,45 @@ sources:
           - "The post is a secondary pedagogical overview, not a primary architecture specification."
           - "No serving stack, hardware, model configuration or benchmark was inspected; performance bottlenecks are configuration-dependent."
           - "The diagram is not reproduced; reuse rights for the image are not established."
+  - id: balestriero-lecun-contrastive-non-contrastive-ssl-spectral-2022
+    title: "Contrastive and Non-Contrastive Self-Supervised Learning Recover Global and Local Spectral Embedding Methods"
+    creators: ["Randall Balestriero","Yann LeCun"]
+    source_type: paper
+    identifiers: {"arxiv":"2205.11508","doi":"10.48550/arXiv.2205.11508"}
+    canonical_url: "https://arxiv.org/abs/2205.11508"
+    publisher: "arXiv"
+    publication_date: "2022-05-23"
+    updated_date: "2022-06-10"
+    language: en
+    version: "arXiv v3"
+    revision: "v3"
+    licence: {"identifier":"CC-BY-4.0","url":"https://creativecommons.org/licenses/by/4.0/","status":"declared"}
+    reuse: {"text":"link-only","figures":"link-only","code":"link-only","data":"unknown"}
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: ["probabilistic-foundations-training","architectures-mechanisms"]
+      tags: ["topic:self-supervised-learning","topic:spectral-embedding","topic:laplacian-eigenmaps","topic:positive-pairs","method:dirichlet-energy","method:whitening"]
+      concept_ids: ["positive-pair-distribution","joint-embedding-predictive-architecture","laplacian-eigenmaps"]
+    metadata:
+      technical_level: advanced
+      contribution_types: ["theory","mathematical-derivation"]
+      audiences: ["researcher","practitioner","educator"]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-10"
+        status: partially-scanned
+        inspected_scope:
+          - "arXiv abstract, bibliographic metadata, licence and version history (v1 2022-05-23, v3 2022-06-10)"
+          - "Full arXiv HTML v3 retrieved; abstract read in full; key passages inspected around Theorem 1, Figure 1, Section 3.1 (VICReg invariance term as Dirichlet energy), Section 3.2 (constrained VICReg recovering kernel Laplacian Eigenmaps), Section 3.3 (Theorem 3 linear-regime parameters, Locality Preserving Projections, Linear Discriminant Analysis) and the global/local contrastive-non-contrastive correspondence (Sections 3.2 and 4.3)"
+          - "Cross-checked the Medium article's lineage sentence against the paper's own abstract and section text"
+        limitations:
+          - "The full HTML was retrieved but not read line by line; the theorems' proofs and experiments were not audited in this pass."
+          - "No code was executed and no independent reproduction was performed."
+          - "The results are population-level and idealized; they do not directly describe finite SGD training of production models."
+    related:
+      pages: ["fr/jepa-platonic-representation","en/jepa-platonic-representation"]
+      concepts: ["positive-pair-distribution","joint-embedding-predictive-architecture","laplacian-eigenmaps"]
+      audit_records:
+        - docs/source-reviews/platonic-representation-jepa-2026-11.md
+        - data/extractions/balestriero-lecun-contrastive-non-contrastive-ssl-spectral-2022.yml

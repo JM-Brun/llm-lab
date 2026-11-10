@@ -578,6 +578,14 @@ concepts:
       en: "Conjecture that internal representations of models trained on different modalities or architectures increasingly resemble each other as models and data scale; a conditional theorem makes it precise for JEPAs whose positive pairs share the same world-state relations."
     domains: [scale-research, mathematical-tools-geometry]
     resources: [fr/jepa-platonic-representation, en/jepa-platonic-representation]
+  - id: laplacian-eigenmaps
+    importance: specialized
+    labels: {fr: "Cartes propres laplaciennes (Laplacian eigenmaps)", en: "Laplacian eigenmaps"}
+    definitions:
+      fr: "Méthode d'apprentissage de variété qui attribue des coordonnées aux sommets d'un graphe pondéré en minimisant l'énergie de Dirichlet, de sorte que les sommets fortement reliés reçoivent des coordonnées proches ; la solution est portée par les premiers vecteurs propres du laplacien normalisé du graphe."
+      en: "Manifold-learning method that assigns coordinates to the vertices of a weighted graph by minimizing the Dirichlet energy, so that strongly connected vertices receive nearby coordinates; the solution is carried by the leading eigenvectors of the normalized graph Laplacian."
+    domains: [mathematical-tools-geometry]
+    resources: [fr/jepa-platonic-representation, en/jepa-platonic-representation]
 
 relation_types:
   represented-by:
@@ -832,3 +840,6 @@ relations:
   - {from: positive-pair-distribution, type: constrains, to: training-objective}
   - {from: joint-embedding-predictive-architecture, type: contrasts-with, to: next-token-prediction}
   - {from: platonic-representation-hypothesis, type: evaluated-by, to: held-out-evaluation}
+  - {from: laplacian-eigenmaps, type: applies-to, to: positive-pair-distribution}
+  - {from: laplacian-eigenmaps, type: contributes-to, to: platonic-representation-hypothesis}
+  - {from: joint-embedding-predictive-architecture, type: represented-by, to: laplacian-eigenmaps}
