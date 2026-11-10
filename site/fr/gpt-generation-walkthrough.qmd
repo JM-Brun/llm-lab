@@ -143,16 +143,26 @@ Ligne par ligne :
 2. Les paramètres sont aléatoires : les logits n'encodent aucune statistique de langue. La boucle, elle, fonctionne parfaitement (formes, causalité, sélection) — c'est exactement ce que ce jalon sépare : **la mécanique** de génération de **la qualité acquise par l'apprentissage**.
 </details>
 
-## Connexions
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Ressources complémentaires</span>
+  <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Pour approfondir
 
 - **Étape précédente** : [l'assemblage du GPT (`gpt.py`)](gpt-model-walkthrough.qmd).
 - **Pages conceptuelles** : [générer du texte pas à pas](generation.qmd), [logits](logits.qmd), [probabilités](probabilites.qmd).
 - **Retour au parcours** : [Construire un petit GPT](build-path.qmd).
 - **Code source** : [`generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/generate.py) · **Tests** : [`test_generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_generate.py).
 
-## Exercices
+### Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/gpt-generation-walkthrough.qmd).
+
+</div>
+</details>
 
 ::: {.language-switch}
 **Langue :** [Français](gpt-generation-walkthrough.qmd) · [English](../en/gpt-generation-walkthrough.qmd)
