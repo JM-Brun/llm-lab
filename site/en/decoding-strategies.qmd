@@ -47,6 +47,8 @@ By the end of this page, you will be able to:
 **Quick question:** can you distinguish transforming a distribution at one position from searching over multiple sequences?
 :::
 
+For “What have the Romans ever done for us?”, the model provides scores for the next token; decoding determines how to transform those scores and select that token. The selected token is then appended to the context, and the process repeats.
+
 ## 1. Where decoding happens
 
 At a given step, the model produces logits $z$ for the next token. A processing chain may then:
