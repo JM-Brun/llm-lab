@@ -18,14 +18,17 @@ Use this structure in Quarto pages, translating labels and descriptions naturall
 </summary>
 <div class="learning-resources__content" markdown="1">
 
-<h3>Explorer en pratique</h3>
-<p>Une phrase qui explique l'intérêt de la ressource, puis son <a href="...">lien explicite</a>.</p>
+### Explorer en pratique
 
-<h3 id="pour-approfondir">Pour approfondir</h3>
-<p>Lectures, références ou implémentations réellement complémentaires.</p>
+Une phrase qui explique l'intérêt de la ressource, puis son [lien explicite](...).
 
-<h3>Exercices</h3>
-<p>Accès à la <a href="...">page d'exercices dédiée</a>.</p>
+### Pour approfondir
+
+Lectures, références ou implémentations réellement complémentaires.
+
+### Exercices
+
+Accès à la [page d'exercices dédiée](...).
 
 </div>
 </details>
