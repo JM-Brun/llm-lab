@@ -111,6 +111,12 @@ At fixed model width, dense attention performs $O(T^2 d)$ arithmetic work per la
 
 The conceptual comparison is sufficient to locate the architectures. To run one representative example of each, install dependencies, and interpret the outputs, continue to the [hands-on activity: compare BERT, GPT-2, and T5](transformer-explainer.qmd#compare-three-transformer-families). This optional activity belongs to practice, not to the conceptual route or the small-GPT build.
 
+
+
+::: {.language-switch}
+**Language:** [Français](../fr/transformer-architectures.qmd) · [English](transformer-architectures.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -122,12 +128,7 @@ The conceptual comparison is sufficient to locate the architectures. To run one 
 
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/transformer-architectures.qmd).
 
-</div>
-</details>
 
-::: {.language-switch}
-**Language:** [Français](../fr/transformer-architectures.qmd) · [English](transformer-architectures.qmd)
-:::
 
 ::: {.self-check}
 ## Check your understanding
@@ -147,3 +148,7 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 </details>
 :::
+
+
+</div>
+</details>
