@@ -78,8 +78,27 @@ def _token_ids() -> np.ndarray:
     return rng.integers(0, CONFIG.vocab_size, size=(2, CONFIG.context_length))
 
 
-def test_logits_match_reference_in_float64() -> None:
-    reference = _reference(CONFIG, torch.float64)
+@pytest.fixture(scope="module", autouse=True)
+def limit_torch_threads():
+    """Avoid thread-pool overhead for this deliberately tiny reference model."""
+    previous = torch.get_num_threads()
+    torch.set_num_threads(1)
+    yield
+    torch.set_num_threads(previous)
+
+
+@pytest.fixture(scope="module")
+def reference_float64() -> object:
+    return _reference(CONFIG, torch.float64)
+
+
+@pytest.fixture(scope="module")
+def reference_float32() -> object:
+    return _reference(CONFIG, torch.float32)
+
+
+def test_logits_match_reference_in_float64(reference_float64: object) -> None:
+    reference = reference_float64
     model = _numpy_model(reference)
     ids = _token_ids()
 
@@ -89,8 +108,8 @@ def test_logits_match_reference_in_float64() -> None:
     np.testing.assert_allclose(model.forward(ids), expected, rtol=0.0, atol=1e-10)
 
 
-def test_hidden_states_match_reference_layer_by_layer() -> None:
-    reference = _reference(CONFIG, torch.float64)
+def test_hidden_states_match_reference_layer_by_layer(reference_float64: object) -> None:
+    reference = reference_float64
     model = _numpy_model(reference)
     ids = _token_ids()
 
@@ -107,8 +126,8 @@ def test_hidden_states_match_reference_layer_by_layer() -> None:
         np.testing.assert_allclose(x, hidden[i + 1].numpy(), rtol=0.0, atol=1e-10)
 
 
-def test_logits_match_float32_reference_within_stated_tolerance() -> None:
-    reference = _reference(CONFIG, torch.float32)
+def test_logits_match_float32_reference_within_stated_tolerance(reference_float32: object) -> None:
+    reference = reference_float32
     model = _numpy_model(reference)
     ids = _token_ids()
 
@@ -118,8 +137,8 @@ def test_logits_match_float32_reference_within_stated_tolerance() -> None:
     np.testing.assert_allclose(model.forward(ids), expected, rtol=0.0, atol=1e-5)
 
 
-def test_greedy_generation_matches_reference() -> None:
-    reference = _reference(CONFIG, torch.float64)
+def test_greedy_generation_matches_reference(reference_float64: object) -> None:
+    reference = reference_float64
     model = _numpy_model(reference)
     prompt = np.array([5, 1, 30], dtype=np.int64)
     new_tokens = CONFIG.context_length - prompt.size
