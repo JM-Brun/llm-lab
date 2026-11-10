@@ -93,6 +93,8 @@ project:
     - en/transformer-history.qmd
     - fr/queries-keys-values.qmd
     - en/queries-keys-values.qmd
+    - fr/queries-keys-values-advanced.qmd
+    - en/queries-keys-values-advanced.qmd
     - fr/scaled-dot-product-attention.qmd
     - fr/attention-score-scaling.qmd
     - en/scaled-dot-product-attention.qmd
@@ -206,6 +208,7 @@ website:
             - section: "Attention, position et architectures"
               contents:
                 - fr/attention-score-scaling.qmd
+                - fr/queries-keys-values-advanced.qmd
                 - fr/cross-attention.qmd
                 - fr/rope.qmd
                 - fr/hybrid-llm-architectures.qmd
@@ -307,6 +310,7 @@ website:
             - section: "Attention, position, and architectures"
               contents:
                 - en/attention-score-scaling.qmd
+                - en/queries-keys-values-advanced.qmd
                 - en/cross-attention.qmd
                 - en/rope.qmd
                 - en/hybrid-llm-architectures.qmd
