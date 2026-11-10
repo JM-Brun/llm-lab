@@ -882,7 +882,6 @@ async function runCase(testCase) {
           const routeMapPage = await page.context().newPage();
           try {
             await routeMapPage.goto(`${BASE}/${lang}/learning-map.html`, { waitUntil: "domcontentloaded", timeout: 30000 });
-            await routeMapPage.waitForLoadState("networkidle", { timeout: 500 }).catch(() => {});
             const ids = await routeMapPage.locator("[id^='guided-stage-']").evaluateAll(nodes => nodes.map(node => node.id));
             stageAnchorCache.set(lang, new Set(ids));
           } finally {
