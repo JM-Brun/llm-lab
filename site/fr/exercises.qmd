@@ -777,7 +777,7 @@ Oui : le vocabulaire et l'ordre des fusions BPE ont été ajustés à partir de 
 
 **Périmètre actuel :** CA-A introduit le masque causal, le décalage des cibles et l'invariance de préfixe à partir d'une matrice et des tests existants. Trois exercices formatifs progressifs, aux identifiants stables AT-A, AT-B et AT-C partagés avec la version anglaise, couvrent séparément le calcul d'une attention multi-têtes, la trace des formes, puis le diagnostic d'affirmations et la prédiction d'interventions. Les variantes spécifiques au masquage multi-têtes et les invariants avancés restent à approfondir. Ordre conseillé : CA-A pour le masque causal, puis AT-A, AT-B et AT-C pour la progression multi-têtes.
 
-#### Exercice — des scores Q/K à la sortie d'attention
+#### Exercice — des scores Q/K à la sortie d'attention {#at-0-scores-to-output}
 
 On considère une requête et deux clés/valeurs :
 
