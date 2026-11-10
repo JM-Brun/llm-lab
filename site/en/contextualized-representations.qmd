@@ -87,6 +87,56 @@ More concretely, self-attention lets a position aggregate information from acces
 
 In the *bank* example, both occurrences deliberately occupy the same position in the sentence (the third word, under the simplifying assumption of one token per word). With learned absolute position embeddings, they therefore receive the same positional term; with a mechanism such as RoPE, their position is also identical. For a causal decoder, the difference in their states then comes from the accessible prefix (*The river* or *The financial*), not from a different absolute position. In other examples, position and context may both contribute.
 
-We can therefore follow one position as it moves through the network: \\(h_t^{(0)}\\) is its input state, and successive blocks produce \\(h_t^{(1)}\\), \\(h_t^{(2)}\\), and so on. The vector is not replaced by a sense label; it is transformed by learned operations that progressively integrate information.
+States then evolve from block to block: \(h_t^{(0)}\) denotes the initial input at position \(t\), and each block produces \(h_t^{(1)}\), \(h_t^{(2)}\), and so on. The vector is not replaced by a sense label; it is transformed by learned operations that progressively integrate information.
 
 ![The same token can receive different contextualized representations depending on the sentence.](../images/contextualized-embeddings-en.svg){fig-alt="Two sequences place bank at the same simplified position. Both occurrences share the same initial lookup, while each Transformer block combines that state with the sequence-specific accessible context before producing a hidden state that may differ." fig-cap="Same token ID and same simplified position: the lookup is identical. The accessible prefixes differ, so hidden states may differ." width=100%}
+
+This original illustration is motivated by [Ethayarajh (2019), *How Contextual are Contextualized Word Representations?*](https://arxiv.org/abs/1909.00512). It illustrates the principle, not measured vectors. Depending on the tokenizer, a visible word may consist of multiple tokens.
+
+## Keep the stages and representations separate
+
+| Object | What determines it? | Is it context-dependent? |
+|---|---|---|
+| Token ID | Tokenizer vocabulary and rules | No; it identifies a vocabulary entry |
+| Initial token embedding | The selected row of the embedding matrix | No, for a fixed matrix and token ID |
+| Hidden state at layer \(\ell\) | Previous layer's state, positional information, and tokens accessible under the mask | Yes, in general |
+
+Two common confusions follow from collapsing these stages:
+
+- **“The embedding lookup understands the sentence.”** No. The lookup selects a learned row; context is incorporated by subsequent network operations.
+- **“The same token must have the same hidden state everywhere.”** No. The initial lookup can be shared while position and context change later representations.
+
+This also does not guarantee that the model will represent human-interpreted senses as cleanly separated clusters. Contextualization is a computational mechanism, not a guarantee of a particular semantic geometry.
+
+## Where this fits in the model
+
+To place this transformation in the full learning path:
+
+1. The tokenizer maps text to token IDs.
+2. The embedding table maps each ID to an initial vector.
+3. The architecture introduces positional information according to its design.
+4. Transformer layers produce context-dependent hidden states.
+5. Later layers and the output head use those states to predict the next token.
+
+The [embedding-space lookup](embedding-space.qmd) maps IDs to initial vectors. To see how the network then transforms these vectors into contextualized states, continue with [The Transformer in a GPT](transformer.qmd): that page locates the stack of blocks and distinguishes attention from the MLP. The [Q/K/V](queries-keys-values.qmd) and [scaled dot-product attention](scaled-dot-product-attention.qmd) pages then unpack the attention mechanism.
+
+::: {.self-check}
+## Check your understanding
+
+[Extended exercises on this topic](../en/exercises.qmd#transformer).
+
+Two occurrences of the **same token ID** appear in two different sentences. Assume the embedding matrix is unchanged:
+
+1. Are the vectors returned by the embedding lookup identical?
+2. Must the hidden states after the Transformer layers also be identical? Why?
+3. At which stage does contextual information enter the computation?
+
+You have understood this step if you can explain the difference between **identity of the initial vector** and **context-dependence of hidden states**, without attributing sentence understanding to the lookup itself.
+
+:::
+
+{{< include ../includes/generated-suggested-route-en-contextualized-representations.qmd >}}
+
+::: {.language-switch}
+**Language:** [Français](../fr/contextualized-representations.qmd) · [English](contextualized-representations.qmd)
+:::
