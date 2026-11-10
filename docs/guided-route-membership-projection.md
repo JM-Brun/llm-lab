@@ -28,6 +28,7 @@ The function returns a mapping:
 - key: published page ID, including its language prefix;
 - value: ordered list of explicit memberships;
 - each membership contains the stage ID, localized stage title, and role (`core` or `optional`).
+- each membership also carries its position, taken from the same registry: the number of stages, and for a `core` membership the page's rank among that stage's core pages and their count. An `optional` membership has no rank and shows no position text: its stage number is already in the stage cue. For core pages, position is rendered as a short text inside the existing context cue («Étape 4 sur 8 · page 2 sur 4»); it is part of the pedagogical context, not a second navigation element, and it makes no claim about reading time or effort.
 
 The list order follows the stage order in `data/guided-route.yml`. The role is preserved per membership, not collapsed into a page-level boolean.
 

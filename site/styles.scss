@@ -1761,14 +1761,13 @@ a.concept-link:focus-visible {
   font-size: .75rem;
   font-weight: 650;
 }
-/* Position and reading time: quiet text pushed to the end of the row. */
+/* Position in the route: quiet text pushed to the end of the row. */
 .guided-page-context__position {
   margin-left: auto;
   color: #475569;
   font-size: .78rem;
   font-variant-numeric: tabular-nums;
 }
-.guided-page-context--multiple p.guided-page-context__position { margin: 0 0 .5rem; }
 .guided-page-context--multiple li .guided-page-context__position { margin-left: .5rem; }
 .guided-page-context--multiple {
   display: block;

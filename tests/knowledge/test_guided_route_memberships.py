@@ -229,33 +229,22 @@ def test_writer_generates_page_contexts_for_every_route_member(
         f"generated-guided-context-{generation_id.replace('/', '-')}.qmd"
     ]
     render_context = GENERATOR["render_guided_page_context_markdown"]
-
-    def reading_minutes(page_id: str) -> int:
-        source = (ROOT / "site" / f"{page_id}.qmd").read_text(encoding="utf-8")
-        return int(GENERATOR["estimate_reading_minutes"](source))
-
     assert overview_file.read_text(encoding="utf-8") == render_context(
-        page_by_id[overview_id],
-        memberships[overview_id],
-        language,
-        reading_minutes(overview_id),
+        page_by_id[overview_id], memberships[overview_id], language
     )
     assert generation_file.read_text(encoding="utf-8") == render_context(
-        page_by_id[generation_id],
-        memberships[generation_id],
-        language,
-        reading_minutes(generation_id),
+        page_by_id[generation_id], memberships[generation_id], language
     )
 
 
 @pytest.mark.parametrize(
     ("language", "expected"),
     [
-        ("en", "Stage 4 of 8 · page 2 of 4 · ≈ 6 min read"),
-        ("fr", "Étape 4 sur 8 · page 2 sur 4 · ≈ 6 min de lecture"),
+        ("en", "Stage 4 of 8 · page 2 of 4"),
+        ("fr", "Étape 4 sur 8 · page 2 sur 4"),
     ],
 )
-def test_core_page_context_states_position_and_reading_time(language: str, expected: str) -> None:
+def test_core_page_context_states_position(language: str, expected: str) -> None:
     membership = GENERATOR["GuidedRouteMembership"](
         stage_id="computation",
         stage_index=4,
@@ -268,12 +257,12 @@ def test_core_page_context_states_position_and_reading_time(language: str, expec
     )
     page = GENERATOR["ResolvedPage"](id=f"{language}/qkv", title="QKV", href="qkv.html")
 
-    rendered = GENERATOR["render_guided_page_context_markdown"](page, [membership], language, 6)
+    rendered = GENERATOR["render_guided_page_context_markdown"](page, [membership], language)
 
     assert f'<span class="guided-page-context__position">{expected}</span>' in rendered
 
 
-def test_optional_page_context_states_its_stage_but_no_page_rank() -> None:
+def test_optional_page_context_adds_no_position() -> None:
     membership = GENERATOR["GuidedRouteMembership"](
         stage_id="representations",
         stage_index=3,
@@ -284,10 +273,10 @@ def test_optional_page_context_states_its_stage_but_no_page_rank() -> None:
     )
     page = GENERATOR["ResolvedPage"](id="en/rope", title="RoPE", href="rope.html")
 
-    rendered = GENERATOR["render_guided_page_context_markdown"](page, [membership], "en", 3)
+    rendered = GENERATOR["render_guided_page_context_markdown"](page, [membership], "en")
 
-    assert ">Stage 3 of 8 · ≈ 3 min read</span>" in rendered
-    assert "page " not in rendered
+    # The stage number is already in the stage cue; an optional page has no rank.
+    assert "guided-page-context__position" not in rendered
 
 
 def test_page_context_omits_position_it_does_not_know() -> None:
@@ -303,23 +292,6 @@ def test_page_context_omits_position_it_does_not_know() -> None:
     rendered = GENERATOR["render_guided_page_context_markdown"](page, [membership], "en")
 
     assert "guided-page-context__position" not in rendered
-
-
-def test_reading_time_counts_prose_only() -> None:
-    estimate = GENERATOR["estimate_reading_minutes"]
-    prose = " ".join(["word"] * 401)
-    noise = (
-        '---\ntitle: "T"\n---\n\n<!--\n' + "hidden " * 500 + "\n-->\n\n"
-        "```python\n" + "code = 1\n" * 500 + "```\n\n"
-        "$$\n" + "x + y " * 500 + "\n$$\n\n"
-        "<svg>" + "<text>label</text>" * 500 + "</svg>\n\n"
-        "{{< include ../includes/other.qmd >}}\n\n"
-    )
-
-    assert estimate(prose) == 3
-    assert estimate(noise + prose) == 3
-    assert estimate("") == 1
-    assert estimate("l'état-de-l'art aujourd\u2019hui") == 1
 
 
 @pytest.mark.parametrize("language", ["fr", "en"])
@@ -341,7 +313,9 @@ def test_real_route_positions_are_complete_and_consistent(language: str) -> None
             assert membership.stage_count == len(stages)
             assert (membership.page_count is None) == (membership.role == "optional")
 
+    core_ids = {page.id for stage in stages for page in stage.pages}
     fragments = GENERATOR["prepare_guided_page_context_fragments"](language, stages)
     for path, text in fragments.items():
-        assert "guided-page-context__position" in text, path.name
-        assert "min" in text, path.name
+        page_id = path.name.removeprefix("generated-guided-context-").removesuffix(".qmd")
+        page_id = page_id.replace("-", "/", 1)
+        assert ("guided-page-context__position" in text) == (page_id in core_ids), path.name
