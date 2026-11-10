@@ -38,6 +38,10 @@ Un tokenizer est un choix de représentation et d'ingénierie. Il doit couvrir l
 **Question de contrôle :** deux tokenizers réduisent le nombre de tokens d'un même texte ; pourquoi cela ne suffit-il pas à conclure que l'un donne un meilleur modèle en aval ?
 :::
 
+::: {.callout-note title="Un texte à passer au tokenizer"}
+Essayez la question « C'est une bonne situation, ça, scribe ? » avec plusieurs tokenizers. Observez les fragments et les IDs réellement renvoyés : ne déduisez pas les frontières à partir des mots visibles, et ne supposez pas qu'elles seront identiques d'un tokenizer à l'autre.
+:::
+
 ## 1. Carte conceptuelle
 
 
