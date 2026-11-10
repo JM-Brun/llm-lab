@@ -103,6 +103,19 @@ def test_non_svg_or_non_image_assets_force_full_render():
         assert result["render_mode"] == "full"
 
 
+def test_svg_asset_paths_cannot_escape_the_images_directory():
+    result = classify_changed_files(
+        [
+            {"filename": "site/fr/example.qmd", "status": "modified"},
+            {"filename": "site/images/../../outside.svg", "status": "modified"},
+        ],
+        CONFIG,
+    )
+
+    assert result["render_mode"] == "full"
+    assert result["render_assets"] == []
+
+
 def test_added_or_deleted_svg_asset_forces_full_render():
     for status in ("added", "removed", "renamed"):
         result = classify_changed_files(
