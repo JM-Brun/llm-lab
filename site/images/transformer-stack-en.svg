@@ -53,9 +53,9 @@
 
 <path d="M790 1020V1110H35V1200H55" class="arrow"/>
 <text x="75" y="1140" class="label">Sublayer 2 · position-wise transformation</text>
-<rect x="55" y="1165" width="145" height="70" rx="9" class="input"/><text x="127" y="1193" text-anchor="middle" class="label">Input H′</text><text x="127" y="1217" text-anchor="middle" class="note">flux résiduel</text>
+<rect x="55" y="1165" width="145" height="70" rx="9" class="input"/><text x="127" y="1193" text-anchor="middle" class="label">Input H′</text><text x="127" y="1217" text-anchor="middle" class="note">residual stream</text>
 <path d="M200 1200H235" class="arrow"/>
-<rect x="235" y="1165" width="135" height="70" rx="9" class="norm"/><text x="302" y="1194" text-anchor="middle" class="label">LayerNorm</text><text x="302" y="1217" text-anchor="middle" class="note">pré-LN</text>
+<rect x="235" y="1165" width="135" height="70" rx="9" class="norm"/><text x="302" y="1194" text-anchor="middle" class="label">LayerNorm</text><text x="302" y="1217" text-anchor="middle" class="note">pre-LN</text>
 <path d="M370 1200H405" class="arrow"/>
 <rect x="405" y="1165" width="210" height="70" rx="9" class="mlp"/><text x="510" y="1194" text-anchor="middle" class="label">MLP / feed-forward</text><text x="510" y="1217" text-anchor="middle" class="note">position by position</text>
 <path d="M615 1200H655" class="arrow"/>
