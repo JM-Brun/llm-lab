@@ -26,7 +26,7 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-text-
 
 **Repères pour commencer :** [texte et données](text-data.qmd) et [espace des embeddings](embedding-space.qmd) suffisent pour aborder les premiers exercices ; les prérequis supplémentaires sont indiqués pour chaque exercice ci-dessous. En particulier, l'exercice sur les fenêtres d'entraînement mobilise les [exemples d'entraînement et le décalage entrée-cible](training-examples.qmd), l'exercice sur les fusions BPE la page de tokenisation et l'exercice sur les fuites entre partitions la préparation du corpus.
 
-**Périmètre actuel :** six exercices formatifs bilingues, aux identifiants stables l'exercice sur la chaîne des représentations à l'exercice sur les fuites entre partitions, couvrent la chaîne texte → représentations (l'exercice sur la chaîne des représentations à l'exercice sur identité, position et contexte), les fenêtres et le décalage entrée-cible (l'exercice sur les fenêtres d'entraînement), le calcul de fusions BPE (l'exercice sur les fusions BPE), puis le diagnostic des fuites entre partitions et de l'ajustement du tokenizer (l'exercice sur les fuites entre partitions). Ordre conseillé : l'exercice sur la chaîne des représentations, l'exercice sur le lookup, l'exercice sur identité, position et contexte, puis l'exercice sur les fenêtres d'entraînement, l'exercice sur les fusions BPE et l'exercice sur les fuites entre partitions après les pages de préparation correspondantes.
+**Périmètre actuel :** six exercices formatifs bilingues couvrent la chaîne texte → représentations, les fenêtres et le décalage entrée-cible, le calcul de fusions BPE, puis le diagnostic des fuites entre partitions et l'ajustement du tokenizer. Chaque exercice possède une ancre descriptive et stable, indépendante de son titre et de sa position dans la collection. Les prérequis indiqués sur chaque exercice guident l'ordre conseillé.
 
 ### Reconstruire la chaîne des représentations {#ex-representation-pipeline}
 
@@ -322,7 +322,7 @@ h_{\text{cible}}=0.4\,z_{\text{préfixe}}+0.6\,z_{\text{cible}},\qquad z=x+P.
 <details>
 <summary>Afficher le corrigé et le code NumPy</summary>
 
-Le lookup de « situation » vaut \((0.5,0.5)\) dans les deux contextes ; \(z_{\text{bank}}=(0.52,0.55)\). Les préfixes donnent \(z_{\text{river}}=(0.11,0.22)\) et \(z_{\text{financial}}=(0.91,-0.40)\).
+Le lookup de « situation » vaut \\(0.5,0.5\\) dans les deux contextes ; \\(z_{\\text{cible}}=(0.52,0.55)\\). Les préfixes donnent \\(z_{\\text{bonne}}=(0.11,0.22)\\) et \\(z_{\\text{mauvaise}}=(0.91,-0.40)\\).
 \[
 h_A=(0.356,0.418),\qquad h_B=(0.676,0.170).
 \]
