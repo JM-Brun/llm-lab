@@ -133,7 +133,7 @@ Le Build path est une voie distincte du parcours Understand. Le même exemple se
 
 1. **Une source canonique :** modifier ce document lorsque le scénario, le prompt, la continuation jouet ou la couverture des pages change.
 2. **Pas de copier-coller de la tirade :** garder la citation d'ouverture courte et référencée ; employer le texte original de LLM Lab pour les démonstrations.
-3. **Bilinguisme :** chaque ajout dans une page FR doit avoir son équivalent EN dans la même PR. Dans les pages françaises, conserver le préfixe Astérix et la continuation d'Otis. Dans les pages anglaises, privilégier le parallèle Monty Python (question sur les Romains puis réponses successives) plutôt qu'une traduction artificielle des répliques françaises.
+3. **Bilinguisme :** chaque ajout dans une page FR doit avoir son équivalent EN dans la même PR. Dans les pages françaises, conserver le préfixe Astérix et la continuation d'Otis. Dans les pages anglaises, privilégier le parallèle Monty Python de *Life of Brian* (question sur les Romains puis réponses successives) plutôt qu'une traduction artificielle des répliques françaises ; utiliser *Holy Grail* en complément pour le contexte conversationnel et les contraintes successives.
 4. **Répétition utile, pas duplication :** chaque page réutilise le même scénario pour enseigner son concept propre. Elle ne répète pas l'explication des pages précédentes.
 5. **Véracité numérique :** aucun ID, vecteur, score, logit, poids ou gradient inventé présenté comme résultat réel. Les chiffres illustratifs sont marqués « jouet », « fictifs » ou calculés.
 6. **Respect des frontières de parcours :** Understand expose la chaîne conceptuelle ; Build suit les dépendances d'implémentation. Deepen ajoute des détails facultatifs ; Practice vérifie le transfert.
@@ -152,6 +152,28 @@ Pour les pages anglaises, utiliser comme parallèle culturel la scène « What h
 **Précaution pédagogique importante :** dans le film, les éléments sont prononcés par plusieurs personnages dans un dialogue monté. Ce n'est donc pas littéralement une génération autoregressive par un seul locuteur ou un modèle. La scène fournit une analogie mémorable du couple contexte/continuation ; pour les démonstrations de génération token par token, utiliser une séquence textuelle unique et contrôlée, ou la continuation jouet ci-dessus. La phrase anglaise est une adaptation de travail du rôle du prompt, pas une traduction du dialogue d'Astérix.
 
 Source de référence : [Monty Python — *Life of Brian* (1979), citation et contexte](https://fr.wikiquote.org/wiki/Monty_Python_:_La_Vie_de_Brian).
+
+### Compléments anglophones — *Monty Python and the Holy Grail*
+
+Deux scènes de *Monty Python and the Holy Grail* (1975) complètent *Life of Brian*, sans remplacer le parallèle principal de génération.
+
+**1. The Bridge of Death — contexte conversationnel et tours successifs**
+
+Le gardien pose une série de questions aux voyageurs ; les réponses déterminent la suite de l'échange et la possibilité de traverser. Cette scène convient pour illustrer :
+- la dépendance d'une réponse aux tours précédents ;
+- la distinction entre contexte accumulé et nouveau message ;
+- le rôle d'une question suivante dans le déroulement d'un dialogue.
+
+Elle ne constitue pas une génération autoregressive par un seul locuteur : les personnages alternent et la scène est un dialogue. À utiliser dans les pages sur le contexte, les conversations et l'instruction, pas comme exemple de génération monologique.
+
+**2. The Knights Who Say “Ni” — contraintes qui évoluent**
+
+La demande d'un arbuste (*a shrubbery*) devient progressivement plus précise : un second arbuste, une disposition particulière, un chemin, puis une contrainte supplémentaire. Cette scène illustre la manière dont de nouvelles exigences enrichissent le contexte et modifient la tâche à accomplir.
+
+Elle est particulièrement adaptée aux pages sur les instructions, le suivi des contraintes, les conversations multi-tours et l'évaluation de la cohérence avec l'historique. Ne pas l'utiliser comme preuve que le modèle comprend ou satisfait nécessairement les contraintes.
+
+Sources de travail : [transcription du pont de la Mort et des chevaliers de Ni](https://transcripts.foreverdreaming.org/viewtopic.php?t=218005) ; [scène des chevaliers de Ni, transcription alternative](https://python.mzonline.com/holygrail/scene26/). Les transcriptions servent à vérifier le contenu des scènes, pas à reproduire de longs extraits dans les leçons.
+
 
 ## 6. Procédure de remplacement ou de réorganisation
 
