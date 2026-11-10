@@ -750,6 +750,14 @@ for (const testCase of cases) {
           throw new Error(`deep-dive page does not expose a link back to canonical parent ${parent}`);
         }
       }
+      if (pagePath === "entropy.html") {
+        const comparisons = page.locator(".meta-flow__comparison-item");
+        const text = await page.locator(".meta-flow").innerText();
+        if (await comparisons.count() !== 2 || !/surprise/i.test(text) ||
+            !/cross-entropy|entropie croisée/i.test(text)) {
+          throw new Error("entropy map must distinguish predictive entropy, observed-token surprise, and cross-entropy");
+        }
+      }
     }
 
     if (kind === "route-context") {
@@ -940,14 +948,6 @@ for (const testCase of cases) {
           const active = page.locator(".meta-flow [aria-current='step']");
           if (await branches.count() !== 3 || await active.count() !== 1) {
             throw new Error("Q/K/V must be shown as three parallel branches with one current concept");
-          }
-        }
-        if (pagePath === "entropy.html") {
-          const comparisons = page.locator(".meta-flow__comparison-item");
-          const text = await page.locator(".meta-flow").innerText();
-          if (await comparisons.count() !== 2 || !/surprise/i.test(text) ||
-              !/cross-entropy|entropie croisée/i.test(text)) {
-            throw new Error("entropy map must distinguish predictive entropy, observed-token surprise, and cross-entropy");
           }
         }
         if (pagePath === "positional-encoding.html") {
