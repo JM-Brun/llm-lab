@@ -56,9 +56,9 @@ La réplique du film sert d'illustration culturelle du couple préfixe/continuat
 
 | Étape | Question pédagogique | Déclinaison de l'exemple | Ce qu'il faut faire observer |
 |---|---|---|---|
-| Situation initiale | Que demande-t-on au modèle ? | Panoramix pose une question courte ; notre prompt reformule la tâche en instruction explicite. | Distinguer le préfixe déjà fourni (question de Panoramix) des tokens de continuation (réponse d'Otis). |
+| Situation initiale | Que demande-t-on au modèle ? | Panoramix fournit le préfixe initial ; la réponse d'Otis constitue la continuation à générer. | Distinguer le préfixe déjà fourni (question de Panoramix) des tokens de continuation (réponse d'Otis). |
 | Texte brut | Quel est le texte fourni ? | Afficher la question de Panoramix comme préfixe, puis la réponse d'Otis comme continuation séparée. | Le modèle ne reçoit pas directement des mots comme unités sémantiques ; il reçoit une représentation tokenisée. |
-| Tokenisation | Comment le texte est-il découpé ? | Faire encoder le prompt avec le tokenizer réellement utilisé dans la page ou le code. | Les frontières de tokens ne coïncident pas nécessairement avec les mots ; elles varient selon le tokenizer. |
+| Tokenisation | Comment le texte est-il découpé ? | Faire encoder le préfixe et, séparément, la continuation avec le tokenizer réellement utilisé dans la page ou le code. | Les frontières de tokens ne coïncident pas nécessairement avec les mots ; elles varient selon le tokenizer. |
 | Vocabulaire et IDs | Comment les morceaux sont-ils identifiés ? | Montrer les tokens et leurs IDs obtenus à l'exécution. | Un ID est une adresse de ligne dans la table de vocabulaire/embedding du tokenizer concerné ; ce n'est pas une coordonnée vectorielle. |
 | Embeddings | Comment les IDs deviennent-ils des vecteurs ? | Sélectionner les lignes de la matrice d'embedding correspondant aux IDs. | Même ID = même vecteur initial dans un checkpoint donné ; les lignes ne sont pas des définitions lexicales. |
 | Position | Comment l'ordre est-il conservé ? | Comparer les mêmes tokens placés à des positions différentes, ou présenter l'ajout/encodage positionnel réellement choisi. | Le modèle doit disposer d'une information de position ; ne pas supposer une méthode unique. |
@@ -87,8 +87,8 @@ Les pages ci-dessous sont les destinations canoniques identifiées dans le parco
 | Page FR | Page EN | Usage précis du fil rouge | Garde-fou / limite |
 |---|---|---|---|
 | `fr/llm-overview.qmd` | `en/llm-overview.qmd` | Accroche : une question courte et une continuation longue illustrent une tâche de modèle de langage. | Ne pas confondre le personnage, un assistant conversationnel et un LLM. |
-| `fr/generation.qmd` | `en/generation.qmd` | Introduire le cycle autoregressif avec le préfixe du scribe et plusieurs continuations possibles. | Ne pas faire croire qu'un modèle choisit toute la tirade en un seul bloc. |
-| `fr/text-data.qmd` | `en/text-data.qmd` | Afficher le préfixe « C'est une bonne situation, ça, scribe ? » comme préfixe brut avant tokenisation, puis distinguer la continuation. | Conserver ponctuation, espaces et accents ; distinguer prompt et cible. |
+| `fr/generation.qmd` | `en/generation.qmd` | Introduire le cycle autoregressif avec le préfixe du scribe et la continuation d'Otis ; utiliser le parallèle Monty Python dans la version anglaise. | Ne pas faire croire qu'un modèle choisit toute la tirade en un seul bloc. |
+| `fr/text-data.qmd` | `en/text-data.qmd` | Afficher le préfixe « C'est une bonne situation, ça, scribe ? » avant tokenisation, puis distinguer les tokens de continuation ; dans la page anglaise, prendre la scène des Romains comme parallèle culturel. | Conserver ponctuation, espaces et accents ; distinguer prompt et cible. |
 | `fr/tokenization-strategies.qmd` | `en/tokenization-strategies.qmd` | Comparer la segmentation effective du prompt avec deux tokenizers si les outils sont disponibles. | Les tokens ne sont pas forcément des mots ; ne pas figer une segmentation universelle. |
 | `fr/embedding-space.qmd` | `en/embedding-space.qmd` | Relier chaque ID obtenu à une ligne de la matrice d'embedding. | Employer « adresse de ligne » pour l'index de la table ; la coordonnée vectorielle est une autre notion. |
 | `fr/positional-encoding.qmd` | `en/positional-encoding.qmd` | Montrer que l'ordre des mots du prompt compte, même si les IDs de tokens sont identiques. | Décrire la méthode positionnelle effectivement étudiée, sans généraliser à toutes les architectures. |
@@ -133,7 +133,7 @@ Le Build path est une voie distincte du parcours Understand. Le même exemple se
 
 1. **Une source canonique :** modifier ce document lorsque le scénario, le prompt, la continuation jouet ou la couverture des pages change.
 2. **Pas de copier-coller de la tirade :** garder la citation d'ouverture courte et référencée ; employer le texte original de LLM Lab pour les démonstrations.
-3. **Bilinguisme :** chaque ajout dans une page FR doit avoir son équivalent EN dans la même PR. Le préfixe de référence reste en français lorsqu'il est présenté comme citation source ; fournir une traduction de travail pour les pages anglaises sans la présenter comme citation officielle du film.
+3. **Bilinguisme :** chaque ajout dans une page FR doit avoir son équivalent EN dans la même PR. Dans les pages françaises, conserver le préfixe Astérix et la continuation d'Otis. Dans les pages anglaises, privilégier le parallèle Monty Python (question sur les Romains puis réponses successives) plutôt qu'une traduction artificielle des répliques françaises.
 4. **Répétition utile, pas duplication :** chaque page réutilise le même scénario pour enseigner son concept propre. Elle ne répète pas l'explication des pages précédentes.
 5. **Véracité numérique :** aucun ID, vecteur, score, logit, poids ou gradient inventé présenté comme résultat réel. Les chiffres illustratifs sont marqués « jouet », « fictifs » ou calculés.
 6. **Respect des frontières de parcours :** Understand expose la chaîne conceptuelle ; Build suit les dépendances d'implémentation. Deepen ajoute des détails facultatifs ; Practice vérifie le transfert.
