@@ -154,6 +154,12 @@ The mechanism is not limited to translation. It also appears in multimodal model
 - [Causal masking](causal-masking.qmd) explains the temporal constraint in decoder self-attention.
 - [Transformer history](transformer-history.qmd) places the encoder–decoder in the original Transformer paper.
 
+
+
+::: {.language-switch}
+**Language:** [Français](../fr/cross-attention.qmd) · [English](cross-attention.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -167,7 +173,3 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 </div>
 </details>
-
-::: {.language-switch}
-**Language:** [Français](../fr/cross-attention.qmd) · [English](cross-attention.qmd)
-:::
