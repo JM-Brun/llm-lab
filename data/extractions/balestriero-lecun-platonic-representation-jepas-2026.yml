@@ -6,7 +6,7 @@ pedagogical_model:
     basis:
       - "Inspected arXiv abstract and HTML sections 1–2.4 on 2026-11-10, including formal world/modality/pair notation, theorem assumptions, spectral interpretation, nuisance analysis and next-token-prediction reformulation."
       - "Cross-checked the article's headline experimental claims against the arXiv abstract; the article itself was fully retrieved."
-      - "The extraction deliberately does not reconstruct sections 3–5 or appendices as if they had been fully audited."
+      - "Sections 3–5 were subsequently inspected in full HTML on 2026-11-10; appendices and executable code remain unaudited."
     inferred_elements:
       - "Learning outcomes, assumed prerequisites and the source-local teaching route are inferred from the inspected paper structure."
   source_graph:
@@ -63,7 +63,7 @@ pedagogical_model:
     - "The theorem uses finite world states, injective renderings, shared positive-pair distributions and population optima; real captions and images are partial observations."
     - "Uniqueness up to rotation requires additional conditions such as a spectral gap; the paper notes that some full-distribution constraints need this uniqueness as an assumption."
     - "The main theorem's identity predictor setup does not cover action-conditioned JEPA predictors used as world models."
-    - "The current extraction has not audited experimental sections, appendices, or implementation."
+    - "Appendix proofs, implementation and independent reproduction remain unaudited."
   comparison:
     dossier: docs/source-reviews/platonic-representation-jepa-2026-11.md
     canonical_graph: "data/concepts.yml and generated JSON-LD projection"
@@ -175,5 +175,131 @@ items:
       tags: [topic:cross-modal-alignment, application:image-captioning]
     candidate_destinations:
       pages: [fr/contextualized-representations, en/contextualized-representations]
+      concepts: []
+    disposition: pending
+
+  - id: balestriero-lecun-platonic-representation-jepas-2026:matched-flickr-experiment
+    kind: result
+    summary: "On Flickr30k, the authors train image and text encoders separately. With matched text encoder, data and training recipe, caption views from different captions of the same image outperform masked spans and next-token prediction on mutual 10-NN and retrieval through one orthogonal map. The paper reports three seeds for these comparisons."
+    locator: {type: section, value: "3.1", label: "Good Views Align Across Modalities"}
+    evidence:
+      kind: author-reported-experiment
+      confidence: well-supported
+      scope: "Flickr30k Karpathy split, 29k training images with five captions each; reported Table 1 and section 3.1."
+      assumptions: ["The reported matched setup is as described by the authors."]
+      limitations: ["Small caption dataset and image encoder limit absolute scores.", "No independent reproduction has been run.", "Alignment metrics do not measure reasoning."]
+    classification:
+      primary_theme: scale-research
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:jepa, topic:cross-modal-alignment, modality:image, modality:text]
+    candidate_destinations:
+      pages: []
+      concepts: []
+    disposition: pending
+  - id: balestriero-lecun-platonic-representation-jepas-2026:trimming-and-stability
+    kind: result
+    summary: "Trimming captions into shorter spans is the most consequential tested adjustment to good-view JEPA: full captions reduce retrieval R@1 from .246 to .185. Other tested settings move the mean less, while training stability remains important: gradient clipping prevents most observed collapses."
+    locator: {type: section, value: "3.2", label: "Trimming Makes Good Views, the Rest Barely Matters"}
+    evidence:
+      kind: author-reported-ablation
+      confidence: context-dependent
+      scope: "One-factor-at-a-time Flickr ablations and stability observations in section 3.2."
+      assumptions: ["The comparisons use the authors' selected training recipe and evaluation protocol."]
+      limitations: ["Ablation scope is bounded to the tested settings.", "The result does not establish that shorter views are always better for every modality or objective."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [scale-research]
+      tags: [topic:jepa, topic:positive-pairs, method:data-augmentation]
+    candidate_destinations:
+      pages: []
+      concepts: []
+    disposition: pending
+  - id: balestriero-lecun-platonic-representation-jepas-2026:video-good-views
+    kind: result
+    summary: "On MSR-VTT, using different frames of one video clip as image-side views and different captions as text-side views improves mutual 10-NN alignment. This provides evidence that the view design can be applied on both modalities when multiple observations of the same scene are available."
+    locator: {type: section, value: "3.3", label: "Good Views Help on Both Sides"}
+    evidence:
+      kind: author-reported-experiment
+      confidence: context-dependent
+      scope: "MSR-VTT experiment with 7k training clips and 20 captions per clip."
+      assumptions: ["A clip is treated as a shared underlying scene/event for the paired frames and captions."]
+      limitations: ["The image JEPA trained from scratch on the 7k clips remains weaker than DINOv2.", "This does not establish scalable video JEPA performance."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [scale-research]
+      tags: [topic:jepa, topic:cross-modal-alignment, modality:video]
+    candidate_destinations:
+      pages: []
+      concepts: []
+    disposition: pending
+  - id: balestriero-lecun-platonic-representation-jepas-2026:sample-token-compute-distinction
+    kind: result
+    summary: "The headline comparison is 42 times fewer training samples for good-view JEPA than next-token prediction to reach a comparable WIT alignment score. Because each good-view sample reads three texts, the paper reports a smaller 14-fold text-token difference and 435 times fewer unique images. These are not total-compute or wall-clock ratios."
+    locator: {type: section, value: "4.2", label: "Good Views Need 42 Times Fewer Samples"}
+    evidence:
+      kind: author-reported-comparison
+      confidence: context-dependent
+      scope: "109M encoder comparison on Recap-DataComp texts; 21.6M versus 900M samples."
+      assumptions: ["The compared runs use the stated model and corpus configurations."]
+      limitations: ["Different batch sizes and learning-rate recipes are used at the two scales.", "No FLOPs, energy or wall-clock equivalence is established.", "The paper reports samples, tokens and unique images as distinct denominators."]
+    classification:
+      primary_theme: scale-research
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:jepa, topic:training-efficiency, topic:cross-modal-alignment]
+    candidate_destinations:
+      pages: []
+      concepts: [training-objective]
+    disposition: pending
+  - id: balestriero-lecun-platonic-representation-jepas-2026:alignment-scaling-law
+    kind: result
+    summary: "The authors fit an empirical alignment law combining the fraction q of good-view training items, sample count M and number of images N. It predicts 85 held-out runs with RMSE .0093, comparable to seed-to-seed variation .0096, within the tested range. It overestimates good-view-only runs when extrapolated to 320M samples because the fitted form lacks a repeated-data term."
+    locator: {type: section, value: "4.4", label: "A Scaling Law for the PRH"}
+    evidence:
+      kind: author-reported-scaling-law
+      confidence: context-dependent
+      scope: "One BERT-S recipe, 45 fitting cells up to 80M samples and 85 predicted runs."
+      assumptions: ["Same Recap-DataComp training recipe and Flickr retrieval evaluation."]
+      limitations: ["Empirical summary, not derived from the theorem.", "Extrapolation failure under repeated exposure is explicitly reported.", "Exponents are poorly identified."]
+    classification:
+      primary_theme: scale-research
+      tags: [topic:platonic-representation-hypothesis, topic:scaling-law, topic:jepa]
+    candidate_destinations:
+      pages: []
+      concepts: []
+    disposition: pending
+  - id: balestriero-lecun-platonic-representation-jepas-2026:captioning-linear-map
+    kind: mechanism
+    summary: "The captioning system trains a text decoder on text alone to reconstruct captions from frozen text-JEPA embeddings. At inference, frozen image embeddings are transformed by a constrained orthogonal map and decoded. No network is trained on image-caption pairs, but the map is fitted on paired Flickr data; the main reported COCO CIDEr .838 configuration uses 30k Flickr pairs."
+    locator: {type: section, value: "5.1", label: "Captioning Without Training a Network on Image–Caption Pairs"}
+    evidence:
+      kind: author-reported-method
+      confidence well-supported
+      scope: "Full section 5.1, including the map, decoder noise and transfer results."
+      assumptions: ["The map is constrained to preserve the geometry assumed by the representation alignment."]
+      limitations: ["The 30k paired examples mean the headline captioning demonstration is not pair-free.", "The result is not state-of-the-art captioning; it demonstrates composability of independently trained components."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [scale-research]
+      tags: [topic:cross-modal-alignment, application:image-captioning, method:orthogonal-alignment]
+    candidate_destinations:
+      pages: []
+      concepts: []
+    disposition: pending
+  - id: balestriero-lecun-platonic-representation-jepas-2026:pair-free-alignment
+    kind: result
+    summary: "A separate experiment aligns unpaired image and caption sets using geometric structure and optimal transport. The 109M good-view text JEPA reaches 64.4% ImageNet-100 top-5 in the reported pair-free setup, compared with at most 56% among the language-model results in the cited benchmark; the authors also report that next-token prediction is unstable in half of its runs."
+    locator: {type: section, value: "5.2", label: "Alignment Without Any Pair"}
+    evidence:
+      kind: author-reported-experiment
+      confidence context-dependent
+      scope: "Unpaired COCO alignment protocol and zero-shot classification benchmark."
+      assumptions: ["The benchmark protocol and baselines are those defined by the cited work and reproduced by the authors."]
+      limitations: ["This is not a zero-pair training procedure for all components in the paper; it is a particular post-hoc alignment evaluation.", "The comparison is protocol-specific and author-reported.", "Flickr results show substantial seed variability."]
+    classification:
+      primary_theme: scale-research
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:cross-modal-alignment, method:optimal-transport, application:zero-shot-classification]
+    candidate_destinations:
+      pages: []
       concepts: []
     disposition: pending
