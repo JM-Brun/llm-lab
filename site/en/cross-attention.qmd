@@ -80,9 +80,9 @@ Let:
 
 The learned projections are distinct:
 
-\[
+$$
 Q=YW_Q,\qquad K=XW_K,\qquad V=XW_V.
-\]
+$$
 
 With (W_Q\in\mathbb{R}^{d_d\times d_k}), (W_K\in\mathbb{R}^{d_e\times d_k}), and (W_V\in\mathbb{R}^{d_e\times d_v}), the resulting shapes are:
 
@@ -94,10 +94,10 @@ The lengths (T) and (S) may differ. This is expected: the decoder queries a sour
 
 Scaled dot-product cross-attention is:
 
-\[
+$$
 \operatorname{CrossAttention}(Y,X)
 =\operatorname{softmax}\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)V.
-\]
+$$
 
 The score matrix (QK^\top) has shape (T\times S): each row corresponds to a target position and each column to a source position. A row therefore gives the weights with which a decoder position aggregates encoder values.
 
