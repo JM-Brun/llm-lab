@@ -29,9 +29,9 @@ La page précédente, [Le Transformer dans un GPT : architecture et calcul](tran
 
 <div class="pipeline-stepper meta-flow meta-flow--branch" role="navigation" aria-label="Carte des projections parallèles Q, K et V et de leur recombinaison">
   <div class="meta-flow__source"><strong>Entrée commune</strong><span>États contextualisés de chaque position</span></div>
-  <div class="meta-flow__relation">Trois projections apprises calculées en parallèle</div>
+  <div class="meta-flow__source meta-flow__branch--active" aria-current="step"><strong>Projections apprises Q, K et V</strong><span>Trois transformations parallèles du même état d’entrée</span></div>
   <div class="meta-flow__branches">
-    <div class="meta-flow__branch meta-flow__branch--active" aria-current="step"><strong>Q · Query</strong><span>Ce que la position cherche</span></div>
+    <div class="meta-flow__branch"><strong>Q · Query</strong><span>Ce que la position cherche</span></div>
     <div class="meta-flow__branch"><strong>K · Key</strong><span>Ce que chaque position rend repérable</span></div>
     <div class="meta-flow__branch"><strong>V · Value</strong><span>Le contenu qui pourra être agrégé</span></div>
   </div>
