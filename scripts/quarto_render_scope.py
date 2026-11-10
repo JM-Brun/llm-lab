@@ -69,7 +69,15 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
             safe = False
             break
 
-        if path.startswith("site/images/") and PurePosixPath(path).suffix.lower() == ".svg":
+        asset_path = PurePosixPath(path.removeprefix("site/"))
+        if (
+            path.startswith("site/images/")
+            and asset_path.parts[0] == "images"
+            and len(asset_path.parts) > 1
+            and not asset_path.is_absolute()
+            and ".." not in asset_path.parts
+            and asset_path.suffix.lower() == ".svg"
+        ):
             assets.append(path)
             continue
 
