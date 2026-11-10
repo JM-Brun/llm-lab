@@ -3243,7 +3243,7 @@ sources:
     canonical_url: "https://jalammar.github.io/illustrated-transformer/"
     publisher: "Jay Alammar"
     publication_date: null
-    updated_date: "2020-07"
+    updated_date: null
     language: en
     version: "July 2020 update noted in article"
     revision: null
@@ -3313,7 +3313,7 @@ sources:
       audit_records: [docs/source-reviews/sinusoidal-positional-encoding-2026-11.md]
   - id: stanford-ee269-transformers-signal-prediction
     title: "Transformers for Signal Prediction"
-    creators: ["Stanford EE269 teaching team"]
+    creators: []
     source_type: course
     identifiers: {}
     canonical_url: "https://web.stanford.edu/class/ee269/Lecture_Transformers.pdf"
