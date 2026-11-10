@@ -2,7 +2,7 @@
 title: "Contextualized representations: dependencies across positions and layers"
 subtitle: "Formalizing accessible context, masks, and successive transformations"
 description: "A mathematical deep dive into how Transformer blocks build hidden states that depend on position and accessible context."
-keywords: ["type:concept-deep-dive", "destination:deepen", "topic:contextualized-representations", "level:advanced", "language:en", "status:published"]
+keywords: ["type:deep-dive", "destination:deepen", "topic:contextualized-representations", "level:advanced", "language:en", "status:published"]
 lang: en
 ---
 
@@ -11,16 +11,20 @@ LLM-LAB-PAGE-MAP v1
 id: "en/contextualized-representations-advanced"
 summary: "Formalizes contextual dependencies of hidden states, masking constraints, and representation changes across blocks."
 scope: "Deepens contextualization after the initial lookup: positional handling, accessible positions, Transformer-block dependencies, and the distinction between self-attention and the MLP."
+domain: "architectures-mechanisms"
 purpose: "Formalize which positions may contribute to a hidden state, distinguish causal decoders from bidirectional encoders, and explain the limits of a simplified block representation."
 suggested_route:
   previous: "en/contextualized-representations"
   next: null
 hierarchy:
-  parents: ["en/deepen"]
+  parents: ["en/contextualized-representations"]
   children: []
 related: ["en/queries-keys-values-advanced", "en/rope", "en/transformer"]
-tags: ["type:concept-deep-dive", "destination:deepen", "topic:contextualized-representations", "level:advanced", "language:en", "status:published"]
+tags: ["type:deep-dive", "destination:deepen", "topic:contextualized-representations", "level:advanced", "language:en", "status:published"]
 -->
+
+
+{{< include ../includes/generated-guided-context-en-contextualized-representations-advanced.qmd >}}
 
 This page extends the [introductory explanation of contextualized representations](contextualized-representations.qmd). It assumes readers can already distinguish a token ID, its lookup vector, and a hidden state produced by the network.
 
