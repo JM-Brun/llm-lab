@@ -53,6 +53,7 @@
   - [Evaluating a model: from score to experimental protocol](experimental-evaluation.html)
 - **Deepen your understanding**
   - Attention, position, and architectures
+    - [Contextualized representations: dependencies across positions and layers](contextualized-representations-advanced.html)
     - [Why scale attention scores?](attention-score-scaling.html)
     - [Q/K/V: mathematical formulation and variants](queries-keys-values-advanced.html)
     - [Cross-attention: connecting two sequences](cross-attention.html)
