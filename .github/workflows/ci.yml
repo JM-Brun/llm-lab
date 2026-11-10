@@ -30,10 +30,16 @@ jobs:
         run: |
           git fetch --no-tags --depth=1 origin "$BASE_SHA"
           changed_files="$(git diff --name-only "$BASE_SHA"...HEAD)"
-          if printf '%s\\n' "$changed_files" | grep -Eq '^(site/|data/|src/|scripts/|docs/|pyproject.toml$|uv.lock$|.github/workflows/ci.yml$)'; then
+          if printf '%s\n' "$changed_files" | grep -Eq '^(site/|data/|src/|scripts/|docs/|pyproject.toml$|uv.lock$|.github/workflows/ci.yml$)'; then
             echo "domain_checks=true" >> "$GITHUB_OUTPUT"
           else
             echo "domain_checks=false" >> "$GITHUB_OUTPUT"
+          fi
+
+          if printf '%s\n' "$changed_files" | grep -Eq '^(src/llm_lab/foundations/|tests/unit/test_gpt2_reference_parity\.py$|docs/requirements-gpt2-reference\.txt$|pyproject\.toml$|uv\.lock$)'; then
+            echo "reference_parity=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "reference_parity=false" >> "$GITHUB_OUTPUT"
           fi
 
 
@@ -51,17 +57,22 @@ jobs:
       - name: Install dependencies
         run: uv sync --locked --dev
 
+      - name: Install YAML validation dependencies
+        # Also required by the static type check for the repository's YAML helpers.
+        run: uv pip install --python .venv/bin/python -r docs/requirements-history-validation.txt
+
+      - name: Install tokenizer example dependency
+        if: github.event_name != 'pull_request' || steps.validation_scope.outputs.domain_checks == 'true'
+        run: uv pip install --python .venv/bin/python -r docs/requirements-tokenizer-example.txt
+
       - name: Install CPU-only PyTorch
+        if: github.event_name != 'pull_request' || steps.validation_scope.outputs.reference_parity == 'true'
         # Avoid multi-gigabyte CUDA wheels. The pin matches the reference requirements.
         run: uv pip install --python .venv/bin/python --index-url https://download.pytorch.org/whl/cpu torch==2.15.0
 
-      - name: Install documentation and validation dependencies
-        # Resolve the remaining documentation, YAML and GPT-2 requirements together.
-        run: |
-          uv pip install --python .venv/bin/python \
-            -r docs/requirements-tokenizer-example.txt \
-            -r docs/requirements-history-validation.txt \
-            -r docs/requirements-gpt2-reference.txt
+      - name: Install GPT-2 reference dependency
+        if: github.event_name != 'pull_request' || steps.validation_scope.outputs.reference_parity == 'true'
+        run: uv pip install --python .venv/bin/python -r docs/requirements-gpt2-reference.txt
 
       - name: Validate source catalogue and extraction records
         if: github.event_name != 'pull_request' || steps.validation_scope.outputs.domain_checks == 'true'
