@@ -59,6 +59,8 @@ Two different questions depending on whether a token has been observed
 ::::
 
 
+For the prefix “What have the Romans ever done for us?”, entropy describes how spread out the distribution is over candidate next tokens. It does not measure whether a continuation is true, or the probability of the entire response to come.
+
 ## Entropy of the next-token distribution
 
 Given a prefix $x_{<t}$, the model produces a categorical distribution over its vocabulary:

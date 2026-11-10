@@ -63,6 +63,8 @@ In “The cat chased the dog because it was fast,” the pronoun **it** could re
 
 That is what self-attention provides. For each position, the mechanism builds two things: **where to look** in the context and **what information to bring back**. Q, K, and V provide the representations needed for these two operations.
 
+For the current token in “What have the Romans ever done for us?”, Q is compared with the K vectors at accessible positions; the resulting weights are then used to aggregate their V vectors. This describes the computation, not conscious search or human-like interpretation of the sentence.
+
 This example is adapted from [Neha KK](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b). It motivates the need for context; it does not prove that one isolated head resolves coreference or describe the attention weights of a trained model.
 
 <div class="epistemic-badges">

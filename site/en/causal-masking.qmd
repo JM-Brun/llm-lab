@@ -55,6 +55,8 @@ Causal masking enforces an information rule: **the output at position $i$ must n
 
 When training a model to predict the next token, all positions in a sequence can be computed in parallel. Without a mask, however, a position's representation could use tokens that would not yet be known during generation. The mask makes parallel training compatible with the autoregressive objective.
 
+When training on a prompt and its continuation, the position predicting a token cannot access target tokens that come after it in the sequence. During generation, those future tokens simply are not present yet.
+
 ## Definition
 
 For a sequence of length $T$, position $i$ can access positions $j\leq i$. Two complementary boolean conventions express this relation: $\mathrm{allowed}_{ij}=\mathbf{1}[j\leq i]$ (key allowed) and $\mathrm{blocked}_{ij}=\mathbf{1}[j>i]$ (key blocked). One can also use an additive mask $M$:

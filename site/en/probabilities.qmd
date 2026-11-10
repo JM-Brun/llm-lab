@@ -64,6 +64,8 @@ Probabilities are positive and sum to one. This normalization does not prove tha
 
 With two logits \(z=(0,\log 3)\), softmax gives \(p=(0.25,0.75)\). The second token is more probable, but this distribution does not mean that it is three times more true: it reflects the model's scores in this context.
 
+In our example, the distribution is conditioned on “What have the Romans ever done for us?” After a generated token is appended, the prefix changes, and the model computes a new distribution for the next step.
+
 ## Conditional probability in an autoregressive model
 
 The next-token distribution depends on the prefix:

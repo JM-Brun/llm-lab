@@ -59,6 +59,8 @@ Deux questions différentes selon que le token est observé ou non
 ::::
 
 
+Pour le préfixe « C'est une bonne situation, ça, scribe ? », l'entropie décrit la dispersion de la distribution sur les tokens candidats au prochain pas. Elle ne mesure ni la vérité de la continuation ni la probabilité de toute la phrase à venir.
+
 ## Entropie de la distribution du prochain token
 
 Pour un préfixe $x_{<t}$, le modèle produit une distribution catégorielle sur son vocabulaire :

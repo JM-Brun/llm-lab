@@ -64,6 +64,8 @@ Les probabilités sont positives et leur somme vaut un. Cette normalisation ne p
 
 Avec deux logits \(z=(0,\log 3)\), la softmax donne \(p=(0.25,0.75)\). Le second token est plus probable, mais cette distribution ne signifie pas qu'il est trois fois plus vrai : elle reflète les scores du modèle dans ce contexte.
 
+Dans notre exemple, la distribution est conditionnée par le préfixe « C'est une bonne situation, ça, scribe ? ». Après l'ajout d'un token généré, le préfixe change : le modèle recalcule alors une nouvelle distribution pour l'étape suivante.
+
 ## Probabilité conditionnelle dans un modèle autorégressif
 
 La distribution du token suivant dépend du préfixe :

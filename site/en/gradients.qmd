@@ -45,6 +45,8 @@ Correct gradient computation remains distinct from model generalization.
   <span class="step-item">4. Parameter update</span>
 </div>
 
+For each target token in the continuation, the cross-entropy gradient adjusts the logits: it pushes the expected token's score upward relative to the other scores. The actual parameter update then follows the chain rule through the model's layers.
+
 ## Gradient with respect to logits
 
 For a one-hot target $y$ and cross-entropy computed from softmax:

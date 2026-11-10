@@ -55,6 +55,8 @@ Les **logits sont des scores, pas des probabilités**. À une position, le modè
 </div>
 
 
+Dans le fil rouge, une fois le préfixe « C'est une bonne situation, ça, scribe ? » traité par le Transformer, la tête de sortie associe un logit à chaque token du vocabulaire pour la prochaine position.
+
 ## Définition et dimensions
 
 Pour une position donnée, on note le vecteur des scores :

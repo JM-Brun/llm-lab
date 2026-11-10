@@ -52,28 +52,31 @@ jobs:
         uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
         with:
           version: "0.13.7"
-          python-version: "3.12"
           enable-cache: true
           cache-dependency-glob: docs/requirements-history-validation.txt
 
-      # Cache the ready-to-use environment, not just uv's downloaded wheels.
-      # Include the resolved Python patch version and exact requirements so a
-      # cache cannot silently cross an interpreter or dependency change.
-      - name: Resolve Python environment cache key
-        id: python_env
-        run: echo "version=$(python -c 'import platform; print(platform.python_version())')" >> "$GITHUB_OUTPUT"
+      # Keep uv-managed Python at a stable path: virtualenvs contain an
+      # interpreter link, so caching .venv alone is not portable when uv
+      # installs Python under runner.temp (which changes between runs).
+      - name: Configure stable uv Python directory
+        run: echo "UV_PYTHON_INSTALL_DIR=$GITHUB_WORKSPACE/.uv-python" >> "$GITHUB_ENV"
 
       - name: Cache shared render environment
         id: render_venv_cache
         uses: actions/cache@v4
         with:
-          path: .venv
-          key: quarto-publish-venv-${{ runner.os }}-py${{ steps.python_env.outputs.version }}-uv0.13.7-${{ hashFiles('docs/requirements-history-validation.txt') }}
+          path: |
+            .uv-python
+            .venv
+          key: quarto-publish-python-${{ runner.os }}-py3.12.16-uv0.13.7-${{ hashFiles('docs/requirements-history-validation.txt') }}
+
+      - name: Install pinned Python
+        run: uv python install 3.12.16
 
       - name: Verify cached render environment
         id: verify_render_venv
         run: |
-          if [ -x .venv/bin/python ] && .venv/bin/python -c 'import yaml, pydantic'; then
+          if [ -x .venv/bin/python ] && .venv/bin/python -c 'import sys, yaml, pydantic; assert sys.version_info[:3] == (3, 12, 16)'; then
             echo "valid=true" >> "$GITHUB_OUTPUT"
             echo "Reusing the cached Python environment."
           else
@@ -85,7 +88,7 @@ jobs:
       - name: Create shared render environment
         if: steps.verify_render_venv.outputs.valid != 'true'
         run: |
-          uv venv --python 3.12 .venv
+          uv venv --python 3.12.16 .venv
           uv pip install --python .venv/bin/python -r docs/requirements-history-validation.txt
 
       - name: Generate bilingual history timeline fragments

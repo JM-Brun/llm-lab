@@ -16,7 +16,7 @@ suggested_route:
   next: "en/contextualized-representations"
 hierarchy:
   parents: ["en/embedding-space"]
-  children: ["en/contextualized-representations", "en/rope"]
+  children: ["en/contextualized-representations", "en/rope", "en/sinusoidal-positional-encoding"]
 related: ["en/transformer", "en/positional-encoding-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:positional-encoding", "level:core", "language:en", "status:published"]
 -->
@@ -24,7 +24,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:positional-encodi
 
 {{< include ../includes/generated-guided-context-en-positional-encoding.qmd >}}
 ::: {.chapter-lead}
-A Transformer needs an ordering signal to distinguish, for example, “the cat chases the dog” from “the dog chases the cat”. This page introduces positional mechanisms and distinguishes them from causal masking; the detailed RoPE derivation belongs in an [advanced deep dive](rope.qmd).
+A Transformer needs an ordering signal to distinguish, for example, “the cat chases the dog” from “the dog chases the cat”. This page introduces positional mechanisms and distinguishes them from causal masking; the detailed RoPE derivation belongs in an [advanced deep dive](rope.qmd). For the original Transformer's sinusoidal encodings, see the [dedicated deep dive](sinusoidal-positional-encoding.qmd).
 :::
 
 ::: {.callout-tip title="The one-minute mental model"}

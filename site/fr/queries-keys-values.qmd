@@ -63,6 +63,8 @@ Dans « Le chat a poursuivi le chien parce qu'il était rapide », le pronom **i
 
 C'est le rôle de l'auto-attention. Pour chaque position, le mécanisme construit deux choses : **où regarder** dans le contexte et **quelle information en rapporter**. Q, K et V fournissent les représentations nécessaires à ces deux opérations.
 
+Pour le token courant dans « C'est une bonne situation, ça, scribe ? », Q est comparée aux K des positions accessibles ; les poids obtenus servent ensuite à agréger leurs V. Cette lecture décrit le calcul, pas une recherche consciente ni une interprétation humaine de la phrase.
+
 Cet exemple est adapté de [Neha KK](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b). Il motive le besoin de contexte ; il ne prouve pas qu'une tête isolée résout la coréférence ni ne décrit les poids d'un modèle entraîné.
 
 <div class="epistemic-badges">
