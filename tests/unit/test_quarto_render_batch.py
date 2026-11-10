@@ -1,11 +1,11 @@
-import importlib.util
+from importlib import util
 from pathlib import Path
 
 
 module_path = Path(__file__).resolve().parents[2] / "scripts" / "quarto_render_batch.py"
-spec = importlib.util.spec_from_file_location("quarto_render_batch", module_path)
+spec = util.spec_from_file_location("quarto_render_batch", module_path)
 assert spec is not None and spec.loader is not None
-module = importlib.util.module_from_spec(spec)
+module = util.module_from_spec(spec)
 spec.loader.exec_module(module)
 
 CONFIG = """project:
@@ -62,9 +62,9 @@ def test_requires_existing_project_render_list():
 
 def test_renderer_implementation_change_forces_full_site_validation():
     scope_path = Path(__file__).resolve().parents[2] / "scripts" / "quarto_render_scope.py"
-    scope_spec = importlib.util.spec_from_file_location("quarto_render_scope", scope_path)
+    scope_spec = util.spec_from_file_location("quarto_render_scope", scope_path)
     assert scope_spec is not None and scope_spec.loader is not None
-    scope = importlib.util.module_from_spec(scope_spec)
+    scope = util.module_from_spec(scope_spec)
     scope_spec.loader.exec_module(scope)
 
     result = scope.classify_changed_files(
