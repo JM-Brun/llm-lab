@@ -7,7 +7,7 @@
       - [Positional encoding: giving tokens an order](positional-encoding.html)
       - [Why can the same token have different contextualized representations?](contextualized-representations.html)
     - Transforming representations
-      - [The Transformer in a GPT: architecture and computation](transformer.html)
+      - [GPT and Transformers: architecture and data flow](transformer.html)
       - [Queries, keys, and values (Q, K, V)](queries-keys-values.html)
       - [Scaled dot-product attention](scaled-dot-product-attention.html)
       - [Causal masking](causal-masking.html)

@@ -79,6 +79,14 @@ Each row corresponds to one position. The same projection matrices are applied a
 
 ## Further depth
 
+::: {.callout-note collapse="true" title="Further resources and historical context"}
+For another visual presentation of Q/K/V, see [Nishanthan K, *How Query, Key, and Value (QKV) Work in Transformers*](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a) (illustration hosted by its source).
+
+To place attention mechanisms in their development before the Transformer architecture, see [A history of Transformers](transformer-history.qmd).
+:::
+
+
+
 ::: {.callout-note collapse="true" title="Another perspective: viewing Q and K in vector space"}
 Codefinity offers a geometric intuition: picture Q and K as vectors whose orientation and alignment contribute to a compatibility score. This helps bridge conceptual roles and numerical objects.
 
@@ -94,6 +102,14 @@ Source: [Codefinity, *Queries, Keys, and Values: The Building Blocks*](https://c
 :::
 
 
+
+::: {.callout-note collapse="true" title="A useful distinction: routing is not content"}
+A key helps determine **whether a position receives attention**; its corresponding value determines **what that position contributes** to the aggregated representation. The two vectors therefore need not encode the same feature.
+
+For example, in a hypothetical scenario, a key might help identify a position with a useful grammatical role, while its value carries semantic information. This is not a claim that an observed trained head performs this behaviour.
+
+Values are not compared with one another, or directly with the query, to select the nearest one: scores depend on Q and K, and the resulting weights are then applied to V. Further perspective: [Brenndoerfer, *Query, Key, Value: The Foundation of Transformer Attention*](https://mbrenndoerfer.com/writing/query-key-value-attention-mechanism).
+:::
 
 ::: {.callout-note collapse="true" title="How does training learn these projections?"}
 The matrices $W_Q$, $W_K$, and $W_V$ do not each receive an explicit “correct” target. They are adjusted indirectly from the model's loss function through backpropagation.
@@ -149,7 +165,9 @@ The functional distinction is simple but fundamental:
 
 The weights are not a universal measure of semantic relevance, and attention is not nearest-neighbour search in the initial embedding space: it operates on learned projections.
 
-The next lesson, [Scaled dot-product attention](scaled-dot-product-attention.qmd), explains how scores become weights and how those weights aggregate V. The [Attention exercises](exercises-attention.qmd#attention) then let you manipulate the projections and verify these dependencies; numerical calculations remain in that practice route.
+The next lesson, [Scaled dot-product attention](scaled-dot-product-attention.qmd), explains how scores become weights and how those weights aggregate V.
+
+To practise the skills associated with this lesson, the [Attention exercises](exercises-attention.qmd#attention) cover projection calculations and dimensions, predicting the effects of changing $W_Q$, $W_K$, or $W_V$, connecting projections to backpropagation, and transferring the reasoning to cross-attention and GQA/MQA. Numerical calculations remain in that practice route.
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 By the end of this lesson, you should be able to:

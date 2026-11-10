@@ -79,6 +79,14 @@ Chaque ligne correspond à une position. Les mêmes matrices de projection sont 
 
 ## Pour approfondir
 
+::: {.callout-note collapse="true" title="Ressources complémentaires et contexte historique"}
+Pour une autre présentation visuelle des rôles Q/K/V, voir [Nishanthan K, *How Query, Key, and Value (QKV) Work in Transformers*](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a) (illustration hébergée par la source).
+
+Pour replacer les mécanismes d'attention dans leur évolution avant l'architecture Transformer, consulter [l'historique des Transformers](transformer-history.qmd).
+:::
+
+
+
 ::: {.callout-note collapse="true" title="Autre point de vue : visualiser Q et K dans l'espace vectoriel"}
 Codefinity propose une intuition géométrique : représenter Q et K comme des vecteurs dont l'orientation et l'alignement participent au score de compatibilité. Cette vue aide à passer des rôles conceptuels aux objets numériques.
 
@@ -95,6 +103,14 @@ Source : [Codefinity, *Queries, Keys, and Values: The Building Blocks*](https://
 
 
 
+
+::: {.callout-note collapse="true" title="Une distinction importante : le routage n'est pas le contenu"}
+Une clé contribue à déterminer **si une position reçoit de l'attention** ; la valeur associée détermine **ce que cette position apporte** à la représentation agrégée. Ces deux vecteurs n'ont donc pas besoin de coder la même caractéristique.
+
+Par exemple, dans un scénario hypothétique, une clé pourrait aider à repérer une position portant un rôle grammatical utile, tandis que sa valeur transporterait une information sémantique. Ce n'est pas l'affirmation qu'une tête entraînée a été observée en train de réaliser ce comportement.
+
+Les valeurs ne sont pas comparées entre elles, ni directement à la requête, pour sélectionner la plus proche : les scores dépendent de Q et K, puis les poids obtenus sont appliqués à V. Perspective complémentaire : [Brenndoerfer, *Query, Key, Value: The Foundation of Transformer Attention*](https://mbrenndoerfer.com/writing/query-key-value-attention-mechanism).
+:::
 
 ::: {.callout-note collapse="true" title="Comment l'entraînement apprend-il ces projections ?"}
 Les matrices $W_Q$, $W_K$ et $W_V$ ne reçoivent pas chacune une cible explicite « correcte ». Elles sont ajustées indirectement à partir de la fonction de perte du modèle, par rétropropagation du gradient.
@@ -150,7 +166,9 @@ La distinction fonctionnelle est simple, mais fondamentale :
 
 Les poids ne sont pas une mesure universelle de pertinence sémantique et l'attention n'est pas une recherche du plus proche voisin dans les embeddings initiaux : elle opère sur des projections apprises.
 
-La page suivante, [Attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd), explique comment les scores deviennent des poids et comment ceux-ci agrègent V. Les [exercices de la section Attention](exercises-attention.qmd#attention) proposent ensuite de manipuler les projections et de vérifier ces dépendances ; les calculs numériques restent dans ce parcours pratique.
+La page suivante, [Attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd), explique comment les scores deviennent des poids et comment ceux-ci agrègent V.
+
+Pour mettre en pratique les compétences associées à cette leçon, les [exercices de la section Attention](exercises-attention.qmd#attention) proposent de calculer les projections et leurs dimensions, prévoir les effets d'une modification de $W_Q$, $W_K$ ou $W_V$, relier les projections à la rétropropagation, puis transférer le raisonnement à l'attention croisée et à GQA/MQA. Les calculs numériques restent dans ce parcours pratique.
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
 À la fin de cette leçon, vous devriez pouvoir :
