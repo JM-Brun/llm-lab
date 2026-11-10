@@ -143,6 +143,30 @@ def test_static_image_only_change_uses_copy_only_incremental_mode():
     assert result["render_mode"] == "incremental"
     assert result["render_targets"] == []
     assert result["render_assets"] == ["site/images/diagram.webp"]
+    assert result["browser_relevant"] is False
+
+
+def test_image_change_with_page_change_keeps_browser_audit_enabled():
+    result = classify_changed_files(
+        [
+            {"filename": "site/fr/example.qmd", "status": "modified"},
+            {"filename": "site/images/diagram.svg", "status": "modified"},
+        ],
+        CONFIG,
+    )
+
+    assert result["render_mode"] == "incremental"
+    assert result["browser_relevant"] is True
+
+
+def test_non_image_static_asset_keeps_browser_audit_enabled():
+    result = classify_changed_files(
+        [{"filename": "site/images/diagram.css", "status": "modified"}],
+        CONFIG,
+    )
+
+    assert result["render_mode"] == "full"
+    assert result["browser_relevant"] is True
 
 
 def test_static_asset_paths_cannot_escape_the_images_directory():
