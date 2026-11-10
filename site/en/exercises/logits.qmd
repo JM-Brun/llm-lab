@@ -1,0 +1,57 @@
+---
+title: "Exercises — Logits"
+subtitle: "Self-check questions, exercises, and worked answers"
+keywords: ["type:exercise-hub", "destination:practice", "topic:logits-exercises", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/logits-exercises"
+summary: "Self-check questions and exercises associated with the Logits lesson."
+scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
+purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/logits"]
+tags: ["type:exercise-hub", "destination:practice", "topic:logits-exercises", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the lesson: Logits](../logits.qmd)
+
+## Check your understanding
+
+1. If the vocabulary contains $V$ tokens, how many components does the logit vector contain at one position?
+
+<details>
+<summary>Show answer</summary>
+
+It contains $V$ components, one for each vocabulary token.
+
+</details>
+
+2. Why does a logit with value 8 not mean an 80% probability?
+
+<details>
+<summary>Show answer</summary>
+
+A logit is an unnormalized real-valued score. It is neither bounded between 0 and 1 nor constrained to sum to one. A separate transformation is needed to obtain a probability distribution.
+
+</details>
+
+3. What does the argmax of a logit vector identify?
+
+<details>
+<summary>Show answer</summary>
+
+It identifies the token with the highest score in that vector. By itself, it does not measure confidence or truth.
+
+</details>
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/logits.qmd) · [English](logits.qmd)
+:::

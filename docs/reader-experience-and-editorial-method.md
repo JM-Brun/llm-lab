@@ -364,10 +364,10 @@ Every lesson page that includes a learner-facing comprehension check must use on
 
 ### Shared presentation contract
 
-- Use the canonical heading **“Vérifier sa compréhension”** in French and **“Check your understanding”** in English. Avoid competing variants such as “Questions de contrôle”, “Self-check”, or “Vérifier votre compréhension”.
-- Wrap the complete activity in the `.self-check` Quarto div so the shared site stylesheet can give it a consistent visual boundary, spacing, and accessible contrast.
+- Use the canonical heading **“Vérifier sa compréhension”** in French and **“Check your understanding”** in English on the companion practice page. Avoid competing variants such as “Questions de contrôle”, “Self-check”, or “Vérifier votre compréhension”.
+- Keep the complete activity in the dedicated per-lesson exercise page and wrap it in the `.self-check` Quarto div so the shared site stylesheet can give it a consistent visual boundary, spacing, and accessible contrast.
 - Number questions consistently. Keep each prompt visually separate from its answer; use native `<details>` / `<summary>` disclosure for solutions, collapsed by default.
-- Place a concise link near the start or end of the activity to the matching topic collection in the exercise hub (`exercises.qmd` / `../en/exercises.qmd`), using the collection's stable anchor. The link must be relevant to the topic, not a generic invitation to browse unrelated material.
+- Place a concise link in the lesson to its dedicated companion page under `site/<language>/exercises/`. The companion links back to the lesson and may link onward to a broader collection in the exercise catalogue when relevant.
 - Do not add the component to a page when it would repeat an existing interactive investigation or when no meaningful check can be written. Do not confuse implementation verification, research checklists, or operational acceptance criteria with learner comprehension questions.
 
 ### Cognitive progression
@@ -388,7 +388,7 @@ This is a progression of cognitive demand, not a mandatory four-question quota. 
 - Explain why a plausible misconception is wrong when it helps distinguish neighboring concepts.
 - A correct numeric result without interpretation is insufficient when the learning objective includes interpretation.
 - Distinguish what a hand calculation, numerical check, unit test, or thought experiment establishes—and what it does not establish.
-- Keep embedded checks short and immediate. The exercise hub is for longer calculations, multi-step problems, transfer tasks, and integrated practice. Its status must remain honest: planned collections are not published exercises.
+- Keep questions and exercise prompts out of the main lesson body: move them intact to a dedicated per-lesson practice page and link to it from the lesson. Preserve worked conceptual examples and demonstrations that teach the mechanism rather than test the learner. The exercise catalogue remains the entry point for longer calculations, multi-step problems, transfer tasks, and integrated practice. Its status must remain honest: planned collections are not published exercises.
 
 ### Bilingual parity and review
 

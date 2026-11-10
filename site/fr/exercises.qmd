@@ -8,7 +8,7 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/exercises"
-scope: "Registre central et espace de navigation des collections d'exercices approfondis et des activités de transfert. Les courtes vérifications restent intégrées aux leçons."
+scope: "Registre central des pages d’exercices par leçon et des collections thématiques approfondies. Les courtes vérifications sont regroupées sur des pages compagnes ; les collections couvrent une pratique transversale."
 purpose: "Choisir une collection thématique, identifier ses prérequis et son niveau de maturité, puis utiliser les corrigés et questions de transfert pour vérifier le raisonnement plutôt que la simple mémorisation."
 suggested_route:
   previous: "fr/build-path"
@@ -20,7 +20,58 @@ related: []
 tags: ["type:exercise-hub", "destination:practice", "topic:exercises", "level:applied", "language:fr", "status:published"]
 -->
 
-Les leçons conservent un composant **« Vérifier sa compréhension »** : quelques questions ciblées avec des réponses repliées, destinées au rappel actif et à la consolidation immédiate des concepts. Ce catalogue donne accès aux **exercices approfondis** : calculs, problèmes en plusieurs étapes, diagnostics, raisonnements orientés implémentation et tâches de transfert. Chaque collection dispose de sa propre page afin de pouvoir s'enrichir sans transformer ce catalogue en une longue feuille d'exercices.
+Les auto-vérifications courtes sont regroupées sur des pages compagnes liées depuis chaque leçon. Les collections thématiques restent dédiées à la pratique transversale.
+
+## Exercices par leçon
+
+::: {.callout-note collapse="true" title="Parcourir les 33 pages d’exercices par leçon"}
+
+### Comprendre
+
+- [Panorama des LLM](exercises/llm-overview.qmd)
+- [Génération autorégressive](exercises/generation.qmd)
+- [Texte et données](exercises/text-data.qmd)
+- [Espace des embeddings](exercises/embedding-space.qmd)
+- [Encodage positionnel](exercises/positional-encoding.qmd)
+- [Représentations contextualisées](exercises/contextualized-representations.qmd)
+- [Transformer](exercises/transformer.qmd)
+- [Requêtes, clés et valeurs](exercises/queries-keys-values.qmd)
+- [Attention à produit scalaire](exercises/scaled-dot-product-attention.qmd)
+- [Masquage causal](exercises/causal-masking.qmd)
+- [Logits](exercises/logits.qmd)
+- [Probabilités](exercises/probabilites.qmd)
+- [Entropie](exercises/entropy.qmd)
+- [Vraisemblance](exercises/vraisemblance.qmd)
+- [Entropie croisée](exercises/cross-entropy.qmd)
+- [Fonction de perte](exercises/loss.qmd)
+- [Gradients](exercises/gradients.qmd)
+- [Architectures Transformer](exercises/transformer-architectures.qmd)
+- [Limites des LLM](exercises/llm-limits.qmd)
+
+### Construire
+
+- [Préparation du corpus](exercises/corpus-preparation.qmd)
+- [Exemples d'entraînement](exercises/training-examples.qmd)
+- [Configuration GPT](exercises/gpt-config-walkthrough.qmd)
+- [Opérations GPT](exercises/gpt-ops-walkthrough.qmd)
+- [Bloc Transformer](exercises/transformer-block-walkthrough.qmd)
+- [Modèle GPT](exercises/gpt-model-walkthrough.qmd)
+- [Génération GPT](exercises/gpt-generation-walkthrough.qmd)
+
+### Approfondir
+
+- [Attention croisée](exercises/cross-attention.qmd)
+- [Architectures hybrides](exercises/hybrid-llm-architectures.qmd)
+- [Stratégies de tokenisation](exercises/tokenization-strategies.qmd)
+- [Apprentissage en contexte](exercises/in-context-learning.qmd)
+- [Complexité computationnelle des LLM](exercises/llm-computational-complexity.qmd)
+- [Émergence](exercises/emergence.qmd)
+- [Évolution des LLM](exercises/llm-evolution.qmd)
+
+:::
+
+
+Ce catalogue donne accès aux **exercices approfondis** : calculs, problèmes en plusieurs étapes, diagnostics, raisonnements orientés implémentation et tâches de transfert. Chaque collection dispose de sa propre page afin de pouvoir s'enrichir sans transformer ce catalogue en une longue feuille d'exercices.
 
 <a id="fondations"></a>
 <a id="donnees-textuelles"></a>
@@ -59,7 +110,7 @@ Les thèmes suivants font partie du programme de pratique à plus long terme. Il
 
 ## Où placer les questions de contrôle ?
 
-Il ne faut pas déplacer toutes les questions hors des leçons. Une courte vérification, étroitement liée au concept présenté, reste à sa place dans la leçon. Déplacez un exercice ici lorsqu'il demande un calcul soutenu, plusieurs étapes de raisonnement, un corrigé détaillé, une comparaison d'alternatives ou un transfert au-delà de la leçon immédiate. Les collections peuvent renvoyer vers les leçons pour la préparation, sans dupliquer leurs explications conceptuelles.
+Les questions de rappel ciblées et leurs corrigés figurent sur la page compagne de la leçon concernée. Les exemples explicatifs et les démonstrations restent dans la leçon lorsqu'ils enseignent le mécanisme plutôt qu'ils n'évaluent l'apprenant. Les collections thématiques sont réservées à la pratique intégrée et transversale ; elles peuvent renvoyer à une vérification compagne comme prérequis, sans reproduire le même énoncé et son corrigé.
 
 ## Références structurantes
 

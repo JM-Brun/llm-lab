@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/loss"]
   children: []
-related: []
+related: ["en/gradients-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:gradients", "level:core", "language:en", "status:published"]
 -->
 
@@ -104,40 +104,10 @@ Compare this with the analytical gradient using absolute and relative tolerances
 - **“One passing finite-difference check proves the entire backward pass.”** It verifies one function, case, precision, and configuration; it does not replace shape, edge-case, and integration tests.
 :::
 
-::: {.self-check}
-## Check your understanding
+## Practice
 
-For additional practice outside the lesson, see the [exercise space — mathematical foundations](exercises-foundations.qmd#foundations).
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/gradients.qmd).
 
-1. Why does the cross-entropy derivative with respect to logits simplify to $p_i-\mathbb{1}[i=y]$?
-
-<details>
-<summary>Show answer</summary>
-
-For a one-hot target, differentiating log-softmax combines the normalization term $p_i$ with the target-class term $-\mathbb{1}[i=y]$. Their difference is the gradient with respect to each logit.
-
-</details>
-
-2. What can disagreement between an analytical gradient and a finite difference indicate?
-
-<details>
-<summary>Show answer</summary>
-
-It may indicate a derivation or implementation bug, but also a poorly chosen $\epsilon$, rounding error, nondeterministic behavior, or mismatched conventions. Isolate the case and check tolerances.
-
-</details>
-
-3. Why might a gradient-descent update fail to reduce the loss if the step is too large?
-
-<details>
-<summary>Show answer</summary>
-
-The gradient describes a local change. A step that is too large can leave the region where that approximation is useful, overshoot a minimum, or increase the objective; the learning rate must be controlled.
-
-</details>
-
-**Return to:** [Overview](mathematical-foundations.qmd) · [Loss](loss.qmd)
-:::
 
 ## Further reading
 

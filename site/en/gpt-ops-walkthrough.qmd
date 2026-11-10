@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["en/build-path"]
   children: []
-related: ["en/transformer", "en/tensors"]
+related: ["en/transformer", "en/tensors", "en/gpt-ops-walkthrough-exercises"]
 tags: ["type:guided-build", "destination:build", "topic:reference-gpt-ops", "level:applied", "language:en", "status:published"]
 -->
 
@@ -185,6 +185,10 @@ def linear(x: FloatArray, weight: FloatArray, bias: FloatArray) -> FloatArray:
 - **Concept pages**: [GPT and the Transformer](transformer.qmd), [tensors and shapes](tensors.qmd).
 - **Back to the path**: [Build a small GPT](build-path.qmd).
 - **Source**: [`gpt_ops.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt_ops.py) · **Tests**: [`test_gpt_ops.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt_ops.py).
+
+## Practice
+
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/gpt-ops-walkthrough.qmd).
 
 ::: {.language-switch}
 **Language:** [Français](../fr/gpt-ops-walkthrough.qmd) · [English](gpt-ops-walkthrough.qmd)

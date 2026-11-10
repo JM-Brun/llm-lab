@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/build-path"]
   children: []
-related: ["fr/transformer", "fr/queries-keys-values", "fr/scaled-dot-product-attention", "fr/causal-masking", "fr/contextualized-representations"]
+related: ["fr/transformer", "fr/queries-keys-values", "fr/scaled-dot-product-attention", "fr/causal-masking", "fr/contextualized-representations", "fr/transformer-block-walkthrough-exercises"]
 tags: ["type:guided-build", "destination:build", "topic:reference-transformer-block", "level:applied", "language:fr", "status:published"]
 -->
 
@@ -209,6 +209,10 @@ Chaque position passe seule dans `d → mlp_hidden_dim` (souvent `4d`), puis GEL
 - **Pages conceptuelles** : [vue d'ensemble GPT et Transformer](transformer.qmd), [Q/K/V](queries-keys-values.qmd), [attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd), [masquage causal](causal-masking.qmd), [représentations contextualisées](contextualized-representations.qmd).
 - **Retour au parcours** : [Construire un petit GPT](build-path.qmd).
 - **Code source** : [`transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/transformer_block.py) · **Tests** : [`test_transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_transformer_block.py).
+
+## Exercices
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/transformer-block-walkthrough.qmd).
 
 ::: {.language-switch}
 **Langue :** [Français](transformer-block-walkthrough.qmd) · [English](../en/transformer-block-walkthrough.qmd)

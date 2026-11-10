@@ -1,0 +1,36 @@
+---
+title: "Exercises — Hybrid LLM architectures"
+subtitle: "Self-check questions, exercises, and worked answers"
+keywords: ["type:exercise-hub", "destination:practice", "topic:hybrid-llm-architectures-exercises", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/hybrid-llm-architectures-exercises"
+summary: "Self-check questions and exercises associated with the Hybrid LLM architectures lesson."
+scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
+purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/hybrid-llm-architectures"]
+tags: ["type:exercise-hub", "destination:practice", "topic:hybrid-llm-architectures-exercises", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the lesson: Hybrid LLM architectures](../hybrid-llm-architectures.qmd)
+
+## Check your understanding
+
+1. **Why retain a few attention layers in a model dominated by Mamba?** To preserve explicit access paths to previous positions.
+2. **Does a 30B MoE with 3B active parameters require only 3B of weight memory?** No: the other experts remain parameters that must be hosted or made accessible.
+3. **Do GQA and Mamba reduce the same cost?** No: GQA reduces K/V heads and attention cache; Mamba maintains bounded recurrent state.
+4. **Does MTP make generation non-autoregressive?** No: proposals are verified by the target model.
+5. **Is a published throughput gain a general law?** No: it depends on hardware and protocol.
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/hybrid-llm-architectures.qmd) · [English](hybrid-llm-architectures.qmd)
+:::

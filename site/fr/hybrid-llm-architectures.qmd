@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/transformer-architectures", "fr/transformer", "fr/generation", "fr/scaling-laws"]
+related: ["fr/transformer-architectures", "fr/transformer", "fr/generation", "fr/scaling-laws", "fr/hybrid-llm-architectures-exercises"]
 tags: ["type:concept-lesson", "destination:deepen", "topic:hybrid-llm-architectures", "level:advanced", "language:fr", "status:published"]
 -->
 
@@ -164,15 +164,10 @@ Nemotron 3 ne rend pas le Transformer obsolète. Il montre qu'un système peut c
 
 Pour relier ce cas au parcours : [architectures Transformer](transformer-architectures.qmd), [bloc Transformer](transformer.qmd), [génération autorégressive](generation.qmd) et [lois d'échelle](scaling-laws.qmd).
 
-::: {.self-check}
-## Vérifier sa compréhension
+## Exercices
 
-1. **Pourquoi garder quelques couches d'attention dans un modèle dominé par Mamba ?** Pour préserver des chemins d'accès explicite aux positions antérieures.
-2. **Un MoE 30B avec 3B actifs nécessite-t-il seulement 3B de mémoire de poids ?** Non : les autres experts restent des paramètres à héberger ou rendre accessibles.
-3. **GQA et Mamba réduisent-ils le même coût ?** Non : GQA réduit les têtes K/V et le cache attention ; Mamba maintient un état récurrent borné.
-4. **MTP rend-il la génération non autorégressive ?** Non : les propositions sont vérifiées par le modèle cible.
-5. **Un gain de débit publié est-il une loi générale ?** Non : il dépend du matériel et du protocole.
-:::
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/hybrid-llm-architectures.qmd).
+
 
 ::: {.language-switch}
 **Langue :** [Français](hybrid-llm-architectures.qmd) · [English](../en/hybrid-llm-architectures.qmd)

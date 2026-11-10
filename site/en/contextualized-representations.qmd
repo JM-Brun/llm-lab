@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/embedding-space", "en/positional-encoding"]
   children: []
-related: ["en/queries-keys-values", "en/transformer"]
+related: ["en/queries-keys-values", "en/transformer", "en/contextualized-representations-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-representations", "level:core", "language:en", "status:published"]
 -->
 
@@ -121,21 +121,10 @@ To place this transformation in the full learning path:
 
 The [embedding-space lookup](embedding-space.qmd) maps IDs to initial vectors. To see how the network then transforms these vectors into contextualized states, continue with [The Transformer in a GPT](transformer.qmd): that page locates the stack of blocks and distinguishes attention from the MLP. The [Q/K/V](queries-keys-values.qmd) and [scaled dot-product attention](scaled-dot-product-attention.qmd) pages then unpack the attention mechanism.
 
-::: {.self-check}
-## Check your understanding
+## Practice
 
-[Extended exercises on this topic](exercises-transformer.qmd#transformer).
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/contextualized-representations.qmd).
 
-Two occurrences of the **same token ID** appear in two different sentences. Assume the embedding matrix is unchanged:
-
-1. Are the vectors returned by the embedding lookup identical?
-2. Must the hidden states after the Transformer layers also be identical? Why?
-3. At which stage does contextual information enter the computation?
-4. In the *bank* example, what is held constant to isolate the effect of context?
-
-You have understood this step if you can explain the difference between **identity of the initial vector** and **context-dependence of hidden states**, without attributing sentence understanding to the lookup itself.
-
-:::
 
 {{< include ../includes/generated-suggested-route-en-contextualized-representations.qmd >}}
 

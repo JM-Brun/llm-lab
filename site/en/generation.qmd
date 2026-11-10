@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/llm-overview"]
   children: ["en/logits", "en/probabilities"]
-related: ["en/text-data", "en/transformer", "en/build-path", "en/decoding-strategies", "en/gpt-generation-walkthrough", "en/training-examples"]
+related: ["en/text-data", "en/transformer", "en/build-path", "en/decoding-strategies", "en/gpt-generation-walkthrough", "en/training-examples", "en/generation-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:en", "status:published"]
 -->
 
@@ -166,47 +166,10 @@ This is the central distinction from [learning](loss.qmd): inference uses the av
 - **Quality depends on learned parameters:** the generation loop can run with an untrained model, but that does not make its outputs useful. Generation mechanics and the quality acquired through learning are distinct questions.
 - **Result validity:** a fluent answer—or even syntactically valid, executable SQL—does not guarantee that it answers the intended business question. Check the schema, the definitions being used (for example, how refunds and failed payments are treated), the assumptions, and the results before making a decision or taking action.
 
-::: {.self-check}
-## Check your understanding
+## Practice
 
-Try to answer the following questions before revealing the explanations.
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/generation.qmd).
 
-1. Why can the same model with the same context produce different texts?
-
-<details>
-<summary>Show the answer</summary>
-
-Because sampling can draw different tokens from the distribution. Each selected token then changes the context of subsequent predictions.
-
-</details>
-
-2. Why does a very low temperature make sampling approach greedy selection?
-
-<details>
-<summary>Show the answer</summary>
-
-It amplifies differences between logits. The distribution becomes highly concentrated on the highest-scoring token, making other choices very unlikely (except for ties and numerical effects).
-
-</details>
-
-3. Why cannot generation correct a poorly trained model?
-
-<details>
-<summary>Show the answer</summary>
-
-Parameters remain fixed during inference: no update takes place, no matter how many tokens are generated.
-
-</details>
-
-4. What is the difference between prefill and teacher forcing?
-
-<details>
-<summary>Show the answer</summary>
-
-Prefill is an execution phase that processes the initial prompt as a sequence. Teacher forcing is a conditioning strategy that supplies the observed prefix as context during training (and some scoring uses). They are not two names for the same operation.
-
-</details>
-:::
 
 ::: {.callout-tip title="Go further"}
 These links serve three different purposes:

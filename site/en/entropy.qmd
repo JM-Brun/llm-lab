@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/probabilities"]
   children: ["en/cross-entropy"]
-related: ["en/likelihood"]
+related: ["en/likelihood", "en/entropy-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:entropy", "level:core", "language:en", "status:published"]
 -->
 
@@ -102,24 +102,10 @@ Lower temperature tends to concentrate the distribution; higher temperature tend
 - Entropy or perplexity computed with different tokenizers is not directly comparable without care.
 - The average entropy observed under a model is not automatically the true entropy of the data source.
 
-::: {.self-check}
-## Check your understanding
+## Practice
 
-[Extended exercises on this topic](../en/exercises.qmd#foundations).
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/entropy.qmd).
 
-1. Does low entropy guarantee that the most likely token is correct?
-2. How does entropy differ from the surprisal of the observed token?
-3. Why must the tokenizer and token-counting convention be specified when comparing perplexity?
-
-<details>
-<summary>Show answers</summary>
-
-1. No. Entropy describes the spread of the distribution, not factual correctness.
-2. Entropy averages surprisal over all possible tokens under the predicted distribution; observed-token surprisal uses the probability assigned to the actual target.
-3. Tokenizers segment text differently, changing the units and positions over which the average is computed.
-
-</details>
-:::
 
 ## Further reading
 

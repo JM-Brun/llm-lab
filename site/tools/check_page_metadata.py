@@ -55,6 +55,9 @@ def _page_id_for_path(path: Path, site_dir: Path) -> str | None:
         return "fr/index"
     if relative == "references.qmd":
         return "reference/references"
+    companion = re.fullmatch(r"(fr|en)/exercises/([a-z0-9]+(?:-[a-z0-9]+)*)\.qmd", relative)
+    if companion:
+        return f"{companion.group(1)}/{companion.group(2)}-exercises"
     match = re.fullmatch(r"(fr|en)/([a-z0-9]+(?:-[a-z0-9]+)*)\.qmd", relative)
     return f"{match.group(1)}/{match.group(2)}" if match else None
 

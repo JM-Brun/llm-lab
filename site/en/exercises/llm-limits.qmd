@@ -1,0 +1,50 @@
+---
+title: "Exercises — LLM limitations"
+subtitle: "Self-check questions and worked answers"
+keywords: ["type:exercise-hub", "destination:practice", "topic:llm-limits-exercises", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/llm-limits-exercises"
+summary: "Self-check questions associated with the LLM limitations lesson."
+scope: "Collects the lesson's comprehension questions without duplicating its conceptual explanation."
+purpose: "Check understanding and distinguish the lesson's central ideas through focused questions."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/llm-limits"]
+tags: ["type:exercise-hub", "destination:practice", "topic:llm-limits-exercises", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the lesson: LLM limitations](../llm-limits.qmd)
+
+[Exercises and practice](../exercises.qmd).
+
+Try to answer before opening the solutions. The goal is to manipulate the mental model, not to memorize labels.
+
+1. A model asserts a false statement in a confident tone. Is that necessarily an implementation defect, or a possible consequence of the training objective?
+
+<details>
+<summary>Show the reasoning</summary>
+
+It is not necessarily an implementation defect. The prediction objective assigns probabilities to observed continuations without any truth-verification mechanism: a statistically plausible continuation can be false. Managing that risk requires an evaluation adapted to the intended use.
+
+</details>
+
+2. A measured ability jumps from 0% to 60% between two model sizes under a thresholded metric. What should be examined before concluding to an emergent ability?
+
+<details>
+<summary>Show the reasoning</summary>
+
+The metric, its threshold, and the protocol. A continuous or smoothed metric can show gradual improvement where a thresholded metric suggests a discontinuity; the [emergence debate](emergence.qmd) details these analyses and the required controls.
+
+</details>
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/llm-limits.qmd) · [English](llm-limits.qmd)
+:::

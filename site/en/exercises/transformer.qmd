@@ -1,0 +1,43 @@
+---
+title: "Exercises — GPT and Transformers: architecture and data flow"
+subtitle: "Self-check questions, exercises, and worked answers"
+keywords: ["type:exercise-hub", "destination:practice", "topic:transformer-exercises", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/transformer-exercises"
+summary: "Self-check questions and exercises associated with the GPT and Transformers: architecture and data flow lesson."
+scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
+purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/transformer"]
+tags: ["type:exercise-hub", "destination:practice", "topic:transformer-exercises", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the lesson: GPT and Transformers: architecture and data flow](../transformer.qmd)
+
+## Check your understanding
+
+This check focuses on the network computation, not on decoding, which is covered in the [generation lesson](../generation.qmd).
+
+1. Which operation lets a position incorporate information from other positions, and which one transforms each position independently?
+2. Why does a residual connection not replace the transformation computed by a sublayer?
+
+<details>
+<summary>Show answers and reasoning</summary>
+
+1. Self-attention mixes information across permitted positions; the MLP applies a position-wise transformation with shared weights.
+2. The residual connection adds the sublayer output to its input: $x_{out}=x_{in}+F(x_{in})$. It preserves a direct path through the block while allowing the sublayer to contribute a learned transformation.
+
+</details>
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/transformer.qmd) · [English](transformer.qmd)
+:::

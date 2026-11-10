@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/index", "fr/llm-overview", "fr/transformer-architectures"]
   children: ["fr/queries-keys-values", "fr/scaled-dot-product-attention"]
-related: ["fr/text-data", "fr/embedding-space", "fr/positional-encoding", "fr/contextualized-representations", "fr/logits", "fr/tensors", "fr/generation", "fr/transformer-block-walkthrough", "fr/gpt-model-walkthrough"]
+related: ["fr/text-data", "fr/embedding-space", "fr/positional-encoding", "fr/contextualized-representations", "fr/logits", "fr/tensors", "fr/generation", "fr/transformer-block-walkthrough", "fr/gpt-model-walkthrough", "fr/transformer-exercises"]
 tags: ["type:system-overview", "destination:understand", "topic:transformer", "level:overview", "language:fr", "status:published"]
 -->
 
@@ -137,6 +137,10 @@ L'[atelier d'exploration de GPT-2](transformer-explainer.qmd) permet d'observer 
 ## Pour approfondir
 
 Pour retrouver les visualisations, l'article fondateur et les ressources d'implémentation, consultez la [rubrique Approfondir consacrée au Transformer](deepen.qmd#ressources-transformer). Pour une première vue d'ensemble complémentaire, voir aussi [Understanding Transformer: The Architecture Behind Modern AI](https://dev.to/nishanthan-k/understanding-transformer-the-architecture-behind-modern-ai-55o8). Ces ressources sont facultatives et ne font pas partie du parcours principal.
+
+## Exercices
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/transformer.qmd).
 
 {{< include ../includes/generated-suggested-route-fr-transformer.qmd >}}
 

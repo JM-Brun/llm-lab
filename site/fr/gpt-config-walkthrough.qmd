@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/build-path"]
   children: []
-related: ["fr/transformer"]
+related: ["fr/transformer", "fr/gpt-config-walkthrough-exercises"]
 tags: ["type:guided-build", "destination:build", "topic:reference-gpt-config", "level:applied", "language:fr", "status:published"]
 -->
 
@@ -194,6 +194,10 @@ Ligne par ligne :
 - **Page conceptuelle** : [GPT et Transformer](transformer.qmd) — l'architecture que ces dimensions paramètrent.
 - **Retour au parcours** : [Construire un petit GPT](build-path.qmd) — le parcours qui motive ce code.
 - **Code source** : [`gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt_config.py) · **Tests** : [`test_gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt_config.py).
+
+## Exercices
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/gpt-config-walkthrough.qmd).
 
 ::: {.language-switch}
 **Langue :** [Français](gpt-config-walkthrough.qmd) · [English](../en/gpt-config-walkthrough.qmd)

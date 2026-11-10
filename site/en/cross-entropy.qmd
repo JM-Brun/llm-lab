@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/entropy"]
   children: ["en/loss"]
-related: ["en/likelihood"]
+related: ["en/likelihood", "en/cross-entropy-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:cross-entropy", "level:core", "language:en", "status:published"]
 -->
 
@@ -226,24 +226,10 @@ The derivative of one-hot cross-entropy with respect to the logits is $p_i-\math
 - **“A falling training loss proves that the model is improving.”** No: validation, leakage, baselines, and generalization still need to be examined.
 - **“Perplexity directly compares any models.”** Not without controlling for tokenizer, data, and evaluation conventions.
 
-::: {.self-check}
-## Check your understanding
+## Practice
 
-[Extended exercises on this topic](../en/exercises.qmd#foundations).
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/cross-entropy.qmd).
 
-1. Why does a target probability of 1 give zero loss?
-2. Why must the averaging denominator be specified when tokens are masked?
-3. Why is perplexity insufficient to measure an assistant's overall quality?
-
-<details>
-<summary>Show answers</summary>
-
-1. The loss is \(-\log p_y\), so it is zero when \(p_y=1\).
-2. If masked positions remain in the denominator, the result is no longer the mean over valid tokens and becomes difficult to compare.
-3. Perplexity measures probability assignment to tokens in a particular dataset; it does not directly measure truth, usefulness, safety, or calibration.
-
-</details>
-:::
 
 ## Further practice
 

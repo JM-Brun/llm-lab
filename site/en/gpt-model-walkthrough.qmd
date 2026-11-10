@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["en/build-path"]
   children: []
-related: ["en/transformer", "en/embedding-space", "en/positional-encoding", "en/logits"]
+related: ["en/transformer", "en/embedding-space", "en/positional-encoding", "en/logits", "en/gpt-model-walkthrough-exercises"]
 tags: ["type:guided-build", "destination:build", "topic:reference-gpt-model", "level:applied", "language:en", "status:published"]
 -->
 
@@ -176,6 +176,10 @@ The shape journey, line by line:
 - **Concept pages**: [GPT and the Transformer](transformer.qmd), [embedding space](embedding-space.qmd), [position](positional-encoding.qmd), [logits](logits.qmd).
 - **Back to the path**: [Build a small GPT](build-path.qmd).
 - **Source**: [`gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt.py) · **Tests**: [`test_gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt.py).
+
+## Practice
+
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/gpt-model-walkthrough.qmd).
 
 ::: {.language-switch}
 **Language:** [Français](../fr/gpt-model-walkthrough.qmd) · [English](gpt-model-walkthrough.qmd)

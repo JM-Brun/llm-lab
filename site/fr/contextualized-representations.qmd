@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/embedding-space", "fr/positional-encoding"]
   children: []
-related: ["fr/queries-keys-values", "fr/transformer"]
+related: ["fr/queries-keys-values", "fr/transformer", "fr/contextualized-representations-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-representations", "level:core", "language:fr", "status:published"]
 -->
 
@@ -123,21 +123,10 @@ Pour replacer cette transformation dans le parcours complet :
 
 Le [lookup dans l’espace des plongements (embeddings)](embedding-space.qmd) associe les IDs aux vecteurs initiaux. Pour voir comment le réseau transforme ensuite ces vecteurs en états contextualisés, poursuivez avec [Le Transformer dans un GPT](transformer.qmd) : cette page situe la pile de blocs et distingue l'attention du MLP. Les pages sur [Q/K/V](queries-keys-values.qmd) et l'[attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd) détaillent ensuite le mécanisme d'attention.
 
-::: {.self-check}
-## Vérifier sa compréhension
+## Exercices
 
-[Exercices approfondis sur ce thème](exercises-transformer.qmd#transformer).
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/contextualized-representations.qmd).
 
-Deux occurrences du **même ID de token** apparaissent dans deux phrases différentes. Sans changement de matrice d'embeddings :
-
-1. Les vecteurs obtenus par lookup sont-ils identiques ?
-2. Les états cachés après les couches du Transformer doivent-ils être identiques ? Pourquoi ?
-3. À quelle étape l'information du contexte intervient-elle ?
-4. Dans l'exemple *bank*, qu'est-ce qui est maintenu identique pour isoler l'effet du contexte ?
-
-Vous avez compris cette étape si vous pouvez expliquer la différence entre **identité du vecteur initial** et **dépendance contextuelle des états cachés**, sans attribuer au lookup lui-même une compréhension de la phrase.
-
-:::
 
 {{< include ../includes/generated-suggested-route-fr-contextualized-representations.qmd >}}
 

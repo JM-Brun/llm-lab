@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/text-data"]
   children: []
-related: ["fr/training-examples"]
+related: ["fr/training-examples", "fr/tokenization-strategies-exercises"]
 tags: ["type:deep-dive", "destination:deepen", "topic:tokenization-strategies", "level:advanced", "language:fr", "status:published"]
 -->
 
@@ -246,40 +246,10 @@ Cette page est un **approfondissement facultatif** de [Du texte aux tokens](text
 - [tiktoken](https://github.com/openai/tiktoken)
 
 
-::: {.self-check}
-## Vérifier sa compréhension
+## Exercices
 
-Des exercices formatifs prolongent cette page, notamment sur les fusions BPE, dans la [collection Données textuelles](exercises-text-data.qmd#donnees-textuelles).
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/tokenization-strategies.qmd).
 
-1. Un tokenizer produit moins de tokens qu'un autre sur le même texte. Cela prouve-t-il qu'il est meilleur ?
-
-<details>
-<summary>Afficher la réponse</summary>
-
-Non : une séquence plus courte démontre d'abord une différence de granularité et de compression. La longueur n'est ni une métrique de qualité ni une garantie d'analyse linguistique ; la comparaison utile porte sur le couple corpus, tokenizer et objectif.
-
-</details>
-
-2. Entraîner le tokenizer, est-ce déjà préentraîner le modèle de langage ?
-
-<details>
-<summary>Afficher la réponse</summary>
-
-Non. Le tokenizer a son propre apprentissage (règles de fusion, vocabulaire, normalisation) sur ses propres données, puis il est figé. Le préentraînement du modèle de langage optimise ensuite les poids du réseau pour prédire des tokens, avec le tokenizer figé. Les deux entraînements ne partagent ni objectif ni paramètres.
-
-</details>
-
-3. Un même identifiant de token peut-il désigner des fragments différents dans deux modèles ?
-
-<details>
-<summary>Afficher la réponse</summary>
-
-Oui en général : un identifiant n'a de sens que relativement au vocabulaire du tokenizer qui l'a produit. Sauf tokenizer ou révision identiques, le même entier peut correspondre à des fragments différents ; les identifiants ne se transfèrent pas tels quels entre modèles.
-
-</details>
-
-Vous avez compris cette étape si vous pouvez distinguer l'entraînement du tokenizer de l'encodage à l'inférence, et expliquer pourquoi les identifiants dépendent du vocabulaire et de sa version.
-:::
 
 ::: {.language-switch}
 **Langue :** [Français](tokenization-strategies.qmd) · [English](../en/tokenization-strategies.qmd)

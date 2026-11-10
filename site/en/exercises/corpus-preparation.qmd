@@ -1,0 +1,66 @@
+---
+title: "Exercises — Corpus preparation"
+subtitle: "Self-check questions, exercises, and worked answers"
+keywords: ["type:exercise-hub", "destination:practice", "topic:corpus-preparation-exercises", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/corpus-preparation-exercises"
+summary: "Self-check questions and exercises associated with the Corpus preparation lesson."
+scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
+purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/corpus-preparation"]
+tags: ["type:exercise-hub", "destination:practice", "topic:corpus-preparation-exercises", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the lesson: Corpus preparation](../corpus-preparation.qmd)
+
+## Check your understanding
+
+1. Why does a random split of text chunks not guarantee independence between train and test?
+
+<details>
+<summary>Show answer</summary>
+
+Chunks from the same document, source, or family may appear in multiple partitions. The split unit must match the generalization claim being tested, and overlap must then be audited.
+
+</details>
+
+2. Why freeze the tokenizer after fitting it on the training partition?
+
+<details>
+<summary>Show answer</summary>
+
+To prevent its vocabulary or rules from incorporating information from texts reserved for validation or test in a held-out experiment.
+
+</details>
+
+3. Is deduplication always beneficial?
+
+<details>
+<summary>Show answer</summary>
+
+No. It can reduce over-representation, but it can also alter the corpus distribution or remove legitimate repetitions. The method and its effects should be documented.
+
+</details>
+
+4. What information should accompany the token stream handed to the next stage?
+
+<details>
+<summary>Show answer</summary>
+
+At minimum, corpus provenance, the exact tokenizer revision, encoding parameters, useful statistics, and document-boundary rules.
+
+</details>
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/corpus-preparation.qmd) · [English](corpus-preparation.qmd)
+:::

@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["en/llm-overview"]
   children: []
-related: ["en/experimental-evaluation", "en/emergence"]
+related: ["en/experimental-evaluation", "en/emergence", "en/llm-limits-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:llm-limits", "level:overview", "language:en", "status:published"]
 -->
 
@@ -77,31 +77,10 @@ Model size alone does not explain performance either. Data quality, diversity, a
 
 Cite the protocol, not just the conclusion.
 
-::: {.self-check}
+## Practice
 
-[Exercises and practice](exercises.qmd).
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/llm-limits.qmd).
 
-Try to answer before opening the solutions. The goal is to manipulate the mental model, not to memorize labels.
-
-1. A model asserts a false statement in a confident tone. Is that necessarily an implementation defect, or a possible consequence of the training objective?
-
-<details>
-<summary>Show the reasoning</summary>
-
-It is not necessarily an implementation defect. The prediction objective assigns probabilities to observed continuations without any truth-verification mechanism: a statistically plausible continuation can be false. Managing that risk requires an evaluation adapted to the intended use.
-
-</details>
-
-2. A measured ability jumps from 0% to 60% between two model sizes under a thresholded metric. What should be examined before concluding to an emergent ability?
-
-<details>
-<summary>Show the reasoning</summary>
-
-The metric, its threshold, and the protocol. A continuous or smoothed metric can show gradual improvement where a thresholded metric suggests a discontinuity; the [emergence debate](emergence.qmd) details these analyses and the required controls.
-
-</details>
-
-:::
 
 ::: {.language-switch}
 **Language:** [Français](../fr/llm-limits.qmd) · [English](llm-limits.qmd)

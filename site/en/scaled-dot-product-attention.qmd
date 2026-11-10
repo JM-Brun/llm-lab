@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/transformer"]
   children: ["en/causal-masking", "en/attention-score-scaling"]
-related: ["en/queries-keys-values"]
+related: ["en/queries-keys-values", "en/scaled-dot-product-attention-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:scaled-dot-product-attention", "level:core", "language:en", "status:published"]
 -->
 
@@ -85,11 +85,10 @@ The formulation is presented in [Vaswani et al. (2017), *Attention Is All You Ne
 - Softmax connects to [probabilities](probabilities.qmd), but a normalized distribution is not necessarily calibrated.
 - The [Transformer overview](transformer.qmd) places this computation in the model's data flow.
 
-::: {.self-check}
-## Check your understanding
+## Practice
 
-Calculations involving scores, scaling, normalization, and aggregation are grouped in the [Attention exercise collection](exercises.qmd#attention), keeping this page focused on the mechanism and its invariants.
-:::
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/scaled-dot-product-attention.qmd).
+
 
 ## Optional Build-path companion
 

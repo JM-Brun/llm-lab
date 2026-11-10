@@ -1,0 +1,61 @@
+---
+title: "Exercises — Gradients and backpropagation"
+subtitle: "Self-check questions, exercises, and worked answers"
+keywords: ["type:exercise-hub", "destination:practice", "topic:gradients-exercises", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/gradients-exercises"
+summary: "Self-check questions and exercises associated with the Gradients and backpropagation lesson."
+scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
+purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/gradients"]
+tags: ["type:exercise-hub", "destination:practice", "topic:gradients-exercises", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the lesson: Gradients and backpropagation](../gradients.qmd)
+
+## Check your understanding
+
+For additional practice outside the lesson, see the [exercise space — mathematical foundations](../exercises.qmd#foundations).
+
+1. Why does the cross-entropy derivative with respect to logits simplify to $p_i-\mathbb{1}[i=y]$?
+
+<details>
+<summary>Show answer</summary>
+
+For a one-hot target, differentiating log-softmax combines the normalization term $p_i$ with the target-class term $-\mathbb{1}[i=y]$. Their difference is the gradient with respect to each logit.
+
+</details>
+
+2. What can disagreement between an analytical gradient and a finite difference indicate?
+
+<details>
+<summary>Show answer</summary>
+
+It may indicate a derivation or implementation bug, but also a poorly chosen $\epsilon$, rounding error, nondeterministic behavior, or mismatched conventions. Isolate the case and check tolerances.
+
+</details>
+
+3. Why might a gradient-descent update fail to reduce the loss if the step is too large?
+
+<details>
+<summary>Show answer</summary>
+
+The gradient describes a local change. A step that is too large can leave the region where that approximation is useful, overshoot a minimum, or increase the objective; the learning rate must be controlled.
+
+</details>
+
+**Return to:** [Overview](../mathematical-foundations.qmd) · [Loss](../loss.qmd)
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/gradients.qmd) · [English](gradients.qmd)
+:::

@@ -8,7 +8,7 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/exercises"
-scope: "Central registry and navigation hub for extended exercise collections and transfer practice. Short self-checks remain embedded in lesson pages."
+scope: "Central registry for per-lesson practice pages and extended topic collections. Short lesson checks live on companion pages; topic collections provide broader cross-lesson practice."
 purpose: "Choose a topic collection, identify its prerequisites and maturity, and use worked answers and transfer questions to test reasoning rather than answer recall."
 suggested_route:
   previous: "en/build-path"
@@ -20,7 +20,58 @@ related: []
 tags: ["type:exercise-hub", "destination:practice", "topic:exercises", "level:applied", "language:en", "status:published"]
 -->
 
-Lesson pages retain a consistent **“Check your understanding”** component: a small number of focused questions with collapsed answers. These are intended for immediate retrieval and conceptual reinforcement. This catalogue is the entry point for **extended exercises**: calculations, multi-step problems, diagnosis, implementation-oriented reasoning, and transfer tasks. The substantial exercise sets live on their own topic pages so that they can grow without turning this page into a long, flat worksheet.
+Short self-checks are collected on companion pages linked from each lesson. Topic collections remain the place for broader, cross-lesson practice.
+
+## Exercises by lesson
+
+::: {.callout-note collapse="true" title="Browse all 33 per-lesson practice pages"}
+
+### Understand / Comprendre
+
+- [LLM overview](exercises/llm-overview.qmd)
+- [Autoregressive generation](exercises/generation.qmd)
+- [Text and data](exercises/text-data.qmd)
+- [Embedding space](exercises/embedding-space.qmd)
+- [Positional encoding](exercises/positional-encoding.qmd)
+- [Contextualized representations](exercises/contextualized-representations.qmd)
+- [Transformer](exercises/transformer.qmd)
+- [Queries, keys, and values](exercises/queries-keys-values.qmd)
+- [Scaled dot-product attention](exercises/scaled-dot-product-attention.qmd)
+- [Causal masking](exercises/causal-masking.qmd)
+- [Logits](exercises/logits.qmd)
+- [Probabilities](exercises/probabilities.qmd)
+- [Entropy](exercises/entropy.qmd)
+- [Likelihood](exercises/likelihood.qmd)
+- [Cross-entropy](exercises/cross-entropy.qmd)
+- [Loss](exercises/loss.qmd)
+- [Gradients](exercises/gradients.qmd)
+- [Transformer architectures](exercises/transformer-architectures.qmd)
+- [LLM limits](exercises/llm-limits.qmd)
+
+### Build / Construire
+
+- [Corpus preparation](exercises/corpus-preparation.qmd)
+- [Training examples](exercises/training-examples.qmd)
+- [GPT configuration](exercises/gpt-config-walkthrough.qmd)
+- [GPT operations](exercises/gpt-ops-walkthrough.qmd)
+- [Transformer block](exercises/transformer-block-walkthrough.qmd)
+- [GPT model](exercises/gpt-model-walkthrough.qmd)
+- [GPT generation](exercises/gpt-generation-walkthrough.qmd)
+
+### Deepen / Approfondir
+
+- [Cross-attention](exercises/cross-attention.qmd)
+- [Hybrid LLM architectures](exercises/hybrid-llm-architectures.qmd)
+- [Tokenization strategies](exercises/tokenization-strategies.qmd)
+- [In-context learning](exercises/in-context-learning.qmd)
+- [LLM computational complexity](exercises/llm-computational-complexity.qmd)
+- [Emergence](exercises/emergence.qmd)
+- [LLM evolution](exercises/llm-evolution.qmd)
+
+:::
+
+
+This catalogue is the entry point for **extended exercises**: calculations, multi-step problems, diagnosis, implementation-oriented reasoning, and transfer tasks. The substantial exercise sets live on their own topic pages so that they can grow without turning this page into a long, flat worksheet.
 
 <a id="foundations"></a>
 <a id="text-data"></a>
@@ -59,7 +110,7 @@ The following topics are part of the longer-term practice curriculum. They are n
 
 ## A note on lesson self-checks
 
-Do not move every question out of a lesson. A short, tightly scoped self-check belongs beside the concept it reinforces. Move an exercise here when it requires sustained calculation, several reasoning steps, a worked solution, comparison of alternatives, or transfer beyond the immediate lesson. The dedicated collections may link back to lesson pages for preparation, but should not duplicate their conceptual explanations.
+Focused retrieval questions and their worked answers live on the companion page for the relevant lesson. Keep explanatory examples and demonstrations in the lesson when they teach the mechanism rather than test the learner. The topic collections here are for integrated, cross-lesson practice; they may refer to a companion check as a prerequisite, but should not reproduce the same prompt and solution.
 
 ## Foundational references
 

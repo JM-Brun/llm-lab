@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/text-data"]
   children: ["en/positional-encoding", "en/contextualized-representations", "en/cosine-similarity", "en/embedding-linearity"]
-related: ["en/transformer"]
+related: ["en/transformer", "en/embedding-space-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:en", "status:published"]
 -->
 
@@ -144,29 +144,10 @@ Geometric proximity depends on the model, layer, training objective, and metric.
 
 For a deeper treatment without conflating geometry with the lookup mechanism, see the pages on [cosine similarity](cosine-similarity.qmd) and the [linearity hypothesis for representations](embedding-linearity.qmd).
 
-::: {.self-check}
-## Check your understanding
+## Practice
 
-Practice with [Exercise TR-B — Calculate lookup and trace tensor shapes](exercises-text-data.qmd#tr-b-lookup).
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/embedding-space.qmd).
 
-1. An embedding matrix has \(V\) rows and vectors of dimension \(d\). How many parameters does it contain, and what does ID \(i\) select?
-
-<details>
-<summary>Show the reasoning</summary>
-
-The matrix contains \(V\times d\) parameters. ID \(i\) selects row \(E_i\); its integer value is an index, not a semantic coordinate. Positional processing and contextualization happen afterwards, depending on the architecture (see the two dedicated lessons).
-
-</details>
-
-2. A 2D projection shows two clearly separated point clusters. Does this prove that the model correctly distinguishes these categories on new data?
-
-<details>
-<summary>Show the reasoning</summary>
-
-No. A 2D projection preserves only selected aspects of the geometry and may create or exaggerate visual separation. Define a task, metric, and evaluation protocol on relevant held-out data; an exploratory plot is not evidence of predictive performance.
-
-</details>
-:::
 
 ## References
 

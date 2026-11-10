@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/build-path"]
   children: []
-related: ["fr/generation", "fr/logits", "fr/probabilites"]
+related: ["fr/generation", "fr/logits", "fr/probabilites", "fr/gpt-generation-walkthrough-exercises"]
 tags: ["type:guided-build", "destination:build", "topic:reference-gpt-generation", "level:applied", "language:fr", "status:published"]
 -->
 
@@ -149,6 +149,10 @@ Ligne par ligne :
 - **Pages conceptuelles** : [générer du texte pas à pas](generation.qmd), [logits](logits.qmd), [probabilités](probabilites.qmd).
 - **Retour au parcours** : [Construire un petit GPT](build-path.qmd).
 - **Code source** : [`generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/generate.py) · **Tests** : [`test_generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_generate.py).
+
+## Exercices
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/gpt-generation-walkthrough.qmd).
 
 ::: {.language-switch}
 **Langue :** [Français](gpt-generation-walkthrough.qmd) · [English](../en/gpt-generation-walkthrough.qmd)

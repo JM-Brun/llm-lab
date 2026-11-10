@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/entropy"]
   children: ["fr/loss"]
-related: ["fr/vraisemblance"]
+related: ["fr/vraisemblance", "fr/cross-entropy-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:cross-entropy", "level:core", "language:fr", "status:published"]
 -->
 
@@ -226,24 +226,10 @@ La dérivée de la cross-entropie one-hot par rapport aux logits est $p_i-\mathb
 - **« Une loss d'entraînement qui baisse prouve que le modèle s'améliore. »** Non : il faut examiner la validation, les fuites, les baselines et la généralisation.
 - **« La perplexité compare directement n'importe quels modèles. »** Non sans contrôler le tokenizer, les données et les conventions d'évaluation.
 
-::: {.self-check}
-## Vérifier sa compréhension
+## Exercices
 
-[Exercices approfondis sur ce thème](exercises.qmd#fondations).
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/cross-entropy.qmd).
 
-1. Pourquoi une probabilité cible égale à 1 donne-t-elle une perte nulle ?
-2. Pourquoi faut-il préciser le dénominateur de la moyenne lorsque des tokens sont masqués ?
-3. Pourquoi la perplexité ne suffit-elle pas à mesurer la qualité globale d'un assistant ?
-
-<details>
-<summary>Afficher les réponses</summary>
-
-1. La perte vaut \(-\log p_y\), donc elle est nulle lorsque \(p_y=1\).
-2. Si les positions masquées sont comptées dans le dénominateur, la moyenne ne correspond plus à la moyenne sur les tokens valides et devient difficile à comparer.
-3. La perplexité mesure l'attribution de probabilité aux tokens d'un jeu donné ; elle ne mesure pas directement la vérité, l'utilité, la sécurité ou la calibration.
-
-</details>
-:::
 
 ## Exercices complémentaires
 

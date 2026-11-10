@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/transformer"]
   children: ["en/queries-keys-values-advanced"]
-related: ["en/contextualized-representations", "en/scaled-dot-product-attention", "en/cross-attention", "en/transformer-block-walkthrough"]
+related: ["en/contextualized-representations", "en/scaled-dot-product-attention", "en/cross-attention", "en/transformer-block-walkthrough", "en/queries-keys-values-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-values", "level:core", "language:en", "status:published"]
 -->
 
@@ -102,20 +102,10 @@ By the end of this lesson, you should be able to:
 - describe the qualitative dependencies between projections, weights, and content, without performing matrix calculations.
 :::
 
-::: {.self-check}
-## Check the essential idea
+## Practice
 
-[Extended exercises on Q/K/V and attention](exercises-attention.qmd#attention).
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/queries-keys-values.qmd).
 
-**Which projections determine attention weights, and which one supplies the aggregated vectors? What happens if V changes while Q and K stay the same?**
-
-<details>
-<summary>Show the reasoning</summary>
-
-Q and K determine the attention weights; V supplies the vectors whose content is aggregated. Changing Q or K can change the weights. If only V changes, the weights remain unchanged because the scores depend on Q and K; the aggregated content can change, but need not do so: weighted changes can cancel out.
-
-</details>
-:::
 
 {{< include ../includes/generated-suggested-route-en-queries-keys-values.qmd >}}
 

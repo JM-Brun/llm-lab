@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/transformer"]
   children: ["fr/queries-keys-values-advanced"]
-related: ["fr/contextualized-representations", "fr/scaled-dot-product-attention", "fr/cross-attention", "fr/transformer-block-walkthrough"]
+related: ["fr/contextualized-representations", "fr/scaled-dot-product-attention", "fr/cross-attention", "fr/transformer-block-walkthrough", "fr/queries-keys-values-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-values", "level:core", "language:fr", "status:published"]
 -->
 
@@ -102,20 +102,10 @@ Pour mettre en pratique les compétences associées à cette leçon, les [exerci
 - décrire qualitativement les dépendances entre projections, poids et contenu, sans effectuer de calcul matriciel.
 :::
 
-::: {.self-check}
-## Vérifier l'idée essentielle
+## Exercices
 
-[Exercices approfondis sur Q/K/V et l'attention](exercises-attention.qmd#attention).
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/queries-keys-values.qmd).
 
-**Quelles projections déterminent les poids d'attention, et laquelle fournit les vecteurs agrégés ? Que se passe-t-il si V change alors que Q et K restent fixes ?**
-
-<details>
-<summary>Afficher le raisonnement</summary>
-
-Q et K déterminent les poids d'attention ; V fournit les vecteurs dont le contenu est agrégé. Modifier Q ou K peut modifier les poids. Si V change seul, les poids restent identiques puisque les scores dépendent de Q et K ; le contenu agrégé peut changer, mais ce n'est pas systématique : des variations pondérées peuvent se compenser.
-
-</details>
-:::
 
 {{< include ../includes/generated-suggested-route-fr-queries-keys-values.qmd >}}
 

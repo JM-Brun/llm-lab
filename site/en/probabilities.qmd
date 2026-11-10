@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/logits", "en/generation"]
   children: ["en/entropy", "en/likelihood"]
-related: []
+related: ["en/probabilities-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:probabilites", "level:core", "language:en", "status:published"]
 -->
 
@@ -200,26 +200,10 @@ Selecting the argmax token at each position is not equivalent to globally search
 
 A probability of 0.9 therefore does not automatically mean “a 90% chance that the answer is true.” Calibration must be evaluated on relevant held-out data, and good overall calibration does not guarantee that each individual answer is reliable.
 
-::: {.self-check}
-## Check your understanding
+## Practice
 
-[Extended exercises on this topic](../en/exercises-foundations.qmd#foundations).
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/probabilities.qmd).
 
-1. Why are logits not probabilities?
-2. Why does \(p_\theta(x_t\mid x_{<t})\) depend on the prefix?
-3. What does temperature change, and what can it not guarantee?
-4. What is the difference between normalization, calibration, and factual truth?
-
-<details>
-<summary>Show answers</summary>
-
-1. Logits are unnormalized scores; softmax turns them into positive values that sum to one.
-2. The model conditions the next token on preceding tokens. The same token can therefore have different probabilities in different contexts.
-3. Temperature changes distribution concentration and sampling, but guarantees neither truth nor correct calibration.
-4. Normalization is mathematical, calibration is empirical, and truth depends on facts and evidence.
-
-</details>
-:::
 
 ## Further reading
 

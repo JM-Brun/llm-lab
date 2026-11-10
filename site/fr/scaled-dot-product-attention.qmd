@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/transformer"]
   children: ["fr/causal-masking", "fr/attention-score-scaling"]
-related: ["fr/queries-keys-values"]
+related: ["fr/queries-keys-values", "fr/scaled-dot-product-attention-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:scaled-dot-product-attention", "level:core", "language:fr", "status:published"]
 -->
 
@@ -85,11 +85,10 @@ La formulation est présentée dans [Vaswani et al. (2017), *Attention Is All Yo
 - La fonction softmax est liée aux [probabilités](probabilites.qmd), mais une distribution normalisée n'est pas nécessairement calibrée.
 - La [synthèse Transformer](transformer.qmd) remet le calcul dans le flux du modèle.
 
-::: {.self-check}
-## Vérifier sa compréhension
+## Exercices
 
-Les calculs de scores, de mise à l'échelle, de normalisation et d'agrégation sont regroupés dans la [collection d'exercices Attention](exercises.qmd#attention), afin de garder cette page centrée sur le mécanisme et ses invariants.
-:::
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/scaled-dot-product-attention.qmd).
+
 
 ## Complément côté Build (facultatif)
 

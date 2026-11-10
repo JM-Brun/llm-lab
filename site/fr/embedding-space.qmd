@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/text-data"]
   children: ["fr/positional-encoding", "fr/contextualized-representations", "fr/cosine-similarity", "fr/linearite-embeddings"]
-related: ["fr/transformer"]
+related: ["fr/transformer", "fr/embedding-space-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:fr", "status:published"]
 -->
 
@@ -145,29 +145,10 @@ La proximité géométrique dépend du modèle, de la couche, de l'entraînement
 
 Pour approfondir ces questions sans les confondre avec le mécanisme de lookup, voir la page sur la [similarité cosinus](cosine-similarity.qmd) et celle sur l'[hypothèse de linéarité des représentations](linearite-embeddings.qmd).
 
-::: {.self-check}
-## Vérifier sa compréhension
+## Exercices
 
-Entraînez-vous avec l'[Exercice TR-B — Calculer un lookup et suivre les formes des tenseurs](exercises-text-data.qmd#tr-b-lookup).
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/embedding-space.qmd).
 
-1. Une matrice contient \(V\) lignes et des vecteurs de dimension \(d\). Combien de paramètres contient-elle, et que sélectionne l'ID \(i\) ?
-
-<details>
-<summary>Afficher le raisonnement</summary>
-
-La matrice contient \(V\times d\) paramètres. L'ID \(i\) sélectionne la ligne \(E_i\) ; sa valeur entière sert d'indice, pas de coordonnée sémantique. Le traitement positionnel et la contextualisation interviennent ensuite, selon l'architecture (voir les deux pages dédiées).
-
-</details>
-
-2. Une projection 2D montre deux groupes de points bien séparés. Cela prouve-t-il que le modèle distingue correctement ces catégories sur de nouvelles données ?
-
-<details>
-<summary>Afficher le raisonnement</summary>
-
-Non. Une projection 2D ne préserve qu’une partie de la géométrie et peut créer ou accentuer des séparations visuelles. Il faut définir une tâche, une métrique et un protocole d’évaluation sur des données pertinentes tenues à l’écart ; une figure exploratoire ne constitue pas une preuve de performance.
-
-</details>
-:::
 
 ## Références
 
