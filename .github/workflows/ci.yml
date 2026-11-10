@@ -30,13 +30,13 @@ jobs:
         run: |
           git fetch --no-tags --depth=1 origin "$BASE_SHA"
           changed_files="$(git diff --name-only "$BASE_SHA" HEAD)"
-          if printf '%s\n' "$changed_files" | grep -Eq '^(site/|data/|src/|scripts/|docs/|pyproject.toml$|uv.lock$|.github/workflows/ci.yml$)'; then
+          if printf '%s\\n' "$changed_files" | grep -Eq '^(site/|data/|src/|scripts/|docs/|pyproject.toml$|uv.lock$|.github/workflows/ci.yml$)'; then
             echo "domain_checks=true" >> "$GITHUB_OUTPUT"
           else
             echo "domain_checks=false" >> "$GITHUB_OUTPUT"
           fi
 
-          if printf '%s\n' "$changed_files" | grep -Eq '^(src/llm_lab/foundations/|tests/unit/test_gpt2_reference_parity\.py$|docs/requirements-gpt2-reference\.txt$|pyproject\.toml$|uv\.lock$|.github/workflows/ci\.yml$)'; then
+          if printf '%s\\n' "$changed_files" | grep -Eq '^(src/llm_lab/foundations/|tests/unit/test_gpt2_reference_parity\\.py$|docs/requirements-gpt2-reference\\.txt$|pyproject\\.toml$|uv\\.lock$|.github/workflows/ci\\.yml$)'; then
             echo "reference_parity=true" >> "$GITHUB_OUTPUT"
           else
             echo "reference_parity=false" >> "$GITHUB_OUTPUT"
@@ -127,6 +127,6 @@ jobs:
         run: uv pip install --python .venv/bin/python pytest-xdist==3.8.0
 
       - name: Test
-        # Four workers match the hosted runner's available CPU parallelism.
+        # loadscope schedules whole test classes/modules while balancing work across workers.
         # pytest-cov combines worker coverage; the global threshold remains.
-        run: uv run pytest -n 2 --dist loadfile --durations=20
+        run: uv run pytest -n 2 --dist loadscope --durations=20
