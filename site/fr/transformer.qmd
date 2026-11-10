@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/index", "fr/llm-overview"]
   children: ["fr/embedding-space", "fr/positional-encoding", "fr/contextualized-representations", "fr/queries-keys-values", "fr/scaled-dot-product-attention", "fr/logits", "fr/tensors"]
-related: ["fr/text-data", "fr/transformer-block-walkthrough", "fr/transformer-exercises"]
+related: ["fr/text-data","fr/transformer-block-walkthrough","fr/transformer-exercises"]
 tags: ["type:system-overview", "destination:understand", "topic:transformer", "level:overview", "language:fr", "status:published"]
 -->
 
@@ -29,22 +29,7 @@ Un **GPT** est un modèle de langage construit autour d'un **Transformer décode
 Cette page montre d'abord à quoi ressemble cette architecture, puis suit une passe avant à travers ses blocs jusqu'aux logits. Elle s'arrête à la sortie du réseau : la conversion des logits en probabilités et la sélection du prochain token appartiennent au décodage, pas au calcul interne du Transformer.
 :::
 
-::: {.callout-tip title="L'idée à retenir en une minute"}
-- **Entrée :** les IDs sélectionnent des embeddings ; l'architecture introduit l'information positionnelle selon son mécanisme.
-- **Bloc Transformer :** l'auto-attention échange de l'information entre positions autorisées ; le MLP transforme chaque position séparément. Résidus et normalisation structurent le flux entre ces sous-couches.
-- **Répétition :** les blocs transforment progressivement les états ; Q/K/V sont des projections internes à l'auto-attention, pas une étape après les représentations contextualisées finales.
-- **Sortie :** la tête de sortie produit des logits. Softmax, sélection du token et réinjection dans le contexte sont des opérations distinctes, traitées dans les pages sur les probabilités et la génération.
-
-**Question de contrôle :** pouvez-vous retracer une passe avant des IDs aux logits et distinguer le calcul interne du réseau de la boucle de génération ?
-:::
-
-::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
-Vous pourrez :
-- retracer le calcul depuis la séquence de tokens jusqu’aux logits, en repérant embeddings et information positionnelle ;
-- expliquer les rôles distincts de l’auto-attention et du MLP dans un bloc Transformer ;
-- distinguer représentations contextualisées, logits et token sélectionné ;
-- distinguer profondeur, largeur, nombre de têtes et dimensions internes du MLP.
-:::
+Le schéma qui suit présente deux niveaux de lecture : le GPT complet, pour situer le flux des données, puis un bloc agrandi, pour comprendre les opérations répétées. Nous suivrons ensuite ce flux de l'entrée du réseau jusqu'aux logits, sans refaire la tokenisation ni la boucle de génération.
 
 ## Le Transformer : le réseau au cœur d'un GPT
 
@@ -128,9 +113,22 @@ Autrement dit : l'attention est une sous-couche ; le bloc est l'unité répété
 
 Après le dernier bloc, la normalisation finale et la tête de sortie produisent les **logits** : un score non normalisé pour chaque token du vocabulaire. La [leçon consacrée aux logits](logits.qmd) explique ce que ces scores représentent ; celle sur les [probabilités de sortie](probabilites.qmd) montre comment *softmax* les convertit en distribution. Le réseau s'arrête à ces scores : choisir un token, l'ajouter au contexte et relancer le calcul relève de la [génération autorégressive](generation.qmd).
 
-## S’exercer
+## Vérifier sa compréhension
 
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/transformer.qmd).
+Pour prolonger cette vérification par des problèmes progressifs sur les embeddings, les résidus, la normalisation et le MLP, consultez les [exercices consacrés au Transformer](exercises.qmd#transformer).
+
+Cette vérification porte sur la structure du bloc et le rôle des connexions résiduelles.
+
+1. Quelle opération permet à une position d'intégrer de l'information provenant d'autres positions, et laquelle transforme chaque position indépendamment ?
+2. Pourquoi les connexions résiduelles ne remplacent-elles pas la transformation calculée par une sous-couche ?
+
+<details>
+<summary>Afficher les réponses et le raisonnement</summary>
+
+1. L'auto-attention mélange l'information entre positions autorisées ; le MLP applique une transformation position par position, avec des poids partagés.
+2. La connexion résiduelle additionne la sortie de la sous-couche à son entrée : $x_{sortie}=x_{entrée}+F(x_{entrée})$. Elle préserve un chemin direct à travers le bloc tout en laissant la sous-couche apporter une transformation apprise.
+
+</details>
 
 <!-- Legacy section anchors: see the linked companion page. -->
 <span id="une-expérience-guidée-en-quatre-observations"></span>
@@ -159,6 +157,10 @@ La construction des fenêtres, le décalage entrées/cibles et les masques d'ent
 - **« Tous les Transformers sont des GPT. »** Non : l'architecture originale de 2017 utilisait un encodeur et un décodeur ; GPT est une famille autorégressive de type décodeur seul.
 
 Pour retrouver les visualisations, l'article fondateur et les ressources d'implémentation, consultez la [rubrique Approfondir consacrée au Transformer](deepen.qmd#ressources-transformer). Ces ressources sont facultatives et ne font pas partie du parcours principal.
+
+## S’exercer
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/transformer.qmd).
 
 {{< include ../includes/generated-suggested-route-fr-transformer.qmd >}}
 

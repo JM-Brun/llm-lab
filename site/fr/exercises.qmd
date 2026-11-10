@@ -102,7 +102,7 @@ Les pages sont regroupées selon les trois parcours du site. Ouvrez un parcours 
 | Collection | Périmètre | Statut |
 |---|---|---|
 | [Fondations mathématiques](#fondations) | Tenseurs, probabilités, logits, entropie, cross-entropie, vraisemblance, gradients, stabilité numérique | 7 exercices progressifs rédigés ; vérification de gradients et autres thèmes à compléter |
-| [Données textuelles](#donnees-textuelles) | Tokenisation, BPE, tokens spéciaux, fenêtres, décalage entrée-cible, batching et fuites | Auto-vérifications regroupées dans les pages d’exercices par leçon ; six exercices formatifs TR-A à TR-F publiés |
+| [Données textuelles](#donnees-textuelles) | Tokenisation, BPE, tokens spéciaux, fenêtres, décalage entrée-cible, batching et fuites | Auto-vérifications dans les pages texte/embeddings ; six exercices formatifs TR-A à TR-F publiés |
 | [Attention](#attention) | Q/K/V, scores, mise à l’échelle, masque causal, multi-têtes, invariants | Somme pondérée et projections Q/K/V ; CA-A sur le masque causal et l’invariance de préfixe ; trois exercices formatifs AT-A à AT-C publiés (attention multi-têtes) ; variantes avancées à construire |
 | [Transformer](#transformer) | Embeddings, position, résidus, normalisation, MLP et variantes d’architecture | Trois exercices formatifs TF-A à TF-C publiés (formes et normalisation d'un bloc pré-LN, paramètres du bloc, diagnostic et interventions) ; variantes d'architecture à construire |
 | [Préentraînement](#preentrainement) | Objectif, entraînement/validation, perplexité, checkpoints et reproductibilité | Structure à compléter |
@@ -334,7 +334,7 @@ Le tokenizer transforme le texte en unités discrètes du vocabulaire. Les IDs i
 
 </details>
 
-#### Exercice TR-B — Calculer un lookup et suivre les formes des tenseurs
+#### Exercice TR-B — Calculer un lookup et suivre les formes des tenseurs {#tr-b-lookup}
 
 **Préparation :** l'[espace des embeddings](embedding-space.qmd) pour la matrice et le lookup ; [tenseurs](tensors.qmd) sert de référence facultative sur les conventions de notation. L'exercice progresse en trois étapes : calculer, compléter, généraliser.
 
@@ -459,6 +459,46 @@ Le lookup conserve les axes batch et position, et ajoute l'axe des caractéristi
 - Dire que le lookup contextualise les tokens attribue à la table d'embeddings un calcul réalisé plus tard par le Transformer.
 
 </details>
+
+#### Trace pratique facultative — du texte aux vecteurs
+
+Cette trace complète TR-B avec un tokenizer réel et une table d'embeddings synthétique. Elle permet de suivre les objets successifs sans prétendre reproduire les poids internes d'un GPT-2 préentraîné.
+
+Installez la version figée avec `python -m pip install tiktoken==0.14.0`. NumPy est déjà une dépendance du projet.
+
+```python
+import numpy as np
+import tiktoken
+
+text = "hello world"
+utf8_bytes = text.encode("utf-8")
+encoding = tiktoken.get_encoding("gpt2")
+token_ids = encoding.encode(text)
+token_bytes = [encoding.decode_single_token_bytes(i) for i in token_ids]
+token_strings = [part.decode("utf-8") for part in token_bytes]
+
+assert utf8_bytes == b"hello world"
+assert token_ids == [31373, 995]
+assert token_strings == ["hello", " world"]
+assert encoding.decode(token_ids) == text
+
+# Table synthétique : GPT-2 réel utilise d'autres dimensions et poids appris.
+vocab_size, d = 50_257, 2
+E = np.zeros((vocab_size, d), dtype=np.float32)
+E[31373] = [0.1, 0.2]
+E[995] = [-0.3, 0.4]
+X = E[token_ids]
+assert X.shape == (2, 2)
+assert np.allclose(X, [[0.1, 0.2], [-0.3, 0.4]])
+
+# Vecteurs positionnels illustratifs, pas les paramètres réels de GPT-2.
+P = np.array([[0.01, 0.02], [0.03, 0.04]], dtype=np.float32)
+Z = X + P
+assert Z.shape == (2, 2)
+assert np.allclose(Z, [[0.11, 0.22], [-0.27, 0.44]])
+```
+
+À interpréter avec soin : les IDs dépendent du tokenizer ; les vecteurs de `E` et `P` sont inventés. Le script vérifie le chemin texte → IDs → lookup → ajout positionnel, mais n'exécute aucun bloc Transformer et ne calcule donc pas d'états contextualisés. Pour les détails sur les octets et les fusions BPE, voir TR-E.
 
 #### Exercice TR-C — Distinguer identité, position et contexte
 
@@ -805,6 +845,30 @@ Oui : le vocabulaire et l'ordre des fusions BPE ont été ajustés à partir de 
 
 **Périmètre actuel :** CA-A introduit le masque causal, le décalage des cibles et l'invariance de préfixe à partir d'une matrice et des tests existants. Trois exercices formatifs progressifs, aux identifiants stables AT-A, AT-B et AT-C partagés avec la version anglaise, couvrent séparément le calcul d'une attention multi-têtes, la trace des formes, puis le diagnostic d'affirmations et la prédiction d'interventions. Les variantes spécifiques au masquage multi-têtes et les invariants avancés restent à approfondir. Ordre conseillé : CA-A pour le masque causal, puis AT-A, AT-B et AT-C pour la progression multi-têtes.
 
+#### Exercice — des scores Q/K à la sortie d'attention {#at-0-scores-to-output}
+
+On considère une requête et deux clés/valeurs :
+
+$$
+q=(1,0),\quad k_1=(1,0),\quad k_2=(0,1),\quad
+v_1=(10,0),\quad v_2=(0,20).
+$$
+
+1. Calculez les scores $qk_1^\top$ et $qk_2^\top$.
+2. Appliquez la mise à l'échelle avec $d_k=2$.
+3. Calculez les poids softmax (approximativement).
+4. Calculez la combinaison pondérée des valeurs.
+5. Expliquez pourquoi les poids ne mesurent pas une pertinence sémantique absolue.
+
+<details>
+<summary>Afficher le corrigé raisonné</summary>
+
+Les scores bruts valent $(1,0)$. Après division par $\sqrt{2}$, ils valent environ $(0{,}707,0)$. Le softmax donne environ $(0{,}67,0{,}33)$. La sortie vaut donc $0{,}67(10,0)+0{,}33(0,20)\approx(6{,}7,6{,}6)$.
+
+Q et K déterminent les poids ; V détermine le contenu agrégé. Les poids sont relatifs aux clés accessibles dans cette ligne, pas une mesure universelle de pertinence ou de causalité.
+
+</details>
+
 #### Calculer une agrégation à la main
 
 Une position reçoit les poids d’attention $(0{,}75,\,0{,}25)$ et les vecteurs de valeur sont $v_1=(2,0)$ et $v_2=(0,4)$. Calculez la sortie. Si l’on échange $v_1$ et $v_2$ sans changer les poids, la sortie reste-t-elle identique ?
@@ -986,7 +1050,7 @@ $$
 
 </details>
 
-#### Exercice CA-A — Masque causal et invariance de préfixe
+#### Exercice CA-A — Masque causal et invariance de préfixe {#ca-a-prefix-invariance}
 
 On considère quatre tokens d'entrée \(x_0,x_1,x_2,x_3\). À la position de requête \(i\), l'auto-attention causale n'autorise que les clés des positions \(j\leq i\).
 
@@ -1045,6 +1109,39 @@ Ces tests sont des vérifications ciblées, pas une preuve formelle pour toute e
 ~~~bash
 uv run --locked pytest --no-cov -q tests/unit/test_attention.py tests/unit/test_gpt.py
 ~~~
+
+**Vérification autonome facultative — une tête d'attention.** Le script suivant isole le mécanisme : il perturbe une clé et une valeur futures et vérifie que les sorties du préfixe restent identiques. Il ne remplace pas les tests du modèle complet ci-dessus.
+
+```python
+import numpy as np
+
+T = 4
+mask = np.full((T, T), -np.inf)
+mask[np.tril_indices(T)] = 0.0
+
+rng = np.random.default_rng(42)
+Q = rng.standard_normal((T, 4))
+K = rng.standard_normal((T, 4))
+V = rng.standard_normal((T, 4))
+
+def causal_attention(q, k, v, additive_mask):
+    scores = (q @ k.T) / np.sqrt(k.shape[-1]) + additive_mask
+    scores = scores - np.max(scores, axis=-1, keepdims=True)
+    weights = np.exp(scores)
+    weights[~np.isfinite(additive_mask)] = 0.0
+    weights /= weights.sum(axis=-1, keepdims=True)
+    return weights @ v
+
+reference = causal_attention(Q, K, V, mask)
+K_changed, V_changed = K.copy(), V.copy()
+K_changed[3] += 100.0
+V_changed[3] += 100.0
+altered = causal_attention(Q, K_changed, V_changed, mask)
+
+assert np.allclose(reference[:3], altered[:3])
+assert not np.allclose(reference[3], altered[3])
+```
+
 
 </details>
 

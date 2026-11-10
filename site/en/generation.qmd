@@ -17,36 +17,17 @@ suggested_route:
 hierarchy:
   parents: ["en/llm-overview"]
   children: ["en/logits", "en/probabilities"]
-related: ["en/text-data", "en/build-path", "en/decoding-strategies", "en/gpt-generation-walkthrough", "en/training-examples", "en/generation-exercises"]
+related: ["en/text-data","en/build-path","en/decoding-strategies","en/gpt-generation-walkthrough","en/training-examples","en/generation-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:en", "status:published"]
 -->
 
 ::: {.chapter-lead}
-An LLM generates text **one token at a time**. From the available context, it estimates the probability of each vocabulary token appearing at the next position. These probabilities form a **conditional probability distribution over the next token**. The system then selects a token, appends it to the context, and repeats. During inference, **the model's parameters remain fixed**: generation is not learning.
+When you send a prompt, the model does not write the whole response in one go. It processes the available context, assigns a probability to each token that could come next, then the system selects one and appends it to the context. The cycle repeats until a stopping condition is met.
+
+This loop is called **autoregressive generation**. During inference, the model's parameters remain fixed: producing a response is not learning.
 :::
 
-::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
-By the end of this page, you will be able to:
-- step through autoregressive generation, from context to stopping criterion;
-- distinguish the forward pass, decoding, and the complete generation loop;
-- explain the roles of prefill, incremental decode, and the KV cache;
-- distinguish fixed-parameter inference from learning;
-- predict the effects of greedy selection, sampling, and temperature.
-:::
-
-::: {.callout-tip title="The mental model"}
-**Context → probability distribution → select one token → updated context → repeat.**
-
-The model does not directly choose a word from the text. It assigns a probability to each possible token given the current context. A selection rule then turns that distribution into one concrete token.
-:::
-
-::: {.callout-note collapse="true" title="This page appears at two points in the route"}
-During the first stage (**Place the system in context**), use this page only to observe the general principle: context, distribution, selection, and repetition. The mental model above is enough.
-
-During the **Run inference and generate text** stage, return to this page for the details: forward pass, autoregressive loop, prefill, incremental decode, KV cache, and decoding strategies.
-
-This is an intentional revisit of the same phenomenon at two levels of depth, not two separate concepts or routes.
-:::
+This page first appears as a preview of the overall process, immediately after the overview. The detailed treatment of the loop, *prefill*, *decode*, and selection strategies comes when the route returns to inference.
 
 ## 1. One elementary step: predict and select a token
 
@@ -64,7 +45,7 @@ p_\theta(\cdot \mid c_t) = \operatorname{softmax}(z_t).
 
 For a candidate token \(v\), \(p_\theta(v \mid c_t)\) is the probability that it is the next token given the current context. Each probability lies between 0 and 1, and the probabilities across the vocabulary sum to 1. The distribution depends on the context; generation uses the distribution at the final context position.
 
-For example, with four candidate tokens, the model might assign probabilities of 0.50, 0.30, 0.15, and 0.05. They sum to 1: this distribution describes the next position, not complete sentences.
+The probabilities are assigned to vocabulary tokens and sum to 1. They describe the next position, not complete sentences. Computing a distribution and distinguishing greedy selection from sampling are practised in [exercise GE-A](exercises.qmd#generation).
 
 A decoding policy then selects a token from this distribution:
 
@@ -164,9 +145,6 @@ This is the central distinction from [learning](loss.qmd): inference uses the av
 ## Practice
 
 This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/generation.qmd).
-
-
-
 ::: {.callout-tip title="Go further"}
 These links serve three different purposes:
 

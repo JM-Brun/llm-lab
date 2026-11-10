@@ -17,14 +17,16 @@ suggested_route:
 hierarchy:
   parents: []
   children: ["en/unicode-text", "en/tokenization-strategies", "en/embedding-space"]
-related: ["en/generation", "en/transformer", "en/text-data-exercises"]
+related: ["en/generation","en/transformer","en/text-data-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:text-data", "level:core", "language:en", "status:published"]
 -->
 
 {{< include ../includes/generated-guided-context-en-text-data.qmd >}}
 
 ::: {.chapter-lead}
-A language model receives a sequence of numerical IDs, not raw text. Tokenization defines how text becomes IDs and how IDs are decoded. It is separate from the neural network, but affects vocabulary, sequence length, compute cost, and some observable behaviours.
+Generation starts with a prompt written in ordinary language. Yet the neural network does not process the letters or words as they appear on screen: it receives a sequence of numerical IDs. How do we get from one to the other?
+
+**Tokenization** splits text into units called *tokens* and assigns each one an ID. This step is separate from the neural network, but it determines the model's vocabulary, sequence length, and part of its compute cost.
 :::
 
 ::: {.callout-tip title="The one-minute mental model"}
@@ -46,13 +48,6 @@ To understand the essential mechanism, go directly to [From token IDs to vectors
   <span class="step-arrow" aria-hidden="true">→</span>
   <a class="step-item" href="contextualized-representations.qmd" aria-label="Contextualized representations">4. Context</a>
 </div>
-
-::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
-- Distinguish Unicode text, bytes, tokens, token IDs, and embeddings.
-- Describe how segmentation affects sequence length, cost, and compatibility.
-- Identify the dedicated pages for technical deep dives.
-- Identify what tokenization does not establish about a model's meaning representations or capabilities.
-:::
 
 ## 1. The path from text to model
 
@@ -103,9 +98,6 @@ The same text can produce different sequences depending on the vocabulary, pre-t
 ## Practice
 
 This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/text-data.qmd).
-
-
-
 ## Boundaries between pages
 
 - **This page:** text string → tokens → IDs → initial vectors; the role of each object and tokenizer/model compatibility.

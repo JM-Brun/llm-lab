@@ -37,7 +37,9 @@ Un Transformer doit disposer d'un signal d'ordre pour distinguer, par exemple, �
 
 ## Pourquoi ajouter une information de position ?
 
-Les embeddings de contenu seuls ne codent pas la position. Le masque causal, lorsqu'il est utilisé, indique quelles positions peuvent être consultées (`j ≤ i`) ; les mécanismes positionnels peuvent en plus représenter la position absolue ou le décalage relatif. Ces signaux sont complémentaires, pas interchangeables.
+La page précédente a montré que le lookup fournit un vecteur de contenu, mais pas l'emplacement du token dans la séquence. Or, dans une phrase, le rôle d'un token dépend souvent de sa place : permuter « le chat poursuit le chien » peut changer qui poursuit qui. Le modèle doit donc disposer d'un signal d'ordre.
+
+Le masque causal, lorsqu'il est utilisé, indique quelles positions peuvent être consultées (`j ≤ i`). Les mécanismes positionnels peuvent en plus représenter une position absolue ou un décalage relatif. Ces signaux sont complémentaires, pas interchangeables.
 
 ::: {.callout-note collapse="true" title="Pourquoi l’auto-attention seule ne suffit-elle pas ?"}
 Pour une auto-attention fondée uniquement sur le contenu, sans biais positionnel ni masque dépendant de l’ordre, permuter les lignes de l’entrée permute les lignes de sortie de la même façon. Si $P$ est une matrice de permutation, alors :
@@ -108,9 +110,6 @@ Le [lookup dans l'espace des plongements](embedding-space.qmd) associe chaque id
 ## S’exercer
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/positional-encoding.qmd).
-
-
-
 {{< include ../includes/generated-suggested-route-fr-positional-encoding.qmd >}}
 
 ::: {.language-switch}

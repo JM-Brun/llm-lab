@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/index", "en/llm-overview"]
   children: ["en/embedding-space", "en/positional-encoding", "en/contextualized-representations", "en/queries-keys-values", "en/scaled-dot-product-attention", "en/logits", "en/tensors"]
-related: ["en/text-data", "en/transformer-block-walkthrough", "en/transformer-exercises"]
+related: ["en/text-data","en/transformer-block-walkthrough","en/transformer-exercises"]
 tags: ["type:system-overview", "destination:understand", "topic:transformer", "level:overview", "language:en", "status:published"]
 -->
 
@@ -29,21 +29,7 @@ A **GPT** is a language model built around a **decoder-only Transformer**. The T
 This page first shows what that architecture looks like, then follows a forward pass through its blocks to the logits. It stops at the network output: converting logits into probabilities and selecting the next token belong to decoding, not to the Transformer's internal computation.
 :::
 
-::: {.callout-tip title="The one-minute mental model"}
-- **Input:** token IDs select embeddings; the architecture introduces positional information according to its mechanism.
-- **Transformer block:** self-attention exchanges information across accessible positions; the MLP transforms each position independently. Residual connections and normalization structure the flow between these sublayers.
-- **Repetition:** stacked blocks progressively transform the states; Q/K/V are projections inside self-attention, not a stage after the final contextualized representations.
-- **Output:** the output head produces logits. Softmax, token selection, and feedback into the context are distinct operations covered by the probability and generation lessons.
-
-**Check yourself:** can you trace one forward pass from token IDs to logits and distinguish the network's internal computation from the generation loop?
-:::
-
-::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
-You will be able to:
-- trace the computation from an input token sequence to the logits, identifying embeddings and positional information;
-- explain the distinct roles of self-attention and the MLP in a Transformer block;
-- distinguish contextualized representations, logits, and the selected token;
-- distinguish depth, width, number of heads, and internal MLP dimensions.
+The diagram below offers two levels of view: the complete GPT, to locate the data flow, and an enlarged block, to understand the repeated operations. We will then follow this flow from the network input to the logits, without retelling tokenization or the generation loop.
 :::
 
 ## The Transformer: the network at the heart of a GPT
@@ -128,9 +114,22 @@ In short: attention is a sublayer; the block is the repeated unit; GPT is the mo
 
 After the final block, the final normalization and output head produce the **logits**: one unnormalized score for every vocabulary token. The [logits lesson](logits.qmd) explains what these scores represent; the [output probabilities lesson](probabilities.qmd) shows how *softmax* converts them into a distribution. The network stops at these scores: choosing a token, appending it to the context, and running the model again belong to [autoregressive generation](generation.qmd).
 
-## Practice
+## Check your understanding
 
-This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/transformer.qmd).
+To extend this check with progressive problems on embeddings, residuals, normalization, and the MLP, see the [Transformer exercises](exercises.qmd#transformer).
+
+This check focuses on the block structure and the role of residual connections.
+
+1. Which operation lets a position incorporate information from other positions, and which one transforms each position independently?
+2. Why does a residual connection not replace the transformation computed by a sublayer?
+
+<details>
+<summary>Show answers and reasoning</summary>
+
+1. Self-attention mixes information across permitted positions; the MLP applies a position-wise transformation with shared weights.
+2. The residual connection adds the sublayer output to its input: $x_{out}=x_{in}+F(x_{in})$. It preserves a direct path through the block while allowing the sublayer to contribute a learned transformation.
+
+</details>
 
 <!-- Legacy section anchors: see the linked companion page. -->
 <span id="a-guided-four-part-exploration"></span>
@@ -159,6 +158,10 @@ Window construction, shifted inputs and targets, and training masks are detailed
 - **"All Transformers are GPTs."** No: the original 2017 architecture used an encoder and a decoder; GPT is an autoregressive decoder-only family.
 
 For visualizations, the foundational paper, and implementation resources, see the [Transformer resources in the Deepen area](deepen.qmd#transformer-resources). These resources are optional and are not part of the core learning path.
+
+## Practice
+
+This lesson’s questions and exercises are collected on its [dedicated practice page](exercises/transformer.qmd).
 
 {{< include ../includes/generated-suggested-route-en-transformer.qmd >}}
 

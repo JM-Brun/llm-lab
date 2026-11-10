@@ -18,14 +18,16 @@ suggested_route:
 hierarchy:
   parents: ["fr/index"]
   children: ["fr/transformer", "fr/transformer-architectures", "fr/generation", "fr/build-path", "fr/language-modeling-math", "fr/mathematical-foundations", "fr/llm-limits", "fr/llm-computational-complexity"]
-related: ["fr/transformer-history", "fr/scaling-laws", "fr/llm-overview-exercises"]
+related: ["fr/transformer-history","fr/scaling-laws","fr/llm-overview-exercises"]
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:fr", "status:published"]
 -->
 
 {{< include ../includes/generated-guided-context-fr-llm-overview.qmd >}}
 
 ::: {.chapter-lead}
-Un **grand modèle de langage** (*large language model*, LLM) est un modèle de langage entraîné à grande échelle sur de grands corpus, avec un budget de calcul conséquent. Aucun seuil de paramètres ne fait consensus pour définir cette catégorie : il faut aussi considérer les données et le calcul mobilisés ([lois d'échelle](scaling-laws.qmd) ; [Zhao et al., 2023](https://arxiv.org/abs/2303.18223) ; [Hoffmann et al., 2022](https://proceedings.neurips.cc/paper_files/paper/2022/hash/c1e2faff6f588870935f114ebe04a3e5-Abstract.html)). Le terme LLM ne désigne ni une architecture ni un objectif d'entraînement particuliers.
+Vous demandez à un assistant : « Le rapport indique que la concentration… » et il propose une suite. Comment peut-il produire cette continuation ? Il ne rédige pas toute la réponse d'un seul bloc : il estime d'abord quels tokens pourraient suivre le contexte, puis utilise cette prédiction pour poursuivre.
+
+C'est le principe d'un **modèle de langage** : attribuer des probabilités aux continuations possibles d'une séquence. Un **grand modèle de langage** (*large language model*, LLM) est un modèle de langage entraîné à grande échelle, sur de grands corpus et avec un budget de calcul conséquent. Aucun seuil de paramètres ne définit à lui seul cette catégorie ; les données et le calcul comptent également ([lois d'échelle](scaling-laws.qmd) ; [Zhao et al., 2023](https://arxiv.org/abs/2303.18223) ; [Hoffmann et al., 2022](https://proceedings.neurips.cc/paper_files/paper/2022/hash/c1e2faff6f588870935f114ebe04a3e5-Abstract.html)). LLM ne désigne donc ni une architecture ni un objectif d'entraînement particuliers.
 :::
 
 ::: {.callout-tip title="L'idée à retenir en une minute"}
@@ -119,10 +121,7 @@ Réutiliser un modèle généraliste est intéressant lorsqu'il couvre plusieurs
 
 ## S’exercer
 
-Les questions de cette leçon sont regroupées sur sa [page d’exercices dédiée](exercises/llm-overview.qmd).
-
-
-
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/llm-overview.qmd).
 {{< include ../includes/generated-suggested-route-fr-llm-overview.qmd >}}
 
 ::: {.language-switch}

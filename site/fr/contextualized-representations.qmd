@@ -17,14 +17,14 @@ suggested_route:
 hierarchy:
   parents: ["fr/embedding-space", "fr/positional-encoding", "fr/transformer"]
   children: []
-related: ["fr/queries-keys-values"]
+related: ["fr/queries-keys-values","fr/contextualized-representations-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-representations", "level:core", "language:fr", "status:published"]
 -->
 
 
 {{< include ../includes/generated-guided-context-fr-contextualized-representations.qmd >}}
 ::: {.chapter-lead}
-Un même ID de token sélectionne toujours la même ligne dans une matrice d'embeddings (ou table de plongements) fixe. Pourtant, ce token peut jouer des rôles différents selon la phrase. La distinction essentielle est la suivante : **le lookup fournit un vecteur de plongement initial ; le Transformer construit ensuite des représentations qui dépendent du contexte**.
+La page précédente expliquait comment l'ordre des tokens entre dans le calcul. Reste à comprendre ce que les couches du réseau font de ces vecteurs initiaux : **un même ID fournit le même embedding de départ, mais son état caché peut évoluer selon les autres tokens accessibles**. C'est cette transformation qui produit les représentations contextualisées.
 :::
 
 ::: {.callout-tip title="L'idée à retenir en une minute"}
@@ -122,10 +122,7 @@ Le [lookup dans l’espace des plongements (embeddings)](embedding-space.qmd) as
 
 ## S’exercer
 
-Les questions de cette leçon sont regroupées sur sa [page d’exercices dédiée](exercises/contextualized-representations.qmd).
-
-
-
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/contextualized-representations.qmd).
 {{< include ../includes/generated-suggested-route-fr-contextualized-representations.qmd >}}
 
 ::: {.language-switch}

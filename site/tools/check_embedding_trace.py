@@ -7,8 +7,8 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-EN_HEADING = "One reproducible trace: text → token IDs → embedding rows"
-FR_HEADING = "Une trace reproductible : texte → IDs → lignes d'embedding"
+EN_HEADING = "Optional practical trace — from text to vectors"
+FR_HEADING = "Trace pratique facultative — du texte aux vecteurs"
 
 
 def extract_python_example(path: Path, heading: str) -> str:
@@ -26,8 +26,8 @@ def extract_python_example(path: Path, heading: str) -> str:
 
 def main() -> None:
     examples = {
-        "en": extract_python_example(ROOT / "site/en/embedding-space.qmd", EN_HEADING),
-        "fr": extract_python_example(ROOT / "site/fr/embedding-space.qmd", FR_HEADING),
+        "en": extract_python_example(ROOT / "site/en/exercises.qmd", EN_HEADING),
+        "fr": extract_python_example(ROOT / "site/fr/exercises.qmd", FR_HEADING),
     }
     # Comments may be translated; executable statements must stay in sync.
     trees = {
