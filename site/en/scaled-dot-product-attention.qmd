@@ -134,9 +134,9 @@ First divide the scores by $\sqrt{4}=2$, giving $(1,0)$. Softmax is approximatel
 :::
 
 
-## From the computation to the implementation
+## Optional Build-path companion
 
-This page establishes the mechanism and its invariants without detailing the NumPy primitive's software contract. To trace its use inside a multi-head block, inspect intermediate shapes and review the tests, see the [Transformer-block walkthrough](transformer-block-walkthrough.qmd). General axis and dimension conventions are collected in [tensors](tensors.qmd).
+This page belongs to the conceptual **Theory / Understand** path: it explains the mechanism and its invariants. To see how the primitive is called in a multi-head implementation, optionally consult the [Transformer-block walkthrough](transformer-block-walkthrough.qmd), which belongs to the **Build** path, independent of the conceptual path. General axis and dimension conventions are collected in [tensors](tensors.qmd).
 
 {{< include ../includes/generated-suggested-route-en-scaled-dot-product-attention.qmd >}}
 
