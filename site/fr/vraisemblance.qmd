@@ -82,6 +82,8 @@ $$
 
 Pour des séquences fixes et les mêmes positions prises en compte, maximiser la log-vraisemblance équivaut à minimiser la NLL. La moyenne par token est une mise à l'échelle courante, utile pour comparer des séquences de longueurs différentes, mais elle n'est pas identique à la somme brute.
 
+La page suivante décompose cette NLL au niveau d'une position et généralise le cas d'une cible one-hot à une distribution cible : [Entropie croisée](cross-entropy.qmd).
+
 ## Exemple
 
 Si les probabilités attribuées à trois tokens observés sont $(0.5, 0.25, 0.8)$, alors la vraisemblance de cette séquence (selon le modèle et le préfixe) vaut $0.1$, et la NLL vaut $-\log(0.1)\approx2.303$. La log-vraisemblance vaut environ $-2.303$.
