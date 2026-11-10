@@ -27,12 +27,12 @@ tags: ["type:exercise-hub", "destination:practice", "topic:embedding-space-exerc
 
 Hands-on exercises are grouped in the [Text data collection](../exercises-text-data.qmd#text-data), under **Practice**. This page belongs to that section and keeps the self-check questions below; it is not part of the main learning path.
 
-1. An embedding matrix has \(V\) rows and vectors of dimension \(d\). How many parameters does it contain, and what does ID \(i\) select?
+1. An embedding matrix has $V$ rows and vectors of dimension $d$. How many parameters does it contain, and what does ID $i$ select?
 
 <details>
 <summary>Show the reasoning</summary>
 
-The matrix contains \(V\times d\) parameters. ID \(i\) selects row \(E_i\); its integer value is an index, not a semantic coordinate. Positional processing and contextualization happen afterwards, depending on the architecture (see the two dedicated lessons).
+The matrix contains $V\times d$ parameters. ID $i$ selects row $E_{i,:}$; its integer value is an index, not a semantic coordinate. Positional processing and contextualization happen afterwards, depending on the architecture (see the two dedicated lessons).
 
 </details>
 
@@ -44,6 +44,8 @@ The matrix contains \(V\times d\) parameters. ID \(i\) selects row \(E_i\); its 
 No. A 2D projection preserves only selected aspects of the geometry and may create or exaggerate visual separation. Define a task, metric, and evaluation protocol on relevant held-out data; an exploratory plot is not evidence of predictive performance.
 
 </details>
+
+**You have understood this step if** you can explain that an ID selects a table row, distinguish the row index from the stored vector, and separate the initial vector from contextualized states.
 
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/embedding-space.qmd) · [English](embedding-space.qmd)

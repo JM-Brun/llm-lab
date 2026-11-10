@@ -27,12 +27,12 @@ tags: ["type:exercise-hub", "destination:practice", "topic:embedding-space-exerc
 
 Les exercices d'application sont regroupés dans la [collection Données textuelles](../exercises-text-data.qmd#donnees-textuelles), dans la partie **Pratiquer**. Cette page appartient à cette partie et conserve les questions de vérification ci-dessous ; elle ne fait pas partie du parcours principal.
 
-1. Une matrice contient \(V\) lignes et des vecteurs de dimension \(d\). Combien de paramètres contient-elle, et que sélectionne l'ID \(i\) ?
+1. Une matrice contient $V$ lignes et des vecteurs de dimension $d$. Combien de paramètres contient-elle, et que sélectionne l'ID $i$ ?
 
 <details>
 <summary>Afficher le raisonnement</summary>
 
-La matrice contient \(V\times d\) paramètres. L'ID \(i\) sélectionne la ligne \(E_i\) ; sa valeur entière sert d'indice, pas de coordonnée sémantique. Le traitement positionnel et la contextualisation interviennent ensuite, selon l'architecture (voir les deux pages dédiées).
+La matrice contient $V\times d$ paramètres. L'ID $i$ sélectionne la ligne $E_{i,:}$ ; sa valeur entière sert d'indice, pas de coordonnée sémantique. Le traitement positionnel et la contextualisation interviennent ensuite, selon l'architecture (voir les deux pages dédiées).
 
 </details>
 
@@ -44,6 +44,8 @@ La matrice contient \(V\times d\) paramètres. L'ID \(i\) sélectionne la ligne 
 Non. Une projection 2D ne préserve qu’une partie de la géométrie et peut créer ou accentuer des séparations visuelles. Il faut définir une tâche, une métrique et un protocole d’évaluation sur des données pertinentes tenues à l’écart ; une figure exploratoire ne constitue pas une preuve de performance.
 
 </details>
+
+**Vous avez compris cette étape si** vous pouvez expliquer qu'un ID sélectionne une ligne de la table, distinguer l'indice du vecteur stocké, et séparer le vecteur initial des états contextualisés.
 
 ::: {.language-switch}
 **Langue :** [Français](embedding-space.qmd) · [English](../../en/exercises/embedding-space.qmd)
