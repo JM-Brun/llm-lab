@@ -30,9 +30,7 @@ def _render_targets(config: str) -> set[str]:
     }
 
 
-def classify_changed_files(
-    files: list[dict[str, Any]], config: str
-) -> dict[str, Any]:
+def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str, Any]:
     """Choose skip, incremental, or full rendering conservatively."""
     paths = [str(item.get("filename", "")) for item in files]
     site_relevant = any(
@@ -42,17 +40,14 @@ def classify_changed_files(
         for path in paths
     )
     browser_relevant = any(
-        path.startswith("site/") or path == "scripts/site-browser-review.mjs"
-        for path in paths
+        path.startswith("site/") or path == "scripts/site-browser-review.mjs" for path in paths
     )
 
     render_inputs = [
         item
         for item in files
         if (
-            str(item.get("filename", "")).startswith(
-                ("site/", "data/", "src/", "scripts/")
-            )
+            str(item.get("filename", "")).startswith(("site/", "data/", "src/", "scripts/"))
             or str(item.get("filename", "")) in GLOBAL_RENDER_INPUTS
             or str(item.get("filename", "")).startswith("docs/requirements-")
             or str(item.get("filename", "")) in {"pyproject.toml", "uv.lock"}
@@ -66,11 +61,7 @@ def classify_changed_files(
     for item in render_inputs:
         path = str(item.get("filename", ""))
         status = str(item.get("status", ""))
-        if (
-            not path.startswith("site/")
-            or not path.endswith(".qmd")
-            or status != "modified"
-        ):
+        if not path.startswith("site/") or not path.endswith(".qmd") or status != "modified":
             safe = False
             break
 
@@ -110,7 +101,9 @@ def main() -> None:
 
     with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
         for key in ("site_relevant", "browser_relevant", "render_mode"):
-            output.write(f"{key}={str(result[key]).lower() if isinstance(result[key], bool) else result[key]}\n")
+            output.write(
+                f"{key}={str(result[key]).lower() if isinstance(result[key], bool) else result[key]}\n"
+            )
         for key in ("files", "render_targets"):
             output.write(f"{key}<<EOF\n")
             output.write("\n".join(result[key]))
