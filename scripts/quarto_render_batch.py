@@ -66,8 +66,7 @@ def replace_project_render_targets(config: str, targets: list[str]) -> str:
         (
             index
             for index in range(render_start + 1, project_end)
-            if lines[index].strip()
-            and len(lines[index]) - len(lines[index].lstrip(" ")) <= 2
+            if lines[index].strip() and len(lines[index]) - len(lines[index].lstrip(" ")) <= 2
         ),
         project_end,
     )
@@ -84,9 +83,7 @@ def replace_project_render_targets(config: str, targets: list[str]) -> str:
 def main() -> None:
     """Render the selected pages separately, then safely overlay their outputs."""
     targets = [
-        line.strip()
-        for line in os.environ.get("RENDER_TARGETS", "").splitlines()
-        if line.strip()
+        line.strip() for line in os.environ.get("RENDER_TARGETS", "").splitlines() if line.strip()
     ]
     project_dir = Path("site")
     config_path = project_dir / "_quarto.yml"
@@ -104,8 +101,7 @@ def main() -> None:
         try:
             config_path.write_text(incremental_config, encoding="utf-8")
             sys.stdout.write(
-                f"Rendering {len(targets)} changed page(s) into isolated output "
-                f"{relative_output}\n"
+                f"Rendering {len(targets)} changed page(s) into isolated output {relative_output}\n"
             )
             subprocess.run(
                 [
