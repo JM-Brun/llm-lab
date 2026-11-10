@@ -982,7 +982,7 @@ $$
 
 </details>
 
-#### Exercice CA-A — Masque causal et invariance de préfixe
+#### Exercice CA-A — Masque causal et invariance de préfixe {#ca-a-prefix-invariance}
 
 On considère quatre tokens d'entrée \(x_0,x_1,x_2,x_3\). À la position de requête \(i\), l'auto-attention causale n'autorise que les clés des positions \(j\leq i\).
 
