@@ -153,6 +153,13 @@ For a given task, three options are available: use a general-purpose model as is
 
 The choice is made on measured criteria: quality, errors, robustness, cost, latency, confidentiality, data provenance, maintenance. A few successful prompts are not an evaluation.
 
+::: {.callout-tip title="Go further"}
+- **Inspect a model configuration:** [guided tour of a GPT configuration](gpt-config-walkthrough.qmd).
+- **Review the mathematical tools:** [mathematical foundations](mathematical-foundations.qmd).
+- **Compare text-splitting methods:** [tokenization strategies](tokenization-strategies.qmd).
+- **Follow an implementation:** [guided tour of the Transformer block](transformer-block-walkthrough.qmd).
+:::
+
 ::: {.self-check}
 ## Check your understanding
 
