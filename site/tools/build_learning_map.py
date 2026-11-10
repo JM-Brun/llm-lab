@@ -365,6 +365,11 @@ class GuidedRouteMembership(StrictModel):
     stage_title: str
     stage_objective: str
     role: Literal["core", "optional"]
+    # Position data is optional so that a membership can be built without the
+    # whole route; the page context omits what it does not know.
+    stage_count: int | None = None
+    page_index: int | None = None
+    page_count: int | None = None
 
 
 def build_guided_route_memberships(
@@ -378,7 +383,7 @@ def build_guided_route_memberships(
     """
     memberships: dict[str, list[GuidedRouteMembership]] = {}
     for stage_index, stage in enumerate(stages, start=1):
-        for page in stage.pages:
+        for page_index, page in enumerate(stage.pages, start=1):
             memberships.setdefault(page.id, []).append(
                 GuidedRouteMembership(
                     stage_id=stage.id,
@@ -386,6 +391,9 @@ def build_guided_route_memberships(
                     stage_title=stage.title,
                     stage_objective=stage.objective,
                     role="core",
+                    stage_count=len(stages),
+                    page_index=page_index,
+                    page_count=len(stage.pages),
                 )
             )
         for page in stage.optional_pages:
@@ -396,21 +404,68 @@ def build_guided_route_memberships(
                     stage_title=stage.title,
                     stage_objective=stage.objective,
                     role="optional",
+                    stage_count=len(stages),
                 )
             )
     return memberships
+
+
+READING_WORDS_PER_MINUTE = 200
+_NON_PROSE_PATTERNS: tuple[re.Pattern[str], ...] = (
+    re.compile(r"\A---\n.*?\n---\n", re.DOTALL),  # YAML front matter
+    re.compile(r"<!--.*?-->", re.DOTALL),  # page-map and other comments
+    re.compile(r"^```.*?^```", re.DOTALL | re.MULTILINE),  # fenced code
+    re.compile(r"<(script|style|svg)\b.*?</\1>", re.DOTALL | re.IGNORECASE),
+    re.compile(r"\$\$.*?\$\$", re.DOTALL),  # display math
+    re.compile(r"\{\{<.*?>\}\}"),  # shortcodes
+    re.compile(r"<[^>]+>"),  # remaining HTML tags
+)
+
+
+def estimate_reading_minutes(source: str) -> int:
+    """Estimate reading time from a page source, counting prose only.
+
+    Code, display math, figures and markup are excluded: the figure tells the
+    reader how long the page is, not how long the mathematics takes to absorb.
+    """
+    for pattern in _NON_PROSE_PATTERNS:
+        source = pattern.sub(" ", source)
+    words = len(re.findall(r"[^\W_]+(?:['\u2019-][^\W_]+)*", source))
+    return max(1, -(-words // READING_WORDS_PER_MINUTE))
+
+
+def render_membership_position(membership: GuidedRouteMembership, language: str) -> str:
+    """Say where a page sits in the route: stage out of stages, page out of pages."""
+    if membership.stage_count is None:
+        return ""
+    of = "sur" if language == "fr" else "of"
+    stage_word = "Étape" if language == "fr" else "Stage"
+    parts = [f"{stage_word} {membership.stage_index} {of} {membership.stage_count}"]
+    if membership.page_index is not None and membership.page_count is not None:
+        parts.append(f"page {membership.page_index} {of} {membership.page_count}")
+    return " · ".join(parts)
+
+
+def render_reading_time(reading_minutes: int | None, language: str) -> str:
+    """Render the reading-time estimate, or nothing when it is unknown."""
+    if reading_minutes is None:
+        return ""
+    suffix = "min de lecture" if language == "fr" else "min read"
+    return f"≈ {reading_minutes} {suffix}"
 
 
 def render_guided_page_context_markdown(
     page: ResolvedPage,
     memberships: list[GuidedRouteMembership],
     language: str,
+    reading_minutes: int | None = None,
 ) -> str:
     """Render honest route context without inventing a unique parent stage."""
     if language not in {"fr", "en"}:
         raise ValueError(f"unsupported guided-route language: {language!r}")
     if not memberships:
         return ""
+    reading_time = render_reading_time(reading_minutes, language)
 
     if len(memberships) == 1:
         membership = memberships[0]
@@ -431,6 +486,13 @@ def render_guided_page_context_markdown(
         ]
         if membership.role == "optional":
             lines.append(f'  <span class="guided-page-context__role">{role_label}</span>')
+        position = " · ".join(
+            part
+            for part in (render_membership_position(membership, language), reading_time)
+            if part
+        )
+        if position:
+            lines.append(f'  <span class="guided-page-context__position">{position}</span>')
         lines.extend(["</nav>", ""])
         return "\n".join(lines)
 
@@ -444,8 +506,10 @@ def render_guided_page_context_markdown(
         '         aria-labelledby="guided-page-context-heading">',
         f'  <p id="guided-page-context-heading">{heading} : '
         f"<strong>{escape(page.title)}</strong>.</p>",
-        "  <ul>",
     ]
+    if reading_time:
+        lines.append(f'  <p class="guided-page-context__position">{reading_time}</p>')
+    lines.append("  <ul>")
     for membership in memberships:
         role_label = (
             ("Facultatif" if language == "fr" else "Optional")
@@ -461,6 +525,11 @@ def render_guided_page_context_markdown(
                     f"{escape(membership.stage_title)}</a>"
                 ),
                 f'      <span class="guided-page-context__role">{role_label}</span>',
+                *(
+                    [f'      <span class="guided-page-context__position">{position}</span>']
+                    if (position := render_membership_position(membership, language))
+                    else []
+                ),
                 f"      <p>{escape(membership.stage_objective)}</p>",
                 "    </li>",
             ]
@@ -588,7 +657,15 @@ def prepare_guided_page_context_fragments(
     for page_id, page_memberships in memberships.items():
         page = page_by_id[page_id]
         output = includes / f"generated-guided-context-{page_id.replace('/', '-')}.qmd"
-        outputs[output] = render_guided_page_context_markdown(page, page_memberships, language)
+        source = SITE / f"{page_id}.qmd"
+        reading_minutes = (
+            estimate_reading_minutes(source.read_text(encoding="utf-8"))
+            if source.is_file()
+            else None
+        )
+        outputs[output] = render_guided_page_context_markdown(
+            page, page_memberships, language, reading_minutes
+        )
     return outputs
 
 
