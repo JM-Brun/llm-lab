@@ -1,0 +1,77 @@
+[project]
+name = "llm-lab"
+version = "0.1.0"
+description = "A reproducible, code-first laboratory for understanding and evaluating language models."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2.0",
+]
+
+[project.optional-dependencies]
+ml = [
+    "torch>=2.6",
+]
+notebooks = [
+    "ipykernel>=6.29",
+    "matplotlib>=3.9",
+]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.15",
+    "pre-commit>=4.2",
+    "pytest>=8.3",
+    "pytest-cov>=6.0",
+    "ruff>=0.11",
+]
+
+[build-system]
+requires = ["hatchling>=1.26"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/llm_lab"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = [
+    "--strict-config",
+    "--strict-markers",
+    "--cov=llm_lab",
+    "--cov-report=term-missing",
+    "--cov-fail-under=90",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E",      # pycodestyle errors
+    "F",      # Pyflakes
+    "I",      # isort
+    "UP",     # pyupgrade
+    "B",      # flake8-bugbear
+    "SIM",    # flake8-simplify
+    "RUF",    # Ruff-specific rules
+    "T20",    # disallow print in library code
+]
+ignore = []
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["T20"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.mypy]
+python_version = "3.12"
+mypy_path = "src"
+packages = ["llm_lab"]
+strict = true
+warn_unreachable = true
+show_error_codes = true

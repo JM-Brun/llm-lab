@@ -1,0 +1,114 @@
+---
+name: source-to-learning-integration
+description: Orchestrate the two-phase workflow that turns external sources into traceable structured knowledge and validated improvements to the LLM Lab knowledge graph and bilingual learning experience.
+---
+
+# Source-to-learning integration
+
+## Mission
+
+Coordinate two distinct phases with an explicit, persistent hand-off:
+
+1. **Extraction** — inspect external sources and record their useful content as structured, evidence-linked data. Do not edit pedagogical pages or mutate the canonical knowledge graph.
+2. **Integration** — review validated extraction records, decide what belongs in the knowledge graph and learning experience, then update canonical data, pages, assets, experiments, references, and navigation as justified.
+
+The phases may run in separate sessions and PRs. Extraction is a durable research result, not a promise that every item will be published. Integration is a deliberate graph/editorial decision, not a mechanical copy of extraction notes.
+
+## Specialist skills
+
+- `source-extraction`: provenance, access and scan scope, structured claims/ideas/artifacts, confidence, source catalogue, extraction records and hand-off.
+- `knowledge-and-learning-integration`: graph impact, concept/relation decisions, page mapping, content/assets/experiments, bilingual parity and validation.
+
+Use this skill to orchestrate both. Run extraction first unless a complete, trustworthy record already exists. Run integration only against persistent, reviewable records. Do not repeat scans unnecessarily.
+
+Apply the [source-to-knowledge validation protocol](../../../docs/workflows/source-to-knowledge-validation.md) across the hand-off: validate extraction fidelity before synthesis, compare contributions before deciding integration, and report resource validation and learner validation as separate evidence states. Q/K/V is a calibration case, not proof of transferability.
+
+## Project-level audit routing\n\nIf the request concerns an entire external learning project or coherent resource family, invoke `project-learning-resource-audit` first to reconcile the existing project owner and reconstruct the project model. Then use Phase A below for any constituent sources not already inspected and Phase B for accepted integration decisions. Do not rescan source materials already represented by trustworthy records. For a single article or a multi-source topic collection, stay with this skill's ordinary phases and the existing source/topic comparison templates.\n\n## Phase A — extraction
+
+Input: URLs, documents, repositories, named sources, or a source set.
+
+Output:
+- stable source records in the canonical source catalogue;
+- atomic extracted items with precise source locators;
+- scan status and exact scope actually inspected;
+- evidence kind, confidence, generality, assumptions, limitations and rights metadata;
+- candidate concepts, relations, pages, visuals, experiments and teaching improvements;
+- independent qualitative assessment of novelty, complementarity, learner value, applicability, redundancy and evidence quality;
+- a top-level `pedagogical_model` in the extraction YAML, preserving the source-local concept/process graph, ordered teaching route, declared/inferred outcomes and prerequisites, strengths, limits and comparison pointer;
+- an extraction report with access limits and unresolved questions.
+
+No page edits, published new pages, concept-registry mutations, or graph-projection changes in this phase. Candidate destinations and graph nodes/edges are proposals only.
+
+## Phase B — integration
+
+Input: reviewed extraction records and current repository state.
+
+Output:
+- accepted/deferred/rejected dispositions with rationale;
+- canonical graph changes, or an explicit no-change decision;
+- updates to existing pages or justified new pages;
+- asset, experiment, implementation, reference, route and bilingual updates as needed;
+- a differential comparison of source graph/route versus the canonical LLM Lab graph, guided route, page routes and Build route;
+- validation evidence and a before/after impact report.
+
+A source can be fully scanned and catalogued without any page or graph change.
+
+## Cross-phase decision rule: novelty is not the same as complementarity
+
+Before deciding what to publish, evaluate each extracted item on two separate axes: **information novelty** and **pedagogical complementarity**. Also assess learner value, applicability, explanatory redundancy and evidence quality. Use qualitative levels with rationales; never reduce them to a composite score.
+
+A source can be low-novelty but high-complementarity. Topic overlap alone is not a reason to reject it. Compare the learner question, explanatory model, analogy mapping, example, teaching sequence, abstraction level and caveats against the exact existing page section. Preserve promising alternatives in the extraction record even when they are not published.
+
+Phase A should preserve useful options; Phase B should decide whether each option improves the learner experience enough to justify additional complexity and maintenance. A no-change decision must be item-specific and explain why the contribution is redundant or not worth integrating—not merely state that the concept is already covered.
+
+## Multi-source compilation principle
+
+Expect substantial overlap among sources. The project should progressively become a curated, traceable synthesis of useful contributions: distinct explanations, mathematical and computational views, analogies, examples, visualizations, history, implementation choices, empirical evidence, critiques and experiments. The goal is not maximal source count or page length, but a coherent sequence of complementary perspectives with provenance and uncertainty preserved. For topics with several relevant sources, use docs/source-synthesis-method.md and maintain a dossier in docs/source-syntheses/ when it adds durable value. Compare sources against the learner question and current lesson; distinguish independent evidence from copied tutorial consensus; place useful contributions at the right depth. Never merge distinct claims into an unattributed statement.
+
+## Canonical architecture
+### Classification contract
+
+Use `docs/source-catalogue-schema.md` and `data/source-taxonomy.yml` for source/extraction classification. Reuse the six domains in `data/domains.yml`; assign one primary theme and optional secondary themes. Keep namespaced retrieval tags separate from canonical `concept_ids` and typed metadata. Do not introduce a generic `meta_tags` bag or treat tags as graph concepts. Apply the same distinction at extraction-item level, allowing a justified item-level refinement without rewriting its source classification.
+
+
+Before creating or changing data structures, inspect:
+- `docs/knowledge-graph-standards.md` and `docs/knowledge-graph-implementation-audit.md`;
+- `data/concepts.yml`, `data/domains.yml`, `data/resources.yml`;
+- `site/tools/export_knowledge_graph.py` and relevant validators/tests;
+- source audits, `docs/references.md`, `docs/pedagogical-resource-library.md`, and `docs/visual-assets-register.md`.
+
+Reuse existing stable IDs and graph semantics. The source catalogue is canonical in `data/sources.yml`, source classification in `data/source-taxonomy.yml`, and atomic extraction records in `data/extractions/`, governed by `docs/source-catalogue-schema.md`. Do not create a parallel catalogue, a second concept registry, a competing graph database, or manually maintained JSON-LD. Do not overload implementation-oriented `data/resources.yml`. Keep YAML as authoring data and JSON-LD as a generated projection.
+
+Distinguish sources actually scanned from sources merely discovered, selected, linked, cited, inaccessible, superseded or rejected. A bibliography entry is not evidence of a scan.
+
+## Global constraints
+
+- Preserve existing useful knowledge; no silent deletion of caveats, examples, equations or links.
+- Synthesize original explanations; do not concatenate articles or copy protected prose/figures.
+- Separate general principles from model-, version-, task-, dataset- and hardware-specific findings.
+- Evidence must support the exact claim; preserve uncertainty and disagreement.
+- Bound analogies by stating both the mapping and where it breaks.
+- Record figures, code, datasets and experiments with provenance, rights and reproducibility status.
+- Create a page only for a distinct, durable learner question not adequately served by extending an existing page.
+- Keep graph relations, pedagogical route, page navigation, source bibliography and learning-resource registry distinct but linked.
+- Maintain substantive French/English parity for published changes.
+
+## Route comparison contract
+
+For every instructional source with a discernible teaching sequence, compare three route levels explicitly:
+1. the source-local section/lesson sequence;
+2. the target page's local suggested route and its immediate previous/next pages;
+3. the end-to-end project learning route, including any separate Build/implementation path.
+
+Map source steps to canonical pages and stages. Record where the source compresses concepts that the project separates, where examples live elsewhere, and where deeper material is deliberately delegated. Decide independently whether to change page content, page navigation, the guided route, the implementation route, or none of them. A source route is not automatically a project prerequisite graph or site-navigation graph.
+
+## Completion report
+
+For instructional sources, include the reconstructed source graph and route, their differential against LLM Lab's canonical graph and learning route, and separate decisions for graph changes, route changes and intentional non-changes.
+
+Report the two phases separately:
+1. sources examined, scan scope/status, extraction counts by type, provenance/rights gaps;
+2. item dispositions, graph nodes/edges added or changed, pages/assets/experiments/references updated, and no-change decisions;
+3. existing knowledge preserved or moved, FR/EN parity, validation results and unresolved follow-ups.
+
+The workflow is complete only when persistent records and accepted integrations are traceable, validated and accurately reported.

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440" role="img" aria-labelledby="title desc">
+<title id="title">Visually similar strings can have different UTF-8 encodings</title>
+<desc id="desc">Precomposed é has code point U+00E9 and UTF-8 bytes C3 A9. Decomposed e followed by combining acute has code points U+0065 and U+0301 and bytes 65 CC 81. A tokenizer may normalize them before tokenization, depending on its configuration.</desc>
+<rect width="960" height="440" rx="22" fill="#f8fafc"/>
+<text x="40" y="48" font-family="Arial,sans-serif" font-size="25" font-weight="700" fill="#172554">Same appearance ≠ same code-point sequence</text>
+<text x="40" y="78" font-family="Arial,sans-serif" font-size="16" fill="#475569">Unicode example: precomposed “é” and “e” + combining acute accent</text>
+<rect x="36" y="108" width="430" height="236" rx="16" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<rect x="494" y="108" width="430" height="236" rx="16" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="60" y="143" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#334155">PRECOMPOSED FORM</text>
+<text x="60" y="194" font-family="Arial,sans-serif" font-size="42" font-weight="700" fill="#0f766e">é</text>
+<text x="60" y="231" font-family="Arial,sans-serif" font-size="15" fill="#475569">Unicode code point</text>
+<rect x="60" y="244" width="130" height="38" rx="8" fill="#ccfbf1"/>
+<text x="125" y="269" text-anchor="middle" font-family="monospace" font-size="18" font-weight="700" fill="#115e59">U+00E9</text>
+<text x="214" y="231" font-family="Arial,sans-serif" font-size="15" fill="#475569">UTF-8 bytes</text>
+<rect x="214" y="244" width="92" height="38" rx="8" fill="#dbeafe"/>
+<text x="260" y="269" text-anchor="middle" font-family="monospace" font-size="18" font-weight="700" fill="#1d4ed8">C3 A9</text>
+<text x="518" y="143" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#334155">DECOMPOSED FORM</text>
+<text x="518" y="194" font-family="Arial,sans-serif" font-size="42" font-weight="700" fill="#0f766e">é</text>
+<text x="518" y="231" font-family="Arial,sans-serif" font-size="15" fill="#475569">Two code points</text>
+<rect x="518" y="244" width="168" height="38" rx="8" fill="#ccfbf1"/>
+<text x="602" y="269" text-anchor="middle" font-family="monospace" font-size="17" font-weight="700" fill="#115e59">U+0065 U+0301</text>
+<text x="710" y="231" font-family="Arial,sans-serif" font-size="15" fill="#475569">UTF-8 bytes</text>
+<rect x="710" y="244" width="190" height="38" rx="8" fill="#dbeafe"/>
+<text x="805" y="269" text-anchor="middle" font-family="monospace" font-size="17" font-weight="700" fill="#1d4ed8">65 CC 81</text>
+<path d="M480 164 L480 308" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5 6"/>
+<rect x="36" y="363" width="888" height="52" rx="12" fill="#fef3c7" stroke="#f59e0b"/>
+<text x="56" y="385" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#92400e">Tokenization implication</text>
+<text x="56" y="404" font-family="Arial,sans-serif" font-size="14" fill="#78350f">Normalization may reconcile these forms; behavior depends on the tokenizer. This figure does not predict token output.</text>
+</svg>

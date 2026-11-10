@@ -1,0 +1,8 @@
+# Shared Serena project configuration. Keep machine-local overrides in project.local.yml.
+project_name: "llm-lab"
+language_servers:
+  - python
+encoding: "utf-8"
+ignore_all_files_in_gitignore: true
+ls_workspace_folders:
+  - "."

@@ -1,0 +1,358 @@
+# Learning path
+
+> **Decision (2026-11-09): LLM Lab has two distinct learning paths.** The **Theory / Understand path** teaches how LLMs work, in a coherent conceptual and scientific progression. The **Build path** teaches how to implement, train, validate and use a small GPT from scratch, in an implementation dependency order. They share canonical concepts, sources and code references, but neither is a required continuation of the other. A theory lesson is not an implementation checkpoint; a Build milestone does not require the learner to complete the corresponding theory route first. Links between them are contextual cross-references, not prerequisite edges.
+>
+> **Understand** and **Build** are the two primary pathways. **Deepen** contains optional advanced theory or technical detail; **Practice & experiment** contains activities that reinforce or test either pathway. These are complementary content destinations, not additional linear curricula. The page-level roles and evidence crosswalk remain in [content-section-mapping.md](content-section-mapping.md).
+
+This plan defines two paths with different completion evidence, not one sequence of paired theory-and-code modules. A Theory lesson is complete when its explanation, assumptions, examples, sources and conceptual checks are sound; a Build milestone is complete when its implementation, tests, expected outputs and limitations are evidenced. Neither path claims learner mastery merely because its materials exist. See [project status](project-status.md) for the current inventory and the [roadmap](roadmap.md) for priorities and acceptance criteria.
+
+## Reader-facing short overview
+
+For a concise, learner-facing explanation of the Understand route and its navigation, see the [simplified path overview and audit](understand-path-overview.md). This is an orientation layer only; the eight-stage route below remains canonical in `data/guided-route.yml`.
+
+## Theory / Understand guided route — machine-readable map source
+
+The eight-stage **Theory / Understand route** displayed above the exploratory graphs on the bilingual learning-map pages is maintained in [`data/guided-route.yml`](../data/guided-route.yml), a versioned bilingual YAML registry. It is not the Build route. This file is the **single machine-readable source** for stage IDs, titles, objectives, core page links and optional resources. A resource's optional role in a stage is distinct from its destination: it can be an Understand page or a Deepen page. The present document remains the narrative curriculum and explains the conceptual order; do not duplicate the stage registry here or in JavaScript.
+
+The generator resolves every core and optional page ID against published page metadata and fails on missing or unpublished destinations. The route is conceptual, not a strict prerequisite DAG: pages within a stage are complementary resources, not mandatory sequential gates. See the [2026-11-06 reconciliation audit](learning-route-reconciliation-2026-11-05.md) for the crosswalk between curriculum, guided route, Quarto navigation, page graph and concept/resource graph.
+
+The practical GPT construction route remains the separate [Build path](../site/fr/build-path.qmd) / [EN](../site/en/build-path.qmd). In particular, G1b corpus preparation and G2 training-example construction form a branch for training, not a prerequisite for understanding or demonstrating inference.
+
+
+## Path A — Theory / Understand: the conceptual order
+
+The learner-facing course and the implementation dependency graph answer different questions. **The conceptual course starts with what a model does; the build route follows the dependencies needed to construct one.** Do not force these into one identical chapter order.
+
+1. **Orient and preview inference:** what the broad term LLM covers, where GPT fits, and how architecture differs from objective and task. Follow one complete request as a black box with fixed parameters to establish the autoregressive loop before unpacking its mechanisms.
+2. **Unpack the input:** raw text, tokenization, vocabulary, token IDs and the prompt/context supplied at inference. Unicode/UTF-8 representation and normalization are optional technical depth, not a prerequisite in the core route.
+3. **Understand representations:** embeddings, positional information and the distinction between initial and contextualized hidden states.
+4. **Understand Transformer computation:** Transformer blocks, Q/K/V projections, attention, causal masking, MLP, residual connections and normalization.
+5. **Understand prediction:** final hidden states, vocabulary logits and the conditional next-token probability distribution.
+6. **Understand inference and generation:** prefill, iterative decoding, token selection, stopping and the autoregressive feedback loop. The generation lesson is revisited here in detail after its initial overview.
+7. **Score observed targets:** target probabilities, sequence likelihood, log-likelihood, negative log-likelihood and cross-entropy; distinguish scoring/evaluation from generation and parameter updates.
+8. **Explain learning:** the next-token objective, loss aggregation, gradients, backpropagation, optimization, pretraining and validation. Explain teacher forcing as the use of the observed prefix; do not turn corpus engineering or batch construction into prerequisites for this conceptual explanation.
+
+**Optional extension — adaptation and use:** pretrained checkpoints, supervised fine-tuning, instruction tuning, prompting and retrieval-augmented generation. Keep context-only methods, parameter updates and model use distinct; this extension is discoverable from the core route but is not an additional mandatory stage in the eight-stage guided route.
+
+### Reader-facing sequence and operational branches
+
+The public page-navigation arrows follow the **conceptual inference route**, not the order in which every component is implemented:
+
+`LLM panorama → generation preview → text and tokens → tokenization → embeddings → positional information → contextualized representations → Transformer → Q/K/V → scaled attention → causal masking → logits → probabilities`.
+
+The generation lesson appears early as a system-level preview: it establishes the autoregressive loop with fixed parameters before the learner studies each internal component. Its appearance before the detailed input and probability lessons is deliberate, not a claim that those details are unnecessary.
+
+The Theory route explains why training uses observed targets, a loss and parameter updates. Operational corpus preparation and training-example construction belong exclusively to the separate Build path; they are not numbered stages or prerequisites in this conceptual route.
+
+Evaluation is cross-cutting. Validation results may inform model, data, and decoding choices; the test set must remain held out until final assessment. The landing-page diagram links each available stage to its canonical lesson. A missing implementation milestone must remain visibly distinct from an available conceptual explanation.
+
+## Theory-path page ownership: one canonical explanation, deliberate reminders
+
+The sequence above is a **route through concepts**, not permission to explain the same mechanism in every chapter. Each concept has a canonical page; the panorama and system overviews provide orientation, while component lessons carry the substantive explanation. The Understand route contains only the minimum conceptual model needed to follow the system. Mathematical derivations, architectural variants, and implementation edge cases belong in Deepen, even when they could fit inside a collapsed callout. A later page may recall a prerequisite, but should not repeat its worked example or complete explanation unless it adds a distinct learning outcome.
+
+- **LLM panorama:** terminology, model-family orientation, and the distinctions between architecture, weight learning, and use.
+- **Generation:** the complete autoregressive inference loop and the basic decoding choices.
+- **GPT/Transformer overview:** one forward pass through the network, with emphasis on Transformer blocks and the path to logits.
+- **Text/data:** the short inference path from raw text to token IDs and initial embeddings; tokenizer algorithms and comparative examples belong to `tokenization-strategies`, while empirical design/evaluation belongs to its advanced page. Corpus curation is a separate Build-stage concern owned by `corpus-preparation`.
+- **Component lessons:** embeddings, positional information, contextualized representations, attention mechanisms, logits, probabilities, likelihood, entropy, cross-entropy, loss, and gradients each have their own explanatory home.
+- **Corpus preparation:** provenance, source eligibility, parsing, filtering, deduplication, evaluation splits and tokenizer fitting; this is a Build-stage concern, not a prerequisite for the inference path.
+- **Training examples:** context windows, shifted targets, document boundaries, packing, and training masks belong to the training-data branch, not to the first explanation of inference input.
+
+Use [the cross-page content ownership contract](content-section-mapping.md#9-cross-page-content-ownership-contract) to decide whether a repeated passage is a useful reminder, a system-level map, retrieval practice, or avoidable duplication. The contract also records where advanced depth and implementation evidence belong.
+
+Evaluation is cross-cutting: introduce the idea of a held-out test early, then deepen metrics, baselines, uncertainty, leakage and error analysis when the learner has a concrete model or claim to assess.
+
+A randomly initialized GPT can demonstrate the mechanics of inference before it is trained, but its output will generally be incoherent. This separates **how generation works** from **why learned parameters make generation useful**. Never imply that a useful language model can be obtained without training or loading pretrained weights.
+
+## Reader-facing map: understand → guided build → deepen → practice
+
+This crosswalk connects the public conceptual course to the guided build and optional deep dives. It is a **status-aware map**, not a claim that every lifecycle stage already has a complete lesson or implementation. The sidebar separates the conceptual course, the guided build entry point, optional deep dives, and practice. The mathematical-foundations page remains an optional LLM-specific orientation map in Deepen (Approfondir), linked from the Understand learning sequence rather than placed before the Transformer overview. It exposes existing canonical content; planned stages remain visible here as gaps rather than as empty or misleading links. The navigation coordination is tracked in [issue #130](https://github.com/JM-Brun/llm-lab/issues/130); the three-depth curriculum map was consolidated by [#87](https://github.com/JM-Brun/llm-lab/issues/87) (closed, PR #336) and is maintained here and in [content-section-mapping.md](content-section-mapping.md).
+
+| Lifecycle question | Panorama / current navigation | Guided-build milestone | Existing canonical pages (FR / EN) | Status and owner |
+|---|---|---|---|---|
+| **1. What is an LLM?** What problem does it solve, and how do model families and objectives differ? | Start with the bilingual [LLM panorama](../site/fr/llm-overview.qmd) / [EN](../site/en/llm-overview.qmd), then use the GPT/Transformer page for the selected decoder-only example. | G0 — understand what is being built and distinguish decoder-only GPT from other model families. | [Panorama LLM](../site/fr/llm-overview.qmd) / [LLM panorama](../site/en/llm-overview.qmd); [Vue d’ensemble Transformer](../site/fr/transformer.qmd) / [Transformer overview](../site/en/transformer.qmd); [Glossaire](../site/fr/glossary.qmd) / [Glossary](../site/en/glossary.qmd); optional deepening: [Lois d'échelle](../site/fr/scaling-laws.qmd) / [scaling laws](../site/en/scaling-laws.qmd). | **Published on `main`.** The bilingual panorama includes short checks on architecture versus objective and RAG versus fine-tuning. #108 is closed (PR #343); the rendered desktop/mobile review is transferred to [#337](https://github.com/JM-Brun/llm-lab/issues/337) (P2). Publication does not establish learner validation. |
+| **2. How does text become model input?** How do text, tokens and IDs form the context supplied at inference? | Sidebar: **Understand → Comment le modèle calcule sa prédiction → Du texte aux identifiants** (FR) / **How the model computes a prediction → From text to token IDs** (EN). | G1 — tokenize text, understand vocabulary/token IDs and trace a prompt into the model's input context. Detailed segmentation algorithms are optional; training windows and shifted targets are a separate later branch (G2). | Core: [Texte et données](../site/fr/text-data.qmd) / [Text and data](../site/en/text-data.qmd). Optional detail: [Tokenisation](../site/fr/tokenization-strategies.qmd) / [Tokenization](../site/en/tokenization-strategies.qmd); [Unicode](../site/fr/unicode-text.qmd) / [Unicode](../site/en/unicode-text.qmd). | **Existing concept pages with embedded self-checks** for token-ID semantics and tokenizer-specific ID spaces; implementation/evidence partial. Source reviews [#82](https://github.com/JM-Brun/llm-lab/issues/82) and [#114](https://github.com/JM-Brun/llm-lab/issues/114) are closed; end-to-end corpus/tokenizer implementation remains a gap under [#78](https://github.com/JM-Brun/llm-lab/issues/78). The deferred canonical-page browser review is [#320](https://github.com/JM-Brun/llm-lab/issues/320) (P2). |
+| **3. How are token IDs represented?** How do embeddings and positional information become contextualized hidden states? | Sidebar: **Understand → How the model computes a prediction → From IDs to representations** (EN) / **Comprendre → Comment le modèle calcule sa prédiction → Des identifiants aux représentations** (FR). | G3 — trace IDs to initial vectors and positional information; G4–G5 then contextualize them through attention and the assembled Transformer blocks. | [Des identifiants aux vecteurs](../site/fr/embedding-space.qmd) / [From token IDs to vectors](../site/en/embedding-space.qmd); [Position](../site/fr/positional-encoding.qmd) / [Position](../site/en/positional-encoding.qmd); [Représentations contextualisées](../site/fr/contextualized-representations.qmd) / [Contextualized representations](../site/en/contextualized-representations.qmd). Optional technical reference: [Tenseurs](../site/fr/tensors.qmd) / [Tensors](../site/en/tensors.qmd). | **Concept pages include an embedded transfer check** distinguishing identical initial lookup vectors from context-dependent hidden states, plus a caution against over-reading 2D projections. Implementation/evidence partial. Tensor theory is not a gate: Build introduces the required shapes and operations locally. Source-level content review [#82](https://github.com/JM-Brun/llm-lab/issues/82) is closed; the deferred browser review is tracked in [#320](https://github.com/JM-Brun/llm-lab/issues/320). Page existence still does not establish browser validation or learner mastery. |
+| **4. What computation transforms representations?** How does a Transformer mix information across positions and layers? | Sidebar: **Understand → How the model computes a prediction → Transforming representations** (EN) / **Comprendre → Comment le modèle calcule sa prédiction → Transformer les représentations** (FR). | G4 — understand and verify the attention sublayer; G5 — compose the complete Transformer block and assemble the GPT stack. | [Vue d’ensemble Transformer](../site/fr/transformer.qmd) / [Transformer overview](../site/en/transformer.qmd); [Q/K/V](../site/fr/queries-keys-values.qmd) / [Q/K/V](../site/en/queries-keys-values.qmd); [Attention](../site/fr/scaled-dot-product-attention.qmd) / [Attention](../site/en/scaled-dot-product-attention.qmd); [Masquage causal](../site/fr/causal-masking.qmd) / [Causal masking](../site/en/causal-masking.qmd). Optional mathematical deep dive: [Pourquoi mettre les scores d'attention à l'échelle ?](../site/fr/attention-score-scaling.qmd) / [Why scale attention scores?](../site/en/attention-score-scaling.qmd). | **Concept pages now include hand-checks** for Q/K/V aggregation and scaled attention, with the causal-masking hand-check on the masking page. Conceptual coverage remains partial; implementation gap. Concept-to-code sequencing: [#78](https://github.com/JM-Brun/llm-lab/issues/78); attention/masking work follows its own implementation dependencies under #78–#81; the source-content gate #82 is closed. |
+| **5. How does the model produce and select a next token?** How do logits, probabilities and decoding fit together? | Sidebar: **Understand → How the model computes a prediction → From scores to probabilities** (EN) / **Comprendre → Comment le modèle calcule sa prédiction → Des scores aux probabilités** (FR). | G6 — obtain vocabulary logits, interpret the conditional distribution, and understand deterministic or sampled token selection. | [Logits](../site/fr/logits.qmd) / [Logits](../site/en/logits.qmd); [Probabilités](../site/fr/probabilites.qmd) / [Probabilities](../site/en/probabilities.qmd); [Vraisemblance](../site/fr/vraisemblance.qmd) / [Likelihood](../site/en/likelihood.qmd); [Vue d’ensemble Transformer](../site/fr/transformer.qmd) / [Transformer overview](../site/en/transformer.qmd). | **Concept pages exist; end-to-end integration partial.** Distinguish logits, probabilities and the decoding rule; decoding does not update model parameters. |
+| **6. How does a model generate text?** How do autoregressive decoding, sampling and stopping work? | Published core lesson in Understand; the from-scratch checkpoint demonstration remains a Build milestone. | G7 — run the generation loop with fixed parameters; the first from-scratch demonstration may use a randomly initialized model and will not produce useful language. | The bilingual [generation lesson](../site/fr/generation.qmd) explains the forward-pass / decoding / generation boundary, greedy selection, sampling, temperature and stopping. The reference inference loop is implemented and tested; checkpoint-based generation still depends on training. | **Conceptual lesson published; implementation loop available; trained-checkpoint demonstration pending.** Advanced strategies remain optional under #84. |
+| **7. How are training examples formed, and how does the model learn?** How do corpora become shifted targets, and how do loss, gradients and optimization update parameters? | Planned guided-build stage; this follows the inference explanation and demonstration. | G2 — prepare context windows and shifted targets; then G8 — calculate cross-entropy, backpropagate, update parameters, validate and checkpoint. | [Exemples d’entraînement](../site/fr/training-examples.qmd) / [Training examples](../site/en/training-examples.qmd); [Entropie croisée](../site/fr/cross-entropy.qmd) / [Cross-entropy](../site/en/cross-entropy.qmd); [Loss](../site/fr/loss.qmd) / [Loss](../site/en/loss.qmd); [Gradients](../site/fr/gradients.qmd) / [Gradients](../site/en/gradients.qmd). No complete public training module or end-to-end run is currently evidenced. | **Planned / major gap.** Data-window ownership: [#58](https://github.com/JM-Brun/llm-lab/issues/58); core pretraining coverage: [full-curriculum-plan.md](full-curriculum-plan.md). |
+| **8. How are pretrained models reused and adapted?** How do checkpoint loading, classification, instruction tuning and parameter-efficient adaptation differ? | A separate branch after the from-scratch core, not a continuation of random-initialization training. | A1–A4 — pretrained checkpoint loading, classification, instruction SFT and LoRA/quantization. | No complete bilingual public pathway for these stages is currently evidenced. | **Planned / gaps.** Map against upstream Chapters 6–7 and Appendices A–E in [full-curriculum-plan.md](full-curriculum-plan.md); do not conflate LoRA with quantization or SFT. |
+| **9. How do we evaluate claims and investigate failure?** | Sidebar: **S'exercer et expérimenter** (FR) / **Practice and experiment** (EN), plus optional critical deep dives under Approfondir / Deepen. Evaluation is introduced before experiments and applies across training, generation and adaptation. | G9 — compare against a reference only under compatible architecture/tokenizer/weight conditions; E1 — define task-specific metrics, baselines, uncertainty, ablations, leakage checks and error analysis. | [Évaluation expérimentale](../site/fr/evaluation-experimentale.qmd) / [Experimental evaluation](../site/en/experimental-evaluation.qmd); [Similarité cosinus](../site/fr/cosine-similarity.qmd) / [Cosine similarity](../site/en/cosine-similarity.qmd); [Linéarité des embeddings](../site/fr/linearite-embeddings.qmd) / [Embedding linearity](../site/en/embedding-linearity.qmd). | **Conceptual and critical-reading pages exist; reusable evaluation workflow partial.** Owner: [#78](https://github.com/JM-Brun/llm-lab/issues/78) and evaluation follow-ups. |
+| **10. Where can I go deeper or look things up?** | Sidebar: **Approfondir** (FR) / **Deepen your understanding** (EN), glossary and references. | Optional detours from any milestone; not a mandatory final stage. | [Glossaire](../site/fr/glossary.qmd) / [Glossary](../site/en/glossary.qmd); [Références](../site/references.qmd); mathematics and critical-reading pages linked above. | **Existing reference structure; traceability still being completed.** The milestone-to-deep-dive/source crosswalk from #87 (closed, PR #336) is maintained in [content-section-mapping.md](content-section-mapping.md). |
+
+### How the three learning depths work together
+
+- **Panorama:** build a short mental model of an LLM and its lifecycle. The bilingual family-level panorama is published on `main` (merged PR #213; completed by PR #343, closing #108). The rendered-page browser review is transferred to [#337](https://github.com/JM-Brun/llm-lab/issues/337) (P2).
+- **Guided build:** follow the G0–G9 dependency graph to assemble a small GPT, demonstrate inference with its initially random parameters, prepare training examples, train and validate it, then generate again from the trained checkpoint. Stop at unmet evidence gates; source-review and browser-review states are tracked in [the remaining-work register](work-backlog-status.md) rather than restated in each section.
+- **Deep dives:** enter concept pages, mathematical derivations, critical analyses and experiments when they answer a concrete question. They are optional branches, not a second mandatory syllabus.
+
+The sidebar is intentionally a map of **available canonical pages**, not a complete representation of every future lifecycle stage. The landing page should expose Practice & experiment alongside the other first-visit routes. Planned training and adaptation stages must be described as planned until their destinations and evidence exist; generation is already a published conceptual lesson, while checkpoint-based demonstration remains dependent on the training milestone. Do not create empty links merely to make the menu appear complete.
+
+### How to use this map
+
+- Start from the [French landing page](../site/index.qmd) or [English landing page](../site/en/index.qmd), then choose the panorama, guided build or a deep dive.
+- The sidebars and both landing pages also expose an interactive learning map of the published pages ([FR](../site/fr/learning-map.qmd) / [EN](../site/en/learning-map.qmd)). It is a navigation aid over existing pages; it adds no new evidence state.
+- Follow the guided milestones in dependency order, but stop at unmet exit criteria. Implementation follows the dependency and evidence criteria in #78–#81; per-issue source-review and browser-review states are tracked once in the milestone table, the [roadmap](roadmap.md) and the [remaining-work register](work-backlog-status.md).
+- Follow contextual links from an overview to a concept page, and from that concept to code/tests or evidence where available. A deep dive should always provide a route back to its parent question.
+- Treat “page exists,” “source checked,” “code executes,” “CI passes,” “rendered desktop/mobile reviewed,” and “learner can transfer the idea” as separate evidence states.
+
+## How the guided milestones relate to the concept pages
+
+The **G0–G9 milestone table above is the authoritative milestone inventory** for the from-scratch GPT build; the dependency graph below defines the order. G2 is a parallel training-data branch, not a prerequisite to inference. The topic descriptions below are not a second course sequence: they describe the kinds of knowledge and evidence attached to those milestones.
+
+- **Orientation and input (G0–G1):** LLM families, lifecycle, Unicode, tokenization, vocabulary and token IDs.
+- **Inference computation (G3–G7):** embeddings and position; contextual representations; Q/K/V, attention and causal masking; GPT block; logits, probabilities, decoding and generation with fixed parameters.
+- **Training-data branch (G2):** corpus partitions, context windows, shifted targets, batching and masks. This branch depends on tokenization but is not a prerequisite for the inference path.
+- **Parameter learning (G8):** objective, cross-entropy/loss, gradients, optimization, validation and checkpoints.
+- **Verification (G9):** reference comparison only under compatible architecture, tokenizer, weights and preprocessing. This is a verification milestone, not a substitute for task-level evaluation.
+- **Separate adaptation branch (A1–A4):** pretrained checkpoint reuse, classification, instruction SFT, and parameter-efficient adaptation. These milestones do not belong inside the randomly initialized training route.
+- **Cross-cutting evaluation (E1):** task-specific metrics, baselines, uncertainty, ablations, leakage, contamination, distribution shift and error analysis. Introduce evaluation design before experiments; do not postpone it to a final course chapter.
+
+For detailed coverage against Raschka's chapters and appendices, use the [full curriculum map](full-curriculum-plan.md). Avoid maintaining parallel module lists with different ordering or status: update the milestone table and the coverage map instead.
+
+## Critical reading: test default assumptions
+
+The bilingual notes on [cosine similarity](../site/fr/cosine-similarity.qmd) and the [linearity hypothesis](../site/fr/linearite-embeddings.qmd) are cross-cutting modules, not replacements for the implementation sequence above. Use them to practise stating assumptions, finding counterexamples, designing controls, and distinguishing decodability from causal use. Their proposed experiments should be considered complete only when the protocol and results are committed under `experiments/` and summarized under `reports/`.
+
+## Weekly working rhythm
+
+Plan for **up to five focused hours per week**, in sessions of **no more than 60 minutes**. This is a sustainable planning ceiling, not a deadline or a promise that a milestone will fit into a fixed number of weeks.
+
+At the start of each week, select the smallest unfinished acceptance criterion from the current milestone. Allocate sessions to:
+1. inspect and understand the relevant concept/source;
+2. work through one concrete example or derivation;
+3. review a misconception, boundary case or counterexample;
+4. inspect or write tests/code only when the prerequisite gate permits implementation;
+5. record what is established, uncertain and still missing.
+
+Do not schedule downstream milestones by calendar date. Move to attention, full-GPT implementation or training only when the specific prerequisite and evidence criteria in #78–#81 are met. Missed sessions do not create a requirement to exceed the weekly or session limit. Adaptation topics (A1–A4) remain a separate later branch, not a fixed week in the core route.
+
+## 2026-10-29 — End-to-end GPT build route and evidence gates
+
+This section makes the guided path operational while preserving the current prerequisite gate. It does not authorize downstream implementation before the active foundational slice and private knowledge review are complete. It is a route specification and status snapshot, not a claim that the build is already executable.
+
+### Two distinct learning routes
+
+- **Core from-scratch route:** implement a small decoder-only GPT from randomly initialized parameters; demonstrate its inference/generation loop before training (and explain why the output is poor); prepare training examples; train and validate the model; save a checkpoint; then generate again and compare. This is the defining end-to-end construction outcome.
+- **Pretrained adaptation route:** load a compatible pretrained checkpoint and tokenizer, then adapt/evaluate the model for classification or instruction following; later explore LoRA and quantization. This route starts from learned parameters and is not a substitute for the from-scratch route.
+
+The routes share foundations (text, tokenization, tensors, architecture, prediction and evaluation) but diverge at initialization and training objective.
+
+### Guided build milestones
+
+The implementation-evidence status for these milestones is audited in [Build milestone implementation-evidence audit — 2026-11-06](audits/build-milestones-evidence-audit-2026-11-06.md). The table below remains the curriculum authority; the audit records the source/test basis and explicit limits.
+
+| ID | Learner question and milestone | Prerequisites | Expected learner artifact / evidence | Current public evidence and status | Owner |
+|---|---|---|---|---|---|
+| G0 | **What are we building?** Understand an autoregressive decoder-only GPT, next-token prediction, and the boundary between model, tokenizer, data and inference. | Basic programming and elementary linear algebra/probability. | Correct component/data-flow explanation; distinguish GPT-style decoder-only models from all LLMs and encoder–decoder Transformers. | Conceptual evidence: bilingual LLM panorama, Transformer overview, scaling-laws pages, glossary and history. No implementation or learner-assessment evidence is claimed at this milestone; rendered overview review remains tracked separately. | #108, #130, #337 |
+| G1 | **How does raw text become model input?** Text handling, tokenizer, vocabulary, token IDs and special tokens. Unicode/UTF-8 encoding and normalization are optional Deepen material, not a linear prerequisite. | Strings and basic data handling. | Trace one text example through a tokenizer; state tokenizer identity/version and special-token behavior. | Bilingual conceptual pages and source reviews exist. The reference implementation accepts token IDs directly: no tokenizer, vocabulary builder, text↔ID round trip or special-token pipeline is implemented/tested. Corpus/tokenizer pipeline remains a gap under #78; rendered review remains #320. | #78, #320 |
+| G2 | **How are training examples formed?** Context windows, shifted input/target sequences, batching, padding/truncation and data splits. This is a training-data branch, not a prerequisite for inference. | Token IDs and tensor indexing; a full corpus/tokenizer pipeline is not needed to test the windowing primitive. | Deterministic input/target windows; tests for one-token shift, stride, boundaries and invalid inputs. A complete batch pipeline additionally needs split hygiene and masking. | Partial implementation: `sliding_input_target_pairs` in `training_examples.py`, tested in `test_training_examples.py`. Corpus ingestion, batching/packing, padding, masks and train/validation split management are not implemented by this module. #58 owns the wider training-example work; do not duplicate it. | #58, #78 |
+| G3 | **How do tokens become vectors?** Tensor shapes, embedding-table lookup, positional information and the difference between input embeddings and contextualized states. | G1; vector/matrix and indexing basics. G2 is not required to understand or run inference. | Trace shapes from token IDs [B,L] to vectors [B,L,d]; explain learned absolute positions in the reference implementation and contrast them with RoPE. | Implemented inside `GPT` (`gpt.py`): token embedding lookup plus learned absolute position embeddings. `test_gpt.py` checks output shape, finite logits and seeded reproducibility. No standalone embedding module or RoPE implementation is claimed; bilingual conceptual/shape activities remain distinct from code evidence. | #78, #220, #320 |
+| G4 | **How does the model mix context?** Q/K/V projections, scaled dot-product attention, causal masking and multi-head attention as the attention sublayer. | G3; matrix multiplication, softmax and tensor dimensions. | Explain the Q/K/V roles; verify score scaling, normalization over permitted keys, value aggregation and exclusion of future positions; trace the head split/merge. | Implemented across `attention.py` (causal mask and single-head scaled dot-product primitive) and the attention sublayer of `transformer_block.py` (Q/K/V projections, head slicing and output projection). Tests cover mask structure, attention behavior and the attention path's integration into the block. The full block composition belongs to G5. No dropout or train/eval mode switch exists in this NumPy reference. | #79–#81, #78 |
+| G5 | **What is one Transformer block, and how is it assembled into GPT?** Compose the attention sublayer with the residual/normalization paths and position-wise MLP; then stack blocks between GPT's input embeddings and output head. | G3–G4; module composition and initialization concepts. | Trace `(B,T,d)` through one block and verify shape preservation; then trace the assembled model to `(B,T,V)` logits and check configuration/parameter count. Backward tests belong to the future training implementation, not this inference-only reference. | Implemented: `TransformerBlock.forward` composes pre-LN causal multi-head attention and the GELU MLP with residual paths; `GPT.forward` adds token/position embeddings, stacks blocks, applies final normalization and vocabulary projection. `test_transformer_block.py`, `test_gpt.py` and `test_gpt_config.py` cover block/model shape and finite outputs, configuration and parameter-count formula. The NumPy reference is inference-only; no backward/autograd path. | #78 |
+| G6 | **How does the model predict and select a token?** Produce vocabulary logits, interpret probabilities, and apply a decoding rule. | G5; understand a categorical distribution at an intuitive level. Training loss and gradients are not prerequisites for inference. | Hand-checkable logits/probability example; demonstrate greedy selection and one sampling strategy; state that decoding does not change parameters. | Logits-to-selection is implemented and tested in `generate.py` (`test_generate.py`); greedy, temperature sampling and optional top-k/top-p truncation (sampling path only) are available in the generation loop. The filter functions live in `decoding_filters.py` (`test_decoding_filters.py`), linked from the decoding-strategies deep dive. The generation lesson is the canonical conceptual explanation. | #84, #79 |
+| G7 | **How does the model generate?** Run autoregressive generation with fixed parameters and a bounded context window. The first demonstration can use the randomly initialized GPT from G5; its output should be expected to be poor. | G5–G6; token IDs, causal attention and output scores. A trained checkpoint is not required to understand the mechanics. | Run deterministic and sampled generation; verify the `max_new_tokens` bound and sliding context window; record the absence of an EOS/early-stopping rule. Compare untrained and trained output only when a trained checkpoint exists. | Implemented/tested in `generate.py` and `test_generate.py`: autoregressive loop, greedy and seeded sampling, temperature, optional top-k/top-p and context-window sliding. Explicit limitations: no KV cache, no EOS/early stopping, no checkpoint loader; output is token IDs from the synthetic reference vocabulary. | #84 |
+| G8 | **How do parameters learn?** Align shifted targets, calculate cross-entropy, backpropagate through model parameters, update parameters, validate and checkpoint. | G2 and G5 (a forward pass producing vocabulary logits); gradient/chain-rule and autograd concepts. G7 is a useful prior demonstration, not a computational prerequisite. | Reproducible small training run with fixed configuration/seed, optimizer updates, separate train/validation curves and checkpoint. | Partial mathematical primitives only: `training_examples.py` builds shifted windows; `losses.py` computes mean cross-entropy and its gradient with respect to logits, both tested. No gradient propagation through GPT weights, optimizer, parameter update, training loop, held-out validation runner or checkpoint exists. Optional loop techniques (warmup, cosine decay, global-norm clipping and monitoring) are source-audited, not implemented or core gates; see [Raschka Appendix D audit](audits/raschka-appendix-d-training-loop-audit-2026-11-09.md). | #78, #79; [G8 specification #656](https://github.com/JM-Brun/llm-lab/issues/656) |
+| G9 | **How do we know an implementation matches its reference?** Compare only when architecture, tokenizer, parameter values/weights and preprocessing are compatible. | G5 plus a trusted reference and an explicit compatibility contract; G8 is additionally required only when the object being verified is a trained checkpoint. | Compare configuration and parameter coverage, then intermediate/final numerical outputs with stated tolerances; explain mismatches. | Implemented for random weights: `gpt2_weights.py` maps GPT-2 parameter names and layouts onto the reference model (coverage, shape and tied-head checks); `test_gpt2_reference_parity.py` compares logits, layer-by-layer hidden states and greedy generation with Hugging Face `GPT2LMHeadModel` under identical random parameters (atol 1e-10 in float64, 1e-5 in float32). The tokenizer is outside this comparison (token IDs are supplied directly), and no published or trained checkpoint is compared yet (A1). G9 is verification, not held-out task evaluation (E1), and is not an obligatory successor to G8. | #78; G9 verification specification |
+| A1 | **How do we reuse pretrained weights?** Checkpoint formats, parameter-name mapping, tokenizer compatibility and inference. | G5, G9; checkpoint and state-dict concepts. | Load a known compatible checkpoint; verify parameter coverage and selected outputs. | Partial: the parameter-name mapping and coverage checks exist in `gpt2_weights.py` (G9); no published checkpoint, pinned revision or tokenizer has been loaded or compared, and no public bilingual learning module is evidenced. | Full curriculum plan / future issue |
+| A2 | **How do we adapt a model for classification?** Add a task head, fine-tune, compare to a baseline and inspect errors. | A1; supervised learning and evaluation design. | Held-out evaluation, baseline, metrics and error analysis. | Gap; no complete public module/validated implementation evidenced. | Full curriculum plan / future issue |
+| A3 | **How do we teach instruction following?** Format instruction data, mask prompt tokens appropriately, batch/pack examples, supervised fine-tune and evaluate. | A1; G2/G6; data quality and leakage discipline. | Reproducible SFT run, held-out prompts, baseline and qualitative/quantitative error analysis. | Gap; no complete public bilingual module evidenced. | Full curriculum plan / future issue |
+| A4 | **How can adaptation become more efficient?** LoRA, adapter targeting, rank/alpha, quantization and QLoRA trade-offs. | A3; matrix factorization and memory accounting. | Controlled baseline-versus-adapter comparison with quality, memory, runtime and configuration. | Gap/advanced extension; do not conflate LoRA with quantization or QLoRA. | Full curriculum plan / future issue |
+| E1 | **How do we evaluate claims and limitations?** Metrics, calibration where appropriate, contamination, leakage, distribution shift, ablations and uncertainty. | Evaluation design; task-specific prerequisites. | Versioned evaluation protocol, baseline, ablations, representative errors and limitations. | Experimental evaluation and critical-reading pages exist; reusable end-to-end evaluation harness is not evidenced. | #78 and evaluation follow-ups |
+
+**Status vocabulary:** *Exists* means a public page or issue exists; *partial* means the learning outcome is only partly explained or evidenced; *gap* means the route/artifact is not yet present. None of these statuses implies passing CI, rendered browser review or learner mastery.
+
+### Dependency order and safe stopping points
+
+The build is a dependency graph, not a single straight line:
+
+- **Inference branch:** G0 → G1 → G3 → G4 → G5 → G6 → G7 (generation with fixed parameters; initially untrained).
+- **Training-data branch:** G1 → G2 (corpus windows and shifted targets).
+- **Learning branch:** G2 + G5 → G8 (training, once the missing optimizer/autograd loop exists). G7 is a useful before-training demonstration, not a computational prerequisite. **Verification (G9)** is a separate cross-cutting check after G5; add G8 only when verifying a trained checkpoint.
+
+G2 can be prepared in parallel with model construction, but it is needed before training. It is not a prerequisite for understanding or demonstrating inference. G7 helps explain why learning matters, but the G8 computation depends on training examples plus a differentiable model forward pass, not on having run generation.
+
+- Readers may explore G0 and concept deep dives non-linearly.
+- G1 and G3–G7 form the inference branch. G2 is a separate training-data branch that depends on G1, not a prerequisite to G3.
+- G4–G6 assemble the model and explain its prediction/output path. G7 demonstrates inference with fixed parameters before training; a randomly initialized model is not expected to generate coherent text.
+- G8 is pedagogically introduced after the fixed-parameter inference demonstration, but its computational prerequisites are G2 and a differentiable model forward pass. The current NumPy GPT is not differentiable with respect to its weights. G4 and later implementation milestones follow #78–#81 and the prerequisite review. Rendered-page release checks are tracked in the coordination section below.
+- A1–A4 are a separate downstream adaptation branch. They must not be inserted into the from-scratch sequence as if pretrained fine-tuning were how a randomly initialized GPT learns.
+- E1 is cross-cutting: evaluation design should be introduced before experiments, not postponed until the final module.
+
+### Evidence required before calling the core route complete
+
+A public “build a GPT from scratch” claim is justified only when all of the following are present and linked from the relevant milestones:
+
+1. **Data:** documented corpus provenance/licence, deterministic preprocessing, tokenizer identity, train/validation split, and batch/target tests.
+2. **Architecture:** explicit configuration, parameter count, tensor-shape trace, component ordering, initialization and train/eval semantics.
+3. **Objective:** correctly aligned next-token targets, numerically stable loss, documented reduction/masking and tests.
+4. **Optimization:** optimizer and schedule configuration, gradient handling, reproducible training loop, validation and checkpointing.
+5. **Generation:** checkpoint loading, autoregressive loop, decoding configuration, stopping behavior and an inspectable example.
+6. **Verification:** tests and a documented run with limitations; reference comparison only under compatible conditions. Keep G9 verification distinct from E1 task-level generalization evaluation.
+7. **Publication:** EN/FR conceptual parity, working local links, successful Quarto build, desktop/mobile browser review and a clear distinction between source, execution, visual and learning evidence.
+
+A diagram, pseudocode, isolated loss example or conceptual Transformer page is useful preparation, but none alone satisfies the end-to-end build criterion.
+
+### Coordination with existing work
+
+- #82's source-level foundational slice is closed. Its remaining browser review is tracked at P2 in #320; this does not block source-level planning, but it remains a release/visual evidence item.
+- #58 owns corpus windows and training examples; #83 was closed as a duplicate and must not be reopened alongside it.
+- #79–#81 own logits/loss, attention and causal masking. Keep their scope bounded and preserve prerequisite order.
+- #84 owns generation and its evaluation limitations.
+- #78 owns the concept-to-code inventory and page-level evidence; this table provides the end-to-end learner route, not a replacement for that inventory.
+- #87 (closed, PR #336) consolidated the three-depth curriculum relationships, now maintained in [content-section-mapping.md](content-section-mapping.md); #130 coordinates high-level navigation and coverage.
+- Appendix/bonus scope and upstream chapter statuses remain in [the full curriculum coverage plan](full-curriculum-plan.md#8-upstream-repository-inventory-refresh-2026-10-29).
+
+Do not open parallel issues for milestones already owned above. Create a new issue only when a real gap has no existing owner, and keep implementation gated by the private acquired/to-review/missing knowledge review.
+
+
+## Canonical module topology: shared core and operational branches
+
+**Status: canonical curriculum model, 2026-11-06.** This section defines the conceptual modules and their relations. It is the authority for module scope and pedagogical dependencies. The eight-stage guided route is the reader-facing projection of this module topology. It preserves the preview-first learning order while separating inference, observed-target scoring and training; it does not turn those sibling branches into a mandatory sequential dependency chain.
+
+### 1. The hierarchy
+
+The course is organised as one system with a shared computational core and three sibling operational uses of its prediction mechanism. Evaluation is cross-cutting.
+
+```text
+LLM system
+├── Orientation
+├── Shared computational core
+│   ├── Text and tokenization
+│   ├── Representations
+│   ├── Transformer computation
+│   └── Prediction
+├── Inference / generation
+├── Observed-target scoring
+├── Training
+│   └── Training-data branch
+└── Evaluation (cross-cutting)
+```
+
+The four core submodules are not independent models: they build the common mapping from token context to a next-token conditional distribution. Inference, scoring and training are not successive computational steps after one another. They are sibling uses of that shared predictor, with different target/context policies and different state transitions.
+
+### 2. Module contracts and relations
+
+In the table below:
+- **Parent / children** describe conceptual containment and decomposition.
+- **Predecessors / successors** describe immediate pedagogical dependencies in the minimum course, not a total ordering of all resources.
+- **Core resources** identify the current canonical bilingual pages; they do not claim that the page bodies have already been refactored.
+- **Deepen** identifies optional material that must not block the minimum route.
+
+| Module ID | Parent | Scope and boundary | Children | Immediate predecessor(s) | Immediate successor(s) | Core resources (FR / EN) |
+|---|---|---|---|---|---|---|
+| `llm-system` | — | Whole system: model, context, parameters, inference, learning and evaluation. Root of the curriculum hierarchy, not a duplicate technical lesson. | `orientation`, `shared-core`, `inference`, `scoring`, `training`, `evaluation` | — | — | `llm-overview` |
+| `orientation` | `llm-system` | Establish what an LLM does and preview the fixed-parameter generation loop as a black box. Does not teach internal computation. | — | — | `shared-core` | `llm-overview`, `generation` (preview only) |
+| `shared-core` | `llm-system` | Shared context-to-distribution computation, independent of whether the next token is generated or observed. Ends at the conditional distribution. | `text-input`, `representations`, `transformer-computation`, `prediction` | `orientation` | `inference`, `scoring`, `training` | `text-data`, `embedding-space`, `positional-encoding`, `contextualized-representations`, `transformer`, `queries-keys-values`, `scaled-dot-product-attention`, `causal-masking`, `logits`, `probabilites` / `probabilities` |
+| `text-input` | `shared-core` | Raw text, tokenization, vocabulary and token IDs; ends at the discrete model input. Does not include embeddings or corpus governance. | Text, token, token ID, tokenizer | Orientation | `representations` | Core: `text-data`; optional companion: `tokenization-strategies` |
+| `representations` | `shared-core` | Embedding lookup, positional information, initial hidden states and the distinction between initial and contextualized representations. | Token embedding, positional encoding, initial hidden state, contextualized representation | `text-input` | `transformer-computation` | `embedding-space`, `positional-encoding`, `contextualized-representations` |
+| `transformer-computation` | `shared-core` | Repeated decoder-block computation: Q/K/V projections, attention scores/weights, causal constraint, value aggregation, output projection, residual path, normalization and MLP. Ends at final contextualized states. | Self-attention, Q/K/V, scaled attention, causal mask, MLP/FFN, residual stream, normalization, multi-head attention | `representations` | `prediction` | `transformer`, `queries-keys-values`, `scaled-dot-product-attention`, `causal-masking` |
+| `prediction` | `shared-core` | Final hidden-state projection to vocabulary logits and conversion to a conditional next-token distribution. Ends before selecting a token or comparing with an observed target. | Output projection, logits, softmax, conditional distribution, next-token prediction | `transformer-computation` | `inference`, `scoring` | `logits`, `probabilites` / `probabilities` |
+| `inference` | `llm-system` | Fixed-parameter execution: process prompt/context, select a token from the distribution, append it, and repeat until stopping. Does not compute a training objective or update parameters. | Prefill, decode step, decoding policy, token feedback, stopping, optional KV cache | `prediction` | No mandatory successor; generated output may be inspected or evaluated | `generation` |
+| `scoring` | `llm-system` | Use the shared distribution and an observed target to compute target probabilities, sequence likelihood/log-likelihood and token-level negative log-likelihood/cross-entropy. Does not select a token or update parameters. | Observed target, target probability, sequence likelihood, log-likelihood, negative log-likelihood, cross-entropy | `prediction` | `training`, `evaluation` | `vraisemblance` / `likelihood`, `cross-entropy` |
+| `training` | `llm-system` | Teacher-forced next-token learning: align inputs and targets, compute token costs, aggregate a differentiable objective, backpropagate gradients and update parameters. Does not redefine the shared predictor. | `training-data`, training examples, shifted targets, teacher forcing, token loss, batch objective, gradient, optimizer, parameter update | `shared-core`, `scoring`, and the training-data branch for a from-scratch run | `evaluation`, optional adaptation/fine-tuning | `training-examples`, `cross-entropy`, `loss`, `gradients` |
+| `training-data` | `training` (operational sub-branch) | Corpus provenance/curation, tokenizer fitting/freezing, context windows, shifted targets, batching and masks. These are required for the from-scratch training implementation, not for inference or the conceptual scoring definition. | Corpus preparation (G1b), training examples (G2) | `text-input` plus corpus/source decisions | `training` | `corpus-preparation`, `training-examples` |
+| `evaluation` | `llm-system` (cross-cutting) | Apply scoring and task-specific metrics to held-out data; report evidence and limitations without parameter updates. Can also inspect an untrained model as a diagnostic. | Validation/test protocols, metrics, baselines, uncertainty, calibration, leakage and error analysis | `scoring` plus a model state appropriate to the question (random, trained or pretrained) | Feedback to data/model/decoding decisions; no single mandatory next module | Existing applied resource: `evaluation-experimentale`; orientation: `llm-overview` |
+
+### 3. Relation semantics: do not collapse the graph dimensions
+
+| Relation | Meaning | Canonical representation |
+|---|---|---|
+| Parent / child | A module or page conceptually contains or decomposes another | Curriculum hierarchy in this section; page-level hierarchy in `LLM-LAB-PAGE-MAP`; concept `part-of` edges in `data/concepts.yml` |
+| Predecessor / successor | A minimum pedagogical dependency between modules/pages | This curriculum model; page-level recommended navigation may project it through `suggested_route.previous/next` |
+| Prerequisite | A specific concept is needed to understand another concept | Typed `prerequisite` relation in `data/concepts.yml`, used sparingly |
+| Computational relation | One operation produces, constrains, transforms, or contributes to another quantity | Typed relations in `data/concepts.yml` such as `produces`, `normalized-by`, `constrains`, `contributes-to`, `evaluated-by` |
+| Related | A useful connection that is neither containment nor immediate learning dependency | Page `related` or a justified typed concept relation |
+| Optional depth | Material that extends a topic but is not needed for the minimum outcome | Existing `optional_pages` in `data/guided-route.yml`, `destination:deepen`, and `level:advanced` page metadata |
+
+Do not create a generic predecessor/successor relation in the concept graph: concepts are not curriculum modules. Do not infer page parenthood from computation order. Do not infer a prerequisite from a link, page order, domain membership or a shared topic tag.
+
+### 4. The three branches after prediction
+
+The shared predictor is described by:
+
+`context → embeddings/positions → Transformer blocks → final hidden states → logits → conditional distribution`
+
+The distribution then supports three distinct branches:
+
+- **Inference:** distribution → decoding policy → generated token → append to context → next forward computation. Parameters remain fixed.
+- **Scoring:** distribution + observed target → target probability → sequence likelihood/log-likelihood and token cross-entropy. No token is selected.
+- **Training:** teacher-forced context + observed targets → scoring/loss aggregation → gradients → optimizer update → new parameter values. The next training forward pass uses those updated parameters.
+
+Scoring is the mathematical bridge into the usual next-token training objective, but it is not a mandatory operation in the inference loop. Inference and scoring are siblings, not a chain. Training reuses scoring and adds the parameter-optimization mechanism.
+
+### 5. Training-data branch and the Build crosswalk
+
+The from-scratch implementation adds a data-preparation branch:
+
+`text/tokenizer (G1) → corpus preparation and tokenizer freeze (G1b) → context windows and shifted targets (G2) → training (G8)`
+
+This branch joins the model implementation path at training. It must not be inserted between prediction and inference, and it is not needed to demonstrate G3–G7 inference with fixed parameters. A pretrained-model fine-tuning path has a different data/checkpoint setup and should not be represented as identical to from-scratch pretraining.
+
+### 6. Core versus Deepen: classification rule
+
+A topic belongs to the **core route** when omitting it prevents the learner from explaining or implementing at least one of these minimum outcomes:
+
+1. Trace token IDs through representations and Transformer computation to logits and a conditional distribution.
+2. Distinguish selecting a generated token from scoring an observed target.
+3. Explain the fixed-parameter autoregressive inference loop.
+4. Compute an observed-target scoring quantity and connect token cross-entropy to the training objective.
+5. Explain teacher forcing, shifted targets, gradients and at least one parameter update.
+
+A topic belongs to **Deepen** when it refines, optimizes, generalizes or critically analyses a mechanism that the learner can already explain at the minimum level. It remains discoverable and linked to its parent topic; it does not become a hidden gate.
+
+| Module | Core minimum | Deepen / optional |
+|---|---|---|
+| Text input | Text, tokenization, vocabulary, IDs | Unicode/UTF-8 internals, normalization edge cases, tokenizer training/objectives and comparative design |
+| Representations | Embedding lookup, positional information, initial vs contextualized states | Tensor algebra beyond local shapes, embedding geometry, RoPE derivation and alternatives |
+| Transformer computation | Q/K/V roles, scaled attention, causal mask, value aggregation, MLP and residual/block composition | Multi-head algebra, cross-attention, alternative normalization/attention, kernel and complexity analysis |
+| Prediction | Output projection, logits, softmax and conditional distribution | Entropy/calibration theory, numerical-stability derivations, distribution geometry |
+| Inference | Fixed parameters, autoregressive feedback, basic greedy/sampling distinction, stopping, conceptual prefill/decode | Top-k/top-p details, beam/speculative decoding, KV-cache internals, paged attention, serving and throughput/latency |
+| Scoring | Observed target, conditional probability, sequence likelihood/log-likelihood, token NLL/cross-entropy | Perplexity comparability, advanced probabilistic interpretations and uncertainty |
+| Training | Shifted targets, teacher forcing, cross-entropy/loss, gradients and one parameter update | AdamW internals, schedulers, clipping, mixed precision, distributed training, regularisation variants |
+| Evaluation | Held-out split distinction and the fact that evaluation does not update parameters | Metric selection, calibration, uncertainty, leakage, benchmark design, statistical tests and detailed error analysis |
+
+**Important nuance:** prefill/decode are core execution vocabulary for understanding practical inference, but KV-cache internals are optional efficiency depth. Teacher forcing is core to explaining the standard parallel next-token training setup; it is not a synonym for prefill and must not be placed on the inference branch.
+
+### 7. Current resource coverage and explicit gaps
+
+The canonical resources above are existing bilingual pages, but the model does not assume that every concept has a dedicated page:
+
+- Teacher forcing is owned initially by the training-examples lesson; a standalone page is not required unless the explanation becomes too large or has a distinct learning outcome.
+- Prefill and incremental decode are owned initially by the generation lesson; dedicated pages are not required for the minimum route.
+- KV cache is a concept associated with generation and belongs in Deepen until implementation or learner evidence justifies a separate page.
+- The current experimental-evaluation page is a general applied protocol exercise, not a complete LLM evaluation chapter. Keep it in Practice; do not make it the canonical explanation of perplexity, held-out language-model evaluation, or benchmark design.
+- Likelihood and cross-entropy are shared by scoring and training. They have one canonical explanation each; multiple route contexts must link to the same page rather than duplicate the content.
+- The early generation preview remains an orientation resource. The detailed inference branch reuses the same canonical generation lesson at a deeper level; this is an intentional revisit, not two distinct concepts.
+
+### 8. Migration boundary
+
+This is a **modelling completion**, not the page/site refactor. Until the subsequent migration is approved:
+- keep the existing Quarto page bodies, sidebars, page-map hierarchy and generated route fragments unchanged;
+- use this module topology as the reference when auditing those structures;
+- do not mechanically rewrite page-level `hierarchy` to mirror module containment;
+- do not promote every advanced concept into a new page;
+- reconcile the guided-route projection, page ownership and bilingual navigation only in a later, separately validated change set.
+
+## Path B — Build: an independent implementation progression
+
+The Build path is a separate course with its own entry point, milestones, implementation prerequisites and completion criteria. Its order is determined by what must exist in code before the next component can be implemented and tested; it is not a reordering of the Theory path.
+
+The current Build milestones are G0–G9 and retain their established branches:
+
+- **Model/inference branch:** define the small GPT scope; prepare prompt tokenization; implement embeddings and positional information; implement attention and Transformer blocks; assemble the model; produce logits and select tokens; demonstrate autoregressive generation with fixed parameters.
+- **Training-data branch:** prepare a traceable corpus and tokenizer (G1b), then construct windows, shifted targets and batches (G2). This branch joins the model path at training; it is not a prerequisite for implementing or understanding inference.
+- **Parameter-learning branch:** combine the implemented model and training examples to compute the objective, gradients, optimizer updates, validation and checkpoints (G8), then verify/evaluate (G9/E1).
+- **Adaptation branch:** pretrained checkpoint loading, fine-tuning, LoRA and quantization remain separate from training a GPT from random initialization.
+
+A learner may enter Build directly and use concise local explanations, notation and references as needed. A link to an Understand lesson is a reference to the canonical conceptual explanation, not a gate. Conversely, the Theory path may link to a Build result or experiment as an illustration, without importing Build milestones into its route. The detailed implementation status and code/test evidence remain owned by the Build path and its existing issue #78.
+
+## Relationship contract
+
+- Shared concepts have one canonical explanation; do not duplicate full theory inside Build walkthroughs.
+- Build pages explain implementation decisions, interfaces, tensor contracts, expected outputs and tests; they may include only the local theory needed to understand that implementation.
+- Theory pages explain mechanisms, assumptions, equations, interpretation and limitations; they may use small illustrative pseudocode but do not become code walkthroughs.
+- Deepen pages are optional and may serve either path; each must state which question it deepens and whether it is useful to Theory, Build or both.
+- Practice activities identify their target path(s), prerequisites and evidence. They are not automatically prerequisites for either route.
+- The concept graph and computational graph describe knowledge and computation respectively; neither determines the order of both paths.

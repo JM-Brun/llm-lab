@@ -1,0 +1,167 @@
+schema_version: 1
+source_id: ali-tokenizer-choice-llm-training-2024
+scan:
+  accessed_at: "2026-11-05"
+  retrieval_method: direct-pdf
+  author_text:
+    status: partial
+    coverage: "Primary ACL Anthology PDF: abstract, evaluation definitions, tokenizer/model setup, intrinsic and extrinsic results, compute analysis and limitations."
+    notes: ["Focused extraction; experiments were not reproduced."]
+  figures_media:
+    status: partial
+    coverage: "Main result tables and compute Figure 3 inspected in the PDF."
+    notes: ["No figure or table asset was copied."]
+  code_data:
+    status: not-inspected
+    coverage: null
+    notes: ["Training code, tokenizer artifacts and raw data were not independently audited."]
+  comments: {status: not-inspected, coverage: null, notes: []}
+  linked_resources:
+    status: partial
+    coverage: "Primary ACL Anthology paper and publication metadata."
+    notes: ["Supplementary repositories and all outbound references were not exhaustively inspected."]
+  metadata:
+    status: partial
+    coverage: "Findings of NAACL 2024, pp. 3907–3924."
+    notes: []
+  rights:
+    status: unknown
+    coverage: null
+    notes: ["No asset reuse permission was established; this record contains paraphrases only."]
+  unresolved_questions:
+    - "Reproducibility requires independent inspection of training code, data and evaluation scripts."
+    - "The single-seed design does not quantify seed variance."
+items:
+  - id: ali-tokenizer-choice-llm-training-2024:intrinsic-extrinsic-evaluation
+    kind: definition
+    summary: "The paper distinguishes intrinsic tokenizer evaluation (fertility, parity and vocabulary overlap) from extrinsic evaluation of the downstream model trained with that tokenizer."
+    locator: {type: section, value: "§3.4, pp. 3909–3910; §4, p. 3911", label: "Evaluation methodology"}
+    evidence:
+      kind: explicit-method-definition
+      confidence: established
+      scope: "Definitions and operationalization used in this study."
+      assumptions: []
+      limitations: ["These selected metrics are not an exhaustive definition of tokenizer quality."]
+    technical_assessment:
+      status: correct
+      rationale: "The distinction separates tokenizer-output properties from downstream model outcomes."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:tokenizer-evaluation, method:intrinsic-evaluation, method:extrinsic-evaluation]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The advanced bilingual evaluation lesson already distinguishes intrinsic measures from downstream evaluation."
+  - id: ali-tokenizer-choice-llm-training-2024:controlled-decoder-comparison
+    kind: experiment
+    summary: "The authors train 24 tokenizer configurations and one 2.6B decoder-only model per tokenizer, for up to 52.6B tokens, then compare zero-shot performance across monolingual and multilingual tasks."
+    locator: {type: section, value: "§3.3–3.4, p. 3909; §5.1, pp. 3911–3912", label: "Model and evaluation setup"}
+    evidence:
+      kind: experimental-protocol
+      confidence: established
+      scope: "English-only and five-language European configurations."
+      assumptions: []
+      limitations:
+        - "The multilingual setting covers English, German, French, Italian and Spanish."
+        - "Task counts are uneven across languages (22 English tasks; 4–6 per other language)."
+        - "One seed was used and hyperparameters were not independently optimized for every tokenizer."
+    technical_assessment:
+      status: correct
+      rationale: "Protocol details are explicit in the model and evaluation sections."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:tokenizer-evaluation, method:controlled-comparison, modality:multilingual]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "A useful concrete protocol, already summarized in the advanced comparison."
+  - id: ali-tokenizer-choice-llm-training-2024:downstream-performance
+    kind: result
+    summary: "Tokenizer configuration changes downstream results in the tested models; the best average configuration differs between English-only and multilingual training, and selected tasks show meaningful gaps between the best and worst tokenizers."
+    locator: {type: section, value: "§5.2–5.2.3, pp. 3912–3914; Tables 3–5", label: "Downstream performance"}
+    evidence:
+      kind: reported-experimental-result
+      confidence: well-supported
+      scope: "The study's 2.6B decoder-only models, five European languages and zero-shot task suite."
+      assumptions: []
+      limitations:
+        - "Aggregate scores conceal task-level variation."
+        - "The observed ranking is protocol-dependent, not a universal tokenizer ranking."
+        - "Library-specific pre/post-processing may contribute to observed differences."
+    technical_assessment:
+      status: qualified
+      rationale: "The tables support the result, but not every library/algorithm/preprocessing factor is fully isolated."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:downstream-performance, topic:tokenizer-evaluation]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The bilingual deep dive already records this finding with experimental scope."
+  - id: ali-tokenizer-choice-llm-training-2024:intrinsic-metrics-limit
+    kind: limitation
+    summary: "Fertility and parity are not reliable universal proxies for downstream performance: their relationship with extrinsic results is task-dependent, and low fertility alone is not sufficient for better model performance."
+    locator: {type: section, value: "§3.4, pp. 3909–3910; §6, p. 3914", label: "Intrinsic/extrinsic relationship and conclusion"}
+    evidence:
+      kind: reported-result-and-interpretation
+      confidence: well-supported
+      scope: "The configurations and downstream tasks evaluated in this paper."
+      assumptions: []
+      limitations:
+        - "Intrinsic metrics remain useful for tokenizer-output and compression analysis."
+        - "The study does not prove that all intrinsic metrics fail for every model or task."
+    technical_assessment:
+      status: correct
+      rationale: "The conclusion matches the reported task-dependent correlations."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:tokenizer-evaluation, topic:fertility, topic:parity]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The current deep dive already expresses this caveat."
+  - id: ali-tokenizer-choice-llm-training-2024:compute-cost-boundary
+    kind: limitation
+    summary: "The reported up-to-68% additional training-compute estimate belongs to a specific tokenizer comparison on German documents; it is not a universal multiplier for inference or all language pairs."
+    locator: {type: section, value: "§5.3, pp. 3913–3914; Figure 3", label: "Tokenizer-dependent computational cost"}
+    evidence:
+      kind: reported-comparison
+      confidence: well-supported
+      scope: "The paper's specified German-document comparison."
+      assumptions: []
+      limitations: ["The estimate depends on the model, sequence lengths, corpus and compared tokenizer pair."]
+    technical_assessment:
+      status: qualified
+      rationale: "The percentage is meaningful only with its scenario and training-compute denominator attached."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:compute-cost, topic:multilingual-tokenization]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The current documentation already scopes the number to a specific training-compute comparison."
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "The paper contributes controlled extrinsic evidence and a concrete evaluation protocol. The relevant findings are already integrated in the advanced bilingual lesson; preserve structured evidence without adding a page, concept or route step."

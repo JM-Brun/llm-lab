@@ -1,0 +1,30 @@
+schema_version: 1
+source_id: huggingface-transformers-kv-cache-explanation
+items:
+  - id: huggingface-transformers-kv-cache-explanation:incremental-kv-reuse
+    kind: mechanism
+    summary: "For causal autoregressive decoding, previously processed positions' key and value states can be retained per attention layer and reused. At an incremental decoding step, the current position supplies a new query, key and value; the query attends over the cached past keys plus the current key, and the new key/value are appended to the cache."
+    locator:
+      type: section
+      value: "Attention matrices"
+      label: "Caching explanation and incremental attention equation"
+    evidence:
+      kind: implementation-documentation
+      confidence: well-supported
+      scope: "The documentation explains why causal past K/V states remain reusable, gives the incremental attention expression, and describes appending the current K/V to the cache per layer."
+      assumptions:
+        - "Autoregressive causal attention is used."
+        - "The model is in inference/generation mode."
+      limitations:
+        - "This is a conceptual description; cache layouts and update mechanics vary across implementations and cache classes."
+        - "Sliding-window and other bounded-context mechanisms may discard older states rather than retain the full prefix."
+        - "The inspected documentation is on the mutable main branch and was not pinned to a commit."
+    classification:
+      primary_theme: inference-efficiency
+      tags: [topic:kv-cache, topic:autoregressive-generation, method:incremental-decoding]
+      concept_ids: [key, value, self-attention]
+    candidate_destinations:
+      pages: []
+      concepts: [key, value, self-attention]
+    disposition: defer
+    disposition_rationale: "This is a useful implementation-level continuation of Q/K/V, but it belongs in an inference or KV-cache lesson rather than the introductory Q/K/V definition. Check existing inference curriculum and add a cross-link only when a canonical destination is established."

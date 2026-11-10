@@ -1,0 +1,240 @@
+---
+name: knowledge-and-learning-integration
+description: Integrate validated source-extraction records into the LLM Lab knowledge graph and bilingual learning experience, including concepts, relations, existing/new pages, figures, experiments, references, navigation and validation.
+---
+
+# Knowledge and learning integration
+
+## Mission and phase boundary
+
+This is **Phase B: integration**. Consume persistent, reviewable records produced by `source-extraction`. Decide which items genuinely improve LLM Lab, then integrate them into the canonical knowledge graph and/or learning experience.
+
+Do not rescan by default. If an extraction is incomplete, stale or tied to a different version, request targeted re-extraction. An extracted item is not automatically accepted. A fully catalogued source can produce no graph or page change.
+
+Use the [source-to-knowledge validation protocol](../../../docs/workflows/source-to-knowledge-validation.md) for the integration gates and final report. Assess complementarity independently of novelty, test a plausible bounded integration before a pedagogical no-op, and keep technical review, rendered/accessibility review and learner evidence distinct.
+
+## 1. Inspect the current architecture
+
+Before changing anything, inspect:
+- `docs/knowledge-graph-standards.md` and `docs/knowledge-graph-implementation-audit.md`;
+- `data/concepts.yml`, `data/domains.yml`, `data/resources.yml`;
+- `site/tools/export_knowledge_graph.py`, schemas, graph validators and tests;
+- `docs/learning-path.md`, `docs/content-section-mapping.md`, page inventory and templates;
+- editorial principles, reader-experience guidance and page metadata schema;
+- relevant pages in both `site/fr/` and `site/en/`, including prerequisites and downstream pages;
+- source catalogue, references, resource library, asset register, experiments and open issues/PRs.
+
+The current branch is authoritative. Audits and extraction recommendations are discovery aids, not proof of current state.
+
+Lifecycle rule: source scan status, source integration status and extraction-item disposition are independent. Never infer `scanned` from `integrated`, and never infer that every item was accepted from a source-level status. Preserve mixed item decisions.
+
+## 2. Review and disposition every item
+
+### Evaluate incremental learning value before disposition
+
+Compare each extraction with actual existing coverage, but compare explanatory function rather than topic labels alone. A source may have low novelty and high complementarity: that is a legitimate reason to improve an existing lesson.
+
+For each item, inspect the extraction's `pedagogical_assessment` of novelty, complementarity, pedagogical value, applicability, redundancy and evidence quality. If an older extraction has no such field, assess these dimensions during Phase B and add the field when updating the record. Re-evaluate it against the current branch; do not accept its initial assessment uncritically. Record the exact existing page/section and the learner question it serves.
+
+Use these distinctions:
+- **New knowledge**: a missing or materially more precise fact, derivation, limitation, result or implementation detail.
+- **Complementary perspective**: a different mental model, analogy, example, narrative sequence, visualization or connection that improves understanding despite overlapping subject matter.
+- **Reinforcement**: another explanation of the same point with little additional learning benefit; usually cite or retain as an optional resource rather than adding it to the page.
+- **Redundancy**: substantially the same explanation, example and learner function, with no meaningful improvement.
+- **Correction**: a source exposes an error, ambiguity, omission or overstatement in the project (verify independently before changing it).
+
+Do not reject an item solely because the concept or topic is already covered. Conversely, do not integrate it merely because it is different. Ask what learner difficulty it solves and whether it does so better or differently enough to justify the added cognitive load.
+
+Compare each extraction with actual existing coverage. Record exactly one item-level `disposition` from `item_dispositions` in `data/source-taxonomy.yml`: `integrate`, `correct`, `clarify`, `link`, `cite`, `case-study`, `experiment`, `integrate-by-reference`, `already-covered`, `defer`, or `reject`. The taxonomy file is authoritative; do not introduce local synonyms or substitute source-level `integration_status` for an item decision.
+
+Keep evidence confidence distinct from pedagogical assessment: item evidence uses the confidence values in `data/source-taxonomy.yml`; pedagogical assessment dimensions use `low`, `moderate`, `high`, or `uncertain`, each with a rationale.
+
+For each, record rationale, evidence/confidence, generality, existing coverage, destination and learner value. State what is genuinely complementary: derivation, mental model, counterexample, evidence, limitation, implementation perspective, failure mode, history or experiment.
+
+Do not add content solely because it is novel or interesting.
+
+### Required complementary-perspective pass (do not stop at already-covered)
+
+Before assigning an already-covered, reinforcement or reject disposition to a pedagogical contribution, perform and record a complementary-perspective pass:
+
+1. Identify the precise learner question served by the existing canonical explanation.
+2. Identify the source's learner question, explanatory lens, mental model, example phenomenon, teaching move and abstraction level.
+3. Compare these functions, not just the topic, vocabulary or example label. In particular, distinguish examples that share a word/topic but teach different phenomena (e.g. lexical ambiguity versus pronoun coreference).
+4. Ask whether the source makes a hidden relationship, assumption, contrast or transfer opportunity explicit.
+5. Test a bounded integration in the existing page: an optional/collapsible alternative perspective, a contrast table, a cross-link, a worked example, a misconception note or a practice prompt. Do not force it into the core route if it is optional.
+6. Keep the addition only if it gives the learner a distinct benefit and can be bounded technically; otherwise record why the attempted integration would add cognitive load without benefit.
+
+A source collection should accumulate distinct explanatory lenses, not merely accumulate citations. When multiple sources illuminate the same mechanism from different angles, integrate the best combination in original project language and preserve item-level attribution. “The topic is already covered” is never sufficient rationale by itself for a no-op decision.
+
+### Compile complementary sources into a coherent learning resource
+
+Treat a source collection as material to synthesize, not as a queue of independent page additions. Most sources will share core concepts; this is expected. The editorial task is to identify the distinct contribution each makes and assemble a coherent explanation that is more useful than any source considered alone.
+
+For topics represented by multiple useful sources, create or update a source synthesis dossier under docs/source-syntheses/ when it materially helps editorial decisions or future maintenance. Follow docs/source-synthesis-method.md. Compare sources against the learner question and canonical page(s), by explanatory lens, mental model, example, derivation, evidence, implementation detail, abstraction level and caveats. Distinguish convergence, complementary viewpoints, disagreements and unsupported claims. Map contributions to core explanation, optional perspective, deep dive, case study, experiment, reference or cross-link. Record what is retained, synthesized in original language, linked, deferred or excluded, with source/item traceability.
+
+A compilation is not a concatenation. Do not reproduce source prose or stack near-identical analogies. Prefer one clear core explanation plus selected complementary perspectives where they resolve distinct learner difficulties. Preserve useful alternatives as optional material or linked resources. Do not erase disagreement. Repeated tutorials copying the same explanation are not independent corroboration; keep pedagogical usefulness separate from scientific evidential strength.
+
+## 3. Enrich the knowledge graph deliberately
+
+### Differential source-graph and learning-route analysis
+
+For instructional sources with a meaningful teaching sequence, compare the source's reconstructed local model with the current LLM Lab model before deciding on integration:
+
+1. Compare semantic nodes and typed relations against the relevant canonical concept subgraph. Identify missing durable concepts, missing/incorrect edges, ambiguous concepts, and source details that are merely examples or transient claims.
+2. Compare the source's teaching sequence against `data/guided-route.yml`, `docs/learning-path.md`, page-level `suggested_route`, page hierarchy and the separate Build route. State which of these structures is being compared; never conflate them.
+3. Compare learner outcomes, assumed prerequisites, conceptual transitions, examples, analogies, visual explanations, checks/practice, abstraction levels and omitted topics.
+4. Decide independently whether to change the canonical graph, the pedagogical route, a page explanation, navigation links, or none of them. A graph addition does not imply a route change; a source's section order is not automatically a better curriculum.
+5. Add a canonical concept only if it is stable, reusable, clearly defined, has meaningful typed relations, and maps to an appropriate existing or justified future learning resource. If a concept is already taught but absent from the graph, that can still be a valid graph improvement.
+6. Add a route edge only when it expresses a learner-relevant transition or dependency and passes route reciprocity, acyclicity, bilingual parity and page-ownership checks. Do not add route links just to mirror a source's order or eliminate null route pointers.
+7. Record the source graph, source route, current LLM Lab subgraph/route, differential findings, accepted changes and intentional non-changes in a concise comparison dossier. Use Mermaid or tables where they make the difference inspectable; keep the canonical YAML registries authoritative.
+
+The report must state whether the source changed the graph, the route, both, or neither, and explain why. Do not optimize for node/edge count or superficial visual symmetry.
+
+
+The graph may be augmented, but only when the extraction changes the conceptual model or useful relationships.
+
+### Concepts
+- Reuse existing stable concept IDs.
+- Add a concept only for a durable, reusable notion with a distinct definition and meaningful relations.
+- Do not create concepts for source titles, source entities, model names, section headings, temporary findings, examples or every extraction item.
+- Keep source identity separate from the concept it discusses.
+- Never create a second concept registry or independent graph database.
+
+### Relations
+- Reuse the established relation vocabulary and direction.
+- Add edges only when their semantics are justified. Distinguish prerequisite, part-whole, specialization, dependency, association, contrast and other supported types.
+- Do not convert analogy into equivalence, correlation into causation, association into prerequisite, or historical succession into conceptual dependency.
+- Preserve evidence/provenance for new or materially changed relations where the schema supports it; otherwise link the extraction through supported provenance fields or record the limitation.
+- Check effects on neighbouring concepts, domain membership, page mappings and route prerequisites.
+
+### Sources, extracted items and projections
+- Represent sources/extractions using the compatible canonical model established in Phase A.
+- Link sources/items to concepts, pages and first-class resources without conflating identities.
+- Keep source catalogue, concept registry, learning-resource registry and pedagogical route distinct but cross-linked.
+- Update the JSON-LD exporter and tests whenever the canonical graph model changes. JSON-LD is generated, never hand-maintained.
+- Update the interactive map only when new nodes/edges materially improve discovery. Graph topology is not the same thing as the pedagogical route.
+
+Report before/after nodes and edges: added, changed, intentionally unchanged and removed (with explicit justification).
+
+## 4. Select the right learning destination
+
+Map accepted items by learner question and page purpose:
+
+| Layer | Appropriate contribution |
+|---|---|
+| Foundations | Reusable mathematical, statistical, CS, numerical or systems prerequisite |
+| Understand / core | General mechanism, definition, mental model, misconception correction |
+| Synthesis | Relations among concepts, architecture families, training/inference stages |
+| Deepen | Derivation, formal property, complexity, variants, research debate, failure conditions |
+| Case study | Named model/family/version, configuration, design choices, results and limits |
+| Build | Tensor/data contracts, algorithms, code paths, numerical and engineering trade-offs |
+| Practice & experiment | Reproducible activity, ablation, comparison, interactive exploration, test |
+| Reference / glossary / history | Stable terminology, bibliography, historical or lookup material |
+
+One source may contribute at several layers. Split by learner question. Do not place model-specific details in general concept pages or force general principles to live only in case studies.
+
+Keep prerequisite vs suggested reading, concept relation vs navigation relation, core vs optional depth, and explanation vs implementation vs practice distinct.
+
+## 5. Extend existing pages before creating new ones
+
+Assess whether an item can clarify a definition, add a bounded analogy, strengthen a derivation, expose an assumption, add a counterexample/misconception/failure mode, improve a figure, add an example, motivate an experiment, improve cross-links or correct stale information.
+
+Before editing, inventory existing claims, caveats, examples, equations, activities and links that must remain. Every moved item needs a working destination and explicit rationale. No silent shortening or loss.
+
+### New-page gate
+
+Create a page only if all conditions hold:
+1. a distinct, durable learner question and learning outcome exist;
+2. canonical ownership is clear;
+3. no existing page can accommodate it through a coherent small extension;
+4. it fits a meaningful core, Deepen, case-study or practice location;
+5. evidence, examples, references and FR/EN counterparts can be supported;
+6. it does not fragment a topic or duplicate an existing concept treatment.
+
+Inspect page inventory, archetypes/templates, content-section mapping, neighbours and open issues/PRs. Document why extending existing pages is inferior. If the idea is immature, retain a structured proposal rather than publishing a speculative page.
+
+## 6. Integrate analogies, visuals, experiments and code responsibly
+
+### Analogies and alternative explanations
+
+Do not compare analogies by topic alone. Compare their mappings, highlighted mechanism, learner entry point, valid scope, failure boundary and likely misconception. Two analogies can be complementary when they illuminate different aspects; they are redundant when they induce the same mental model without improving clarity.
+
+Prefer one canonical explanation with a clearly labelled alternative perspective, optional expandable note or cross-link over a sequence of competing analogies. Do not accumulate analogies merely to demonstrate source coverage. Explain why the alternative helps and when not to use it. Credit the source; synthesize original wording; do not copy distinctive prose or illustrations. An analogy supplements, never replaces, formal or computational definitions.
+
+### Figures and visualizations
+Choose: link original, embed with verified rights, create an independently authored figure, or omit. Never trace/cosmetically alter protected visuals. Preserve useful existing project assets unless replacement is justified. Update `docs/visual-assets-register.md`, references, accessibility text and affected pages.
+
+### Experiments, datasets and benchmarks
+Turn ideas into bounded falsifiable protocols only when useful and feasible. Specify hypothesis, variables, controls, dataset, model/version, baseline, metrics, compute and interpretation risks. Reuse canonical code, fixtures and experiment directories. Keep statuses distinct: proposed, protocol implemented, run completed, independently reproduced. Never present source results as project results.
+
+### Code
+Use pinned versions, existing project architecture and canonical code locations. Add tests where appropriate. Distinguish conceptual pseudocode from executable code and intended behavior from observed/tested behavior.
+
+## 7. Update references, metadata and bilingual pages
+### Source classification and discovery facets
+
+When integrating source and extraction records, preserve the distinction defined in `docs/source-catalogue-schema.md`:
+- domains classify the broad subject and reuse `data/domains.yml`;
+- tags are namespaced retrieval facets, not concept nodes or page metadata;
+- `concept_ids` reference canonical concepts only;
+- typed metadata (source type, language, level, contribution, audience, scan status and integration status) remains typed.
+
+Do not automatically promote source tags into concepts, page keywords, graph edges or visible UI labels. If an accepted extraction warrants a new canonical concept, define and relate it through the normal concept-review process. Keep item-level classification only where it adds meaningful specificity.
+
+
+For published changes:
+- cite the source next to the claim and update the appropriate canonical source/reference inventory;
+- include exact version/date and licence/attribution where relevant;
+- update metadata, concept associations, resource references, reciprocal links and route/navigation only when semantics require it;
+- inspect both language counterparts and align claims, equations, assumptions, examples, caveats, citations and links substantively;
+- use natural language-specific phrasing, not mechanical translation;
+- if a counterpart is absent, record the gap and decide whether to create it or defer publication.
+
+Do not create a parallel bibliography. A source reference is not a concept node or pedagogical navigation link.
+
+## 8. Plan, validate and report
+
+For broad changes, prepare a reviewable plan:
+
+| Extraction item | Evidence/confidence | Novelty / complementarity / pedagogical value | Existing explanatory coverage | Disposition + rationale | Graph/page/asset/experiment impact | FR/EN |
+|---|---|---|---|---|---|---|
+
+Run narrow checks, then broader checks for shared systems:
+- source catalogue and extraction schema;
+- concept graph and relation validation;
+- JSON-LD export and tests;
+- metadata, links, IDs, references and asset paths;
+- bilingual parity;
+- Quarto render/build for affected pages;
+- tests for changed code, notebooks and experiments;
+- visual inspection of FR/EN pages, equations, figures, mobile layout and navigation.
+
+Inspect diffs for accidental deletions, unrelated formatting churn, generated noise and duplicated explanations. A green build does not prove scientific correctness or pedagogical quality.
+
+Final report:
+1. extraction items reviewed and dispositions;
+2. graph nodes/edges added, changed, intentionally unchanged or removed;
+3. pages/sections/assets/experiments/references updated or proposed;
+4. new-page decision and rationale;
+5. existing knowledge preserved or moved;
+6. FR/EN parity;
+7. validation commands/results;
+8. unresolved issues and next steps.
+
+## Definition of done
+
+- Each accepted integration links to a source and precise extraction item.
+- Graph changes use canonical IDs, relation semantics, schemas and generated projections.
+- For instructional sources, the source graph and route are compared with the canonical graph and route; graph and route changes are independent, justified decisions.
+- Every page change has a demonstrated learner benefit and fits page ownership/layer.
+- New-page decisions pass the explicit gate.
+- Existing useful content is preserved.
+- Rights, attribution, versions and experimental status are accurate.
+- FR/EN counterparts and navigation are substantively aligned.
+- Relevant checks and rendered-page review are reported.
+- Deferred/rejected items have explicit reasons.
+
+
+## Focused visual-rights hand-off
+
+This skill owns the pedagogical and architectural disposition of source-derived visuals, but a proposed use must be supported by asset-level evidence. Keep the source-extraction record as the primary source-scan record; do not duplicate its visual-first pass. Use `visual-asset-audit` only when exact asset identity, creator/rightsholder, permission, existing-use escalation or a proposed adaptation/reuse requires focused verification. An unknown or restrictive licence is not a reason to silently remove an existing project asset.

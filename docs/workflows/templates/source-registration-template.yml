@@ -1,0 +1,39 @@
+# Copy one entry into data/sources.yml and replace every placeholder.
+# Controlled values are defined in data/source-taxonomy.yml and data/domains.yml.
+# Keep unknown values null/unknown; never infer dates, revisions, licences or rights.
+- id: "stable-lowercase-kebab-case-id"
+  title: "Source title"
+  creators: ["Author or organization"]
+  source_type: paper # exact value from source_types in data/source-taxonomy.yml
+  identifiers: {}
+  canonical_url: "https://example.org/canonical-source"
+  publisher: "Publisher or platform"
+  publication_date: null
+  updated_date: null
+  language: en
+  version: null
+  revision: null
+  licence: {identifier: null, url: null, status: unknown}
+  reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+  classification:
+    primary_theme: text-tokenization # ID from data/domains.yml; null only while discovered/unclassified
+    secondary_themes: []
+    tags: ["topic:replace-me"] # namespaced tags from data/source-taxonomy.yml
+    concept_ids: [] # existing IDs only, from data/concepts.yml
+  metadata:
+    technical_level: unspecified # introductory | intermediate | advanced | mixed | unspecified
+    contribution_types: [other] # controlled by data/source-taxonomy.yml
+    audiences: [learner] # controlled by data/source-taxonomy.yml
+  scan_status: discovered # exact value from scan_statuses in data/source-taxonomy.yml
+  integration_status: not-reviewed # exact value from integration_statuses in data/source-taxonomy.yml
+  scan_history:
+    - accessed_at: "YYYY-MM-DD"
+      status: partially-scanned
+      inspected_scope:
+        - "Specify exactly which source component was inspected and by what retrieval route."
+      limitations:
+        - "List inaccessible or unresolved components; do not treat them as absent."
+  related:
+    pages: []
+    concepts: []
+    audit_records: []

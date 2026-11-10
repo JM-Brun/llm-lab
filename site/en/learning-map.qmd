@@ -1,0 +1,83 @@
+---
+title: "Guided route and resource map"
+subtitle: "Three questions, eight stages, territories, sections, pages, and canonical concepts"
+description: "A guided route in three questions detailed as eight conceptual stages, a progressive territory map, and a canonical-concept registry to orient yourself across the site."
+keywords: ["type:entry-point", "destination:orient", "topic:learning-map", "level:overview", "language:en", "status:published"]
+lang: en
+toc: true
+include-in-header: /includes/learning-map-hreflang.html
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/learning-map"
+scope: "Eight-stage conceptual guided route followed by a progressive map: territories, sections, pages, and canonical concepts."
+purpose: "Orient readers through a compact conceptual progression, then let them explore resources territory by territory and section by section, along with canonical concepts."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:entry-point", "destination:orient", "topic:learning-map", "level:overview", "language:en", "status:published"]
+-->
+
+This page presents the eight-stage **Theory / Understand path**, followed by a progressive resource map. The **Build path is independent**: it has its own implementation order and entry point. The route is derived from the canonical curriculum; the map starts from the high-level territories, then reveals sections and pages as you click. The reading notes below collapse by default; the map mirrors the search, filter, and selection in the URL, and the "Copy link" button shares that exact view.
+
+::: {.callout-note title="The path in brief"}
+You can remember the route in **five movements** before exploring the eight detailed stages:
+
+1. **Place the system** — understand what an LLM is and what it predicts.
+2. **Observe** — follow a complete generation as a black box, from context to next token.
+3. **Explain the computation** — connect text and tokens, representations, the Transformer, and the predictive distribution.
+4. **Understand the uses** — distinguish generation, scoring an observed target, and parameter learning. These are three uses of predictive computation, not successive steps in one generation loop.
+5. **Explore** — then choose to build, practice, deepen, or consult references.
+
+The eight stages below unpack this overview without making every page a strict prerequisite.
+:::
+
+::: {.callout-note collapse="true" title="How to read this map"}
+
+- **Territories** — the main parts of the site: Understand, Build, Practice, Deepen, Reference.
+- **Sections** — clicking a territory reveals its subsections; the breadcrumb or the Escape key takes you back up one level.
+- **Pages** — clicking a page shows its details (purpose, sections, links); "Open the page" navigates there directly.
+- **Concepts** — the "Canonical concepts" view groups the concepts from the bilingual registry versioned in `data/concepts.yml` by discovery domain, with their definitions, typed relationships, and resource pages. The search and the relation-type filter narrow the list, a selected concept highlights its neighbours, and related concepts remain clickable from the details panel.
+
+Section headings shown in a page's details are editorial landmarks, not canonical concepts. The map must not be interpreted as a single reading order: the guided route below plays that role.
+
+:::
+
+::: {.guided-route-section}
+
+## Theory path — Understand
+
+This theory path first answers three questions: what is an LLM, how does it compute a prediction, and what can be done with that prediction? The first part places the system in context; the second covers four stages, from text to the next-token distribution; the third presents three sibling uses, generating, scoring an observed target, and learning by updating the parameters, which are not successive prerequisites. Evaluation remains cross-cutting: it measures the model on held-out data ([experimental evaluation](experimental-evaluation.qmd)). The eight detailed stages remain the suggested progression: core pages cover each stage's main ideas; optional resources offer further context or depth and can belong to any destination. Pages within a stage are complementary resources, not a list of strict prerequisites.
+
+{{< include ../includes/generated-guided-route-en.qmd >}}
+
+::: {.guided-route-companion}
+
+**Other primary path — Build:** To build a small GPT, follow the [independent Build path](build-path.html). It has its own implementation milestones and prerequisites; it is not a required continuation of the Theory path. Corpus preparation and training-example construction form a dedicated model-learning branch, not a prerequisite for inference.
+
+:::
+
+:::
+
+## Explore the resources
+
+These views support exploration; they do not replace the guided route above (territories, sections, pages, and concepts are described at the top of the page). The "Reset view" button clears the search, the filter, and the selection; "Copy link" copies the URL of the current view; the Escape key steps back one level at a time. Both the map and the list below are generated automatically by the Python meta-code from the Quarto sidebar and page metadata: a single source to maintain.
+
+{{< include ../includes/generated-map-territories-en.qmd >}}
+
+{{< include ../includes/generated-map-data-en.qmd >}}
+
+Use this map for orientation, not as a strict prerequisite graph. Advanced pages can be consulted directly when they address the question at hand.
+
+### All resources, as a list
+
+The same structure as a static list: useful without JavaScript, for printing, or for copying a link. It is produced by the same generation as the interactive map.
+
+{{< include ../includes/generated-map-list-en.qmd >}}
+
+[Browse the glossary](glossary.qmd) · [Explore the GPT build path](build-path.qmd) · [Version française](../fr/learning-map.html)

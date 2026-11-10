@@ -1,0 +1,276 @@
+---
+title: "Du corpus tokenisé aux exemples d’entraînement"
+subtitle: "Décalage entrée-cible, fenêtres, documents, padding et dimensions"
+keywords: ["type:concept-bridge", "destination:build", "topic:training-examples", "level:core", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/training-examples"
+summary: "Montre comment construire les paires entrée-cible décalées à partir des tokens et comment le teacher forcing utilise le préfixe observé pour conditionner les prédictions pendant l’entraînement."
+scope: "Couvre la transformation d’un flux de tokens en exemples entrée-cible autorégressifs et la stratégie de conditionnement par teacher forcing : décalage d’un token, fenêtres de contexte et stride, packing et frontières de documents, padding, masques d’attention et de loss, et dimensions des tenseurs. La page s’arrête à la construction et à l'interprétation des exemples, sans implémenter la boucle d'entraînement ni dériver les objectifs d'optimisation."
+purpose: "Construire des exemples entrée-cible alignés à partir d’identifiants de tokens, expliquer comment le teacher forcing conditionne les prédictions sur le préfixe observé, distinguer les choix de fenêtrage et de masquage, et diagnostiquer les erreurs d’alignement qui modifieraient l’objectif d’entraînement."
+suggested_route:
+  previous: "fr/corpus-preparation"
+  next: null
+hierarchy:
+  parents: ["fr/corpus-preparation"]
+  children: []
+related: ["fr/tokenization-strategies", "fr/vraisemblance"]
+tags: ["type:concept-bridge", "destination:build", "topic:training-examples", "level:core", "language:fr", "status:published"]
+-->
+
+::: {.callout-note}
+**Cette page appartient au parcours Build (préparation des exemples d’entraînement, G2)**, pas aux huit étapes du parcours théorique Understand. Elle peut être consultée indépendamment lorsque vous étudiez la construction des cibles et le teacher forcing. [Revenir au parcours Build](build-path.qmd).
+:::
+
+::: {.chapter-lead}
+Un modèle autorégressif apprend à prédire le prochain token à partir du contexte disponible. Pour l’entraîner, on transforme un flux de tokens en paires entrée-cible alignées. Un décalage d’un seul indice, un masque incorrect ou une frontière de document mal traitée change l’objectif effectivement optimisé.
+:::
+
+## Objectifs
+
+- Construire une paire entrée-cible décalée d’un token.
+- Expliquer le teacher forcing et le distinguer de la réinjection des tokens générés à l’inférence.
+- Distinguer longueur de contexte, stride, taille du lot et taille du vocabulaire.
+- Comparer fenêtres glissantes et séquences packées.
+- Distinguer frontière de document, masque d’attention et masque de perte.
+- Vérifier les formes des tenseurs et détecter les erreurs d’alignement.
+
+## 1. Décaler les entrées et les cibles
+
+Supposons que le tokenizer ait produit les identifiants `[t0, t1, t2, t3, t4]`. Pour une longueur d’entrée de 4 :
+
+- entrée `x = [t0, t1, t2, t3]`
+- cible `y = [t1, t2, t3, t4]`
+
+```{mermaid}
+flowchart TB
+    A["Flux : t0 t1 t2 t3 t4"] --> B["Entrée x : t0 t1 t2 t3"]
+    A --> C["Cible y : t1 t2 t3 t4"]
+    B --> D["Prédiction à chaque position"]
+    D --> C
+```
+
+Entrée et cible ont la même longueur. La cible est décalée d’une position dans le flux source : chaque position doit prédire le token qui suit. Le dernier token d’entrée fournit du contexte ; il n’est pas sa propre cible.
+
+**À faire avant de lire la suite :** pour le flux `[8, 3, 3, 9, 2, 7]` avec une longueur de 3, écrivez les deux premières paires entrée-cible. Vérifiez que chaque cible est exactement le token suivant dans le flux.
+
+<details>
+<summary>Correction et vérification de l'alignement</summary>
+
+- Exemple 1 : entrée `[8, 3, 3]`, cible `[3, 3, 9]`.
+- Exemple 2, avec un stride de 1 : entrée `[3, 3, 9]`, cible `[3, 9, 2]`.
+
+À la position 0 du premier exemple, le modèle reçoit le token `8` et doit prédire `3` ; à la position 2, il reçoit le contexte `[8, 3, 3]` et prédit `9`. Le même identifiant peut se répéter : l'alignement dépend de la position dans le flux, pas de l'unicité des valeurs.
+
+</details>
+
+### Teacher forcing : utiliser le préfixe observé pendant l'entraînement
+
+Dans l'entraînement autorégressif standard, le modèle reçoit les tokens observés du corpus comme contexte et prédit les tokens suivants. Pour une paire décalée `x = [t0, …, t(L−1)]` et `y = [t1, …, tL]`, le logit à la position `i` est comparé à la cible `y[i]`.
+
+On parle de **teacher forcing** parce que le préfixe fourni au modèle est le préfixe de référence, issu des données, et non une suite de tokens générés par le modèle. Le masque causal reste indispensable : à la position `i`, le calcul ne peut utiliser que `x[0]` à `x[i]`, jamais les tokens futurs. Le modèle peut ainsi traiter les positions de la séquence dans une même passe avant, puis calculer une perte sur les cibles décalées.
+
+Le teacher forcing est une **stratégie de conditionnement**. Ce n'est ni l'objectif de prédiction, ni la fonction de perte, ni l'optimiseur. L'objectif usuel est exprimé par la cross-entropie ou la NLL sur les cibles alignées. À l'[inférence](generation.qmd), les tokens de référence ne sont pas disponibles : le token sélectionné par le modèle est ajouté au contexte pour la prédiction suivante.
+
+La fonction de référence `sliding_input_target_pairs` construit uniquement les fenêtres et les cibles décalées ; elle ne réalise ni passe avant entraînable, ni teacher forcing exécuté, ni mise à jour des paramètres. Cette distinction est conceptuelle et décrit le contrat des exemples d'entraînement.
+
+## 2. Fenêtres glissantes et stride
+
+Le stride est le nombre de positions dont on décale le début de la fenêtre entre deux exemples. Il est distinct de la longueur de contexte.
+
+| Longueur de la fenêtre d’entrée | Stride | Conséquence pour les fenêtres d’entrée |
+|---:|---:|---|
+| 4 | 4 | Les fenêtres d’entrée sont adjacentes, sans recouvrement |
+| 4 | 2 | Les fenêtres d’entrée se recouvrent ; du contexte est réutilisé |
+| 4 | 5 | Certaines positions peuvent être sautées |
+
+```{mermaid}
+flowchart LR
+    A["Flux : 0 1 2 3 4 5 6 7"] --> B["Stride 4 : [0 1 2 3]"]
+    B --> C["Puis [4 5 6 7]"]
+    A --> D["Stride 2 : [0 1 2 3]"]
+    D --> E["Puis [2 3 4 5]"]
+```
+
+Le tableau décrit **uniquement les fenêtres d’entrée**. Pour l’entraînement à la prédiction du prochain token, chaque fenêtre a aussi besoin d’une cible décalée d’un token ; le dernier token d’entrée doit donc avoir un successeur dans le flux source. La fin du corpus doit être traitée explicitement (par exemple en supprimant un exemple incomplet ou en appliquant une convention de fin de séquence définie).
+
+### Exemple calculé : ce que le stride fait répéter
+
+Prenons le flux `[0, 1, 2, 3, 4, 5, 6, 7, 8]`, une longueur d’entrée $L=4$ et des cibles décalées d’un token.
+
+| Stride | Départ | Entrée $x$ | Cible $y$ |
+|---:|---:|---|---|
+| 4 | 0 | [0, 1, 2, 3] | [1, 2, 3, 4] |
+| 4 | 4 | [4, 5, 6, 7] | [5, 6, 7, 8] |
+| 2 | 0 | [0, 1, 2, 3] | [1, 2, 3, 4] |
+| 2 | 2 | [2, 3, 4, 5] | [3, 4, 5, 6] |
+| 2 | 4 | [4, 5, 6, 7] | [5, 6, 7, 8] |
+
+Avec un stride de 2, les entrées partagent deux tokens consécutifs et les cibles des fenêtres successives répètent elles aussi des positions (par exemple 3 et 4). Ces répétitions augmentent le nombre d’occurrences d’apprentissage ; elles ne créent pas de nouvelles observations indépendantes. Avec un stride de 4, les fenêtres d’entrée sont adjacentes et les cibles couvrent ici les positions suivantes sans recouvrement.
+
+Ce tableau suppose que le flux fournit un successeur pour chaque position cible. Il illustre le fenêtrage, pas une politique complète de packing ou de batching.
+
+Un stride plus petit augmente généralement le nombre d’exemples et le recouvrement. Il n’existe pas de stride universellement optimal : les choix dépendent du pipeline, du budget de calcul et du traitement de la fin du corpus. Une fenêtre pédagogique glissante n’est pas nécessairement représentative d’un pipeline industriel.
+
+::: {.callout-note collapse="true" title="Implémentation NumPy et tests (approfondissement)"}
+L'[implémentation de référence NumPy](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/training_examples.py) et ses [tests unitaires](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_training_examples.py) couvrent volontairement un cas restreint : la construction de fenêtres glissantes avec cibles décalées d'un token (`sliding_input_target_pairs`). Une fenêtre n'est conservée que si sa cible est complète ; la fin de corpus incomplète est écartée, sans padding ni token de fin inventé.
+
+Cette référence ne met **pas** en œuvre le chargement d'un corpus ni la tokenisation, le packing de documents, les marqueurs de frontière, le padding, les masques d'attention ou de perte, le batching via un `Dataset`/`DataLoader`, ni les découpages train/validation. Les choix de fenêtrage d'un pipeline industriel ne s'en déduisent pas directement.
+
+Les tests vérifient l'alignement exact de chaque cible sur le token suivant du flux source, le nombre de fenêtres et le recouvrement pour plusieurs strides, le traitement explicite de la fin du corpus, le déterminisme, l'absence de mutation de l'entrée et le rejet des entrées invalides. Ils étayent le périmètre annoncé de cette référence ; ils ne prouvent pas l'optimalité d'un stride ni la représentativité d'un pipeline de préentraînement.
+:::
+
+## 3. Frontières de documents et packing
+
+Concaténer plusieurs documents peut créer des fenêtres qui traversent une frontière. Il faut distinguer trois décisions :
+
+- **Packing :** regrouper plusieurs documents dans une séquence pour réduire le padding.
+- **Marquage de frontière :** insérer un token de fin ou de séparation.
+- **Masquage inter-documents :** décider si l’attention peut traverser la frontière.
+
+```{mermaid}
+flowchart LR
+    A["Document A"] --> B["Séparateur éventuel"]
+    B --> C["Document B"]
+    C --> D["Séquence packée"]
+    D --> E["Vérifier les cibles et les masques"]
+```
+
+Un token de fin de document ne bloque pas, à lui seul, l’attention. Le masquage inter-documents est une décision d’implémentation, pas une règle universelle. Il faut inspecter le masque réellement appliqué et vérifier que les transitions entre documents correspondent à l’objectif visé.
+
+## 4. Padding et masque de perte
+
+Le padding rend des séquences de longueurs différentes compatibles avec un tenseur rectangulaire. Les positions de padding ne doivent généralement pas contribuer à la perte de prédiction, sauf si l’objectif l’exige explicitement.
+
+```{mermaid}
+flowchart TB
+    A["Cibles : 12 8 4 PAD PAD"] --> C["Calcul de la perte"]
+    B["Masque de perte : 1 1 1 0 0"] --> C
+    C --> D["Seules les positions valides contribuent"]
+```
+
+### Exemple calculé : exclure le padding de la réduction
+
+Considérons les pertes par position suivantes, données ici à titre **illustratif** :
+
+| Position | Cible | Masque de perte (m_i) | Perte (ell_i) |
+|---:|---|---:|---:|
+| 0 | 12 | 1 | 0,2 |
+| 1 | 8 | 1 | 1,1 |
+| 2 | 4 | 1 | 0,7 |
+| 3 | PAD | 0 | 4,0 |
+| 4 | PAD | 0 | 3,0 |
+
+La moyenne sur les seules positions valides vaut :
+
+[
+\mathcal{L}=\frac{\sum_i m_i\ell_i}{\sum_i m_i}
+=\frac{0{,}2+1{,}1+0{,}7}{3}
+=\frac{2}{3}\approx 0{,}667.
+]
+
+Les pertes illustratives des positions PAD ne contribuent pas. Une moyenne naïve sur les cinq positions donnerait (1{,}8), ce qui modifierait l’objectif en faisant dépendre la perte du nombre de positions de padding. En pratique, la convention exacte de réduction (somme, moyenne par séquence ou moyenne par token valide) doit être explicitée ; cet exemple illustre uniquement la moyenne par token valide.
+
+Le **masque d’attention** détermine quelles positions peuvent être consultées. Le **masque de perte** détermine quelles cibles contribuent à l’objectif d’optimisation. Ils ont des rôles distincts et ne doivent pas être confondus.
+
+## 5. Formes des tenseurs
+
+Notons `B` la taille du lot, `L` la longueur de séquence et `V` la taille du vocabulaire.
+
+```{mermaid}
+flowchart LR
+    A["input_ids : [B, L]"] --> C["Modèle causal"]
+    C --> D["logits : [B, L, V]"]
+    B["targets : [B, L]"] --> E["Perte sur cibles valides"]
+    D --> E
+```
+
+- `input_ids` : `[B, L]`, identifiants en entrée.
+- `targets` : `[B, L]`, identifiants attendus, décalés d’un token.
+- `logits` : `[B, L, V]`, scores non normalisés pour chaque token du vocabulaire à chaque position.
+- `loss` : souvent un scalaire après réduction sur les positions valides.
+
+Le modèle produit des logits à chaque position, pas une unique prédiction pour toute la séquence. L’aplatissement et la réduction doivent préserver l’alignement entre logits, cibles et masque.
+
+## 6. Checklist de débogage
+
+Quand la perte est anormalement basse, élevée ou instable, vérifier :
+
+1. Chaque cible est-elle le token immédiatement suivant dans le flux source ?
+2. Entrée et cible ont-elles des longueurs compatibles ?
+3. Le dernier token sans successeur est-il traité selon une convention explicite ?
+4. Les positions de padding sont-elles exclues de la perte comme prévu ?
+5. Masques causal, de padding et de perte ont-ils des rôles distincts ?
+6. Les transitions entre documents sont-elles intentionnelles ?
+7. Les axes `B`, `L` et `V` correspondent-ils à ceux attendus par la fonction de perte ?
+8. Une cible future est-elle accessible au contexte qui sert à la prédire ?
+
+## 7. Ressources complémentaires
+
+- **Exemples calculés :** [Sebastian Raschka — construire les exemples entrée-cible](https://www.sebastianraschka.com/faq/docs/input-target-pretraining-examples.html).
+- **Interprétation de l’objectif :** [Raschka — ce que le préentraînement sur texte non annoté enseigne](https://www.sebastianraschka.com/faq/docs/what-pretraining-teaches.html).
+- **Code pédagogique :** [Raschka, *LLMs-from-scratch*, chapitre 2](https://github.com/rasbt/LLMs-from-scratch/tree/main/ch02). Vérifiez les conventions dans la version consultée.
+- **API de batching :** [Documentation PyTorch — `torch.utils.data`](https://docs.pytorch.org/docs/stable/data.html). Référence d’API, pas cours complet sur l’objectif autorégressif.
+- **Pont visuel vers le modèle :** [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/) et [Transformer Explainer](https://poloclub.github.io/transformer-explainer/).
+- **Attention :** [3Blue1Brown — Attention in Transformers](https://www.3blue1brown.com/lessons/attention/), à consulter après avoir compris la préparation des exemples.
+
+Pour revenir en amont, consulter [Du texte aux tokens](text-data.qmd). Pour poursuivre le cours, voir [la cross-entropie](cross-entropy.qmd) et [le Transformer](transformer.qmd). Les pages sur les [tenseurs](tensors.qmd) et la [chaîne mathématique de l'entraînement](mathematical-foundations.qmd) sont des références complémentaires, pas des prérequis à maîtriser avant de continuer.
+
+::: {.callout-tip title="Fiche de révision — construire des exemples autorégressifs"}
+- **Alignement :** pour une entrée \(x=[t_0,\ldots,t_{L-1}]\), la cible est décalée d'un token, \(y=[t_1,\ldots,t_L]\). Chaque position prédit son successeur.
+- **Teacher forcing :** le préfixe observé sert de contexte ; le masque causal interdit l'accès aux tokens futurs. Ce conditionnement n'est ni la loss ni l'optimiseur.
+- **Fenêtrage :** la longueur fixe le contexte disponible ; le stride fixe le déplacement entre fenêtres et donc leur recouvrement.
+- **Masques :** le masque causal règle l'accès à l'information ; le masque de perte règle les cibles qui contribuent à la réduction. Un séparateur de document ne bloque pas automatiquement l'attention.
+- **Formes :** `input_ids` et `targets` ont la forme \([B,L]\), les logits \([B,L,V]\). L'alignement doit être conservé jusqu'au calcul de la perte.
+:::
+
+::: {.self-check}
+## Vérifier sa compréhension
+
+1. Pour le flux `[4, 7, 2, 9]` et une longueur d'entrée de 3, quelle est la première paire entrée-cible ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Entrée `[4, 7, 2]`, cible `[7, 2, 9]`. Chaque cible est le token immédiatement suivant à la même position de prédiction.
+
+</details>
+
+2. Pourquoi le teacher forcing ne donne-t-il pas accès aux tokens futurs ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Le modèle reçoit le préfixe observé, mais le masque causal limite chaque position aux tokens précédents et au token courant. Sans cette contrainte, la cible pourrait fuiter dans le calcul.
+
+</details>
+
+3. Quelle différence entre masque d'attention et masque de perte ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Le premier détermine quelles positions peuvent être consultées ; le second détermine quelles cibles contribuent à l'objectif. Ils ne sont pas interchangeables.
+
+</details>
+
+4. Si les logits ont la forme \([B,L,V]\), que représentent les trois axes ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Le lot, la position dans la séquence et le token candidat du vocabulaire. Il y a une distribution de scores sur les \(V\) tokens à chaque position de chaque séquence.
+
+</details>
+:::
+
+## Limites
+
+Cette page décrit les mécanismes de base, sans prescrire une stratégie universelle de packing, de masquage inter-documents, de padding ou de réduction de perte. Les choix dépendent de l’objectif, de l’architecture, des données et de l’implémentation.
+
+::: {.language-switch}
+**Langue :** [Français](training-examples.qmd) · [English](../en/training-examples.qmd)
+:::

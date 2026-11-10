@@ -1,0 +1,51 @@
+schema_version: 1
+# Controlled discovery domains. These are concept memberships, not page classifications.
+domains:
+  - id: architectures-mechanisms
+    labels: {fr: "Architectures et mécanismes", en: "Architectures and mechanisms"}
+    descriptions:
+      fr: "Structures de réseaux, composants et mécanismes qui déterminent les transformations et les flux d'information dans un modèle."
+      en: "Network structures, components, and mechanisms that determine transformations and information flow within a model."
+    guiding_questions:
+      fr: "Comment les architectures et mécanismes spécialisés transforment-ils l'information ou le calcul ?"
+      en: "How do specialized architectures and mechanisms transform information or computation?"
+  - id: text-tokenization
+    labels: {fr: "Texte et tokenisation", en: "Text and tokenization"}
+    descriptions:
+      fr: "Représentation du texte, encodage, segmentation en tokens et conséquences des choix de tokenisation."
+      en: "Text representation, encoding, token segmentation, and the consequences of tokenization choices."
+    guiding_questions:
+      fr: "Comment la représentation du texte et la conception du tokenizer déterminent-elles les entrées du modèle ?"
+      en: "How do text representation and tokenizer design determine model inputs?"
+  - id: mathematical-tools-geometry
+    labels: {fr: "Outils mathématiques et géométrie", en: "Mathematical tools and geometry"}
+    descriptions:
+      fr: "Outils algébriques, géométriques et numériques pour analyser tenseurs, transformations et espaces de représentation."
+      en: "Algebraic, geometric, and numerical tools for analyzing tensors, transformations, and representation spaces."
+    guiding_questions:
+      fr: "Quels outils mathématiques permettent d'analyser les tenseurs et les espaces de représentation ?"
+      en: "Which mathematical tools help analyze tensors and representation spaces?"
+  - id: probabilistic-foundations-training
+    labels: {fr: "Fondements probabilistes et entraînement", en: "Probabilistic foundations and training"}
+    descriptions:
+      fr: "Distributions, objectifs probabilistes, fonctions de coût, estimation et optimisation des paramètres."
+      en: "Distributions, probabilistic objectives, loss functions, estimation, and parameter optimization."
+    guiding_questions:
+      fr: "Comment les quantités probabilistes, les objectifs et l'optimisation s'articulent-ils ?"
+      en: "How do probabilistic quantities, objectives, and optimization connect?"
+  - id: inference-efficiency
+    labels: {fr: "Inférence et efficacité", en: "Inference and efficiency"}
+    descriptions:
+      fr: "Génération, gestion du contexte, stratégies de décodage, contraintes de calcul, mémoire et latence."
+      en: "Generation, context management, decoding strategies, and compute, memory, and latency constraints."
+    guiding_questions:
+      fr: "Comment un modèle exploite-t-il son contexte, sélectionne-t-il ses sorties et consomme-t-il des ressources ?"
+      en: "How does a model use context, select outputs, and consume resources?"
+  - id: scale-research
+    labels: {fr: "Échelle et recherche", en: "Scale and research"}
+    descriptions:
+      fr: "Lois d'échelle, comportement émergent allégué, protocoles expérimentaux et résultats empiriques sur les capacités."
+      en: "Scaling laws, alleged emergent behavior, experimental protocols, and empirical findings about capabilities."
+    guiding_questions:
+      fr: "Quelles régularités empiriques et affirmations sur les capacités sont étayées par les données ?"
+      en: "Which empirical regularities and capability claims are supported by evidence?"

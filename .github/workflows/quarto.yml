@@ -1,0 +1,147 @@
+name: Quarto site
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 3 * * *"
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: quarto-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  render:
+    name: Render bilingual learning site and browser audit
+    # Pinned: ubuntu-latest moved to 26.04, which Playwright 1.56.1 does not
+    # support ("Playwright does not support chromium on ubuntu26.04-x64").
+    # Move back to ubuntu-latest together with a Playwright upgrade.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Quarto
+        env:
+          QUARTO_VERSION: "1.11.9"
+        run: |
+          installer="$RUNNER_TEMP/quarto-${QUARTO_VERSION}-linux-amd64.deb"
+          url="https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.deb"
+          curl --fail --location --retry 5 --retry-all-errors --retry-delay 5 --retry-max-time 240 --output "$installer" "$url"
+          sudo apt-get install --yes "$installer"
+          quarto --version
+
+      - name: Set up uv and Python
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          version: "0.13.7"
+          python-version: "3.12"
+
+      - name: Validate page metadata learning graph
+        run: uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/check_page_metadata.py
+
+      - name: Validate first-class learning resources
+        run: uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/check_resource_registry.py
+
+      - name: Generate bilingual history timeline fragments
+        run: uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/render_history_pilot.py
+
+      - name: Generate learning-map data and guided-route Markdown
+        run: uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/build_learning_map.py
+
+      - name: Generate bilingual computational-graph fragments
+        run: uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/render_computational_graph.py
+
+      - name: Render site
+        run: quarto render site
+
+      - name: Check rendered learning-map controls
+        run: python3 site/tools/check_learning_map_rendered.py site/_site
+
+      - name: Check rendered knowledge graph export
+        run: python3 site/tools/check_knowledge_graph_rendered.py site/_site
+
+      - name: Check rendered history timeline parity
+        run: python3 site/tools/check_history_rendered.py
+
+      - name: Check local links in rendered site
+        run: python3 site/tools/check_site_links.py site/_site
+
+      # Run the browser audit against this exact PR render, not the deployed
+      # Pages site. This makes the check reproducible and tests proposed CSS.
+      - name: Collect changed paths for targeted browser review
+        id: browser_changes
+        if: github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          changed_files="$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/files" --paginate --jq '.[].filename')"
+          {
+            echo "files<<EOF"
+            printf '%s\n' "$changed_files"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+          if printf '%s\n' "$changed_files" | grep -Eq '^(site/|scripts/site-browser-review.mjs$)'; then
+            echo "relevant=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "relevant=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Set up Node
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.browser_changes.outputs.relevant == 'true')
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install browser test dependencies
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.browser_changes.outputs.relevant == 'true')
+        run: npm install --no-save --package-lock=false playwright@1.56.1 @axe-core/playwright@4.10.2
+
+      - name: Cache Playwright Chromium
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.browser_changes.outputs.relevant == 'true')
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-1.56.1
+
+      - name: Install Chromium
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.browser_changes.outputs.relevant == 'true')
+        run: npx playwright install --with-deps chromium
+
+      - name: Serve this PR's rendered site
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.browser_changes.outputs.relevant == 'true')
+        run: |
+          python3 -m http.server 4173 --directory site/_site >/tmp/qkv-site-server.log 2>&1 &
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:4173/en/learning-map.html >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/qkv-site-server.log
+          exit 1
+
+      - name: Review rendered bilingual learning pages and concept navigation
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.browser_changes.outputs.relevant == 'true')
+        env:
+          SITE_BROWSER_BASE_URL: http://127.0.0.1:4173
+          SITE_BROWSER_PROFILE: ${{ github.event_name == 'pull_request' && 'targeted' || 'full' }}
+          SITE_BROWSER_CHANGED_FILES: ${{ steps.browser_changes.outputs.files }}
+        run: node scripts/site-browser-review.mjs
+
+      - name: Upload screenshots and audit report
+        if: always() && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.browser_changes.outputs.relevant == 'true'))
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-browser-review-${{ github.sha }}
+          path: artifacts/site-browser-review/
+          if-no-files-found: warn
+          retention-days: 30

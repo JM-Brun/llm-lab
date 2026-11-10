@@ -1,0 +1,185 @@
+---
+title: "LLM Lab — comprendre en explorant"
+subtitle: "Comprendre les modèles de langage en reliant intuition, mathématiques, code et expériences vérifiables."
+keywords: ["type:entry-point", "destination:orient", "topic:index", "level:overview", "language:fr", "status:published"]
+lang: fr
+sidebar: fr
+toc: false
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/index"
+scope: "Point d’entrée du site et choix des parcours."
+purpose: "Orienter le lecteur vers la compréhension, la construction, l’approfondissement ou la pratique."
+suggested_route:
+  previous: null
+  next: "fr/llm-overview"
+hierarchy:
+  parents: []
+  children: ["fr/llm-overview", "fr/build-path", "fr/transformer", "fr/exercises", "fr/evaluation-experimentale", "fr/glossary", "fr/transformer-history"]
+related: []
+tags: ["type:entry-point", "destination:orient", "topic:index", "level:overview", "language:fr", "status:published"]
+-->
+
+:::: {.hero-intro}
+<p class="eyebrow">OBSERVER · EXPLIQUER · VÉRIFIER</p>
+
+## Qu’est-ce qu’un LLM, et comment produit-il du texte ?
+
+Les grands modèles de langage (LLM) sont une famille de modèles neuronaux entraînés sur de grandes quantités de texte. Beaucoup de modèles actuels utilisent un Transformer autorégressif qui prédit le prochain token, mais les LLM ne se réduisent ni à une architecture unique ni à cette seule tâche.
+
+**LLM Lab relie ces mécanismes à leurs explications mathématiques et à leur comportement observable.** Le but n’est pas de croire une intuition parce qu’un schéma paraît convaincant : c’est de comprendre ce qu’un composant calcule, de vérifier ce qu’on peut tester et d’identifier ce qui reste une hypothèse ou une limite.
+
+<div class="hero-actions">
+[Comprendre le fonctionnement des LLM](fr/llm-overview.qmd){.btn .btn-primary}
+[Explorer la carte des notions](fr/learning-map.qmd){.btn .btn-outline-primary}
+</div>
+::::
+
+## Par où commencer ?
+
+Deux parcours principaux et indépendants sont proposés : **comprendre théoriquement les LLM** ou **construire un petit GPT**. Ils partagent les mêmes notions de référence, mais ont des objectifs, des progressions et des prérequis distincts. Aucun n'est la suite obligatoire de l'autre. La [carte des ressources et des notions](fr/learning-map.qmd) permet de naviguer librement entre les deux.
+
+<div class="learning-entry-grid">
+  <article class="learning-entry learning-entry-primary">
+    <p class="learning-entry-kicker">01 · PARCOURS THÉORIQUE</p>
+    <h3>Comprendre le fonctionnement des LLM</h3>
+    <p>Construire une vue d'ensemble : données, représentations, Transformer, prédiction et génération.</p>
+    <a class="learning-entry-link" href="fr/llm-overview.qmd">Commencer par le panorama <span aria-hidden="true">→</span></a>
+  </article>
+  <article class="learning-entry">
+    <p class="learning-entry-kicker">02 · PARCOURS BUILD INDÉPENDANT</p>
+    <h3>Implémenter un petit GPT</h3>
+    <p>Construire et vérifier un petit GPT selon les dépendances d'implémentation, sans devoir suivre le parcours théorique au préalable. L'inférence de référence est testée ; l'entraînement complet reste à réaliser.</p>
+    <a class="learning-entry-link" href="fr/build-path.qmd">Voir le parcours de construction <span aria-hidden="true">→</span></a>
+  </article>
+  <article class="learning-entry">
+    <p class="learning-entry-kicker">03 · APPROFONDIR</p>
+    <h3>Explorer les fondements</h3>
+    <p>Consulter les dérivations mathématiques, les architectures et les références techniques, sans en faire des prérequis.</p>
+    <a class="learning-entry-link" href="fr/deepen.qmd">Explorer les approfondissements <span aria-hidden="true">→</span></a>
+  </article>
+</div>
+
+<div class="learning-practice">
+<div>
+<p class="learning-entry-kicker">À TOUT MOMENT · PRATIQUER</p>
+<strong>Vérifier par le calcul et l'expérience</strong>
+<p>Confronter les explications à des exercices, des implémentations et des protocoles d'évaluation.</p>
+</div>
+<div class="learning-practice-links">
+<a href="fr/exercises.qmd">Exercices</a>
+<a href="fr/evaluation-experimentale.qmd">Évaluation expérimentale</a>
+</div>
+</div>
+
+## Lire une leçon
+
+Les leçons utilisent trois repères pour distinguer les types de contenu :
+
+- <span class="epistemic-badge badge-concept">Concept vérifié</span> Définitions formelles, équations et hypothèses mathématiques explicites.
+- <span class="epistemic-badge badge-code">Micro-code exécutable</span> Ateliers Python/NumPy inspectables avec assertions sur les formes tensorielles et les invariants.
+- <span class="epistemic-badge badge-status">Architecture / Statut</span> Périmètre architectural explicite et état du jalon dans le parcours de construction.
+
+Ces repères décrivent les preuves disponibles ; ils ne rendent pas toutes les preuves équivalentes. Un schéma rend une structure lisible sans démontrer une propriété ; une dérivation établit un résultat sous des hypothèses explicites ; un test vérifie les cas qu’il couvre ; une expérience compare des configurations selon un protocole, des métriques et des limites documentés.
+
+## Trois usages opérationnels et une évaluation transversale
+
+Le même calcul prédictif produit une distribution conditionnelle. Cette distribution sert à trois usages opérationnels distincts : générer un token, scorer une cible observée ou apprendre en ajustant les paramètres. L'évaluation est transversale : elle agrège des mesures sur des données et selon un protocole définis. Le schéma détaille les boucles de génération et d'apprentissage ; le scoring est distingué juste après.
+
+```{=html}
+<figure class="llm-flow-figure">
+<svg class="llm-flow" viewBox="0 0 1220 650" role="group" aria-labelledby="llm-flow-title-fr" aria-describedby="llm-flow-desc-fr" xmlns="http://www.w3.org/2000/svg">
+<title id="llm-flow-title-fr">Carte interactive des processus d'inférence, d'apprentissage et d'évaluation</title>
+<desc id="llm-flow-desc-fr">Le schéma détaille la génération autorégressive à paramètres fixes, l'apprentissage avec mise à jour des paramètres et l'évaluation sur données tenues à l'écart. Le scoring d'une séquence observée est un troisième usage du calcul prédictif ; il ne sélectionne pas de token et ne met pas à jour les paramètres.</desc>
+<defs>
+<marker id="flow-arrow-fr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#7b91a6"/></marker>
+<marker id="flow-feedback-fr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#39845b"/></marker>
+</defs>
+<text x="20" y="28" class="flow-kicker">1 · INFÉRENCE / GÉNÉRATION — PARAMÈTRES FIXES</text>
+<g class="flow-connectors" fill="none" stroke="#7b91a6" stroke-width="2.2" marker-end="url(#flow-arrow-fr)">
+<path d="M150 105 H170"/><path d="M300 105 H320"/><path d="M450 105 H470"/><path d="M600 105 H620"/><path d="M750 105 H770"/><path d="M900 105 H920"/><path d="M1050 105 H1070"/>
+<path d="M1135 150 V194 H85 V150"/>
+</g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/text-data.html" aria-label="Texte et données : contexte et tokens"><rect x="20" y="60" width="130" height="90" rx="12"/><text x="32" y="82" class="flow-kicker">ENTRÉE</text><text x="32" y="108" class="flow-title">Texte / prompt</text><text x="32" y="130" class="flow-subtitle">tokenisation → IDs</text></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/embedding-space.html" aria-label="Espace des embeddings"><rect x="170" y="60" width="130" height="90" rx="12"/><text x="182" y="82" class="flow-kicker">VECTEURS</text><text x="182" y="108" class="flow-title">Embeddings</text><text x="182" y="130" class="flow-subtitle">lookup</text></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/positional-encoding.html" aria-label="Information positionnelle"><rect x="320" y="60" width="130" height="90" rx="12"/><text x="332" y="82" class="flow-kicker">POSITION</text><text x="332" y="108" class="flow-title">Position</text><text x="332" y="130" class="flow-subtitle">encodage / RoPE</text></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/transformer.html" aria-label="Calcul du Transformer"><rect x="470" y="60" width="130" height="90" rx="12"/><text x="482" y="82" class="flow-kicker">RÉSEAU</text><text x="482" y="108" class="flow-title">Transformer</text><text x="482" y="130" class="flow-subtitle">attention + MLP</text></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/contextualized-representations.html" aria-label="Représentations contextualisées"><rect x="620" y="60" width="130" height="90" rx="12"/><text x="632" y="82" class="flow-kicker">SORTIE CACHÉE</text><text x="632" y="108" class="flow-title">États</text><text x="632" y="130" class="flow-subtitle">contextualisés</text></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/logits.html" aria-label="Logits"><rect x="770" y="60" width="130" height="90" rx="12"/><text x="782" y="82" class="flow-kicker">SCORES</text><text x="782" y="108" class="flow-title">Logits</text><text x="782" y="130" class="flow-subtitle">non normalisés</text></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/probabilites.html" aria-label="Probabilités"><rect x="920" y="60" width="130" height="90" rx="12"/><text x="932" y="82" class="flow-kicker">DISTRIBUTION</text><text x="932" y="108" class="flow-title">Probabilités</text><text x="932" y="130" class="flow-subtitle">softmax</text></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/generation.html" aria-label="Génération et sélection du prochain token"><rect x="1070" y="60" width="130" height="90" rx="12"/><text x="1082" y="82" class="flow-kicker">DÉCODAGE</text><text x="1082" y="108" class="flow-title">Sélection</text><text x="1082" y="130" class="flow-subtitle">ou sampling</text></g>
+<text x="430" y="174" class="flow-note">Ajouter le token sélectionné au contexte, puis recommencer — sans modifier θ</text>
+<text x="20" y="216" class="flow-note">La position peut être ajoutée aux embeddings ou intégrée à l’attention (ex. RoPE), selon l’architecture.</text>
+
+<text x="20" y="238" class="flow-kicker">2 · APPRENTISSAGE — MISE À JOUR DES PARAMÈTRES</text>
+<g class="flow-connectors" fill="none" stroke="#7b91a6" stroke-width="2.2" marker-end="url(#flow-arrow-fr)">
+<path d="M240 315 H260"/><path d="M480 315 H500"/><path d="M720 315 H740"/><path d="M960 315 H980"/>
+<path d="M1090 360 V392 H610 V360"/>
+</g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/corpus-preparation.html" aria-label="Préparation du corpus et du tokenizer"><rect x="20" y="270" width="220" height="90" rx="12"/><text x="34" y="292" class="flow-kicker">DONNÉES</text><text x="34" y="318" class="flow-title">Corpus + tokenizer</text><text x="34" y="340" class="flow-subtitle">provenance, filtres, partitions</text></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/training-examples.html" aria-label="Exemples d'entraînement"><rect x="260" y="270" width="220" height="90" rx="12"/><text x="274" y="292" class="flow-kicker">SÉQUENCES</text><text x="274" y="318" class="flow-title">Entrées + cibles</text><text x="274" y="340" class="flow-subtitle">fenêtres et décalage</text></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/transformer.html" aria-label="Passe avant du modèle"><rect x="500" y="270" width="220" height="90" rx="12"/><text x="514" y="292" class="flow-kicker">PRÉDICTIONS</text><text x="514" y="318" class="flow-title">Passe avant</text><text x="514" y="340" class="flow-subtitle">avec les paramètres θ</text></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/loss.html" aria-label="Fonction de perte"><rect x="740" y="270" width="220" height="90" rx="12"/><text x="754" y="292" class="flow-kicker">OBJECTIF</text><text x="754" y="318" class="flow-title">Loss / perte</text><text x="754" y="340" class="flow-subtitle">écart aux cibles</text></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/gradients.html" aria-label="Gradients et mise à jour"><rect x="980" y="270" width="220" height="90" rx="12"/><text x="994" y="292" class="flow-kicker">OPTIMISATION</text><text x="994" y="318" class="flow-title">Gradients + update</text><text x="994" y="340" class="flow-subtitle">modifier les paramètres θ</text></g>
+<text x="650" y="414" class="flow-note">Les paramètres mis à jour servent au calcul suivant</text>
+
+<text x="20" y="448" class="flow-kicker">3 · ÉVALUATION — FONCTION TRANSVERSALE</text>
+<g class="flow-connectors" fill="none" stroke="#7b91a6" stroke-width="2.2" marker-end="url(#flow-arrow-fr)">
+<path d="M240 525 H420"/><path d="M640 525 H820"/>
+</g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/corpus-preparation.html" aria-label="Jeux de validation et de test"><rect x="20" y="480" width="220" height="90" rx="12"/><text x="34" y="502" class="flow-kicker">DONNÉES TENUES À L'ÉCART</text><text x="34" y="528" class="flow-title">Validation / test</text><text x="34" y="550" class="flow-subtitle">séparation sans fuite</text></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/evaluation-experimentale.html" aria-label="Métriques et analyse des erreurs"><rect x="420" y="480" width="220" height="90" rx="12"/><text x="434" y="502" class="flow-kicker">MESURES</text><text x="434" y="528" class="flow-title">Métriques + erreurs</text><text x="434" y="550" class="flow-subtitle">incertitude et analyse</text></g>
+<g class="flow-node" role="link" tabindex="0" data-href="fr/evaluation-experimentale.html" aria-label="Interpréter les résultats de l’évaluation"><rect x="820" y="480" width="220" height="90" rx="12"/><text x="834" y="502" class="flow-kicker">INTERPRÉTATION</text><text x="834" y="528" class="flow-title">Décisions informées</text><text x="834" y="550" class="flow-subtitle">ajuster sans contaminer le test</text></g>
+<text x="20" y="606" class="flow-hint">Les résultats de validation peuvent guider les choix de données, d'entraînement et de décodage ; le jeu de test reste réservé à l'évaluation finale.</text>
+<text x="20" y="630" class="flow-hint">Chaque bloc bordé est cliquable et ouvre une page canonique. Les flèches pleines indiquent le flux de calcul ; les boucles indiquent une répétition ou une mise à jour.</text>
+</svg>
+<script>
+(() => {
+  const svg = document.currentScript?.previousElementSibling;
+  if (!svg || !svg.matches(".llm-flow")) return;
+  const findNode = target => target instanceof Element
+    ? target.closest(".flow-node[role='link']")
+    : null;
+  const activate = node => {
+    const href = node?.getAttribute("data-href");
+    if (href) window.location.assign(href);
+  };
+  svg.addEventListener("click", event => {
+    const node = findNode(event.target);
+    if (node) activate(node);
+  });
+  svg.addEventListener("keydown", event => {
+    if (event.key !== "Enter") return;
+    const node = findNode(event.target);
+    if (node) {
+      event.preventDefault();
+      activate(node);
+    }
+  });
+})();
+</script>
+<figcaption>Inférence : paramètres fixes · Apprentissage : paramètres mis à jour · Évaluation : analyse transversale sur des données tenues à l'écart</figcaption>
+</figure>
+```
+ 
+::: {.callout-note title="Trois usages frères du même calcul prédictif"}
+- **Génération :** le modèle sélectionne un token, le réinjecte dans le contexte et recommence ; les paramètres restent fixes.
+- **Scoring :** le préfixe observé conditionne la probabilité de chaque cible ; on agrège les log-probabilités sans sélectionner de token ni modifier les paramètres ([vraisemblance](fr/vraisemblance.qmd)).
+- **Apprentissage :** la loss compare les prédictions aux cibles, puis les gradients servent à mettre à jour les paramètres.
+
+**Évaluation :** elle n'est pas une quatrième branche équivalente. Elle réutilise notamment le scoring sur des données tenues à l'écart et agrège les résultats selon un protocole ; elle peut aussi évaluer des sorties générées.
+:::
+
+## Explorer davantage
+
+**Dans LLM Lab :** [Glossaire](fr/glossary.qmd) · [Exercices](fr/exercises.qmd) · [Histoire des Transformers](fr/transformer-history.qmd) · [Évaluation expérimentale](fr/evaluation-experimentale.qmd) · [Bibliographie commentée](references.qmd).
+
+**Références externes :** [3Blue1Brown — Transformers](https://www.youtube.com/watch?v=LPZh9BOjkQs&t=10s) pour l’intuition visuelle ; [Sebastian Raschka — LLMs from Scratch](https://github.com/rasbt/LLMs-from-scratch/) pour les détails d’implémentation ; [The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/) et [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/) de Jay Alammar pour les explications visuelles.
+
+Pour le programme complet, consultez la [carte du curriculum](https://github.com/JM-Brun/llm-lab/blob/main/docs/full-curriculum-plan.md) et le [parcours d’apprentissage](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md).
+
+::: {.language-switch}
+[Français](index.qmd) · [English](en/index.qmd)
+:::

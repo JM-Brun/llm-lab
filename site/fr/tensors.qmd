@@ -1,0 +1,214 @@
+---
+title: "Tenseurs dans un Transformer : formes et axes"
+subtitle: "Lire les dimensions sans confondre cohérence de forme et correction du calcul"
+keywords: ["type:deep-dive", "destination:deepen", "topic:tensors", "level:advanced", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/tensors"
+scope: "Fournit une référence technique facultative sur les formes et axes des tenseurs dans les calculs d’un Transformer, notamment les dimensions batch, séquence, caractéristiques, vocabulaire et têtes, les projections et les formes courantes des activations et logits. Elle souligne qu’une compatibilité de formes ne garantit ni la justesse sémantique ni la correction du calcul et ne constitue pas un cours de prérequis au parcours pratique. Elle couvre également le coût en paramètres de la table d'embeddings."
+purpose: "Lire les formes courantes des tenseurs d’un LLM, suivre les axes préservés ou transformés par une opération, vérifier les dimensions des projections et de l’attention, et identifier pourquoi un calcul compatible en forme peut néanmoins être incorrect. Évaluer le nombre de paramètres de la table d'embeddings et de la projection de sortie."
+domain: "mathematical-tools-geometry"
+suggested_route:
+  previous: "fr/mathematical-foundations"
+  next: "fr/cosine-similarity"
+hierarchy:
+  parents: ["fr/transformer"]
+  children: []
+related: []
+tags: ["type:deep-dive", "destination:deepen", "topic:tensors", "level:advanced", "language:fr", "status:published"]
+-->
+
+
+{{< include ../includes/generated-guided-context-fr-tensors.qmd >}}
+::: {.chapter-lead}
+Dans un Transformer, les tenseurs transportent les représentations des tokens, les logits, les masques et les gradients. Lire correctement leurs axes est indispensable : une opération peut s'exécuter sans erreur tout en portant sur le mauvais axe.
+:::
+
+::: {.callout-note}
+**Place dans le parcours.** Cette page est une référence technique facultative, pas un cours prérequis à terminer avant de construire un GPT. Pour le parcours pratique, apprenez à lire progressivement les formes et les axes réellement utilisés. Les opérations PyTorch sont introduites dans leur contexte ; la théorie générale des tenseurs relève des approfondissements facultatifs.
+:::
+
+![Tenseur d'activations organisé selon trois axes : lot, positions et caractéristiques.](../images/tensors-fr.svg){fig-alt="Tenseur de forme B × T × D : B indexe les exemples, T les positions de chaque séquence et D les caractéristiques de chaque position." width=100%}
+
+Pour un lot de textes, chaque position d'une séquence est décrite par un vecteur. Le tenseur d'activations est donc souvent organisé selon les axes batch, positions et caractéristiques.
+
+La forme d’un tenseur décrit l’organisation numérique des représentations, pas leur signification. Pour le niveau conceptuel, voir [l’espace des embeddings](embedding-space.qmd), puis les pages dédiées à la [similarité cosinus](cosine-similarity.qmd) et à la [linéarité des représentations](linearite-embeddings.qmd) pour les questions de géométrie et d'interprétabilité.
+
+## Formes courantes dans un LLM
+
+On utilise souvent les conventions suivantes :
+
+- \(B\) : taille du batch ;
+- \(T\) : longueur de séquence ;
+- \(D\) : dimension cachée ;
+- \(N_{\mathrm{vocab}}\) : taille du vocabulaire ;
+- \(H\) : nombre de têtes d'attention ;
+- \(d_h\) : dimension par tête, souvent telle que \(D=H d_h\).
+
+Les activations cachées ont souvent la forme \((B,T,D)\), les logits \((B,T,N_{\mathrm{vocab}})\), et les représentations d'attention multi-tête peuvent prendre la forme \((B,H,T,d_h)\). Ces conventions sont fréquentes mais ne sont pas universelles : il faut lire les contrats des fonctions et vérifier les formes réelles.
+
+| Objet dans le modèle | Forme typique | Interprétation |
+|---|---|---|
+| Perte moyenne scalaire | `()` | un objectif agrégé |
+| Embedding d'un token | `(D,)` | un vecteur de caractéristiques |
+| États cachés d'une séquence | `(T,D)` | un vecteur par position |
+| États cachés d'un batch | `(B,T,D)` | exemples, positions, caractéristiques |
+
+## Coût en paramètres : la table d'embeddings et la projection de sortie
+
+La taille du vocabulaire \(N_{\mathrm{vocab}}\) et la dimension d'embedding \(d\) sont deux choix distincts. La matrice d'embeddings \(E\in\mathbb{R}^{N_{\mathrm{vocab}}\times d}\) contient \(N_{\mathrm{vocab}}\) lignes — une par ID — et \(d\) composantes par ligne. Pour une séquence de longueur \(L\), le lookup produit une matrice de forme \(L\times d\) ; pour un lot de \(B\) séquences, la forme usuelle est \(B\times L\times d\).
+
+- **\(N_{\mathrm{vocab}}\)** dépend du tokenizer et du vocabulaire qu'il définit, y compris les tokens spéciaux.
+- **\(d\)** est un hyperparamètre de l'architecture, choisi avec la profondeur, les têtes d'attention et le budget de calcul ; il n'est pas déduit de \(N_{\mathrm{vocab}}\).
+- La table d'embeddings contient \(N_{\mathrm{vocab}}d\) paramètres.
+
+**Ordre de grandeur calculable :** avec \(N_{\mathrm{vocab}}=50\,000\) tokens et \(d=768\), la table contient \(50\,000\times768=38\,400\,000\) paramètres. En précision 32 bits, les poids seuls occupent environ 153,6 MB en unités décimales (ou 146,5 MiB), hors gradients, états de l'optimiseur et autres paramètres. C'est une estimation du coût de la table, pas la description d'un modèle particulier.
+- Si la projection de sortie possède une matrice distincte, elle ajoute typiquement \(dN_{\mathrm{vocab}}\) paramètres, éventuellement plus un biais. Certains modèles partagent les poids d'entrée et de sortie (*weight tying*) : il faut vérifier l'architecture avant d'additionner les deux matrices.
+- Les IDs et les poids associés sont couplés. Modifier le vocabulaire, l'ordre des IDs ou \(N_{\mathrm{vocab}}\) exige une stratégie explicite d'adaptation ou de réentraînement ; ce n'est pas une substitution neutre.
+
+À chaque position, la distribution de sortie comporte en général \(N_{\mathrm{vocab}}\) logits ; la [page sur les logits](logits.qmd) approfondit les scores de sortie. Cette section héberge dans le parcours avancé le comptage détaillé des paramètres, dont le rôle conceptuel est présenté dans [l'espace des embeddings](embedding-space.qmd).
+
+## Lire les dimensions d'une projection
+
+Supposons que \(X\) ait la forme \((B,T,D)\) et que la matrice de projection \(W\) ait la forme \((D,D')\), où \(D'\) est la dimension de sortie. La projection applique la même transformation à chaque position :
+
+\[
+Y=XW,\qquad \operatorname{shape}(Y)=(B,T,D').
+\]
+
+Les axes du batch et des positions sont conservés ; le dernier axe passe de \(D\) à \(D'\). Cette notation évite de confondre la dimension de sortie avec \(H\), qui désigne plus loin le nombre de têtes d'attention. Vérifier les formes permet de détecter certaines erreurs, mais ne garantit pas que les axes ont la bonne signification.
+
+## Les axes ont une signification
+
+Une forme donne les tailles des axes, pas leur sémantique. Deux tenseurs de forme \((B,T,D)\) peuvent représenter des objets différents.
+
+- **Projection linéaire :** transforme généralement le dernier axe des caractéristiques, par exemple \((B,T,D)\to(B,T,N_{\mathrm{vocab}})\) pour produire des logits.
+- **Softmax :** pour une distribution sur le vocabulaire, la normalisation doit porter sur l'axe \(N_{\mathrm{vocab}}\), pas sur l'axe \(T\).
+- **Attention :** les scores relient les positions de requête et de clé ; le masque causal doit empêcher l'accès aux positions futures.
+- **Perte :** les logits et les labels doivent aligner les positions et le token cible attendu.
+- **Réduction :** une moyenne sur les tokens valides n'est pas équivalente à une moyenne sur le batch ou sur toutes les positions avec padding.
+
+
+## Contre-exemple : softmax sur le mauvais axe
+
+Considérons, pour un seul exemple et deux positions, les logits de trois tokens candidats :
+
+```text
+position 0 : [2, 1, 0]
+position 1 : [0, 1, 2]
+forme       : (B=1, T=2, N_vocab=3)
+```
+
+Pour chaque position, on veut une distribution sur les **tokens candidats**. La softmax doit donc agir sur l'axe \(N_{\mathrm{vocab}}\), le dernier axe dans cette convention :
+
+```python
+probs = logits.softmax(dim=-1)  # normalise les 3 tokens, pour chaque position
+```
+
+La somme des probabilités sur \(N_{\mathrm{vocab}}\) vaut alors 1 à chaque position. Pour ces logits, les lignes valent approximativement `[0.665, 0.245, 0.090]` et `[0.090, 0.245, 0.665]`.
+
+En revanche :
+
+```python
+wrong = logits.softmax(dim=1)  # normalise les 2 positions, token par token
+```
+
+Pour cet exemple, les lignes deviennent approximativement `[0.881, 0.500, 0.119]` et `[0.119, 0.500, 0.881]` ; chacune somme à 1,5 et non à 1. Cette opération est mathématiquement valide et compatible avec la forme, mais elle répond à une autre question : pour chaque token candidat, elle répartit la masse entre les positions. Les lignes ne sont généralement plus des distributions sur le vocabulaire.
+
+**Invariant de débogage :** si la sortie est censée représenter \(p(\text{token}\mid\text{contexte à cette position})\), vérifier que la somme sur l'axe du vocabulaire vaut 1 pour chaque couple batch-position. Une forme correcte ne suffit pas ; l'invariant dépend de l'interprétation attendue.
+
+![Comparaison entre la softmax sur l’axe du vocabulaire N_vocab, qui produit une distribution par position, et sur l’axe de séquence T, qui donne ici des sommes de ligne égales à 1,5.](../images/softmax-axis-comparison-fr.svg){fig-alt="La matrice de gauche, normalisée sur N_vocab, a des sommes de ligne égales à un. La matrice de droite, normalisée sur T, a des sommes de ligne égales à 1,5 : l’opération est compatible avec la forme mais incorrecte pour représenter les probabilités du prochain token." width=100%}
+
+*Figure — Les mêmes logits prennent un sens différent selon l’axe de normalisation.*
+
+## Implémentation : vérifier le sens des axes avec PyTorch
+
+Cet exemple minimal est exécutable avec PyTorch. Il vérifie la forme de sortie et l'invariant selon lequel les probabilités de chaque position somment à un sur l'axe du vocabulaire. Il confirme aussi qu'une normalisation sur l'axe de séquence répond à une autre question.
+
+```python
+import torch
+
+# Forme : (batch=1, positions=2, vocabulaire=3)
+logits = torch.tensor([[[2.0, 1.0, 0.0], [0.0, 1.0, 2.0]]])
+
+probs = torch.softmax(logits, dim=-1)  # distribution sur le vocabulaire à chaque position
+wrong = torch.softmax(logits, dim=1)   # distribution sur les positions pour chaque token
+
+assert probs.shape == (1, 2, 3)
+torch.testing.assert_close(probs.sum(dim=-1), torch.ones((1, 2)))
+torch.testing.assert_close(wrong.sum(dim=1), torch.ones((1, 3)))
+assert not torch.allclose(wrong.sum(dim=-1), torch.ones((1, 2)))
+
+print(probs[0])  # environ [[0.665, 0.245, 0.090], [0.090, 0.245, 0.665]]
+print(wrong[0].sum(dim=-1))  # environ [1.5, 1.5], pas une distribution sur le vocabulaire
+```
+
+Les assertions rendent explicite la sémantique attendue. Il s'agit d'une vérification pédagogique compacte, pas d'un remplacement des tests sur les masques, l'alignement des cibles, le padding ou le chemin de génération du modèle. En production, placer les opérations réutilisables dans le paquet du projet et les tester indépendamment.
+
+
+## Exemple de lecture des dimensions
+
+Pour \(B=2\), \(T=4\) et \(D=8\), les états cachés ont la forme \((2,4,8)\). Une projection vers un vocabulaire de \(N_{\mathrm{vocab}}=1000\) tokens produit des logits de forme \((2,4,1000)\). Le dernier axe correspond aux tokens candidats ; chaque couple batch-position porte ainsi une distribution après softmax sur cet axe.
+
+La compatibilité des formes ne garantit pas que la projection, le masque, le décalage causal ou la réduction soient corrects. Il faut également vérifier le sens des axes et la sémantique des cibles.
+
+
+## Pour les fondations générales
+
+Pour les notions réutilisables hors LLM — formes, axes, indexation, réductions, broadcasting et distinction entre tableaux logiciels et tenseurs mathématiques — voir la page canonique de [Wiki Knowledge : tenseurs et tableaux multidimensionnels](https://github.com/JM-Brun/wiki-knowledge/blob/main/wiki/concepts/tenseurs-et-tableaux-multidimensionnels.md). Le présent chapitre conserve ici les conventions (B,T,D,N_vocab,H), les formes propres aux modèles de langue et les erreurs de manipulation fréquentes dans ce contexte.
+
+## Ouvertures vers d'autres domaines
+
+Les axes ne sont pas de simples indices : ils définissent la question posée aux données. Cette idée se retrouve ailleurs, avec des nuances importantes.
+
+- **Traitement du signal :** un tableau \((T,C)\) peut représenter le temps et les canaux d'un capteur. Réduire sur \(T\) calcule une statistique temporelle ; réduire sur \(C\) combine des canaux. Même opération, sens différent. [NumPy — dimensions et tableaux](https://numpy.org/doc/stable/user/basics.creation.html) présente les bases de cette représentation.
+- **Bases de données et analyse tabulaire :** lignes et colonnes ont un schéma sémantique. Permuter deux colonnes sans mettre à jour leur interprétation peut conserver un tableau valide tout en corrompant l'analyse. Les dimensions d'un tenseur jouent un rôle analogue, mais les axes numériques peuvent aussi être réordonnés et diffusés implicitement.
+- **Physique et géométrie :** dans un tenseur mathématique au sens strict, les composantes suivent des lois de transformation sous un changement de coordonnées. Un tableau PyTorch de rang élevé n'est pas automatiquement un tel tenseur. Cette distinction devient utile lorsqu'on aborde vecteurs, bases, changements de coordonnées et invariance.
+- **Probabilités et théorie de l'information :** une softmax définit une distribution seulement relativement à un ensemble de catégories précis. Dans un LLM, cet ensemble est souvent le vocabulaire ; normaliser sur les positions produit une autre quantité, pas une distribution de tokens.
+
+Ces ponts sont des pistes de lecture, pas des prérequis. Ils peuvent devenir des pages autonomes dans une base de connaissances plus générale ; le parcours LLM Lab doit rester compréhensible sans ces approfondissements.
+
+## Précision terminologique : rang d'un tableau et tenseur mathématique
+
+Dans les bibliothèques de deep learning, le mot « tenseur » désigne couramment un tableau numérique multidimensionnel. En mathématiques et en physique, un tenseur est un objet plus structuré, dont les composantes suivent des règles de transformation précises. Les deux usages sont liés, mais pas strictement équivalents. Ici, le **rang du tableau** désigne le nombre d'axes : un scalaire a le rang 0, un vecteur le rang 1 et une matrice le rang 2. Ce sens diffère du rang d'une matrice en algèbre linéaire.
+
+## Pièges fréquents
+
+- **Indexation :** sélectionner un exemple ou une position de séquence peut supprimer un axe ; vérifier si l'opération suivante attend encore cette dimension.
+- **Permutation d'axes :** changer l'ordre des axes change la manière dont les opérations les interprètent.
+- **Broadcasting :** une dimension de taille 1 peut être étendue implicitement et masquer une erreur d'alignement.
+- **Reshape :** changer la forme ne donne pas automatiquement une nouvelle signification aux valeurs.
+- **Masques :** un masque diffusé sur les scores d'attention peut avoir une forme compatible mais autoriser les mauvaises positions.
+- **Type numérique :** float32, bfloat16 et d'autres types n'ont pas les mêmes compromis de précision, mémoire et performance.
+- **Gradients :** une variable doit être reliée au graphe de calcul pour recevoir un gradient automatique attendu.
+
+## Idées reçues à éviter
+
+- **« Un tenseur doit être un cube. »** Non : dans les API de deep learning, un scalaire, un vecteur, une matrice ou un tableau de dimension supérieure peut être appelé tenseur.
+- **« Même forme signifie même signification. »** Non : des axes de même taille peuvent représenter des quantités différentes, et la forme ne code pas leur sémantique.
+- **« Des dimensions compatibles prouvent que l'opération est correcte. »** Non : une opération peut s'exécuter en utilisant le mauvais axe, le mauvais alignement de cible ou le mauvais masque.
+
+## Pour poursuivre
+
+- [Requêtes, clés et valeurs](queries-keys-values.qmd).
+- [Attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd).
+- [Espace des embeddings](embedding-space.qmd).
+- [Loss](loss.qmd) et [Gradients](gradients.qmd).
+- [Fondations mathématiques](mathematical-foundations.qmd) — chaîne logits → perte → gradients.
+
+## Références
+
+- [PyTorch — Tensors](https://docs.pytorch.org/tutorials/beginner/introyt/tensors_deeper_tutorial.html).
+- [PyTorch — Tensor documentation](https://docs.pytorch.org/docs/stable/tensors.html).
+- [NumPy — N-dimensional array](https://numpy.org/doc/stable/reference/arrays.ndarray.html).
+- [Sebastian Raschka — LLMs from Scratch](https://github.com/rasbt/LLMs-from-scratch) — référence complémentaire orientée implémentation.
+- [Visualisation des tenseurs, partie 1](https://www.youtube.com/watch?v=YxXyN2ifK8A) — point de vue mathématique et physique, à distinguer de l'usage plus simple de « tenseur » dans les bibliothèques de deep learning.
+
+**Notion canonique :** [GPT et Transformer](transformer.qmd). Cette page fournit une référence technique sur les formes et les axes des tenseurs ; elle ne constitue pas un prérequis à la lecture du parcours de construction.
+
+::: {.language-switch}
+[Français](tensors.qmd) · [English](../en/tensors.qmd)
+:::

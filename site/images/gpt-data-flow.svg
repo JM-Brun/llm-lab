@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-labelledby="title desc">
+<title id="title">Flux de données simplifié d'un GPT autorégressif</title>
+<desc id="desc">Du texte aux tokens, embeddings et information positionnelle, puis blocs Transformer répétés, logits, probabilités et choix du prochain token. Le token choisi rejoint le contexte pour l'étape suivante.</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#344054"/></marker></defs>
+<rect width="1200" height="560" rx="22" fill="#fbfcfe"/>
+<text x="600" y="42" text-anchor="middle" font-family="Arial,sans-serif" font-size="27" font-weight="700" fill="#172b4d">Un GPT prédit le prochain token</text>
+<g font-family="Arial,sans-serif" text-anchor="middle">
+<rect x="35" y="100" width="180" height="94" rx="14" fill="#e8f1ff" stroke="#4778b8" stroke-width="2"/><text x="125" y="133" font-size="19" font-weight="700" fill="#173b67">Texte d'entrée</text><text x="125" y="160" font-size="15" fill="#173b67">« Le ciel est… »</text>
+<rect x="265" y="100" width="180" height="94" rx="14" fill="#e9f7f0" stroke="#3a9270" stroke-width="2"/><text x="355" y="133" font-size="19" font-weight="700" fill="#17583f">Tokenisation</text><text x="355" y="160" font-size="15" fill="#17583f">identifiants</text>
+<rect x="495" y="100" width="220" height="94" rx="14" fill="#fff3d6" stroke="#bc8a24" stroke-width="2"/><text x="605" y="132" font-size="18" font-weight="700" fill="#704d0a">Vecteurs d'entrée</text><text x="605" y="157" font-size="15" fill="#704d0a">embeddings + position</text>
+<rect x="765" y="78" width="205" height="138" rx="14" fill="#f0eaff" stroke="#8063b3" stroke-width="2"/><text x="867" y="108" font-size="18" font-weight="700" fill="#4b337b">Blocs répétés</text><rect x="790" y="124" width="155" height="30" rx="7" fill="#fff" stroke="#8063b3"/><text x="867" y="144" font-size="14" fill="#4b337b">Auto-attention causale</text><rect x="790" y="166" width="155" height="30" rx="7" fill="#fff" stroke="#8063b3"/><text x="867" y="186" font-size="14" fill="#4b337b">MLP / feed-forward</text>
+<rect x="1010" y="100" width="155" height="94" rx="14" fill="#fde9e7" stroke="#c66a5c" stroke-width="2"/><text x="1087" y="133" font-size="18" font-weight="700" fill="#813b32">Logits</text><text x="1087" y="159" font-size="14" fill="#813b32">scores par token</text>
+<g stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#arrow)"><path d="M215 147 H258"/><path d="M445 147 H488"/><path d="M715 147 H758"/><path d="M970 147 H1003"/></g>
+<rect x="765" y="302" width="205" height="82" rx="14" fill="#e8f1ff" stroke="#4778b8" stroke-width="2"/><text x="867" y="333" font-size="18" font-weight="700" fill="#173b67">Softmax</text><text x="867" y="357" font-size="15" fill="#173b67">distribution de probabilité</text>
+<rect x="495" y="302" width="220" height="82" rx="14" fill="#e9f7f0" stroke="#3a9270" stroke-width="2"/><text x="605" y="333" font-size="18" font-weight="700" fill="#17583f">Sélection / échantillonnage</text><text x="605" y="357" font-size="15" fill="#17583f">choisir le prochain token</text>
+<path d="M1087 194 V270 H867 V294" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/><path d="M765 343 H722" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+<rect x="265" y="302" width="180" height="82" rx="14" fill="#fff3d6" stroke="#bc8a24" stroke-width="2"/><text x="355" y="333" font-size="18" font-weight="700" fill="#704d0a">Token suivant</text><text x="355" y="357" font-size="15" fill="#704d0a">ajouté au contexte</text>
+<path d="M495 343 H452" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+<path d="M355 302 V250 H125 V201" stroke="#344054" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+<text x="600" y="445" font-size="18" font-weight="700" fill="#172b4d">Génération autorégressive</text><text x="600" y="472" font-size="16" fill="#344054">Le token choisi est ajouté au contexte, puis le modèle prédit à nouveau.</text>
+<text x="600" y="513" font-size="14" fill="#5d6878">Schéma conceptuel : certains détails (normalisation, connexions résiduelles, cache KV) sont omis.</text>
+</g></svg>

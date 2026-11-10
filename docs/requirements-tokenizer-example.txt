@@ -1,0 +1,2 @@
+# Pinned dependency used only to execute the documentation's GPT-2 tokenizer trace in CI.
+tiktoken==0.14.0

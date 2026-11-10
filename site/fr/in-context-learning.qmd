@@ -1,0 +1,121 @@
+---
+title: "Apprentissage en contexte (in-context learning)"
+subtitle: "Apprendre à partir du prompt sans mettre à jour les paramètres"
+keywords: ["type:concept-lesson", "destination:deepen", "topic:in-context-learning", "level:advanced", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/in-context-learning"
+scope: "Présente l'apprentissage en contexte, ses différences avec l'entraînement et le fine-tuning, ses manifestations et les principales hypothèses explicatives."
+purpose: "Le lecteur doit pouvoir expliquer comment un modèle exploite des exemples dans le prompt sans mise à jour de ses paramètres, distinguer zero-shot, one-shot et few-shot, et reconnaître les limites des explications mécanistes actuelles."
+domain: "inference-efficiency"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/llm-overview", "fr/generation", "fr/contextualized-representations"]
+tags: ["type:concept-lesson", "destination:deepen", "topic:in-context-learning", "level:advanced", "language:fr", "status:published"]
+-->
+
+::: {.chapter-lead}
+L'**apprentissage en contexte** (*in-context learning*, ICL) désigne la capacité d'un modèle à adapter sa réponse à des exemples, des consignes ou des régularités présentés directement dans le prompt. Cette adaptation se produit pendant l'inférence : les paramètres du modèle restent fixes. Le modèle exploite le contexte fourni ; il ne réalise pas pour autant une nouvelle étape de fine-tuning.
+:::
+
+## Zero-shot, one-shot et few-shot
+
+Ces termes décrivent la quantité d'exemples de démonstration fournis dans le prompt :
+
+- **Zero-shot** : une instruction décrit la tâche, sans exemple résolu.
+- **One-shot** : un exemple illustre le format ou la transformation attendue.
+- **Few-shot** : plusieurs exemples donnent au modèle des régularités à reproduire.
+
+Exemple de classification :
+
+```text
+Texte : « Le colis est arrivé en retard. »
+Sentiment : négatif
+
+Texte : « La livraison était rapide et soignée. »
+Sentiment :
+```
+
+Le premier exemple fournit une démonstration locale. Le modèle peut l'utiliser pour produire une étiquette cohérente pour le second texte, même si aucune mise à jour de poids n'a lieu.
+
+## Pourquoi ce n'est pas du fine-tuning
+
+| Opération | Où se trouve l'information d'adaptation ? | Les paramètres changent-ils ? |
+|---|---|---|
+| Préentraînement | Corpus d'entraînement | Oui, optimisation des poids |
+| Fine-tuning | Exemples d'entraînement supplémentaires | Oui |
+| Apprentissage en contexte | Prompt courant | Non |
+| RAG | Documents récupérés puis ajoutés au contexte | Non, pas par la seule récupération |
+
+L'ICL est temporaire et conditionné par le contenu et la disposition du prompt. Une nouvelle conversation ou un prompt différent peut conduire à un comportement différent. Le fine-tuning modifie les paramètres et peut produire une adaptation qui persiste au-delà d'un prompt particulier.
+
+## Que fait le modèle avec les exemples ?
+
+Le modèle reçoit une séquence qui contient à la fois la tâche et les démonstrations. À chaque couche, les mécanismes d'attention et les autres opérations du réseau transforment les représentations en fonction de ce contexte. Lorsqu'il génère la suite, il produit une continuation conditionnée par les exemples précédents.
+
+Cela décrit le calcul observable, mais ne constitue pas à lui seul une explication complète de l'ICL. Plusieurs hypothèses sont étudiées : reconnaissance de motifs, inférence sur la règle qui a généré les exemples, apprentissage implicite d'algorithmes pendant le préentraînement, et circuits d'attention qui facilitent la copie ou l'association entre exemples.
+
+Les *induction heads* sont un mécanisme étudié dans certains Transformers : des têtes d'attention peuvent contribuer à repérer une séquence déjà vue et à en poursuivre le motif. Elles éclairent certains comportements de copie et de continuation, mais ne constituent pas une explication universelle de toutes les formes d'ICL.
+
+## Ce que l'ICL permet — et ses limites
+
+L'ICL peut permettre de changer rapidement de format, de fournir une convention locale, de montrer quelques exemples d'une tâche ou de guider une extraction structurée sans entraîner un nouvel adaptateur.
+
+Mais ses résultats dépendent fortement :
+
+- de la qualité, du nombre et de l'ordre des exemples ;
+- de la formulation des instructions et de la distribution des exemples ;
+- de la longueur du contexte et de la position des informations ;
+- de la proximité entre les exemples et le cas à traiter ;
+- de la capacité du modèle à généraliser au-delà des motifs superficiels.
+
+Un modèle peut reproduire le format sans avoir identifié la règle pertinente. Il peut aussi être sensible à l'ordre des exemples, aux exemples contradictoires ou à des détails non pertinents. L'ICL ne garantit donc ni une généralisation correcte ni une compréhension de la tâche au sens humain.
+
+## Comment l'étudier expérimentalement ?
+
+Pour distinguer apprentissage de la règle et simple imitation :
+
+1. comparer zero-shot, one-shot et few-shot sur les mêmes tâches ;
+2. permuter l'ordre des exemples et mesurer la sensibilité ;
+3. comparer des exemples pertinents à des exemples superficiellement similaires mais non pertinents ;
+4. tester des cas nouveaux qui exigent l'application de la règle plutôt que la copie ;
+5. contrôler la longueur du prompt et les effets de position ;
+6. répéter les essais avec plusieurs formulations et graines d'échantillonnage.
+
+Un bon protocole sépare la réussite sur les exemples vus de la généralisation à des cas non montrés.
+
+## À retenir
+
+- L'ICL utilise le prompt comme support d'adaptation temporaire.
+- Les poids restent fixes pendant cette adaptation en contexte.
+- Les exemples peuvent spécifier une tâche, un format ou une régularité locale.
+- Les mécanismes précis sont encore étudiés ; les induction heads n'en sont qu'une pièce possible.
+- Réussir sur quelques exemples ne démontre pas une généralisation robuste.
+
+## Références
+
+- Brown et al. (2020), [*Language Models are Few-Shot Learners*](https://arxiv.org/abs/2005.14165).
+- Olsson et al. (2022), [*In-context Learning and Induction Heads*](https://arxiv.org/abs/2209.11895).
+- Xie et al. (2022), [*An Explanation of In-context Learning as Implicit Bayesian Inference*](https://arxiv.org/abs/2111.02080).
+- Min et al. (2022), [*Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?*](https://arxiv.org/abs/2202.12837).
+
+::: {.self-check}
+## Vérifier sa compréhension
+
+1. Pourquoi l'ICL n'est-il pas une mise à jour des poids ?
+2. Une démonstration améliore le format de sortie mais pas l'exactitude. Qu'est-ce que cela indique sur la différence entre imitation et généralisation ?
+3. Concevez une expérience qui distingue l'apprentissage d'une règle de la simple reproduction de motifs présents dans les exemples.
+
+[Exercices et expérimentations](exercises.qmd).
+:::
+
+::: {.language-switch}
+**Langue :** [Français](in-context-learning.qmd) · [English](../en/in-context-learning.qmd)
+:::

@@ -1,0 +1,402 @@
+schema_version: 1
+source_id: andrej-karpathy-gpt-tokenizer-video
+
+scan:
+  accessed_at: "2026-10-30"
+  retrieval_method: indexed-text
+  author_text:
+    status: partial
+    coverage: "Public chapter markers, video description and a third-party rendered transcript/caption set with timestamped segments."
+    notes:
+      - "The transcript audit covers the retrieved caption text and chapter markers; it is not a claim that the full video was watched."
+      - "Transcript wording and segmentation may differ from the audiovisual presentation."
+  figures_media:
+    status: not-inspected
+    coverage: null
+    notes:
+      - "The video's visual demonstrations were not systematically inspected frame by frame."
+  code_data:
+    status: partial
+    coverage: "Implementation concepts and referenced tokenizer behaviors were mapped to the existing project examples."
+    notes:
+      - "The video itself was not executed as code; referenced code was not independently run as part of this extraction."
+  comments:
+    status: not-inspected
+    coverage: null
+    notes: []
+  linked_resources:
+    status: partial
+    coverage: "Relevant tokenizer concepts and implementation links mentioned in the transcript were mapped where recoverable."
+    notes:
+      - "The full outbound-link set was not exhaustively audited."
+  metadata:
+    status: partial
+    coverage: "Title, creator and public chapter markers."
+    notes:
+      - "Exact publication date and immutable video revision were not recorded."
+  rights:
+    status: unknown
+    coverage: null
+    notes:
+      - "No reuse permission for video frames, audio or visual assets was established."
+  unresolved_questions:
+    - "Would direct audiovisual inspection reveal visual explanations omitted or compressed by the transcript?"
+    - "Can the exact publication date and complete outbound-link set be recovered reliably?"
+
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Timestamped third-party rendering of public captions and public chapter markers, reviewed on 2026-10-30."
+      - "Concept sequence reconciled with the current tokenization, Unicode and text-data lessons."
+    inferred_elements:
+      - "The source-local graph below is an editorial reconstruction from the transcript, not a graph authored by Karpathy."
+      - "Prerequisites and learning outcomes are inferred from the sequence and examples."
+  source_graph:
+    nodes:
+      - id: src-unicode-code-points
+        kind: representation
+        description: "Python text strings expose Unicode code points rather than a universal one-character/one-byte representation."
+        locator: "14:56–18:15"
+        inferred: false
+      - id: src-utf8-byte-sequence
+        kind: representation
+        description: "UTF-8 encodes a Unicode code point as a variable-length byte sequence."
+        locator: "18:15–23:49"
+        inferred: false
+      - id: src-byte-base-vocabulary
+        kind: concept
+        description: "A byte-level base vocabulary can cover arbitrary byte sequences but may represent text with longer token sequences."
+        locator: "18:15–23:49"
+        inferred: false
+      - id: src-bpe-pair-merging
+        kind: operation
+        description: "BPE training repeatedly counts adjacent pairs and merges a selected frequent pair."
+        locator: "23:50–34:58"
+        inferred: false
+      - id: src-merge-rank-sequence
+        kind: intermediate
+        description: "The learned merge order is retained and replayed during encoding."
+        locator: "28:35–34:58; 48:21–57:36"
+        inferred: false
+      - id: src-tokenizer-pipeline-stage
+        kind: concept
+        description: "Tokenization is a distinct preprocessing stage between raw text and model token IDs."
+        locator: "39:20–42:47"
+        inferred: false
+      - id: src-regex-pretokenization
+        kind: operation
+        description: "Regex pre-tokenization partitions input before BPE and constrains which pairs can merge."
+        locator: "57:36–1:11:38"
+        inferred: false
+      - id: src-special-token-handling
+        kind: constraint
+        description: "Special-token spellings and their API handling are distinct from ordinary subword merges."
+        locator: "1:18:15–1:28:42"
+        inferred: false
+      - id: src-sentencepiece-family
+        kind: concept
+        description: "SentencePiece is introduced as a tokenizer library/family supporting different subword algorithms."
+        locator: "1:28:42–1:49:58"
+        inferred: false
+      - id: src-multimodal-tokenization
+        kind: application
+        description: "Tokenization concepts extend beyond plain text in multimodal model inputs."
+        locator: "1:49:58 onward"
+        inferred: false
+    edges:
+      - from: src-unicode-code-points
+        type: encoded-as
+        to: src-utf8-byte-sequence
+        inferred: false
+      - from: src-utf8-byte-sequence
+        type: can-be-represented-by
+        to: src-byte-base-vocabulary
+        inferred: false
+      - from: src-byte-base-vocabulary
+        type: input-to
+        to: src-bpe-pair-merging
+        inferred: false
+      - from: src-bpe-pair-merging
+        type: produces
+        to: src-merge-rank-sequence
+        inferred: false
+      - from: src-tokenizer-pipeline-stage
+        type: contains
+        to: src-regex-pretokenization
+        inferred: true
+      - from: src-regex-pretokenization
+        type: constrains
+        to: src-bpe-pair-merging
+        inferred: false
+      - from: src-merge-rank-sequence
+        type: applied-during
+        to: src-tokenizer-pipeline-stage
+        inferred: false
+    interpretation: "This is a source-local editorial reconstruction from transcript segments. Edges marked inferred express the reviewer’s synthesis, not a formal graph published by the speaker."
+  learning_outcomes:
+    - status: inferred
+      outcome: "Distinguish Unicode code points, UTF-8 bytes, token strings and token IDs."
+      basis: "The opening sequence contrasts Python strings, UTF encodings and byte-level vocabulary."
+    - status: inferred
+      outcome: "Explain BPE training as iterative pair counting/merging and distinguish it from encoding with learned merge ranks."
+      basis: "The transcript separates the training loop, vocabulary growth and later encoding/decoding."
+    - status: inferred
+      outcome: "Identify pre-tokenization and special-token handling as tokenizer-specific pipeline conventions."
+      basis: "Dedicated later segments cover regex pre-tokenization and special tokens."
+  assumed_prerequisites:
+    - status: inferred
+      topic: "Basic familiarity with strings, sequences and integer indexing."
+      basis: "The source introduces text representations and vocabulary IDs without a formal prerequisite statement."
+    - status: inferred
+      topic: "Basic Python familiarity."
+      basis: "Examples use Python strings, bytes and tokenizer code."
+  teaching_route:
+    - order: 1
+      section: "Unicode, Python strings and UTF encodings"
+      function: motivation-and-representation
+      moves:
+        - "Separate visible characters, Unicode code points and encoded bytes."
+        - "Motivate a byte-level base vocabulary."
+    - order: 2
+      section: "BPE pair counting and merging"
+      function: worked-mechanism
+      moves:
+        - "Count adjacent pairs."
+        - "Select and merge a pair."
+        - "Update the vocabulary and repeat."
+    - order: 3
+      section: "Tokenizer as a separate pipeline stage; encode and decode"
+      function: pipeline-placement
+      moves:
+        - "Connect text preprocessing to token IDs and model input."
+        - "Distinguish learning merge rules from applying them."
+    - order: 4
+      section: "Regex pre-tokenization and tokenizer-specific patterns"
+      function: implementation-qualification
+      moves:
+        - "Show that pre-tokenization partitions text before BPE."
+        - "Compare GPT-2 and later tokenizer pattern choices without universalizing them."
+    - order: 5
+      section: "Special tokens and SentencePiece"
+      function: variants-and-boundaries
+      moves:
+        - "Separate registered special tokens from ordinary text segmentation."
+        - "Introduce SentencePiece as a library/family rather than a single universal algorithm."
+    - order: 6
+      section: "Multimodal tokenization"
+      function: scope-extension
+      moves:
+        - "Signal that tokenization also applies to non-text inputs."
+        - "Leave multimodal mechanisms outside the current text-only learning path."
+  pedagogical_strengths:
+    - "Builds intuition from concrete byte and pair-merging operations."
+    - "Separates training a tokenizer from encoding with learned rules."
+    - "Moves from basic mechanics toward implementation conventions and broader modalities."
+  pedagogical_limits:
+    - "The extraction is transcript-based; visual demonstrations and speaker emphasis were not inspected."
+    - "Exact regex details are implementation-specific and should be checked against tokenizer source code."
+    - "The source is a walkthrough, not a complete formal specification of every production tokenizer."
+    - "Multimodal tokenization is introduced but not a substitute for a dedicated modality-specific treatment."
+  comparison:
+    dossier: "docs/source-reviews/tokenization-embeddings-source-collection.md"
+    canonical_graph: "data/concepts.yml"
+    canonical_routes:
+      - "docs/learning-path.md"
+      - "site/en/text-data.qmd"
+      - "site/fr/text-data.qmd"
+      - "site/en/tokenization-strategies.qmd"
+      - "site/fr/tokenization-strategies.qmd"
+    decision: "Integrate by reference and retain the source's byte-level teaching sequence as an optional comparison. Existing LLM Lab lessons already cover the core distinctions; no new page or curriculum step is warranted."
+    structures_kept_separate:
+      - "Source-local graph and inferred teaching route"
+      - "Canonical concept graph"
+      - "Bilingual page navigation and project learning path"
+
+items:
+  - id: andrej-karpathy-gpt-tokenizer-video:unicode-bytes
+    kind: definition
+    summary: "Unicode code points, UTF-8 bytes and visible characters are different representational units; a code point may encode to multiple bytes."
+    locator:
+      type: timestamp
+      value: "14:56–23:49"
+      label: "Unicode strings and UTF encodings"
+    evidence:
+      kind: transcript-explanation
+      confidence: well-supported
+      assumptions: []
+      limitations:
+        - "Transcript-based extraction; not a frame-by-frame audiovisual review."
+    technical_assessment:
+      status: correct
+      rationale: "Consistent with Unicode and UTF-8 encoding semantics."
+      corroborating_sources: []
+    pedagogical_assessment:
+      learner_question: "Why is a visible character not necessarily one byte or one token?"
+      explanatory_lens: representation-contrast
+      teaching_form: [worked-example, distinction]
+      novelty: {level: low, rationale: "The canonical Unicode page already owns this distinction."}
+      complementarity: {level: moderate, rationale: "The source connects the distinction directly to byte-level BPE motivation."}
+      learner_value: {level: moderate, rationale: "It bridges text encoding and tokenizer design."}
+      redundancy: {level: high, rationale: "The canonical Unicode and tokenization pages already explain the underlying distinction."}
+      integration_cost: {level: low, rationale: "A cross-reference is sufficient; no new section is required."}
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:unicode, topic:tokenization]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/unicode-text, fr/unicode-text, en/tokenization-strategies, fr/tokenization-strategies]
+      concepts: [token]
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The canonical Unicode page is the stronger owner; retain the source as an optional walkthrough."
+
+  - id: andrej-karpathy-gpt-tokenizer-video:bpe-training-encoding
+    kind: mechanism
+    summary: "BPE training repeatedly counts adjacent pairs and merges a selected pair to grow a vocabulary; encoding later replays the learned merge order."
+    locator:
+      type: timestamp
+      value: "23:50–57:36"
+      label: "BPE training, merge order, encoding and decoding"
+    evidence:
+      kind: transcript-explanation
+      confidence: well-supported
+      assumptions: []
+      limitations:
+        - "The source's specific implementation conventions must not be generalized to every tokenizer."
+    technical_assessment:
+      status: correct
+      rationale: "The described training/encoding separation matches standard BPE-style tokenizer construction, subject to the stated base units and preprocessing."
+      corroborating_sources: []
+    pedagogical_assessment:
+      learner_question: "What is learned during tokenizer training, and what happens during ordinary encoding?"
+      explanatory_lens: algorithmic-process
+      teaching_form: [worked-example, step-by-step]
+      novelty: {level: low, rationale: "The existing BPE lesson already contains an auditable merge trace."}
+      complementarity: {level: moderate, rationale: "The video provides a byte-level implementation-oriented narrative."}
+      learner_value: {level: moderate, rationale: "It links pair merges to merge ranks and encoding."}
+      redundancy: {level: high, rationale: "The same algorithmic sequence is already taught locally."}
+      integration_cost: {level: low, rationale: "A source link and comparison are sufficient."}
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:tokenization, method:bpe]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenization-strategies, fr/tokenization-strategies]
+      concepts: [token]
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Useful alternate walkthrough; do not duplicate the canonical worked trace."
+
+  - id: andrej-karpathy-gpt-tokenizer-video:pretokenization
+    kind: mechanism
+    summary: "Regex pre-tokenization partitions input before BPE; the partition boundaries constrain which adjacent units can be merged."
+    locator:
+      type: timestamp
+      value: "57:36–1:11:38"
+      label: "Regex pre-tokenization and GPT tokenizer patterns"
+    evidence:
+      kind: transcript-explanation
+      confidence: context-dependent
+      assumptions:
+        - "The exact regex and behavior depend on the tokenizer implementation/version."
+      limitations:
+        - "This extraction does not reproduce or validate the full GPT-2/GPT-4 regex patterns."
+    technical_assessment:
+      status: qualified
+      rationale: "The role of pre-tokenization is correctly described, but exact pattern behavior must be checked against the tokenizer implementation."
+      corroborating_sources: []
+    pedagogical_assessment:
+      learner_question: "Why can a tokenizer's pre-tokenizer change which merges are possible?"
+      explanatory_lens: pipeline-boundary
+      teaching_form: [mechanism, implementation-comparison]
+      novelty: {level: low, rationale: "The canonical lesson already explains pre-tokenization and tokenizer-specific conventions."}
+      complementarity: {level: moderate, rationale: "The source gives an implementation-level motivation for boundaries."}
+      learner_value: {level: moderate, rationale: "It helps learners connect regex splitting to final token boundaries."}
+      redundancy: {level: moderate, rationale: "The existing lesson covers the concept but not every exact regex."}
+      integration_cost: {level: moderate, rationale: "A full regex comparison would add version-sensitive maintenance."}
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:tokenization, method:pre-tokenization]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenization-strategies, fr/tokenization-strategies]
+      concepts: [token]
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The general mechanism is covered; exact GPT regex variants remain an optional implementation-level topic."
+
+  - id: andrej-karpathy-gpt-tokenizer-video:special-tokens
+    kind: limitation
+    summary: "Registered special tokens and their API handling are distinct from ordinary subword merges and visible spellings in arbitrary input text."
+    locator:
+      type: timestamp
+      value: "1:18:15–1:28:42"
+      label: "Special-token handling"
+    evidence:
+      kind: transcript-explanation
+      confidence: context-dependent
+      assumptions:
+        - "Interpretation of special-token spellings depends on tokenizer API and explicit allow-list behavior."
+      limitations:
+        - "The project-specific API/security caveats are corroborated separately by the minbpe and tokenizer implementation audits."
+    technical_assessment:
+      status: qualified
+      rationale: "The distinction is valid but exact parsing/rejection behavior is implementation-specific."
+      corroborating_sources: []
+    pedagogical_assessment:
+      learner_question: "Does text that looks like a special token always become a special token?"
+      explanatory_lens: api-semantics
+      teaching_form: [misconception, implementation-caveat]
+      novelty: {level: low, rationale: "The project already integrated special-token API handling in PR #151."}
+      complementarity: {level: moderate, rationale: "The video situates special tokens in the tokenizer workflow."}
+      learner_value: {level: moderate, rationale: "It reinforces a security- and correctness-relevant distinction."}
+      redundancy: {level: high, rationale: "The canonical lesson now explains this operational caveat."}
+      integration_cost: {level: low, rationale: "No new content is required."}
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:tokenization, topic:special-tokens]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenization-strategies, fr/tokenization-strategies]
+      concepts: [token]
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The current bilingual special-token section is more explicit about API-specific behavior."
+
+  - id: andrej-karpathy-gpt-tokenizer-video:sentencepiece-multimodal
+    kind: teaching-sequence
+    summary: "The walkthrough broadens from GPT-style BPE to SentencePiece and then signals multimodal tokenization as an extension beyond plain text."
+    locator:
+      type: timestamp
+      value: "1:28:42–1:49:58 onward"
+      label: "SentencePiece and multimodal tokenization"
+    evidence:
+      kind: transcript-outline
+      confidence: context-dependent
+      assumptions: []
+      limitations:
+        - "The transcript records topic transitions; detailed multimodal mechanisms are not extracted here."
+    technical_assessment:
+      status: not-reviewed
+      rationale: "This item records source scope and teaching sequence rather than a detailed technical claim."
+      corroborating_sources: []
+    pedagogical_assessment:
+      learner_question: "Where do text-only tokenization lessons stop being sufficient?"
+      explanatory_lens: scope-extension
+      teaching_form: [roadmap, further-reading]
+      novelty: {level: low, rationale: "The current project intentionally scopes the core path to text-only GPT construction."}
+      complementarity: {level: moderate, rationale: "It signals future directions without expanding prerequisites."}
+      learner_value: {level: low, rationale: "Useful orientation but not required for the current learner outcome."}
+      redundancy: {level: low, rationale: "The source adds a broader horizon rather than a new core mechanism."}
+      integration_cost: {level: moderate, rationale: "A multimodal lesson would require a separate project scope."}
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:tokenization, topic:multimodal]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenization-strategies, fr/tokenization-strategies]
+      concepts: [token]
+      route_ids: []
+    disposition: defer
+    disposition_rationale: "Multimodal tokenization is intentionally outside the current text-only learning slice."

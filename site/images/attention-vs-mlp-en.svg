@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="500" viewBox="0 0 1200 500" role="img" aria-labelledby="title desc">
+<title id="title">Self-attention and feed-forward network: two complementary roles</title>
+<desc id="desc">On the left, each position can receive information from other positions through attention weights. On the right, the same feed-forward network is applied independently at each position, with no direct exchange between positions at this stage.</desc>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#475467"/></marker></defs>
+<rect width="1200" height="500" rx="22" fill="#fbfcfe"/>
+<text x="600" y="42" text-anchor="middle" font-family="Arial,sans-serif" font-size="27" font-weight="700" fill="#172b4d">Two operations, two functions</text>
+<g font-family="Arial,sans-serif">
+<rect x="35" y="72" width="550" height="360" rx="18" fill="#f0eaff" stroke="#8063b3" stroke-width="2"/>
+<text x="310" y="109" text-anchor="middle" font-size="23" font-weight="700" fill="#4b337b">Self-attention</text>
+<text x="310" y="136" text-anchor="middle" font-size="16" fill="#4b337b">Information flows between allowed positions</text>
+<g fill="#fff" stroke="#8063b3" stroke-width="2"><rect x="85" y="180" width="90" height="55" rx="10"/><rect x="265" y="180" width="90" height="55" rx="10"/><rect x="445" y="180" width="90" height="55" rx="10"/></g>
+<g text-anchor="middle" font-size="18" font-weight="700" fill="#4b337b"><text x="130" y="213">x₁</text><text x="310" y="213">x₂</text><text x="490" y="213">x₃</text></g>
+<g stroke="#8063b3" stroke-width="2.5" fill="none" marker-end="url(#arrow)"><path d="M170 188 Q220 150 270 188"/><path d="M355 188 Q400 150 450 188"/><path d="M130 238 Q220 292 310 238"/><path d="M310 238 Q400 292 490 238"/><path d="M170 220 Q310 330 450 220"/></g>
+<text x="310" y="362" text-anchor="middle" font-size="16" fill="#4b337b">Weights computed from representations</text>
+<text x="310" y="386" text-anchor="middle" font-size="16" fill="#4b337b">and access constraints (e.g. causal mask)</text>
+<rect x="615" y="72" width="550" height="360" rx="18" fill="#e9f7f0" stroke="#3a9270" stroke-width="2"/>
+<text x="890" y="109" text-anchor="middle" font-size="23" font-weight="700" fill="#17583f">Feed-forward network (MLP)</text>
+<text x="890" y="136" text-anchor="middle" font-size="16" fill="#17583f">The same transformation acts independently at each position</text>
+<g fill="#fff" stroke="#3a9270" stroke-width="2"><rect x="665" y="180" width="90" height="55" rx="10"/><rect x="845" y="180" width="90" height="55" rx="10"/><rect x="1025" y="180" width="90" height="55" rx="10"/><rect x="665" y="270" width="90" height="55" rx="10"/><rect x="845" y="270" width="90" height="55" rx="10"/><rect x="1025" y="270" width="90" height="55" rx="10"/></g>
+<g text-anchor="middle" font-size="17" font-weight="700" fill="#17583f"><text x="710" y="213">x₁</text><text x="890" y="213">x₂</text><text x="1070" y="213">x₃</text><text x="710" y="303">MLP(x₁)</text><text x="890" y="303">MLP(x₂)</text><text x="1070" y="303">MLP(x₃)</text></g>
+<g stroke="#3a9270" stroke-width="2.5" fill="none" marker-end="url(#arrow)"><path d="M710 238 V262"/><path d="M890 238 V262"/><path d="M1070 238 V262"/></g>
+<text x="890" y="362" text-anchor="middle" font-size="16" fill="#17583f">Weights shared across positions</text>
+<text x="890" y="386" text-anchor="middle" font-size="16" fill="#17583f">but no direct exchange between them at this stage</text>
+<text x="600" y="470" text-anchor="middle" font-size="14" fill="#5d6878">Simplified view of a Transformer block; residual connections and normalization are not shown.</text>
+</g></svg>

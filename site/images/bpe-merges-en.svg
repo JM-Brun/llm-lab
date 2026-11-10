@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 390" role="img" aria-labelledby="title desc">
+<title id="title">Byte Pair Encoding: illustrative merge sequence</title>
+<desc id="desc">An illustrative sequence of BPE merges from characters to larger subword units. The example is schematic, not a real tokenizer output.</desc>
+<rect width="1000" height="390" rx="18" fill="#f8fafc"/>
+<text x="36" y="42" font-family="Arial,sans-serif" font-size="24" font-weight="700" fill="#172554">BPE: frequent units are merged</text>
+<text x="36" y="68" font-family="Arial,sans-serif" font-size="15" fill="#475569">Schematic example — actual merges depend on the training corpus and learned vocabulary.</text>
+<g font-family="Arial,sans-serif" font-size="17" text-anchor="middle">
+<text x="38" y="116" text-anchor="start" font-size="14" font-weight="700" fill="#334155">Step 0 · characters</text>
+<rect x="38" y="132" width="48" height="42" rx="7" fill="#dbeafe" stroke="#60a5fa"/><text x="62" y="159" fill="#1e3a8a">l</text><rect x="102" y="132" width="48" height="42" rx="7" fill="#dbeafe" stroke="#60a5fa"/><text x="126" y="159" fill="#1e3a8a">o</text><rect x="166" y="132" width="48" height="42" rx="7" fill="#dbeafe" stroke="#60a5fa"/><text x="190" y="159" fill="#1e3a8a">w</text><rect x="230" y="132" width="48" height="42" rx="7" fill="#dbeafe" stroke="#60a5fa"/><text x="254" y="159" fill="#1e3a8a">e</text><rect x="294" y="132" width="48" height="42" rx="7" fill="#dbeafe" stroke="#60a5fa"/><text x="318" y="159" fill="#1e3a8a">r</text>
+<text x="38" y="210" text-anchor="start" font-size="14" font-weight="700" fill="#334155">Step 1 · merge “l” + “o”</text>
+<rect x="38" y="226" width="62" height="42" rx="7" fill="#bfdbfe" stroke="#3b82f6"/><text x="69" y="253" fill="#1e293b">lo</text><rect x="116" y="226" width="62" height="42" rx="7" fill="#e2e8f0" stroke="#94a3b8"/><text x="147" y="253" fill="#1e293b">w</text><rect x="194" y="226" width="62" height="42" rx="7" fill="#e2e8f0" stroke="#94a3b8"/><text x="225" y="253" fill="#1e293b">e</text><rect x="272" y="226" width="62" height="42" rx="7" fill="#e2e8f0" stroke="#94a3b8"/><text x="303" y="253" fill="#1e293b">r</text>
+<text x="38" y="304" text-anchor="start" font-size="14" font-weight="700" fill="#334155">Step 2 · further possible merges</text>
+<rect x="38" y="320" width="104" height="42" rx="7" fill="#bbf7d0" stroke="#22c55e"/><text x="90" y="347" fill="#14532d">low</text>
+<rect x="154" y="320" width="104" height="42" rx="7" fill="#bbf7d0" stroke="#22c55e"/><text x="206" y="347" fill="#14532d">er</text>
+<path d="M285 342 H350" stroke="#64748b" stroke-width="2"/><path d="M342 335 L350 342 L342 349" fill="none" stroke="#64748b" stroke-width="2"/>
+<rect x="365" y="320" width="174" height="42" rx="7" fill="#fef3c7" stroke="#f59e0b"/><text x="452" y="347" fill="#78350f">larger units</text>
+</g>
+<text x="575" y="151" font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#334155">Core idea</text>
+<text x="575" y="181" font-family="Arial,sans-serif" font-size="15" fill="#334155">1. Count adjacent pairs.</text>
+<text x="575" y="208" font-family="Arial,sans-serif" font-size="15" fill="#334155">2. Merge according to the learned rule.</text>
+<text x="575" y="235" font-family="Arial,sans-serif" font-size="15" fill="#334155">3. Repeat until the target vocabulary.</text>
+<text x="575" y="285" font-family="Arial,sans-serif" font-size="14" fill="#64748b">The external interactive demo</text>
+<text x="575" y="307" font-family="Arial,sans-serif" font-size="14" fill="#64748b">lets you inspect merges on</text>
+<text x="575" y="329" font-family="Arial,sans-serif" font-size="14" fill="#64748b">editable examples.</text>
+</svg>

@@ -1,0 +1,193 @@
+---
+title: "Explore and compare Transformers"
+subtitle: "Compare three model families, then observe and critique a real GPT-2 run"
+keywords: ["type:experiment-guide", "destination:practice", "topic:transformer-explainer", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/transformer-explainer"
+scope: "Hands-on activity: run and compare an encoder-only model (BERT), a decoder-only model (GPT-2), and an encoder–decoder model (T5), then explore GPT-2 small with Transformer Explainer: observe tokenization, representations, attention and decoding; design controlled experiments; identify the computation path behind the interface; distinguish visual observation from computational evidence; and audit visualization limits and implementation choices, notably top-k followed by top-p (display truncation before nucleus sampling). It does not replace the conceptual architecture lessons."
+purpose: "Readers should be able to run minimal examples of BERT, GPT-2, and T5 and relate their interfaces to architecture families without inferring a quality ranking; formulate and test a hypothesis about a GPT-2 run; identify the computation path behind the interface; distinguish visual observation from computational evidence; and explain the top-k-then-top-p choice and its consequences for the nucleus threshold."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: ["en/transformer-architectures"]
+  children: []
+related: ["en/exercises"]
+tags: ["type:experiment-guide", "destination:practice", "topic:transformer-explainer", "level:applied", "language:en", "status:published"]
+-->
+
+::: {.chapter-lead}
+Compare representative models from the three main Transformer configurations, then **observe a real GPT-2 run, test controlled hypotheses, and examine what the tool actually shows**. Move from outputs to computations, then assess the limits of the experiments.
+:::
+
+::: {.callout-note}
+**Before you start:** how a [GPT works](transformer.qmd), [tokens and representations](embedding-space.qmd), [attention](scaled-dot-product-attention.qmd), and [probabilities](probabilities.qmd). The links serve as targeted reminders; you do not need to master the advanced derivations.
+:::
+
+## Compare three Transformer families
+
+This hands-on activity complements the conceptual [Transformer architectures](transformer-architectures.qmd) lesson. It shows how three different usage interfaces correspond to three typical configurations and objectives. It is **neither a benchmark nor a quality ranking**.
+
+### Run one example from each family
+
+This experiment runs one representative model from each configuration. Its purpose is to **observe different objectives and usage interfaces**, not to measure which model is “best”.
+
+#### Set up the environment
+
+In an isolated Python environment:
+
+```bash
+python -m pip install torch transformers
+```
+
+The first run downloads the three models' weights. CPU execution is possible, but may take a few minutes and requires from several hundred megabytes to a few gigabytes of memory, depending on the models and libraries.
+
+#### Run the three examples
+
+```python
+from transformers import pipeline
+
+# 1. Encoder-only: suggest tokens for a masked position.
+bert = pipeline("fill-mask", model="google-bert/bert-base-uncased")
+for candidate in bert("Paris is the capital of [MASK].", top_k=5):
+    print(candidate["token_str"], round(candidate["score"], 3))
+
+# 2. Decoder-only: continue a prefix without seeing future tokens.
+gpt2 = pipeline("text-generation", model="openai-community/gpt2")
+continuation = gpt2(
+    "A language model learns to",
+    max_new_tokens=24,
+    do_sample=False,
+    pad_token_id=gpt2.tokenizer.eos_token_id,
+)
+print(continuation[0]["generated_text"])
+
+# 3. Encoder–decoder: produce a target sequence from an input.
+t5 = pipeline("text2text-generation", model="google-t5/t5-small")
+translation = t5("translate English to German: The house is wonderful.")
+print(translation[0]["generated_text"])
+```
+
+#### Interpret the observations
+
+- **BERT** returns several candidates for a masked position. It uses context on both the left and right of that position in the input.
+- **GPT-2** continues the prefix. Its causal mask prevents each position from attending to later tokens.
+- **T5** receives an input and generates a target sequence. Its autoregressive decoder also uses information from the input through cross-attention.
+
+Exact outputs may vary with library versions and downloaded weights. The prompts are deliberately illustrative: these three calls are **neither a benchmark nor a quality comparison**. The models differ in data, size, tokenizer, and training.
+
+#### Questions to interpret the results
+
+1. Why can BERT suggest a word using context after the mask, while GPT-2 cannot use future tokens?
+2. In the T5 example, which information comes from the input, and which information is produced by the decoder?
+3. Why can these three outputs not establish that one architecture is globally better than the others?
+
+**Takeaway:** the architecture constrains information flow; the training objective and the task determine what the model learns to do and what it is asked to do at inference time.
+
+## Observe a Transformer at work
+
+Georgia Tech's **[Transformer Explainer](https://poloclub.github.io/transformer-explainer/)** lets you explore a real GPT-2 small run in the browser. It complements the static diagrams of the overview: type a text, then watch how the representations, attention computations, and next-token distribution evolve.
+
+:::: {.callout-note title="Open the embedded demonstration" collapse="true"}
+
+<iframe
+  src="https://poloclub.github.io/transformer-explainer/"
+  title="Transformer Explainer — interactive GPT-2 visualization"
+  width="100%"
+  height="820"
+  loading="lazy"
+  allow="fullscreen"
+  style="border: 1px solid #d2d9c8; border-radius: 0.6rem; background: #fff;"
+></iframe>
+
+::::
+
+[Open Transformer Explainer in a new tab](https://poloclub.github.io/transformer-explainer/) if the embed does not display, or if you prefer the full window.
+
+### A guided experiment in four observations
+
+1. **Tokens and representations.** Slightly change the input text and watch its segmentation. Connect the tokens to the IDs and embeddings described in [the representations page](embedding-space.qmd).
+2. **Attention.** Select tokens and examine attention patterns. Connect the scores, causal mask, and value aggregation to the [Q/K/V](queries-keys-values.qmd), [attention](scaled-dot-product-attention.qmd), and [causal masking](causal-masking.qmd) pages.
+3. **Prediction.** Locate the output scores (*logits*) and the vocabulary distribution. Consult [logits](logits.qmd) and [probabilities](probabilities.qmd) to distinguish score from probability.
+4. **Decoding.** Vary the temperature and, when the interface offers them, the top-k/top-p parameters. The same distribution can lead to different selections; decoding does not change the model's weights.
+
+### Controlled experiments: from observation to test
+
+To avoid drawing conclusions from a single visualization, keep a reference prompt, change **one factor at a time**, and record what shifts.
+
+1. **Tokenizer sensitivity.** Compare an isolated word, the same word preceded by a space, and a variant with punctuation. Record the tokens and IDs. Subword segmentation depends on the tokenizer and on character context; it does not directly reveal the model's "understanding".
+2. **Causal mask.** Examine the attention row of the last token, then append a suffix to the prompt. A position must not receive information from future positions. In a causal model in evaluation mode, the representations of the prefix positions should remain invariant when a suffix is added (up to numerical tolerance); this test targets internal states, not only the generated text.
+3. **Temperature and sampling.** Keep the prompt and logits, then change only the temperature. The distribution changes according to $p_i(T)=\operatorname{softmax}(z/T)_i$, but the raw logits stay identical. Then compare top-k and top-p: these filters change the set of allowed candidates. A sampled generation can vary even when the prompt and parameters are identical.
+
+For each experiment, record: hypothesis, changed variable, observation, interpretation, and limit. A visual observation is a clue to confront with the equation and, where possible, an automated test.
+
+### Reading the Transformer Explainer code
+
+**Audit scope:** upstream repository [poloclub/transformer-explainer](https://github.com/poloclub/transformer-explainer), snapshot [`bfe50af`](https://github.com/poloclub/transformer-explainer/commit/bfe50afba10b9b560b84143ee1107d977defa74f) consulted on 30 October 2026. The interface files below display results; they must not be confused with the functions that compute those results.
+
+| Observed element | Interface component | Computation or data to inspect |
+|---|---|---|
+| Tokens, IDs and embedding vectors | [Embedding.svelte](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/components/Embedding.svelte) — visualization | [data.ts](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/utils/data.ts) for tokenization and the ONNX inference call; [model.py](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/utils/model/model.py), `GPT.forward`, for the token and position embedding tables |
+| Q, K, V projections | [QKV.svelte](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/components/QKV.svelte) — vector visualization | [model.py](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/utils/model/model.py), `CausalSelfAttention.forward`: joint projection, split, and head reshaping |
+| Attention scores and weights | [AttentionMatrix.svelte](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/components/AttentionMatrix.svelte) — displayed matrix | [model.py](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/utils/model/model.py) for scores, scaling, causal mask, softmax and dropout; [data.ts](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/utils/data.ts) selects the tensors exposed by the ONNX session |
+| MLP and residual blocks | [Mlp.svelte](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/components/Mlp.svelte) — visualization | [model.py](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/utils/model/model.py), `MLP` and `Block` classes: feed-forward transformations, normalizations, residual connections |
+| Logits, temperature and sampling | [LinearSoftmax.svelte](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/components/LinearSoftmax.svelte) — visualization | [data.ts](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/utils/data.ts): ONNX logit extraction, temperature, softmax, top-k and top-p |
+| Guided explanations and highlights | [textbookPages.ts](https://github.com/poloclub/transformer-explainer/blob/bfe50afba10b9b560b84143ee1107d977defa74f/src/utils/textbookPages.ts) | Pedagogical text and mapping between manual steps and visual components; this file does not define the model's computation |
+
+The browser execution path uses Svelte/TypeScript, ONNX Runtime Web, and a GPT-2 tokenizer; `data.ts` calls the ONNX session. The repository also contains a reference PyTorch model in `model.py`, useful for inspecting the architecture and its operations, but distinct from the ONNX inference path used by the interface. This separation between computation, tensor extraction, visualization, and explanations is an organizational model worth studying, not an architecture to copy verbatim into LLM Lab.
+
+### Design choices to know about
+
+The source code reveals deliberate choices worth knowing so you do not over-interpret the display:
+
+- **Top-p (nucleus) on truncated candidates:** in `topPSampling` in `src/utils/data.ts`, the code sorts the logits and keeps the best 50 — the original comment says so explicitly ("*Trim the list to a reasonable number that can be displayed on the screen*") — then applies the temperature, the softmax, and the cumulative sum **on those 50 candidates**, truncates at the threshold $p$, and renormalizes. Composing a top-k truncation followed by a top-p nucleus is standard practice: Hugging Face chains both filters, with a default `top_k` of 50. The behavior is therefore a **documented design choice**, not a flaw of the tool; the next subsection spells out exactly what this composition computes.
+- **Embeddings:** a learned vector representation is not a universal geometric definition of meaning. Proximity depends on the metric, the space, the layer, and the task.
+- **Attention:** the displayed weights describe one step of the computation. They do not measure the causal influence of a token on the final logit.
+- **Random generation:** comparing two textual outputs does not isolate the effect of a parameter if the random draw also changes. To study the distribution, compare probabilities or control the seed where the implementation allows it.
+
+These remarks do not disqualify the tool: they define precisely what it lets you learn and what it should not be made to say.
+
+### Reading precision: what this top-p computes
+
+Fix a temperature $T>0$ and let $P_T$ be the softmax distribution that would be obtained on the full vocabulary after applying that temperature. Let $S_{50}$ be the set of 50 retained candidates and $m=P_T(S_{50})<1$ their mass in that distribution. After truncation, the tool works with the conditional distribution $P_T(i\mid i\in S_{50})=P_T(i)/m$. For a retained prefix $A\subseteq S_{50}$, its cutoff condition becomes
+
+$$\sum_{i\in A}\frac{P_T(i)}{m}\geq p\quad\Longleftrightarrow\quad P_T(A)\geq p\,m.$$
+
+In other words, the threshold $p$ applies to the **renormalized distribution of the 50 candidates**, not to the full vocabulary: with $m=0{,}60$ and $p=0{,}90$, the threshold corresponds to 0.54 of the initial mass. The mass actually retained can exceed 0.54 if the last token crosses the threshold; it remains at most 0.60. The exact nucleus on the full vocabulary would have to accumulate 0.90 — and therefore include tokens beyond rank 50. This is a consequence of the top-k → top-p composition, not an anomaly: compare the displayed probabilities with the nucleus defined on the full vocabulary with this difference in mind.
+
+### What this demonstration allows — and does not allow — concluding
+
+- The tool runs **GPT-2 small (124 million parameters)**: a pedagogical model representative enough of the fundamental operations, not a substitute for inspecting every recent LLM.
+- The model runs in the browser. The first load may require downloading the model resources and will use your machine's memory and CPU.
+- Visualizing an attention weight shows an internal operation, not by itself a causal or faithful explanation of the prediction.
+- Generation parameters such as temperature change the selection of the next token; they do not retrain the model and do not make its outputs factually reliable.
+- This demonstration is an external tool. It does not run LLM Lab's Python code and is not a test of our future implementations.
+
+**Takeaway:** use the explorer to form hypotheses and spot the operations; return to this site's equations to verify them, then to the repository's tests and experiments when a corresponding implementation is available.
+
+## A minimal experiment record
+
+For each experiment, keep a short but verifiable record:
+
+- **Hypothesis:** what behavior do you expect, and why?
+- **Variable:** which factor changes, and which factors remain fixed?
+- **Observation:** which tokens, scores, representations, or outputs did you actually observe?
+- **Interpretation:** which mechanism could explain the result?
+- **Limitation:** what alternative explanation or tool artifact remains possible?
+
+A screenshot alone does not establish a property of the model. For claims about computation, compare the observation with the equation, the code that performs the operation, and—where possible—a reproducible test.
+
+## Continue
+
+- [GPT and Transformer](transformer.qmd) — return to the system model and data flow.
+- [Causal masking](causal-masking.qmd) — formalize the prohibition on accessing future tokens.
+- [Generation strategies](generation.qmd) — explore selection rules and their effects.
+- [Exercise space](exercises.qmd) — continue with extended activities and transfer questions.
+
+::: {.language-switch}
+**Language:** [Français](../fr/transformer-explainer.qmd) · [English](transformer-explainer.qmd)
+:::

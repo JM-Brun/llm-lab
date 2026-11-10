@@ -1,0 +1,191 @@
+---
+title: "Guided tour: building-block operations (`gpt_ops.py`)"
+subtitle: "Initialization, linear projection, normalization and GELU, line by line"
+keywords: ["type:guided-build", "destination:build", "topic:reference-gpt-ops", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/gpt-ops-walkthrough"
+scope: "Explains the gpt_ops.py file line by line: weight initialization, the linear projection and its shape convention, per-position layer normalization with the eps guard and affine transform, and the tanh approximation of GELU. Excludes the assembly of the Transformer block and the model."
+purpose: "Readers should be able to predict each operation's output shape, explain why weights start small, why normalization acts on the last axis, and why the GELU approximation is acceptable."
+suggested_route:
+  previous: "en/gpt-config-walkthrough"
+  next: "en/transformer-block-walkthrough"
+hierarchy:
+  parents: ["en/build-path"]
+  children: []
+related: ["en/transformer", "en/tensors"]
+tags: ["type:guided-build", "destination:build", "topic:reference-gpt-ops", "level:applied", "language:en", "status:published"]
+-->
+
+::: {.chapter-lead}
+This page is the second stop (2 of 5) of the guided tour. This file gathers the operations every Transformer block repeats: weight initialization, linear projection, normalization and activation. Keeping them out of the model classes has two benefits: each operation is **testable alone**, and the model files read **like architecture**. Full source: [`src/llm_lab/foundations/gpt_ops.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt_ops.py).
+:::
+::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
+By the end of this tour, you will be able to:
+- predict each operation's output shape (`linear`, `layer_norm`, `gelu`) without running it;
+- explain why weights start small at initialization;
+- justify layer norm's `axis=-1` convention and the tanh approximation of GELU.
+:::
+
+## One convention for the whole package: `float64`
+
+```python
+FloatArray = NDArray[np.float64]
+```
+
+The whole package exchanges **float64** arrays: results stay exact enough to hand-check on paper; the speed cost is irrelevant at reference scale.
+
+```{=html}
+<figure class="wf-fig" id="wf-ops-map" data-wf-default="Four operations, one shared contract: batch axes pass untouched, only the last axis is transformed — by a projection, a normalization, or an activation. This contract is what makes the block’s shapes predictable.">
+<figcaption class="wf-fig-title">The shape contract of the four <code>gpt_ops.py</code> building blocks</figcaption>
+<div class="wf-stage">
+<div class="wf-diagram">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 250" role="img" aria-labelledby="wfo-title wfo-desc">
+<title id="wfo-title">Shape contract of the four gpt_ops.py building blocks, from initialization to activation</title>
+<desc id="wfo-desc">A generator initializes W (out, in) and a zero bias; the linear projection replaces the last axis of x (..., in) with the output width (..., out); layer normalization acts on the last axis, per position; GELU transforms each activation individually without changing the shape.</desc>
+<defs>
+<marker id="wfo-green" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#16A34A"/></marker>
+<marker id="wfo-violet" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#8B5CF6"/></marker>
+<marker id="wfo-slate" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#64748B"/></marker>
+</defs>
+<g font-family="Arial,sans-serif">
+<g data-wf-part="init"><rect x="14" y="18" width="86" height="40" rx="20" fill="#ECFDF5" stroke="#15803D" stroke-width="2"/><text x="57" y="43" text-anchor="middle" font-size="13" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#14532D">rng</text></g>
+<g data-wf-part="init"><rect x="130" y="18" width="216" height="40" rx="8" fill="#FFFFFF" stroke="#334155" stroke-width="1.5"/><text x="238" y="43" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#17212B">_init_matrix / _init_linear</text></g>
+<g data-wf-part="init"><path d="M100 38 H124" stroke="#64748B" stroke-width="2" fill="none" marker-end="url(#wfo-slate)"/></g>
+<g data-wf-part="init lin"><rect x="378" y="18" width="128" height="40" rx="8" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/><text x="442" y="43" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#4C1D95">W (out, in)</text></g>
+<g data-wf-part="init lin"><rect x="532" y="18" width="104" height="40" rx="8" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/><text x="584" y="43" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#4C1D95">b = (0,)</text></g>
+<g data-wf-part="init"><path d="M346 38 H372" stroke="#8B5CF6" stroke-width="2" fill="none" marker-end="url(#wfo-violet)"/><path d="M310 58 C 360 66, 500 70, 578 58" stroke="#8B5CF6" stroke-width="2" fill="none" marker-end="url(#wfo-violet)"/></g>
+<g data-wf-part="init lin"><path d="M442 58 C 380 84, 280 98, 252 114" stroke="#8B5CF6" stroke-width="1.8" fill="none" marker-end="url(#wfo-violet)"/><path d="M584 58 C 480 92, 320 102, 274 114" stroke="#8B5CF6" stroke-width="1.8" fill="none" marker-end="url(#wfo-violet)"/></g>
+<g data-wf-part="lin"><rect x="14" y="146" width="92" height="56" rx="10" fill="#DCFCE7" stroke="#16A34A" stroke-width="2"/><text x="60" y="169" text-anchor="middle" font-size="15" font-weight="700" fill="#14532D">x</text><text x="60" y="189" text-anchor="middle" font-size="12" fill="#166534">(..., in)</text></g>
+<g data-wf-part="lin"><path d="M106 174 H144" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfo-green)"/></g>
+<g data-wf-part="lin"><rect x="150" y="124" width="180" height="100" rx="10" fill="#FFFFFF" stroke="#334155" stroke-width="2"/><text x="240" y="150" text-anchor="middle" font-size="15" font-weight="700" fill="#17212B">linear</text><text x="240" y="172" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#17212B">y = x @ W&#7511; + b</text><text x="240" y="194" text-anchor="middle" font-size="11" fill="#475569">(..., in) &#8594; (..., out)</text><text x="240" y="212" text-anchor="middle" font-size="11" fill="#475569">the bias broadcasts on the last axis</text></g>
+<g data-wf-part="lin"><path d="M330 174 H374" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfo-green)"/></g>
+<g data-wf-part="ln"><rect x="380" y="124" width="200" height="100" rx="10" fill="#FFFFFF" stroke="#334155" stroke-width="2"/><text x="480" y="150" text-anchor="middle" font-size="15" font-weight="700" fill="#17212B">layer_norm</text><text x="480" y="172" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#17212B">axis = -1</text><text x="480" y="190" text-anchor="middle" font-size="11" fill="#475569">mean 0, variance 1</text><text x="480" y="208" text-anchor="middle" font-size="11" fill="#475569">then &#215; &#947; + &#946;</text></g>
+<g data-wf-part="ln"><path d="M580 174 H624" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfo-green)"/></g>
+<g data-wf-part="gelu"><rect x="630" y="124" width="200" height="100" rx="10" fill="#FFFFFF" stroke="#334155" stroke-width="2"/><text x="730" y="150" text-anchor="middle" font-size="15" font-weight="700" fill="#17212B">gelu</text><text x="730" y="172" text-anchor="middle" font-size="12" font-family="ui-monospace,Menlo,Consolas,monospace" fill="#17212B">0.5x(1+tanh(&#8230;))</text><text x="730" y="194" text-anchor="middle" font-size="11" fill="#475569">element-wise</text></g>
+<g data-wf-part="gelu"><path d="M830 174 H874" stroke="#16A34A" stroke-width="3" fill="none" marker-end="url(#wfo-green)"/></g>
+<rect x="880" y="146" width="100" height="56" rx="10" fill="#F8FAFC" stroke="#64748B" stroke-width="1.8"/><text x="930" y="169" text-anchor="middle" font-size="14" font-weight="700" fill="#334155">output</text><text x="930" y="189" text-anchor="middle" font-size="12" fill="#475569">(..., d)</text>
+</g>
+</svg>
+</div>
+<div class="wf-panel">
+<p class="wf-hint">Hover over or select an operation to locate it in the chain. Keyboard: <kbd>Tab</kbd> to browse, <kbd>Enter</kbd> to pin, <kbd>Esc</kbd> to release.</p>
+<div class="wf-chips" role="group" aria-label="gpt_ops.py operations">
+<button type="button" class="wf-chip" data-wf-links="init" data-wf-note="Draws W with shape (out, in), standard deviation 0.02, and a zero bias: at initialization every layer is a pure linear map with no learned offset.">_init_matrix / _init_linear</button>
+<button type="button" class="wf-chip" data-wf-links="lin" data-wf-note="x (..., in) @ Wᵀ yields (..., out): only the last axis is replaced; the (out,) bias broadcasts onto it. The same contract holds for Q, K, V, O and the MLP.">linear</button>
+<button type="button" class="wf-chip" data-wf-links="ln" data-wf-note="Statistics of the last axis, computed per position: zero mean, unit variance, then a learned affine transform (γ, β); eps floors the denominator.">layer_norm</button>
+<button type="button" class="wf-chip" data-wf-links="gelu" data-wf-note="Element-wise, GPT-2’s tanh approximation: smooth near zero, within roughly 10⁻⁴ of the exact erf definition. The shape never changes.">gelu</button>
+</div>
+<p class="wf-note" aria-live="polite">Four operations, one shared contract: batch axes pass untouched, only the last axis is transformed — by a projection, a normalization, or an activation. This contract is what makes the block’s shapes predictable.</p>
+</div>
+</div>
+<figcaption class="wf-legend">
+<span class="wf-key"><span class="wf-swatch" style="background:#DCFCE7;border-color:#16A34A"></span>data flow</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#F5F3FF;border-color:#8B5CF6"></span>drawn parameters (W, b)</span>
+<span class="wf-key"><span class="wf-swatch" style="background:#FFFFFF;border-color:#334155"></span>operation</span>
+</figcaption>
+</figure>
+<script src="../includes/walkthrough-figures.js" defer></script>
+```
+
+## Initializing: drawing small weights
+
+```python
+def _init_matrix(
+    rng: np.random.Generator,
+    shape: tuple[int, int],
+    std: float = 0.02,
+) -> FloatArray:
+    return np.asarray(rng.normal(0.0, std, shape), dtype=np.float64)
+```
+
+- `rng` comes **from the caller**: the model creates one generator from the seed and hands it around — that is what makes the whole model's initialization reproducible from a single seed.
+- `std=0.02` is the **GPT-2** convention: small weights keep initial activations near the embedding scale, so the first pass neither saturates nor explodes. A convention, not a law.
+
+```python
+def _init_linear(
+    rng: np.random.Generator,
+    out_features: int,
+    in_features: int,
+    std: float,
+) -> tuple[FloatArray, FloatArray]:
+    weight = _init_matrix(rng, (out_features, in_features), std)
+    bias = np.zeros(out_features, dtype=np.float64)
+    return weight, bias
+```
+
+- The weight has shape `(out, in)` with a **zero** bias: at initialization the layer is a pure linear map with no learned shift. The parameter count in `num_parameters` stays honest.
+
+## Projecting: `y = x @ W^T + b`
+
+```python
+def linear(x: FloatArray, weight: FloatArray, bias: FloatArray) -> FloatArray:
+    return np.asarray(x @ weight.T + bias, dtype=np.float64)
+```
+
+- **Why transpose?** The weight is stored `(out, in)` — the same convention as `torch.nn.Linear` — so both widths are readable in every array's shape, and the code maps directly onto PyTorch.
+- **Why does the bias broadcast?** `bias` has shape `(out,)`; NumPy adds it to the **last axis** of the product, which is exactly the output axis. The same line works for `(in,)`, `(B, T, in)`, or any number of leading batch axes.
+
+::: {.callout-tip}
+**Shape rule to remember:** `x` of shape `(..., in)` and `weight` of shape `(out, in)` give `(..., out)`. Every projection in the block follows this contract.
+:::
+
+## Normalizing: layer norm per position
+
+```python
+    mean = x.mean(axis=-1, keepdims=True)
+    variance = x.var(axis=-1, keepdims=True)
+    normalized = (x - mean) / np.sqrt(variance + eps)
+    return np.asarray(normalized * gamma + beta, dtype=np.float64)
+```
+
+- **`axis=-1`**: the statistics cover each position's `d`-dimensional vector, independent of batch and sequence — that is what makes the operation *per-position*, unlike batch normalization.
+- **`keepdims=True`**: mean and variance keep shape `(..., 1)` and broadcast back over the embedding axis with no reshaping.
+- **`eps` inside the sqrt**: if a position's activations were constant, the variance would be zero and the division would explode; `eps` caps the denominator at `sqrt(eps)`. A numerical guard, not a modelling choice.
+- **Learned `gamma` and `beta`**: normalization forces zero mean and unit variance; the affine pair gives the model back the freedom to temper that constraint. They start at identity (ones and zeros).
+
+## Activating: approximate GELU
+
+```python
+    inner = math.sqrt(2.0 / math.pi) * (x + 0.044715 * x**3)
+    return np.asarray(0.5 * x * (1.0 + np.tanh(inner)), dtype=np.float64)
+```
+
+- The exact definition, `x * Phi(x)` with the normal CDF, needs `erf` — absent from base NumPy (SciPy would be required).
+- The **tanh approximation** is the one GPT-2 used: it differs from the exact function by a 1e-4-order amount for moderate inputs, and it is the formula learners meet in real GPT-2 source code.
+- Unlike ReLU, GELU is **smooth**: near zero, a small negative input passes with a small weight instead of being clipped to exactly zero.
+
+::: {.callout-warning}
+**Common misconceptions.** (1) Layer norm is not batch norm: it uses no statistic of the batch or the sequence. (2) GELU is not "a universally better ReLU": it is a GPT-style convention, chosen here precisely because GPT-2 uses it.
+:::
+
+## What the tests verify
+
+[`tests/unit/test_gpt_ops.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt_ops.py) checks each promise: `linear` equals the manual `x @ W.T + b` and broadcasts the bias; `layer_norm` normalizes then rescales, with zero mean and near-unit variance under the identity affine; `gelu(0) = 0` and the approximation stays within 1e-3 of the exact `erf` definition; initialization is reproducible at equal seeds.
+
+## Exercises
+
+1. An `x` of shape `(3, 7, 12)` passes through `linear` with `weight` of shape `(8, 12)`: what is the output shape?
+2. What happens when normalizing a position whose 16 activations are all identical? What role does `eps` play?
+
+<details>
+<summary>Show answers and reasoning</summary>
+
+1. `(3, 7, 8)`: the last axis (12) is replaced by the output width (8); the batch axes (3, 7) are preserved.
+2. The variance is exactly 0; without `eps` the division would produce `inf` or `nan`. With `eps`, the denominator is `sqrt(eps)` and the output stays finite (close to the mean, rescaled by `gamma` and `beta`).
+</details>
+
+## Connections
+
+- **Previous stop**: [GPT configuration (`gpt_config.py`)](gpt-config-walkthrough.qmd) — the dimensions used here.
+- **Next stop**: [the Transformer block (`transformer_block.py`)](transformer-block-walkthrough.qmd) — which consumes these blocks.
+- **Concept pages**: [GPT and the Transformer](transformer.qmd), [tensors and shapes](tensors.qmd).
+- **Back to the path**: [Build a small GPT](build-path.qmd).
+- **Source**: [`gpt_ops.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt_ops.py) · **Tests**: [`test_gpt_ops.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt_ops.py).
+
+::: {.language-switch}
+**Language:** [Français](../fr/gpt-ops-walkthrough.qmd) · [English](gpt-ops-walkthrough.qmd)
+:::

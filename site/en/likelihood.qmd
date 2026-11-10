@@ -1,0 +1,115 @@
+---
+title: "Likelihood and log-likelihood"
+subtitle: "Scoring observed tokens and connecting likelihood to loss"
+keywords: ["type:concept-lesson", "destination:understand", "topic:vraisemblance", "level:core", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/likelihood"
+summary: "Explains how to score an already observed token sequence by combining its conditional probabilities. This branch evaluates a known continuation rather than selecting a new one."
+scope: "Define the probability assigned to an observed token sequence under fixed model parameters, using the autoregressive chain-rule factorization and its logarithm; distinguish sequence likelihood and log-likelihood from one-step predictive uncertainty, cross-entropy as a target-distribution measure, and dataset-level loss reduction."
+purpose: "Compute a sequence likelihood from conditional token probabilities, convert products to summed log-likelihoods, and explain why maximizing log-likelihood corresponds to minimizing negative log-likelihood for fixed observations."
+suggested_route:
+  previous: "en/entropy"
+  next: "en/cross-entropy"
+hierarchy:
+  parents: ["en/probabilities"]
+  children: []
+related: ["en/entropy", "en/cross-entropy"]
+tags: ["type:concept-lesson", "destination:understand", "topic:vraisemblance", "level:core", "language:en", "status:published"]
+-->
+
+
+{{< include ../includes/generated-guided-context-en-likelihood.qmd >}}
+::: {.chapter-lead}
+Likelihood measures the probability of observed data for fixed parameters. In autoregressive language modeling, it is built from the conditional probabilities of each target token.
+:::
+
+::: {.callout-tip title="The one-minute mental model"}
+- **Scoring:** the model receives the reference prefix and assigns probability to the observed target; no generated token is fed back and parameters remain fixed.
+- **Sequence:** the chain rule gives $P_\theta(x_{1:T})=\prod_t P_\theta(x_t\mid x_{<t})$; the logarithm turns this product into a sum.
+- **Objective:** NLL is $-\log P_\theta(x_{1:T})$. For the same observations and positions, maximizing log-likelihood is equivalent to minimizing NLL.
+- **Comparison:** state the tokenizer, included positions, and sum or per-token mean; these conventions change the scale.
+
+**Check yourself:** why is scoring an observed sequence neither generation nor a parameter update?
+:::
+
+## Autoregressive factorization
+
+The derivation of this factorization from the chain rule, and the interpretation of conditional probabilities, are developed in [the mathematical formalization of language modeling](language-modeling-math.qmd). Here, the focus is on likelihood as an evaluation criterion for observed sequences and on its connection to the loss.
+
+For a sequence $x_{1:T}$:
+
+$$
+P_\theta(x_{1:T})=\prod_{t=1}^{T}P_\theta(x_t\mid x_{<t}).
+$$
+
+### Scoring an observed sequence: the prefix is known
+
+At each position, the model receives the observed prefix $x_{<t}$ and assigns a probability to the target token $x_t$. This conditioning on reference tokens is also used as *teacher forcing* during training (see [training examples](training-examples.qmd)). Here, it is used only to **score** the sequence: no generated token is selected, no model prediction is fed back, and the parameters $\theta$ remain fixed. For a sequence that fits within the context window, the model can compute logits for all positions in one *forward pass*: observed prefixes are supplied together, while the causal mask prevents each position from reading later tokens. Beyond that window, scoring requires a windowing or stride strategy and an explicit convention for the prefixes actually available and the targets counted.
+
+This differs from generation, which feeds the model-selected token back before the next step. It also differs from training: scoring computes no gradients and makes no parameter updates.
+
+For multiple independent dataset sequences, total likelihood is the product of each sequence probability. Products of many numbers at most one become tiny quickly, so we use log-likelihood:
+
+$$
+\log P_\theta(x_{1:T})=
+\sum_{t=1}^{T}\log P_\theta(x_t\mid x_{<t}).
+$$
+
+The logarithm turns products into sums, which are more stable and convenient to compute.
+
+## From likelihood to loss
+
+Negative log-likelihood $\operatorname{NLL}$ is:
+
+$$
+\operatorname{NLL}(\theta)=-\log P_\theta(x_{1:T}).
+$$
+
+For fixed sequences and the same included positions, maximizing log-likelihood is equivalent to minimizing NLL. Averaging per token is a common scaling, useful for comparing sequences of different lengths, but it is not the same as the raw sum.
+
+## Example
+
+If the probabilities assigned to three observed tokens are $(0.5, 0.25, 0.8)$, then the sequence likelihood (under the model and prefix) is $0.1$, and NLL is $-\log(0.1)\approx2.303$. Log-likelihood is approximately $-2.303$.
+
+::: {.callout-warning title="Misconceptions"}
+- **“High likelihood proves the model is true.”** No: it indicates probabilistic fit to selected observations relative to a model, tokenizer, and data distribution.
+- **“Token probabilities are independent.”** They are conditional on the prefix; the product follows from the chain rule, not independence.
+- **“NLL is comparable without specifying the tokenizer.”** Not always: different segmentations change the number and granularity of evaluated events.
+:::
+
+::: {.self-check}
+## Check your understanding
+
+[Practice with the mathematical foundations collection](exercises.qmd#foundations), including worked exercises on negative log-likelihood and perplexity.
+
+1. Why use log-likelihood rather than the direct product?
+2. Which rule factorizes a sequence probability into conditional probabilities? Does it require token independence?
+3. Why document the tokenizer and NLL reduction when comparing models?
+
+<details>
+<summary>Show answers</summary>
+
+1. A product of many probabilities can become extremely small and difficult to represent numerically. The logarithm turns it into a sum, which is more stable and easier to optimize. Because the logarithm is increasing, maximizing log-likelihood preserves the ranking induced by likelihood.
+2. The chain rule factorizes any joint probability into successive conditional probabilities. It does not require independence between tokens. Each term is conditioned on the preceding prefix. An independence assumption between separate dataset sequences, sometimes used when constructing total likelihood, is a different issue.
+3. The tokenizer determines which events are evaluated and their granularity. Summed NLL also depends on token count; averaging per token changes the scale and must be distinguished from the sum. Comparisons are meaningful only when these conventions and the evaluated data are compatible.
+
+**Numerical transfer:** for the example probabilities $(0.5, 0.25, 0.8)$, likelihood is $0.1$, total NLL is approximately $2.303$ nats, and mean NLL per token is approximately $0.768$ nat. This mean is the average of the one-hot target cross-entropies at the three positions; a batch loss then adds an aggregation and masking convention.
+
+</details>
+
+**Related connection to the aggregated objective:** [Loss](loss.qmd).
+:::
+
+## Further reading
+
+- [Goodfellow, Bengio, and Courville — *Deep Learning*, §5.5: Maximum Likelihood Estimation](https://www.deeplearningbook.org/contents/ml.html): a general mathematical treatment of likelihood, log-likelihood, and maximum-likelihood estimation. The autoregressive factorization above applies that general framework to token sequences.
+
+{{< include ../includes/generated-suggested-route-en-likelihood.qmd >}}
+
+:::: {.language-switch}
+[Français](../fr/vraisemblance.qmd) · [English](likelihood.qmd)
+::::

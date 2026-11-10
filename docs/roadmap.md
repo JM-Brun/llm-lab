@@ -1,0 +1,292 @@
+# Repository roadmap
+
+> **Execution tracking:** use the [backlog dashboard](backlog-dashboard.md) for live GitHub issue filters and dated handoffs. The [remaining-work register](work-backlog-status.md) is a dated planning snapshot; GitHub issues remain authoritative. This document is the longer-term learning and project roadmap.
+
+This roadmap prioritizes **validating and improving the knowledge already present**. Public-page structure and review should follow the shared [reader-experience and editorial method](reader-experience-and-editorial-method.md), which defines progressive disclosure and non-linear navigation. Do not add implementations, modules, pages, or experiments merely to advance a roadmap. A topic is not complete because it is documented, because tests pass, or because an experiment runs: it requires accurate explanations, explicit assumptions and counterexamples, and demonstrated understanding recorded in the private `career-knowledge` inventory. For implementation, validate only the **specific minimum knowledge needed for the next step**; introduce tensor operations, probability and gradients in context. Advanced mathematics and general tensor theory are optional deep dives, not blanket prerequisites for building a small GPT. The page-by-page boundary is documented in [content-section-mapping.md](content-section-mapping.md).
+
+## Main learner journey audit — 2026-11-05
+
+The focused synthesis of the learner-facing route, Build scope, transfer evidence and existing owner issues is recorded in [docs/learner-journey-audit-2026-11-05.md](learner-journey-audit-2026-11-05.md). It is an audit baseline, not a replacement roadmap or a new issue hierarchy. Existing work remains with #130, #225, #355, #415, #78, #220, #447 and the bounded browser-review issues. The audit explicitly separates design coherence, operational/browser validation and evidence of learner mastery.
+
+## Current state
+
+The [project status](project-status.md) is the current inventory of implemented, tested, demonstrated, and planned work. The dated material below preserves the 2026-10-28 review as history; its implementation and gate statements are not a current status source.
+
+### Historical snapshot (reviewed 2026-10-28)
+
+The learning budget is capped at **five focused hours per week, with no session longer than 60 minutes**. Calendar estimates below are sequencing aids, not deadlines; a module remains open until its evidence criteria are met. Do not compensate for missed sessions by extending another day.
+
+### Implemented in the repository
+- A Quarto site in French and English, with canonical pages for mathematical foundations, entropy/cross-entropy, attention, cosine similarity, embedding-space geometry, positional encoding/RoPE, and the embedding-linearity hypothesis.
+- A bilingual glossary and a sourced, selective history of the Transformer architecture.
+- Control questions in the core probability/loss/gradient pages with answers hidden behind native disclosure controls.
+- A small NumPy cross-entropy implementation and analytical gradient, with unit tests including finite-difference comparison.
+- CI checks for Ruff formatting/lint, mypy, pytest, and a separate Quarto render workflow; the rendered-site workflow also checks local HTML links and fragment identifiers.
+- Written conventions for the learning path, experiment protocol, mathematical foundations, and reference provenance.
+
+### Not yet demonstrated
+- A complete tokenizer, Transformer block, or tiny GPT implementation in `src/llm_lab`.
+- A training run with a saved configuration, validation curves, generated examples, and error analysis.
+- End-to-end invariance tests for causal attention.
+- Reproducible experiments behind the cosine-similarity and feature-linearity articles.
+- Browser-based visual/accessibility review and external-reference availability/relevance checks. Local rendered-site file and fragment links are now checked in CI.
+- A committed `uv.lock` at the reviewed base snapshot; the current setup can resolve dependencies during CI, but it does not yet guarantee the same locked dependency graph across runs.
+- An explicit repository licence. Do not infer permission to reuse the code or content.
+
+## UX and visual-system track — Green identity
+
+**Decision (2026-10-30):** green is the primary brand colour of LLM Lab. This evolves the existing restrained green/retro-computing palette; it does not switch to a blue-led interface. The implementation contract and rationale are documented in [the visual design system](design-system.md).
+
+This track improves presentation and discoverability without changing scientific scope, inventing implementation status, or displacing the knowledge-validation gate above.
+
+### Sequence
+
+Implementation and validation are split across existing owner issues to avoid parallel/duplicated work: [#191 — validate the green design system across the rendered bilingual site](https://github.com/JM-Brun/llm-lab/issues/191), [#154 — homepage orientation and system diagram](https://github.com/JM-Brun/llm-lab/issues/154), and [#130 — high-level learning-design/navigation audit](https://github.com/JM-Brun/llm-lab/issues/130). PR [#189](https://github.com/JM-Brun/llm-lab/pull/189) establishes the tokens and written contract; it does not complete their rendered-site validation.
+
+1. **Green design tokens and theme coherence (P0).** Use the documented green palette consistently across Quarto navigation, links, primary actions, focus states, cards, diagrams, and callouts. Keep reading surfaces neutral; reserve amber/red/blue/violet for semantic states or data categories. Check contrast rather than relying on hue alone.
+2. **Homepage information hierarchy (P0).** Improve the first screen, make the learning proposition and entry routes immediately legible, and expose the existing GPT/Transformer learning map without implying planned features already exist. Preserve French/English parity.
+3. **Navigation and wayfinding (P0).** Simplify top-level navigation while retaining the detailed sidebar; add contextual routes and breadcrumbs only where supported by Quarto. Avoid duplicating the same hierarchy.
+4. **Reusable page patterns (P1).** Refine overview, concept, mathematical derivation, implementation, experiment, and critical-review page patterns. Do not impose a universal template where it obscures the page's purpose.
+5. **One validated interactive exemplar (P1).** Select an existing, knowledge-validated concept before building an explorer. Specify the learning question, controls, computed quantities, shapes/units, expected observations, limitations, fallback, and tests. Reuse Python as the reference implementation where practical; avoid duplicate Python and JavaScript calculations without a documented reason.
+6. **Progressive expansion (P2).** Extend interactions only after the exemplar passes scientific, accessibility, responsive, performance, and maintenance review.
+
+### UX track acceptance criteria
+
+- The brand reads as green at first glance; the navbar is no longer blue-led.
+- Green is used consistently but not as a large-area reading background.
+- Text contrast meets WCAG 2.2 AA (4.5:1 body text; 3:1 qualifying large text); meaningful UI/graphic components meet applicable 3:1 requirements.
+- Colour is never the sole carrier of meaning.
+- Keyboard focus is visible; reduced-motion preferences are respected; interactive content has a static or textual fallback.
+- French and English pages retain equivalent structure, claims, and navigation.
+- Desktop, tablet, and narrow mobile layouts are inspected from rendered output.
+- Quarto rendering and existing local-link checks pass.
+- New interactions are not labelled implemented until their behavior and tests exist; diagrams are not presented as evidence of a mathematical property.
+
+### Explicitly out of scope
+
+- Replacing Quarto or rebuilding the site as a JavaScript application.
+- Copying Transformer Explainer's interface or reproducing its model-specific implementation.
+- Adding multiple interactive explorers before validating one end-to-end.
+- Reorganizing or deleting scientific content solely to simplify the menu.
+- Treating visual polish as evidence of conceptual mastery or scientific validation.
+
+
+## Prioritized plan
+
+> **Priority reconciliation — 2026-11-09:** the P0/P1 headings below preserve the 2026-10-28 planning rationale; they are not live GitHub priority labels. The current live execution order, issue labels and dependency gates are in [the backlog dashboard](backlog-dashboard.md) and [the 2026-11-09 handoff](next-work-handoff-2026-11-09.md). Current live state has no P0 issue. Do not treat the historical P0 heading below as an active P0 task.
+
+### Historical priority — audit and validate existing knowledge (2026-10-28 baseline)
+**Goal:** improve the quality and teachability of existing material without increasing the repository's scope.
+
+Tasks:
+1. Review each existing explanation for factual accuracy, hidden assumptions, scope conditions, and claims stronger than the cited evidence supports.
+2. Identify the most plausible misconception for each core concept and correct it in the existing explanation rather than adding a separate page.
+3. Add or sharpen a counterexample only where it distinguishes two explanations that otherwise sound equally plausible.
+4. Check whether French and English versions preserve the same qualifications and limits.
+5. Use short, unfamiliar transfer questions to assess understanding; record mastery evidence privately in `career-knowledge`, not in the public portfolio.
+6. Fix only defects found by this audit. Do not start new implementation work while relevant prerequisite knowledge remains unvalidated.
+
+**Exit criteria**
+- Important claims have a clear scope and support from relevant sources.
+- Common misconceptions and at least one discriminating counterexample are addressed where useful.
+- The learner can explain the concept, identify when it does not apply, and transfer it to a new case.
+- `career-knowledge` records the evidence needed for mastery; a passing test or a polished page alone is insufficient.
+
+#### Latest focused audit — core probability and loss chain (2026-10-27)
+
+A textual, bilingual review of `site/fr/entropy.qmd`, `site/en/entropy.qmd`, `site/fr/cross-entropy.qmd`, and `site/en/cross-entropy.qmd` has been completed against the current public files. This is not a browser-render, external-link, or mastery review.
+
+- **Entropy:** the two language versions preserve the same core claims: finite-vocabulary bound in nats, the \(0\log 0=0\) convention, a checkable numerical example, predictive entropy versus observed-token surprisal, sequence NLL, temperature, and limits concerning truth/calibration and tokenizer-dependent comparisons.
+- **Cross-entropy:** the two versions preserve the one-hot token objective, normalized soft-target formulation, KL identity and direction, zero-support caveat, target/logit alignment, masking and reduction semantics, perplexity convention, and the one-hot logit-gradient derivation.
+- **Logits/probabilities:** a duplicated set of self-check questions in the English logits page was removed on this branch; no mathematical correction was identified in those page pairs.
+- **Likelihood/loss:** the likelihood pages remain aligned. The loss pages had duplicated English self-checks, a missing tensor-navigation link, and an ambiguous perplexity/log-base caveat. The branch consolidates the self-check, restores the link, defines the loss notation, and states the natural-log and base-2 perplexity formulas explicitly.
+- **Gradients:** the English page also duplicated its self-check. The branch consolidates it; the textual review found no justified change to the chain-rule or finite-difference equations.
+- **Corrections so far are editorial/mathematical clarification, not mastery evidence.** In particular, the KL derivation remains because the page uses it to explain soft targets and the relationship between cross-entropy and KL; this is not a claim that the entire treatment has passed independent scientific review.
+- **Still open:** actual browser review of MathJax and responsive layout; external-reference availability/relevance; private knowledge-transfer questions and evidence. Do not mark these concepts acquired from this audit alone.
+
+**Next step (updated 2026-10-29):** the active text-to-embedding example executes in CI from both language versions using pinned documentation-only `tiktoken==0.14.0` ([PR #120](https://github.com/JM-Brun/llm-lab/pull/120); Python CI and Quarto render/local-link checks passed). The first source-by-source audit and bilingual resource corrections are proposed in replacement [PR #123](https://github.com/JM-Brun/llm-lab/pull/123), which supersedes conflicted [PR #121](https://github.com/JM-Brun/llm-lab/pull/121) (closed, not merged). The replacement branch's Python CI and Quarto render/local-link checks both passed; this does not complete browser review or the full source inventory. Both language versions warn about the observed Cornell visualizer frequency-display inconsistency, and the English tokenizer-strategies page links to the English Hugging Face BPE lesson. The Müller–Steinbach BPE Explainer is linked externally only because reuse rights were not verified; the inaccessible Gage source, unwatched Karpathy video, and unchecked Raschka notebook cells remain explicit gaps. Remaining: review PR #123's diff, inspect published EN/FR pages and SVGs at desktop/mobile widths, finish remaining source checks, then collect private transfer-question evidence. Do not mark page quality or learner mastery complete without evidence.
+
+### Historical priority — keep the existing learning experience dependable (2026-10-28 baseline)
+**Goal:** ensure the existing site and numerical exercise are correct, navigable, and easy to reproduce.
+
+Tasks:
+1. Render the full Quarto site and inspect both languages at desktop and mobile widths.
+2. Rely on the rendered-site CI checker for local file/fragment links; manually inspect external references, image loading, alternative text, headings, and rendered mathematics.
+3. Fix notation inconsistencies in the mathematical foundations and attention self-checks.
+4. Link the website, learning path, reference list, and this roadmap consistently.
+5. Record reproducibility and accessibility defects found during review, but defer dependency-locking changes and new test helpers until the knowledge-validation gate is met.
+6. Do not add a causal-mask helper or attention implementation as part of this priority; first validate the existing explanation of causality and its failure cases.
+
+**Acceptance criteria**
+- `quarto render site` succeeds from a clean checkout.
+- `uv sync --locked --dev`, Ruff, mypy, and pytest pass.
+- The rendered-site local-link check passes with no known broken local file or fragment links; externally hosted images have a text alternative and source attribution.
+- The site distinguishes existing implementations from planned work.
+
+### Deferred — Mathematical and numerical foundations
+**Goal:** build a small reference implementation with reliable numerical checks before model complexity grows.
+
+Tasks:
+1. Consolidate validation shared by loss and gradient functions without obscuring the mathematics.
+2. Test invariance of cross-entropy to adding a constant to every logit in a row.
+3. Test gradient row sums, expected shapes, finite outputs, and extreme but valid logits.
+4. Add a small gradient-check utility or a clearly documented test helper.
+5. Document dtype, reduction convention, numerical tolerances, and finite-difference limitations.
+
+**Acceptance criteria**
+- Known-value, edge-case, property, and gradient tests pass.
+- Tests explain what each property establishes and what it does not.
+- The implementation remains NumPy-only and CPU-friendly.
+
+### Deferred — Causal attention implementation
+**Goal:** turn the current explanatory chapter into an executable, tested component.
+
+Tasks:
+1. Add a NumPy reference for causal masking and scaled dot-product attention, keeping it deliberately small.
+2. Specify tensor shapes and whether masks are boolean or additive.
+3. Test shape errors, finite outputs, row normalization, and masked probability mass.
+4. Test the defining causal invariant: changing a future token must not change earlier-position outputs.
+5. Compare the reference against PyTorch scaled dot-product attention on matching inputs and tolerances.
+6. Extend the chapter in French and English with links to the implementation and tests.
+
+**Acceptance criteria**
+- Tests demonstrate both local mask behavior and end-to-end causality.
+- Reference-vs-framework differences are explained, not hidden behind loose tolerances.
+- No performance claim is made without a benchmark.
+
+### Deferred — Tokenization, data windows, and a tiny Transformer
+**Goal:** build the smallest end-to-end autoregressive model whose data flow can be inspected.
+
+Tasks:
+1. Define a deterministic tokenizer/data interface and document any simplifications.
+2. Create next-token windows with explicit input/target shifting and split-before-fitting rules.
+3. Implement embeddings, positional information, attention, residual connections, normalization, and feed-forward layers in small modules.
+4. Add shape, gradient, causal-leakage, and tiny-batch overfit tests.
+5. Run a CPU-friendly training smoke test and save a configuration plus a small report.
+
+**Acceptance criteria**
+- Data windows and targets can be inspected by hand.
+- No train/validation overlap is introduced by windowing.
+- A tiny batch can be overfit as a pipeline check; this is not presented as evidence of language quality.
+- A clean command reproduces the smoke test.
+
+### Deferred — Controlled experiments on representation geometry
+**Goal:** move the cosine and linearity notes from literature review to evidence-producing investigations.
+
+**Experiment A — Embedding metrics**
+- Choose a documented sentence-embedding model and a fixed dataset/split such as STS Benchmark.
+- Compare cosine, dot product, and Euclidean distance under explicit normalization conditions.
+- Report Spearman/Pearson correlation for similarity prediction and Recall@k/MRR/nDCG for retrieval where relevant.
+- Measure vector norms, similarity distributions, anisotropy diagnostics, and neighbour hubness.
+- Inspect false positives/negatives and repeat across at least one model or data slice.
+- Do not conclude that one metric is universally best from one dataset.
+
+**Experiment B — Geometry and linear probes**
+- Use a synthetic dataset first: linearly separable data, XOR, and a periodic/circular feature.
+- Compare linear and nonlinear probes under controlled sample size, regularization, and held-out compositions.
+- If a pretrained language model is added, pin its revision and tokenizer, define the activation layer and feature label, and separate training, validation, and test examples.
+- Include control tasks and intervention tests where feasible; probe accuracy alone is not evidence of causal use.
+- Report uncertainty and failure cases, not only headline accuracy.
+
+**Acceptance criteria**
+- Each experiment has a fixed config/seed, data provenance, baseline, metrics, machine-readable output, and report.
+- The report distinguishes observed results, interpretation, and hypotheses.
+- Data/model download requirements and compute costs are explicit.
+
+### P5 — Training, fine-tuning, and evaluation
+**Goal:** add model training only after the foundational tests and data contracts are stable.
+
+Order:
+1. Tiny GPT pre-training with train/validation curves and generation examples.
+2. Reference comparison against a trusted implementation with matching tokenizer, architecture, weights, and numerical conditions.
+3. Small SFT run with held-out evaluation and example-level error analysis.
+4. LoRA and quantization comparisons, keeping adapter rank, target modules, quantization, memory, latency, and quality distinct.
+5. Preference optimization as a controlled experiment or simulation if realistic compute/data are unavailable.
+6. Robustness evaluation: leakage, distribution shift, calibration where relevant, prompt sensitivity, contamination, and failure slices.
+
+**Acceptance criteria**
+- Every run records model/tokenizer revisions, data provenance, config, seed, device, package versions, runtime, peak memory where available, and evaluation protocol.
+- Baselines and selection criteria are defined before inspecting final-test results.
+- Quality/cost trade-offs and regressions are reported.
+
+### P6 — Portfolio quality and maintenance
+**Goal:** make the repository legible to a technical reviewer or hiring team.
+
+Tasks:
+1. Add a concise project status page and one-command quick-start for each completed experiment.
+2. **Implemented:** CI checks local file and fragment links in rendered HTML. Continue reviewing external-reference availability/relevance separately; external URLs are intentionally excluded from this deterministic check.
+3. Perform an accessibility and mobile visual pass on the rendered site.
+4. Choose and add an explicit licence only after deciding the intended reuse terms for code and content.
+5. Publish reports with plots, exact commands, source links, and known limitations.
+6. Keep the roadmap honest: mark items complete only after acceptance criteria are satisfied.
+
+**Acceptance criteria**
+- A reviewer can reproduce the core numerical tests and at least one experiment from a clean checkout.
+- Every claimed feature is either implemented or labelled planned.
+- The repository clearly states licence and external asset provenance.
+
+## Suggested sequence at five hours per week
+
+Use five sessions of at most 60 minutes. A missed session is skipped or rescheduled into another available day; never exceed the daily cap. Keep the audit/retrieval loop active throughout rather than treating it as a one-time first week.
+
+| Approximate timebox | Focus | Deliverable |
+| --- | --- | --- |
+| Weeks 1–2 | P0 audit existing explanations and bilingual parity | Corrections to existing pages only, source/caveat review, unfamiliar transfer questions |
+| Weeks 3–4 | P1 numerical foundations, only where the audit exposes a real gap | Reviewed derivation or property-test plan; implementation only after the prerequisite knowledge gate |
+| Weeks 5–6 | Causal attention concepts and invariance reasoning | Written causal-invariance argument and counterexample; no implementation unless mastery evidence warrants it |
+| Weeks 7–8 | Representation geometry: critically audit existing cosine/linearity claims | Source-backed claim review and explicit limitations; no experiment until its question and protocol are justified |
+| Weeks 9–10 | Select one bounded experiment or one existing-page gap | One protocol with baseline, metrics, split policy, uncertainty and stop criteria |
+| Weeks 11–12 | Reproducibility, report, transfer test and public-site review | Reviewed evidence report, limitations, links and accessibility/render check |
+
+At five hours per week, the plan intentionally narrows throughput rather than weakening quality gates. Tokenizer, Transformer, pretraining, SFT/LoRA, preference optimization, and advanced architecture work remain deferred until the relevant concepts and the chosen project justify them. If acceptance criteria fail, extend the module instead of advancing on calendar time.
+
+## Content architecture and definition of done
+
+Use the same hierarchy as the site grows:
+
+- **Home page:** orientation, learning path, current status, and how to navigate; do not repeat chapter content.
+- **Synthesis page:** explain how multiple concepts interact and link to their canonical concept pages. Keep only the equations needed to understand the relationship.
+- **Concept page:** one canonical explanation of one concept. Other pages should link to it instead of copying its full definition.
+- **Code and evidence:** link to the existing implementation, tests, and experiment/report where they exist. If none exists, say so explicitly and link to the planned acceptance criteria. Never imply that illustrative pseudocode is production code or that planned work already exists.
+
+Every new or substantially revised concept page should meet these criteria:
+
+- [ ] State the question, scope, prerequisites, and an intuitive explanation before formal notation.
+- [ ] Explain the concept's provenance: original paper or technical source, historical context where known, and distinguish it from later variants.
+- [ ] Explain what problem it solves and why it is useful; state assumptions and trade-offs.
+- [ ] Define symbols, tensor dimensions, conventions, and equations precisely.
+- [ ] Give a small worked example or diagram with clear provenance.
+- [ ] Explain misconceptions and at least one discriminating counterexample where it improves understanding.
+- [ ] Link to related concepts and other disciplines when the connection is substantive; explain the mapping and its limits instead of adding a bare link. For example, an entropy connection should distinguish Shannon information entropy, statistical mechanics, and informal uses of the word.
+- [ ] Link to code, tests, and experiments when present, or explicitly state that they do not yet exist.
+- [ ] Include a primary paper or official technical source plus an accessible explanation where useful.
+- [ ] Keep French and English versions equivalent in claims, caveats, notation, and references.
+- [ ] Check internal links, rendered equations, mobile readability, and source attribution.
+- [ ] Use Quarto-supported inline math (`$...$`) and display math (`$$...$$`) delimiters consistently; check that display delimiters are paired and inspect the rendered output in both languages.
+
+Passing a render or test establishes only the property that was checked. It does not by itself establish conceptual mastery, general model quality, or an empirical claim.
+
+
+### Focused audit — causal-mask API semantics (2026-10-28)
+
+A source-level review of the English and French causal-masking pages found that both correctly described the additive causal mask and stated that no reusable attention implementation or end-to-end invariance test exists. One practical caveat was missing: boolean-mask polarity is not uniform across attention APIs. The official PyTorch `scaled_dot_product_attention` API treats `True` as allowed, while `MultiheadAttention.attn_mask` treats `True` as masked out. The proposed correction adds matching warnings and links to both official references. This does not establish end-to-end causality or replace rendered/browser review; Quarto and local-link CI must pass.
+
+
+### Focused bilingual audit — cosine-similarity navigation (2026-10-28)
+
+The source comparison found one small parity gap: the French cosine-similarity lesson linked to the embedding-space concept from its takeaway, while the English lesson did not. The English link has been added. This is a targeted navigation fix, not completion of the full semantic bilingual audit; rendered-site, external-reference, and responsive visual checks remain open.
+
+
+### Focused math-rendering audit — XOR example (2026-10-28)
+
+The bilingual embedding-linearity lessons used ordinary parentheses around several XOR expressions instead of inline-math delimiters. Both versions now use explicit Quarto-supported inline math for the variable domain, XOR function, coordinates, feature map, and product feature. The mathematical statements are unchanged; render validation remains required.
+
+
+### Focused numerical-scope audit — cosine reference snippet (2026-10-28)
+
+The bilingual cosine-similarity pages now distinguish the mathematical definition and zero-vector guard from production-grade numerical robustness. The illustrative direct NumPy norm/dot-product snippet can overflow or underflow on extreme finite magnitudes. No replacement implementation or benchmark was added; any future implementation should be accompanied by edge-case tests and an explicit dtype/tolerance contract.
+
+
+### Focused bilingual audit — embedding-space language link (2026-10-28)
+
+A stale note in the English embedding-space lesson claimed that positional encoding/RoPE was available only in French, despite the English counterpart already existing. The lesson now links directly to its English counterpart. This is a targeted navigation correction; the full bilingual semantic and rendered-page reviews remain open.

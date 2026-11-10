@@ -1,0 +1,196 @@
+---
+title: "From GPT-2 to contemporary LLM systems"
+subtitle: "Understanding the changes without reducing seven years of research to a sequence of versions"
+description: "An advanced synthesis of LLM evolution: scale, in-context learning, post-training, multimodality, reasoning, efficiency, and tool-using systems."
+keywords: ["type:concept-lesson", "destination:deepen", "topic:llm-evolution", "level:advanced", "language:en", "status:published"]
+lang: en
+---
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/llm-evolution"
+scope: "Cross-cutting synthesis of language-model evolution since GPT-2, distinguishing scale, in-context learning, post-training, multimodality, inference-time compute, efficiency, and system integration; it does not claim to document unpublished proprietary architectures."
+purpose: "Readers should be able to compare major changes without conflating them, distinguish model changes from changes in the surrounding system, and identify technical mechanisms for deeper study."
+domain: "scale-research"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/scaling-laws", "en/emergence", "en/in-context-learning", "en/hybrid-llm-architectures", "en/llm-computational-complexity", "en/llm-limits", "en/experimental-evaluation"]
+tags: ["type:concept-lesson", "destination:deepen", "topic:llm-evolution", "level:advanced", "language:en", "status:published"]
+-->
+
+::: {.chapter-lead}
+Between GPT-2 and contemporary LLM systems, progress cannot be reduced to increasing parameter counts or replacing one architecture with another. It combines several changes: scale and data, in-context learning, post-training, input and output modalities, additional inference-time compute, efficiency, and integration into systems that use tools. This page provides a cross-cutting framework; it is not a technical specification of proprietary models.
+:::
+
+## Read evolution along several axes
+
+A generation-by-generation comparison is useful for orientation, but it hides the fact that several dimensions evolve in parallel. At least six axes should be distinguished:
+
+1. **Scale and data** — parameters, training tokens, data quality and diversity, and compute budget.
+2. **Learning procedure** — pretraining, instruction tuning, preference learning, and other forms of post-training.
+3. **Architecture and efficiency** — attention, dense or expert-based architectures, cache management, memory costs, and latency.
+4. **Modalities** — processing text, images, audio, or other inputs and outputs.
+5. **Inference-time compute** — reasoning strategies, additional compute budgets, and verification.
+6. **Surrounding system** — tools, orchestration, routing, asynchronous execution, and control during generation.
+
+These axes are related but not interchangeable. An improvement observed in a product does not, by itself, establish a specific change to the neural network architecture.
+
+## Milestones: GPT-2 to GPT-6
+
+The table summarizes public information highlighted by the cited sources. It is not a controlled comparison: available information, evaluation protocols, and transparency differ across generations.
+
+| Generation | Publicly documented highlights | Main takeaway |
+|---|---|---|
+| **GPT-2 (2019)** | Autoregressive Transformer pretrained to predict the next token; the largest model in the study had 1.5 billion parameters. | Demonstrated the potential of large-scale pretraining and zero-shot transfer, before the conversational post-training practices that later became common. |
+| **GPT-3 (2020)** | 175 billion parameters; few-shot performance obtained by placing examples in the prompt, without updating weights for each evaluated task. | Made in-context learning a central property to study, distinct from fine-tuning. |
+| **GPT-4 (2023)** | Multimodal model accepting text and image inputs and producing text; iterative alignment and evaluation work. | Modalities and alignment became visible dimensions of progress beyond text prediction alone. |
+| **GPT-5 (2025)** | A unified system described as combining fast models and reasoning models, with a router selecting according to the request and its needs. | Reasoning and routing can be properties of system organization as well as of an individual network. |
+| **GPT-6 (2026)** | API documentation describes, among other features, asynchronous tool calling and *mid-turn steering* through the Responses API over WebSocket. | Interaction between the model, application, and tools becomes an important part of observable behavior. |
+
+**Reading caveat.** The ByteByteGo article is a useful pedagogical summary, but some of its statements compress complex topics. For example, GPT-2 already showed zero-shot transfer on some tasks; it would be inaccurate to say it could only continue text and had no question-answering capability. The GPT-3 paper explicitly documents few-shot use *without gradient updates*, whereas complete internal details of newer models are not all public.
+
+## 1. From scale to in-context learning
+
+Increasing model and corpus sizes contributed to improved measured performance on many tasks. But parameter count is only one dimension: token volume, data quality, training compute, architecture, and evaluation protocol also matter.
+
+GPT-3 made **in-context learning** (ICL) particularly visible: examples placed in the prompt can guide model behavior without updating its parameters. It is therefore not fine-tuning performed for every request.
+
+Further reading:
+- [Scaling laws](scaling-laws.qmd) — empirical relationships between parameters, data, compute, and loss.
+- [In-context learning](in-context-learning.qmd) — zero-shot, one-shot, few-shot, and generalization limits.
+- [Emergence](emergence.qmd) — the role of metrics, thresholds, and protocols in claims about emergent capabilities.
+
+## 2. From pretraining to post-training
+
+Pretraining learns statistical regularities from a corpus, often through autoregressive next-token prediction. By itself, it does not fully specify the conversational behavior expected from an assistant.
+
+**Post-training** groups several families of procedures that adapt a pretrained model to particular uses and preferences:
+
+- **Instruction tuning / SFT** (*supervised fine-tuning*): supervised adjustment on instruction-and-response examples.
+- **RLHF** (*reinforcement learning from human feedback*): use of human preferences, often represented by a reward model, in an optimization procedure.
+- **DPO** (*direct preference optimization*): direct optimization from preference data, without following exactly the classic pipeline involving a reward model and an RL loop.
+
+These methods are neither synonyms nor necessarily used together. Their details, variants, and trade-offs deserve dedicated lessons. Avoid attributing a specific method to a model generation when public documentation does not confirm it.
+
+Post-training does not replace the underlying predictive model: it changes the parameters or the way the model is trained in order to shape its outputs. For the underlying prediction examples and teacher forcing, see [training examples](training-examples.qmd) and [the mathematical chain of LLM training](mathematical-foundations.qmd).
+
+## 3. From text-only inputs to multimodal models
+
+A multimodal model processes more than one data type, such as text and images. This does not necessarily mean that it uses one shared representation or a uniform architecture for every modality.
+
+To understand a multimodal architecture, ask more specific questions:
+
+- How is each modality encoded?
+- At what level are representations combined?
+- Does interaction use cross-attention, shared tokens, or another interface?
+- Which modalities are accepted as inputs, and which can be produced as outputs?
+- Which evaluations actually measure multimodal capabilities?
+
+[Cross-attention](cross-attention.qmd) is an important mechanism to understand, but it is not a universal explanation of all multimodal architectures.
+
+## 4. From learned computation to inference-time compute
+
+Reasoning models highlight another dimension: spending more compute on solving a request, for example by generating intermediate steps, exploring several possibilities, or checking an answer.
+
+This is often called **inference-time compute** or *test-time compute*. It refers to compute used during model operation, not a weight update as in training.
+
+Distinguish:
+- reasoning capabilities learned in the parameters during training;
+- additional compute spent on a particular request;
+- search, verification, or selection mechanisms;
+- reasoning content exposed to a user, which is not necessarily a faithful trace of every internal computation.
+
+Increasing the inference budget can improve some performance measures, but it costs latency and compute and does not guarantee a correct answer.
+
+## 5. Architecture and efficiency: several independent levers
+
+The evolution of LLM systems does not mean that the dense Transformer has simply been replaced by one new architecture. Several variants address different constraints:
+
+- **Mixture of Experts (MoE)** activates a subset of experts for some tokens, with trade-offs involving capacity, routing, memory, and communication.
+- **GQA / MQA** reduce the number of key/value groups relative to standard multi-head attention, notably to reduce KV-cache memory costs.
+- **KV cache** avoids recomputing prefix keys and values at every decoding step.
+- **Speculative decoding** uses an auxiliary model or mechanism to propose tokens, which are then checked by the target model through a procedure designed to preserve the intended distribution.
+
+These techniques are not mutually exclusive and do not solve the same problem. Some target compute cost, others memory traffic, throughput, or latency.
+
+Further reading: [Hybrid architectures](hybrid-llm-architectures.qmd) and [Computational complexity and parallelism](llm-computational-complexity.qmd).
+
+## 6. From a model to a system that uses tools
+
+A model that can produce a tool call does not necessarily execute the requested operation itself. In a typical integration, the application receives the call, executes the tool, and sends its result back to the model.
+
+Agentic systems add an orchestration loop: interpret a goal, plan, call tools, inspect results, and possibly repeat. Distinguish:
+
+- **tool calling**: a structured representation of a requested action;
+- **tool execution**: the responsibility of the application or external service;
+- **orchestration**: management of calls, results, errors, retries, and task state;
+- **control**: the ability to modify or stop work and manage side effects.
+
+GPT-6 documentation illustrates two system capabilities:
+- asynchronous tool calling lets the model continue independent work while the application executes a tool;
+- *mid-turn steering* lets additional instructions be sent during a response over WebSocket. It does not rewrite output already emitted or cancel tools that have already started.
+
+These features do not mean the application delegates responsibility for execution to the model. Tools, permissions, results, and side effects remain the application's responsibility.
+
+## What this evolution does not establish
+
+The GPT-2 to GPT-6 milestones are not a controlled experiment. The models are not compared with identical data, compute, objectives, and protocols. Public information is also uneven: reports and system cards document some properties, but do not necessarily reveal parameter counts, data, detailed architectures, or training recipes.
+
+Avoid inferring a specific architectural mechanism from a generation name or a product capability. For every claim, ask:
+
+1. Is this a published model property, an API feature, or the author's interpretation?
+2. Which primary source documents it?
+3. Which metric and protocol support the capability claim?
+4. Can the model's contribution be separated from routing, tools, prompts, and the application?
+5. Which details remain unknown?
+
+## Synthesis
+
+LLM evolution is best read as the convergence of several axes, not as a simple succession of sizes or architectures:
+
+- pretraining and scale build base capabilities;
+- post-training shapes behavior;
+- context enables temporary adaptation without parameter updates;
+- multimodality broadens the kinds of information processed;
+- inference-time compute allocates additional resources to selected requests;
+- tools and orchestration turn the model into a component of a larger system.
+
+The most useful mental model is therefore **a predictive model at the core of a system**, whose observable capabilities also depend on its training, inference budget, interfaces, and execution environment.
+
+## References and resources
+
+### Pedagogical overview
+- ByteByteGo, [GPT-2 to GPT-6: What Actually Changed](https://blog.bytebytego.com/i/222752055/gpt-2-to-gpt-6-what-actually-changed) — starting point for this synthesis; specific claims are qualified and cross-checked below.
+
+### Primary sources and documentation
+- Radford et al. (2019), [Better Language Models and Their Implications](https://openai.com/index/better-language-models/) — GPT-2 overview.
+- Brown et al. (2020), [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) — GPT-3 and in-context learning.
+- Ouyang et al. (2022), [Training language models to follow instructions with human feedback](https://arxiv.org/abs/2203.02155) — supervised instruction tuning and RLHF.
+- Rafailov et al. (2023), [Direct Preference Optimization](https://arxiv.org/abs/2305.18290) — preference optimization without a separately trained reward model in the basic formulation.
+- Fedus et al. (2021), [Switch Transformers](https://arxiv.org/abs/2101.03961) — sparse mixture-of-experts routing.
+- Ainslie et al. (2023), [GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints](https://arxiv.org/abs/2305.13245) — grouped-query attention.
+- Leviathan et al. (2023), [Fast Inference from Transformers via Speculative Decoding](https://arxiv.org/abs/2211.17192) — speculative decoding.
+- OpenAI (2023), [GPT-4](https://openai.com/index/gpt-4-research/) — multimodal capabilities and alignment.
+- OpenAI (2025), [GPT-5 System Card](https://openai.com/index/gpt-5-system-card/) — fast models, reasoning, and routing.
+- OpenAI, [Using GPT-6](https://developers.openai.com/api/docs/guides/latest-model?model=gpt-6-astra) — documented GPT-6 API capabilities.
+- OpenAI, [Async tool calling](https://developers.openai.com/api/docs/guides/async-tool-calling) — asynchronous execution contract.
+- OpenAI, [Mid-turn steering](https://developers.openai.com/api/docs/guides/steering) — steering an ongoing response.
+
+::: {.self-check}
+## Check your understanding
+
+1. Why does GPT-3 illustrate in-context learning rather than fine-tuning for every few-shot task?
+2. Why should post-training not be confused with pretraining?
+3. An API exposes asynchronous tool calling: what remains the application's responsibility?
+4. Is a benchmark improvement enough to demonstrate an architectural change? Why?
+5. Classify MoE, KV cache, RLHF, and inference-time compute by their primary axis.
+
+[Exercises and practice](exercises.qmd).
+:::
+
+::: {.language-switch}
+**Language:** [Français](../fr/llm-evolution.qmd) · [English](llm-evolution.qmd)
+:::

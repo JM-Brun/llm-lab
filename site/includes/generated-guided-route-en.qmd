@@ -1,0 +1,153 @@
+## Discover the system {.guided-route-part #guided-part-discover}
+
+:::: {.guided-route-grid}
+
+::: {.guided-route-stage #guided-stage-orientation}
+
+### 01 · Place the system in context
+
+Understand what an LLM is and follow a complete generation loop as a black box with fixed parameters before studying its internal mechanisms.
+
+**Core pages**
+
+- [Overview: what is an LLM?](llm-overview.html)
+- [Generating text: inference step by step](generation.html)
+
+**Optional resources**
+
+- [Transformer architectures: encoder, encoder–decoder, and decoder](transformer-architectures.html)
+- [The training objective: guarantees and limits](llm-limits.html)
+
+:::
+
+::::
+
+## Understand how a prediction is computed {.guided-route-part #guided-part-prediction}
+
+:::: {.guided-route-grid}
+
+::: {.guided-route-stage #guided-stage-text-input}
+
+### 02 · From text to tokens
+
+Distinguish text, tokens, and token IDs that form the model's discrete input without needing to study segmentation algorithms.
+
+**Core pages**
+
+- [From text to tokens: representing language](text-data.html)
+
+**Optional resources**
+
+- [Tokenization strategies: granularity, algorithms, and trade-offs](tokenization-strategies.html)
+- [Unicode, UTF-8, and text normalization](unicode-text.html)
+- [Designing and evaluating a tokenizer](tokenizer-design-evaluation.html)
+
+:::
+
+::: {.guided-route-stage #guided-stage-representations}
+
+### 03 · From IDs to representations
+
+Trace embedding lookup and the addition of positional information, then distinguish initial states from contextualized representations.
+
+**Core pages**
+
+- [From token IDs to vectors: embeddings](embedding-space.html)
+- [Positional encoding: giving tokens an order](positional-encoding.html)
+- [Why can the same token have different contextualized representations?](contextualized-representations.html)
+
+**Optional resources**
+
+- [Tensors in a Transformer: shapes and axes](tensors.html)
+- [RoPE: geometry, derivation, and limitations](rope.html)
+
+:::
+
+::: {.guided-route-stage #guided-stage-computation}
+
+### 04 · Understand Transformer computation
+
+Connect Q/K/V projections, attention scores and weights, value aggregation, causal masking, and the other operations in a Transformer block.
+
+**Core pages**
+
+- [The Transformer in a GPT: architecture and computation](transformer.html)
+- [Queries, keys, and values (Q, K, V)](queries-keys-values.html)
+- [Scaled dot-product attention](scaled-dot-product-attention.html)
+- [Causal masking](causal-masking.html)
+
+**Optional resources**
+
+- [Cross-attention: connecting two sequences](cross-attention.html)
+- [Why scale attention scores?](attention-score-scaling.html)
+
+:::
+
+::: {.guided-route-stage #guided-stage-prediction}
+
+### 05 · From hidden states to the predictive distribution
+
+Trace the projection from final hidden states to logits and the conditional next-token distribution; interpret its entropy before any token selection or observed target.
+
+**Core pages**
+
+- [Logits: scores before normalization](logits.html)
+- [Output probabilities: from logits to tokens](probabilities.html)
+- [Entropy: uncertainty over the next token](entropy.html)
+
+:::
+
+::::
+
+## Understand the uses of a prediction {.guided-route-part #guided-part-usages}
+
+:::: {.guided-route-grid}
+
+::: {.guided-route-stage #guided-stage-inference}
+
+### 06 · Run inference and generate text
+
+Distinguish prompt prefill from iterative decode, select a token with a decoding policy, feed it back into the context, and stop generation without updating parameters.
+
+**Core pages**
+
+- [Generating text: inference step by step](generation.html) *(recap)*
+
+**Optional resources**
+
+- [Advanced decoding strategies](decoding-strategies.html)
+
+:::
+
+::: {.guided-route-stage #guided-stage-scoring}
+
+### 07 · Score observed tokens
+
+Evaluate the probability assigned to a known target, build a sequence likelihood, and connect negative log-likelihood to cross-entropy without selecting a token or changing parameters.
+
+**Core pages**
+
+- [Likelihood and log-likelihood](likelihood.html)
+- [Cross-entropy: the token-prediction objective](cross-entropy.html)
+
+:::
+
+::: {.guided-route-stage #guided-stage-training}
+
+### 08 · Learn and update parameters
+
+Connect observed targets to the aggregated loss, gradients, and parameter updates; understand teacher forcing conceptually without making shifted-example preparation a stage of the Theory path.
+
+**Core pages**
+
+- [Loss: from per-token penalty to training objective](loss.html)
+- [Gradients: connecting loss to parameters](gradients.html)
+
+**Optional resources**
+
+- [Cross-entropy: the token-prediction objective](cross-entropy.html) *(recap)*
+- [Scaling laws: parameters, data, and compute](scaling-laws.html)
+
+:::
+
+::::

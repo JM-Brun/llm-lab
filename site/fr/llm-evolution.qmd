@@ -1,0 +1,196 @@
+---
+title: "De GPT-2 aux systèmes LLM contemporains"
+subtitle: "Comprendre les évolutions sans réduire sept années de recherche à une succession de versions"
+description: "Synthèse avancée des évolutions des LLM : échelle, apprentissage en contexte, post-entraînement, multimodalité, raisonnement, efficacité et systèmes utilisant des outils."
+keywords: ["type:concept-lesson", "destination:deepen", "topic:llm-evolution", "level:advanced", "language:fr", "status:published"]
+lang: fr
+---
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/llm-evolution"
+scope: "Synthèse transversale des évolutions des modèles de langage depuis GPT-2, en distinguant échelle, apprentissage en contexte, post-entraînement, multimodalité, calcul à l'inférence, efficacité et intégration système ; ne prétend pas documenter les architectures propriétaires non publiées."
+purpose: "Le lecteur doit pouvoir comparer les grandes évolutions sans les confondre, distinguer les changements du modèle de ceux du système qui l'entoure, et identifier les mécanismes techniques à approfondir."
+domain: "scale-research"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/scaling-laws", "fr/emergence", "fr/in-context-learning", "fr/hybrid-llm-architectures", "fr/llm-computational-complexity", "fr/llm-limits", "fr/evaluation-experimentale"]
+tags: ["type:concept-lesson", "destination:deepen", "topic:llm-evolution", "level:advanced", "language:fr", "status:published"]
+-->
+
+::: {.chapter-lead}
+Entre GPT-2 et les systèmes LLM contemporains, l'évolution ne se résume pas à augmenter le nombre de paramètres ou à remplacer une architecture par une autre. Elle combine plusieurs transformations : échelle et données, apprentissage en contexte, post-entraînement, modalités d'entrée et de sortie, calcul supplémentaire à l'inférence, efficacité et intégration dans des systèmes capables d'utiliser des outils. Cette page propose une grille de lecture transversale ; elle ne constitue pas une spécification technique des modèles propriétaires.
+:::
+
+## Lire l'évolution sur plusieurs axes
+
+Une comparaison génération par génération est utile pour se repérer, mais elle masque le fait que plusieurs dimensions évoluent en parallèle. Il faut distinguer au minimum :
+
+1. **Échelle et données** — paramètres, tokens d'entraînement, qualité et diversité des données, budget de calcul.
+2. **Procédure d'apprentissage** — pré-entraînement, instruction tuning, apprentissage sur préférences et autres formes de post-entraînement.
+3. **Architecture et efficacité** — attention, architectures denses ou à experts, gestion du cache, coûts mémoire et latence.
+4. **Modalités** — traitement du texte, des images, de l'audio ou d'autres entrées/sorties.
+5. **Calcul à l'inférence** — stratégies de raisonnement, budget de calcul supplémentaire et vérification.
+6. **Système environnant** — outils, orchestration, routage, exécution asynchrone et contrôle en cours de génération.
+
+Ces axes sont liés, mais non interchangeables. Une amélioration observée dans un produit ne permet pas à elle seule de conclure à un changement précis de l'architecture du réseau.
+
+## Quelques jalons : GPT-2 à GPT-6
+
+Le tableau résume les éléments publics mis en avant par les sources citées. Il ne doit pas être lu comme une comparaison contrôlée : les informations disponibles, les protocoles d'évaluation et le degré de transparence diffèrent selon les générations.
+
+| Génération | Éléments publics marquants | Lecture à retenir |
+|---|---|---|
+| **GPT-2 (2019)** | Modèle Transformer autoregressif pré-entraîné pour prédire le token suivant ; le plus grand modèle publié dans l'étude compte 1,5 milliard de paramètres. | Démonstration du potentiel du pré-entraînement à grande échelle et du transfert zero-shot, sans le post-entraînement conversationnel devenu courant ensuite. |
+| **GPT-3 (2020)** | 175 milliards de paramètres ; performances few-shot obtenues en fournissant des exemples dans le prompt, sans mise à jour des poids pour chaque tâche évaluée. | L'apprentissage en contexte devient une propriété centrale à étudier, distincte du fine-tuning. |
+| **GPT-4 (2023)** | Modèle multimodal acceptant des entrées texte et image et produisant du texte ; travail itératif d'alignement et d'évaluation. | Les modalités et l'alignement deviennent des dimensions visibles de l'évolution, au-delà de la seule prédiction de texte. |
+| **GPT-5 (2025)** | Système unifié décrit avec des modèles rapides et des modèles de raisonnement, ainsi qu'un routeur qui choisit selon la demande et les besoins. | Le raisonnement et le routage peuvent relever de l'organisation du système autant que d'une propriété isolée d'un réseau unique. |
+| **GPT-6 (2026)** | La documentation API décrit notamment l'appel d'outils asynchrone et le *mid-turn steering* via l'API Responses sur WebSocket. | L'interaction entre modèle, application et outils devient une partie importante du comportement observable. |
+
+**Précaution de lecture.** Le billet ByteByteGo fournit une synthèse pédagogique utile, mais certaines formulations condensent des sujets complexes. Par exemple, GPT-2 montrait déjà des transferts zero-shot sur certaines tâches ; il serait donc inexact de dire qu'il ne pouvait que continuer du texte sans aucune capacité de question-réponse. De même, le rapport GPT-3 documente explicitement le few-shot *sans gradient update*, tandis que les détails internes complets des modèles plus récents ne sont pas tous publics.
+
+## 1. De l'échelle à l'apprentissage en contexte
+
+L'augmentation de la taille des modèles et des corpus a contribué à améliorer les performances mesurées sur de nombreuses tâches. Mais le nombre de paramètres n'est qu'une dimension : la quantité de tokens, leur qualité, le calcul d'entraînement, l'architecture et le protocole d'évaluation comptent également.
+
+GPT-3 a rendu particulièrement visible l'**apprentissage en contexte** (*in-context learning*, ICL) : des exemples placés dans le prompt peuvent orienter le comportement du modèle sans mise à jour de ses paramètres. Il ne s'agit donc pas d'un fine-tuning effectué à chaque requête.
+
+À approfondir :
+- [Lois d'échelle](scaling-laws.qmd) — relations empiriques entre paramètres, données, calcul et perte.
+- [Apprentissage en contexte](in-context-learning.qmd) — zero-shot, one-shot, few-shot et limites de généralisation.
+- [Émergence](emergence.qmd) — rôle des métriques, seuils et protocoles dans les affirmations de capacités émergentes.
+
+## 2. Du pré-entraînement au post-entraînement
+
+Le pré-entraînement apprend des régularités statistiques à partir d'un corpus, souvent au moyen de la prédiction autorégressive du prochain token. Il ne suffit pas, à lui seul, à spécifier le comportement conversationnel attendu d'un assistant.
+
+Le **post-entraînement** regroupe plusieurs familles de procédures qui adaptent un modèle pré-entraîné à des usages et préférences :
+
+- **Instruction tuning / SFT** (*supervised fine-tuning*) : ajustement supervisé sur des exemples d'instructions et de réponses.
+- **RLHF** (*reinforcement learning from human feedback*) : utilisation de préférences humaines, souvent représentées par un modèle de récompense, dans une procédure d'optimisation.
+- **DPO** (*direct preference optimization*) : optimisation directe à partir de données de préférences, sans reprendre exactement le pipeline classique avec modèle de récompense et boucle RL.
+
+Ces méthodes ne sont ni synonymes ni systématiquement utilisées ensemble. Leurs détails, leurs variantes et leurs compromis méritent des pages dédiées. Il faut aussi éviter d'attribuer une méthode précise à une génération lorsque la documentation publique ne la confirme pas.
+
+Le post-entraînement ne remplace pas le modèle prédictif de base : il modifie les paramètres ou la manière dont le modèle est entraîné afin d'orienter ses sorties. Pour revoir les exemples de prédiction et le teacher forcing, consulter [les exemples d'entraînement](training-examples.qmd) et [la chaîne mathématique de l'entraînement](mathematical-foundations.qmd).
+
+## 3. De la modalité texte aux modèles multimodaux
+
+Un modèle multimodal traite plusieurs types de données, par exemple du texte et des images. Cela ne signifie pas nécessairement qu'il utilise une représentation unique ou une architecture uniforme pour toutes les modalités.
+
+Pour comprendre une architecture multimodale, il faut poser des questions plus précises :
+
+- Comment chaque modalité est-elle encodée ?
+- À quel niveau les représentations sont-elles combinées ?
+- L'interaction passe-t-elle par une attention croisée, des tokens communs ou une autre interface ?
+- Quelles modalités sont acceptées en entrée et lesquelles peuvent être produites en sortie ?
+- Quelles évaluations mesurent réellement les capacités multimodales ?
+
+[Attention croisée](cross-attention.qmd) fournit un mécanisme important à connaître, mais ne constitue pas une explication universelle de toutes les architectures multimodales.
+
+## 4. Du calcul appris au calcul mobilisé à l'inférence
+
+Les modèles dits de raisonnement mettent en avant une autre dimension : consacrer davantage de calcul à la résolution d'une requête, par exemple en produisant des étapes intermédiaires, en explorant plusieurs possibilités ou en vérifiant une réponse.
+
+On parle souvent d'**inference-time compute** ou de *test-time compute*. Cette expression désigne du calcul mobilisé au moment de l'utilisation, et non une mise à jour des poids comme pendant l'entraînement.
+
+Il faut distinguer :
+- le raisonnement appris dans les paramètres au cours de l'entraînement ;
+- le calcul supplémentaire engagé pour une requête donnée ;
+- les mécanismes de recherche, de vérification ou de sélection ;
+- les éléments de raisonnement éventuellement exposés à l'utilisateur, qui ne constituent pas nécessairement une trace fidèle de tous les calculs internes.
+
+Une hausse du budget d'inférence peut améliorer certaines performances, mais elle a des coûts en latence et en calcul et ne garantit pas une réponse correcte.
+
+## 5. Architectures et efficacité : plusieurs leviers indépendants
+
+L'évolution des systèmes ne signifie pas que le Transformer dense a été simplement remplacé par une nouvelle architecture unique. Plusieurs variantes répondent à des contraintes différentes :
+
+- **Mixture of Experts (MoE)** : active un sous-ensemble d'experts pour certains tokens, avec des compromis de capacité, de routage, de mémoire et de communication.
+- **GQA / MQA** : réduisent le nombre de groupes de clés et valeurs par rapport à l'attention multi-têtes classique, notamment pour réduire le coût mémoire du cache KV.
+- **KV cache** : évite de recalculer les clés et valeurs du préfixe à chaque étape de décodage.
+- **Speculative decoding** : utilise un modèle ou un mécanisme auxiliaire pour proposer des tokens, ensuite vérifiés par le modèle cible selon une procédure conçue pour préserver la distribution visée.
+
+Ces techniques ne sont pas mutuellement exclusives et ne répondent pas au même problème. Certaines agissent sur le coût du calcul, d'autres sur le trafic mémoire, le débit ou la latence.
+
+À approfondir : [Architectures hybrides](hybrid-llm-architectures.qmd) et [Complexité et parallélisme](llm-computational-complexity.qmd).
+
+## 6. Du modèle au système qui utilise des outils
+
+Un modèle qui sait produire un appel d'outil n'exécute pas nécessairement lui-même l'opération demandée. Dans une intégration classique, l'application reçoit l'appel, exécute l'outil, puis transmet son résultat au modèle.
+
+Les systèmes agentiques ajoutent une boucle d'orchestration : interpréter un objectif, planifier, appeler des outils, examiner les résultats et éventuellement recommencer. Il faut donc distinguer :
+
+- **tool calling** : représentation structurée d'une demande d'action ;
+- **exécution d'outil** : responsabilité de l'application ou du service externe ;
+- **orchestration** : gestion des appels, résultats, erreurs, reprises et état de la tâche ;
+- **contrôle** : possibilité de modifier ou interrompre le travail et de gérer les effets de bord.
+
+La documentation GPT-6 illustre deux capacités système :
+- l'appel d'outil asynchrone permet au modèle de poursuivre un travail indépendant pendant que l'application exécute un outil ;
+- le *mid-turn steering* permet d'ajouter des instructions pendant une réponse via WebSocket. Il ne réécrit pas les sorties déjà émises et n'annule pas les outils déjà démarrés.
+
+Ces fonctionnalités ne signifient pas que l'application délègue la responsabilité de l'exécution au modèle. Les outils, leurs permissions, les résultats et les effets de bord restent à gérer côté application.
+
+## Ce que cette évolution ne permet pas de conclure
+
+Les jalons GPT-2 à GPT-6 ne constituent pas une expérience contrôlée. Les modèles ne sont pas comparés à données, calcul, objectifs et protocoles identiques. Les informations publiques sont aussi très inégales : les rapports et fiches système documentent certaines propriétés, mais ne révèlent pas nécessairement les paramètres, les données, les architectures détaillées ou les recettes d'entraînement.
+
+Il faut donc éviter de conclure, à partir d'un nom de génération ou d'une capacité produit, qu'un mécanisme architectural précis est utilisé. Pour chaque affirmation, demander :
+
+1. S'agit-il d'une propriété publiée du modèle, d'une fonctionnalité de l'API ou d'une interprétation de l'auteur ?
+2. Quelle source primaire la documente ?
+3. Quelle métrique et quel protocole soutiennent l'affirmation de capacité ?
+4. Peut-on séparer l'effet du modèle de celui du routage, des outils, du prompt et de l'application ?
+5. Quelles informations restent inconnues ?
+
+## Synthèse
+
+L'évolution des LLM peut être lue comme la convergence de plusieurs axes, et non comme une simple succession de tailles ou d'architectures :
+
+- le pré-entraînement et l'échelle construisent les capacités de base ;
+- le post-entraînement oriente le comportement ;
+- le contexte permet une adaptation temporaire sans mise à jour des paramètres ;
+- la multimodalité élargit les types d'information traités ;
+- le calcul à l'inférence permet de consacrer davantage de ressources à certaines requêtes ;
+- les outils et l'orchestration transforment le modèle en composant d'un système plus large.
+
+Le meilleur modèle mental reste donc celui d'un **modèle prédictif au cœur d'un système**, dont les capacités observables dépendent aussi de son entraînement, de son budget d'inférence, de ses interfaces et de son environnement d'exécution.
+
+## Références et ressources
+
+### Synthèse pédagogique
+- ByteByteGo, [GPT-2 to GPT-6: What Actually Changed](https://blog.bytebytego.com/i/222752055/gpt-2-to-gpt-6-what-actually-changed) — point de départ de cette synthèse ; les affirmations spécifiques sont nuancées et recoupées ci-dessous.
+
+### Sources primaires et documentation
+- Radford et al. (2019), [Better Language Models and Their Implications](https://openai.com/index/better-language-models/) — présentation de GPT-2.
+- Brown et al. (2020), [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) — GPT-3 et apprentissage en contexte.
+- Ouyang et al. (2022), [Training language models to follow instructions with human feedback](https://arxiv.org/abs/2203.02155) — supervised instruction tuning and RLHF.
+- Rafailov et al. (2023), [Direct Preference Optimization](https://arxiv.org/abs/2305.18290) — preference optimization without a separately trained reward model in the basic formulation.
+- Fedus et al. (2021), [Switch Transformers](https://arxiv.org/abs/2101.03961) — sparse mixture-of-experts routing.
+- Ainslie et al. (2023), [GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints](https://arxiv.org/abs/2305.13245) — grouped-query attention.
+- Leviathan et al. (2023), [Fast Inference from Transformers via Speculative Decoding](https://arxiv.org/abs/2211.17192) — speculative decoding.
+- OpenAI (2023), [GPT-4](https://openai.com/index/gpt-4-research/) — capacités multimodales et alignement.
+- OpenAI (2025), [GPT-5 System Card](https://openai.com/index/gpt-5-system-card/) — modèles rapides, raisonnement et routage.
+- OpenAI, [Using GPT-6](https://developers.openai.com/api/docs/guides/latest-model?model=gpt-6-astra) — capacités documentées de l'API GPT-6.
+- OpenAI, [Async tool calling](https://developers.openai.com/api/docs/guides/async-tool-calling) — contrat d'exécution asynchrone.
+- OpenAI, [Mid-turn steering](https://developers.openai.com/api/docs/guides/steering) — contrôle d'une réponse en cours.
+
+::: {.self-check}
+## Vérifier sa compréhension
+
+1. Pourquoi GPT-3 illustre-t-il l'apprentissage en contexte plutôt qu'un fine-tuning à chaque tâche few-shot ?
+2. Pourquoi le post-entraînement ne doit-il pas être confondu avec le pré-entraînement ?
+3. Une API expose un appel d'outil asynchrone : qu'est-ce qui reste sous la responsabilité de l'application ?
+4. Une amélioration de benchmark suffit-elle à démontrer une modification d'architecture ? Pourquoi ?
+5. Classez MoE, KV cache, RLHF et inference-time compute selon l'axe principal auquel ils appartiennent.
+
+[Exercices et expérimentations](exercises.qmd).
+:::
+
+::: {.language-switch}
+**Langue :** [Français](llm-evolution.qmd) · [English](../en/llm-evolution.qmd)
+:::

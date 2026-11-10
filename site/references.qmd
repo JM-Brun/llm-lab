@@ -1,0 +1,442 @@
+---
+sidebar: false
+title: "Références et provenance des illustrations"
+subtitle: "Sources externes, attribution et réutilisation responsable"
+keywords: ["type:bibliography", "destination:reference", "topic:references", "level:reference", "language:shared", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "reference/references"
+scope: "Références et provenance des illustrations"
+purpose: "Présenter les sources citées et la provenance des illustrations, ainsi que les conditions de réutilisation."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:bibliography", "destination:reference", "topic:references", "level:reference", "language:shared", "status:published"]
+-->
+
+Cette page distingue les schémas originaux présents dans le site des ressources visuelles externes recommandées. Une image visible en ligne n'est pas automatiquement libre de réutilisation.
+
+## Schéma original du dépôt
+
+Le diagramme du masque causal affiché dans le chapitre est créé pour ce projet et stocké dans `site/images/causal-attention-mask.svg`. Il est réutilisable avec le code du dépôt, sous réserve de la licence du dépôt lorsqu'elle sera explicitement définie.
+
+## Schémas originaux du dépôt
+
+### Chaîne mathématique de l'entraînement
+
+- **Création :** schéma original dessiné pour LLM Lab et versionné dans `site/images/math-training-pipeline.svg`.
+- **Utilisation :** vue d'ensemble des fondations mathématiques en français et en anglais.
+- **Contenu :** logits → softmax/probabilités → log-vraisemblance négative → loss agrégée → gradient.
+- **Provenance :** illustration originale, sans image externe incorporée.
+
+## Schéma original — probabilité cible et cross-entropie
+
+- **Fichiers :** `site/images/cross-entropy-target-probability.svg` (anglais) et `site/images/cross-entropy-target-probability-fr.svg` (français).
+- **Utilisation :** pages française et anglaise sur la cross-entropie.
+- **Intention pédagogique :** comparer, pour un même token observé, les pertes \(-\ln p(y)\) lorsque \(p(y)=0{,}9\) et \(p(y)=0{,}1\).
+- **Provenance :** figures originales créées pour ce dépôt, sans image externe incorporée. L'explication visuelle de [3Blue1Brown — But what is cross-entropy?](https://www.youtube.com/watch?v=GlYgs6v2YfU) est une ressource pédagogique complémentaire, pas la source des illustrations.
+- **Limite :** les barres illustrent la perte d'un token et ne représentent pas la distribution complète, la réduction sur les tokens valides ni un résultat expérimental.
+
+## Schémas originaux du dépôt — Q/K/V
+
+- **Création :** schémas originaux du projet, versionnés dans \`site/images/queries-keys-values.svg\` et \`site/images/queries-keys-values-en.svg\`.
+- **Utilisation :** pages française et anglaise sur les requêtes, clés et valeurs.
+- **Contenu :** projections apprises de l'entrée vers Q, K et V ; Q/K produisent les scores/poids d'attention, qui agrègent les valeurs V.
+- **Provenance :** illustrations originales du dépôt, sans image externe incorporée. Les ressources de Jay Alammar et de 3Blue1Brown sont des références de conception pédagogique, pas les sources graphiques de ces SVG.
+- **Limite :** le diagramme montre la structure conceptuelle ; il ne visualise pas à lui seul les dimensions exactes, les conventions de masque ou l'effet causal des poids sur la sortie finale.
+
+## Illustration externe — texte, IDs, embeddings et contextualisation
+
+- **Auteur :** Rushang Chauhan.
+- **Article source :** [*Embeddings: The Bridge Between Tokens and Context*](https://www.linkedin.com/pulse/embeddings-bridge-between-tokens-context-rushang-chauhan-oqpzf/), publié le 30 avril 2026.
+- **Image :** couverture/illustration de l'article, intégrée dans les pages française et anglaise sur les représentations contextualisées.
+- **Rôle pédagogique :** donner une carte visuelle du passage texte → IDs → table d'embeddings → information positionnelle → attention → représentations contextualisées. La figure est un schéma d'orientation, pas une spécification universelle de l'injection de position ; la page précise notamment le cas de RoPE.
+- **Hébergement :** image intégrée depuis le CDN LinkedIn ; aucune copie locale n'a pu être créée dans cet environnement. Le lien CDN est signé et peut évoluer ; une copie locale ne devra être ajoutée qu'après obtention d'un fichier source téléchargeable et vérification des conditions de réutilisation.
+- **Droits :** attribution fournie à titre de provenance ; elle ne constitue pas une licence de réutilisation. Vérifier les conditions applicables auprès de l'auteur avant redistribution ou modification.
+
+## Illustrations externes actuellement intégrées — tokenisation
+
+Ces trois figures sont intégrées dans les pages française et anglaise sur les stratégies de tokenisation. Elles sont conservées dans le site pendant la vérification des droits ; leur présence ne signifie pas que la réutilisation a déjà été juridiquement validée.
+
+### Catherine Arnett — fertilité des tokenizers selon la langue
+
+- **Source :** [*wHy DoNt YoU jUsT uSe ThE lLaMa ToKeNiZeR??*](https://huggingface.co/blog/catherinearnett/dangers-of-tokenizer-recycling), article communautaire publié le 27 septembre 2024.
+- **Illustration intégrée :** [fichier image hébergé sur le CDN Hugging Face](https://cdn-uploads.huggingface.co/production/uploads/6384d424ac61472e5e92d403/yZnGPoBwKK4d19aCR7Ypo.png).
+- **Utilisation :** figure de comparaison de la fertilité de plusieurs tokenizers dans les expériences présentées par l'autrice ; ce n'est pas un classement universel.
+- **Droits :** aucun droit de réutilisation explicite pour cet actif précis n'a été identifié sur l'article. Vérification en attente ; illustration conservée sans modification.
+
+### Petrov et al. — disparités de longueur de tokenisation et de temps d'exécution
+
+- **Source :** [*Language Model Tokenizers Introduce Unfairness Between Languages*](https://www.adelbibi.com/publication/langugage_unfairness_tokenizers/), NeurIPS 2023.
+- **Illustration intégrée :** [figure hébergée sur le site de l'auteur](https://www.adelbibi.com/publication/langugage_unfairness_tokenizers/featured_hu3a085884cc9c15c3954ff8e09a76a4a3_251753_720x2500_fit_q75_h2_lanczos.webp).
+- **Utilisation :** visualisation d'une association mesurée dans le protocole étudié, pas d'une loi causale universelle.
+- **Droits :** la page source identifie le travail sous CC BY-NC-ND 4.0. La couverture exacte de cette image par la licence et les conditions applicables à son intégration inchangée restent à confirmer. Vérification en attente ; illustration conservée sans modification.
+
+### Hugging Face — composants du pipeline de tokenisation
+
+- **Source :** [cours Hugging Face, *Building a tokenizer, block by block*](https://huggingface.co/docs/course/chapter6/8).
+- **Illustration intégrée :** [SVG du dépôt huggingface-course/documentation-images](https://huggingface.co/datasets/huggingface-course/documentation-images/resolve/main/en/chapter6/tokenization_pipeline.svg).
+- **Utilisation :** schéma des étapes de normalisation, pré-tokenisation, modèle de tokenisation et post-traitement.
+- **Droits :** le dépôt de données [déclare Apache-2.0 dans son README](https://huggingface.co/datasets/huggingface-course/documentation-images/blob/main/README.md). Il reste à confirmer que l'actif exact est couvert par cette licence et à vérifier sa provenance/attribution. Vérification en cours ; illustration conservée sans modification.
+
+Le registre technique complet, y compris les SVG locaux, les actifs liés mais non intégrés et les vérifications restantes, est suivi dans [l'issue #156](https://github.com/JM-Brun/llm-lab/issues/156) et dans `docs/visual-assets-register.md`.
+
+## Illustrations intégrées
+
+::: {.reference-card}
+### Ressource visuelle 1 — Pile de blocs GPT-2
+
+- **Auteur :** Jay Alammar.
+- **Source :** [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/).
+- **Fichier distant utilisé :** [gpt2-transformer-block-vectors-2.png](https://jalammar.github.io/images/gpt2/gpt2-transformer-block-vectors-2.png).
+- **Utilisation :** ressource visuelle externe recommandée ; elle n'est plus intégrée à la page d'accueil après la réorganisation du parcours.
+- **Provenance :** lien vers le site de l'auteur ; aucune copie locale n'est incluse dans le dépôt.
+- **Droits :** cette attribution ne constitue pas une licence de réutilisation. Vérifier les conditions du site ou demander une autorisation avant toute redistribution ou modification.
+:::
+
+::: {.reference-card}
+### Ressource visuelle 2 — Fenêtres de données et masque causal
+
+- **Auteur :** Jay Alammar.
+- **Source :** [The Illustrated GPT-2, section sur le masked self-attention](https://jalammar.github.io/illustrated-gpt2/).
+- **Fichier distant utilisé :** [transformer-decoder-attention-mask-dataset.png](https://jalammar.github.io/images/gpt2/transformer-decoder-attention-mask-dataset.png).
+- **Utilisation :** ressource visuelle complémentaire pour étudier les fenêtres d'entraînement et le masque causal ; elle n'est plus intégrée au chapitre de synthèse.
+- **Provenance et droits :** lien vers la source originale, sans copie locale dans le dépôt. Voir les conditions de l'auteur avant toute réutilisation indépendante.
+:::
+
+::: {.reference-card}
+### Ressource visuelle 3 — Un bloc d'attention met à jour les représentations
+
+- **Auteur :** 3Blue1Brown.
+- **Source :** [Transformers, the tech behind LLMs](https://www.3blue1brown.com/lessons/gpt/).
+- **Fichier distant utilisé :** [attent.jpg](https://storage.googleapis.com/3blue1brown-website-bucket/lessons/2024/gpt/attent.jpg).
+- **Utilisation :** ressource visuelle complémentaire pour l'intuition de l'attention ; elle n'est plus intégrée au chapitre de synthèse.
+- **Provenance :** lien vers l'hébergement de 3Blue1Brown, sans copie locale.
+- **Droits :** 3Blue1Brown décrit les conditions d'utilisation des images fixes et extraits sur sa [page officielle](https://www.3blue1brown.com/about/). Vérifier ces conditions avant toute autre utilisation.
+:::
+
+## Ressources visuelles complémentaires
+
+::: {.reference-card}
+### Sara Ravi — GPT-2 Architecture Demystified
+
+[Lire l'article original](https://sararavi14.medium.com/gpt-2-architecture-demystified-a-step-by-step-breakdown-74b1c5c80d17).
+
+Référence complémentaire pour une présentation progressive de l'architecture GPT-2. Le site renvoie à l'article d'origine plutôt que de recopier ses figures : les droits et conditions de réutilisation de chaque illustration doivent être vérifiés séparément.
+:::
+
+::: {.reference-card}
+### 3Blue1Brown — Transformers, the tech behind LLMs
+
+[Consulter la leçon originale](https://www.3blue1brown.com/lessons/gpt/).
+
+Ressource vidéo et animée pour l'intuition mathématique. Ce dépôt ne téléverse ni ne republie les vidéos. Pour toute utilisation d'images fixes ou d'extraits, suivre les conditions publiées par [3Blue1Brown](https://www.3blue1brown.com/about/), notamment l'attribution visible et les limites annoncées.
+:::
+
+::: {.reference-card}
+### Cho et al. — *Transformer Explainer: Learning LLM Transformers with Interactive Visual Explanation and Experimentation* (CHI 2026)
+
+[Explorer la démonstration interactive](https://poloclub.github.io/transformer-explainer/) · [Dépôt open source](https://github.com/poloclub/transformer-explainer) · [Article CHI 2026](https://doi.org/10.1145/3772318.3791725) · [Prépublication antérieure (2024)](https://arxiv.org/abs/2408.04619).
+
+Outil pédagogique de Georgia Tech qui exécute GPT-2 dans le navigateur et relie une entrée textuelle aux opérations internes du modèle : représentations, attention et prédiction du prochain token. L'article CHI 2026 décrit notamment une visualisation progressive entre niveaux d'abstraction et une étude utilisateur ; la prépublication arXiv de 2024 est une version antérieure du travail et ne doit pas être confondue avec la publication de 2026. L'intérêt pour LLM Lab est de permettre l'observation manipulable d'un *forward pass*, en complément des dérivations et des schémas du dépôt. La démonstration utilise GPT-2 small (124 millions de paramètres) : les observations ne doivent pas être généralisées sans précaution à toutes les architectures récentes. Le code source est publié sous licence MIT ; cette licence ne s'étend pas automatiquement aux contenus externes éventuellement intégrés au site.
+:::
+
+## Ressources pédagogiques vidéo
+
+Ces liens sont proposés pour compléter la lecture. Ils servent d'appui pédagogique ; les affirmations historiques et mathématiques de référence restent reliées aux articles originaux ou à la documentation correspondante.
+
+- [Vidéo pédagogique recommandée](https://www.youtube.com/watch?v=oikbkiHtGP0) — lien fourni pour ce parcours ; le titre et les métadonnées n'ont pas été confirmés indépendamment.
+- [udiprod — *Visualization of tensors, part 1*](https://www.youtube.com/watch?v=YxXyN2ifK8A) — visualisation du concept mathématique de tenseur ; utile pour distinguer le sens physique/mathématique du sens simplifié utilisé dans les bibliothèques de machine learning.
+- [Vidéo YouTube fournie — Hwr9OpeO9fM](https://www.youtube.com/watch?v=Hwr9OpeO9fM) — lien à examiner ; titre et contenu non confirmés indépendamment.
+- [Vidéo YouTube fournie — fqsxg3aJ1XE](https://www.youtube.com/watch?v=fqsxg3aJ1XE) — lien à examiner ; titre et contenu non confirmés indépendamment.
+
+## Tenseurs, embeddings et information de position
+
+- [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762) — architecture Transformer et encodages positionnels sinusoïdaux.
+- [Su et al. (2021), *RoFormer: Enhanced Transformer with Rotary Position Embedding*](https://arxiv.org/abs/2104.09864) — formulation de RoPE.
+- [Mikolov et al. (2013), *Efficient Estimation of Word Representations in Vector Space*](https://arxiv.org/abs/1301.3781) — embeddings de mots.
+- [PyTorch — Tensors](https://docs.pytorch.org/tutorials/beginner/introyt/tensors_deeper_tutorial.html) — formes et opérations sur les tenseurs.
+
+## Références techniques
+
+- [Sebastian Raschka — LLMs from Scratch](https://github.com/rasbt/LLMs-from-scratch)
+- [Hugging Face — LLM Course en français](https://huggingface.co/learn/llm-course/fr)
+- [PyTorch — Transformer building blocks](https://docs.pytorch.org/tutorials/intermediate/transformer_building_blocks.html)
+- [PyTorch — Scaled dot-product attention](https://docs.pytorch.org/tutorials/intermediate/scaled_dot_product_attention_tutorial)
+- [Quarto — documentation officielle](https://quarto.org/docs/guide/)
+
+## Références de recherche : géométrie des représentations
+
+Ces pages de lecture critique utilisent des articles scientifiques et des ressources techniques ; elles distinguent les résultats publiés, les prépublications et les explications pédagogiques.
+
+- **Similarité cosinus, métriques et espaces d'embeddings :** [Steck, Ekanadham & Kallus (2024), arXiv:2403.05440](https://arxiv.org/abs/2403.05440) ; [Ethayarajh (2019), arXiv:1909.00512](https://arxiv.org/abs/1909.00512) ; [Nastase & Merlo (2025), arXiv:2509.01606](https://arxiv.org/abs/2509.01606) ; [Zhelezniak et al. (2019), arXiv:1905.07790](https://arxiv.org/abs/1905.07790).
+- **Linéarité et géométrie des caractéristiques :** [Park, Choe & Veitch (2023), arXiv:2311.03658](https://arxiv.org/abs/2311.03658) ; [Engels et al., *Not All Language Model Features Are One-Dimensionally Linear*, arXiv:2405.14860](https://arxiv.org/abs/2405.14860) ; [Tiblias et al., *Hypothesis-Driven Feature Manifold Analysis in LLMs via Supervised Multi-Dimensional Scaling* (preprint title: *Shape Happens*), arXiv:2510.01025 / TMLR 2026](https://arxiv.org/abs/2510.01025) ; [Elhage et al., *Toy Models of Superposition*](https://transformer-circuits.pub/2022/toy_model/).
+- **Méthodes d'évaluation et limites des probes :** [Hewitt & Liang (2019), EMNLP](https://aclanthology.org/D19-1275/) ; [Nielsen & Hansen (2024), PMLR](https://proceedings.mlr.press/v233/nielsen24a.html).
+
+Accès direct aux analyses : [similarité cosinus](fr/cosine-similarity.qmd) · [linéarité des représentations](fr/linearite-embeddings.qmd).
+
+Les liens ci-dessus servent de bibliographie de départ, pas de preuve automatique pour chaque affirmation. Les pages de lecture précisent le périmètre des résultats et proposent des contrôles expérimentaux.
+
+## Références consultées pour la synthèse du Transformer
+
+Ces ressources ont été consultées pour comparer les explications, repérer les angles pédagogiques complémentaires et vérifier les limites des analogies. Les deux nouveaux schémas de flux du dépôt sont **originaux** : ils synthétisent les opérations décrites par ces sources, sans incorporer ni recopier leurs illustrations.
+
+- **3Blue1Brown — Grant Sanderson**, [*Transformers, the tech behind LLMs*](https://www.3blue1brown.com/lessons/gpt/) (2024) : vue globale de la génération autorégressive, tokenisation, embeddings, MLP, matrice de sortie, logits et softmax. La leçon aide à relier le flux de données au calcul matriciel.
+- **3Blue1Brown — Grant Sanderson**, [*Attention in transformers, step by step*](https://www.3blue1brown.com/lessons/attention/) (2024) : attention, masquage, valeurs, contexte, têtes multiples et cross-attention. Elle complète la vue d'ensemble par une explication mécanistique.
+- **Jay Alammar**, [*The Illustrated Transformer*](https://jalammar.github.io/illustrated-transformer/) : explication visuelle de l'architecture encodeur-décodeur originale, avec le flux des tenseurs, les encodages positionnels, les connexions résiduelles et la normalisation. Cette architecture historique ne doit pas être confondue avec un GPT décodeur seul.
+- **Jay Alammar**, [*The Illustrated GPT-2*](https://jalammar.github.io/illustrated-gpt2/) : architecture GPT, génération et attention masquée.
+- **Code source du site de Jay Alammar** : [jalammar.github.io sur GitHub](https://github.com/jalammar/jalammar.github.io), utile pour retrouver les sources des illustrations et leur contexte d'origine. La présence d'un fichier dans un dépôt public ne vaut pas automatiquement autorisation de le réutiliser.
+- **Innovative Digital Transformation Jordan**, [*The Illustrated Transformer From Scratch*](https://idtjo.hosting.acm.org/wordpress/the-illustrated-transformer/) : perspective complémentaire sur l'auto-attention comme mécanisme d'échange d'information entre positions, les blocs modernes, les connexions résiduelles, la normalisation et les variantes d'architecture.
+- **Vidéo YouTube fournie — [hVEo76eZmpo](https://www.youtube.com/watch?v=hVEo76eZmpo)** : lien conservé à la demande ; son titre et son contenu n'ont pas pu être vérifiés indépendamment, il n'est donc pas utilisé comme preuve d'une affirmation technique.
+- **Vidéo YouTube fournie — [YxXyN2ifK8A](https://www.youtube.com/watch?v=YxXyN2ifK8A)** : *Visualization of tensors, part 1* (udiprod), à utiliser pour compléter la discussion sur les tenseurs.
+- **Vidéos YouTube fournies — [Hwr9OpeO9fM](https://www.youtube.com/watch?v=Hwr9OpeO9fM) et [fqsxg3aJ1XE](https://www.youtube.com/watch?v=fqsxg3aJ1XE)** : liens conservés ; titres et contenus non vérifiés indépendamment.
+
+### Comment lire ces ressources ensemble
+
+- Utiliser 3Blue1Brown pour l'intuition sur le flux des données et les opérations matricielles.
+- Utiliser Jay Alammar pour suivre visuellement les tenseurs dans l'architecture originale et dans GPT-2.
+- Utiliser l'article ACM pour une formulation plus compacte de l'auto-attention et du bloc Transformer, en vérifiant les hypothèses de chaque version.
+- Revenir aux équations et à [*Attention Is All You Need*](https://arxiv.org/abs/1706.03762) pour les définitions formelles. Une animation, un schéma ou une analogie ne constitue pas à elle seule une preuve mathématique.
+
+Les schémas originaux [flux de données GPT](images/gpt-data-flow.svg), [calcul d'attention](images/attention-calculation-flow.svg) et [auto-attention comparée au MLP](images/attention-vs-mlp.svg) ont été créés pour ce dépôt. Ils synthétisent des concepts présentés dans les références ci-dessus, mais ne sont ni des captures d'écran ni des adaptations pixel à pixel des images des auteurs cités.
+
+## Références pédagogiques — requêtes, clés et valeurs
+
+Ces sources secondaires sont citées dans les pages [Q, K et V](fr/queries-keys-values.qmd) (française et anglaise) pour l'intuition et les exemples. Elles ne sont pas les sources des schémas originaux du dépôt ; aucune de leurs illustrations n'est copiée.
+
+::: {.reference-card}
+### Codefinity — *Queries, Keys, and Values: The Building Blocks*
+
+[Consulter la leçon](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b).
+
+Cours en ligne cité pour deux apports : l'intuition géométrique de Q et K (orientation, alignement, rôle des normes dans le produit scalaire) et l'exemple d'ambiguïté lexicale (*bank*). Ressource pédagogique, pas une source primaire ; les définitions formelles, le calcul et les limites d'interprétation restent ceux des pages du dépôt. Aucun actif visuel n'est réutilisé ; les conditions de réutilisation du contenu du cours ne sont pas établies.
+:::
+
+::: {.reference-card}
+### Nishanthan K — *How Query, Key, and Value (QKV) Work in Transformers* (22 octobre 2026)
+
+[Article DEV Community](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a) · [Miroir Medium contrôlé par l'auteur](https://nishanthan-k.medium.com/how-query-key-and-value-qkv-work-in-transformers-1274bfa14ea8).
+
+Article cité pour une représentation visuelle complémentaire des rôles Q/K/V. L'illustration reste hébergée par sa source et liée depuis les pages, jamais intégrée : les droits de réutilisation ne sont pas établis. Statut détaillé (lien seul, inspection et droits en attente) dans `docs/visual-assets-register.md` et l'[issue #156](https://github.com/JM-Brun/llm-lab/issues/156).
+:::
+
+::: {.reference-card}
+### Neha KK — *Understanding Queries, Keys and Values in Transformers* (31 décembre 2025)
+
+[Lire l'article](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b).
+
+Article cité pour l'exemple linguistique de coréférence (« il » dans « L'animal n'a pas traversé la route parce qu'il était fatigué. »). Il ne fournit ni modèle, ni tête d'attention, ni poids mesurés, ni expérience : l'exemple illustre le flux d'information contextuel, pas un résultat d'observation. Aucun actif réutilisé ; conditions de réutilisation non établies.
+:::
+
+## Politique de citation
+
+Pour chaque figure externe, indiquer près de l'image : l'auteur ou le détenteur des droits, le titre ou la page source, un lien direct vers la ressource, et toute licence connue. Une URL accessible n'implique pas que l'image soit libre de réutilisation.
+
+Priorité est donnée aux schémas originaux créés dans le dépôt, aux ressources explicitement sous licence ouverte et aux intégrations depuis les sites des auteurs. Les ressources externes doivent enrichir les explications, sans remplacer les dérivations mathématiques, le code et les tests du projet.
+
+## Évaluation des tokenizers et disparités multilingues
+
+Ces travaux sont associés à la page [Stratégies de tokenisation](fr/tokenization-strategies.qmd). Ils répondent à des questions différentes et ne constituent pas un classement universel des tokenizers.
+
+- Goldman et al. (2024), [*Unpacking Tokenization: Evaluating Text Compression and its Correlation with Model Performance*](https://aclanthology.org/2024.findings-acl.134/) — analyse le lien empirique entre compression et performances en aval dans les expériences étudiées.
+- Schmidt et al. (2024), [*Tokenization Is More Than Compression*](https://aclanthology.org/2024.emnlp-main.40/) — explique pourquoi la compression seule ne suffit pas comme objectif de sélection.
+- Arnett et al. (NeurIPS 2025), [*Explaining and Mitigating Crosslingual Tokenizer Inequities*](https://proceedings.neurips.cc/paper_files/paper/2025/hash/5b91cefbfa52340af2f16f249572dc76-Abstract-Conference.html) — étudie les écarts de coût entre langues et les facteurs de conception associés.
+- Chiu (ACL 2026), [*TokLens: A Multilingual Lens on Tokenizer Quality for LLMs*](https://aclanthology.org/2026.acl-srw.18/) — cadre multi-métrique d'évaluation des tokenizers sur plusieurs langues.
+- Ahia et al. (2023), [*Do All Languages Cost the Same?*](https://aclanthology.org/2023.emnlp-main.614/) — étude des coûts de tokenisation dans 22 langues.
+- Wegmann et al. (2025), [*Tokenization is Sensitive to Language Variation*](https://aclanthology.org/2025.findings-acl.572/) — sensibilité aux variations linguistiques et au pré-tokenizer.
+
+## Ressources pédagogiques — texte, données et tokenisation
+
+::: {.reference-card}
+### ByteByteGo — *How LLMs Learn from the Internet* (1 décembre 2025)
+
+[Lire l'article](https://blog.bytebytego.com/p/how-llms-learn-from-the-internet).
+
+Vue d'ensemble de la préparation des données avant le pré-entraînement : collecte, déduplication, filtrage, contraintes de qualité et de conformité, puis tokenisation. La ressource aide à rendre visible le fait que la tokenisation intervient dans une chaîne de préparation plus large. Elle reste une présentation de vulgarisation : ne pas reprendre ses estimations d'échelle ou ses affirmations générales comme des mesures documentées.
+:::
+
+::: {.reference-card}
+### ByteByteGo — *How LLMs See the World* (4 août 2025)
+
+[Lire l'article](https://blog.bytebytego.com/p/how-llms-see-the-world).
+
+Vue d'ensemble accessible des tokens, IDs, embeddings, familles de tokenizers et exemples de segmentation de nombres, code, ponctuation et langues. À utiliser pour l'intuition et le repérage des questions, pas comme source technique de référence : certaines formulations simplifient le lien entre fragmentation et raisonnement, la portée sémantique des embeddings ou le fonctionnement de l'attention. Les pages de ce dépôt apportent les distinctions et limites nécessaires.
+:::
+
+::: {.reference-card}
+### Vizuara — *Tokenization from Scratch: Building Byte-Pair Encoding by Hand*
+
+[Consulter le parcours](https://pods.vizuara.ai/courses/build-llm/tokenization-from-scratch-building-byte-pair-encoding-by-han).
+
+Le descriptif annonce un parcours intermédiaire composé d'un article, de figures, d'équations, de neuf notebooks pratiques (environ quatre heures) et d'une étude de cas. L'intérêt pédagogique retenu pour LLM Lab est la continuité entre explication, manipulation de l'algorithme et application. Le contenu détaillé peut être soumis à accès ; ce lien n'est donc pas présenté comme une ressource libre ou un prérequis.
+:::
+
+::: {.reference-card}
+### Vizuara — *LLMs from 30,000 feet*
+
+[Consulter le micro-cours](https://mu.vizuara.ai/learn/llms-30k).
+
+Le format en courtes leçons autonomes et questions explicites est intéressant pour la progression éditoriale. Les séquences « How words become numbers » et « Why tokenizers struggle with Indian languages » sont proches des questions traitées ici. Les formulations très condensées servent d'intuition, mais ne remplacent pas les distinctions techniques entre token, ID et embedding, ni une évaluation empirique des coûts et performances multilingues.
+:::
+
+::: {.reference-card}
+### Kevin Degila — visualisations interactives autour de *Construire un LLM de zéro*
+
+[Voir la publication LinkedIn](https://fr.linkedin.com/posts/kevindegila_construire-un-llm-de-z%C3%A9ro-est-un-livre-activity-7483807443496497152-yspe).
+
+Exemple de visualisations manipulables autour des vecteurs, du produit scalaire, de fonctions à plusieurs variables et de la température. L'intérêt retenu est éditorial : placer une manipulation au moment où elle éclaire une notion, plutôt que regrouper toutes les démonstrations dans une galerie sans contexte. L'aperçu public consulté ne permet pas d'identifier un fichier image pédagogique autonome réutilisable ; aucune image de cette publication n'est copiée dans le dépôt.
+:::
+
+## Références pédagogiques — requêtes, clés et valeurs
+
+Ressources consultées le 5 novembre 2026. Ces ressources secondaires apportent des angles pédagogiques complémentaires aux pages [Q, K et V](fr/queries-keys-values.qmd) et [scaled dot-product attention](fr/scaled-dot-product-attention.qmd). Elles ne remplacent ni les références primaires ni les dérivations du dépôt. Les figures externes restent hébergées par leurs sources : aucune illustration n'est copiée ici.
+
+- **Michael Brenndoerfer**, [*Query, Key, Value: The Foundation of Transformer Attention*](https://mbrenndoerfer.com/writing/query-key-value-attention-mechanism) — explication intermédiaire avec hypothèses explicites pour la variance des scores, déroulé numérique, formes de tenseurs et interprétations géométriques. Les hypothèses de la dérivation et les limites de la trace jouet sont détaillées dans la revue de source.
+- **Codefinity**, [*Queries, Keys, and Values: The Building Blocks*](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b) — intuition géométrique sur Q/K, dépendance du produit scalaire aux normes et exemple d'ambiguïté lexicale (*bank*). Ressource pédagogique, pas source primaire.
+- **Neha KK**, [*Understanding Queries, Keys and Values in Transformers*](https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b) — motivation de la séparation des projections et exemple de coréférence. L'exemple ne rapporte aucun modèle, aucune tête, aucun poids mesuré ni expérience ; il illustre un flux d'information possible, pas une observation de résolution de coréférence.
+- **Nishanthan K**, [*How Query, Key, and Value (QKV) Work in Transformers*](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a) — présentation introductive et illustration complémentaire des rôles Q/K/V. Le miroir [Medium de l'auteur](https://nishanthan-k.medium.com/how-query-key-and-value-qkv-work-in-transformers-1274bfa14ea8) est également référencé dans la revue. Les métadonnées de publication et les droits des illustrations restent à vérifier.
+
+La comparaison pédagogique des quatre sources Q/K/V et les décisions d'intégration sont documentées dans le [dossier de comparaison des quatre sources](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/qkv-four-source-comparison-2026-11.md) et la [matrice de couverture pédagogique](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/qkv-pedagogical-coverage-matrix-2026-11.md). Les revues individuelles et extractions atomiques restent indexées dans le [catalogue des revues de sources](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-reviews/README.md). Une URL accessible ne vaut pas autorisation de réutilisation d'une figure.
+
+## Entropie, compression et divergence KL
+
+### Références mathématiques et scientifiques
+
+- Claude E. Shannon (1948), [A Mathematical Theory of Communication](https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf) — définitions et résultats fondateurs sur l'information, l'entropie et le codage.
+- Thomas M. Cover & Joy A. Thomas, [Elements of Information Theory](https://onlinelibrary.wiley.com/doi/book/10.1002/047174882X) — entropie, entropie conditionnelle, information mutuelle, codage et divergence KL.
+- Edwin T. Jaynes (1957), [Information Theory and Statistical Mechanics](https://doi.org/10.1103/PhysRev.106.620) — relation entre entropie informationnelle et physique statistique.
+- [3Blue1Brown — Reinventing Entropy](https://www.youtube.com/watch?v=l6DKRf-fAAM) — intuition visuelle sur la surprise, l'entropie et la compression.
+- [3Blue1Brown — But what is cross-entropy?](https://www.youtube.com/watch?v=GlYgs6v2YfU) — coût de codage avec une distribution prédictive, entropie croisée et lien avec les objectifs des LLM.
+- [3Blue1Brown — lesson on cross-entropy](https://www.3blue1brown.com/lessons/cross-entropy/) — page de la leçon et ressources associées.
+- [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) — convention d'API pour les logits, les cibles et les réductions.
+- [Hugging Face — Perplexity of fixed-length models](https://huggingface.co/docs/transformers/perplexity) — lien entre log-vraisemblance, cross-entropie moyenne et perplexité.
+
+### Vidéos complémentaires proposées pour l'étude
+
+Les deux vidéos 3Blue1Brown ci-dessus sont les références pédagogiques principales utilisées dans les pages. Les liens suivants sont conservés comme ressources complémentaires fournies pour ce parcours ; leur titre exact et leur contenu doivent être vérifiés avant de les citer comme preuve d'une affirmation précise.
+
+- [Vidéo YouTube — ID nlxyZ4gKHGA, à vérifier](https://www.youtube.com/watch?v=nlxyZ4gKHGA&t=602s)
+- [Vidéo YouTube — ID VJ61CF9sxm4, à vérifier](https://www.youtube.com/watch?v=VJ61CF9sxm4)
+- [Vidéo YouTube — ID H71WR50stm4, à vérifier](https://www.youtube.com/watch?v=H71WR50stm4)
+- [Vidéo YouTube — ID kD5DHGbkYz0, à vérifier](https://www.youtube.com/watch?v=kD5DHGbkYz0&t=279s)
+- [Vidéo YouTube — ID ZBp-uFwYlQg, à vérifier](https://www.youtube.com/watch?v=ZBp-uFwYlQg)
+- [Vidéo YouTube — ID Pwgpl9mKars, à vérifier](https://www.youtube.com/watch?v=Pwgpl9mKars)
+- [Short YouTube — ID jd02NxCuCxA, à vérifier](https://www.youtube.com/shorts/jd02NxCuCxA)
+
+Une référence pédagogique aide à construire l'intuition, mais ne remplace pas une source primaire lorsqu'une page énonce un résultat mathématique ou physique. Les liens vidéo sont donc distingués des références formelles.
+
+
+## Parcours d'étude chapitre par chapitre — Sebastian Raschka
+
+Ces ressources complètent le parcours principal. L'ordre recommandé est : **lire la théorie → regarder une vidéo si nécessaire → examiner le code de référence → répondre aux questions sans consulter les solutions → seulement ensuite implémenter et tester dans LLM Lab**. Les explications pédagogiques ne remplacent ni les sources primaires ni les tests.
+
+- **Méthode de lecture :** Sebastian Raschka, [Reading Books](https://sebastianraschka.com/blog/2025/reading-books.html) — conseils pour lire un chapitre avant de coder.
+- **Carte des chapitres et ressources :** [Raschka — Build a Large Language Model (From Scratch)](https://sebastianraschka.com/llms-from-scratch/).
+- **Livre de référence :** [Manning — Build a Large Language Model (From Scratch)](https://www.manning.com/books/build-a-large-language-model-from-scratch).
+- **Code officiel :** [rasbt/LLMs-from-scratch](https://github.com/rasbt/LLMs-from-scratch).
+- **Vidéos chapitre par chapitre :** [playlist YouTube](https://www.youtube.com/playlist?list=PLQRyiBCWmqp5twpd8Izmaxu5XRkxd5yC-) ; [vidéo complémentaire fournie](https://www.youtube.com/watch?v=kPGTx4wcm_w). Vérifier le titre et le contenu exact de chaque vidéo avant de la citer pour une affirmation technique.
+- **Tokenisation :** Solomon Eshun, [Building LLMs From Scratch (Part 2): Tokenization](https://soloshun.medium.com/building-llms-from-scratch-part-2-tokenization-e0bf05d24094). Explication secondaire des compromis de tokenisation et de BPE ; vérifier les détails avec le livre, le code de référence et la documentation officielle du tokenizer concerné.
+- **Cours complémentaire :** [AlgoMonster — LLM course introduction](https://algo.monster/courses/llm/llm_course_introduction). À utiliser en supplément après vérification de son contenu actuel et de ses conditions d'accès.
+
+Un [PDF miroir tiers fourni pour examen](https://dl.tehrandata.org/book/Build-a-large-language-models.pdf) n'a pas de provenance ni de statut de licence vérifiés. Préférer la page de l'éditeur et les ressources officielles ; ne pas redistribuer ce fichier ni en recopier le contenu.
+
+
+## Sources scientifiques citées dans le panorama des LLM
+
+- **Vaswani et al. (2017), [*Attention Is All You Need*](https://arxiv.org/abs/1706.03762)** — architecture Transformer encodeur-décodeur originale.
+- **Devlin et al. (2018), [*BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding*](https://arxiv.org/abs/1810.04805)** — encodeur bidirectionnel et objectif de prédiction de tokens masqués.
+- **Raffel et al. (2019), [*Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer (T5)*](https://arxiv.org/abs/1910.10683)** — cadre encodeur-décodeur texte-vers-texte et pré-entraînement par corruption.
+- **Radford et al. (2019), [*Language Models are Unsupervised Multitask Learners*](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf)** — exemple GPT-2 de modèle autorégressif décodeur seul.
+- **Bommasani et al. (2021), [*On the Opportunities and Risks of Foundation Models*](https://arxiv.org/abs/2108.07258)** — cadrage des modèles de fondation et de leurs risques.
+- **Ouyang et al. (2022), [*Training language models to follow instructions with human feedback*](https://arxiv.org/abs/2203.02155)** — exemple de pipeline d'adaptation par démonstrations et préférences.
+- **Rafailov et al. (2023), [*Direct Preference Optimization: Your Language Model is Secretly a Reward Model*](https://arxiv.org/abs/2305.18290)** — optimisation directe d'une politique à partir de comparaisons de préférences, sans entraîner séparément un modèle de récompense puis utiliser PPO.
+- **Gu et Dao (2023), [*Mamba: Linear-Time Sequence Modeling with Selective State Spaces*](https://arxiv.org/abs/2312.00752)** — exemple d'architecture de modélisation de séquence non fondée sur l'attention Transformer standard.
+
+Ces sources ont des rôles différents — description d'architecture, objectifs d'entraînement, modèles de fondation et adaptation par préférences. Aucune ne définit à elle seule tous les usages actuels du terme « LLM ».
+
+## Sources scientifiques citées dans les lois d'échelle
+
+- **Kaplan et al. (2020), [*Scaling Laws for Neural Language Models*](https://arxiv.org/abs/2001.08361)** — relations de puissance empiriques entre la perte et l'échelle du modèle, des données et du calcul.
+- **Hoffmann et al. (2022), [*Training Compute-Optimal Large Language Models*](https://arxiv.org/abs/2203.15556)** — étude dite « Chinchilla » : de nombreux grands modèles étaient entraînés sur trop peu de tokens au regard de leur taille ; propose une allocation du budget de calcul entre paramètres et données.
+- **Henighan et al. (2020), [*Scaling Laws for Autoregressive Generative Modeling*](https://arxiv.org/abs/2010.14701)** — lois d'échelle mesurées sur une large famille de modalités et d'architectures.
+
+Ces trois travaux établissent des régularités observées dans des régimes expérimentaux donnés ; ils ne fixent ni seuil universel de LLM ni règle d'allocation indépendante du protocole. La page [Lois d'échelle](fr/scaling-laws.qmd) présente ces résultats et leurs limites.
+
+
+## Références pédagogiques — processus de génération autorégressive
+
+Ces ressources ont servi de références de conception et de vérification pour la page [Panorama : qu’est-ce qu’un LLM ?](fr/llm-overview.qmd). Elles ne sont pas les sources graphiques de l’illustration originale du dépôt.
+
+### Pipeline NLP : prétraitement, modèle et post-traitement {#pipeline-et-generation-autoregressive}
+
+- **Hugging Face, LLM Course — [“Behind the pipeline”](https://huggingface.co/learn/llm-course/chapter2/2).** Présente un pipeline NLP en trois grandes parties : prétraitement, passage dans le modèle, puis post-traitement. L’exemple de la page porte sur la classification de sentiment ; il est utile pour clarifier la séparation des responsabilités, mais ne doit pas être pris pour une description exacte de toutes les architectures GPT génératives.
+
+### Visualiser le Transformer {#visualiser-le-transformer}
+
+- **Jay Alammar (2018), [“The Illustrated Transformer”](https://jalammar.github.io/illustrated-transformer/).** Présentation visuelle progressive de l’architecture Transformer, de l’attention et de l’information positionnelle. La page LLM Lab reprend l’idée d’une hiérarchie visuelle et d’une progression par niveaux, sans reprendre ni adapter ses illustrations. L’auteur indique une licence [Creative Commons Attribution–NonCommercial–ShareAlike 4.0 International](https://creativecommons.org/licenses/by-nc-sa/4.0/) pour cet article ; cette licence ne s’applique pas à l’illustration originale de LLM Lab.
+
+### Transformers : comment les entrées deviennent des sorties {#transformers-how-inputs-become-outputs}
+
+- **Edward Raff, Drew Farris et Stella Biderman (2025), [*How Large Language Models Work*](https://www.manning.com/books/how-large-language-models-work), chapitre 3 : “Transformers: How Inputs Become Outputs”.** Décrit la transformation des tokens en représentations, le rôle des couches Transformer, la production des scores de sortie et la boucle de génération. Le [chapitre en aperçu](https://www.manning.com/preview/how-large-language-models-work/chapter-3) est particulièrement pertinent pour relier le traitement du contexte à la sélection du token suivant. Référence de synthèse pédagogique, et non source primaire.
+
+### Provenance de l’illustration du processus
+
+- **Fichiers :** `site/images/llm-generation-process-fr.svg` et `site/images/llm-generation-process-en.svg`.
+- **Création :** schémas vectoriels originaux dessinés pour LLM Lab ; ils ne reproduisent pas les figures des ressources ci-dessus et ne contiennent aucun logo de fournisseur.
+- **Utilisation :** pages française et anglaise du panorama LLM.
+- **Contenu :** distinction entre le contexte évolutif, les paramètres fixes du modèle pendant l’inférence, l’évaluation des continuations et la règle de sélection. Les pourcentages visibles sont explicitement illustratifs et ne correspondent pas à une mesure réelle.
+- **Droits et provenance :** illustration originale produite pour le dépôt ; les trois références précédentes sont citées comme ressources pédagogiques consultées, pas comme titulaires ou sources de l’image.
+
+
+## Stratégies de décodage et génération ouverte
+
+Ces travaux sont cités dans l'approfondissement [Stratégies avancées de décodage](fr/decoding-strategies.qmd). Ils étudient des tâches et des protocoles différents : leurs résultats ne définissent pas un réglage universel.
+
+- **Holtzman et al. (2020), [*The Curious Case of Neural Text Degeneration*](https://arxiv.org/abs/1904.09751), ICLR.** Analyse la dégénérescence de certaines méthodes de maximisation en génération ouverte et propose le nucleus sampling (top-p).
+- **Nadeem et al. (2020), [*A Systematic Characterization of Sampling Algorithms for Open-ended Language Generation*](https://aclanthology.org/2020.aacl-main.36/), AACL-IJCNLP.** Étudie les propriétés communes de top-k, nucleus et échantillonnage avec température, ainsi que leur compromis qualité-diversité.
+- **Meister et al. (2023), [*On the Efficacy of Sampling Adapters*](https://aclanthology.org/2023.acl-long.80/), ACL.** Propose un cadre pour analyser comment les transformations locales des distributions modifient les compromis entre précision et rappel.
+- **Li et al. (2023), [*Contrastive Decoding: Open-ended Text Generation as Optimization*](https://aclanthology.org/2023.acl-long.687/), ACL.** Introduit une fonction de score contrastive entre un modèle expert et un modèle amateur, sous contrainte de plausibilité.
+- **Welleck et al. (2020), [*Consistency of a Recurrent Language Model With Respect to Incomplete Decoding*](https://aclanthology.org/2020.emnlp-main.448/), EMNLP.** Analyse théoriquement l'incohérence de certaines stratégies de décodage pour les modèles récurrents ; la portée de ce résultat doit rester attachée à ses hypothèses et à sa classe de modèles.
+
+## Architectures hybrides et efficacité d'inférence
+
+Ces ressources sont utilisées dans l'étude de cas [Architectures hybrides : le cas Nemotron](fr/hybrid-llm-architectures.qmd). ByteByteGo fournit une synthèse pédagogique ; les affirmations d'architecture et les chiffres propres aux modèles sont recoupés avec les documents NVIDIA primaires.
+
+- **NVIDIA, [*Nemotron 3: Efficient and Open Intelligence*](https://research.nvidia.com/labs/nemotron/files/NVIDIA-Nemotron-3-White-Paper.pdf)** — source primaire sur l'architecture hybride Mamba-2/Transformer/MoE, LatentMoE, MTP, NVFP4, contexte long et post-entraînement. Les caractéristiques varient selon Nano, Super et Ultra.
+- **Shao et al. (2024), [*DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models*](https://arxiv.org/abs/2402.03300)** — présente GRPO (*Group Relative Policy Optimization*) pour optimiser une politique à partir des récompenses relatives d'un groupe de réponses.
+- **NVIDIA, [*Nemotron 3 Super: Open, Efficient MoE Hybrid Mamba-Transformer Model*](https://research.nvidia.com/labs/nemotron/files/NVIDIA-Nemotron-3-Super-Technical-Report.pdf)** — rapport technique complémentaire sur le modèle Super, notamment l'intercalation Mamba/attention, LatentMoE, MTP partagé et l'entraînement NVFP4 à précision mixte.
+- **NVIDIA, [*Nemotron 3 Ultra: Open, Efficient Mixture-of-Experts Hybrid Mamba-Transformer Model for Agentic Reasoning*](https://research.nvidia.com/labs/nemotron/files/NVIDIA-Nemotron-3-Ultra-Technical-Report.pdf)** — rapport technique sur la variante Ultra, notamment LatentMoE et le post-entraînement MOPD.
+- **NVIDIA Developer Blog, [*NVIDIA Nemotron 3 Ultra Powers Faster, More Efficient Reasoning for Long-Running Agents*](https://developer.nvidia.com/blog/nvidia-nemotron-3-ultra-powers-faster-more-efficient-reasoning-for-long-running-agents/)** — synthèse de l'équipe NVIDIA sur MOPD et les usages agentiques.
+- **NVIDIA Developer Blog, [*Inside NVIDIA Nemotron 3: Techniques, Tools, and Data That Make It Efficient and Accurate*](https://developer.nvidia.com/blog/inside-nvidia-nemotron-3-techniques-tools-and-data-that-make-it-efficient-and-accurate/)** — explication par l'équipe NVIDIA.
+- **Raghav Mehta / ByteByteGo (2 novembre 2026), [*How Nvidia's New Nemotron Model Works*](https://blog.bytebytego.com/p/how-nvidias-new-nemotron-model-works)** — synthèse secondaire accessible sur Mamba, MoE, GQA, MTP et quantification. Utile pour repérer les liens entre concepts ; vérifier les versions et chiffres dans les sources primaires.
+- **Gu & Dao (2023), [*Mamba: Linear-Time Sequence Modeling with Selective State Spaces*](https://arxiv.org/abs/2312.00752)** — modèles à espace d'état sélectifs.
+- **Dao & Gu (2024), [*Transformers are SSMs: Generalized Models and Efficient Algorithms Through Structured State Space Duality*](https://arxiv.org/abs/2405.21060)** — fondements de Mamba-2.
+- **Ainslie et al. (2023), [*GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints*](https://arxiv.org/abs/2305.13245)** — grouped-query attention.
+- **Leviathan et al. (2023), [*Fast Inference from Transformers via Speculative Decoding*](https://arxiv.org/abs/2211.17192)** — décodage spéculatif.
+- **Gloeckle et al. (2024), [*Better & Faster Large Language Models via Multi-token Prediction*](https://arxiv.org/abs/2404.19737)** — prédiction multi-token et génération.
+
+- **NVIDIA Developer Blog, [*Developing Nemotron 3.5 Lightning NVFP4 with QAD Using NVIDIA Model Optimizer*](https://developer.nvidia.com/blog/developing-nemotron-3-5-lightning-nvfp4-with-qad-using-nvidia-model-optimizer/)** — source primaire sur la quantification post-entraînement et la distillation QAD de Lightning 3.5.
+- **NVIDIA NeMo, [*Quantization (PTQ + QAD) — Nemotron 3.5 Lightning*](https://docs.nvidia.com/nemotron/latest/nemotron/lightning35/quantization.html)** — documentation de la recette PTQ puis QAD, du checkpoint et des métriques rapportées.
+- **NVIDIA, [*Nemotron 3.5 Super and Lightning*](https://research.nvidia.com/labs/nemotron/Nemotron-3.5-Super-and-Lightning/)** — page officielle de la famille 3.5 et de ses checkpoints.
+
+
+## Complexité, efficacité et parallélisme des LLM
+
+- **Vaswani et al. (2017), [*Attention Is All You Need*](https://arxiv.org/abs/1706.03762)** — formulation du Transformer et de l'attention multi-tête ; référence de base pour les coûts en \(T^2\).
+- **Dao et al. (2022), [*FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness*](https://arxiv.org/abs/2205.14135)** — réduction des mouvements mémoire et des intermédiaires sans modifier l'attention exacte ni son travail quadratique.
+- **Dao (2023), [*FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning*](https://arxiv.org/abs/2307.08691)** — parallélisme, partitionnement du travail et utilisation du GPU.
+- **Gu & Dao (2023), [*Mamba: Linear-Time Sequence Modeling with Selective State Spaces*](https://arxiv.org/abs/2312.00752)** — modèles à espace d'état sélectifs, scan efficace et inférence récurrente.
+- **Dao & Gu (2024), [*Transformers are SSMs: Generalized Models and Efficient Algorithms Through Structured State Space Duality*](https://arxiv.org/abs/2405.21060)** — fondements algorithmiques de Mamba-2 et des scans structurés.
+- **Ainslie et al. (2023), [*GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints*](https://arxiv.org/abs/2305.13245)** — réduction du nombre de têtes clé/valeur et du cache KV.
+- **Shazeer (2019), [*Fast Transformer Decoding: One Write-Head is All You Need*](https://arxiv.org/abs/1911.02150)** — multi-query attention et réduction du coût mémoire du décodage.
+- **Fedus, Zoph & Shazeer (2022), [*Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity*](https://arxiv.org/abs/2101.03961)** — routage parcimonieux et compromis MoE.
+- **Shoeybi et al. (2019), [*Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism*](https://arxiv.org/abs/1909.08053)** — parallélisme tensoriel et entraînement distribué.
+- **Huang et al. (2019), [*GPipe: Efficient Training of Giant Neural Networks using Pipeline Parallelism*](https://arxiv.org/abs/1811.06965)** — parallélisme pipeline et micro-lots.
+- **Korthikanti et al. (2022), [*Reducing Activation Recomputation in Large Transformer Models*](https://arxiv.org/abs/2205.05198)** — parallélisme de séquence et mémoire d'activation.

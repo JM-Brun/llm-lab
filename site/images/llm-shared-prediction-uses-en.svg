@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 860" role="img" aria-labelledby="title desc">
+<title id="title">One predictive computation, three uses</title><desc id="desc">The context is processed by the model to produce logits and then a probability distribution. The distribution is used for generation, scoring an observed target, and training.</desc>
+<defs><marker id="arr" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M1 1 L10 6 L1 11" fill="none" stroke="#405a72" stroke-width="2"/></marker><style>
+text{font-family:Inter,ui-sans-serif,system-ui,sans-serif;fill:#183247}.h{font-size:30px;font-weight:700}.b{font-size:23px}.s{font-size:19px}.tiny{font-size:17px}.box{stroke-width:2.5}
+</style></defs>
+<rect width="1440" height="860" fill="#fff"/>
+<text x="720" y="54" text-anchor="middle" class="h">One predictive computation, three uses</text>
+<text x="720" y="88" text-anchor="middle" class="s" fill="#52697b">The model estimates the next token; the task determines what we do with that estimate.</text>
+<!-- upper shared path -->
+<rect x="70" y="145" width="250" height="150" rx="20" fill="#edf4ff" stroke="#8eb1df" class="box"/>
+<text x="195" y="195" text-anchor="middle" class="h">Context</text><text x="195" y="235" text-anchor="middle" class="s">Tokens already known</text><text x="195" y="263" text-anchor="middle" class="tiny">prompt or observed prefix</text>
+<rect x="420" y="145" width="250" height="150" rx="20" fill="#eaf6ef" stroke="#8fc5a4" class="box"/>
+<text x="545" y="195" text-anchor="middle" class="h">Model</text><text x="545" y="235" text-anchor="middle" class="s">Forward pass</text><text x="545" y="263" text-anchor="middle" class="tiny">parameters θ</text>
+<rect x="770" y="145" width="220" height="150" rx="20" fill="#fff5e5" stroke="#e3c17d" class="box"/>
+<text x="880" y="195" text-anchor="middle" class="h">Logits</text><text x="880" y="235" text-anchor="middle" class="s">One score per token</text><text x="880" y="263" text-anchor="middle" class="tiny">unnormalized scores</text>
+<rect x="1090" y="145" width="280" height="150" rx="20" fill="#fff1e9" stroke="#e4ad8d" class="box"/>
+<text x="1230" y="195" text-anchor="middle" class="h">Probabilities</text><text x="1230" y="235" text-anchor="middle" class="s">Softmax</text><text x="1230" y="263" text-anchor="middle" class="tiny">distribution over the vocabulary</text>
+<g fill="none" stroke="#405a72" stroke-width="4" marker-end="url(#arr)"><path d="M325 220 H410"/><path d="M675 220 H760"/><path d="M995 220 H1080"/></g>
+<!-- branch line -->
+<path d="M1230 300 V365 H240 V420 M1230 365 H720 V420 M1230 365 H1200 V420" fill="none" stroke="#8093a4" stroke-width="3"/>
+<g fill="none" stroke="#405a72" stroke-width="3" marker-end="url(#arr)"><path d="M240 365 V410"/><path d="M720 365 V410"/><path d="M1200 365 V410"/></g>
+<!-- cards -->
+<rect x="55" y="430" width="370" height="315" rx="22" fill="#edf4ff" stroke="#8eb1df" class="box"/>
+<text x="240" y="485" text-anchor="middle" class="h">1. Generation</text>
+<text x="240" y="535" text-anchor="middle" class="b">Choose a token</text>
+<text x="240" y="575" text-anchor="middle" class="s">Decoding: selection or sampling</text>
+<path d="M240 600 V635" stroke="#405a72" stroke-width="3" marker-end="url(#arr)"/>
+<rect x="105" y="650" width="270" height="60" rx="12" fill="#fff" stroke="#8eb1df" stroke-width="2"/>
+<text x="240" y="688" text-anchor="middle" class="b">Append to context ↺</text>
+<rect x="535" y="430" width="370" height="315" rx="22" fill="#fff6e8" stroke="#e3c17d" class="box"/>
+<text x="720" y="485" text-anchor="middle" class="h">2. Scoring</text>
+<text x="720" y="535" text-anchor="middle" class="b">Look at the target token</text>
+<text x="720" y="580" text-anchor="middle" class="s">What probability does the model</text><text x="720" y="610" text-anchor="middle" class="s">assign to it?</text>
+<rect x="590" y="650" width="260" height="60" rx="12" fill="#fff" stroke="#e3c17d" stroke-width="2"/>
+<text x="720" y="688" text-anchor="middle" class="b">Target probability</text>
+<rect x="1015" y="430" width="370" height="315" rx="22" fill="#edf7ef" stroke="#8fc5a4" class="box"/>
+<text x="1200" y="485" text-anchor="middle" class="h">3. Training</text>
+<text x="1200" y="535" text-anchor="middle" class="b">Compare with the target</text>
+<text x="1200" y="580" text-anchor="middle" class="s">Loss → gradients</text>
+<path d="M1200 605 V635" stroke="#405a72" stroke-width="3" marker-end="url(#arr)"/>
+<rect x="1065" y="650" width="270" height="60" rx="12" fill="#fff" stroke="#8fc5a4" stroke-width="2"/>
+<text x="1200" y="688" text-anchor="middle" class="b">Update θ</text>
+<text x="720" y="810" text-anchor="middle" class="s" fill="#52697b">Generation and scoring: parameters stay fixed. Training: parameters are adjusted by optimization.</text>
+</svg>

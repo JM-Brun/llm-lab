@@ -1,0 +1,60 @@
+# Python bytecode and environments
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+
+# Build and packaging
+build/
+dist/
+*.egg-info/
+.wheels/
+
+# Quarto build/cache artifacts
+site/_site/
+site/.quarto/
+site/_freeze/
+site/learning-map-data-*.json
+site/includes/generated-guided-context-*.qmd
+site/includes/generated-suggested-route-*.qmd
+
+# Test, coverage, and type-check caches
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.mypy_cache/
+.dmypy.json
+.ruff_cache/
+.hypothesis/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.streamlit/secrets.toml
+
+# Model checkpoints, datasets, and experiment outputs (store externally)
+checkpoints/
+models/
+data/raw/
+data/processed/
+outputs/
+artifacts/
+*.safetensors
+*.pt
+*.pth
+*.ckpt
+*.onnx
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
