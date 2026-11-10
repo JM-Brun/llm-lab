@@ -50,10 +50,7 @@ def test_large_safe_batch_stays_incremental():
         + "".join(f"    - fr/page-{index}.qmd\n" for index in range(60))
         + "\nwebsite:\n  title: Example\n"
     )
-    files = [
-        {"filename": f"site/fr/page-{index}.qmd", "status": "modified"}
-        for index in range(49)
-    ]
+    files = [{"filename": f"site/fr/page-{index}.qmd", "status": "modified"} for index in range(49)]
 
     result = classify_changed_files(files, config)
 
