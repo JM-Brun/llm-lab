@@ -59,7 +59,7 @@ Ici, $M$ désigne un masque additif strict : $M_{ij}=0$ pour un couple requête-
 
 ## Passer du mécanisme au calcul
 
-Le calcul complet se lit dans l'ordre : les scores issus de Q et K sont mis à l'échelle, le masque éventuel exclut les positions interdites, le softmax normalise les scores accessibles, puis les poids combinent les vecteurs V. Pour effectuer cette chaîne de calcul à la main, distinguer mélange pondéré et sélection, puis manipuler les projections dans un cas multi-têtes, utilisez les exercices de la collection [Attention](exercises.qmd#attention), en particulier AT-A à AT-C.
+Le calcul complet se lit dans l'ordre : les scores issus de Q et K sont mis à l'échelle, le masque éventuel exclut les positions interdites, le softmax normalise les scores accessibles, puis les poids combinent les vecteurs V. Pour effectuer cette chaîne de calcul à la main, distinguer mélange pondéré et sélection, puis manipuler les projections dans un cas multi-têtes, utilisez les exercices de la collection [Attention](exercises.qmd#at-0-scores-to-output), en particulier AT-A à AT-C.
 
 ## Origine et rôle
 
