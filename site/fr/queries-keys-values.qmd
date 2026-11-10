@@ -75,7 +75,7 @@ Avec $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ et $W_V\in\mathbb{R}^{d_{model
 - $Q,K\in\mathbb{R}^{T\times d_k}$ ;
 - $V\in\mathbb{R}^{T\times d_v}$.
 
-Chaque ligne correspond à une position. Les mêmes matrices de projection sont appliquées à toutes les positions, mais les représentations d'entrée varient. Les dimensions $d_k$ et $d_v$ ne sont pas nécessairement égales ; les biais éventuels sont omis dans cette écriture. Pour suivre ces projections dans le code du bloc, voir la [visite guidée du bloc Transformer](transformer-block-walkthrough.qmd) ; les conventions générales de dimensions et d'axes sont détaillées dans [Tenseurs](tensors.qmd).
+Chaque ligne correspond à une position. Les mêmes matrices de projection sont appliquées à toutes les positions, mais les représentations d'entrée varient. Les dimensions $d_k$ et $d_v$ ne sont pas nécessairement égales ; les biais éventuels sont omis dans cette écriture. Cette provenance commune caractérise l'auto-attention ; en [attention croisée](cross-attention.qmd), Q provient du flux qui consulte, tandis que K et V proviennent du flux consulté. Pour suivre ces projections dans le code du bloc, voir la [visite guidée du bloc Transformer](transformer-block-walkthrough.qmd) ; les conventions générales de dimensions et d'axes sont détaillées dans [Tenseurs](tensors.qmd).
 
 ## Approfondissement mathématique et architectural
 
