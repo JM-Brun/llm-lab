@@ -20,7 +20,7 @@
 <text x="108" y="228" class="head">Contexte</text>
 <text x="55" y="285" class="body">Le prompt et les</text><text x="55" y="315" class="body">échanges précédents.</text>
 <rect x="55" y="355" width="235" height="245" rx="15" fill="#fff" stroke="#8eb1eb" stroke-width="2"/>
-<text x="77" y="398" class="body" font-weight="700">« Pourquoi le ciel</text><text x="77" y="430" class="body" font-weight="700">est-il bleu ? »</text>
+<text x="77" y="398" class="body" font-weight="700">« C’est une bonne</text><text x="77" y="430" class="body" font-weight="700">situation, ça, scribe ? »</text>
 <text x="77" y="485" class="small" font-weight="700">CONTEXTE DISPONIBLE</text>
 <rect x="77" y="508" width="190" height="14" rx="7" fill="#c4d1e3"/><rect x="77" y="535" width="172" height="14" rx="7" fill="#c4d1e3"/><rect x="77" y="562" width="184" height="14" rx="7" fill="#c4d1e3"/>
 <!-- tokenize -->
@@ -30,9 +30,9 @@
 <text x="370" y="285" class="body">Le tokenizer découpe</text><text x="370" y="315" class="body">le texte en tokens.</text>
 <text x="370" y="365" class="small" font-weight="700">EXEMPLE SCHÉMATIQUE</text>
 <g fill="#d8c9f1" stroke="#b9a3e4" stroke-width="1.5">
- <rect x="370" y="390" width="105" height="58" rx="9"/><rect x="485" y="390" width="52" height="58" rx="9"/><rect x="547" y="390" width="58" height="58" rx="9"/>
+ <rect x="370" y="390" width="52" height="58" rx="9"/><rect x="432" y="390" width="40" height="58" rx="9"/><rect x="482" y="390" width="90" height="58" rx="9"/>
 </g>
-<text x="422" y="426" text-anchor="middle" class="small">Le</text><text x="511" y="426" text-anchor="middle" class="small">rap-</text><text x="576" y="426" text-anchor="middle" class="small">port</text>
+<text x="396" y="426" text-anchor="middle" class="small">ça</text><text x="452" y="426" text-anchor="middle" class="small">,</text><text x="527" y="426" text-anchor="middle" class="small">scribe</text>
 <text x="370" y="500" class="body">Les tokens sont ensuite</text><text x="370" y="530" class="body">convertis en identifiants</text><text x="370" y="560" class="body">et en représentations.</text>
 <!-- model -->
 <rect x="660" y="175" width="285" height="505" rx="22" fill="#f0faf4" stroke="#9bd3b2" class="panel"/>
@@ -50,13 +50,13 @@
 <text x="1053" y="228" class="head">Distribution</text>
 <text x="1000" y="285" class="body">Softmax transforme</text><text x="1000" y="315" class="body">les scores en probabilités.</text>
 <text x="1000" y="365" class="small" font-weight="700">CONTINUATIONS POSSIBLES</text>
-<text x="1000" y="415" class="body">« Le »</text><text x="1228" y="415" text-anchor="end" class="body" font-weight="700">42 %</text>
-<rect x="1000" y="426" width="220" height="12" rx="6" fill="#ead9b2"/><rect x="1000" y="426" width="194" height="12" rx="6" fill="#bd9344"/>
-<text x="1000" y="475" class="body">« Grâce à »</text><text x="1228" y="475" text-anchor="end" class="body" font-weight="700">34 %</text>
-<rect x="1000" y="486" width="220" height="12" rx="6" fill="#ead9b2"/><rect x="1000" y="486" width="158" height="12" rx="6" fill="#bd9344"/>
-<text x="1000" y="535" class="body">« Car »</text><text x="1228" y="535" text-anchor="end" class="body" font-weight="700">15 %</text>
-<rect x="1000" y="546" width="220" height="12" rx="6" fill="#ead9b2"/><rect x="1000" y="546" width="70" height="12" rx="6" fill="#bd9344"/>
-<text x="1000" y="590" class="small">« En raison de » : 9 %</text>
+<text x="1000" y="415" class="body">« Être »</text><text x="1228" y="415" text-anchor="end" class="body" font-weight="700">60 %</text>
+<rect x="1000" y="426" width="220" height="12" rx="6" fill="#ead9b2"/><rect x="1000" y="426" width="210" height="12" rx="6" fill="#bd9344"/>
+<text x="1000" y="475" class="body">« Vous »</text><text x="1228" y="475" text-anchor="end" class="body" font-weight="700">20 %</text>
+<rect x="1000" y="486" width="220" height="12" rx="6" fill="#ead9b2"/><rect x="1000" y="486" width="70" height="12" rx="6" fill="#bd9344"/>
+<text x="1000" y="535" class="body">« Oui »</text><text x="1228" y="535" text-anchor="end" class="body" font-weight="700">10 %</text>
+<rect x="1000" y="546" width="220" height="12" rx="6" fill="#ead9b2"/><rect x="1000" y="546" width="35" height="12" rx="6" fill="#bd9344"/>
+<text x="1000" y="590" class="small">« Non » : 10 %</text>
 <!-- select -->
 <rect x="1290" y="175" width="280" height="505" rx="22" fill="#fff4ed" stroke="#efbd9a" class="panel"/>
 <circle cx="1330" cy="220" r="24" fill="#d9782a"/><text x="1330" y="228" text-anchor="middle" font-size="23" font-weight="750" fill="#fff">5</text>
@@ -65,7 +65,7 @@
 <rect x="1315" y="365" width="230" height="100" rx="14" fill="#fff" stroke="#e9b18b" stroke-width="2"/>
 <text x="1430" y="405" text-anchor="middle" class="body" font-weight="700">Décodage</text><text x="1430" y="438" text-anchor="middle" class="small">Maximum ou échantillonnage</text>
 <rect x="1315" y="495" width="230" height="100" rx="14" fill="#ffe5d2" stroke="#df8b4c" stroke-width="2"/>
-<text x="1430" y="535" text-anchor="middle" class="body" font-weight="700">« Grâce à »</text><text x="1430" y="568" text-anchor="middle" class="small">Token sélectionné : 34 %</text>
+<text x="1430" y="535" text-anchor="middle" class="body" font-weight="700">« Être »</text><text x="1430" y="568" text-anchor="middle" class="small">Token sélectionné : 60 %</text>
 <text x="1315" y="630" class="tiny">L’échantillonnage peut choisir</text><text x="1315" y="653" class="tiny">un token moins probable que le maximum.</text>
 <!-- arrows -->
 <g fill="none" stroke="#315f9f" stroke-width="5" marker-end="url(#arrow)">
