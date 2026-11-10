@@ -23,7 +23,6 @@ tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-re
 
 
 {{< include ../includes/generated-guided-context-fr-contextualized-representations.qmd >}}
-:::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
 À la fin de cette leçon, vous devriez pouvoir :
@@ -64,7 +63,7 @@ Supposons que le token visible `bank` soit représenté par le même ID dans deu
 Sous cette hypothèse explicite, les deux occurrences récupèrent le même **vecteur de plongement initial** (embedding) :
 
 \[
-e_{\text{bank}} = E[\text{ID}_{\text{bank}}].
+e_{\mathrm{bank}} = E[\mathrm{ID}_{\mathrm{bank}}].
 \]
 
 Le lookup est un accès à une table. Il n'examine pas les mots voisins, ne déduit pas le sens visé et ne produit pas un vecteur propre à chaque phrase.
