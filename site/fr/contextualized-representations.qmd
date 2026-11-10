@@ -95,6 +95,8 @@ Cet exemple est repris comme motivation pédagogique dans le tutoriel de [Nishan
 
 Le lookup initial ne suffit pas à décrire l'entrée du réseau : l'architecture doit aussi traiter la position, puis les blocs Transformer construisent des états dépendant du contexte accessible. Le mécanisme positionnel varie selon les modèles ; un vecteur de position n'est donc pas toujours ajouté directement à l'embedding.
 
+Dans le fil rouge, le préfixe « C'est une bonne situation, ça, scribe ? » est déjà présent. À mesure que « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... » est généré, chaque nouveau token est traité avec le contexte désormais disponible, qui s'allonge au fil de la boucle.
+
 Pour comprendre les dépendances entre positions, les masques causaux et les rôles distincts de l'auto-attention et du MLP, consultez l'[approfondissement sur les représentations contextualisées](contextualized-representations-advanced.qmd). La formalisation détaillée est volontairement séparée de cette première explication.
 
 <details class="spot-the-fallacy">
