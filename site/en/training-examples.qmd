@@ -224,6 +224,12 @@ When loss is unexpectedly low, high, or unstable, check:
 
 This page explains core mechanisms without prescribing a universal strategy for packing, cross-document masking, padding, or loss reduction. Choices depend on the objective, architecture, data, and implementation.
 
+
+
+::: {.language-switch}
+**Language:** [Français](../fr/training-examples.qmd) · [English](training-examples.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -248,7 +254,3 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 </div>
 </details>
-
-::: {.language-switch}
-**Language:** [Français](../fr/training-examples.qmd) · [English](training-examples.qmd)
-:::
