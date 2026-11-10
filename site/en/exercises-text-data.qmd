@@ -543,7 +543,7 @@ The word `lowest` does not occur in the training corpus. Starting from the chara
 <details>
 <summary>Show the worked solution</summary>
 
-First apply `o + w → ow), then `l + ow → low`. The resulting segmentation is:
+First apply `o + w → ow`, then `l + ow → low`. The resulting segmentation is:
 
 `low · e · s · t · </w>`
 
@@ -620,4 +620,4 @@ Yes: the BPE vocabulary and merge order were fitted using validation text. For a
 
 [← Back to the exercise catalogue](exercises.qmd)
 
-**Language:** [Français](../fr/exercises.qmd) · [English](exercises-text-data.qmd)
+**Language:** [Français](../fr/exercises-text-data.qmd) · [English](exercises-text-data.qmd)
