@@ -62,5 +62,5 @@ Batch, sequence position, and candidate vocabulary token. Each position in each 
 </details>
 
 ::: {.language-switch}
-**Language:** [Français](../../fr/exercises/training-examples.qmd) · [English](../exercises/training-examples.qmd)
+**Language:** [Français](../../fr/exercises/training-examples.qmd) · [English](training-examples.qmd)
 :::

@@ -25,7 +25,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:probabilites-exercise
 
 ## Check your understanding
 
-[Extended exercises on this topic](../en/exercises.qmd#foundations).
+[Extended exercises on this topic](../exercises.qmd#foundations).
 
 1. Why are logits not probabilities?
 2. Why does \(p_\theta(x_t\mid x_{<t})\) depend on the prefix?
@@ -43,5 +43,5 @@ tags: ["type:exercise-hub", "destination:practice", "topic:probabilites-exercise
 </details>
 
 ::: {.language-switch}
-**Language:** [Français](../../fr/exercises/probabilites.qmd) · [English](../exercises/probabilities.qmd)
+**Language:** [Français](../../fr/exercises/probabilites.qmd) · [English](probabilities.qmd)
 :::

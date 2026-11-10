@@ -53,5 +53,5 @@ It identifies the token with the highest score in that vector. By itself, it doe
 </details>
 
 ::: {.language-switch}
-**Language:** [Français](../../fr/exercises/logits.qmd) · [English](../exercises/logits.qmd)
+**Language:** [Français](../../fr/exercises/logits.qmd) · [English](logits.qmd)
 :::

@@ -57,5 +57,5 @@ No. The causal mask is a visibility constraint: it restricts each position to it
 You have understood this step if you can explain why order must be taken into account, distinguish the three families of mechanisms, and separate explicit positional information from the causal visibility constraint.
 
 ::: {.language-switch}
-**Language:** [Français](../../fr/exercises/positional-encoding.qmd) · [English](../exercises/positional-encoding.qmd)
+**Language:** [Français](../../fr/exercises/positional-encoding.qmd) · [English](positional-encoding.qmd)
 :::

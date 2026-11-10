@@ -37,5 +37,5 @@ Q and K determine the attention weights; V supplies the vectors whose content is
 </details>
 
 ::: {.language-switch}
-**Language:** [Français](../../fr/exercises/queries-keys-values.qmd) · [English](../exercises/queries-keys-values.qmd)
+**Language:** [Français](../../fr/exercises/queries-keys-values.qmd) · [English](queries-keys-values.qmd)
 :::
