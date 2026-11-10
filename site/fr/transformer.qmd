@@ -205,6 +205,14 @@ Pour notre préfixe d'exemple avec les dimensions de GPT-2 : chaque position res
 <span id="ce-que-cette-démonstration-permet-et-ne-permet-pas-de-conclure"></span>
 <span id="observer-un-transformer-en-fonctionnement"></span>
 
+
+
+{{< include ../includes/generated-suggested-route-fr-transformer.qmd >}}
+
+::: {.language-switch}
+**Langue :** [Français](transformer.qmd) · [English](../en/transformer.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
@@ -221,14 +229,7 @@ Pour notre préfixe d'exemple avec les dimensions de GPT-2 : chaque position res
 <h3>Exercices</h3>
 <p>Les questions et exercices de cette leçon sont regroupés sur sa <a href="exercises/transformer.qmd">page d'exercices dédiée</a>.</p>
 
-</div>
-</details>
 
-{{< include ../includes/generated-suggested-route-fr-transformer.qmd >}}
-
-::: {.language-switch}
-**Langue :** [Français](transformer.qmd) · [English](../en/transformer.qmd)
-:::
 
 ::: {.self-check}
 ## Vérifier sa compréhension
@@ -252,3 +253,7 @@ Pour notre préfixe d'exemple avec les dimensions de GPT-2 : chaque position res
 
 </details>
 :::
+
+
+</div>
+</details>
