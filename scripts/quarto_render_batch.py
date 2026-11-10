@@ -96,7 +96,9 @@ def main() -> None:
         dir=project_dir,
     ) as temp_name:
         temp_output = Path(temp_name)
-        relative_output = temp_output.relative_to(project_dir)
+        # Quarto resolves --output-dir relative to the project directory.
+        # TemporaryDirectory returns a path already prefixed by `site/` here.
+        relative_output = temp_output.name
 
         try:
             config_path.write_text(incremental_config, encoding="utf-8")
