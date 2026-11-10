@@ -30,9 +30,6 @@ def test_exercise_anchor_ids_are_stable_and_bilingual(collection: str) -> None:
         assert len(exercise_ids) == len(set(exercise_ids)), (
             f"{path.relative_to(SITE)}: duplicate IDs"
         )
-        assert exercise_ids, f"{path.relative_to(SITE)}: no explicit exercise anchors"
-        assert all(identifier.startswith(f"ex-{collection}-") for identifier in exercise_ids)
-        assert len(exercise_ids) == len(set(exercise_ids)), f"{path.relative_to(SITE)}: duplicate IDs"
         identifiers[language] = exercise_ids
 
     assert identifiers["fr"] == identifiers["en"], (
