@@ -95,3 +95,13 @@ The vector is not replaced by a sense label. It is transformed by learned operat
 - Block variants may change operation order, normalization, residual connections, and attention mechanisms.
 
 **Takeaway:** lookup fixes the identity of the initial token vector; positional architecture and Transformer blocks then determine how each position's state depends on other accessible states.
+
+## Continue exploring
+
+- [Return to the contextualized-representations lesson](contextualized-representations.qmd) — the essential mental model.
+- [Deepen Q/K/V](queries-keys-values-advanced.qmd) — projections and the attention calculation.
+- [Return to the Deepen map](deepen.qmd).
+
+::: {.language-switch}
+**Language:** [Français](../fr/contextualized-representations-advanced.qmd) · [English](contextualized-representations-advanced.qmd)
+:::
