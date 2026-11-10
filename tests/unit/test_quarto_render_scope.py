@@ -103,6 +103,39 @@ def test_non_svg_or_non_image_assets_force_full_render():
         assert result["render_mode"] == "full"
 
 
+def test_historical_four_page_two_svg_change_set_is_incremental():
+    repository_root = Path(__file__).resolve().parents[2]
+    config = (repository_root / "site" / "_quarto.yml").read_text(encoding="utf-8")
+    changed_files = [
+        {"filename": f"site/{language}/{page}.qmd", "status": "modified"}
+        for language in ("en", "fr")
+        for page in ("generation", "llm-overview")
+    ] + [
+        {
+            "filename": f"site/images/llm-generation-process-{language}.svg",
+            "status": "modified",
+        }
+        for language in ("en", "fr")
+    ]
+
+    result = classify_changed_files(changed_files, config)
+
+    assert result["render_mode"] == "incremental"
+    assert len(result["render_targets"]) == 4
+    assert len(result["render_assets"]) == 2
+
+
+def test_svg_only_change_stays_full_until_a_page_is_rendered():
+    result = classify_changed_files(
+        [{"filename": "site/images/diagram.svg", "status": "modified"}],
+        CONFIG,
+    )
+
+    assert result["render_mode"] == "full"
+    assert result["render_targets"] == []
+    assert result["render_assets"] == []
+
+
 def test_svg_asset_paths_cannot_escape_the_images_directory():
     result = classify_changed_files(
         [
