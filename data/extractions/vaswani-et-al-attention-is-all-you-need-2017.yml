@@ -1,0 +1,40 @@
+schema_version: 1
+source_id: vaswani-et-al-attention-is-all-you-need-2017
+items:
+  - id: vaswani-et-al-attention-is-all-you-need-2017:sinusoidal-formula
+    kind: mechanism
+    summary: "The original Transformer adds a fixed position vector to token embeddings. Even dimensions use sine and odd dimensions use cosine, with angular frequencies forming a geometric progression determined by the model dimension and a base of 10,000."
+    locator: {type: section, value: "3.5", label: "Positional Encoding"}
+    evidence:
+      kind: formal-definition
+      confidence: established
+      scope: "The paper's stated sinusoidal equations and description of the wavelength range."
+      assumptions: ["Position indices are integers; the embedding dimension is even for paired sine/cosine coordinates."]
+      limitations: ["The paper's wavelength endpoint description is approximate for finite model dimension.", "The paper does not establish that the model will generalize reliably beyond training lengths."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:positional-encoding, method:sinusoidal-encoding]
+      concept_ids: []
+    candidate_destinations:
+      pages: [fr/sinusoidal-positional-encoding, en/sinusoidal-positional-encoding]
+    disposition: integrate
+    disposition_rationale: "This is the primary source for the exact formula, frequency schedule, and original motivation; the new bilingual deep dive derives and qualifies these claims."
+  - id: vaswani-et-al-attention-is-all-you-need-2017:fixed-offset-linearity
+    kind: derivation
+    summary: "For any fixed offset k, the positional vector at p+k can be represented as a linear transformation of the positional vector at p. Each sine/cosine pair transforms through a 2-by-2 matrix whose coefficients depend on k and that pair's frequency, not on p."
+    locator: {type: section, value: "3.5", label: "Positional Encoding"}
+    evidence:
+      kind: mathematical-claim
+      confidence: established
+      scope: "The paper states the fixed-offset linear-transform motivation; the pairwise matrix derivation is reconstructed from trigonometric addition identities."
+      assumptions: ["The standard interleaved sine/cosine construction is used."]
+      limitations: ["The existence of the transformation does not prove that a trained attention head learns a particular relative-position rule."]
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:positional-encoding, method:sinusoidal-encoding]
+      concept_ids: []
+    candidate_destinations:
+      pages: [fr/sinusoidal-positional-encoding, en/sinusoidal-positional-encoding]
+    disposition: integrate
+    disposition_rationale: "The derivation is central to the advanced page and is explicitly separated from claims about learned behaviour."
