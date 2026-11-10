@@ -87,8 +87,12 @@ jobs:
           uv run mypy src
           uv run mypy site/tools/strict_yaml.py site/tools/page_index.py site/tools/artifact_writer.py
 
+      - name: Install parallel test runner
+        # Keep the runner pinned and outside the project lock: it is CI-only
+        # orchestration, not a runtime or development dependency.
+        run: uv pip install --python .venv/bin/python pytest-xdist==3.8.0
+
       - name: Test
-        # Report the slowest tests to identify safe optimization candidates.
-        # Keep execution serial until fixture isolation and parallel speedups
-        # have been measured; coverage thresholds remain enforced by pytest.
-        run: uv run pytest --durations=20
+        # Four workers match the hosted runner's available CPU parallelism.
+        # pytest-cov combines worker coverage; the global threshold remains.
+        run: uv run pytest -n 4 --dist loadfile --durations=20
