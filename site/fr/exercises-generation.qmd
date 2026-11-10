@@ -1,0 +1,124 @@
+---
+title: "Exercices — Génération"
+subtitle: "Entraînement approfondi, corrigés détaillés et transfert"
+keywords: ["type:exercise-collection", "destination:practice", "topic:exercise-generation", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/exercises-generation"
+scope: "Exercices sur la sélection du prochain token, le décodage autoregressif, l'arrêt, le prefill et le cache KV."
+purpose: "Travailler la collection d'exercices génération indépendamment du parcours conceptuel, avec des prérequis, des corrigés détaillés et des questions de transfert."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: ["fr/exercises"]
+  children: []
+related: []
+tags: ["type:exercise-collection", "destination:practice", "topic:exercise-generation", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour au catalogue des exercices](exercises.qmd)
+
+### Génération {#generation}
+
+**Notions préalables :** [logits](logits.qmd), [probabilités de sortie](probabilites.qmd), [prédiction du prochain token et génération autoregressive](generation.qmd).
+
+**Cinq exercices formatifs publiés :** GE-A à GE-E. Ils couvrent la sélection du prochain token, la boucle autoregressive et l'arrêt, puis le prefill/decode et le rôle ainsi que les limites du cache KV.
+
+### GE-A — Distribution et sélection
+
+Un modèle produit les logits $z=(0,\ln 2,\ln 3)$ pour le vocabulaire $\{A,B,C\}$.
+
+1. Calculer la distribution softmax.
+2. Quel token sélectionne le décodage glouton ?
+3. Avec l'échantillonnage, le token sélectionné est-il nécessairement celui de probabilité maximale ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Les exponentielles valent $(1,2,3)$ et leur somme vaut $6$. La distribution est $p=(1/6,1/3,1/2)$. Le décodage glouton sélectionne $C$. Avec l'échantillonnage, tout token de probabilité non nulle peut être sélectionné : $C$ est le plus probable, mais pas certain. La distribution est la sortie probabiliste du modèle ; le token est le résultat de la politique de sélection.
+
+</details>
+
+### GE-B — Tracer la boucle autoregressive
+
+On commence avec $c_1=(A,B)$. Le décodage est glouton et les distributions sont données :
+
+| Contexte courant | Distribution |
+|---|---|
+| $(A,B)$ | $P(C)=0{,}8$, $P(D)=0{,}2$ |
+| $(A,B,C)$ | $P(D)=0{,}7$, $P(E)=0{,}3$ |
+| $(A,B,C,D)$ | $P(\mathrm{EOS})=0{,}9$, $P(E)=0{,}1$ |
+
+1. Donner le token sélectionné à chaque étape.
+2. Écrire le contexte après chaque sélection.
+3. Combien d'étapes élémentaires sont exécutées ?
+4. Qu'est-ce qui est répété et qu'est-ce qui change ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Les sélections sont $C$, puis $D$, puis EOS. Les contextes deviennent $(A,B,C)$, $(A,B,C,D)$, puis $(A,B,C,D,\mathrm{EOS})$ si EOS est représenté explicitement dans la séquence. Trois étapes élémentaires sont exécutées. Le mécanisme de prédiction-sélection est répété ; le contexte change à chaque réinjection. Les paramètres du modèle restent fixes.
+
+</details>
+
+### GE-C — Critères d'arrêt
+
+Une génération utilise max_new_tokens = 4. EOS est sélectionné à la deuxième étape.
+
+1. Quel est le nombre maximal de nouveaux tokens autorisés ?
+2. Combien sont effectivement générés si EOS est compté ?
+3. Que se passe-t-il si EOS n'est jamais sélectionné ?
+4. Pourquoi EOS et la limite de longueur sont-ils deux critères distincts ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+La limite autorise quatre nouveaux tokens au maximum. EOS étant sélectionné à la deuxième étape, deux tokens sont générés, EOS compris, puis la boucle s'arrête. Sans EOS, la génération s'arrête après quatre nouveaux tokens. EOS est un critère sémantique porté par un token ; la limite est une contrainte externe d'exécution.
+
+</details>
+
+### GE-D — Tracer le prefill et le decode incrémental
+
+Un prompt contient les identifiants de tokens $(A,B,C)$. On suppose un Transformer causal avec activation du cache KV.
+
+1. Pendant le prefill, combien de positions du prompt sont traitées ?
+2. Les logits de quelle position servent-ils à sélectionner le premier token généré $D$ ?
+3. Pour prédire le token suivant $E$, quel token est nouvellement fourni pendant le decode incrémental ?
+4. Pourquoi le prefill n'est-il pas la même opération que le teacher forcing ?
+5. Les paramètres du modèle sont-ils mis à jour pendant ces phases d'inférence ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Le prefill traite les trois positions du prompt en un passage séquentiel et remplit le cache KV. Les logits de la dernière position du prompt (celle de $C$) définissent la distribution à partir de laquelle $D$ est sélectionné. L'étape de decode suivante fournit $D$ comme nouveau token et réutilise les clés et valeurs en cache pour prédire $E$. Le prompt est fourni comme contexte d'inférence, mais le prefill n'est pas du teacher forcing : il calcule la première distribution du prochain token sans utiliser une continuation de référence comme entrée suivante ni calculer de loss d'entraînement. $D$ est sélectionné par le modèle, puis devient le token de contexte suivant. En teacher forcing, les prédictions successives sont conditionnées par les préfixes de la séquence de référence. Les paramètres restent fixes pendant le prefill et le decode.
+
+</details>
+
+### GE-E — Que permet d'économiser le cache KV ?
+
+On considère un prompt de trois tokens $(A,B,C)$ et la génération de trois tokens $D,E,F$. On ignore l'éviction liée à la fenêtre de contexte et on compte uniquement les positions de tokens nouvellement transmises au modèle :
+
+1. Sans cache KV, combien de positions sont traitées au total lors du passage sur le prompt et des deux prédictions suivantes ?
+2. Avec un cache KV, combien de nouvelles positions sont traitées après le prefill ?
+3. Quelles informations sont conservées dans le cache ?
+4. Le cache modifie-t-il les paramètres du modèle ou la distribution conditionnelle calculée ?
+5. Pourquoi le décompte précédent ne représente-t-il pas l'ensemble du calcul d'attention ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Sans cache, le modèle traite des séquences de longueur $3$, puis $4$ (pour prédire $E$), puis $5$ (pour prédire $F$) : $3+4+5=12$ positions de tokens. Avec un cache, le prefill traite les trois tokens du prompt ; les étapes de decode traitent ensuite seulement $D$ et $E$ comme nouvelles positions : $3+1+1=5$ positions nouvellement traitées. Le cache conserve les clés et valeurs déjà calculées à chaque couche du Transformer. Il ne met pas à jour les paramètres et ne modifie pas la prédiction conditionnelle visée ; il évite de recalculer le préfixe. À chaque étape de decode, la nouvelle requête consulte toujours les clés et valeurs en cache : le nombre de nouvelles positions ne compte donc ni toutes les opérations d'attention ni l'ensemble des FLOPs.
+
+</details>
+
+**Périmètre restant :** température, top-k et top-p.
+
+---
+
+[← Retour au catalogue des exercices](exercises.qmd)
+
+**Langue :** [Français](exercises-generation.qmd) · [English](../en/exercises-generation.qmd)

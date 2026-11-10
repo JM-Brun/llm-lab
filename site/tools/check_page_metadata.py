@@ -26,6 +26,7 @@ TAG_TYPES = {
     "guided-build",
     "deep-dive",
     "exercise-hub",
+    "exercise-collection",
     "experiment-guide",
     "glossary",
     "historical-reference",

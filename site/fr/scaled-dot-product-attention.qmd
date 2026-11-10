@@ -121,7 +121,7 @@ La formulation est présentée dans [Vaswani et al. (2017), *Attention Is All Yo
 ::: {.self-check}
 ## Vérifier sa compréhension
 
-[Exercices approfondis sur ce thème](exercises.qmd#attention).
+[Exercices approfondis sur ce thème](exercises-attention.qmd#attention).
 
 1. Une ligne de scores vaut $(2,0)$ et la dimension des clés est $d_k=4$. Calculez les poids softmax après mise à l’échelle.
 

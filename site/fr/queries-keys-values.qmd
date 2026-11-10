@@ -189,7 +189,7 @@ La compréhension de Q/K/V se vérifie par des opérations observables, pas seul
 4. **Prédire les conséquences d'une modification de paramètres** : identifier ce qui change — et ce qui reste invariant — lorsqu'on modifie $W_Q$, $W_K$ ou $W_V$.
 5. **Transférer le raisonnement** : réutiliser ces distinctions en attention croisée et dans des variantes d'attention, en explicitant les changements de provenance ou de partage des projections.
 
-Les exercices associés sont regroupés dans la section [Attention](exercises.qmd#attention). Ils distinguent les acquis propres à Q/K/V des calculs de scores, de softmax et d'agrégation, traités dans la page sur l'[attention à produit scalaire](scaled-dot-product-attention.qmd).
+Les exercices associés sont regroupés dans la section [Attention](exercises-attention.qmd#attention). Ils distinguent les acquis propres à Q/K/V des calculs de scores, de softmax et d'agrégation, traités dans la page sur l'[attention à produit scalaire](scaled-dot-product-attention.qmd).
 
 ## Ce qu'il faut distinguer
 
@@ -204,7 +204,7 @@ Une clé n'est pas une étiquette sémantique lisible, et l'attention n'est pas 
 ::: {.self-check}
 ## Vérifier l'idée essentielle
 
-[Exercices approfondis sur Q/K/V et l'attention](exercises.qmd#attention).
+[Exercices approfondis sur Q/K/V et l'attention](exercises-attention.qmd#attention).
 
 **Quelles projections déterminent les poids d'attention, et laquelle fournit les vecteurs agrégés ? Que se passe-t-il si V change alors que Q et K restent fixes ?**
 

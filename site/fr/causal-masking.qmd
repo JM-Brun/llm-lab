@@ -174,7 +174,7 @@ Dans ce cas synthétique, modifier les clés et valeurs futures ne change pas le
 ::: {.self-check}
 ## Vérifier sa compréhension
 
-[Exercices approfondis sur ce thème](exercises.qmd#attention).
+[Exercices approfondis sur ce thème](exercises-attention.qmd#attention).
 
 1. Une ligne de scores déjà mise à l'échelle vaut $(1,0)$. Que deviennent les poids si la deuxième position est interdite par un masque causal ? Pourquoi le masque doit-il être appliqué avant le softmax ?
 

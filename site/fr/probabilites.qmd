@@ -203,7 +203,7 @@ Une probabilité de 0,9 ne signifie donc pas automatiquement « 90 % de chances 
 ::: {.self-check}
 ## Vérifier sa compréhension
 
-[Exercices approfondis sur ce thème](exercises.qmd#fondations).
+[Exercices approfondis sur ce thème](exercises-foundations.qmd#fondations).
 
 1. Pourquoi les logits ne sont-ils pas des probabilités ?
 2. Pourquoi \(p_\theta(x_t\mid x_{<t})\) dépend-il du préfixe ?
@@ -226,7 +226,7 @@ Une probabilité de 0,9 ne signifie donc pas automatiquement « 90 % de chances 
 
 - [Vraisemblance](vraisemblance.qmd) — probabilité des tokens observés et des séquences.
 - [Entropie croisée](cross-entropy.qmd) — objectif d'entraînement.
-- [Exercices de fondations mathématiques](exercises.qmd#fondations) — exercices corrigés sur la softmax, la perte et des notions associées ; d'autres thèmes restent prévus.
+- [Exercices de fondations mathématiques](exercises-foundations.qmd#fondations) — exercices corrigés sur la softmax, la perte et des notions associées ; d'autres thèmes restent prévus.
 
 ## Références
 
