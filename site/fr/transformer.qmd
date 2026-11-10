@@ -107,10 +107,10 @@ Il est utile de distinguer trois échelles :
 1. **La sous-couche d'attention** calcule comment chaque position combine les valeurs provenant des positions autorisées. Les projections Q/K/V et le calcul des poids appartiennent à cette sous-couche.
 2. **Le bloc Transformer** associe cette attention à une transformation feed-forward (MLP), avec des chemins résiduels et des normalisations. Pour le bloc pré-LN de référence, son contrat peut s'écrire :
 
-   \\[ H^{(\\ell+1)} = \\mathcal{B}_{\\theta_\\ell}(H^{(\\ell)}; M), \\qquad H^{(\\ell)},H^{(\\ell+1)} \\in \\mathbb{R}^{B\\times T\\times d}. \\]
+   \[ H^{(\ell+1)} = \mathcal{B}_{\theta_\ell}(H^{(\ell)}; M), \qquad H^{(\ell)},H^{(\ell+1)} \in \mathbb{R}^{B\times T\times d}. \]
 
    Le bloc transforme les représentations sans sélectionner de token ni produire directement une distribution sur le vocabulaire.
-3. **Le GPT assemblé** prépare les représentations d'entrée, applique une pile de blocs, puis une normalisation finale et une projection vers le vocabulaire. Dans le modèle de référence, le flux passe ainsi de \\(B\\times T\\) IDs à \\(B\\times T\\times d\\) états, puis à \\(B\\times T\\times V\\) logits.
+3. **Le GPT assemblé** prépare les représentations d'entrée, applique une pile de blocs, puis une normalisation finale et une projection vers le vocabulaire. Dans le modèle de référence, le flux passe ainsi de \(B\times T\) IDs à \(B\times T\times d\) états, puis à \(B\times T\times V\) logits.
 
 Autrement dit : l'attention est une sous-couche ; le bloc est l'unité répétée ; GPT est le modèle qui assemble ces blocs avec ses interfaces d'entrée et de sortie. La [visite guidée du bloc](transformer-block-walkthrough.qmd) montre une implémentation particulière, tandis que la [visite guidée de l'assemblage GPT](gpt-model-walkthrough.qmd) suit leur intégration dans le modèle complet.
 
