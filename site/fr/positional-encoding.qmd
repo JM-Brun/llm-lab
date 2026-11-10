@@ -62,6 +62,8 @@ La page précédente a montré que le lookup fournit un vecteur de contenu, mais
 
 Le masque causal, lorsqu'il est utilisé, indique quelles positions peuvent être consultées (`j ≤ i`). Les mécanismes positionnels peuvent en plus représenter une position absolue ou un décalage relatif. Ces signaux sont complémentaires, pas interchangeables.
 
+Dans le préfixe « C'est une bonne situation, ça, scribe ? », l'ordre des tokens fait partie de l'entrée. Lorsque la génération ajoute « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... », les nouveaux tokens occupent à leur tour de nouvelles positions dans la séquence.
+
 ::: {.callout-note collapse="true" title="Pourquoi l’auto-attention seule ne suffit-elle pas ?"}
 Pour une auto-attention fondée uniquement sur le contenu, sans biais positionnel ni masque dépendant de l’ordre, permuter les lignes de l’entrée permute les lignes de sortie de la même façon. Si $P$ est une matrice de permutation, alors :
 
