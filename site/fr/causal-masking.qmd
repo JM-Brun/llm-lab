@@ -40,6 +40,17 @@ Le masque causal impose une règle d'information : **la sortie à la position $i
 **Pour approfondir :** étudiez les conventions de masques booléens propres aux API, puis le test d'invariance qui détecte une fuite d'information.
 :::
 
+<div class="pipeline-stepper" role="navigation" aria-label="Étapes de l’application du masque causal aux scores d’attention">
+  <a class="step-item" href="scaled-dot-product-attention.qmd">Scores QKᵀ</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item active" aria-current="step">Masque causal (j ≤ i)</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">Softmax sur les positions autorisées</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">Agrégation des valeurs V</span>
+</div>
+
+
 ## Pourquoi ce masque est nécessaire
 
 Lorsqu'on entraîne un modèle à prédire le token suivant, toutes les positions d'une séquence peuvent être calculées en parallèle. Sans masque, cependant, la représentation d'une position pourrait utiliser des tokens qui ne seraient pas encore connus au moment de la génération. Le masque rend donc l'entraînement parallèle compatible avec l'objectif autorégressif.
