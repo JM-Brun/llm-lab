@@ -98,6 +98,12 @@ Le corpus préparé peut alors être encodé en flux de tokens. La page [Du corp
 
 Cette page définit un cadre de traçabilité et de séparation des responsabilités, pas une politique juridique, une recette universelle de filtrage ni un système de détection de contamination prêt à l'emploi. Les seuils, outils et unités de partition doivent être justifiés par les données, les droits applicables et l'affirmation expérimentale visée.
 
+
+
+::: {.language-switch}
+[Français](corpus-preparation.qmd) · [English](../en/corpus-preparation.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
@@ -111,7 +117,3 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 
 </div>
 </details>
-
-::: {.language-switch}
-[Français](corpus-preparation.qmd) · [English](../en/corpus-preparation.qmd)
-:::
