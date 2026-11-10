@@ -236,7 +236,7 @@ Interpret this carefully: IDs depend on the tokenizer; the vectors in `E` and `P
 
 ### Exercise TR-C — Diagnose identity, position and context
 
-**Preparation:** [contextualized representations](contextualized-representations.qmd) and [position and RoPE](positional-encoding.qmd), after TR-A and TR-B. The exercise progresses in two stages: diagnose claims, then predict under controlled changes.
+**Preparation:** [contextualized representations](contextualized-representations.qmd) and [position and RoPE](positional-encoding.qmd), after TR-A and TR-B. For the mathematical framing of Stage 3, the [deep dive on dependencies across positions and layers](contextualized-representations-advanced.qmd) is an optional reference. The exercise progresses in three stages: diagnose claims, predict under controlled changes, then calculate a toy numerical example.
 
 **Stage 1 — Classify claims.** For a fixed tokenizer and fixed embedding matrix, classify each statement as **valid**, **invalid**, or **architecture-dependent**, and justify your choice. No specific model configuration is supplied: when a statement refers to "this model", decide whether the information given is sufficient to determine its behavior.
 
