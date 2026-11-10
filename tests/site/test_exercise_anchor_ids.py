@@ -22,7 +22,7 @@ def test_exercise_anchor_ids_are_stable_and_bilingual(collection: str) -> None:
         exercise_ids = [identifier for identifier in headings if identifier.startswith("ex-")]
         exercise_headings = re.findall(r"^#{3} (.+?) \{#([^}]+)\}\s*$", source, flags=re.MULTILINE)
         assert all(
-            not re.search(r"\\b(?:TR-[A-Z]|CA-A|AT-[ABC]|GE-[A-E]|TF-[ABC])\\b", title)
+            not re.search(r"\b(?:TR-[A-Z]|CA-A|AT-[ABC]|GE-[A-E]|TF-[ABC])\b", title)
             for title, _ in exercise_headings
         )
         assert exercise_ids, f"{path.relative_to(SITE)}: no explicit exercise anchors"
