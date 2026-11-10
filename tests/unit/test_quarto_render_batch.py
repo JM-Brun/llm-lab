@@ -1,5 +1,5 @@
-from pathlib import Path
 import importlib.util
+from pathlib import Path
 
 
 module_path = Path(__file__).resolve().parents[2] / "scripts" / "quarto_render_batch.py"
