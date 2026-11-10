@@ -1,0 +1,154 @@
+---
+title: "Q/K/V: mathematical formulation and variants"
+subtitle: "Per-position projections, score geometry, gradients, and architectures"
+keywords: ["type:deep-dive", "destination:deepen", "topic:queries-keys-values-advanced", "level:advanced", "language:en", "status:published"]
+lang: en
+---
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/queries-keys-values-advanced"
+summary: "Develops Q/K/V per-position projections, their geometry, gradients, and architectural variants."
+scope: "Formalizes individual and matrix projections, per-head dimensions, dot-product geometry, gradient paths in standard attention, and head/projection-sharing variants; does not repeat the intuitive introduction or full attention calculation, and delegates cross-attention to its dedicated page."
+purpose: "Readers should be able to move between matrix and per-position equations, derive Q/K/V shape and gradient dependencies, distinguish head sharing from parameter tying, and interpret scores without assigning them direct semantic meaning."
+domain: "architectures-mechanisms"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: ["en/queries-keys-values"]
+  children: []
+related: ["en/scaled-dot-product-attention", "en/cross-attention", "en/transformer-block-walkthrough", "en/tensors", "en/gradients"]
+tags: ["type:deep-dive", "destination:deepen", "topic:queries-keys-values-advanced", "level:advanced", "language:en", "status:published"]
+-->
+
+{{< include ../includes/generated-guided-context-en-queries-keys-values-advanced.qmd >}}
+
+::: {.chapter-lead}
+This deep dive extends [Queries, keys, and values (Q, K, V)](queries-keys-values.qmd). The core lesson provides the mental model and essential dimensions; this page makes the per-position notation, mathematical dependencies, and parameterization variants explicit. It assumes that the roles of Q, K, and V and the general attention computation are already familiar.
+:::
+
+## From matrices to individual per-position equations
+
+The compact matrix formulation computes all positions at once. It simply applies the same linear projections to every row of the input.
+
+For a sequence of \(T\) positions, let \(X\in\mathbb{R}^{T\times d_{model}}\). Row \(x_t\in\mathbb{R}^{1\times d_{model}}\) is the input state at position \(t\). Omitting biases:
+
+\[
+q_t=x_tW_Q,\qquad k_t=x_tW_K,\qquad v_t=x_tW_V.
+\]
+
+Stacking the resulting rows for every position recovers:
+
+\[
+Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
+\]
+
+With \(W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}\) and \(W_V\in\mathbb{R}^{d_{model}\times d_v}\), the dimensions are:
+
+| Object | Shape | Interpretation |
+|---|---:|---|
+| \(x_t\) | \(1\times d_{model}\) | input state at one position |
+| \(W_Q,W_K\) | \(d_{model}\times d_k\) | projections into query and key spaces |
+| \(W_V\) | \(d_{model}\times d_v\) | projection into value space |
+| \(q_t,k_t\) | \(1\times d_k\) | one position's query and key |
+| \(v_t\) | \(1\times d_v\) | one position's value |
+| \(Q,K\) | \(T\times d_k\) | all queries and keys |
+| \(V\) | \(T\times d_v\) | all values |
+
+For a batch of \(B\) sequences of length \(T\), the usual input shape is \(X\in\mathbb{R}^{B\times T\times d_{model}}\). Projections operate on the last axis and preserve the first two: \(Q,K\in\mathbb{R}^{B\times T\times d_k}\) and \(V\in\mathbb{R}^{B\times T\times d_v}\). When present, biases are added at every position; they do not change these shapes.
+
+This is an expansion of the matrix formula, not a different mechanism. Its main use is to make position indexing explicit and avoid confusing sequence length \(T\) with representation dimensions.
+
+## Geometry of Q–K compatibility
+
+For a query \(q_i\) and key \(k_j\), the standard unnormalized score is their dot product:
+
+\[
+s_{ij}=q_i k_j^\top
+=\lVert q_i\rVert\,\lVert k_j\rVert\cos(\theta_{ij}).
+\]
+
+The angle alone therefore does not determine the score: both vector norms matter. A dot product is not, in general, normalized cosine similarity.
+
+Learned projections transform the input space so that task-useful compatibilities can be represented. This does not mean the model necessarily searches for semantically similar tokens in the initial embedding space. After scaling, optional masking, and softmax, the weights are also relative to the accessible positions in that row. The complete calculation belongs to [scaled dot-product attention](scaled-dot-product-attention.qmd).
+
+## Routing and content: what the distinction means
+
+A key contributes to determining whether a position receives attention weight; its associated value determines what that position contributes to the aggregation. K and V are computed from the same input state in standard self-attention, but their distinct matrices allow them to represent different features.
+
+As a hypothetical illustration, a key might help identify a position with a useful grammatical role, while its value carries semantic information. This describes a possible functional separation; it is not a claim that a particular trained head has been observed to perform it.
+
+Values are not compared with one another, or directly with the query, to select the nearest one. Relative selection operates through Q–K scores; the resulting weights are then applied to V. This distinction prevents confusing the compatibility used to route information with the content actually transmitted.
+
+## Gradient paths through attention
+
+The matrices \(W_Q,W_K,W_V\) do not each have an independently supervised target. They are optimized jointly from the network's loss. To make the path explicit, consider a standard attention head:
+
+\[
+S=\frac{QK^\top}{\sqrt{d_k}}+M,\qquad
+A=\operatorname{softmax}(S),\qquad O=AV,
+\]
+
+where softmax is applied row-wise and \(M\) is a fixed additive mask. Assume every row has at least one accessible key.
+
+Writing \(G_O=\partial\mathcal L/\partial O\), the chain rule gives:
+
+\[
+\frac{\partial\mathcal L}{\partial V}=A^\top G_O,
+\qquad
+\frac{\partial\mathcal L}{\partial A}=G_OV^\top.
+\]
+
+The gradient with respect to scores then passes through the row-wise softmax Jacobian. Writing \(G_S=\partial\mathcal L/\partial S\):
+
+\[
+\frac{\partial\mathcal L}{\partial Q}
+=\frac{G_SK}{\sqrt{d_k}},
+\qquad
+\frac{\partial\mathcal L}{\partial K}
+=\frac{G_S^\top Q}{\sqrt{d_k}}.
+\]
+
+Finally, for bias-free linear projections and fixed input \(X\):
+
+\[
+\frac{\partial\mathcal L}{\partial W_Q}
+=X^\top\frac{\partial\mathcal L}{\partial Q},\quad
+\frac{\partial\mathcal L}{\partial W_K}
+=X^\top\frac{\partial\mathcal L}{\partial K},\quad
+\frac{\partial\mathcal L}{\partial W_V}
+=X^\top\frac{\partial\mathcal L}{\partial V}.
+\]
+
+These expressions isolate the local paths in one head: the gradient to V passes directly through weighted aggregation; gradients to Q and K pass through scores and softmax. In the full network, gradients also propagate through output projections, residual connections, normalization, and earlier layers. The parameters are distinct, but their updates are coordinated by the same loss.
+
+## Multiple heads and projection sharing
+
+In standard multi-head attention, each head has sub-projections that produce its own Q, K, and V. Head outputs are concatenated and transformed by an output projection. Implementations may store these sub-projections in large fused matrices rather than three separate modules: the memory layout does not change the mathematical contract.
+
+**MQA** (*multi-query attention*) and **GQA** (*grouped-query attention*) reduce the number of K/V heads relative to the number of query heads. In MQA, query heads share one K/V head; in GQA, they are partitioned into groups that each share a K/V head. This sharing notably reduces the amount of key/value state to retain in the KV cache during decoding. It does not mean Q, K, and V become one vector.
+
+This head sharing must be distinguished from **projection-parameter tying**: tying, for example, key and value projection parameters is a different change to the parameterization. Empirical results depend on architecture and protocol; they do not establish one variant as universally superior. For the distinct provenance of the streams, see the dedicated [cross-attention](cross-attention.qmd) page; for KV-cache memory cost, see [LLM computational complexity and parallelism](llm-computational-complexity.qmd).
+
+## Interpreting representations without over-reading attention weights
+
+Context can change a token's lexical interpretation: in “He sat by the bank,” a river context makes *bank* more likely to mean a riverbank rather than a financial institution. This illustrates why contextualized representations matter, but it does not prove that one isolated head performs disambiguation on its own. An attention map alone cannot explain a model decision or establish a causal relationship.
+
+For the broader role of context in hidden states, see [contextualized representations](contextualized-representations.qmd). For historical context and other Q/K/V visual explanations, consult [Transformer history](transformer-history.qmd) and the supplementary resources: [Nishanthan K](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a), [Brenndoerfer](https://mbrenndoerfer.com/writing/query-key-value-attention-mechanism), and [Codefinity](https://codefinity.com/courses/v2/e7ee0772-6b82-4a1c-96ba-69b85ddee608/7ce26687-f7a7-4728-be33-7014c6c7b707/a5ac1dbf-dbec-4dd1-a8d6-f3d83cbb905b).
+
+## References
+
+- Vaswani et al. (2017), [*Attention Is All You Need*](https://arxiv.org/abs/1706.03762) — standard formulation and multi-head attention.
+- Ainslie et al. (2023), [*GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints*](https://arxiv.org/abs/2305.13245) — key/value head sharing.
+- Kayyam et al. (2026), [*Do Transformers Need Three Projections? Systematic Study of QKV Variants*](https://proceedings.mlr.press/v306/kayyam26a.html) — empirical study of projection-sharing variants.
+
+## Continue exploring
+
+- [Return to the Q/K/V lesson](queries-keys-values.qmd) — the mental model and essential scope.
+- [Compute scores and aggregate values](scaled-dot-product-attention.qmd) — the complete attention calculation.
+- [Cross-attention](cross-attention.qmd) — distinct provenance of queries, keys, and values.
+- [Transformer-block walkthrough](transformer-block-walkthrough.qmd) — how heads are organized in an implementation.
+
+::: {.language-switch}
+**Language:** [Français](../fr/queries-keys-values-advanced.qmd) · [English](queries-keys-values-advanced.qmd)
+:::
