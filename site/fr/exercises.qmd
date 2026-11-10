@@ -266,7 +266,7 @@ Le tokenizer transforme le texte en unités discrètes du vocabulaire. Les IDs i
 
 </details>
 
-#### Exercice TR-B — Calculer un lookup et suivre les formes des tenseurs
+#### Exercice TR-B — Calculer un lookup et suivre les formes des tenseurs {#tr-b-lookup}
 
 **Préparation :** l'[espace des embeddings](embedding-space.qmd) pour la matrice et le lookup ; [tenseurs](tensors.qmd) sert de référence facultative sur les conventions de notation. L'exercice progresse en trois étapes : calculer, compléter, généraliser.
 
