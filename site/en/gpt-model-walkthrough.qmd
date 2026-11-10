@@ -57,6 +57,45 @@ By the end of this tour, you will be able to:
 **Differences from GPT-2.** The original GPT-2 reuses the token-embedding matrix, transposed, to compute logits: input and output weights are *tied*. Here, `w_head` is an independent matrix and has a bias (`b_head`). There is another initialization difference: GPT-2 initializes its position-embedding table with standard deviation `0.01`, whereas this project uses `0.02`; token embeddings use `0.02` in both. The project's reference model is therefore a GPT-style educational model, not an exact GPT-2 reproduction. Its parameter count includes the additional output matrix and bias.
 :::
 
+## Isolated experiment: verify lookup with NumPy
+
+Before tracing lookup in the complete model, isolate the operation on a small synthetic matrix. **These values are pedagogical: they are neither the project's GPT weights nor learned embeddings.** The experiment checks three invariants: the output shape for a batch, identical vectors for repeated IDs, and the absence of a relationship between numerical ID order and geometric distance.
+
+```python
+import numpy as np
+
+# Synthetic matrix: V=5 entries, embedding dimension d=2
+E = np.array([
+    [0.1, 0.0],   # ID 0
+    [0.0, 0.2],   # ID 1
+    [0.8, -0.1],  # ID 2
+    [-0.2, 0.5],  # ID 3
+    [0.3, 0.7],   # ID 4
+], dtype=np.float64)
+
+# Batch of 2 sequences, each of length T=3
+token_ids = np.array([
+    [2, 0, 3],
+    [1, 2, 4],
+])
+
+# Each ID selects one row of E
+X = E[token_ids]
+
+assert X.shape == (2, 3, 2)       # (B, T, d)
+assert np.array_equal(X[0, 0], E[2])
+assert np.array_equal(X[1, 1], E[2])
+assert np.array_equal(X[0, 0], X[1, 1])
+
+# Consecutive IDs do not imply geometric proximity
+d_2_3 = float(np.linalg.norm(E[2] - E[3]))
+d_0_4 = float(np.linalg.norm(E[0] - E[4]))
+print(f"X shape: {X.shape}")
+print(f"Distance E[2]-E[3]: {d_2_3:.3f} | Distance E[0]-E[4]: {d_0_4:.3f}")
+```
+
+The expected shape is `(2, 3, 2)`. Both occurrences of ID 2 retrieve exactly the same row. The distances are only those of this synthetic matrix: they illustrate that differences between IDs do not determine distances between vectors; they are not measurements from a trained model.
+
 ## The forward pass: from `(B, T)` to `(B, T, V)`
 
 ```python
