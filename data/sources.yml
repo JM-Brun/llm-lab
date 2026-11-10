@@ -3058,3 +3058,39 @@ sources:
       concepts: [contextualized-representation]
       audit_records:
         - docs/source-reviews/platonic-representation-jepa-2026-11.md
+
+  - id: brij-pandey-inference-generation-linkedin-2026
+    title: "You ask LLM a question. It pauses. Then the answer starts appearing, piece by piece."
+    creators: ["Brij Pandey"]
+    source_type: other
+    identifiers: {}
+    canonical_url: "https://www.linkedin.com/posts/brijpandeyji_you-ask-llm-a-question-it-pauses-then-share-7525787285829804032-YNEl"
+    publisher: "LinkedIn"
+    publication_date: "2026-11-10"
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: inference-efficiency
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:inference, topic:kv-cache, method:speculative-decoding]
+      concept_ids: []
+    metadata:
+      technical_level: intermediate
+      contribution_types: [pedagogy, visualization]
+      audiences: [learner, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-10"
+        status: partially-scanned
+        inspected_scope:
+          - "Full visible LinkedIn post text describing tokenization, prefill, autoregressive decoding, KV cache, streaming and inference latency"
+          - "Supplied 1280-pixel diagram, including decoder block components, greedy/sampling selection, speculative decoding, TTFT and ITL"
+        limitations:
+          - "The post is a secondary pedagogical overview, not a primary architecture specification."
+          - "No serving stack, hardware, model configuration or benchmark was inspected; performance bottlenecks are configuration-dependent."
+          - "The diagram is not reproduced; reuse rights for the image are not established."
