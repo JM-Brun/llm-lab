@@ -36,12 +36,20 @@ In an autoregressive LLM, entropy describes how spread out the predicted next-to
 **Check yourself:** can you distinguish uncertainty before observing a token from surprise after observing a target?
 :::
 
-<div class="pipeline-stepper" role="navigation" aria-label="Steps in interpreting entropy">
-  <a class="step-item" href="probabilities.qmd">1. Distribution</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active" aria-current="step">2. Entropy</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item">3. Uncertainty</span>
+<div class="pipeline-stepper meta-flow meta-flow--branch" role="navigation" aria-label="Map of concepts related to the predictive distribution">
+  <div class="meta-flow__source"><strong>Predictive distribution</strong><span>p(next token | context)</span></div>
+  <div class="meta-flow__relation">Two different questions depending on whether a token has been observed</div>
+  <div class="meta-flow__comparison">
+    <div class="meta-flow__comparison-item meta-flow__branch--active" aria-current="step">
+      <strong>Before observation · Entropy H(p)</strong>
+      <small>Spread of the full distribution: predictive uncertainty</small>
+    </div>
+    <div class="meta-flow__comparison-item">
+      <strong>After observation · Surprise −log p(y)</strong>
+      <small>Score of the observed token; see <a href="likelihood.qmd">likelihood</a></small>
+    </div>
+  </div>
+  <div class="meta-flow__result"><strong>Given a target distribution q: cross-entropy H(q, p)</strong> · <a href="cross-entropy.qmd">Compare prediction and target</a></div>
 </div>
 
 
