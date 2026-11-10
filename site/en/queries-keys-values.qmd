@@ -134,6 +134,14 @@ By the end of this lesson, you should be able to:
 - describe the qualitative dependencies between projections, weights, and content, without performing matrix calculations.
 :::
 
+
+
+{{< include ../includes/generated-suggested-route-en-queries-keys-values.qmd >}}
+
+::: {.language-switch}
+**Language:** [Français](../fr/queries-keys-values.qmd) · [English](queries-keys-values.qmd)
+:::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -145,14 +153,7 @@ By the end of this lesson, you should be able to:
 
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/queries-keys-values.qmd).
 
-</div>
-</details>
 
-{{< include ../includes/generated-suggested-route-en-queries-keys-values.qmd >}}
-
-::: {.language-switch}
-**Language:** [Français](../fr/queries-keys-values.qmd) · [English](queries-keys-values.qmd)
-:::
 
 ::: {.self-check}
 ## Check your understanding
@@ -168,3 +169,7 @@ Q and K determine the scores and therefore the attention weights. V supplies the
 
 </details>
 :::
+
+
+</div>
+</details>
