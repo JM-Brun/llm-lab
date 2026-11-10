@@ -10,7 +10,7 @@
  </style>
 </defs>
 <rect width="900" height="1500" fill="#ffffff"/>
-<text x="450" y="48" text-anchor="middle" class="title">Dans un GPT, le Transformer est le réseau de blocs empilés</text>
+<text x="450" y="48" text-anchor="middle" class="title">Dans un GPT, le Transformer forme la pile de blocs au cœur du réseau</text>
 
 <rect x="30" y="78" width="840" height="690" rx="18" class="panel"/>
 <text x="450" y="120" text-anchor="middle" class="head">1 · Le modèle complet (vue simplifiée)</text>
