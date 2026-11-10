@@ -104,13 +104,13 @@ L'exemple autonome suivant utilise la forme de sortie courante d'un modèle de l
 import torch
 import torch.nn.functional as F
 
-# B=1 batch, T=3 positions, V=3 vocabulary tokens.
+# B=1 séquence, T=3 positions, V=3 tokens du vocabulaire.
 logits = torch.tensor(
     [[[2.0, 0.0, -1.0], [0.0, 1.0, 0.0], [1.0, 0.0, 2.0]]],
     dtype=torch.float64,
 )
 targets = torch.tensor([[0, 2, -100]], dtype=torch.long)
-# Validate the sequence-level contract before inspecting dimensions.
+# Vérifier le contrat au niveau de la séquence avant d'inspecter les dimensions.
 assert logits.ndim == 3
 batch_size, seq_len, vocab_size = logits.shape
 assert targets.shape == (batch_size, seq_len)
@@ -134,11 +134,11 @@ manual_loss = -F.log_softmax(logits[valid], dim=-1).gather(
     1, targets[valid].unsqueeze(1)
 ).mean()
 
-# The framework reduction agrees with the mean over valid target positions.
+# La réduction du framework correspond à la moyenne sur les positions cibles valides.
 torch.testing.assert_close(per_token_loss[valid].mean(), mean_loss)
 torch.testing.assert_close(mean_loss, manual_loss)
 
-# Passing probabilities as if they were logits changes the objective.
+# Passer des probabilités comme s'il s'agissait de logits modifie l'objectif.
 softmax_first_loss = torch.nn.CrossEntropyLoss(ignore_index=-100)(
     logits.softmax(dim=-1).reshape(-1, vocab_size), flat_targets
 )
