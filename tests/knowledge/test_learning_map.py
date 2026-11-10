@@ -616,7 +616,7 @@ def test_repository_guided_route_resolves_against_published_pages(monkeypatch) -
             assert all(page.id in published_ids for page in stage.optional_pages)
 
 
-def test_build_writes_language_specific_json(tmp_path: Path) -> None:
+def test_build_writes_language_specific_json(tmp_path: Path, monkeypatch) -> None:
     site = tmp_path / "site"
     _write_page(site, page_id="fr/index", language="fr", title="Accueil", topic="overview")
     _write_page(site, page_id="fr/attention", language="fr", title="Attention")
@@ -625,8 +625,8 @@ def test_build_writes_language_specific_json(tmp_path: Path) -> None:
     _write_guided_route(tmp_path)
     _write_sidebar(site)
 
-    MODULE["build"].__globals__["SITE"] = site
-    MODULE["build"].__globals__["ROOT"] = tmp_path
+    monkeypatch.setitem(MODULE["build"].__globals__, "SITE", site)
+    monkeypatch.setitem(MODULE["build"].__globals__, "ROOT", tmp_path)
     _write_concept_registry(tmp_path)
     _write_domain_registry(tmp_path)
     output = MODULE["build"]("fr")
@@ -695,7 +695,7 @@ def test_build_writes_language_specific_json(tmp_path: Path) -> None:
     ]
 
 
-def test_load_pages_preserves_primary_deepen_domain(tmp_path: Path) -> None:
+def test_load_pages_preserves_primary_deepen_domain(tmp_path: Path, monkeypatch) -> None:
     site = tmp_path / "site"
     _write_page(
         site,
