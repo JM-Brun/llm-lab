@@ -202,17 +202,33 @@ Chaque position passe seule dans `d → mlp_hidden_dim` (souvent `4d`), puis GEL
 2. Chaque position de `attended` est écrite exactement une fois par la boucle (chaque couple `(b, h)` écrit sa tranche pour toutes les positions) ; aucune cellule n'est lue avant d'être écrite, donc l'initialisation à zéro serait du travail inutile.
 </details>
 
+## Navigation dans le parcours
+
+
 ## Connexions
 
 - **Étape précédente** : [les briques numériques (`gpt_ops.py`)](gpt-ops-walkthrough.qmd).
 - **Étape suivante** : [l'assemblage du GPT (`gpt.py`)](gpt-model-walkthrough.qmd) — où les blocs sont empilés.
+
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Ressources complémentaires</span>
+  <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Pour approfondir
+
 - **Pages conceptuelles** : [vue d'ensemble GPT et Transformer](transformer.qmd), [Q/K/V](queries-keys-values.qmd), [attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd), [masquage causal](causal-masking.qmd), [représentations contextualisées](contextualized-representations.qmd).
 - **Retour au parcours** : [Construire un petit GPT](build-path.qmd).
 - **Code source** : [`transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/transformer_block.py) · **Tests** : [`test_transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_transformer_block.py).
 
-## Exercices
+### Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/transformer-block-walkthrough.qmd).
+
+</div>
+</details>
 
 ::: {.language-switch}
 **Langue :** [Français](transformer-block-walkthrough.qmd) · [English](../en/transformer-block-walkthrough.qmd)

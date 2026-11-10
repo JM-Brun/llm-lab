@@ -92,14 +92,25 @@ The prepared corpus can then be encoded into token streams. The [training exampl
 - **Handoff contract:** pass token IDs with provenance, tokenizer version, encoding parameters, useful statistics, and document-boundary rules.
 :::
 
-## Practice
-
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/corpus-preparation.qmd).
 
 
 ## Limitations
 
 This page defines a traceability framework and separation of responsibilities, not a legal policy, universal filtering recipe, or ready-made contamination detector. Thresholds, tools, and split units must be justified by the data, applicable rights, and the experimental claim being made.
+
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Supplementary resources</span>
+  <span class="learning-resources__description">Experiment, explore further, and practise the ideas from this lesson.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Practice
+
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/corpus-preparation.qmd).
+
+</div>
+</details>
 
 ::: {.language-switch}
 [Français](../fr/corpus-preparation.qmd) · [English](corpus-preparation.qmd)

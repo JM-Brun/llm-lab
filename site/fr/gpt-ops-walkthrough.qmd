@@ -178,17 +178,33 @@ def linear(x: FloatArray, weight: FloatArray, bias: FloatArray) -> FloatArray:
 2. La variance vaut exactement 0 ; sans `eps`, la division par zéro produirait `inf` ou `nan`. Avec `eps`, le dénominateur vaut `sqrt(eps)` et la sortie est finie (proche de la moyenne, ramenée à l'échelle par `gamma` et `beta`).
 </details>
 
+## Navigation dans le parcours
+
+
 ## Connexions
 
 - **Étape précédente** : [la configuration (`gpt_config.py`)](gpt-config-walkthrough.qmd) — les dimensions utilisées ici.
 - **Étape suivante** : [le bloc Transformer (`transformer_block.py`)](transformer-block-walkthrough.qmd) — qui consomme ces briques.
+
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Ressources complémentaires</span>
+  <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Pour approfondir
+
 - **Pages conceptuelles** : [GPT et Transformer](transformer.qmd), [tenseurs et formes](tensors.qmd).
 - **Retour au parcours** : [Construire un petit GPT](build-path.qmd).
 - **Code source** : [`gpt_ops.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt_ops.py) · **Tests** : [`test_gpt_ops.py`](https://github.com/JM-Brun/llm-lab/blob/main/tests/unit/test_gpt_ops.py).
 
-## Exercices
+### Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/gpt-ops-walkthrough.qmd).
+
+</div>
+</details>
 
 ::: {.language-switch}
 **Langue :** [Français](gpt-ops-walkthrough.qmd) · [English](../en/gpt-ops-walkthrough.qmd)
