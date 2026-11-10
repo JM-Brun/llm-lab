@@ -1,13 +1,13 @@
 ---
 title: "Exercices — transformer-block-walkthrough"
 subtitle: "Exercices de compréhension et de lecture du code"
-keywords: ["type:exercise-hub", "destination:practice", "topic:reference-transformer-block", "level:applied", "language:fr", "status:published"]
+keywords: ["type:exercise-hub", "destination:practice", "topic:reference-transformer-block-exercises", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---
 
 <!--
 LLM-LAB-PAGE-MAP v1
-id: "fr/exercises/transformer-block-walkthrough"
+id: "fr/transformer-block-walkthrough-exercises"
 summary: "Exercices associés à la visite guidée transformer-block-walkthrough."
 scope: "Regroupe les exercices et corrigés de la visite guidée sans dupliquer l'explication du code."
 purpose: "Vérifier la compréhension des invariants, des formes et des choix d'implémentation présentés dans la visite guidée."
@@ -18,7 +18,7 @@ hierarchy:
   parents: []
   children: []
 related: ["fr/transformer-block-walkthrough"]
-tags: ["type:exercise-hub", "destination:practice", "topic:reference-transformer-block", "level:applied", "language:fr", "status:published"]
+tags: ["type:exercise-hub", "destination:practice", "topic:reference-transformer-block-exercises", "level:applied", "language:fr", "status:published"]
 -->
 
 [← Retour à la visite guidée : transformer-block-walkthrough](../transformer-block-walkthrough.qmd)

@@ -1,13 +1,13 @@
 ---
 title: "Exercices — Attention à produit scalaire mise à l’échelle"
 subtitle: "Questions de vérification, exercices et corrigés"
-keywords: ["type:exercise-hub", "destination:practice", "topic:scaled-dot-product-attention", "level:applied", "language:fr", "status:published"]
+keywords: ["type:exercise-hub", "destination:practice", "topic:scaled-dot-product-attention-exercises", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---
 
 <!--
 LLM-LAB-PAGE-MAP v1
-id: "fr/exercises/scaled-dot-product-attention"
+id: "fr/scaled-dot-product-attention-exercises"
 summary: "Questions de vérification et exercices associés à la leçon Attention à produit scalaire mise à l’échelle."
 scope: "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle."
 purpose: "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon."
@@ -18,7 +18,7 @@ hierarchy:
   parents: []
   children: []
 related: ["fr/scaled-dot-product-attention"]
-tags: ["type:exercise-hub", "destination:practice", "topic:scaled-dot-product-attention", "level:applied", "language:fr", "status:published"]
+tags: ["type:exercise-hub", "destination:practice", "topic:scaled-dot-product-attention-exercises", "level:applied", "language:fr", "status:published"]
 -->
 
 [← Retour à la leçon : Attention à produit scalaire mise à l’échelle](../scaled-dot-product-attention.qmd)

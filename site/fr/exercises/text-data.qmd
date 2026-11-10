@@ -1,13 +1,13 @@
 ---
 title: "Exercices — Texte et données"
 subtitle: "Questions de vérification, exercices et corrigés"
-keywords: ["type:exercise-hub", "destination:practice", "topic:text-data", "level:applied", "language:fr", "status:published"]
+keywords: ["type:exercise-hub", "destination:practice", "topic:text-data-exercises", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---
 
 <!--
 LLM-LAB-PAGE-MAP v1
-id: "fr/exercises/text-data"
+id: "fr/text-data-exercises"
 summary: "Questions de vérification et exercices associés à la leçon Texte et données."
 scope: "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle."
 purpose: "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon."
@@ -18,7 +18,7 @@ hierarchy:
   parents: []
   children: []
 related: ["fr/text-data"]
-tags: ["type:exercise-hub", "destination:practice", "topic:text-data", "level:applied", "language:fr", "status:published"]
+tags: ["type:exercise-hub", "destination:practice", "topic:text-data-exercises", "level:applied", "language:fr", "status:published"]
 -->
 
 [← Retour à la leçon : Texte et données](../text-data.qmd)

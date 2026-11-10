@@ -1,13 +1,13 @@
 ---
 title: "Exercices — GPT et Transformer : architecture et flux des données"
 subtitle: "Questions de vérification, exercices et corrigés"
-keywords: ["type:exercise-hub", "destination:practice", "topic:transformer", "level:applied", "language:fr", "status:published"]
+keywords: ["type:exercise-hub", "destination:practice", "topic:transformer-exercises", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---
 
 <!--
 LLM-LAB-PAGE-MAP v1
-id: "fr/exercises/transformer"
+id: "fr/transformer-exercises"
 summary: "Questions de vérification et exercices associés à la leçon GPT et Transformer : architecture et flux des données."
 scope: "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle."
 purpose: "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon."
@@ -18,7 +18,7 @@ hierarchy:
   parents: []
   children: []
 related: ["fr/transformer"]
-tags: ["type:exercise-hub", "destination:practice", "topic:transformer", "level:applied", "language:fr", "status:published"]
+tags: ["type:exercise-hub", "destination:practice", "topic:transformer-exercises", "level:applied", "language:fr", "status:published"]
 -->
 
 [← Retour à la leçon : GPT et Transformer : architecture et flux des données](../transformer.qmd)
