@@ -40,6 +40,19 @@ L'attention n'est pas une opération unique : elle enchaîne **scores → mise �
 **Pour approfondir :** la dérivation du facteur d'échelle — pourquoi diviser par $\sqrt{d_k}$ et ce que cet argument ne garantit pas — est développée dans [Pourquoi mettre les scores à l'échelle ?](attention-score-scaling.qmd) ; la modification des positions accessibles avant le softmax est le rôle du [masque causal](causal-masking.qmd).
 :::
 
+<div class="pipeline-stepper" role="navigation" aria-label="Étapes de l’attention à produit scalaire">
+  <a class="step-item" href="queries-keys-values.qmd">1. Q, K, V</a>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">2. Scores QKᵀ</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">3. Mise à l’échelle</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item active" aria-current="step">4. Softmax</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">5. Agrégation des valeurs</span>
+</div>
+
+
 ## Calcul en quatre étapes
 
 Pour une tête, $Q,K\in\mathbb{R}^{T\times d_k}$ et $V\in\mathbb{R}^{T\times d_v}$.
