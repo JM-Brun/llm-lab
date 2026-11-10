@@ -57,7 +57,9 @@ def test_global_configuration_and_shared_references_force_full_render():
         "site/_quarto.yml",
         "site/references.qmd",
         "site/styles.scss",
-        ".github/workflows/publish-quarto.yml",
+        "pyproject.toml",
+        "uv.lock",
+        "scripts/site-browser-review.mjs",
     ):
         result = classify_changed_files([{"filename": path, "status": "modified"}], CONFIG)
         assert result["render_mode"] == "full"
@@ -88,3 +90,15 @@ def test_unrelated_changes_skip_site_render():
 
     assert result["render_mode"] == "skip"
     assert result["site_relevant"] is False
+
+
+def test_workflow_orchestration_and_scope_classifier_edits_skip_site_render():
+    for path in (
+        ".github/workflows/quarto.yml",
+        ".github/workflows/publish-quarto.yml",
+        "scripts/quarto_render_scope.py",
+    ):
+        result = classify_changed_files([{"filename": path, "status": "modified"}], CONFIG)
+        assert result["render_mode"] == "skip"
+        assert result["site_relevant"] is False
+        assert result["browser_relevant"] is False
