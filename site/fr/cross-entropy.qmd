@@ -49,6 +49,8 @@ La page précédente a construit la vraisemblance d'une séquence en combinant l
 
 Pour relier cette formule à l’entraînement, voir aussi la construction des [exemples entrée-cible](training-examples.qmd) et les règles de masquage de la perte. À ne pas confondre avec l'[entropie de la distribution prédite](entropy.qmd) : l'entropie décrit la dispersion des probabilités avant de connaître le token suivant ; la perte de cross-entropie évalue la probabilité donnée à la cible observée (ou à une distribution cible).
 
+Dans le fil rouge, le token cible est le prochain token effectivement présent dans la continuation de référence. La cross-entropie pénalise le modèle lorsque la probabilité attribuée à ce token est faible ; elle ne compare pas directement des phrases entières comme des objets indivisibles.
+
 ## Objectif pour un token
 
 Ici, \(t\) indexe le **token cible** : les logits sont alignés sur \(x_t\) et représentent \(p_\theta(x_t\mid x_{<t})\). Certaines implémentations indexent plutôt les logits par la position d'entrée ; la ligne correspondant à l'entrée \(t\) prédit alors \(x_{t+1}\). Ces conventions ne sont équivalentes que si les logits et les labels sont décalés de manière cohérente. Pour une cible one-hot, la perte vaut :
