@@ -88,4 +88,7 @@ jobs:
           uv run mypy site/tools/strict_yaml.py site/tools/page_index.py site/tools/artifact_writer.py
 
       - name: Test
-        run: uv run pytest
+        # Report the slowest tests to identify safe optimization candidates.
+        # Keep execution serial until fixture isolation and parallel speedups
+        # have been measured; coverage thresholds remain enforced by pytest.
+        run: uv run pytest --durations=20
