@@ -32,10 +32,12 @@ By the end of this lesson, you should be able to:
 - refute the misconception that attributes semantic comprehension or contextual disambiguation to the initial embedding lookup.
 :::
 
+::: {.chapter-lead}
 <div class="epistemic-badges">
   <span class="epistemic-badge badge-concept">Verified concept</span>
   <span class="epistemic-badge badge-status">Architecture: Transformer Blocks</span>
-</div> {.chapter-lead}
+</div>
+
 Two sentences can contain the same token without giving it the same role: *bank* refers to a river edge in one and a financial institution in the other. Yet the tokenizer may assign the same ID to both occurrences. **The lookup does not change; the Transformer's processing of the sequence builds hidden states that depend on context.**
 :::
 
@@ -48,9 +50,7 @@ Two sentences can contain the same token without giving it the same role: *bank*
 **Check yourself:** how can two occurrences share the same initial vector yet have different hidden states?
 :::
 
-![Overview of the path from text and token IDs through an embedding table and positional information to contextual representations.](https://media.licdn.com/dms/image/v2/D4D12AQHkmEd7fMhztQ/article-cover_image-shrink_720_1280/B4DZ3YWKZfI0AM-/0/1777451187827?e=2147483647&t=ETNuRHmhKfKe0FYbI-a9g2NaUZ3QNv9xue4OYjI1qUs&v=beta){fig-alt="A schematic pipeline: text is tokenized into IDs, IDs select rows in a learned embedding table, positional information is handled, attention layers process the sequence, and contextual representations are produced." fig-cap="Overview illustration by Rushang Chauhan. The position-handling stage is schematic: architectures such as RoPE do not simply add a position vector to each token embedding. See the explanation below and the page on positional encoding." width=100%}
-
-The figure is reproduced from Rushang Chauhan's LinkedIn article, [*Embeddings: The Bridge Between Tokens and Context*](https://www.linkedin.com/pulse/embeddings-bridge-between-tokens-context-rushang-chauhan-oqpzf/). It provides an orientation map; the sections below specify the architectural distinctions that a high-level diagram necessarily compresses. Asset-level reuse review is pending in [#156](https://github.com/JM-Brun/llm-lab/issues/156); the existing illustration is retained unchanged while its provenance and applicable permissions are checked.
+![Pipeline from text to contextualized representations.](../images/contextualization-pipeline-en.svg){fig-alt="Text is tokenized into IDs; IDs select vectors from the embedding table; the model handles position and Transformer blocks produce contextualized states." fig-cap="From text to contextualized states: each stage transforms or enriches the representation, from symbols to context-dependent hidden states." width=100%}
 
 ## Start with what stays the same
 
