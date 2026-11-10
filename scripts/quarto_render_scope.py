@@ -76,7 +76,7 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
             and len(asset_path.parts) > 1
             and not asset_path.is_absolute()
             and ".." not in asset_path.parts
-            and asset_path.suffix.lower() == ".svg"
+            and asset_path.suffix.lower() in {".svg", ".png", ".jpg", ".jpeg", ".webp", ".gif"}
         ):
             assets.append(path)
             continue
@@ -98,7 +98,7 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
         targets.append(path)
 
     mode = "skip" if not site_relevant else "full"
-    if safe and targets:
+    if safe and (targets or assets):
         mode = "incremental"
 
     return {
