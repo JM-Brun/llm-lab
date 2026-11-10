@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   render:
-    name: Render bilingual learning site and browser audit
+    name: Quarto site & browser audit
     # Pinned: ubuntu-latest moved to 26.04, which Playwright 1.56.1 does not
     # support ("Playwright does not support chromium on ubuntu26.04-x64").
     # Move back to ubuntu-latest together with a Playwright upgrade.
