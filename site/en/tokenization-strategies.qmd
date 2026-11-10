@@ -251,10 +251,19 @@ This page is an **optional deepening** of [From text to tokens](text-data.qmd): 
 - [tiktoken](https://github.com/openai/tiktoken)
 
 
-## Practice
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Supplementary resources</span>
+  <span class="learning-resources__description">Experiment, explore further, and practise the ideas from this lesson.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Practice
 
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/tokenization-strategies.qmd).
 
+</div>
+</details>
 
 ::: {.language-switch}
 **Language:** [Français](../fr/tokenization-strategies.qmd) · [English](tokenization-strategies.qmd)
