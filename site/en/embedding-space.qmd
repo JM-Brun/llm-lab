@@ -68,6 +68,8 @@ In this lesson, $E$ denotes the **embedding matrix**: a parameter table with one
 
 Consider the English token `bank`, used in the [contextualized representations](contextualized-representations.qmd) lesson in two sentences: *The river bank eroded* and *The financial bank collapsed*. To isolate the mechanism, assume the tokenizer assigns the same ID to both occurrences. The actual ID depends on the tokenizer; the number below is fictitious.
 
+The same lookup applies to the tokens in “What have the Romans ever done for us?”: each ID selects its row in the matrix. The sentence's content does not turn lookup into an interpretation of meaning.
+
 ```{mermaid}
 flowchart TD
     A["Text: « bank »"] --> B["Token: bank"]
