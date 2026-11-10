@@ -286,8 +286,12 @@ for (const testCase of cases) {
       if (item.exerciseHub.collectionAnchors.some(anchor => !anchor.exists)) {
         throw new Error("one or more canonical exercise collection anchors are missing");
       }
-      if (item.exerciseHub.missingExerciseIds.length) {
-        throw new Error(`missing stable exercise IDs: ${item.exerciseHub.missingExerciseIds.join(", ")}`);
+      const expectedExerciseRanges = ["TR-A–TR-F", "AT-A–AT-C", "CA-A", "TF-A–TF-C", "GE-A–GE-E"];
+      item.exerciseHub.missingExerciseRanges = expectedExerciseRanges.filter(
+        range => !visibleText.includes(range)
+      );
+      if (item.exerciseHub.missingExerciseRanges.length) {
+        throw new Error(`missing stable exercise ranges: ${item.exerciseHub.missingExerciseRanges.join(", ")}`);
       }
       if (item.exerciseHub.detailsCount < 9 ||
           item.exerciseHub.summariesCount !== item.exerciseHub.detailsCount ||
