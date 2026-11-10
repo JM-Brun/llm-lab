@@ -117,6 +117,14 @@ Compare this with the analytical gradient using absolute and relative tolerances
 - **“One passing finite-difference check proves the entire backward pass.”** It verifies one function, case, precision, and configuration; it does not replace shape, edge-case, and integration tests.
 :::
 
+
+
+{{< include ../includes/generated-suggested-route-en-gradients.qmd >}}
+
+:::: {.language-switch}
+[Français](../fr/gradients.qmd) · [English](gradients.qmd)
+::::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -136,9 +144,3 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 </div>
 </details>
-
-{{< include ../includes/generated-suggested-route-en-gradients.qmd >}}
-
-:::: {.language-switch}
-[Français](../fr/gradients.qmd) · [English](gradients.qmd)
-::::
