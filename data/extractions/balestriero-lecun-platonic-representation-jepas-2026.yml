@@ -1,0 +1,343 @@
+schema_version: 1
+source_id: balestriero-lecun-platonic-representation-jepas-2026
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Inspected arXiv abstract and HTML sections 1–2.4 on 2026-11-10, including formal world/modality/pair notation, theorem assumptions, spectral interpretation, nuisance analysis and next-token-prediction reformulation."
+      - "Cross-checked the article's headline experimental claims against the arXiv abstract; the article itself was fully retrieved."
+      - "Sections 3–5 were subsequently inspected in full HTML on 2026-11-10; appendices and executable code remain unaudited."
+    inferred_elements:
+      - "Learning outcomes, assumed prerequisites and the source-local teaching route are inferred from the inspected paper structure."
+  source_graph:
+    nodes:
+      - {id: src-world-state, kind: theoretical-object, description: "Finite latent state z in a world Z with probability p(z).", locator: "Section 2.1"}
+      - {id: src-modality-rendering, kind: mapping, description: "Injective rendering g_m from a world state to an observation in modality m.", locator: "Section 2.1"}
+      - {id: src-positive-pair-distribution, kind: probability-distribution, description: "Symmetric distribution over pairs of world states with both marginals equal to p.", locator: "Section 2.1"}
+      - {id: src-jepa-objective, kind: objective, description: "Expected pairwise embedding loss plus an anti-collapse term depending on the embedding distribution.", locator: "Equation 1"}
+      - {id: src-anti-collapse, kind: constraint, description: "Rotation-invariant distributional constraint or regularizer preventing constant embeddings.", locator: "Sections 2.1 and Appendix A"}
+      - {id: src-positive-pair-kernel, kind: matrix, description: "Normalized adjacency kernel induced by the positive-pair distribution over world states.", locator: "Section 2.1"}
+      - {id: src-spectral-embedding, kind: representation, description: "Top eigenvector embedding associated with the positive-pair graph under second-order anti-collapse.", locator: "Section 2.1"}
+      - {id: src-orthogonal-rotation, kind: transformation, description: "Orthogonal coordinate change relating optimal embeddings across modalities.", locator: "Section 2.1"}
+      - {id: src-world-nuisance, kind: latent-variable, description: "Observation-specific modality factor such as wording or camera viewpoint, independent of the world state.", locator: "Section 2.3"}
+      - {id: src-good-view, kind: positive-pair-design, description: "Pairing distinct observations of world states related by the world-level positive distribution.", locator: "Section 2.3"}
+      - {id: src-bad-view, kind: positive-pair-design, description: "Pairing corruptions of a single observation, often retaining its modality nuisance.", locator: "Section 2.3"}
+      - {id: src-induced-world-kernel, kind: matrix, description: "World-state relation induced jointly by data coverage and the positive-pair construction.", locator: "Section 2.3"}
+      - {id: src-next-token-objective, kind: objective, description: "Language-model objective represented as a JEPA-like factorization with prefix/continuation positives and log-partition anti-collapse.", locator: "Section 2.4"}
+    edges:
+      - {from: src-world-state, type: observed-through, to: src-modality-rendering}
+      - {from: src-positive-pair-distribution, type: defines, to: src-positive-pair-kernel}
+      - {from: src-modality-rendering, type: parameterizes, to: src-jepa-objective}
+      - {from: src-jepa-objective, type: constrained-by, to: src-anti-collapse}
+      - {from: src-positive-pair-kernel, type: determines, to: src-spectral-embedding}
+      - {from: src-spectral-embedding, type: equivalent-under, to: src-orthogonal-rotation}
+      - {from: src-good-view, type: induces, to: src-positive-pair-distribution}
+      - {from: src-bad-view, type: induces, to: src-induced-world-kernel}
+      - {from: src-world-nuisance, type: may-be-retained-by, to: src-bad-view}
+      - {from: src-induced-world-kernel, type: determines, to: src-spectral-embedding}
+      - {from: src-next-token-objective, type: is-reformulated-as, to: src-bad-view}
+    interpretation: "Reconstruction of the formal objects and relations in sections 2.1–2.4; source-local edge labels are descriptive, not a replacement for the paper's equations or canonical concept relations."
+  learning_outcomes:
+    - {status: inferred, outcome: "State the Platonic Representation Theorem as a conditional equivalence result up to orthogonal transformations.", basis: "Section 2.1."}
+    - {status: inferred, outcome: "Explain how a JEPA objective and its positive-pair kernel determine a spectral embedding under second-order anti-collapse.", basis: "Section 2.1."}
+    - {status: inferred, outcome: "Distinguish world-state variation from modality-specific nuisance variation.", basis: "Section 2.3."}
+    - {status: inferred, outcome: "Explain why bad-view pair construction depends jointly on the data distribution and the corruption process.", basis: "Section 2.3."}
+    - {status: inferred, outcome: "Interpret next-token prediction as a JEPA-like objective only within the paper's stated reformulation and caveats.", basis: "Section 2.4."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Linear algebra: covariance, eigenvectors, orthogonal transformations and spectral gaps.", basis: "Theorem and spectral embedding derivation."}
+    - {status: inferred, topic: "Probability distributions, joint distributions and conditional expectation.", basis: "World-state and positive-pair formalization."}
+    - {status: inferred, topic: "Self-supervised representation learning and anti-collapse objectives.", basis: "JEPA objective and related objectives discussion."}
+  teaching_route:
+    - {order: 1, section: "Introduction", function: motivate-and-position-hypothesis, moves: ["Situate PRH relative to multilingual and cross-modal representation alignment", "Identify missing theoretical conditions for JEPA"]}
+    - {order: 2, section: "2.1 The Platonic Representation Theorem", function: formalize-world-and-shared-pairs, moves: ["Define latent world states and modality renderings", "Express a JEPA objective with anti-collapse regularization", "Connect positive-pair graph to spectral embedding and rotation equivalence"]}
+    - {order: 3, section: "2.2 When Positives Differ", function: quantify-misalignment, moves: ["Relate kernel mismatch to representation mismatch", "Explain spectral gaps and stable eigenspaces"]}
+    - {order: 4, section: "2.3 Good-View and Bad-View JEPAs", function: model-nuisance-and-view-design, moves: ["Introduce modality-specific nuisance variables", "Contrast scene-level positives with observation corruptions", "Show that data coverage and view construction jointly induce the kernel"]}
+    - {order: 5, section: "2.4 Next-Token Prediction is a Bad-View JEPA", function: connect-language-objective, moves: ["Identify prefix/continuation positives", "Interpret log-partition as anti-collapse term", "Separate theorem result from heuristic cross-modal interpretation"]}
+    - {order: 6, section: "Sections 3–5 and appendices", function: pending-full-audit, moves: ["Experimental design and metrics", "Scaling law and captioning demonstration", "Proof details and robustness checks"]}
+  pedagogical_strengths:
+    - "The theorem makes the PRH conditional and testable rather than treating it as an inevitable scaling trend."
+    - "The spectral-graph interpretation connects positive-pair design to the geometry learned by the encoder."
+    - "The nuisance model explains why invariance to corruptions can preserve modality-specific information."
+    - "The paper explicitly separates the main theorem from the heuristic interpretation of next-token prediction."
+  pedagogical_limits:
+    - "The theorem uses finite world states, injective renderings, shared positive-pair distributions and population optima; real captions and images are partial observations."
+    - "Uniqueness up to rotation requires additional conditions such as a spectral gap; the paper notes that some full-distribution constraints need this uniqueness as an assumption."
+    - "The main theorem's identity predictor setup does not cover action-conditioned JEPA predictors used as world models."
+    - "Appendix proofs, implementation and independent reproduction remain unaudited."
+  comparison:
+    dossier: docs/source-reviews/platonic-representation-jepa-2026-11.md
+    canonical_graph: "data/concepts.yml and generated JSON-LD projection"
+    canonical_routes: [data/guided-route.yml, docs/learning-path.md, "Deepen page metadata"]
+    decision: "Keep source-local formal objects separate from canonical concepts during the first ingestion pass; propose concept additions only after a complete audit and destination review."
+    structures_kept_separate: [paper-formal-model, source-pedagogical-route, canonical-concept-graph, curriculum-prerequisites, page-navigation]
+items:
+  - id: balestriero-lecun-platonic-representation-jepas-2026:platonic-theorem
+    kind: claim
+    summary: "For a finite world with positive state probabilities, injective modality renderings, a shared symmetric positive-pair distribution with the same marginals, and population minimizers unique up to rotation, separately trained modality JEPAs minimize the same world-level objective and therefore recover the same representation up to orthogonal rotation."
+    locator: {type: section, value: "2.1", label: "The Platonic Representation Theorem"}
+    evidence:
+      kind: formal-theorem
+      confidence: well-supported
+      scope: "The theorem statement and proof setup in section 2.1; full proof details remain to be checked in Appendix A."
+      assumptions: ["Finite latent world-state set", "p(z)>0", "Injective modality rendering", "Same positive-pair distribution over world states with both marginals p", "Rotation-invariant pair loss and anti-collapse term", "Population optimization", "Minimizers unique up to rotation"]
+      limitations: ["Not a theorem that arbitrary neural networks or all modalities converge in practice.", "The full proof and spectral-gap argument have not yet been audited."]
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:platonic-representation-hypothesis, topic:jepa, method:orthogonal-alignment]
+    candidate_destinations:
+      pages: [fr/contextualized-representations, en/contextualized-representations]
+      concepts: []
+  - id: balestriero-lecun-platonic-representation-jepas-2026:spectral-embedding
+    kind: mechanism
+    summary: "With second-order anti-collapse constraints, the JEPA optimum is characterized by the top eigenvectors of the normalized adjacency matrix of the graph induced by positive pairs; a spectral gap makes the relevant embedding unique up to rotation."
+    locator: {type: section, value: "2.1", label: "Normalized positive-pair adjacency and spectral embedding"}
+    evidence:
+      kind: mathematical-derivation-summary
+      confidence: well-supported
+      scope: "The normalized kernel definition and spectral interpretation in section 2.1."
+      assumptions: ["Second-order anti-collapse formulation", "Appropriate spectral ordering and gap", "Population objective"]
+      limitations: ["Exact optimization and eigenvector ordering details require full Appendix A audit.", "The paper notes that the full-distribution SIGReg constraint's uniqueness is left as an assumption."]
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:jepa, topic:spectral-embedding, method:whitening]
+    candidate_destinations:
+      pages: [fr/contextualized-representations, en/contextualized-representations]
+      concepts: []
+  - id: balestriero-lecun-platonic-representation-jepas-2026:kernel-mismatch
+    kind: result
+    summary: "When modalities induce different positive-pair kernels over world states, their optimal spectral embeddings need not coincide; the paper bounds their post-rotation mismatch using the difference between kernels and the separation of the relevant spectrum."
+    locator: {type: section, value: "2.2", label: "When Positives Differ"}
+    evidence:
+      kind: theorem-summary
+      confidence: well-supported
+      scope: "Section 2.2 and the article's summary of the 300 synthetic-world numerical check."
+      assumptions: ["The spectral perturbation setup and gap conditions of the paper."]
+      limitations: ["The exact bound and constants are not transcribed here; they require a full derivation audit.", "The 300-world result is a synthetic numerical validation, not a real-world guarantee."]
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:jepa, topic:spectral-embedding, topic:cross-modal-alignment]
+    candidate_destinations:
+      pages: [fr/contextualized-representations, en/contextualized-representations]
+      concepts: []
+  - id: balestriero-lecun-platonic-representation-jepas-2026:modality-nuisance
+    kind: mechanism
+    summary: "The paper models an observation as a function of both world state and modality-specific nuisance, such as caption wording or camera viewpoint. Pairing two corruptions of one observation can retain that nuisance, consuming embedding dimensions that cannot be aligned with another modality; pairing independent observations of a related scene can remove it from the shared signal."
+    locator: {type: section, value: "2.3", label: "Good-View and Bad-View JEPAs"}
+    evidence:
+      kind: formal-model-summary
+      confidence: well-supported
+      scope: "Nuisance model, scene-explained covariance and positive-pair comparison in section 2.3."
+      assumptions: ["Nuisance is independent of the world state in the formal model.", "The embedding is centered and whitened."]
+      limitations: ["A nuisance for cross-modal alignment may be essential for a world model conditioned on actions or camera motion.", "The formal rendering assumes each observation determines its state; captions in reality can omit scene information."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:jepa, topic:cross-modal-alignment, topic:modality-nuisance]
+    candidate_destinations:
+      pages: [fr/contextualized-representations, en/contextualized-representations]
+      concepts: []
+  - id: balestriero-lecun-platonic-representation-jepas-2026:next-token-as-bad-view
+    kind: claim
+    summary: "The paper reformulates next-token prediction as a JEPA-like objective whose positive pairs are a document prefix and its continuation and whose anti-collapse term is the softmax log-partition. The authors use this to motivate a heuristic account of weaker alignment with vision; this explanation is not a corollary of the rotation theorem."
+    locator: {type: section, value: "2.4", label: "Next-Token Prediction is a Bad-View JEPA"}
+    evidence:
+      kind: mathematical-reformulation
+      confidence: context-dependent
+      scope: "Section 2.4, including the explicit caveats about the theorem not directly covering next-token prediction."
+      assumptions: ["The paper's factorization and embedding parameterization."]
+      limitations: ["Next-token prediction is not a spectral JEPA and is identified only up to a general invertible linear transform in the discussion.", "The nuisance explanation is heuristic rather than a direct theorem consequence."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [architectures-mechanisms, mathematical-tools-geometry]
+      tags: [topic:next-token-prediction, topic:jepa, topic:cross-modal-alignment]
+      concept_ids: [next-token-prediction, training-objective]
+    candidate_destinations:
+      pages: [fr/contextualized-representations, en/contextualized-representations]
+      concepts: [next-token-prediction, training-objective]
+  - id: balestriero-lecun-platonic-representation-jepas-2026:captioning-pairs
+    kind: limitation
+    summary: "The captioning demonstration fits a constrained linear map between frozen independently trained encoders using image–caption pairs; it does not jointly train the encoders or train the text decoder on image inputs, but it is not a completely pair-free demonstration."
+    locator: {type: section, value: "5.1", label: "Captioning Without Training a Network on Image–Caption Pairs"}
+    evidence:
+      kind: author-reported-method
+      confidence: context-dependent
+      scope: "Abstract and article's detailed description of the captioning demonstration; section 5.1 awaits full audit."
+      assumptions: ["The article's summary accurately reflects the paper's method."]
+      limitations: ["Exact fitting protocol, data split and map parameterization require direct inspection of section 5.1."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [scale-research]
+      tags: [topic:cross-modal-alignment, application:image-captioning]
+    candidate_destinations:
+      pages: [fr/contextualized-representations, en/contextualized-representations]
+      concepts: []
+
+  - id: balestriero-lecun-platonic-representation-jepas-2026:matched-flickr-experiment
+    kind: result
+    summary: "On Flickr30k, the authors train image and text encoders separately. With matched text encoder, data and training recipe, caption views from different captions of the same image outperform masked spans and next-token prediction on mutual 10-NN and retrieval through one orthogonal map. The paper reports three seeds for these comparisons."
+    locator: {type: section, value: "3.1", label: "Good Views Align Across Modalities"}
+    evidence:
+      kind: author-reported-experiment
+      confidence: well-supported
+      scope: "Flickr30k Karpathy split, 29k training images with five captions each; reported Table 1 and section 3.1."
+      assumptions: ["The reported matched setup is as described by the authors."]
+      limitations: ["Small caption dataset and image encoder limit absolute scores.", "No independent reproduction has been run.", "Alignment metrics do not measure reasoning."]
+    classification:
+      primary_theme: scale-research
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:jepa, topic:cross-modal-alignment, modality:image, modality:text]
+    candidate_destinations:
+      pages: []
+      concepts: []
+  - id: balestriero-lecun-platonic-representation-jepas-2026:trimming-and-stability
+    kind: result
+    summary: "Trimming captions into shorter spans is the most consequential tested adjustment to good-view JEPA: full captions reduce retrieval R@1 from .246 to .185. Other tested settings move the mean less, while training stability remains important: gradient clipping prevents most observed collapses."
+    locator: {type: section, value: "3.2", label: "Trimming Makes Good Views, the Rest Barely Matters"}
+    evidence:
+      kind: author-reported-ablation
+      confidence: context-dependent
+      scope: "One-factor-at-a-time Flickr ablations and stability observations in section 3.2."
+      assumptions: ["The comparisons use the authors' selected training recipe and evaluation protocol."]
+      limitations: ["Ablation scope is bounded to the tested settings.", "The result does not establish that shorter views are always better for every modality or objective."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [scale-research]
+      tags: [topic:jepa, topic:positive-pairs, method:data-augmentation]
+    candidate_destinations:
+      pages: []
+      concepts: []
+  - id: balestriero-lecun-platonic-representation-jepas-2026:video-good-views
+    kind: result
+    summary: "On MSR-VTT, using different frames of one video clip as image-side views and different captions as text-side views improves mutual 10-NN alignment. This provides evidence that the view design can be applied on both modalities when multiple observations of the same scene are available."
+    locator: {type: section, value: "3.3", label: "Good Views Help on Both Sides"}
+    evidence:
+      kind: author-reported-experiment
+      confidence: context-dependent
+      scope: "MSR-VTT experiment with 7k training clips and 20 captions per clip."
+      assumptions: ["A clip is treated as a shared underlying scene/event for the paired frames and captions."]
+      limitations: ["The image JEPA trained from scratch on the 7k clips remains weaker than DINOv2.", "This does not establish scalable video JEPA performance."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [scale-research]
+      tags: [topic:jepa, topic:cross-modal-alignment, modality:video]
+    candidate_destinations:
+      pages: []
+      concepts: []
+  - id: balestriero-lecun-platonic-representation-jepas-2026:sample-token-compute-distinction
+    kind: result
+    summary: "The headline comparison is 42 times fewer training samples for good-view JEPA than next-token prediction to reach a comparable WIT alignment score. Because each good-view sample reads three texts, the paper reports a smaller 14-fold text-token difference and 435 times fewer unique images. These are not total-compute or wall-clock ratios."
+    locator: {type: section, value: "4.2", label: "Good Views Need 42 Times Fewer Samples"}
+    evidence:
+      kind: author-reported-comparison
+      confidence: context-dependent
+      scope: "109M encoder comparison on Recap-DataComp texts; 21.6M versus 900M samples."
+      assumptions: ["The compared runs use the stated model and corpus configurations."]
+      limitations: ["Different batch sizes and learning-rate recipes are used at the two scales.", "No FLOPs, energy or wall-clock equivalence is established.", "The paper reports samples, tokens and unique images as distinct denominators."]
+    classification:
+      primary_theme: scale-research
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:jepa, topic:training-efficiency, topic:cross-modal-alignment]
+    candidate_destinations:
+      pages: []
+      concepts: [training-objective]
+  - id: balestriero-lecun-platonic-representation-jepas-2026:alignment-scaling-law
+    kind: result
+    summary: "The authors fit an empirical alignment law combining the fraction q of good-view training items, sample count M and number of images N. It predicts 85 held-out runs with RMSE .0093, comparable to seed-to-seed variation .0096, within the tested range. It overestimates good-view-only runs when extrapolated to 320M samples because the fitted form lacks a repeated-data term."
+    locator: {type: section, value: "4.4", label: "A Scaling Law for the PRH"}
+    evidence:
+      kind: author-reported-scaling-law
+      confidence: context-dependent
+      scope: "One BERT-S recipe, 45 fitting cells up to 80M samples and 85 predicted runs."
+      assumptions: ["Same Recap-DataComp training recipe and Flickr retrieval evaluation."]
+      limitations: ["Empirical summary, not derived from the theorem.", "Extrapolation failure under repeated exposure is explicitly reported.", "Exponents are poorly identified."]
+    classification:
+      primary_theme: scale-research
+      tags: [topic:platonic-representation-hypothesis, topic:scaling-law, topic:jepa]
+    candidate_destinations:
+      pages: []
+      concepts: []
+  - id: balestriero-lecun-platonic-representation-jepas-2026:captioning-linear-map
+    kind: mechanism
+    summary: "The captioning system trains a text decoder on text alone to reconstruct captions from frozen text-JEPA embeddings. At inference, frozen image embeddings are transformed by a constrained orthogonal map and decoded. No network is trained on image-caption pairs, but the map is fitted on paired Flickr data; the main reported COCO CIDEr .838 configuration uses 30k Flickr pairs."
+    locator: {type: section, value: "5.1", label: "Captioning Without Training a Network on Image–Caption Pairs"}
+    evidence:
+      kind: author-reported-method
+      confidence: well-supported
+      scope: "Full section 5.1, including the map, decoder noise and transfer results."
+      assumptions: ["The map is constrained to preserve the geometry assumed by the representation alignment."]
+      limitations: ["The 30k paired examples mean the headline captioning demonstration is not pair-free.", "The result is not state-of-the-art captioning; it demonstrates composability of independently trained components."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [scale-research]
+      tags: [topic:cross-modal-alignment, application:image-captioning, method:orthogonal-alignment]
+    candidate_destinations:
+      pages: []
+      concepts: []
+  - id: balestriero-lecun-platonic-representation-jepas-2026:pair-free-alignment
+    kind: result
+    summary: "A separate experiment aligns unpaired image and caption sets using geometric structure and optimal transport. The 109M good-view text JEPA reaches 64.4% ImageNet-100 top-5 in the reported pair-free setup, compared with at most 56% among the language-model results in the cited benchmark; the authors also report that next-token prediction is unstable in half of its runs."
+    locator: {type: section, value: "5.2", label: "Alignment Without Any Pair"}
+    evidence:
+      kind: author-reported-experiment
+      confidence: context-dependent
+      scope: "Unpaired COCO alignment protocol and zero-shot classification benchmark."
+      assumptions: ["The benchmark protocol and baselines are those defined by the cited work and reproduced by the authors."]
+      limitations: ["This is not a zero-pair training procedure for all components in the paper; it is a particular post-hoc alignment evaluation.", "The comparison is protocol-specific and author-reported.", "Flickr results show substantial seed variability."]
+    classification:
+      primary_theme: scale-research
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:cross-modal-alignment, method:optimal-transport, application:zero-shot-classification]
+    candidate_destinations:
+      pages: []
+      concepts: []
+
+  - id: balestriero-lecun-platonic-representation-jepas-2026:spectral-gap-uniqueness
+    kind: derivation
+    summary: "Under the paper's centered and whitened second-order constraint, minimizing expected squared distance over positive pairs reduces to maximizing the sum of Rayleigh quotients of the positive-pair Markov operator. Ky Fan's maximum principle selects its top-k non-constant eigenfunctions; a strict gap between eigenvalues k and k+1 makes that subspace unique, while different orthonormal bases of the same subspace differ only by an orthogonal rotation."
+    locator: {type: section, value: "Appendix A.2", label: "Proof of the Platonic Representation Theorem"}
+    evidence:
+      kind: formal-proof
+      confidence: well-supported
+      scope: "Appendix A.1–A.2, including the Markov operator, normalized kernel, objective expansion and Ky Fan argument."
+      assumptions: ["Finite world and symmetric positive-pair distribution with marginal p", "Centered, whitened embedding constraints", "Strict spectral gap mu_k > mu_(k+1)"]
+      limitations: ["This is the second-order constrained case; the paper leaves uniqueness under the full-distribution SIGReg constraint as an assumption.", "A reader-facing page should unpack the variational argument rather than state 'JEPA learns eigenvectors' without conditions."]
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:jepa, topic:spectral-embedding, method:whitening]
+    candidate_destinations:
+      pages: []
+      concepts: []
+  - id: balestriero-lecun-platonic-representation-jepas-2026:rotation-identification
+    kind: mechanism
+    summary: "Once two finite-world representations agree up to an unknown orthogonal rotation, generic paired examples can identify that rotation: k pairs in general position suffice for a k-dimensional embedding, whereas k-1 pairs may leave another exact fit. For ideal rotation-invariant continuous embedding distributions, unpaired moments cannot identify the rotation; finite-world higher-order geometry can nevertheless support post-hoc unpaired alignment."
+    locator: {type: section, value: "Appendix A.3", label: "When Positives Differ and what pairs identify"}
+    evidence:
+      kind: mathematical-derivation
+      confidence: well-supported
+      scope: "Appendix A.3 and the discussion of pair-free alignment in section 5.2."
+      assumptions: ["Orthogonal Procrustes alignment", "Paired points in general position for the k-pair sufficiency statement"]
+      limitations: ["The pair-free procedure is a separate post-hoc method based on geometric matching and optimal transport; it is not implied by first- and second-moment matching.", "The finite-world result is not a universal guarantee for arbitrary datasets."]
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [scale-research]
+      tags: [topic:cross-modal-alignment, method:orthogonal-alignment, method:optimal-transport]
+    candidate_destinations:
+      pages: []
+      concepts: []
+  - id: balestriero-lecun-platonic-representation-jepas-2026:objective-family-scope
+    kind: limitation
+    summary: "The paper's rotation-invariant JEPA objective form includes spectral contrastive learning and whitened MSE; VICReg and Barlow Twins fit only in specific whitened hard-constraint limits, while LeJEPA's SIGReg is rotation-invariant in expectation over projection directions. The spectral uniqueness proof should not be generalized indiscriminately to every anti-collapse loss."
+    locator: {type: section, value: "Appendix A.1", label: "Objectives of the form used by the theorem"}
+    evidence:
+      kind: formal-scope-qualification
+      confidence: well-supported
+      scope: "Appendix A.1 objective-family discussion."
+      assumptions: ["The stated hard-constraint or expectation limits for each objective."]
+      limitations: ["The complete derivations for all named objectives are not reproduced in this extraction.", "The paper explicitly leaves uniqueness under the full SIGReg distributional constraint as an assumption."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:jepa, method:whitening, method:anti-collapse]
+    candidate_destinations:
+      pages: []
+      concepts: []
