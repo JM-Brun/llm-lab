@@ -87,8 +87,6 @@ Cette comparaison est conceptuelle : elle ne signifie pas que les embeddings des
 
 ## Du principe au calcul
 
-## Du principe au calcul
-
 Le lookup est une opération simple : chaque ID sélectionne la ligne correspondante dans la table, sans mélanger les positions ni interpréter la valeur numérique de l'ID. Pour vérifier concrètement cette opération, suivre les formes d'un batch et distinguer indice et coordonnée, passez à l'[exercice TR-B](exercises-text-data.qmd#tr-b-lookup). La trace de tokenisation et les manipulations de BPE sont également regroupées dans la collection [Données textuelles](exercises-text-data.qmd#donnees-textuelles).
 
 ::: {.micro-workbench}
