@@ -76,7 +76,7 @@ La sélection peut être déterministe (par exemple *argmax*) ou stochastique (�
 
 **Le résultat de cette étape est un seul token sélectionné**, pas encore le texte complet. Il faut distinguer la distribution calculée par le modèle du token effectivement choisi par la politique de décodage.
 
-Si les notions de token et d'identifiant ne sont pas encore familières, commencez par [Du texte aux tokens](text-data.qmd). Pour comprendre **comment le modèle calcule** cette distribution, consultez [Vue d'ensemble du Transformer](transformer.qmd), [Logits](logits.qmd) et [Probabilités de sortie](probabilites.qmd). Ces pages expliquent le calcul interne ; la présente page étudie ce que le système fait de la distribution obtenue.
+Si les notions de token et d'identifiant ne sont pas encore familières, commencez par [Du texte aux tokens](text-data.qmd). Pour comprendre **comment le modèle calcule** cette distribution, consultez [Le Transformer dans un GPT](transformer.qmd), [Logits](logits.qmd) et [Probabilités de sortie](probabilites.qmd). Ces pages expliquent le calcul interne ; la présente page étudie ce que le système fait de la distribution obtenue.
 
 ## 2. La boucle de génération : répéter cette étape
 
