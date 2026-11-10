@@ -46,9 +46,9 @@ def test_multiple_modified_pages_are_rendered_incrementally():
 
 def test_large_safe_batch_stays_incremental():
     config = (
-        "project:\\n  render:\\n"
-        + "".join(f"    - fr/page-{index}.qmd\\n" for index in range(60))
-        + "\\nwebsite:\\n  title: Example\\n"
+        "project:\n  render:\n"
+        + "".join(f"    - fr/page-{index}.qmd\n" for index in range(60))
+        + "\nwebsite:\n  title: Example\n"
     )
     files = [
         {"filename": f"site/fr/page-{index}.qmd", "status": "modified"}
