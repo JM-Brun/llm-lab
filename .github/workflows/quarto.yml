@@ -156,11 +156,7 @@ jobs:
           RENDER_TARGETS: ${{ steps.site_changes.outputs.render_targets }}
           RENDER_ASSETS: ${{ steps.site_changes.outputs.render_assets }}
         run: |
-          while IFS= read -r page; do
-            [ -n "$page" ] || continue
-            echo "Incrementally rendering $page"
-            quarto render "$page" --no-clean
-          done <<< "$RENDER_TARGETS"
+          .venv/bin/python scripts/quarto_render_batch.py
 
           while IFS= read -r asset; do
             [ -n "$asset" ] || continue
