@@ -66,15 +66,11 @@ This second diagram answers a different question: it places the network in the c
 
 At the first block's input, each token ID has already been mapped to a vector, and the model has information about token order. The pages on [embeddings](embedding-space.qmd) and [positional information](positional-encoding.qmd) explain these initial representations; [contextualized representations](contextualized-representations.qmd) shows what Transformer layers do with them. Here, we follow that computation at the block level.
 
-The transition from text to token IDs is explained in [text and tokenization](text-data.qmd); the [embedding page](embedding-space.qmd) shows how those IDs become vectors. [Positional information](positional-encoding.qmd) explains how the model accounts for token order. Here, we keep these stages as the starting point and focus on what the blocks do with the resulting representations. For the shapes and axes of the arrays involved, see [Tensors](tensors.qmd).
-
 ## 2. Transformer blocks
 
 The stack shown above consists of blocks of the same general type, repeated in depth. Each block combines two main operations:
 
 - **Self-attention:** each position combines information from the positions allowed by the mask, including its own position in a causal GPT. The causal mask prevents access to future tokens.
-
-
 - **Feed-forward network (MLP):** a small neural network applied to each position separately, with the same weights everywhere. It typically combines linear projections with a nonlinear activation to produce a transformed representation; the exact design varies by architecture.
 
 Blocks also use **residual connections** and **normalization**. A residual connection adds a correction computed by a sublayer to the representation flowing through the network, rather than replacing that representation entirely. It therefore provides a direct path for information and gradients:
