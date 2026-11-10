@@ -104,7 +104,7 @@ After the final block, the final normalization and output head produce the **log
 
 ## Check your understanding
 
-To extend this check with progressive problems on embeddings, residuals, normalization, and the MLP, see the [Transformer exercises](exercises.qmd#transformer).
+To extend this check with progressive problems on embeddings, residuals, normalization, and the MLP, see the [Transformer exercises](exercises-transformer.qmd#transformer).
 
 This check focuses on the block structure and the role of residual connections.
 

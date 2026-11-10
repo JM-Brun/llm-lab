@@ -35,6 +35,15 @@ const cases = [
   ...exerciseHubCases.map(testCase => ({
     ...testCase, page: "exercises.html", kind: "exercise-hub",
   })),
+  ...exerciseHubCases.flatMap(testCase => [
+    { page: "exercises-text-data.html", exerciseIds: ["TR-A", "TR-B", "TR-C", "TR-D", "TR-E", "TR-F"] },
+    { page: "exercises-transformer.html", exerciseIds: ["TF-A", "TF-B", "TF-C"] },
+    { page: "exercises-attention.html", exerciseIds: ["AT-A", "AT-B", "AT-C", "CA-A"] },
+    { page: "exercises-foundations.html", exerciseIds: [] },
+    { page: "exercises-generation.html", exerciseIds: [] },
+  ].map(collection => ({
+    ...testCase, ...collection, kind: "exercise-collection",
+  }))),
   ...visualCases.map(testCase => ({
     ...testCase, page: "llm-overview.html", kind: "spine-overview",
   })),
@@ -258,50 +267,65 @@ for (const testCase of cases) {
     item.h1 = await page.locator("h1").first().innerText().catch(() => null);
 
     if (kind === "exercise-hub") {
-      const hub = page.locator("main");
-      const visibleText = await hub.innerText();
-      const exerciseIds = ["TR-A", "TR-B", "TR-C", "TR-D", "TR-E", "TR-F", "TF-A", "TF-B", "TF-C", "AT-A", "AT-B", "AT-C", "CA-A"];
-      item.exerciseHub = await page.evaluate(() => {
+      const expectedCollectionPages = [
+        "exercises-foundations.html",
+        "exercises-text-data.html",
+        "exercises-attention.html",
+        "exercises-transformer.html",
+        "exercises-generation.html",
+      ];
+      item.exerciseHub = await page.evaluate(expectedPages => {
         const lang = document.documentElement.lang || "en";
         const anchors = lang.startsWith("fr")
-          ? ["donnees-textuelles", "attention", "transformer"]
-          : ["text-data", "attention", "transformer"];
-        const details = [...document.querySelectorAll("main details")];
+          ? ["fondations", "donnees-textuelles", "attention", "transformer", "generation"]
+          : ["foundations", "text-data", "attention", "transformer", "generation"];
+        const collectionLinks = [...document.querySelectorAll("main a[href]")].map(link => ({
+          href: link.href,
+          text: link.textContent.trim().replace(/\s+/g, " "),
+        }));
+        const missingCollectionPages = expectedPages.filter(expected =>
+          !collectionLinks.some(link => new URL(link.href).pathname.endsWith("/" + expected))
+        );
         return {
           collectionAnchors: anchors.map(id => ({ id, exists: Boolean(document.getElementById(id)) })),
-          detailsCount: details.length,
-          summariesCount: details.filter(node => node.querySelector(":scope > summary")).length,
-          openDetailsAtLoad: details.filter(node => node.open).length,
-          tableCount: document.querySelectorAll("main table").length,
+          collectionLinks,
+          missingCollectionPages,
         };
-      });
-      item.exerciseHub.exerciseIdsPresent = exerciseIds.filter(id =>
-        visibleText.includes(id)
-      );
-      item.exerciseHub.missingExerciseIds = exerciseIds.filter(id =>
-        !visibleText.includes(id)
-      );
+      }, expectedCollectionPages);
       if (item.exerciseHub.collectionAnchors.some(anchor => !anchor.exists)) {
         throw new Error("one or more canonical exercise collection anchors are missing");
       }
-      if (item.exerciseHub.missingExerciseIds.length) {
-        throw new Error(`missing stable exercise IDs: ${item.exerciseHub.missingExerciseIds.join(", ")}`);
+      if (item.exerciseHub.missingCollectionPages.length) {
+        throw new Error(`missing exercise collection links: ${item.exerciseHub.missingCollectionPages.join(", ")}`);
       }
-      if (item.exerciseHub.detailsCount < 9 ||
-          item.exerciseHub.summariesCount !== item.exerciseHub.detailsCount ||
-          item.exerciseHub.openDetailsAtLoad !== 0) {
-        throw new Error("exercise hints/solutions must use native collapsed details/summary disclosures");
+    }
+    if (kind === "exercise-collection") {
+      const visibleText = await page.locator("main").innerText();
+      const details = page.locator("main details");
+      const detailsCount = await details.count();
+      const summariesCount = await details.locator("summary").count();
+      const openDetailsAtLoad = await details.evaluateAll(nodes => nodes.filter(node => node.open).length);
+      item.exerciseCollection = {
+        expectedIds: testCase.exerciseIds,
+        presentIds: testCase.exerciseIds.filter(id => visibleText.includes(id)),
+        detailsCount,
+        summariesCount,
+        openDetailsAtLoad,
+      };
+      const missing = testCase.exerciseIds.filter(id => !visibleText.includes(id));
+      if (missing.length) {
+        throw new Error(`missing stable exercise IDs in collection: ${missing.join(", ")}`);
       }
-      if (item.exerciseHub.tableCount < 3) {
-        throw new Error("expected exercise tables are missing from the rendered hub");
+      if (detailsCount === 0 || summariesCount !== detailsCount || openDetailsAtLoad !== 0) {
+        throw new Error("exercise hints/solutions must use native collapsed details/summary disclosures in each collection");
       }
-      const firstSummary = hub.locator("details > summary").first();
+      const firstSummary = page.locator("main details > summary").first();
       await firstSummary.focus();
       await page.keyboard.press("Enter");
-      await page.waitForFunction(() => document.querySelector("main details")?.open === true);
+      await page.waitForFunction(() => [...document.querySelectorAll("main details")].some(node => node.open));
       await page.keyboard.press("Space");
-      await page.waitForFunction(() => document.querySelector("main details")?.open === false);
-      item.exerciseHub.nativeDisclosureKeyboard = true;
+      await page.waitForFunction(() => [...document.querySelectorAll("main details")].every(node => !node.open));
+      item.exerciseCollection.nativeDisclosureKeyboard = true;
     }
     // Quarto footer navigation follows editorial sidebar order, independently
     // of document-level rel metadata, the guided route, and the computational graph.

@@ -26,8 +26,8 @@ def extract_python_example(path: Path, heading: str) -> str:
 
 def main() -> None:
     examples = {
-        "en": extract_python_example(ROOT / "site/en/exercises.qmd", EN_HEADING),
-        "fr": extract_python_example(ROOT / "site/fr/exercises.qmd", FR_HEADING),
+        "en": extract_python_example(ROOT / "site/en/exercises-text-data.qmd", EN_HEADING),
+        "fr": extract_python_example(ROOT / "site/fr/exercises-text-data.qmd", FR_HEADING),
     }
     # Comments may be translated; executable statements must stay in sync.
     trees = {

@@ -249,7 +249,7 @@ Cette page est un **approfondissement facultatif** de [Du texte aux tokens](text
 ::: {.self-check}
 ## Vérifier sa compréhension
 
-Des exercices formatifs prolongent cette page, notamment sur les fusions BPE, dans la [collection Données textuelles](exercises.qmd#donnees-textuelles).
+Des exercices formatifs prolongent cette page, notamment sur les fusions BPE, dans la [collection Données textuelles](exercises-text-data.qmd#donnees-textuelles).
 
 1. Un tokenizer produit moins de tokens qu'un autre sur le même texte. Cela prouve-t-il qu'il est meilleur ?
 

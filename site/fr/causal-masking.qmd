@@ -111,7 +111,7 @@ Les Transformers décodeurs comme GPT utilisent cette contrainte pour apprendre 
 </details>
 
 ::: {.callout-note collapse="true" title="Vérifier l'invariance en pratique"}
-La règle causale se formule aussi comme une propriété de préfixe : à paramètres et préfixe inchangés, ajouter ou modifier des tokens futurs ne doit pas changer les sorties déjà calculées pour ce préfixe. L'[exercice CA-A](exercises.qmd#ca-a-prefix-invariance) fait construire le masque, examiner le décalage des cibles et interpréter les tests d'invariance du code de référence. Il distingue également le test d'une opération élémentaire d'attention de celui du modèle complet.
+La règle causale se formule aussi comme une propriété de préfixe : à paramètres et préfixe inchangés, ajouter ou modifier des tokens futurs ne doit pas changer les sorties déjà calculées pour ce préfixe. L'[exercice CA-A](exercises-attention.qmd#ca-a-prefix-invariance) fait construire le masque, examiner le décalage des cibles et interpréter les tests d'invariance du code de référence. Il distingue également le test d'une opération élémentaire d'attention de celui du modèle complet.
 :::
 
 ## Liens avec les autres concepts
@@ -124,7 +124,7 @@ La règle causale se formule aussi comme une propriété de préfixe : à param�
 ::: {.self-check}
 ## Vérifier sa compréhension
 
-La construction d'une matrice causale, le décalage des cibles et l'analyse de l'invariance de préfixe sont travaillés dans l'[exercice CA-A](exercises.qmd#ca-a-prefix-invariance).
+La construction d'une matrice causale, le décalage des cibles et l'analyse de l'invariance de préfixe sont travaillés dans l'[exercice CA-A](exercises-attention.qmd#ca-a-prefix-invariance).
 :::
 
 ::: {.callout-note collapse="true" title="Code et tests de référence (approfondissement)"}
