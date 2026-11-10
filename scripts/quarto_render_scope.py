@@ -18,6 +18,7 @@ GLOBAL_RENDER_INPUTS = {
     "pyproject.toml",
     "uv.lock",
     "scripts/site-browser-review.mjs",
+    "scripts/quarto_render_batch.py",
 }
 
 
