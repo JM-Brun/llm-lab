@@ -46,7 +46,7 @@ An ID is a **numeric reference**, not a representation of meaning. It lets the m
 
 **Key idea:** the token is a vocabulary unit, the ID identifies it, and the embedding vector is its learned numerical representation.
 
-**For practice:** the lookup calculation and reproducible text → IDs → vectors trace are grouped in the [Text data collection](exercises-text-data.qmd#tr-b-lookup). Geometric properties are developed in the cosine-similarity and linearity lessons.
+
 :::
 
 
@@ -128,7 +128,7 @@ This is a conceptual contrast, not a claim that modern Transformer embeddings ar
 
 ## From the principle to the calculation
 
-Embedding lookup is simple: each ID selects its corresponding row in the table, without mixing positions or interpreting the numerical value of the ID. To work through this operation, trace a batch's shapes, and distinguish an index from a coordinate, use [exercise TR-B](exercises-text-data.qmd#tr-b-lookup). Tokenization traces and BPE calculations are also grouped in the [Text data collection](exercises-text-data.qmd#text-data).
+Embedding lookup is simple: each ID selects its corresponding row in the table, without mixing positions or interpreting the numerical value of the ID. The micro-workbench below checks these invariants on a small NumPy example.
 
 ::: {.micro-workbench}
 ::: {.micro-workbench-header}
@@ -172,7 +172,7 @@ print(f"Distance E[2]-E[3]: {d_2_3:.3f} | Distance E[0]-E[4]: {d_0_4:.3f}")
 ```
 :::
 ::: {.micro-workbench-footer}
-Lookup is row selection: two occurrences of the same token ID retrieve identical initial vectors ($E[i] \equiv E[i]$).
+Lookup is row selection: at each position $(b, \ell)$ of the batch, the output vector is exactly row $E[\mathrm{id}]$ of the table; two occurrences of the same token ID therefore retrieve identical initial vectors.
 :::
 :::
 
@@ -199,9 +199,13 @@ Geometric proximity depends on the model, layer, training objective, and metric.
 
 For a deeper treatment without conflating geometry with the lookup mechanism, see the pages on [cosine similarity](cosine-similarity.qmd) and the [linearity hypothesis for representations](embedding-linearity.qmd).
 
-## Practice
+## Practice, questions and exercises {#practice}
 
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/embedding-space.qmd).
+The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/embedding-space.qmd) and in the [Text data collection](exercises-text-data.qmd#text-data):
+
+- **Check-your-understanding questions:** counting the parameters of the table $E$ and interpreting a 2D projection, with detailed reasoning ([dedicated practice page](exercises/embedding-space.qmd)).
+- **[Exercise TR-B — Calculate lookup and trace tensor shapes](exercises-text-data.qmd#tr-b-lookup):** perform the lookup, complete a shape trace, generalize to a batch, then follow the reproducible text → IDs → vectors trace.
+- **Related exercises:** TR-A rebuilds the text → IDs → contextualized states chain; TR-C distinguishes identity, position and context.
 
 
 ## References
