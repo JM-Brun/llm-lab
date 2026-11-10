@@ -68,6 +68,25 @@ Choose an audit scope from the user's request:
 
 For a group audit, inspect the pages before and after the group where needed to understand entry and exit transitions. A group is not judged in isolation if its context determines whether the sequence works.
 
+### Default unit: a three-page continuity window
+
+For an audit focused on one page in the Understand route, use a **three-page window** by default:
+
+- **Previous page (incoming context):** establishes the learner's expected starting knowledge and the question or unresolved tension handed to the current page.
+- **Current page (audit target):** must make its own contribution explicit, explain what it needs locally, and avoid re-teaching the previous page's canonical content.
+- **Next page (outgoing context):** reveals what the current page needs to prepare, which concepts can safely be deferred, and whether the hand-off is explicit and usable.
+
+The current page is the primary target; its neighbors are context, not automatically equal-scope audit targets. Inspect all three in FR and EN when available. Check both transitions (previous → current and current → next), not just the current page's local quality. Also inspect route metadata and rendered previous/next navigation: conceptual sequence, metadata relations and UI navigation are related evidence, not interchangeable sources of truth.
+
+Use a rolling window when progressing through a route: after auditing A–B–C, the next focused audit is B–C–D. Reuse findings and evidence from the overlap instead of repeating the full audit, but re-check them if the source revision or route changed. This makes each page appear as incoming context, target, then outgoing context and reduces blind spots at hand-offs.
+
+**Route boundaries are asymmetric by design:**
+- At the first page, there is no previous page. Audit the entry contract instead: what the route promises, what prior knowledge it assumes, how the reader arrives, and whether the page establishes a clear first question. Include the next page to test the first hand-off.
+- At the last page, there is no next page. Audit the exit contract instead: what the route has enabled the learner to explain or do, whether the page closes or signposts the route appropriately, and whether it points to a meaningful continuation without implying a nonexistent required step. Include the previous page to test the final hand-off.
+- If route metadata has no previous/next neighbor, do not invent one from filename order. Use the canonical route and explain the boundary or branching structure.
+
+For a user-requested group of more than one target page, expand the window to include one immediate predecessor and one immediate successor where they exist. State clearly which pages are targets and which are context. For a whole-route audit, every page is in scope and the first/last-page boundary rules apply.
+
 ## Procedure
 
 ### 1. Establish the actual route and scope
