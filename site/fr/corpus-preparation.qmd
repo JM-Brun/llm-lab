@@ -92,14 +92,25 @@ Le corpus préparé peut alors être encodé en flux de tokens. La page [Du corp
 - **Contrat de sortie :** transmettre les IDs avec provenance, version du tokenizer, paramètres d'encodage, statistiques et règles de frontière documentaire.
 :::
 
-## Exercices
-
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/corpus-preparation.qmd).
 
 
 ## Limites
 
 Cette page définit un cadre de traçabilité et de séparation des responsabilités, pas une politique juridique, une recette universelle de filtrage ni un système de détection de contamination prêt à l'emploi. Les seuils, outils et unités de partition doivent être justifiés par les données, les droits applicables et l'affirmation expérimentale visée.
+
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Ressources complémentaires</span>
+  <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Exercices
+
+Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/corpus-preparation.qmd).
+
+</div>
+</details>
 
 ::: {.language-switch}
 [Français](corpus-preparation.qmd) · [English](../en/corpus-preparation.qmd)
