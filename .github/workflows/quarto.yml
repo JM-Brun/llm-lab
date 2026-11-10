@@ -54,26 +54,30 @@ jobs:
             echo "browser_relevant=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Cache Quarto installer
-        if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
+      - name: Cache Quarto Linux tarball
         id: quarto_cache
         uses: actions/cache@v4
         with:
-          path: ${{ runner.temp }}/quarto-1.11.9-linux-amd64.deb
-          key: quarto-${{ runner.os }}-1.11.9
+          path: ${{ runner.temp }}/quarto-${{ env.QUARTO_VERSION }}-linux-amd64.tar.gz
+          key: quarto-tarball-${{ runner.os }}-${{ env.QUARTO_VERSION }}
 
       - name: Set up Quarto
-        if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
         env:
           QUARTO_VERSION: "1.11.9"
+          QUARTO_SHA256: "9d037baa3b38ffac7217edca1d2e53760b0fab4d5749220740a32056e03a1530"
         run: |
-          installer="$RUNNER_TEMP/quarto-${QUARTO_VERSION}-linux-amd64.deb"
-          if [ ! -s "$installer" ]; then
-            url="https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.deb"
-            curl --fail --location --retry 5 --retry-all-errors --retry-delay 5 --retry-max-time 240 --output "$installer" "$url"
+          archive="$RUNNER_TEMP/quarto-${QUARTO_VERSION}-linux-amd64.tar.gz"
+          if [ ! -s "$archive" ] || ! echo "$QUARTO_SHA256  $archive" | sha256sum --check --status; then
+            rm -f "$archive"
+            url="https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.tar.gz"
+            curl --fail --location --retry 5 --retry-all-errors --retry-delay 5 --retry-max-time 240 --output "$archive" "$url"
           fi
-          sudo apt-get install --yes "$installer"
-          quarto --version
+          echo "$QUARTO_SHA256  $archive" | sha256sum --check
+          install_dir="$RUNNER_TEMP/quarto-${QUARTO_VERSION}"
+          mkdir -p "$install_dir"
+          tar -xzf "$archive" --strip-components=1 -C "$install_dir"
+          echo "$install_dir/bin" >> "$GITHUB_PATH"
+          "$install_dir/bin/quarto" --version
 
       - name: Set up uv and Python
         if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
