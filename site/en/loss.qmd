@@ -106,6 +106,14 @@ The formula with $\exp$ assumes mean NLL is computed with the natural logarithm 
 Before interpreting a curve, document the objective, input/target shift, ignore mask, reduction, train/validation split, and any regularization terms. Overfitting a tiny batch is a useful pipeline sanity check, but not evidence of generalization.
 :::
 
+
+
+{{< include ../includes/generated-suggested-route-en-loss.qmd >}}
+
+:::: {.language-switch}
+[Français](../fr/loss.qmd) · [English](loss.qmd)
+::::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -124,9 +132,3 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 </div>
 </details>
-
-{{< include ../includes/generated-suggested-route-en-loss.qmd >}}
-
-:::: {.language-switch}
-[Français](../fr/loss.qmd) · [English](loss.qmd)
-::::
