@@ -129,20 +129,24 @@ Les mêmes matrices de projection sont appliquées à toutes les positions ; ce 
 
 Prenons une seule représentation d'entrée, avec des vecteurs-lignes et des matrices de projection choisies uniquement pour l'illustration :
 
-$
-x_t = \begin{bmatrix}1 & 2\end{bmatrix},\qquad
-W_Q = \begin{bmatrix}1&0\\0&1\end{bmatrix},\qquad
-W_K = \begin{bmatrix}0&1\\1&0\end{bmatrix},\qquad
-W_V = \begin{bmatrix}1&1\\0&1\end{bmatrix}.
-$
+\[
+\begin{aligned}
+x_t &= \begin{bmatrix}1 & 2\end{bmatrix},\\
+W_Q &= \begin{bmatrix}1&0\\0&1\end{bmatrix},\\
+W_K &= \begin{bmatrix}0&1\\1&0\end{bmatrix},\\
+W_V &= \begin{bmatrix}1&1\\0&1\end{bmatrix}.
+\end{aligned}
+\]
 
 Les trois projections donnent :
 
-$
-q_t = x_tW_Q = \begin{bmatrix}1&2\end{bmatrix},\qquad
-k_t = x_tW_K = \begin{bmatrix}2&1\end{bmatrix},\qquad
-v_t = x_tW_V = \begin{bmatrix}1&3\end{bmatrix}.
-$
+\[
+\begin{aligned}
+q_t &= x_tW_Q = \begin{bmatrix}1&2\end{bmatrix},\\
+k_t &= x_tW_K = \begin{bmatrix}2&1\end{bmatrix},\\
+v_t &= x_tW_V = \begin{bmatrix}1&3\end{bmatrix}.
+\end{aligned}
+\]
 
 La même entrée produit donc trois représentations différentes, parce que les matrices apprises n'ont pas le même rôle. Les nombres ci-dessus sont fictifs : ils servent à suivre les multiplications, pas à décrire les paramètres d'un modèle entraîné.
 
