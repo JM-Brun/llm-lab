@@ -18,6 +18,8 @@ GLOBAL_RENDER_INPUTS = {
     "pyproject.toml",
     "uv.lock",
     "scripts/site-browser-review.mjs",
+    # Changes to the incremental renderer itself require a full site validation.
+    "scripts/quarto_render_batch.py",
 }
 
 
