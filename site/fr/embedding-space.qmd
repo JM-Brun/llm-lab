@@ -27,6 +27,19 @@ tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space",
 Après la tokenisation, chaque token est représenté par un identifiant entier. Cet identifiant sert d'indice dans une table apprise : le modèle lit la ligne correspondante et obtient un vecteur. C'est le **lookup d'embedding**. Deux occurrences du même ID sélectionnent le même vecteur initial ; la position et les couches du modèle interviennent ensuite pour construire des représentations dépendant du contexte.
 :::
 
+::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
+À la fin de cette leçon, vous devriez pouvoir :
+- expliquer comment un identifiant entier (ID de token) sélectionne une ligne dans une matrice apprise $E \in \mathbb{R}^{V \times d}$ ;
+- distinguer le vecteur d'embedding initial de l'état contextualisé produit par les couches du Transformer ;
+- justifier pourquoi la proximité numérique des identifiants n'implique aucune proximité géométrique ou sémantique dans l'espace latent.
+:::
+
+
+<div class="epistemic-badges">
+  <span class="epistemic-badge badge-concept">Concept vérifié</span>
+  <span class="epistemic-badge badge-status">Architecture : Entrée du Transformer</span>
+</div>
+
 
 ::: {.callout-tip title="L'idée à retenir en une minute"}
 Un ID est une **adresse de ligne**, pas une coordonnée sémantique. La matrice d'embeddings — ou table de plongements — contient un vecteur appris par ID ; le lookup sélectionne simplement la bonne ligne. Deux occurrences du même ID récupèrent donc le même vecteur initial. C'est ensuite le traitement par le Transformer qui construit une représentation dépendant du contexte.
@@ -59,7 +72,62 @@ Cette comparaison est conceptuelle : elle ne signifie pas que les embeddings des
 
 ## Du principe au calcul
 
+## Du principe au calcul
+
 Le lookup est une opération simple : chaque ID sélectionne la ligne correspondante dans la table, sans mélanger les positions ni interpréter la valeur numérique de l'ID. Pour vérifier concrètement cette opération, suivre les formes d'un batch et distinguer indice et coordonnée, passez à l'[exercice TR-B](exercises.qmd#tr-b-lookup). La trace de tokenisation et les manipulations de BPE sont également regroupées dans la collection [Données textuelles](exercises.qmd#donnees-textuelles).
+
+::: {.micro-workbench}
+::: {.micro-workbench-header}
+MICRO-WORKBENCH · LE LOOKUP VECTORIEL D'EMBEDDING (NUMPY)
+:::
+::: {.micro-workbench-body}
+```python
+import numpy as np
+
+# Matrice de vocabulaire V=5 tokens, dimension d=2
+E = np.array([
+    [0.1, 0.0],   # ID 0
+    [0.0, 0.2],   # ID 1
+    [0.8, -0.1],  # ID 2
+    [-0.2, 0.5],  # ID 3
+    [0.3, 0.7],   # ID 4
+], dtype=np.float64)
+
+# Batch de 2 séquences de longueur L=3
+token_ids = np.array([
+    [2, 0, 3],  # Séquence A
+    [1, 2, 4],  # Séquence B
+])
+
+# Lookup vectorisé par indexation directe NumPy (sélection de lignes)
+X = E[token_ids]
+
+# Invariant 1 : dimensions de sortie (B=2, L=3, d=2)
+assert X.shape == (2, 3, 2)
+
+# Invariant 2 : même ID = même ligne sélectionnée dans les deux séquences
+assert np.array_equal(X[0, 0], E[2])
+assert np.array_equal(X[1, 1], E[2])
+assert np.array_equal(X[0, 0], X[1, 1])
+
+# Invariant 3 : IDs consécutifs (2 et 3) n'ont aucune contrainte de distance géométrique
+d_2_3 = float(np.linalg.norm(E[2] - E[3]))
+d_0_4 = float(np.linalg.norm(E[0] - E[4]))
+print(f"X shape: {X.shape}")
+print(f"Distance E[2]-E[3] : {d_2_3:.3f} | Distance E[0]-E[4] : {d_0_4:.3f}")
+```
+:::
+::: {.micro-workbench-footer}
+Le lookup est une sélection de lignes : deux occurrences d'un même ID sélectionnent des vecteurs strictement identiques ($E[i] \equiv E[i]$).
+:::
+:::
+
+<details class="spot-the-fallacy">
+<summary>Piège fréquent : « Deux tokens ayant des identifiants numériques consécutifs (ex. 2 et 3) ont des vecteurs d'embeddings proches »</summary>
+<div class="fallacy-content">
+<p><strong>Contre-exemple :</strong> L'identifiant entier n'est qu'un <em>indice de ligne</em> dans la matrice $E \in \mathbb{R}^{V \times d}$. L'ordre numérique des entiers résulte uniquement de l'algorithme de tokenisation (fréquence d'apparition dans le corpus, ordre de création du vocabulaire ou code d'octets), et non de la géométrie de l'espace vectoriel. Deux lignes consécutives $E_2$ et $E_3$ sont des vecteurs de dimension $d$ initialisés indépendamment et mis à jour selon leurs gradients respectifs. Leur distance géométrique n'a aucun rapport avec la différence numérique $|3 - 2| = 1$.</p>
+</div>
+</details>
 
 ## De l'embedding initial aux représentations contextualisées
 
@@ -82,8 +150,7 @@ Pour approfondir ces questions sans les confondre avec le mécanisme de lookup, 
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/embedding-space.qmd).
 
-
-La [collection approfondie sur le Transformer](exercises.qmd#transformer) est prévue ; utilisez les vérifications ci-dessous en attendant.
+Entraînez-vous avec l'[Exercice TR-B — Calculer un lookup et suivre les formes des tenseurs](exercises.qmd#donnees-textuelles).
 
 1. Une matrice contient \(V\) lignes et des vecteurs de dimension \(d\). Combien de paramètres contient-elle, et que sélectionne l'ID \(i\) ?
 
@@ -113,6 +180,17 @@ Non. Une projection 2D ne préserve qu’une partie de la géométrie et peut cr
 - [Sentence Transformers — Semantic Textual Similarity](https://sbert.net/docs/sentence_transformer/usage/semantic_textual_similarity.html).
 
 {{< include ../includes/generated-suggested-route-fr-embedding-space.qmd >}}
+
+<div class="route-nav-cards">
+  <a href="text-data.qmd" class="route-nav-card">
+    <span class="nav-direction">← Étape précédente</span>
+    <span class="nav-title">Du texte aux tokens</span>
+  </a>
+  <a href="positional-encoding.qmd" class="route-nav-card">
+    <span class="nav-direction">Étape suivante →</span>
+    <span class="nav-title">Encodage positionnel</span>
+  </a>
+</div>
 
 ::: {.language-switch}
 **Langue :** [Français](embedding-space.qmd) · [English](../en/embedding-space.qmd)

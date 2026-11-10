@@ -27,6 +27,19 @@ tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space",
 After tokenization, each token is represented by an integer ID. The ID acts as an index into a learned table: the model retrieves the corresponding row, a vector. This operation is the **embedding lookup**. Two occurrences of the same ID select the same initial vector; positional information and the model's layers then build representations that depend on context.
 :::
 
+::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
+By the end of this lesson, you should be able to:
+- explain how an integer token ID acts as a row index in a learned matrix $E \in \mathbb{R}^{V \times d}$;
+- distinguish an initial token embedding vector from the contextualized hidden states produced by Transformer layers;
+- justify why numerical proximity of token IDs implies neither geometric nor semantic closeness in embedding space.
+:::
+
+
+<div class="epistemic-badges">
+  <span class="epistemic-badge badge-concept">Verified concept</span>
+  <span class="epistemic-badge badge-status">Architecture: Transformer Input</span>
+</div>
+
 
 ::: {.callout-tip title="The one-minute mental model"}
 An ID is a **row address**, not a semantic coordinate. The embedding matrix stores one learned vector per ID; lookup simply selects the corresponding row. Two occurrences of the same ID therefore retrieve the same initial vector. The Transformer then builds a context-dependent representation from it.
@@ -58,7 +71,62 @@ This is a conceptual contrast, not a claim that modern Transformer embeddings ar
 
 ## From the principle to the calculation
 
+## From the principle to the calculation
+
 Embedding lookup is simple: each ID selects its corresponding row in the table, without mixing positions or interpreting the numerical value of the ID. To work through this operation, trace a batch's shapes, and distinguish an index from a coordinate, use [exercise TR-B](exercises.qmd#tr-b-lookup). Tokenization traces and BPE calculations are also grouped in the [Text data collection](exercises.qmd#text-data).
+
+::: {.micro-workbench}
+::: {.micro-workbench-header}
+MICRO-WORKBENCH · VECTORIZED EMBEDDING LOOKUP (NUMPY)
+:::
+::: {.micro-workbench-body}
+```python
+import numpy as np
+
+# Vocabulary matrix V=5 tokens, dimension d=2
+E = np.array([
+    [0.1, 0.0],   # ID 0
+    [0.0, 0.2],   # ID 1
+    [0.8, -0.1],  # ID 2
+    [-0.2, 0.5],  # ID 3
+    [0.3, 0.7],   # ID 4
+], dtype=np.float64)
+
+# Batch of 2 sequences of length L=3
+token_ids = np.array([
+    [2, 0, 3],  # Sequence A
+    [1, 2, 4],  # Sequence B
+])
+
+# Vectorized lookup via direct NumPy integer indexing (row selection)
+X = E[token_ids]
+
+# Invariant 1: output tensor shape (B=2, L=3, d=2)
+assert X.shape == (2, 3, 2)
+
+# Invariant 2: same ID = exact same row selected in both sequences
+assert np.array_equal(X[0, 0], E[2])
+assert np.array_equal(X[1, 1], E[2])
+assert np.array_equal(X[0, 0], X[1, 1])
+
+# Invariant 3: consecutive IDs (2 and 3) have no geometric distance constraint
+d_2_3 = float(np.linalg.norm(E[2] - E[3]))
+d_0_4 = float(np.linalg.norm(E[0] - E[4]))
+print(f"X shape: {X.shape}")
+print(f"Distance E[2]-E[3]: {d_2_3:.3f} | Distance E[0]-E[4]: {d_0_4:.3f}")
+```
+:::
+::: {.micro-workbench-footer}
+Lookup is row selection: two occurrences of the same token ID retrieve identical initial vectors ($E[i] \equiv E[i]$).
+:::
+:::
+
+<details class="spot-the-fallacy">
+<summary>Common Fallacy: “Two tokens with consecutive numerical IDs (e.g. 2 and 3) have geometrically close embedding vectors”</summary>
+<div class="fallacy-content">
+<p><strong>Counterexample:</strong> The integer ID is solely a <em>row address</em> in the matrix $E \in \mathbb{R}^{V \times d}$. Integer ordering is an artifact of tokenizer construction (frequency ranking, merge order in BPE, or byte values), not vector-space geometry. Adjacent rows $E_2$ and $E_3$ are $d$-dimensional vectors initialized independently and updated along different gradient trajectories. Their geometric distance shares zero relationship with the numerical difference $|3 - 2| = 1$.</p>
+</div>
+</details>
 
 ## From initial embeddings to contextualized representations
 
@@ -81,8 +149,7 @@ For a deeper treatment without conflating geometry with the lookup mechanism, se
 
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/embedding-space.qmd).
 
-
-The [extended Transformer collection](../en/exercises.qmd#transformer) is planned; use the checks below for now.
+Practice with [Exercise TR-B — Calculate lookup and trace tensor shapes](../en/exercises.qmd#text-data).
 
 1. An embedding matrix has \(V\) rows and vectors of dimension \(d\). How many parameters does it contain, and what does ID \(i\) select?
 
@@ -112,6 +179,17 @@ No. A 2D projection preserves only selected aspects of the geometry and may crea
 - [Sentence Transformers — Semantic Textual Similarity](https://sbert.net/docs/sentence_transformer/usage/semantic_textual_similarity.html).
 
 {{< include ../includes/generated-suggested-route-en-embedding-space.qmd >}}
+
+<div class="route-nav-cards">
+  <a href="text-data.qmd" class="route-nav-card">
+    <span class="nav-direction">← Previous step</span>
+    <span class="nav-title">From text to tokens</span>
+  </a>
+  <a href="positional-encoding.qmd" class="route-nav-card">
+    <span class="nav-direction">Next step →</span>
+    <span class="nav-title">Positional encoding</span>
+  </a>
+</div>
 
 ::: {.language-switch}
 **Language:** [Français](../fr/embedding-space.qmd) · [English](embedding-space.qmd)
