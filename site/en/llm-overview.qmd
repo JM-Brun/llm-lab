@@ -117,12 +117,11 @@ LLMs are commonly used to generate or rewrite text, summarize, translate, extrac
 
 Reusing a general-purpose model is attractive when it can cover several tasks or when labeled examples are scarce. Choosing between reusing a model, retrieving documents with RAG, or adapting its parameters then depends on the task. A RAG system can provide up-to-date information if its document corpus or index is updated, without retraining the model ([Lewis et al., 2020](https://arxiv.org/abs/2005.11401)). Adaptation may help with a specific format, domain, or behavior. Compare these options using measured criteria: quality, errors, robustness, cost, latency, confidentiality, data provenance, and maintenance. A demonstration on a few prompts is not an evaluation.
 
-::: {.self-check}
-[Exercises and practice](exercises.qmd).
+## Practice
 
-1. **Does fine-tuning necessarily change the architecture?** No: it primarily updates parameters. Some methods also add modules, so distinguish the model family from the full structure of the adapted system.
-2. **Documentation changes every day: RAG or fine-tuning?** RAG can retrieve new documents at inference time without changing the weights. It does not guarantee that retrieved documents are relevant or that the answer is faithful to them.
-:::
+This lesson’s questions are collected on its [dedicated practice page](exercises/llm-overview.qmd).
+
+
 
 {{< include ../includes/generated-suggested-route-en-llm-overview.qmd >}}
 

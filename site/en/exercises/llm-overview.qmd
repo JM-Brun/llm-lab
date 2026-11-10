@@ -1,0 +1,33 @@
+---
+title: "Exercises — Language model overview"
+subtitle: "Comprehension questions and practice"
+keywords: ["type:exercise-hub", "destination:practice", "topic:llm-overview-exercises", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/llm-overview-exercises"
+summary: "Comprehension questions associated with the language model overview."
+scope: "Collects the overview's comprehension questions without duplicating the general presentation of model families."
+purpose: "Distinguish architecture, adaptation, and information retrieval, then choose the appropriate intervention for a given need."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/llm-overview"]
+tags: ["type:exercise-hub", "destination:practice", "topic:llm-overview-exercises", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the lesson: Language model overview](../llm-overview.qmd)
+
+[Exercises and practice](exercises.qmd).
+
+1. **Does fine-tuning necessarily change the architecture?** No: it primarily updates parameters. Some methods also add modules, so distinguish the model family from the full structure of the adapted system.
+2. **Documentation changes every day: RAG or fine-tuning?** RAG can retrieve new documents at inference time without changing the weights. It does not guarantee that retrieved documents are relevant or that the answer is faithful to them.
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/llm-overview.qmd) · [English](llm-overview.qmd)
+:::
