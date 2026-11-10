@@ -49,16 +49,16 @@ Un ID est une **adresse de ligne**, pas une coordonnée sémantique. La matrice 
 **Pour pratiquer :** le calcul du lookup et la trace reproductible texte → IDs → vecteurs sont regroupés dans la [collection Données textuelles](exercises.qmd#tr-b-lookup). Les propriétés géométriques sont développées dans les pages sur la similarité cosinus et la linéarité.
 :::
 
-<div class="pipeline-stepper" role="navigation" aria-label="Étapes du lookup d'embedding">
-  <a class="step-item" href="text-data.qmd">1. IDs</a>
+<div class="pipeline-stepper" role="navigation" aria-label="Du token ID à la représentation contextualisée">
+  <a class="step-item" href="text-data.qmd">ID de token</a>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active" aria-current="step">2. Lookup</span>
+  <span class="step-item active" aria-current="step">Lookup dans E</span>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item">3. Vecteur initial</span>
+  <span class="step-item">Vecteur initial</span>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="positional-encoding.qmd">4. Position</a>
+  <a class="step-item" href="positional-encoding.qmd">Traitement positionnel selon l’architecture</a>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="contextualized-representations.qmd">5. Contexte</a>
+  <a class="step-item" href="contextualized-representations.qmd">Couches Transformer → états contextualisés</a>
 </div>
 
 
