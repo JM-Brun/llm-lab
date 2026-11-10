@@ -31,7 +31,7 @@
 | Exercises, answers, and links to practice pages | Reorganized; practice destinations remain | Both overview and generation pages link to their dedicated exercise pages; generation retains the GE-A exercise link | Preserved |
 | Original running example (“The report indicates…”) and old probability distribution | Replaced intentionally | New Otis / *Life of Brian* running examples and clearly labelled illustrative probabilities | Intentional pedagogical replacement, not a lost concept |
 | Four overview links: GPT configuration walkthrough, mathematical foundations, tokenization strategies, Transformer block walkthrough | Removed from the overview | The destination pages remain in the repository, but equivalent links are not present in the current overview | **Discoverability regression** |
-| Overview link to the Build path | Removed from the overview's old link set | The Build path page remains; the current overview still links to the general Build path in at least one locale only if explicitly present—verify bilingual parity before considering restored | **Navigation should be checked** |
+| Overview link to the Build path | Retained | Both current overview pages still link to the Build path | Preserved |
 
 ## SVG review
 
@@ -39,7 +39,7 @@ Both generation-process illustrations now use the new running example and the sa
 
 ## Follow-up recommended
 
-Restore the four removed overview destinations as a compact, contextual **“Go further / Pour approfondir”** group in both languages. They are not missing lesson content—the target pages still exist—but removing their entry points makes useful implementation and mathematical material harder to discover. Keep the group short and describe what each destination adds; do not reinstate a long undifferentiated link list.
+Restore the four removed overview destinations as a compact, contextual **“Go further / Pour approfondir”** group in both languages. They are not missing lesson content—the target pages still exist—but removing their entry points makes useful implementation and mathematical material harder to discover. Keep the group short and describe what each destination adds; do not reinstate a long undifferentiated link list. The Build-path link itself is still present in both overview pages and does not need restoration.
 
 Before closing the audit, verify the Build-path link and equivalent French/English destinations, then run the page metadata, link, and Quarto checks. The audit rule in `docs/reader-experience-and-editorial-method.md` should be used for subsequent multi-page refactors.
 
