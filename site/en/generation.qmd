@@ -21,8 +21,6 @@ related: ["en/text-data", "en/transformer", "en/build-path", "en/decoding-strate
 tags: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:en", "status:published"]
 -->
 
-{{< include ../includes/generated-guided-context-en-generation.qmd >}}
-
 ::: {.chapter-lead}
 The overview stopped at a table: after “What have the Romans ever done for us?”, the model gives 0.6 to “They” and 0.2 to “Aqueducts”. A table of probabilities is not yet an answer. How do we get from one to the other?
 
