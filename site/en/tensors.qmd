@@ -191,7 +191,14 @@ In deep-learning libraries, “tensor” commonly means a multidimensional numer
 - **“The same shape means the same meaning.”** No: axes of equal size may represent different quantities, and shape alone does not encode their semantics.
 - **“Compatible dimensions prove the operation is correct.”** No: an operation may run while using the wrong axis, target alignment, or mask.
 
-## Further reading
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Supplementary resources</span>
+  <span class="learning-resources__description">Explore related concepts and consult the technical references.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Further reading
 
 - [Queries, keys, and values](queries-keys-values.qmd).
 - [Scaled dot-product attention](scaled-dot-product-attention.qmd).
@@ -199,7 +206,7 @@ In deep-learning libraries, “tensor” commonly means a multidimensional numer
 - [Loss](loss.qmd) and [Gradients](gradients.qmd).
 - [Mathematical foundations](mathematical-foundations.qmd) — the logits-to-loss-to-gradients chain.
 
-## References
+### References
 
 - [PyTorch — Tensors](https://docs.pytorch.org/tutorials/beginner/introyt/tensors_deeper_tutorial.html).
 - [PyTorch — Tensor documentation](https://docs.pytorch.org/docs/stable/tensors.html).
@@ -208,6 +215,9 @@ In deep-learning libraries, “tensor” commonly means a multidimensional numer
 - [Visualization of tensors, part 1](https://www.youtube.com/watch?v=YxXyN2ifK8A) — a mathematical/physical perspective on tensor terminology; distinguish it from the simpler array usage common in deep-learning libraries.
 
 **Canonical lesson:** [GPT and the Transformer](transformer.qmd). This page is a technical reference for tensor shapes and axes; it is not a prerequisite for following the build path.
+
+</div>
+</details>
 
 :::: {.language-switch}
 [Français](../fr/tensors.qmd) · [English](tensors.qmd)
