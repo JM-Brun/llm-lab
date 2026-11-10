@@ -191,6 +191,12 @@ In deep-learning libraries, “tensor” commonly means a multidimensional numer
 - **“The same shape means the same meaning.”** No: axes of equal size may represent different quantities, and shape alone does not encode their semantics.
 - **“Compatible dimensions prove the operation is correct.”** No: an operation may run while using the wrong axis, target alignment, or mask.
 
+
+
+:::: {.language-switch}
+[Français](../fr/tensors.qmd) · [English](tensors.qmd)
+::::
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
@@ -218,7 +224,3 @@ In deep-learning libraries, “tensor” commonly means a multidimensional numer
 
 </div>
 </details>
-
-:::: {.language-switch}
-[Français](../fr/tensors.qmd) · [English](tensors.qmd)
-::::
