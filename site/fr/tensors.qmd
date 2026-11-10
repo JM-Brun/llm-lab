@@ -15,7 +15,7 @@ suggested_route:
   previous: "fr/mathematical-foundations"
   next: "fr/cosine-similarity"
 hierarchy:
-  parents: []
+  parents: ["fr/mathematical-foundations"]
   children: []
 related: ["fr/transformer"]
 tags: ["type:deep-dive", "destination:deepen", "topic:tensors", "level:advanced", "language:fr", "status:published"]
