@@ -141,6 +141,10 @@ jobs:
       - name: Install dependencies
         run: uv sync --locked --dev
 
+      - name: Install YAML validation dependencies
+        # Tests import the learning-map builder, which validates its source with Pydantic.
+        run: uv pip install --python .venv/bin/python -r docs/requirements-history-validation.txt
+
       - name: Install CPU-only PyTorch
         if: github.event_name != 'pull_request' || steps.reference_scope.outputs.reference_parity == 'true'
         # Avoid multi-gigabyte CUDA wheels. The pin matches the reference requirements.
