@@ -50,7 +50,7 @@ jobs:
             echo "site_relevant=false" >> "$GITHUB_OUTPUT"
           fi
 
-          if printf '%s\n' "$changed_files" | grep -Eq '^(site/|scripts/site-browser-review\.mjs$)'; then
+          if printf '%s\n' "$changed_files" | grep -Eq '^(site/|data/|scripts/site-browser-review\.mjs$)'; then
             echo "browser_relevant=true" >> "$GITHUB_OUTPUT"
           else
             echo "browser_relevant=false" >> "$GITHUB_OUTPUT"
