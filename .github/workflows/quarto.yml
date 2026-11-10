@@ -83,7 +83,7 @@ jobs:
           fi
 
       - name: Cache Quarto Linux tarball
-        if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
+        if: github.event_name != 'pull_request' || (steps.site_changes.outputs.site_relevant == 'true' && (steps.site_changes.outputs.render_targets != '' || steps.site_changes.outputs.render_assets == '' || steps.verify_site_cache.outputs.cache_restored != 'true'))
         id: quarto_cache
         uses: actions/cache@v4
         with:
@@ -91,7 +91,7 @@ jobs:
           key: quarto-tarball-${{ runner.os }}-1.11.9
 
       - name: Set up Quarto
-        if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
+        if: github.event_name != 'pull_request' || (steps.site_changes.outputs.site_relevant == 'true' && (steps.site_changes.outputs.render_targets != '' || steps.site_changes.outputs.render_assets == '' || steps.verify_site_cache.outputs.cache_restored != 'true'))
         env:
           QUARTO_VERSION: "1.11.9"
           QUARTO_SHA256: "9d037baa3b38ffac7217edca1d2e53760b0fab4d5749220740a32056e03a1530"
@@ -136,15 +136,15 @@ jobs:
         run: .venv/bin/python site/tools/check_resource_registry.py
 
       - name: Generate bilingual history timeline fragments
-        if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
+        if: github.event_name != 'pull_request' || (steps.site_changes.outputs.site_relevant == 'true' && (steps.site_changes.outputs.render_targets != '' || steps.site_changes.outputs.render_assets == '' || steps.verify_site_cache.outputs.cache_restored != 'true'))
         run: .venv/bin/python site/tools/render_history_pilot.py
 
       - name: Generate learning-map data and guided-route Markdown
-        if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
+        if: github.event_name != 'pull_request' || (steps.site_changes.outputs.site_relevant == 'true' && (steps.site_changes.outputs.render_targets != '' || steps.site_changes.outputs.render_assets == '' || steps.verify_site_cache.outputs.cache_restored != 'true'))
         run: .venv/bin/python site/tools/build_learning_map.py
 
       - name: Generate bilingual computational-graph fragments
-        if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
+        if: github.event_name != 'pull_request' || (steps.site_changes.outputs.site_relevant == 'true' && (steps.site_changes.outputs.render_targets != '' || steps.site_changes.outputs.render_assets == '' || steps.verify_site_cache.outputs.cache_restored != 'true'))
         run: .venv/bin/python site/tools/render_computational_graph.py
 
       - name: Render changed pages incrementally

@@ -106,7 +106,7 @@ jobs:
           echo "Publish strategy: $mode"
 
       - name: Cache Quarto Linux tarball
-        if: steps.publish_strategy.outputs.mode != 'skip'
+        if: steps.publish_strategy.outputs.mode != 'skip' && (steps.publish_strategy.outputs.mode != 'incremental' || steps.render_scope.outputs.render_targets != '' || steps.render_scope.outputs.render_assets == '')
         id: quarto_cache
         uses: actions/cache@v4
         with:
@@ -114,7 +114,7 @@ jobs:
           key: quarto-tarball-${{ runner.os }}-1.11.9
 
       - name: Set up Quarto
-        if: steps.publish_strategy.outputs.mode != 'skip'
+        if: steps.publish_strategy.outputs.mode != 'skip' && (steps.publish_strategy.outputs.mode != 'incremental' || steps.render_scope.outputs.render_targets != '' || steps.render_scope.outputs.render_assets == '')
         env:
           QUARTO_VERSION: "1.11.9"
           QUARTO_SHA256: "9d037baa3b38ffac7217edca1d2e53760b0fab4d5749220740a32056e03a1530"
@@ -133,7 +133,7 @@ jobs:
           "$install_dir/bin/quarto" --version
 
       - name: Set up uv and Python
-        if: steps.publish_strategy.outputs.mode != 'skip'
+        if: steps.publish_strategy.outputs.mode != 'skip' && (steps.publish_strategy.outputs.mode != 'incremental' || steps.render_scope.outputs.render_targets != '' || steps.render_scope.outputs.render_assets == '')
         uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
         with:
           version: "0.13.7"
@@ -144,11 +144,11 @@ jobs:
       # interpreter link, so caching .venv alone is not portable when uv
       # installs Python under runner.temp (which changes between runs).
       - name: Configure stable uv Python directory
-        if: steps.publish_strategy.outputs.mode != 'skip'
+        if: steps.publish_strategy.outputs.mode != 'skip' && (steps.publish_strategy.outputs.mode != 'incremental' || steps.render_scope.outputs.render_targets != '' || steps.render_scope.outputs.render_assets == '')
         run: echo "UV_PYTHON_INSTALL_DIR=$GITHUB_WORKSPACE/.uv-python" >> "$GITHUB_ENV"
 
       - name: Cache shared render environment
-        if: steps.publish_strategy.outputs.mode != 'skip'
+        if: steps.publish_strategy.outputs.mode != 'skip' && (steps.publish_strategy.outputs.mode != 'incremental' || steps.render_scope.outputs.render_targets != '' || steps.render_scope.outputs.render_assets == '')
         id: render_venv_cache
         uses: actions/cache@v4
         with:
@@ -158,11 +158,11 @@ jobs:
           key: quarto-publish-python-${{ runner.os }}-py3.12.16-uv0.13.7-${{ hashFiles('docs/requirements-history-validation.txt') }}
 
       - name: Install pinned Python
-        if: steps.publish_strategy.outputs.mode != 'skip'
+        if: steps.publish_strategy.outputs.mode != 'skip' && (steps.publish_strategy.outputs.mode != 'incremental' || steps.render_scope.outputs.render_targets != '' || steps.render_scope.outputs.render_assets == '')
         run: uv python install 3.12.16
 
       - name: Verify cached render environment
-        if: steps.publish_strategy.outputs.mode != 'skip'
+        if: steps.publish_strategy.outputs.mode != 'skip' && (steps.publish_strategy.outputs.mode != 'incremental' || steps.render_scope.outputs.render_targets != '' || steps.render_scope.outputs.render_assets == '')
         id: verify_render_venv
         run: |
           if [ -x .venv/bin/python ] && .venv/bin/python -c 'import sys, yaml, pydantic; assert sys.version_info[:3] == (3, 12, 16)'; then
@@ -175,21 +175,21 @@ jobs:
           fi
 
       - name: Create shared render environment
-        if: steps.publish_strategy.outputs.mode != 'skip' && steps.verify_render_venv.outputs.valid != 'true'
+        if: steps.publish_strategy.outputs.mode != 'skip' && (steps.publish_strategy.outputs.mode != 'incremental' || steps.render_scope.outputs.render_targets != '' || steps.render_scope.outputs.render_assets == '') && steps.verify_render_venv.outputs.valid != 'true'
         run: |
           uv venv --python 3.12.16 .venv
           uv pip install --python .venv/bin/python -r docs/requirements-history-validation.txt
 
       - name: Generate bilingual history timeline fragments
-        if: steps.publish_strategy.outputs.mode != 'skip'
+        if: steps.publish_strategy.outputs.mode != 'skip' && (steps.publish_strategy.outputs.mode != 'incremental' || steps.render_scope.outputs.render_targets != '' || steps.render_scope.outputs.render_assets == '')
         run: .venv/bin/python site/tools/render_history_pilot.py
 
       - name: Generate learning-map data and guided-route Markdown
-        if: steps.publish_strategy.outputs.mode != 'skip'
+        if: steps.publish_strategy.outputs.mode != 'skip' && (steps.publish_strategy.outputs.mode != 'incremental' || steps.render_scope.outputs.render_targets != '' || steps.render_scope.outputs.render_assets == '')
         run: .venv/bin/python site/tools/build_learning_map.py
 
       - name: Generate bilingual computational-graph fragments
-        if: steps.publish_strategy.outputs.mode != 'skip'
+        if: steps.publish_strategy.outputs.mode != 'skip' && (steps.publish_strategy.outputs.mode != 'incremental' || steps.render_scope.outputs.render_targets != '' || steps.render_scope.outputs.render_assets == '')
         run: .venv/bin/python site/tools/render_computational_graph.py
 
       - name: Render changed pages incrementally
