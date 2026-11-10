@@ -10,7 +10,7 @@
  </style>
 </defs>
 <rect width="900" height="1500" fill="#ffffff"/>
-<text x="450" y="48" text-anchor="middle" class="title">In a GPT, the Transformer is the stack of neural network blocks</text>
+<text x="450" y="48" text-anchor="middle" class="title">In a GPT, the Transformer forms the core stack of neural network blocks</text>
 
 <rect x="30" y="78" width="840" height="690" rx="18" class="panel"/>
 <text x="450" y="120" text-anchor="middle" class="head">1 · The complete model (simplified view)</text>
