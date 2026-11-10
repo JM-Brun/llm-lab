@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/build-path"]
   children: []
-related: ["fr/transformer", "fr/queries-keys-values", "fr/scaled-dot-product-attention", "fr/causal-masking", "fr/contextualized-representations", "fr/exercises/transformer-block-walkthrough"]
+related: ["fr/transformer", "fr/queries-keys-values", "fr/scaled-dot-product-attention", "fr/causal-masking", "fr/contextualized-representations", "fr/transformer-block-walkthrough-exercises"]
 tags: ["type:guided-build", "destination:build", "topic:reference-transformer-block", "level:applied", "language:fr", "status:published"]
 -->
 

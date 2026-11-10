@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/logits", "fr/generation"]
   children: ["fr/entropy", "fr/vraisemblance"]
-related: ["fr/exercises/probabilites"]
+related: ["fr/probabilites-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:probabilites", "level:core", "language:fr", "status:published"]
 -->
 

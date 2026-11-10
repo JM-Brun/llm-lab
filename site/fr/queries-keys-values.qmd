@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/transformer"]
   children: []
-related: ["fr/contextualized-representations", "fr/scaled-dot-product-attention", "fr/cross-attention", "fr/transformer-block-walkthrough", "fr/exercises/queries-keys-values"]
+related: ["fr/contextualized-representations", "fr/scaled-dot-product-attention", "fr/cross-attention", "fr/transformer-block-walkthrough", "fr/queries-keys-values-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-values", "level:core", "language:fr", "status:published"]
 -->
 

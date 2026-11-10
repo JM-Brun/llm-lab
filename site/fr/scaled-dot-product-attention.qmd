@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/transformer"]
   children: ["fr/causal-masking", "fr/attention-score-scaling"]
-related: ["fr/queries-keys-values", "fr/exercises/scaled-dot-product-attention"]
+related: ["fr/queries-keys-values", "fr/scaled-dot-product-attention-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:scaled-dot-product-attention", "level:core", "language:fr", "status:published"]
 -->
 

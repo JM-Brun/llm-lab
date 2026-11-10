@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/index", "fr/llm-overview"]
   children: ["fr/embedding-space", "fr/positional-encoding", "fr/contextualized-representations", "fr/queries-keys-values", "fr/scaled-dot-product-attention", "fr/logits", "fr/tensors"]
-related: ["fr/text-data", "fr/transformer-block-walkthrough", "fr/exercises/transformer"]
+related: ["fr/text-data", "fr/transformer-block-walkthrough", "fr/transformer-exercises"]
 tags: ["type:system-overview", "destination:understand", "topic:transformer", "level:overview", "language:fr", "status:published"]
 -->
 
