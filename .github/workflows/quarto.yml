@@ -22,6 +22,13 @@ jobs:
     # support ("Playwright does not support chromium on ubuntu26.04-x64").
     # Move back to ubuntu-latest together with a Playwright upgrade.
     runs-on: ubuntu-24.04
+    # The matching Playwright image already contains Chromium and its Linux
+    # libraries. This avoids a per-run apt update/install (and its flaky mirrors).
+    container:
+      image: mcr.microsoft.com/playwright:v1.56.1-noble
+      options: --ipc=host
+    env:
+      PLAYWRIGHT_BROWSERS_PATH: /ms-playwright
     timeout-minutes: 25
     steps:
       - name: Check out repository
@@ -300,21 +307,12 @@ jobs:
         if: (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.site_changes.outputs.browser_relevant == 'true')) && steps.npm_cache.outputs.cache-hit != 'true'
         run: npm install --prefer-offline --no-audit --no-fund --no-save --package-lock=false playwright@1.56.1 @axe-core/playwright@4.10.2
 
-      - name: Cache Playwright Chromium
-        id: playwright_cache
+      - name: Verify preinstalled Playwright browser
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.site_changes.outputs.browser_relevant == 'true')
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-chromium-${{ runner.os }}-1.56.1
-
-      - name: Install Playwright system dependencies
-        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.site_changes.outputs.browser_relevant == 'true')
-        run: npx playwright install-deps chromium
-
-      - name: Install Chromium when the browser cache is cold
-        if: (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.site_changes.outputs.browser_relevant == 'true')) && steps.playwright_cache.outputs.cache-hit != 'true'
-        run: npx playwright install chromium
+        run: |
+          npx playwright --version
+          test -d "$PLAYWRIGHT_BROWSERS_PATH"
+          find "$PLAYWRIGHT_BROWSERS_PATH" -maxdepth 1 -mindepth 1 -type d -print
 
       - name: Serve this PR's rendered site
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.site_changes.outputs.browser_relevant == 'true')
