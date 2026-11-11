@@ -42,6 +42,12 @@ def test_transition_projection_and_rendering_are_bilingual_and_separate_from_mem
     cross_entropy_context = GENERATOR["render_guided_page_transitions"](cross_entropy, language)
     assert "→" in generation_context
     assert "↔" in cross_entropy_context
+    # Native <summary> must remain a single non-nested disclosure control.
+    assert "<summary><a " not in cross_entropy_context
+    summary_text = cross_entropy_context.split("<summary>", 1)[1].split("</summary>", 1)[0]
+    assert "<a " not in summary_text
+    assert cross_entropy_context.count('href="learning-map.html#guided-stage-') == 2
+    assert 'class="guided-page-transitions__stages"' in cross_entropy_context
     assert escape(generation[0].from_stage_title) in generation_context
     assert escape(generation[0].to_stage_title) in generation_context
     assert escape(generation[0].purpose) in generation_context
