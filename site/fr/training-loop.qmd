@@ -1,6 +1,7 @@
 ---
 title: "La boucle d'entraînement : des gradients au modèle entraîné"
 subtitle: "Mises à jour répétées, optimiseurs et mesure séparée de la loss de validation"
+description-meta: "Montre comment des pas de gradient répétés transforment un modèle initialisé au hasard en modèle entraîné, ce qu'un optimiseur ajoute au gradient et pourquoi la loss de validation est mesurée sur des données réservées."
 keywords: ["type:concept-lesson", "destination:understand", "topic:training-loop", "level:core", "language:fr", "status:published"]
 lang: fr
 ---

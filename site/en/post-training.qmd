@@ -1,6 +1,7 @@
 ---
 title: "From a base model to an assistant: post-training"
 subtitle: "Adapting pretrained parameters, and what stays in the context"
+description-meta: "Explains post-training as the same training loop applied to a pretrained model with different data and targets, and separates it from prompting and retrieval, which change the context but not the parameters."
 keywords: ["type:concept-lesson", "destination:understand", "topic:post-training", "level:applied", "language:en", "status:published"]
 lang: en
 ---
