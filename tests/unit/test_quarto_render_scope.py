@@ -209,7 +209,6 @@ def test_global_configuration_and_shared_references_force_full_render():
         "site/styles.scss",
         "pyproject.toml",
         "uv.lock",
-        "scripts/site-browser-review.mjs",
     ):
         result = classify_changed_files([{"filename": path, "status": "modified"}], CONFIG)
         assert result["render_mode"] == "full"
@@ -252,3 +251,15 @@ def test_workflow_orchestration_and_scope_classifier_edits_skip_site_render():
         assert result["render_mode"] == "skip"
         assert result["site_relevant"] is False
         assert result["browser_relevant"] is False
+
+
+def test_browser_audit_script_only_skips_quarto_render_but_keeps_browser_audit():
+    result = classify_changed_files(
+        [{"filename": "scripts/site-browser-review.mjs", "status": "modified"}], CONFIG
+    )
+
+    assert result["render_mode"] == "skip"
+    assert result["site_relevant"] is False
+    assert result["browser_relevant"] is True
+    assert result["render_targets"] == []
+    assert result["render_assets"] == []
