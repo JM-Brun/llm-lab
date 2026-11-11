@@ -111,3 +111,40 @@ def test_learning_map_generator_removal_requires_full_validation():
         CONFIG,
     )
     assert result["render_mode"] == "full"
+
+
+def test_rewrites_only_local_quarto_source_page_hrefs() -> None:
+    document = (
+        '<a href="deepen.qmd#transformer-resources">Local</a>'
+        '<a href="../fr/exercises.qmd?mode=full#fondations">Relative</a>'
+        '<a href="https://example.com/guide.qmd#external">External</a>'
+        '<a href="#local-anchor">Fragment</a>'
+        '<div data-href="untouched.qmd">Data attribute</div>'
+        '<a href="document.pdf">Other file</a>'
+    )
+
+    rewritten = batch["rewrite_quarto_source_links"](document)
+
+    assert 'href="deepen.html#transformer-resources"' in rewritten
+    assert 'href="../fr/exercises.html?mode=full#fondations"' in rewritten
+    assert 'href="https://example.com/guide.qmd#external"' in rewritten
+    assert 'href="#local-anchor"' in rewritten
+    assert 'data-href="untouched.qmd"' in rewritten
+    assert 'href="document.pdf"' in rewritten
+
+
+def test_rewrites_rendered_html_pages_before_overlay(tmp_path: Path) -> None:
+    page = tmp_path / "fr" / "transformer.html"
+    page.parent.mkdir()
+    page.write_text(
+        '<a href="deepen.qmd#transformer-resources">Resources</a>',
+        encoding="utf-8",
+    )
+    non_html = tmp_path / "fr" / "source.txt"
+    non_html.write_text('<a href="deepen.qmd">Not rendered HTML</a>', encoding="utf-8")
+
+    changed_pages = batch["rewrite_rendered_html_links"](tmp_path)
+
+    assert changed_pages == 1
+    assert 'href="deepen.html#transformer-resources"' in page.read_text(encoding="utf-8")
+    assert 'href="deepen.qmd"' in non_html.read_text(encoding="utf-8")
