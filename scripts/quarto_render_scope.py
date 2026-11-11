@@ -18,6 +18,8 @@ GLOBAL_RENDER_INPUTS = {
     "pyproject.toml",
     "uv.lock",
     "scripts/site-browser-review.mjs",
+    # Renderer changes trigger an incremental CLI smoke test against the cached site.
+    "scripts/quarto_render_batch.py",
 }
 
 
@@ -67,16 +69,42 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
         item
         for item in files
         if (
-            str(item.get("filename", "")).startswith(("site/", "data/", "src/", "scripts/"))
-            or str(item.get("filename", "")) in GLOBAL_RENDER_INPUTS
-            or str(item.get("filename", "")).startswith("docs/requirements-")
-            or str(item.get("filename", "")) in {"pyproject.toml", "uv.lock"}
+            str(item.get("filename", ""))
+            not in {
+                "scripts/quarto_render_batch.py",
+                "scripts/quarto_render_scope.py",
+                "site/tools/build_learning_map.py",
+            }
+            and (
+                str(item.get("filename", "")).startswith(("site/", "data/", "src/", "scripts/"))
+                or str(item.get("filename", "")) in GLOBAL_RENDER_INPUTS
+                or str(item.get("filename", "")).startswith("docs/requirements-")
+                or str(item.get("filename", "")) in {"pyproject.toml", "uv.lock"}
+            )
         )
     ]
 
     targets: list[str] = []
     assets: list[str] = []
-    safe = site_relevant and bool(render_inputs) and len(render_inputs) <= MAX_INCREMENTAL_PAGES
+    renderer_items = [
+        item for item in files if item.get("filename") == "scripts/quarto_render_batch.py"
+    ]
+    renderer_changed = bool(renderer_items)
+    renderer_safe = all(item.get("status") in {"added", "modified"} for item in renderer_items)
+    renderer_smoke_test = renderer_changed and renderer_safe
+    map_generator_items = [
+        item for item in files if item.get("filename") == "site/tools/build_learning_map.py"
+    ]
+    map_generator_changed = bool(map_generator_items)
+    map_generator_safe = all(
+        item.get("status") in {"added", "modified"} for item in map_generator_items
+    )
+    safe = (
+        site_relevant
+        and renderer_safe
+        and map_generator_safe
+        and len(render_inputs) <= MAX_INCREMENTAL_PAGES
+    )
     configured_targets = _render_targets(config)
 
     for item in render_inputs:
@@ -106,13 +134,21 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
             break
         targets.append(path)
 
+    if map_generator_changed:
+        map_targets = ["site/fr/learning-map.qmd", "site/en/learning-map.qmd"]
+        if all(target.removeprefix("site/") in configured_targets for target in map_targets):
+            targets.extend(map_targets)
+        else:
+            safe = False
+
     mode = "skip" if not site_relevant else "full"
-    if safe and (targets or assets):
+    if safe and (targets or assets or renderer_changed):
         mode = "incremental"
 
     return {
         "site_relevant": site_relevant,
         "browser_relevant": browser_relevant,
+        "renderer_smoke_test": renderer_smoke_test,
         "render_mode": mode,
         "render_targets": sorted(set(targets)) if mode == "incremental" else [],
         "render_assets": sorted(set(assets)) if mode == "incremental" else [],
@@ -131,7 +167,7 @@ def main() -> None:
     result = classify_changed_files(files, config)
 
     with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
-        for key in ("site_relevant", "browser_relevant", "render_mode"):
+        for key in ("site_relevant", "browser_relevant", "renderer_smoke_test", "render_mode"):
             value = result[key]
             if isinstance(value, bool):
                 value = str(value).lower()

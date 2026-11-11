@@ -74,12 +74,26 @@ jobs:
         id: verify_site_cache
         if: github.event_name == 'pull_request' && steps.site_changes.outputs.render_mode == 'incremental'
         run: |
-          if [ -s site/_site/index.html ] && [ -d site/_site/site_libs ]; then
+          missing=()
+          while IFS= read -r source; do
+            [ -n "$source" ] || continue
+            output="site/_site/${source%.qmd}.html"
+            if [ ! -s "$output" ]; then
+              missing+=("$output")
+            fi
+          done < <(sed -n '/^  render:/,/^website:/s/^    - //p' site/_quarto.yml)
+
+          if [ -s site/_site/index.html ] && [ -d site/_site/site_libs ] && [ "${#missing[@]}" -eq 0 ]; then
             echo "cache_restored=true" >> "$GITHUB_OUTPUT"
-            echo "Restored a complete Quarto site; changed pages can be rendered incrementally."
+            echo "Restored site cache contains every page in the current Quarto render list."
           else
             echo "cache_restored=false" >> "$GITHUB_OUTPUT"
-            echo "Site cache unavailable or incomplete; using a full render."
+            if [ "${#missing[@]}" -gt 0 ]; then
+              printf 'Cached site is missing configured page(s): %s\n' "${missing[@]}"
+            else
+              echo "Site cache unavailable or incomplete."
+            fi
+            echo "Falling back to a full render."
           fi
 
       - name: Cache Quarto Linux tarball
@@ -151,16 +165,12 @@ jobs:
         run: .venv/bin/python site/tools/render_computational_graph.py
 
       - name: Render changed pages incrementally
-        if: ${{ github.event_name == 'pull_request' && steps.site_changes.outputs.render_mode == 'incremental' && steps.verify_site_cache.outputs.cache_restored == 'true' }}
+        if: ${{ github.event_name == 'pull_request' && steps.site_changes.outputs.render_mode == 'incremental' && steps.verify_site_cache.outputs.cache_restored == 'true' && (steps.site_changes.outputs.render_targets != '' || steps.site_changes.outputs.render_assets != '') }}
         env:
           RENDER_TARGETS: ${{ steps.site_changes.outputs.render_targets }}
           RENDER_ASSETS: ${{ steps.site_changes.outputs.render_assets }}
         run: |
-          while IFS= read -r page; do
-            [ -n "$page" ] || continue
-            echo "Incrementally rendering $page"
-            quarto render "$page" --no-clean
-          done <<< "$RENDER_TARGETS"
+          .venv/bin/python scripts/quarto_render_batch.py
 
           while IFS= read -r asset; do
             [ -n "$asset" ] || continue
@@ -174,6 +184,23 @@ jobs:
       - name: Render full site
         if: ${{ github.event_name != 'pull_request' || (steps.site_changes.outputs.site_relevant == 'true' && (steps.site_changes.outputs.render_mode != 'incremental' || steps.verify_site_cache.outputs.cache_restored != 'true')) }}
         run: quarto render site
+
+      # Exercise renderer changes against the restored or freshly rendered site.
+      # This validates the actual CLI path without forcing an unnecessary full build.
+      - name: Smoke-test isolated batched incremental renderer
+        if: github.event_name == 'pull_request' && steps.site_changes.outputs.renderer_smoke_test == 'true'
+        env:
+          RENDER_TARGETS: site/fr/deepen.qmd
+        run: .venv/bin/python scripts/quarto_render_batch.py
+
+      - name: Verify isolated render overlays the site root
+        if: github.event_name == 'pull_request' && contains(steps.site_changes.outputs.files, 'scripts/quarto_render_batch.py')
+        run: |
+          test -s site/_site/index.html
+          test -s site/_site/fr/learning-map.html
+          test -s site/_site/en/learning-map.html
+          test ! -e site/_site/_site/index.html
+          echo "The isolated render preserved the expected site root and did not create a nested _site directory."
 
       - name: Check rendered learning-map controls
         if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
@@ -189,7 +216,12 @@ jobs:
 
       - name: Check local links in rendered site
         if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
-        run: python3 site/tools/check_site_links.py site/_site
+        run: |
+          if ! python3 site/tools/check_site_links.py site/_site; then
+            grep -n -C 2 -E 'training-loop\.html|post-training\.html' \
+              site/_site/en/learning-map.html site/_site/fr/learning-map.html || true
+            exit 1
+          fi
 
       - name: Set up Node
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.site_changes.outputs.browser_relevant == 'true')

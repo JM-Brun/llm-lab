@@ -13,6 +13,7 @@ next to the JSON payloads, so the two layers evolve independently.
 from __future__ import annotations
 
 import json
+import posixpath
 import re
 import sys
 import unicodedata
@@ -161,8 +162,11 @@ class ResolvedGuidedRouteStage(StrictModel):
     optional_pages: list[ResolvedPage] = Field(default_factory=list)
 
 
-def page_href(page_id: str, language: str) -> str:
-    """Return a path relative to a language-specific learning-map page."""
+def page_href(page_id: str, language: str, source_path: Path | None = None) -> str:
+    """Return the actual rendered path relative to a language-specific map page."""
+    if source_path is not None:
+        output_path = source_path.relative_to(SITE).with_suffix(".html").as_posix()
+        return posixpath.relpath(output_path, start=language)
     if page_id == f"{language}/index":
         # The French landing page is the site root; the English landing page
         # lives in site/en/, the same directory as the pages linking to it.
@@ -182,8 +186,28 @@ def load_pages() -> list[dict[str, Any]]:
     """Project the shared published-page index into learning-map records."""
     from page_index import load_published_pages
 
+    config_path = SITE / "_quarto.yml"
+    rendered_sources: set[str] | None = None
+    if config_path.is_file():
+        config = load_yaml(config_path) or {}
+        project = config.get("project") or {}
+        render_entries = project.get("render") if isinstance(project, dict) else None
+        if render_entries is not None:
+            if not isinstance(render_entries, list) or not all(
+                isinstance(entry, str) for entry in render_entries
+            ):
+                raise ValueError(
+                    "site/_quarto.yml project.render must be an explicit list of paths"
+                )
+            rendered_sources = set(render_entries)
+
     pages: list[dict[str, Any]] = []
     for page in load_published_pages(SITE):
+        source_path = page.path.relative_to(SITE).as_posix()
+        # A page can be authored and marked published without being part of
+        # Quarto's explicit build. Never advertise a destination the site won't emit.
+        if rendered_sources is not None and source_path not in rendered_sources:
+            continue
         page_id, language = page.page_id, page.language
         if page_id.endswith("/learning-map"):
             continue
@@ -208,7 +232,7 @@ def load_pages() -> list[dict[str, Any]]:
             {
                 "id": page_id,
                 "title": title,
-                "href": page_href(page_id, "fr" if language == "shared" else language),
+                "href": page_href(page_id, "fr" if language == "shared" else language, page.path),
                 "language": language,
                 "destination": tags.get("destination", "reference"),
                 "level": tags.get("level", "reference"),

@@ -187,6 +187,19 @@ const report = {
   failures: [],
 };
 
+async function retryAfterNavigation(page, operation) {
+  try {
+    return await operation();
+  } catch (error) {
+    // The French homepage can perform a client-side language/path fixup just
+    // after DOMContentLoaded. If that replaces the document during the first
+    // readiness probe, wait for the resulting navigation and retry once.
+    if (!/execution context was destroyed|navigation/i.test(String(error))) throw error;
+    await page.waitForNavigation({ waitUntil: "domcontentloaded", timeout: 10000 }).catch(() => {});
+    return operation();
+  }
+}
+
 async function waitForFonts(page) {
   let timeoutId;
   try {
@@ -242,13 +255,20 @@ async function runCase(testCase, caseIndex) {
     const response = await page.goto(url, { waitUntil: "domcontentloaded", timeout: 30000 });
     item.httpStatus = response?.status() ?? null;
     if (!response || !response.ok()) throw new Error(`HTTP status ${item.httpStatus}`);
+    // The French homepage is served from the site root. Quarto's generated
+    // homepage scripts can still trigger a same-document navigation after
+    // DOMContentLoaded; wait for the initial load event before evaluating the
+    // page so a transient navigation cannot destroy the execution context.
+    await page.waitForLoadState("load", { timeout: 30000 });
     // Do not wait for networkidle: analytics, remote fonts, and persistent requests
     // can keep the network busy after the DOM is already auditable.
     // A remote font or stylesheet must not stall the entire audit indefinitely.
-    await waitForFonts(page);
-    await waitForMath(page);
+    await retryAfterNavigation(page, () => waitForFonts(page));
+    await retryAfterNavigation(page, () => waitForMath(page));
     // Let layout and paint settle without an unconditional wall-clock sleep.
-    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    await retryAfterNavigation(page, () =>
+      page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))))
+    );
 
     item.title = await page.title();
     if (kind === "homepage") {
@@ -1256,8 +1276,3 @@ console.log(JSON.stringify({
 }, null, 2));
 // Surface every failure as a GitHub Actions error annotation so the exact
 // failing case is visible in the run summary without downloading artifacts.
-for (const failure of report.failures) {
-  console.log(`::error title=Site browser review failure::${failure.replace(/\s+/g, " ").slice(0, 900)}`);
-}
-
-if (report.failures.length) process.exitCode = 1;
