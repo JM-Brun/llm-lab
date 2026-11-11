@@ -24,6 +24,14 @@ tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "
 
 {{< include ../includes/generated-guided-context-fr-llm-overview.qmd >}}
 
+<nav class="page-breadcrumb" aria-label="Fil d’Ariane">
+  <a href="../index.qmd">Accueil</a>
+  <span aria-hidden="true">›</span>
+  <span>Comprendre les LLM</span>
+  <span aria-hidden="true">›</span>
+  <span aria-current="page">Panorama : qu’est-ce qu’un LLM ?</span>
+</nav>
+
 ::: {.chapter-lead}
 « C'est une bonne situation, ça, scribe ? » Dans *Astérix et Obélix : Mission Cléopâtre*, la question de Panoramix lance le scribe Otis dans une longue tirade. Posez la même question à un assistant conversationnel : lui aussi enchaîne. Comment un programme produit-il une suite à partir d'une question ?
 
@@ -186,6 +194,13 @@ Pas nécessairement. Un système RAG récupère les documents récents à l'inf�
 :::
 
 {{< include ../includes/generated-suggested-route-fr-llm-overview.qmd >}}
+
+<div class="route-nav-cards">
+  <a class="route-nav-card" href="generation.qmd">
+    <span class="nav-direction">Étape suivante →</span>
+    <span class="nav-title">Générer du texte</span>
+  </a>
+</div>
 
 ::: {.language-switch}
 **Langue :** [Français](llm-overview.qmd) · [English](../en/llm-overview.qmd)
