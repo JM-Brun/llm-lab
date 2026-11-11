@@ -1,3 +1,19 @@
+"""Regression tests for bilingual guided-route transition projection."""
+
+from __future__ import annotations
+
+import runpy
+from pathlib import Path
+from typing import Any
+
+import pytest
+
+ROOT = Path(__file__).resolve().parents[2]
+GENERATOR: dict[str, Any] = runpy.run_path(
+    str(ROOT / "site/tools/build_learning_map.py"),
+    run_name="guided_route_transition_projection_test",
+)
+
 
 
 
