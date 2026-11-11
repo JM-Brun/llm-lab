@@ -262,6 +262,17 @@ def test_other_workflow_and_scope_classifier_edits_skip_render_and_browser_audit
         assert result["browser_relevant"] is False
 
 
+def test_full_render_regenerates_all_generated_includes():
+    result = classify_changed_files(
+        [{"filename": "site/tools/page_index.py", "status": "modified"}], CONFIG
+    )
+
+    assert result["render_mode"] == "full"
+    assert result["generate_history"] is True
+    assert result["generate_learning_map"] is True
+    assert result["generate_computational_graph"] is True
+
+
 def test_generator_scope_for_quarto_page_changes():
     result = classify_changed_files(
         [{"filename": "site/fr/attention.qmd", "status": "modified"}], CONFIG
