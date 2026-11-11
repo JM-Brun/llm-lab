@@ -1,4 +1,4 @@
-""""Validate the explicit page-to-stage membership projection."""
+"""Validate the explicit page-to-stage membership projection."""
 
 from __future__ import annotations
 
