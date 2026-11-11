@@ -186,20 +186,23 @@ def load_pages() -> list[dict[str, Any]]:
     """Project the shared published-page index into learning-map records."""
     from page_index import load_published_pages
 
-    config = load_yaml(SITE / "_quarto.yml") or {}
-    render_entries = (config.get("project") or {}).get("render", [])
-    if not isinstance(render_entries, list) or not all(
-        isinstance(entry, str) for entry in render_entries
-    ):
-        raise ValueError("site/_quarto.yml project.render must be an explicit list of paths")
-    rendered_sources = set(render_entries)
+    config_path = SITE / "_quarto.yml"
+    rendered_sources: set[str] | None = None
+    if config_path.is_file():
+        config = load_yaml(config_path) or {}
+        render_entries = (config.get("project") or {}).get("render", [])
+        if not isinstance(render_entries, list) or not all(
+            isinstance(entry, str) for entry in render_entries
+        ):
+            raise ValueError("site/_quarto.yml project.render must be an explicit list of paths")
+        rendered_sources = set(render_entries)
 
     pages: list[dict[str, Any]] = []
     for page in load_published_pages(SITE):
         source_path = page.path.relative_to(SITE).as_posix()
         # A page can be authored and marked published without being part of
         # Quarto's explicit build. Never advertise a destination the site won't emit.
-        if source_path not in rendered_sources:
+        if rendered_sources is not None and source_path not in rendered_sources:
             continue
         page_id, language = page.page_id, page.language
         if page_id.endswith("/learning-map"):
