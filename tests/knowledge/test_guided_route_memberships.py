@@ -417,3 +417,36 @@ def test_rail_and_page_context_use_identical_stage_ids(language: str) -> None:
 
     assert 'href="#guided-stage-' + stages[0].id + '"' in rail
     assert 'data-stage-id="' + stages[0].id + '"' in context
+
+
+@pytest.mark.parametrize("language", ["fr", "en"])
+def test_every_route_member_wires_exactly_its_generated_context_include(language: str) -> None:
+    pages = [page for page in GENERATOR["load_pages"]() if page["language"] in {language, "shared"}]
+    stages = GENERATOR["load_guided_route"](language, pages)
+    memberships = GENERATOR["build_guided_route_memberships"](stages)
+
+    expected_occurrences = sum(len(stage.pages) + len(stage.optional_pages) for stage in stages)
+    assert sum(len(page_memberships) for page_memberships in memberships.values()) == (
+        expected_occurrences
+    )
+
+    expected_page_ids = set(memberships)
+    observed_page_ids: set[str] = set()
+    for source in (GENERATOR["SITE"] / language).glob("*.qmd"):
+        page_id = f"{language}/{source.stem}"
+        includes = [
+            line.strip()
+            for line in source.read_text(encoding="utf-8").splitlines()
+            if "generated-guided-context-" in line
+        ]
+        if page_id in expected_page_ids:
+            expected_include = (
+                "{{< include ../includes/generated-guided-context-"
+                f"{page_id.replace('/', '-')}.qmd >}}}}"
+            )
+            assert includes == [expected_include], source
+            observed_page_ids.add(page_id)
+        else:
+            assert not includes, source
+
+    assert observed_page_ids == expected_page_ids
