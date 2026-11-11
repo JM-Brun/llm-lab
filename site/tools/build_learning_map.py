@@ -627,6 +627,55 @@ def validate_route_projection(stages: list[ResolvedGuidedRouteStage]) -> None:
         )
 
 
+GUIDED_RAIL_LABELS: dict[str, dict[str, str]] = {
+    "fr": {
+        "aria": "Progression dans le parcours pédagogique",
+        "progress": "Progression consultée · stockée uniquement dans ce navigateur",
+        "reset": "Effacer la progression consultée",
+    },
+    "en": {
+        "aria": "Learning path progress",
+        "progress": "Viewed progress · stored only in this browser",
+        "reset": "Clear viewed progress",
+    },
+}
+
+
+def render_guided_rail(stages: list[ResolvedGuidedRouteStage], language: str) -> str:
+    """Render a static, linked overview of route stages with an optional JS progress slot."""
+    if language not in GUIDED_RAIL_LABELS:
+        raise ValueError(f"unsupported guided-route language: {language!r}")
+    labels = GUIDED_RAIL_LABELS[language]
+    lines = [
+        f'<nav class="guided-rail" aria-label="{labels["aria"]}" '
+        f'data-guided-rail data-total="{len(stages)}">',
+    ]
+    for index, stage in enumerate(stages, start=1):
+        part = ROUTE_PART_BY_FIRST_STAGE.get(stage.id)
+        if part is not None:
+            part_id, title_fr, title_en = part
+            part_title = title_fr if language == "fr" else title_en
+            lines.append(
+                f'  <span class="guided-rail__part" data-part="{part_id}">'
+                f'{escape(part_title)}</span>'
+            )
+        lines.append(
+            f'  <a class="guided-rail__stage" href="#guided-stage-{escape(stage.id)}" '
+            f'data-stage-id="{escape(stage.id)}" data-stage-index="{index}">'
+            f'<span class="guided-rail__number">{index:02d}</span>'
+            f'<span class="guided-rail__title">{escape(stage.title)}</span></a>'
+        )
+    lines.extend(
+        [
+            f'  <p class="guided-rail__progress" data-guided-rail-progress hidden '
+            f'data-reset-label="{labels["reset"]}">{labels["progress"]}</p>',
+            "</nav>",
+            "",
+        ]
+    )
+    return "\\n".join(lines)
+
+
 def render_guided_route_markdown(stages: list[ResolvedGuidedRouteStage], language: str) -> str:
     """Render the route as native Quarto Markdown; no browser-side route renderer."""
     if language not in {"fr", "en"}:
@@ -842,7 +891,8 @@ def prepare_guided_route_fragment(
 ) -> dict[Path, str]:
     """Render a generated Quarto Markdown partial for the requested language."""
     output = SITE / "includes" / f"generated-guided-route-{language}.qmd"
-    return {output: render_guided_route_markdown(stages, language)}
+    rail = render_guided_rail(stages, language)
+    return {output: rail + "\\n" + render_guided_route_markdown(stages, language)}
 
 
 def write_guided_route_fragment(language: str, stages: list[ResolvedGuidedRouteStage]) -> Path:
