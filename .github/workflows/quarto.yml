@@ -41,7 +41,7 @@ jobs:
 
       - name: Find latest published site cache
         id: site_cache
-        if: github.event_name == 'pull_request' && steps.site_changes.outputs.render_mode == 'incremental'
+        if: github.event_name == 'pull_request' && (steps.site_changes.outputs.render_mode == 'incremental' || (steps.site_changes.outputs.render_mode == 'skip' && steps.site_changes.outputs.browser_relevant == 'true'))
         env:
           GH_TOKEN: ${{ github.token }}
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
@@ -61,7 +61,7 @@ jobs:
 
       - name: Restore latest published site
         id: restore_site
-        if: github.event_name == 'pull_request' && steps.site_changes.outputs.render_mode == 'incremental' && steps.site_cache.outputs.available == 'true'
+        if: github.event_name == 'pull_request' && (steps.site_changes.outputs.render_mode == 'incremental' || (steps.site_changes.outputs.render_mode == 'skip' && steps.site_changes.outputs.browser_relevant == 'true')) && steps.site_cache.outputs.available == 'true'
         continue-on-error: true
         uses: actions/download-artifact@v4
         with:
@@ -72,7 +72,7 @@ jobs:
 
       - name: Verify restored site cache
         id: verify_site_cache
-        if: github.event_name == 'pull_request' && steps.site_changes.outputs.render_mode == 'incremental'
+        if: github.event_name == 'pull_request' && (steps.site_changes.outputs.render_mode == 'incremental' || (steps.site_changes.outputs.render_mode == 'skip' && steps.site_changes.outputs.browser_relevant == 'true'))
         run: |
           missing=()
           while IFS= read -r source; do
@@ -97,7 +97,7 @@ jobs:
           fi
 
       - name: Cache Quarto Linux tarball
-        if: github.event_name != 'pull_request' || (steps.site_changes.outputs.site_relevant == 'true' && (steps.site_changes.outputs.render_targets != '' || steps.site_changes.outputs.render_assets == '' || steps.verify_site_cache.outputs.cache_restored != 'true'))
+        if: github.event_name != 'pull_request' || ((steps.site_changes.outputs.site_relevant == 'true' || steps.site_changes.outputs.browser_relevant == 'true') && (steps.site_changes.outputs.render_mode != 'skip' || steps.verify_site_cache.outputs.cache_restored != 'true') && (steps.site_changes.outputs.render_targets != '' || steps.site_changes.outputs.render_assets == '' || steps.verify_site_cache.outputs.cache_restored != 'true'))
         id: quarto_cache
         uses: actions/cache@v4
         with:
@@ -182,7 +182,7 @@ jobs:
           done <<< "$RENDER_ASSETS"
 
       - name: Render full site
-        if: ${{ github.event_name != 'pull_request' || (steps.site_changes.outputs.site_relevant == 'true' && (steps.site_changes.outputs.render_mode != 'incremental' || steps.verify_site_cache.outputs.cache_restored != 'true')) }}
+        if: ${{ github.event_name != 'pull_request' || ((steps.site_changes.outputs.site_relevant == 'true' || (steps.site_changes.outputs.browser_relevant == 'true' && steps.verify_site_cache.outputs.cache_restored != 'true')) && (steps.site_changes.outputs.render_mode != 'incremental' || steps.verify_site_cache.outputs.cache_restored != 'true')) }}
         run: quarto render site
 
       # Exercise renderer changes against the restored or freshly rendered site.
