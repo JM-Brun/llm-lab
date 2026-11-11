@@ -285,7 +285,7 @@ def test_generator_scope_for_computational_graph_registry_is_narrow():
 
 
 def test_generator_scope_for_learning_map_registries_is_narrow():
-    for path in ("data/concepts.yml", "data/domains.yml", "data/guided-route.yml"):
+    for path in ("data/concepts.yml", "data/domains.yml", "data/resources.yml", "data/guided-route.yml"):
         result = classify_changed_files([{"filename": path, "status": "modified"}], CONFIG)
 
         assert result["generate_history"] is False
