@@ -331,6 +331,7 @@ def test_guided_rail_links_every_stage_in_registry_order(language: str) -> None:
     positions = [rendered.index(f'href="#guided-stage-{stage.id}"') for stage in stages]
     assert positions == sorted(positions)
     assert rendered.count('class="guided-rail__part"') == len(GENERATOR["ROUTE_PARTS"])
+    assert "\\n" not in rendered
     assert 'data-guided-rail data-total="8"' in rendered
     assert 'data-guided-rail-progress hidden' in rendered
     assert "stockée uniquement dans ce navigateur" in rendered if language == "fr" else "stored only in this browser" in rendered
@@ -366,3 +367,4 @@ def test_guided_route_fragment_places_rail_before_stage_anchors(language: str, t
         GENERATOR["SITE"] = original_site
     rendered = next(iter(artifacts.values()))
     assert rendered.index('class="guided-rail"') < rendered.index("#guided-stage-orientation")
+    assert "\\n" not in rendered
