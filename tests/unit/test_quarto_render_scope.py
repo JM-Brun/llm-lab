@@ -332,7 +332,7 @@ def test_browser_audit_change_with_page_change_keeps_incremental_render_and_audi
     result = classify_changed_files(
         [
             {"filename": "scripts/site-browser-review.mjs", "status": "modified"},
-            {"filename": "site/en/learning/example.qmd", "status": "modified"},
+            {"filename": "site/en/example.qmd", "status": "modified"},
         ],
         CONFIG,
     )
@@ -340,4 +340,4 @@ def test_browser_audit_change_with_page_change_keeps_incremental_render_and_audi
     assert result["render_mode"] == "incremental"
     assert result["site_relevant"] is True
     assert result["browser_relevant"] is True
-    assert "site/en/learning/example.qmd" in result["render_targets"]
+    assert "site/en/example.qmd" in result["render_targets"]
