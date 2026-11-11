@@ -205,7 +205,12 @@ def load_pages() -> list[dict[str, Any]]:
         if rendered_sources is not None and source_path not in rendered_sources:
             continue
         page_id, language = page.page_id, page.language
-        if page_id in {"en/training-loop", "en/post-training", "fr/training-loop", "fr/post-training"}:
+        if page_id in {
+            "en/training-loop",
+            "en/post-training",
+            "fr/training-loop",
+            "fr/post-training",
+        }:
             sys.stdout.write(
                 f"Learning-map diagnostic: {page_id} source={source_path} "
                 f"rendered={rendered_sources is None or source_path in rendered_sources}\\n"
