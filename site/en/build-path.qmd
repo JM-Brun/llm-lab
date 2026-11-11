@@ -12,7 +12,7 @@ scope: "Guides inspection and verification of a small decoder-only GPT using the
 purpose: "The reader should be able to trace the reference modules through the guided tours, attempt their exercises, run the code and tests, verify available milestones, and explain the limitations of randomly initialized generation."
 suggested_route:
   previous: null
-  next: "en/exercises"
+  next: "en/gpt-config-walkthrough"
 hierarchy:
   parents: ["en/index", "en/llm-overview"]
   children: ["en/gpt-config-walkthrough", "en/gpt-ops-walkthrough", "en/transformer-block-walkthrough", "en/gpt-model-walkthrough", "en/gpt-generation-walkthrough", "en/corpus-preparation"]
