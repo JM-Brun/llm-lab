@@ -265,3 +265,34 @@ def test_build_terminal_pages_keep_explicit_return_links(language: str, page_id:
     else:
         expected = "Back to the path" if language == "en" else "Retour au parcours"
     assert expected in source
+
+
+def test_published_build_page_inventory_is_bilingual_and_routes_resolve() -> None:
+    pages = GENERATOR["load_pages"]()
+    by_id = {page["id"]: page for page in pages}
+    build_by_language = {
+        language: {
+            page["id"].split("/", maxsplit=1)[1]
+            for page in pages
+            if page["language"] == language and page["destination"] == "build"
+        }
+        for language in ("fr", "en")
+    }
+
+    assert build_by_language["fr"]
+    assert build_by_language["fr"] == build_by_language["en"]
+
+    for language in ("fr", "en"):
+        build_pages = [
+            page
+            for page in pages
+            if page["language"] == language and page["destination"] == "build"
+        ]
+        for page in build_pages:
+            route = page["route"]
+            assert route.get("previous") or route.get("next"), page["id"]
+            for direction in ("previous", "next"):
+                target_id = route.get(direction)
+                if target_id is not None:
+                    assert target_id in by_id, (page["id"], direction, target_id)
+                    assert target_id.startswith(f"{language}/"), (page["id"], target_id)
