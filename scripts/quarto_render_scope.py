@@ -19,6 +19,8 @@ GLOBAL_RENDER_INPUTS = {
     "scripts/quarto_render_batch.py",
     # Classifier changes must exercise the full-render path in the Quarto workflow.
     "scripts/quarto_render_scope.py",
+    # Guided-context include coverage is an end-to-end contract: render every wired page.
+    "tests/knowledge/test_guided_route_memberships.py",
 }
 
 
@@ -106,7 +108,12 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
     # has no image-specific assertions and is not useful for image-only updates.
     browser_relevant = any(
         (path.startswith("site/") and not _is_static_image_asset(path))
-        or path in {"scripts/site-browser-review.mjs", ".github/workflows/quarto.yml"}
+        or path
+        in {
+            "scripts/site-browser-review.mjs",
+            ".github/workflows/quarto.yml",
+            "tests/knowledge/test_guided_route_memberships.py",
+        }
         for path in paths
     )
 
