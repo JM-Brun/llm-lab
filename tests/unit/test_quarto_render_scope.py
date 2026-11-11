@@ -366,3 +366,22 @@ def test_browser_audit_change_with_page_change_keeps_incremental_render_and_audi
     assert result["site_relevant"] is True
     assert result["browser_relevant"] is True
     assert "site/en/example.qmd" in result["render_targets"]
+
+
+def test_guided_context_membership_coverage_triggers_full_render_and_browser_audit():
+    result = classify_changed_files(
+        [
+            {
+                "filename": "tests/knowledge/test_guided_route_memberships.py",
+                "status": "modified",
+            }
+        ],
+        CONFIG,
+    )
+
+    assert result["render_mode"] == "full"
+    assert result["site_relevant"] is True
+    assert result["browser_relevant"] is True
+    assert result["generate_history"] is True
+    assert result["generate_learning_map"] is True
+    assert result["generate_computational_graph"] is True
