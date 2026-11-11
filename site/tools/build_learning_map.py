@@ -491,7 +491,7 @@ def render_stage_badge(membership: GuidedRouteMembership, language: str) -> str:
         f'data-stage-id="{escape(membership.stage_id)}" '
         f'data-stage-index="{membership.stage_index}" '
         f'data-stage-total="{membership.stage_count}">'
-        f'{label} {membership.stage_index}/{membership.stage_count}</span>'
+        f"{label} {membership.stage_index}/{membership.stage_count}</span>"
     )
 
 
@@ -678,7 +678,7 @@ def render_guided_rail(stages: list[ResolvedGuidedRouteStage], language: str) ->
             part_title = title_fr if language == "fr" else title_en
             lines.append(
                 f'  <span class="guided-rail__part" data-part="{part_id}">'
-                f'{escape(part_title)}</span>'
+                f"{escape(part_title)}</span>"
             )
         lines.append(
             f'  <a class="guided-rail__stage" href="#guided-stage-{escape(stage.id)}" '
