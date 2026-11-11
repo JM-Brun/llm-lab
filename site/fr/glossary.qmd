@@ -112,5 +112,5 @@ Ces notions sont regroupées dans le parcours [Géométrie et interprétabilité
 - [Références et provenance](../references.qmd)
 
 ::: {.language-switch}
-[Français](glossary.qmd) · [English](../en/glossary.qmd)
-::::
+**Langue :** [Français](glossary.qmd) · [English](../en/glossary.qmd)
+:::
