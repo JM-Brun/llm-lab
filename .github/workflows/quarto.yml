@@ -74,12 +74,26 @@ jobs:
         id: verify_site_cache
         if: github.event_name == 'pull_request' && steps.site_changes.outputs.render_mode == 'incremental'
         run: |
-          if [ -s site/_site/index.html ] && [ -d site/_site/site_libs ]; then
+          missing=()
+          while IFS= read -r source; do
+            [ -n "$source" ] || continue
+            output="site/_site/${source%.qmd}.html"
+            if [ ! -s "$output" ]; then
+              missing+=("$output")
+            fi
+          done < <(sed -n '/^  render:/,/^website:/s/^    - //p' site/_quarto.yml)
+
+          if [ -s site/_site/index.html ] && [ -d site/_site/site_libs ] && [ "${#missing[@]}" -eq 0 ]; then
             echo "cache_restored=true" >> "$GITHUB_OUTPUT"
-            echo "Restored a complete Quarto site; changed pages can be rendered incrementally."
+            echo "Restored site cache contains every page in the current Quarto render list."
           else
             echo "cache_restored=false" >> "$GITHUB_OUTPUT"
-            echo "Site cache unavailable or incomplete; using a full render."
+            if [ "${#missing[@]}" -gt 0 ]; then
+              printf 'Cached site is missing configured page(s): %s\\n' "${missing[@]}"
+            else
+              echo "Site cache unavailable or incomplete."
+            fi
+            echo "Falling back to a full render."
           fi
 
       - name: Cache Quarto Linux tarball
