@@ -6,9 +6,6 @@ keywords: ["type:concept-lesson", "destination:understand", "topic:inference-gen
 lang: fr
 ---
 
-{{< include ../includes/generated-guided-context-fr-generation.qmd >}}
-
-
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/generation"
@@ -24,6 +21,8 @@ hierarchy:
 related: ["fr/text-data", "fr/transformer", "fr/build-path", "fr/decoding-strategies", "fr/gpt-generation-walkthrough", "fr/training-examples", "fr/generation-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:fr", "status:published"]
 -->
+
+{{< include ../includes/generated-guided-context-fr-generation.qmd >}}
 
 ::: {.chapter-lead}
 Le panorama s'est arrêté sur un tableau : après « C'est une bonne situation, ça, scribe ? », le modèle donne 0,6 à « Être », 0,2 à « Vous ». Un tableau de probabilités n'est pas encore une réponse. Comment passe-t-on de l'un à l'autre ?
