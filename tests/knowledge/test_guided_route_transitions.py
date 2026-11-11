@@ -1,4 +1,5 @@
 """Tests for the canonical, bilingual guided-route transition model."""
+
 from __future__ import annotations
 
 import runpy
@@ -22,6 +23,7 @@ validate_guided_route_transitions = TRANSITIONS["validate_guided_route_transitio
 
 def route_payload() -> dict:
     from strict_yaml import load_yaml
+
     return load_yaml(ROOT / "data/guided-route.yml")
 
 
@@ -36,14 +38,18 @@ def test_reference_transitions_are_explicit_and_bilingual(language: str) -> None
 
     generation = by_id["predictive-distribution-to-generation"]
     assert (generation.from_stage, generation.to_stage, generation.direction) == (
-        "prediction", "inference", "directed"
+        "prediction",
+        "inference",
+        "directed"
     )
     assert getattr(generation.pages, language) == [f"{language}/generation"]
     assert getattr(generation.purpose, language)
 
     cross_entropy = by_id["observed-target-to-training-objective"]
     assert (cross_entropy.from_stage, cross_entropy.to_stage, cross_entropy.direction) == (
-        "scoring", "training", "symmetric"
+        "scoring",
+        "training",
+        "symmetric"
     )
     assert getattr(cross_entropy.pages, language) == [f"{language}/cross-entropy"]
     assert getattr(cross_entropy.purpose, language)
@@ -53,17 +59,19 @@ def test_one_page_can_explain_multiple_transitions_and_one_transition_multiple_p
     payload = route_payload()
     payload["transitions"][0]["pages"]["fr"].append("fr/decoding-strategies")
     payload["transitions"][0]["pages"]["en"].append("en/decoding-strategies")
-    payload["transitions"].append({
-        "id": "generation-as-inference-example",
-        "from": "orientation",
-        "to": "inference",
-        "direction": "directed",
-        "pages": {"fr": ["fr/generation"], "en": ["en/generation"]},
-        "purpose": {
-            "fr": "Relier la vue d'ensemble à l'exécution détaillée.",
-            "en": "Connect the overview to detailed execution.",
-        },
-    })
+    payload["transitions"].append(
+        {
+            "id": "generation-as-inference-example",
+            "from": "orientation",
+            "to": "inference",
+            "direction": "directed",
+            "pages": {"fr": ["fr/generation"], "en": ["en/generation"]},
+            "purpose": {
+                "fr": "Relier la vue d'ensemble à l'exécution détaillée.",
+                "en": "Connect the overview to detailed execution.",
+            },
+        }
+    )
     result = validate_guided_route_transitions(payload, published_ids())
     assert len(result[0].pages.fr) == 2
     assert [item.id for item in result if "fr/generation" in item.pages.fr] == [
