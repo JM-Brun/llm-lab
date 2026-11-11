@@ -99,6 +99,7 @@ def test_optional_local_language_switch_blocks_are_consistent() -> None:
                 )
                 relative_target = target_path.relative_to(SITE.resolve())
                 expected_language = "fr" if label.strip().casefold() == "français" else "en"
-                assert relative_target.parts[0] == expected_language, (
+                is_shared_homepage = relative_target == pathlib.Path("index.qmd")
+                assert relative_target.parts[0] == expected_language or is_shared_homepage, (
                     f"{where}: {label!r} points to the wrong language tree: {target!r}"
                 )
