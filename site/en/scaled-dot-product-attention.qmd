@@ -1,6 +1,7 @@
 ---
 title: "Scaled dot-product attention"
 subtitle: "From position-to-position scores to a weighted aggregation of values"
+description-meta: "Follows attention computation end to end: Q–K compatibility, score scaling, normalization, and weighted aggregation of V."
 keywords: ["type:concept-lesson", "destination:understand", "topic:scaled-dot-product-attention", "level:core", "language:en", "status:published"]
 lang: en
 ---

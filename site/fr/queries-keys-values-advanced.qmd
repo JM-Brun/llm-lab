@@ -1,6 +1,7 @@
 ---
 title: "Q/K/V : formulation mathématique et variantes"
 subtitle: "Projections par position, géométrie des scores, gradients et architectures"
+description-meta: "Approfondit les projections Q/K/V par position, leur géométrie, leurs gradients et leurs variantes architecturales."
 keywords: ["type:deep-dive", "destination:deepen", "topic:queries-keys-values-advanced", "level:advanced", "language:fr", "status:published"]
 lang: fr
 ---
