@@ -84,3 +84,22 @@ The projection, renderer, fragment writer and regression tests are integrated in
 The merged [PR #531](https://github.com/JM-Brun/llm-lab/pull/531) validated the four page-context pilots and the learning map. It varied browser color-scheme preference, but the site currently ships only one light Quarto theme; no dark-theme support is claimed.
 
 The follow-up Axe findings are tracked in [#532](https://github.com/JM-Brun/llm-lab/issues/532) and are being addressed in [PR #535](https://github.com/JM-Brun/llm-lab/pull/535). That PR adds keyboard semantics to Quarto collapsible callouts and fixes the identified navigation/Mermaid contrast issues.
+
+## Extension boundary — pages spanning stages and transitions
+
+The membership projection remains a direct, read-only index of `data/guided-route.yml`. It must not infer additional stages from page metadata or concepts. A multi-membership page retains all stage entries and their individual `core` / `optional` roles; there is no primary membership.
+
+Membership and transition are separate projections:
+
+- **Membership projection:** stage → page, already implemented. It tells where the route explicitly uses the page and is the default evidence of stage coverage.
+- **Transition projection:** stage pair → page(s) + bilingual purpose, a proposed extension to the same canonical route model. It tells which conceptual connection the page explicitly teaches. A page may participate in multiple transitions, and a transition may be explained by more than one page.
+
+Do not add a duplicate per-page `coverage` array when the existing stage membership already expresses the same fact. A separately represented cross-stage contribution is justified only when the page teaches material from a stage without being a listed route resource there. Mere mention, a suggested previous/next link, a concept relation, or a hierarchy edge is not sufficient evidence.
+
+### Required transition semantics before implementation
+
+A transition record must identify a stable ID, `from` and `to` stage IDs, canonical page IDs in each published language, and a concise localized purpose. Direction must be intentional; if the relationship is symmetric, encode that explicitly rather than relying on an ambiguous arrow. Transition edges are explanatory, not prerequisite edges. Validate endpoint existence, page publication/language, unique IDs, bilingual purpose, and page association. The renderer should show localized stage titles and purpose, never raw IDs or fabricated step numbers.
+
+The two regression fixtures are `generation` (orientation + inference; early overview and later detailed inference) and `cross-entropy` (scoring core + training optional; observed-target scoring and training objective). Their distinct membership roles must survive generation unchanged. The `text-data` page is a negative boundary fixture: its mention of corpus preparation must not imply Build membership.
+
+No YAML schema, generator, page fragment, or source page is changed by this design note. Implement the schema only after these semantics and the bilingual examples are reviewed.
