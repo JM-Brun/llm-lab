@@ -1,8 +1,9 @@
 """Render changed Quarto pages in one isolated project invocation.
 
-The temporary output directory is overlaid onto the published site only after
-Quarto succeeds. This preserves shared assets still referenced by untouched
-pages, unlike rendering the batch directly into the cached site tree.
+The temporary output directory is kept outside the Quarto project and is
+overlaid onto the published site only after Quarto succeeds. This prevents
+the previous output tree from being copied into the new render and preserves
+shared assets still referenced by untouched pages.
 """
 
 from __future__ import annotations
@@ -37,7 +38,7 @@ def replace_project_render_targets(config: str, targets: list[str]) -> str:
 
     lines = config.splitlines(keepends=True)
     project_start = next(
-        (index for index, line in enumerate(lines) if line.rstrip("\n") == "project:"),
+        (index for index, line in enumerate(lines) if line.rstrip("\\n") == "project:"),
         None,
     )
     if project_start is None:
@@ -55,7 +56,7 @@ def replace_project_render_targets(config: str, targets: list[str]) -> str:
         (
             index
             for index in range(project_start + 1, project_end)
-            if lines[index].rstrip("\n") == "  render:"
+            if lines[index].rstrip("\\n") == "  render:"
         ),
         None,
     )
@@ -74,8 +75,8 @@ def replace_project_render_targets(config: str, targets: list[str]) -> str:
         render_end -= 1
 
     replacement = [
-        "  render:\n",
-        *(f"    - {json.dumps(path)}\n" for path in normalized),
+        "  render:\\n",
+        *(f"    - {json.dumps(path)}\\n" for path in normalized),
     ]
     return "".join(lines[:render_start] + replacement + lines[render_end:])
 
@@ -91,39 +92,28 @@ def main() -> None:
     incremental_config = replace_project_render_targets(original_config, targets)
     output_dir = project_dir / "_site"
 
+    # Keep both the old published output and the temporary output outside the
+    # project root: Quarto must not discover either as an input resource.
     with tempfile.TemporaryDirectory(
         prefix="_quarto_incremental_",
-        dir=project_dir,
+        dir=project_dir.parent,
     ) as temp_name:
         temp_output = Path(temp_name)
-        relative_output = temp_output.name
+        relative_output = os.path.relpath(temp_output.resolve(), project_dir.resolve())
 
         try:
-            # The previous published output is now a sibling of the isolated
-            # output directory. Quarto would otherwise treat it as a project
-            # resource and copy it into the temporary output as a nested _site/.
+            # Override project.output-dir itself. Passing --output-dir too
+            # would combine the two paths for website projects.
             isolated_config = incremental_config.replace(
-                "project:\n",
-                "project:\n  exclude:\n    - _site/**\n",
+                "  output-dir: _site\\n",
+                f"  output-dir: {json.dumps(relative_output)}\\n",
                 1,
             )
             if isolated_config == incremental_config:
-                raise ValueError("Could not add the previous output directory to project.exclude")
-
-            # Override project.output-dir itself: passing --output-dir as well
-            # would combine the two paths for website projects.
-            isolated_config = isolated_config.replace(
-                "  output-dir: _site\n",
-                f"  output-dir: {json.dumps(relative_output)}\n",
-                1,
-            )
-            if isolated_config == incremental_config.replace(
-                "project:\n", "project:\n  exclude:\n    - _site/**\n", 1
-            ):
                 raise ValueError("Could not find the expected project.output-dir: _site")
             config_path.write_text(isolated_config, encoding="utf-8")
             sys.stdout.write(
-                f"Rendering {len(targets)} changed page(s) into isolated output {relative_output}\n"
+                f"Rendering {len(targets)} changed page(s) into isolated output {relative_output}\\n"
             )
             subprocess.run(
                 ["quarto", "render", "site", "--no-clean"],
@@ -142,7 +132,7 @@ def main() -> None:
         shutil.copytree(temp_output, output_dir, dirs_exist_ok=True)
         sys.stdout.write(
             f"Overlaid isolated render output into {output_dir}; "
-            "existing shared assets were preserved\n"
+            "existing shared assets were preserved\\n"
         )
 
 
