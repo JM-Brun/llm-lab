@@ -236,10 +236,10 @@ def test_build_hub_prefers_the_first_guided_implementation_tour(language: str) -
     practice_hub = page_by_id[f"{language}/exercises"]
     assert practice_hub["route"]["previous"] is None
     assert first_tour["route"]["previous"] == hub["id"]
-    rendered = GENERATOR["render_suggested_route_markdown"](
-        first_tour, page_by_id, language
+    rendered = GENERATOR["render_suggested_route_markdown"](first_tour, page_by_id, language)
+    expected_return = (
+        "← Retour au parcours Build" if language == "fr" else "← Back to the Build path"
     )
-    expected_return = "← Retour au parcours Build" if language == "fr" else "← Back to the Build path"
     assert expected_return in rendered
     assert 'href="build-path.qmd"' in rendered
 
