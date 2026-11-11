@@ -222,3 +222,38 @@ def test_published_route_ends_with_exactly_one_forward_card(language: str) -> No
     assert [name for name, text in fragments.items() if label in text] == [final_name]
     source = (ROOT / "site" / f"{final_id}.qmd").read_text(encoding="utf-8")
     assert f"includes/{final_name}" in source
+
+
+@pytest.mark.parametrize("language", ["fr", "en"])
+def test_build_hub_prefers_the_first_guided_implementation_tour(language: str) -> None:
+    pages = GENERATOR["load_pages"]()
+    page_by_id = {page["id"]: page for page in pages}
+
+    hub = page_by_id[f"{language}/build-path"]
+    first_tour = page_by_id[f"{language}/gpt-config-walkthrough"]
+
+    assert hub["route"]["next"] == first_tour["id"]
+    assert first_tour["route"]["previous"] == hub["id"]
+
+
+@pytest.mark.parametrize(
+    ("language", "page_id"),
+    [
+        ("fr", "training-examples"),
+        ("en", "training-examples"),
+        ("fr", "gpt-generation-walkthrough"),
+        ("en", "gpt-generation-walkthrough"),
+    ],
+)
+def test_build_terminal_pages_keep_explicit_return_links(language: str, page_id: str) -> None:
+    pages = GENERATOR["load_pages"]()
+    page = next(item for item in pages if item["id"] == f"{language}/{page_id}")
+
+    assert page["route"]["next"] is None
+    source_path = ROOT / "site" / language / f"{page_id}.qmd"
+    source = source_path.read_text(encoding="utf-8")
+    if page_id == "training-examples":
+        expected = "Return to the Build path" if language == "en" else "Revenir au parcours Build"
+    else:
+        expected = "Back to the path" if language == "en" else "Retour au parcours"
+    assert expected in source
