@@ -86,7 +86,8 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
         item for item in files if item.get("filename") == "scripts/quarto_render_batch.py"
     ]
     renderer_changed = bool(renderer_items)
-    renderer_safe = all(item.get("status") == "modified" for item in renderer_items)
+    renderer_safe = all(item.get("status") in {"added", "modified"} for item in renderer_items)
+    renderer_smoke_test = renderer_changed and renderer_safe
     safe = site_relevant and renderer_safe and len(render_inputs) <= MAX_INCREMENTAL_PAGES
     configured_targets = _render_targets(config)
 
@@ -124,6 +125,7 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
     return {
         "site_relevant": site_relevant,
         "browser_relevant": browser_relevant,
+        "renderer_smoke_test": renderer_smoke_test,
         "render_mode": mode,
         "render_targets": sorted(set(targets)) if mode == "incremental" else [],
         "render_assets": sorted(set(assets)) if mode == "incremental" else [],
@@ -142,7 +144,7 @@ def main() -> None:
     result = classify_changed_files(files, config)
 
     with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
-        for key in ("site_relevant", "browser_relevant", "render_mode"):
+        for key in ("site_relevant", "browser_relevant", "renderer_smoke_test", "render_mode"):
             value = result[key]
             if isinstance(value, bool):
                 value = str(value).lower()
