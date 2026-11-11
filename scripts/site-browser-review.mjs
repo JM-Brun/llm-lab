@@ -988,7 +988,7 @@ async function runCase(testCase, caseIndex) {
         item.routeContext.stageAnchorsResolve = stageFragments.every(id => availableStageAnchors.has(id));
         if (!item.routeContext.stageAnchorsResolve) throw new Error("guided-route stage link points to a missing anchor");
         const multiStagePages = {
-          "generation.html": ["guided-stage-prediction", "guided-stage-inference"],
+          "generation.html": ["guided-stage-orientation", "guided-stage-inference"],
           "cross-entropy.html": ["guided-stage-scoring", "guided-stage-training"],
         };
         if (multiStagePages[pagePath]) {
