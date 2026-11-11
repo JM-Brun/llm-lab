@@ -263,3 +263,18 @@ def test_browser_audit_script_only_skips_quarto_render_but_keeps_browser_audit()
     assert result["browser_relevant"] is True
     assert result["render_targets"] == []
     assert result["render_assets"] == []
+
+
+def test_browser_audit_change_with_page_change_keeps_incremental_render_and_audit():
+    result = classify_changed_files(
+        [
+            {"filename": "scripts/site-browser-review.mjs", "status": "modified"},
+            {"filename": "site/en/learning/example.qmd", "status": "modified"},
+        ],
+        CONFIG,
+    )
+
+    assert result["render_mode"] == "incremental"
+    assert result["site_relevant"] is True
+    assert result["browser_relevant"] is True
+    assert "site/en/learning/example.qmd" in result["render_targets"]
