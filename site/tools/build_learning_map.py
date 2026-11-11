@@ -135,6 +135,10 @@ class GuidedRouteDocument(StrictModel):
 
     schema_version: Literal[1]
     stages: list[GuidedRouteStage] = Field(min_length=1)
+    # Detailed transition validation lives in guided_route_transitions.py so
+    # this document accepts the canonical top-level field while keeping the
+    # stage model and its membership projection independent.
+    transitions: list[dict[str, Any]] = Field(default_factory=list)
 
     @model_validator(mode="after")
     def stage_ids_are_unique(self) -> GuidedRouteDocument:
