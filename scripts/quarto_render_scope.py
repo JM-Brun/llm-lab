@@ -69,7 +69,8 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
         item
         for item in files
         if (
-            str(item.get("filename", "")) != "scripts/quarto_render_batch.py"
+            str(item.get("filename", ""))
+            not in {"scripts/quarto_render_batch.py", "scripts/quarto_render_scope.py"}
             and (
                 str(item.get("filename", "")).startswith(("site/", "data/", "src/", "scripts/"))
             or str(item.get("filename", "")) in GLOBAL_RENDER_INPUTS
