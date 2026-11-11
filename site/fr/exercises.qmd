@@ -117,4 +117,6 @@ Les questions de rappel ciblées et leurs corrigés figurent sur la page compagn
 - [Raschka — dépôt du livre et exercices officiels](https://github.com/rasbt/LLMs-from-scratch) : à utiliser comme index thématique, sans copier les énoncés ni les corrigés.
 - [Programme complet et matrice de couverture](https://github.com/JM-Brun/llm-lab/blob/main/docs/full-curriculum-plan.md).
 
-**Langue :** [Français](../fr/exercises.qmd) · [English](../en/exercises.qmd)
+::: {.language-switch}
+**Langue :** [Français](exercises.qmd) · [English](../en/exercises.qmd)
+:::

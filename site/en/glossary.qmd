@@ -111,6 +111,6 @@ These topics are grouped in the [Representation geometry and interpretability](e
 - [History of Transformers](transformer-history.qmd)
 - [References and provenance](../references.qmd)
 
-:::: {.language-switch}
-[Français](../fr/glossary.qmd) · [English](glossary.qmd)
-::::
+::: {.language-switch}
+**Language:** [Français](../fr/glossary.qmd) · [English](glossary.qmd)
+:::
