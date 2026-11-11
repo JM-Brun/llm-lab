@@ -169,18 +169,14 @@ def test_every_core_guided_route_page_keeps_its_pedagogical_cards(language: str)
     stages = load_guided_route(language, pages)
     fragments = prepare_suggested_route_fragments(language, pages, stages)
     page_by_id = {page["id"]: page for page in pages}
-    core_page_ids = {
-        page.id
-        for stage in stages
-        for page in stage.pages
-    }
+    core_page_ids = {page.id for stage in stages for page in stage.pages}
     final_page_id = final_core_page_id(stages)
 
     assert core_page_ids
     for page_id in sorted(core_page_ids):
         page = page_by_id[page_id]
-        fragment_path = SITE / "includes" / (
-            f"generated-suggested-route-{page_id.replace('/', '-')}.qmd"
+        fragment_path = (
+            SITE / "includes" / (f"generated-suggested-route-{page_id.replace('/', '-')}.qmd")
         )
         rendered = fragments[fragment_path]
         route = page["route"]
