@@ -152,5 +152,7 @@ def test_guided_route_cards_remain_visible_when_quarto_has_same_destination(
 
     assert "Previous lesson" in rendered
     assert "Next lesson" in rendered
-    assert "Étape précédente" in rendered
-    assert "Étape suivante" in rendered
+    previous_label = "← Étape précédente" if language == "fr" else "← Previous step"
+    next_label = "Étape suivante →" if language == "fr" else "Next step →"
+    assert previous_label in rendered
+    assert next_label in rendered
