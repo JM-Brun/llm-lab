@@ -60,3 +60,55 @@ def test_language_switch_targets_are_bijective_and_existing() -> None:
     for french_slug, english_slug in mapping.items():
         assert (SITE / "fr" / f"{french_slug}.qmd").is_file()
         assert (SITE / "en" / f"{english_slug}.qmd").is_file()
+
+
+def test_optional_local_language_switch_blocks_are_consistent() -> None:
+    """Validate local shortcuts when authored; the global navbar remains sufficient."""
+    from urllib.parse import unquote, urlsplit
+
+    block_pattern = re.compile(
+        r"(?ms)^:{3,}\\s*\\{\\.language-switch\\}\\s*\\n"
+        r"(.*?)^:{3,}\\s*$"
+    )
+    link_pattern = re.compile(r"\\[([^]]+)\\]\\(([^)]+)\\)")
+
+    pages = sorted(
+        path
+        for language in ("fr", "en")
+        for path in (SITE / language).rglob("*.qmd")
+    )
+    for page in pages:
+        source = page.read_text(encoding="utf-8")
+        blocks = list(block_pattern.finditer(source))
+        for index, block in enumerate(blocks, start=1):
+            where = f"{page.relative_to(SITE)} language-switch block {index}"
+            body = block.group(1)
+            links = link_pattern.findall(body)
+            labels = [label.strip().casefold() for label, _ in links]
+
+            expected_labels = (
+                {"français", "english"} if page.parts[1] == "fr" else {"français", "english"}
+            )
+            assert set(labels) == expected_labels and len(labels) == 2, (
+                f"{where}: expected exactly one Français and one English link"
+            )
+            assert re.search(
+                r"\\*\\*\\s*(?:Langue|Language)\\s*:\\s*\\*\\*",
+                body,
+                flags=re.IGNORECASE,
+            ), f"{where}: expected a localized Langue:/Language: label"
+
+            for label, target in links:
+                parsed = urlsplit(target.strip())
+                assert not parsed.scheme and not parsed.netloc, (
+                    f"{where}: language links must be relative source links"
+                )
+                target_path = (page.parent / unquote(parsed.path)).resolve()
+                assert target_path.suffix == ".qmd" and target_path.is_file(), (
+                    f"{where}: {label!r} target does not resolve to a Quarto source: {target!r}"
+                )
+                relative_target = target_path.relative_to(SITE.resolve())
+                expected_language = "fr" if label.strip().casefold() == "français" else "en"
+                assert relative_target.parts[0] == expected_language, (
+                    f"{where}: {label!r} points to the wrong language tree: {target!r}"
+                )
