@@ -1,6 +1,7 @@
 ---
 title: "Exercises — Training examples"
 subtitle: "Self-check questions, exercises, and worked answers"
+description-meta: "Self-check questions and exercises associated with the Training examples lesson."
 keywords: ["type:exercise-hub", "destination:practice", "topic:training-examples-exercises", "level:applied", "language:en", "status:published"]
 lang: en
 ---

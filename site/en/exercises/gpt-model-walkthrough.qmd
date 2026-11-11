@@ -1,6 +1,7 @@
 ---
 title: "Exercises — Complete GPT model"
 subtitle: "Comprehension and code-reading exercises"
+description-meta: "Exercises associated with the Complete GPT model guided tour."
 keywords: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-model-exercises", "level:applied", "language:en", "status:published"]
 lang: en
 ---
