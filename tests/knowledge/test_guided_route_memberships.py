@@ -442,7 +442,7 @@ def test_every_route_member_wires_exactly_its_generated_context_include(language
         if page_id in expected_page_ids:
             expected_include = (
                 "{{< include ../includes/generated-guided-context-"
-                f"{page_id.replace('/', '-')}.qmd >}}"
+                f"{page_id.replace('/', '-')}.qmd >}}}}"
             )
             assert includes == [expected_include], source
             observed_page_ids.add(page_id)
