@@ -6,6 +6,9 @@ keywords: ["type:concept-lesson", "destination:understand", "topic:inference-gen
 lang: fr
 ---
 
+{{< include ../includes/generated-guided-context-fr-generation.qmd >}}
+
+
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/generation"
