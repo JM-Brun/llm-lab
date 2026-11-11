@@ -38,7 +38,7 @@ def replace_project_render_targets(config: str, targets: list[str]) -> str:
 
     lines = config.splitlines(keepends=True)
     project_start = next(
-        (index for index, line in enumerate(lines) if line.rstrip("\\n") == "project:"),
+        (index for index, line in enumerate(lines) if line.rstrip("\n") == "project:"),
         None,
     )
     if project_start is None:
@@ -56,7 +56,7 @@ def replace_project_render_targets(config: str, targets: list[str]) -> str:
         (
             index
             for index in range(project_start + 1, project_end)
-            if lines[index].rstrip("\\n") == "  render:"
+            if lines[index].rstrip("\n") == "  render:"
         ),
         None,
     )
@@ -75,8 +75,8 @@ def replace_project_render_targets(config: str, targets: list[str]) -> str:
         render_end -= 1
 
     replacement = [
-        "  render:\\n",
-        *(f"    - {json.dumps(path)}\\n" for path in normalized),
+        "  render:\n",
+        *(f"    - {json.dumps(path)}\n" for path in normalized),
     ]
     return "".join(lines[:render_start] + replacement + lines[render_end:])
 
@@ -105,15 +105,16 @@ def main() -> None:
             # Override project.output-dir itself. Passing --output-dir too
             # would combine the two paths for website projects.
             isolated_config = incremental_config.replace(
-                "  output-dir: _site\\n",
-                f"  output-dir: {json.dumps(relative_output)}\\n",
+                "  output-dir: _site\n",
+                f"  output-dir: {json.dumps(relative_output)}\n",
                 1,
             )
             if isolated_config == incremental_config:
                 raise ValueError("Could not find the expected project.output-dir: _site")
             config_path.write_text(isolated_config, encoding="utf-8")
             sys.stdout.write(
-                f"Rendering {len(targets)} changed page(s) into isolated output {relative_output}\\n"
+                f"Rendering {len(targets)} changed page(s) into isolated output "
+                f"{relative_output}\n"
             )
             subprocess.run(
                 ["quarto", "render", "site", "--no-clean"],
@@ -132,7 +133,7 @@ def main() -> None:
         shutil.copytree(temp_output, output_dir, dirs_exist_ok=True)
         sys.stdout.write(
             f"Overlaid isolated render output into {output_dir}; "
-            "existing shared assets were preserved\\n"
+            "existing shared assets were preserved\n"
         )
 
 
