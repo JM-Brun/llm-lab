@@ -1,6 +1,7 @@
 ---
 title: "Entropie : incertitude sur le prochain token"
 subtitle: "Lire une distribution de sortie sans la confondre avec la vérité"
+description-meta: "Définit l’entropie de la distribution du prochain token comme mesure de dispersion prédictive avant l’observation de la cible, puis la distingue de la surprise du token observé, de la vraisemblance d’une séquence et de l’entropie croisée."
 keywords: ["type:concept-lesson", "destination:understand", "topic:entropy", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
