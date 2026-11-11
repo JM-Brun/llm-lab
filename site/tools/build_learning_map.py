@@ -481,6 +481,20 @@ def build_guided_route_memberships(
     return memberships
 
 
+def render_stage_badge(membership: GuidedRouteMembership, language: str) -> str:
+    """Render the localized stage counter and stable hooks for future local progress."""
+    if membership.stage_count is None:
+        return ""
+    label = "Étape" if language == "fr" else "Stage"
+    return (
+        f'<span class="guided-page-context__badge" '
+        f'data-stage-id="{escape(membership.stage_id)}" '
+        f'data-stage-index="{membership.stage_index}" '
+        f'data-stage-total="{membership.stage_count}">'
+        f"{label} {membership.stage_index}/{membership.stage_count}</span>"
+    )
+
+
 def render_membership_position(membership: GuidedRouteMembership, language: str) -> str:
     """Say where a core page sits: stage out of stages, page out of the stage's pages.
 
@@ -529,6 +543,8 @@ def render_guided_page_context_markdown(
                 f"{escape(membership.stage_title)}</a>"
             ),
         ]
+        if badge := render_stage_badge(membership, language):
+            lines.append(f"  {badge}")
         if membership.role == "optional":
             lines.append(f'  <span class="guided-page-context__role">{role_label}</span>')
         position = render_membership_position(membership, language)
@@ -564,6 +580,11 @@ def render_guided_page_context_markdown(
                     f"{escape(membership.stage_title)}</a>"
                 ),
                 f'      <span class="guided-page-context__role">{role_label}</span>',
+                *(
+                    [f"      {badge}"]
+                    if (badge := render_stage_badge(membership, language))
+                    else []
+                ),
                 *(
                     [f'      <span class="guided-page-context__position">{position}</span>']
                     if (position := render_membership_position(membership, language))
@@ -625,6 +646,55 @@ def validate_route_projection(stages: list[ResolvedGuidedRouteStage]) -> None:
             "guided-route three-part projection is out of sync with "
             f"data/guided-route.yml: missing={sorted(missing)}, order={opening_order}"
         )
+
+
+GUIDED_RAIL_LABELS: dict[str, dict[str, str]] = {
+    "fr": {
+        "aria": "Progression dans le parcours pédagogique",
+        "progress": "Progression consultée · stockée uniquement dans ce navigateur",
+        "reset": "Effacer la progression consultée",
+    },
+    "en": {
+        "aria": "Learning path progress",
+        "progress": "Viewed progress · stored only in this browser",
+        "reset": "Clear viewed progress",
+    },
+}
+
+
+def render_guided_rail(stages: list[ResolvedGuidedRouteStage], language: str) -> str:
+    """Render a static, linked overview of route stages with an optional JS progress slot."""
+    if language not in GUIDED_RAIL_LABELS:
+        raise ValueError(f"unsupported guided-route language: {language!r}")
+    labels = GUIDED_RAIL_LABELS[language]
+    lines = [
+        f'<nav class="guided-rail" aria-label="{labels["aria"]}" '
+        f'data-guided-rail data-total="{len(stages)}">',
+    ]
+    for index, stage in enumerate(stages, start=1):
+        part = ROUTE_PART_BY_FIRST_STAGE.get(stage.id)
+        if part is not None:
+            part_id, title_fr, title_en = part
+            part_title = title_fr if language == "fr" else title_en
+            lines.append(
+                f'  <span class="guided-rail__part" data-part="{part_id}">'
+                f"{escape(part_title)}</span>"
+            )
+        lines.append(
+            f'  <a class="guided-rail__stage" href="#guided-stage-{escape(stage.id)}" '
+            f'data-stage-id="{escape(stage.id)}" data-stage-index="{index}">'
+            f'<span class="guided-rail__number">{index:02d}</span>'
+            f'<span class="guided-rail__title">{escape(stage.title)}</span></a>'
+        )
+    lines.extend(
+        [
+            f'  <p class="guided-rail__progress" data-guided-rail-progress hidden '
+            f'data-reset-label="{labels["reset"]}">{labels["progress"]}</p>',
+            "</nav>",
+            "",
+        ]
+    )
+    return "\n".join(lines)
 
 
 def render_guided_route_markdown(stages: list[ResolvedGuidedRouteStage], language: str) -> str:
@@ -842,7 +912,8 @@ def prepare_guided_route_fragment(
 ) -> dict[Path, str]:
     """Render a generated Quarto Markdown partial for the requested language."""
     output = SITE / "includes" / f"generated-guided-route-{language}.qmd"
-    return {output: render_guided_route_markdown(stages, language)}
+    rail = render_guided_rail(stages, language)
+    return {output: rail + "\n" + render_guided_route_markdown(stages, language)}
 
 
 def write_guided_route_fragment(language: str, stages: list[ResolvedGuidedRouteStage]) -> Path:

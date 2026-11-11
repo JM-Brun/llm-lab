@@ -319,3 +319,101 @@ def test_real_route_positions_are_complete_and_consistent(language: str) -> None
         page_id = path.name.removeprefix("generated-guided-context-").removesuffix(".qmd")
         page_id = page_id.replace("-", "/", 1)
         assert ("guided-page-context__position" in text) == (page_id in core_ids), path.name
+
+
+@pytest.mark.parametrize("language", ["fr", "en"])
+def test_guided_rail_links_every_stage_in_registry_order(language: str) -> None:
+    pages = [page for page in GENERATOR["load_pages"]() if page["language"] in {language, "shared"}]
+    stages = GENERATOR["load_guided_route"](language, pages)
+    rendered = GENERATOR["render_guided_rail"](stages, language)
+
+    positions = [rendered.index(f'href="#guided-stage-{stage.id}"') for stage in stages]
+    assert positions == sorted(positions)
+    assert rendered.count('class="guided-rail__part"') == len(GENERATOR["ROUTE_PARTS"])
+    assert "\\n" not in rendered
+    assert 'data-guided-rail data-total="8"' in rendered
+    assert "data-guided-rail-progress hidden" in rendered
+    part_positions = [
+        rendered.index(f'data-part="{part_id}"') for part_id in ("discover", "prediction", "usages")
+    ]
+    assert part_positions == sorted(part_positions)
+    disclaimer = (
+        "stockée uniquement dans ce navigateur"
+        if language == "fr"
+        else "stored only in this browser"
+    )
+    assert disclaimer in rendered
+
+
+def test_guided_rail_rejects_unknown_language() -> None:
+    with pytest.raises(ValueError, match="unsupported guided-route language"):
+        GENERATOR["render_guided_rail"]([], "de")
+
+
+def test_guided_rail_escapes_stage_titles() -> None:
+    stage = GENERATOR["ResolvedGuidedRouteStage"](
+        id="safe-stage",
+        title='<script>alert("x")</script>',
+        objective="objective",
+        pages=[],
+    )
+    rendered = GENERATOR["render_guided_rail"]([stage], "en")
+    assert "&lt;script&gt;" in rendered
+    assert "<script>" not in rendered
+
+
+@pytest.mark.parametrize("language", ["fr", "en"])
+def test_guided_route_fragment_places_rail_before_stage_anchors(
+    language: str, tmp_path: Path
+) -> None:
+    pages = [page for page in GENERATOR["load_pages"]() if page["language"] in {language, "shared"}]
+    stages = GENERATOR["load_guided_route"](language, pages)
+    original_site = GENERATOR["SITE"]
+    GENERATOR["SITE"] = tmp_path
+    try:
+        artifacts = GENERATOR["prepare_guided_route_fragment"](language, stages)
+    finally:
+        GENERATOR["SITE"] = original_site
+    rendered = next(iter(artifacts.values()))
+    assert rendered.index('class="guided-rail"') < rendered.index("#guided-stage-orientation")
+    assert "\\n" not in rendered
+
+
+@pytest.mark.parametrize(("language", "label"), [("fr", "Étape 3/8"), ("en", "Stage 3/8")])
+def test_page_context_renders_stage_badge_and_tracking_attributes(
+    language: str, label: str
+) -> None:
+    membership = GENERATOR["GuidedRouteMembership"](
+        stage_id="representations",
+        stage_index=3,
+        stage_title="Representations",
+        stage_objective="objective",
+        role="core",
+        stage_count=8,
+        page_index=1,
+        page_count=4,
+    )
+    page = GENERATOR["ResolvedPage"](
+        id=f"{language}/embeddings", title="Embeddings", href="embeddings.html"
+    )
+    rendered = GENERATOR["render_guided_page_context_markdown"](page, [membership], language)
+
+    assert label in rendered
+    assert 'data-stage-id="representations"' in rendered
+    assert 'data-stage-index="3"' in rendered
+    assert 'data-stage-total="8"' in rendered
+
+
+@pytest.mark.parametrize("language", ["fr", "en"])
+def test_rail_and_page_context_use_identical_stage_ids(language: str) -> None:
+    pages = [page for page in GENERATOR["load_pages"]() if page["language"] in {language, "shared"}]
+    stages = GENERATOR["load_guided_route"](language, pages)
+    rail = GENERATOR["render_guided_rail"](stages, language)
+    context = GENERATOR["render_guided_page_context_markdown"](
+        stages[0].pages[0],
+        GENERATOR["build_guided_route_memberships"](stages)[stages[0].pages[0].id],
+        language,
+    )
+
+    assert 'href="#guided-stage-' + stages[0].id + '"' in rail
+    assert 'data-stage-id="' + stages[0].id + '"' in context
