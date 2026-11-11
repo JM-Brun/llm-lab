@@ -151,7 +151,7 @@ jobs:
         run: .venv/bin/python site/tools/render_computational_graph.py
 
       - name: Render changed pages incrementally
-        if: ${{ github.event_name == 'pull_request' && steps.site_changes.outputs.render_mode == 'incremental' && steps.verify_site_cache.outputs.cache_restored == 'true' }}
+        if: ${{ github.event_name == 'pull_request' && steps.site_changes.outputs.render_mode == 'incremental' && steps.verify_site_cache.outputs.cache_restored == 'true' && (steps.site_changes.outputs.render_targets != '' || steps.site_changes.outputs.render_assets != '') }}
         env:
           RENDER_TARGETS: ${{ steps.site_changes.outputs.render_targets }}
           RENDER_ASSETS: ${{ steps.site_changes.outputs.render_assets }}
@@ -171,9 +171,8 @@ jobs:
         if: ${{ github.event_name != 'pull_request' || (steps.site_changes.outputs.site_relevant == 'true' && (steps.site_changes.outputs.render_mode != 'incremental' || steps.verify_site_cache.outputs.cache_restored != 'true')) }}
         run: quarto render site
 
-      # Exercise the isolated one-process incremental renderer after a full render
-      # has provided a complete site tree. The temp output must overlay without
-      # deleting shared assets still referenced by untouched pages.
+      # Exercise renderer changes against the restored or freshly rendered site.
+      # This validates the actual CLI path without forcing an unnecessary full build.
       - name: Smoke-test isolated batched incremental renderer
         if: github.event_name == 'pull_request' && contains(steps.site_changes.outputs.files, 'scripts/quarto_render_batch.py')
         env:
