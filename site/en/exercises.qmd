@@ -117,4 +117,6 @@ Focused retrieval questions and their worked answers live on the companion page 
 - [Raschka — book repository and official exercises](https://github.com/rasbt/LLMs-from-scratch): use as a topic index; do not copy exercise statements or solutions.
 - [Full curriculum and coverage matrix](https://github.com/JM-Brun/llm-lab/blob/main/docs/full-curriculum-plan.md).
 
+::: {.language-switch}
 **Language:** [Français](../fr/exercises.qmd) · [English](exercises.qmd)
+:::
