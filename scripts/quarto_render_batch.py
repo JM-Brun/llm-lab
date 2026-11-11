@@ -113,8 +113,7 @@ def main() -> None:
                 raise ValueError("Could not find the expected project.output-dir: _site")
             config_path.write_text(isolated_config, encoding="utf-8")
             sys.stdout.write(
-                f"Rendering {len(targets)} changed page(s) into isolated output "
-                f"{relative_output}\n"
+                f"Rendering {len(targets)} changed page(s) into isolated output {relative_output}\n"
             )
             subprocess.run(
                 ["quarto", "render", "site", "--no-clean"],
