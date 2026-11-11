@@ -124,3 +124,35 @@ def test_suggested_route_is_empty_when_both_directions_duplicate_sidebar() -> No
     )
 
     assert rendered == ""
+
+
+@pytest.mark.parametrize("language", ["fr", "en"])
+def test_guided_route_cards_remain_visible_when_quarto_has_same_destination(
+    language: str,
+) -> None:
+    """Understand's pedagogical cards coexist with identical native Quarto links."""
+    page = {
+        "id": f"{language}/example",
+        "route": {
+            "previous": f"{language}/previous",
+            "next": f"{language}/next",
+        },
+    }
+    page_by_id = {
+        f"{language}/previous": {"title": "Previous lesson", "href": "previous.html"},
+        f"{language}/next": {"title": "Next lesson", "href": "next.html"},
+    }
+    rendered = render_suggested_route_markdown(
+        page,
+        page_by_id,
+        language,
+        sidebar_neighbors={"previous": f"{language}/previous", "next": f"{language}/next"},
+        preserve_pedagogical_cards=True,
+    )
+
+    assert "Previous lesson" in rendered
+    assert "Next lesson" in rendered
+    previous_label = "← Étape précédente" if language == "fr" else "← Previous step"
+    next_label = "Étape suivante →" if language == "fr" else "Next step →"
+    assert previous_label in rendered
+    assert next_label in rendered
