@@ -929,6 +929,7 @@ def render_suggested_route_markdown(
     *,
     completes_route: bool = False,
     sidebar_neighbors: dict[str, str] | None = None,
+    preserve_pedagogical_cards: bool = False,
 ) -> str:
     """Render local previous/next links from the page's canonical suggested route.
 
@@ -968,9 +969,10 @@ def render_suggested_route_markdown(
             continue
         if not isinstance(target_id, str):
             raise ValueError(f"invalid {direction} route for {page['id']!r}: {target_id!r}")
-        # Keep pedagogical transitions only when they add a destination that
-        # the native Quarto footer navigation does not already expose.
-        if target_id == (sidebar_neighbors or {}).get(direction):
+        # Understand's guided route is an explicit pedagogical layer. Keep its
+        # cards even when Quarto exposes the same destination in its footer:
+        # the two navigation systems serve different purposes.
+        if not preserve_pedagogical_cards and target_id == (sidebar_neighbors or {}).get(direction):
             continue
         target = page_by_id.get(target_id)
         if target is None:
@@ -1005,6 +1007,7 @@ def prepare_suggested_route_fragments(
     """
     page_by_id = {page["id"]: page for page in pages}
     final_page_id = final_core_page_id(stages)
+    core_page_ids = {page.id for stage in stages for page in stage.pages}
     continuation_id = f"{language}/{ROUTE_CONTINUATION_PAGE}"
     sidebar_neighbors_by_page = load_sidebar_page_neighbors(language)
     includes = SITE / "includes"
@@ -1018,6 +1021,7 @@ def prepare_suggested_route_fragments(
             # the published route is guarded by its own test.
             completes_route=page["id"] == final_page_id and continuation_id in page_by_id,
             sidebar_neighbors=sidebar_neighbors_by_page.get(page["id"], {}),
+            preserve_pedagogical_cards=page["id"] in core_page_ids,
         )
         output = includes / (f"generated-suggested-route-{page['id'].replace('/', '-')}.qmd")
         outputs[output] = rendered
