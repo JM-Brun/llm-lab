@@ -242,6 +242,11 @@ async function runCase(testCase, caseIndex) {
     const response = await page.goto(url, { waitUntil: "domcontentloaded", timeout: 30000 });
     item.httpStatus = response?.status() ?? null;
     if (!response || !response.ok()) throw new Error(`HTTP status ${item.httpStatus}`);
+    // The French homepage is served from the site root. Quarto's generated
+    // homepage scripts can still trigger a same-document navigation after
+    // DOMContentLoaded; wait for the initial load event before evaluating the
+    // page so a transient navigation cannot destroy the execution context.
+    await page.waitForLoadState("load", { timeout: 30000 });
     // Do not wait for networkidle: analytics, remote fonts, and persistent requests
     // can keep the network busy after the DOM is already auditable.
     // A remote font or stylesheet must not stall the entire audit indefinitely.
