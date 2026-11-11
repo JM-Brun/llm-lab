@@ -272,6 +272,8 @@ def test_scope_classifier_changes_trigger_full_render_validation():
     assert result["generate_learning_map"] is True
     assert result["generate_computational_graph"] is True
 
+    assert result["browser_relevant"] is True
+
 
 def test_full_render_regenerates_all_generated_includes():
     result = classify_changed_files(
