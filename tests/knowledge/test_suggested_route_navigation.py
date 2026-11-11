@@ -262,9 +262,12 @@ def test_build_terminal_pages_keep_explicit_return_links(language: str, page_id:
     source = source_path.read_text(encoding="utf-8")
     if page_id == "training-examples":
         expected = "Return to the Build path" if language == "en" else "Revenir au parcours Build"
+        assert expected in source
     else:
+        heading = "## Connections" if language == "en" else "## Connexions"
         expected = "Back to the Build path" if language == "en" else "Retour au parcours Build"
-    assert expected in source
+        connections = source.split(heading, maxsplit=1)[1].split("\\n## ", maxsplit=1)[0]
+        assert expected in connections
 
 
 def test_published_build_page_inventory_is_bilingual_and_routes_resolve() -> None:
