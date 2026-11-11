@@ -241,9 +241,18 @@ def test_unrelated_changes_skip_site_render():
     assert result["site_relevant"] is False
 
 
-def test_workflow_orchestration_and_scope_classifier_edits_skip_site_render():
+def test_quarto_workflow_edits_skip_render_but_run_browser_audit():
+    result = classify_changed_files(
+        [{"filename": ".github/workflows/quarto.yml", "status": "modified"}], CONFIG
+    )
+
+    assert result["render_mode"] == "skip"
+    assert result["site_relevant"] is False
+    assert result["browser_relevant"] is True
+
+
+def test_other_workflow_and_scope_classifier_edits_skip_render_and_browser_audit():
     for path in (
-        ".github/workflows/quarto.yml",
         ".github/workflows/publish-quarto.yml",
         "scripts/quarto_render_scope.py",
     ):
