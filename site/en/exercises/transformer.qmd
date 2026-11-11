@@ -10,7 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "en/transformer-exercises"
 summary: "Self-check questions and exercises associated with the GPT and Transformers: architecture and data flow lesson."
 scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
-purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
+purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson's questions and exercises."
 suggested_route:
   previous: null
   next: null
@@ -29,12 +29,18 @@ This check focuses on the network computation, not on decoding, which is covered
 
 1. Which operation lets a position incorporate information from other positions, and which one transforms each position independently?
 2. Why does a residual connection not replace the transformation computed by a sublayer?
+3. What problem does normalization prevent in a deep stack of blocks?
+4. Which dimensions does a representation traverse in a block's MLP, and in what order?
+5. During generation, which logits are used to choose the next token?
 
 <details>
 <summary>Show answers and reasoning</summary>
 
 1. Self-attention mixes information across permitted positions; the MLP applies a position-wise transformation with shared weights.
 2. The residual connection adds the sublayer output to its input: $x_{out}=x_{in}+F(x_{in})$. It preserves a direct path through the block while allowing the sublayer to contribute a learned transformation.
+3. Without normalization, the successive additions of the residual connections make the magnitudes of the representations grow: activations and gradients become unstable, and training a deep stack fails. Normalization re-centers and rescales the components of each position's vector, which stabilizes training.
+4. `d_model` to `d_ff` (the MLP's intermediate dimension, often about 4 × `d_model`), a nonlinear activation on the intermediate representation, then back to `d_model`.
+5. Only those of the last position: the causal mask guarantees they depend only on tokens already known. During training, by contrast, the logits of every position are used, each position being supervised to predict its next token.
 
 </details>
 
