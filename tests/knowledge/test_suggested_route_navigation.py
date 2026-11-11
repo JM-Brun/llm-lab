@@ -233,6 +233,8 @@ def test_build_hub_prefers_the_first_guided_implementation_tour(language: str) -
     first_tour = page_by_id[f"{language}/gpt-config-walkthrough"]
 
     assert hub["route"]["next"] == first_tour["id"]
+    practice_hub = page_by_id[f"{language}/exercises"]
+    assert practice_hub["route"]["previous"] is None
     assert first_tour["route"]["previous"] == hub["id"]
     rendered = GENERATOR["render_suggested_route_markdown"](
         first_tour, page_by_id, language
