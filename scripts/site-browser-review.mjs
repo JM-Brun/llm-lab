@@ -881,6 +881,14 @@ async function runCase(testCase, caseIndex) {
       }
     }
 
+    if (pagePath === "build-path.html") {
+      const guidedContextCount = await page.locator(".guided-page-context").count();
+      item.routeContext = { expectedAbsent: true, guidedContextCount };
+      if (guidedContextCount !== 0) {
+        throw new Error("Build pages must not expose the Understand guided-route context");
+      }
+    }
+
     if (kind === "route-context") {
       const sidebarEntryTargets = {
         "text-data.html": "text-data.html",
