@@ -14,6 +14,7 @@ GENERATOR: dict[str, Any] = runpy.run_path(
     run_name="guided_route_transition_projection_test",
 )
 
+
 @pytest.mark.parametrize("language", ["fr", "en"])
 def test_transition_projection_and_rendering_are_bilingual_and_separate_from_membership(
     language: str,
