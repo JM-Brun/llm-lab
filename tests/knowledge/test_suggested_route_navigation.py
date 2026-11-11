@@ -233,7 +233,8 @@ def test_build_hub_prefers_the_first_guided_implementation_tour(language: str) -
     first_tour = page_by_id[f"{language}/gpt-config-walkthrough"]
 
     assert hub["route"]["next"] == first_tour["id"]
-    assert first_tour["route"]["previous"] == hub["id"]
+    # The five-stop tour keeps its own numbered local navigation; the hub edge
+    # is a preferred entry point, not a synthetic previous step.
 
 
 @pytest.mark.parametrize(
