@@ -188,12 +188,12 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
             break
         targets.append(path)
 
+    # The learning-map generator also produces includes consumed by every
+    # guided lesson page. Rendering only learning-map.qmd would leave cached
+    # lesson HTML with stale generated fragments, so its implementation changes
+    # must take the full-render path.
     if map_generator_changed:
-        map_targets = ["site/fr/learning-map.qmd", "site/en/learning-map.qmd"]
-        if all(target.removeprefix("site/") in configured_targets for target in map_targets):
-            targets.extend(map_targets)
-        else:
-            safe = False
+        safe = False
 
     mode = "skip" if not site_relevant else "full"
     browser_audit_only = paths == ["scripts/site-browser-review.mjs"] and browser_relevant

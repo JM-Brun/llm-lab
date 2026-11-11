@@ -275,6 +275,17 @@ def test_scope_classifier_changes_trigger_full_render_validation():
     assert result["browser_relevant"] is True
 
 
+def test_learning_map_generator_change_forces_full_render_for_all_consumers():
+    result = classify_changed_files(
+        [{"filename": "site/tools/build_learning_map.py", "status": "modified"}], CONFIG
+    )
+
+    assert result["render_mode"] == "full"
+    assert result["render_targets"] == []
+    assert result["generate_learning_map"] is True
+    assert result["browser_relevant"] is True
+
+
 def test_full_render_regenerates_all_generated_includes():
     result = classify_changed_files(
         [{"filename": "site/tools/page_index.py", "status": "modified"}], CONFIG
