@@ -62,6 +62,8 @@ Ordre de référence, à adapter selon les composants effectivement présents et
 
 Ne pas afficher systématiquement une rangée de badges, un panneau de métadonnées, une carte d'objectifs ou une section « prérequis ». Le titre, le lead, le contexte et les objectifs ne doivent pas répéter la même information.
 
+Le champ Quarto `description` reste **facultatif** : le filtre `site/filters/meta-description.lua` fournit déjà une description HTML à partir du sous-titre lorsqu'aucune description explicite n'est définie. Ajouter une description propre uniquement lorsqu'elle apporte une formulation de recherche réellement distincte ; ne pas imposer une paraphrase du sous-titre. Le `summary` du bloc `LLM-LAB-PAGE-MAP` répond à un autre usage (résumé de la page dans les vues de découverte) et ne doit pas être confondu avec cette métadonnée HTML.
+
 ### 3.3 Corps de page
 
 Le corps partage les mêmes règles de lisibilité et de sémantique, pas une séquence de titres imposée :
@@ -104,7 +106,9 @@ Ne pas déplacer dans ce bloc les explications, exemples travaillés, hypothèse
 
 Le changement de langue doit être fiable, explicite et situé de façon cohérente. Il ne doit pas être confondu avec la navigation précédente/suivante.
 
-Le pied de site est un composant global de l'enveloppe du site : liens institutionnels, documentation et informations du projet selon le thème existant. Il ne doit pas devenir un deuxième pied de page éditorial répétant les ressources, le breadcrumb ou les transitions locales. Vérifier son comportement sur les pages longues, les pages de référence et les vues mobiles.
+Le sélecteur de langue de la navbar est le contrôle global, disponible sur toutes les pages. Un bloc local `.language-switch` peut offrir un accès direct supplémentaire en fin de contenu ; il est **facultatif selon l'archétype**, mais, lorsqu'il existe, il doit employer la même structure, les mêmes libellés localisés et les liens directs vers la page sœur. Ne pas rendre ce bloc obligatoire sur les pages de référence ou d'activité lorsque la navigation globale suffit.
+
+Le pied de site est un composant global de l'enveloppe du site : liens institutionnels, documentation et informations du projet selon le thème existant. Il ne doit pas devenir un deuxième pied de page éditorial répétant les ressources, le breadcrumb ou les transitions locales. Comme la configuration Quarto actuelle définit un pied unique pour les deux langues, son libellé doit être neutre linguistiquement ou être réellement localisé ; une phrase française affichée sur les pages anglaises n'est pas acceptable. Vérifier son comportement sur les pages longues, les pages de référence et les vues mobiles.
 
 ## 4. Variantes par famille de pages
 
@@ -121,6 +125,19 @@ Les familles ci-dessous décrivent des comportements par défaut, pas une nouvel
 | Référence / glossaire / bibliographie | Accès rapide, structure indexable, définitions et provenance | Un récit pédagogique linéaire, des objectifs génériques ou un stepper |
 
 Une page peut combiner plusieurs patterns si sa tâche le justifie. Si deux tâches exigent chacune une explication substantielle, examiner le découpage éditorial avant d'ajouter des sections à l'infini.
+
+### Contrat minimal par archétype
+
+| Archétype existant (type de métadonnées) | Anatomie attendue par défaut | Éléments conditionnels |
+|---|---|---|
+| Entrée / panorama (`entry-point`, `system-overview`) | Titre, sous-titre, orientation concise, modèle d'ensemble et destinations explicites | Lead structuré, diagramme, objectifs ou auto-vérification seulement s'ils servent l'orientation |
+| Leçon conceptuelle (`concept-lesson`, `concept-bridge`) | Titre, sous-titre, ouverture qui formule l'idée centrale, explication autonome, limites et liens contextuels | Contexte de parcours si la page appartient au registre ; objectifs et bloc de ressources si utiles |
+| Approfondissement (`deep-dive`) | Périmètre précis, hypothèses, développement technique et limites | Lead, dérivation longue, navigation vers le concept parent ; pas de breadcrumb guidé par défaut |
+| Visite guidée / Build (`guided-build`) | Objectif exécutable, prérequis d'exécution, étapes, résultats attendus et moyens de vérification | Lead, objectifs, liens précédent/suivant visibles si nécessaires à la séquence, ressources complémentaires |
+| Practice / exercices / expérience (`exercise-hub`, `exercise-collection`, `experiment-guide`) | Consigne ou question, protocole ou structure d'exercice, critères d'interprétation et limites | Indices, corrigés repliés, ressources ; pas d'objectifs génériques ni de breadcrumb Understand imposés |
+| Référence (`glossary`, `historical-reference`, `bibliography`) | Structure de consultation, conventions, entrées et provenance | Introduction brève et liens vers explications canoniques ; pas de parcours linéaire ou d'auto-évaluation artificielle |
+
+Cette table est une règle d'arbitrage, pas une checklist de présence. Le type contrôlé existant reste l'identifiant stable ; le besoin documentaire, le pattern scientifique et les modules de composition ne deviennent pas de nouveaux champs de métadonnées. Le contexte de parcours guidé est dérivé exclusivement des appartenances explicites au registre : il ne se déduit ni de `destination`, ni du chemin du fichier, ni d'un ordre de sidebar.
 
 ## 5. Navigation : règles non négociables
 
