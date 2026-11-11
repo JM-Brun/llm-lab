@@ -22,7 +22,7 @@ related: ["fr/transformer-history", "fr/scaling-laws", "fr/llm-overview-exercise
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:fr", "status:published"]
 -->
 
-<nav class="page-breadcrumb" aria-label="Fil d’Ariane — étapes couvertes par le panorama">
+<nav class="page-breadcrumb" aria-label="Fil d'Ariane — étapes couvertes par le panorama">
   <a href="../index.qmd">Accueil</a>
   <span aria-hidden="true">›</span>
   <a href="generation.qmd">Situer le système</a>
