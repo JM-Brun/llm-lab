@@ -47,8 +47,8 @@ def test_reference_transitions_are_explicit_and_bilingual(language: str) -> None
 
 def test_one_page_can_explain_multiple_transitions_and_one_transition_multiple_pages() -> None:
     payload = route_payload()
-    payload["transitions"][0]["pages"]["fr"].append("fr/cross-entropy")
-    payload["transitions"][0]["pages"]["en"].append("en/cross-entropy")
+    payload["transitions"][0]["pages"]["fr"].append("fr/decoding-strategies")
+    payload["transitions"][0]["pages"]["en"].append("en/decoding-strategies")
     payload["transitions"].append({
         "id": "generation-as-inference-example",
         "from": "orientation",
