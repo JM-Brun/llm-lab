@@ -233,8 +233,13 @@ def test_build_hub_prefers_the_first_guided_implementation_tour(language: str) -
     first_tour = page_by_id[f"{language}/gpt-config-walkthrough"]
 
     assert hub["route"]["next"] == first_tour["id"]
-    # The five-stop tour keeps its own numbered local navigation; the hub edge
-    # is a preferred entry point, not a synthetic previous step.
+    assert first_tour["route"]["previous"] == hub["id"]
+    rendered = GENERATOR["render_suggested_route_markdown"](
+        first_tour, page_by_id, language
+    )
+    expected_return = "← Retour au parcours Build" if language == "fr" else "← Back to the Build path"
+    assert expected_return in rendered
+    assert 'href="build-path.qmd"' in rendered
 
 
 @pytest.mark.parametrize(
