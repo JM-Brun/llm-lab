@@ -196,7 +196,9 @@ def load_pages() -> list[dict[str, Any]]:
             if not isinstance(render_entries, list) or not all(
                 isinstance(entry, str) for entry in render_entries
             ):
-                raise ValueError("site/_quarto.yml project.render must be an explicit list of paths")
+                raise ValueError(
+                    "site/_quarto.yml project.render must be an explicit list of paths"
+                )
             rendered_sources = set(render_entries)
 
     pages: list[dict[str, Any]] = []
