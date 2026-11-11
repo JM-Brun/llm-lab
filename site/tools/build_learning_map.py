@@ -167,6 +167,19 @@ class ResolvedGuidedRouteStage(StrictModel):
     optional_pages: list[ResolvedPage] = Field(default_factory=list)
 
 
+class ResolvedGuidedRouteTransition(StrictModel):
+    """A localized transition resolved to reader-facing stage and page data."""
+
+    id: str
+    from_stage_id: str
+    from_stage_title: str
+    to_stage_id: str
+    to_stage_title: str
+    direction: Literal["directed", "symmetric"]
+    purpose: str
+    pages: list[ResolvedPage]
+
+
 def page_href(page_id: str, language: str, source_path: Path | None = None) -> str:
     """Return the actual rendered path relative to a language-specific map page."""
     if source_path is not None:
@@ -437,6 +450,50 @@ def load_guided_route(language: str, pages: list[dict[str, Any]]) -> list[Resolv
     return resolved
 
 
+def load_guided_route_transitions(
+    language: str, pages: list[dict[str, Any]]
+) -> list[ResolvedGuidedRouteTransition]:
+    """Resolve canonical transitions without changing stage membership."""
+    if language not in {"fr", "en"}:
+        raise ValueError(f"unsupported guided-route language: {language!r}")
+    payload = load_yaml(ROOT / "data" / "guided-route.yml")
+    published = {page["id"] for page in load_pages()}
+    transitions = validate_guided_route_transitions(payload, published)
+    stages = {stage.id: stage for stage in GuidedRouteDocument.model_validate(payload).stages}
+    page_by_id = {page["id"]: page for page in pages}
+    resolved = []
+    for transition in transitions:
+        page_refs = getattr(transition.pages, language)
+        missing = [page_id for page_id in page_refs if page_id not in page_by_id]
+        if missing:
+            raise ValueError(
+                f"transition {transition.id!r} references pages unavailable in "
+                f"the {language} projection: {missing}"
+            )
+        source = stages[transition.from_stage]
+        target = stages[transition.to_stage]
+        resolved.append(
+            ResolvedGuidedRouteTransition(
+                id=transition.id,
+                from_stage_id=source.id,
+                from_stage_title=getattr(source.title, language),
+                to_stage_id=target.id,
+                to_stage_title=getattr(target.title, language),
+                direction=transition.direction,
+                purpose=getattr(transition.purpose, language),
+                pages=[
+                    ResolvedPage(
+                        id=page_id,
+                        title=page_by_id[page_id]["title"],
+                        href=page_by_id[page_id]["href"],
+                    )
+                    for page_id in page_refs
+                ],
+            )
+        )
+    return resolved
+
+
 class GuidedRouteMembership(StrictModel):
     """One page's explicit membership in a guided-route stage."""
 
@@ -607,6 +664,54 @@ def render_guided_page_context_markdown(
     return "\n".join(lines)
 
 
+def build_guided_route_transition_index(
+    transitions: list[ResolvedGuidedRouteTransition],
+) -> dict[str, list[ResolvedGuidedRouteTransition]]:
+    """Index explicit transition explanations by page, preserving source order."""
+    index: dict[str, list[ResolvedGuidedRouteTransition]] = {}
+    for transition in transitions:
+        for page in transition.pages:
+            index.setdefault(page.id, []).append(transition)
+    return index
+
+
+def render_guided_page_transitions(
+    transitions: list[ResolvedGuidedRouteTransition], language: str
+) -> str:
+    """Render progressive, non-prerequisite transition context without raw IDs."""
+    if language not in {"fr", "en"}:
+        raise ValueError(f"unsupported language: {language!r}")
+    if not transitions:
+        return ""
+    label = (
+        "Liens entre étapes expliqués sur cette page"
+        if language == "fr"
+        else "Stage connections explained on this page"
+    )
+    lines = [
+        '<section class="guided-page-transitions" aria-label="' + label + '">',
+        f'  <p class="guided-page-transitions__label">{label}</p>',
+    ]
+    for transition in transitions:
+        arrow = "→" if transition.direction == "directed" else "↔"
+        source_href = "learning-map.html#guided-stage-" + escape(transition.from_stage_id, quote=True)
+        target_href = "learning-map.html#guided-stage-" + escape(transition.to_stage_id, quote=True)
+        summary = (
+            f'<a href="{source_href}">{escape(transition.from_stage_title)}</a> '
+            f'{arrow} <a href="{target_href}">{escape(transition.to_stage_title)}</a>'
+        )
+        lines.extend(
+            [
+                '  <details class="guided-page-transitions__item">',
+                f"    <summary>{summary}</summary>",
+                f"    <p>{escape(transition.purpose)}</p>",
+                "  </details>",
+            ]
+        )
+    lines.extend(["</section>", ""])
+    return "\\n".join(lines)
+
+
 ROUTE_PARTS: tuple[tuple[str, str, str, str], ...] = (
     (
         "discover",
@@ -763,19 +868,26 @@ def render_guided_route_markdown(stages: list[ResolvedGuidedRouteStage], languag
 
 
 def prepare_guided_page_context_fragments(
-    language: str, stages: list[ResolvedGuidedRouteStage]
+    language: str,
+    stages: list[ResolvedGuidedRouteStage],
+    transitions: list[ResolvedGuidedRouteTransition] | None = None,
 ) -> dict[Path, str]:
-    """Render generated context partials for every page in the guided route."""
+    """Render membership and explicit transition context for route pages."""
     memberships = build_guided_route_memberships(stages)
     page_by_id = {
         page.id: page for stage in stages for page in [*stage.pages, *stage.optional_pages]
     }
+    transition_index = build_guided_route_transition_index(transitions or [])
     includes = SITE / "includes"
     outputs: dict[Path, str] = {}
     for page_id, page_memberships in memberships.items():
         page = page_by_id[page_id]
         output = includes / f"generated-guided-context-{page_id.replace('/', '-')}.qmd"
-        outputs[output] = render_guided_page_context_markdown(page, page_memberships, language)
+        membership = render_guided_page_context_markdown(page, page_memberships, language)
+        transition_context = render_guided_page_transitions(
+            transition_index.get(page_id, []), language
+        )
+        outputs[output] = membership + transition_context
     return outputs
 
 
@@ -1085,9 +1197,12 @@ def prepare_build(language: str) -> dict[Path, str]:
     output = SITE / f"learning-map-data-{language}.json"
     concept_graph = load_concept_graph(language, pages)
     guided_route = load_guided_route(language, pages)
+    guided_transitions = load_guided_route_transitions(language, pages)
     navigation = load_navigation(language, pages)
     artifacts = prepare_guided_route_fragment(language, guided_route)
-    artifacts.update(prepare_guided_page_context_fragments(language, guided_route))
+    artifacts.update(
+        prepare_guided_page_context_fragments(language, guided_route, guided_transitions)
+    )
     artifacts.update(prepare_suggested_route_fragments(language, pages, guided_route))
     payload = {
         "language": language,
