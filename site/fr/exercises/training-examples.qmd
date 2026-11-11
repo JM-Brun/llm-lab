@@ -1,6 +1,7 @@
 ---
 title: "Exercices — Exemples d'entraînement"
 subtitle: "Questions de vérification, exercices et corrigés"
+description-meta: "Questions de vérification et exercices associés à la leçon Exemples d'entraînement."
 keywords: ["type:exercise-hub", "destination:practice", "topic:training-examples-exercises", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---

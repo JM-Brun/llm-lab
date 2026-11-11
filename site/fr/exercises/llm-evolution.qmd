@@ -1,6 +1,7 @@
 ---
 title: "Exercices — Évolution des modèles de langage"
 subtitle: "Questions de vérification, exercices et corrigés"
+description-meta: "Questions de vérification et exercices associés à la leçon Évolution des modèles de langage."
 keywords: ["type:exercise-hub", "destination:practice", "topic:llm-evolution-exercises", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---

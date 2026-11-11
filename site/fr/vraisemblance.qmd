@@ -1,6 +1,7 @@
 ---
 title: "Vraisemblance et log-vraisemblance"
 subtitle: "Scorer les tokens observés et relier la vraisemblance à la loss"
+description-meta: "Explique comment attribuer un score à une séquence de tokens déjà observée en combinant ses probabilités conditionnelles. Cette branche évalue une continuation connue au lieu d’en sélectionner une nouvelle."
 keywords: ["type:concept-lesson", "destination:understand", "topic:vraisemblance", "level:core", "language:fr", "status:published"]
 lang: fr
 ---

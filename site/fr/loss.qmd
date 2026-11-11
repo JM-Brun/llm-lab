@@ -1,6 +1,7 @@
 ---
 title: "Loss : de la perte par token à l'objectif"
 subtitle: "Réduction, masquage des cibles et interprétation d'une courbe"
+description-meta: "Relie les pénalités calculées sur les tokens cibles à un objectif d’entraînement agrégé. La loss fournit le signal scalaire différencié pour calculer les gradients et mettre à jour les paramètres."
 keywords: ["type:concept-lesson", "destination:understand", "topic:loss", "level:core", "language:fr", "status:published"]
 lang: fr
 ---

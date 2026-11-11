@@ -1,6 +1,7 @@
 ---
 title: "Logits: scores before normalization"
 subtitle: "Why a model does not directly output probabilities"
+description-meta: "Presents logits as the unnormalized scores produced for vocabulary tokens at the network output, immediately before their transformation into a distribution."
 keywords: ["type:concept-lesson", "destination:understand", "topic:logits", "level:core", "language:en", "status:published"]
 lang: en
 ---

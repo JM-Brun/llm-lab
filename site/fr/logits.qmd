@@ -1,6 +1,7 @@
 ---
 title: "Logits : les scores avant normalisation"
 subtitle: "Pourquoi un modèle ne produit pas directement des probabilités"
+description-meta: "Présente les logits comme les scores non normalisés produits pour les tokens du vocabulaire à la sortie du réseau, juste avant leur transformation en distribution."
 keywords: ["type:concept-lesson", "destination:understand", "topic:logits", "level:core", "language:fr", "status:published"]
 lang: fr
 ---

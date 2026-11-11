@@ -1,6 +1,7 @@
 ---
 title: "Probabilités de sortie : des logits aux tokens"
 subtitle: "Distribution conditionnelle, température et calibration"
+description-meta: "Explique comment les logits deviennent une distribution conditionnelle sur le prochain token, et comment cette distribution intervient dans la sélection sans garantir la vérité."
 keywords: ["type:concept-lesson", "destination:understand", "topic:probabilites", "level:core", "language:fr", "status:published"]
 lang: fr
 ---

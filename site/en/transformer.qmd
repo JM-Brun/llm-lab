@@ -1,6 +1,7 @@
 ---
 title: "The Transformer in a GPT: architecture and computation"
 subtitle: "From stacked blocks to logits"
+description-meta: "Introduces the architecture of a decoder-only GPT, from its Transformer block stack to the output head, then traces a forward pass to the logits. Distinguishes attention, the repeated block, and the complete model."
 keywords: ["type:system-overview", "destination:understand", "topic:transformer", "level:overview", "language:en", "status:published"]
 lang: en
 ---

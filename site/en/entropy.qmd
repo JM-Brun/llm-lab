@@ -1,6 +1,7 @@
 ---
 title: "Entropy: uncertainty over the next token"
 subtitle: "Reading an output distribution without confusing it with truth"
+description-meta: "Defines the entropy of the next-token distribution as predictive dispersion before observing a target, then distinguishes it from the surprisal of the observed token, sequence likelihood, and cross-entropy."
 keywords: ["type:concept-lesson", "destination:understand", "topic:entropy", "level:core", "language:en", "status:published"]
 lang: en
 ---

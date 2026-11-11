@@ -1,6 +1,7 @@
 ---
 title: "Exercices — Masque causal"
 subtitle: "Questions de vérification, exercices et corrigés"
+description-meta: "Questions de vérification et exercices associés à la leçon Masque causal."
 keywords: ["type:exercise-hub", "destination:practice", "topic:causal-masking-exercises", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---

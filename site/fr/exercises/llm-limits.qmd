@@ -1,6 +1,7 @@
 ---
 title: "Exercices — Limites des LLM"
 subtitle: "Questions de vérification et corrigés"
+description-meta: "Questions de vérification associées à la leçon Limites des LLM."
 keywords: ["type:exercise-hub", "destination:practice", "topic:llm-limits-exercises", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---

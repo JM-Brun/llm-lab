@@ -1,6 +1,7 @@
 ---
 title: "Attention à produit scalaire mise à l'échelle"
 subtitle: "Des scores entre positions à une agrégation pondérée des valeurs"
+description-meta: "Déroule le calcul d’attention de bout en bout : compatibilité entre Q et K, mise à l’échelle, normalisation des scores et agrégation pondérée de V."
 keywords: ["type:concept-lesson", "destination:understand", "topic:scaled-dot-product-attention", "level:core", "language:fr", "status:published"]
 lang: fr
 ---

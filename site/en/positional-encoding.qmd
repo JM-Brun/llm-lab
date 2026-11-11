@@ -1,6 +1,7 @@
 ---
 title: "Positional encoding: giving tokens an order"
 subtitle: "Why order must be injected—and where"
+description-meta: "Explains how positional information lets a Transformer account for token order, and locates the main families of mechanisms in the computation."
 keywords: ["type:concept-lesson", "destination:understand", "topic:positional-encoding", "level:core", "language:en", "status:published"]
 lang: en
 ---

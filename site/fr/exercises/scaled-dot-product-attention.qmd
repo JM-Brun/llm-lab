@@ -1,6 +1,7 @@
 ---
 title: "Exercices — Attention à produit scalaire mise à l’échelle"
 subtitle: "Questions de vérification, exercices et corrigés"
+description-meta: "Questions de vérification et exercices associés à la leçon Attention à produit scalaire mise à l’échelle."
 keywords: ["type:exercise-hub", "destination:practice", "topic:scaled-dot-product-attention-exercises", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---

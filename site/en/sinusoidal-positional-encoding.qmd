@@ -1,6 +1,7 @@
 ---
 title: "Sinusoidal positional encodings: frequencies, geometry, and limits"
 subtitle: "Deriving and analysing the positional signal in the original Transformer"
+description-meta: "Derives the original Transformer's sinusoidal encoding, interprets its frequencies and geometry, and examines its properties and limitations."
 keywords: ["type:deep-dive", "destination:deepen", "topic:sinusoidal-positional-encoding", "level:advanced", "language:en", "status:published"]
 lang: en
 ---

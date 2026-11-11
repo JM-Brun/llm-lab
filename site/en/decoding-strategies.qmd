@@ -1,6 +1,7 @@
 ---
 title: "Advanced decoding strategies"
 subtitle: "Temperature, truncated sampling, search, and quality-diversity trade-offs"
+description-meta: "Deepens token-selection rules and sequence search: temperature, top-k, top-p, greedy, beam search, and contrastive decoding, together with their trade-offs and reproducibility conditions."
 keywords: ["type:deep-dive", "destination:deepen", "topic:decoding", "level:advanced", "language:en", "status:published"]
 lang: en
 ---

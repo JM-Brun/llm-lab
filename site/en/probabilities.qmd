@@ -1,6 +1,7 @@
 ---
 title: "Output probabilities: from logits to tokens"
 subtitle: "Conditional distributions, temperature, and calibration"
+description-meta: "Explains how logits become a conditional distribution over the next token, and how that distribution informs selection without guaranteeing factual truth."
 keywords: ["type:concept-lesson", "destination:understand", "topic:probabilites", "level:core", "language:en", "status:published"]
 lang: en
 ---

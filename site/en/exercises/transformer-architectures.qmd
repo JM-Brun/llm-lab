@@ -1,6 +1,7 @@
 ---
 title: "Exercises — Transformer architectures"
 subtitle: "Self-check questions and worked answers"
+description-meta: "Self-check questions associated with the Transformer architectures lesson."
 keywords: ["type:exercise-hub", "destination:practice", "topic:transformer-architectures-exercises", "level:applied", "language:en", "status:published"]
 lang: en
 ---

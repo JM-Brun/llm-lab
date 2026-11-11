@@ -1,6 +1,7 @@
 ---
 title: "Exercices — Vraisemblance et log-vraisemblance"
 subtitle: "Questions de vérification, exercices et corrigés"
+description-meta: "Questions de vérification et exercices associés à la leçon Vraisemblance et log-vraisemblance."
 keywords: ["type:exercise-hub", "destination:practice", "topic:vraisemblance-exercises", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---

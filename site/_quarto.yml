@@ -601,7 +601,7 @@ website:
   page-footer:
     left: "LLM Lab"
     right:
-      - text: "GitHub"
+      - text: "GitHub · Code source · Source code"
         href: https://github.com/JM-Brun/llm-lab
 
 format:

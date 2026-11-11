@@ -1,6 +1,7 @@
 ---
 title: "Causal masking"
 subtitle: "Preventing access to future tokens in an autoregressive model"
+description-meta: "Shows how causal masking prevents each position from using future tokens, enabling autoregressive prediction."
 keywords: ["type:concept-lesson", "destination:understand", "topic:causal-masking", "level:core", "language:en", "status:published"]
 lang: en
 ---

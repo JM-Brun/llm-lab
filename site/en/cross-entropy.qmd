@@ -1,6 +1,7 @@
 ---
 title: "Cross-entropy: the token-prediction objective"
 subtitle: "From logits to loss, with explicit masks and reduction"
+description-meta: "Connects a target distribution to the model's predicted distribution. With a one-hot target, cross-entropy becomes the penalty for the observed token and provides the local term used to build the loss."
 keywords: ["type:concept-lesson", "destination:understand", "topic:cross-entropy", "level:core", "language:en", "status:published"]
 lang: en
 ---

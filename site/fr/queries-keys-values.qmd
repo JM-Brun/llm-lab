@@ -1,6 +1,7 @@
 ---
 title: "Requêtes, clés et valeurs (Q, K, V)"
 subtitle: "Trois projections apprises, trois rôles dans l'auto-attention"
+description-meta: "Distingue les trois projections apprises de l’auto-attention : Q formule les requêtes, K permet de calculer les compatibilités et V porte le contenu agrégé."
 keywords: ["type:concept-lesson", "destination:understand", "topic:queries-keys-values", "level:core", "language:fr", "status:published"]
 lang: fr
 ---

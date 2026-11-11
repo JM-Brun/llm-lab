@@ -1,6 +1,7 @@
 ---
 title: "Encodage positionnel : donner un ordre aux tokens"
 subtitle: "Pourquoi l'ordre doit être injecté — et où"
+description-meta: "Explique comment l’information positionnelle permet au Transformer de tenir compte de l’ordre des tokens, et situe les principales familles de mécanismes dans le calcul."
 keywords: ["type:concept-lesson", "destination:understand", "topic:positional-encoding", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
