@@ -285,15 +285,20 @@ jobs:
           node-version: "22"
 
       - name: Cache npm packages
+        id: npm_cache
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.site_changes.outputs.browser_relevant == 'true')
         uses: actions/cache@v4
         with:
-          path: ~/.npm
-          key: npm-browser-${{ runner.os }}-playwright-1.56.1-axe-4.10.2
+          # Cache both npm's download cache and the fully resolved, version-pinned
+          # modules. A warm runner can skip npm install altogether.
+          path: |
+            ~/.npm
+            node_modules
+          key: npm-browser-${{ runner.os }}-node22-playwright-1.56.1-axe-4.10.2
 
       - name: Install browser test dependencies
-        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.site_changes.outputs.browser_relevant == 'true')
-        run: npm install --no-save --package-lock=false playwright@1.56.1 @axe-core/playwright@4.10.2
+        if: (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.site_changes.outputs.browser_relevant == 'true')) && steps.npm_cache.outputs.cache-hit != 'true'
+        run: npm install --prefer-offline --no-audit --no-fund --no-save --package-lock=false playwright@1.56.1 @axe-core/playwright@4.10.2
 
       - name: Cache Playwright Chromium
         id: playwright_cache
