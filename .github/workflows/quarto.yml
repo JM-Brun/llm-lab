@@ -29,6 +29,9 @@ jobs:
       options: --ipc=host
     env:
       PLAYWRIGHT_BROWSERS_PATH: /ms-playwright
+    defaults:
+      run:
+        shell: bash
     timeout-minutes: 25
     steps:
       - name: Check out repository
