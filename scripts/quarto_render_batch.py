@@ -84,7 +84,6 @@ def replace_project_render_targets(config: str, targets: list[str]) -> str:
     return "".join(lines[:render_start] + replacement + lines[render_end:])
 
 
-
 HREF_ATTRIBUTE = re.compile(
     r"(?P<prefix>(?<![\w:-])href\s*=\s*)(?P<quote>['\"])(?P<value>.*?)(?P=quote)",
     re.IGNORECASE,
@@ -93,6 +92,7 @@ HREF_ATTRIBUTE = re.compile(
 
 def rewrite_quarto_source_links(document: str) -> str:
     """Rewrite local Quarto source-page hrefs that escaped incremental rendering."""
+
     def replace_href(match: re.Match[str]) -> str:
         original = match.group("value")
         decoded = html.unescape(original)
@@ -102,10 +102,7 @@ def rewrite_quarto_source_links(document: str) -> str:
 
         rewritten = urlunsplit(parsed._replace(path=f"{parsed.path[:-4]}.html"))
         quote = match.group("quote")
-        return (
-            f"{match.group('prefix')}{quote}"
-            f"{html.escape(rewritten, quote=True)}{quote}"
-        )
+        return f"{match.group('prefix')}{quote}{html.escape(rewritten, quote=True)}{quote}"
 
     return HREF_ATTRIBUTE.sub(replace_href, document)
 
