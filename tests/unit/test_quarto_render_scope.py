@@ -7,6 +7,7 @@ assert module_spec is not None and module_spec.loader is not None
 module = importlib.util.module_from_spec(module_spec)
 module_spec.loader.exec_module(module)
 classify_changed_files = module.classify_changed_files
+generator_scope = module.generator_scope
 
 
 CONFIG = """project:
@@ -252,20 +253,39 @@ def test_quarto_workflow_edits_skip_render_but_run_browser_audit():
 
 
 def test_other_workflow_and_scope_classifier_edits_skip_render_and_browser_audit():
-    for path in (
-        ".github/workflows/publish-quarto.yml",
-        "scripts/quarto_render_scope.py",
-    ):
-        result = classify_changed_files([{"filename": path, "status": "modified"}], CONFIG)
-        assert result["render_mode"] == "skip"
-        assert result["site_relevant"] is False
-        assert result["browser_relevant"] is False
+    result = classify_changed_files(
+        [{"filename": ".github/workflows/publish-quarto.yml", "status": "modified"}], CONFIG
+    )
+    assert result["render_mode"] == "skip"
+    assert result["site_relevant"] is False
+    assert result["browser_relevant"] is False
+
+
+def test_scope_classifier_changes_trigger_full_render_validation():
+    result = classify_changed_files(
+        [{"filename": "scripts/quarto_render_scope.py", "status": "modified"}], CONFIG
+    )
+
+    assert result["render_mode"] == "full"
+    assert result["site_relevant"] is True
+    assert result["generate_history"] is True
+    assert result["generate_learning_map"] is True
+    assert result["generate_computational_graph"] is True
+
+
+def test_full_render_regenerates_all_generated_includes():
+    result = classify_changed_files(
+        [{"filename": "site/tools/page_index.py", "status": "modified"}], CONFIG
+    )
+
+    assert result["render_mode"] == "full"
+    assert result["generate_history"] is True
+    assert result["generate_learning_map"] is True
+    assert result["generate_computational_graph"] is True
 
 
 def test_generator_scope_for_quarto_page_changes():
-    result = classify_changed_files(
-        [{"filename": "site/fr/attention.qmd", "status": "modified"}], CONFIG
-    )
+    result = generator_scope(["site/fr/attention.qmd"])
 
     assert result["generate_history"] is True
     assert result["generate_learning_map"] is True
@@ -273,9 +293,7 @@ def test_generator_scope_for_quarto_page_changes():
 
 
 def test_generator_scope_for_history_dataset_is_narrow():
-    result = classify_changed_files(
-        [{"filename": "data/history-pilot.yml", "status": "modified"}], CONFIG
-    )
+    result = generator_scope(["data/history-pilot.yml"])
 
     assert result["generate_history"] is True
     assert result["generate_learning_map"] is False
@@ -283,9 +301,7 @@ def test_generator_scope_for_history_dataset_is_narrow():
 
 
 def test_generator_scope_for_computational_graph_registry_is_narrow():
-    result = classify_changed_files(
-        [{"filename": "data/computational-graph.yml", "status": "modified"}], CONFIG
-    )
+    result = generator_scope(["data/computational-graph.yml"])
 
     assert result["generate_history"] is False
     assert result["generate_learning_map"] is False
@@ -299,7 +315,7 @@ def test_generator_scope_for_learning_map_registries_is_narrow():
         "data/resources.yml",
         "data/guided-route.yml",
     ):
-        result = classify_changed_files([{"filename": path, "status": "modified"}], CONFIG)
+        result = generator_scope([path])
 
         assert result["generate_history"] is False
         assert result["generate_learning_map"] is True
@@ -321,7 +337,7 @@ def test_generator_scope_is_conservative_for_generator_implementation_changes():
         "site/tools/render_computational_graph.py": "generate_computational_graph",
     }
     for path, expected in cases.items():
-        result = classify_changed_files([{"filename": path, "status": "modified"}], CONFIG)
+        result = generator_scope([path])
         assert result[expected] is True
 
 
