@@ -149,6 +149,7 @@ Ligne par ligne :
 ## Connexions
 
 - **Étape précédente** : [l'assemblage du GPT (`gpt.py`)](gpt-model-walkthrough.qmd).
+- **Retour au parcours Build** : [Construire un petit GPT](build-path.qmd).
 
 
 
