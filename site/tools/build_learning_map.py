@@ -697,9 +697,7 @@ def render_guided_page_transitions(
         source_href = "learning-map.html#guided-stage-" + escape(
             transition.from_stage_id, quote=True
         )
-        target_href = "learning-map.html#guided-stage-" + escape(
-            transition.to_stage_id, quote=True
-        )
+        target_href = "learning-map.html#guided-stage-" + escape(transition.to_stage_id, quote=True)
         summary = (
             f'<a href="{source_href}">{escape(transition.from_stage_title)}</a> '
             f'{arrow} <a href="{target_href}">{escape(transition.to_stage_title)}</a>'
