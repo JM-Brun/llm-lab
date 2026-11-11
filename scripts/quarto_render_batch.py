@@ -86,7 +86,7 @@ def replace_project_render_targets(config: str, targets: list[str]) -> str:
 
 
 HREF_ATTRIBUTE = re.compile(
-    r"(?P<prefix>(?<![\\w:-])href\\s*=\\s*)(?P<quote>['\\\"])(?P<value>.*?)(?P=quote)",
+    r"(?P<prefix>(?<![\w:-])href\s*=\s*)(?P<quote>['\"])(?P<value>.*?)(?P=quote)",
     re.IGNORECASE,
 )
 
@@ -184,7 +184,7 @@ def main() -> None:
 
         rewritten_pages = rewrite_rendered_html_links(temp_output)
         sys.stdout.write(
-            f"Rewrote local Quarto source links in {rewritten_pages} rendered HTML page(s)\\n"
+            f"Rewrote local Quarto source links in {rewritten_pages} rendered HTML page(s)\n"
         )
 
         # Overlay generated files only. Never delete from the existing site:
