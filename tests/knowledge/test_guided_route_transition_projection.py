@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import runpy
+from html import escape
 from pathlib import Path
 from typing import Any
 
@@ -41,9 +42,9 @@ def test_transition_projection_and_rendering_are_bilingual_and_separate_from_mem
     cross_entropy_context = GENERATOR["render_guided_page_transitions"](cross_entropy, language)
     assert "→" in generation_context
     assert "↔" in cross_entropy_context
-    assert generation[0].from_stage_title in generation_context
-    assert generation[0].to_stage_title in generation_context
-    assert generation[0].purpose in generation_context
+    assert escape(generation[0].from_stage_title) in generation_context
+    assert escape(generation[0].to_stage_title) in generation_context
+    assert escape(generation[0].purpose) in generation_context
     assert "predictive-distribution-to-generation" not in generation_context
     assert "observed-target-to-training-objective" not in cross_entropy_context
 
