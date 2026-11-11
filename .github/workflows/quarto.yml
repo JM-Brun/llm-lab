@@ -122,9 +122,9 @@ jobs:
                   break
 
           with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
-              output.write(f"available={'true' if run_id else 'false'}\\n")
+              output.write(f"available={'true' if run_id else 'false'}\n")
               if run_id:
-                  output.write(f"run_id={run_id}\\n")
+                  output.write(f"run_id={run_id}\n")
           if run_id:
               print(f"Found published site cache in workflow run {run_id}.")
           else:
@@ -213,9 +213,9 @@ jobs:
                   break
 
           with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
-              output.write(f"available={'true' if run_id else 'false'}\\n")
+              output.write(f"available={'true' if run_id else 'false'}\n")
               if run_id:
-                  output.write(f"run_id={run_id}\\n")
+                  output.write(f"run_id={run_id}\n")
           if run_id:
               print(f"Found exact-commit published site cache in workflow run {run_id}.")
           else:
@@ -252,7 +252,7 @@ jobs:
           else
             echo "cache_restored=false" >> "$GITHUB_OUTPUT"
             echo "Published site cache failed provenance or completeness checks; falling back to a full render."
-            [ "${#missing[@]}" -eq 0 ] || printf 'Missing configured page(s): %s\\n' "${missing[@]}"
+            [ "${#missing[@]}" -eq 0 ] || printf 'Missing configured page(s): %s\n' "${missing[@]}"
           fi
 
       - name: Cache Quarto Linux tarball
