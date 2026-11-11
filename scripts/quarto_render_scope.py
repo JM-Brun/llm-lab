@@ -17,6 +17,8 @@ GLOBAL_RENDER_INPUTS = {
     "uv.lock",
     # Renderer changes trigger an incremental CLI smoke test against the cached site.
     "scripts/quarto_render_batch.py",
+    # Classifier changes must exercise the full-render path in the Quarto workflow.
+    "scripts/quarto_render_scope.py",
 }
 
 
