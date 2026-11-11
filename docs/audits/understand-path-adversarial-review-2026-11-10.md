@@ -76,6 +76,7 @@ Re-reading the pages before editing showed three findings were overstated. They 
 ## Implemented so far
 
 - F1, option B: new `training-loop` lesson (EN/FR), route stage 8, sidebars, registries, docs.
+- F2: new `post-training` lesson (EN/FR), attached as an optional page of the existing `training` stage rather than a ninth stage. A ninth stage would contradict the "three questions, eight stages" structure of the learning map and the learning-path decision that adaptation is not an additional stage of the guided route.
 - F8: one prerequisite sentence on each landing page (EN `site/en/index.qmd`, FR `site/index.qmd`). The stated prerequisites come from the lessons' content and have not been validated with learners.
 
 ## Proposed issues (not yet created)

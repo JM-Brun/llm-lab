@@ -148,6 +148,7 @@ Relier les cibles observées à la loss agrégée, aux gradients et aux mises à
 
 - [Entropie croisée : l'objectif de prédiction des tokens](cross-entropy.html) *(rappel)*
 - [Lois d'échelle : paramètres, données et calcul](scaling-laws.html)
+- [D'un modèle de base à un assistant : le post-entraînement](post-training.html)
 
 :::
 

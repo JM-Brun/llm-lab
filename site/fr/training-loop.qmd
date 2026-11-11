@@ -16,7 +16,7 @@ suggested_route:
   next: null
 hierarchy:
   parents: ["fr/loss"]
-  children: []
+  children: ["fr/post-training"]
 related: ["fr/scaling-laws", "fr/build-path", "fr/evaluation-experimentale"]
 tags: ["type:concept-lesson", "destination:understand", "topic:training-loop", "level:core", "language:fr", "status:published"]
 -->

@@ -1,0 +1,113 @@
+---
+title: "D'un modèle de base à un assistant : le post-entraînement"
+subtitle: "Adapter les paramètres pré-entraînés, et ce qui reste dans le contexte"
+keywords: ["type:concept-lesson", "destination:understand", "topic:post-training", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/post-training"
+summary: "Explique le post-entraînement comme la même boucle d'entraînement appliquée à un modèle pré-entraîné avec d'autres données et d'autres cibles, et le distingue du prompting et de la récupération, qui modifient le contexte mais pas les paramètres."
+scope: "Distinguer pré-entraînement, fine-tuning supervisé sur des paires instruction-réponse, méthodes à préférences (RLHF avec modèle de récompense et optimisation directe des préférences) et adaptation économe en paramètres, au niveau des données, des cibles et des paramètres modifiés ; les opposer à l'apprentissage en contexte et à la génération augmentée par récupération. Les algorithmes (PPO, dérivation de l'objectif DPO), les recettes de modèles particuliers et l'évaluation du comportement d'un assistant sont hors périmètre."
+purpose: "Indiquer, pour chaque méthode d'adaptation, quelles données elle utilise, quels tokens contribuent à la loss, quels paramètres changent et ce qui reste fixe ; choisir entre modifier le contexte et modifier les paramètres."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: ["fr/training-loop"]
+  children: []
+related: ["fr/llm-overview", "fr/llm-evolution", "fr/in-context-learning", "fr/loss", "fr/glossary", "fr/llm-limits"]
+tags: ["type:concept-lesson", "destination:understand", "topic:post-training", "level:applied", "language:fr", "status:published"]
+-->
+
+
+{{< include ../includes/generated-guided-context-fr-post-training.qmd >}}
+::: {.chapter-lead}
+Un *modèle de base* pré-entraîné prédit des continuations vraisemblables d'un texte ; il n'a pas été entraîné à suivre des instructions ni à tenir une conversation. Le post-entraînement adapte ses paramètres dans ce but. Le mécanisme est la [boucle d'entraînement](training-loop.qmd) déjà étudiée, appliquée à un modèle qui part de paramètres appris et utilise d'autres données, d'autres cibles ou d'autres signaux d'entraînement.
+:::
+
+::: {.callout-tip title="L'idée à retenir en une minute"}
+Deux choses différentes peuvent modifier une réponse.
+
+- **Modifier les paramètres** (post-entraînement) : exécuter la boucle d'entraînement sur de nouvelles données. Le changement persiste dans le point de sauvegarde et s'applique à tous les prompts suivants.
+- **Modifier le contexte** (prompting, exemples, documents récupérés) : fournir une autre entrée à des paramètres fixes. Le changement ne vaut que pour cette requête.
+
+Les méthodes de post-entraînement diffèrent par les *données*, les *tokens qui contribuent à la loss* et les *paramètres mis à jour*. Elles ne sont pas synonymes et ne sont pas toutes employées pour chaque modèle.
+:::
+
+## Ce qui ne change pas : la boucle
+
+Le post-entraînement part des paramètres $\theta_0$ obtenus par le [pré-entraînement](training-loop.qmd#le-pré-entraînement-est-la-même-boucle-à-grande-échelle), pas d'une initialisation aléatoire. Chaque pas effectue toujours une passe avant, une [loss](loss.qmd), un [gradient](gradients.qmd) et une mise à jour. Ce qui change, ce sont les données d'entraînement et les positions comptées par la loss.
+
+| Méthode | Données | Signal d'entraînement | Paramètres modifiés |
+|---|---|---|---|
+| **Pré-entraînement** | Grand corpus de texte non annoté | Entropie croisée du token suivant sur chaque position | Tous |
+| **Fine-tuning supervisé (SFT) / instruction tuning** | Démonstrations instruction–réponse sélectionnées | Entropie croisée du token suivant, en général sur les seuls tokens de la réponse | Généralement tous, ou un petit sous-ensemble ajouté (voir plus bas) |
+| **Méthodes à préférences** (RLHF, DPO) | Comparaisons entre réponses candidates à un même prompt | Une récompense apprise (RLHF) ou une loss définie directement sur les réponses préférée et rejetée (DPO) | Généralement tous, ou un petit sous-ensemble ajouté |
+| **Prompting, exemples few-shot, RAG** | Texte placé dans le contexte au moment de la requête | Aucun : pas d'entraînement | Aucun |
+
+Le tableau décrit la pratique courante ; les systèmes diffèrent, et la documentation publique n'indique pas toujours quelle combinaison un modèle donné a utilisée.
+
+## Le fine-tuning supervisé : la même loss, un autre masque
+
+Une paire instruction–réponse est concaténée en une seule séquence de tokens, par exemple un prompt suivi de la réponse souhaitée. Le SFT applique ensuite l'objectif du token suivant décrit dans [Loss](loss.qmd). Le choix usuel consiste à ne laisser contribuer à la loss que les tokens de la **réponse** : les positions du prompt fournissent du contexte grâce au masque causal, mais sont exclues de la moyenne par le [masque de loss](loss.qmd#masquage-et-cibles-décalées). Compter aussi le prompt est possible et change l'objectif.
+
+C'est pourquoi le masque de loss compte : il sélectionne les cibles qui contribuent à l'objectif ; il ne décide pas quelles positions l'attention peut lire. Rien d'autre ne change dans la passe avant. On obtient un modèle dont la continuation la plus probable d'un prompt en forme d'instruction est une réponse dans le style démontré.
+
+Le SFT enseigne par imitation des démonstrations. Il n'indique pas à lui seul laquelle de deux réponses acceptables une personne préférerait, et sa qualité dépend de celle et de la couverture des démonstrations.
+
+## Les méthodes à préférences
+
+Les données de préférence enregistrent laquelle de deux (ou plusieurs) réponses candidates à un même prompt une personne ou un autre juge a préférée. Deux familles sont courantes.
+
+- **RLHF avec modèle de récompense.** Un *modèle de récompense* est d'abord entraîné à attribuer des scores plus élevés aux réponses préférées. Le modèle de langage est ensuite optimisé par un algorithme d'apprentissage par renforcement (souvent PPO) pour produire des réponses bien notées, en général avec une pénalité qui le maintient proche du modèle de départ. La récompense est un substitut appris des données de préférence, pas une mesure de la vérité ni de la qualité.
+- **Optimisation directe des préférences (DPO).** Le modèle de langage est entraîné directement avec une loss sur les réponses préférées et rejetées, sans modèle de récompense séparé ni boucle d'apprentissage par renforcement.
+
+Les deux modifient les paramètres : ce sont du post-entraînement. Elles diffèrent du SFT parce que le signal est une comparaison, non une séquence cible unique. Toutes deux optimisent un substitut : des données issues d'évaluateurs, de prompts et de critères particuliers. Leurs dérivations, variantes et compromis sortent du périmètre de cette leçon ; voir les entrées du glossaire et les sources ci-dessous.
+
+## Mettre à jour moins de paramètres
+
+Ajuster tous les paramètres d'un grand modèle exige de stocker les gradients et l'état de l'optimiseur pour chacun d'eux. Les méthodes **économes en paramètres** gèlent les poids pré-entraînés et n'entraînent qu'un petit nombre de paramètres ajoutés. LoRA, par exemple, apprend une correction de faible rang pour certaines matrices de poids ([Hu et al., 2021](https://arxiv.org/abs/2106.09685)). Cela change le nombre de paramètres que l'optimiseur met à jour, pas l'objectif : la boucle est la même, et le résultat est constitué des poids pré-entraînés plus un petit ajout entraîné.
+
+## Modifier le contexte à la place
+
+Certaines méthodes laissent les paramètres intacts.
+
+- **Prompting et exemples en contexte :** des instructions ou des démonstrations placées dans le prompt orientent la continuation sans aucune mise à jour. Voir l'[apprentissage en contexte](in-context-learning.qmd) pour ce que les exemples peuvent et ne peuvent pas faire.
+- **Génération augmentée par récupération (RAG) :** une étape de recherche récupère des documents et les insère dans le prompt ([Lewis et al., 2020](https://arxiv.org/abs/2005.11401)). De nouvelles informations s'ajoutent en mettant à jour la base de documents, sans entraînement ; la réponse vaut ce que valent la recherche et l'usage que le modèle fait du texte récupéré.
+
+::: {.callout-warning title="Idées reçues"}
+- **« Le fine-tuning ajoute des connaissances comme une insertion en base de données. »** Il ajuste les paramètres vers le signal d'entraînement ; il peut façonner le style et le format de façon fiable, les faits moins fiablement, et dégrader le comportement hors des données d'ajustement.
+- **« L'instruction tuning change l'architecture. »** Le réseau est le même ; ce sont les paramètres qui diffèrent.
+- **« RLHF et DPO sont des noms interchangeables du fine-tuning. »** Elles utilisent des données de comparaison et des objectifs différents ; le SFT utilise des démonstrations.
+- **« Un modèle qui suit les instructions est donc véridique. »** Le post-entraînement oriente la distribution vers des sorties préférées ; il ne garantit pas l'exactitude factuelle. Voir les [limites des LLM](llm-limits.qmd).
+:::
+
+## Choisir entre contexte et paramètres
+
+Commencer par le changement le moins coûteux que justifient vos mesures : le modèle tel quel, puis le contexte (exemples, récupération), puis les paramètres. L'adaptation se justifie quand un format, un domaine ou un comportement n'est pas obtenu par le contexte seul et qu'il existe assez de bonnes données. La décision repose sur la qualité mesurée, le coût, la latence, la confidentialité, la provenance des données et la maintenance, comme dans le [panorama des LLM](llm-overview.qmd). Quelques prompts réussis ne constituent pas une évaluation ; voir l'[évaluation expérimentale](evaluation-experimentale.qmd).
+
+Pour situer ces méthodes dans l'histoire des modèles d'assistant, voir l'[évolution des LLM](llm-evolution.qmd#du-pré-entraînement-au-post-entraînement). Le parcours Construire depuis zéro ne couvre pas l'adaptation ; son état y est suivi dans le [parcours Construire](build-path.qmd).
+
+::: {.language-switch}
+[Français](post-training.qmd) · [English](../en/post-training.qmd)
+:::
+
+<details class="learning-resources">
+<summary>
+  <span class="learning-resources__title">Ressources complémentaires</span>
+  <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
+</summary>
+<div class="learning-resources__content" markdown="1">
+
+### Pour approfondir
+
+- [Ouyang et al. — Training language models to follow instructions with human feedback](https://arxiv.org/abs/2203.02155) : fine-tuning supervisé, modèle de récompense et PPO dans un même pipeline documenté.
+- [Wei et al. — Finetuned Language Models Are Zero-Shot Learners (FLAN)](https://arxiv.org/abs/2109.01652) : instruction tuning sur de nombreuses tâches formulées comme des instructions.
+- [Rafailov et al. — Direct Preference Optimization](https://arxiv.org/abs/2305.18290) : apprentissage des préférences sans modèle de récompense séparé.
+- [Hu et al. — LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685) : adaptation économe en paramètres par mises à jour de faible rang.
+- [Lewis et al. — Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401) : récupération insérée dans le contexte au moment de l'inférence.
+
+</div>
+</details>

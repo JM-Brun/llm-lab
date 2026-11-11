@@ -109,5 +109,5 @@ stages:
       fr: [fr/loss, fr/gradients, fr/training-loop]
       en: [en/loss, en/gradients, en/training-loop]
     optional_pages:
-      fr: [fr/cross-entropy, fr/scaling-laws]
-      en: [en/cross-entropy, en/scaling-laws]
+      fr: [fr/cross-entropy, fr/scaling-laws, fr/post-training]
+      en: [en/cross-entropy, en/scaling-laws, en/post-training]

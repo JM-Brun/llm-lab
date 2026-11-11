@@ -148,6 +148,7 @@ Connect observed targets to the aggregated loss, gradients, and parameter update
 
 - [Cross-entropy: the token-prediction objective](cross-entropy.html) *(recap)*
 - [Scaling laws: parameters, data, and compute](scaling-laws.html)
+- [From a base model to an assistant: post-training](post-training.html)
 
 :::
 
