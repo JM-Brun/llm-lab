@@ -181,15 +181,15 @@ jobs:
           uv pip install --python .venv/bin/python -r docs/requirements-history-validation.txt
 
       - name: Generate bilingual history timeline fragments
-        if: steps.publish_strategy.outputs.mode == 'full' || steps.render_scope.outputs.generate_history == 'true'
+        if: github.event_name != 'push' || steps.render_scope.outputs.generate_history == 'true' || steps.render_scope.outputs.generate_history == ''
         run: .venv/bin/python site/tools/render_history_pilot.py
 
       - name: Generate learning-map data and guided-route Markdown
-        if: steps.publish_strategy.outputs.mode == 'full' || steps.render_scope.outputs.generate_learning_map == 'true'
+        if: github.event_name != 'push' || steps.render_scope.outputs.generate_learning_map == 'true' || steps.render_scope.outputs.generate_learning_map == ''
         run: .venv/bin/python site/tools/build_learning_map.py
 
       - name: Generate bilingual computational-graph fragments
-        if: steps.publish_strategy.outputs.mode == 'full' || steps.render_scope.outputs.generate_computational_graph == 'true'
+        if: github.event_name != 'push' || steps.render_scope.outputs.generate_computational_graph == 'true' || steps.render_scope.outputs.generate_computational_graph == ''
         run: .venv/bin/python site/tools/render_computational_graph.py
 
       - name: Render changed pages incrementally
