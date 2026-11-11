@@ -3,6 +3,7 @@
 Transitions describe explanatory relationships, never prerequisites. This
 module validates the source model without projecting or rendering it.
 """
+
 from __future__ import annotations
 
 import re
@@ -111,10 +112,9 @@ def validate_guided_route_transitions(
                         f"transition {transition.id!r} references unpublished or "
                         f"missing {language} page {page_id!r}"
                     )
-            endpoint_members = (
-                stage_members(stage_by_id[transition.from_stage], language)
-                | stage_members(stage_by_id[transition.to_stage], language)
-            )
+            endpoint_members = stage_members(
+                stage_by_id[transition.from_stage], language
+            ) | stage_members(stage_by_id[transition.to_stage], language)
             unrelated = set(page_ids) - endpoint_members
             if unrelated:
                 raise ValueError(
