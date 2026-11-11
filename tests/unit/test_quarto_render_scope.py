@@ -209,7 +209,6 @@ def test_global_configuration_and_shared_references_force_full_render():
         "site/styles.scss",
         "pyproject.toml",
         "uv.lock",
-        "scripts/site-browser-review.mjs",
     ):
         result = classify_changed_files([{"filename": path, "status": "modified"}], CONFIG)
         assert result["render_mode"] == "full"
@@ -315,3 +314,30 @@ def test_generator_scope_is_conservative_for_generator_implementation_changes():
     for path, expected in cases.items():
         result = classify_changed_files([{"filename": path, "status": "modified"}], CONFIG)
         assert result[expected] is True
+
+
+def test_browser_audit_script_only_skips_quarto_render_but_keeps_browser_audit():
+    result = classify_changed_files(
+        [{"filename": "scripts/site-browser-review.mjs", "status": "modified"}], CONFIG
+    )
+
+    assert result["render_mode"] == "skip"
+    assert result["site_relevant"] is False
+    assert result["browser_relevant"] is True
+    assert result["render_targets"] == []
+    assert result["render_assets"] == []
+
+
+def test_browser_audit_change_with_page_change_keeps_incremental_render_and_audit():
+    result = classify_changed_files(
+        [
+            {"filename": "scripts/site-browser-review.mjs", "status": "modified"},
+            {"filename": "site/en/example.qmd", "status": "modified"},
+        ],
+        CONFIG,
+    )
+
+    assert result["render_mode"] == "incremental"
+    assert result["site_relevant"] is True
+    assert result["browser_relevant"] is True
+    assert "site/en/example.qmd" in result["render_targets"]

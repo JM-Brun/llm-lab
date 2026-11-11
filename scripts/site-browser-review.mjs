@@ -1,3 +1,5 @@
+// Browser-audit implementation is independent of Quarto output: PR checks reuse
+// the exact-base published artifact and rebuild only when that cache is unavailable.
 import fs from "node:fs";
 import path from "node:path";
 import { chromium } from "playwright";
