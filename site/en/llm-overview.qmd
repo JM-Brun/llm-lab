@@ -22,6 +22,28 @@ related: ["en/transformer-history", "en/scaling-laws", "en/llm-overview-exercise
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:en", "status:published"]
 -->
 
+<nav class="page-breadcrumb" aria-label="Breadcrumb — stages covered by this overview">
+  <a href="../index.qmd">Home</a>
+  <span aria-hidden="true">›</span>
+  <a href="generation.qmd">Place the system in context</a>
+  <span aria-hidden="true">›</span>
+  <a href="text-data.qmd">From text to tokens</a>
+  <span aria-hidden="true">›</span>
+  <a href="embedding-space.qmd">From IDs to representations</a>
+  <span aria-hidden="true">›</span>
+  <a href="transformer.qmd">Understand Transformer computation</a>
+  <span aria-hidden="true">›</span>
+  <a href="logits.qmd">From hidden states to the predictive distribution</a>
+  <span aria-hidden="true">›</span>
+  <a href="generation.qmd">Run inference and generate text</a>
+  <span aria-hidden="true">›</span>
+  <a href="likelihood.qmd">Score observed tokens</a>
+  <span aria-hidden="true">›</span>
+  <a href="loss.qmd">Learn and update parameters</a>
+  <span aria-hidden="true">›</span>
+  <span aria-current="page">Overview: what is an LLM?</span>
+</nav>
+
 {{< include ../includes/generated-guided-context-en-llm-overview.qmd >}}
 
 ::: {.chapter-lead}
@@ -186,6 +208,13 @@ Not necessarily. A RAG system retrieves recent documents at inference time witho
 :::
 
 {{< include ../includes/generated-suggested-route-en-llm-overview.qmd >}}
+
+<div class="route-nav-cards">
+  <a class="route-nav-card" href="generation.qmd">
+    <span class="nav-direction">Next step →</span>
+    <span class="nav-title">Generate text</span>
+  </a>
+</div>
 
 ::: {.language-switch}
 **Language:** [Français](../fr/llm-overview.qmd) · [English](llm-overview.qmd)
