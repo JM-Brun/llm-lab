@@ -64,7 +64,8 @@ def generator_scope(paths: list[str]) -> dict[str, bool]:
         "generate_learning_map": (
             qmd_changed
             or any(
-                path in {
+                path
+                in {
                     "site/_quarto.yml",
                     "site/en/_metadata.yml",
                     "site/fr/_metadata.yml",
