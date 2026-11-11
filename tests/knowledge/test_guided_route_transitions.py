@@ -32,6 +32,12 @@ def published_ids() -> set[str]:
 
 
 @pytest.mark.parametrize("language", ["fr", "en"])
+def test_route_document_uses_the_strict_transition_schema() -> None:
+    document = GENERATOR["GuidedRouteDocument"].model_validate(route_payload())
+    assert len(document.transitions) == 2
+    assert document.transitions[0].id == "predictive-distribution-to-generation"
+
+
 def test_reference_transitions_are_explicit_and_bilingual(language: str) -> None:
     transitions = validate_guided_route_transitions(route_payload(), published_ids())
     by_id = {item.id: item for item in transitions}
