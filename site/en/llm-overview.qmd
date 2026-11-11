@@ -22,8 +22,6 @@ related: ["en/transformer-history", "en/scaling-laws", "en/llm-overview-exercise
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:en", "status:published"]
 -->
 
-{{< include ../includes/generated-guided-context-en-llm-overview.qmd >}}
-
 <nav class="page-breadcrumb" aria-label="Breadcrumb">
   <a href="../index.qmd">Home</a>
   <span aria-hidden="true">›</span>
@@ -31,6 +29,8 @@ tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "
   <span aria-hidden="true">›</span>
   <span aria-current="page">Overview: what is an LLM?</span>
 </nav>
+
+{{< include ../includes/generated-guided-context-en-llm-overview.qmd >}}
 
 ::: {.chapter-lead}
 “What have the Romans ever done for us?” In *Monty Python's Life of Brian*, the question sets off a long series of answers. Put the same question to a conversational assistant: it carries on too. How does a program produce a continuation from a question?
