@@ -453,21 +453,55 @@ def test_every_route_member_wires_exactly_its_generated_context_include(language
 
 
 @pytest.mark.parametrize(
-    ("language", "breadcrumb_label", "next_label", "next_title"),
+    ("language", "breadcrumb_label", "next_label", "next_title", "stage_links"),
     [
-        ("fr", "Fil d’Ariane", "Étape suivante →", "Générer du texte"),
-        ("en", "Breadcrumb", "Next step →", "Generate text"),
+        (
+            "fr",
+            "Fil d’Ariane — étapes couvertes par le panorama",
+            "Étape suivante →",
+            "Générer du texte",
+            (
+                "generation.qmd",
+                "text-data.qmd",
+                "embedding-space.qmd",
+                "transformer.qmd",
+                "logits.qmd",
+                "vraisemblance.qmd",
+                "loss.qmd",
+            ),
+        ),
+        (
+            "en",
+            "Breadcrumb — stages covered by this overview",
+            "Next step →",
+            "Generate text",
+            (
+                "generation.qmd",
+                "text-data.qmd",
+                "embedding-space.qmd",
+                "transformer.qmd",
+                "logits.qmd",
+                "likelihood.qmd",
+                "loss.qmd",
+            ),
+        ),
     ],
 )
-def test_overview_preserves_breadcrumb_and_explicit_next_page(
-    language: str, breadcrumb_label: str, next_label: str, next_title: str
+def test_overview_preserves_all_covered_stages_and_explicit_next_page(
+    language: str,
+    breadcrumb_label: str,
+    next_label: str,
+    next_title: str,
+    stage_links: tuple[str, ...],
 ) -> None:
-    """The cross-cutting overview remains navigable without a false active step."""
+    """The cross-cutting overview exposes its full coverage and a preferred continuation."""
     page = ROOT / "site" / language / "llm-overview.qmd"
     source = page.read_text(encoding="utf-8")
 
     assert f'<nav class="page-breadcrumb" aria-label="{breadcrumb_label}">' in source
     assert 'aria-current="page"' in source
-    assert 'href="generation.qmd"' in source
+    for stage_link in stage_links:
+        assert f'href="{stage_link}"' in source
     assert next_label in source
     assert next_title in source
+    assert 'href="generation.qmd"' in source
