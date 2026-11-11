@@ -192,6 +192,16 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
     elif safe and (targets or assets or renderer_changed):
         mode = "incremental"
 
+    # A full Quarto render consumes generated includes from every generator.
+    # Narrow generator selection is safe only when the cached site is overlaid
+    # incrementally; a clean/full render must regenerate the complete set.
+    if mode == "full":
+        generators = {
+            "generate_history": True,
+            "generate_learning_map": True,
+            "generate_computational_graph": True,
+        }
+
     return {
         "site_relevant": site_relevant,
         "browser_relevant": browser_relevant,
