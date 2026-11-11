@@ -14,7 +14,6 @@ GENERATOR: dict[str, Any] = runpy.run_path(
     run_name="guided_route_membership_test",
 )
 
-
 @pytest.mark.parametrize("language", ["fr", "en"])
 def test_membership_projection_preserves_core_optional_and_multiple_contexts(
     language: str,
@@ -89,7 +88,6 @@ def test_membership_projection_preserves_core_optional_and_multiple_contexts(
     )
     assert practice_page not in memberships
 
-
 def test_membership_projection_keeps_empty_membership_absent() -> None:
     stages = [
         GENERATOR["ResolvedGuidedRouteStage"](
@@ -110,7 +108,6 @@ def test_membership_projection_keeps_empty_membership_absent() -> None:
     assert memberships["en/optional"][0].role == "optional"
     assert "en/unassigned" not in memberships
 
-
 @pytest.mark.parametrize("language", ["fr", "en"])
 def test_guided_route_stage_anchors_are_stable(language: str) -> None:
     pages = [page for page in GENERATOR["load_pages"]() if page["language"] in {language, "shared"}]
@@ -119,7 +116,6 @@ def test_guided_route_stage_anchors_are_stable(language: str) -> None:
 
     for stage in stages:
         assert f"#guided-stage-{stage.id}" in rendered
-
 
 @pytest.mark.parametrize("language", ["fr", "en"])
 def test_route_projection_parts_match_the_canonical_route(language: str) -> None:
@@ -131,7 +127,6 @@ def test_route_projection_parts_match_the_canonical_route(language: str) -> None
     rendered = GENERATOR["render_guided_route_markdown"](stages, language)
     for part_id in ("discover", "prediction", "usages"):
         assert f"#guided-part-{part_id}" in rendered
-
 
 def test_single_membership_renders_as_context_not_as_a_parent_claim() -> None:
     membership = GENERATOR["GuidedRouteMembership"](
@@ -157,7 +152,6 @@ def test_single_membership_renders_as_context_not_as_a_parent_claim() -> None:
     )
     assert "03 · From IDs to representations" in rendered
     assert "Optional resource" in rendered
-
 
 def test_multiple_memberships_are_all_rendered_with_their_purposes() -> None:
     memberships = [
@@ -191,14 +185,12 @@ def test_multiple_memberships_are_all_rendered_with_their_purposes() -> None:
     assert "Connect logits, probabilities and next-token selection." in rendered
     assert "Core stage" in rendered
 
-
 def test_page_without_route_membership_has_no_context_fragment() -> None:
     page = GENERATOR["ResolvedPage"](
         id="en/build-path", title="Build a small GPT", href="build-path.html"
     )
 
     assert GENERATOR["render_guided_page_context_markdown"](page, [], "en") == ""
-
 
 @pytest.mark.parametrize("language", ["fr", "en"])
 def test_writer_generates_page_contexts_for_every_route_member(
@@ -236,7 +228,6 @@ def test_writer_generates_page_contexts_for_every_route_member(
         page_by_id[generation_id], memberships[generation_id], language
     )
 
-
 @pytest.mark.parametrize(
     ("language", "expected"),
     [
@@ -261,7 +252,6 @@ def test_core_page_context_states_position(language: str, expected: str) -> None
 
     assert f'<span class="guided-page-context__position">{expected}</span>' in rendered
 
-
 def test_optional_page_context_adds_no_position() -> None:
     membership = GENERATOR["GuidedRouteMembership"](
         stage_id="representations",
@@ -278,7 +268,6 @@ def test_optional_page_context_adds_no_position() -> None:
     # The stage number is already in the stage cue; an optional page has no rank.
     assert "guided-page-context__position" not in rendered
 
-
 def test_page_context_omits_position_it_does_not_know() -> None:
     membership = GENERATOR["GuidedRouteMembership"](
         stage_id="representations",
@@ -292,7 +281,6 @@ def test_page_context_omits_position_it_does_not_know() -> None:
     rendered = GENERATOR["render_guided_page_context_markdown"](page, [membership], "en")
 
     assert "guided-page-context__position" not in rendered
-
 
 @pytest.mark.parametrize("language", ["fr", "en"])
 def test_real_route_positions_are_complete_and_consistent(language: str) -> None:
@@ -320,8 +308,6 @@ def test_real_route_positions_are_complete_and_consistent(language: str) -> None
         page_id = page_id.replace("-", "/", 1)
         assert ("guided-page-context__position" in text) == (page_id in core_ids), path.name
 
-
-
 @pytest.mark.parametrize("language", ["fr", "en"])
 def test_guided_rail_links_every_stage_in_registry_order(language: str) -> None:
     pages = [page for page in GENERATOR["load_pages"]() if page["language"] in {language, "shared"}]
@@ -334,15 +320,21 @@ def test_guided_rail_links_every_stage_in_registry_order(language: str) -> None:
     assert "\\n" not in rendered
     assert 'data-guided-rail data-total="8"' in rendered
     assert 'data-guided-rail-progress hidden' in rendered
-    assert rendered.index('data-part="discover"') < rendered.index('data-part="prediction"') < rendered.index('data-part="usages"')
-    assert "stockée uniquement dans ce navigateur" in rendered if language == "fr" else "stored only in this browser" in rendered
+    part_positions = [
+        rendered.index(f'data-part="{part_id}"')
+        for part_id in ("discover", "prediction", "usages")
+    ]
+    assert part_positions == sorted(part_positions)
+    disclaimer = (
+        "stockée uniquement dans ce navigateur"
+        if language == "fr"
+        else "stored only in this browser"
+    )
+    assert disclaimer in rendered
 
-
-@pytest.mark.parametrize("language", ["fr", "en"])
-def test_guided_rail_rejects_unknown_language(language: str) -> None:
+def test_guided_rail_rejects_unknown_language() -> None:
     with pytest.raises(ValueError, match="unsupported guided-route language"):
         GENERATOR["render_guided_rail"]([], "de")
-
 
 def test_guided_rail_escapes_stage_titles() -> None:
     stage = GENERATOR["ResolvedGuidedRouteStage"](
@@ -354,7 +346,6 @@ def test_guided_rail_escapes_stage_titles() -> None:
     rendered = GENERATOR["render_guided_rail"]([stage], "en")
     assert "&lt;script&gt;" in rendered
     assert "<script>" not in rendered
-
 
 @pytest.mark.parametrize("language", ["fr", "en"])
 def test_guided_route_fragment_places_rail_before_stage_anchors(language: str, tmp_path: Path) -> None:
@@ -370,8 +361,6 @@ def test_guided_route_fragment_places_rail_before_stage_anchors(language: str, t
     assert rendered.index('class="guided-rail"') < rendered.index("#guided-stage-orientation")
     assert "\\n" not in rendered
 
-
-
 @pytest.mark.parametrize(("language", "label"), [("fr", "Étape 3/8"), ("en", "Stage 3/8")])
 def test_page_context_renders_stage_badge_and_tracking_attributes(language: str, label: str) -> None:
     membership = GENERATOR["GuidedRouteMembership"](
@@ -384,14 +373,15 @@ def test_page_context_renders_stage_badge_and_tracking_attributes(language: str,
         page_index=1,
         page_count=4,
     )
-    page = GENERATOR["ResolvedPage"](id=f"{language}/embeddings", title="Embeddings", href="embeddings.html")
+    page = GENERATOR["ResolvedPage"](
+        id=f"{language}/embeddings", title="Embeddings", href="embeddings.html"
+    )
     rendered = GENERATOR["render_guided_page_context_markdown"](page, [membership], language)
 
     assert label in rendered
     assert 'data-stage-id="representations"' in rendered
     assert 'data-stage-index="3"' in rendered
     assert 'data-stage-total="8"' in rendered
-
 
 @pytest.mark.parametrize("language", ["fr", "en"])
 def test_rail_and_page_context_use_identical_stage_ids(language: str) -> None:
