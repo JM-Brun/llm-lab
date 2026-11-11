@@ -111,6 +111,7 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
         or path
         in {
             "scripts/site-browser-review.mjs",
+            "scripts/quarto_render_scope.py",
             ".github/workflows/quarto.yml",
             "tests/knowledge/test_guided_route_memberships.py",
         }
