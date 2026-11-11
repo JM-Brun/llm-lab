@@ -4,12 +4,12 @@ from typing import Any
 
 import pytest
 from build_learning_map import (
-    load_navigation,
-    load_pages,
-    load_sidebar_page_neighbors,
     SITE,
     final_core_page_id,
     load_guided_route,
+    load_navigation,
+    load_pages,
+    load_sidebar_page_neighbors,
     prepare_suggested_route_fragments,
     render_suggested_route_markdown,
 )
