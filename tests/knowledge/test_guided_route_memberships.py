@@ -1,4 +1,4 @@
-"""Validate the explicit page-to-stage membership projection."""
+""""Validate the explicit page-to-stage membership projection."""
 
 from __future__ import annotations
 
@@ -15,14 +15,11 @@ GENERATOR: dict[str, Any] = runpy.run_path(
 )
 
 
-
 @pytest.mark.parametrize("language", ["fr", "en"])
 def test_membership_projection_preserves_core_optional_and_multiple_contexts(
     language: str,
 ) -> None:
-    pages = [
-        page for page in GENERATOR["load_pages"]() if page["language"] in {language, "shared"}
-    ]
+    pages = [page for page in GENERATOR["load_pages"]() if page["language"] in {language, "shared"}]
     stages = GENERATOR["load_guided_route"](language, pages)
     memberships = GENERATOR["build_guided_route_memberships"](stages)
 
@@ -335,7 +332,7 @@ def test_guided_rail_links_every_stage_in_registry_order(language: str) -> None:
     assert rendered.count('class="guided-rail__part"') == len(GENERATOR["ROUTE_PARTS"])
     assert "\\n" not in rendered
     assert 'data-guided-rail data-total="8"' in rendered
-    assert 'data-guided-rail-progress hidden' in rendered
+    assert "data-guided-rail-progress hidden" in rendered
     part_positions = [
         rendered.index(f'data-part="{part_id}"') for part_id in ("discover", "prediction", "usages")
     ]
@@ -383,7 +380,9 @@ def test_guided_route_fragment_places_rail_before_stage_anchors(
 
 
 @pytest.mark.parametrize(("language", "label"), [("fr", "Étape 3/8"), ("en", "Stage 3/8")])
-def test_page_context_renders_stage_badge_and_tracking_attributes(language: str, label: str) -> None:
+def test_page_context_renders_stage_badge_and_tracking_attributes(
+    language: str, label: str
+) -> None:
     membership = GENERATOR["GuidedRouteMembership"](
         stage_id="representations",
         stage_index=3,
