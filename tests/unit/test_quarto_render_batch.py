@@ -9,6 +9,8 @@ CONFIG = """project:
   render:
     - fr/old.qmd
     - en/old.qmd
+    - fr/learning-map.qmd
+    - en/learning-map.qmd
 
 website:
   title: Example
@@ -45,7 +47,7 @@ def test_rejects_unsafe_or_empty_targets():
 
 def test_requires_existing_project_render_list():
     config = CONFIG.replace(
-        "  render:\n    - fr/old.qmd\n    - en/old.qmd\n",
+        "  render:\n    - fr/old.qmd\n    - en/old.qmd\n    - fr/learning-map.qmd\n    - en/learning-map.qmd\n",
         "",
     )
     try:
