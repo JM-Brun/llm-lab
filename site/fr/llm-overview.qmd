@@ -22,10 +22,24 @@ related: ["fr/transformer-history", "fr/scaling-laws", "fr/llm-overview-exercise
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:fr", "status:published"]
 -->
 
-<nav class="page-breadcrumb" aria-label="Fil d’Ariane">
+<nav class="page-breadcrumb" aria-label="Fil d’Ariane — étapes couvertes par le panorama">
   <a href="../index.qmd">Accueil</a>
   <span aria-hidden="true">›</span>
-  <span>Comprendre les LLM</span>
+  <a href="generation.qmd">Situer le système</a>
+  <span aria-hidden="true">›</span>
+  <a href="text-data.qmd">Du texte aux tokens</a>
+  <span aria-hidden="true">›</span>
+  <a href="embedding-space.qmd">Des identifiants aux représentations</a>
+  <span aria-hidden="true">›</span>
+  <a href="transformer.qmd">Comprendre le calcul du Transformer</a>
+  <span aria-hidden="true">›</span>
+  <a href="logits.qmd">Des états à la distribution prédictive</a>
+  <span aria-hidden="true">›</span>
+  <a href="generation.qmd">Exécuter l’inférence et générer du texte</a>
+  <span aria-hidden="true">›</span>
+  <a href="vraisemblance.qmd">Attribuer un score aux tokens observés</a>
+  <span aria-hidden="true">›</span>
+  <a href="loss.qmd">Apprendre et mettre à jour les paramètres</a>
   <span aria-hidden="true">›</span>
   <span aria-current="page">Panorama : qu’est-ce qu’un LLM ?</span>
 </nav>
