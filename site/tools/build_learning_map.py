@@ -797,8 +797,6 @@ def prepare_suggested_route_fragments(
             completes_route=page["id"] == final_page_id and continuation_id in page_by_id,
             sidebar_neighbors=sidebar_neighbors_by_page.get(page["id"], {}),
         )
-        if not rendered:
-            continue
         output = includes / (f"generated-suggested-route-{page['id'].replace('/', '-')}.qmd")
         outputs[output] = rendered
     return outputs
