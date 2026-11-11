@@ -881,6 +881,14 @@ async function runCase(testCase, caseIndex) {
       }
     }
 
+    if (pagePath === "build-path.html") {
+      const guidedContextCount = await page.locator(".guided-page-context").count();
+      item.routeContext = { expectedAbsent: true, guidedContextCount };
+      if (guidedContextCount !== 0) {
+        throw new Error("Build pages must not expose the Understand guided-route context");
+      }
+    }
+
     if (kind === "route-context") {
       const sidebarEntryTargets = {
         "text-data.html": "text-data.html",
@@ -945,7 +953,7 @@ async function runCase(testCase, caseIndex) {
 
       const context = page.locator(".guided-page-context");
       const contextFreePage = [
-        "experimental-evaluation.html", "evaluation-experimentale.html", "generation.html",
+        "experimental-evaluation.html", "evaluation-experimentale.html",
       ].includes(pagePath);
       if (contextFreePage) {
         if (await context.count() !== 0) {
@@ -953,9 +961,7 @@ async function runCase(testCase, caseIndex) {
         }
         item.routeContext = {
           expectedAbsent: true,
-          reason: pagePath === "generation.html"
-            ? "Route memberships remain in the learning map, not in learner-facing lesson prose."
-            : "Evaluation is cross-cutting, not a guided-route stage.",
+          reason: "Evaluation is cross-cutting, not a guided-route stage.",
         };
       } else {
         if (await context.count() !== 1) throw new Error("guided-route context is missing");
@@ -990,6 +996,7 @@ async function runCase(testCase, caseIndex) {
         item.routeContext.stageAnchorsResolve = stageFragments.every(id => availableStageAnchors.has(id));
         if (!item.routeContext.stageAnchorsResolve) throw new Error("guided-route stage link points to a missing anchor");
         const multiStagePages = {
+          "generation.html": ["guided-stage-orientation", "guided-stage-inference"],
           "cross-entropy.html": ["guided-stage-scoring", "guided-stage-training"],
         };
         if (multiStagePages[pagePath]) {
