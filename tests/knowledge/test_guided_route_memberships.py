@@ -450,3 +450,24 @@ def test_every_route_member_wires_exactly_its_generated_context_include(language
             assert not includes, source
 
     assert observed_page_ids == expected_page_ids
+
+
+@pytest.mark.parametrize(
+    ("language", "breadcrumb_label", "next_label", "next_title"),
+    [
+        ("fr", "Fil d’Ariane", "Étape suivante →", "Générer du texte"),
+        ("en", "Breadcrumb", "Next step →", "Generate text"),
+    ],
+)
+def test_overview_preserves_breadcrumb_and_explicit_next_page(
+    language: str, breadcrumb_label: str, next_label: str, next_title: str
+) -> None:
+    """The cross-cutting overview remains navigable without a false active step."""
+    page = ROOT / "site" / language / "llm-overview.qmd"
+    source = page.read_text(encoding="utf-8")
+
+    assert f'<nav class="page-breadcrumb" aria-label="{breadcrumb_label}">' in source
+    assert 'aria-current="page"' in source
+    assert 'href="generation.qmd"' in source
+    assert next_label in source
+    assert next_title in source
