@@ -27,7 +27,7 @@ def test_replaces_only_project_render_list():
         ["site/fr/new.qmd", "site/en/new.qmd", "site/fr/new.qmd"],
     )
     assert result == CONFIG.replace(
-        "    - fr/old.qmd\n    - en/old.qmd",
+        "    - fr/old.qmd\n    - en/old.qmd\n    - fr/learning-map.qmd\n    - en/learning-map.qmd",
         '    - "fr/new.qmd"\n    - "en/new.qmd"',
     )
     assert "website:\n  title: Example" in result
