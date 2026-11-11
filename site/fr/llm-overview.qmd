@@ -42,17 +42,9 @@ La réplique du film sert d'accroche. Pour les calculs, le parcours utilise une 
 - **Trois mots à distinguer :** un **LLM** est un modèle de langage entraîné à grande échelle ; le **Transformer** est une famille d'architectures ; un **GPT** est un Transformer d'un type précis, pré-entraîné à prédire le prochain token.
 :::
 
-<div class="pipeline-stepper" role="navigation" aria-label="Étapes de l’entrée à la génération">
-  <a class="step-item" href="text-data.qmd">1. Prompt</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="text-data.qmd">2. Tokens</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active" aria-current="step">3. Transformer</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="logits.qmd">4. Prédiction</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="generation.qmd">5. Génération</a>
-</div>
+::: {.callout-note title="Une page transversale"}
+Ce panorama présente plusieurs dimensions complémentaires d’un LLM, et non une étape unique du parcours. Il donne des repères sur **l’entrée et les représentations** ([texte et tokens](text-data.qmd), [embeddings](embedding-space.qmd)), **le calcul et la prédiction** ([Transformer](transformer.qmd), [distribution de probabilités](probabilites.qmd)), puis **les usages de cette prédiction** ([génération](generation.qmd), [scoring](vraisemblance.qmd) et [apprentissage](loss.qmd)). Aucun de ces thèmes n’est donc désigné ici comme l’étape courante.
+:::
 
 ## Ce que le modèle prédit
 
