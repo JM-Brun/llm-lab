@@ -698,14 +698,19 @@ def render_guided_page_transitions(
             transition.from_stage_id, quote=True
         )
         target_href = "learning-map.html#guided-stage-" + escape(transition.to_stage_id, quote=True)
-        summary = (
-            f'<a href="{source_href}">{escape(transition.from_stage_title)}</a> '
-            f'{arrow} <a href="{target_href}">{escape(transition.to_stage_title)}</a>'
+        source_title = escape(transition.from_stage_title)
+        target_title = escape(transition.to_stage_title)
+        summary = f"{source_title} {arrow} {target_title}"
+        stage_links = (
+            f'<p class="guided-page-transitions__stages">'
+            f'<a href="{source_href}">{source_title}</a> '
+            f'{arrow} <a href="{target_href}">{target_title}</a></p>'
         )
         lines.extend(
             [
                 '  <details class="guided-page-transitions__item">',
                 f"    <summary>{summary}</summary>",
+                f"    {stage_links}",
                 f"    <p>{escape(transition.purpose)}</p>",
                 "  </details>",
             ]
