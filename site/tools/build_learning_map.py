@@ -252,7 +252,6 @@ def sidebar_page_id(entry: object, language: str) -> str | None:
     return slug
 
 
-
 def load_sidebar_page_neighbors(language: str) -> dict[str, dict[str, str]]:
     """Return native Quarto previous/next page IDs in sidebar reading order.
 
@@ -261,7 +260,10 @@ def load_sidebar_page_neighbors(language: str) -> dict[str, dict[str, str]]:
     """
     if language not in {"fr", "en"}:
         raise ValueError(f"unsupported sidebar language: {language!r}")
-    config = load_yaml(SITE / "_quarto.yml")
+    config_path = SITE / "_quarto.yml"
+    if not config_path.is_file():
+        return {}
+    config = load_yaml(config_path)
     sidebars = (config or {}).get("website", {}).get("sidebar", [])
     sidebar = next((entry for entry in sidebars if entry.get("id") == language), None)
     if sidebar is None:
