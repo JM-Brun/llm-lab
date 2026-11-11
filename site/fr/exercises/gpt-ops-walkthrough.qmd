@@ -1,6 +1,7 @@
 ---
 title: "Exercices — Opérations numériques du GPT"
 subtitle: "Exercices de compréhension et de lecture du code"
+description-meta: "Exercices associés à la visite guidée Opérations numériques du GPT."
 keywords: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-ops-exercises", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---
