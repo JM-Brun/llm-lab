@@ -89,7 +89,7 @@ jobs:
           else
             echo "cache_restored=false" >> "$GITHUB_OUTPUT"
             if [ "${#missing[@]}" -gt 0 ]; then
-              printf 'Cached site is missing configured page(s): %s\\n' "${missing[@]}"
+              printf 'Cached site is missing configured page(s): %s\n' "${missing[@]}"
             else
               echo "Site cache unavailable or incomplete."
             fi
