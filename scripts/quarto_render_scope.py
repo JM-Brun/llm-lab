@@ -18,7 +18,7 @@ GLOBAL_RENDER_INPUTS = {
     "pyproject.toml",
     "uv.lock",
     "scripts/site-browser-review.mjs",
-    # Changes to the incremental renderer itself require a full site validation.
+    # Renderer changes trigger an incremental CLI smoke test against the cached site.
     "scripts/quarto_render_batch.py",
 }
 
@@ -69,16 +69,20 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
         item
         for item in files
         if (
-            str(item.get("filename", "")).startswith(("site/", "data/", "src/", "scripts/"))
+            str(item.get("filename", "")) != "scripts/quarto_render_batch.py"
+            and (
+                str(item.get("filename", "")).startswith(("site/", "data/", "src/", "scripts/"))
             or str(item.get("filename", "")) in GLOBAL_RENDER_INPUTS
             or str(item.get("filename", "")).startswith("docs/requirements-")
-            or str(item.get("filename", "")) in {"pyproject.toml", "uv.lock"}
+                or str(item.get("filename", "")) in {"pyproject.toml", "uv.lock"}
+            )
         )
     ]
 
     targets: list[str] = []
     assets: list[str] = []
-    safe = site_relevant and bool(render_inputs) and len(render_inputs) <= MAX_INCREMENTAL_PAGES
+    safe = site_relevant and len(render_inputs) <= MAX_INCREMENTAL_PAGES
+    renderer_changed = "scripts/quarto_render_batch.py" in paths
     configured_targets = _render_targets(config)
 
     for item in render_inputs:
@@ -109,7 +113,7 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
         targets.append(path)
 
     mode = "skip" if not site_relevant else "full"
-    if safe and (targets or assets):
+    if safe and (targets or assets or renderer_changed):
         mode = "incremental"
 
     return {
