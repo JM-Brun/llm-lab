@@ -65,7 +65,9 @@ def test_linked_sidebar_section_entry_is_projected_once(
 
 
 @pytest.mark.parametrize("language", ["fr", "en"])
-def test_sidebar_neighbors_match_quarto_order_independently_of_route_metadata(language: str) -> None:
+def test_sidebar_neighbors_match_quarto_order_independently_of_route_metadata(
+    language: str,
+) -> None:
     """A native sidebar transition must not be mistaken for a suggested route."""
     pages = load_pages()
     page_by_id = {page["id"]: page for page in pages}
