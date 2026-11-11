@@ -673,7 +673,7 @@ def render_guided_rail(stages: list[ResolvedGuidedRouteStage], language: str) ->
             "",
         ]
     )
-    return "\\n".join(lines)
+    return "\n".join(lines)
 
 
 def render_guided_route_markdown(stages: list[ResolvedGuidedRouteStage], language: str) -> str:
@@ -892,7 +892,7 @@ def prepare_guided_route_fragment(
     """Render a generated Quarto Markdown partial for the requested language."""
     output = SITE / "includes" / f"generated-guided-route-{language}.qmd"
     rail = render_guided_rail(stages, language)
-    return {output: rail + "\\n" + render_guided_route_markdown(stages, language)}
+    return {output: rail + "\n" + render_guided_route_markdown(stages, language)}
 
 
 def write_guided_route_fragment(language: str, stages: list[ResolvedGuidedRouteStage]) -> Path:
