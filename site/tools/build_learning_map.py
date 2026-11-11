@@ -24,6 +24,7 @@ from pathlib import Path
 from typing import Any, Literal
 
 from artifact_writer import write_artifacts
+from guided_route_transitions import GuidedRouteTransition, validate_guided_route_transitions
 from learning_map_renderers import (
     REPRESENTATIONS,
     escape_markdown_text,
@@ -138,7 +139,7 @@ class GuidedRouteDocument(StrictModel):
     # Detailed transition validation lives in guided_route_transitions.py so
     # this document accepts the canonical top-level field while keeping the
     # stage model and its membership projection independent.
-    transitions: list[dict[str, Any]] = Field(default_factory=list)
+    transitions: list[GuidedRouteTransition] = Field(default_factory=list)
 
     @model_validator(mode="after")
     def stage_ids_are_unique(self) -> GuidedRouteDocument:
@@ -405,8 +406,6 @@ def load_guided_route(language: str, pages: list[dict[str, Any]]) -> list[Resolv
     # Validate bilingual transitions against the complete published-page index.
     # This is intentionally separate from membership projection and does not
     # alter core/optional roles or infer prerequisite edges.
-    from guided_route_transitions import validate_guided_route_transitions
-
     validate_guided_route_transitions(payload, {page["id"] for page in load_pages()})
     page_by_id = {page["id"]: page for page in pages}
     resolved: list[ResolvedGuidedRouteStage] = []
