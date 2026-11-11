@@ -252,3 +252,63 @@ def test_workflow_orchestration_and_scope_classifier_edits_skip_site_render():
         assert result["render_mode"] == "skip"
         assert result["site_relevant"] is False
         assert result["browser_relevant"] is False
+
+
+def test_generator_scope_for_quarto_page_changes():
+    result = classify_changed_files(
+        [{"filename": "site/fr/attention.qmd", "status": "modified"}], CONFIG
+    )
+
+    assert result["generate_history"] is True
+    assert result["generate_learning_map"] is True
+    assert result["generate_computational_graph"] is False
+
+
+def test_generator_scope_for_history_dataset_is_narrow():
+    result = classify_changed_files(
+        [{"filename": "data/history-pilot.yml", "status": "modified"}], CONFIG
+    )
+
+    assert result["generate_history"] is True
+    assert result["generate_learning_map"] is False
+    assert result["generate_computational_graph"] is False
+
+
+def test_generator_scope_for_computational_graph_registry_is_narrow():
+    result = classify_changed_files(
+        [{"filename": "data/computational-graph.yml", "status": "modified"}], CONFIG
+    )
+
+    assert result["generate_history"] is False
+    assert result["generate_learning_map"] is False
+    assert result["generate_computational_graph"] is True
+
+
+def test_generator_scope_for_learning_map_registries_is_narrow():
+    for path in ("data/concepts.yml", "data/domains.yml", "data/guided-route.yml"):
+        result = classify_changed_files([{"filename": path, "status": "modified"}], CONFIG)
+
+        assert result["generate_history"] is False
+        assert result["generate_learning_map"] is True
+        assert result["generate_computational_graph"] is False
+
+
+def test_generator_scope_for_unrelated_changes_skips_all_generators():
+    result = classify_changed_files(
+        [{"filename": "README.md", "status": "modified"}], CONFIG
+    )
+
+    assert result["generate_history"] is False
+    assert result["generate_learning_map"] is False
+    assert result["generate_computational_graph"] is False
+
+
+def test_generator_scope_is_conservative_for_generator_implementation_changes():
+    cases = {
+        "site/tools/render_history_pilot.py": "generate_history",
+        "site/tools/build_learning_map.py": "generate_learning_map",
+        "site/tools/render_computational_graph.py": "generate_computational_graph",
+    }
+    for path, expected in cases.items():
+        result = classify_changed_files([{"filename": path, "status": "modified"}], CONFIG)
+        assert result[expected] is True
