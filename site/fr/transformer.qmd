@@ -95,20 +95,20 @@ $$
 Le même parcours, en image :
 
 ```{mermaid}
-#| label: fig-bloc-prefln
-#| fig-cap: "Une passe dans un bloc pré-LN : chaque sous-couche lit une copie normalisée du flux, et sa sortie vient s'ajouter au flux (connexion résiduelle)."
-#| fig-alt: "Diagramme de flux : x entre dans le bloc ; une copie passe par LayerNorm puis l'attention multi-têtes, et rejoint x par une addition ; le résultat x prime passe par LayerNorm puis le MLP, qui projette de d_model vers d_ff puis revient à d_model, et rejoint x prime par une seconde addition, donnant x seconde, sortie du bloc."
+%%| label: fig-bloc-prefln
+%%| fig-cap: "Une passe dans un bloc pré-LN : chaque sous-couche lit une copie normalisée du flux, et sa sortie vient s'ajouter au flux (connexion résiduelle)."
+%%| fig-alt: "Diagramme de flux : x entre dans le bloc ; une copie passe par LayerNorm puis l'attention multi-têtes, et rejoint x par une addition ; le résultat x prime passe par LayerNorm puis le MLP, qui projette de d_model vers d_ff puis revient à d_model, et rejoint x prime par une seconde addition, donnant x seconde, sortie du bloc."
 flowchart LR
-    X(["x (entrée du bloc)"]) --> LN1["LayerNorm"]
+    X(["x, entrée du bloc"]) --> LN1["LayerNorm"]
     LN1 --> ATT["Attention multi-têtes"]
     ATT --> ADD1((" + "))
     X -- "chemin résiduel" --> ADD1
-    ADD1 --> X2(["x′ (après l'attention)"])
+    ADD1 --> X2(["x′, après l'attention"])
     X2 --> LN2["LayerNorm"]
     LN2 --> MLP["MLP : d_model vers d_ff vers d_model"]
     MLP --> ADD2((" + "))
     X2 -- "chemin résiduel" --> ADD2
-    ADD2 --> Y(["x″ (sortie du bloc)"])
+    ADD2 --> Y(["x″, sortie du bloc"])
 ```
 
 En résumé, chaque composant du bloc a un rôle distinct :
