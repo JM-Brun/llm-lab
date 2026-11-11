@@ -22,8 +22,6 @@ related: ["fr/transformer-history", "fr/scaling-laws", "fr/llm-overview-exercise
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:fr", "status:published"]
 -->
 
-{{< include ../includes/generated-guided-context-fr-llm-overview.qmd >}}
-
 <nav class="page-breadcrumb" aria-label="Fil d’Ariane">
   <a href="../index.qmd">Accueil</a>
   <span aria-hidden="true">›</span>
@@ -31,6 +29,8 @@ tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "
   <span aria-hidden="true">›</span>
   <span aria-current="page">Panorama : qu’est-ce qu’un LLM ?</span>
 </nav>
+
+{{< include ../includes/generated-guided-context-fr-llm-overview.qmd >}}
 
 ::: {.chapter-lead}
 « C'est une bonne situation, ça, scribe ? » Dans *Astérix et Obélix : Mission Cléopâtre*, la question de Panoramix lance le scribe Otis dans une longue tirade. Posez la même question à un assistant conversationnel : lui aussi enchaîne. Comment un programme produit-il une suite à partir d'une question ?
