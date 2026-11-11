@@ -111,3 +111,26 @@ stages:
     optional_pages:
       fr: [fr/cross-entropy, fr/scaling-laws, fr/post-training]
       en: [en/cross-entropy, en/scaling-laws, en/post-training]
+
+transitions:
+  - id: predictive-distribution-to-generation
+    from: prediction
+    to: inference
+    direction: directed
+    pages:
+      fr: [fr/generation]
+      en: [en/generation]
+    purpose:
+      fr: "Relier la distribution conditionnelle du prochain token à sa sélection, puis à sa réinjection dans la boucle autorégressive jusqu'à l'arrêt."
+      en: "Connect the conditional next-token distribution to token selection, then to feedback into the autoregressive loop until stopping."
+
+  - id: observed-target-to-training-objective
+    from: scoring
+    to: training
+    direction: symmetric
+    pages:
+      fr: [fr/cross-entropy]
+      en: [en/cross-entropy]
+    purpose:
+      fr: "Relier le score attribué à une cible observée à l'objectif d'apprentissage qui agrège ces pénalités pour ajuster les paramètres, sans faire du scoring un prérequis."
+      en: "Connect the score assigned to an observed target with the learning objective that aggregates these penalties to update parameters, without making scoring a prerequisite."
