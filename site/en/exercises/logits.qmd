@@ -1,6 +1,7 @@
 ---
 title: "Exercises — Logits"
 subtitle: "Self-check questions, exercises, and worked answers"
+description-meta: "Self-check questions and exercises associated with the Logits lesson."
 keywords: ["type:exercise-hub", "destination:practice", "topic:logits-exercises", "level:applied", "language:en", "status:published"]
 lang: en
 ---
