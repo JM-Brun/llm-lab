@@ -599,9 +599,9 @@ website:
             - en/glossary.qmd
             - en/transformer-history.qmd
   page-footer:
-    left: "LLM Lab · Mathématiques, code et expériences reproductibles"
+    left: "LLM Lab · Mathématiques, code et expériences reproductibles · Mathematics, code and reproducible experiments"
     right:
-      - text: "Code source"
+      - text: "Code source · Source code"
         href: https://github.com/JM-Brun/llm-lab
 
 format:
