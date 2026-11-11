@@ -294,9 +294,7 @@ def test_generator_scope_for_learning_map_registries_is_narrow():
 
 
 def test_generator_scope_for_unrelated_changes_skips_all_generators():
-    result = classify_changed_files(
-        [{"filename": "README.md", "status": "modified"}], CONFIG
-    )
+    result = classify_changed_files([{"filename": "README.md", "status": "modified"}], CONFIG)
 
     assert result["generate_history"] is False
     assert result["generate_learning_map"] is False
