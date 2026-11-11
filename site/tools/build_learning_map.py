@@ -252,6 +252,52 @@ def sidebar_page_id(entry: object, language: str) -> str | None:
     return slug
 
 
+def load_sidebar_page_neighbors(language: str) -> dict[str, dict[str, str]]:
+    """Return native Quarto previous/next page IDs in sidebar reading order.
+
+    This is deliberately separate from the suggested pedagogical route: the
+    two sequences can differ, and only identical destinations are redundant.
+    """
+    if language not in {"fr", "en"}:
+        raise ValueError(f"unsupported sidebar language: {language!r}")
+    config_path = SITE / "_quarto.yml"
+    if not config_path.is_file():
+        return {}
+    config = load_yaml(config_path)
+    sidebars = (config or {}).get("website", {}).get("sidebar", [])
+    sidebar = next((entry for entry in sidebars if entry.get("id") == language), None)
+    if sidebar is None:
+        raise ValueError(f"missing Quarto sidebar for language: {language!r}")
+
+    ordered: list[str] = []
+
+    def visit(entries: list[object]) -> None:
+        for entry in entries:
+            if isinstance(entry, dict) and "section" in entry:
+                href = entry.get("href")
+                page_id = sidebar_page_id(href, language)
+                if page_id is not None:
+                    ordered.append(page_id)
+                visit(entry.get("contents", []))
+            else:
+                page_id = sidebar_page_id(entry, language)
+                if page_id is not None:
+                    ordered.append(page_id)
+
+    visit(sidebar.get("contents", []))
+    # A linked section can also be listed by its parent. Keep its first
+    # occurrence, matching the resource-map projection's no-duplicate rule.
+    ordered = list(dict.fromkeys(ordered))
+    return {
+        page_id: {
+            direction: ordered[index + offset]
+            for direction, offset in (("previous", -1), ("next", 1))
+            if 0 <= index + offset < len(ordered)
+        }
+        for index, page_id in enumerate(ordered)
+    }
+
+
 def load_navigation(language: str, pages: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Derive the drill-down area structure recursively from the Quarto sidebar.
 
@@ -660,6 +706,7 @@ def render_suggested_route_markdown(
     language: str,
     *,
     completes_route: bool = False,
+    sidebar_neighbors: dict[str, str] | None = None,
 ) -> str:
     """Render local previous/next links from the page's canonical suggested route.
 
@@ -699,6 +746,10 @@ def render_suggested_route_markdown(
             continue
         if not isinstance(target_id, str):
             raise ValueError(f"invalid {direction} route for {page['id']!r}: {target_id!r}")
+        # Keep pedagogical transitions only when they add a destination that
+        # the native Quarto footer navigation does not already expose.
+        if target_id == (sidebar_neighbors or {}).get(direction):
+            continue
         target = page_by_id.get(target_id)
         if target is None:
             raise ValueError(f"unresolved {direction} route for {page['id']!r}: {target_id!r}")
@@ -733,6 +784,7 @@ def prepare_suggested_route_fragments(
     page_by_id = {page["id"]: page for page in pages}
     final_page_id = final_core_page_id(stages)
     continuation_id = f"{language}/{ROUTE_CONTINUATION_PAGE}"
+    sidebar_neighbors_by_page = load_sidebar_page_neighbors(language)
     includes = SITE / "includes"
     outputs: dict[Path, str] = {}
     for page in pages:
@@ -743,9 +795,8 @@ def prepare_suggested_route_fragments(
             # A site without a Build path (test fixtures) keeps its plain ending;
             # the published route is guarded by its own test.
             completes_route=page["id"] == final_page_id and continuation_id in page_by_id,
+            sidebar_neighbors=sidebar_neighbors_by_page.get(page["id"], {}),
         )
-        if not rendered:
-            continue
         output = includes / (f"generated-suggested-route-{page['id'].replace('/', '-')}.qmd")
         outputs[output] = rendered
     return outputs

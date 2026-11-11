@@ -3,7 +3,12 @@
 from typing import Any
 
 import pytest
-from build_learning_map import load_navigation
+from build_learning_map import (
+    load_navigation,
+    load_pages,
+    load_sidebar_page_neighbors,
+    render_suggested_route_markdown,
+)
 
 
 @pytest.mark.parametrize(
@@ -57,3 +62,65 @@ def test_linked_sidebar_section_entry_is_projected_once(
     assert found is not None
     assert found["pages"] == [entry_page, *child_pages]
     assert sum(count_page(area["sections"], entry_page) for area in navigation) == 1
+
+
+@pytest.mark.parametrize("language", ["fr", "en"])
+def test_sidebar_neighbors_match_quarto_order_independently_of_route_metadata(
+    language: str,
+) -> None:
+    """A native sidebar transition must not be mistaken for a suggested route."""
+    pages = load_pages()
+    page_by_id = {page["id"]: page for page in pages}
+    neighbors = load_sidebar_page_neighbors(language)
+
+    text_data = f"{language}/text-data"
+    gradients = f"{language}/gradients"
+    assert neighbors[text_data]["next"] == f"{language}/embedding-space"
+    assert page_by_id[text_data]["route"]["next"] == f"{language}/embedding-space"
+    assert gradients in neighbors
+    assert page_by_id[gradients]["route"]["next"] == f"{language}/training-loop"
+
+
+def test_suggested_route_omits_only_directions_already_in_sidebar() -> None:
+    """Matching destinations disappear; pedagogical-only destinations remain."""
+    page = {
+        "id": "fr/example",
+        "route": {"previous": "fr/shared-previous", "next": "fr/sidebar-next"},
+    }
+    page_by_id = {
+        "fr/shared-previous": {"title": "Shared previous", "href": "shared-previous.html"},
+        "fr/sidebar-next": {"title": "Sidebar next", "href": "sidebar-next.html"},
+    }
+
+    rendered = render_suggested_route_markdown(
+        page,
+        page_by_id,
+        "fr",
+        sidebar_neighbors={"next": "fr/sidebar-next"},
+    )
+
+    assert "Shared previous" in rendered
+    assert "Sidebar next" not in rendered
+    assert "Étape précédente" in rendered
+    assert "Étape suivante" not in rendered
+
+
+def test_suggested_route_is_empty_when_both_directions_duplicate_sidebar() -> None:
+    """Do not render an empty route-card wrapper after removing duplicate links."""
+    page = {
+        "id": "fr/example",
+        "route": {"previous": "fr/previous", "next": "fr/next"},
+    }
+    page_by_id = {
+        "fr/previous": {"title": "Previous", "href": "previous.html"},
+        "fr/next": {"title": "Next", "href": "next.html"},
+    }
+
+    rendered = render_suggested_route_markdown(
+        page,
+        page_by_id,
+        "fr",
+        sidebar_neighbors={"previous": "fr/previous", "next": "fr/next"},
+    )
+
+    assert rendered == ""
