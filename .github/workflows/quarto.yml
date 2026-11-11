@@ -204,7 +204,7 @@ jobs:
         if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
         run: |
           if ! python3 site/tools/check_site_links.py site/_site; then
-            grep -n -C 2 -E 'training-loop\\.html|post-training\\.html' \
+            grep -n -C 2 -E 'training-loop\.html|post-training\.html' \
               site/_site/en/learning-map.html site/_site/fr/learning-map.html || true
             exit 1
           fi
