@@ -1,6 +1,7 @@
 ---
 title: "The training loop: from gradients to a trained model"
 subtitle: "Repeated updates, optimizers, and why validation loss is measured separately"
+description-meta: "Shows how repeated gradient steps turn a randomly initialized model into a trained one, what an optimizer adds to the gradient, and why validation loss is measured on held-out data."
 keywords: ["type:concept-lesson", "destination:understand", "topic:training-loop", "level:core", "language:en", "status:published"]
 lang: en
 ---

@@ -1,6 +1,7 @@
 ---
 title: "Des identifiants aux vecteurs : les embeddings"
 subtitle: "Comment un ID sélectionne une ligne apprise — et pourquoi cette ligne n'est pas une coordonnée"
+description-meta: "Explique comment un Token ID sélectionne une ligne de la matrice de plongements et comment le vecteur obtenu devient l'entrée des traitements ultérieurs."
 keywords: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:fr", "status:published"]
 lang: fr
 ---

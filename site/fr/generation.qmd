@@ -1,6 +1,7 @@
 ---
 title: "Générer du texte : l'inférence pas à pas"
 subtitle: "Comment un LLM produit un token après l'autre"
+description-meta: "Présente la génération comme une boucle autorégressive : contexte, prédiction du prochain token, sélection, réinjection et arrêt. Situe le prefill, le decode incrémental et les stratégies de sélection, puis distingue l’inférence du scoring et de l’apprentissage."
 keywords: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:fr", "status:published"]
 lang: fr
 ---

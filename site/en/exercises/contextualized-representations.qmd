@@ -1,6 +1,7 @@
 ---
 title: "Exercises — Contextualized representations"
 subtitle: "Self-check questions and worked answers"
+description-meta: "Self-check questions associated with the Contextualized representations lesson."
 keywords: ["type:exercise-hub", "destination:practice", "topic:contextualized-representations-exercises", "level:applied", "language:en", "status:published"]
 lang: en
 ---

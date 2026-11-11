@@ -1,6 +1,7 @@
 ---
 title: "Exercices — Panorama des modèles de langage"
 subtitle: "Questions de compréhension et mises en pratique"
+description-meta: "Questions de compréhension associées au panorama des modèles de langage."
 keywords: ["type:exercise-hub", "destination:practice", "topic:llm-overview-exercises", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---

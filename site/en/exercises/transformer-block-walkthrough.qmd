@@ -1,6 +1,7 @@
 ---
 title: "Exercises — Transformer block"
 subtitle: "Comprehension and code-reading exercises"
+description-meta: "Exercises associated with the Transformer block guided tour."
 keywords: ["type:exercise-hub", "destination:practice", "topic:reference-transformer-block-exercises", "level:applied", "language:en", "status:published"]
 lang: en
 ---

@@ -1,6 +1,7 @@
 ---
 title: "Exercises — LLM limitations"
 subtitle: "Self-check questions and worked answers"
+description-meta: "Self-check questions associated with the LLM limitations lesson."
 keywords: ["type:exercise-hub", "destination:practice", "topic:llm-limits-exercises", "level:applied", "language:en", "status:published"]
 lang: en
 ---

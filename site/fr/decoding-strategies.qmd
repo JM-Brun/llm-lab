@@ -1,6 +1,7 @@
 ---
 title: "Stratégies avancées de décodage"
 subtitle: "Température, échantillonnage tronqué, recherche et compromis qualité-diversité"
+description-meta: "Approfondit les règles de sélection et les recherches de séquences : température, top-k, top-p, greedy, beam search et décodage contrastif, avec leurs compromis et leurs conditions de reproductibilité."
 keywords: ["type:deep-dive", "destination:deepen", "topic:decoding", "level:advanced", "language:fr", "status:published"]
 lang: fr
 ---

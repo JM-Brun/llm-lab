@@ -1,6 +1,7 @@
 ---
 title: "Likelihood and log-likelihood"
 subtitle: "Scoring observed tokens and connecting likelihood to loss"
+description-meta: "Explains how to score an already observed token sequence by combining its conditional probabilities. This branch evaluates a known continuation rather than selecting a new one."
 keywords: ["type:concept-lesson", "destination:understand", "topic:vraisemblance", "level:core", "language:en", "status:published"]
 lang: en
 ---

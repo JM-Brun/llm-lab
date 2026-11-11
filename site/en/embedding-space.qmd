@@ -1,6 +1,7 @@
 ---
 title: "From token IDs to vectors: embeddings"
 subtitle: "How an ID selects a learned row — and why that row is not a coordinate"
+description-meta: "Explains how a token ID selects a row in the embedding matrix and how the resulting vector becomes input to later processing."
 keywords: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:en", "status:published"]
 lang: en
 ---

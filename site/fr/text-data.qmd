@@ -1,6 +1,7 @@
 ---
 title: "Du texte aux tokens : représenter le langage"
 subtitle: "Le parcours conceptuel du texte aux représentations du modèle"
+description-meta: "Suit le passage du texte source au contexte discret fourni au modèle : prétraitement, tokens, identifiants et lookup des embeddings. Distingue l’encodage d’un prompt de la préparation d’un corpus d’entraînement."
 keywords: ["type:concept-lesson", "destination:understand", "topic:text-data", "level:core", "language:fr", "status:published"]
 lang: fr
 ---

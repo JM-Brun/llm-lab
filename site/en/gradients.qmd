@@ -1,6 +1,7 @@
 ---
 title: "Gradients: connecting loss to parameters"
 subtitle: "Derivatives, the chain rule, and numerical verification"
+description-meta: "Connects the loss to gradients through backpropagation and the chain rule, then explains how these derivatives guide parameter updates."
 keywords: ["type:concept-lesson", "destination:understand", "topic:gradients", "level:core", "language:en", "status:published"]
 lang: en
 ---

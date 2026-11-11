@@ -1,6 +1,7 @@
 ---
 title: "From text to tokens: representing language"
 subtitle: "The conceptual path from text to model representations"
+description-meta: "Traces the transformation from source text to the discrete context supplied to the model: preprocessing, tokens, IDs, and embedding lookup. Distinguishes prompt encoding from training-corpus preparation."
 keywords: ["type:concept-lesson", "destination:understand", "topic:text-data", "level:core", "language:en", "status:published"]
 lang: en
 ---

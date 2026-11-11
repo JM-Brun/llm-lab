@@ -1,6 +1,7 @@
 ---
 title: "Le Transformer dans un GPT : architecture et calcul"
 subtitle: "De la pile de blocs aux logits"
+description-meta: "Présente l'architecture d'un GPT décodeur seul, du réseau de blocs Transformer à la tête de sortie, puis suit une passe avant jusqu'aux logits. Distingue l'attention, le bloc répété et le modèle complet."
 keywords: ["type:system-overview", "destination:understand", "topic:transformer", "level:overview", "language:fr", "status:published"]
 lang: fr
 ---

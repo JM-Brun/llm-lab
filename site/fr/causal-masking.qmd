@@ -1,6 +1,7 @@
 ---
 title: "Masque causal"
 subtitle: "Empêcher l'accès aux tokens futurs dans un modèle autorégressif"
+description-meta: "Montre comment le masque causal interdit à chaque position d’utiliser les tokens futurs, ce qui rend possible la prédiction autorégressive."
 keywords: ["type:concept-lesson", "destination:understand", "topic:causal-masking", "level:core", "language:fr", "status:published"]
 lang: fr
 ---

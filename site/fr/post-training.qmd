@@ -1,6 +1,7 @@
 ---
 title: "D'un modèle de base à un assistant : le post-entraînement"
 subtitle: "Adapter les paramètres pré-entraînés, et ce qui reste dans le contexte"
+description-meta: "Explique le post-entraînement comme la même boucle d'entraînement appliquée à un modèle pré-entraîné avec d'autres données et d'autres cibles, et le distingue du prompting et de la récupération, qui modifient le contexte mais pas les paramètres."
 keywords: ["type:concept-lesson", "destination:understand", "topic:post-training", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---

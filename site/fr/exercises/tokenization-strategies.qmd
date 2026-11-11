@@ -1,6 +1,7 @@
 ---
 title: "Exercices — Stratégies de tokenisation"
 subtitle: "Questions de vérification, exercices et corrigés"
+description-meta: "Questions de vérification et exercices associés à la leçon Stratégies de tokenisation."
 keywords: ["type:exercise-hub", "destination:practice", "topic:tokenization-strategies-exercises", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---

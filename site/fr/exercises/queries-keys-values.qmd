@@ -1,6 +1,7 @@
 ---
 title: "Exercices — Requêtes, clés et valeurs (Q, K, V)"
 subtitle: "Questions de vérification, exercices et corrigés"
+description-meta: "Questions de vérification et exercices associés à la leçon Requêtes, clés et valeurs (Q, K, V)."
 keywords: ["type:exercise-hub", "destination:practice", "topic:queries-keys-values-exercises", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---

@@ -1,6 +1,7 @@
 ---
 title: "Entropie croisée : l'objectif de prédiction des tokens"
 subtitle: "Des logits à la perte, avec masques et réduction explicites"
+description-meta: "Relie une distribution cible à la distribution prédite par le modèle. Dans le cas d’une cible one-hot, l’entropie croisée devient la pénalité associée au token observé et prépare la définition de la loss."
 keywords: ["type:concept-lesson", "destination:understand", "topic:cross-entropy", "level:core", "language:fr", "status:published"]
 lang: fr
 ---

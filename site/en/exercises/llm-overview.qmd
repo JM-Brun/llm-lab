@@ -1,6 +1,7 @@
 ---
 title: "Exercises — Language model overview"
 subtitle: "Comprehension questions and practice"
+description-meta: "Comprehension questions associated with the language model overview."
 keywords: ["type:exercise-hub", "destination:practice", "topic:llm-overview-exercises", "level:applied", "language:en", "status:published"]
 lang: en
 ---

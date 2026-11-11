@@ -1,6 +1,7 @@
 ---
 title: "Gradients : relier la perte aux paramètres"
 subtitle: "Dérivées, règle de chaîne et vérification numérique"
+description-meta: "Relie la loss aux gradients par la rétropropagation et la règle de chaîne, puis explique comment ces dérivées guident les mises à jour des paramètres."
 keywords: ["type:concept-lesson", "destination:understand", "topic:gradients", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
