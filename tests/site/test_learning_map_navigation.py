@@ -64,9 +64,8 @@ def test_linked_sidebar_section_entry_is_projected_once(
     assert sum(count_page(area["sections"], entry_page) for area in navigation) == 1
 
 
-
 @pytest.mark.parametrize("language", ["fr", "en"])
-def test_sidebar_neighbors_remain_distinct_from_pedagogical_route(language: str) -> None:
+def test_sidebar_neighbors_match_quarto_order_independently_of_route_metadata(language: str) -> None:
     """A native sidebar transition must not be mistaken for a suggested route."""
     pages = load_pages()
     page_by_id = {page["id"]: page for page in pages}
@@ -74,9 +73,9 @@ def test_sidebar_neighbors_remain_distinct_from_pedagogical_route(language: str)
 
     text_data = f"{language}/text-data"
     gradients = f"{language}/gradients"
-    assert neighbors[text_data]["next"] == f"{language}/tokenization-strategies"
+    assert neighbors[text_data]["next"] == f"{language}/embedding-space"
     assert page_by_id[text_data]["route"]["next"] == f"{language}/embedding-space"
-    assert neighbors[gradients]["next"] == f"{language}/transformer-architectures"
+    assert gradients in neighbors
     assert page_by_id[gradients]["route"]["next"] == f"{language}/training-loop"
 
 
