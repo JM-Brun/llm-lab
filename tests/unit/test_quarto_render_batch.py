@@ -56,10 +56,23 @@ def test_requires_existing_project_render_list():
         raise AssertionError("Expected missing project.render to fail")
 
 
-def test_renderer_implementation_change_forces_full_site_validation():
+def test_renderer_implementation_change_uses_cached_site_smoke_test():
     result = scope["classify_changed_files"](
         [{"filename": "scripts/quarto_render_batch.py", "status": "modified"}],
         CONFIG,
     )
     assert result["site_relevant"] is True
-    assert result["render_mode"] == "full"
+    assert result["render_mode"] == "incremental"
+    assert result["render_targets"] == []
+
+
+def test_renderer_change_keeps_safe_page_changes_incremental():
+    result = scope["classify_changed_files"](
+        [
+            {"filename": "scripts/quarto_render_batch.py", "status": "modified"},
+            {"filename": "site/fr/old.qmd", "status": "modified"},
+        ],
+        CONFIG,
+    )
+    assert result["render_mode"] == "incremental"
+    assert result["render_targets"] == ["site/fr/old.qmd"]
