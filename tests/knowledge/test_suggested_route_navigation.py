@@ -263,7 +263,7 @@ def test_build_terminal_pages_keep_explicit_return_links(language: str, page_id:
     if page_id == "training-examples":
         expected = "Return to the Build path" if language == "en" else "Revenir au parcours Build"
     else:
-        expected = "Back to the path" if language == "en" else "Retour au parcours"
+        expected = "Back to the Build path" if language == "en" else "Retour au parcours Build"
     assert expected in source
 
 
