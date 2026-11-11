@@ -101,6 +101,12 @@ def main() -> None:
         temp_output = Path(temp_name)
         relative_output = os.path.relpath(temp_output.resolve(), project_dir.resolve())
 
+        # Moving the old output outside the project prevents Quarto from
+        # treating it as a regular resource and copying it into the new output.
+        backup_output = temp_output.with_name(f"{temp_output.name}_previous_site")
+        if output_dir.exists():
+            shutil.move(str(output_dir), str(backup_output))
+
         try:
             # Override project.output-dir itself. Passing --output-dir too
             # would combine the two paths for website projects.
@@ -120,7 +126,15 @@ def main() -> None:
                 check=True,
             )
         finally:
-            config_path.write_text(original_config, encoding="utf-8")
+            try:
+                config_path.write_text(original_config, encoding="utf-8")
+            finally:
+                # Restore the published site even when configuration restoration
+                # or the Quarto process fails.
+                if backup_output.exists():
+                    if output_dir.exists():
+                        shutil.rmtree(output_dir)
+                    shutil.move(str(backup_output), str(output_dir))
 
         if not temp_output.is_dir() or not any(temp_output.iterdir()):
             raise RuntimeError("Quarto succeeded but produced no isolated output")
