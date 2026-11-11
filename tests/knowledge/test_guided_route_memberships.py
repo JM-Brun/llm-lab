@@ -457,7 +457,7 @@ def test_every_route_member_wires_exactly_its_generated_context_include(language
     [
         (
             "fr",
-            "Fil d’Ariane — étapes couvertes par le panorama",
+            "Fil d'Ariane — étapes couvertes par le panorama",
             "Étape suivante →",
             "Générer du texte",
             (
