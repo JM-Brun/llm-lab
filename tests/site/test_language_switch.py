@@ -79,6 +79,10 @@ def test_optional_local_language_switch_blocks_are_consistent() -> None:
     for page in pages:
         source = page.read_text(encoding="utf-8")
         blocks = list(block_pattern.finditer(source))
+        assert source.count("{.language-switch}") == len(blocks), (
+            f"{page.relative_to(SITE)}: every local language-switch block must use "
+            "the canonical fenced-div wrapper"
+        )
         for index, block in enumerate(blocks, start=1):
             where = f"{page.relative_to(SITE)} language-switch block {index}"
             body = block.group(1)
