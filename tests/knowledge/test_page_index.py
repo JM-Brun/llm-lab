@@ -50,6 +50,23 @@ def test_export_urls_follow_source_paths(tmp_path: Path, monkeypatch) -> None:
     assert pages["reference/references"]["language"] == "fr"
 
 
+def test_rendered_site_cache_is_not_indexed_as_authored_pages(tmp_path: Path) -> None:
+    _write_page(tmp_path, "en/build-path.qmd", "en/build-path", "en", content_language="en")
+    _write_page(
+        tmp_path,
+        "_site/en/build-path.qmd",
+        "en/build-path",
+        "en",
+        content_language="en",
+    )
+
+    pages = load_published_pages(tmp_path)
+
+    assert [(page.page_id, page.path.relative_to(tmp_path).as_posix()) for page in pages] == [
+        ("en/build-path", "en/build-path.qmd")
+    ]
+
+
 def test_duplicate_published_ids_are_rejected(tmp_path: Path) -> None:
     _write_page(tmp_path, "first.qmd", "fr/example", "fr")
     _write_page(tmp_path, "second.qmd", "fr/example", "fr")
