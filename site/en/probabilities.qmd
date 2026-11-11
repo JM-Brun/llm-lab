@@ -97,7 +97,7 @@ Adjust $\tau$ to observe how the distribution changes while the highest-scoring 
 <div class="interactive-toy-box" id="temp-explorer-en">
   <h4>INTERACTIVE EXPLORER · TEMPERATURE SCALING ON LOGITS</h4>
   <p style="font-size: 0.9rem; color: #475569;">
-    Adjust temperature $T$ to observe the transition between a more concentrated distribution ($T < 1$) and a flatter distribution that approaches uniformity as $T$ increases ($T > 1$).
+    Adjust temperature <var>T</var> to observe the transition between a more concentrated distribution (<var>T</var> &lt; 1) and a flatter distribution that approaches uniformity as <var>T</var> increases (<var>T</var> &gt; 1).
   </p>
   <div class="interactive-controls">
     <label for="temp-slider-en" style="font-weight: 700; font-size: 0.9rem;">Temperature (T): <span id="temp-val-en" style="color: var(--llm-brand-action); font-family: monospace;">1.00</span></label>
