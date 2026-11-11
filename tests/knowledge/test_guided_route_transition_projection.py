@@ -21,10 +21,7 @@ GENERATOR: dict[str, Any] = runpy.run_path(
 def test_transition_projection_and_rendering_are_bilingual_and_separate_from_membership(
     language: str,
 ) -> None:
-    pages = [
-        page for page in GENERATOR["load_pages"]()
-        if page["language"] in {language, "shared"}
-    ]
+    pages = [page for page in GENERATOR["load_pages"]() if page["language"] in {language, "shared"}]
     stages = GENERATOR["load_guided_route"](language, pages)
     transitions = GENERATOR["load_guided_route_transitions"](language, pages)
     index = GENERATOR["build_guided_route_transition_index"](transitions)
@@ -74,9 +71,7 @@ def test_transition_context_is_added_only_to_declared_transition_pages(language:
     ]
     stages = GENERATOR["load_guided_route"](language, pages)
     transitions = GENERATOR["load_guided_route_transitions"](language, pages)
-    fragments = GENERATOR["prepare_guided_page_context_fragments"](
-        language, stages, transitions
-    )
+    fragments = GENERATOR["prepare_guided_page_context_fragments"](language, stages, transitions)
     by_name = {path.name: content for path, content in fragments.items()}
 
     generation = by_name[f"generated-guided-context-{language}-generation.qmd"]
@@ -98,11 +93,7 @@ def test_transition_rendering_escapes_authored_text_and_is_deterministic() -> No
         to_stage_title="Target & stage",
         direction="symmetric",
         purpose='<img src=x onerror="alert(1)">',
-        pages=[
-            GENERATOR["ResolvedPage"](
-                id="en/example", title="Example", href="example.html"
-            )
-        ],
+        pages=[GENERATOR["ResolvedPage"](id="en/example", title="Example", href="example.html")],
     )
 
     rendered = GENERATOR["render_guided_page_transitions"]([transition], "en")
