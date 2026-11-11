@@ -238,3 +238,34 @@ The source-level baseline and unresolved implementation questions are recorded i
 - [Full curriculum plan](full-curriculum-plan.md)
 - [Learning path](learning-path.md)
 - [Content section mapping](content-section-mapping.md)
+
+## Addendum — multi-stage coverage and explicit transitions (2026-11-11)
+
+A page can serve more than one stage, explain material spanning several stages, or make a relationship between stages explicit. These are related facts, but they are not interchangeable. The reader-facing model must preserve them without inventing a single parent or implying a mandatory sequence.
+
+### Canonical semantics
+
+- **Route membership** answers whether a page is an explicit resource in a stage. `data/guided-route.yml` remains the source of truth; `pages` means core membership and `optional_pages` means optional membership. Preserve each page's role independently at each stage.
+- **Stage coverage** is the substantive teaching contribution made in a stage. For the guided Understand route, explicit membership is the default evidence that a page serves that stage. Do not create a second page-to-stage coverage list that merely repeats `pages` / `optional_pages`. If a future page genuinely teaches material across stages without being a route resource in each, represent that as a separately justified contribution rather than silently widening membership.
+- **Transition** means the page explicitly explains a conceptual hand-off or relation between two named stages. It is not implied by appearing in both stages, by `suggested_route`, by a concept relation, or by adjacent stage numbering. A transition must name its endpoints and state what the reader is helped to connect.
+- **Page archetype** remains editorial metadata owned by the page schema and #368. Do not add a second page-level role taxonomy such as introduction/bridge/synthesis when the existing `type` and the contextual contribution already explain the page's job.
+
+### Representation and rendering rules
+
+1. Keep one canonical page and list it in every stage where it is intentionally used; do not duplicate its content or create language-specific aliases beyond the published page IDs.
+2. Keep `core` / `optional` local to each membership. A page can be core in one stage and optional in another.
+3. Model a transition as an explicit, directed or deliberately undirected relation between stage IDs, with one or more canonical page IDs and a concise bilingual purpose. The relation must not imply a prerequisite unless the curriculum separately defines one.
+4. A page can participate in several transitions. Render only transitions relevant to that page, with human-readable endpoint titles and the localized purpose; never flatten them into a synthetic breadcrumb or a list of numbered steps.
+5. Distinguish **stage context** (where the route uses the page) from **transition context** (what connection the page makes). A compact page may show both only when each adds information; otherwise use progressive disclosure.
+6. Do not infer coverage or transitions from `hierarchy`, `related`, `suggested_route`, sidebar order, `data/concepts.yml`, or Build dependencies. Those sources have their own semantics.
+7. Do not label a stage as covered merely because the page mentions one of its terms. Membership and transition declarations require an intentional pedagogical contribution.
+
+### Reference cases
+
+- `generation` is core in `orientation` and `inference`. Its early appearance establishes the black-box autoregressive loop; its later use explains prefill, iterative decode, selection, feedback and stopping. The page also makes the conceptual connection from predictive distribution to token selection and the autoregressive loop. The two memberships are not a prerequisite chain.
+- `cross-entropy` is core in `scoring` and optional in `training`. In the scoring context it relates an observed target to its assigned probability; in the training context it connects target distributions to the per-token objective and the aggregated loss. This does not make scoring a required stage before training.
+- `text-data` explains prompt encoding for inference. Its discussion of corpus preparation and training examples is a boundary/cross-reference, not evidence that the page belongs to the Build path or teaches corpus preparation.
+
+### Implementation boundary
+
+The existing stage registry and membership projection remain authoritative for membership. Before extending the YAML schema or renderer, define a minimal transition record and validate: known stage endpoints, published page IDs in the correct language, non-empty bilingual purpose, no duplicate transition IDs, and explicit page association. Keep the projection read-only and generated. Do not wire additional page fragments until the transition model and its rendered multi-membership behavior have dedicated tests.
