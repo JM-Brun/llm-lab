@@ -1,6 +1,7 @@
 ---
 title: "Queries, keys, and values (Q, K, V)"
 subtitle: "Three learned projections, three roles in self-attention"
+description-meta: "Distinguishes the three learned self-attention projections: Q forms queries, K supports compatibility scores, and V carries the content that is aggregated."
 keywords: ["type:concept-lesson", "destination:understand", "topic:queries-keys-values", "level:core", "language:en", "status:published"]
 lang: en
 ---

@@ -1,6 +1,7 @@
 ---
 title: "Generating text: inference step by step"
 subtitle: "How an LLM produces one token after another"
+description-meta: "Presents generation as an autoregressive loop: context, next-token prediction, selection, feedback, and stopping. Introduces prefill, incremental decode, and selection strategies, then distinguishes inference from scoring and training."
 keywords: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:en", "status:published"]
 lang: en
 ---
