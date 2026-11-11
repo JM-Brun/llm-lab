@@ -97,7 +97,7 @@ Modifiez $\tau$ pour observer comment la distribution change, alors que le token
 <div class="interactive-toy-box" id="temp-explorer">
   <h4>EXPLORATEUR INTERACTIF · EFFET DE LA TEMPÉRATURE SUR LES PROBABILITÉS</h4>
   <p style="font-size: 0.9rem; color: #475569;">
-    Modifiez la température $T$ pour observer la transition entre une distribution plus concentrée ($T < 1$) et une distribution plus plate, qui tend vers l'uniformité lorsque $T$ augmente ($T > 1$).
+    Modifiez la température <var>T</var> pour observer la transition entre une distribution plus concentrée (<var>T</var> &lt; 1) et une distribution plus plate, qui tend vers l'uniformité lorsque <var>T</var> augmente (<var>T</var> &gt; 1).
   </p>
   <div class="interactive-controls">
     <label for="temp-slider-fr" style="font-weight: 700; font-size: 0.9rem;">Température (T) : <span id="temp-val-fr" style="color: var(--llm-brand-action); font-family: monospace;">1.00</span></label>
