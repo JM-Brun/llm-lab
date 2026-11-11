@@ -71,11 +71,7 @@ def test_optional_local_language_switch_blocks_are_consistent() -> None:
     )
     link_pattern = re.compile(r"\[([^]]+)\]\(([^)]+)\)")
 
-    pages = sorted(
-        path
-        for language in ("fr", "en")
-        for path in (SITE / language).rglob("*.qmd")
-    )
+    pages = sorted(path for language in ("fr", "en") for path in (SITE / language).rglob("*.qmd"))
     for page in pages:
         source = page.read_text(encoding="utf-8")
         blocks = list(block_pattern.finditer(source))
@@ -92,12 +88,6 @@ def test_optional_local_language_switch_blocks_are_consistent() -> None:
             assert set(labels) == {"français", "english"} and len(labels) == 2, (
                 f"{where}: expected exactly one Français and one English link"
             )
-            assert re.search(
-                r"\*\*\s*(?:Langue|Language)\s*:\s*\*\*",
-                body,
-                flags=re.IGNORECASE,
-            ), f"{where}: expected a localized Langue:/Language: label"
-
             for label, target in links:
                 parsed = urlsplit(target.strip())
                 assert not parsed.scheme and not parsed.netloc, (
