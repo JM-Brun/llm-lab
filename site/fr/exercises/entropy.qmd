@@ -1,6 +1,7 @@
 ---
 title: "Exercices — Entropie : incertitude sur le prochain token"
 subtitle: "Questions de vérification, exercices et corrigés"
+description-meta: "Questions de vérification et exercices associés à la leçon Entropie : incertitude sur le prochain token."
 keywords: ["type:exercise-hub", "destination:practice", "topic:entropy-exercises", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---
