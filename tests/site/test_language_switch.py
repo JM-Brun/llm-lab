@@ -2,6 +2,7 @@
 
 import pathlib  # noqa: I001
 import re
+from urllib.parse import unquote, urlsplit
 
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
@@ -64,13 +65,11 @@ def test_language_switch_targets_are_bijective_and_existing() -> None:
 
 def test_optional_local_language_switch_blocks_are_consistent() -> None:
     """Validate local shortcuts when authored; the global navbar remains sufficient."""
-    from urllib.parse import unquote, urlsplit
-
     block_pattern = re.compile(
-        r"(?ms)^:{3,}\\s*\\{\\.language-switch\\}\\s*\\n"
-        r"(.*?)^:{3,}\\s*$"
+        r"(?ms)^:{3,}\s*\{\.language-switch\}\s*\n"
+        r"(.*?)^:{3,}\s*$"
     )
-    link_pattern = re.compile(r"\\[([^]]+)\\]\\(([^)]+)\\)")
+    link_pattern = re.compile(r"\[([^]]+)\]\(([^)]+)\)")
 
     pages = sorted(
         path
@@ -86,14 +85,11 @@ def test_optional_local_language_switch_blocks_are_consistent() -> None:
             links = link_pattern.findall(body)
             labels = [label.strip().casefold() for label, _ in links]
 
-            expected_labels = (
-                {"français", "english"} if page.parts[1] == "fr" else {"français", "english"}
-            )
-            assert set(labels) == expected_labels and len(labels) == 2, (
+            assert set(labels) == {"français", "english"} and len(labels) == 2, (
                 f"{where}: expected exactly one Français and one English link"
             )
             assert re.search(
-                r"\\*\\*\\s*(?:Langue|Language)\\s*:\\s*\\*\\*",
+                r"\*\*\s*(?:Langue|Language)\s*:\s*\*\*",
                 body,
                 flags=re.IGNORECASE,
             ), f"{where}: expected a localized Langue:/Language: label"
