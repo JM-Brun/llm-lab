@@ -11,7 +11,9 @@ from typing import Any
 
 MAX_INCREMENTAL_PAGES = 60
 # Only inputs that can change rendered content belong here. Workflow
-# orchestration and browser-audit code do not change the generated site.
+# orchestration and this classifier do not change the site itself. The browser
+# audit script remains included because its checks require a freshly rendered
+# site when the audit implementation changes.
 GLOBAL_RENDER_INPUTS = {
     "pyproject.toml",
     "uv.lock",
@@ -44,9 +46,55 @@ def _is_static_image_asset(path: str) -> bool:
     )
 
 
+def generator_scope(paths: list[str]) -> dict[str, bool]:
+    """Select generated fragments from the authored inputs they actually depend on.
+
+    History links include titles read from Quarto pages; the learning map projects
+    published-page metadata, headings, navigation and the concept/route registries.
+    Computational diagrams are independent and depend on their dedicated registry.
+    """
+    qmd_changed = any(path.startswith("site/") and path.endswith(".qmd") for path in paths)
+    return {
+        "generate_history": (
+            qmd_changed
+            or "data/history-pilot.yml" in paths
+            or "site/tools/render_history_pilot.py" in paths
+        ),
+        "generate_learning_map": (
+            qmd_changed
+            or any(
+                path
+                in {
+                    "site/_quarto.yml",
+                    "site/en/_metadata.yml",
+                    "site/fr/_metadata.yml",
+                    "site/en/_sidebar.yml",
+                    "site/fr/_sidebar.yml",
+                    "data/concepts.yml",
+                    "data/domains.yml",
+                    "data/resources.yml",
+                    "data/guided-route.yml",
+                    "site/tools/build_learning_map.py",
+                    "site/tools/learning_map_renderers.py",
+                    "site/tools/page_index.py",
+                    "site/tools/export_knowledge_graph.py",
+                    "site/tools/artifact_writer.py",
+                    "site/tools/strict_yaml.py",
+                }
+                for path in paths
+            )
+        ),
+        "generate_computational_graph": (
+            "data/computational-graph.yml" in paths
+            or "site/tools/render_computational_graph.py" in paths
+        ),
+    }
+
+
 def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str, Any]:
     """Choose skip, incremental, or full rendering conservatively."""
     paths = [str(item.get("filename", "")) for item in files]
+    generators = generator_scope(paths)
     site_relevant = any(
         path.startswith(("site/", "data/", "src/"))
         or path in GLOBAL_RENDER_INPUTS
@@ -69,7 +117,6 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
             str(item.get("filename", ""))
             not in {
                 "scripts/quarto_render_batch.py",
-                "scripts/site-browser-review.mjs",
                 "scripts/quarto_render_scope.py",
                 "site/tools/build_learning_map.py",
             }
@@ -149,6 +196,7 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
     return {
         "site_relevant": site_relevant,
         "browser_relevant": browser_relevant,
+        **generators,
         "renderer_smoke_test": renderer_smoke_test,
         "render_mode": mode,
         "render_targets": sorted(set(targets)) if mode == "incremental" else [],
@@ -168,7 +216,15 @@ def main() -> None:
     result = classify_changed_files(files, config)
 
     with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
-        for key in ("site_relevant", "browser_relevant", "renderer_smoke_test", "render_mode"):
+        for key in (
+            "site_relevant",
+            "browser_relevant",
+            "renderer_smoke_test",
+            "render_mode",
+            "generate_history",
+            "generate_learning_map",
+            "generate_computational_graph",
+        ):
             value = result[key]
             if isinstance(value, bool):
                 value = str(value).lower()
