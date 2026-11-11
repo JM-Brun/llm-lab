@@ -266,7 +266,7 @@ def test_build_terminal_pages_keep_explicit_return_links(language: str, page_id:
     else:
         heading = "## Connections" if language == "en" else "## Connexions"
         expected = "Back to the Build path" if language == "en" else "Retour au parcours Build"
-        connections = source.split(heading, maxsplit=1)[1].split("\\n## ", maxsplit=1)[0]
+        connections = source.split(heading, maxsplit=1)[1].split("\n## ", maxsplit=1)[0]
         assert expected in connections
 
 
