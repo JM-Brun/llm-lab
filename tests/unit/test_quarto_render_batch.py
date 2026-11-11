@@ -70,6 +70,7 @@ def test_renderer_change_keeps_safe_page_changes_incremental():
     result = scope["classify_changed_files"](
         [
             {"filename": "scripts/quarto_render_batch.py", "status": "modified"},
+            {"filename": "scripts/quarto_render_scope.py", "status": "modified"},
             {"filename": "site/fr/old.qmd", "status": "modified"},
         ],
         CONFIG,
