@@ -190,12 +190,14 @@ def load_pages() -> list[dict[str, Any]]:
     rendered_sources: set[str] | None = None
     if config_path.is_file():
         config = load_yaml(config_path) or {}
-        render_entries = (config.get("project") or {}).get("render", [])
-        if not isinstance(render_entries, list) or not all(
-            isinstance(entry, str) for entry in render_entries
-        ):
-            raise ValueError("site/_quarto.yml project.render must be an explicit list of paths")
-        rendered_sources = set(render_entries)
+        project = config.get("project") or {}
+        render_entries = project.get("render") if isinstance(project, dict) else None
+        if render_entries is not None:
+            if not isinstance(render_entries, list) or not all(
+                isinstance(entry, str) for entry in render_entries
+            ):
+                raise ValueError("site/_quarto.yml project.render must be an explicit list of paths")
+            rendered_sources = set(render_entries)
 
     pages: list[dict[str, Any]] = []
     for page in load_published_pages(SITE):
