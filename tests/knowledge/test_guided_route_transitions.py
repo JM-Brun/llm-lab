@@ -31,13 +31,13 @@ def published_ids() -> set[str]:
     return {page["id"] for page in GENERATOR["load_pages"]()}
 
 
-@pytest.mark.parametrize("language", ["fr", "en"])
 def test_route_document_uses_the_strict_transition_schema() -> None:
     document = GENERATOR["GuidedRouteDocument"].model_validate(route_payload())
     assert len(document.transitions) == 2
     assert document.transitions[0].id == "predictive-distribution-to-generation"
 
 
+@pytest.mark.parametrize("language", ["fr", "en"])
 def test_reference_transitions_are_explicit_and_bilingual(language: str) -> None:
     transitions = validate_guided_route_transitions(route_payload(), published_ids())
     by_id = {item.id: item for item in transitions}
@@ -46,7 +46,7 @@ def test_reference_transitions_are_explicit_and_bilingual(language: str) -> None
     assert (generation.from_stage, generation.to_stage, generation.direction) == (
         "prediction",
         "inference",
-        "directed"
+        "directed",
     )
     assert getattr(generation.pages, language) == [f"{language}/generation"]
     assert getattr(generation.purpose, language)
@@ -55,7 +55,7 @@ def test_reference_transitions_are_explicit_and_bilingual(language: str) -> None
     assert (cross_entropy.from_stage, cross_entropy.to_stage, cross_entropy.direction) == (
         "scoring",
         "training",
-        "symmetric"
+        "symmetric",
     )
     assert getattr(cross_entropy.pages, language) == [f"{language}/cross-entropy"]
     assert getattr(cross_entropy.purpose, language)
