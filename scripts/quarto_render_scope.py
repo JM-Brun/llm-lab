@@ -73,8 +73,8 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
             not in {"scripts/quarto_render_batch.py", "scripts/quarto_render_scope.py"}
             and (
                 str(item.get("filename", "")).startswith(("site/", "data/", "src/", "scripts/"))
-            or str(item.get("filename", "")) in GLOBAL_RENDER_INPUTS
-            or str(item.get("filename", "")).startswith("docs/requirements-")
+                or str(item.get("filename", "")) in GLOBAL_RENDER_INPUTS
+                or str(item.get("filename", "")).startswith("docs/requirements-")
                 or str(item.get("filename", "")) in {"pyproject.toml", "uv.lock"}
             )
         )
