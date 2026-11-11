@@ -11,9 +11,7 @@ from typing import Any
 
 MAX_INCREMENTAL_PAGES = 60
 # Only inputs that can change rendered content belong here. Workflow
-# orchestration and this classifier do not change the site itself. The browser
-# audit script remains included because its checks require a freshly rendered
-# site when the audit implementation changes.
+# orchestration and browser-audit code do not change the generated site.
 GLOBAL_RENDER_INPUTS = {
     "pyproject.toml",
     "uv.lock",
@@ -118,6 +116,7 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
             not in {
                 "scripts/quarto_render_batch.py",
                 "scripts/quarto_render_scope.py",
+                "scripts/site-browser-review.mjs",
                 "site/tools/build_learning_map.py",
             }
             and (
