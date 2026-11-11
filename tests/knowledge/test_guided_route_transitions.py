@@ -13,7 +13,11 @@ GENERATOR = runpy.run_path(
     str(ROOT / "site/tools/build_learning_map.py"),
     run_name="guided_route_transition_test",
 )
-from guided_route_transitions import validate_guided_route_transitions
+TRANSITIONS = runpy.run_path(
+    str(ROOT / "site/tools/guided_route_transitions.py"),
+    run_name="guided_route_transition_validator_test",
+)
+validate_guided_route_transitions = TRANSITIONS["validate_guided_route_transitions"]
 
 
 def route_payload() -> dict:
