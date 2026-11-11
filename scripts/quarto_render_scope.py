@@ -11,13 +11,10 @@ from typing import Any
 
 MAX_INCREMENTAL_PAGES = 60
 # Only inputs that can change rendered content belong here. Workflow
-# orchestration and this classifier do not change the site itself. The browser
-# audit script remains included because its checks require a freshly rendered
-# site when the audit implementation changes.
+# orchestration and browser-audit code do not change the generated site.
 GLOBAL_RENDER_INPUTS = {
     "pyproject.toml",
     "uv.lock",
-    "scripts/site-browser-review.mjs",
     # Renderer changes trigger an incremental CLI smoke test against the cached site.
     "scripts/quarto_render_batch.py",
 }
@@ -72,6 +69,7 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
             str(item.get("filename", ""))
             not in {
                 "scripts/quarto_render_batch.py",
+                "scripts/site-browser-review.mjs",
                 "scripts/quarto_render_scope.py",
                 "site/tools/build_learning_map.py",
             }
@@ -142,7 +140,10 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
             safe = False
 
     mode = "skip" if not site_relevant else "full"
-    if safe and (targets or assets or renderer_changed):
+    browser_audit_only = paths == ["scripts/site-browser-review.mjs"] and browser_relevant
+    if browser_audit_only:
+        mode = "skip"
+    elif safe and (targets or assets or renderer_changed):
         mode = "incremental"
 
     return {
