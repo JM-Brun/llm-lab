@@ -398,6 +398,12 @@ def load_guided_route(language: str, pages: list[dict[str, Any]]) -> list[Resolv
     source_path = ROOT / "data" / "guided-route.yml"
     payload = load_yaml(source_path)
     document = GuidedRouteDocument.model_validate(payload)
+    # Validate bilingual transitions against the complete published-page index.
+    # This is intentionally separate from membership projection and does not
+    # alter core/optional roles or infer prerequisite edges.
+    from guided_route_transitions import validate_guided_route_transitions
+
+    validate_guided_route_transitions(payload, {page["id"] for page in load_pages()})
     page_by_id = {page["id"]: page for page in pages}
     resolved: list[ResolvedGuidedRouteStage] = []
 
