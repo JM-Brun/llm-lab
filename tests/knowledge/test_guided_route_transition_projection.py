@@ -14,9 +14,6 @@ GENERATOR: dict[str, Any] = runpy.run_path(
     run_name="guided_route_transition_projection_test",
 )
 
-
-
-
 @pytest.mark.parametrize("language", ["fr", "en"])
 def test_transition_projection_and_rendering_are_bilingual_and_separate_from_membership(
     language: str,
@@ -65,10 +62,7 @@ def test_transition_projection_and_rendering_are_bilingual_and_separate_from_mem
 
 @pytest.mark.parametrize("language", ["fr", "en"])
 def test_transition_context_is_added_only_to_declared_transition_pages(language: str) -> None:
-    pages = [
-        page for page in GENERATOR["load_pages"]()
-        if page["language"] in {language, "shared"}
-    ]
+    pages = [page for page in GENERATOR["load_pages"]() if page["language"] in {language, "shared"}]
     stages = GENERATOR["load_guided_route"](language, pages)
     transitions = GENERATOR["load_guided_route_transitions"](language, pages)
     fragments = GENERATOR["prepare_guided_page_context_fragments"](language, stages, transitions)
