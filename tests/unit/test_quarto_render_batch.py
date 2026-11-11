@@ -57,13 +57,15 @@ def test_requires_existing_project_render_list():
 
 
 def test_renderer_implementation_change_uses_cached_site_smoke_test():
-    result = scope["classify_changed_files"](
-        [{"filename": "scripts/quarto_render_batch.py", "status": "modified"}],
-        CONFIG,
-    )
-    assert result["site_relevant"] is True
-    assert result["render_mode"] == "incremental"
-    assert result["render_targets"] == []
+    for status in ("added", "modified"):
+        result = scope["classify_changed_files"](
+            [{"filename": "scripts/quarto_render_batch.py", "status": status}],
+            CONFIG,
+        )
+        assert result["site_relevant"] is True
+        assert result["renderer_smoke_test"] is True
+        assert result["render_mode"] == "incremental"
+        assert result["render_targets"] == []
 
 
 def test_renderer_change_keeps_safe_page_changes_incremental():
@@ -79,10 +81,11 @@ def test_renderer_change_keeps_safe_page_changes_incremental():
     assert result["render_targets"] == ["site/fr/old.qmd"]
 
 
-def test_renderer_file_addition_or_deletion_requires_full_validation():
-    for status in ("added", "removed", "renamed"):
+def test_renderer_file_deletion_or_rename_requires_full_validation():
+    for status in ("removed", "renamed"):
         result = scope["classify_changed_files"](
             [{"filename": "scripts/quarto_render_batch.py", "status": status}],
             CONFIG,
         )
         assert result["render_mode"] == "full"
+        assert result["renderer_smoke_test"] is False
