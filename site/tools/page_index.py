@@ -37,11 +37,16 @@ def load_published_pages(site: Path) -> list[PublishedPage]:
     pages: list[PublishedPage] = []
     paths_by_id: dict[str, Path] = {}
     for path in sorted(site.rglob("*.qmd")):
+        relative = path.relative_to(site)
+        # A restored Quarto output tree can coexist with authored sources while
+        # generators run before rendering. Never index rendered/cache artifacts
+        # as authored pages: their copied source files would duplicate page IDs.
+        if "_site" in relative.parts:
+            continue
         source = path.read_text(encoding="utf-8")
         if _COMMENT.search(source) is None:
             # Not a page: generated includes may quote the marker inside data.
             continue
-        relative = path.relative_to(site)
         front_match = _FRONT_MATTER.match(source)
         comments = _COMMENT.findall(source)
         if front_match is None or len(comments) != 1 or source.count(_MARKER) != 1:
