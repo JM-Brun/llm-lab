@@ -174,7 +174,7 @@ jobs:
       # Exercise renderer changes against the restored or freshly rendered site.
       # This validates the actual CLI path without forcing an unnecessary full build.
       - name: Smoke-test isolated batched incremental renderer
-        if: github.event_name == 'pull_request' && contains(steps.site_changes.outputs.files, 'scripts/quarto_render_batch.py')
+        if: github.event_name == 'pull_request' && steps.site_changes.outputs.renderer_smoke_test == 'true'
         env:
           RENDER_TARGETS: site/fr/deepen.qmd
         run: .venv/bin/python scripts/quarto_render_batch.py
