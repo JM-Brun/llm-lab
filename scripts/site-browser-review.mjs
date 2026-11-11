@@ -1243,8 +1243,9 @@ async function runCase(testCase, caseIndex) {
 
 // Each case owns its own browser context, so a small worker pool can safely
 // overlap navigation, layout checks, keyboard checks, and Axe analysis.
-// Keep the limit conservative to avoid CPU/memory contention on GitHub runners.
-const workerCount = Math.min(3, cases.length);
+// GitHub's ubuntu-24.04 hosted runner has enough headroom for four independent
+// contexts; keep the pool bounded to avoid unbounded Chromium process growth.
+const workerCount = Math.min(4, cases.length);
 let nextCaseIndex = 0;
 const auditStartedAt = performance.now();
 await Promise.all(Array.from({ length: workerCount }, async () => {
