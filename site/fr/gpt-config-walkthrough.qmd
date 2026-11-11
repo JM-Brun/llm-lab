@@ -11,7 +11,7 @@ id: "fr/gpt-config-walkthrough"
 scope: "Explique ligne par ligne le fichier gpt_config.py : le rôle de l'objet GPTConfig, la raison d'être de chaque dimension, l'immuabilité et la validation à la construction. Exclut les calculs du modèle, le bloc Transformer et la boucle de génération."
 purpose: "Le lecteur doit pouvoir nommer chaque dimension de configuration, relier chaque champ aux formes de tenseurs qu'elle détermine, et expliquer pourquoi la validation échoue tôt avec un message nommé plutôt que tard avec une erreur de forme."
 suggested_route:
-  previous: null
+  previous: "fr/build-path"
   next: "fr/gpt-ops-walkthrough"
 hierarchy:
   parents: ["fr/build-path"]
