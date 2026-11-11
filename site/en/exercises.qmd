@@ -11,7 +11,7 @@ id: "en/exercises"
 scope: "Central registry for per-lesson practice pages and extended topic collections. Short lesson checks live on companion pages; topic collections provide broader cross-lesson practice."
 purpose: "Choose a topic collection, identify its prerequisites and maturity, and use worked answers and transfer questions to test reasoning rather than answer recall."
 suggested_route:
-  previous: "en/build-path"
+  previous: null
   next: "en/experimental-evaluation"
 hierarchy:
   parents: ["en/index"]
