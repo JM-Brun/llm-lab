@@ -202,7 +202,12 @@ jobs:
 
       - name: Check local links in rendered site
         if: github.event_name != 'pull_request' || steps.site_changes.outputs.site_relevant == 'true'
-        run: python3 site/tools/check_site_links.py site/_site
+        run: |
+          if ! python3 site/tools/check_site_links.py site/_site; then
+            grep -n -C 2 -E 'training-loop\\.html|post-training\\.html' \
+              site/_site/en/learning-map.html site/_site/fr/learning-map.html || true
+            exit 1
+          fi
 
       - name: Set up Node
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && steps.site_changes.outputs.browser_relevant == 'true')
