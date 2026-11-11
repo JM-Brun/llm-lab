@@ -70,7 +70,11 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
         for item in files
         if (
             str(item.get("filename", ""))
-            not in {"scripts/quarto_render_batch.py", "scripts/quarto_render_scope.py"}
+            not in {
+                "scripts/quarto_render_batch.py",
+                "scripts/quarto_render_scope.py",
+                "site/tools/build_learning_map.py",
+            }
             and (
                 str(item.get("filename", "")).startswith(("site/", "data/", "src/", "scripts/"))
                 or str(item.get("filename", "")) in GLOBAL_RENDER_INPUTS
@@ -88,7 +92,19 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
     renderer_changed = bool(renderer_items)
     renderer_safe = all(item.get("status") in {"added", "modified"} for item in renderer_items)
     renderer_smoke_test = renderer_changed and renderer_safe
-    safe = site_relevant and renderer_safe and len(render_inputs) <= MAX_INCREMENTAL_PAGES
+    map_generator_items = [
+        item for item in files if item.get("filename") == "site/tools/build_learning_map.py"
+    ]
+    map_generator_changed = bool(map_generator_items)
+    map_generator_safe = all(
+        item.get("status") in {"added", "modified"} for item in map_generator_items
+    )
+    safe = (
+        site_relevant
+        and renderer_safe
+        and map_generator_safe
+        and len(render_inputs) <= MAX_INCREMENTAL_PAGES
+    )
     configured_targets = _render_targets(config)
 
     for item in render_inputs:
@@ -117,6 +133,13 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
             safe = False
             break
         targets.append(path)
+
+    if map_generator_changed:
+        map_targets = ["site/fr/learning-map.qmd", "site/en/learning-map.qmd"]
+        if all(target.removeprefix("site/") in configured_targets for target in map_targets):
+            targets.extend(map_targets)
+        else:
+            safe = False
 
     mode = "skip" if not site_relevant else "full"
     if safe and (targets or assets or renderer_changed):
