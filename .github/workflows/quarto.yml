@@ -120,6 +120,7 @@ jobs:
 
       - name: Restore published site for full audit
         if: steps.published_site_cache.outputs.available == 'true'
+        continue-on-error: true
         uses: actions/download-artifact@v4
         with:
           name: quarto-site-cache
