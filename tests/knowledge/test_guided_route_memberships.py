@@ -425,9 +425,7 @@ def test_every_route_member_wires_exactly_its_generated_context_include(language
     stages = GENERATOR["load_guided_route"](language, pages)
     memberships = GENERATOR["build_guided_route_memberships"](stages)
 
-    expected_occurrences = sum(
-        len(stage.pages) + len(stage.optional_pages) for stage in stages
-    )
+    expected_occurrences = sum(len(stage.pages) + len(stage.optional_pages) for stage in stages)
     assert sum(len(page_memberships) for page_memberships in memberships.values()) == (
         expected_occurrences
     )
