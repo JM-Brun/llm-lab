@@ -1,6 +1,7 @@
 ---
 title: "Why can the same token have different contextualized representations?"
 subtitle: "From a shared embedding lookup to context-dependent hidden states"
+description-meta: "Shows how Transformer layers turn initial vectors into context-dependent states, allowing the same token to have different representations in different contexts."
 keywords: ["type:concept-lesson", "destination:understand", "topic:contextualized-representations", "level:core", "language:en", "status:published"]
 lang: en
 ---

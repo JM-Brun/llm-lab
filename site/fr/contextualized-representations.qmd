@@ -1,6 +1,7 @@
 ---
 title: "Pourquoi un même token peut-il avoir plusieurs représentations contextualisées ?"
 subtitle: "Du lookup partagé aux états cachés dépendants du contexte"
+description-meta: "Montre comment les couches du Transformer transforment les vecteurs initiaux en états dépendant du contexte, de sorte qu’un même token puisse avoir plusieurs représentations."
 keywords: ["type:concept-lesson", "destination:understand", "topic:contextualized-representations", "level:core", "language:fr", "status:published"]
 lang: fr
 ---

@@ -1,6 +1,7 @@
 ---
 title: "Encodages positionnels sinusoïdaux : fréquences, géométrie et limites"
 subtitle: "Dériver et analyser le signal positionnel du Transformer original"
+description-meta: "Dérive l’encodage sinusoïdal du Transformer original, interprète ses fréquences et sa géométrie, puis examine ses propriétés et ses limites."
 keywords: ["type:deep-dive", "destination:deepen", "topic:sinusoidal-positional-encoding", "level:advanced", "language:fr", "status:published"]
 lang: fr
 ---
