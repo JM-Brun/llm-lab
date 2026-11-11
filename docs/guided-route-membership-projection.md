@@ -103,3 +103,31 @@ A transition record must identify a stable ID, `from` and `to` stage IDs, canoni
 The two regression fixtures are `generation` (orientation + inference; early overview and later detailed inference) and `cross-entropy` (scoring core + training optional; observed-target scoring and training objective). Their distinct membership roles must survive generation unchanged. The `text-data` page is a negative boundary fixture: its mention of corpus preparation must not imply Build membership.
 
 No YAML schema, generator, page fragment, or source page is changed by this design note. Implement the schema only after these semantics and the bilingual examples are reviewed.
+
+## Canonical transition schema — implemented in #976
+
+The optional top-level `transitions` collection in `data/guided-route.yml` uses this minimal record:
+
+```yaml
+transitions:
+  - id: predictive-distribution-to-generation
+    from: prediction
+    to: inference
+    direction: directed # or symmetric
+    pages:
+      fr: [fr/generation]
+      en: [en/generation]
+    purpose:
+      fr: "Relier la distribution prédictive à la sélection puis à la boucle autorégressive."
+      en: "Connect the predictive distribution to selection and the autoregressive loop."
+```
+
+- `id` is a stable, unique kebab-case identifier.
+- `from` and `to` are distinct existing stage IDs.
+- `direction` is mandatory: `directed` or `symmetric`; neither value means prerequisite.
+- `pages.fr` and `pages.en` are non-empty, unique lists of published canonical page IDs in the matching language.
+- A listed page must be an explicit member (core or optional) of at least one endpoint stage. It need not be a member of both: a bridge page can explain a relation from its own stage to another.
+- `purpose.fr` and `purpose.en` are both required and non-blank.
+- Unknown fields are rejected, so prerequisite or coverage semantics cannot silently enter this model.
+
+The validator runs as part of the existing guided-route generation. It checks stage identity and endpoints, page publication/language, endpoint association, stable ID uniqueness, explicit direction and localized purpose. It does not modify the membership projection. The reference set is deliberately limited to the evidenced `prediction → inference` connection explained by `generation`, and the symmetric `scoring ↔ training` connection explained by `cross-entropy`. No edge is inferred for `text-data` or for mere mentions of corpus preparation.
