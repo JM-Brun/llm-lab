@@ -76,3 +76,12 @@ def test_renderer_change_keeps_safe_page_changes_incremental():
     )
     assert result["render_mode"] == "incremental"
     assert result["render_targets"] == ["site/fr/old.qmd"]
+
+
+def test_renderer_file_addition_or_deletion_requires_full_validation():
+    for status in ("added", "removed", "renamed"):
+        result = scope["classify_changed_files"](
+            [{"filename": "scripts/quarto_render_batch.py", "status": status}],
+            CONFIG,
+        )
+        assert result["render_mode"] == "full"
