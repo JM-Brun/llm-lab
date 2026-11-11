@@ -481,6 +481,20 @@ def build_guided_route_memberships(
     return memberships
 
 
+def render_stage_badge(membership: GuidedRouteMembership, language: str) -> str:
+    """Render the localized stage counter and stable hooks for future local progress."""
+    if membership.stage_count is None:
+        return ""
+    label = "Étape" if language == "fr" else "Stage"
+    return (
+        f'<span class="guided-page-context__badge" '
+        f'data-stage-id="{escape(membership.stage_id)}" '
+        f'data-stage-index="{membership.stage_index}" '
+        f'data-stage-total="{membership.stage_count}">'
+        f'{label} {membership.stage_index}/{membership.stage_count}</span>'
+    )
+
+
 def render_membership_position(membership: GuidedRouteMembership, language: str) -> str:
     """Say where a core page sits: stage out of stages, page out of the stage's pages.
 
@@ -529,6 +543,8 @@ def render_guided_page_context_markdown(
                 f"{escape(membership.stage_title)}</a>"
             ),
         ]
+        if badge := render_stage_badge(membership, language):
+            lines.append(f"  {badge}")
         if membership.role == "optional":
             lines.append(f'  <span class="guided-page-context__role">{role_label}</span>')
         position = render_membership_position(membership, language)
@@ -564,6 +580,11 @@ def render_guided_page_context_markdown(
                     f"{escape(membership.stage_title)}</a>"
                 ),
                 f'      <span class="guided-page-context__role">{role_label}</span>',
+                *(
+                    [f"      {badge}"]
+                    if (badge := render_stage_badge(membership, language))
+                    else []
+                ),
                 *(
                     [f'      <span class="guided-page-context__position">{position}</span>']
                     if (position := render_membership_position(membership, language))
