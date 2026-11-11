@@ -96,20 +96,30 @@ def main() -> None:
         dir=project_dir,
     ) as temp_name:
         temp_output = Path(temp_name)
-        # Quarto resolves --output-dir relative to the project directory.
-        # TemporaryDirectory returns a path already prefixed by `site/` here.
         relative_output = temp_output.name
 
         try:
-            # Quarto combines its CLI --output-dir with project.output-dir
-            # for website projects. Override the project setting itself so
-            # the temporary directory is the output root, not its parent.
+            # The previous published output is now a sibling of the isolated
+            # output directory. Quarto would otherwise treat it as a project
+            # resource and copy it into the temporary output as a nested _site/.
             isolated_config = incremental_config.replace(
+                "project:\n",
+                "project:\n  exclude:\n    - _site/**\n",
+                1,
+            )
+            if isolated_config == incremental_config:
+                raise ValueError("Could not add the previous output directory to project.exclude")
+
+            # Override project.output-dir itself: passing --output-dir as well
+            # would combine the two paths for website projects.
+            isolated_config = isolated_config.replace(
                 "  output-dir: _site\n",
                 f"  output-dir: {json.dumps(relative_output)}\n",
                 1,
             )
-            if isolated_config == incremental_config:
+            if isolated_config == incremental_config.replace(
+                "project:\n", "project:\n  exclude:\n    - _site/**\n", 1
+            ):
                 raise ValueError("Could not find the expected project.output-dir: _site")
             config_path.write_text(isolated_config, encoding="utf-8")
             sys.stdout.write(
@@ -124,6 +134,8 @@ def main() -> None:
 
         if not temp_output.is_dir() or not any(temp_output.iterdir()):
             raise RuntimeError("Quarto succeeded but produced no isolated output")
+        if (temp_output / "_site").exists():
+            raise RuntimeError("Isolated render unexpectedly copied the previous _site output")
 
         # Overlay generated files only. Never delete from the existing site:
         # untouched pages may still depend on shared Quarto assets.
