@@ -709,7 +709,7 @@ def render_guided_page_transitions(
             ]
         )
     lines.extend(["</section>", ""])
-    return "\\n".join(lines)
+    return "\n".join(lines)
 
 
 ROUTE_PARTS: tuple[tuple[str, str, str, str], ...] = (
