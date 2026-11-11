@@ -1,5 +1,6 @@
 """Regression tests for Quarto sidebar-to-resource-map navigation projection."""
 
+import html
 from typing import Any
 
 import pytest
@@ -187,7 +188,7 @@ def test_every_core_guided_route_page_keeps_its_pedagogical_cards(language: str)
             next_label = "Étape suivante →" if language == "fr" else "Next step →"
             assert next_label in rendered, page_id
             target = page_by_id[route["next"]]
-            assert target["title"] in rendered, page_id
+            assert html.escape(target["title"]) in rendered, page_id
             assert target["href"].removesuffix(".html") + ".qmd" in rendered, page_id
         if page_id == final_page_id:
             continuation_label = (
