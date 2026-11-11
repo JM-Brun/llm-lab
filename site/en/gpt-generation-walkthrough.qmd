@@ -149,6 +149,7 @@ Line by line:
 ## Connections
 
 - **Previous stop**: [assembling the GPT (`gpt.py`)](gpt-model-walkthrough.qmd).
+- **Back to the Build path**: [Build a small GPT](build-path.qmd).
 
 
 
