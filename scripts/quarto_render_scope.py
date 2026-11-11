@@ -81,8 +81,12 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
 
     targets: list[str] = []
     assets: list[str] = []
-    safe = site_relevant and len(render_inputs) <= MAX_INCREMENTAL_PAGES
-    renderer_changed = "scripts/quarto_render_batch.py" in paths
+    renderer_items = [
+        item for item in files if item.get("filename") == "scripts/quarto_render_batch.py"
+    ]
+    renderer_changed = bool(renderer_items)
+    renderer_safe = all(item.get("status") == "modified" for item in renderer_items)
+    safe = site_relevant and renderer_safe and len(render_inputs) <= MAX_INCREMENTAL_PAGES
     configured_targets = _render_targets(config)
 
     for item in render_inputs:
