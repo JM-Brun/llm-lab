@@ -683,7 +683,11 @@ def render_cross_cutting_coverage_markdown(
         raise ValueError(f"unknown covered stages for {page['id']!r}: {missing}")
     if not stage_ids:
         return ""
-    label = "Étapes couvertes par ce panorama" if language == "fr" else "Stages covered by this overview"
+    label = (
+        "Étapes couvertes par ce panorama"
+        if language == "fr"
+        else "Stages covered by this overview"
+    )
     lines = [
         f'<nav class="guided-page-coverage" aria-label="{label}">',
         f'  <p class="guided-page-coverage__label">{label}</p>',
@@ -693,7 +697,7 @@ def render_cross_cutting_coverage_markdown(
         stage = stage_by_id[stage_id]
         lines.append(
             f'    <li><a href="learning-map.html#guided-stage-{escape(stage.id, quote=True)}">'
-            f'{escape(stage.title)}</a></li>'
+            f"{escape(stage.title)}</a></li>"
         )
     lines.extend(["  </ul>", "</nav>", ""])
     return "\n".join(lines)
