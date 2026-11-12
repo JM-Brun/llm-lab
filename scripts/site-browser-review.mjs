@@ -1082,15 +1082,17 @@ async function runCase(testCase, caseIndex) {
           }
         }
         if (["queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "logits.html", "cross-entropy.html"].includes(pagePath)) {
-          const localStepper = page.locator(".pipeline-stepper");
-          item.routeContext.localStepperCount = await localStepper.count();
-          item.routeContext.localStepperLabel = await localStepper.getAttribute("aria-label");
-          item.routeContext.localStepperCurrentCount = await localStepper.locator('[aria-current="step"]').count();
-          if (item.routeContext.localStepperCount !== 1 ||
-              !item.routeContext.localStepperLabel ||
-              /learning path|parcours pédagogique/i.test(item.routeContext.localStepperLabel) ||
-              item.routeContext.localStepperCurrentCount !== 1) {
-            throw new Error("core lesson must expose exactly one correctly labelled local process stepper with one active stage");
+          const localDiagram = page.locator(".pipeline-stepper");
+          item.routeContext.localDiagramCount = await localDiagram.count();
+          item.routeContext.localDiagramLabel = await localDiagram.getAttribute("aria-label");
+          item.routeContext.localDiagramRole = await localDiagram.getAttribute("role");
+          item.routeContext.localDiagramCurrentCount = await localDiagram.locator('[aria-current="step"]').count();
+          if (item.routeContext.localDiagramCount !== 1 ||
+              !item.routeContext.localDiagramLabel ||
+              /learning path|parcours pédagogique/i.test(item.routeContext.localDiagramLabel) ||
+              item.routeContext.localDiagramRole !== "group" ||
+              item.routeContext.localDiagramCurrentCount !== 0) {
+            throw new Error("core computation diagram must be one correctly labelled group without a false current-step marker");
           }
         }
         if (pagePath === "queries-keys-values.html") {
@@ -1100,8 +1102,8 @@ async function runCase(testCase, caseIndex) {
             text: el.textContent || "",
             className: el.className,
           })).catch(() => ({ branchCount: 0, currentCount: 0, text: "", className: "missing map" }));
-          if (audit.branchCount !== 3 || audit.currentCount !== 1) {
-            throw new Error("Q/K/V must be shown as three parallel branches with one current concept; rendered map: " + JSON.stringify(audit));
+          if (audit.branchCount !== 3 || audit.currentCount !== 0) {
+            throw new Error("Q/K/V must be shown as three parallel branches without marking a branch as a current navigation step; rendered map: " + JSON.stringify(audit));
           }
         }
         if (pagePath === "positional-encoding.html") {
