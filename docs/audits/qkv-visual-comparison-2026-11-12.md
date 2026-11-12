@@ -62,3 +62,12 @@ The CI workflow also completed successfully: source catalogue/extraction validat
 - No manual screen-reader session or touch-device test was performed. The browser audit confirms the image alternative in the rendered DOM, not its announcement by assistive technology.
 - The external DEV image remains link-only: figure-specific reuse permission is still unverified.
 
+
+
+## Mobile-specific composition — 2026-11-12
+
+A dedicated narrow-screen SVG was added in both languages rather than shrinking the desktop overview further. The mobile composition uses a vertical sequence with larger labels: shared input, the three learned projections, Q/K score computation and normalization, attention weights, V aggregation, and output. The orange dashed V path remains separate from the Q/K weighting path until aggregation, preserving the central conceptual distinction.
+
+The bilingual lesson pages now use a responsive `picture` element: viewports up to 600 CSS pixels receive the mobile SVG; wider viewports retain the existing desktop SVG. Both variants have localized accessible image alternatives. The external DEV illustration remains link-only; the mobile artwork is independently authored and does not reproduce its composition.
+
+Validation required: Quarto full render and local-link checks; Chromium checks at 390 px and desktop widths in EN/FR; verify the correct SVG is selected at each breakpoint, no overflow/clipping, legible text, and accessible alternative text. Manual screen-reader review remains separate.
