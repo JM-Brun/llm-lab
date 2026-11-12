@@ -87,3 +87,49 @@ The resource is now more than a general visual primer: it provides a traceable e
 ### Inspection boundary
 
 The HTML and Python source were read, but the code was not executed and the running interactive Space was not operated. No benchmark, runtime, visual usability, output correctness or learner outcome is claimed. The repository's build instructions were inspected, but no independent build was performed.
+
+
+## 9. Proposed learning integration (design only; no new page yet)
+
+The source adds a valuable **inspection workflow**, not a missing foundational definition. The best fit is a short optional Practice/Experiment activity attached to the existing embedding-space and contextualized-representations lessons.
+
+### Learning objectives
+
+After the activity, learners should be able to:
+- trace a visible token string to one or more tokenizer IDs;
+- explain that each ID selects a row of the checkpoint's input-embedding matrix;
+- retrieve a vector by ID without decoding and re-tokenizing it;
+- calculate cosine similarity and interpret top-k results as model-parameter neighbourhoods;
+- distinguish token-ID identity, decoded token spelling, and contextual hidden states;
+- explain how graph construction choices (directed/symmetrized, weighted/unweighted, node identity) change the visual result;
+- identify why a nearest-neighbour list is not a semantic truth oracle.
+
+### Suggested activity sequence (FR/EN parity)
+
+| Step | Learner action | Evidence of understanding |
+|---|---|---|
+| 1. Predict / Prédire | Choose a token and predict likely neighbours; include a word with punctuation, whitespace or a subword fragment | Predictions distinguish spelling, usage and tokenization |
+| 2. Tokenize / Tokeniser | Inspect text, token strings and IDs; show one-to-many word/token relationships | Learner can explain why a visible word is not necessarily one token |
+| 3. Lookup / Consulter la matrice | Retrieve rows directly by token ID and display only a small vector slice plus dimension/norm | Correct identity mapping; no full model forward pass required |
+| 4. Compare / Comparer | Compute cosine top-k for selected rows; show exact checkpoint and whether normalization is applied | Learner interprets ranking as a conditional numerical result |
+| 5. Inspect / Examiner | Compare token variants, whitespace/case/prefix variants and special tokens | Learner notices tokenizer-dependent identity and decode/re-encode pitfalls |
+| 6. Graph / Construire le graphe | Toggle directed vs symmetrized edges and weighted vs unweighted edges; retain IDs as node keys | Learner explains graph construction instead of reading it as ontology |
+| 7. Contextualize / Contextualiser | Compare input row with a hidden state for the same token in two different contexts (only if a small reproducible model path is available) | Learner distinguishes static input parameter from context-dependent state |
+| 8. Reflect / Interpréter | Explain one surprising neighbour and one limitation | Learner avoids equating cosine proximity with interchangeable meaning |
+
+### Technical contract for a future implementation
+
+- Pin model identifier and immutable revision; record tokenizer revision, library versions, dtype and device.
+- Load only the input embedding table for the lookup experiment; do not imply that this produces a contextual representation.
+- Use token IDs as canonical identity; decoded strings are labels only. Never decode and re-tokenize to recover a vector row.
+- Read matrix shape from the loaded checkpoint; assert every ID is in range and tokenizer/model vocabularies are compatible.
+- Do not add special tokens unless the embedding matrix is resized and the new row's initialization/training status is explained.
+- State whether cosine is computed on raw rows or normalized rows; include self-neighbour handling and tie behavior.
+- Keep top-k edges directed unless the learner explicitly selects symmetrization; if symmetrized, state the rule (union or mutual-kNN).
+- If a graph layout is shown, explain that layout coordinates are a force-directed projection and do not encode vector-space distances faithfully.
+- Make a small fixture/test independent of downloading the 1.5B checkpoint; add a separate optional heavyweight model path only if resource requirements are explicit.
+- Keep all learner-facing explanation and controls bilingual; keep the external Space as a further-exploration link rather than an embedded dependency.
+
+### Scope decision
+
+Do not add a new canonical concept, chapter, prerequisite edge or process breadcrumb. First attach the optional activity to the existing bilingual lessons and their established Practice route. Promote it to a first-class learning resource only after a runnable implementation, test coverage, rendering and FR/EN parity are verified.
