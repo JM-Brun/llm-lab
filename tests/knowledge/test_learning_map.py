@@ -867,6 +867,28 @@ def test_concept_graph_script_exposes_direction_and_relation_legend() -> None:
     assert 'relation.direction === "symmetric" ? "↔ " : "→ "' in source
 
 
+def test_relation_family_identity_is_visible_in_legend_and_details() -> None:
+    script = MODULE["render_map_script"]()
+    assert 'copy.relationFamilies[relation.family] || ""' in script
+    assert '"map-relation-family map-relation-family--" + relation.family' in script
+    assert '" map-detail-relation--" + family' in script
+    assert '"map-relation-family map-relation-family--" + family' in script
+
+    styles_path = MODULE_PATH.parents[2] / "site" / "styles.scss"
+    styles = styles_path.read_text(encoding="utf-8")
+    for family in (
+        "representational",
+        "pedagogical",
+        "structural",
+        "constraint",
+        "functional",
+        "associative",
+        "evaluative",
+    ):
+        assert f".map-relation-family--{family}" in styles
+        assert f'[data-bs-theme="dark"] .map-relation-family--{family}' in styles
+
+
 def test_load_concept_graph_exports_localized_domains(tmp_path: Path, monkeypatch) -> None:
     _write_concept_registry(tmp_path)
     _write_domain_registry(tmp_path)

@@ -836,6 +836,16 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       Object.keys(relationTypes).forEach(function (kind) {
         var relation = relationTypes[kind];
         var item = el("li", "map-concept-legend-item");
+        var familyLabel = copy.relationFamilies[relation.family] || "";
+        if (familyLabel) {
+          item.appendChild(
+            el(
+              "span",
+              "map-relation-family map-relation-family--" + relation.family,
+              familyLabel
+            )
+          );
+        }
         var direction = relation.direction === "symmetric" ? "↔ " : "→ ";
         item.appendChild(el("span", "map-relation-direction", direction));
         item.appendChild(el("strong", "map-relation-label", relation.label));
@@ -1132,7 +1142,21 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
             var arrow = type && type.direction === "symmetric" ? " ↔ " : " ";
             var source = outgoing ? concept : other;
             var target = outgoing ? other : concept;
-            var entry = el("li", "map-detail-relation");
+            var family = type ? type.family : "";
+            var familyLabel = copy.relationFamilies[family] || "";
+            var entry = el(
+              "li",
+              "map-detail-relation" + (family ? " map-detail-relation--" + family : "")
+            );
+            if (familyLabel) {
+              entry.appendChild(
+                el(
+                  "span",
+                  "map-relation-family map-relation-family--" + family,
+                  familyLabel
+                )
+              );
+            }
             entry.appendChild(
               document.createTextNode(source.label + " " + label + arrow + target.label)
             );
