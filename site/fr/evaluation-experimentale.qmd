@@ -14,7 +14,7 @@ suggested_route:
   previous: "fr/exercises"
   next: null
 hierarchy:
-  parents: ["fr/index"]
+  parents: ["fr/exercises"]
   children: []
 related: []
 tags: ["type:experiment-guide", "destination:practice", "topic:evaluation-experimentale", "level:applied", "language:fr", "status:published"]
@@ -83,3 +83,7 @@ Ce score est un outil de diagnostic pédagogique, pas une certification de maît
 - [Dror et al. — The Hitchhiker's Guide to Testing Statistical Significance in NLP](https://aclanthology.org/P18-1128/)
 
 Cet exercice est pédagogique : ce n'est ni un benchmark ni un résultat de recherche.
+
+::: {.language-switch}
+**Langue :** [Français](evaluation-experimentale.qmd) · [English](../en/experimental-evaluation.qmd)
+:::
