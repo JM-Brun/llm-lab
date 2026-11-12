@@ -44,7 +44,7 @@ By repeating four moves: predict, select, feed back, then continue or stop. This
 **First reading:** the section “The loop on an example” is enough to continue the path. The notation, *prefill*, *decode*, and the selection rules read better on the way back, once you have seen [output probabilities](probabilities.qmd).
 :::
 
-<div class="pipeline-stepper" role="navigation" aria-label="Autoregressive generation loop">
+<div class="pipeline-stepper" role="group" aria-label="Autoregressive generation loop">
   <a class="step-item" href="text-data.qmd">Tokenized prompt</a>
   <span class="step-arrow" aria-hidden="true">→</span>
   <span class="step-item">Prefill: process the prompt</span>

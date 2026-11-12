@@ -41,7 +41,7 @@ L'attention n'est pas une opération unique : elle enchaîne **scores → mise �
 **Pour approfondir :** la dérivation du facteur d'échelle — pourquoi diviser par $\sqrt{d_k}$ et ce que cet argument ne garantit pas — est développée dans [Pourquoi mettre les scores à l'échelle ?](attention-score-scaling.qmd) ; la modification des positions accessibles avant le softmax est le rôle du [masque causal](causal-masking.qmd).
 :::
 
-<div class="pipeline-stepper" role="navigation" aria-label="Étapes du calcul de l’attention avec masque éventuel">
+<div class="pipeline-stepper" role="group" aria-label="Étapes du calcul de l’attention avec masque éventuel">
   <a class="step-item" href="queries-keys-values.qmd">Q, K, V</a>
   <span class="step-arrow" aria-hidden="true">→</span>
   <span class="step-item">Scores QKᵀ</span>

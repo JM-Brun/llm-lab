@@ -36,7 +36,7 @@ La softmax transforme les logits en une **distribution conditionnée par le pré
 **Pour approfondir :** distinguez normalisation, calibration et vérité, puis comparez argmax et échantillonnage. La distribution sert à générer ; pendant l'entraînement, les logits sont confrontés aux tokens cibles par une fonction de perte.
 :::
 
-<div class="pipeline-stepper meta-flow" role="navigation" aria-label="Des logits au token sélectionné">
+<div class="pipeline-stepper meta-flow" role="group" aria-label="Des logits au token sélectionné" aria-describedby="probability-flow-description">
   <a class="step-item" href="logits.qmd">Logits</a>
   <span class="step-arrow" aria-hidden="true">→</span>
   <span class="step-item">Température facultative sur les logits</span>
@@ -49,7 +49,7 @@ La softmax transforme les logits en une **distribution conditionnée par le pré
   <span class="step-arrow" aria-hidden="true">→</span>
   <a class="step-item" href="generation.qmd">Token choisi et réinjecté</a>
 </div>
-<p class="meta-flow__relation">La température agit sur les logits avant la softmax. Dans l’implémentation de référence du projet, top-k et top-p filtrent ensuite la distribution et la renormalisent ; l’ordre peut varier selon les bibliothèques. Une distribution, même filtrée, n’est pas encore un token sélectionné.</p>
+<p id="probability-flow-description" class="meta-flow__relation">La température agit sur les logits avant la softmax. Dans l’implémentation de référence du projet, top-k et top-p filtrent ensuite la distribution et la renormalisent ; l’ordre peut varier selon les bibliothèques. Une distribution, même filtrée, n’est pas encore un token sélectionné.</p>
 
 ## Des logits à une distribution catégorielle
 

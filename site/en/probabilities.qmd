@@ -36,7 +36,7 @@ Softmax turns logits into a **distribution conditioned on the prefix**. It guara
 **Go deeper:** distinguish normalization, calibration, and truth, then compare argmax with sampling. The distribution is used for generation; during training, logits are compared with target tokens through a loss function.
 :::
 
-<div class="pipeline-stepper meta-flow" role="navigation" aria-label="From logits to the selected token">
+<div class="pipeline-stepper meta-flow" role="group" aria-label="From logits to the selected token" aria-describedby="probability-flow-description">
   <a class="step-item" href="logits.qmd">Logits</a>
   <span class="step-arrow" aria-hidden="true">→</span>
   <span class="step-item">Optional temperature scaling of logits</span>
@@ -49,7 +49,7 @@ Softmax turns logits into a **distribution conditioned on the prefix**. It guara
   <span class="step-arrow" aria-hidden="true">→</span>
   <a class="step-item" href="generation.qmd">Selected token, fed back</a>
 </div>
-<p class="meta-flow__relation">Temperature acts on logits before softmax. In the project reference implementation, top-k and top-p then filter the distribution and renormalize it; library pipelines may use different orders. Even a filtered distribution is not yet a selected token.</p>
+<p id="probability-flow-description" class="meta-flow__relation">Temperature acts on logits before softmax. In the project reference implementation, top-k and top-p then filter the distribution and renormalize it; library pipelines may use different orders. Even a filtered distribution is not yet a selected token.</p>
 
 ## From logits to a categorical distribution
 
