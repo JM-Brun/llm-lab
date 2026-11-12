@@ -3437,3 +3437,57 @@ sources:
       concepts: [self-attention, kv-cache, autoregressive-generation]
       audit_records: [docs/source-reviews/raschka-full-to-hybrid-attention-2026-11.md]
 
+  - id: sebastian-raschka-understanding-large-language-models-2023
+    title: "Understanding Large Language Models: A Cross-Section of the Most Relevant Literature To Get Up to Speed"
+    creators: ["Sebastian Raschka"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://magazine.sebastianraschka.com/p/understanding-large-language-models"
+    publisher: "Sebastian Raschka's Magazine"
+    publication_date: "2023-04-16"
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [scale-research, probabilistic-foundations-training, inference-efficiency, mathematical-tools-geometry]
+      tags:
+        - topic:transformer
+        - topic:language-model
+        - topic:scaling-laws
+        - topic:pretraining
+        - topic:fine-tuning
+        - topic:alignment
+        - modality:reading-list
+      concept_ids: []
+    metadata:
+      technical_level: mixed
+      contribution_types: [pedagogy, historical-context, architecture, critical-comparison]
+      audiences: [beginner, learner, practitioner, educator, researcher]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    scan_history:
+      - accessed_at: "2026-11-12"
+        status: partially-scanned
+        inspected_scope:
+          - "Complete author-authored article body retrieved directly, including introduction, all numbered literature entries, section headings, conclusion and further-reading links"
+          - "Article's own explanations and bibliographic links for foundational architecture, scaling/efficiency, fine-tuning and alignment"
+          - "Reconstructed source-local topical graph and ordered reading route"
+          - "Compared the article's 2023 reading-list role with LLM Lab's current bilingual lessons, computational graph, source catalogue and learning routes"
+        limitations:
+          - "The article is a dated snapshot published 2023-04-16; its descriptions of what is current, influential or state of the art must not be presented as current 2026 assessments."
+          - "The linked research papers, books, external tutorials, repositories and datasets were not individually re-read or independently verified in this ingestion."
+          - "The source is a curated secondary reading guide, not a systematic literature review; selection criteria, search protocol and completeness are not specified."
+          - "The conclusion describes a top-10 plus three bonus papers, while the article body numbers entries through 19 and adds further-reading lists; retain the actual section structure rather than repeating that count."
+          - "Some interpretations are simplified for orientation (including encoder/decoder task boundaries, claims about emergent abilities and scaling); consult the primary papers before using them as technical evidence."
+          - "No code, model, benchmark or numerical result was independently reproduced."
+          - "No licence or permission to reproduce article prose, figures or linked assets was established; use link-only handling."
+    related:
+      pages: []
+      concepts: []
+      audit_records:
+        - docs/source-reviews/raschka-understanding-large-language-models-2023.md
+        - data/extractions/sebastian-raschka-understanding-large-language-models-2023.yml

@@ -1,0 +1,209 @@
+schema_version: 1
+source_id: sebastian-raschka-understanding-large-language-models-2023
+
+pedagogical_model:
+  reconstruction:
+    status: complete
+    basis:
+      - "Directly retrieved and inspected the complete author-authored article body on 2026-11-12, from the introduction through all numbered entries, conclusion and further-reading links."
+      - "Reconstructed the source's organization from its explicit section headings, numbered entries and transitions; the graph below is a source-local editorial model."
+      - "The linked papers and supplementary resources were recorded as recommendations but were not independently inspected in this pass."
+    inferred_elements:
+      - "Learning outcomes and prerequisites are inferred from the intended audience and the article's sequence; the author does not provide a formal outcome list."
+      - "The article's section order is a curated reading route, not a dependency graph or a claim that every learner must read every listed paper."
+  source_graph:
+    nodes:
+      - {id: src-literature-roadmap, kind: pedagogical-anchor, description: "Curated entry point into research literature about large language models and Transformers.", locator: "Introduction"}
+      - {id: src-attention-origins, kind: historical-topic, description: "Attention in recurrent sequence models as a precursor to the Transformer.", locator: "Understanding the Main Architecture and Tasks"}
+      - {id: src-transformer-architecture, kind: architecture, description: "Encoder-decoder Transformer, scaled dot-product attention, multi-head attention and positional encoding.", locator: "Understanding the Main Architecture and Tasks"}
+      - {id: src-normalization-design, kind: architecture-choice, description: "Pre-LN and Post-LN placement and its relationship to optimization stability.", locator: "On Layer Normalization in the Transformer Architecture"}
+      - {id: src-model-families, kind: model-family, description: "Encoder-oriented, decoder-autoregressive and encoder-decoder pretraining/modeling approaches.", locator: "BERT; GPT; BART"}
+      - {id: src-fast-weight-history, kind: historical-topic, description: "Fast-weight memories as a historical connection to linearized attention.", locator: "Learning to Control Fast-Weight Memories"}
+      - {id: src-scaling-efficiency, kind: research-theme, description: "Efficient attention, compute allocation, data/model scaling and training-system efficiency.", locator: "Scaling Laws and Improving Efficiency"}
+      - {id: src-parameter-efficient-adaptation, kind: method-family, description: "Low-rank and other parameter-efficient approaches to adapting pretrained models.", locator: "LoRA; Scaling Down to Scale Up"}
+      - {id: src-alignment, kind: research-theme, description: "Instruction tuning, human preference optimization and alternative feedback sources.", locator: "Alignment; Reinforcement Learning with Human Feedback"}
+      - {id: src-instruct-following, kind: method-family, description: "Supervised instruction examples, reward modeling, RLHF and self-generated instructions.", locator: "InstructGPT; Constitutional AI; Self-Instruct"}
+      - {id: src-further-reading, kind: pedagogical-anchor, description: "Additional model-family, dialogue and computational-biology references.", locator: "Conclusion and Further Reading"}
+    edges:
+      - {from: src-literature-roadmap, type: organizes-into, to: src-attention-origins}
+      - {from: src-attention-origins, type: leads-to, to: src-transformer-architecture}
+      - {from: src-transformer-architecture, type: branches-into, to: src-model-families}
+      - {from: src-transformer-architecture, type: raises-design-question, to: src-normalization-design}
+      - {from: src-transformer-architecture, type: has-historical-parallel, to: src-fast-weight-history}
+      - {from: src-literature-roadmap, type: organizes-into, to: src-scaling-efficiency}
+      - {from: src-scaling-efficiency, type: includes-adaptation-methods, to: src-parameter-efficient-adaptation}
+      - {from: src-literature-roadmap, type: organizes-into, to: src-alignment}
+      - {from: src-alignment, type: includes, to: src-instruct-following}
+      - {from: src-literature-roadmap, type: points-to, to: src-further-reading}
+    interpretation: "This graph reconstructs the article's editorial grouping and cross-references. Edges describe the author's organization or a cautious thematic relationship, not formal prerequisite, causal or scientific-dependency relations. The article is a reading guide, not a complete taxonomy of LLM research."
+  learning_outcomes:
+    - {status: inferred, outcome: "Identify foundational research threads that led from attention-based sequence modeling to the Transformer.", basis: "Understanding the Main Architecture and Tasks"}
+    - {status: inferred, outcome: "Distinguish encoder-oriented, decoder-autoregressive and encoder-decoder model families at a high level.", basis: "BERT; GPT; BART"}
+    - {status: inferred, outcome: "Recognize major research questions in normalization, attention efficiency, scaling and parameter-efficient adaptation.", basis: "Layer Normalization; Scaling Laws and Improving Efficiency"}
+    - {status: inferred, outcome: "Trace the broad transition from pretrained language models to instruction-following systems and preference-based alignment.", basis: "Alignment; RLHF"}
+    - {status: inferred, outcome: "Use primary papers and implementation references as follow-up material rather than treating the reading list as a complete or current survey.", basis: "Conclusion and Further Reading"}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Basic neural-network and machine-learning terminology.", basis: "The article is aimed at machine-learning researchers and practitioners getting started with LLM literature."}
+    - {status: inferred, topic: "Basic familiarity with sequence modeling and natural-language processing.", basis: "The opening architecture section assumes readers can situate RNNs and NLP tasks."}
+    - {status: inferred, topic: "Willingness to consult academic papers and technical references.", basis: "The article is explicitly a research-paper reading list rather than a self-contained tutorial."}
+  teaching_route:
+    - {order: 1, section: "Understanding the Main Architecture and Tasks", function: establish-historical-and-architectural-foundations, moves: ["Attention in recurrent models", "Original encoder-decoder Transformer", "Normalization placement", "Fast-weight historical connection", "ULMFiT, BERT, GPT, BART and architecture survey"]}
+    - {order: 2, section: "Scaling Laws and Improving Efficiency", function: examine-compute-and-adaptation-tradeoffs, moves: ["Efficient Transformer surveys", "FlashAttention and training efficiency", "LoRA and parameter-efficient fine-tuning", "Gopher and Chinchilla scaling", "Pythia as a training-dynamics research suite"]}
+    - {order: 3, section: "Alignment – Steering Large Language Models to Intended Goals and Interests", function: introduce-post-pretraining-alignment, moves: ["InstructGPT and RLHF", "Constitutional AI", "Self-Instruct"]}
+    - {order: 4, section: "Reinforcement Learning with Human Feedback (RLHF)", function: point-to-deeper-follow-up, moves: ["Link to the author's separate RLHF treatment"]}
+    - {order: 5, section: "Conclusion and Further Reading", function: broaden-literature-horizon, moves: ["Open-source language models", "Dialogue systems", "Computational biology"]}
+  pedagogical_strengths:
+    - "Provides a compact historical map across architecture, model objectives, scaling, efficiency, adaptation and alignment rather than focusing on one implementation."
+    - "Pairs landmark papers with short explanations of why each paper matters, giving learners a reason to read beyond abstracts."
+    - "Makes useful connections across research threads, including fast-weight memory and linearized attention, and model/data compute allocation."
+    - "Offers multiple entry points for different interests, including architecture, training efficiency, alignment and application domains."
+    - "Links foundational research to accessible visual, implementation and lecture resources without presenting them as substitutes for primary papers."
+  pedagogical_limits:
+    - "Published in April 2023; it predates substantial subsequent developments and cannot serve as a current map of the field."
+    - "The list is selective and author-curated; there is no stated search method, inclusion criterion or systematic coverage claim."
+    - "The article's brief descriptions compress technical distinctions and should be checked against the primary papers before being used as definitions or evidence."
+    - "The encoder/decoder split is a useful orientation but not an exhaustive taxonomy of model architectures or objectives."
+    - "The discussion of emergent abilities, scaling and task performance reflects the cited works and period; it should not be generalized beyond their settings."
+    - "The article does not derive the mathematics or provide reproducible implementations, experiments or benchmark protocols."
+    - "The linked works and external visual/code resources were not independently audited in this ingestion."
+  comparison:
+    dossier: docs/source-reviews/raschka-understanding-large-language-models-2023.md
+    canonical_graph: "data/computational-graph.yml; data/concepts.yml"
+    canonical_routes: [data/guided-route.yml, docs/learning-path.md]
+    decision: "Retain as a historical, curated literature roadmap and a useful set of primary-source leads. Link it from the bibliography and source review; do not duplicate its paper summaries in the canonical lessons or create a parallel LLM taxonomy. Promote individual papers to their own source records only when they are separately inspected and materially used."
+    structures_kept_separate:
+      - "The article's topical groupings are not the canonical concept taxonomy or computational graph."
+      - "Its sequence is an optional reading route, not a replacement for LLM Lab's bilingual learner route."
+      - "The article's paper descriptions are secondary summaries; primary papers remain the authority for technical claims."
+      - "Its 2023 claims about relevance, influence and the state of the field are historical snapshots, not current rankings."
+      - "The additional links are recommendations only; they are not evidence that those resources were inspected."
+items:
+  - id: sebastian-raschka-understanding-large-language-models-2023:curated-literature-roadmap
+    kind: teaching-sequence
+    summary: "The article organizes a selective research reading list into architecture and task foundations, scaling and efficiency, and alignment, then points readers to additional material in dialogue systems, open models and computational biology."
+    locator: {type: section, value: "Introduction; Understanding the Main Architecture and Tasks; Scaling Laws and Improving Efficiency; Alignment; Conclusion and Further Reading", label: "Overall reading-list structure"}
+    evidence:
+      kind: editorial-structure
+      confidence: established
+      scope: "The directly inspected article headings, numbered entries and conclusion."
+      assumptions: ["The extraction records the article's own organization, not a systematic classification of the entire LLM literature."]
+      limitations: ["The list is selective and dated 2023-04-16."]
+    disposition: link
+    disposition_rationale: "Useful as a historical reading roadmap; preserve its identity and point learners to it without replacing the project's maintained learning path."
+
+  - id: sebastian-raschka-understanding-large-language-models-2023:transformer-foundations
+    kind: claim
+    summary: "The opening group traces a route from attention for recurrent sequence models to the original encoder-decoder Transformer, including scaled dot-product attention, multi-head attention and positional encodings."
+    locator: {type: section, value: "Understanding the Main Architecture and Tasks; entries 1–2", label: "Attention origins and Transformer"}
+    evidence:
+      kind: literature-summary
+      confidence: well-supported
+      scope: "The author's brief descriptions of Bahdanau et al. (2014) and Vaswani et al. (2017)."
+      assumptions: ["The extracted statement is a summary of the article's framing, not a substitute for either primary paper."]
+      limitations: ["The article's historical narrative is compressed; consult the original papers for precise contributions and terminology."]
+    disposition: cite
+    disposition_rationale: "The canonical lessons already explain the Transformer; this article adds a compact historical reading path."
+
+  - id: sebastian-raschka-understanding-large-language-models-2023:normalization-debate
+    kind: question
+    summary: "The article highlights the distinction between Post-LN in the original Transformer figure and Pre-LN in the updated reference implementation, and points to research on optimization stability and possible representation-collapse trade-offs."
+    locator: {type: section, value: "On Layer Normalization in the Transformer Architecture", label: "Pre-LN and Post-LN"}
+    evidence:
+      kind: literature-summary
+      confidence: context-dependent
+      scope: "The article's summary of Xiong et al. (2020) and its mention of ResiDual."
+      assumptions: ["Normalization behavior depends on architecture, depth, optimization setup and training regime."]
+      limitations: ["The source does not reproduce the experiments or establish a universal ranking of Pre-LN and Post-LN variants."]
+    disposition: link
+    disposition_rationale: "Keep as a lead to the primary literature; any implementation guidance should be based on direct study and controlled experiments."
+
+  - id: sebastian-raschka-understanding-large-language-models-2023:historical-fast-weights
+    kind: claim
+    summary: "The article connects Schmidhuber's 1991 fast-weight programmers to later linearized-attention formulations, noting the relationship between query/key/value terminology and additive outer-product updates."
+    locator: {type: section, value: "Learning to Control Fast-Weight Memories", label: "Fast-weight historical connection"}
+    evidence:
+      kind: historical-comparison
+      confidence: context-dependent
+      scope: "The article's summary and its linked explanatory post about fast-weight programmers."
+      assumptions: ["The correspondence is an analogy/equivalence under particular mathematical formulations and normalization choices."]
+      limitations: ["The linked historical explanation and primary papers were not independently inspected in this pass; do not infer that all modern attention is identical to the 1991 model."]
+    disposition: link
+    disposition_rationale: "A valuable historical lead for advanced learners, but not a basis for changing the canonical attention explanation without a separate mathematical review."
+
+  - id: sebastian-raschka-understanding-large-language-models-2023:model-family-orientation
+    kind: definition
+    summary: "The article uses BERT, GPT and BART to orient readers among encoder-oriented masked-language modeling, decoder-style autoregressive generation and encoder-decoder sequence-to-sequence pretraining."
+    locator: {type: section, value: "BERT; Improving Language Understanding by Generative Pre-Training; BART", label: "Model-family examples"}
+    evidence:
+      kind: literature-summary
+      confidence: well-supported
+      scope: "The article's high-level comparison of the three cited model families."
+      assumptions: ["These are representative historical examples, not an exhaustive or mutually exclusive taxonomy of all LLMs."]
+      limitations: ["The task boundaries are simplified; model architecture and objective should be distinguished from downstream use cases."]
+    disposition: cite
+    disposition_rationale: "The project's existing lessons cover Transformer and generation mechanics; use this as a pointer to foundational papers rather than reproducing its simplified taxonomy."
+
+  - id: sebastian-raschka-understanding-large-language-models-2023:scaling-and-compute-allocation
+    kind: claim
+    summary: "The scaling section connects model size, training-token count and compute allocation, using Gopher, Chinchilla and Pythia to point toward empirical studies of scaling, data exposure and training dynamics."
+    locator: {type: section, value: "Scaling Laws and Improving Efficiency; entries 14–16", label: "Scaling and training dynamics"}
+    evidence:
+      kind: literature-summary
+      confidence: context-dependent
+      scope: "The article's summaries of Gopher, Chinchilla and Pythia."
+      assumptions: ["Reported results are conditional on the models, datasets, compute budgets, objectives and evaluation tasks studied in the cited works."]
+      limitations: ["The article's shorthand should not be converted into a universal scaling law or a current compute-optimal prescription."]
+    disposition: link
+    disposition_rationale: "Retain as a curated route to primary scaling papers; current training recommendations require newer evidence and explicit assumptions."
+
+  - id: sebastian-raschka-understanding-large-language-models-2023:efficient-attention-and-training
+    kind: claim
+    summary: "The article points to efficient-Transformer surveys, FlashAttention and single-GPU training work as complementary perspectives on memory traffic, attention efficiency and practical training constraints."
+    locator: {type: section, value: "Scaling Laws and Improving Efficiency; entries 10–11", label: "Efficiency references"}
+    evidence:
+      kind: literature-summary
+      confidence: well-supported
+      scope: "The article's descriptions of FlashAttention and Cramming."
+      assumptions: ["The cited papers study different efficiency bottlenecks and should not be treated as directly comparable benchmarks."]
+      limitations: ["No runtime, memory or throughput comparison was reproduced."]
+    disposition: cite
+    disposition_rationale: "Use the papers as separate primary references when discussing algorithmic and systems efficiency."
+
+  - id: sebastian-raschka-understanding-large-language-models-2023:parameter-efficient-fine-tuning
+    kind: mechanism
+    summary: "The article presents LoRA as a low-rank parameterization of weight updates and points to a survey of other parameter-efficient adaptation methods such as adapters and prefix tuning."
+    locator: {type: section, value: "LoRA; Scaling Down to Scale Up", label: "Parameter-efficient fine-tuning"}
+    evidence:
+      kind: literature-summary
+      confidence: well-supported
+      scope: "The article's summary of Hu et al. and the parameter-efficient fine-tuning survey."
+      assumptions: ["The low-rank update is an adaptation parameterization, not a claim that the pretrained weight matrix itself is low rank."]
+      limitations: ["The article does not derive LoRA optimization or compare methods under controlled conditions."]
+    disposition: link
+    disposition_rationale: "Keep as a gateway to primary PEFT literature; no duplicate implementation is justified by this source alone."
+
+  - id: sebastian-raschka-understanding-large-language-models-2023:alignment-methods
+    kind: mechanism
+    summary: "The alignment section sketches supervised instruction examples, reward modeling and RLHF, alongside Constitutional AI and Self-Instruct as alternative or complementary approaches to shaping model behavior."
+    locator: {type: section, value: "Alignment; Reinforcement Learning with Human Feedback", label: "Post-pretraining alignment"}
+    evidence:
+      kind: literature-summary
+      confidence: well-supported
+      scope: "The article's summaries of InstructGPT, Constitutional AI and Self-Instruct."
+      assumptions: ["These methods have distinct objectives and supervision sources; the grouping is thematic, not an assertion that they are interchangeable."]
+      limitations: ["The article does not fully specify the algorithms, reward-model limitations or evaluation protocols."]
+    disposition: cite
+    disposition_rationale: "Use the cited primary papers for an introductory historical path; current alignment practice requires a newer and broader review."
+
+  - id: sebastian-raschka-understanding-large-language-models-2023:reading-list-limitations
+    kind: limitation
+    summary: "The article is a selective April 2023 reading guide, not a systematic review or a current account of LLM research; its brief paper summaries are secondary interpretations."
+    locator: {type: section, value: "Introduction; Conclusion and Further Reading", label: "Scope and limitations"}
+    evidence:
+      kind: editorial-assessment
+      confidence: established
+      scope: "The article's publication date, stated purpose, structure and absence of a systematic search protocol."
+      assumptions: []
+      limitations: ["This assessment concerns the article as a reading guide, not the scientific validity of each linked primary paper."]
+    disposition: clarify
+    disposition_rationale: "Display the date and historical scope wherever the source is recommended; never describe it as a current top-paper ranking."

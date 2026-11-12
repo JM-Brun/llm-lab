@@ -201,3 +201,11 @@ Use these resources as complementary explanations and study aids, not as substit
 
 - **YouTube video — video ID `j0O8Aq6ducw`:** https://www.youtube.com/watch?v=j0O8Aq6ducw
   - **Review status:** URL recorded at the user's request. YouTube watch-page and oEmbed metadata could not be retrieved in this pass; title, creator, transcript, date and contents remain unverified. Do not use it as evidence until inspected.
+
+
+## Historical reading roadmaps
+
+- **Sebastian Raschka — [Understanding Large Language Models: A Cross-Section of the Most Relevant Literature To Get Up to Speed](https://magazine.sebastianraschka.com/p/understanding-large-language-models)** (16 April 2023).
+  - **Use for:** a curated historical route through foundational attention and Transformer papers, model-family objectives, scaling and efficiency, parameter-efficient fine-tuning, and early instruction-following/alignment literature.
+  - **Scope:** this is a selective 2023 reading guide, not a systematic review or a current ranking. Its paper summaries are secondary pointers; consult the primary papers for technical claims and current sources for developments after April 2023.
+  - **Project review:** [source review](source-reviews/raschka-understanding-large-language-models-2023.md); canonical scan and provenance are recorded in [the source catalogue](../data/sources.yml).
