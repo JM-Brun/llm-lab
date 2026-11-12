@@ -190,13 +190,6 @@ Not necessarily. A RAG system retrieves recent documents at inference time witho
 
 {{< include ../includes/generated-suggested-route-en-llm-overview.qmd >}}
 
-<div class="route-nav-cards">
-  <a class="route-nav-card" href="generation.qmd">
-    <span class="nav-direction">Next step →</span>
-    <span class="nav-title">Generate text</span>
-  </a>
-</div>
-
 ::: {.language-switch}
 **Language:** [Français](../fr/llm-overview.qmd) · [English](llm-overview.qmd)
 :::
