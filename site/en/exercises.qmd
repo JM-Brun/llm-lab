@@ -47,6 +47,7 @@ Short self-checks are collected on companion pages linked from each lesson. Topi
 - [Gradients](exercises/gradients.qmd)
 - [Transformer architectures](exercises/transformer-architectures.qmd)
 - [LLM limits](exercises/llm-limits.qmd)
+- [Post-training](exercises/post-training.qmd)
 
 ### Build / Construire
 
