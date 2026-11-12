@@ -45,12 +45,12 @@ Les **logits sont des scores, pas des probabilités**. À une position, le modè
 **Première lecture :** suivez le passage « représentation du Transformer → projection de sortie → vecteur de $V$ logits ». La page suivante explique comment ces scores deviennent une distribution conditionnelle.
 :::
 
-<div class="pipeline-stepper" role="navigation" aria-label="Étapes de production des logits">
+<div class="pipeline-stepper" role="group" aria-label="Étapes de production des logits">
   <a class="step-item" href="transformer.qmd">1. État final</a>
   <span class="step-arrow" aria-hidden="true">→</span>
   <span class="step-item">2. Projection vocabulaire</span>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active" aria-current="step">3. Logits</span>
+  <span class="step-item active">3. Logits</span>
   <span class="step-arrow" aria-hidden="true">→</span>
   <a class="step-item" href="probabilites.qmd">4. Probabilités</a>
 </div>
