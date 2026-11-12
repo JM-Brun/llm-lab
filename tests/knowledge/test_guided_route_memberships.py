@@ -459,13 +459,13 @@ def test_every_route_member_wires_exactly_its_generated_context_include(language
             "fr",
             "Étapes du parcours abordées dans ce panorama",
             "Étape suivante →",
-            "Générer du texte",
+            "Générer du texte : l'inférence pas à pas",
         ),
         (
             "en",
             "Learning stages covered by this overview",
             "Next step →",
-            "Generate text",
+            "Generating text: inference step by step",
         ),
     ],
 )
