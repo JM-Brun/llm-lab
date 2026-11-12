@@ -533,7 +533,7 @@ async function runCase(testCase, caseIndex) {
         return {
           src,
           loaded: img.complete && img.naturalWidth > 0,
-          localAsset: parsed.origin === window.location.origin && /\\/images\\//.test(parsed.pathname),
+          localAsset: parsed.origin === window.location.origin && parsed.pathname.includes("/images/"),
           alt: img.getAttribute("alt"),
           width: Math.round(img.getBoundingClientRect().width),
         };
