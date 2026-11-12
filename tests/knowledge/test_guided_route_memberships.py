@@ -453,55 +453,58 @@ def test_every_route_member_wires_exactly_its_generated_context_include(language
 
 
 @pytest.mark.parametrize(
-    ("language", "breadcrumb_label", "next_label", "next_title", "stage_links"),
+    ("language", "expected_label", "next_label", "next_title"),
     [
         (
             "fr",
-            "Fil d'Ariane — étapes couvertes par le panorama",
+            "Étapes du parcours abordées dans ce panorama",
             "Étape suivante →",
             "Générer du texte",
-            (
-                "generation.qmd",
-                "text-data.qmd",
-                "embedding-space.qmd",
-                "transformer.qmd",
-                "logits.qmd",
-                "vraisemblance.qmd",
-                "loss.qmd",
-            ),
         ),
         (
             "en",
-            "Breadcrumb — stages covered by this overview",
+            "Learning stages covered by this overview",
             "Next step →",
             "Generate text",
-            (
-                "generation.qmd",
-                "text-data.qmd",
-                "embedding-space.qmd",
-                "transformer.qmd",
-                "logits.qmd",
-                "likelihood.qmd",
-                "loss.qmd",
-            ),
         ),
     ],
 )
-def test_overview_preserves_all_covered_stages_and_explicit_next_page(
-    language: str,
-    breadcrumb_label: str,
-    next_label: str,
-    next_title: str,
-    stage_links: tuple[str, ...],
+def test_overview_preserves_cross_cutting_coverage_and_explicit_next_page(
+    language: str, expected_label: str, next_label: str, next_title: str
 ) -> None:
-    """The cross-cutting overview exposes its full coverage and a preferred continuation."""
-    page = ROOT / "site" / language / "llm-overview.qmd"
-    source = page.read_text(encoding="utf-8")
+    """Coverage is a set; Orientation membership and preferred continuation remain distinct."""
+    pages = [page for page in GENERATOR["load_pages"]() if page["language"] in {language, "shared"}]
+    stages = GENERATOR["load_guided_route"](language, pages)
+    memberships = GENERATOR["build_guided_route_memberships"](stages)
+    overview_id = f"{language}/llm-overview"
+    overview = next(page for page in pages if page["id"] == overview_id)
+    expected_stages = [
+        "orientation",
+        "text-input",
+        "representations",
+        "computation",
+        "prediction",
+        "inference",
+        "scoring",
+        "training",
+    ]
 
-    assert f'<nav class="page-breadcrumb" aria-label="{breadcrumb_label}">' in source
-    assert 'aria-current="page"' in source
-    for stage_link in stage_links:
-        assert f'href="{stage_link}"' in source
+    assert overview["covered_stages"] == expected_stages
+    assert [(item.stage_id, item.role) for item in memberships[overview_id]] == [
+        ("orientation", "core")
+    ]
+    fragments = GENERATOR["prepare_cross_cutting_coverage_fragments"](language, pages, stages)
+    output_path = (
+        GENERATOR["SITE"] / "includes" / (f"generated-guided-coverage-{language}-llm-overview.qmd")
+    )
+    coverage = fragments[output_path]
+    assert expected_label in coverage
+    assert coverage.count("<li>") == len(expected_stages)
+    assert "<nav" not in coverage
+    assert "<section" in coverage
+    assert coverage.index("guided-stage-orientation") < coverage.index("guided-stage-training")
+
+    source = (ROOT / "site" / language / "llm-overview.qmd").read_text(encoding="utf-8")
     assert next_label in source
     assert next_title in source
     assert 'href="generation.qmd"' in source
