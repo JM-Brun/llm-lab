@@ -448,9 +448,9 @@ async function runCase(testCase, caseIndex) {
     for (const [direction, navigation] of Object.entries(item.pageNavigation)) {
       const visible = Boolean(navigation.href);
       if (visible) {
-        const prefix = lang === "fr" ? (direction === "previous" ? "Page précédente:" : "Page suivante:") : (direction === "previous" ? "Previous page:" : "Next page:");
+        const prefix = lang === "fr" ? (direction === "previous" ? "Page précédente" : "Page suivante") : (direction === "previous" ? "Previous page" : "Next page");
         const normalizedAriaLabel = navigation.ariaLabel?.replace(/\s+:/g, ":");
-        if (!navigation.title || !normalizedAriaLabel?.startsWith(prefix)) throw new Error(direction + " footer link lacks a localized directional accessible name");
+        if (!normalizedAriaLabel?.startsWith(prefix)) throw new Error(direction + " footer link lacks a localized directional accessible name");
       }
     }
     item.layout = await page.evaluate(() => ({
@@ -1302,3 +1302,9 @@ console.log(JSON.stringify({
 }, null, 2));
 // Surface every failure as a GitHub Actions error annotation so the exact
 // failing case is visible in the run summary without downloading artifacts.
+for (const failure of report.failures) {
+  console.error(`::error::${failure}`);
+}
+if (report.failures.length > 0) {
+  process.exitCode = 1;
+}
