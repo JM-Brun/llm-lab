@@ -102,6 +102,10 @@ For the position of these methods in the history of assistant models, see [LLM e
 </summary>
 <div class="learning-resources__content" markdown="1">
 
+### Practice
+
+Check the distinctions between SFT, RLHF, DPO, LoRA and retrieval on the [dedicated post-training exercise page](exercises/post-training.qmd).
+
 ### Further reading
 
 - [Ouyang et al. — Training language models to follow instructions with human feedback](https://arxiv.org/abs/2203.02155): supervised fine-tuning, a reward model and PPO in one documented pipeline.
