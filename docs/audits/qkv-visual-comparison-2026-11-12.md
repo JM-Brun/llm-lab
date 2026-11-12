@@ -36,9 +36,29 @@ This remains an orientation diagram, not a replacement for the dedicated scaled 
 
 The source illustration remains link-only. The project SVG changes are independently authored and do not copy its layout or artwork.
 
-## Validation still required
+## Validation evidence — 2026-11-12
 
-- Quarto build and existing EN/FR Chromium page checks.
-- Inspect the generated SVGs at desktop and mobile sizes for label clipping, arrow routing and footer wrapping.
-- Confirm localized image alternatives are emitted by the rendered pages.
-- Keep manual screen-reader/accessibility-tree review separate from source metadata and automated checks.
+The refinement was merged in [PR #1030](https://github.com/JM-Brun/llm-lab/pull/1030) at merge commit `af2d7ecc43ed9a6fdc4a59c63169a67ec2102886`.
+
+The post-fix Quarto/browser workflow completed successfully on the merged PR head (`1a8a0c1a803f71ae4bfbd1d4c8bd00bda5c74c79`):
+
+- Quarto full-site render succeeded; local-link checks and the generated learning-map, knowledge-graph and history-timeline checks also succeeded.
+- Chromium reviewed all four Q/K/V route cases: EN/FR × desktop (1440 px) / mobile (390 px), light theme.
+- All four routes returned HTTP 200, loaded the expected localized SVG, and emitted the expected localized image alternative. No console errors or uncaught page errors were reported.
+- No document-level horizontal overflow was detected at either viewport. The SVG rendered at 810 px on desktop and 313 px on mobile.
+- The page's previous/next links resolve to the Transformer lesson and the scaled-dot-product-attention lesson in both languages.
+- Desktop Axe checks (one per language) reported zero violations, 31 passes and one incomplete item. Axe was intentionally skipped on mobile because the audit runs once per page/language on desktop/light.
+- The desktop keyboard probe completed its tab cycle in both languages: 35 focus targets, all 35 visibly focused; the learning-outcome disclosure toggled with Enter. No mobile keyboard probe was run.
+
+The CI workflow also completed successfully: source catalogue/extraction validation, page metadata and learning graph, bilingual concept registry, resource checks, formatting, lint, type checking and the full test suite all passed.
+
+**Browser artifact:** [site-browser-review artifact from workflow run 43252332474](https://github.com/JM-Brun/llm-lab/actions/runs/43252332474/artifacts/13959757114). It contains EN/FR desktop and mobile screenshots plus `report.json`.
+
+## Remaining evidence and boundaries
+
+- The automated browser review is a PR-local render of the merged source, not proof that the public deployed pages have updated. Verify the deployed EN/FR pages separately.
+- The mobile viewport has no horizontal overflow, but the SVG is scaled to 313 px; its fine internal labels are naturally less legible at that size. The surrounding lesson text and mathematical equations remain the readable explanation. A dedicated mobile composition could be considered separately if learner testing shows it is needed.
+- Axe reports one incomplete item per desktop page; inspect the relevant incomplete rule before treating automated accessibility review as exhaustive.
+- No manual screen-reader session or touch-device test was performed. The browser audit confirms the image alternative in the rendered DOM, not its announcement by assistive technology.
+- The external DEV image remains link-only: figure-specific reuse permission is still unverified.
+
