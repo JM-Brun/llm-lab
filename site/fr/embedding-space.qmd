@@ -41,7 +41,7 @@ Reprenons le fil rouge du parcours. Le texte déjà présent dans le contexte es
 
 > **Préfixe / prompt :** « C'est une bonne situation, ça, scribe ? »
 
-La continuation commence ensuite par la réponse d'Otis — « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... » — mais cette suite n'est pas encore présente au moment où le modèle traite le préfixe. Pour les démonstrations numériques reproductibles, le projet utilise aussi une continuation pédagogique originale ; aucune segmentation ni aucun ID ne doit être supposé universel.
+La continuation suivie dans le parcours est le texte original de LLM Lab : « Être scribe, c'est relier des histoires. » Elle n'est pas encore présente lorsque le modèle traite le préfixe ; elle sera ajoutée token par token pendant la génération. La réplique d'Otis reste une accroche du film, pas la cible des démonstrations. Aucune segmentation ni aucun ID ne doit être supposé universel.
 
 Le tokenizer découpe le préfixe en tokens selon son vocabulaire et ses règles. Il attribue à chaque token un ID entier. Un mot visible n'est pas nécessairement un token unique : la segmentation exacte dépend du tokenizer utilisé.
 
