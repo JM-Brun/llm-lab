@@ -505,6 +505,16 @@ def test_overview_preserves_cross_cutting_coverage_and_explicit_next_page(
     assert coverage.index("guided-stage-orientation") < coverage.index("guided-stage-training")
 
     source = (ROOT / "site" / language / "llm-overview.qmd").read_text(encoding="utf-8")
-    assert next_label in source
-    assert next_title in source
-    assert 'href="generation.qmd"' in source
+    assert source.count("generated-suggested-route") == 1
+    assert '<div class="route-nav-cards">' not in source
+
+    route_fragments = GENERATOR["prepare_suggested_route_fragments"](language, pages, stages)
+    route_path = (
+        GENERATOR["SITE"]
+        / "includes"
+        / f"generated-suggested-route-{language}-llm-overview.qmd"
+    )
+    suggested_route = route_fragments[route_path]
+    assert suggested_route.count(next_label) == 1
+    assert suggested_route.count(next_title) == 1
+    assert suggested_route.count('href="generation.qmd"') == 1
