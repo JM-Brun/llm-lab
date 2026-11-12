@@ -209,3 +209,11 @@ Use these resources as complementary explanations and study aids, not as substit
   - **Use for:** a curated historical route through foundational attention and Transformer papers, model-family objectives, scaling and efficiency, parameter-efficient fine-tuning, and early instruction-following/alignment literature.
   - **Scope:** this is a selective 2023 reading guide, not a systematic review or a current ranking. Its paper summaries are secondary pointers; consult the primary papers for technical claims and current sources for developments after April 2023.
   - **Project review:** [source review](source-reviews/raschka-understanding-large-language-models-2023.md); canonical scan and provenance are recorded in [the source catalogue](../data/sources.yml).
+
+## Roadmap-oriented and practitioner-focused LLM courses
+
+**Maxime Labonne — LLM Course**
+- Repository: https://github.com/mlabonne/llm-course
+- **Use for:** a broad, roadmap-oriented map of LLM foundations, model-scientist topics (architecture, pre-training, post-training, evaluation, quantization and merging), and LLM-engineering topics (running models, prompting, RAG, agents, optimization, deployment and security), with links to practical articles and notebooks.
+- **How this lab complements it:** use the roadmap to discover practitioner topics and compare alternative learning progressions; keep LLM Lab's two independent Understand and Build paths, canonical concept ownership, bilingual parity, tested NumPy-first explanations and evidence gates. The course's breadth is a discovery aid, not a mandate to add every topic to the core curriculum.
+- **Audit and reuse status:** README-level discovery recorded 2026-11-12; representative linked materials and current notebook compatibility still require inspection under [project audit #1049](https://github.com/JM-Brun/llm-lab/issues/1049). Link to original materials; do not assume notebook, text, figure, code or dataset reuse rights from repository visibility.
