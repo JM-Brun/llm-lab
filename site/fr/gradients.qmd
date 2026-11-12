@@ -52,9 +52,11 @@ Pour chaque token cible de la continuation, le gradient de la cross-entropie aju
 
 Pour une cible one-hot $y$ et une cross-entropie calculée depuis le softmax :
 
-$$
+$
 \frac{\partial\ell}{\partial z_i}=p_i-\mathbb{1}[i=y].
-$$
+$
+
+Pour une cible one-hot, les composantes de ce gradient somment à zéro : $\sum_i(p_i-\mathbb{1}[i=y])=1-1=0$. C'est cohérent avec l'invariance de la softmax à l'ajout d'une même constante à tous les logits.
 
 Cette formule donne la dérivée de la perte **pour une seule position**. Pour la moyenne non pondérée sur l'ensemble $\mathcal{M}$ des positions cibles valides définie dans [Loss](loss.qmd), le gradient par logit devient :
 
