@@ -1,0 +1,108 @@
+/* Guided-route reading progress. All state stays in this browser; no network calls. */
+(function () {
+  "use strict";
+
+  var STORAGE_KEY = "llm-lab:guided-progress:v1";
+  var STAGE_ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+  function stageIdFrom(node) {
+    var id = node && node.getAttribute("data-stage-id");
+    return id && STAGE_ID_PATTERN.test(id) ? id : null;
+  }
+
+  function readProgress() {
+    try {
+      var raw = window.localStorage.getItem(STORAGE_KEY);
+      if (!raw) return [];
+      var parsed = JSON.parse(raw);
+      if (!Array.isArray(parsed)) return [];
+      return Array.from(new Set(parsed.filter(function (id) {
+        return typeof id === "string" && STAGE_ID_PATTERN.test(id);
+      })));
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function writeProgress(ids) {
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  function init() {
+    var rails = document.querySelectorAll("[data-guided-rail]");
+    var contexts = document.querySelectorAll(".guided-page-context [data-stage-id]");
+    var progress = readProgress();
+    if (progress === null) return;
+
+    function applyState() {
+      document.querySelectorAll("[data-stage-id]").forEach(function (node) {
+        var id = stageIdFrom(node);
+        if (!id) return;
+        var visited = progress.indexOf(id) !== -1;
+        node.classList.toggle("is-visited", visited);
+        if (visited) node.setAttribute("data-visited", "true");
+        else node.removeAttribute("data-visited");
+      });
+
+      rails.forEach(function (rail) {
+        var slot = rail.querySelector("[data-guided-rail-progress]");
+        if (!slot) return;
+        var total = Number(rail.getAttribute("data-total")) || 0;
+        var count = document.createElement("span");
+        count.className = "guided-rail__count";
+        count.setAttribute("data-guided-progress-count", "");
+        count.textContent = progress.length + "/" + total + " " +
+          (document.documentElement.lang.toLowerCase().indexOf("fr") === 0
+            ? "étapes consultées" : "stages viewed");
+        var reset = document.createElement("button");
+        reset.type = "button";
+        reset.className = "guided-rail__reset";
+        reset.textContent = slot.getAttribute("data-reset-label") || "";
+        reset.addEventListener("click", function () {
+          progress = [];
+          if (writeProgress(progress)) applyState();
+        });
+        slot.replaceChildren(count, reset);
+        slot.hidden = false;
+      });
+    }
+
+    function markVisited(id) {
+      if (!id || progress.indexOf(id) !== -1) return;
+      progress.push(id);
+      if (writeProgress(progress)) applyState();
+    }
+
+    // A lesson visit marks every explicit membership, including multi-stage pages.
+    contexts.forEach(function (node) {
+      markVisited(stageIdFrom(node));
+    });
+
+    // Clicking a stage segment is itself a meaningful visit to that stage.
+    rails.forEach(function (rail) {
+      rail.addEventListener("click", function (event) {
+        var link = event.target.closest("a[data-stage-id]");
+        if (link && rail.contains(link)) markVisited(stageIdFrom(link));
+      });
+    });
+
+    window.addEventListener("storage", function (event) {
+      if (event.key !== STORAGE_KEY) return;
+      progress = readProgress();
+      if (progress !== null) applyState();
+    });
+
+    applyState();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init, { once: true });
+  } else {
+    init();
+  }
+}());
