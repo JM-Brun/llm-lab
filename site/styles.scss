@@ -1779,6 +1779,35 @@ a.concept-link:focus-visible {
   font-size: 0.85rem;
 }
 
+/* First-class code resources are associations, not concept-to-concept edges. */
+.map-detail-panel .map-code-resources {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0 0 0.5rem;
+  padding-left: 1.2rem;
+}
+
+.map-detail-panel .map-code-resource-link {
+  font-weight: 600;
+  color: var(--map-accent);
+}
+
+.map-detail-panel .map-code-resource-language {
+  display: inline-block;
+  margin-left: 0.45rem;
+  padding: 0.05rem 0.4rem;
+  border: 1px solid var(--map-line);
+  border-radius: 999px;
+  color: var(--map-muted);
+  font-size: 0.7rem;
+}
+
+.map-detail-panel .map-code-resource-description {
+  margin: 0.15rem 0 0;
+  color: var(--map-muted);
+  font-size: 0.8rem;
+}
+
 
 /* Keep long MathJax expressions inside the reading column on narrow screens.
    The expression remains fully available through local horizontal scrolling. */
