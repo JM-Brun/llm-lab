@@ -1,0 +1,75 @@
+---
+title: "Exercises — Post-training"
+subtitle: "Check what changes when a base model becomes an assistant"
+description-meta: "Retrieval questions and a transfer scenario for supervised fine-tuning, preference-based methods, parameter-efficient adaptation, and retrieval."
+keywords: ["type:exercise-hub", "destination:practice", "topic:post-training-exercises", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/post-training-exercises"
+summary: "Retrieval questions and a transfer scenario for supervised fine-tuning, preference-based methods, parameter-efficient adaptation, and retrieval."
+scope: "Checks the distinctions taught in the post-training lesson without deriving objectives or implementing adaptation methods."
+purpose: "Identify which data and signal a method uses, whether it updates parameters, and when changing context is a better first intervention."
+suggested_route:
+  previous: "en/post-training"
+  next: null
+hierarchy:
+  parents: ["en/post-training"]
+  children: []
+related: ["en/post-training", "en/training-loop", "en/llm-limits"]
+tags: ["type:exercise-hub", "destination:practice", "topic:post-training-exercises", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the lesson: Post-training](../post-training.qmd)
+
+## Check your understanding
+
+Try each question before opening its answer.
+
+1. **In supervised fine-tuning, why can prompt tokens be visible to the model but excluded from the loss?**
+
+<details>
+<summary>Show the answer</summary>
+
+The prompt provides the context needed to predict the response. A loss mask can exclude prompt positions from the objective while the causal attention mechanism still lets response positions read them. The attention mask and loss mask serve different purposes.
+</details>
+
+2. **What distinguishes reward-model RLHF from DPO?**
+
+<details>
+<summary>Show the answer</summary>
+
+In the common RLHF pipeline, preference comparisons train a separate reward model, then a reinforcement-learning procedure (often PPO) optimizes the language model against that learned reward. DPO instead defines a preference loss directly over preferred and rejected responses, without a separate reward model and RL loop. Neither reward nor preference is a direct guarantee of truth.
+</details>
+
+3. **Does LoRA normally require updating every base-model parameter? What changes instead?**
+
+<details>
+<summary>Show the answer</summary>
+
+No. In the usual parameter-efficient setup, base weights are frozen and trainable low-rank adapter parameters are added to selected modules. QLoRA additionally uses a quantized frozen base to reduce memory; it is not simply another name for ordinary full fine-tuning.
+</details>
+
+## Choose the intervention
+
+A team has two problems:
+
+- The assistant must answer using product prices that change every day.
+- Its answers must consistently follow a fixed output schema.
+
+Which intervention would you test first for each problem, and what evidence would you collect?
+
+<details>
+<summary>Show one defensible approach</summary>
+
+- **Changing prices:** test retrieval from an updatable, authoritative product store. This changes the request context without retraining. Evaluate retrieval freshness, coverage, and whether generated answers faithfully use the retrieved values.
+- **Fixed output schema:** first test prompt instructions and structured-output constraints available in the serving stack. If reliable behaviour still requires adaptation across many tasks, evaluate SFT against a held-out set of schema-validity cases.
+
+This is a test plan, not a universal rule. Compare failure rates, latency, cost, maintenance burden, and data quality under the same evaluation protocol.
+</details>
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/post-training.qmd) · [English](post-training.qmd)
+:::
