@@ -28,11 +28,11 @@ tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-valu
 La page précédente, [Le Transformer dans un GPT : architecture et calcul](transformer.qmd), a montré que l'auto-attention est une sous-couche du bloc répété. Partons maintenant d'une difficulté simple : comment une position peut-elle exploiter le contexte fourni par les autres tokens ?
 :::
 
-:::: {.pipeline-stepper .meta-flow .meta-flow--branch role="navigation" aria-label="Carte des projections parallèles Q, K et V et de leur recombinaison"}
+:::: {.pipeline-stepper .meta-flow .meta-flow--branch role="group" aria-label="Carte des projections parallèles Q, K et V et de leur recombinaison"}
 ::: {.meta-flow__source}
 <strong>Entrée commune</strong><span>Représentations d'entrée de chaque position</span>
 :::
-::: {.meta-flow__source .meta-flow__branch--active aria-current="step"}
+::: {.meta-flow__source .meta-flow__branch--active}
 <strong>Projections apprises Q, K et V</strong><span>Trois transformations parallèles du même état d’entrée</span>
 :::
 ::: {.meta-flow__branches}

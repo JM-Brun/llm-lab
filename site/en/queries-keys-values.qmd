@@ -28,11 +28,11 @@ tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-valu
 The previous page, [The Transformer in a GPT: architecture and computation](transformer.qmd), showed that self-attention is a sublayer within the repeated block. We now start with a simple question: how can one position use the context provided by the other tokens?
 :::
 
-:::: {.pipeline-stepper .meta-flow .meta-flow--branch role="navigation" aria-label="Map of parallel Q, K and V projections and their recombination"}
+:::: {.pipeline-stepper .meta-flow .meta-flow--branch role="group" aria-label="Map of parallel Q, K and V projections and their recombination"}
 ::: {.meta-flow__source}
 <strong>Shared input</strong><span>Input representations at each position</span>
 :::
-::: {.meta-flow__source .meta-flow__branch--active aria-current="step"}
+::: {.meta-flow__source .meta-flow__branch--active}
 <strong>Learned Q, K and V projections</strong><span>Three parallel transformations of the same input state</span>
 :::
 ::: {.meta-flow__branches}

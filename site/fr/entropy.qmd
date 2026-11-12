@@ -39,7 +39,7 @@ Dans un LLM autorégressif, l'entropie décrit la dispersion de la distribution 
 **Question rapide :** pouvez-vous distinguer l'incertitude avant observation de la surprise après observation d'une cible ?
 :::
 
-:::: {.pipeline-stepper .meta-flow .meta-flow--branch role="navigation" aria-label="Carte des notions liées à la distribution prédictive"}
+:::: {.pipeline-stepper .meta-flow .meta-flow--branch role="group" aria-label="Carte des notions liées à la distribution prédictive"}
 ::: {.meta-flow__source}
 <strong>Distribution prédictive</strong><span>p(token suivant | contexte)</span>
 :::
@@ -47,7 +47,7 @@ Dans un LLM autorégressif, l'entropie décrit la dispersion de la distribution 
 Deux questions différentes selon que le token est observé ou non
 :::
 ::: {.meta-flow__comparison}
-::: {.meta-flow__comparison-item .meta-flow__branch--active aria-current="step"}
+::: {.meta-flow__comparison-item .meta-flow__branch--active}
 <strong>Avant observation · Entropie H(p)</strong><small>Dispersion moyenne de toute la distribution : incertitude prédictive</small>
 :::
 ::: {.meta-flow__comparison-item}
