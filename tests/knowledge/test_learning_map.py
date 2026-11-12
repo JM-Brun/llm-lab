@@ -910,6 +910,96 @@ def test_load_concept_graph_exports_localized_domains(tmp_path: Path, monkeypatc
     assert french["concepts"][1]["domains"] == []
 
 
+def test_load_concept_graph_projects_published_code_resources_separately(
+    tmp_path: Path, monkeypatch
+) -> None:
+    _write_concept_registry(tmp_path)
+    resources = {
+        "schema_version": 1,
+        "resources": [
+            {
+                "id": "transformer-block-module",
+                "kind": "implementation",
+                "labels": {
+                    "fr": "Bloc Transformer de référence",
+                    "en": "Reference Transformer block",
+                },
+                "descriptions": {
+                    "fr": "Implémentation du bloc Transformer.",
+                    "en": "Implementation of the Transformer block.",
+                },
+                "language": "en",
+                "programming_language": "Python",
+                "status": "published",
+                "location": {
+                    "type": "local",
+                    "path": "src/llm_lab/foundations/transformer_block.py",
+                },
+                "referenced_by": ["fr/attention", "en/attention"],
+                "concepts": ["attention"],
+            },
+            {
+                "id": "unassociated-module",
+                "kind": "implementation",
+                "labels": {"fr": "Module sans notion", "en": "Unassociated module"},
+                "descriptions": {"fr": "Description.", "en": "Description."},
+                "language": "en",
+                "status": "published",
+                "location": {"type": "external", "url": "https://example.org/module"},
+                "referenced_by": ["fr/attention", "en/attention"],
+                "concepts": [],
+            },
+            {
+                "id": "draft-module",
+                "kind": "implementation",
+                "labels": {"fr": "Brouillon", "en": "Draft"},
+                "descriptions": {"fr": "Brouillon.", "en": "Draft."},
+                "language": "en",
+                "status": "draft",
+                "location": {"type": "external", "url": "https://example.org/draft"},
+                "referenced_by": [],
+                "concepts": ["attention"],
+            },
+        ],
+    }
+    resource_path = tmp_path / "data" / "resources.yml"
+    resource_path.write_text(yaml.safe_dump(resources, allow_unicode=True), encoding="utf-8")
+    monkeypatch.setitem(MODULE["load_concept_graph"].__globals__, "ROOT", tmp_path)
+
+    french = MODULE["load_concept_graph"](
+        "fr", [{"id": "fr/attention", "title": "Attention", "href": "attention.html"}]
+    )
+    english = MODULE["load_concept_graph"](
+        "en", [{"id": "en/attention", "title": "Attention", "href": "attention.html"}]
+    )
+
+    assert french["concepts"][0]["code_resources"] == [
+        {
+            "id": "transformer-block-module",
+            "label": "Bloc Transformer de référence",
+            "description": "Implémentation du bloc Transformer.",
+            "href": (
+                "https://github.com/JM-Brun/llm-lab/blob/main/"
+                "src/llm_lab/foundations/transformer_block.py"
+            ),
+            "programming_language": "Python",
+        }
+    ]
+    assert english["concepts"][0]["code_resources"][0]["label"] == "Reference Transformer block"
+    assert french["concepts"][1]["code_resources"] == []
+
+
+def test_concept_details_render_code_resources_as_a_separate_section() -> None:
+    script = MODULE["render_map_script"]()
+    assert 'copy.conceptCodeResources' in script
+    assert 'var codeResources = concept.code_resources || [];' in script
+    assert 'el("ul", "map-code-resources")' in script
+    assert 'el("a", "map-code-resource-link", resource.label)' in script
+    assert 'link.href = resource.href;' in script
+    assert "Modules de code associés" in script
+    assert "Associated code modules" in script
+
+
 def test_load_concept_graph_falls_back_when_domain_registry_is_missing(
     tmp_path: Path, monkeypatch
 ) -> None:
