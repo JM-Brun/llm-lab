@@ -82,7 +82,7 @@ Two consequences follow from this mechanism.
 
 **A choice commits what follows.** Had the rule kept “Aqueducts” at turn 1, the context at turn 2 would be different, and everything after it too. The model does not go back on a token that has been appended.
 
-**The model keeps nothing from one turn to the next, except the text.** Its parameters are identical at all three turns. What changes is the context it is given.
+**The model's parameters stay the same from one turn to the next: generation does not update them.** The context, however, grows with the chosen token. An optimized implementation may also reuse previous computations through a KV cache, explained below; this cache speeds up inference but is neither learning nor a change to the parameters.
 
 ## One step, in notation
 
