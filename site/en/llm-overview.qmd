@@ -81,7 +81,7 @@ Give the model the prefix “What have the Romans ever done for us?”. It does 
 
 These values are made up: they do not come from a trained model, and a real vocabulary has tens of thousands of entries, not four. The path reuses them from page to page so that every calculation can be redone by hand.
 
-This table is a **conditional distribution**: it depends on the context. Append “They” to the question and recompute: the candidates are no longer the same, and “built” comes first.
+This table is a **conditional distribution**: it depends on the context. The four probabilities share a total of 1 (or 100%). Append “They” to the question and recompute: the candidates are no longer the same, and “built” comes first.
 
 Three terms are enough to read the rest of the path.
 
@@ -95,7 +95,7 @@ A probable continuation is not a true one. That “They” is probable after the
 
 ## From text to a distribution
 
-![The autoregressive generation process: context is prepared and tokenized, processed by a GPT with fixed parameters, then extended with the selected token.](../images/llm-generation-process-en.svg){#fig-gpt-generation-process fig-alt="The prefix “What have the Romans ever done for us?” is tokenized, processed by a GPT with fixed parameters, then converted into a distribution: They 0.6, Aqueducts 0.2, Nothing 0.1, Well 0.1, shown as percentages. A decoding rule selects “They”, which is appended to the context. Probabilities are made up."}
+![The autoregressive generation process: context is prepared and tokenized, processed by a model with fixed parameters, then extended with the selected token.](../images/llm-generation-process-en.svg){#fig-gpt-generation-process fig-alt="The prefix “What have the Romans ever done for us?” is tokenized, processed by a model with fixed parameters, then converted into a distribution: They 0.6, Aqueducts 0.2, Nothing 0.1, Well 0.1, shown as percentages. A decoding rule selects “They”, which is appended to the context. Probabilities are made up."}
 
 The figure reads from left to right.
 
