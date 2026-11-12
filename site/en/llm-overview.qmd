@@ -53,14 +53,14 @@ This page introduces several complementary dimensions of an LLM rather than a si
 
 Give the model the prefix “What have the Romans ever done for us?”. It does not output a word directly: it assigns a score to every unit of its vocabulary, then converts those scores into probabilities. For this context, imagine the following result.
 
-| Possible continuation | Probability |
+| Possible next token | Probability |
 |---|---|
 | “They” | 0.6 |
 | “Aqueducts” | 0.2 |
 | “Nothing” | 0.1 |
 | “Well” | 0.1 |
 
-These values are made up: they do not come from a trained model, and a real vocabulary has tens of thousands of entries, not four. The path reuses them from page to page so that every calculation can be redone by hand.
+These values are made up: they do not come from a trained model, and a real vocabulary has tens of thousands of entries, not four. In this simplified example, each row represents one token; the displayed strings are not a claim that a real tokenizer would treat each one as a single token. The path reuses these values from page to page so that every calculation can be redone by hand.
 
 This table is a **conditional distribution**: it depends on the context. The four probabilities share a total of 1 (or 100%). Append “They” to the question and recompute: the candidates are no longer the same, and “built” comes first.
 
@@ -134,13 +134,13 @@ Describing a model means answering three independent questions.
 
 A **foundation model** is a broader category than a *base model*: a model trained on broad data at scale and adaptable to many tasks, including tasks beyond language ([Bommasani et al., 2021](https://crfm.stanford.edu/report)).
 
-**Use.** At inference time, the parameters do not move. Everything that changes the answer goes through the context: the **prompt** (the text supplied), the examples placed in it, or the documents that a **retrieval-augmented generation** (RAG) system fetches and inserts into it.
+**Use.** At inference time, the parameters do not move. Context is the main way to steer the answer: the **prompt** (the text supplied), the examples placed in it, or the documents that a **retrieval-augmented generation** (RAG) system fetches and inserts into it. Decoding settings (for example, temperature or *top-p*) can also change the selected token without changing the context or the parameters.
 
 ## Choosing an approach
 
 LLMs are commonly used to generate or rewrite text, summarize, translate, extract information, classify, assist with programming, and answer questions.
 
-For a given task, three options are available: use a general-purpose model as is, supply it with documents through RAG, or adapt its parameters.
+For a given task, three approaches can be combined: use a general-purpose model as is, supply it with documents through RAG, or adapt its parameters. For example, an adapted model can also be paired with a RAG system.
 
 - **The model as is** fits when it already covers the task or when labeled examples are scarce.
 - **RAG** brings recent information without retraining, provided its corpus or index is kept up to date ([Lewis et al., 2020](https://arxiv.org/abs/2005.11401)).
