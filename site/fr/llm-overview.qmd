@@ -108,7 +108,7 @@ Les étapes 1 à 3 forment le calcul du modèle ; le parcours les ouvre une à u
 
 ## Un calcul, trois usages
 
-Une fois la distribution calculée, tout dépend de la question posée.
+Une fois la distribution calculée, tout dépend de la question posée. **Pour une première lecture, retenez seulement les trois usages** : produire une suite, mesurer la vraisemblance d'une suite connue ou apprendre à partir d'une suite attendue. Les termes *prefill*, *decode*, *loss*, *gradients* et *teacher forcing* précisent les mécanismes ; vous pourrez les approfondir dans les pages liées sans devoir tous les mémoriser maintenant.
 
 <!-- Desktop: three-column view; mobile: stacked view for readable labels. -->
 ![Du contexte à trois usages de la distribution prédictive : génération, scoring d'une cible observée et apprentissage.](../images/llm-shared-prediction-uses-fr.svg){.d-none .d-md-block #fig-llm-shared-prediction-uses fig-alt="Le contexte passe dans le modèle, qui produit des logits puis une distribution de probabilités sur le prochain token. Cette distribution sert à choisir un token en génération, à mesurer la probabilité d'un token observé en scoring, ou à calculer une loss et mettre à jour les paramètres pendant l'apprentissage."}
