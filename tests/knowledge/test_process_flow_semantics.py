@@ -39,6 +39,8 @@ def test_probability_meta_flow_is_not_a_navigation_landmark() -> None:
         "en/generation.qmd",
         "fr/transformer.qmd",
         "en/transformer.qmd",
+        "fr/text-data.qmd",
+        "en/text-data.qmd",
     ],
 )
 def test_computation_diagrams_are_not_navigation_landmarks(relative_path: str) -> None:
