@@ -15,6 +15,7 @@ purpose: "Enable readers to compare major embedding families, understand what a 
 suggested_route:
   previous: null
   next: null
+domain: "mathematical-tools-geometry"
 hierarchy:
   parents: ["en/deepen"]
   children: []
