@@ -53,6 +53,7 @@ COPY: dict[str, dict[str, Any]] = {
         "relatedConcepts": "Notions liées",
         "sectionHeadingsTitle": "Dans cette page",
         "conceptResources": "Pages associées",
+        "conceptCodeResources": "Modules de code associés",
         "relationLegendTitle": "Sens des relations (source → cible)",
         "relationFilterLabel": "Type de relation",
         "relationFilterAll": "Tous les types",
@@ -122,6 +123,7 @@ COPY: dict[str, dict[str, Any]] = {
         "relatedConcepts": "Related concepts",
         "sectionHeadingsTitle": "On this page",
         "conceptResources": "Pages covering this concept",
+        "conceptCodeResources": "Associated code modules",
         "relationLegendTitle": "Relationship meaning (source → target)",
         "relationFilterLabel": "Relation type",
         "relationFilterAll": "All types",
@@ -1187,6 +1189,27 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
           }
         });
         detailPanel.appendChild(chips);
+      }
+      var codeResources = concept.code_resources || [];
+      if (codeResources.length) {
+        detailPanel.appendChild(el("h4", "map-detail-heading", copy.conceptCodeResources));
+        var codeList = el("ul", "map-code-resources");
+        codeResources.forEach(function (resource) {
+          var item = el("li", "map-code-resource");
+          var link = el("a", "map-code-resource-link", resource.label);
+          link.href = resource.href;
+          item.appendChild(link);
+          if (resource.programming_language) {
+            item.appendChild(
+              el("span", "map-code-resource-language", resource.programming_language)
+            );
+          }
+          if (resource.description) {
+            item.appendChild(el("p", "map-code-resource-description", resource.description));
+          }
+          codeList.appendChild(item);
+        });
+        detailPanel.appendChild(codeList);
       }
       openDetailsBox();
       setStatus(concept.label);

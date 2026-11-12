@@ -1158,6 +1158,30 @@ def load_concept_graph(
     registry = load_yaml(registry_path)
     domain_labels = load_domain_labels(language)
     page_by_id = {page["id"]: page for page in pages}
+    resource_registry_path = ROOT / "data" / "resources.yml"
+    resource_registry = (
+        load_yaml(resource_registry_path) if resource_registry_path.is_file() else {}
+    )
+    code_resources_by_concept: dict[str, list[dict[str, str]]] = {}
+    for resource in resource_registry.get("resources", []):
+        if resource.get("status") != "published":
+            continue
+        location = resource["location"]
+        href = (
+            f"https://github.com/JM-Brun/llm-lab/blob/main/{location['path']}"
+            if location["type"] == "local"
+            else location["url"]
+        )
+        for concept_id in resource.get("concepts", []):
+            code_resources_by_concept.setdefault(concept_id, []).append(
+                {
+                    "id": resource["id"],
+                    "label": resource["labels"][language],
+                    "description": resource["descriptions"][language],
+                    "href": href,
+                    "programming_language": resource.get("programming_language", ""),
+                }
+            )
     concepts = []
     concept_ids = set()
     referenced_domains: list[str] = []
@@ -1179,6 +1203,7 @@ def load_concept_graph(
                 "importance": item["importance"],
                 "domains": domains,
                 "resources": resources,
+                "code_resources": code_resources_by_concept.get(item["id"], []),
             }
         )
         concept_ids.add(item["id"])
