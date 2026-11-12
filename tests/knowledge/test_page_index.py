@@ -169,6 +169,8 @@ def test_probability_meta_flow_is_not_a_navigation_landmark() -> None:
         "en/likelihood.qmd",
         "fr/entropy.qmd",
         "en/entropy.qmd",
+        "fr/logits.qmd",
+        "en/logits.qmd",
     ],
 )
 def test_computation_diagrams_do_not_mark_a_current_step(relative_path: str) -> None:
