@@ -38,7 +38,7 @@ Les conventions de réduction déterminent comment les pertes par token sont agr
 
 :::
 
-<div class="pipeline-stepper" role="navigation" aria-label="Étapes de construction de la loss">
+<div class="pipeline-stepper" role="group" aria-label="Étapes de construction de la loss">
   <a class="step-item" href="vraisemblance.qmd">1. Cible observée</a>
   <span class="step-arrow" aria-hidden="true">→</span>
   <a class="step-item" href="cross-entropy.qmd">2. Perte par token</a>
