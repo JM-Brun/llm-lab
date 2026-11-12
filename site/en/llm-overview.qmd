@@ -81,7 +81,7 @@ Give the model the prefix “What have the Romans ever done for us?”. It does 
 
 These values are made up: they do not come from a trained model, and a real vocabulary has tens of thousands of entries, not four. The path reuses them from page to page so that every calculation can be redone by hand.
 
-This table is a **conditional distribution**: it depends on the context. Append “They” to the question and recompute: the candidates are no longer the same, and “built” comes first.
+This table is a **conditional distribution**: it depends on the context. The four probabilities share a total of 1 (or 100%). Append “They” to the question and recompute: the candidates are no longer the same, and “built” comes first.
 
 Three terms are enough to read the rest of the path.
 
@@ -95,7 +95,7 @@ A probable continuation is not a true one. That “They” is probable after the
 
 ## From text to a distribution
 
-![The autoregressive generation process: context is prepared and tokenized, processed by a GPT with fixed parameters, then extended with the selected token.](../images/llm-generation-process-en.svg){#fig-gpt-generation-process fig-alt="The prefix “What have the Romans ever done for us?” is tokenized, processed by a GPT with fixed parameters, then converted into a distribution: They 0.6, Aqueducts 0.2, Nothing 0.1, Well 0.1, shown as percentages. A decoding rule selects “They”, which is appended to the context. Probabilities are made up."}
+![The autoregressive generation process: context is prepared and tokenized, processed by a model with fixed parameters, then extended with the selected token.](../images/llm-generation-process-en.svg){#fig-gpt-generation-process fig-alt="The prefix “What have the Romans ever done for us?” is tokenized, processed by a model with fixed parameters, then converted into a distribution: They 0.6, Aqueducts 0.2, Nothing 0.1, Well 0.1, shown as percentages. A decoding rule selects “They”, which is appended to the context. Probabilities are made up."}
 
 The figure reads from left to right.
 
@@ -108,7 +108,7 @@ Steps 1 to 3 are the model's computation; the path opens them one by one, from [
 
 ## One computation, three uses
 
-Once the distribution is computed, everything depends on the question being asked.
+Once the distribution is computed, everything depends on the question being asked. **For a first pass, keep only the three uses in mind**: produce a continuation, measure the likelihood of a known continuation, or learn from an expected continuation. Terms such as *prefill*, *decode*, *loss*, *gradients*, and *teacher forcing* describe the mechanisms; you can explore them in the linked pages without having to memorize them all now.
 
 <!-- Desktop: three-column view; mobile: stacked view for readable labels. -->
 ![From context to three uses of the predictive distribution: generation, observed-target scoring, and training.](../images/llm-shared-prediction-uses-en.svg){.d-none .d-md-block #fig-llm-shared-prediction-uses fig-alt="The context passes through the model, which produces logits and then a probability distribution over the next token. The distribution is used to select a token during generation, measure the probability of an observed token during scoring, or calculate a loss and update parameters during training."}
@@ -168,7 +168,6 @@ For a given task, three options are available: use a general-purpose model as is
 The choice is made on measured criteria: quality, errors, robustness, cost, latency, confidentiality, data provenance, maintenance. A few successful prompts are not an evaluation.
 
 ::: {.callout-tip title="Go further"}
-- **Look up a term:** [LLM and Transformer glossary](glossary.qmd).
 - **Inspect a model configuration:** [guided tour of a GPT configuration](gpt-config-walkthrough.qmd).
 - **Review the mathematical tools:** [mathematical foundations](mathematical-foundations.qmd).
 - **Compare text-splitting methods:** [tokenization strategies](tokenization-strategies.qmd).
