@@ -91,9 +91,9 @@ The next page decomposes this NLL at one target position and generalizes the one
 
 Continue the illustrative sequence “Être scribe ,”. Suppose the conditional probabilities assigned to its three successive observed tokens are $0.6$, $0.5$, and $0.8$. Each value is evaluated after extending the observed prefix with the preceding reference tokens; they are not independent probabilities.
 
-$
+$$
 P(\text{continuation})=0.6\times0.5\times0.8=0.24.
-$
+$$
 
 The log-likelihood is $\log(0.24)\approx-1.427$ nats, and the sequence NLL is $-\log(0.24)\approx1.427$ nats. Dividing by three gives an average of approximately $0.476$ nats per token. These are illustrative values chosen to keep the arithmetic visible, not outputs from a trained model.
 
