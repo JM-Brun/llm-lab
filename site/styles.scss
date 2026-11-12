@@ -2304,3 +2304,61 @@ details.learning-resources[open] > summary { border-bottom: 0; }
 @media (max-width: 600px) {
   .learning-resources__content { padding-left: 1.25rem; }
 }
+
+
+/* Cross-cutting coverage is a thematic set, not a navigation landmark or route. */
+.guided-page-coverage {
+  margin: 1.5rem 0 2rem;
+  padding: 1rem 1.15rem 1.1rem;
+  border: 1px dashed var(--llm-line);
+  border-inline-start: 4px solid var(--llm-brand-action);
+  border-radius: .7rem;
+  background: var(--llm-paper);
+}
+.guided-page-coverage__heading {
+  margin: 0 0 .8rem;
+  padding: 0;
+  border: 0;
+  font-size: 1rem;
+  font-weight: 750;
+  letter-spacing: 0;
+}
+.guided-page-coverage__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.guided-page-coverage__list li { max-width: none; }
+.guided-page-coverage__list a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  padding: .35rem .7rem;
+  border: 1px solid var(--llm-line);
+  border-radius: .4rem;
+  background: var(--bs-body-bg, #fff);
+  font-size: .9rem;
+  line-height: 1.35;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: .18em;
+}
+.guided-page-coverage__list a:hover,
+.guided-page-coverage__list a:focus-visible {
+  border-style: solid;
+  outline-offset: 2px;
+}
+[data-bs-theme="dark"] .guided-page-coverage {
+  background: var(--bs-tertiary-bg, #202a24);
+}
+[data-bs-theme="dark"] .guided-page-coverage__list a {
+  background: var(--bs-secondary-bg, #26332b);
+}
+@media (max-width: 575.98px) {
+  .guided-page-coverage { padding: .85rem; }
+  .guided-page-coverage__list { display: grid; grid-template-columns: 1fr; }
+  .guided-page-coverage__list a { width: 100%; }
+}
