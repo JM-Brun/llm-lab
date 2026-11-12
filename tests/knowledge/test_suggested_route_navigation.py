@@ -222,3 +222,80 @@ def test_published_route_ends_with_exactly_one_forward_card(language: str) -> No
     assert [name for name, text in fragments.items() if label in text] == [final_name]
     source = (ROOT / "site" / f"{final_id}.qmd").read_text(encoding="utf-8")
     assert f"includes/{final_name}" in source
+
+
+@pytest.mark.parametrize("language", ["fr", "en"])
+def test_build_hub_prefers_the_first_guided_implementation_tour(language: str) -> None:
+    pages = GENERATOR["load_pages"]()
+    page_by_id = {page["id"]: page for page in pages}
+
+    hub = page_by_id[f"{language}/build-path"]
+    first_tour = page_by_id[f"{language}/gpt-config-walkthrough"]
+
+    assert hub["route"]["next"] == first_tour["id"]
+    practice_hub = page_by_id[f"{language}/exercises"]
+    assert practice_hub["route"]["previous"] is None
+    assert first_tour["route"]["previous"] == hub["id"]
+    rendered = GENERATOR["render_suggested_route_markdown"](first_tour, page_by_id, language)
+    expected_return = (
+        "← Retour au parcours Build" if language == "fr" else "← Back to the Build path"
+    )
+    assert expected_return in rendered
+    assert 'href="build-path.qmd"' in rendered
+
+
+@pytest.mark.parametrize(
+    ("language", "page_id"),
+    [
+        ("fr", "training-examples"),
+        ("en", "training-examples"),
+        ("fr", "gpt-generation-walkthrough"),
+        ("en", "gpt-generation-walkthrough"),
+    ],
+)
+def test_build_terminal_pages_keep_explicit_return_links(language: str, page_id: str) -> None:
+    pages = GENERATOR["load_pages"]()
+    page = next(item for item in pages if item["id"] == f"{language}/{page_id}")
+
+    assert page["route"]["next"] is None
+    source_path = ROOT / "site" / language / f"{page_id}.qmd"
+    source = source_path.read_text(encoding="utf-8")
+    if page_id == "training-examples":
+        expected = "Return to the Build path" if language == "en" else "Revenir au parcours Build"
+        assert expected in source
+    else:
+        heading = "## Connections" if language == "en" else "## Connexions"
+        expected = "Back to the Build path" if language == "en" else "Retour au parcours Build"
+        connections = source.split(heading, maxsplit=1)[1].split("\n## ", maxsplit=1)[0]
+        assert expected in connections
+
+
+def test_published_build_page_inventory_is_bilingual_and_routes_resolve() -> None:
+    pages = GENERATOR["load_pages"]()
+    by_id = {page["id"]: page for page in pages}
+    build_by_language = {
+        language: {
+            page["id"].split("/", maxsplit=1)[1]
+            for page in pages
+            if page["language"] == language and page["destination"] == "build"
+        }
+        for language in ("fr", "en")
+    }
+
+    assert build_by_language["fr"]
+    assert build_by_language["fr"] == build_by_language["en"]
+
+    for language in ("fr", "en"):
+        build_pages = [
+            page
+            for page in pages
+            if page["language"] == language and page["destination"] == "build"
+        ]
+        for page in build_pages:
+            route = page["route"]
+            assert route.get("previous") or route.get("next"), page["id"]
+            for direction in ("previous", "next"):
+                target_id = route.get(direction)
+                if target_id is not None:
+                    assert target_id in by_id, (page["id"], direction, target_id)
+                    assert target_id.startswith(f"{language}/"), (page["id"], target_id)

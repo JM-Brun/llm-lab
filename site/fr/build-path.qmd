@@ -12,7 +12,7 @@ scope: "Guide l'inspection et la vérification d'un petit GPT décodeur seul à 
 purpose: "Le lecteur doit pouvoir suivre les modules de référence dans les visites guidées, essayer leurs exercices, exécuter le code et les tests, vérifier les jalons disponibles et expliquer les limites de la génération à paramètres aléatoires."
 suggested_route:
   previous: null
-  next: "fr/exercises"
+  next: "fr/gpt-config-walkthrough"
 hierarchy:
   parents: ["fr/index", "fr/llm-overview"]
   children: ["fr/gpt-config-walkthrough", "fr/gpt-ops-walkthrough", "fr/transformer-block-walkthrough", "fr/gpt-model-walkthrough", "fr/gpt-generation-walkthrough", "fr/corpus-preparation"]

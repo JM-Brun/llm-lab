@@ -11,7 +11,7 @@ id: "fr/exercises"
 scope: "Registre central des pages d’exercices par leçon et des collections thématiques approfondies. Les courtes vérifications sont regroupées sur des pages compagnes ; les collections couvrent une pratique transversale."
 purpose: "Choisir une collection thématique, identifier ses prérequis et son niveau de maturité, puis utiliser les corrigés et questions de transfert pour vérifier le raisonnement plutôt que la simple mémorisation."
 suggested_route:
-  previous: "fr/build-path"
+  previous: null
   next: "fr/evaluation-experimentale"
 hierarchy:
   parents: ["fr/index"]

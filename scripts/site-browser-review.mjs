@@ -754,9 +754,10 @@ async function runCase(testCase, caseIndex) {
         const current = byId.get(currentId);
         if (!current) throw new Error(`missing page metadata: ${currentId}`);
 
+        const buildHubId = `${language}/build-path`;
         let first = current;
         const backwards = new Set([first.id]);
-        while (first.route?.previous) {
+        while (first.route?.previous && first.route.previous !== buildHubId) {
           const previous = byId.get(first.route.previous);
           if (!previous || backwards.has(previous.id)) {
             throw new Error("build-tour previous links are missing or cyclic");
@@ -764,11 +765,18 @@ async function runCase(testCase, caseIndex) {
           backwards.add(previous.id);
           first = previous;
         }
+        const entryPrevious = first.route?.previous ?? null;
+        if (entryPrevious) {
+          const hub = byId.get(entryPrevious);
+          if (!hub || hub.route?.next !== first.id) {
+            throw new Error("build-tour entry from the Build hub is not reciprocal");
+          }
+        }
 
         const steps = [];
         const visited = new Set();
         let cursor = first;
-        let expectedPrevious = null;
+        let expectedPrevious = entryPrevious;
         while (cursor) {
           if (visited.has(cursor.id) || cursor.route?.previous !== expectedPrevious) {
             throw new Error("build-tour metadata is cyclic or non-reciprocal");
@@ -812,7 +820,7 @@ async function runCase(testCase, caseIndex) {
       const expectedLinks = [
         { target: step.previous, label: lang === "fr" ? "Étape précédente" : "Previous stop" },
         { target: step.next, label: lang === "fr" ? "Étape suivante" : "Next stop" },
-      ].filter(link => link.target);
+      ].filter(link => link.target && !(index === 0 && link.target === `${lang}/build-path`));
       item.buildTour.navigationLinks = await connectionsList.locator("li").evaluateAll(items =>
         items.map(item => ({
           href: item.querySelector("a[href]")?.getAttribute("href") || null,
@@ -831,6 +839,14 @@ async function runCase(testCase, caseIndex) {
         );
         if (actual.length !== 1) {
           throw new Error(`build-tour ${expected.label} link to ${expected.target} is missing or duplicated`);
+        }
+      }
+
+      if (index === 0) {
+        const returnCard = page.locator('.route-nav-cards a[href="build-path.qmd"]');
+        const returnLabel = lang === "fr" ? "Retour au parcours Build" : "Back to the Build path";
+        if (await returnCard.count() !== 1 || !(await returnCard.first().innerText()).includes(returnLabel)) {
+          throw new Error("first build-tour page must expose one explicitly labelled return to the Build hub");
         }
       }
       if (item.buildTour.navigationLinks.some(link =>

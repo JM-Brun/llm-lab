@@ -977,6 +977,11 @@ def render_suggested_route_markdown(
         target = page_by_id.get(target_id)
         if target is None:
             raise ValueError(f"unresolved {direction} route for {page['id']!r}: {target_id!r}")
+        display_label = label
+        if direction == "previous" and target_id == f"{language}/build-path":
+            display_label = (
+                "← Retour au parcours Build" if language == "fr" else "← Back to the Build path"
+            )
         href = str(target.get("href", ""))
         if not href.endswith(".html"):
             raise ValueError(f"route target has no published HTML href: {target_id!r}")
@@ -984,7 +989,7 @@ def render_suggested_route_markdown(
         cards.extend(
             [
                 f'  <a class="route-nav-card" href="{escape(source_href, quote=True)}">',
-                f'    <span class="nav-direction">{escape(label)}</span>',
+                f'    <span class="nav-direction">{escape(display_label)}</span>',
                 f'    <span class="nav-title">{escape(str(target["title"]))}</span>',
                 "  </a>",
             ]
