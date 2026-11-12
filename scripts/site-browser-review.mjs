@@ -143,6 +143,11 @@ if (process.env.SITE_BROWSER_PROFILE === "targeted") {
   const changedPages = new Set(changedFiles
     .filter(file => /^site\/(en|fr)\/.+\.qmd$/.test(file))
     .map(file => file.replace(/^site\/(en|fr)\//, "").replace(/\.qmd$/, ".html")));
+  // Q/K/V matrix diagrams are shared by the bilingual page; an SVG-only
+  // change still needs a rendered browser screenshot of that page.
+  if (changedFiles.some(file => /^site\/images\/queries-keys-values(?:-en)?\.svg$/.test(file))) {
+    changedPages.add("queries-keys-values.html");
+  }
   const hasGlobalSiteChange = changedFiles.some(file =>
     /^site\/(\.quarto|_quarto\.yml|.*\.(css|scss|js))$/.test(file) ||
     /^site\/_extensions\//.test(file) || /^scripts\//.test(file)
