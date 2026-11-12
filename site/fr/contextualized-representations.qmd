@@ -96,7 +96,7 @@ Considérons maintenant : *“The animal was tired because it had been running.�
 
 Cet exemple est repris comme motivation pédagogique dans le tutoriel de [Nishanthan K sur Q, K et V](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers). Il ne démontre pas qu'une tête d'attention particulière identifie nécessairement l'antécédent, ni que l'attention seule réalise toute la résolution de coréférence. Il sert à distinguer deux motivations complémentaires : lever une ambiguïté lexicale (*bank*) et exploiter une relation entre tokens (*it* / *the animal*).
 
-Dans le fil rouge, le préfixe « C'est une bonne situation, ça, scribe ? » est déjà présent. À mesure que « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... » est généré, chaque nouveau token est traité avec le contexte désormais disponible, qui s'allonge au fil de la boucle.
+Dans le fil rouge, le préfixe « C'est une bonne situation, ça, scribe ? » est déjà présent. À mesure que « Être scribe, c'est relier des histoires. » est généré, chaque nouveau token est traité avec le contexte désormais disponible, qui s'allonge au fil de la boucle.
 
 Pour comprendre les dépendances entre positions, les masques causaux et les rôles distincts de l'auto-attention et du MLP, consultez l'[approfondissement sur les représentations contextualisées](contextualized-representations-advanced.qmd). La formalisation détaillée est volontairement séparée de cette première explication.
 
