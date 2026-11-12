@@ -991,11 +991,11 @@ def test_load_concept_graph_projects_published_code_resources_separately(
 
 def test_concept_details_render_code_resources_as_a_separate_section() -> None:
     script = MODULE["render_map_script"]()
-    assert 'copy.conceptCodeResources' in script
-    assert 'var codeResources = concept.code_resources || [];' in script
+    assert "copy.conceptCodeResources" in script
+    assert "var codeResources = concept.code_resources || [];" in script
     assert 'el("ul", "map-code-resources")' in script
     assert 'el("a", "map-code-resource-link", resource.label)' in script
-    assert 'link.href = resource.href;' in script
+    assert "link.href = resource.href;" in script
     assert "Modules de code associés" in script
     assert "Associated code modules" in script
 
