@@ -19,7 +19,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/generation", "fr/logits", "fr/probabilites", "fr/evaluation-experimentale"]
+related: ["fr/generation", "fr/logits", "fr/probabilites", "fr/evaluation-experimentale", "fr/exercises-generation"]
 tags: ["type:deep-dive", "destination:deepen", "topic:decoding", "level:advanced", "language:fr", "status:published"]
 -->
 
@@ -284,6 +284,10 @@ Pour comparer deux configurations, consigner au minimum :
 - métriques automatiques et, si possible, consignes d'évaluation humaine.
 
 Ne comparer que les noms de paramètres (« température 0,7 » ou « top-p 0,9 ») est insuffisant si les autres traitements, leurs ordres ou les versions logicielles diffèrent.
+
+## Mettre en pratique
+
+Pour vérifier les calculs de température et comparer top-k à top-p sur une distribution concrète, consultez les [exercices de génération](exercises-generation.qmd#ex-generation-temperature). Ces activités sont facultatives et corrigées ; elles ne remplacent pas l'évaluation de la qualité des sorties sur des tâches réelles.
 
 ## Références de recherche
 
