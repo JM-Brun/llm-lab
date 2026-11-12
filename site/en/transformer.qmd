@@ -99,16 +99,16 @@ The same route, as a picture:
 %%| fig-cap: "One pass through a pre-LN block: each sublayer reads a normalized copy of the stream, and its output is added back to the stream (residual connection)."
 %%| fig-alt: "Flow diagram: x enters the block; a copy passes through LayerNorm then multi-head attention, and rejoins x at an addition; the result x prime passes through LayerNorm then the MLP, which projects from d_model to d_ff and back to d_model, and rejoins x prime at a second addition, giving x double prime, the block output."
 flowchart LR
-    X(["x, block input"]) --> LN1["LayerNorm"]
+    X["x — block input"] --> LN1["LayerNorm"]
     LN1 --> ATT["Multi-head attention"]
-    ATT --> ADD1((" + "))
+    ATT --> ADD1["Addition"]
     X -- "residual path" --> ADD1
-    ADD1 --> X2(["x′, after attention"])
+    ADD1 --> X2["x′ — after attention"]
     X2 --> LN2["LayerNorm"]
     LN2 --> MLP["MLP: d_model to d_ff to d_model"]
-    MLP --> ADD2((" + "))
+    MLP --> ADD2["Addition"]
     X2 -- "residual path" --> ADD2
-    ADD2 --> Y(["x″, block output"])
+    ADD2 --> Y["x″ — block output"]
 ```
 
 In short, each block component has a distinct role:
