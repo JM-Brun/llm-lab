@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import runpy
+from html import escape
 from pathlib import Path
 from typing import Any
 
@@ -514,5 +515,5 @@ def test_overview_preserves_cross_cutting_coverage_and_explicit_next_page(
     )
     suggested_route = route_fragments[route_path]
     assert suggested_route.count(next_label) == 1
-    assert suggested_route.count(next_title) == 1
+    assert suggested_route.count(escape(next_title)) == 1
     assert suggested_route.count('href="generation.qmd"') == 1
