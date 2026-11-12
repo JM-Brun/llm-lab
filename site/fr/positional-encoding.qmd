@@ -81,13 +81,14 @@ Cette propriété suppose l’absence de signal positionnel et de contrainte dé
 
 ![Où l'information de position entre dans le calcul : en entrée pour un encodage absolu, dans les requêtes et les clés pour RoPE.](../images/positional-info-insertion-fr.svg){fig-alt="Un encodage absolu est ajouté aux embeddings en entrée, avant toute projection. RoPE applique des rotations aux requêtes et aux clés après leurs projections, avant le produit QK, si bien que les scores d'attention portent l'information de position." width=100%}
 
-## Trois approches à distinguer
+## Deux familles et plusieurs mécanismes
 
-- **Encodage absolu ajouté au vecteur :** on ajoute à la représentation du token (son vecteur de plongement) un vecteur associé à sa position. Le Transformer original utilisait des encodages sinusoïdaux ; d'autres modèles apprennent leurs embeddings positionnels.
-- **Mécanismes relatifs :** ils introduisent le décalage entre positions dans le calcul de l'attention, par exemple au moyen d'un biais ajouté aux scores ou de représentations relatives.
-- **RoPE :** cette méthode rotative applique des rotations dépendant de la position aux requêtes et aux clés après leurs projections, avant le produit $QK^\top$. Le score obtenu dépend alors du décalage relatif. RoPE est donc un mécanisme de position relative ; on le distingue ici pour rendre visible son mode d'injection particulier.
+- **Encodages absolus :** on ajoute à la représentation du token (son vecteur de plongement) un vecteur associé à sa position. Le Transformer original utilisait des encodages sinusoïdaux ; d'autres modèles apprennent leurs embeddings positionnels.
+- **Mécanismes relatifs :** ils introduisent le décalage entre positions dans le calcul de l'attention. Deux exemples importants sont :
+  - les **biais ou représentations relatives**, qui modifient les scores ou les représentations en fonction de la distance entre positions ;
+  - **RoPE**, qui applique des rotations dépendant de la position aux requêtes et aux clés après leurs projections, avant le produit $QK^\top$. Le score obtenu dépend du décalage relatif. RoPE appartient donc à la famille relative ; son mode d'injection rotatif justifie de le présenter séparément dans les schémas.
 
-Ces approches injectent l'information positionnelle à des endroits différents et n'ont pas exactement les mêmes propriétés. Le schéma compare deux mécanismes positionnels explicites ; il ne représente pas le masque causal, qui constitue une contrainte d'accès distincte. Il suffit ici de retenir leur rôle et leur emplacement général dans le calcul. Pour comprendre la dépendance au décalage relatif, les conventions de rotation et les limites à longue séquence, voir l'[approfondissement avancé sur RoPE](rope.qmd).
+La distinction principale est celle entre information **absolue** et information **relative** ; RoPE est un mécanisme particulier de la seconde famille, pas une troisième famille disjointe. Le schéma compare deux modes d'injection explicites ; il ne représente pas le masque causal, qui constitue une contrainte d'accès distincte. Pour comprendre la dépendance au décalage relatif, les conventions de rotation et les limites à longue séquence, voir l'[approfondissement avancé sur RoPE](rope.qmd).
 
 ::: {.callout-note collapse="true" title="Approfondissement facultatif — géométrie des encodages sinusoïdaux"}
 Dans l’encodage sinusoïdal original, chaque paire de coordonnées utilise une fréquence propre. En posant $\omega_i=10000^{-2i/d}$, la paire associée à l’indice $i$ s’écrit :
