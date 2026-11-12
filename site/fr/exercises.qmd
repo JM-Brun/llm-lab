@@ -24,7 +24,7 @@ Les auto-vérifications courtes sont regroupées sur des pages compagnes liées 
 
 ## Exercices par leçon
 
-::: {.callout-note collapse="true" title="Parcourir les 33 pages d’exercices par leçon"}
+::: {.callout-note collapse="true" title="Parcourir les 34 pages d’exercices par leçon"}
 
 ### Comprendre
 
@@ -47,6 +47,7 @@ Les auto-vérifications courtes sont regroupées sur des pages compagnes liées 
 - [Gradients](exercises/gradients.qmd)
 - [Architectures Transformer](exercises/transformer-architectures.qmd)
 - [Limites des LLM](exercises/llm-limits.qmd)
+- [Post-entraînement](exercises/post-training.qmd)
 
 ### Construire
 

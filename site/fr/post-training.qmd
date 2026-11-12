@@ -14,10 +14,10 @@ scope: "Distinguer pré-entraînement, fine-tuning supervisé sur des paires ins
 purpose: "Indiquer, pour chaque méthode d'adaptation, quelles données elle utilise, quels tokens contribuent à la loss, quels paramètres changent et ce qui reste fixe ; choisir entre modifier le contexte et modifier les paramètres."
 suggested_route:
   previous: null
-  next: null
+  next: "fr/post-training-exercises"
 hierarchy:
   parents: ["fr/training-loop"]
-  children: []
+  children: ["fr/post-training-exercises"]
 related: ["fr/llm-overview", "fr/llm-evolution", "fr/in-context-learning", "fr/loss", "fr/glossary", "fr/llm-limits"]
 tags: ["type:concept-lesson", "destination:understand", "topic:post-training", "level:applied", "language:fr", "status:published"]
 -->
@@ -101,6 +101,10 @@ Pour situer ces méthodes dans l'histoire des modèles d'assistant, voir l'[évo
   <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
 </summary>
 <div class="learning-resources__content" markdown="1">
+
+### Exercices
+
+Vérifier les distinctions entre SFT, RLHF, DPO, LoRA et récupération sur la [page d'exercices dédiée au post-entraînement](exercises/post-training.qmd).
 
 ### Pour approfondir
 

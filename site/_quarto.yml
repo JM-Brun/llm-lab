@@ -164,6 +164,7 @@ project:
     - fr/exercises/gradients.qmd
     - fr/exercises/transformer-architectures.qmd
     - fr/exercises/llm-limits.qmd
+    - fr/exercises/post-training.qmd
     - fr/exercises/corpus-preparation.qmd
     - fr/exercises/training-examples.qmd
     - fr/exercises/gpt-config-walkthrough.qmd
@@ -197,6 +198,7 @@ project:
     - en/exercises/gradients.qmd
     - en/exercises/transformer-architectures.qmd
     - en/exercises/llm-limits.qmd
+    - en/exercises/post-training.qmd
     - en/exercises/corpus-preparation.qmd
     - en/exercises/training-examples.qmd
     - en/exercises/gpt-config-walkthrough.qmd
