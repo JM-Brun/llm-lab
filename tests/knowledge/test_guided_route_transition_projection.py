@@ -150,7 +150,7 @@ def test_transition_visual_identity_is_distinct_from_stage_membership() -> None:
     assert "border-left: 2px dashed #A78BC9" in transition_styles
     # Membership remains its own green pill/context treatment.
     membership_start = styles.index(".guided-page-context {")
-    membership_end = styles.index("/* Keep Quarto navigation text", membership_start)
+    membership_end = styles.index("/* Explanatory stage transitions", membership_start)
     membership_styles = styles[membership_start:membership_end]
     assert "#E5F1E8" in membership_styles
     assert "#7651A8" not in membership_styles
