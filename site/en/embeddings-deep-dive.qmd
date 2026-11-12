@@ -230,7 +230,7 @@ This project reuses the progression as a **case study**, while qualifying severa
 
 ### A minimal reproducible experiment
 
-LLM Lab provides a NumPy helper that requires no model download: [inspect a tiny embedding table in the bilingual exercise](../en/exercises/embedding-space.qmd). It retrieves rows directly by ID and computes a deterministic cosine top-k. It does not claim to reproduce the source checkpoint or interactive atlas.
+LLM Lab provides a NumPy helper that requires no model download: [inspect a tiny embedding table in the bilingual exercise](exercises/embedding-space.qmd). It retrieves rows directly by ID and computes a deterministic cosine top-k. It does not claim to reproduce the source checkpoint or interactive atlas.
 
 ### About the source figures
 
