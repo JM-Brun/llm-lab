@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="550" viewBox="0 0 1200 550" role="img" aria-labelledby="title desc">
-  <title id="title">From scores to weights, then output</title><desc id="desc">Scores may be negative; weights are positive and normalized. S et A ont la forme T × T ; O a la forme T × d_v. Les poids affichés sont des exemples dont chaque ligne somme à un.</desc><defs>
+  <title id="title">From scores to weights, then output</title><desc id="desc">Scores may be negative; weights are non-negative and normalized. S and A have shape T × T; O has shape T × d_v. The displayed weights are illustrative, and each row sums to one.</desc><defs>
  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f0f5ff"/><stop offset="1" stop-color="#fff5ee"/></linearGradient>
  <linearGradient id="score" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#d9d4f5"/><stop offset="1" stop-color="#6555a5"/></linearGradient>
  <linearGradient id="weight" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#c9eee5"/><stop offset="1" stop-color="#087f70"/></linearGradient>
