@@ -8,13 +8,16 @@ shared assets still referenced by untouched pages.
 
 from __future__ import annotations
 
+import html
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
 import tempfile
 from pathlib import Path, PurePosixPath
+from urllib.parse import urlsplit, urlunsplit
 
 
 def replace_project_render_targets(config: str, targets: list[str]) -> str:
@@ -81,6 +84,41 @@ def replace_project_render_targets(config: str, targets: list[str]) -> str:
     return "".join(lines[:render_start] + replacement + lines[render_end:])
 
 
+HREF_ATTRIBUTE = re.compile(
+    r"(?P<prefix>(?<![\w:-])href\s*=\s*)(?P<quote>['\"])(?P<value>.*?)(?P=quote)",
+    re.IGNORECASE,
+)
+
+
+def rewrite_quarto_source_links(document: str) -> str:
+    """Rewrite local Quarto source-page hrefs that escaped incremental rendering."""
+
+    def replace_href(match: re.Match[str]) -> str:
+        original = match.group("value")
+        decoded = html.unescape(original)
+        parsed = urlsplit(decoded)
+        if parsed.scheme or parsed.netloc or not parsed.path.lower().endswith(".qmd"):
+            return match.group(0)
+
+        rewritten = urlunsplit(parsed._replace(path=f"{parsed.path[:-4]}.html"))
+        quote = match.group("quote")
+        return f"{match.group('prefix')}{quote}{html.escape(rewritten, quote=True)}{quote}"
+
+    return HREF_ATTRIBUTE.sub(replace_href, document)
+
+
+def rewrite_rendered_html_links(output_dir: Path) -> int:
+    """Rewrite local .qmd hrefs in HTML files produced by an isolated Quarto render."""
+    changed_pages = 0
+    for html_path in output_dir.rglob("*.html"):
+        original = html_path.read_text(encoding="utf-8")
+        rewritten = rewrite_quarto_source_links(original)
+        if rewritten != original:
+            html_path.write_text(rewritten, encoding="utf-8")
+            changed_pages += 1
+    return changed_pages
+
+
 def main() -> None:
     """Render the selected pages separately, then safely overlay their outputs."""
     targets = [
@@ -140,6 +178,11 @@ def main() -> None:
             raise RuntimeError("Quarto succeeded but produced no isolated output")
         if (temp_output / "_site").exists():
             raise RuntimeError("Isolated render unexpectedly copied the previous _site output")
+
+        rewritten_pages = rewrite_rendered_html_links(temp_output)
+        sys.stdout.write(
+            f"Rewrote local Quarto source links in {rewritten_pages} rendered HTML page(s)\n"
+        )
 
         # Overlay generated files only. Never delete from the existing site:
         # untouched pages may still depend on shared Quarto assets.
