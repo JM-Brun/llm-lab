@@ -39,15 +39,17 @@ La softmax transforme les logits en une **distribution conditionnée par le pré
 <div class="pipeline-stepper meta-flow" role="navigation" aria-label="Des logits au token sélectionné">
   <a class="step-item" href="logits.qmd">Logits</a>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item">Transformations facultatives : température, top-k ou top-p</span>
+  <span class="step-item">Température facultative sur les logits</span>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active" aria-current="step">Distribution finale normalisée</span>
+  <span class="step-item">Softmax : distribution initiale</span>
+  <span class="step-arrow" aria-hidden="true">→</span>
+  <span class="step-item">Filtres facultatifs top-k / top-p, puis renormalisation</span>
   <span class="step-arrow" aria-hidden="true">→</span>
   <span class="step-item">Politique de sélection : argmax ou échantillonnage</span>
   <span class="step-arrow" aria-hidden="true">→</span>
   <a class="step-item" href="generation.qmd">Token choisi et réinjecté</a>
 </div>
-<p class="meta-flow__relation">L’ordre exact des transformations dépend de la stratégie de décodage et de son implémentation ; une distribution n’est pas encore un token sélectionné.</p>
+<p class="meta-flow__relation">La température agit sur les logits avant la softmax. Dans l’implémentation de référence du projet, top-k et top-p filtrent ensuite la distribution et la renormalisent ; l’ordre peut varier selon les bibliothèques. Une distribution, même filtrée, n’est pas encore un token sélectionné.</p>
 
 ## Des logits à une distribution catégorielle
 
