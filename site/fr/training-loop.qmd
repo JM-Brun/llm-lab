@@ -61,6 +61,10 @@ Un batch fournit une estimation bruitée de la loss sur tout le jeu d'entraînem
 
 Un modèle fraîchement initialisé attribue des probabilités à peu près uniformes : sa loss est proche de $\ln V$ pour un vocabulaire de taille $V$ (un départ quasi uniforme est un test de cohérence, pas une garantie : l'échelle d'initialisation compte). L'entraînement vise à faire baisser cette loss ; avec des batchs stochastiques, les mesures peuvent fluctuer d'un pas à l'autre.
 
+### Rejouer un pas sur le premier token du scribe
+
+Pour rendre le cycle concret, reprenons la cible « Être » et la distribution illustrative $p=(0{,}6;0{,}2;0{,}1;0{,}1)$. La loss locale vaut $-\ln(0{,}6)\approx0{,}511$ nat et son gradient par rapport aux logits vaut $(-0{,}4;0{,}2;0{,}1;0{,}1)$. La règle de chaîne transforme ce signal en gradients des poids (voir [l'exemple de la dernière projection](gradients.qmd)) ; l'optimiseur applique ensuite une mise à jour. Au pas suivant, le modèle doit recalculer ses logits avec les nouveaux paramètres : les probabilités $0{,}6/0{,}2/0{,}1/0{,}1$ ne sont donc pas supposées rester identiques. Cet exemple relie les étapes du mécanisme ; il ne simule pas un entraînement complet ni ne garantit que la loss baisse après n'importe quel pas.
+
 ## Optimiseur, gradient et taux d'apprentissage
 
 Ces trois notions sont souvent confondues.
