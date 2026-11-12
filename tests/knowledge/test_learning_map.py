@@ -866,6 +866,7 @@ def test_concept_graph_script_exposes_direction_and_relation_legend() -> None:
     assert "var label = type ? type.label : relation.type;" in source
     assert 'relation.direction === "symmetric" ? "↔ " : "→ "' in source
 
+
 def test_relation_family_identity_is_visible_in_legend_and_details() -> None:
     script = MODULE["render_map_script"]()
     assert 'copy.relationFamilies[relation.family] || ""' in script
