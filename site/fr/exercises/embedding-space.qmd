@@ -48,6 +48,33 @@ Non. Une projection 2D ne préserve qu’une partie de la géométrie et peut cr
 
 **Vous avez compris cette étape si** vous pouvez expliquer qu'un ID sélectionne une ligne de la table, distinguer l'indice du vecteur stocké, et séparer le vecteur initial des états contextualisés.
 
+## Inspecter une petite matrice d'embeddings d'entrée
+
+Cette expérience indépendante d'un modèle utilise une toute petite matrice NumPy. Elle ne nécessite ni tokenizer, ni téléchargement de checkpoint, ni GPU. Les fonctions opèrent sur les **lignes d'une table d'embeddings d'entrée**, pas sur des états cachés contextualisés.
+
+```python
+import numpy as np
+from llm_lab.foundations.embedding_inspection import (
+    cosine_top_k,
+    lookup_embedding_rows,
+)
+
+embedding_matrix = np.array(
+    [[1.0, 0.0], [0.8, 0.6], [-1.0, 0.0], [0.0, 1.0], [0.0, 0.0]]
+)
+
+# Ce sont les IDs, et non des chaînes décodées, qui sélectionnent et identifient les lignes.
+print(lookup_embedding_rows(embedding_matrix, [1, 0, 1]))
+neighbor_ids, similarities = cosine_top_k(embedding_matrix, token_id=0, k=3)
+print(list(zip(neighbor_ids.tolist(), similarities.tolist(), strict=True)))
+```
+
+Le lookup conserve l'ordre et les IDs répétés. La recherche cosinus exclut l'ID de la requête par défaut, ignore les lignes de norme nulle (la similarité cosinus n'y est pas définie) et départage les égalités par ID croissant. Le résultat est un voisinage top-k orienté ; il ne constitue pas automatiquement un graphe symétrique.
+
+**À essayer :** changez l'ID de la requête, comparez k=1 et k=3, puis prévoyez l'ordre avant d'exécuter le code. Expliquez ensuite pourquoi ce résultat ne dit rien, à lui seul, sur le sens contextualisé ou la qualité d'une recherche de phrases.
+
+**Vous avez compris cet exercice si** vous pouvez retrouver l'ID de ligne de chaque vecteur renvoyé et préciser les règles appliquées aux candidats, à l'auto-voisin et aux égalités.
+
 ::: {.language-switch}
 **Langue :** [Français](embedding-space.qmd) · [English](../../en/exercises/embedding-space.qmd)
 :::

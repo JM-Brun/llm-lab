@@ -3196,12 +3196,24 @@ sources:
           - "Sections on embedding terminology, TF-IDF, Word2Vec, BERT, modern LLM token embeddings, torch.nn.Embedding, DeepSeek-R1-Distill-Qwen-1.5B extraction, cosine nearest neighbours and token-neighbour graphs"
           - "Interactive page metadata and link to the author's LLM Mechanics repository"
         limitations:
-          - "The interactive atlas was not manually operated; its underlying data, rendering parameters and exact graph construction were not independently inspected."
+          - "The live atlas was not manually operated; its underlying data, rendering parameters and interactive behavior remain unverified."
           - "The linked LLM Mechanics repository and notebook code were not audited or executed."
           - "Several source/reference links in the article extraction are empty or unresolved; the cited original sources for some diagrams and historical claims could not be verified."
           - "Embedded visual assets were represented by captions/placeholders in the retrieved text; individual image bytes, authorship and reuse rights were not audited."
           - "No licence or permission to reproduce article text, figures, code or model-derived data was established."
           - "The article is a secondary tutorial; simplified claims about semantic quality, dimensionality, TF-IDF geometry and BERT objectives require qualification against primary sources."
+      - accessed_at: "2026-11-12"
+        status: partially-scanned
+        inspected_scope:
+          - "Space source tree at revision aa0a8f2, including src/index.html, source fragments, package metadata and Python extraction/visualization scripts"
+          - "Current linked primer-llm-embeddings repository README and its build/dependency instructions"
+          - "Embedding extraction, cosine top-k lookup and graph-construction code paths"
+          - "Crosswalk against existing bilingual embedding-space, contextualized-representations and cosine-similarity lessons"
+        limitations:
+          - "The live atlas was not operated; visual behavior, interaction and responsive rendering remain unverified."
+          - "Python and JavaScript code were read but not executed; no independent build or numerical reproduction was performed."
+          - "The previously referenced LLM Mechanics repository remains unaudited and should not be conflated with the current primer-llm-embeddings repository."
+          - "No asset-level licence or permission was established; text, figures and code remain link-only."
     related:
       pages:
         - fr/embedding-space
@@ -3329,3 +3341,4 @@ sources:
       pages: [fr/sinusoidal-positional-encoding, en/sinusoidal-positional-encoding]
       concepts: []
       audit_records: [docs/source-reviews/sinusoidal-positional-encoding-2026-11.md]
+
