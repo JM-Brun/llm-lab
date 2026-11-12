@@ -14,7 +14,7 @@
 | Anthropic Academy (Building with the Claude API) | Free video course with certificate | English | "How do I build applications on top of models?" | Applied API/usage training at scale | Internals-first scope: parameters, attention, scoring and training rather than API usage |
 | fast.ai — Practical Deep Learning for Coders | Free video course | English | "How do I train practical deep-learning models top-down?" | Broad DL practice beyond language models | LLM-specific conceptual spine; no blanket math prerequisite; bilingual |
 | Stanford CS336 — Language Modeling from Scratch | University course (lectures + assignments) | English | "What is the full engineering and theory of training LMs at scale?" | Advanced, assignment-driven depth; scaling and systems coverage | Advanced mathematics available when needed rather than a blanket prerequisite; learner route without enrollment |
-| mlabonne/llm-course | Free GitHub roadmap + Colab notebooks | English | "What should I study next, in what order?" | A broad curated roadmap across LLM topics | Depth over breadth on the core spine; evidence inventory; bilingual |
+| mlabonne/llm-course | Free GitHub roadmap, topic maps, curated links and linked Colab notebooks | English | "How do I progress from foundations to building, tuning and deploying LLM systems?" | Broad Scientist + Engineer coverage: pre/post-training, preference alignment, evaluation, quantization, RAG, agents, optimization, deployment and security | A narrower internals-first conceptual spine; tested NumPy reference; explicit separation of conceptual and implementation paths; FR/EN parity and evidence gates |
 | mneves75/llmdeepdive | Free open-source course site (MIT) | English + Brazilian Portuguese | "How do LLMs actually work, down to serving and silicon?" | 380 lessons over 26 tracks; one real model worked throughout; serving stacks, hardware, multimodal, agent engineering; quiz-gated explanations; build-enforced parity | French/English pair; open progressive disclosure instead of gated disclosure; small inspectable random-init models with an explicit no-training-yet status; formative exercise hub |
 | Jay Alammar — Illustrated series (+ Hands-On LLMs with M. Grootendorst) | Free articles; book | English | "Can I see the architecture and data flow visually?" | Canonical visual narratives for GPT-2/Transformer | Explanations embedded in a full staged route with checks; figures reused only with verified rights |
 | 3Blue1Brown — neural network and LLM lessons | Free videos | English | "What is the geometric intuition behind attention, entropy, gradients?" | Exceptional animated intuition | Text with worked examples, counterexamples, self-checks; bilingual |
@@ -85,3 +85,108 @@ Interactive model explorers such as poloclub's Transformer Explainer (https://po
 ## Maintenance
 
 Re-dating rule: update a row when a project materially changes (scope, language, licence, access model) and record the recheck date; do not add every new tutorial that repeats existing explanations. Entries relying on third-party roundups should be replaced by direct page checks before being used for decisions.
+
+
+## 2026-11-12 comparative update — two explicit learning journeys
+
+This update directly inspects the current public structure of [mlabonne/llm-course](https://github.com/mlabonne/llm-course) and Microsoft's [LLM Fundamentals](https://learn.microsoft.com/en-us/agent-framework/journey/llm-fundamentals), and reconciles them with the previously extracted comparison of Raschka, Hugging Face and other peers. It updates the landscape; it does not create a new curriculum or imply that every linked notebook has been executed.
+
+### Comparative position at a glance
+
+| Dimension | LLM Lab | mlabonne/llm-course | Microsoft Learn — LLM Fundamentals |
+|---|---|---|---|
+| Main purpose | Explain how LLMs work, then make mechanisms inspectable through a small implementation and evidence-based practice | Provide a broad roadmap from foundations to model research/building and production application engineering | Give application developers the minimum LLM mental model needed before building agents |
+| Structure | Two independent primary paths: Understand (conceptual) and Build (implementation dependency); Deepen and Practice support both | Three broad tracks: optional LLM Fundamentals, LLM Scientist, LLM Engineer; topic clusters and external resources | One compact foundation module inside a larger sequential Agent Development Journey |
+| Starting assumptions | No blanket advanced-math prerequisite; local prerequisites introduced just in time | Fundamentals are optional/reference material; assumes learner will navigate a broad set of external resources and notebooks | Developer-oriented; explicitly permits experienced readers to skip fundamentals and move to agents |
+| Core technical spine | Text/tokens → representations → Transformer computation → prediction → inference → scoring/learning; separate data/training branch | Architecture, tokenization, attention, pretraining, post-training, alignment, evaluation, quantization, merging; plus engineering topics | Definition and weights/architecture → tokens → pretraining/post-training/reasoning → inference/context → API messages and sampling → capabilities/limits → tool calling |
+| Practical work | Maintained NumPy reference, tests, exercises and controlled experiments; currently no end-to-end trained model | Roadmap links to Colab notebooks and tools; implementation is distributed across external notebooks/platforms | Conceptual developer guide; its next step is to build agents with Agent Framework |
+| Application engineering | Deliberately outside the current core; agent systems are not the central learning outcome | Major Engineer track: APIs/local models, prompting, vector stores, RAG, agents, optimization, deployment and security | Explicit continuation: agents, tools/MCP, skills, middleware, context providers, agent composition, A2A and workflows |
+| Evidence model | Distinguishes explanation, tests, illustrative output and experimental evidence; status and limitations are explicit | Curated roadmap and linked hands-on resources; evidence quality varies by linked resource and is not centrally normalized | Explanatory guidance and trade-off framing; not a reproducible research or implementation audit |
+| Language/access | French and English, parity treated as a maintained contract; open site and repository | English; open GitHub repository, free roadmap and linked notebooks | English and French Learn editions; official documentation |
+| Best fit | Learners who want a rigorous, inspectable mental model and a small implementation without vendor lock-in | Learners who want breadth across the current LLM research and engineering ecosystem | Developers who need a concise foundation to make sensible choices when building agents |
+
+### 1. mlabonne/llm-course — breadth across the LLM lifecycle
+
+**Observed structure (repository README, checked 2026-11-12):**
+
+1. **LLM Fundamentals** is explicitly optional and serves as a reference for mathematics, Python, neural networks and NLP.
+2. **The LLM Scientist** focuses on building and improving models: architecture, pretraining, post-training data, fine-tuning, preference alignment (including DPO/PPO/GRPO), evaluation, quantization, model merging and newer directions such as multimodality, interpretability and test-time compute.
+3. **The LLM Engineer** focuses on applications and deployment: running models, prompting and structured outputs, vector storage, RAG, agents, inference optimization, deployment and security.
+4. **Notebooks and tools** link out to Colab, RunPod, Hugging Face and other resources. The repository is primarily a roadmap/resource index, not a single self-contained executable course. Linked notebooks are separate artifacts and should be inspected individually before claiming reproducibility or current compatibility.
+
+**What transfers to LLM Lab:**
+
+- Make the full lifecycle visible so readers can see what lies beyond a small GPT: post-training, evaluation, quantization, inference optimization, RAG, agents and security.
+- Keep optional foundations available for reference rather than forcing every learner through a long mathematics prerequisite.
+- Use a clear distinction between model-building work (Scientist) and application engineering (Engineer).
+- Treat evaluation, data quality, alignment and security as first-class topics, not footnotes after architecture.
+
+**What should not be copied:**
+
+- Its breadth-first roadmap is not a substitute for LLM Lab's worked conceptual sequence.
+- A link to a notebook is not equivalent to a maintained implementation, test suite or reproducible experiment.
+- LLM Lab should not expand into every engineering topic merely to match the roadmap. Agent/application engineering belongs in a clearly labelled adjacent path or external-resource handoff unless a distinct project objective is approved.
+
+**Positioning decision:** mlabonne is the strongest breadth/lifecycle map among these three, while LLM Lab is more explicit about conceptual ownership, implementation dependencies, bilingual parity and evidence status. The gap is not simply a missing list of topics; it is the absence of some complete end-to-end practical branches (training, adaptation and modern application engineering), already disclosed in project status.
+
+### 2. Microsoft Learn — LLM Fundamentals as the on-ramp to agents
+
+**Observed scope (page last updated 2026-08-25; checked 2026-11-12):**
+
+The page is intentionally developer-oriented. It covers the definition of an LLM and the distinction between learned weights and architecture; tokens and token IDs; pretraining, SFT, RLHF and reasoning-oriented reinforcement learning; autoregressive inference, context windows, prefill/decode and KV cache; chat-completion message roles; temperature and non-determinism; strengths and limitations; and the mechanics of tool calling as structured token generation interpreted by application code.
+
+It then bridges directly to the Agent Framework: instructions, tools/MCP, sessions/context, middleware and reliability. The wider [Agent Development Journey](https://learn.microsoft.com/en-us/agent-framework/journey/) continues through agents, tools, skills, middleware, context providers, agents-as-tools, A2A and workflows. The French Learn edition is also available at [Principes fondamentaux de LLM](https://learn.microsoft.com/fr-fr/agent-framework/journey/llm-fundamentals).
+
+**What transfers to LLM Lab:**
+
+- Explain the practical implications of context windows, prefill/decode, KV cache, latency, token cost and streaming alongside the conceptual mechanism.
+- Make the software boundary in tool use unmistakable: the model emits a structured request; the host application executes it and returns the observation.
+- Connect model capabilities and limitations to downstream system design, rather than presenting them as an abstract checklist.
+- Offer a short, clearly marked transition for readers whose goal is application/agent development.
+
+**What should not be copied:**
+
+- Microsoft's page compresses mechanisms for developer orientation; it is not a substitute for mathematical derivations, worked numerical examples, implementation tests or a full training curriculum.
+- Some simplifications are context-dependent (for example, temperature-zero determinism and the description of reasoning training). LLM Lab should state assumptions and model/provider variation rather than turn rules of thumb into universal guarantees.
+- Agent Framework-specific API and workflow instruction should remain outside the vendor-independent LLM core.
+
+**Positioning decision:** Microsoft is the best concise bridge from an LLM mental model to agent application architecture. LLM Lab should provide more inspectable foundations, then link outward to this journey when the learner's objective changes from understanding/building a model to engineering an agent.
+
+### 3. Reconciliation with the previously extracted peer landscape
+
+The earlier comparison remains useful and is not replaced by these two additions:
+
+- **Raschka** remains the closest end-to-end from-scratch GPT construction reference; its implementation chapters are a useful coverage baseline for LLM Lab's incomplete training path.
+- **Hugging Face LLM Course** remains the strongest ecosystem-oriented learning path for Transformers, datasets, tokenizers, fine-tuning and model sharing.
+- **Karpathy Zero to Hero** remains a strong first-principles neural-network and GPT build sequence.
+- **Stanford CS336** represents deeper academic treatment of language-model training and systems.
+- **mneves75/llmdeepdive** remains a close peer for broad model-internals coverage, bilingual delivery (EN/pt-BR), quizzes and serving/hardware depth.
+- **Cohere LLM University** provides integrated notebook practice in a vendor-maintained learning environment.
+- **Princeton COS 597G** offers a research-paper seminar route rather than a beginner implementation course.
+- **picoGPT, Jay Alammar, 3Blue1Brown, Transformer Explainer and bbycroft** are best treated as focused implementation or visual companions, not full curricula.
+
+The comparison is about learning goals, sequence, scope, practice and evidence—not a ranking of quality or a claim that the resources have equivalent depth.
+
+### 4. Curriculum implications — prioritized, without duplicating existing work
+
+| Priority | Implication | Decision / destination |
+|---|---|---|
+| P1 | Make the boundary between a small educational GPT and a useful pretrained assistant explicit | Preserve the existing status disclosure; do not imply the random-init model demonstrates language quality |
+| P1 | Close the actual Build gap from corpus/tokenizer preparation through training, validation, checkpointing and held-out evaluation | Continue under existing G1b/G2/G8/G9 ownership and linked issues; do not create duplicate milestones |
+| P1 | Improve the evaluation thread: baselines, leakage/contamination, uncertainty, error analysis and reproducibility | Integrate with existing evaluation pages and experiment protocol |
+| P2 | Add a concise practical inference/serving bridge: prefill vs decode, KV cache, throughput/latency and memory | Extend canonical Deepen pages where ownership already exists; link to engineering references for deployment specifics |
+| P2 | Make post-training distinctions navigable: SFT, preference optimization/RL, reasoning training, prompting and retrieval are not interchangeable | Keep the existing post-training page and separate Build adaptation branch; add only missing learning outcomes |
+| P2 | Provide a short “from LLMs to agents” handoff covering tool-call boundary, context/memory and orchestration | Prefer a clearly labelled external pathway/resource handoff before creating a full agent-engineering curriculum |
+| P3 | Add breadth topics such as multimodality, model merging, interpretability and security | Keep as optional Deepen or curated external resources until a concrete audience and evidence-backed scope justify expansion |
+
+**Non-goal:** matching the number of modules or topics in mlabonne or Microsoft. The success criterion is a coherent, accurate and testable learning experience, not topic-count parity.
+
+### 5. Source and evidence record
+
+- [mlabonne/llm-course README](https://github.com/mlabonne/llm-course) — primary source for the three-track structure and linked roadmap topics; repository inspected 2026-11-12. Individual Colab notebooks were not executed.
+- [Microsoft Learn — LLM Fundamentals](https://learn.microsoft.com/en-us/agent-framework/journey/llm-fundamentals) — official page inspected 2026-11-12; page reports last update 2026-08-25.
+- [Microsoft Learn — Agent Development Journey](https://learn.microsoft.com/en-us/agent-framework/journey/) — official continuation map inspected 2026-11-12.
+- [Microsoft Learn — Parcours de développement de l’agent (FR)](https://learn.microsoft.com/fr-fr/agent-framework/journey/) — French journey landing page inspected 2026-11-12.
+- Existing internal baseline: [Raschka/Hugging Face comparative audit](source-reviews/learning-path-comparison-2026-11-05.md), plus the peer entries and verification caveats above.
+
+**Maintenance:** recheck the primary pages when their structure changes materially. Do not treat this dated snapshot as a live syllabus; do not infer notebook execution, learner outcomes, or full source audits from README descriptions alone.
