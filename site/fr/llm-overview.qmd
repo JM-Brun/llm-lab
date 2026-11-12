@@ -190,13 +190,6 @@ Pas nécessairement. Un système RAG récupère les documents récents à l'inf�
 
 {{< include ../includes/generated-suggested-route-fr-llm-overview.qmd >}}
 
-<div class="route-nav-cards">
-  <a class="route-nav-card" href="generation.qmd">
-    <span class="nav-direction">Étape suivante →</span>
-    <span class="nav-title">Générer du texte</span>
-  </a>
-</div>
-
 ::: {.language-switch}
 **Langue :** [Français](llm-overview.qmd) · [English](../en/llm-overview.qmd)
 :::
