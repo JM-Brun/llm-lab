@@ -60,6 +60,12 @@ Compare a dense-attention baseline, a local/sliding-window model and a hybrid/re
 
 Keep task accuracy, retrieval fidelity, memory and latency as separate axes. Include a control for context truncation and ensure that models receive equivalent information.
 
+## LLM Lab integration
+
+The source is now registered in `data/sources.yml` as two related records: the supplied LinkedIn post and the author's companion article. The bilingual Deepen pages `site/en/hybrid-llm-architectures.qmd` and `site/fr/hybrid-llm-architectures.qmd` now include a dated, sample-qualified trend section. The section distinguishes sparse/local attention from recurrent-state memory and proposes a controlled comparison across prefill/decode, throughput, memory and long-range retrieval. The existing Nemotron case-study page was extended rather than creating a duplicate page.
+
+The canonical concept graph currently has no dedicated IDs for sparse attention or recurrent state; the extraction therefore links only to existing, directly relevant concepts. A separate follow-up issue tracks whether new concept IDs and generated catalogue updates are warranted, plus bilingual/build validation: https://github.com/JM-Brun/llm-lab/issues/1045.
+
 ## Provenance and limitations
 
 The supplied LinkedIn post text was directly retrieved, including the visible explanatory comments. The author's companion article was also retrieved and supplies the chart legend and fuller explanation. The chart image itself was not independently downloaded or numerically re-analysed; the model list, sample size, inclusion criteria and underlying data were not audited. No model was run and no benchmark was reproduced. Text, chart and image reuse rights were not established; retain link-only treatment.
