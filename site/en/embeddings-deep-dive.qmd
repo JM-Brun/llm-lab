@@ -158,9 +158,9 @@ A vector of dimension $d$ is a point in $\mathbb{R}^d$.  But individual coordina
 
 For two vectors $x$ and $y$:
 
-- **Dot product**: (x^\top y). It depends on both angle and norms.
-- **Euclidean distance**: (\|x-y\|_2). It measures distance in the chosen geometry.
-- **Cosine similarity**: (\frac{x^\top y}{\|x\|_2\,\|y\|_2}). It compares angle and ignores radial scale.
+- **Dot product**: $x^\top y$. It depends on both angle and norms.
+- **Euclidean distance**: $\|x-y\|_2$. It measures distance in the chosen geometry.
+- **Cosine similarity**: $\frac{x^\top y}{\|x\|_2\,\|y\|_2}$. It compares angle and ignores radial scale.
 
 L2 normalization makes all norms equal to 1; in that case, maximizing the dot product is equivalent to maximizing cosine similarity. Without normalization, these scores are not interchangeable.
 
