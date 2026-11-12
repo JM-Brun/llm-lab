@@ -9,9 +9,9 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/entropy-exercises"
-summary: "Questions de vérification et exercices associés à la leçon Entropie : incertitude sur le prochain token."
-scope: "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle."
-purpose: "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon."
+summary: "Questions de vérification, calculs de surprisal par token et corrigés pour la leçon Entropie."
+scope: "Regroupe les questions, exercices et corrigés de la leçon correspondante sans dupliquer son explication conceptuelle."
+purpose: "Vérifier la compréhension, calculer le surprisal des tokens et distinguer la surprise d'une séquence observée de l'entropie prédictive attendue."
 suggested_route:
   previous: null
   next: null
@@ -22,7 +22,7 @@ related: ["fr/entropy"]
 tags: ["type:exercise-hub", "destination:practice", "topic:entropy-exercises", "level:applied", "language:fr", "status:published"]
 -->
 
-[← Retour à la leçon : Entropie : incertitude sur le prochain token](../entropy.qmd)
+[← Retour à la leçon : Entropie — incertitude sur le prochain token](../entropy.qmd)
 
 ## Vérifier sa compréhension
 
@@ -36,10 +36,53 @@ tags: ["type:exercise-hub", "destination:practice", "topic:entropy-exercises", "
 <summary>Afficher les réponses</summary>
 
 1. Non. L'entropie décrit la dispersion de la distribution, pas la correction factuelle.
-2. L'entropie moyenne la surprise sur tous les tokens possibles selon la distribution prédite ; la surprise observée utilise la probabilité attribuée à la cible réelle.
+2. L'entropie moyenne le surprisal sur tous les tokens possibles selon la distribution prédite ; le surprisal observé utilise la probabilité attribuée à la cible réelle.
 3. Les tokenizers segmentent différemment le texte, ce qui change les unités et les positions sur lesquelles la moyenne est calculée.
 
 </details>
+
+## Calculer le surprisal d'un token
+
+Pour un même contexte, supposons qu'un modèle attribue les probabilités suivantes aux tokens possibles :
+
+| Token candidat | Probabilité |
+|---|---:|
+| A | 1/2 |
+| B | 1/4 |
+| C | 1/8 |
+| D | 1/8 |
+
+1. Calculez le surprisal de chaque candidat en bits, avec $I(x)=-\log_2 p(x\mid contexte)$.
+2. Calculez l'entropie de cette distribution. Pourquoi s'agit-il d'un surprisal **attendu** plutôt que de celui d'un token sélectionné ?
+3. Si le prochain token observé est C, quel est son surprisal ? Cette valeur décrit-elle toute la distribution ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+1. A : 1 bit ; B : 2 bits ; C : 3 bits ; D : 3 bits.
+2. $H=\frac12(1)+\frac14(2)+\frac18(3)+\frac18(3)=1,75$ bit. L'entropie moyenne le surprisal de toutes les issues possibles, pondéré par leurs probabilités.
+3. C a un surprisal de 3 bits. C'est le surprisal réalisé de cet événement observé, pas l'entropie de la distribution.
+
+</details>
+
+## Du surprisal des tokens au score d'une séquence
+
+Considérons maintenant trois tokens observés successifs. Leurs probabilités conditionnelles, évaluées à chaque position avec le préfixe observé disponible, valent $1/2$, $1/4$ et $1/8$.
+
+1. Calculez le surprisal de chaque token en bits.
+2. Calculez la probabilité de la séquence et son surprisal total.
+3. Calculez le surprisal moyen par token. Cette moyenne observée est-elle automatiquement égale à l'entropie du modèle ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+1. Les surprisals des tokens valent 1, 2 et 3 bits.
+2. Par la règle de chaîne, la probabilité de la séquence vaut $(1/2)(1/4)(1/8)=1/64$. Son surprisal total vaut $-\log_2(1/64)=6$ bits, soit la somme $1+2+3$.
+3. La moyenne observée vaut $6/3=2$ bits par token. Elle n'est pas automatiquement égale à l'entropie du modèle : l'entropie est une espérance sous une distribution prédictive donnée, tandis que cette moyenne est calculée sur une séquence observée. La NLL moyenne sur un jeu de données est liée à l'entropie croisée empirique, selon les cibles et la convention de comptage retenues.
+
+</details>
+
+**Ne pas confondre les quantités :** le surprisal d'un token est une valeur au niveau d'un événement ; l'entropie est une espérance sur les issues possibles ; la log-vraisemblance d'une séquence additionne les log-probabilités conditionnelles ; la NLL / entropie croisée moyenne ajoute une convention de cible et d'agrégation. Voir [Vraisemblance](../vraisemblance.qmd) pour la factorisation d'une séquence.
 
 ::: {.language-switch}
 **Langue :** [Français](entropy.qmd) · [English](../../en/exercises/entropy.qmd)
