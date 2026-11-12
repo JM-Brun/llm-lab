@@ -56,14 +56,15 @@ Attention is not one indivisible operation: it is the sequence **scores → scal
 </div>
 
 
-## Four computation steps
+## Five computation steps
 
 For one head, $Q,K\in\mathbb{R}^{T\times d_k}$ and $V\in\mathbb{R}^{T\times d_v}$.
 
 1. **Scores:** $S=QK^\top$, with shape $T\times T$.
 2. **Scaling:** $S/\sqrt{d_k}$.
-3. **Normalization:** $A=\operatorname{softmax}(S/\sqrt{d_k}+M)$, row-wise.
-4. **Aggregation:** $O=AV$, with shape $T\times d_v$.
+3. **Optional mask:** add $M$ to exclude inaccessible query-key pairs before normalization.
+4. **Normalization:** $A=\operatorname{softmax}(S/\sqrt{d_k}+M)$, row-wise.
+5. **Aggregation:** $O=AV$, with shape $T\times d_v$.
 
 Thus,
 
