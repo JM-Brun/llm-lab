@@ -961,8 +961,8 @@ def write_guided_page_context_fragments(
 
 ROUTE_CONTINUATION_PAGE = "build-path"
 ROUTE_CONTINUATION_LABEL = {
-    "fr": "Parcours terminé · ensuite : construire →",
-    "en": "Path complete · next: build →",
+    "fr": "Parcours terminé · voie complémentaire : construire un GPT →",
+    "en": "Path complete · optional companion path: build a GPT →",
 }
 
 
@@ -987,8 +987,8 @@ def render_suggested_route_markdown(
 
     ``completes_route`` marks the last core page of the guided route. Its
     suggested route has no next page, so the reader would be left with a
-    single backward link; it gets one forward card to the Build path instead.
-    That is one concrete next step, not a list repeating the site menu.
+    single backward link; it gets one optional companion-path card to Build.
+    This cross-link does not make Build a required continuation of Understand.
     """
     if language not in {"fr", "en"}:
         raise ValueError(f"unsupported suggested-route language: {language!r}")

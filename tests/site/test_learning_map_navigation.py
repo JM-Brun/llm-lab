@@ -192,8 +192,8 @@ def test_every_core_guided_route_page_keeps_its_pedagogical_cards(language: str)
             assert target["href"].removesuffix(".html") + ".qmd" in rendered, page_id
         if page_id == final_page_id:
             continuation_label = (
-                "Parcours terminé · ensuite : construire →"
+                "Parcours terminé · voie complémentaire : construire un GPT →"
                 if language == "fr"
-                else "Path complete · next: build →"
+                else "Path complete · optional companion path: build a GPT →"
             )
             assert continuation_label in rendered, page_id
