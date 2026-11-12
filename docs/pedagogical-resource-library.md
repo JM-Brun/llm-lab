@@ -129,7 +129,8 @@ Use primary papers for original technical contributions, official documentation 
 | Transformer and self-attention | Illustrated Transformer; Vizuara; Transformer Explainer; original paper | What are the axes and tensor shapes? What is omitted from the simplified diagram? |
 | Embeddings and similarity | Embedding Projector; Distill; primary papers | Which distances are preserved, and what distortions are introduced by projection or normalization? |
 | Training and optimization | 3Blue1Brown; Karpathy; PyTorch docs | Which quantity changes at each step? What do gradients and optimizer state represent? |
-| Architecture and inference data flow | ByteByteGo; Vizuara; Hugging Face docs | Which components and interfaces are conceptual versus implementation-specific? |\n| LLM quantization and efficient serving | GPTQ; AWQ; SmoothQuant; PyTorch quantization API; vLLM quantization guide | Are weights, activations or KV cache quantized? What are the bit-width, granularity, calibration, kernel and hardware assumptions? |
+| Architecture and inference data flow | ByteByteGo; Vizuara; Hugging Face docs | Which components and interfaces are conceptual versus implementation-specific? |
+| LLM quantization and efficient serving | GPTQ; AWQ; SmoothQuant; PyTorch quantization API; vLLM quantization guide | Are weights, activations or KV cache quantized? What are the bit-width, granularity, calibration, kernel and hardware assumptions? |
 | Evaluation and uncertainty | StatQuest; primary evaluation papers; official metric documentation | What is the estimand, split unit, baseline, uncertainty, and failure mode? |
 
 ## Contribution checklist
