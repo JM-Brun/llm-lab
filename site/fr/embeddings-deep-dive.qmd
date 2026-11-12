@@ -230,7 +230,7 @@ Le projet reprend cette progression comme **étude de cas**, mais qualifie plusi
 
 ### Une expérience minimale reproductible
 
-LLM Lab propose un outil NumPy sans téléchargement de modèle : [inspecter une petite table d'embeddings dans l'exercice bilingue](../fr/exercises/embedding-space.qmd). Il permet de retrouver des lignes directement par ID et de calculer un top-k cosinus déterministe. Il ne prétend pas reproduire le checkpoint ni l'atlas interactif de la source.
+LLM Lab propose un outil NumPy sans téléchargement de modèle : [inspecter une petite table d'embeddings dans l'exercice bilingue](exercises/embedding-space.qmd). Il permet de retrouver des lignes directement par ID et de calculer un top-k cosinus déterministe. Il ne prétend pas reproduire le checkpoint ni l'atlas interactif de la source.
 
 ### À propos des figures de la source
 
