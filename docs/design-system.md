@@ -54,6 +54,39 @@ Green is the primary brand colour. It identifies the site, navigation, links, pr
 - Code blocks should support copying, preserve readable line lengths, and remain usable on narrow screens.
 - Cards should encode a meaningful action or content grouping, not merely decorate every paragraph.
 
+## Visual grammar for knowledge and navigation structures
+
+LLM Lab contains several connected models, but they answer different reader questions. Their visual identities must make those differences apparent before a reader follows a link. They share the site design tokens and typography; they do **not** share one generic breadcrumb, stepper, graph or card treatment.
+
+| Structure | Reader question | Visual identity | Semantic boundary |
+|---|---|---|---|
+| **Document breadcrumb** | Where am I in the site? | Quiet, neutral hierarchy with compact chevron separators; derived from the Quarto sidebar. | Information architecture only; no learning order or prerequisite claim. |
+| **Learning-stage membership** | Which learning stage(s) does this page serve? | Green, rounded stage labels grouped as a compact context/list; multiple memberships remain visible. No connecting arrows. | Membership is not a parent/child relation, transition or primary-stage assignment. |
+| **Explicit stage transition** | What conceptual connection does this page explain between stages? | A separately labelled relationship, using a violet dashed connector and an explicit direction marker (`→` or `↔`) wherever a diagram is appropriate. Its purpose remains available as text. | An explanatory relation, never a prerequisite or an inferred next step. Violet is valid here only with a visible legend. |
+| **Preferred next page** | What is the recommended next reading action? | A clear, solid-green action link/card with a forward cue; visually stronger than contextual metadata. | An editorial recommendation, not a required transition and not the only available route. |
+| **Build walkthrough sequence** | Which implementation visit am I in, and what comes next locally? | Dark-green numbered connected stepper, with a stable local count and explicit previous/next actions. | Local implementation order only; never reuse Understand stage numbers or memberships. |
+| **Canonical concept** | What is this notion, independently of a particular lesson? | Stable concept identity with a bilingual label/definition and visible domain context when useful; link to its canonical resources. | A concept is not a page: one concept may be explained by several resources and belong to several domains. |
+| **Conceptual relation** | How are two canonical concepts related, and in which direction? | Typed relation vocabulary with a persistent legend, explicit arrow/direction and relation-family filtering. Keep the current domain-grouped concept browser as the default; do not force a global linear or DAG layout. | A typed knowledge relation, not a page link, curriculum membership or automatically inferred learning dependency. |
+| **Page hierarchy** | How is this page structurally grouped within the documentation? | Neutral nested tree/indentation derived from the authored page hierarchy and reflected in the sidebar where applicable. | A parent/child page relation is structural; it does not by itself establish a conceptual relation or prerequisite. |
+| **Curated related-page link** | Which other page is relevant alongside this one? | Quiet secondary text link, grouped as a related resource rather than a step or node in a sequence. | Relevance/association only; no direction, prerequisite or next-step claim unless separately declared. |
+| **Preferred previous/next route** | What is the recommended continuation or return point? | Explicit directional navigation; the preferred next action receives the solid-green emphasis, while previous/secondary links remain quieter. | An editorial route edge, not a conceptual relation or mandatory curriculum transition. |
+| **Exploratory resource map** | What pages and resources can I explore across the site? | Neutral, hierarchical or branching overview with a clear distinction between navigation areas and page resources. | The map supports discovery; its layout/order does not imply conceptual relations or prerequisites. |
+| **Page-local process / meta-flow** | What happens to the data or computation inside this explanation? | Explicit source → operation → result nodes; use branches, comparisons or loops when the process actually has that topology. | A domain-specific computational/process model, not a site breadcrumb or universal learning sequence. |
+| **Inline concept link** | Where can I understand this term more deeply? | Subtle dotted underline on the first useful contextual occurrence. | A contextual affordance to a canonical explanation, not a metadata badge or graph edge displayed inline. |
+
+### Shared rules
+
+- **Meaning before colour.** Every structure must retain a textual label and a recognisable shape/connector convention. Colour reinforces meaning; it never carries the distinction alone.
+- **One source of truth per model.** Render each projection from its existing canonical source (`data/concepts.yml`, `data/guided-route.yml`, page metadata and Quarto sidebar as appropriate). Do not create a second registry to drive styling.
+- **No semantic promotion by presentation.** A stronger colour, arrow, number or position must not turn membership into sequence, a link into a prerequisite, or an explanatory transition into a required route.
+- **Keep the layers composable.** A page may legitimately show its document location, several learning-stage memberships, an explained stage transition and a preferred next page together. Give each its own label and visual treatment rather than merging them into a synthetic breadcrumb.
+- **Use diagrams only when topology matters.** A list or compact relationship panel is preferable when a spatial graph adds no useful task. Do not draw connectors merely to make a model look more graph-like.
+- **Progressive disclosure.** Show the smallest useful context by default; reveal relation descriptions, optional branches and detailed inventories on demand. Preserve a textual alternative.
+- **Bilingual parity.** Labels, direction markers, legends and explanatory purpose must remain equivalent in French and English, including long-label wrapping.
+- **Validation is model-specific.** Test source semantics, generated projection, rendered appearance and learner interpretation separately. A successful build does not prove that readers distinguish these structures.
+
+This grammar is a contract for future refinements, not an instruction to restyle every existing component in one pass. Apply it incrementally in the owning navigation, concept-graph and process-diagram work; preserve already validated behaviours unless a concrete defect is demonstrated.
+
 ## Navigation hierarchy
 
 Every page reached through the Quarto sidebar should expose a compact **breadcrumb** above its title. It is generated from the active sidebar hierarchy, so the labels and nesting remain aligned with the actual site navigation in both languages. The breadcrumb answers “where am I?”; it is not a claim that readers must follow every parent page in sequence.

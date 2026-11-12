@@ -1822,6 +1822,68 @@ a.concept-link:focus-visible {
 }
 
 
+/* Explanatory stage transitions are a separate semantic layer from green stage membership.
+   Violet + a dashed connector means “this page explains a connection”, never prerequisite. */
+.guided-page-transitions {
+  margin: .7rem 0 1.35rem;
+  padding: .65rem .85rem .7rem;
+  border: 1px dashed #C7B6DF;
+  border-left: 4px dashed #7651A8;
+  border-radius: .55rem;
+  background: #FAF8FD;
+  color: #382653;
+  font-size: .86rem;
+  line-height: 1.5;
+}
+.guided-page-transitions__label {
+  margin: 0 0 .35rem;
+  color: #65418F;
+  font-size: .74rem;
+  font-weight: 750;
+  letter-spacing: .035em;
+  text-transform: uppercase;
+}
+.guided-page-transitions__item {
+  padding: .3rem 0;
+  border-top: 1px dotted #D8CBE8;
+}
+.guided-page-transitions__item:first-of-type { border-top: 0; }
+.guided-page-transitions__item > summary {
+  color: #4C2D70;
+  font-weight: 680;
+  cursor: pointer;
+  text-underline-offset: .18em;
+}
+.guided-page-transitions__item > summary::marker { color: #7651A8; }
+.guided-page-transitions__item > summary:focus-visible {
+  outline: 2px solid #7651A8;
+  outline-offset: 3px;
+  border-radius: .2rem;
+}
+.guided-page-transitions__stages {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .3rem .55rem;
+  margin: .5rem 0 .25rem;
+  padding-left: .7rem;
+  border-left: 2px dashed #A78BC9;
+  color: #65418F;
+  font-weight: 650;
+}
+.guided-page-transitions__stages a,
+.guided-page-transitions__stages a:visited { color: #55347C; }
+.guided-page-transitions__item > p:last-child {
+  margin: .2rem 0 .2rem .7rem;
+  color: #51445F;
+  font-size: .84rem;
+}
+@media (max-width: 600px) {
+  .guided-page-transitions { padding: .6rem .7rem; }
+  .guided-page-transitions__stages { gap: .25rem .4rem; }
+}
+
+
 /* Keep Quarto navigation text above WCAG AA contrast on the paper background. */
 .nav-page-text,
 .quarto-title-breadcrumbs .breadcrumb-item a {
