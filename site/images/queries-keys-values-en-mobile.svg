@@ -26,18 +26,18 @@
 <path d="M195 355 V615 H105 V646 M195 475 V615 H285 V646" fill="none" stroke="#60758b" stroke-width="2.2" marker-end="url(#arrm)"/>
 <rect x="25" y="652" width="340" height="104" rx="14" fill="#fff" stroke="#a9b9c8" stroke-width="2"/>
 <text x="195" y="682" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="750" fill="#10233f">1 · Compare Q and K</text>
-<text x="195" y="712" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="19" fill="#51627a">QKᵀ → scores</text>
+<text x="195" y="712" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="19" fill="#51627a">QKᵀ → T × T</text>
 <text x="195" y="738" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="14" fill="#51627a">scale by √d_k, then softmax</text>
 <path d="M195 756 V786" stroke="#60758b" stroke-width="2.2" marker-end="url(#arrm)"/>
 <rect x="25" y="792" width="340" height="94" rx="14" fill="#dff2f1" stroke="#087f8c" stroke-width="2"/>
 <text x="195" y="824" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="19" font-weight="750" fill="#075d65">2 · Attention weights</text>
-<text x="195" y="852" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" fill="#24545a">which positions to attend to more?</text>
+<text x="195" y="852" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" fill="#24545a">which positions to attend to more?</text><text x="195" y="875" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" fill="#24545a">A : T × T</text>
 <path d="M195 886 V918" stroke="#60758b" stroke-width="2.2" marker-end="url(#arrm)"/>
 <path d="M195 595 H12 V977 H25" fill="none" stroke="#df8b67" stroke-width="2.5" stroke-dasharray="7 6" marker-end="url(#arrm)"/>
 <rect x="25" y="925" width="340" height="104" rx="14" fill="#fff" stroke="#a9b9c8" stroke-width="2"/>
 <text x="195" y="956" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="750" fill="#10233f">3 · Aggregate values V</text>
 <text x="195" y="985" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" fill="#51627a">attention weights × value vectors</text>
-<text x="195" y="1010" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="14" fill="#51627a">weighted sum</text>
+<text x="195" y="1010" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="14" fill="#51627a">A (T×T) · V (T×d_v) → O (T×d_v)</text>
 <path d="M195 1029 V1060" stroke="#60758b" stroke-width="2.2" marker-end="url(#arrm)"/>
 <rect x="25" y="1067" width="340" height="82" rx="14" fill="#10233f"/>
 <text x="195" y="1098" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="17" font-weight="750" fill="#fff">Attention output</text>
