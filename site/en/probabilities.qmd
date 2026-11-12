@@ -175,7 +175,7 @@ def stable_softmax(z, temperature=1.0):
 # 1. Standard temperature (T=1.0)
 p_standard = stable_softmax(logits, temperature=1.0)
 
-# 2. Cold temperature (T=0.2): sharpens dominant token (greedy behavior)
+# 2. Cold temperature (T=0.2): increases the top token's probability without forcing argmax
 p_cold = stable_softmax(logits, temperature=0.2)
 
 # 3. Hot temperature (T=5.0): flattens distribution toward uniform
