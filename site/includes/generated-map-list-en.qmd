@@ -68,6 +68,7 @@
     - [Unicode, UTF-8, and text normalization](unicode-text.html)
     - [Designing and evaluating a tokenizer](tokenizer-design-evaluation.html)
   - Mathematical tools and geometry
+    - [Embeddings: from vector representations to search spaces](embeddings-deep-dive.html)
     - [Tensors in a Transformer: shapes and axes](tensors.html)
     - [Does cosine similarity measure semantic similarity?](cosine-similarity.html)
     - [The linearity hypothesis in representation spaces](embedding-linearity.html)
