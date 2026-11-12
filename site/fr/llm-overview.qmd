@@ -153,6 +153,7 @@ Le choix se fait sur des critères mesurés : qualité, erreurs, robustesse, co�
 - **Revoir les outils mathématiques :** [fondements mathématiques](mathematical-foundations.qmd).
 - **Comparer les méthodes de découpage du texte :** [stratégies de tokenisation](tokenization-strategies.qmd).
 - **Suivre une implémentation :** [visite guidée du bloc Transformer](transformer-block-walkthrough.qmd).
+- **Retrouver une définition courte :** [glossaire des LLM et des Transformers](glossary.qmd).
 :::
 
 ::: {.self-check}
