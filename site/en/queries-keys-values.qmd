@@ -88,6 +88,13 @@ Q and K therefore determine **how attention is distributed**. V supplies **the c
   <img src="../images/queries-keys-values-en.svg" alt="Self-attention overview: input X is projected into Q, K, and V. Q and K produce scores and then attention weights; these weights aggregate the V values to produce the output. The mobile version arranges the steps vertically." style="width:100%;height:auto">
 </picture>
 
+### Score, attention-weight and output matrices
+
+<picture>
+  <source media="(max-width: 600px)" srcset="../images/attention-matrices-en-mobile.svg">
+  <img src="../images/attention-matrices-en.svg" alt="Three successive matrices: scores S with shape T × T, attention weights A with shape T × T and rows summing to 1, then output O with shape T × d_v. Colours and patterns are schematic; scores are not probabilities." style="width:100%;height:auto">
+</picture>
+
 The diagram reveals two paths: one determines the weighting, the other supplies the content. **Why are three distinct projections needed to build these two paths from the same input?**
 
 ## Why three projections from the same input?
