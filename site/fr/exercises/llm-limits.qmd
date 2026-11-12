@@ -46,6 +46,22 @@ La métrique, son seuil et le protocole. Une métrique continue ou lissée peut 
 
 </details>
 
+3. **Deux groupes contiennent chacun 50 prédictions formulées avec une confiance de 80 %. Dans le groupe A, 40 sont correctes ; dans le groupe B, 25 le sont. Que peut-on en déduire sur la calibration ?**
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+Le groupe A présente une exactitude empirique de 80 %, cohérente avec une calibration à ce niveau de confiance. Le groupe B n'atteint que 50 % d'exactitude malgré une confiance de 80 % : il est donc trop confiant dans cet échantillon. La calibration s'évalue sur des groupes de prédictions, et non à partir de la confiance d'une seule réponse ; des échantillons plus grands et représentatifs sont nécessaires pour une estimation fiable.
+</details>
+
+4. **Un modèle obtient un score élevé sur un benchmark bien défini de résumé. Cela établit-il une compréhension humaine ? Que peut-on conclure à la place ?**
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+Cela étaye une affirmation opérationnelle : le modèle réussit sur ce benchmark, avec ses données, sa métrique et son protocole particuliers. Cela ne démontre pas à lui seul une compréhension humaine, une expérience ou une intention. Il faut préciser la capacité mesurée et son périmètre, puis tester séparément la généralisation et les cas d'échec.
+</details>
+
 ::: {.language-switch}
 **Langue :** [Français](llm-limits.qmd) · [English](../../en/exercises/llm-limits.qmd)
 :::

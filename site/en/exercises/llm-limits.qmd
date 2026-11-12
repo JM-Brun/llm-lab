@@ -46,6 +46,22 @@ The metric, its threshold, and the protocol. A continuous or smoothed metric can
 
 </details>
 
+3. **Two groups each contain 50 predictions made with 80% confidence. In group A, 40 are correct; in group B, 25 are correct. What does this tell you about calibration?**
+
+<details>
+<summary>Show the reasoning</summary>
+
+Group A has 80% empirical accuracy and is consistent with calibration at that confidence level. Group B has 50% empirical accuracy despite 80% confidence, so it is overconfident in this sample. Calibration is assessed across groups of predictions, not inferred from the confidence of one answer; larger and representative samples are needed for a reliable estimate.
+</details>
+
+4. **A model scores highly on a well-defined summarization benchmark. Does that establish human-like understanding? What can you conclude instead?**
+
+<details>
+<summary>Show the reasoning</summary>
+
+It supports an operational claim: the model performs well on that benchmark, under its particular data, metric and protocol. It does not by itself establish human-like understanding, experience or intention. State the measured capability and its scope, then test generalization and failure cases separately.
+</details>
+
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/llm-limits.qmd) · [English](llm-limits.qmd)
 :::
