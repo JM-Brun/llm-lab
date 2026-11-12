@@ -510,9 +510,7 @@ def test_overview_preserves_cross_cutting_coverage_and_explicit_next_page(
 
     route_fragments = GENERATOR["prepare_suggested_route_fragments"](language, pages, stages)
     route_path = (
-        GENERATOR["SITE"]
-        / "includes"
-        / f"generated-suggested-route-{language}-llm-overview.qmd"
+        GENERATOR["SITE"] / "includes" / f"generated-suggested-route-{language}-llm-overview.qmd"
     )
     suggested_route = route_fragments[route_path]
     assert suggested_route.count(next_label) == 1
