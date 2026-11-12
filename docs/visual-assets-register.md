@@ -13,9 +13,9 @@ Attribution establishes provenance; it does not by itself grant permission. Conv
 
 ## Repository-level licensing finding
 
-[LICENSE.md](../LICENSE.md) offers project code under MIT and original project-authored prose in Quarto pages and documentation under CC BY-SA 4.0. The CC BY-SA grant explicitly excludes all non-text assets, including all 38 current local SVGs under `site/images/`, unless and until a separate asset-level licence is explicitly recorded. The provenance findings and their evidence are tracked separately below; provenance confirmation does not itself grant a licence. Externally hosted figures and other third-party material remain subject to their respective rights holders' terms; attribution or a source link is not, by itself, permission to reuse an asset.
+[LICENSE.md](../LICENSE.md) offers project code under MIT and original project-authored prose in Quarto pages and documentation under CC BY-SA 4.0. The CC BY-SA grant explicitly excludes all non-text assets, including all 56 current local SVGs under `site/images/`, unless and until a separate asset-level licence is explicitly recorded. The provenance findings and their evidence are tracked separately below; provenance confirmation does not itself grant a licence. Externally hosted figures and other third-party material remain subject to their respective rights holders' terms; attribution or a source link is not, by itself, permission to reuse an asset.
 
-The licence boundary remains independent of the provenance findings below: no asset-level licence has been declared for the 38 local SVGs. Third-party embeds retain their separate rights assessments. Do not remove, replace, hide, or disable an existing illustration solely because its rights are uncertain.
+The licence boundary remains independent of the provenance findings below: no asset-level licence has been declared for the 56 local SVGs. Third-party embeds retain their separate rights assessments. Do not remove, replace, hide, or disable an existing illustration solely because its rights are uncertain.
 
 ## Externally hosted images currently embedded
 
@@ -46,7 +46,7 @@ The references page links to the original sources and records that these images 
 
 ## Local visual assets under `site/images/`
 
-The source-level scan found 32 SVG files. The table records source references found in the EN/FR Quarto pages. “Project-managed” describes repository location, not a verified legal licence. The page's references section describes several figures as original project diagrams; authorship and reuse terms for every file still need confirmation.
+The original 2026-10-30 source-level scan found 32 SVG files. A fresh recursive directory enumeration on 2026-11-12 finds 56 files; the table below now records the current EN/FR Quarto references. “Project-managed” describes repository location, not a verified legal licence. Authorship and reuse terms must be assessed against the per-file evidence recorded below.
 
 | File(s) | Referenced from | Initial classification |
 |---|---|---|
@@ -61,7 +61,13 @@ The source-level scan found 32 SVG files. The table records source references fo
 | `llm-generation-process-en.svg`, `llm-generation-process-fr.svg` | EN/FR `llm-overview.qmd` | Project-managed SVG pair added after the 2026-10-30 snapshot; registered during the #156 reconciliation of 2026-11-05. The EN variant shipped as a partial translation; its remaining French labels were completed in the same PR. Authorship/history and licence to verify like the other local SVGs |
 | `math-training-pipeline.svg` | EN/FR `mathematical-foundations.qmd` | Project-managed SVG; described as original in `site/references.qmd`; verify authorship/history and licence |
 | `positional-info-insertion-en.svg`, `positional-info-insertion-fr.svg` | EN/FR `positional-encoding.qmd` | Project-managed SVG pair; original diagrams added with the RoPE relocation in PR #255; verify authorship/history and licence |
-| `queries-keys-values-en.svg`, `queries-keys-values.svg` | EN/FR `queries-keys-values.qmd` | Project-managed SVG pair; described as original in `site/references.qmd`; verify authorship/history and licence |
+| `queries-keys-values-en.svg`, `queries-keys-values.svg`, `queries-keys-values-en-mobile.svg`, `queries-keys-values-mobile.svg` | EN/FR `queries-keys-values.qmd` | Project-managed desktop/mobile SVGs; the mobile variants are selected by responsive `picture` sources; verify provenance and asset-level licence for the later mobile pair as recorded in the 2026-11-12 reconciliation |
+| `attention-matrices-en.svg`, `attention-matrices.svg`, `attention-matrices-en-mobile.svg`, `attention-matrices-mobile.svg` | EN/FR `queries-keys-values.qmd` | New desktop/mobile matrix figures for scores, normalized attention weights and output; project-managed SVGs added 2026-11-12; provenance and asset-level licence confirmation pending |
+| `contextualization-pipeline-en.svg`, `contextualization-pipeline-fr.svg` | EN/FR `contextualized-representations.qmd` | New bilingual pipeline figures added after the previous 38-file inventory; provenance and asset-level licence confirmation pending |
+| `embedding-lookup-en.svg`, `embedding-lookup-fr.svg` | EN/FR `embedding-space.qmd` | New bilingual lookup figures illustrating token ID → embedding-table row → vector; provenance and asset-level licence confirmation pending |
+| `llm-shared-prediction-uses-en.svg`, `llm-shared-prediction-uses-en-mobile.svg`, `llm-shared-prediction-uses-fr.svg`, `llm-shared-prediction-uses-fr-mobile.svg` | EN/FR `llm-overview.qmd` | New bilingual desktop/mobile figures for generation, scoring and training uses of the predictive distribution; provenance and asset-level licence confirmation pending |
+| `sinusoidal-position-matrix-en.svg`, `sinusoidal-position-matrix-fr.svg` | EN/FR `sinusoidal-positional-encoding.qmd` | New bilingual heatmaps for sinusoidal positional-encoding values; provenance and asset-level licence confirmation pending |
+| `transformer-stack-en.svg`, `transformer-stack-fr.svg` | EN/FR `transformer.qmd` | New bilingual architecture figures for the decoder-only GPT stack and a pre-LN Transformer block; provenance and asset-level licence confirmation pending |
 | `rope-en.svg`, `rope-fr.svg` | EN/FR `positional-encoding.qmd` | Project-managed SVG pair; verify authorship/history and licence |
 | `softmax-axis-comparison-en.svg`, `softmax-axis-comparison-fr.svg` | EN/FR `tensors.qmd` | Project-managed SVG pair; verify authorship/history and licence |
 | `transformer-attention-architectures-fr.svg`, `transformer-attention-architectures.svg` | FR/EN `transformer-architectures.qmd` | Project-managed SVG pair (FR variant added in the #317 pilot review); verify authorship/history and licence |
@@ -276,3 +282,27 @@ These structural checks do not independently prove authorship; the provenance as
 - **Asset-level licence:** not selected or applied. A separate explicit owner decision remains necessary before adding an asset licence or changing the licence boundary.
 
 No SVG content, attribution, page reference, or licence was changed by this reconciliation. Preserve all existing assets unchanged unless a separate, explicit decision authorizes a specific change.
+
+
+## Current local SVG inventory reconciliation — 2026-11-12
+
+A fresh recursive GitHub directory enumeration of `site/images/` on 2026-11-12 finds **56 SVG files**, compared with the 38-file inventory reconciled on 2026-11-09. The current directory listing was enumerated directly (not inferred from the older register). The 18 additions are now represented in the table above and matched to their current bilingual Quarto source references:
+
+| Added files since the 38-file baseline | Current embedded page(s) |
+|---|---|
+| `attention-matrices-en.svg`, `attention-matrices.svg`, `attention-matrices-en-mobile.svg`, `attention-matrices-mobile.svg` | EN/FR `queries-keys-values.qmd` |
+| `contextualization-pipeline-en.svg`, `contextualization-pipeline-fr.svg` | EN/FR `contextualized-representations.qmd` |
+| `embedding-lookup-en.svg`, `embedding-lookup-fr.svg` | EN/FR `embedding-space.qmd` |
+| `llm-shared-prediction-uses-en.svg`, `llm-shared-prediction-uses-en-mobile.svg`, `llm-shared-prediction-uses-fr.svg`, `llm-shared-prediction-uses-fr-mobile.svg` | EN/FR `llm-overview.qmd` |
+| `sinusoidal-position-matrix-en.svg`, `sinusoidal-position-matrix-fr.svg` | EN/FR `sinusoidal-positional-encoding.qmd` |
+| `transformer-stack-en.svg`, `transformer-stack-fr.svg` | EN/FR `transformer.qmd` |
+| `queries-keys-values-en-mobile.svg`, `queries-keys-values-mobile.svg` | EN/FR `queries-keys-values.qmd` |
+
+The previous 38-file provenance reconciliation remains valid only for the 38 files it explicitly covered. It must not be silently generalized to the 18 later additions:
+
+- **38/56:** owner-confirmed project-origin provenance under the evidence recorded in the 2026-11-09 reconciliation.
+- **18/56:** newly enumerated assets with source-page references identified; exact creation/adaptation declarations and per-file Git history still need to be reconciled before extending the provenance confirmation.
+- **56/56:** excluded from the MIT code / CC BY-SA prose grants until an asset-level licence is separately and explicitly declared under #163.
+- **Third-party embedded images:** remain separately assessed in the external-asset section; this local SVG count does not include remote image assets.
+
+The 18-file addition set was matched against the current EN/FR Quarto source files. This is a source-level reference check, not yet a rendered-DOM enumeration or legal clearance. The four responsive pairs are intentionally preserved; no asset was removed, replaced, hidden, or disabled. The SVG source and per-path history checks for the 18 additions remain the next bounded step.
