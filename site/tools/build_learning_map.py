@@ -1159,7 +1159,9 @@ def load_concept_graph(
     domain_labels = load_domain_labels(language)
     page_by_id = {page["id"]: page for page in pages}
     resource_registry_path = ROOT / "data" / "resources.yml"
-    resource_registry = load_yaml(resource_registry_path) if resource_registry_path.is_file() else {}
+    resource_registry = (
+        load_yaml(resource_registry_path) if resource_registry_path.is_file() else {}
+    )
     code_resources_by_concept: dict[str, list[dict[str, str]]] = {}
     for resource in resource_registry.get("resources", []):
         if resource.get("status") != "published":
