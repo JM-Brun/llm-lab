@@ -158,14 +158,25 @@ jobs:
             fi
           done < <(sed -n '/^  render:/,/^website:/s/^    - //p' site/_quarto.yml)
 
-          if [ -s site/_site/index.html ] && [ -d site/_site/site_libs ] && [ "${#missing[@]}" -eq 0 ]; then
+          homepage_valid=false
+          if [ -s site/_site/index.html ] \
+            && grep -q 'comprendre en explorant' site/_site/index.html \
+            && grep -q 'learning-entry-grid' site/_site/index.html; then
+            homepage_valid=true
+          fi
+
+          if [ -s site/_site/index.html ] && [ -d site/_site/site_libs ] && [ "${#missing[@]}" -eq 0 ] && [ "$homepage_valid" = true ]; then
             echo "cache_restored=true" >> "$GITHUB_OUTPUT"
-            echo "Restored site cache contains every page in the current Quarto render list."
+            echo "Restored site cache contains every configured page and the French homepage."
           else
             echo "cache_restored=false" >> "$GITHUB_OUTPUT"
             if [ "${#missing[@]}" -gt 0 ]; then
-              printf 'Cached site is missing configured page(s): %s\n' "${missing[@]}"
-            else
+              printf 'Cached site is missing configured page(s): %s\\n' "${missing[@]}"
+            fi
+            if [ "$homepage_valid" != true ]; then
+              echo "Cached root index is not the expected French homepage; refusing this cache."
+            fi
+            if [ "${#missing[@]}" -eq 0 ] && [ "$homepage_valid" = true ]; then
               echo "Site cache unavailable or incomplete."
             fi
             echo "Falling back to a full render."
