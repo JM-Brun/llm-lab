@@ -51,7 +51,7 @@ Two sentences can contain the same token without giving it the same role: *bank*
 :::
 
 
-<div class="pipeline-stepper meta-flow meta-flow--branch" role="navigation" aria-label="From embeddings to contextualized representations, depending on positional handling">
+<div class="pipeline-stepper meta-flow meta-flow--branch" role="group" aria-label="From embeddings to contextualized representations, depending on positional handling">
   <div class="meta-flow__source"><strong>Token embeddings</strong><span>Initial vectors retrieved by lookup</span></div>
   <div class="meta-flow__source"><strong>Positional signal</strong><span>Injected at an architecture-dependent point</span></div>
   <div class="meta-flow__comparison">
@@ -59,7 +59,7 @@ Two sentences can contain the same token without giving it the same role: *bank*
     <div class="meta-flow__comparison-item"><strong>RoPE</strong><small>Rotate Q/K inside the attention mechanisms of Transformer layers</small></div>
   </div>
   <div class="meta-flow__result"><strong>Repeated Transformer layers</strong><small>Attention, MLP, residual connections and normalization</small></div>
-  <div class="meta-flow__result meta-flow__branch--active" aria-current="step"><strong>Contextualized representations</strong><small>Each state depends on content and the interactions allowed with context</small></div>
+  <div class="meta-flow__result meta-flow__branch--active"><strong>Contextualized representations</strong><small>Each state depends on content and the interactions allowed with context</small></div>
 </div>
 
 
