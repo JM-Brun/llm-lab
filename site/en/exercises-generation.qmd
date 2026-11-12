@@ -124,6 +124,8 @@ Without a cache, the model processes lengths $3$, then $4$ (to predict $E$), the
 <a id="ge-f-temperature-and-concentration"></a>
 ### Temperature and distribution concentration {#ex-generation-temperature}
 
+**Optional preparation:** [Advanced decoding strategies](decoding-strategies.qmd), to review logit transformations and distribution concentration.
+
 A model produces logits $z=(0,\ln 4,\ln 16)$ for tokens $\{A,B,C\}$. Apply temperature using $p(T)=\operatorname{softmax}(z/T)$.
 
 1. Compute the distribution for $T=1$.
@@ -144,6 +146,8 @@ The ranking remains $C$, then $B$, then $A$: dividing all logits by a strictly p
 
 <a id="ge-g-top-k-and-top-p"></a>
 ### Compare top-k and top-p {#ex-generation-top-k-top-p}
+
+**Optional preparation:** [Advanced decoding strategies](decoding-strategies.qmd), to review fixed-size candidate selection and cumulative probability mass.
 
 After softmax, the distribution over four tokens is:
 
