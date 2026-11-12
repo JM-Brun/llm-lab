@@ -103,6 +103,10 @@ The same tokenizer is used to encode an inference prompt and to convert corpus d
 
 The second branch is not a prerequisite for understanding how a model encodes a prompt.
 
+::: {.callout-note title="Tokens, context windows, and budgets"}
+A model's context limit is measured in **tokens**, not words or characters. The request may include more than the visible user message: system instructions, conversation history, tool descriptions, retrieved passages, and the space reserved for the answer can all consume the same finite budget. The exact accounting depends on the model and API, including any message-format overhead or non-text content. A long document can therefore exceed the available context even when it looks short on screen. Applications handle this by truncating, selecting, summarizing, or retrieving content; none of these strategies guarantees that omitted information will be remembered. The [generation lesson](generation.qmd) explains how the available context is processed during inference.
+:::
+
 ## 2. What tokenization changes — and what it does not tell us
 
 Segmentation determines the sequence of IDs supplied to the model. It affects input coverage, sequence length, and compatibility between tokenizer and model weights. It is not guaranteed linguistic analysis, a measure of meaning, or a model-quality score.
