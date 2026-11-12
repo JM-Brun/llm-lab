@@ -108,6 +108,10 @@ def classify_changed_files(files: list[dict[str, Any]], config: str) -> dict[str
     # has no image-specific assertions and is not useful for image-only updates.
     browser_relevant = any(
         (path.startswith("site/") and not _is_static_image_asset(path))
+        or path in {
+            "site/images/queries-keys-values.svg",
+            "site/images/queries-keys-values-en.svg",
+        }
         or path
         in {
             "scripts/site-browser-review.mjs",
