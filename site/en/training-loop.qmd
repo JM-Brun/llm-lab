@@ -25,7 +25,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:training-loop", "
 
 {{< include ../includes/generated-guided-context-en-training-loop.qmd >}}
 ::: {.chapter-lead}
-Training repeats one cycle many times: predict, measure the loss, compute the gradient, update the parameters. The model improves on its training data by construction; whether it also improves on text it has not seen is measured separately, on held-out data.
+Training repeats one cycle many times: predict, measure the loss, compute the gradient, update the parameters. Its objective is to improve fit to the training data; this does not guarantee a decrease at every step or better performance on unseen text, which must be measured separately on held-out data.
 :::
 
 ::: {.callout-tip title="The one-minute mental model"}
@@ -59,7 +59,7 @@ Steps 1–3 only read the parameters. Step 4 is the single place where they chan
 
 A batch gives a noisy estimate of the loss over the whole training set, so its gradient is a noisy estimate of the full gradient. This is why the method is called *stochastic* gradient descent: successive batches pull the parameters in slightly different directions, and the average trend is what lowers the loss. Counting conventions vary: a *step* is one parameter update, and an *epoch* is one pass over the training data; both depend on the batch size and dataset.
 
-A freshly initialized model assigns roughly uniform probabilities, so its loss is near $\ln V$ for a vocabulary of size $V$ (a near-uniform start is a sanity check, not a guarantee: initialization scale matters). Training lowers the loss from there.
+A freshly initialized model assigns roughly uniform probabilities, so its loss is near $\ln V$ for a vocabulary of size $V$ (a near-uniform start is a sanity check, not a guarantee: initialization scale matters). Training aims to lower this loss; with stochastic batches, measurements can fluctuate from one step to the next.
 
 ## Optimizer, gradient, and learning rate
 
