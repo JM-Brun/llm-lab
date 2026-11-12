@@ -83,7 +83,7 @@ The three projections are easiest to distinguish by following the flow of inform
 
 Q and K therefore determine **how attention is distributed**. V supplies **the content that is aggregated** using that distribution. K and V can represent different features: compatibility supports routing, while the value carries the transmitted content. They are learned numerical vectors, not readable labels or ready-made answers.
 
-![Diagram of query, key, and value projections: Q and K determine attention weights, which are used to aggregate V.](../images/queries-keys-values-en.svg){fig-alt="Two paths start from the same input: the Q and K vectors are compared to compute attention weights; those weights are then applied to V vectors to produce an aggregated representation." width=100%}
+![Diagram of query, key, and value projections, followed by scaled dot-product attention and value aggregation.](../images/queries-keys-values-en.svg){fig-alt="Sequence-level, single-head overview: the shared input X is projected into Q, K, and V. Q and K produce scores, which are scaled and normalized into attention weights; those weights multiply V to produce the attention output. Batch and head axes and causal masking are omitted." width=100%}
 
 The diagram reveals two paths: one determines the weighting, the other supplies the content. **Why are three distinct projections needed to build these two paths from the same input?**
 
