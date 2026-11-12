@@ -138,6 +138,7 @@ def test_transition_index_supports_multiple_pages_and_multiple_transitions_per_p
     assert [item.id for item in index["en/a"]] == ["first", "second"]
     assert [item.id for item in index["en/b"]] == ["first"]
 
+
 def test_transition_visual_identity_is_distinct_from_stage_membership() -> None:
     styles = (ROOT / "site/styles.scss").read_text(encoding="utf-8")
     transition_start = styles.index(".guided-page-transitions {")
