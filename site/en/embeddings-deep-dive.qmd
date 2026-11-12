@@ -152,11 +152,11 @@ The useful question is therefore not only “what does this dimension mean?” b
 
 ## 4. Geometry: distances, angles, norms, and pitfalls
 
-A vector of dimension (d) is a point in (mathbb{R}^d). But individual coordinates generally do not have stable interpretations. Relationships between vectors depend on the model, layer, normalization, and metric.
+A vector of dimension $d$ is a point in $\mathbb{R}^d$.  But individual coordinates generally do not have stable interpretations. Relationships between vectors depend on the model, layer, normalization, and metric.
 
 ### 4.1 Three common measures
 
-For two vectors (x) and (y):
+For two vectors $x$ and $y$:
 
 - **Dot product**: (x^\top y). It depends on both angle and norms.
 - **Euclidean distance**: (\|x-y\|_2). It measures distance in the chosen geometry.
@@ -172,7 +172,7 @@ A projection (PCA, t-SNE, UMAP, or another method) transforms high-dimensional v
 
 ### 4.3 Nearest neighbours, graphs, and meaning
 
-A (k)-nearest-neighbour search builds a neighbourhood conditioned on the model, vectors, normalization, metric, value of (k), and self-neighbour policy. The relation “A is among B's k nearest neighbours” does not always imply the reverse.
+A $k$-nearest-neighbour search builds a neighbourhood conditioned on the model, vectors, normalization, metric, value of $k$, and self-neighbour policy. The relation “A is among B's k nearest neighbours” does not always imply the reverse.
 
 Turning these links into an undirected graph imposes a symmetrization rule (union or mutual neighbourhood). A graph layout moves nodes to make the drawing readable: its coordinates do not faithfully reproduce distances in the vector space.
 
