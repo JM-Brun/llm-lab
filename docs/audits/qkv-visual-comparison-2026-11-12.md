@@ -71,3 +71,10 @@ A dedicated narrow-screen SVG was added in both languages rather than shrinking 
 The bilingual lesson pages now use a responsive `picture` element: viewports up to 600 CSS pixels receive the mobile SVG; wider viewports retain the existing desktop SVG. Both variants have localized accessible image alternatives. The external DEV illustration remains link-only; the mobile artwork is independently authored and does not reproduce its composition.
 
 Validation required: Quarto full render and local-link checks; Chromium checks at 390 px and desktop widths in EN/FR; verify the correct SVG is selected at each breakpoint, no overflow/clipping, legible text, and accessible alternative text. Manual screen-reader review remains separate.
+
+
+## Matrices explicites pour Q, K et V — 2026-11-12
+
+Les quatre diagrammes bilingues (desktop et mobile) ajoutent une représentation matricielle schématique à chacune des branches Q, K et V. Chaque vignette montre trois lignes et quatre colonnes pour rendre la structure 2D immédiatement visible ; cette grille est illustrative et ne prétend pas fixer la largeur réelle des tenseurs. Les dimensions effectives restent indiquées séparément : Q et K ont la forme T × d_k, V a la forme T × d_v, et l'entrée X a la forme T × d_model. Le contraste Q/K (même largeur de clé pour le produit QKᵀ) versus V (largeur d_v, contenu agrégé) est conservé.
+
+Point de rigueur : la petite grille ne représente pas la matrice de projection W_Q/W_K/W_V, mais le tenseur de sortie Q, K ou V. Les matrices de projection sont identifiées dans les équations XW_Q, XW_K et XW_V. Le détail de leurs dimensions et le passage aux tenseurs multi-têtes restent dans la leçon avancée.
