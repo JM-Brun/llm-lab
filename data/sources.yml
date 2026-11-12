@@ -3330,8 +3330,8 @@ sources:
     publication_date: "2025"
     updated_date: null
     language: en
-    version: "Live Space; example checkpoint: deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B"
-    revision: null
+    version: "Hugging Face Space main @ aa0a8f2; example checkpoint: deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B"
+    revision: aa0a8f2
     licence: {identifier: null, url: null, status: unknown}
     reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
     classification:
@@ -3351,9 +3351,10 @@ sources:
         inspected_scope:
           - "Rendered article text: embeddings, TF-IDF, word2vec, BERT, modern LLM lookup, contextualized states, named checkpoint, cosine neighbours and token graph"
           - "Visible author/citation metadata and source-local teaching sequence"
+          - "Space source tree, src/index.html, fragments, linked implementation repository README, and Python embedding-extraction/nearest-neighbour graph scripts"
         limitations:
           - "Live atlas interactions, controls, hover behavior and responsive rendering not inspected."
-          - "Embedded code was not executed; linked repository and dependency versions not audited."
+          - "Embedded code and Python scripts were inspected but not executed; dependencies were read from package metadata but not installed or validated."
           - "Outbound resources, audio and community discussion not inspected."
           - "Technical qualifications are recorded in the source review."
           - "No asset-level licence or permission established; text, figures and code remain link-only."
