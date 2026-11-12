@@ -6,6 +6,12 @@ project:
     - learning-map-data-fr.json
     - learning-map-data-en.json
     - knowledge-graph.jsonld
+    # Quarto does not reliably discover local SVGs referenced only by <source srcset>.
+    # Copy responsive picture sources explicitly so mobile diagrams are published.
+    - images/queries-keys-values-en-mobile.svg
+    - images/queries-keys-values-mobile.svg
+    - images/attention-matrices-en-mobile.svg
+    - images/attention-matrices-mobile.svg
   render:
     - index.qmd
     - fr/learning-map.qmd
