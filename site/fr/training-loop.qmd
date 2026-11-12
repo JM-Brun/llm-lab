@@ -25,7 +25,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:training-loop", "
 
 {{< include ../includes/generated-guided-context-fr-training-loop.qmd >}}
 ::: {.chapter-lead}
-L'entraînement répète un même cycle : prédire, mesurer la loss, calculer le gradient, mettre à jour les paramètres. Le modèle s'améliore par construction sur ses données d'entraînement ; savoir s'il progresse aussi sur un texte jamais vu se mesure séparément, sur des données réservées.
+L'entraînement répète un même cycle : prédire, mesurer la loss, calculer le gradient, mettre à jour les paramètres. Son objectif est d'améliorer l'ajustement aux données d'entraînement ; cela ne garantit pas une baisse à chaque pas ni une meilleure performance sur un texte jamais vu, qui se mesure séparément sur des données réservées.
 :::
 
 ::: {.callout-tip title="L'idée à retenir en une minute"}
@@ -59,7 +59,7 @@ Les étapes 1 à 3 ne font que lire les paramètres. L'étape 4 est le seul endr
 
 Un batch fournit une estimation bruitée de la loss sur tout le jeu d'entraînement ; son gradient est donc une estimation bruitée du gradient complet. D'où le nom de descente de gradient *stochastique* : des batchs successifs tirent les paramètres dans des directions légèrement différentes, et c'est la tendance moyenne qui fait baisser la loss. Les conventions de comptage varient : un *pas* est une mise à jour des paramètres, une *époque* est un passage sur les données d'entraînement ; les deux dépendent de la taille du batch et du jeu de données.
 
-Un modèle fraîchement initialisé attribue des probabilités à peu près uniformes : sa loss est proche de $\ln V$ pour un vocabulaire de taille $V$ (un départ quasi uniforme est un test de cohérence, pas une garantie : l'échelle d'initialisation compte). L'entraînement fait baisser la loss à partir de là.
+Un modèle fraîchement initialisé attribue des probabilités à peu près uniformes : sa loss est proche de $\ln V$ pour un vocabulaire de taille $V$ (un départ quasi uniforme est un test de cohérence, pas une garantie : l'échelle d'initialisation compte). L'entraînement vise à faire baisser cette loss ; avec des batchs stochastiques, les mesures peuvent fluctuer d'un pas à l'autre.
 
 ## Optimiseur, gradient et taux d'apprentissage
 
