@@ -3323,7 +3323,7 @@ sources:
   - id: hesamation-llm-embeddings-visual-guide
     title: "LLM Embeddings Explained: A Visual and Intuitive Guide"
     creators: ["Hesam Sheikh Hessani"]
-    source_type: interactive-tutorial
+    source_type: tutorial
     identifiers: {}
     canonical_url: "https://huggingface.co/spaces/hesamation/primer-llm-embedding"
     publisher: "Hugging Face Spaces"
@@ -3337,7 +3337,7 @@ sources:
     classification:
       primary_theme: text-tokenization
       secondary_themes: [mathematical-tools-geometry, architectures-mechanisms]
-      tags: [topic:token-embedding, topic:contextualized-representation, topic:embedding-space, topic:nearest-neighbors, topic:cosine-similarity, method:tf-idf, method:word2vec, architecture:bert, ecosystem:huggingface, format:interactive-visualization]
+      tags: [topic:token-embedding, topic:contextualized-representation, topic:embedding-space, topic:nearest-neighbors, topic:cosine-similarity, method:tf-idf, method:word2vec, topic:bert, ecosystem:huggingface]
       concept_ids: [token-embedding, contextualized-representation]
     metadata:
       technical_level: introductory
