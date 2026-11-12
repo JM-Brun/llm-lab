@@ -14,7 +14,7 @@ suggested_route:
   next: null
 hierarchy:
   parents: []
-  children: ["fr/next-concept-modeling", "fr/contextualized-representations-advanced"]
+  children: ["fr/next-concept-modeling", "fr/contextualized-representations-advanced", "fr/embeddings-deep-dive"]
 related: []
 tags:
   - "type:entry-point"
@@ -102,6 +102,7 @@ La page [Stratégies de tokenisation](tokenization-strategies.qmd) du parcours p
 
 **Question directrice :** quelles opérations et propriétés mathématiques permettent d'analyser les représentations et les calculs ?
 
+- [Dossier spécialisé : embeddings et représentations vectorielles](embeddings-deep-dive.qmd) — panorama autonome des familles, objectifs, géométrie, évaluation et usages au-delà des LLM.
 - [Tenseurs](tensors.qmd) — dimensions, opérations et conventions.
 - [Similarité cosinus](cosine-similarity.qmd) — mesure angulaire et limites d'interprétation.
 - [Linéarité des embeddings](linearite-embeddings.qmd) — hypothèses et preuves empiriques associées aux relations linéaires dans les espaces de représentation.

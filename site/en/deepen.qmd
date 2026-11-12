@@ -13,7 +13,7 @@ suggested_route:
   next: null
 hierarchy:
   parents: []
-  children: ["en/next-concept-modeling", "en/contextualized-representations-advanced"]
+  children: ["en/next-concept-modeling", "en/contextualized-representations-advanced", "en/embeddings-deep-dive"]
 related: []
 tags:
   - "type:entry-point"
@@ -101,6 +101,7 @@ The core [Tokenization strategies](tokenization-strategies.qmd) lesson remains t
 
 **Guiding question:** which mathematical operations and properties help analyze representations and computations?
 
+- [Specialized deep dive: embeddings and vector representations](embeddings-deep-dive.qmd) — a self-contained map of families, objectives, geometry, evaluation, and uses beyond LLMs.
 - [Tensors](tensors.qmd) — dimensions, operations, and conventions.
 - [Cosine similarity](cosine-similarity.qmd) — angular measure and interpretation limits.
 - [Embedding linearity](embedding-linearity.qmd) — assumptions and empirical evidence behind linear relations in representation spaces.

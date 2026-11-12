@@ -68,6 +68,7 @@
     - [Unicode, UTF-8 et normalisation du texte](unicode-text.html)
     - [Concevoir et évaluer un tokenizer](tokenizer-design-evaluation.html)
   - Outils mathématiques et géométrie
+    - [Embeddings : des représentations vectorielles aux espaces de recherche](embeddings-deep-dive.html)
     - [Tenseurs dans un Transformer : formes et axes](tensors.html)
     - [La similarité cosinus mesure-t-elle la similarité sémantique ?](cosine-similarity.html)
     - [L'hypothèse de linéarité dans les espaces de représentations](linearite-embeddings.html)

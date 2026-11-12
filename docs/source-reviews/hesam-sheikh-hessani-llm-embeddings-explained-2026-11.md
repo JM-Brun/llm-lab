@@ -128,9 +128,9 @@ The resource is now more than a general visual primer: it provides a traceable e
 The HTML and Python source were read, but the code was not executed and the running interactive Space was not operated. No benchmark, runtime, visual usability, output correctness or learner outcome is claimed. The repository's build instructions were inspected, but no independent build was performed.
 
 
-## 9. Proposed learning integration (design only; no new page yet)
+## 9. Implemented learning integration: autonomous Deepen dossier and optional Practice experiment
 
-The source adds a valuable **inspection workflow**, not a missing foundational definition. The best fit is a short optional Practice/Experiment activity attached to the existing embedding-space and contextualized-representations lessons.
+The source contributes two complementary learning assets: (1) a standalone, bilingual **Deepen** dossier that surveys embeddings beyond LLMs, and (2) a small optional Practice/Experiment activity attached to the existing embedding-space and contextualized-representations lessons. The dossier intentionally revisits core notions from a broader historical, mathematical and cross-modal perspective; it does not replace or expand the main learning path.
 
 ### Learning objectives
 
@@ -143,7 +143,7 @@ After the activity, learners should be able to:
 - explain how graph construction choices (directed/symmetrized, weighted/unweighted, node identity) change the visual result;
 - identify why a nearest-neighbour list is not a semantic truth oracle.
 
-### Suggested activity sequence (FR/EN parity)
+### Optional model-inspection activity sequence (FR/EN parity)
 
 | Step | Learner action | Evidence of understanding |
 |---|---|---|
@@ -156,7 +156,7 @@ After the activity, learners should be able to:
 | 7. Contextualize / Contextualiser | Compare input row with a hidden state for the same token in two different contexts (only if a small reproducible model path is available) | Learner distinguishes static input parameter from context-dependent state |
 | 8. Reflect / Interpréter | Explain one surprising neighbour and one limitation | Learner avoids equating cosine proximity with interchangeable meaning |
 
-### Technical contract for a future implementation
+### Remaining technical contract for checkpoint-level reproduction
 
 - Pin model identifier and immutable revision; record tokenizer revision, library versions, dtype and device.
 - Load only the input embedding table for the lookup experiment; do not imply that this produces a contextual representation.
@@ -171,11 +171,11 @@ After the activity, learners should be able to:
 
 ### Scope decision
 
-Do not add a new canonical concept, chapter, prerequisite edge or process breadcrumb. First attach the optional activity to the existing bilingual lessons and their established Practice route. Promote it to a first-class learning resource only after a runnable implementation, test coverage, rendering and FR/EN parity are verified.
+The autonomous dossier is implemented at `site/fr/embeddings-deep-dive.qmd` and `site/en/embeddings-deep-dive.qmd`, registered in the Deepen sidebar, bilingual map lists and language switch. Intentional overlap with the core embedding lessons is accepted because the page has a different purpose: a self-contained, broad survey and a hub toward further specialist topics. No new canonical concept, prerequisite edge, process breadcrumb or mandatory learning route is introduced. The small fixture-based Practice activity remains attached to the existing lessons.
 
 ## 10. Reproducible project-side inspection exercise
 
-A small NumPy-only implementation now exists in `src/llm_lab/foundations/embedding_inspection.py`, with unit tests in `tests/unit/test_embedding_inspection.py`. It deliberately avoids loading or downloading the 1.5B checkpoint and does not introduce a new lesson or route.
+A small NumPy-only implementation now exists in `src/llm_lab/foundations/embedding_inspection.py`, with unit tests in `tests/unit/test_embedding_inspection.py`. It deliberately avoids loading or downloading the 1.5B checkpoint and complements (rather than duplicates) the autonomous Deepen dossier; it introduces no new canonical concept or mandatory route.
 
 - `lookup_embedding_rows` retrieves rows directly by integer token IDs, preserving order and duplicate IDs; it returns a copy and never decodes/re-tokenizes labels.
 - `cosine_top_k` computes cosine neighbours in the input embedding table, returns token IDs alongside scores, excludes the query by default, excludes zero-norm candidates, and uses ascending token ID as a deterministic tie-break.
@@ -183,4 +183,8 @@ A small NumPy-only implementation now exists in `src/llm_lab/foundations/embeddi
 - Both helpers validate matrix shape, real finite values, integer IDs and row bounds. They are NumPy-only; no model, tokenizer, PyTorch or network dependency is introduced.
 - The existing bilingual embedding-space exercise hubs now include the same executable example and explicitly state that input-table neighbours are not contextualized states or sentence-level retrieval evidence.
 
-This is a tested reference-scale pedagogical implementation, not a reproduction of the external Space's checkpoint, extraction pipeline, interactive atlas or graph layout. The activity is now implemented as a tiny-fixture exercise; live-atlas inspection and checkpoint-level reproduction remain open validation tasks.
+This is a tested reference-scale pedagogical implementation, not a reproduction of the external Space's checkpoint, extraction pipeline, interactive atlas or graph layout. The bilingual autonomous Deepen dossier now covers the broader embedding landscape, learning objectives, geometry, evaluation and non-LLM applications. The source atlas remains an external exploration link; live-atlas inspection and checkpoint-level reproduction remain open validation tasks.
+
+### Visual reuse and attribution
+
+The Hugging Face Space README metadata declares Apache-2.0. The source article also embeds illustrations credited to third parties (including Manning), so those assets are not copied into LLM Lab. The dossier preserves the pedagogical progression with original Mermaid diagrams, uses existing project SVGs for geometric intuition, and links to the original interactive Space and code. Any future direct reuse of a source figure should be limited to clearly author-created assets and retain the licence notice and attribution.

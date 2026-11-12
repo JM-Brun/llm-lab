@@ -116,7 +116,9 @@ project:
     - fr/tensors.qmd
     - en/tensors.qmd
     - fr/embedding-space.qmd
+    - fr/embeddings-deep-dive.qmd
     - en/embedding-space.qmd
+    - en/embeddings-deep-dive.qmd
     - fr/contextualized-representations.qmd
     - en/contextualized-representations.qmd
     - fr/positional-encoding.qmd
@@ -389,6 +391,7 @@ website:
                 - fr/tokenizer-design-evaluation.qmd
             - section: "Outils mathématiques et géométrie"
               contents:
+                - fr/embeddings-deep-dive.qmd
                 - fr/tensors.qmd
                 - fr/cosine-similarity.qmd
                 - fr/linearite-embeddings.qmd
@@ -575,6 +578,7 @@ website:
                 - en/tokenizer-design-evaluation.qmd
             - section: "Mathematical tools and geometry"
               contents:
+                - en/embeddings-deep-dive.qmd
                 - en/tensors.qmd
                 - en/cosine-similarity.qmd
                 - en/embedding-linearity.qmd
