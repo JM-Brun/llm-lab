@@ -15,7 +15,7 @@ suggested_route:
   next: "en/experimental-evaluation"
 hierarchy:
   parents: ["en/index"]
-  children: ["en/exercises-foundations", "en/exercises-text-data", "en/exercises-attention", "en/exercises-transformer", "en/exercises-generation"]
+  children: ["en/exercises-foundations", "en/exercises-text-data", "en/exercises-attention", "en/exercises-transformer", "en/exercises-generation", "en/experimental-evaluation"]
 related: []
 tags: ["type:exercise-hub", "destination:practice", "topic:exercises", "level:applied", "language:en", "status:published"]
 -->
@@ -86,6 +86,10 @@ This catalogue is the entry point for **extended exercises**: calculations, mult
 - Attempt each task before opening its solution. State assumptions and identify conditions under which your answer would fail.
 - Use transfer prompts to test whether the reasoning generalizes beyond the worked example.
 - Solutions are collapsed by default. A correct result without reasoning is not sufficient evidence of mastery.
+
+## Standalone transfer exercises
+
+- [Experimental evaluation: from score to protocol](experimental-evaluation.qmd) — design a defensible evaluation, avoid leakage and selection bias, interpret ranking metrics, and justify uncertainty.
 
 ## Exercise collections
 
