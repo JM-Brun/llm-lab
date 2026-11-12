@@ -153,6 +153,7 @@ The choice is made on measured criteria: quality, errors, robustness, cost, late
 - **Review the mathematical tools:** [mathematical foundations](mathematical-foundations.qmd).
 - **Compare text-splitting methods:** [tokenization strategies](tokenization-strategies.qmd).
 - **Follow an implementation:** [guided tour of the Transformer block](transformer-block-walkthrough.qmd).
+- **Look up a concise definition:** [LLM and Transformer glossary](glossary.qmd).
 :::
 
 ::: {.self-check}
