@@ -23,9 +23,7 @@ def test_guided_progress_uses_only_browser_local_storage() -> None:
 
 
 def test_guided_progress_handles_storage_failures_and_reset() -> None:
-    script = (ROOT / "site" / "includes" / "guided-rail-progress.html").read_text(
-        encoding="utf-8"
-    )
+    script = (ROOT / "site" / "includes" / "guided-rail-progress.html").read_text(encoding="utf-8")
     assert "catch (error)" in script
     assert "if (progress === null) return" in script
     assert "data-reset-label" in script
