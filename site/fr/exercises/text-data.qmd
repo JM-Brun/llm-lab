@@ -26,7 +26,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:text-data-exercises",
 
 ## Vérifier sa compréhension
 
-La [collection approfondie sur les données textuelles](../exercises.qmd#donnees-textuelles) est prévue ; utilisez les vérifications ci-dessous en attendant.
+Pour une pratique transversale au-delà de ces vérifications courtes, consultez la [collection d’exercices sur les données textuelles](../exercises-text-data.qmd#donnees-textuelles).
 
 1. Un tokenizer attribue l’ID `17` au token `chat`. Dans une séquence, cet ID apparaît deux fois. Les deux occurrences sélectionnent-elles le même vecteur initial ? Peut-on conclure que le nombre 17 encode une quantité de sens ?
 
