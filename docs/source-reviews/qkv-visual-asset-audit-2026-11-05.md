@@ -130,3 +130,22 @@ This is a PR-local Chromium render of the Q/K/V page content at PR #787's tested
 The automated keyboard probe does not replace manual keyboard testing. No touch-device or screen-reader session was performed, and mobile Axe was not run. SVG image alt text was observed in the rendered DOM, but assistive-technology announcement of the SVG and its internal `<title>`/`<desc>` remains unverified.
 
 This evidence supersedes the older PR #680 evidence for the Q/K/V page body and provides a more recent render of its one-minute mental model, projection equations and explanatory sections. It does not close #483: deployed-site verification, manual keyboard/touch/screen-reader checks and original third-party media provenance/reuse terms remain open.
+
+
+## 10. DEV illustration retrieval update — 2026-11-12
+
+This section supersedes the earlier DEV row and the Nishanthan subsection wherever they state that the image bytes/composition were unavailable. The maintainer supplied the exact image URL, and the image was retrieved and visually inspected on 2026-11-12:
+
+- Article: https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers-199a
+- Transformed image URL: https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Farticles%2Fys3yd2cf5dpvzprf2n6a.png
+- Underlying uploaded asset: https://dev-to-uploads.s3.us-east-2.amazonaws.com/uploads/articles/ys3yd2cf5dpvzprf2n6a.png
+
+The figure shows a continuous overview from input tokens and representations X through learned Q/K/V projections, QKᵀ scores, scaling and softmax, and weighted Value aggregation. It includes simplified sequence-level matrix shapes and the scaled dot-product equation.
+
+The image is useful as a *composition benchmark*: it makes the whole computational path visible in one view, rather than presenting Q/K/V as isolated roles. Its boundaries are also important: it is static, does not show causal masking or multi-head splitting/concatenation, omits batch/head axes, and does not represent the entire Transformer block after attention output projection/residual/MLP. Its simplified shapes should not be mistaken for a complete batched multi-head tensor contract.
+
+**Rights decision unchanged:** figure-specific licence and reuse permission remain unverified. Keep it link-only; do not embed, trace, crop, recolor or recreate it. Attribution is not a licence.
+
+The project-owned EN/FR diagrams have a bounded independent refinement proposed in [PR #1030](https://github.com/JM-Brun/llm-lab/pull/1030): show projection equations and sequence-level shapes, make scaling visible, and retain the existing Q/K-versus-V explanation. This does not import the external asset or duplicate the detailed scaled-attention lesson.
+
+The source is still partially scanned: this retrieval resolves the image-bytes/composition gap, but does not resolve figure-specific reuse rights, all linked materials, publication metadata or the previously inconsistent comment/reply history. The earlier access record remains valid as historical evidence; this addendum records the later retrieval.
