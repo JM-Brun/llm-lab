@@ -164,6 +164,13 @@ Use these resources as complementary explanations and study aids, not as substit
 
 ## Inference performance and generation systems
 
+- **Sebastian Raschka — “From Full to Hybrid Attention in LLMs”** (LinkedIn post and author companion article, 10 November 2026):
+  - Post: https://www.linkedin.com/posts/sebastianraschka_currently-working-towards-a-bigger-open-llm-share-7525958627799695361-Hprj/
+  - Companion article: https://sebastianraschka.com/blog/2026/full-to-hybrid-attention.html
+  - **Use for:** a dated snapshot of dense-global versus hybrid attention patterns in the author's selected open-model sample, and a taxonomy that distinguishes sparse/local attention from recurrent-state mechanisms.
+  - **Interpretation and reuse:** the reported 50/50 split is sample-specific and has not been independently audited; it is not a market census or a performance benchmark. The article's figures are linked, not copied. See [the source review](source-reviews/raschka-full-to-hybrid-attention-2026-11.md).
+
+
 - **Brij Pandey — “You ask LLM a question. It pauses. Then the answer starts appearing, piece by piece.”** (LinkedIn post, 10 November 2026): https://www.linkedin.com/posts/brijpandeyji_you-ask-llm-a-question-it-pauses-then-share-7525787285829804032-YNEl
   - **Use for:** a compact end-to-end inference diagram connecting tokenization, embeddings, decoder layers, KV caching, next-token selection, streaming, TTFT/ITL diagnostics, and speculative decoding.
   - **Integration:** used as a secondary pedagogical overview in the bilingual generation lesson to motivate prefill/decode latency, KV-cache memory growth, and the distinction between first-token latency and inter-token latency. Technical details are qualified against the model architecture and serving configuration; the LinkedIn figure is linked, not copied.

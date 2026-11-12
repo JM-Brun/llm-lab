@@ -8,7 +8,7 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/hybrid-llm-architectures"
-scope: "Étudie les compromis entre Mamba-2, attention, MoE, GQA, MTP et précision numérique à partir de Nemotron 3 ; distingue principes généraux et choix propres à une version."
+scope: "Étudie les compromis entre Mamba-2, attention, MoE, GQA, MTP et précision numérique à partir de Nemotron 3 ; ajoute une observation qualifiée sur les mécanismes d’attention globale, locale/parcimonieuse et récurrents en 2026."
 purpose: "Expliquer les coûts d'inférence ciblés par une architecture hybride, distinguer paramètres totaux et actifs, et identifier les compromis de capacité, de rappel et de bande passante."
 domain: "architectures-mechanisms"
 suggested_route:
@@ -153,6 +153,34 @@ QAD ne doit pas être confondue avec MOPD :
 
 Pour le checkpoint Lightning 3.5 documenté par NVIDIA, le passage de 66 Go en BF16 à 22 Go en NVFP4 illustre le gain de stockage ; le rapport indique une récupération médiane de 99,24 % de la précision BF16 sur son protocole d'évaluation. Ces chiffres sont propres à ce checkpoint et à ce protocole, pas une garantie générale de la quantification FP4.
 
+
+## Une tendance plus large : de l'attention complète aux architectures hybrides
+
+Dans un instantané de son panorama de modèles ouverts pour le second semestre 2026, Sebastian Raschka rapporte qu'environ la moitié des modèles de son échantillon conservent certaines couches d'attention globale dense dans une architecture hybride, tandis qu'environ la moitié n'utilisent aucune couche d'attention globale dense. C'est une **observation propre à son échantillon**, pas un recensement de tous les modèles publiés ni une comparaison contrôlée des performances. Voir [l'analyse de la source et ses limites](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-reviews/raschka-full-to-hybrid-attention-2026-11.md) et [le post LinkedIn original](https://www.linkedin.com/posts/sebastianraschka_currently-working-towards-a-bigger-open-llm-share-7525958627799695361-Hprj/).
+
+La distinction n'est pas simplement « attention ou absence d'attention ». Dans la taxonomie du graphique de l'auteur, *no full attention* signifie **zéro couche d'attention globale dense** ; cela ne signifie pas que le modèle ne mélange plus les informations de la séquence ou ne peut plus exploiter son contexte.
+
+Il faut distinguer deux mécanismes d'efficacité :
+
+1. **L'attention locale ou parcimonieuse change les positions consultées.** L'attention par fenêtre glissante et l'attention par blocs limitent les positions accessibles ; une sélection parcimonieuse peut conserver l'accès à certaines positions éloignées. Ces méthodes ciblent le calcul attentionnel et/ou la taille de l'ensemble de clés-valeurs consulté. Leur coût exact dépend du motif et de l'implémentation.
+2. **Les couches récurrentes changent la manière de transporter l'historique.** Mamba-2 et les mécanismes de type Gated DeltaNet maintiennent un état mis à jour à mesure que les tokens arrivent, plutôt que de stocker une paire clé-valeur explicite pour chaque position passée. Cet état récurrent est borné, mais la compression de l'historique ne remplace pas sans perte une recherche arbitraire dans le passé.
+
+Une pile hybride peut combiner ces approches ; certaines architectures conservent aussi quelques couches d'attention globale comme chemins de récupération explicites. Le placement des couches constitue une hypothèse architecturale à évaluer, pas une garantie de supériorité.
+
+### Que mesurer dans une comparaison équitable ?
+
+Comparer les architectures sur des charges de travail et du matériel identiques ; ne pas déduire un gain en production de la seule étiquette architecturale.
+
+| Dimension | Mesure ou test | Pourquoi c'est important |
+|---|---|---|
+| Traitement du prompt | Latence et débit du préremplissage selon la longueur du contexte | Met en évidence le coût du prompt et le parallélisme |
+| Génération | Latence de décodage, latence inter-token et débit en concurrence | Capture le coût de l'historique à chaque token et le comportement en service |
+| Mémoire | Mémoire maximale du cache KV et de l'état récurrent à batch/contexte identiques | Distingue cache croissant et état borné |
+| Rappel à longue distance | Récupération exacte de faits placés à différentes positions du contexte | Vérifie si l'historique utile reste accessible |
+| Gestion des corrections | Retrouver un fait après qu'un message ultérieur l'a corrigé | Vérifie si la compression préserve les mises à jour |
+| Traces d'agents | Retrouver une information au sein d'un long historique d'actions et d'appels d'outils | Évalue une charge de travail réaliste à long contexte |
+
+Garder latence, débit, mémoire et précision de récupération comme axes distincts. Un état de taille fixe peut réduire la mémoire tout en compliquant le rappel exact ; une attention parcimonieuse peut préserver un accès distant, mais conserver un coût de calcul dépendant de son motif. Ce sont des compromis complémentaires, pas des affirmations de complexité interchangeables.
 
 ## Lire les chiffres avec esprit critique
 

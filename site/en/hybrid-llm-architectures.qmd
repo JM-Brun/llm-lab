@@ -8,7 +8,7 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/hybrid-llm-architectures"
-scope: "Uses Nemotron 3 to study trade-offs among Mamba-2, attention, MoE, GQA, MTP, and numerical precision; distinguishes general principles from version-specific choices."
+scope: "Uses Nemotron 3 to study trade-offs among Mamba-2, attention, MoE, GQA, MTP, and numerical precision; adds a sample-qualified 2026 trend comparison of dense global, sparse/local, and recurrent hybrid sequence mechanisms."
 purpose: "Explain inference costs targeted by hybrid architectures, distinguish total and active parameters, and identify trade-offs in capacity, retrieval, and bandwidth."
 domain: "architectures-mechanisms"
 suggested_route:
@@ -153,6 +153,34 @@ QAD should not be confused with MOPD:
 
 For the Lightning 3.5 checkpoint documented by NVIDIA, the reduction from 66 GB in BF16 to 22 GB in NVFP4 illustrates the storage gain; the report gives a median 99.24% recovery of BF16 accuracy under its evaluation protocol. These figures are specific to that checkpoint and protocol, not a general guarantee of FP4 quantization.
 
+
+## A broader trend: from full to hybrid attention
+
+A November 2026 survey snapshot by Sebastian Raschka reports that, in the open-model sample he reviewed for the second half of 2026, roughly half of the models retained some dense global-attention layers in a hybrid stack and roughly half used no dense global-attention layers. This is a **sample-specific observation**, not a census of all released models or a controlled performance comparison. See [Raschka's source review and its limitations](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-reviews/raschka-full-to-hybrid-attention-2026-11.md) and [the original LinkedIn post](https://www.linkedin.com/posts/sebastianraschka_currently-working-towards-a-bigger-open-llm-share-7525958627799695361-Hprj/).
+
+The distinction is not simply “attention versus no attention.” Under the author's chart taxonomy, *no full attention* means zero **dense global-attention layers**; it does not mean that the model has no sequence-mixing mechanism or cannot use its context.
+
+Two efficiency mechanisms must be kept separate:
+
+1. **Local or sparse attention changes which positions are consulted.** Sliding-window and chunked attention restrict the accessible positions; sparse selection can retain access to selected distant positions. These methods target attention computation and/or the size of the attended key-value set. Their exact cost depends on the pattern and implementation.
+2. **Recurrent sequence layers change how history is carried forward.** Mamba-2 and Gated DeltaNet-style mechanisms maintain a state updated as tokens arrive, rather than storing an explicit key/value pair for every past position. This bounds the recurrent state, but compressing history is not a lossless substitute for arbitrary lookup.
+
+A hybrid stack can combine these approaches, and some designs retain occasional global-attention layers as explicit retrieval paths. The layer schedule is an architectural hypothesis to evaluate, not a guarantee that one design dominates another.
+
+### What a fair comparison should measure
+
+Compare architectures on matched workloads and hardware; do not infer serving gains from the layer label alone.
+
+| Dimension | Measurement or test | Why it matters |
+|---|---|---|
+| Prompt processing | Prefill latency and throughput versus context length | Exposes prompt-side compute and parallelism |
+| Generation | Decode latency, inter-token latency and concurrent throughput | Captures per-token history costs and serving behavior |
+| Memory | Peak KV-cache and recurrent-state memory at matched batch/context | Separates growing cache from bounded state |
+| Long-range recall | Exact retrieval of facts placed at different context positions | Tests whether useful history remains accessible |
+| Revision handling | Retrieve a fact after a later message corrects it | Tests whether compressed summaries preserve updates |
+| Agent traces | Retrieve information across long tool-call/action histories | Tests a realistic long-context workload |
+
+Keep latency, throughput, memory and retrieval accuracy as separate axes. A fixed-size state may lower memory while making exact recall harder; sparse attention may retain distant access but still incur pattern-dependent computation. These are complementary trade-offs, not interchangeable complexity claims.
 
 ## Critically reading the numbers
 

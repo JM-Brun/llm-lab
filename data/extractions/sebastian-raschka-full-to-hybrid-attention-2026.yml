@@ -1,0 +1,110 @@
+schema_version: 1
+source_id: sebastian-raschka-full-to-hybrid-attention-2026
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Full visible LinkedIn post text retrieved on 2026-11-12, including the author's definitions of full, hybrid and no-full-attention architectures and the stated long-context motivation."
+      - "Author's companion article retrieved: https://sebastianraschka.com/blog/2026/full-to-hybrid-attention.html; used to clarify the chart legend and the two efficiency mechanisms."
+      - "Visible LinkedIn comments inspected as contextual discussion, not treated as verified technical evidence."
+    inferred_elements:
+      - "Learning outcomes and the proposed comparative experiment are editorial recommendations, not a published experiment by the author."
+      - "The 50/50 split is reported for the author's model sample in the second half of 2026; the sample and inclusion criteria were not audited."
+  source_graph:
+    nodes:
+      - {id: src-dense-global-attention, kind: attention-pattern, description: "Dense global attention is present in every layer (MHA, GQA, dense MLA or CCA under the author's legend).", locator: "Companion article; chart legend"}
+      - {id: src-local-sparse-attention, kind: attention-pattern, description: "Sliding-window, chunked or sparse selection restricts the positions participating in attention computation.", locator: "LinkedIn post; companion article"}
+      - {id: src-recurrent-state, kind: sequence-mechanism, description: "Recurrent components such as Gated DeltaNet maintain a fixed-size state instead of retaining the full history as an expanding KV cache.", locator: "LinkedIn post; companion article"}
+      - {id: src-hybrid-layer-stack, kind: architecture-pattern, description: "A layer stack mixes global attention with local/sparse attention or recurrent sequence mechanisms.", locator: "Companion article; chart legend"}
+      - {id: src-long-context-workload, kind: application, description: "Long documents, conversations, codebases and agent traces increase pressure on context memory and compute.", locator: "LinkedIn post"}
+      - {id: src-exact-retrieval, kind: evaluation-property, description: "Ability to recover precise information from a long history, including after corrections and tool calls.", locator: "LinkedIn post; critical interpretation"}
+      - {id: src-attention-computation, kind: resource-cost, description: "Compute spent on the attention operation as sequence length and attended positions grow.", locator: "Editorial reconstruction of the attention-pattern distinction"}
+      - {id: src-history-state-memory, kind: resource-cost, description: "Memory used to retain or update information from prior sequence positions.", locator: "Editorial reconstruction of the recurrent-state distinction"}
+    edges:
+      - {from: src-dense-global-attention, type: can-be-combined-with, to: src-local-sparse-attention}
+      - {from: src-dense-global-attention, type: can-be-combined-with, to: src-recurrent-state}
+      - {from: src-local-sparse-attention, type: reduces, to: src-attention-computation}
+      - {from: src-recurrent-state, type: bounds, to: src-history-state-memory}
+      - {from: src-hybrid-layer-stack, type: targets, to: src-long-context-workload}
+      - {from: src-recurrent-state, type: creates-tradeoff-with, to: src-exact-retrieval}
+    interpretation: "Editorial reconstruction. Sparse/local attention and recurrent state compression are distinct mechanisms; neither should be described as simply making ordinary dense attention faster."
+  learning_outcomes:
+    - {status: inferred, outcome: "Distinguish dense global, local/sliding-window, sparse and recurrent sequence mechanisms.", basis: "Author's three-way architecture legend."}
+    - {status: inferred, outcome: "Explain why reduced attention computation and bounded recurrent state address different resource costs.", basis: "Author's two efficiency mechanisms."}
+    - {status: inferred, outcome: "Identify exact long-range retrieval as a quality trade-off to measure alongside memory and latency.", basis: "Author's warning about history compression; critical extension."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Basic self-attention and Transformer-layer knowledge.", basis: "The post assumes familiarity with MHA/GQA/MLA and attention layers."}
+    - {status: inferred, topic: "Basic understanding of autoregressive context and KV caches.", basis: "The post discusses retaining context and recurrent fixed-size state."}
+  teaching_route:
+    - {order: 1, section: "From full to hybrid attention", function: establish-observed-trend, moves: ["Introduce the author's sample-specific 2025–2026 trend", "Qualify the 50/50 split as a snapshot rather than a census"]}
+    - {order: 2, section: "Three architecture categories", function: classify-layer-stacks, moves: ["Define full attention throughout", "Define some full attention hybrids", "Define zero dense global-attention layers"]}
+    - {order: 3, section: "Two efficiency mechanisms", function: separate-compute-and-memory, moves: ["Explain sparse/local position selection", "Explain fixed-size recurrent state", "Contrast compute reduction with history compression"]}
+    - {order: 4, section: "Long-context trade-offs", function: connect-cost-to-quality, moves: ["Relate architecture to documents, codebases and agents", "Explain exact-retrieval risks under compressed history"]}
+    - {order: 5, section: "Evaluation blueprint", function: operationalize-claims, moves: ["Measure prefill/decode latency and memory", "Test exact retrieval and corrected facts", "Compare matched architectures under controlled serving conditions"]}
+  pedagogical_strengths:
+    - "Connects architecture choices to concrete long-context workloads and resource constraints."
+    - "Separates attention-computation reduction from bounded recurrent-state memory."
+    - "Provides a useful bridge between attention mechanisms, recurrent sequence models, KV-cache behavior and agent traces."
+  pedagogical_limits:
+    - "The headline 50/50 split is sample-dependent; the model inventory and inclusion criteria are not supplied in the post."
+    - "The chart categories combine several materially different mechanisms and should not be mistaken for a complete architectural taxonomy."
+    - "No controlled latency, memory, throughput or retrieval benchmark is included."
+    - "The phrase no full attention means zero dense global-attention layers, not absence of sequence mixing or context use."
+    - "Fixed-size state saves history memory but does not guarantee exact recall; sparse attention may retain distant access depending on selection."
+  comparison:
+    dossier: docs/source-reviews/raschka-full-to-hybrid-attention-2026-11.md
+    canonical_graph: "data/concepts.yml"
+    decision: "Use as a current critical case study for attention variants and long-context efficiency. Link from attention/KV-cache and recurrent-sequence-model lessons after checking current page coverage. Do not reproduce the chart or treat its sample percentages as a benchmark."
+    structures_kept_separate: [source-explanatory-graph, canonical-concept-graph, page-navigation-graph, pedagogical-route]
+items:
+  - id: sebastian-raschka-full-to-hybrid-attention-2026:architecture-trend
+    kind: claim
+    summary: "The author reports that the open LLM models in his second-half-2026 sample split approximately 50/50 between hybrids retaining some dense global attention and models with no dense global-attention layers."
+    locator: {type: article, value: "From Full to Hybrid Attention in LLMs", label: "Trend chart and introduction"}
+    evidence:
+      kind: author-reported-survey
+      confidence: context-dependent
+      scope: "The author's own open-LLM roundup snapshot, not a comprehensive census."
+      assumptions: ["The author's model selection and architecture labels are applied consistently."]
+      limitations: ["The complete roundup, sample size, inclusion criteria and raw data were not audited."]
+    classification:
+      tags: [topic:hybrid-attention, topic:long-context, topic:open-llm]
+      concept_ids: []
+    candidate_destinations:
+      pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/hybrid-llm-architectures, en/hybrid-llm-architectures]
+    disposition: clarify
+    disposition_rationale: "Useful as a dated trend observation, but must be explicitly attributed and sample-qualified."
+  - id: sebastian-raschka-full-to-hybrid-attention-2026:two-efficiency-mechanisms
+    kind: mechanism
+    summary: "Sparse/local attention reduces attention computation by selecting positions or blocks; recurrent components such as Gated DeltaNet reduce history-memory growth by maintaining a fixed-size state. These are distinct efficiency mechanisms."
+    locator: {type: article, value: "From Full to Hybrid Attention in LLMs", label: "Two efficiency gains"}
+    evidence:
+      kind: secondary-technical-explanation
+      confidence: well-supported
+      scope: "High-level mechanism distinction stated by the author and critically reconstructed."
+      assumptions: ["Exact complexity depends on the attention pattern, state size and implementation."]
+      limitations: ["No implementation or asymptotic complexity analysis was reproduced in this source pass."]
+    classification:
+      tags: [topic:sparse-attention, topic:recurrent-state, topic:kv-cache, topic:inference-efficiency]
+      concept_ids: []
+    candidate_destinations:
+      pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/hybrid-llm-architectures, en/hybrid-llm-architectures]
+    disposition: integrate-by-reference
+    disposition_rationale: "A compact comparison can clarify why hybrid architectures combine attention and recurrent mechanisms."
+  - id: sebastian-raschka-full-to-hybrid-attention-2026:retrieval-tradeoff
+    kind: limitation
+    summary: "Compressing the history into a fixed-size recurrent state can reduce memory, but it can make exact retrieval of arbitrary past details harder; evaluate retrieval separately from memory and latency."
+    locator: {type: article, value: "From Full to Hybrid Attention in LLMs", label: "Memory and exact retrieval"}
+    evidence:
+      kind: critical-source-review
+      confidence: well-supported
+      scope: "The author's stated caveat and an evaluation recommendation derived from it."
+      assumptions: ["The task requires exact recovery of information not necessarily retained losslessly in the recurrent state."]
+      limitations: ["No retrieval benchmark was run for this source."]
+    classification:
+      tags: [topic:long-context-retrieval, topic:recurrent-state, topic:agent-evaluation]
+      concept_ids: []
+    candidate_destinations:
+      pages: [fr/hybrid-llm-architectures, en/hybrid-llm-architectures, fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+    disposition: integrate
+    disposition_rationale: "The memory/recall trade-off is a strong motivation for controlled long-context and agent-trace experiments."
