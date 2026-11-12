@@ -94,7 +94,7 @@ Now consider: *“The animal was tired because it had been running.”* Here, th
 
 This example is used as a pedagogical motivation in [Nishanthan K's tutorial on Q, K, and V](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers). It does not show that a particular attention head necessarily identifies the antecedent, or that attention alone performs complete coreference resolution. It complements the lexical-ambiguity example (*bank*) by illustrating a relation between tokens (*it* / *the animal*).
 
-In the running example, “What have the Romans ever done for us?” is already in the context. As the response is generated, each new token is processed against the context available at that step, which grows throughout the loop.
+In the running example, “What have the Romans ever done for us?” is already in the context. As “They built roads between distant towns.” is generated, each new token is processed against the context available at that step, which grows throughout the loop.
 
 For the dependencies between positions, causal masks, and the distinct roles of self-attention and the MLP, see the [deep dive on contextualized representations](contextualized-representations-advanced.qmd). The detailed formalization is deliberately separated from this first explanation.
 

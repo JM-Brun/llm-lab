@@ -31,9 +31,9 @@ Generation starts with a prompt written in ordinary language. Yet the neural net
 :::
 
 ::: {.callout-note title="Running example: the text to encode"}
-For a short prompt, use **“What have the Romans ever done for us?”**, from *Monty Python's Life of Brian*. The answers that follow in the scene are a separate continuation-like dialogue sequence, spoken by several characters. In *Monty Python and the Holy Grail*, the Bridge of Death provides a second example of conversational context accumulating across turns.
+For the recurring example, the prompt is **“What have the Romans ever done for us?”**, from *Monty Python's Life of Brian*. The film's replies are a cultural analogy, not the target continuation used in the worked trace. That continuation is an original LLM Lab sentence: **“They built roads between distant towns.”**
 
-Encode the prompt separately from any target continuation. Token boundaries depend on the tokenizer; token IDs are not universal.
+Encode the prompt and this continuation separately with the tokenizer being studied. Token boundaries depend on the tokenizer; token IDs are not universal.
 :::
 
 

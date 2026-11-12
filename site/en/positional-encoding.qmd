@@ -63,7 +63,7 @@ The previous page showed that lookup provides a content vector, but not the toke
 
 When used, the causal mask indicates which positions may be attended to (`j ≤ i`). Positional mechanisms can additionally represent an absolute position or a relative offset. These signals are complementary, not interchangeable.
 
-In “What have the Romans ever done for us?”, token order is part of the input. As generation adds a response, each new token takes its own position in the growing sequence.
+In “What have the Romans ever done for us?”, token order is part of the input. As generation adds “They built roads between distant towns.”, each new token takes its own position in the growing sequence.
 
 ::: {.callout-note collapse="true" title="Why is self-attention alone not enough?"}
 For content-only self-attention, with no positional bias or order-dependent mask, permuting the input rows permutes the output rows in the same way. If $P$ is a permutation matrix, then:
