@@ -168,6 +168,6 @@ items:
       assumptions: ["The methods are compared as families of representation techniques, not as directly interchangeable embedding spaces."]
       limitations: ["The history is compressed and some references are missing from the retrieved page.", "Original BERT used next-sentence prediction, but later variants such as RoBERTa changed the pretraining objective."]
     candidate_destinations:
-      pages: [fr/embedding-space, en/embedding-space, fr/deepen, en/deepen]
-    disposition: link
-    disposition_rationale: "Useful optional historical perspective, but the existing core lesson already has a shorter Word2Vec-to-Transformer distinction; do not expand the core page into a survey of all embedding methods."
+      pages: [fr/embeddings-deep-dive, en/embeddings-deep-dive, fr/deepen, en/deepen]
+    disposition: integrate
+    disposition_rationale: "The broader taxonomy and teaching progression are integrated in the dedicated bilingual Deepen dossier; keep the core lesson focused and retain the original Space as an external visual exploration resource."
