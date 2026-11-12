@@ -33,12 +33,8 @@ def test_understand_pages_reuse_one_canonical_continuation(
     language: str, continuation: str
 ) -> None:
     for page_id in CORE_EXAMPLE_PAGES:
-        source = (ROOT / "site" / language / f"{page_id}.qmd").read_text(
-            encoding="utf-8"
-        )
-        assert continuation in source, (
-            f"{language}/{page_id} diverges from the running example"
-        )
+        source = (ROOT / "site" / language / f"{page_id}.qmd").read_text(encoding="utf-8")
+        assert continuation in source, f"{language}/{page_id} diverges from the running example"
 
 
 @pytest.mark.parametrize(
