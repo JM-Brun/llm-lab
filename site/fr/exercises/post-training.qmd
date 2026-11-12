@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/post-training"]
   children: []
-related: ["fr/post-training", "fr/training-loop", "fr/llm-limits"]
+related: ["fr/training-loop", "fr/llm-limits"]
 tags: ["type:exercise-hub", "destination:practice", "topic:post-training-exercises", "level:applied", "language:fr", "status:published"]
 -->
 
