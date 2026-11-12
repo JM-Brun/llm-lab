@@ -87,3 +87,10 @@ The matrix notation is extended beyond Q/K/V so the downstream shapes are visibl
 ## Matrix visual refinement — 2026-11-12
 
 The Q/K/V matrix motifs now use a restrained three-colour gradient (teal for Q, blue for K, orange for V), softly rounded cells, a subtle framed panel, and explicit shape labels. This adopts the visual principle of a gradient-filled matrix while keeping the artwork independently authored rather than copying the reference illustration. English labels are localized ("Matrix"); French labels use "Matrice". The three-by-four cell pattern remains schematic, not a claim about the true feature width.
+
+
+## Correction visuelle et validation des mises à jour d'assets — 2026-11-12
+
+La revue du SVG a révélé deux défauts de placement que les contrôles XML ne pouvaient pas détecter : sur les versions desktop, le libellé de dimension était répété exactement au même emplacement au-dessus de chaque vignette ; sur les versions mobiles, le libellé inférieur touchait le bord du panneau matriciel. Les libellés redondants sont supprimés, en conservant une seule dimension lisible au-dessus de chaque matrice.
+
+Le workflow Quarto incrémental a également été corrigé : lorsque le changement ne concerne que des assets statiques et qu'aucune page Quarto n'est sélectionnée, il copie les assets dans le site restauré sans invoquer le moteur de rendu Python. Cela évite l'appel à `.venv/bin/python` dans un scénario où l'environnement virtuel n'est volontairement pas installé. Les rendus de pages continuent d'utiliser le moteur isolé lorsque des cibles Quarto sont présentes.
