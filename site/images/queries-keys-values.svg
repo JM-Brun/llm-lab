@@ -13,13 +13,13 @@
 <path d="M252 236 H296 V190 H330 M296 236 V336 H330 M296 236 V482 H330" fill="none" stroke="#60758b" stroke-width="2.5" marker-end="url(#arrow)"/>
 <rect x="336" y="150" width="224" height="86" rx="15" fill="#dff2f1" stroke="#087f8c" stroke-width="2"/>
 <text x="448" y="184" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="22" font-weight="800" fill="#075d65">Requête · Q</text>
-<text x="448" y="207" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="14" fill="#24545a">ce que je cherche</text><text x="448" y="229" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" fill="#24545a">Q = XW_Q · T × d_k</text>
+<text x="448" y="207" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="14" fill="#24545a">ce que je cherche</text><text x="448" y="229" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" fill="#24545a">Q = XW_Q → T × d_k</text>
 <rect x="336" y="293" width="224" height="86" rx="15" fill="#e7edff" stroke="#617bc5" stroke-width="2"/>
 <text x="448" y="327" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="22" font-weight="800" fill="#29478e">Clé · K</text>
-<text x="448" y="350" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="14" fill="#334c7d">ce qui est à comparer</text><text x="448" y="372" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" fill="#334c7d">K = XW_K · T × d_k</text>
+<text x="448" y="350" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="14" fill="#334c7d">ce qui est à comparer</text><text x="448" y="372" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" fill="#334c7d">K = XW_K → T × d_k</text>
 <rect x="336" y="439" width="224" height="86" rx="15" fill="#fff0e8" stroke="#df8b67" stroke-width="2"/>
 <text x="448" y="473" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="22" font-weight="800" fill="#9b4e3c">Valeur · V</text>
-<text x="448" y="496" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="14" fill="#7c5143">contenu à agréger</text><text x="448" y="518" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" fill="#7c5143">V = XW_V · T × d_v</text>
+<text x="448" y="496" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="14" fill="#7c5143">contenu à agréger</text><text x="448" y="518" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" fill="#7c5143">V = XW_V → T × d_v</text>
 <path d="M560 193 H620 V263 H650 M560 336 H620 V263" fill="none" stroke="#60758b" stroke-width="2.5" marker-end="url(#arrow)"/>
 <rect x="656" y="207" width="212" height="112" rx="16" fill="#fff" stroke="#a9b9c8" stroke-width="2"/>
 <text x="762" y="239" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="19" font-weight="750" fill="#10233f">1. Comparer</text>
