@@ -11,6 +11,12 @@ def test_probability_meta_flow_is_not_a_navigation_landmark() -> None:
     )
     for path, label in pages:
         source = path.read_text(encoding="utf-8")
-        assert f'class="pipeline-stepper meta-flow" role="group" aria-label="{label}" aria-describedby="probability-flow-description"' in source
+        group = (
+            f'class="pipeline-stepper meta-flow" role="group" aria-label="{label}" '
+            'aria-describedby="probability-flow-description"'
+        )
+        assert group in source
         assert '<p id="probability-flow-description" class="meta-flow__relation">' in source
-        assert 'role="navigation"' not in source[source.index('class="pipeline-stepper meta-flow"'):source.index("</div>", source.index('class="pipeline-stepper meta-flow"'))]
+        flow_start = source.index('class="pipeline-stepper meta-flow"')
+        flow_end = source.index("</div>", flow_start)
+        assert 'role="navigation"' not in source[flow_start:flow_end]
