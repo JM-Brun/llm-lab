@@ -3342,3 +3342,98 @@ sources:
       concepts: []
       audit_records: [docs/source-reviews/sinusoidal-positional-encoding-2026-11.md]
 
+  - id: sebastian-raschka-full-to-hybrid-attention-2026
+    title: "From Full to Hybrid Attention in LLMs"
+    creators: ["Sebastian Raschka"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://www.linkedin.com/posts/sebastianraschka_currently-working-towards-a-bigger-open-llm-share-7525958627799695361-Hprj/"
+    publisher: "LinkedIn"
+    publication_date: "2026-11-10"
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [inference-efficiency]
+      tags:
+        - topic:hybrid-attention
+        - topic:sparse-attention
+        - topic:recurrent-state
+        - topic:long-context
+        - topic:kv-cache
+      concept_ids: [self-attention, kv-cache, autoregressive-generation, agentic-system]
+    metadata:
+      technical_level: advanced
+      contribution_types: [architecture, critical-comparison, research-trend]
+      audiences: [learner, practitioner, researcher]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-11-12"
+        status: partially-scanned
+        inspected_scope:
+          - "Supplied LinkedIn post text, including the author's architecture categories and stated long-context motivation"
+          - "Author's companion article, including the chart legend and distinction between hybrid stacks with and without dense global-attention layers"
+          - "Source-local architecture graph, teaching route, pedagogical strengths and limitations"
+          - "Compared against the existing bilingual Deepen page on hybrid LLM architectures and integrated a dated, qualified trend note"
+        limitations:
+          - "The 50/50 split is an author-reported observation for a selected open-model sample, not a census of all released models."
+          - "The model inventory, sample size, inclusion criteria and underlying chart data were not independently audited."
+          - "No architecture was run and no latency, memory, throughput or retrieval benchmark was reproduced."
+          - "Sparse/local attention and bounded recurrent state are distinct mechanisms; the chart taxonomy groups multiple variants and is not a complete architectural taxonomy."
+          - "A fixed-size recurrent state is not a lossless KV cache; exact long-range retrieval remains an evaluation concern."
+          - "The chart image and article assets were not copied; reuse permissions remain unverified and handling is link-only."
+    related:
+      pages:
+        - fr/hybrid-llm-architectures
+        - en/hybrid-llm-architectures
+        - fr/llm-computational-complexity
+        - en/llm-computational-complexity
+      concepts: [self-attention, kv-cache, autoregressive-generation, agentic-system]
+      audit_records:
+        - docs/source-reviews/raschka-full-to-hybrid-attention-2026-11.md
+
+  - id: sebastian-raschka-full-to-hybrid-attention-companion-2026
+    title: "From Full to Hybrid Attention in LLMs"
+    creators: ["Sebastian Raschka"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://sebastianraschka.com/blog/2026/full-to-hybrid-attention.html"
+    publisher: "Sebastian Raschka"
+    publication_date: "2026-11-10"
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [inference-efficiency]
+      tags: [topic:hybrid-attention, topic:sparse-attention, topic:recurrent-state, topic:long-context]
+      concept_ids: [self-attention, kv-cache, autoregressive-generation]
+    metadata:
+      technical_level: advanced
+      contribution_types: [architecture, critical-comparison, research-trend]
+      audiences: [learner, practitioner, researcher]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-11-12"
+        status: partially-scanned
+        inspected_scope:
+          - "Author's companion article and chart legend used to clarify the categories in the supplied LinkedIn post"
+          - "Cross-checked the article's explanation against the source-local extraction and existing hybrid-architecture lesson"
+        limitations:
+          - "The companion article was inspected for the explanation and chart legend; the underlying model inventory and raw chart data were not audited."
+          - "No model execution or performance benchmark was reproduced."
+          - "No chart or other asset was copied; reuse permissions remain unverified."
+    related:
+      pages: [fr/hybrid-llm-architectures, en/hybrid-llm-architectures]
+      concepts: [self-attention, kv-cache, autoregressive-generation]
+      audit_records: [docs/source-reviews/raschka-full-to-hybrid-attention-2026-11.md]
+
