@@ -824,12 +824,12 @@ def validate_route_projection(stages: list[ResolvedGuidedRouteStage]) -> None:
 GUIDED_RAIL_LABELS: dict[str, dict[str, str]] = {
     "fr": {
         "aria": "Progression dans le parcours pédagogique",
-        "progress": "Progression consultée · stockée uniquement dans ce navigateur",
+        "progress": "étapes consultées · stockées uniquement dans ce navigateur",
         "reset": "Effacer la progression consultée",
     },
     "en": {
         "aria": "Learning path progress",
-        "progress": "Viewed progress · stored only in this browser",
+        "progress": "stages viewed · stored only in this browser",
         "reset": "Clear viewed progress",
     },
 }
