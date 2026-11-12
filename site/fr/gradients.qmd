@@ -36,7 +36,7 @@ La loss indique **ce qui doit être amélioré** ; le gradient indique **comment
 La qualité du calcul du gradient reste distincte de la généralisation du modèle.
 :::
 
-<div class="pipeline-stepper" role="navigation" aria-label="Étapes de mise à jour des paramètres">
+<div class="pipeline-stepper" role="group" aria-label="Étapes de mise à jour des paramètres">
   <a class="step-item" href="loss.qmd">1. Loss</a>
   <span class="step-arrow" aria-hidden="true">→</span>
   <span class="step-item">2. Rétropropagation</span>
