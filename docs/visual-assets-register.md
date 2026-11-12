@@ -61,12 +61,12 @@ The original 2026-10-30 source-level scan found 32 SVG files. A fresh recursive 
 | `llm-generation-process-en.svg`, `llm-generation-process-fr.svg` | EN/FR `llm-overview.qmd` | Project-managed SVG pair added after the 2026-10-30 snapshot; registered during the #156 reconciliation of 2026-11-05. The EN variant shipped as a partial translation; its remaining French labels were completed in the same PR. Authorship/history and licence to verify like the other local SVGs |
 | `math-training-pipeline.svg` | EN/FR `mathematical-foundations.qmd` | Project-managed SVG; described as original in `site/references.qmd`; verify authorship/history and licence |
 | `positional-info-insertion-en.svg`, `positional-info-insertion-fr.svg` | EN/FR `positional-encoding.qmd` | Project-managed SVG pair; original diagrams added with the RoPE relocation in PR #255; verify authorship/history and licence |
-| `queries-keys-values-en.svg`, `queries-keys-values.svg`, `queries-keys-values-en-mobile.svg`, `queries-keys-values-mobile.svg` | EN/FR `queries-keys-values.qmd` | Project-managed desktop/mobile SVGs; the mobile variants are selected by responsive `picture` sources; verify provenance and asset-level licence for the later mobile pair as recorded in the 2026-11-12 reconciliation |
-| `attention-matrices-en.svg`, `attention-matrices.svg`, `attention-matrices-en-mobile.svg`, `attention-matrices-mobile.svg` | EN/FR `queries-keys-values.qmd` | New desktop/mobile matrix figures for scores, normalized attention weights and output; project-managed SVGs added 2026-11-12; provenance and asset-level licence confirmation pending |
+| `queries-keys-values-en.svg`, `queries-keys-values.svg`, `queries-keys-values-en-mobile.svg`, `queries-keys-values-mobile.svg` | EN/FR `queries-keys-values.qmd` | Project-managed desktop/mobile SVGs; the mobile variants are selected by responsive `picture` sources; owner-authored PR #1034 explicitly describes independently authored mobile diagrams; asset-level licence remains undeclared |
+| `attention-matrices-en.svg`, `attention-matrices.svg`, `attention-matrices-en-mobile.svg`, `attention-matrices-mobile.svg` | EN/FR `queries-keys-values.qmd` | New desktop/mobile matrix figures for scores, normalized attention weights and output; owner-authored PR #1038 explicitly describes the artwork as independently authored; asset-level licence remains undeclared |
 | `contextualization-pipeline-en.svg`, `contextualization-pipeline-fr.svg` | EN/FR `contextualized-representations.qmd` | New bilingual pipeline figures added after the previous 38-file inventory; provenance and asset-level licence confirmation pending |
-| `embedding-lookup-en.svg`, `embedding-lookup-fr.svg` | EN/FR `embedding-space.qmd` | New bilingual lookup figures illustrating token ID → embedding-table row → vector; provenance and asset-level licence confirmation pending |
-| `llm-shared-prediction-uses-en.svg`, `llm-shared-prediction-uses-en-mobile.svg`, `llm-shared-prediction-uses-fr.svg`, `llm-shared-prediction-uses-fr-mobile.svg` | EN/FR `llm-overview.qmd` | New bilingual desktop/mobile figures for generation, scoring and training uses of the predictive distribution; provenance and asset-level licence confirmation pending |
-| `sinusoidal-position-matrix-en.svg`, `sinusoidal-position-matrix-fr.svg` | EN/FR `sinusoidal-positional-encoding.qmd` | New bilingual heatmaps for sinusoidal positional-encoding values; provenance and asset-level licence confirmation pending |
+| `embedding-lookup-en.svg`, `embedding-lookup-fr.svg` | EN/FR `embedding-space.qmd` | New bilingual lookup figures illustrating token ID → embedding-table row → vector; owner-authored PR #915 describes purpose-built diagrams; asset-level licence remains undeclared |
+| `llm-shared-prediction-uses-en.svg`, `llm-shared-prediction-uses-en-mobile.svg`, `llm-shared-prediction-uses-fr.svg`, `llm-shared-prediction-uses-fr-mobile.svg` | EN/FR `llm-overview.qmd` | New bilingual desktop/mobile figures for generation, scoring and training uses of the predictive distribution; owner-authored PR #782 describes a purpose-built visual; asset-level licence remains undeclared |
+| `sinusoidal-position-matrix-en.svg`, `sinusoidal-position-matrix-fr.svg` | EN/FR `sinusoidal-positional-encoding.qmd` | New bilingual heatmaps for sinusoidal positional-encoding values; owner-authored PR #917 describes original bilingual heatmaps; asset-level licence remains undeclared |
 | `transformer-stack-en.svg`, `transformer-stack-fr.svg` | EN/FR `transformer.qmd` | New bilingual architecture figures for the decoder-only GPT stack and a pre-LN Transformer block; provenance and asset-level licence confirmation pending |
 | `rope-en.svg`, `rope-fr.svg` | EN/FR `positional-encoding.qmd` | Project-managed SVG pair; verify authorship/history and licence |
 | `softmax-axis-comparison-en.svg`, `softmax-axis-comparison-fr.svg` | EN/FR `tensors.qmd` | Project-managed SVG pair; verify authorship/history and licence |
@@ -301,8 +301,34 @@ A fresh recursive GitHub directory enumeration of `site/images/` on 2026-11-12 f
 The previous 38-file provenance reconciliation remains valid only for the 38 files it explicitly covered. It must not be silently generalized to the 18 later additions:
 
 - **38/56:** owner-confirmed project-origin provenance under the evidence recorded in the 2026-11-09 reconciliation.
-- **18/56:** newly enumerated assets with source-page references identified; exact creation/adaptation declarations and per-file Git history still need to be reconciled before extending the provenance confirmation.
+- **14/56:** newly enumerated assets with explicit owner-authored creation declarations in PRs #782, #915, #917, #1034 and #1038; provenance is evidenced, but no asset-level licence is declared.\n- **4/56:** the two contextualization-pipeline SVGs (#876) and two Transformer-stack SVGs (#857) have owner-authored introduction commits, but their PR descriptions do not explicitly confirm original creation or absence of third-party adaptation; keep this narrow provenance question open.
 - **56/56:** excluded from the MIT code / CC BY-SA prose grants until an asset-level licence is separately and explicitly declared under #163.
 - **Third-party embedded images:** remain separately assessed in the external-asset section; this local SVG count does not include remote image assets.
 
 The 18-file addition set was matched against the current EN/FR Quarto source files. This is a source-level reference check, not yet a rendered-DOM enumeration or legal clearance. The four responsive pairs are intentionally preserved; no asset was removed, replaced, hidden, or disabled. The SVG source and per-path history checks for the 18 additions remain the next bounded step.
+
+
+### Provenance evidence for the 18 later additions
+
+The per-path commit history and the merged PR descriptions were checked for the 18 files added after the 2026-11-09 38-file baseline:
+
+| Files | Owner-authored evidence | Assessment |
+|---|---|---|
+| `attention-matrices-en.svg`, `attention-matrices.svg`, `attention-matrices-en-mobile.svg`, `attention-matrices-mobile.svg` | [PR #1038](https://github.com/JM-Brun/llm-lab/pull/1038) explicitly describes the new matrix figure as independently authored. | Project-origin provenance confirmed by exact-file change and explicit declaration. |
+| `queries-keys-values-en-mobile.svg`, `queries-keys-values-mobile.svg` | [PR #1034](https://github.com/JM-Brun/llm-lab/pull/1034) explicitly describes independently authored mobile diagrams. | Project-origin provenance confirmed by exact-file change and explicit declaration. |
+| `embedding-lookup-en.svg`, `embedding-lookup-fr.svg` | [PR #915](https://github.com/JM-Brun/llm-lab/pull/915) describes purpose-built bilingual SVG diagrams and maps their content to the lesson. | Project-origin provenance evidenced by owner-authored declaration. |
+| `llm-shared-prediction-uses-en.svg`, `llm-shared-prediction-uses-en-mobile.svg`, `llm-shared-prediction-uses-fr.svg`, `llm-shared-prediction-uses-fr-mobile.svg` | [PR #782](https://github.com/JM-Brun/llm-lab/pull/782) describes a purpose-built bilingual visual and its desktop/mobile compositions. | Project-origin provenance evidenced by owner-authored declaration. |
+| `sinusoidal-position-matrix-en.svg`, `sinusoidal-position-matrix-fr.svg` | [PR #917](https://github.com/JM-Brun/llm-lab/pull/917) explicitly describes original bilingual heatmaps. | Project-origin provenance confirmed by owner-authored declaration. |
+| `contextualization-pipeline-en.svg`, `contextualization-pipeline-fr.svg` | Added by [PR #876](https://github.com/JM-Brun/llm-lab/pull/876); the patch adds both files, but the PR description says existing diagrams were retained and does not explicitly attest to original creation/adaptation history. | **Pending narrow owner confirmation**; do not infer provenance solely from commit authorship. |
+| `transformer-stack-en.svg`, `transformer-stack-fr.svg` | Added by [PR #857](https://github.com/JM-Brun/llm-lab/pull/857); the PR describes the new bilingual architecture figure but does not explicitly state whether it was drawn from scratch or adapted. | **Pending narrow owner confirmation**; do not infer provenance solely from commit authorship. |
+
+A source-level structural inspection was also run on all 18 files on 2026-11-12. All have an SVG root, `title`, and `desc`; none contains an explicit `metadata` block, embedded raster `image`, `foreignObject`, `script`, or external HTTP(S) `href`/`xlink:href`. This is a source-pattern inspection, not a full XML parser validation and not evidence of authorship or permission.
+
+### Updated current status
+
+- **52/56:** project-origin provenance is supported by the prior owner confirmation for 38 files plus exact owner-authored PR declarations for 14 additions.
+- **4/56:** two contextualization-pipeline and two Transformer-stack files still need explicit confirmation that they are original project artwork or identify any adapted source.
+- **56/56:** remain excluded from the MIT code / CC BY-SA prose grants in `LICENSE.md`; no asset-level licence has been selected or applied.
+- **18/18 later additions:** mapped to their current EN/FR Quarto embedding locations; this remains a source-level check, not a rendered-DOM inventory.
+
+This reconciliation supersedes the 2026-11-09 statement that 38 files were the current complete directory inventory. It does not change any illustration, attribution, or licence term. Preserve all assets unchanged while the four provenance confirmations and asset-level licensing decision remain open.
