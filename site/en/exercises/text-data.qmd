@@ -26,7 +26,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:text-data-exercises",
 
 ## Check your understanding
 
-The [extended text-data collection](../exercises.qmd#text-data) is planned; use the checks below for now.
+For integrated practice beyond these short checks, use the [Text data exercise collection](../exercises-text-data.qmd#text-data).
 
 1. A tokenizer assigns ID `17` to the token `cat`. This ID appears twice in a sequence. Do both occurrences select the same initial vector? Can you conclude that the number 17 encodes an amount of meaning?
 
