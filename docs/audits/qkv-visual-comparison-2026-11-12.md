@@ -82,3 +82,8 @@ Point de rigueur : la petite grille ne représente pas la matrice de projection 
 ## Dimensions of scores, weights and output — 2026-11-12
 
 The matrix notation is extended beyond Q/K/V so the downstream shapes are visible too: QKᵀ has shape T × T; after scaling and softmax, the attention-weight matrix A also has shape T × T; the weighted product A·V produces O with shape T × d_v. The displayed multiplication is therefore dimensionally readable: (T × T) · (T × d_v) → (T × d_v). This is a single-sequence, single-head view; batch and head axes remain intentionally omitted.
+
+
+## Matrix visual refinement — 2026-11-12
+
+The Q/K/V matrix motifs now use a restrained three-colour gradient (teal for Q, blue for K, orange for V), softly rounded cells, a subtle framed panel, and explicit shape labels. This adopts the visual principle of a gradient-filled matrix while keeping the artwork independently authored rather than copying the reference illustration. English labels are localized ("Matrix"); French labels use "Matrice". The three-by-four cell pattern remains schematic, not a claim about the true feature width.
