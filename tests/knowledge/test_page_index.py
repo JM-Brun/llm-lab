@@ -208,3 +208,4 @@ def test_computation_diagrams_are_not_navigation_landmarks(relative_path: str) -
     flow_end = source.index("</div>", flow_start)
     assert 'role="group"' in source[flow_start:flow_end], path
     assert 'role="navigation"' not in source[flow_start:flow_end], path
+    assert 'aria-current="step"' not in source[flow_start:flow_end], path
