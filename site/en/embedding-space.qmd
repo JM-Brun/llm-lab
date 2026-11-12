@@ -41,7 +41,7 @@ For the recurring example, the English pages use the cultural parallel from *Mon
 
 > **Prefix / prompt:** “What have the Romans ever done for us?”
 
-The scene then unfolds through successive replies, including examples such as “Aqueducts”, “sanitation”, “roads” and “irrigation”. In the film these are spoken by different characters, so this is a memorable analogy for context and continuation, not a literal single-speaker autoregressive generation trace. The exact tokenization and IDs depend on the tokenizer; no universal segmentation or ID is assumed here.
+The film's successive replies are a cultural analogy, not the continuation used in the worked trace. For that trace, LLM Lab uses the original sentence “They built roads between distant towns.” It is not a film quotation or a model output. The exact tokenization and IDs depend on the tokenizer; no universal segmentation or ID is assumed here.
 
 A tokenizer splits the prefix into tokens according to its vocabulary and rules, then assigns an integer ID to each token. A visible word is not necessarily one token: the exact segmentation depends on the tokenizer in use.
 
