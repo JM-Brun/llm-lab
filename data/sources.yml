@@ -3453,7 +3453,7 @@ sources:
     reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
     classification:
       primary_theme: architectures-mechanisms
-      secondary_themes: [training-optimization, inference-efficiency, alignment-safety, mathematical-tools-geometry]
+      secondary_themes: [scale-research, probabilistic-foundations-training, inference-efficiency, mathematical-tools-geometry]
       tags:
         - topic:transformer
         - topic:language-model
