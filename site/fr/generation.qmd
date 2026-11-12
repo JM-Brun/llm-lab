@@ -44,7 +44,7 @@ En répétant quatre gestes : prédire, sélectionner, réinjecter, puis continu
 **Première lecture :** la section « La boucle sur un exemple » suffit pour poursuivre le parcours. La notation, le *prefill*, le *decode* et les règles de sélection se lisent mieux au retour, une fois vues les [probabilités de sortie](probabilites.qmd).
 :::
 
-<div class="pipeline-stepper" role="navigation" aria-label="Boucle de génération autorégressive">
+<div class="pipeline-stepper" role="group" aria-label="Boucle de génération autorégressive">
   <a class="step-item" href="text-data.qmd">Prompt tokenisé</a>
   <span class="step-arrow" aria-hidden="true">→</span>
   <span class="step-item">Prefill : traitement du prompt</span>
