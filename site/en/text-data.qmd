@@ -103,6 +103,10 @@ The same tokenizer is used to encode an inference prompt and to convert corpus d
 
 The second branch is not a prerequisite for understanding how a model encodes a prompt.
 
+::: {.callout-note title="Tokens and context windows"}
+A model's context limit is measured in **tokens**, not words or characters. The input budget may also include message history, instructions, retrieved content, tool descriptions, and space reserved for the answer; exact accounting depends on the model and API. The [deep dive on inference complexity](llm-computational-complexity.qmd) discusses context and resource costs, while [LLM evolution](llm-evolution.qmd#tool-using-systems) explains how applications manage longer interactions.
+:::
+
 ## 2. What tokenization changes — and what it does not tell us
 
 Segmentation determines the sequence of IDs supplied to the model. It affects input coverage, sequence length, and compatibility between tokenizer and model weights. It is not guaranteed linguistic analysis, a measure of meaning, or a model-quality score.

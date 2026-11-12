@@ -103,6 +103,10 @@ Le même tokenizer sert à encoder un prompt à l'inférence et à convertir les
 
 La seconde branche n'est pas un prérequis pour comprendre comment un modèle encode un prompt.
 
+::: {.callout-note title="Tokens et fenêtres de contexte"}
+La limite de contexte d'un modèle se mesure en **tokens**, pas en mots ni en caractères. Le budget d'entrée peut aussi inclure l'historique, les instructions, les contenus récupérés, les descriptions d'outils et l'espace réservé à la réponse ; le décompte exact dépend du modèle et de l'API. L'[approfondissement sur la complexité de l'inférence](llm-computational-complexity.qmd) traite des coûts liés au contexte, tandis que la page sur l'[évolution des LLM](llm-evolution.qmd#tool-using-systems) explique comment les applications gèrent les interactions longues.
+:::
+
 ## 2. Ce que la tokenisation change — et ce qu'elle ne dit pas
 
 La segmentation détermine la séquence d'IDs fournie au modèle. Elle influe notamment sur la couverture des entrées, la longueur de séquence et la compatibilité entre tokenizer et poids. Elle ne constitue ni une analyse linguistique garantie, ni une mesure du sens, ni un score de qualité du modèle.

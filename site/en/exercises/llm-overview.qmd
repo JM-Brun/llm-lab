@@ -11,7 +11,7 @@ LLM-LAB-PAGE-MAP v1
 id: "en/llm-overview-exercises"
 summary: "Comprehension questions associated with the language model overview."
 scope: "Collects the overview's comprehension questions without duplicating the general presentation of model families."
-purpose: "Distinguish architecture, adaptation, and information retrieval, then choose the appropriate intervention for a given need."
+purpose: "Distinguish architecture, adaptation, information retrieval, message-format roles, and model-generated tool requests from application-side execution."
 suggested_route:
   previous: null
   next: null
@@ -28,6 +28,8 @@ tags: ["type:exercise-hub", "destination:practice", "topic:llm-overview-exercise
 
 1. **Does fine-tuning necessarily change the architecture?** No: it primarily updates parameters. Some methods also add modules, so distinguish the model family from the full structure of the adapted system.
 2. **Documentation changes every day: RAG or fine-tuning?** RAG can retrieve new documents at inference time without changing the weights. It does not guarantee that retrieved documents are relevant or that the answer is faithful to them.
+3. **A model returns a structured request to call `lookup_order(order_id=42)`. Has the order system been queried yet?** No. The model has produced a request; the surrounding application must validate the arguments and permissions, execute the tool, and return its result to the model. Generating a tool call is not the same as executing it.
+4. **A chat transcript labels messages `system`, `user`, and `assistant`. Are these three Transformer layers?** No. They are roles in the message format used by the application/API. The model's architecture is a separate question, and a role label alone does not enforce a policy.
 
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/llm-overview.qmd) · [English](llm-overview.qmd)

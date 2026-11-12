@@ -11,7 +11,7 @@ LLM-LAB-PAGE-MAP v1
 id: "fr/llm-overview-exercises"
 summary: "Questions de compréhension associées au panorama des modèles de langage."
 scope: "Regroupe les questions de compréhension du panorama sans dupliquer la présentation générale des familles de modèles."
-purpose: "Distinguer architecture, adaptation et récupération d'information, puis choisir le bon niveau d'intervention selon le besoin."
+purpose: "Distinguer architecture, adaptation, récupération d'information, rôles du format de message et demandes d'outil produites par le modèle de leur exécution côté application."
 suggested_route:
   previous: null
   next: null
@@ -28,6 +28,8 @@ tags: ["type:exercise-hub", "destination:practice", "topic:llm-overview-exercise
 
 1. **Le fine-tuning change-t-il nécessairement l'architecture ?** Non : il modifie d'abord les paramètres. Certaines méthodes ajoutent aussi des modules ; il faut distinguer la famille du modèle de la structure complète du système adapté.
 2. **Une documentation change chaque jour : RAG ou fine-tuning ?** Le RAG peut récupérer les nouveaux documents à l'inférence sans modifier les poids. Il ne garantit toutefois ni la pertinence des documents récupérés ni la fidélité de la réponse.
+3. **Un modèle renvoie une demande structurée pour appeler `lookup_order(order_id=42)`. Le système de commande a-t-il déjà été interrogé ?** Non. Le modèle a produit une demande ; l'application qui l'entoure doit en valider les arguments et les permissions, exécuter l'outil, puis renvoyer son résultat au modèle. Produire un appel d'outil ne signifie pas l'exécuter.
+4. **Une conversation étiquette les messages `system`, `user` et `assistant`. S'agit-il de trois couches du Transformer ?** Non. Ce sont des rôles du format de message utilisé par l'application ou l'API. L'architecture du modèle est une question distincte, et une étiquette de rôle n'impose pas à elle seule une politique.
 
 ::: {.language-switch}
 **Langue :** [Français](llm-overview.qmd) · [English](../../en/exercises/llm-overview.qmd)
