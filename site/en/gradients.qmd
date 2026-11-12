@@ -36,7 +36,7 @@ The loss tells us **what should improve**; the gradient tells us **how the loss 
 Correct gradient computation remains distinct from model generalization.
 :::
 
-<div class="pipeline-stepper" role="navigation" aria-label="Steps in updating model parameters">
+<div class="pipeline-stepper" role="group" aria-label="Steps in updating model parameters">
   <a class="step-item" href="loss.qmd">1. Loss</a>
   <span class="step-arrow" aria-hidden="true">→</span>
   <span class="step-item">2. Backpropagation</span>

@@ -36,11 +36,11 @@ A Transformer needs an ordering signal to distinguish, for example, “the cat c
 **Quick question:** can you explain why swapping two tokens must be able to change the computation, and identify where each mechanism introduces that information?
 :::
 
-:::: {.pipeline-stepper .meta-flow .meta-flow--branch role="navigation" aria-label="Two common ways to inject positional information"}
+:::: {.pipeline-stepper .meta-flow .meta-flow--branch role="group" aria-label="Two common ways to inject positional information"}
 ::: {.meta-flow__source}
 <strong>Token embeddings</strong><span>Content vectors before positional handling</span>
 :::
-::: {.meta-flow__source .meta-flow__branch--active aria-current="step"}
+::: {.meta-flow__source .meta-flow__branch--active}
 <strong>Positional handling</strong><span>The mechanism depends on the architecture</span>
 :::
 ::: {.meta-flow__comparison}

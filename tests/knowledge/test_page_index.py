@@ -161,13 +161,41 @@ def test_probability_meta_flow_is_not_a_navigation_landmark() -> None:
         "en/transformer.qmd",
         "fr/text-data.qmd",
         "en/text-data.qmd",
+        "fr/contextualized-representations.qmd",
+        "en/contextualized-representations.qmd",
+        "fr/positional-encoding.qmd",
+        "en/positional-encoding.qmd",
+        "fr/gradients.qmd",
+        "en/gradients.qmd",
+        "fr/logits.qmd",
+        "en/logits.qmd",
+        "fr/loss.qmd",
+        "en/loss.qmd",
+        "fr/training-loop.qmd",
+        "en/training-loop.qmd",
     ],
 )
 def test_computation_diagrams_are_not_navigation_landmarks(relative_path: str) -> None:
     root = Path(__file__).resolve().parents[2]
     path = root / "site" / relative_path
     source = path.read_text(encoding="utf-8")
-    flow_start = source.index('class="pipeline-stepper"')
-    flow_end = source.index("</div>", flow_start)
-    assert 'role="group"' in source[flow_start:flow_end], path
-    assert 'role="navigation"' not in source[flow_start:flow_end], path
+    flow_start = source.index("pipeline-stepper")
+    flow = source[flow_start : flow_start + 500]
+    assert 'role="group"' in flow, path
+    assert 'role="navigation"' not in flow, path
+
+
+@pytest.mark.parametrize(
+    "relative_path",
+    [
+        "fr/contextualized-representations.qmd",
+        "en/contextualized-representations.qmd",
+        "fr/positional-encoding.qmd",
+        "en/positional-encoding.qmd",
+    ],
+)
+def test_branching_flows_do_not_claim_a_current_step(relative_path: str) -> None:
+    root = Path(__file__).resolve().parents[2]
+    source = (root / "site" / relative_path).read_text(encoding="utf-8")
+    flow_start = source.index("pipeline-stepper")
+    assert 'aria-current="step"' not in source[flow_start : flow_start + 2000]
