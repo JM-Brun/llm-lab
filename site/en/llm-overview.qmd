@@ -108,7 +108,7 @@ Steps 1 to 3 are the model's computation; the path opens them one by one, from [
 
 ## One computation, three uses
 
-Once the distribution is computed, everything depends on the question being asked.
+Once the distribution is computed, everything depends on the question being asked. **For a first pass, keep only the three uses in mind**: produce a continuation, measure the likelihood of a known continuation, or learn from an expected continuation. Terms such as *prefill*, *decode*, *loss*, *gradients*, and *teacher forcing* describe the mechanisms; you can explore them in the linked pages without having to memorize them all now.
 
 <!-- Desktop: three-column view; mobile: stacked view for readable labels. -->
 ![From context to three uses of the predictive distribution: generation, observed-target scoring, and training.](../images/llm-shared-prediction-uses-en.svg){.d-none .d-md-block #fig-llm-shared-prediction-uses fig-alt="The context passes through the model, which produces logits and then a probability distribution over the next token. The distribution is used to select a token during generation, measure the probability of an observed token during scoring, or calculate a loss and update parameters during training."}
