@@ -48,6 +48,33 @@ No. A 2D projection preserves only selected aspects of the geometry and may crea
 
 **You have understood this step if** you can explain that an ID selects a table row, distinguish the row index from the stored vector, and separate the initial vector from contextualized states.
 
+## Inspect a tiny input embedding table
+
+This model-independent exercise uses a deliberately tiny NumPy matrix. It needs no tokenizer, checkpoint download or GPU. The helper functions operate on **input embedding rows**, not contextualized hidden states.
+
+```python
+import numpy as np
+from llm_lab.foundations.embedding_inspection import (
+    cosine_top_k,
+    lookup_embedding_rows,
+)
+
+embedding_matrix = np.array(
+    [[1.0, 0.0], [0.8, 0.6], [-1.0, 0.0], [0.0, 1.0], [0.0, 0.0]]
+)
+
+# IDs, not decoded strings, select and identify the rows.
+print(lookup_embedding_rows(embedding_matrix, [1, 0, 1]))
+neighbor_ids, similarities = cosine_top_k(embedding_matrix, token_id=0, k=3)
+print(list(zip(neighbor_ids.tolist(), similarities.tolist(), strict=True)))
+```
+
+The lookup preserves order and repeated IDs. The cosine search excludes the query ID by default, excludes zero-norm candidate rows (cosine is undefined for them), and breaks ties by ascending ID. Its output is a directed top-k neighbourhood; it is not automatically a symmetric graph.
+
+**Try it:** change the query ID, compare k=1 and k=3, and predict the order before running the code. Then explain why the result says nothing by itself about contextual meaning or sentence-level retrieval quality.
+
+**You have understood this exercise if** you can trace every returned vector back to its integer row ID and state the exact candidate, self-neighbour and tie policies.
+
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/embedding-space.qmd) · [English](embedding-space.qmd)
 :::
