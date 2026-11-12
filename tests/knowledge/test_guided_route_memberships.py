@@ -455,36 +455,47 @@ def test_every_route_member_wires_exactly_its_generated_context_include(language
 @pytest.mark.parametrize(
     ("language", "expected_label", "next_label", "next_title"),
     [
-        ("fr", "Étapes du parcours abordées dans ce panorama", "Étape suivante →", "Générer du texte"),
-        ("en", "Learning stages covered by this overview", "Next step →", "Generate text"),
+        (
+            "fr",
+            "Étapes du parcours abordées dans ce panorama",
+            "Étape suivante →",
+            "Générer du texte",
+        ),
+        (
+            "en",
+            "Learning stages covered by this overview",
+            "Next step →",
+            "Generate text",
+        ),
     ],
 )
 def test_overview_preserves_cross_cutting_coverage_and_explicit_next_page(
     language: str, expected_label: str, next_label: str, next_title: str
 ) -> None:
     """Coverage is a set; Orientation membership and preferred continuation remain distinct."""
-    pages = [
-        page for page in GENERATOR["load_pages"]()
-        if page["language"] in {language, "shared"}
-    ]
+    pages = [page for page in GENERATOR["load_pages"]() if page["language"] in {language, "shared"}]
     stages = GENERATOR["load_guided_route"](language, pages)
     memberships = GENERATOR["build_guided_route_memberships"](stages)
     overview_id = f"{language}/llm-overview"
     overview = next(page for page in pages if page["id"] == overview_id)
     expected_stages = [
-        "orientation", "text-input", "representations", "computation",
-        "prediction", "inference", "scoring", "training",
+        "orientation",
+        "text-input",
+        "representations",
+        "computation",
+        "prediction",
+        "inference",
+        "scoring",
+        "training",
     ]
 
     assert overview["covered_stages"] == expected_stages
     assert [(item.stage_id, item.role) for item in memberships[overview_id]] == [
         ("orientation", "core")
     ]
-    fragments = GENERATOR["prepare_cross_cutting_coverage_fragments"](
-        language, pages, stages
-    )
-    output_path = GENERATOR["SITE"] / "includes" / (
-        f"generated-guided-coverage-{language}-llm-overview.qmd"
+    fragments = GENERATOR["prepare_cross_cutting_coverage_fragments"](language, pages, stages)
+    output_path = (
+        GENERATOR["SITE"] / "includes" / (f"generated-guided-coverage-{language}-llm-overview.qmd")
     )
     coverage = fragments[output_path]
     assert expected_label in coverage
