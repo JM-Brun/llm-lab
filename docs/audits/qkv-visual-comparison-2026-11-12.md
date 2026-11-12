@@ -94,3 +94,16 @@ The Q/K/V matrix motifs now use a restrained three-colour gradient (teal for Q, 
 La revue du SVG a révélé deux défauts de placement que les contrôles XML ne pouvaient pas détecter : sur les versions desktop, le libellé de dimension était répété exactement au même emplacement au-dessus de chaque vignette ; sur les versions mobiles, le libellé inférieur touchait le bord du panneau matriciel. Les libellés redondants sont supprimés, en conservant une seule dimension lisible au-dessus de chaque matrice.
 
 Le workflow Quarto incrémental a également été corrigé : lorsque le changement ne concerne que des assets statiques et qu'aucune page Quarto n'est sélectionnée, il copie les assets dans le site restauré sans invoquer le moteur de rendu Python. Cela évite l'appel à `.venv/bin/python` dans un scénario où l'environnement virtuel n'est volontairement pas installé. Les rendus de pages continuent d'utiliser le moteur isolé lorsque des cibles Quarto sont présentes.
+
+
+## Scores, poids d’attention et sortie sous forme de matrices — 2026-11-12
+
+Ajout d'une figure dédiée, en versions desktop/mobile et française/anglaise, pour rendre visibles les trois objets successifs :
+
+- **Scores** \(S = QK^\top / \sqrt{d_k}\), de forme \(T \times T\) : compatibilités brutes, qui peuvent être négatives et ne sont pas des probabilités.
+- **Poids** \(A = \operatorname{softmax}(S)\), de forme \(T \times T\) : normalisation ligne par ligne ; chaque ligne de l'exemple somme à 1.
+- **Sortie** \(O = AV\), de forme \(T \times d_v\) : combinaison pondérée des valeurs.
+
+La palette distingue les scores (violet), les poids normalisés (vert) et la sortie agrégée (orange). Les valeurs de la matrice A sont un exemple numérique illustratif ; les motifs des scores et de la sortie sont des intensités schématiques, pas des données extraites d'un modèle. La figure ne représente ni masque causal ni axes batch/têtes, qui dépendent du contexte architectural.
+
+La figure est intégrée à la leçon Q/K/V dans les deux langues, avec une composition mobile distincte. La revue du SVG desktop confirme que les dimensions Q/K/V sont maintenant chacune libellées une seule fois.
