@@ -527,12 +527,17 @@ async function runCase(testCase, caseIndex) {
         });
       })(),
       pageHeight: document.documentElement.scrollHeight,
-      images: [...document.images].map(img => ({
-        src: img.currentSrc || img.src,
-        loaded: img.complete && img.naturalWidth > 0,
-        alt: img.getAttribute("alt"),
-        width: Math.round(img.getBoundingClientRect().width),
-      })),
+      images: [...document.images].map(img => {
+        const src = img.currentSrc || img.src;
+        const parsed = new URL(src, window.location.href);
+        return {
+          src,
+          loaded: img.complete && img.naturalWidth > 0,
+          localAsset: parsed.origin === window.location.origin && parsed.pathname.includes("/images/"),
+          alt: img.getAttribute("alt"),
+          width: Math.round(img.getBoundingClientRect().width),
+        };
+      }),
       svgs: [...document.querySelectorAll("svg")].map(svg => {
         const r = svg.getBoundingClientRect();
         return {
@@ -572,6 +577,13 @@ async function runCase(testCase, caseIndex) {
       }),
       languageSwitchLinks: [...document.querySelectorAll("a[href]")].filter(a => { const href = a.getAttribute("href") || ""; return href.includes("/en/") || href.includes("/fr/"); }).length,
     }));
+
+    const brokenLocalImages = (item.layout.images || []).filter(image => image.localAsset && !image.loaded);
+    if (brokenLocalImages.length) {
+      report.failures.push(
+        `${pagePath}/${lang}/${label}/${theme}: local image assets failed to load: ${brokenLocalImages.map(image => image.src).join(", ")}`
+      );
+    }
 
     if (label === "mobile") {
       const clippedMetaFlow = (item.layout.metaFlows || []).find(flow =>
