@@ -14,10 +14,10 @@ scope: "Distinguish pretraining, supervised fine-tuning on instruction-response 
 purpose: "State, for each adaptation method, what data it uses, which tokens contribute to the loss, which parameters change, and what stays fixed; choose between changing the context and changing the parameters."
 suggested_route:
   previous: null
-  next: null
+  next: "en/post-training-exercises"
 hierarchy:
   parents: ["en/training-loop"]
-  children: []
+  children: ["en/post-training-exercises"]
 related: ["en/llm-overview", "en/llm-evolution", "en/in-context-learning", "en/loss", "en/glossary", "en/llm-limits"]
 tags: ["type:concept-lesson", "destination:understand", "topic:post-training", "level:applied", "language:en", "status:published"]
 -->
