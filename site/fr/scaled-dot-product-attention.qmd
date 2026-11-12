@@ -56,14 +56,15 @@ L'attention n'est pas une opération unique : elle enchaîne **scores → mise �
 </div>
 
 
-## Calcul en quatre étapes
+## Calcul en cinq étapes
 
-Pour une tête, $Q,K\in\mathbb{R}^{T\times d_k}$ et $V\in\mathbb{R}^{T\times d_v}$.
+Pour une tête, $Q,K\in\mathbb{R}^{T\times d_k}$ et $V\in\mathbb{R}^{T\times d_v}$, où $T$ désigne ici la longueur de la séquence.
 
 1. **Scores :** $S=QK^\top$, de forme $T\times T$.
-2. **Mise à l'échelle :** $S/\sqrt{d_k}$.
-3. **Normalisation :** $A=\operatorname{softmax}(S/\sqrt{d_k}+M)$, ligne par ligne.
-4. **Agrégation :** $O=AV$, de forme $T\times d_v$.
+2. **Mise à l'échelle :** $S'=S/\sqrt{d_k}$.
+3. **Masquage éventuel :** $S''=S'+M$, où les positions interdites reçoivent $-\infty$.
+4. **Normalisation :** $A=\operatorname{softmax}(S'')$, ligne par ligne.
+5. **Agrégation :** $O=AV$, de forme $T\times d_v$.
 
 Ainsi,
 
