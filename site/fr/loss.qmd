@@ -79,17 +79,17 @@ La somme, la moyenne par séquence ou une moyenne pondérée sont également pos
 
 Pour la continuation « Être scribe , », les probabilités conditionnelles illustratives sont successivement $0{,}6$, $0{,}5$ et $0{,}8$. Les pertes locales sont donc :
 
-$
+$$
 \ell_1=-\ln(0{,}6)\approx0{,}511,\quad
 \ell_2=-\ln(0{,}5)\approx0{,}693,\quad
 \ell_3=-\ln(0{,}8)\approx0{,}223.
-$
+$$
 
 Sans position ignorée, la moyenne par token vaut :
 
-$
+$$
 \mathcal L=\frac{0{,}511+0{,}693+0{,}223}{3}\approx0{,}476\text{ nat/token}.
-$
+$$
 
 La somme, environ $1{,}427$ nats, est la NLL de la séquence calculée dans [Vraisemblance](vraisemblance.qmd). La moyenne par token est cette somme divisée par trois ; ne pas confondre les deux conventions. Ces nombres illustrent le calcul sur une continuation de référence et ne prétendent pas mesurer un modèle réel.
 
