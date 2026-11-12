@@ -75,6 +75,24 @@ $$
 
 La somme, la moyenne par séquence ou une moyenne pondérée sont également possibles. Elles ne définissent pas exactement le même objectif et peuvent modifier l'échelle des gradients ou le poids relatif des séquences.
 
+### Calcul repris du fil rouge : trois tokens du scribe
+
+Pour la continuation « Être scribe , », les probabilités conditionnelles illustratives sont successivement $0{,}6$, $0{,}5$ et $0{,}8$. Les pertes locales sont donc :
+
+$
+\ell_1=-\ln(0{,}6)\approx0{,}511,\quad
+\ell_2=-\ln(0{,}5)\approx0{,}693,\quad
+\ell_3=-\ln(0{,}8)\approx0{,}223.
+$
+
+Sans position ignorée, la moyenne par token vaut :
+
+$
+\mathcal L=\frac{0{,}511+0{,}693+0{,}223}{3}\approx0{,}476\text{ nat/token}.
+$
+
+La somme, environ $1{,}427$ nats, est la NLL de la séquence calculée dans [Vraisemblance](vraisemblance.qmd). La moyenne par token est cette somme divisée par trois ; ne pas confondre les deux conventions. Ces nombres illustrent le calcul sur une continuation de référence et ne prétendent pas mesurer un modèle réel.
+
 ## Masquage et cibles décalées
 
 Dans un modèle de langage causal, la convention d'indexation doit être explicite. Avec l'indexation par la cible utilisée ici, les logits associés au préfixe $x_{<t}$ prédisent $x_t$. Avec une indexation par la position d'entrée, les logits à la position $t$ prédisent généralement $x_{t+1}$. La loss doit aligner les logits et les labels selon une seule convention, sans comparer les logits à la mauvaise cible. Les tokens de padding ou les positions explicitement ignorées doivent être exclus du numérateur **et** du dénominateur d'une moyenne sur les cibles valides. Le masque de perte détermine uniquement quelles cibles contribuent à l'objectif ; il ne détermine pas quels tokens peuvent influencer les représentations utilisées pour prédire ces cibles. Cette visibilité relève du masque d'attention (masque causal, de padding ou de frontière documentaire, selon le cas). Exclure une cible de la loss ne suffit donc pas, à lui seul, à empêcher son information d'entrer dans le contexte. Voir aussi [les exemples d'entraînement](training-examples.qmd) et [le masquage causal](causal-masking.qmd).
