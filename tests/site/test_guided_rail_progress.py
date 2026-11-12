@@ -19,7 +19,7 @@ def test_guided_progress_uses_only_browser_local_storage() -> None:
     assert 'llm-lab:guided-progress:v1' in script
     assert "window.localStorage.getItem" in script
     assert "window.localStorage.setItem" in script
-    assert "window.localStorage.removeItem" not in script
+    assert "window.localStorage.removeItem" in script
     assert "fetch(" not in script
     assert "XMLHttpRequest" not in script
 
