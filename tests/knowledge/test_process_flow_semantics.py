@@ -28,7 +28,6 @@ def test_probability_meta_flow_is_not_a_navigation_landmark() -> None:
         assert 'role="navigation"' not in source[flow_start:flow_end]
 
 
-
 @pytest.mark.parametrize(
     "relative_path",
     [
