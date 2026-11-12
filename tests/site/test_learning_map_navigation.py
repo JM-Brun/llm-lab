@@ -6,11 +6,13 @@ from typing import Any
 import pytest
 from build_learning_map import (
     SITE,
+    build_guided_route_memberships,
     final_core_page_id,
     load_guided_route,
     load_navigation,
     load_pages,
     load_sidebar_page_neighbors,
+    prepare_cross_cutting_coverage_fragments,
     prepare_suggested_route_fragments,
     render_suggested_route_markdown,
 )
@@ -197,3 +199,37 @@ def test_every_core_guided_route_page_keeps_its_pedagogical_cards(language: str)
                 else "Path complete · next: build →"
             )
             assert continuation_label in rendered, page_id
+
+
+@pytest.mark.parametrize(
+    ("language", "expected_label"),
+    [("fr", "Étapes couvertes par ce panorama"), ("en", "Stages covered by this overview")],
+)
+def test_overview_coverage_is_generated_as_a_set_without_membership(
+    language: str, expected_label: str
+) -> None:
+    """The transversal overview covers all stages without becoming a member of each."""
+    pages = load_pages()
+    stages = load_guided_route(language, pages)
+    overview_id = f"{language}/llm-overview"
+    overview = next(page for page in pages if page["id"] == overview_id)
+    expected_stage_ids = [
+        "orientation",
+        "text-input",
+        "representations",
+        "computation",
+        "prediction",
+        "inference",
+        "scoring",
+        "training",
+    ]
+
+    assert overview["covered_stages"] == expected_stage_ids
+    assert overview_id not in build_guided_route_memberships(stages)
+    fragments = prepare_cross_cutting_coverage_fragments(language, pages, stages)
+    output = fragments[SITE / "includes" / f"generated-guided-coverage-{language}-llm-overview.qmd"]
+    assert expected_label in output
+    assert output.count("<li>") == len(expected_stage_ids)
+    assert "aria-label=" in output
+    assert "<span aria-current=" not in output
+    assert output.index("guided-stage-orientation") < output.index("guided-stage-training")
