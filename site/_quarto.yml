@@ -620,6 +620,7 @@ format:
     include-after-body:
       - includes/language-switch.html
       - includes/learning-map.html
+      - includes/guided-rail-progress.html
       - includes/accessibility-fixes.html
     toc: true
     toc-depth: 3
