@@ -187,8 +187,12 @@ def test_computation_diagrams_are_not_navigation_landmarks(relative_path: str) -
 
 @pytest.mark.parametrize(
     "relative_path",
-    ["fr/contextualized-representations.qmd", "en/contextualized-representations.qmd",
-     "fr/positional-encoding.qmd", "en/positional-encoding.qmd"],
+    [
+        "fr/contextualized-representations.qmd",
+        "en/contextualized-representations.qmd",
+        "fr/positional-encoding.qmd",
+        "en/positional-encoding.qmd",
+    ],
 )
 def test_branching_flows_do_not_claim_a_current_step(relative_path: str) -> None:
     root = Path(__file__).resolve().parents[2]
