@@ -1,0 +1,75 @@
+---
+title: "Exercices — Post-entraînement"
+subtitle: "Vérifier ce qui change lorsqu'un modèle de base devient un assistant"
+description-meta: "Questions de rappel et scénario de transfert sur le fine-tuning supervisé, les méthodes à préférences, l'adaptation économe en paramètres et la récupération."
+keywords: ["type:exercise-hub", "destination:practice", "topic:post-training-exercises", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/post-training-exercises"
+summary: "Questions de rappel et scénario de transfert sur le fine-tuning supervisé, les méthodes à préférences, l'adaptation économe en paramètres et la récupération."
+scope: "Vérifie les distinctions enseignées dans la leçon sur le post-entraînement sans dériver les objectifs ni implémenter les méthodes d'adaptation."
+purpose: "Identifier les données et le signal utilisés par une méthode, déterminer si elle met à jour les paramètres et choisir quand modifier le contexte constitue une meilleure première intervention."
+suggested_route:
+  previous: "fr/post-training"
+  next: null
+hierarchy:
+  parents: ["fr/post-training"]
+  children: []
+related: ["fr/post-training", "fr/training-loop", "fr/llm-limits"]
+tags: ["type:exercise-hub", "destination:practice", "topic:post-training-exercises", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour à la leçon : Post-entraînement](../post-training.qmd)
+
+## Vérifier sa compréhension
+
+Essayez de répondre avant d'ouvrir le corrigé.
+
+1. **En fine-tuning supervisé, pourquoi les tokens du prompt peuvent-ils être visibles par le modèle tout en étant exclus de la loss ?**
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Le prompt fournit le contexte nécessaire à la prédiction de la réponse. Un masque de loss peut exclure les positions du prompt de l'objectif, tandis que le mécanisme d'attention causale permet toujours aux positions de la réponse de les lire. Le masque d'attention et le masque de loss ont des fonctions différentes.
+</details>
+
+2. **Qu'est-ce qui distingue le RLHF avec modèle de récompense du DPO ?**
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Dans le pipeline RLHF courant, les comparaisons de préférences servent à entraîner un modèle de récompense séparé, puis une méthode d'apprentissage par renforcement (souvent PPO) optimise le modèle de langage selon cette récompense apprise. Le DPO définit directement une loss de préférence sur les réponses préférée et rejetée, sans modèle de récompense ni boucle RL séparés. Ni la récompense ni la préférence ne garantissent directement la vérité.
+</details>
+
+3. **LoRA exige-t-il normalement de mettre à jour tous les paramètres du modèle de base ? Que modifie-t-on à la place ?**
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Non. Dans le cas usuel de l'adaptation économe en paramètres, les poids de base sont gelés et des paramètres d'adaptateurs de faible rang sont ajoutés à certains modules. QLoRA utilise en plus un modèle de base gelé et quantifié pour réduire la mémoire ; ce n'est pas simplement un autre nom pour le fine-tuning complet.
+</details>
+
+## Choisir l'intervention
+
+Une équipe rencontre deux problèmes :
+
+- L'assistant doit répondre avec des prix de produits qui changent chaque jour.
+- Ses réponses doivent respecter systématiquement un schéma de sortie fixe.
+
+Quelle intervention testeriez-vous en premier pour chaque problème, et quelles preuves recueilleriez-vous ?
+
+<details>
+<summary>Afficher une approche défendable</summary>
+
+- **Prix changeants :** tester la récupération depuis une source produit faisant autorité et actualisable. Cela modifie le contexte de la requête sans réentraînement. Évaluer la fraîcheur et la couverture de la récupération, ainsi que la fidélité avec laquelle les réponses utilisent les valeurs récupérées.
+- **Schéma de sortie fixe :** tester d'abord les instructions de prompt et les contraintes de sortie structurée disponibles dans la pile d'inférence. Si le comportement reste insuffisamment fiable sur de nombreuses tâches, évaluer le SFT sur un jeu de cas de validité du schéma tenu à l'écart.
+
+Il s'agit d'un plan de test, pas d'une règle universelle. Comparer taux d'échec, latence, coût, charge de maintenance et qualité des données avec un même protocole d'évaluation.
+</details>
+
+::: {.language-switch}
+**Langue :** [Français](post-training.qmd) · [English](../../en/exercises/post-training.qmd)
+:::
