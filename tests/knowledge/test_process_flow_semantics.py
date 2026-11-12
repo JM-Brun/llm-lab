@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -20,6 +22,8 @@ def test_probability_meta_flow_is_not_a_navigation_landmark() -> None:
         ROOT / "site" / "en" / "causal-masking.qmd",
         ROOT / "site" / "fr" / "generation.qmd",
         ROOT / "site" / "en" / "generation.qmd",
+        ROOT / "site" / "fr" / "transformer.qmd",
+        ROOT / "site" / "en" / "transformer.qmd",
     )
     for path, label in pages:
         source = path.read_text(encoding="utf-8")
