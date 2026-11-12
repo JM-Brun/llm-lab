@@ -70,9 +70,9 @@ The cost increases when the model assigns low probability to the observed token.
 
 For the running scribe example, let $p=(0.6,0.2,0.1,0.1)$ for “Être”, “Vous”, “Oui”, and “Non”, and let the one-hot target be $q=(1,0,0,0)$ because “Être” is observed. Then:
 
-$
+$$
 H(q,p)=-\sum_i q_i\log p_i=-\log(0.6)\approx0.511\text{ nats}.
-$
+$$
 
 Only the target probability appears explicitly in this one-hot expression. The other probabilities still matter indirectly because softmax normalizes all logits and therefore affects the target probability and its gradient. This is the loss at one target position, not yet a sequence or batch reduction.
 
