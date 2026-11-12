@@ -34,11 +34,20 @@
     }
   }
 
+  function clearProgress() {
+    try {
+      window.localStorage.removeItem(STORAGE_KEY);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
   function init() {
     var rails = document.querySelectorAll("[data-guided-rail]");
     var contexts = document.querySelectorAll(".guided-page-context [data-stage-id]");
     var progress = readProgress();
-    if (progress === null) return;
+    if (progress === null || !writeProgress(progress)) return;
 
     function applyState() {
       document.querySelectorAll("[data-stage-id]").forEach(function (node) {
@@ -69,8 +78,10 @@
           reset.className = "guided-rail__reset";
           reset.textContent = slot.getAttribute("data-reset-label") || "";
           reset.addEventListener("click", function () {
-            progress = [];
-            if (writeProgress(progress)) applyState();
+            if (clearProgress()) {
+              progress = [];
+              applyState();
+            }
           });
           slot.appendChild(reset);
         }
