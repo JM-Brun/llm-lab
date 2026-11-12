@@ -1,12 +1,17 @@
 """Regression tests for Quarto sidebar-to-resource-map navigation projection."""
 
+import html
 from typing import Any
 
 import pytest
 from build_learning_map import (
+    SITE,
+    final_core_page_id,
+    load_guided_route,
     load_navigation,
     load_pages,
     load_sidebar_page_neighbors,
+    prepare_suggested_route_fragments,
     render_suggested_route_markdown,
 )
 
@@ -156,3 +161,39 @@ def test_guided_route_cards_remain_visible_when_quarto_has_same_destination(
     next_label = "Étape suivante →" if language == "fr" else "Next step →"
     assert previous_label in rendered
     assert next_label in rendered
+
+
+@pytest.mark.parametrize("language", ["fr", "en"])
+def test_every_core_guided_route_page_keeps_its_pedagogical_cards(language: str) -> None:
+    """Derive navigation-card coverage from the canonical route, not a sample page."""
+    pages = load_pages()
+    stages = load_guided_route(language, pages)
+    fragments = prepare_suggested_route_fragments(language, pages, stages)
+    page_by_id = {page["id"]: page for page in pages}
+    core_page_ids = {page.id for stage in stages for page in stage.pages}
+    final_page_id = final_core_page_id(stages)
+
+    assert core_page_ids
+    for page_id in sorted(core_page_ids):
+        page = page_by_id[page_id]
+        fragment_path = (
+            SITE / "includes" / (f"generated-suggested-route-{page_id.replace('/', '-')}.qmd")
+        )
+        rendered = fragments[fragment_path]
+        route = page["route"]
+        if route.get("previous") is not None:
+            previous_label = "← Étape précédente" if language == "fr" else "← Previous step"
+            assert previous_label in rendered, page_id
+        if route.get("next") is not None:
+            next_label = "Étape suivante →" if language == "fr" else "Next step →"
+            assert next_label in rendered, page_id
+            target = page_by_id[route["next"]]
+            assert html.escape(target["title"]) in rendered, page_id
+            assert target["href"].removesuffix(".html") + ".qmd" in rendered, page_id
+        if page_id == final_page_id:
+            continuation_label = (
+                "Parcours terminé · ensuite : construire →"
+                if language == "fr"
+                else "Path complete · next: build →"
+            )
+            assert continuation_label in rendered, page_id
