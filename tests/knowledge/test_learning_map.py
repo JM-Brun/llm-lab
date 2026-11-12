@@ -886,6 +886,7 @@ def test_relation_family_identity_is_visible_in_legend_and_details() -> None:
         "evaluative",
     ):
         assert f".map-relation-family--{family}" in styles
+        assert f'[data-bs-theme="dark"] .map-relation-family--{family}' in styles
 
 
 def test_load_concept_graph_exports_localized_domains(tmp_path: Path, monkeypatch) -> None:
