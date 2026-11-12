@@ -100,6 +100,8 @@ Once the distribution is computed, everything depends on the question being aske
 - **Score.** The continuation is known: ours begins with “They”. We read the probability the model gave it, 0.6. Repeated over every token of a text, this reading measures how much the model expected that text; this is the [likelihood](likelihood.qmd).
 - **Learn.** The continuation is also known, and we want the model to expect it more next time. The gap between the prediction and the expected token is summarized by one number, the [loss](loss.qmd); the [gradients](gradients.qmd) indicate how to change each parameter to reduce it. During this learning, the context is always built from the actual tokens of the text, never from tokens the model would have produced: this is *teacher forcing*, explained in [training examples](training-examples.qmd).
 
+In our example, assigning 0.6 to the observed token corresponds to a **surprisal** of $-\ln(0.6)\approx0.51$ nats: the less probable a token is, the more surprising it is. [Entropy](entropy.qmd) is the expected surprisal over all possible next tokens; summing the surprisals of observed tokens connects this idea to [likelihood](likelihood.qmd).
+
 Generating and scoring leave the parameters untouched; only learning changes them. The three uses share the same computation, but they do not follow one another within a single run.
 
 Scoring is not yet evaluating. Scoring gives probabilities for one text. An evaluation compares these results, or other measures, over a set of examples defined in advance and held out from training until the final assessment.
