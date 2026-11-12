@@ -13,9 +13,7 @@ def test_guided_progress_is_loaded_after_the_static_learning_map() -> None:
 
 
 def test_guided_progress_uses_only_browser_local_storage() -> None:
-    script = (ROOT / "site" / "includes" / "guided-rail-progress.html").read_text(
-        encoding="utf-8"
-    )
+    script = (ROOT / "site" / "includes" / "guided-rail-progress.html").read_text(encoding="utf-8")
     assert 'llm-lab:guided-progress:v1' in script
     assert "window.localStorage.getItem" in script
     assert "window.localStorage.setItem" in script
@@ -30,7 +28,7 @@ def test_guided_progress_handles_storage_failures_and_reset() -> None:
     )
     assert "catch (error)" in script
     assert "if (progress === null) return" in script
-    assert 'data-reset-label' in script
+    assert "data-reset-label" in script
     assert "progress = []" in script
 
 
