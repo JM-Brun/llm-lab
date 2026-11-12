@@ -81,13 +81,13 @@ This property assumes that no positional signal or order-dependent constraint is
 
 ![Where positional information enters the computation: at the input for an absolute encoding, inside queries and keys for RoPE.](../images/positional-info-insertion-en.svg){fig-alt="An absolute encoding is added to the embeddings at the input, before any projection. RoPE applies rotations to queries and keys after their projections, before the QK product, so the attention scores carry positional information." width=100%}
 
-## Three approaches to distinguish
+## Two families, with several mechanisms
 
 - **Absolute encoding added to the vector:** add a position-specific vector to the token representation. The original Transformer used sinusoidal encodings; other models learn positional embeddings.
 - **Relative mechanisms:** introduce the offset between positions into the attention computation, for example through a bias added to attention scores or through relative representations.
 - **RoPE:** this rotary method applies position-dependent rotations to queries and keys after their projections and before the $QK^\top$ product. The resulting score depends on the relative offset. RoPE is therefore a relative-position mechanism; it is separated here to make its particular insertion point clear.
 
-These approaches inject positional information at different points and do not have exactly the same properties. The diagram compares two explicit positional mechanisms; it does not depict the causal mask, which is a separate visibility constraint. At this stage, it is enough to understand their role and approximate location in the computation. For relative-offset dependence, rotation conventions, and long-sequence limitations, see the [advanced RoPE deep dive](rope.qmd).
+The first distinction is between **absolute** and **relative** positional information. RoPE is not a third disjoint family: it is a relative-position mechanism with a distinctive implementation point. These mechanisms inject positional information at different points and do not have exactly the same properties. The diagram compares two explicit positional mechanisms; it does not depict the causal mask, which is a separate visibility constraint. At this stage, it is enough to understand their role and approximate location in the computation. For relative-offset dependence, rotation conventions, and long-sequence limitations, see the [advanced RoPE deep dive](rope.qmd).
 
 ::: {.callout-note collapse="true" title="Optional deepening — the geometry of sinusoidal encodings"}
 In the original sinusoidal encoding, each coordinate pair uses its own frequency. Let $\omega_i=10000^{-2i/d}$. The pair associated with index $i$ is:
