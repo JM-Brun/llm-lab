@@ -60,7 +60,7 @@ La réplique du film sert d'accroche. Pour les calculs, le parcours utilise une 
 
 ::: {.callout-tip title="L'idée à retenir en une minute"}
 - **Ce que le modèle calcule :** à partir d'un contexte, une probabilité pour chaque token qui pourrait suivre. Un token après l'autre, avec des paramètres qui ne changent pas pendant l'utilisation.
-- **Un calcul, trois usages :** générer (choisir un token et l'ajouter au contexte), scorer (lire la probabilité donnée à un token déjà connu), apprendre (comparer la prédiction au token attendu et corriger les paramètres).
+- **Un calcul, trois usages :** générer (choisir un token et l'ajouter au contexte), mesurer la vraisemblance (lire la probabilité donnée à un token déjà connu), apprendre (comparer la prédiction au token attendu et corriger les paramètres).
 - **Trois mots à distinguer :** un **LLM** est un modèle de langage entraîné à grande échelle ; le **Transformer** est une famille d'architectures ; un **GPT** est un Transformer d'un type précis, pré-entraîné à prédire le prochain token.
 :::
 
@@ -81,7 +81,7 @@ Donnons au modèle le préfixe « C'est une bonne situation, ça, scribe ? ». I
 
 Ces valeurs sont fictives : elles ne proviennent pas d'un modèle entraîné, et un vocabulaire réel compte des dizaines de milliers d'entrées, pas quatre. Le parcours les réutilise d'une page à l'autre pour que chaque calcul puisse être refait à la main.
 
-Ce tableau est une **distribution conditionnelle** : elle dépend du contexte. Ajoutez « Être » à la suite de la question et recalculez : les candidats ne sont plus les mêmes, et « scribe » passe en tête.
+Ce tableau est une **distribution conditionnelle** : elle dépend du contexte. Les quatre probabilités se partagent un total de 1 (soit 100 %). Ajoutez « Être » à la suite de la question et recalculez : les candidats ne sont plus les mêmes, et « scribe » passe en tête.
 
 Trois termes suffisent pour lire la suite du parcours.
 
@@ -95,7 +95,7 @@ Une suite probable n'est pas une suite vraie. Que « Être » soit probable apr�
 
 ## Du texte à la distribution
 
-![Le processus autorégressif de génération : le contexte est préparé et tokenisé, traité par un GPT à paramètres fixes, puis enrichi du token sélectionné.](../images/llm-generation-process-fr.svg){#fig-gpt-generation-process fig-alt="Le préfixe « C'est une bonne situation, ça, scribe ? » est tokenisé, traité par un GPT à paramètres fixes, puis converti en distribution : Être 0,6, Vous 0,2, Oui 0,1, Non 0,1, affichés en pourcentages. Une règle de décodage sélectionne « Être », qui est ajouté au contexte. Les probabilités sont fictives."}
+![Le processus autorégressif de génération : le contexte est préparé et tokenisé, traité par un modèle à paramètres fixes, puis enrichi du token sélectionné.](../images/llm-generation-process-fr.svg){#fig-gpt-generation-process fig-alt="Le préfixe « C'est une bonne situation, ça, scribe ? » est tokenisé, traité par un modèle à paramètres fixes, puis converti en distribution : Être 0,6, Vous 0,2, Oui 0,1, Non 0,1, affichés en pourcentages. Une règle de décodage sélectionne « Être », qui est ajouté au contexte. Les probabilités sont fictives."}
 
 La figure se lit de gauche à droite.
 
@@ -108,7 +108,7 @@ Les étapes 1 à 3 forment le calcul du modèle ; le parcours les ouvre une à u
 
 ## Un calcul, trois usages
 
-Une fois la distribution calculée, tout dépend de la question posée.
+Une fois la distribution calculée, tout dépend de la question posée. **Pour une première lecture, retenez seulement les trois usages** : produire une suite, mesurer la vraisemblance d'une suite connue ou apprendre à partir d'une suite attendue. Les termes *prefill*, *decode*, *loss*, *gradients* et *teacher forcing* précisent les mécanismes ; vous pourrez les approfondir dans les pages liées sans devoir tous les mémoriser maintenant.
 
 <!-- Desktop: three-column view; mobile: stacked view for readable labels. -->
 ![Du contexte à trois usages de la distribution prédictive : génération, scoring d'une cible observée et apprentissage.](../images/llm-shared-prediction-uses-fr.svg){.d-none .d-md-block #fig-llm-shared-prediction-uses fig-alt="Le contexte passe dans le modèle, qui produit des logits puis une distribution de probabilités sur le prochain token. Cette distribution sert à choisir un token en génération, à mesurer la probabilité d'un token observé en scoring, ou à calculer une loss et mettre à jour les paramètres pendant l'apprentissage."}
