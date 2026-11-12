@@ -137,3 +137,20 @@ def test_transition_index_supports_multiple_pages_and_multiple_transitions_per_p
 
     assert [item.id for item in index["en/a"]] == ["first", "second"]
     assert [item.id for item in index["en/b"]] == ["first"]
+
+def test_transition_visual_identity_is_distinct_from_stage_membership() -> None:
+    styles = (ROOT / "site/styles.scss").read_text(encoding="utf-8")
+    transition_start = styles.index(".guided-page-transitions {")
+    transition_end = styles.index("/* Keep Quarto navigation text", transition_start)
+    transition_styles = styles[transition_start:transition_end]
+
+    assert "border-left: 4px dashed #7651A8" in transition_styles
+    assert "background: #FAF8FD" in transition_styles
+    assert ".guided-page-transitions__stages" in transition_styles
+    assert "border-left: 2px dashed #A78BC9" in transition_styles
+    # Membership remains its own green pill/context treatment.
+    membership_start = styles.index(".guided-page-context {")
+    membership_end = styles.index("/* Keep Quarto navigation text", membership_start)
+    membership_styles = styles[membership_start:membership_end]
+    assert "#E5F1E8" in membership_styles
+    assert "#7651A8" not in membership_styles
