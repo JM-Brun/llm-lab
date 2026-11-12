@@ -53,14 +53,14 @@ Ce panorama présente plusieurs dimensions complémentaires d’un LLM, et non u
 
 Donnons au modèle le préfixe « C'est une bonne situation, ça, scribe ? ». Il ne produit pas directement un mot : il attribue un score à chaque unité de son vocabulaire, puis convertit ces scores en probabilités. Pour ce contexte, on peut imaginer le résultat suivant.
 
-| Suite possible | Probabilité |
+| Prochain token possible | Probabilité |
 |---|---|
 | « Être » | 0,6 |
 | « Vous » | 0,2 |
 | « Oui » | 0,1 |
 | « Non » | 0,1 |
 
-Ces valeurs sont fictives : elles ne proviennent pas d'un modèle entraîné, et un vocabulaire réel compte des dizaines de milliers d'entrées, pas quatre. Le parcours les réutilise d'une page à l'autre pour que chaque calcul puisse être refait à la main.
+Ces valeurs sont fictives : elles ne proviennent pas d'un modèle entraîné, et un vocabulaire réel compte des dizaines de milliers d'entrées, pas quatre. Dans cet exemple simplifié, chaque ligne représente un token unique ; les formes affichées ne garantissent pas qu'un tokenizer réel les traiterait chacune comme un seul token. Le parcours réutilise ces valeurs d'une page à l'autre pour que chaque calcul puisse être refait à la main.
 
 Ce tableau est une **distribution conditionnelle** : elle dépend du contexte. Les quatre probabilités se partagent un total de 1 (soit 100 %). Ajoutez « Être » à la suite de la question et recalculez : les candidats ne sont plus les mêmes, et « scribe » passe en tête.
 
@@ -134,13 +134,13 @@ Décrire un modèle, c'est répondre à trois questions indépendantes.
 
 Un **modèle de fondation** (*foundation model*) est une catégorie plus large que le *base model* : un modèle entraîné sur des données générales à grande échelle et adaptable à de nombreuses tâches, y compris hors du langage ([Bommasani et al., 2021](https://crfm.stanford.edu/report)).
 
-**Utilisation.** À l'inférence, les paramètres ne bougent pas. Tout ce qui change la réponse passe par le contexte : le **prompt** (le texte fourni), les exemples qu'on y place, ou les documents qu'un système de **génération augmentée par récupération** (*retrieval-augmented generation*, RAG) va chercher et y insère.
+**Utilisation.** À l'inférence, les paramètres ne bougent pas. Le contexte est le principal levier pour orienter la réponse : le **prompt** (le texte fourni), les exemples qu'on y place, ou les documents qu'un système de **génération augmentée par récupération** (*retrieval-augmented generation*, RAG) va chercher et y insère. Le réglage du décodage (par exemple la température ou *top-p*) peut aussi modifier le token sélectionné, sans changer le contexte ni les paramètres.
 
 ## Choisir une approche
 
 Les LLM servent notamment à générer ou reformuler du texte, résumer, traduire, extraire des informations, classer, assister la programmation et répondre à des questions.
 
-Pour une tâche donnée, trois options se présentent : utiliser un modèle généraliste tel quel, lui fournir des documents par RAG, ou adapter ses paramètres.
+Pour une tâche donnée, trois approches peuvent être combinées : utiliser un modèle généraliste tel quel, lui fournir des documents par RAG, ou adapter ses paramètres. Par exemple, un modèle adapté peut aussi être associé à un système RAG.
 
 - **Le modèle tel quel** convient quand il couvre déjà la tâche ou quand les exemples étiquetés sont rares.
 - **Le RAG** apporte des informations récentes sans réentraînement, à condition que son corpus ou son index soit tenu à jour ([Lewis et al., 2020](https://arxiv.org/abs/2005.11401)).
