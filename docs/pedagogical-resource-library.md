@@ -90,6 +90,27 @@ When using an analogy, write down both the mapping and the break point. Example:
 | [Seeing Theory](https://seeing-theory.brown.edu/) | Interactive probability and statistics | Useful for distributions, inference, and uncertainty; check that the chosen visualization supports the precise mathematical claim. |
 | [3Blue1Brown — Essence of Linear Algebra](https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr) | Geometric intuition for vectors, matrices, and linear transformations | Use alongside formal definitions and examples that match the notation used in this book. |
 
+## Quantization of LLMs: numerical foundations and deployment
+
+Use this cluster when explaining why lower-bit representations can reduce model storage or memory traffic, and why the result does not guarantee proportional end-to-end speedup. Keep the distinction between a numerical format, a quantization algorithm, a checkpoint format, and the kernel/runtime that executes it.
+
+| Resource | Role | What it supports / limits |
+|---|---|---|
+| [GPTQ — Accurate Post-Training Quantization for Generative Pre-trained Transformers](https://arxiv.org/abs/2210.17323) | Primary paper; weight-only PTQ | Introduces one-shot weight quantization using approximate second-order information and error compensation across weights. Do not describe it merely as independent rounding or infer that its reported speedups transfer to arbitrary hardware/runtime combinations. |
+| [AWQ — Activation-aware Weight Quantization](https://proceedings.mlsys.org/paper_files/paper/2024/hash/42a452cbafa9dd64e9ba4aa95cc1ef21-Abstract-Conference.html) | Primary paper; low-bit weight-only PTQ | Uses activation statistics to identify salient channels and equivalent per-channel scaling to reduce weight-quantization error. It is not activation quantization: the paper's central method is weight-only. |
+| [SmoothQuant](https://proceedings.mlr.press/v202/xiao23c.html) | Primary paper; W8A8 PTQ | Uses an equivalent transformation to migrate quantization difficulty from activation outliers into weights, enabling INT8 weights and activations. This is a different target from the common weight-only GPTQ/AWQ setup. |
+| [PyTorch quantization API](https://docs.pytorch.org/docs/stable/quantization-support) and [per-channel quantization](https://docs.pytorch.org/docs/stable/generated/torch.quantize_per_channel.html) | Official API reference | Grounds scale/zero-point and per-tensor/per-channel semantics. API-level quantized tensors are not by themselves a guide to current LLM deployment kernels. |
+| [vLLM quantization guide](https://docs.vllm.ai/en/stable/features/quantization/) | Official serving/runtime reference | Shows that supported formats, kernels and hardware compatibility vary. Treat this as a versioned deployment matrix, not a timeless property of GPTQ/AWQ or a guarantee of speedup. |
+| [The AiEdge — How Quantization Compresses LLMs](https://newsletter.theaiedge.io/p/how-quantization-compresses-llms) | Secondary pedagogical candidate | The public preview (Damien Benveniste, 2 Nov 2026) introduces GPTQ compensation, AWQ channel scaling and SmoothQuant's redistribution in a useful comparative framing. The full article is marked paid; only the preview was verifiable here. Do not cite it as a fully reviewed source or rely on inaccessible details. |
+
+**Teaching distinctions to preserve**
+
+- W4A16, W8A8, etc. describe operand precision conventions (weights/activations); they are not algorithm names. State the convention when using it.
+- Separate storage size from runtime memory use, memory bandwidth, arithmetic throughput, kernel availability and end-to-end latency. Fewer bits can reduce storage without accelerating a workload if dequantization, unsupported kernels, or other bottlenecks dominate.
+- Calibration data, granularity (tensor/channel/group), clipping, scale/zero-point choice, outliers and model architecture affect the error/quality trade-off. Avoid implying that one scale policy is universal.
+- Compare quality with a stated metric, model, calibration/evaluation data and runtime; paper-reported speedups are conditional on their hardware/software setup.
+- PTQ is performed after training; QAT changes training to account for quantization effects. Neither term identifies a particular integer format or serving kernel.
+
 ## Official and primary sources
 
 - [Attention Is All You Need](https://arxiv.org/abs/1706.03762) — original Transformer paper.
@@ -108,7 +129,7 @@ Use primary papers for original technical contributions, official documentation 
 | Transformer and self-attention | Illustrated Transformer; Vizuara; Transformer Explainer; original paper | What are the axes and tensor shapes? What is omitted from the simplified diagram? |
 | Embeddings and similarity | Embedding Projector; Distill; primary papers | Which distances are preserved, and what distortions are introduced by projection or normalization? |
 | Training and optimization | 3Blue1Brown; Karpathy; PyTorch docs | Which quantity changes at each step? What do gradients and optimizer state represent? |
-| Architecture and inference data flow | ByteByteGo; Vizuara; Hugging Face docs | Which components and interfaces are conceptual versus implementation-specific? |
+| Architecture and inference data flow | ByteByteGo; Vizuara; Hugging Face docs | Which components and interfaces are conceptual versus implementation-specific? |\n| LLM quantization and efficient serving | GPTQ; AWQ; SmoothQuant; PyTorch quantization API; vLLM quantization guide | Are weights, activations or KV cache quantized? What are the bit-width, granularity, calibration, kernel and hardware assumptions? |
 | Evaluation and uncertainty | StatQuest; primary evaluation papers; official metric documentation | What is the estimand, split unit, baseline, uncertainty, and failure mode? |
 
 ## Contribution checklist
