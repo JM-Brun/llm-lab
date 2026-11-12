@@ -122,8 +122,6 @@ Cosine is a **geometric metric**, not a universal definition of semantics. Treat
 </summary>
 <div class="learning-resources__content" markdown="1">
 
-#### Critical reading
-
 #### Research papers
 
 - **Steck, Ekanadham & Kallus (2024).** [Is Cosine-Similarity of Embeddings Really About Similarity? — arXiv:2403.05440](https://arxiv.org/abs/2403.05440), also published in the *WWW 2024 Companion* proceedings ([DOI](https://doi.org/10.1145/3589335.3651526)). Theoretical analysis of how regularization affects embedding similarities.
