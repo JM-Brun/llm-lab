@@ -15,7 +15,7 @@ suggested_route:
   next: "fr/evaluation-experimentale"
 hierarchy:
   parents: ["fr/index"]
-  children: ["fr/exercises-foundations", "fr/exercises-text-data", "fr/exercises-attention", "fr/exercises-transformer", "fr/exercises-generation"]
+  children: ["fr/exercises-foundations", "fr/exercises-text-data", "fr/exercises-attention", "fr/exercises-transformer", "fr/exercises-generation", "fr/evaluation-experimentale"]
 related: []
 tags: ["type:exercise-hub", "destination:practice", "topic:exercises", "level:applied", "language:fr", "status:published"]
 -->
@@ -86,6 +86,10 @@ Ce catalogue donne accès aux **exercices approfondis** : calculs, problèmes en
 - Essayez chaque exercice avant d'ouvrir le corrigé. Explicitez vos hypothèses et les conditions dans lesquelles votre réponse ne serait plus valable.
 - Utilisez les questions de transfert pour vérifier que le raisonnement se généralise au-delà de l'exemple travaillé.
 - Les corrigés sont repliés par défaut. Un résultat correct sans justification ne suffit pas à démontrer la maîtrise.
+
+## Exercices de transfert autonomes
+
+- [Évaluation expérimentale : du score au protocole](evaluation-experimentale.qmd) — concevoir une évaluation défendable, éviter les fuites et le biais de sélection, interpréter les métriques de classement et justifier l’incertitude.
 
 ## Collections d'exercices
 
