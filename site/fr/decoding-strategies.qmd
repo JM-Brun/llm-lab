@@ -287,7 +287,7 @@ Ne comparer que les noms de paramètres (« température 0,7 » ou « top-p 0,9 
 
 ## Mettre en pratique
 
-Pour vérifier les calculs de température et comparer top-k à top-p sur une distribution concrète, consultez les exercices de génération : [température](exercises-generation.qmd#ex-generation-temperature) et [top-k/top-p](exercises-generation.qmd#ex-generation-top-k-top-p). Ces activités sont facultatives et corrigées ; elles ne remplacent pas l'évaluation de la qualité des sorties sur des tâches réelles.
+Pour vérifier les calculs de température et comparer top-k à top-p sur une distribution concrète, consultez les exercices de génération : [température](exercises-generation.qmd#ge-f-temperature-and-concentration) et [top-k/top-p](exercises-generation.qmd#ge-g-top-k-and-top-p). Ces activités sont facultatives et corrigées ; elles ne remplacent pas l'évaluation de la qualité des sorties sur des tâches réelles.
 
 ## Références de recherche
 

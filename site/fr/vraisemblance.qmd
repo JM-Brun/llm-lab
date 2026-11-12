@@ -87,9 +87,16 @@ Pour des séquences fixes et les mêmes positions prises en compte, maximiser la
 
 La page suivante décompose cette NLL au niveau d'une position et généralise le cas d'une cible one-hot à une distribution cible : [Entropie croisée](cross-entropy.qmd).
 
-## Exemple
+## Exemple : la continuation du scribe
 
-Si les probabilités attribuées à trois tokens observés sont $(0.5, 0.25, 0.8)$, alors la vraisemblance de cette séquence (selon le modèle et le préfixe) vaut $0.1$, et la NLL vaut $-\log(0.1)\approx2.303$. La log-vraisemblance vaut environ $-2.303$.
+Reprenons les trois premiers choix de la génération : après le préfixe « C'est une bonne situation, ça, scribe ? », le modèle attribue $0{,}6$ à « Être » ; après ce token, il attribue $0{,}5$ à « scribe » ; après « Être scribe », il attribue $0{,}8$ à la virgule. Ces probabilités sont conditionnelles à des préfixes successifs différents :
+
+$$
+P_\theta(\text{« Être scribe , »}\mid c)
+=0{,}6\times0{,}5\times0{,}8=0{,}24.
+$$
+
+La log-vraisemblance vaut $\log(0{,}24)\approx-1{,}427$ et la négative log-vraisemblance (NLL) vaut $-\log(0{,}24)\approx1{,}427$ nats pour ces trois tokens. La somme des pertes locales est cette NLL ; leur moyenne vaut environ $1{,}427/3=0{,}476$ nat par token. Les valeurs sont illustratives et reprennent exactement les probabilités du tableau de génération : elles ne proviennent pas d'un modèle entraîné.
 
 ::: {.callout-warning title="Idées reçues"}
 - **« Une vraisemblance élevée prouve que le modèle est vrai. »** Non : elle indique l'adéquation probabiliste aux observations choisies, relativement à un modèle, un tokenizer et une distribution de données.
