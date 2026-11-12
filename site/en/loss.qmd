@@ -38,7 +38,7 @@ Reduction conventions determine how per-token losses are aggregated. Perplexity 
 
 :::
 
-<div class="pipeline-stepper" role="navigation" aria-label="Steps in constructing the training loss">
+<div class="pipeline-stepper" role="group" aria-label="Steps in constructing the training loss">
   <a class="step-item" href="likelihood.qmd">1. Observed target</a>
   <span class="step-arrow" aria-hidden="true">→</span>
   <a class="step-item" href="cross-entropy.qmd">2. Per-token loss</a>
