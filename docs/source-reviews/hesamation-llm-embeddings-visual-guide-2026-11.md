@@ -58,3 +58,32 @@ The atlas is distinctive, but its actual visual quality, controls, accessibility
 **Link-only:** the external interactive atlas and article.  
 **Deferred:** bilingual runnable Practice experiment and code reuse until the linked repository, model-loading path, dependencies, vector source, normalization and outputs are checked/reproduced.  
 **Next evidence:** inspect the live atlas on desktop; reproduce one nearest-neighbour example; verify model configuration/dimension; then decide whether a compact bilingual experiment adds value. No learner-outcome claim is made.
+
+
+## 8. Repository and implementation inspection — 2026-11-12
+
+The Space source tree and its linked implementation were inspected after the initial text-only review:
+
+- Space source: `src/index.html` (main revision `aa0a8f2`), fragments under `src/fragments/`, and `python/code/`.
+- Linked implementation repository: [hesamsheikh/primer-llm-embeddings](https://github.com/hesamsheikh/primer-llm-embeddings). Its README documents `npm install`, `npm run build`, and a static Distill-style page with runtime/compile-time HTML fragments. Dependencies include D3 and Plotly.
+- Python entry points: `save_qwen_embeddings.py` and `qwen_per_token_visualization.py`; the page also embeds Gists for tokenization, embedding lookup and nearest-neighbour examples.
+- Visual structure: the article uses a Distill-style narrative, expandable code sections, a TF-IDF visualization, a word2vec hierarchy, token/neighbor graph fragments, and an atlas captioned as 50 random tokens plus nearest tokens from the named checkpoint. The page also links a TensorFlow Embedding Projector as an external exploration tool.
+
+### Implementation semantics and reproducibility caveats
+
+1. `save_qwen_embeddings.py` loads the named tokenizer/model, adds a new `[PAD]` token, extracts `get_input_embeddings()`, and saves its state dict. Adding a tokenizer token without resizing/replacing the model embedding matrix can create a tokenizer/model vocabulary mismatch if that token is later used. The sample does not appear to need padding; avoid mutating the tokenizer or explicitly resize and document the model if padding is required.
+2. The visualization script reconstructs an `nn.Embedding` table with hard-coded `vocab_size=151936` and `dimensions=1536`. These values are checkpoint-specific. A robust reproduction should read the actual embedding tensor/config and assert tokenizer/model vocabulary compatibility rather than duplicate constants.
+3. `find_similar_embeddings` computes cosine similarity against the full input-embedding matrix and takes top-k. This is a useful parameter-inspection operation, not contextual semantic similarity. The displayed score/rank is conditioned on the selected checkpoint, input embedding table and normalization convention.
+4. The function decodes neighbour IDs to strings and later re-tokenizes those strings to recover vectors. Decoding and re-tokenization need not be an identity for byte/subword/special tokens. The script then selects a fixed sequence position (`[0][1]`), which may not correspond to the original token ID and can select only the first subtoken when a decoded token splits again. Preserve token IDs and retrieve rows directly from the matrix instead.
+5. The graph uses decoded token strings as node keys. Distinct token IDs can decode to colliding or visually confusing strings; use token IDs as node identity and decoded forms only as labels. Also, top-k neighbour membership is directed by construction, but `networkx.Graph` renders it as an undirected edge; the graph must be labelled as a symmetrized kNN view (or preserve direction/weights explicitly).
+6. The page's statement that the embedding module is “a simple Linear layer” is only an equivalence under one-hot input and matching weight/bias conventions. The implementation distinction is that `nn.Embedding` performs indexed row lookup without materializing one-hot vectors.
+7. The article's BERT task-head description says “token generation or classification”; this is misleading for generic BERT. BERT is an encoder representation model with task-specific heads; it is not a causal next-token generation model.
+8. The article's TF-IDF visualization describes a 10-dimensional document representation, but the figure caption refers to “word embeddings”. This is a terminology mismatch: the shown TF-IDF vectors represent document/chunk term-weight profiles, not learned word-type embeddings.
+
+### Integration consequence
+
+The resource is now more than a general visual primer: it provides a traceable end-to-end case study connecting tokenizer IDs, parameter-table lookup, vector comparison, top-k retrieval, token decoding and graph construction. LLM Lab should teach this as a **parameter-inspection experiment** with explicit identity/provenance and failure analysis, not as proof that nearest neighbours are semantically equivalent. A safe learner exercise should keep IDs throughout, compare decoded forms only for display, expose whether the graph is directed/symmetrized, and distinguish input embeddings from contextual hidden states.
+
+### Inspection boundary
+
+The HTML and Python source were read, but the code was not executed and the running interactive Space was not operated. No benchmark, runtime, visual usability, output correctness or learner outcome is claimed. The repository's build instructions were inspected, but no independent build was performed.
