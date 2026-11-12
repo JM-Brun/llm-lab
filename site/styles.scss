@@ -1670,6 +1670,16 @@ a.concept-link:focus-visible {
   vertical-align: middle;
 }
 
+/* Preserve the seven relation-family identities on Quarto's dark theme.
+   These lighter semantic colors retain the same shape + label encoding. */
+[data-bs-theme="dark"] .map-relation-family--representational { color: #7DD3FC; }
+[data-bs-theme="dark"] .map-relation-family--pedagogical { color: #FCD34D; }
+[data-bs-theme="dark"] .map-relation-family--structural { color: #CBD5E1; }
+[data-bs-theme="dark"] .map-relation-family--constraint { color: #FCA5A5; }
+[data-bs-theme="dark"] .map-relation-family--functional { color: #5EEAD4; }
+[data-bs-theme="dark"] .map-relation-family--associative { color: #D6BFA8; }
+[data-bs-theme="dark"] .map-relation-family--evaluative { color: #E2E8F0; }
+
 .map-detail-relations .map-concept-link {
   margin-left: 0.4rem;
   padding: 0.05rem 0.5rem;
