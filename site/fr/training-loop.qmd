@@ -34,7 +34,7 @@ Un **pas d'entraînement** prend un batch de préfixes observés et de cibles, e
 Une seconde mesure accompagne l'entraînement : la même loss calculée sur des données de **validation** qui ne produisent jamais de mise à jour. La loss d'entraînement dit dans quelle mesure le modèle s'ajuste à ce sur quoi il est ajusté ; la loss de validation estime si cet ajustement se transfère.
 :::
 
-<div class="pipeline-stepper" role="navigation" aria-label="Opérations d'un pas d'entraînement">
+<div class="pipeline-stepper" role="group" aria-label="Opérations d'un pas d'entraînement">
   <span class="step-item">1. Batch</span>
   <span class="step-arrow" aria-hidden="true">→</span>
   <span class="step-item">2. Passe avant et loss</span>
