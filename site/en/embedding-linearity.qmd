@@ -124,8 +124,6 @@ Linearity is a useful, testable hypothesis, not a universal law. A rigorous clai
 </summary>
 <div class="learning-resources__content" markdown="1">
 
-#### Research and technical reading
-
 #### Papers and preprints
 
 - **Engels et al. (2025).** [Not All Language Model Features Are One-Dimensionally Linear — arXiv:2405.14860](https://arxiv.org/abs/2405.14860), published at ICLR 2025. Defines irreducible multidimensional features and reports, among other results, circular representations of days and months studied with intervention experiments.
