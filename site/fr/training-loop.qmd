@@ -141,6 +141,37 @@ Le *pré-entraînement* désigne cette boucle appliquée à un corpus de texte t
 
 L'implémentation de cette boucle depuis zéro, avec points de sauvegarde et exécuteur de validation, est un jalon du [parcours Construire](build-path.qmd) ; son état y est suivi. Cette leçon ne l'exige pas. Poursuivre l'entraînement d'un modèle pré-entraîné sur un objectif plus étroit (fine-tuning supervisé et méthodes voisines) réutilise la même boucle avec d'autres données et d'autres cibles ; il est présenté dans le [panorama des LLM](llm-overview.qmd), pas ici.
 
+## Vérifier sa compréhension
+
+Essayez de répondre avant d'ouvrir les corrigés. L'objectif est de relier les étapes, pas de réciter une définition.
+
+1. **Après le calcul de la loss et du gradient, quelle opération modifie effectivement les paramètres ?**
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+C'est l'étape de mise à jour appliquée par l'optimiseur. La passe avant calcule les prédictions, la loss évalue les écarts et la rétropropagation calcule le gradient ; ces opérations ne changent pas à elles seules les paramètres. L'optimiseur utilise le gradient (et éventuellement son état interne) pour produire les nouveaux paramètres.
+
+</details>
+
+2. **La loss d'entraînement baisse, mais la loss de validation remonte. Que peut-on conclure, et que ne peut-on pas conclure ?**
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+C'est un indice de surapprentissage : le modèle continue de mieux ajuster les exemples d'entraînement, mais cet ajustement se transfère moins bien aux données réservées. Cela ne prouve pas à lui seul une cause unique ni que toutes les capacités du modèle régressent. Il faut vérifier le protocole de séparation, la représentativité des données et les métriques, puis décider à partir de la validation sans réutiliser le jeu de test pour régler le modèle.
+
+</details>
+
+3. **Pourquoi conserver un jeu de test si l'on dispose déjà d'un jeu de validation ?**
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+La validation sert à guider des décisions répétées (arrêt, hyperparamètres, choix de modèle). À force de prendre ces décisions en fonction de ses résultats, on finit indirectement par s'y adapter. Le jeu de test reste donc intact jusqu'à l'évaluation finale afin de fournir une estimation moins biaisée par ces choix. Si le test sert à nouveau à ajuster le système, il cesse de jouer ce rôle.
+
+</details>
+
 {{< include ../includes/generated-suggested-route-fr-training-loop.qmd >}}
 
 ::: {.language-switch}
