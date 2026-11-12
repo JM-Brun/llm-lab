@@ -7,6 +7,8 @@ order: ``gpt_config`` (dimensions), ``gpt_ops`` (building blocks),
 aligned input/target windows that pretraining consumes, and
 ``decoding_filters`` implements the optional top-k/top-p truncations of
 the decoding deep dive, applied by ``generate`` in sampling mode.
+``embedding_inspection`` provides small NumPy-only helpers for inspecting
+input embedding rows and cosine neighbours without loading a checkpoint.
 ``gpt2_weights`` maps GPT-2 checkpoint parameters onto the reference model,
 for the reference-parity check and for inference with published weights.
 
@@ -30,6 +32,8 @@ _EXPORTS = {
     "cross_entropy_gradient": "losses",
     "gelu": "gpt_ops",
     "generate": "generate",
+    "cosine_top_k": "embedding_inspection",
+    "lookup_embedding_rows": "embedding_inspection",
     "layer_norm": "gpt_ops",
     "linear": "gpt_ops",
     "load_gpt2_state_dict": "gpt2_weights",
