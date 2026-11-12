@@ -79,7 +79,7 @@ Deux parcours principaux et indépendants sont proposés : **comprendre théoriq
 Les leçons utilisent trois repères pour distinguer les types de contenu :
 
 - <span class="epistemic-badge badge-concept">Concept vérifié</span> Définitions formelles, équations et hypothèses mathématiques explicites.
-- <span class="epistemic-badge badge-code">Micro-code exécutable</span> Ateliers Python/NumPy inspectables avec assertions sur les formes tensorielles et les invariants.
+- <span class="epistemic-badge badge-code">À exécuter localement</span> Exemples Python/NumPy avec invariants de formes et assertions ; les blocs de code ne s’exécutent pas dans cette page.
 - <span class="epistemic-badge badge-status">Architecture / Statut</span> Périmètre architectural explicite et état du jalon dans le parcours de construction.
 
 Ces repères décrivent les preuves disponibles ; ils ne rendent pas toutes les preuves équivalentes. Un schéma rend une structure lisible sans démontrer une propriété ; une dérivation établit un résultat sous des hypothèses explicites ; un test vérifie les cas qu’il couvre ; une expérience compare des configurations selon un protocole, des métriques et des limites documentés.
