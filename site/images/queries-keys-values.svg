@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="660" viewBox="0 0 1200 660" role="img" aria-labelledby="title desc">
 <title id="title">Requêtes, clés et valeurs dans l'attention</title>
-<desc id="desc">Les représentations d'entrée sont transformées en requêtes, clés et valeurs. Les requêtes sont comparées aux clés pour calculer les poids d'attention, puis ces poids servent à combiner les valeurs.</desc>
+<desc id="desc">Vue séquentielle à une tête : X est projeté en Q, K et V. Q et K produisent des scores, divisés par la racine de d_k puis normalisés par softmax en poids d’attention ; ces poids agrègent V pour produire la sortie. Les axes batch et têtes ainsi que le masque causal sont omis.</desc>
 <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#eef8f8"/><stop offset="1" stop-color="#fff5ef"/></linearGradient><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#60758b"/></marker></defs>
 <rect width="1200" height="660" rx="26" fill="url(#bg)"/>
 <text x="52" y="52" font-family="Inter,Arial,sans-serif" font-size="16" font-weight="800" letter-spacing="2" fill="#087f8c">AUTO-ATTENTION</text>
@@ -24,7 +24,7 @@
 <rect x="656" y="207" width="212" height="112" rx="16" fill="#fff" stroke="#a9b9c8" stroke-width="2"/>
 <text x="762" y="239" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="19" font-weight="750" fill="#10233f">1. Comparer</text>
 <text x="762" y="270" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="18" fill="#51627a">QKᵀ → scores</text>
-<text x="762" y="295" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" fill="#51627a">division par √d_k, puis softmax</text>
+<text x="762" y="295" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" fill="#51627a">division par √d_k, puis softmax</text>
 <path d="M868 263 H907" fill="none" stroke="#60758b" stroke-width="2.5" marker-end="url(#arrow)"/>
 <rect x="913" y="207" width="235" height="112" rx="16" fill="#dff2f1" stroke="#087f8c" stroke-width="2"/>
 <text x="1030" y="239" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="750" fill="#075d65">Poids d'attention</text>
