@@ -82,7 +82,7 @@ Deux conséquences découlent de cette mécanique.
 
 **Un choix engage la suite.** Si la règle avait retenu « Vous » au tour 1, le contexte du tour 2 serait différent, et toute la suite avec lui. Le modèle ne revient pas sur un token déjà ajouté.
 
-**Le modèle ne garde rien d'un tour à l'autre, sauf le texte.** Ses paramètres sont identiques aux trois tours. Ce qui change, c'est le contexte qu'on lui présente.
+**Les paramètres du modèle restent identiques d'un tour à l'autre : la génération ne les met pas à jour.** Le contexte, lui, s'allonge avec le token choisi. Une implémentation optimisée peut aussi réutiliser des calculs précédents au moyen d'un cache KV, expliqué plus loin ; ce cache accélère l'inférence, mais ne constitue ni un apprentissage ni une modification des paramètres.
 
 ## Une étape, en notation
 
