@@ -149,3 +149,15 @@ The source-local graph also now connects Q/K/V projections to a learning-process
 The currently indexed result exposes the substantive KV-cache reader comment, which remains a separate community item. An earlier scan recorded a second visible comment and an author reply, but their exact text is not recoverable from the current snapshot. They are not reconstructed from memory or guessed. The parent source remains partially scanned until this thread can be re-opened and reconciled.
 
 **Illustration handling:** the two Q/K/V lessons now link directly to the author-controlled Medium article and cite Nishanthan K and the DEV Community publication. This makes the source illustration accessible to readers at its origin without copying an uninspected image or implying a reuse licence. It is not yet an embedded project asset.
+
+
+## 13. Illustration retrieval update — 2026-11-12
+
+The earlier statements in sections 8, 11 and 12 that the actual illustration bytes/composition could not be retrieved are superseded by this addendum. The maintainer supplied the exact image URL, and the image was retrieved and visually inspected on 2026-11-12:
+
+- https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Farticles%2Fys3yd2cf5dpvzprf2n6a.png
+- Underlying upload: https://dev-to-uploads.s3.us-east-2.amazonaws.com/uploads/articles/ys3yd2cf5dpvzprf2n6a.png
+
+The visual connects input representations X, learned Q/K/V projections, QKᵀ compatibility scores, scaling and softmax, and weighted Value aggregation. It provides a useful whole-pipeline composition benchmark. It is not a numerical example, does not show causal masking or multi-head transformations, and omits batch/head axes; its simplified dimensions are not a full implementation contract.
+
+The project comparison and independently authored bilingual refinement are recorded in [the visual comparison audit](../audits/qkv-visual-comparison-2026-11-12.md) and proposed in [PR #1030](https://github.com/JM-Brun/llm-lab/pull/1030). The external asset remains link-only: no figure-specific reuse licence or permission has been established. The source remains partially scanned for the other unresolved provenance, linked-material and comment-history items.
