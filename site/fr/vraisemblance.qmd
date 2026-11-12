@@ -91,10 +91,10 @@ La page suivante décompose cette NLL au niveau d'une position et généralise l
 
 Reprenons les trois premiers choix de la génération : après le préfixe « C'est une bonne situation, ça, scribe ? », le modèle attribue $0{,}6$ à « Être » ; après ce token, il attribue $0{,}5$ à « scribe » ; après « Être scribe », il attribue $0{,}8$ à la virgule. Ces probabilités sont conditionnelles à des préfixes successifs différents :
 
-$
+$$
 P_\theta(\text{« Être scribe , »}\mid c)
 =0{,}6\times0{,}5\times0{,}8=0{,}24.
-$
+$$
 
 La log-vraisemblance vaut $\log(0{,}24)\approx-1{,}427$ et la négative log-vraisemblance (NLL) vaut $-\log(0{,}24)\approx1{,}427$ nats pour ces trois tokens. La somme des pertes locales est cette NLL ; leur moyenne vaut environ $1{,}427/3=0{,}476$ nat par token. Les valeurs sont illustratives et reprennent exactement les probabilités du tableau de génération : elles ne proviennent pas d'un modèle entraîné.
 
