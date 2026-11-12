@@ -167,7 +167,9 @@ def _last_page_fixture(language: str) -> tuple[dict[str, Any], dict[str, dict[st
         ("fr", "Parcours terminé · voie complémentaire : construire un GPT →"),
     ],
 )
-def test_last_route_page_offers_build_as_an_optional_companion_path(language: str, label: str) -> None:
+def test_last_route_page_offers_build_as_an_optional_companion_path(
+    language: str, label: str
+) -> None:
     last, page_by_id = _last_page_fixture(language)
 
     rendered = GENERATOR["render_suggested_route_markdown"](
