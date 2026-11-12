@@ -39,7 +39,7 @@ In an autoregressive LLM, entropy describes how spread out the predicted next-to
 **Quick question:** can you distinguish uncertainty before observing a token from surprise after observing a target?
 :::
 
-:::: {.pipeline-stepper .meta-flow .meta-flow--branch role="navigation" aria-label="Map of concepts related to the predictive distribution"}
+:::: {.pipeline-stepper .meta-flow .meta-flow--branch role="group" aria-label="Map of concepts related to the predictive distribution"}
 ::: {.meta-flow__source}
 <strong>Predictive distribution</strong><span>p(next token | context)</span>
 :::
@@ -47,7 +47,7 @@ In an autoregressive LLM, entropy describes how spread out the predicted next-to
 Two different questions depending on whether a token has been observed
 :::
 ::: {.meta-flow__comparison}
-::: {.meta-flow__comparison-item .meta-flow__branch--active aria-current="step"}
+::: {.meta-flow__comparison-item .meta-flow__branch--active}
 <strong>Before observation · Entropy H(p)</strong><small>Spread of the full distribution: predictive uncertainty</small>
 :::
 ::: {.meta-flow__comparison-item}
