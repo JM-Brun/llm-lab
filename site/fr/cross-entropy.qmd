@@ -72,9 +72,9 @@ Le coût augmente lorsque le modèle attribue une faible probabilité au token o
 
 Au premier tour de la génération, la distribution illustrative est $p=(0{,}6;\,0{,}2;\,0{,}1;\,0{,}1)$ pour (« Être », « Vous », « Oui », « Non »). La cible observée est « Être », représentée par la distribution one-hot $q=(1;0;0;0)$. L'entropie croisée se réduit alors à :
 
-$
+$$
 H(q,p)=-\sum_i q_i\log p_i=-\log(0{,}6)\approx0{,}511\text{ nat}.
-$
+$$
 
 Les trois autres probabilités ne disparaissent pas de la distribution : elles contribuent indirectement à la normalisation de la softmax et donc au gradient par rapport aux logits. Cette valeur est la perte d'une position, pas encore la loss moyenne d'une séquence ou d'un batch.
 
