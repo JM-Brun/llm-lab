@@ -118,7 +118,7 @@ These techniques are not mutually exclusive and do not solve the same problem. S
 
 Further reading: [Hybrid architectures](hybrid-llm-architectures.qmd) and [Computational complexity and parallelism](llm-computational-complexity.qmd).
 
-## 6. From a model to a system that uses tools
+## 6. From a model to a system that uses tools {#tool-using-systems}
 
 A model that can produce a tool call does not necessarily execute the requested operation itself. In a typical integration, the application receives the call, executes the tool, and sends its result back to the model.
 
