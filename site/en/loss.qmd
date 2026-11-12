@@ -75,6 +75,8 @@ $$
 
 A sum, per-sequence mean, or weighted mean is also possible. These do not define exactly the same objective and can change gradient scale or the relative weight of sequences.
 
+For the illustrative scribe continuation, the three local penalties are $-\log(0.6)\approx0.511$, $-\log(0.5)\approx0.693$, and $-\log(0.8)\approx0.223$ nats. Their sum is the sequence NLL, approximately $1.427$ nats; their mean is approximately $0.476$ nats per token. State whether a reported value is a sum or a mean: they answer different scale questions.
+
 ## Masking and shifted targets
 
 In causal language modeling, the indexing convention must be explicit. With the target-position indexing used here, logits associated with prefix $x_{<t}$ predict $x_t$. With input-position indexing, logits at position $t$ usually predict $x_{t+1}$. The loss must align logits and labels under one convention rather than comparing logits with the wrong target. Padding tokens or explicitly ignored positions must be excluded from both the numerator **and** denominator of a mean over valid targets. The loss mask determines only which targets contribute to the objective; it does not determine which tokens may influence the representations used to predict those targets. That visibility is controlled by the attention mask (causal, padding, or document-boundary masking, as appropriate). Excluding a target from the loss therefore does not, by itself, prevent its information from entering the context. See also [training examples](training-examples.qmd) and [causal masking](causal-masking.qmd).
