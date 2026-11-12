@@ -26,9 +26,46 @@ tags: ["type:exercise-hub", "destination:practice", "topic:in-context-learning-e
 
 ## Vérifier sa compréhension
 
-1. Pourquoi l'ICL n'est-il pas une mise à jour des poids ?
-2. Une démonstration améliore le format de sortie mais pas l'exactitude. Qu'est-ce que cela indique sur la différence entre imitation et généralisation ?
-3. Concevez une expérience qui distingue l'apprentissage d'une règle de la simple reproduction de motifs présents dans les exemples.
+Essayez de répondre avant d'ouvrir chaque corrigé. Les réponses sont indicatives : une formulation différente est valable si elle justifie correctement le raisonnement.
+
+1. **Pourquoi l'ICL n'est-il pas une mise à jour des poids ?**
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Pendant l'inférence, le modèle reçoit les consignes et les exemples dans le prompt. Ils modifient le contexte auquel le modèle conditionne ses prédictions, mais l'opération de génération ne calcule ni gradient ni mise à jour des paramètres. Les poids restent donc identiques avant et après cette requête. L'adaptation est temporaire : un autre prompt peut produire un autre comportement. Cela la distingue du fine-tuning, qui optimise les paramètres à partir de données d'entraînement et modifie le comportement du checkpoint.
+
+</details>
+
+2. **Une démonstration améliore le format de sortie mais pas l'exactitude. Qu'est-ce que cela indique sur la différence entre imitation et généralisation ?**
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Le modèle a peut-être appris à reproduire un motif de présentation — par exemple une structure JSON ou une étiquette — sans identifier ni appliquer correctement la règle de fond. Réussir à imiter la forme d'une démonstration ne prouve donc pas que le modèle généralise la transformation ou le raisonnement attendu. Pour tester la généralisation, il faut évaluer des cas nouveaux, suffisamment différents des exemples, et mesurer séparément la conformité du format et l'exactitude du contenu.
+
+</details>
+
+3. **Concevez une expérience qui distingue l'apprentissage d'une règle de la simple reproduction de motifs présents dans les exemples.**
+
+<details>
+<summary>Afficher une démarche possible et ses critères</summary>
+
+On peut construire une tâche artificielle avec une règle explicite et des exemples de démonstration, puis comparer plusieurs conditions sur les mêmes cas de test :
+
+1. **Zero-shot :** instruction seule, sans démonstration.
+2. **Few-shot pertinent :** exemples qui illustrent la règle.
+3. **Few-shot réordonné :** mêmes exemples, dans un ordre différent.
+4. **Few-shot non pertinent :** exemples de longueur et de format comparables, mais qui n'illustrent pas la règle.
+5. **Few-shot contradictoire (facultatif) :** exemples dont certains suggèrent une règle différente, pour mesurer la sensibilité aux démonstrations.
+
+Préparer des cas de test tenus à l'écart, notamment des combinaisons ou entrées jamais vues dans les démonstrations. Mesurer séparément l'exactitude de la règle, la conformité du format et, si utile, la stabilité des réponses. Contrôler autant que possible la longueur du prompt et répéter les essais avec plusieurs formulations et graines d'échantillonnage.
+
+**Interprétation :** une réussite limitée aux exemples vus ou à leurs motifs superficiels indique une imitation fragile. Une réussite sur des cas nouveaux, qui résiste raisonnablement au réordonnancement et aux exemples non pertinents, constitue un indice plus solide de généralisation. Ce n'est toutefois pas une preuve d'un mécanisme interne particulier : l'expérience mesure un comportement, pas directement l'algorithme appris par le modèle.
+
+Une bonne réponse doit préciser au moins la condition de comparaison, les cas de test non vus et une mesure distincte de la réussite sur la règle. Plusieurs protocoles sont défendables s'ils contrôlent les facteurs confondants et permettent cette distinction.
+
+</details>
 
 [Exercices et expérimentations](../exercises.qmd).
 
