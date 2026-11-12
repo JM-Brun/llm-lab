@@ -517,3 +517,18 @@ def test_overview_preserves_cross_cutting_coverage_and_explicit_next_page(
     assert suggested_route.count(next_label) == 1
     assert suggested_route.count(escape(next_title)) == 1
     assert suggested_route.count('href="generation.qmd"') == 1
+
+
+@pytest.mark.parametrize(
+    ("language", "label", "href"),
+    [
+        ("fr", "glossaire des LLM et des Transformers", "glossary.qmd"),
+        ("en", "LLM and Transformer glossary", "glossary.qmd"),
+    ],
+)
+def test_overview_links_to_the_localized_glossary(
+    language: str, label: str, href: str
+) -> None:
+    """The overview offers a visible, language-localized route to terminology lookup."""
+    source = (ROOT / "site" / language / "llm-overview.qmd").read_text(encoding="utf-8")
+    assert f"[{label}]({href})" in source
