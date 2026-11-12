@@ -678,6 +678,7 @@ def test_build_writes_language_specific_json(tmp_path: Path, monkeypatch) -> Non
             "importance": "core",
             "domains": ["architectures-mechanisms"],
             "resources": [{"id": "fr/attention", "title": "Attention", "href": "attention.html"}],
+            "code_resources": [],
         },
         {
             "id": "query",
@@ -686,6 +687,7 @@ def test_build_writes_language_specific_json(tmp_path: Path, monkeypatch) -> Non
             "importance": "supporting",
             "domains": [],
             "resources": [{"id": "fr/attention", "title": "Attention", "href": "attention.html"}],
+            "code_resources": [],
         },
     ]
     assert payload["concept_domains"] == [
