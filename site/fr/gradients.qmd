@@ -52,9 +52,9 @@ Pour chaque token cible de la continuation, le gradient de la cross-entropie aju
 
 Pour une cible one-hot $y$ et une cross-entropie calculée depuis le softmax :
 
-$
+$$
 \frac{\partial\ell}{\partial z_i}=p_i-\mathbb{1}[i=y].
-$
+$$
 
 Pour une cible one-hot, les composantes de ce gradient somment à zéro : $\sum_i(p_i-\mathbb{1}[i=y])=1-1=0$. C'est cohérent avec l'invariance de la softmax à l'ajout d'une même constante à tous les logits.
 
@@ -92,13 +92,13 @@ Dans un réseau profond, la rétropropagation applique efficacement cette règle
 
 Reprenons la distribution du premier tour du scribe, $p=(0{,}6;0{,}2;0{,}1;0{,}1)$, avec « Être » comme cible. Le gradient par rapport aux logits est :
 
-$
+$$
 g_z=p-y=(-0{,}4;\,0{,}2;\,0{,}1;\,0{,}1).
-$
+$$
 
 Considérons une dernière projection affine jouet $z=Wh+b$, avec un état d'entrée $h=(1;2)^\top$ et une matrice $W$ de quatre lignes (une par token) et deux colonnes. Par la règle de chaîne :
 
-$
+$$
 \frac{\partial\ell}{\partial W}=g_z h^\top
 =\begin{pmatrix}
 -0{,}4&-0{,}8\\
@@ -106,7 +106,7 @@ $
 0{,}1&0{,}2\\
 0{,}1&0{,}2
 \end{pmatrix}.
-$
+$$
 
 Avec un pas SGD illustratif $\eta=0{,}1$, la variation des poids est $\Delta W=-\eta\,\partial\ell/\partial W$ : la première ligne augmente de $(0{,}04;0{,}08)$ et les trois autres diminuent respectivement de $(0{,}02;0{,}04)$, $(0{,}01;0{,}02)$ et $(0{,}01;0{,}02)$. Ce calcul montre comment le signal de la cible atteint les poids de la projection finale. Dans un Transformer complet, $h$ dépend lui-même des paramètres des couches précédentes : la rétropropagation continue alors à travers ces couches. Les valeurs de $h$, de $W$ et le taux d'apprentissage sont choisis pour illustrer la règle, pas extraits d'un entraînement.
 
