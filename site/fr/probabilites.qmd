@@ -69,6 +69,14 @@ Avec deux logits $z=(0,\log 3)$, la softmax donne $p=(0.25,0.75)$. Le second tok
 
 Dans notre exemple, la distribution est conditionnée par le préfixe « C'est une bonne situation, ça, scribe ? ». Après l'ajout d'un token généré, le préfixe change : le modèle recalcule alors une nouvelle distribution pour l'étape suivante.
 
+Pour conserver un **repère numérique commun** avec les pages sur la perte et les gradients, nous suivrons aussi cette distribution illustrative au premier tour :
+
+| Token candidat | Être | Vous | Oui | Non |
+|---|---:|---:|---:|---:|
+| Probabilité | 0,6 | 0,2 | 0,1 | 0,1 |
+
+La cible de la continuation de référence est « Être ». Ces quatre valeurs sont un exemple pédagogique cohérent avec la boucle de génération ; elles ne sont pas présentées comme la sortie d'un modèle réellement exécuté.
+
 ## Probabilité conditionnelle dans un modèle autorégressif
 
 La distribution du token suivant dépend du préfixe :
@@ -99,10 +107,10 @@ Modifiez $\tau$ pour observer comment la distribution change, alors que le token
 <div class="interactive-toy-box" id="temp-explorer">
   <h4>EXPLORATEUR INTERACTIF · EFFET DE LA TEMPÉRATURE SUR LES PROBABILITÉS</h4>
   <p style="font-size: 0.9rem; color: #475569;">
-    Modifiez la température <var>T</var> pour observer la transition entre une distribution plus concentrée (<var>T</var> &lt; 1) et une distribution plus plate, qui tend vers l'uniformité lorsque <var>T</var> augmente (<var>T</var> &gt; 1).
+    Modifiez la température <var>τ</var> pour observer la transition entre une distribution plus concentrée (<var>τ</var> &lt; 1) et une distribution plus plate, qui tend vers l'uniformité lorsque <var>T</var> augmente (<var>τ</var> &gt; 1).
   </p>
   <div class="interactive-controls">
-    <label for="temp-slider-fr" style="font-weight: 700; font-size: 0.9rem;">Température (T) : <span id="temp-val-fr" style="color: var(--llm-brand-action); font-family: monospace;">1.00</span></label>
+    <label for="temp-slider-fr" style="font-weight: 700; font-size: 0.9rem;">Température (τ) : <span id="temp-val-fr" style="color: var(--llm-brand-action); font-family: monospace;">1.00</span></label>
     <input type="range" id="temp-slider-fr" min="0.1" max="3.0" step="0.05" value="1.0" style="flex: 1; accent-color: var(--llm-brand);">
   </div>
   <div class="interactive-bars">
@@ -134,9 +142,9 @@ Modifiez $\tau$ pour observer comment la distribution change, alors que le token
       const logits = [3.0, 1.5, 1.0, 0.2];
       function update() {
         if (!slider) return;
-        const T = parseFloat(slider.value);
-        if (tempVal) tempVal.textContent = T.toFixed(2);
-        const scaled = logits.map(z => z / T);
+        const tau = parseFloat(slider.value);
+        if (tempVal) tempVal.textContent = tau.toFixed(2);
+        const scaled = logits.map(z => z / tau);
         const maxVal = Math.max(...scaled);
         const exp = scaled.map(s => Math.exp(s - maxVal));
         const sumExp = exp.reduce((a, b) => a + b, 0);
