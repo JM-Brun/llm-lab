@@ -313,13 +313,13 @@ These are qualitative predictions, not guarantees about the magnitude of a numer
 **Stage 3 — Controlled numerical calculation (toy aggregation, not an attention layer).**
 
 Use two short phrases with the same target and different preceding context: A = [good, situation] and B = [bad, situation]. These are simplified pedagogical units, **not a tokenization claimed for any real tokenizer**. The synthetic embedding table contains:
-$
+$$
 E[\text{good}]=(0.1,0.2),\quad E[\text{bad}]=(0.9,-0.4),\quad E[\text{situation}]=(0.5,0.5).
-$
+$$
 The shared target “situation” is at position 1 in both windows. Add the same positional vector $P_1=(0.02,0.05)$; the preceding context words are at position 0 and use $P_0=(0.01,0.00)$. To isolate the effect of the preceding context, define a **fixed illustrative** aggregation:
-$
+$$
 h_{\text{target}}=0.4\,z_{\text{prefix}}+0.6\,z_{\text{target}},\qquad z=x+P.
-$
+$$
 1. Verify that the lookup and positional term for “situation” are identical in A and B.
 2. Compute the position-adjusted prefix vectors, then compute $z_{\text{target}}$.
 3. Compute $h_A$, $h_B$, and their Euclidean distance.
@@ -329,9 +329,9 @@ $
 <summary>Show the worked solution and NumPy code</summary>
 
 The lookup for “situation” is $(0.5,0.5)$ in both windows; $z_{\text{target}}=(0.52,0.55)$. The prefixes give $z_{\text{good}}=(0.11,0.20)$ and $z_{\text{bad}}=(0.91,-0.40)$.
-$
+$$
 h_A=(0.356,0.410),\qquad h_B=(0.676,0.170).
-$
+$$
 The distance is $\sqrt{0.320^2+0.240^2}=0.400$.
 
 ~~~python
