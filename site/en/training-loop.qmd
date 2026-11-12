@@ -34,14 +34,14 @@ A **training step** takes a batch of observed prefixes and targets, runs the for
 A second measurement runs alongside: the same loss computed on **validation** data that never produces an update. Training loss tells you how well the model fits what it is fitted to; validation loss estimates how well that fit carries over.
 :::
 
-<div class="pipeline-stepper" role="navigation" aria-label="Operations in one training step">
+<div class="pipeline-stepper" role="group" aria-label="Operations in one training step">
   <span class="step-item">1. Batch</span>
   <span class="step-arrow" aria-hidden="true">→</span>
   <span class="step-item">2. Forward and loss</span>
   <span class="step-arrow" aria-hidden="true">→</span>
   <span class="step-item">3. Gradient</span>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active" aria-current="step">4. Update</span>
+  <span class="step-item active">4. Update</span>
   <span class="step-arrow" aria-hidden="true">→</span>
   <span class="step-item">5. Repeat, and measure on validation data</span>
 </div>

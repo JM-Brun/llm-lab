@@ -37,14 +37,14 @@ The previous page built a sequence's likelihood by combining the conditional pro
 **Quick question:** can you recover a token's NLL and explain why a loss mask cannot replace the causal mask?
 :::
 
-<div class="pipeline-stepper" role="navigation" aria-label="Steps in calculating cross-entropy">
+<div class="pipeline-stepper" role="group" aria-label="Steps in calculating cross-entropy">
   <a class="step-item" href="likelihood.qmd">1. Observed target</a>
   <span class="step-arrow" aria-hidden="true">→</span>
   <a class="step-item" href="probabilities.qmd">2. Predicted probability</a>
   <span class="step-arrow" aria-hidden="true">→</span>
   <span class="step-item">3. NLL</span>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active" aria-current="step">4. Mean over tokens</span>
+  <span class="step-item active">4. Mean over tokens</span>
 </div>
 
 

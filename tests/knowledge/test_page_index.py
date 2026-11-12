@@ -151,6 +151,37 @@ def test_probability_meta_flow_is_not_a_navigation_landmark() -> None:
 @pytest.mark.parametrize(
     "relative_path",
     [
+        "fr/positional-encoding.qmd",
+        "en/positional-encoding.qmd",
+        "fr/queries-keys-values.qmd",
+        "en/queries-keys-values.qmd",
+        "fr/training-loop.qmd",
+        "en/training-loop.qmd",
+        "fr/contextualized-representations.qmd",
+        "en/contextualized-representations.qmd",
+        "fr/cross-entropy.qmd",
+        "en/cross-entropy.qmd",
+        "fr/loss.qmd",
+        "en/loss.qmd",
+    ],
+)
+def test_computation_diagrams_do_not_mark_a_current_step(relative_path: str) -> None:
+    root = Path(__file__).resolve().parents[2]
+    source = (root / "site" / relative_path).read_text(encoding="utf-8")
+    flow_start = source.index("pipeline-stepper")
+    div_end = source.find("\n</div>", flow_start)
+    fence_end = source.find("\n::::", flow_start)
+    flow_ends = [end for end in (div_end, fence_end) if end >= 0]
+    flow_end = min(flow_ends)
+    flow = source[flow_start:flow_end]
+    assert 'role="group"' in flow
+    assert 'role="navigation"' not in flow
+    assert 'aria-current="step"' not in flow
+
+
+@pytest.mark.parametrize(
+    "relative_path",
+    [
         "fr/scaled-dot-product-attention.qmd",
         "en/scaled-dot-product-attention.qmd",
         "fr/causal-masking.qmd",

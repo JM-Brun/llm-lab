@@ -52,7 +52,7 @@ Deux phrases peuvent contenir le même token sans lui donner le même rôle : *b
 
 
 
-<div class="pipeline-stepper meta-flow meta-flow--branch" role="navigation" aria-label="Des embeddings aux représentations contextualisées selon le traitement positionnel">
+<div class="pipeline-stepper meta-flow meta-flow--branch" role="group" aria-label="Des embeddings aux représentations contextualisées selon le traitement positionnel">
   <div class="meta-flow__source"><strong>Embeddings de tokens</strong><span>Vecteurs initiaux issus du lookup</span></div>
   <div class="meta-flow__source"><strong>Signal positionnel</strong><span>Injecté à un endroit qui dépend de l’architecture</span></div>
   <div class="meta-flow__comparison">
@@ -60,7 +60,7 @@ Deux phrases peuvent contenir le même token sans lui donner le même rôle : *b
     <div class="meta-flow__comparison-item"><strong>RoPE</strong><small>Rotation de Q/K à l’intérieur des mécanismes d’attention des couches Transformer</small></div>
   </div>
   <div class="meta-flow__result"><strong>Couches Transformer répétées</strong><small>Attention, MLP, connexions résiduelles et normalisation</small></div>
-  <div class="meta-flow__result meta-flow__branch--active" aria-current="step"><strong>Représentations contextualisées</strong><small>Chaque état dépend du contenu et des interactions autorisées avec le contexte</small></div>
+  <div class="meta-flow__result meta-flow__branch--active"><strong>Représentations contextualisées</strong><small>Chaque état dépend du contenu et des interactions autorisées avec le contexte</small></div>
 </div>
 
 
