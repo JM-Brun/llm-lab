@@ -32,13 +32,18 @@
       const direction = link.closest(".nav-page-previous") ? "previous" : link.closest(".nav-page-next") ? "next" : null;
       if (!direction || link.dataset.navigationLabelEnhanced === "true") return;
       const title = link.querySelector(".nav-page-text")?.textContent?.trim().replace(/\s+/g, " ") || link.getAttribute("title")?.trim();
-      if (!title) return;
       const french = document.documentElement.lang.toLowerCase().startsWith("fr");
       const label = french ? (direction === "previous" ? "Page précédente" : "Page suivante") : (direction === "previous" ? "Previous page" : "Next page");
       const separator = french ? " : " : ": ";
-      link.setAttribute("aria-label", label + separator + title);
+      link.setAttribute("aria-label", title ? label + separator + title : label);
       link.dataset.navigationLabelEnhanced = "true";
     });
+  };
+
+  const observePageNavigation = () => {
+    if (!document.body) return;
+    const observer = new MutationObserver(enhancePageNavigation);
+    observer.observe(document.body, { childList: true, subtree: true });
   };
 
   // Preserve deep links into optional resource sections: opening a hash target
@@ -63,6 +68,7 @@
   const enhanceAccessibility = () => {
     enhanceCalloutButtons();
     enhancePageNavigation();
+    observePageNavigation();
     openResourceDisclosureForHash();
   };
 
