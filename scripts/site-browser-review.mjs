@@ -83,7 +83,7 @@ const cases = [
     ...testCase, page: "llm-overview.html", kind: "spine-overview",
   })),
   ...routeContextCases.flatMap(testCase =>
-    ["llm-overview.html", "generation.html", "text-data.html", "tokenization-strategies.html", "unicode-text.html", "tokenizer-design-evaluation.html", "embedding-space.html", "positional-encoding.html", "contextualized-representations.html", "tensors.html", "rope.html", "transformer.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "attention-score-scaling.html", "cross-attention.html", "logits.html", testCase.lang === "fr" ? "probabilites.html" : "probabilities.html", testCase.lang === "fr" ? "vraisemblance.html" : "likelihood.html", "decoding-strategies.html", "cross-entropy.html", "loss.html", "gradients.html", testCase.lang === "fr" ? "evaluation-experimentale.html" : "experimental-evaluation.html", "scaling-laws.html", "transformer-architectures.html", "llm-limits.html"].map(page => ({
+    ["llm-overview.html", "generation.html", "text-data.html", "tokenization-strategies.html", "unicode-text.html", "tokenizer-design-evaluation.html", "embedding-space.html", "positional-encoding.html", "contextualized-representations.html", "tensors.html", "rope.html", "transformer.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "causal-masking.html", "attention-score-scaling.html", "cross-attention.html", "logits.html", testCase.lang === "fr" ? "probabilites.html" : "probabilities.html", testCase.lang === "fr" ? "vraisemblance.html" : "likelihood.html", "decoding-strategies.html", "cross-entropy.html", "loss.html", "gradients.html", "training-loop.html", testCase.lang === "fr" ? "evaluation-experimentale.html" : "experimental-evaluation.html", "scaling-laws.html", "transformer-architectures.html", "llm-limits.html"].map(page => ({
       ...testCase, page, kind: "route-context",
     }))
   ),
@@ -114,7 +114,7 @@ const cases = [
   // Focused mobile review for decoding, attention, scoring and training.
   // Desktop/light route-context cases above remain the keyboard/Axe baseline.
   ...visualCases.filter(testCase => testCase.label === "mobile").flatMap(testCase =>
-    ["decoding-strategies.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "transformer-architectures.html", "causal-masking.html", "attention-score-scaling.html", testCase.lang === "fr" ? "vraisemblance.html" : "likelihood.html", "cross-entropy.html", "loss.html", "gradients.html", "training-examples.html", testCase.lang === "fr" ? "evaluation-experimentale.html" : "experimental-evaluation.html"].map(page => ({
+    ["decoding-strategies.html", "queries-keys-values.html", "scaled-dot-product-attention.html", "transformer-architectures.html", "causal-masking.html", "attention-score-scaling.html", testCase.lang === "fr" ? "vraisemblance.html" : "likelihood.html", "cross-entropy.html", "loss.html", "gradients.html", "training-loop.html", "training-examples.html", testCase.lang === "fr" ? "evaluation-experimentale.html" : "experimental-evaluation.html"].map(page => ({
       ...testCase, page, kind: "attention-training-mobile",
     }))
   ),
@@ -1057,6 +1057,7 @@ async function runCase(testCase, caseIndex) {
             "decoding-strategies.html": "guided-stage-inference",
             "loss.html": "guided-stage-training",
             "gradients.html": "guided-stage-training",
+            "training-loop.html": "guided-stage-training",
             "scaling-laws.html": "guided-stage-training",
             "transformer-architectures.html": "guided-stage-orientation",
             "llm-limits.html": "guided-stage-orientation",
