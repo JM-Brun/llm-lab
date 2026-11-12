@@ -260,6 +260,7 @@ def load_pages() -> list[dict[str, Any]]:
                 "scope": str(metadata.get("scope", "")),
                 "summary": str(metadata.get("summary", "")),
                 "purpose": str(metadata.get("purpose", "")),
+                "covered_stages": metadata.get("covered_stages", []),
                 "section_headings": section_headings,
                 "route": metadata.get("suggested_route", {}),
                 "parents": metadata.get("hierarchy", {}).get("parents", []),
@@ -663,6 +664,55 @@ def render_guided_page_context_markdown(
     lines.extend(["  </ul>", "</section>", ""])
     return "\n".join(lines)
 
+
+
+def render_cross_cutting_coverage_markdown(
+    page: dict[str, Any], stages: Sequence[ResolvedGuidedRouteStage], language: str
+) -> str:
+    """Render a page's explicit thematic coverage as a set, not a breadcrumb chain."""
+    if language not in {"fr", "en"}:
+        raise ValueError(f"unsupported coverage language: {language!r}")
+    stage_ids = page.get("covered_stages", [])
+    if not isinstance(stage_ids, list) or any(not isinstance(item, str) for item in stage_ids):
+        raise ValueError(f"invalid covered_stages metadata for {page['id']!r}")
+    if len(stage_ids) != len(set(stage_ids)):
+        raise ValueError(f"duplicate covered stage for {page['id']!r}")
+    stage_by_id = {stage.id: stage for stage in stages}
+    missing = [stage_id for stage_id in stage_ids if stage_id not in stage_by_id]
+    if missing:
+        raise ValueError(f"unknown covered stages for {page['id']!r}: {missing}")
+    if not stage_ids:
+        return ""
+    label = "Étapes couvertes par ce panorama" if language == "fr" else "Stages covered by this overview"
+    lines = [
+        f'<nav class="guided-page-coverage" aria-label="{label}">',
+        f'  <p class="guided-page-coverage__label">{label}</p>',
+        "  <ul>",
+    ]
+    for stage_id in stage_ids:
+        stage = stage_by_id[stage_id]
+        lines.append(
+            f'    <li><a href="learning-map.html#guided-stage-{escape(stage.id, quote=True)}">'
+            f'{escape(stage.title)}</a></li>'
+        )
+    lines.extend(["  </ul>", "</nav>", ""])
+    return "\\n".join(lines)
+
+
+def prepare_cross_cutting_coverage_fragments(
+    language: str, pages: list[dict[str, Any]], stages: Sequence[ResolvedGuidedRouteStage]
+) -> dict[Path, str]:
+    """Generate explicit coverage partials for transversal pages without changing membership."""
+    outputs: dict[Path, str] = {}
+    includes = SITE / "includes"
+    for page in pages:
+        if not page.get("covered_stages"):
+            continue
+        if page["language"] != language:
+            continue
+        output = includes / f"generated-guided-coverage-{page['id'].replace('/', '-')}.qmd"
+        outputs[output] = render_cross_cutting_coverage_markdown(page, stages, language)
+    return outputs
 
 def build_guided_route_transition_index(
     transitions: list[ResolvedGuidedRouteTransition],
@@ -1219,6 +1269,7 @@ def prepare_build(language: str) -> dict[Path, str]:
     artifacts.update(
         prepare_guided_page_context_fragments(language, guided_route, guided_transitions)
     )
+    artifacts.update(prepare_cross_cutting_coverage_fragments(language, pages, guided_route))
     artifacts.update(prepare_suggested_route_fragments(language, pages, guided_route))
     payload = {
         "language": language,
