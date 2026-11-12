@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/generation"]
+related: ["fr/generation", "fr/exercises-generation"]
 tags: ["type:exercise-hub", "destination:practice", "topic:inference-generation-exercises", "level:applied", "language:fr", "status:published"]
 -->
 
@@ -63,6 +63,10 @@ Les paramètres restent fixes pendant l'inférence : aucune mise à jour n'a lie
 Le prefill est une phase d'exécution qui traite le prompt initial comme une séquence. Le teacher forcing est une stratégie de conditionnement qui fournit le préfixe observé comme contexte pendant l'entraînement (et certains usages de scoring). Ce ne sont pas deux noms pour la même opération.
 
 </details>
+
+## Entraînement approfondi
+
+Pour aller plus loin, la [collection d'exercices Génération](../exercises-generation.qmd#generation) propose des calculs et des traces guidées, avec corrigés détaillés, sur la sélection, la boucle autoregressive, le cache KV, la température et les filtres top-k/top-p.
 
 ::: {.language-switch}
 **Langue :** [Français](generation.qmd) · [English](../../en/exercises/generation.qmd)

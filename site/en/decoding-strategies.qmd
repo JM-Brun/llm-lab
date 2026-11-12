@@ -19,7 +19,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["en/generation", "en/logits", "en/probabilities", "en/experimental-evaluation"]
+related: ["en/generation", "en/logits", "en/probabilities", "en/experimental-evaluation", "en/exercises-generation"]
 tags: ["type:deep-dive", "destination:deepen", "topic:decoding", "level:advanced", "language:en", "status:published"]
 -->
 
@@ -284,6 +284,10 @@ For each comparison, record at least:
 - automatic metrics and, where possible, human evaluation instructions.
 
 Parameter labels alone (such as “temperature 0.7” or “top-p 0.9”) are insufficient if other processors, their order, or software versions differ.
+
+## Practice
+
+To check the temperature calculations and compare top-k with top-p on a concrete distribution, use the generation exercises on [temperature](exercises-generation.qmd#ex-generation-temperature) and [top-k/top-p](exercises-generation.qmd#ex-generation-top-k-top-p). These activities are optional and include worked solutions; they do not replace evaluating output quality on real tasks.
 
 ## Research references
 

@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["en/exercises"]
   children: []
-related: []
+related: ["en/decoding-strategies", "en/generation-exercises"]
 tags: ["type:exercise-collection", "destination:practice", "topic:exercise-generation", "level:applied", "language:en", "status:published"]
 -->
 
@@ -26,7 +26,7 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-gener
 
 **Prerequisites:** [logits](logits.qmd), [output probabilities](probabilities.qmd), [next-token prediction and autoregressive generation](generation.qmd).
 
-**Five formative exercises published:** GE-A–GE-E. They cover next-token selection, the autoregressive loop and stopping, then prefill/decode and the purpose and limits of the KV cache.
+**Seven formative exercises published:** GE-A–GE-G. They cover next-token selection, the autoregressive loop and stopping, prefill/decode and KV caching, then the effects of temperature and top-k/top-p filters.
 
 <a id="ge-a-distribution-and-selection"></a>
 ### Distribution and selection {#ex-generation-distribution-selection}
@@ -120,7 +120,58 @@ Without a cache, the model processes lengths $3$, then $4$ (to predict $E$), the
 
 </details>
 
-**Remaining scope:** temperature, top-k and top-p.
+
+<a id="ge-f-temperature-and-concentration"></a>
+### Temperature and distribution concentration {#ex-generation-temperature}
+
+**Optional preparation:** [Advanced decoding strategies](decoding-strategies.qmd), to review logit transformations and distribution concentration.
+
+A model produces logits $z=(0,\ln 4,\ln 16)$ for tokens $\{A,B,C\}$. Apply temperature using $p(T)=\operatorname{softmax}(z/T)$.
+
+1. Compute the distribution for $T=1$.
+2. Compute the distribution for $T=2$.
+3. Does the most probable token change? What changes nevertheless?
+4. Does a higher temperature make an answer more truthful or creative by definition?
+
+<details>
+<summary>Show the worked solution</summary>
+
+For $T=1$, the exponentials of the logits are $(1,4,16)$, so $p(1)=(1/21,4/21,16/21)$.
+
+For $T=2$, the logits divided by two are $(0,\ln 2,\ln 4)$; their exponentials are $(1,2,4)$, so $p(2)=(1/7,2/7,4/7)$.
+
+The ranking remains $C$, then $B$, then $A$: dividing all logits by a strictly positive temperature preserves their order. The distribution nevertheless becomes flatter: less probable tokens receive more relative probability mass. Temperature guarantees neither truth, creativity, nor quality; it controls the spread of choices.
+
+</details>
+
+<a id="ge-g-top-k-and-top-p"></a>
+### Compare top-k and top-p {#ex-generation-top-k-top-p}
+
+**Optional preparation:** [Advanced decoding strategies](decoding-strategies.qmd), to review fixed-size candidate selection and cumulative probability mass.
+
+After softmax, the distribution over four tokens is:
+
+| Token | A | B | C | D |
+|---|---:|---:|---:|---:|
+| Probability | 0.50 | 0.25 | 0.15 | 0.10 |
+
+1. With top-k and $k=2$, which tokens are retained? Compute their probabilities after renormalization.
+2. With top-p and $p=0.80$, which tokens are retained? Compute their probabilities after renormalization.
+3. Why do the two methods not necessarily retain the same number of candidates?
+4. What is lost when a filter excludes a token with nonzero probability?
+
+<details>
+<summary>Show the worked solution</summary>
+
+**Top-k, $k=2$:** tokens A and B are retained. Their original mass is $0.50+0.25=0.75$. After renormalization, $P(A)=0.50/0.75=2/3$ and $P(B)=0.25/0.75=1/3$.
+
+**Top-p, $p=0.80$:** add tokens in descending probability order until cumulative mass reaches or exceeds 0.80. A alone gives 0.50; A+B give 0.75; A+B+C give 0.90. The nucleus is therefore {A, B, C}. After renormalization, $P(A)=5/9$, $P(B)=5/18$, and $P(C)=1/6$.
+
+Top-k fixes the number of candidates; top-p fixes a target cumulative mass, so the number varies with the distribution. Both filters exclude continuations that had nonzero probability in the original distribution: they change the effective distribution and may remove a continuation that would have been relevant.
+
+</details>
+
+These exercises focus on distribution controls. Sequence search (beam search) and contrastive decoding remain optional deep dives, not prerequisites for the main learning path.
 
 ---
 

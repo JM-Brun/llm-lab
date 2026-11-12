@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/exercises"]
   children: []
-related: []
+related: ["fr/decoding-strategies", "fr/generation-exercises"]
 tags: ["type:exercise-collection", "destination:practice", "topic:exercise-generation", "level:applied", "language:fr", "status:published"]
 -->
 
@@ -26,7 +26,7 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-gener
 
 **Notions préalables :** [logits](logits.qmd), [probabilités de sortie](probabilites.qmd), [prédiction du prochain token et génération autoregressive](generation.qmd).
 
-**Cinq exercices formatifs publiés :** GE-A à GE-E. Ils couvrent la sélection du prochain token, la boucle autoregressive et l'arrêt, puis le prefill/decode et le rôle ainsi que les limites du cache KV.
+**Sept exercices formatifs publiés :** GE-A à GE-G. Ils couvrent la sélection du prochain token, la boucle autoregressive et l'arrêt, le prefill/decode et le cache KV, puis les effets de la température et des filtres top-k/top-p.
 
 <a id="ge-a-distribution-et-selection"></a>
 ### Distribution et sélection {#ex-generation-distribution-selection}
@@ -120,7 +120,58 @@ Sans cache, le modèle traite des séquences de longueur $3$, puis $4$ (pour pr�
 
 </details>
 
-**Périmètre restant :** température, top-k et top-p.
+
+<a id="ge-f-temperature-and-concentration"></a>
+### Température et concentration de la distribution {#ex-generation-temperature}
+
+**Préparation facultative :** [Stratégies avancées de décodage](decoding-strategies.qmd), pour revoir la transformation des logits et la concentration de la distribution.
+
+Un modèle produit les logits $z=(0,\ln 4,\ln 16)$ pour les tokens $\{A,B,C\}$. On applique la température selon $p(T)=\operatorname{softmax}(z/T)$.
+
+1. Calculer la distribution pour $T=1$.
+2. Calculer la distribution pour $T=2$.
+3. Le token le plus probable change-t-il ? Qu'est-ce qui change malgré tout ?
+4. Une température plus élevée rend-elle la réponse plus vraie ou plus créative par définition ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Pour $T=1$, les exponentielles des logits sont $(1,4,16)$, donc $p(1)=(1/21,4/21,16/21)$.
+
+Pour $T=2$, les logits divisés par deux sont $(0,\ln 2,\ln 4)$ ; les exponentielles sont $(1,2,4)$, donc $p(2)=(1/7,2/7,4/7)$.
+
+Le classement reste $C$, puis $B$, puis $A$ : diviser tous les logits par une température strictement positive conserve leur ordre. La distribution devient toutefois plus plate : les tokens moins probables reçoivent davantage de masse relative. La température ne garantit ni vérité, ni créativité, ni qualité ; elle règle la dispersion des choix.
+
+</details>
+
+<a id="ge-g-top-k-and-top-p"></a>
+### Comparer top-k et top-p {#ex-generation-top-k-top-p}
+
+**Préparation facultative :** [Stratégies avancées de décodage](decoding-strategies.qmd), pour revoir la sélection par nombre fixe de candidats et par masse cumulée.
+
+Après softmax, la distribution sur quatre tokens est :
+
+| Token | A | B | C | D |
+|---|---:|---:|---:|---:|
+| Probabilité | 0,50 | 0,25 | 0,15 | 0,10 |
+
+1. Avec top-k et $k=2$, quels tokens sont conservés ? Calculez leurs probabilités après renormalisation.
+2. Avec top-p et $p=0,80$, quels tokens sont conservés ? Calculez leurs probabilités après renormalisation.
+3. Pourquoi les deux méthodes ne conservent-elles pas nécessairement le même nombre de candidats ?
+4. Que perd-on lorsqu'un filtre exclut un token de probabilité non nulle ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+**Top-k, $k=2$ :** les tokens A et B sont conservés. Leur masse initiale vaut $0,50+0,25=0,75$. Après renormalisation, $P(A)=0,50/0,75=2/3$ et $P(B)=0,25/0,75=1/3$.
+
+**Top-p, $p=0,80$ :** on ajoute les tokens par probabilité décroissante jusqu'à atteindre ou dépasser 0,80. A seul donne 0,50 ; A+B donnent 0,75 ; A+B+C donnent 0,90. Le noyau est donc {A, B, C}. Après renormalisation, $P(A)=5/9$, $P(B)=5/18$ et $P(C)=1/6$.
+
+Top-k fixe le nombre de candidats ; top-p fixe une masse cumulée cible, donc le nombre varie avec la distribution. Dans les deux cas, le filtrage exclut des continuations qui avaient une probabilité non nulle dans la distribution d'origine : il modifie la distribution effective et peut supprimer une continuation pourtant pertinente.
+
+</details>
+
+Ces exercices portent sur les réglages de distribution. La recherche de séquences (beam search) et le décodage contrastif restent des approfondissements facultatifs, sans être des prérequis du parcours principal.
 
 ---
 
