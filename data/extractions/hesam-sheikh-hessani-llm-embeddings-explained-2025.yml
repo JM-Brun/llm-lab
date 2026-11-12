@@ -5,7 +5,7 @@ pedagogical_model:
     status: partial
     basis:
       - "The complete text exposed by the Hugging Face Space's embedded static article was retrieved on 2026-11-10, including the section headings, prose, code descriptions, figure captions and citation block."
-      - "The page's linked LLM Mechanics repository was identified, but its source code and notebooks were not audited."
+      - "The article's earlier LLM Mechanics repository was identified but remains unaudited; the current Space source links a distinct primer-llm-embeddings repository, whose source and Python scripts were inspected on 2026-11-12 but not executed."
       - "The reconstruction follows the author's visible article sequence; it does not claim that the interactive atlas or its underlying calculations were independently reproduced."
     inferred_elements:
       - "Learning outcomes and prerequisites are inferred from the explanatory sequence; the article does not publish a formal outcome list."
@@ -63,7 +63,7 @@ pedagogical_model:
     dossier: docs/source-reviews/hesam-sheikh-hessani-llm-embeddings-explained-2026-11.md
     canonical_graph: "data/concepts.yml"
     canonical_routes: [data/guided-route.yml, docs/learning-path.md]
-    decision: "Treat as a complementary visual tutorial and model-inspection case study. The core token-lookup and contextualization content is already present in the bilingual embedding-space lessons; do not create a duplicate core lesson. After inspecting the linked code and checking the dimension/TF-IDF claims, consider a contextual external link or an optional reproducible nearest-neighbour exercise."
+    decision: "Treat as a complementary visual tutorial and model-inspection case study. The core token-lookup and contextualization content is already present in the bilingual embedding-space lessons; do not create a duplicate core lesson. The current Space-linked primer-llm-embeddings source has been inspected but not executed; its implementation caveats and a bilingual optional Practice blueprint are recorded in the canonical source review. Keep the atlas external and link-only. Do not promote the activity until a small reproducible implementation, tests, rendering and FR/EN parity are verified. The distinct earlier LLM Mechanics repository remains unaudited."
     structures_kept_separate: [source-explanatory-graph, canonical-concept-graph, page-navigation-graph, pedagogical-route]
 items:
   - id: hesam-sheikh-hessani-llm-embeddings-explained-2025:static-and-contextualized
