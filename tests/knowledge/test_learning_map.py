@@ -871,7 +871,7 @@ def test_relation_family_identity_is_visible_in_legend_and_details() -> None:
     script = MODULE["render_map_script"]()
     assert 'copy.relationFamilies[relation.family] || ""' in script
     assert '"map-relation-family map-relation-family--" + relation.family' in script
-    assert '"map-detail-relation--" + family' in script
+    assert '" map-detail-relation--" + family' in script
     assert '"map-relation-family map-relation-family--" + family' in script
 
     styles_path = MODULE_PATH.parents[2] / "site" / "styles.scss"
