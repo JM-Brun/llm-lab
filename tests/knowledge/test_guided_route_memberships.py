@@ -526,9 +526,7 @@ def test_overview_preserves_cross_cutting_coverage_and_explicit_next_page(
         ("en", "LLM and Transformer glossary", "glossary.qmd"),
     ],
 )
-def test_overview_links_to_the_localized_glossary(
-    language: str, label: str, href: str
-) -> None:
+def test_overview_links_to_the_localized_glossary(language: str, label: str, href: str) -> None:
     """The overview offers a visible, language-localized route to terminology lookup."""
     source = (ROOT / "site" / language / "llm-overview.qmd").read_text(encoding="utf-8")
     assert f"[{label}]({href})" in source
