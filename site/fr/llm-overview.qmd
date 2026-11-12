@@ -100,6 +100,8 @@ Une fois la distribution calculée, tout dépend de la question posée. **Pour u
 - **Scorer.** On connaît la suite : notre continuation commence par « Être ». On lit la probabilité que le modèle lui donnait, 0,6. Répétée sur chaque token d'un texte, cette lecture mesure à quel point le modèle s'attendait à ce texte ; c'est la [vraisemblance](vraisemblance.qmd).
 - **Apprendre.** On connaît aussi la suite, et l'on veut que le modèle s'y attende davantage la prochaine fois. L'écart entre la prédiction et le token attendu est résumé par un nombre, la [perte](loss.qmd) (*loss*) ; les [gradients](gradients.qmd) indiquent comment modifier chaque paramètre pour la réduire. Pendant cet apprentissage, le contexte est toujours construit avec les tokens réels du texte, jamais avec ceux que le modèle aurait produits : c'est le *teacher forcing*, détaillé dans les [exemples d'entraînement](training-examples.qmd).
 
+Dans notre exemple, attribuer 0,6 au token observé correspond à un **surprisal** de $-\ln(0,6)\approx0,51$ nat : moins un token est probable, plus il est surprenant. L'[entropie](entropy.qmd) est le surprisal moyen, pondéré par leurs probabilités, sur tous les tokens possibles ; additionner les surprisals des tokens observés relie cette idée à la [vraisemblance](vraisemblance.qmd).
+
 Générer et scorer laissent les paramètres intacts ; seul l'apprentissage les modifie. Les trois usages partagent le même calcul, mais ne s'enchaînent pas dans une même exécution.
 
 Scorer n'est pas encore évaluer. Le scoring donne des probabilités pour un texte. Une évaluation compare ces résultats, ou d'autres mesures, sur un ensemble d'exemples défini à l'avance et tenu à l'écart de l'entraînement jusqu'au bilan final.
