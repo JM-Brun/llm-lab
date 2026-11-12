@@ -172,3 +172,15 @@ After the activity, learners should be able to:
 ### Scope decision
 
 Do not add a new canonical concept, chapter, prerequisite edge or process breadcrumb. First attach the optional activity to the existing bilingual lessons and their established Practice route. Promote it to a first-class learning resource only after a runnable implementation, test coverage, rendering and FR/EN parity are verified.
+
+## 10. Reproducible project-side inspection exercise
+
+A small NumPy-only implementation now exists in `src/llm_lab/foundations/embedding_inspection.py`, with unit tests in `tests/unit/test_embedding_inspection.py`. It deliberately avoids loading or downloading the 1.5B checkpoint and does not introduce a new lesson or route.
+
+- `lookup_embedding_rows` retrieves rows directly by integer token IDs, preserving order and duplicate IDs; it returns a copy and never decodes/re-tokenizes labels.
+- `cosine_top_k` computes cosine neighbours in the input embedding table, returns token IDs alongside scores, excludes the query by default, excludes zero-norm candidates, and uses ascending token ID as a deterministic tie-break.
+- The query row must have non-zero norm; `k` must fit the eligible candidate set. The function returns a directed top-k list, not a symmetrized graph.
+- Both helpers validate matrix shape, real finite values, integer IDs and row bounds. They are NumPy-only; no model, tokenizer, PyTorch or network dependency is introduced.
+- The existing bilingual embedding-space exercise hubs now include the same executable example and explicitly state that input-table neighbours are not contextualized states or sentence-level retrieval evidence.
+
+This is a tested reference-scale pedagogical implementation, not a reproduction of the external Space's checkpoint, extraction pipeline, interactive atlas or graph layout. The activity is now implemented as a tiny-fixture exercise; live-atlas inspection and checkpoint-level reproduction remain open validation tasks.
