@@ -201,8 +201,10 @@ jobs:
           if [ -z "$RENDER_TARGETS" ] && [ -z "$RENDER_ASSETS" ]; then
             echo "Incremental mode has no safe page or asset targets; falling back to a full render."
             quarto render site
-          else
+          elif [ -n "$RENDER_TARGETS" ]; then
             .venv/bin/python scripts/quarto_render_batch.py
+          else
+            echo "Static assets only; skipping the Quarto page renderer."
           fi
 
           while IFS= read -r asset; do
