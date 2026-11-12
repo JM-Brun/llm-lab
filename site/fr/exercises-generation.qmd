@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/exercises"]
   children: []
-related: ["fr/decoding-strategies"]
+related: ["fr/decoding-strategies", "fr/generation-exercises"]
 tags: ["type:exercise-collection", "destination:practice", "topic:exercise-generation", "level:applied", "language:fr", "status:published"]
 -->
 
