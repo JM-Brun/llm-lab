@@ -70,13 +70,13 @@ The factor $1/|\mathcal{M}|$ comes from the mean; ignored positions have zero de
 
 For the one-position scribe example, $p=(0.6,0.2,0.1,0.1)$ and target $y=0$ (“Être”), so:
 
-$
+$$
 \nabla_z\ell=p-y=(-0.4,0.2,0.1,0.1).
-$
+$$
 
 The components sum to zero, as expected: adding the same constant to every logit leaves softmax unchanged. To see how this reaches a parameter, consider a final affine projection $z=Wh+b$ with $h=(1,2)^\top$. Its weight gradient is the outer product:
 
-$
+$$
 \nabla_W\ell=(\nabla_z\ell)h^\top=
 \begin{bmatrix}
 -0.4 & -0.8\\
@@ -84,7 +84,7 @@ $
 0.1 & 0.2\\
 0.1 & 0.2
 \end{bmatrix}.
-$
+$$
 
 With an illustrative SGD rate $\eta=0.1$, $W$ changes by $-\eta\nabla_W\ell$: the first row increases by $(0.04,0.08)$ and the other rows decrease according to their gradients. Earlier layers receive gradients by further applications of the chain rule. These small values are pedagogical, not parameters from a trained model.
 
