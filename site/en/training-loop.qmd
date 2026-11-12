@@ -41,7 +41,7 @@ A second measurement runs alongside: the same loss computed on **validation** da
   <span class="step-arrow" aria-hidden="true">→</span>
   <span class="step-item">3. Gradient</span>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active" aria-current="step">4. Update</span>
+  <span class="step-item active">4. Update</span>
   <span class="step-arrow" aria-hidden="true">→</span>
   <span class="step-item">5. Repeat, and measure on validation data</span>
 </div>

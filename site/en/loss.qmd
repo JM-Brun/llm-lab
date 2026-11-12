@@ -45,7 +45,7 @@ Reduction conventions determine how per-token losses are aggregated. Perplexity 
   <span class="step-arrow" aria-hidden="true">→</span>
   <span class="step-item">3. Aggregation</span>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active" aria-current="step">4. Loss</span>
+  <span class="step-item active">4. Loss</span>
 </div>
 
 Before interpreting the loss, check how [training inputs and targets are constructed](training-examples.qmd): a correct formula cannot fix a token-shift error.
