@@ -26,9 +26,46 @@ tags: ["type:exercise-hub", "destination:practice", "topic:in-context-learning-e
 
 ## Check your understanding
 
-1. Why is ICL not a weight update?
-2. A demonstration improves output format but not accuracy. What does this indicate about imitation versus generalization?
-3. Design an experiment that distinguishes learning a rule from reproducing patterns present in the demonstrations.
+Try to answer each question before opening its worked answer. The answers are indicative: other formulations are valid when they justify the reasoning correctly.
+
+1. **Why is ICL not a weight update?**
+
+<details>
+<summary>Show the worked answer</summary>
+
+During inference, the model receives instructions and examples in its prompt. They change the context on which the model conditions its predictions, but generation does not compute gradients or update parameters. The weights therefore remain the same before and after the request. The adaptation is temporary: a different prompt may produce different behavior. This differs from fine-tuning, which optimizes parameters on training data and changes the checkpoint's behavior.
+
+</details>
+
+2. **A demonstration improves output format but not accuracy. What does this indicate about imitation versus generalization?**
+
+<details>
+<summary>Show the worked answer</summary>
+
+The model may have learned to reproduce a presentation pattern — such as a JSON structure or a label — without identifying and correctly applying the underlying rule. Reproducing the form of a demonstration therefore does not show that the model generalizes the intended transformation or reasoning. To test generalization, evaluate novel cases that differ meaningfully from the examples, and measure format compliance separately from content accuracy.
+
+</details>
+
+3. **Design an experiment that distinguishes learning a rule from reproducing patterns present in the demonstrations.**
+
+<details>
+<summary>Show one possible approach and its criteria</summary>
+
+Construct an artificial task with an explicit rule and demonstration examples, then compare several conditions on the same test cases:
+
+1. **Zero-shot:** instruction only, with no demonstrations.
+2. **Relevant few-shot:** examples that illustrate the rule.
+3. **Reordered few-shot:** the same examples in a different order.
+4. **Irrelevant few-shot:** examples with comparable length and format that do not illustrate the rule.
+5. **Contradictory few-shot (optional):** examples where some demonstrations suggest a different rule, to measure sensitivity to them.
+
+Prepare held-out test cases, including combinations or inputs never shown in the demonstrations. Measure rule accuracy, format compliance, and, where useful, response stability separately. Control prompt length as far as possible and repeat trials with multiple phrasings and sampling seeds.
+
+**Interpretation:** success limited to seen examples or their superficial patterns suggests fragile imitation. Success on novel cases that remains reasonably robust to reordering and irrelevant examples is stronger evidence of generalization. It is not proof of a particular internal mechanism: the experiment measures behavior, not the algorithm the model may have learned internally.
+
+A good answer should specify at least the comparison conditions, unseen test cases, and a measure of rule success distinct from formatting. Several protocols are defensible if they control confounding factors and make this distinction possible.
+
+</details>
 
 [Exercises and experiments](../exercises.qmd).
 
