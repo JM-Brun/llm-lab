@@ -696,7 +696,7 @@ def render_cross_cutting_coverage_markdown(
             f'{escape(stage.title)}</a></li>'
         )
     lines.extend(["  </ul>", "</nav>", ""])
-    return "\\n".join(lines)
+    return "\n".join(lines)
 
 
 def prepare_cross_cutting_coverage_fragments(
@@ -713,6 +713,7 @@ def prepare_cross_cutting_coverage_fragments(
         output = includes / f"generated-guided-coverage-{page['id'].replace('/', '-')}.qmd"
         outputs[output] = render_cross_cutting_coverage_markdown(page, stages, language)
     return outputs
+
 
 def build_guided_route_transition_index(
     transitions: list[ResolvedGuidedRouteTransition],
