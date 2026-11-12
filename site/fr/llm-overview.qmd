@@ -148,6 +148,14 @@ Pour une tâche donnée, trois approches peuvent être combinées : utiliser un 
 
 Le choix se fait sur des critères mesurés : qualité, erreurs, robustesse, coût, latence, confidentialité, provenance des données, maintenance. Quelques prompts réussis ne constituent pas une évaluation.
 
+## Du modèle de langage à l’application conversationnelle
+
+Une interface de chat n'envoie pas un objet « conversation » magique au réseau neuronal. L'application sérialise une suite de messages dans le format attendu par le modèle. Les API courantes exposent des rôles comme **system**, **user** et **assistant** ; certaines représentent aussi explicitement les appels d'outils et leurs résultats. Ces rôles organisent l'interaction, mais leur syntaxe et leur sémantique exactes dépendent du modèle et de l'API. Ce ne sont pas des couches universelles du Transformer, et une étiquette de rôle ne suffit pas à imposer une politique.
+
+La **fenêtre de contexte** est la quantité finie de contenu tokenisé — entrée et contenu généré — qu'un modèle peut traiter lors d'une requête. Quand une conversation dépasse ce budget, l'application doit éventuellement sélectionner, résumer ou récupérer des informations plus anciennes. C'est différent d'une **mémoire** persistante : un modèle ne conserve pas automatiquement toutes les conversations précédentes entre deux requêtes indépendantes. La persistance exige un stockage côté application et une politique explicite sur les informations enregistrées, récupérées et réinjectées.
+
+Un **appel d'outil** ajoute une frontière supplémentaire. Le modèle peut produire une demande structurée qui nomme un outil et ses arguments ; l'application ou le runtime qui l'entoure valide cette demande, décide si elle est autorisée, exécute l'opération et renvoie le résultat dans le nouveau contexte. Le modèle n'exécute pas du code externe simplement parce qu'il a généré la demande. Un **agent** se comprend donc mieux comme un système construit autour d'un modèle — avec une boucle de contrôle, des outils, un état ou une mémoire et des garde-fous — et non comme un synonyme de LLM. L'utilisation d'outils dépend du modèle et du runtime ; elle n'est pas garantie par la seule prédiction du prochain token.
+
 ::: {.callout-tip title="Pour approfondir"}
 - **Voir le modèle en configuration :** [visite guidée de la configuration d'un GPT](gpt-config-walkthrough.qmd).
 - **Revoir les outils mathématiques :** [fondements mathématiques](mathematical-foundations.qmd).
