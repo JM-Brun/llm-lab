@@ -71,3 +71,26 @@ A dedicated narrow-screen SVG was added in both languages rather than shrinking 
 The bilingual lesson pages now use a responsive `picture` element: viewports up to 600 CSS pixels receive the mobile SVG; wider viewports retain the existing desktop SVG. Both variants have localized accessible image alternatives. The external DEV illustration remains link-only; the mobile artwork is independently authored and does not reproduce its composition.
 
 Validation required: Quarto full render and local-link checks; Chromium checks at 390 px and desktop widths in EN/FR; verify the correct SVG is selected at each breakpoint, no overflow/clipping, legible text, and accessible alternative text. Manual screen-reader review remains separate.
+
+
+## Matrices explicites pour Q, K et V — 2026-11-12
+
+Les quatre diagrammes bilingues (desktop et mobile) ajoutent une représentation matricielle schématique à chacune des branches Q, K et V. Chaque vignette montre trois lignes et quatre colonnes pour rendre la structure 2D immédiatement visible ; cette grille est illustrative et ne prétend pas fixer la largeur réelle des tenseurs. Les dimensions effectives restent indiquées séparément : Q et K ont la forme T × d_k, V a la forme T × d_v, et l'entrée X a la forme T × d_model. Le contraste Q/K (même largeur de clé pour le produit QKᵀ) versus V (largeur d_v, contenu agrégé) est conservé.
+
+Point de rigueur : la petite grille ne représente pas la matrice de projection W_Q/W_K/W_V, mais le tenseur de sortie Q, K ou V. Les matrices de projection sont identifiées dans les équations XW_Q, XW_K et XW_V. Le détail de leurs dimensions et le passage aux tenseurs multi-têtes restent dans la leçon avancée.
+
+## Dimensions of scores, weights and output — 2026-11-12
+
+The matrix notation is extended beyond Q/K/V so the downstream shapes are visible too: QKᵀ has shape T × T; after scaling and softmax, the attention-weight matrix A also has shape T × T; the weighted product A·V produces O with shape T × d_v. The displayed multiplication is therefore dimensionally readable: (T × T) · (T × d_v) → (T × d_v). This is a single-sequence, single-head view; batch and head axes remain intentionally omitted.
+
+
+## Matrix visual refinement — 2026-11-12
+
+The Q/K/V matrix motifs now use a restrained three-colour gradient (teal for Q, blue for K, orange for V), softly rounded cells, a subtle framed panel, and explicit shape labels. This adopts the visual principle of a gradient-filled matrix while keeping the artwork independently authored rather than copying the reference illustration. English labels are localized ("Matrix"); French labels use "Matrice". The three-by-four cell pattern remains schematic, not a claim about the true feature width.
+
+
+## Correction visuelle et validation des mises à jour d'assets — 2026-11-12
+
+La revue du SVG a révélé deux défauts de placement que les contrôles XML ne pouvaient pas détecter : sur les versions desktop, le libellé de dimension était répété exactement au même emplacement au-dessus de chaque vignette ; sur les versions mobiles, le libellé inférieur touchait le bord du panneau matriciel. Les libellés redondants sont supprimés, en conservant une seule dimension lisible au-dessus de chaque matrice.
+
+Le workflow Quarto incrémental a également été corrigé : lorsque le changement ne concerne que des assets statiques et qu'aucune page Quarto n'est sélectionnée, il copie les assets dans le site restauré sans invoquer le moteur de rendu Python. Cela évite l'appel à `.venv/bin/python` dans un scénario où l'environnement virtuel n'est volontairement pas installé. Les rendus de pages continuent d'utiliser le moteur isolé lorsque des cibles Quarto sont présentes.

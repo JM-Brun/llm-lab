@@ -343,7 +343,11 @@ jobs:
           RENDER_TARGETS: ${{ steps.site_changes.outputs.render_targets }}
           RENDER_ASSETS: ${{ steps.site_changes.outputs.render_assets }}
         run: |
-          .venv/bin/python scripts/quarto_render_batch.py
+          if [ -n "$RENDER_TARGETS" ]; then
+            .venv/bin/python scripts/quarto_render_batch.py
+          else
+            echo "Asset-only incremental render: reusing the verified cached HTML; no Python render environment is needed."
+          fi
 
           while IFS= read -r asset; do
             [ -n "$asset" ] || continue
