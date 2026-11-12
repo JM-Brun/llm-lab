@@ -33,7 +33,7 @@
 <text x="195" y="824" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="19" font-weight="750" fill="#075d65">2 · Attention weights</text>
 <text x="195" y="852" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" fill="#24545a">which positions to attend to more?</text>
 <path d="M195 886 V918" stroke="#60758b" stroke-width="2.2" marker-end="url(#arrm)"/>
-<path d="M195 595 V918" fill="none" stroke="#df8b67" stroke-width="2.5" stroke-dasharray="7 6" marker-end="url(#arrm)"/>
+<path d="M195 595 H12 V977 H25" fill="none" stroke="#df8b67" stroke-width="2.5" stroke-dasharray="7 6" marker-end="url(#arrm)"/>
 <rect x="25" y="925" width="340" height="104" rx="14" fill="#fff" stroke="#a9b9c8" stroke-width="2"/>
 <text x="195" y="956" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="750" fill="#10233f">3 · Aggregate values V</text>
 <text x="195" y="985" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" fill="#51627a">attention weights × value vectors</text>
