@@ -54,21 +54,26 @@
         var slot = rail.querySelector("[data-guided-rail-progress]");
         if (!slot) return;
         var total = Number(rail.getAttribute("data-total")) || 0;
-        var count = document.createElement("span");
-        count.className = "guided-rail__count";
-        count.setAttribute("data-guided-progress-count", "");
-        count.textContent = progress.length + "/" + total + " " +
-          (document.documentElement.lang.toLowerCase().indexOf("fr") === 0
-            ? "étapes consultées" : "stages viewed");
-        var reset = document.createElement("button");
-        reset.type = "button";
-        reset.className = "guided-rail__reset";
-        reset.textContent = slot.getAttribute("data-reset-label") || "";
-        reset.addEventListener("click", function () {
-          progress = [];
-          if (writeProgress(progress)) applyState();
-        });
-        slot.replaceChildren(count, reset);
+        var count = slot.querySelector("[data-guided-progress-count]");
+        if (!count) {
+          count = document.createElement("span");
+          count.className = "guided-rail__count";
+          count.setAttribute("data-guided-progress-count", "");
+          slot.insertBefore(count, slot.firstChild);
+        }
+        count.textContent = progress.length + "/" + total;
+        var reset = slot.querySelector("button.guided-rail__reset");
+        if (!reset) {
+          reset = document.createElement("button");
+          reset.type = "button";
+          reset.className = "guided-rail__reset";
+          reset.textContent = slot.getAttribute("data-reset-label") || "";
+          reset.addEventListener("click", function () {
+            progress = [];
+            if (writeProgress(progress)) applyState();
+          });
+          slot.appendChild(reset);
+        }
         slot.hidden = false;
       });
     }
