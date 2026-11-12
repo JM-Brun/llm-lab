@@ -78,3 +78,7 @@ Validation required: Quarto full render and local-link checks; Chromium checks a
 Les quatre diagrammes bilingues (desktop et mobile) ajoutent une représentation matricielle schématique à chacune des branches Q, K et V. Chaque vignette montre trois lignes et quatre colonnes pour rendre la structure 2D immédiatement visible ; cette grille est illustrative et ne prétend pas fixer la largeur réelle des tenseurs. Les dimensions effectives restent indiquées séparément : Q et K ont la forme T × d_k, V a la forme T × d_v, et l'entrée X a la forme T × d_model. Le contraste Q/K (même largeur de clé pour le produit QKᵀ) versus V (largeur d_v, contenu agrégé) est conservé.
 
 Point de rigueur : la petite grille ne représente pas la matrice de projection W_Q/W_K/W_V, mais le tenseur de sortie Q, K ou V. Les matrices de projection sont identifiées dans les équations XW_Q, XW_K et XW_V. Le détail de leurs dimensions et le passage aux tenseurs multi-têtes restent dans la leçon avancée.
+
+## Dimensions of scores, weights and output — 2026-11-12
+
+The matrix notation is extended beyond Q/K/V so the downstream shapes are visible too: QKᵀ has shape T × T; after scaling and softmax, the attention-weight matrix A also has shape T × T; the weighted product A·V produces O with shape T × d_v. The displayed multiplication is therefore dimensionally readable: (T × T) · (T × d_v) → (T × d_v). This is a single-sequence, single-head view; batch and head axes remain intentionally omitted.
