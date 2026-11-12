@@ -9,9 +9,9 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/entropy-exercises"
-summary: "Self-check questions and exercises associated with the Entropy: uncertainty over the next token lesson."
+summary: "Self-check questions, exercises, and worked answers for the Entropy lesson."
 scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
-purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
+purpose: "Check understanding, calculate token-level surprisal, and distinguish observed sequence surprise from expected predictive entropy."
 suggested_route:
   previous: null
   next: null
@@ -40,6 +40,49 @@ tags: ["type:exercise-hub", "destination:practice", "topic:entropy-exercises", "
 3. Tokenizers segment text differently, changing the units and positions over which the average is computed.
 
 </details>
+
+## Calculate token surprisal
+
+For one fixed context, suppose a model assigns the following next-token probabilities:
+
+| Candidate token | Probability |
+|---|---:|
+| A | 1/2 |
+| B | 1/4 |
+| C | 1/8 |
+| D | 1/8 |
+
+1. Calculate the surprisal of each candidate in bits, using $I(x)=-\log_2 p(x\mid context)$.
+2. Calculate the entropy of this distribution. Why is it an **expected** surprisal rather than the surprisal of one selected token?
+3. If the observed next token is C, what is its surprisal? Does that value describe the whole distribution?
+
+<details>
+<summary>Show the worked answer</summary>
+
+1. A: 1 bit; B: 2 bits; C: 3 bits; D: 3 bits.
+2. $H=\frac12(1)+\frac14(2)+\frac18(3)+\frac18(3)=1.75$ bits. It averages the surprisal of all possible outcomes, weighted by their probabilities.
+3. C has 3 bits of surprisal. This is the realized surprisal of that observed event, not the entropy of the distribution.
+
+</details>
+
+## From token surprisal to a sequence score
+
+Now consider three successive observed tokens. Their conditional probabilities, each evaluated with the observed prefix available at that position, are $1/2$, $1/4$, and $1/8$.
+
+1. Calculate each token's surprisal in bits.
+2. Calculate the sequence probability and total surprisal.
+3. Calculate the mean surprisal per token. Is this observed mean automatically equal to the entropy of the model?
+
+<details>
+<summary>Show the worked answer</summary>
+
+1. The token surprisals are 1, 2, and 3 bits.
+2. By the chain rule, the sequence probability is $(1/2)(1/4)(1/8)=1/64$. Its total surprisal is $-\log_2(1/64)=6$ bits, equal to the sum $1+2+3$.
+3. The observed mean is $6/3=2$ bits per token. It is not automatically the model's entropy: entropy is an expectation under a specified predictive distribution, whereas this mean is calculated from one observed sequence. Dataset-level mean NLL is related to empirical cross-entropy under the chosen targets and token-counting convention.
+
+</details>
+
+**Keep the quantities distinct:** token surprisal is an event-level value; entropy is an expectation over possible outcomes; sequence log-likelihood sums conditional log-probabilities; mean NLL/cross-entropy adds a target and aggregation convention. See [Likelihood](../likelihood.qmd) for the sequence factorization.
 
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/entropy.qmd) · [English](entropy.qmd)
