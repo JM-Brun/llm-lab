@@ -23,18 +23,18 @@
 <path d="M560 193 H620 V263 H650 M560 336 H620 V263" fill="none" stroke="#60758b" stroke-width="2.5" marker-end="url(#arrow)"/>
 <rect x="656" y="207" width="212" height="112" rx="16" fill="#fff" stroke="#a9b9c8" stroke-width="2"/>
 <text x="762" y="239" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="19" font-weight="750" fill="#10233f">1. Comparer</text>
-<text x="762" y="270" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="18" fill="#51627a">QKᵀ → scores</text>
+<text x="762" y="270" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="18" fill="#51627a">QKᵀ → T × T</text>
 <text x="762" y="295" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" fill="#51627a">division par √d_k, puis softmax</text>
 <path d="M868 263 H907" fill="none" stroke="#60758b" stroke-width="2.5" marker-end="url(#arrow)"/>
 <rect x="913" y="207" width="235" height="112" rx="16" fill="#dff2f1" stroke="#087f8c" stroke-width="2"/>
 <text x="1030" y="239" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="750" fill="#075d65">Poids d'attention</text>
-<text x="1030" y="269" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" fill="#24545a">quelles positions</text><text x="1030" y="291" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" fill="#24545a">regarder davantage ?</text>
+<text x="1030" y="269" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" fill="#24545a">quelles positions</text><text x="1030" y="291" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" fill="#24545a">regarder davantage ?</text><text x="1030" y="310" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" fill="#24545a">A : T × T</text>
 <path d="M560 482 H620 V418 H762 V344" fill="none" stroke="#df8b67" stroke-width="2.5" marker-end="url(#arrow)"/>
 <path d="M1030 319 V388" fill="none" stroke="#60758b" stroke-width="2.5" marker-end="url(#arrow)"/>
 <rect x="656" y="394" width="492" height="128" rx="16" fill="#fff" stroke="#a9b9c8" stroke-width="2"/>
 <text x="902" y="427" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="19" font-weight="750" fill="#10233f">2. Combiner les valeurs</text>
 <text x="902" y="458" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="17" fill="#51627a">somme pondérée des vecteurs V</text>
-<text x="902" y="488" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" fill="#51627a">→ représentation enrichie par le contexte</text>
+<text x="902" y="488" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" fill="#51627a">A (T×T) · V (T×d_v) → O (T×d_v)</text>
 <rect x="52" y="578" width="1096" height="48" rx="12" fill="#10233f"/>
 <text x="600" y="608" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="16" font-weight="650" fill="#fff">A = softmax(QKᵀ / √d_k) · Sortie = AV</text>
 </svg>
