@@ -152,15 +152,15 @@ La question utile n'est donc pas seulement « que signifie cette dimension ? »,
 
 ## 4. Géométrie : distances, angles, normes et pièges
 
-Un vecteur de dimension (d) est un point de (mathbb{R}^d). Mais les coordonnées prises séparément n'ont généralement pas d'interprétation stable. Les relations entre vecteurs dépendent du modèle, de la couche, de la normalisation et de la métrique.
+Un vecteur de dimension $d$ est un point de $\mathbb{R}^d$. Mais les coordonnées prises séparément n'ont généralement pas d'interprétation stable. Les relations entre vecteurs dépendent du modèle, de la couche, de la normalisation et de la métrique.
 
 ### 4.1 Trois mesures courantes
 
-Pour deux vecteurs (x) et (y) :
+Pour deux vecteurs $x$ et $y$ :
 
-- **Produit scalaire** : (x^\top y). Il dépend à la fois de l'angle et des normes.
-- **Distance euclidienne** : (\|x-y\|_2). Elle mesure une distance dans la géométrie choisie.
-- **Similarité cosinus** : (\frac{x^\top y}{\|x\|_2\,\|y\|_2}). Elle compare l'angle et ignore l'échelle radiale.
+- **Produit scalaire** : $x^\top y$. Il dépend à la fois de l'angle et des normes.
+- **Distance euclidienne** : $\|x-y\|_2$. Elle mesure une distance dans la géométrie choisie.
+- **Similarité cosinus** : $\frac{x^\top y}{\|x\|_2\,\|y\|_2}$. Elle compare l'angle et ignore l'échelle radiale.
 
 La normalisation L2 rend les normes égales à 1 ; dans ce cas, maximiser le produit scalaire revient à maximiser le cosinus. Sans normalisation, ces scores ne sont pas interchangeables.
 
@@ -172,7 +172,7 @@ Une projection (PCA, t-SNE, UMAP ou autre) transforme des vecteurs de grande dim
 
 ### 4.3 Voisins proches, graphe et sens
 
-Une recherche des (k) plus proches voisins construit un voisinage conditionné par le modèle, les vecteurs, la normalisation, la métrique, la valeur de (k) et la règle d'exclusion de soi-même. Le lien « A est dans les k voisins de B » n'implique pas toujours la réciproque.
+Une recherche des $k$ plus proches voisins construit un voisinage conditionné par le modèle, les vecteurs, la normalisation, la métrique, la valeur de (k) et la règle d'exclusion de soi-même. Le lien « A est dans les k voisins de B » n'implique pas toujours la réciproque.
 
 Transformer ces liens en graphe non orienté impose une règle de symétrisation (union ou voisinage mutuel). Un layout de graphe déplace les nœuds pour rendre le dessin lisible : ses coordonnées ne restituent pas fidèlement les distances de l'espace vectoriel.
 
