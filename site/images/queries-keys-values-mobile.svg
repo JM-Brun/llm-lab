@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 1190" role="img" aria-labelledby="title desc">
+<title id="title">Projections Q, K et V et calcul de l'attention</title>
+<desc id="desc">Vue verticale pour petit écran. L'entrée X est projetée en Q, K et V. Q et K déterminent les scores puis les poids d'attention ; ces poids sont combinés aux valeurs V pour produire la sortie.</desc>
+<defs><linearGradient id="bgm" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#eef8f8"/><stop offset="1" stop-color="#fff5ef"/></linearGradient><marker id="arrm" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0 0 L0 6 L8 3z" fill="#60758b"/></marker></defs>
+<rect width="390" height="1190" rx="22" fill="url(#bgm)"/>
+<text x="24" y="38" font-family="Inter,Arial,sans-serif" font-size="12" font-weight="800" letter-spacing="1.5" fill="#087f8c">AUTO-ATTENTION · VUE MOBILE</text>
+<text x="24" y="70" font-family="Inter,Arial,sans-serif" font-size="21" font-weight="750" fill="#10233f">Une entrée, trois projections</text>
+<rect x="25" y="96" width="340" height="92" rx="14" fill="#fff" stroke="#cbd9e3" stroke-width="2"/>
+<text x="195" y="126" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="19" font-weight="750" fill="#10233f">Entrée commune X</text>
+<text x="195" y="151" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="14" fill="#51627a">représentations de toutes les positions</text>
+<text x="195" y="173" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" fill="#51627a">T × d_model</text>
+<path d="M195 188 V218" stroke="#60758b" stroke-width="2.2" marker-end="url(#arrm)"/>
+<text x="195" y="238" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="700" fill="#51627a">TROIS TRANSFORMATIONS APPRISES</text>
+<rect x="25" y="255" width="340" height="100" rx="14" fill="#dff2f1" stroke="#087f8c" stroke-width="2"/>
+<text x="195" y="285" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="22" font-weight="800" fill="#075d65">Q · Requête</text>
+<text x="195" y="311" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" fill="#24545a">ce que la position cherche</text>
+<text x="195" y="337" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="14" fill="#24545a">Q = XW_Q · T × d_k</text>
+<rect x="25" y="375" width="340" height="100" rx="14" fill="#e7edff" stroke="#617bc5" stroke-width="2"/>
+<text x="195" y="405" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="22" font-weight="800" fill="#29478e">K · Clé</text>
+<text x="195" y="431" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" fill="#334c7d">ce que chaque position rend repérable</text>
+<text x="195" y="457" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="14" fill="#334c7d">K = XW_K · T × d_k</text>
+<rect x="25" y="495" width="340" height="100" rx="14" fill="#fff0e8" stroke="#df8b67" stroke-width="2"/>
+<text x="195" y="525" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="22" font-weight="800" fill="#9b4e3c">V · Valeur</text>
+<text x="195" y="551" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" fill="#7c5143">le contenu qui pourra être agrégé</text>
+<text x="195" y="577" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="14" fill="#7c5143">V = XW_V · T × d_v</text>
+<path d="M195 355 V615 H105 V646 M195 475 V615 H285 V646" fill="none" stroke="#60758b" stroke-width="2.2" marker-end="url(#arrm)"/>
+<rect x="25" y="652" width="340" height="104" rx="14" fill="#fff" stroke="#a9b9c8" stroke-width="2"/>
+<text x="195" y="682" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="750" fill="#10233f">1 · Comparer Q et K</text>
+<text x="195" y="712" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="19" fill="#51627a">QKᵀ → scores</text>
+<text x="195" y="738" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="14" fill="#51627a">division par √d_k, puis softmax</text>
+<path d="M195 756 V786" stroke="#60758b" stroke-width="2.2" marker-end="url(#arrm)"/>
+<rect x="25" y="792" width="340" height="94" rx="14" fill="#dff2f1" stroke="#087f8c" stroke-width="2"/>
+<text x="195" y="824" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="19" font-weight="750" fill="#075d65">2 · Poids d'attention</text>
+<text x="195" y="852" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" fill="#24545a">quelles positions regarder davantage ?</text>
+<path d="M195 886 V918" stroke="#60758b" stroke-width="2.2" marker-end="url(#arrm)"/>
+<path d="M195 595 V918" fill="none" stroke="#df8b67" stroke-width="2.5" stroke-dasharray="7 6" marker-end="url(#arrm)"/>
+<rect x="25" y="925" width="340" height="104" rx="14" fill="#fff" stroke="#a9b9c8" stroke-width="2"/>
+<text x="195" y="956" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="750" fill="#10233f">3 · Agréger les valeurs V</text>
+<text x="195" y="985" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" fill="#51627a">poids d'attention × vecteurs V</text>
+<text x="195" y="1010" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="14" fill="#51627a">somme pondérée</text>
+<path d="M195 1029 V1060" stroke="#60758b" stroke-width="2.2" marker-end="url(#arrm)"/>
+<rect x="25" y="1067" width="340" height="82" rx="14" fill="#10233f"/>
+<text x="195" y="1098" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="17" font-weight="750" fill="#fff">Sortie de l'attention</text>
+<text x="195" y="1128" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="16" fill="#fff">A = softmax(QKᵀ / √d_k) · O = AV</text>
+<text x="195" y="1175" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="12" fill="#51627a">Q/K règlent la pondération · V apporte le contenu</text>
+</svg>
