@@ -118,7 +118,7 @@ Ces techniques ne sont pas mutuellement exclusives et ne répondent pas au même
 
 À approfondir : [Architectures hybrides](hybrid-llm-architectures.qmd) et [Complexité et parallélisme](llm-computational-complexity.qmd).
 
-## 6. Du modèle au système qui utilise des outils
+## 6. Du modèle au système qui utilise des outils {#tool-using-systems}
 
 Un modèle qui sait produire un appel d'outil n'exécute pas nécessairement lui-même l'opération demandée. Dans une intégration classique, l'application reçoit l'appel, exécute l'outil, puis transmet son résultat au modèle.
 
