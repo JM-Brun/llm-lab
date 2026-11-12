@@ -24,7 +24,7 @@ Short self-checks are collected on companion pages linked from each lesson. Topi
 
 ## Exercises by lesson
 
-::: {.callout-note collapse="true" title="Browse all 33 per-lesson practice pages"}
+::: {.callout-note collapse="true" title="Browse all 34 per-lesson practice pages"}
 
 ### Understand / Comprendre
 
