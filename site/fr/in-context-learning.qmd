@@ -51,6 +51,8 @@ Sentiment :
 
 Le premier exemple fournit une démonstration locale. Le modèle peut l'utiliser pour produire une étiquette cohérente pour le second texte, même si aucune mise à jour de poids n'a lieu.
 
+Le périmètre du terme varie selon les travaux : certains réservent *in-context learning* aux démonstrations fournies dans le prompt (notamment le few-shot), tandis que d'autres emploient le terme plus largement pour l'adaptation conditionnée par les instructions. Dans ce parcours, la définition opérationnelle est large ; les réglages zero-shot, one-shot et few-shot restent distingués.
+
 ## Pourquoi ce n'est pas du fine-tuning
 
 | Opération | Où se trouve l'information d'adaptation ? | Les paramètres changent-ils ? |
