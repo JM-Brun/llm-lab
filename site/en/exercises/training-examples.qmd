@@ -1,7 +1,7 @@
 ---
 title: "Exercises — Training examples"
-subtitle: "Self-check questions, exercises, and worked answers"
-description-meta: "Self-check questions and exercises associated with the Training examples lesson."
+subtitle: "Four self-check questions and their answers"
+description-meta: "Four self-check questions with answers, associated with the Training examples lesson."
 keywords: ["type:exercise-hub", "destination:practice", "topic:training-examples-exercises", "level:applied", "language:en", "status:published"]
 lang: en
 ---
@@ -9,9 +9,9 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/training-examples-exercises"
-summary: "Self-check questions and exercises associated with the Training examples lesson."
-scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
-purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
+summary: "Four self-check questions with answers, associated with the Training examples lesson."
+scope: "Collects four short self-check questions and their answers without duplicating the lesson’s conceptual explanation."
+purpose: "Check a few essential prerequisites: token alignment, causality, attention and loss masks, and the dimensions of logits."
 suggested_route:
   previous: null
   next: null

@@ -1,7 +1,7 @@
 ---
 title: "Exercices — Exemples d'entraînement"
-subtitle: "Questions de vérification, exercices et corrigés"
-description-meta: "Questions de vérification et exercices associés à la leçon Exemples d'entraînement."
+subtitle: "Quatre questions de vérification et leurs réponses"
+description-meta: "Quatre questions de vérification avec réponses, associées à la leçon Exemples d'entraînement."
 keywords: ["type:exercise-hub", "destination:practice", "topic:training-examples-exercises", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---
@@ -9,9 +9,9 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/training-examples-exercises"
-summary: "Questions de vérification et exercices associés à la leçon Exemples d'entraînement."
-scope: "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle."
-purpose: "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon."
+summary: "Quatre questions de vérification avec réponses, associées à la leçon Exemples d'entraînement."
+scope: "Regroupe quatre questions courtes de vérification et leurs réponses, sans dupliquer l’explication conceptuelle de la leçon."
+purpose: "Vérifier quelques prérequis essentiels : alignement des tokens, causalité, masques d’attention et de perte, et dimensions des logits."
 suggested_route:
   previous: null
   next: null
