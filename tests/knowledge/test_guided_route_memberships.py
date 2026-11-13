@@ -41,6 +41,12 @@ def test_membership_projection_preserves_core_optional_and_multiple_contexts(
         ("inference", "core"),
     ]
 
+    for page_id in ("in-context-learning", "context-engineering"):
+        membership = memberships[f"{language}/{page_id}"]
+        assert [(item.stage_id, item.role) for item in membership] == [
+            ("orientation", "core")
+        ]
+
     text_input = memberships[f"{language}/text-data"]
     assert [(item.stage_id, item.role) for item in text_input] == [("text-input", "core")]
 
