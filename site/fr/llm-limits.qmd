@@ -9,7 +9,7 @@ lang: fr
 LLM-LAB-PAGE-MAP v1
 id: "fr/llm-limits"
 scope: "Examine ce que l’objectif de prédiction du prochain token garantit et ne garantit pas : vérité des sorties, calibration, sens du mot « comprendre », capacités dites émergentes, rôle de la taille. Court complément critique du panorama ; ne détaille ni les mécanismes du Transformer ni les protocoles d’évaluation expérimentale."
-purpose: "À l’issue de cette page, le lecteur doit pouvoir distinguer ce qui se déduit de l’objectif d’entraînement de ce qui exige une évaluation, préciser le critère derrière le mot « comprendre » et expliquer pourquoi une capacité apparente dépend de la métrique et du protocole."
+purpose: "À l’issue de cette page, le lecteur doit pouvoir distinguer ce qui se déduit de l’objectif d’entraînement de ce qui exige une évaluation, préciser le critère derrière le mot « comprendre », distinguer l’évaluation du modèle et du système, et expliquer pourquoi une capacité apparente dépend de la métrique et du protocole."
 suggested_route:
   previous: null
   next: null
@@ -30,7 +30,7 @@ Prédire le prochain token est un **objectif d’entraînement**. Ce qu’un mod
 À l’issue de cette page, vous pourrez :
 - distinguer ce qui découle de l’objectif d’entraînement de ce qui exige une évaluation ;
 - préciser le critère utilisé derrière le mot « comprendre » ;
-- expliquer pourquoi une capacité apparente dépend de la métrique et du protocole.
+- distinguer l’évaluation du modèle seul de celle d’un assistant complet et citer plusieurs dimensions pertinentes ;\n- expliquer pourquoi une capacité apparente dépend de la métrique et du protocole.
 :::
 
 ## 1. Ce que l’objectif garantit — et ne garantit pas
@@ -44,6 +44,19 @@ Un objectif de prédiction apprend à attribuer des probabilités aux suites de 
 - qu’un comportement soit causalement expliqué par un motif d’attention isolé.
 
 Ces absences de garantie ne sont pas des défauts de réalisation : elles découlent de l’objectif lui-même. Chacune appelle une évaluation adaptée — mesures, baselines et contrôles — définie en fonction de la tâche et de l'usage visés. L'[exercice d'évaluation expérimentale](evaluation-experimentale.qmd) illustre cette démarche sur un cas précis de classement de passages scientifiques ; il ne constitue pas une méthode générale d'évaluation des assistants conversationnels.
+
+## 2. Qu'évaluer dans un assistant ?
+
+Un score unique ne résume pas la qualité d'un assistant. Il faut d'abord préciser **ce qui est évalué** : le modèle seul, ou le système complet (modèle, instructions, récupération de documents, outils et interface). Pour un assistant, plusieurs dimensions peuvent être examinées séparément :
+
+- **Exactitude et fidélité aux sources :** les affirmations sont-elles correctes et, lorsqu'une source est fournie, la réponse est-elle réellement étayée par elle ? Utiliser des cas vérifiables et une adjudication adaptée ; la fluidité du texte n'est pas une preuve.
+- **Réussite de la tâche et suivi des consignes :** le résultat satisfait-il les critères définis à l'avance, y compris le format et les contraintes ? Des exemples de réussite isolés ne suffisent pas.
+- **Calibration :** les niveaux de confiance annoncés correspondent-ils à la fréquence de réussite observée sur un ensemble de cas ? Une mesure comme l'erreur de calibration ou le score de Brier apporte un éclairage, mais dépend de la définition des probabilités et des données évaluées.
+- **Robustesse :** les résultats résistent-ils à des paraphrases, à des entrées ambiguës, à des informations manquantes et à des cas limites ? Comparer des variantes contrôlées permet de repérer les fragilités.
+- **Sécurité et refus :** le système évite-t-il les réponses dangereuses tout en répondant aux demandes légitimes ? Mesurer à la fois les erreurs de sécurité et les refus injustifiés.
+- **Outils, récupération et fonctionnement :** si le système utilise un RAG ou des outils, les documents récupérés sont-ils pertinents, les citations soutiennent-elles les affirmations, les actions sont-elles correctement exécutées ? Ajouter les contraintes opérationnelles pertinentes : latence, coût et disponibilité.
+
+Ces dimensions ne forment pas une liste universelle ni un score à additionner mécaniquement. Leur priorité dépend de l'usage et du risque. Les résultats doivent être ventilés par type de tâche et de cas d'échec ; une moyenne globale peut masquer une faiblesse importante. Enfin, un test hors ligne ne garantit pas le comportement en production : surveiller les changements de données, d'usage et de système après déploiement.
 
 ## 2. Que veut dire « comprendre » ?
 
