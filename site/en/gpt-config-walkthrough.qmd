@@ -182,6 +182,8 @@ The questions for this tour and their worked answers are collected on its [dedic
 
 ## Build path navigation
 
+[← Back to the path: Build a small GPT](build-path.qmd)
+
 
 ## Connections
 
