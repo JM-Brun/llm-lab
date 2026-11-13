@@ -11,7 +11,6 @@ LLM-LAB-PAGE-MAP v1
 id: "en/in-context-learning"
 scope: "Introduces in-context learning as the use of instructions and examples in a prompt without updating parameters; distinguishes zero-shot, one-shot, and few-shot settings, fine-tuning, RAG, and context engineering. Mechanistic hypotheses and experimental protocols are further explorations."
 purpose: "Readers should define ICL, distinguish zero-shot, one-shot, and few-shot settings, explain why parameters remain fixed, and avoid conflating ICL with fine-tuning, RAG, or context engineering."
-domain: "inference-efficiency"
 suggested_route:
   previous: "en/generation"
   next: "en/context-engineering"
