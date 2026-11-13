@@ -86,6 +86,7 @@ For prefill, define throughput denominator (input tokens processed). For decode,
 
 - FlashAttention reduces data movement and avoids materializing the full dense attention score/probability matrices in high-bandwidth memory; it does not remove dense pairwise attention arithmetic.
 - SDPA is an interface with backend dispatch. An SDPA call alone is not evidence that FlashAttention ran.
+- Treat FlashAttention generations separately. FlashAttention-2 improves parallelism/work partitioning; FlashAttention-3 uses Hopper-specific asynchronous execution and low-precision techniques. Record the exact implementation/version and GPU architecture; do not compare a FlashAttention-3 result on H100 as though it were the same kernel as FlashAttention-2 on another device.
 - Peak memory includes more than the attention matrix. Q/K/V, outputs, model activations, allocator reservations and KV cache must be accounted for separately.
 - Training, prefill and decode have different shapes and bottlenecks. Results from one phase do not establish results for another.
 - Speedups depend on hardware, sequence length, head dimension, batch, dtype, masks, layout, software version and baseline quality.
