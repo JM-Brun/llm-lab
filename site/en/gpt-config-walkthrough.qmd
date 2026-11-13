@@ -178,20 +178,7 @@ Line by line:
 
 ## Exercises
 
-1. What error do you get with `embedding_dim=10, num_heads=4`? And with `embedding_dim=12, num_heads=4`?
-2. How many entries does the position table of a `context_length=256, embedding_dim=64` configuration have?
-
-
-3. For a configuration with `vocab_size=50`, `context_length=32`, `embedding_dim=64`, `num_heads=4`, `num_layers=6`, and `mlp_hidden_dim=256`, match each field to what it controls. What does `seed` change?
-<details>
-<summary>Show answers and reasoning</summary>
-
-1. `10 % 4 == 2`: divisibility fails, so `ValueError` at construction. With `12 % 4 == 0`: accepted, and each head receives `12/4 = 3` columns.
-2. `256 × 64 = 16384` values, i.e. 16384 learned parameters — one per position and per dimension. This count is independent of the vocabulary and the head count.
-
-
-3. `vocab_size` sets the token-table rows and the last logits dimension (`V`); `context_length` sets the maximum sequence length and position table; `embedding_dim` sets the residual-stream width `d` and projection widths; `num_heads` splits that width into `H` heads of `d/H` columns; `num_layers` sets the number of blocks; `mlp_hidden_dim` sets the MLP's intermediate width. `seed` changes initial values, not shapes or architecture.
-</details>
+The questions for this tour and their worked answers are collected on its [dedicated practice page](exercises/gpt-config-walkthrough.qmd). Try them before opening the answers: they check the stated outcomes without duplicating the prompts in the walkthrough.
 
 ## Build path navigation
 
