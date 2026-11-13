@@ -781,7 +781,7 @@ relations:
   - {from: retrieval-augmented-generation, type: contributes-to, to: context-engineering}
   - {from: persistent-memory, type: contributes-to, to: context-engineering}
   - {from: fine-tuning, type: part-of, to: post-training}
-  - {from: fine-tuning, type: contrasts-with, to: context-injection}
+  - {from: context-injection, type: contrasts-with, to: fine-tuning}
   - {from: context-injection, type: contributes-to, to: in-context-learning}
   - {from: document-retrieval, type: contrasts-with, to: in-context-learning}
   - {from: policy-gradient, type: part-of, to: post-training}
