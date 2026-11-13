@@ -50,3 +50,14 @@ The newsletter is a secondary pedagogical source and its full text was unavailab
 - Shah et al. (2024), *FlashAttention-3*: https://arxiv.org/abs/2407.08608
 - PyTorch SDPA API: https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html
 - PyTorch SDPA tutorial: https://docs.pytorch.org/tutorials/intermediate/scaled_dot_product_attention_tutorial.html
+
+
+## Original teaching visuals
+
+Three editable SVG diagrams were added to the bilingual scaled-dot-product-attention lesson:
+
+- `site/images/flashattention/io-aware-tiling.svg`: HBM/SRAM data movement and tiled computation.
+- `site/images/flashattention/online-softmax.svg`: merge of running and tile-local softmax statistics.
+- `site/images/flashattention/dense-vs-sparse.svg`: connectivity preserved by exact dense FlashAttention versus a sparse pattern.
+
+These are original explanatory schematics, not reproductions of the newsletter's or papers' figures. They intentionally simplify hardware execution: the tiling sketch is conceptual, not a literal kernel schedule, and the sparse pattern is illustrative rather than a claim about one canonical sparse algorithm. The bilingual lesson supplies localized captions and alternative text.
