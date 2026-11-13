@@ -753,8 +753,8 @@ relations:
   - {from: reinforcement-learning-from-human-feedback, type: part-of, to: post-training}
   - {from: direct-preference-optimization, type: part-of, to: post-training}
   - {from: in-context-learning, type: contrasts-with, to: instruction-tuning}
-  - {from: context-engineering, type: related-to, to: in-context-learning}
-  - {from: context-engineering, type: related-to, to: autoregressive-generation}
+  - {from: context-engineering, type: contributes-to, to: in-context-learning}
+  - {from: context-engineering, type: applies-to, to: autoregressive-generation}
   - {from: inference-time-compute, type: applies-to, to: reasoning-model}
   - {from: tool-calling, type: part-of, to: agentic-system}
   - {from: token, type: represented-by, to: token-embedding}
