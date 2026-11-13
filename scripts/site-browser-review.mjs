@@ -863,21 +863,25 @@ async function runCase(testCase, caseIndex) {
 
       if (index === 0) {
         const returnLabel = lang === "fr" ? "Retour au parcours Build" : "Back to the Build path";
-        const returnCards = await page.locator(".route-nav-cards a").evaluateAll(links =>
-          links.map(link => ({
-            href: link.getAttribute("href"),
-            text: link.innerText.trim().toLocaleLowerCase(),
+        item.buildTour.returnCardData = await page.locator(".route-nav-cards").evaluateAll(cards =>
+          cards.map(card => ({
+            html: card.outerHTML,
+            links: [...card.querySelectorAll("a")].map(link => ({
+              href: link.getAttribute("href"),
+              text: link.innerText.trim(),
+            })),
           }))
         );
-        const matches = returnCards.filter(link =>
-          link.text.includes(returnLabel.toLocaleLowerCase())
-          && link.href
-          && new URL(link.href, page.url()).pathname.endsWith("/build-path.html")
+        const returnCards = item.buildTour.returnCardData.flatMap(card => card.links).filter(link =>
+          link.text.toLocaleLowerCase().includes(returnLabel.toLocaleLowerCase())
         );
-        if (matches.length !== 1) {
+        const returnTarget = returnCards.length === 1 && returnCards[0].href
+          ? new URL(returnCards[0].href, page.url()).pathname
+          : null;
+        if (returnCards.length !== 1 || !returnTarget?.endsWith("/build-path.html")) {
           throw new Error(
             "first build-tour page must expose one explicitly labelled return to the Build hub "
-            + JSON.stringify(returnCards)
+            + JSON.stringify(item.buildTour.returnCardData)
           );
         }
       }
