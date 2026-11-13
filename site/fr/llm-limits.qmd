@@ -45,6 +45,19 @@ Un objectif de prédiction apprend à attribuer des probabilités aux suites de 
 
 Ces absences de garantie ne sont pas des défauts de réalisation : elles découlent de l’objectif lui-même. Chacune appelle une évaluation adaptée — mesures, baselines et contrôles — définie en fonction de la tâche et de l'usage visés. L'[exercice d'évaluation expérimentale](evaluation-experimentale.qmd) illustre cette démarche sur un cas précis de classement de passages scientifiques ; il ne constitue pas une méthode générale d'évaluation des assistants conversationnels.
 
+## 2. Qu'évaluer dans un assistant ?
+
+Un score unique ne résume pas la qualité d'un assistant. Il faut d'abord préciser **ce qui est évalué** : le modèle seul, ou le système complet (modèle, instructions, récupération de documents, outils et interface). Pour un assistant, plusieurs dimensions peuvent être examinées séparément :
+
+- **Exactitude et fidélité aux sources :** les affirmations sont-elles correctes et, lorsqu'une source est fournie, la réponse est-elle réellement étayée par elle ? Utiliser des cas vérifiables et une adjudication adaptée ; la fluidité du texte n'est pas une preuve.
+- **Réussite de la tâche et suivi des consignes :** le résultat satisfait-il les critères définis à l'avance, y compris le format et les contraintes ? Des exemples de réussite isolés ne suffisent pas.
+- **Calibration :** les niveaux de confiance annoncés correspondent-ils à la fréquence de réussite observée sur un ensemble de cas ? Une mesure comme l'erreur de calibration ou le score de Brier apporte un éclairage, mais dépend de la définition des probabilités et des données évaluées.
+- **Robustesse :** les résultats résistent-ils à des paraphrases, à des entrées ambiguës, à des informations manquantes et à des cas limites ? Comparer des variantes contrôlées permet de repérer les fragilités.
+- **Sécurité et refus :** le système évite-t-il les réponses dangereuses tout en répondant aux demandes légitimes ? Mesurer à la fois les erreurs de sécurité et les refus injustifiés.
+- **Outils, récupération et fonctionnement :** si le système utilise un RAG ou des outils, les documents récupérés sont-ils pertinents, les citations soutiennent-elles les affirmations, les actions sont-elles correctement exécutées ? Ajouter les contraintes opérationnelles pertinentes : latence, coût et disponibilité.
+
+Ces dimensions ne forment pas une liste universelle ni un score à additionner mécaniquement. Leur priorité dépend de l'usage et du risque. Les résultats doivent être ventilés par type de tâche et de cas d'échec ; une moyenne globale peut masquer une faiblesse importante. Enfin, un test hors ligne ne garantit pas le comportement en production : surveiller les changements de données, d'usage et de système après déploiement.
+
 ## 2. Que veut dire « comprendre » ?
 
 Le mot « compréhension » doit être précisé. Il peut désigner :
