@@ -76,6 +76,7 @@ Canonical destinations:
 - causal masking: `causal-masking.qmd`;
 - cross-attention: optional `cross-attention.qmd`;
 - block implementation concepts: `transformer-block-walkthrough.qmd`;
+- practice transfer: `exercises-transformer.qmd` (TF-D).
 - logits and probabilities: `logits.qmd`, `probabilites.qmd` / `probabilities.qmd`;
 - architecture comparison: `transformer-architectures.qmd`.
 
@@ -124,7 +125,7 @@ Keep derivations, tensor shape algebra, positional variants, cross-attention det
 - [x] Original encoder–decoder diagram distinguished from decoder-only GPT.
 - [x] Historical labels mapped to canonical LLM Lab concepts.
 - [x] Progressive reading passes and architecture comparison added to the bilingual canonical page.
-- [ ] Learner-facing practice prompts added or verified in the existing exercise system.
+- [x] Added TF-D to the existing bilingual Transformer exercise collection: original encoder–decoder labels, cross-attention Q/K/V provenance, logits versus softmax, GPT omissions, and post-LN versus pre-LN.
 - [ ] Source audit #758 completed, including separate assessment of *The Illustrated Transformer* and *The Illustrated GPT-2*.
 - [ ] FR/EN semantic parity checked after rendered build.
 - [ ] Internal links resolve in both languages.
