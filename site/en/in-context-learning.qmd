@@ -1,29 +1,34 @@
 ---
 title: "In-context learning"
 subtitle: "Adapting from a prompt without updating model parameters"
-keywords: ["type:concept-lesson", "destination:deepen", "topic:in-context-learning", "level:advanced", "language:en", "status:published"]
+keywords: ["type:concept-lesson", "destination:understand", "topic:in-context-learning", "level:core", "language:en", "status:published"]
 lang: en
 ---
 
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/in-context-learning"
-scope: "Introduces in-context learning, its differences from training and fine-tuning, its manifestations, and leading explanatory hypotheses."
+summary: "Explains how a model uses instructions and demonstrations in context without updating its parameters."
+scope: "Introduces in-context learning as an inference-time behavior, its differences from training and fine-tuning, and the limits of mechanistic explanations."
 purpose: "Readers should explain how a model uses examples in a prompt without updating its parameters, distinguish zero-shot, one-shot, and few-shot settings, and recognize the limits of current mechanistic explanations."
 domain: "inference-efficiency"
 suggested_route:
-  previous: null
-  next: null
+  previous: "en/generation"
+  next: "en/context-engineering"
 hierarchy:
   parents: []
   children: []
-related: ["en/llm-overview", "en/generation", "en/contextualized-representations", "en/in-context-learning-exercises"]
-tags: ["type:concept-lesson", "destination:deepen", "topic:in-context-learning", "level:advanced", "language:en", "status:published"]
+related: ["en/llm-overview", "en/generation", "en/context-engineering", "en/contextualized-representations", "en/in-context-learning-exercises"]
+tags: ["type:concept-lesson", "destination:understand", "topic:in-context-learning", "level:core", "language:en", "status:published"]
 -->
 
 ::: {.chapter-lead}
 **In-context learning (ICL)** is a model's ability to adapt its response to examples, instructions, or patterns provided directly in the prompt. This adaptation happens during inference: the model's parameters remain fixed. The model uses the supplied context; it does not thereby perform another fine-tuning step.
 :::
+
+## Relation to context engineering
+
+ICL describes the model's behavior in response to information in its prompt. **Context engineering** is the system-design work that selects and organizes that information before the call. It can therefore create better conditions for ICL, but it is not the same phenomenon. See the [Context engineering](context-engineering.qmd) lesson.
 
 ## Zero-shot, one-shot, and few-shot
 
