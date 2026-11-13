@@ -207,4 +207,4 @@ A comparison requires checking, among other things, the tokenizer and its segmen
 
 [← Back to the exercise catalogue](exercises.qmd)
 
-**Language:** [Français](../fr/exercises.qmd) · [English](exercises-foundations.qmd)
+**Language:** [Français](../fr/exercises-foundations.qmd) · [English](exercises-foundations.qmd)
