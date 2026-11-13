@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/generation"]
   children: []
-related: ["fr/in-context-learning", "fr/text-data", "fr/llm-limits"]
+related: ["fr/in-context-learning", "fr/contextualized-representations", "fr/text-data", "fr/llm-limits"]
 tags: ["type:concept-lesson", "destination:understand", "topic:context-engineering", "level:core", "language:fr", "status:published"]
 -->
 
@@ -45,13 +45,14 @@ Le mot est utilisé pour désigner des objets liés, mais différents :
 | **Fenêtre de contexte** | Le budget maximal de tokens utilisable par un appel ; les conventions de comptage entrée/sortie dépendent du modèle et de l'API | Que remplir cette capacité améliore la réponse |
 | **Longueur du contexte actif** | Le nombre de tokens effectivement présents dans le contexte à cette étape | Qu'il soit proche de la capacité maximale |
 | **Contexte accessible par l'attention** | Les positions qu'une position donnée peut utiliser, selon l'architecture et le masque | Que tous les tokens fournis soient accessibles à chaque position |
+| **Représentation contextualisée** | Un état caché/vectoriel calculé par les couches du Transformer à partir des tokens accessibles | Que ce soit le contexte actif ou un historique stocké |
 | **Historique de conversation** | Les messages conservés par l'application | Qu'ils soient tous renvoyés au modèle à chaque tour |
 | **Mémoire** | Des informations conservées hors du calcul courant, éventuellement entre sessions | Qu'elles soient présentes dans le contexte tant qu'elles ne sont pas récupérées et injectées |
 | **Documents récupérés (RAG)** | Des passages sélectionnés dans une source externe | Qu'ils modifient les paramètres du modèle ou soient fiables par défaut |
 
 Dans un Transformer causal, le masque d'attention restreint ce que chaque position peut consulter à l'intérieur de la séquence fournie. C'est un **contexte accessible au niveau du calcul**. Le context engineering agit à un autre niveau : il détermine largement quelle séquence et quelles informations le système fournit au modèle.
 
-La capacité de contexte et le contexte actif ne sont donc pas synonymes. Une application peut conserver un historique long tout en n'en transmettant qu'un résumé et quelques messages récents.
+La capacité de contexte et le contexte actif ne sont donc pas synonymes. Une application peut conserver un historique long tout en n'en transmettant qu'un résumé et quelques messages récents. Le contexte actif désigne les informations d'entrée ; les [représentations contextualisées](contextualized-representations.qmd) sont, elles, les états cachés calculés par le Transformer à partir de ces informations.
 
 ## Que peut contenir le contexte actif ?
 
