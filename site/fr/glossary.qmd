@@ -42,6 +42,9 @@ Ce glossaire donne une définition courte des termes rencontrés dans le site. I
 - **Decode incrémental** — phase qui suit le prefill et répète la prédiction à partir du contexte étendu par les tokens générés. À distinguer du décodage (*decoding*), qui désigne la règle de sélection du token. Voir [Générer du texte](generation.qmd).
 - **Cache KV** — mécanisme qui conserve les clés et valeurs d'attention déjà calculées afin d'éviter de recalculer le préfixe pendant le decode ; optimisation facultative de l'inférence.
 - **Fenêtre de contexte** — quantité de tokens que le modèle peut prendre en compte dans une entrée donnée.
+- **Apprentissage en contexte (*in-context learning*, ICL)** — adaptation des prédictions aux instructions, exemples ou régularités présents dans le contexte d'entrée, sans mise à jour des paramètres. Voir [apprentissage en contexte](in-context-learning.qmd).
+- **Ingénierie du contexte (*context engineering*)** — conception et gestion des informations effectivement fournies au modèle : sélection, récupération, structuration, actualisation, sécurité et évaluation. Voir [ingénierie du contexte](context-engineering.qmd).
+- **Prompt engineering** — formulation et organisation des instructions et exemples d'un prompt ; c'est une partie du travail sur le contexte, pas un synonyme du context engineering.
 
 ## Représentations et géométrie
 
