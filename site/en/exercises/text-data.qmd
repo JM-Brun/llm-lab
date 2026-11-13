@@ -46,6 +46,15 @@ No. IDs are defined only within a tokenizer's vocabulary; ID 17 in one vocabular
 
 </details>
 
+3. Two faithful translations of the same passage produce sequences of different lengths with the same tokenizer. If the model has a fixed context window, what practical consequence can this have? Can we infer that the model handles the language using fewer tokens better?
+
+<details>
+<summary>Show the reasoning</summary>
+
+The translation using more tokens consumes a larger share of the context budget: with the same budget, less room remains for history, documents, or the answer. Depending on the system, the longer sequence may also increase processing cost. But this does not show that the model handles the language using fewer tokens better: length measures representation efficiency on these texts, not the model's language quality. Downstream results would need to be evaluated separately, by language and on comparable tasks.
+
+</details>
+
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/text-data.qmd) · [English](text-data.qmd)
 :::
