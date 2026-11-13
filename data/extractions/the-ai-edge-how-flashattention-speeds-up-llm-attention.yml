@@ -1,0 +1,110 @@
+schema_version: 1
+source_id: the-ai-edge-how-flashattention-speeds-up-llm-attention
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Retrieved page exposes title, date, introductory text, running-state explanation, exact-versus-sparse distinction, PyTorch SDPA mention and table of contents."
+      - "Full sections on GPU execution, backward recomputation, training, decoding and performance limits were not accessible; the page labels the full article paid."
+      - "Additional technical detail is cross-checked against the original paper, FlashAttention-2 and official PyTorch documentation, not attributed to unseen newsletter text."
+    inferred_elements:
+      - "Learning outcomes and assumed prerequisites are inferred from the visible excerpt and declared section headings."
+  source_graph:
+    nodes:
+      - {id: src-attention-function, kind: computational-operation, description: "Mathematical attention mapping from Q, K and V under a mask.", locator: "Introduction"}
+      - {id: src-attention-kernel, kind: implementation, description: "Hardware execution strategy for the attention function.", locator: "Introduction"}
+      - {id: src-query-tile, kind: data-block, description: "Block of query rows processed together.", locator: "Introduction; primary-paper cross-check"}
+      - {id: src-key-value-tile, kind: data-block, description: "Key/value block streamed through the query-block computation.", locator: "Introduction; primary-paper cross-check"}
+      - {id: src-score-tile, kind: intermediate, description: "Temporary query-key scores for one tile.", locator: "Introduction"}
+      - {id: src-online-softmax-state, kind: numerical-state, description: "Running maximum, rescaled exponential sum and weighted-value accumulator.", locator: "Running-state explanation"}
+      - {id: src-hbm, kind: hardware-memory, description: "GPU high-bandwidth memory.", locator: "Primary-paper cross-check"}
+      - {id: src-on-chip-memory, kind: hardware-memory, description: "Fast on-chip storage used for tiles.", locator: "Primary-paper cross-check"}
+      - {id: src-sparse-attention, kind: alternative-method, description: "Attention variant changing which position pairs participate.", locator: "Exact-versus-sparse distinction"}
+      - {id: src-sdpa-interface, kind: software-interface, description: "PyTorch interface dispatching among eligible attention implementations.", locator: "PyTorch mention; official documentation"}
+    edges:
+      - {from: src-attention-function, type: implemented-by, to: src-attention-kernel}
+      - {from: src-query-tile, type: scored-against, to: src-key-value-tile}
+      - {from: src-score-tile, type: summarized-by, to: src-online-softmax-state}
+      - {from: src-online-softmax-state, type: updates, to: src-query-tile}
+      - {from: src-attention-kernel, type: reduces-data-movement-between, to: src-hbm}
+      - {from: src-attention-kernel, type: uses, to: src-on-chip-memory}
+      - {from: src-attention-kernel, type: distinct-from, to: src-sparse-attention}
+      - {from: src-sdpa-interface, type: dispatches-to, to: src-attention-kernel}
+    interpretation: "Source-local reconstruction. Technical nodes beyond the visible excerpt are explicitly cross-checked against primary or official documentation; this is not a complete reconstruction of the paid article."
+  learning_outcomes:
+    - {status: inferred, outcome: "Distinguish the mathematical attention function from its GPU execution kernel.", basis: "Accessible introduction."}
+    - {status: inferred, outcome: "Explain why tiled exact attention reduces intermediate materialization without making dense attention sparse.", basis: "Accessible introduction and primary paper."}
+    - {status: inferred, outcome: "Explain why running normalization statistics permit softmax across tiles.", basis: "Accessible running-state explanation."}
+    - {status: inferred, outcome: "Identify why speed claims require workload-, hardware- and backend-specific measurement.", basis: "Primary paper and PyTorch documentation."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Q/K/V, softmax and weighted aggregation.", basis: "Attention operation is assumed familiar."}
+    - {status: inferred, topic: "Matrix multiplication, exponentials and numerical stability.", basis: "Needed for online softmax."}
+    - {status: inferred, topic: "GPU memory hierarchy.", basis: "Needed for IO-aware motivation."}
+  teaching_route:
+    - {order: 1, section: "What attention computes", function: establish-mathematical-baseline, moves: ["Recall QK scores, normalization and weighted V aggregation"]}
+    - {order: 2, section: "Why the matrix is expensive", function: motivate-io-awareness, moves: ["Separate arithmetic work from intermediate materialization and memory traffic"]}
+    - {order: 3, section: "Normalize attention in pieces", function: derive-online-state, moves: ["Introduce tiling", "Maintain running maximum and exponential sum", "Rescale partial output"]}
+    - {order: 4, section: "Keep the work on the GPU chip", function: connect-algorithm-to-hardware, moves: ["Explain HBM and on-chip SRAM", "Explain tiling and fusion"]}
+    - {order: 5, section: "Recompute probabilities for training", function: expose-memory-compute-tradeoff, moves: ["Explain backward recomputation"]}
+    - {order: 6, section: "Understand the speedup's limits", function: qualify-performance-claims, moves: ["Separate training, prefill and decode", "Check backend eligibility", "Benchmark target hardware"]}
+  pedagogical_strengths:
+    - "Starts from the known attention operation rather than proposing a different mathematical mechanism."
+    - "Running-state explanation bridges global softmax and tiled execution."
+    - "Distinguishes exact IO-aware attention from sparse attention."
+    - "Connects recurrence to GPU memory hierarchy."
+  pedagogical_limits:
+    - "The accessible excerpt does not expose full derivations, implementation details, figures or later sections."
+    - "No newsletter benchmark was independently reproduced."
+    - "The complete source-local teaching model cannot be validated while paid sections remain inaccessible."
+  comparison:
+    dossier: docs/source-reviews/flashattention-io-aware-2026-11.md
+    canonical_graph: "data/concepts.yml and generated JSON-LD projection"
+    canonical_routes: [data/guided-route.yml, docs/learning-path.md, "Build path"]
+    decision: "Use for an optional Deepen companion, not a new core Understand stage; preserve separation between source-local execution graph, canonical concepts and curriculum."
+    structures_kept_separate: [source-semantic-graph, source-pedagogical-route, canonical-concept-graph, theory-understand-route, build-dependency-graph]
+items:
+  - id: the-ai-edge-how-flashattention-speeds-up-llm-attention:function-versus-kernel
+    kind: distinction
+    summary: "The attention function specifies the mathematical mapping from Q, K and V under a mask; a kernel specifies how hardware executes that mapping. Kernel optimization need not redefine the function."
+    locator: "Introduction, paragraphs 1–3"
+    locator_type: section
+    evidence_kind: direct-text
+    evidence_confidence: well-supported
+    limitations: ["Exactness is mathematical equivalence subject to floating-point effects, not universal bitwise identity."]
+    disposition: integrate
+  - id: the-ai-edge-how-flashattention-speeds-up-llm-attention:exact-versus-sparse
+    kind: misconception
+    summary: "Exact FlashAttention preserves allowed attention connectivity while changing intermediate storage and data movement; sparse attention changes participating position pairs."
+    locator: "Introduction, paragraphs 3–4; Dao et al. 2022"
+    locator_type: section
+    evidence_kind: direct-text
+    evidence_confidence: established
+    limitations: ["The original paper also discusses a separate block-sparse extension; do not conflate it with exact dense FlashAttention."]
+    disposition: integrate
+  - id: the-ai-edge-how-flashattention-speeds-up-llm-attention:online-softmax
+    kind: mechanism
+    summary: "Tiled attention merges per-tile maxima, exponential sums and weighted-value accumulators with rescaling, preserving global softmax normalization without retaining all scores simultaneously."
+    locator: "Running-state explanation; recurrence cross-checked against Dao et al. 2022 and FlashAttention-2"
+    locator_type: section
+    evidence_kind: synthesis
+    evidence_confidence: established
+    limitations: ["Masks, dropout, dtype and backward details require primary algorithm and kernel documentation."]
+    disposition: integrate
+  - id: the-ai-edge-how-flashattention-speeds-up-llm-attention:io-not-compute-elimination
+    kind: limitation
+    summary: "FlashAttention primarily reduces IO and intermediate materialization; dense attention still performs pairwise query-key interactions and retains quadratic arithmetic in sequence length."
+    locator: "Dao et al. 2022, abstract and IO analysis"
+    locator_type: external-cross-check
+    evidence_kind: primary-paper
+    evidence_confidence: established
+    limitations: ["IO complexity is not a universal wall-clock prediction."]
+    disposition: integrate
+  - id: the-ai-edge-how-flashattention-speeds-up-llm-attention:backend-dispatch
+    kind: limitation
+    summary: "PyTorch SDPA selects among eligible backends; invoking the API does not establish that a FlashAttention kernel was selected."
+    locator: "PyTorch scaled_dot_product_attention documentation"
+    locator_type: external-cross-check
+    evidence_kind: official-documentation
+    evidence_confidence: established
+    limitations: ["Eligibility and defaults vary by version, device, dtype, shape and mask."]
+    disposition: integrate
