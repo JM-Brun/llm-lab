@@ -168,11 +168,11 @@ Considérons les pertes par position suivantes, données ici à titre **illustra
 La moyenne sur les seules positions valides vaut :
 
 
-$
+$$
 \mathcal{L}=\frac{\sum_i m_i\ell_i}{\sum_i m_i}
 =\frac{0{,}2+1{,}1+0{,}7}{3}
 =\frac{2}{3}\approx 0{,}667.
-$
+$$
 
 Les pertes illustratives des positions PAD ne contribuent pas. Une moyenne naïve sur les cinq positions donnerait (1{,}8), ce qui modifierait l’objectif en faisant dépendre la perte du nombre de positions de padding. En pratique, la convention exacte de réduction (somme, moyenne par séquence ou moyenne par token valide) doit être explicitée ; cet exemple illustre uniquement la moyenne par token valide.
 
