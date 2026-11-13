@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import difflib
 import runpy
 from pathlib import Path
 from typing import Any
@@ -33,19 +32,10 @@ def test_tracked_map_list_matches_canonical_sidebar(language: str) -> None:
     fragment = ROOT / "site" / "includes" / f"generated-map-list-{language}.qmd"
 
     assert fragment.is_file(), f"Missing tracked map list: {fragment}"
-    actual = fragment.read_text(encoding="utf-8")
-    assert actual == expected, (
+    assert fragment.read_text(encoding="utf-8") == expected, (
         f"Stale map list: {fragment}. Regenerate with "
         "uv run --no-project --with-requirements docs/requirements-history-validation.txt "
-        "--python 3.12 python site/tools/build_learning_map.py\n"
-        + "\n".join(
-            difflib.unified_diff(
-                actual.splitlines(),
-                expected.splitlines(),
-                fromfile="tracked",
-                tofile="expected",
-            )
-        )
+        "--python 3.12 python site/tools/build_learning_map.py"
     )
 
 
