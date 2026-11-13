@@ -413,8 +413,16 @@ concepts:
       fr: "Adaptation du comportement du modèle à des instructions ou exemples présents dans le prompt, sans mise à jour de ses paramètres."
       en: "Adaptation of model behavior to instructions or examples in the prompt, without updating its parameters."
     domains: [inference-efficiency]
-    importance: supporting
+    importance: core
     resources: [fr/in-context-learning, en/in-context-learning, fr/llm-evolution, en/llm-evolution]
+  - id: context-engineering
+    labels: {fr: "Conception et gestion du contexte", en: "Context engineering"}
+    definitions:
+      fr: "Pratique consistant à sélectionner, assembler, organiser et actualiser les informations effectivement fournies au modèle à chaque étape d'inférence."
+      en: "The practice of selecting, assembling, organizing, and updating the information actually supplied to a model at each inference step."
+    domains: [inference-efficiency]
+    importance: core
+    resources: [fr/context-engineering, en/context-engineering]
   - id: pretraining
     labels: {fr: "Pré-entraînement", en: "Pretraining"}
     definitions:
@@ -745,6 +753,8 @@ relations:
   - {from: reinforcement-learning-from-human-feedback, type: part-of, to: post-training}
   - {from: direct-preference-optimization, type: part-of, to: post-training}
   - {from: in-context-learning, type: contrasts-with, to: instruction-tuning}
+  - {from: context-engineering, type: related-to, to: in-context-learning}
+  - {from: context-engineering, type: related-to, to: autoregressive-generation}
   - {from: inference-time-compute, type: applies-to, to: reasoning-model}
   - {from: tool-calling, type: part-of, to: agentic-system}
   - {from: token, type: represented-by, to: token-embedding}
