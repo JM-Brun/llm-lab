@@ -735,3 +735,66 @@ A reader should not leave with the rule “no LayerNorm means a deep Transformer
 - **Beginner:** can explain why future tokens must be blocked before softmax and why the current position remains visible when predicting the next token.
 - **Experienced reader:** can distinguish boolean-mask API polarity, handle fully masked rows, and understand why prefix-invariance tests are stronger than checking the triangular matrix alone.
 - **Remaining opportunity:** add an end-to-end causal-invariance test for a complete small GPT once the implementation milestone exists; retain the current primitive-level test as a lower-level invariant.
+
+
+---
+
+# Addendum — third-wave audit 1/6: `embedding-space`
+
+**Status:** French and English lesson and exercise pages reviewed. No content change is warranted in this pass; source-level review only.
+
+## Page identity and role
+
+- FR: `site/fr/embedding-space.qmd`; EN: `site/en/embedding-space.qmd`
+- Practice: `site/fr/exercises/embedding-space.qmd` and `site/en/exercises/embedding-space.qmd`
+- Role: explain how a token ID retrieves an initial vector from a learned embedding table and distinguish the integer row address from the vector's coordinates.
+- Boundary: tokenization is explained in `text-data`; positional processing and contextualization are handled in their own lessons; geometry and code are handed to Deepen and Build.
+
+## Page-level value record
+
+| Field | Finding |
+|---|---|
+| Learner question | What does a token ID actually select, and what is the difference between the ID and the vector? |
+| Beginner outcome | Explain the lookup `x_i = E_{i,:}`, identify the matrix shape `V × d`, and distinguish a row index from a point in vector space. |
+| Experienced-reader value already present | The page rejects the common mistake of treating consecutive token IDs as geometrically close, explains that embedding rows are learned parameters updated through the lookup path, and clearly separates initial embeddings from contextualized hidden states. |
+| Bilingual check | FR/EN mathematical content, distinctions and examples align. The exercise hubs also test the limitation of 2D projections and distinguish an exploratory geometric picture from predictive performance on held-out data. |
+| Gap found | No critical conceptual gap found. The page has a focused scope and avoids prematurely introducing cosine similarity or contextual geometry as if they were properties of the ID itself. |
+| Change made | None. The current concise explanation and its exercise transfer are appropriate for a core lesson. |
+| Depth placement | Keep implementation and matrix inspection in Build/Practice; retain historical and geometric caveats in Deepen. |
+| Validation | Reviewed both lessons and both exercise pages. No code execution, browser render or learner validation is claimed. |
+
+## Double-audience test
+
+- **Beginner:** can explain that the ID is an address and the vector is the row's content.
+- **Experienced reader:** can explain why the integer index carries no geometric semantics and why a 2D visualization does not establish downstream task performance.
+
+---
+
+# Addendum — third-wave audit 2/6: `probabilites` / `probabilities`
+
+**Status:** French and English lessons and exercise hubs reviewed. No content change is warranted in this pass; source-level review only.
+
+## Page identity and role
+
+- FR: `site/fr/probabilites.qmd`; EN: `site/en/probabilities.qmd`
+- Practice: `site/fr/exercises/probabilites.qmd` and `site/en/exercises/probabilities.qmd`
+- Role: turn vocabulary logits into a conditional categorical distribution, explain temperature and selection, and distinguish normalization from calibration and factual truth.
+- Boundary: logit geometry belongs to `logits`; sequence scoring belongs to likelihood; predictive dispersion belongs to entropy; advanced decoding trade-offs remain in generation/decoding strategies.
+
+## Page-level value record
+
+| Field | Finding |
+|---|---|
+| Learner question | What does a next-token probability mean, and what can it not tell us? |
+| Beginner outcome | Understand softmax normalization, context conditioning, temperature and the distinction between a normalized distribution and factual reliability. |
+| Experienced-reader value already present | The page gives probability-ratio identities, common-shift invariance, a two-model counterexample showing why the maximum logit alone is not confidence, numerical-stability guidance, and a distinction between argmax and sequence-level search. It also includes an interactive temperature explorer and a NumPy workbench. |
+| Bilingual check | The mathematical definitions, temperature transformation, normalization/calibration/truth distinction and exercises align. The French version includes the scribe distribution as a small table, while the English version states the same values in prose; this is a presentation difference, not a conceptual discrepancy. |
+| Gap found | No critical conceptual gap found. The lesson correctly distinguishes the initial softmax distribution from post-filter renormalization and selected tokens, and explicitly notes that library pipelines can order filters differently. |
+| Change made | None. The interactive example's initial percentages are consistent with the displayed logits `[3.0, 1.5, 1.0, 0.2]`; its workbench also demonstrates the expected concentration changes. |
+| Depth placement | Preserve the normalization/calibration/truth distinction here; leave entropy and observed-sequence likelihood to their dedicated lessons. |
+| Validation | Reviewed both lessons and both exercise hubs; checked the temperature explorer's default softmax values algebraically. No browser interaction or code execution is claimed. |
+
+## Double-audience test
+
+- **Beginner:** can explain why softmax probabilities sum to one but do not represent probabilities of truth.
+- **Experienced reader:** can use logit differences to reason about probability ratios, explain temperature scaling and recognize why a top logit or normalized distribution alone does not establish calibration.
