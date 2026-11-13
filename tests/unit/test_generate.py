@@ -98,6 +98,17 @@ def test_generate_validation_errors() -> None:
         generate(model, np.array([1, 50], dtype=np.int64), 3)
     with pytest.raises(ValueError, match="max_new_tokens must be a non-negative integer"):
         generate(model, np.array([1, 2], dtype=np.int64), -1)
+    with pytest.raises(ValueError, match="temperature must be strictly positive"):
+        generate(
+            model,
+            np.array([1, 2], dtype=np.int64),
+            3,
+            greedy=False,
+            temperature=0.0,
+            rng=np.random.default_rng(0),
+        )
+    with pytest.raises(ValueError, match="rng is required"):
+        generate(model, np.array([1, 2], dtype=np.int64), 3, greedy=False)
 
 
 @pytest.mark.parametrize("count", [-1, 1.5, 2.0, True, "3"])
@@ -114,17 +125,6 @@ def test_generate_accepts_numpy_integer_token_count() -> None:
     result = generate(model, prompt, np.int64(2))
 
     assert result.shape == (4,)
-    with pytest.raises(ValueError, match="temperature must be strictly positive"):
-        generate(
-            model,
-            np.array([1, 2], dtype=np.int64),
-            3,
-            greedy=False,
-            temperature=0.0,
-            rng=np.random.default_rng(0),
-        )
-    with pytest.raises(ValueError, match="rng is required"):
-        generate(model, np.array([1, 2], dtype=np.int64), 3, greedy=False)
 
 
 def test_generate_top_k_one_sampling_matches_greedy_chain() -> None:
