@@ -182,6 +182,8 @@ Les questions de cette visite et leurs corrigés sont regroupés sur la [page de
 
 ## Navigation dans le parcours
 
+[← Retour au parcours : Construire un petit GPT](build-path.qmd)
+
 
 ## Connexions
 
