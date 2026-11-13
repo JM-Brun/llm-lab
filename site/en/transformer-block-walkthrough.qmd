@@ -192,20 +192,7 @@ Each position goes on its own through `d -> mlp_hidden_dim` (often `4d`), then G
 
 ## Exercises
 
-1. With `d=16` and `H=2`, which columns of `q` does head 1 read?
-2. Why is `attended` allocated with `np.empty_like(x)` instead of zeros?
-
-
-3. In the pre-LN attention branch, what roles do Q, K, V, and the output projection O play? From which stream are they computed, and where does the residual connection enter?
-<details>
-<summary>Show answers and reasoning</summary>
-
-1. Columns 8 to 15 (`slice(8, 16)`): every column belongs to exactly one head, and the split is contiguous.
-2. Every cell of `attended` is written exactly once by the loop (each `(b, h)` pair writes its slice for all positions); no cell is read before being written, so zero-initialization would be wasted work.
-
-
-3. Q and K determine compatibility scores between positions; the softmax of those scores weights V, which carries the aggregated information. Q, K, and V are projected from the same normalized stream. The O projection mixes the head outputs; its result is added to the original residual stream. Normalization stays inside the branch, not on the direct residual path.
-</details>
+The questions for this tour and their worked answers are collected on its [dedicated practice page](exercises/transformer-block-walkthrough.qmd). Try them before opening the answers: they check the stated outcomes without duplicating the prompts in the walkthrough.
 
 ## Build path navigation
 
