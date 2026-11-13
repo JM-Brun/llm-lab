@@ -1,0 +1,193 @@
+---
+title: "RAG, memory, and document retrieval"
+subtitle: "How external information does — or does not — become usable by a model"
+description-meta: "Distinguish document retrieval, RAG, persistent memory, context injection, and in-context learning."
+lang: en
+keywords: ["type:deep-dive", "destination:deepen", "topic:rag-memory", "level:advanced", "language:en", "status:published"]
+---
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/rag-memory-boundaries"
+scope: "Boundaries between external storage, document retrieval, application memory, context construction, RAG, and ICL."
+purpose: "Trace external information to its possible use by an LLM and diagnose failures at each stage."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: ["en/deepen"]
+  children: []
+related: ["en/in-context-learning", "en/context-engineering", "en/contextualized-representations", "en/generation", "en/post-training"]
+tags: ["type:deep-dive", "destination:deepen", "topic:rag-memory", "level:advanced", "language:en", "status:published"]
+-->
+
+::: {.chapter-lead}
+A document can exist in a database, be indexed, and be retrieved without the model knowing about it when it answers. For external information to become usable, it must cross another boundary: it must be supplied to the model in its context, or made available through a tool that is actually called. This page distinguishes document retrieval, RAG, memory, and context engineering from **in-context learning (ICL)**, which describes what the model does with information it receives.
+:::
+
+## 1. From source to use: six distinct states
+
+| State | What happened | What this guarantees to the model |
+|---|---|---|
+| **Available** | Information exists in a file, database, conversation, or API. | Nothing: it may remain inaccessible. |
+| **Stored and prepared** | Content was extracted, cleaned, chunked, summarized, or retained. | Nothing: storage remains external. |
+| **Indexed** | Structures make content or references searchable. | Nothing: an index is not model input. |
+| **Retrieved** | A query selects documents, passages, or records. | Nothing until the result is supplied. |
+| **Supplied** | Content is included in model input or made available through a called tool. | The model can take it into account, subject to context and computation limits. |
+| **Used** | The model interprets and uses the content for the task. | No guarantee of truth, perfect understanding, or faithfulness. |
+
+**The decisive boundary is transmission.** A vector database, application history, or file on a server does not spontaneously become model knowledge. Supplying a passage, in turn, does not guarantee correct interpretation.
+
+This extends the three context levels described in [Context engineering](context-engineering.qmd): information selected by the application, the sequence actually supplied to the model, and positions accessible during Transformer computation. See also [Contextualized representations](contextualized-representations.qmd) and [Causal masking](causal-masking.qmd).
+
+## 2. Document retrieval: finding is not supplying
+
+**Document retrieval** or **information retrieval** selects documents or passages relevant to a query. It can power a conventional search engine, a RAG pipeline, or a memory system.
+
+A typical pipeline includes:
+1. **Ingestion and parsing:** extract text, structure, and metadata from PDFs, web pages, repositories, and databases.
+2. **Normalization and chunking:** create retrievable units (*chunks*) while preserving headings, tables, references, and links to parent documents where possible.
+3. **Indexing:** build a lexical index, vector representations, filterable metadata, or a combination.
+4. **Query formulation:** optional rewriting, term expansion, or subqueries.
+5. **Search:** lexical matching, dense similarity, structured filters, or hybrid retrieval.
+6. **Ranking:** fusion, reranking, deduplication, and passage selection.
+7. **Return:** provide excerpts, identifiers, scores, and metadata to the application.
+
+Search is **not necessarily vector-based**. BM25 and inverted indexes are lexical; dense embeddings support similarity search; SQL and metadata filters provide exact constraints. RAG therefore does not always require a vector database or embeddings.
+
+A document embedding is a numerical representation useful for search, not the source text. The search engine uses it to locate candidates; the system must then return relevant content or make it accessible to the model. Chunking matters: short chunks lose context, long chunks dilute information and consume more tokens, and arbitrary boundaries may separate a claim from its caveats.
+
+## 3. RAG: retrieve, then construct context
+
+**Retrieval-augmented generation (RAG)** combines retrieval of external information with its use by a generative model. In a common design, selected passages are added to the model context alongside the question and instructions.
+
+```{mermaid}
+flowchart TD
+  A[External sources] --> B[Ingestion and parsing]
+  B --> C[Chunking and indexing]
+  D[Question] --> E[Query formulation]
+  C --> F[Search and filters]
+  E --> F
+  F --> G[Ranking and selection]
+  G --> H[Context assembly]
+  H --> I[Generative model]
+  I --> J[Answer and citations]
+  J --> K[Verification]
+```
+
+**Preparation before a query:** connect sources, track provenance, extract and normalize content, choose units, build indexes, and plan updates and deletions.
+
+**Execution for a question:** analyze the request, retrieve candidates, filter and rerank, assemble context with excerpts and metadata, supply it, generate an answer, and check citations and contradictions.
+
+RAG does not necessarily change model parameters. It changes information available during inference: it complements pretraining and fine-tuning rather than constituting parameter transfer learning. See [Post-training and adaptation](post-training.qmd).
+
+### Why can RAG fail?
+
+- Missing, outdated, or unreliable source.
+- Parsing that loses a note, table, or structural relation.
+- Chunking that separates a claim from its context.
+- Poorly formulated query or search that misses the right passage.
+- Reranking that removes useful evidence.
+- Context assembly that is too long or contradictory.
+- Model that ignores, distorts, or extrapolates beyond excerpts.
+- Missing, misattributed, or unsupported citations.
+
+Retrieval quality and answer quality conditioned on passages must be evaluated separately. A good answer without correct retrieval may be coincidence or parametric knowledge; correct retrieval followed by a poor answer indicates an exploitation, instruction, or generation problem.
+
+## 4. Memory: retain information for reuse
+
+In an LLM system, **memory** usually means information retained by the application for reuse in later interactions. It may take the form of raw history, summaries, structured facts, preferences, events, documents, or task state.
+
+Useful functional distinctions include:
+- **Conversation history:** earlier messages retained as a trace of the exchange.
+- **Episodic memory:** time-situated events (“the project chose this option”).
+- **Semantic memory:** reusable facts or relations (“the project uses this convention”).
+- **Procedural memory:** procedures or operating preferences.
+- **Task state:** completed steps, open decisions, and information needed to resume.
+
+These are not universal categories imposed by the model. They can be implemented in a relational database, files, event log, search engine, or graph.
+
+A memory architecture must at least **write**, **maintain**, and **read**:
+1. select what is worth retaining, with provenance and duration;
+2. merge duplicates, date facts, handle contradictions, and invalidate stale information;
+3. recall items useful for the task and supply them to the model or make them available through a tool.
+
+A large memory is not necessarily a good memory. Indiscriminate retention increases noise, contradictions, costs, and privacy risks. Useful memory is selective, traceable, updateable, and governed.
+
+**A remembered item is not automatically in active context.** It may remain stored without being retrieved, be retrieved without being supplied, or be supplied without being correctly used. Persistent memory and a call's context are distinct layers.
+
+## 5. RAG and memory: same technology, different purposes
+
+| Dimension | Document RAG | Application memory |
+|---|---|---|
+| Purpose | Answer from relevant external sources | Preserve state or information across interactions |
+| Content | Documents, pages, passages, reference data | History, facts, preferences, events, summaries, state |
+| Selection | Query relevance and source reliability | Usefulness to the user, task, and continuity |
+| Time horizon | Depends on corpus updates | Designed to survive multiple calls or sessions |
+| Provenance | Source and document location | Origin, date, context, and confidence |
+| Challenge | Find and supply the right evidence | Retain and recall the right information |
+
+Both can share a search engine or vector database. Memory can be queried as a corpus; RAG can retrieve earlier decisions; an agent can preserve task state while searching documentation. Technical convergence does not erase the functional distinction.
+
+## 6. ICL: what the model does with received context
+
+**In-context learning** describes the behaviour by which a model adapts its predictions to instructions, examples, or patterns in context, without updating its parameters. It is neither a storage mechanism nor a search engine.
+
+- A retrieved document provides **factual evidence**.
+- Prompt examples show a **rule, task, or format**.
+- Re-injected memory provides **continuity information**.
+- An instruction specifies **how to process** these elements.
+
+RAG organizes access to external information; memory organizes retention and recall; context engineering decides what is supplied and how; ICL describes behavioural adaptation to what the model is shown.
+
+ICL does not guarantee that a rule persists after the call or that weights change. A demonstration may influence the current answer without persistent modification. Parameter adaptation requires training or fine-tuning.
+
+## 7. Controlled experiment: when does information become usable?
+
+Consider an artificial fact absent from the base model:
+
+> Project Orion adopted the Delta protocol on September 12, 2026.
+
+Prepare a source containing this fact and compare, using the same model and question:
+
+| Condition | Operation | Fact supplied? |
+|---|---|---|
+| A — Baseline | No document or memory | No |
+| B — Storage | Document retained in an external repository | No |
+| C — Indexing | Document indexed, no search run | No |
+| D — Retrieval only | Passage found but not supplied | No |
+| E — RAG | Passage added to context | Yes |
+| F — Memory recall | Fact retained, selected, then added to context | Yes |
+| G — ICL demonstration | Fact and example of its use supplied | Yes, with demonstration |
+
+B through D should leave model computation unchanged if no result is supplied and no tool is called. E and F make the fact available in the input; G adds a behavioural example. This alone does not prove robust understanding.
+
+Vary one factor at a time: relevance, passage rank, truncation, summary, context position, contradiction, freshness, and presence of ICL examples. Measure accuracy, passage recall, source faithfulness, justified citations, abstention when the answer is absent, latency, and cost. Distinguish a lucky correct answer from one actually supported by supplied evidence.
+
+## 8. Security, provenance, and governance
+
+A retrieved document is **data**, not a trusted instruction. It may contain an indirect injection (“ignore previous instructions”), a manipulative claim, or stale content. Preserve the boundary between control instructions and external content, limit tool permissions, and prevent a document from redefining application policy.
+
+For each reused item, retain where possible its source, identifier, dates, original passage, status (active, superseded, revoked, uncertain), access rules, and transformations. Memory may contain personal or sensitive data: collection, recall, and deletion must respect privacy requirements. Deletion must cover the layers actually used — indexes, summaries, caches, and backups according to their policies.
+
+## 9. Four questions for diagnosing a system
+
+| Question | Concept to inspect |
+|---|---|
+| Where does information exist, and in what form? | Source, storage, index, memory |
+| How does the system find it? | Document retrieval and recall |
+| What is actually supplied to the model? | Context engineering, assembly, context window |
+| How does the model use what it receives? | ICL, generation, limitations, evaluation |
+
+**Rule to remember:** external information does not influence the model's prediction merely because it exists or has been found. It must cross the transmission mechanism — in context or through a tool that is actually used — and then be correctly exploited.
+
+## Limitations
+
+This page describes architectural principles, not one RAG implementation or a universal memory taxonomy. Guarantees must be established through end-to-end tests, not inferred from the presence of an index or prompt.
+
+## Practice
+
+The companion exercises help diagnose transmission boundaries and design a controlled experiment: [Exercises — RAG, memory, and document retrieval](exercises/rag-memory-boundaries.qmd).
+
+::: {.language-switch}
+[Français](../fr/rag-memory-boundaries.qmd) · [English](rag-memory-boundaries.qmd)
+:::
