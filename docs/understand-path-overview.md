@@ -47,7 +47,9 @@ Suivre d'abord une génération complète comme une boîte noire :
 
 Le modèle calcule une distribution ; une règle de décodage sélectionne un token ; le token est réinjecté dans le contexte. Les paramètres restent fixes pendant l'inférence ordinaire.
 
-Page : [Générer du texte](../site/fr/generation.qmd), d'abord comme aperçu du système.
+Deux notions complètent immédiatement cette vue : l'**apprentissage en contexte (ICL)**, qui désigne l'utilisation d'exemples présents dans le prompt sans mise à jour des poids, et le **context engineering**, qui consiste à sélectionner, assembler et maintenir les informations effectivement fournies au modèle. L'une décrit un comportement du modèle ; l'autre, le travail de conception du système.
+
+Pages : [Générer du texte](../site/fr/generation.qmd), [Apprentissage en contexte](../site/fr/in-context-learning.qmd) et [Concevoir le contexte](../site/fr/context-engineering.qmd).
 
 ### 3 — Expliquer le calcul : que reçoit et que calcule le modèle ?
 
@@ -93,6 +95,8 @@ COMPRENDRE UN LLM
 Situer le système
       ↓
 Observer une génération complète (boîte noire)
+      ↓
+Comprendre ICL et context engineering
       ↓
 Expliquer le calcul
 Texte → tokens → représentations → Transformer → distribution
