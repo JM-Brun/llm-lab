@@ -94,22 +94,22 @@ Return to the scribe's first prediction and its illustrative distribution over f
 
 Using natural logarithms, entropy is:
 
-$
+$$
 \begin{aligned}
 H(p)&=-\sum_v p(v)\ln p(v)\\
 &=-(0.6\ln0.6+0.2\ln0.2
 +2\times0.1\ln0.1)\\
 &\approx 1.089\text{ nats}.
 \end{aligned}
-$
+$$
 
 The maximum for four outcomes is $\ln4\approx1.386$ nats, so this distribution reaches about 79% of that maximum. These illustrative values let us follow the same example through [likelihood](likelihood.qmd), [cross-entropy](cross-entropy.qmd), and [gradients](gradients.qmd).
 
 The key identity is:
 
-$
+$$
 H(p)=\mathbb E_{X\sim p}[-\ln p(X)].
-$
+$$
 
 In other words, entropy is the **expected** surprisal when the outcome is drawn from $p$. It is a property of the whole distribution, not the surprisal of one particular outcome.
 
