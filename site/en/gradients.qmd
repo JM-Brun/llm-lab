@@ -54,7 +54,7 @@ For a one-hot target $y$ and cross-entropy computed from softmax:
 
 $$
 \frac{\partial\ell}{\partial z_i}=p_i-\mathbb{1}[i=y].
-$
+$$
 
 For a one-hot target, the components of this gradient sum to zero: $\sum_i(p_i-\mathbb{1}[i=y])=1-1=0$. This is consistent with softmax invariance to adding the same constant to every logit.
 
@@ -72,13 +72,13 @@ The factor $1/|\mathcal{M}|$ comes from the mean; ignored positions have zero de
 
 For the one-position scribe example, $p=(0.6,0.2,0.1,0.1)$ and target $y=0$ (“Être”), so:
 
-$
+$$
 \nabla_z\ell=p-y=(-0.4,0.2,0.1,0.1).
-$
+$$
 
 To see how this reaches a parameter, consider a toy final affine projection $z=Wh+b$ with input state $h=(1,2)^\top$ and a matrix $W$ with four rows (one per token) and two columns. By the chain rule:
 
-$
+$$
 \frac{\partial\ell}{\partial W}=\nabla_z\ell\,h^\top=
 \begin{pmatrix}
 -0.4&-0.8\\
@@ -86,7 +86,7 @@ $
 0.1&0.2\\
 0.1&0.2
 \end{pmatrix}.
-$
+$$
 
 With an illustrative SGD step $\eta=0.1$, the weight change is $\Delta W=-\eta\,\partial\ell/\partial W$: the first row increases by $(0.04,0.08)$, and the other three decrease by $(0.02,0.04)$, $(0.01,0.02)$, and $(0.01,0.02)$, respectively. This shows how the target signal reaches the final projection's weights. In a full Transformer, $h$ itself depends on earlier-layer parameters, so backpropagation continues through those layers. The values of $h$, $W$, and the learning rate are chosen to illustrate the rule, not taken from a trained model.
 
