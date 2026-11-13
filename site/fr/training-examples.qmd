@@ -174,7 +174,7 @@ $$
 =\frac{2}{3}\approx 0{,}667.
 $$
 
-Les pertes illustratives des positions PAD ne contribuent pas. Une moyenne naïve sur les cinq positions donnerait (1{,}8), ce qui modifierait l’objectif en faisant dépendre la perte du nombre de positions de padding. En pratique, la convention exacte de réduction (somme, moyenne par séquence ou moyenne par token valide) doit être explicitée ; cet exemple illustre uniquement la moyenne par token valide.
+Les pertes illustratives des positions PAD ne contribuent pas. Une moyenne naïve sur les cinq positions donnerait $1{,}8$, ce qui modifierait l’objectif en faisant dépendre la perte du nombre de positions de padding. En pratique, la convention exacte de réduction (somme, moyenne par séquence ou moyenne par token valide) doit être explicitée ; cet exemple illustre uniquement la moyenne par token valide.
 
 Le **masque d’attention** détermine quelles positions peuvent être consultées. Le **masque de perte** détermine quelles cibles contribuent à l’objectif d’optimisation. Ils ont des rôles distincts et ne doivent pas être confondus.
 
