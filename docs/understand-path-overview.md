@@ -1,7 +1,7 @@
 # Parcours « Comprendre les LLM » — synthèse et audit de navigation
 
 **Statut :** note d'audit éditorial et proposition d'évolution  
-**Date :** 2026-11-09  
+**Date :** 2026-11-13  
 **Périmètre :** point d'entrée français, panorama LLM, navigation latérale, parcours guidé et carte des ressources.
 
 Cette note est fondée sur les sources du dépôt : `site/index.qmd`, `site/fr/learning-map.qmd`, `site/fr/llm-overview.qmd`, `site/fr/generation.qmd`, `data/guided-route.yml`, `docs/learning-path.md`, `docs/content-section-mapping.md` et `docs/information-architecture.md`. Il s'agit d'un audit éditorial des sources, pas encore d'une validation visuelle desktop/mobile ou d'un test utilisateur.
