@@ -75,7 +75,7 @@ Pour relier ces notions au calcul interne, voir [les représentations contextual
 | Notion | Ce qu'elle désigne |
 |---|---|
 | **Prompt engineering** | Formuler et organiser les instructions et les exemples d'un prompt. |
-| **In-context learning (ICL)** | Phénomène par lequel le modèle adapte son comportement à partir des informations et démonstrations présentes dans le contexte, sans mise à jour de ses paramètres. |
+| **In-context learning (ICL)** | Phénomène par lequel le modèle adapte son comportement à partir des consignes, exemples ou régularités présents dans le contexte, sans mise à jour de ses paramètres. |
 | **Context engineering** | Travail plus large de sélection, récupération, structuration, actualisation et sécurisation de l'ensemble du contexte transmis. |
 | **RAG** | Architecture qui récupère des informations externes et les injecte dans le contexte ; c'est une technique mobilisable par le context engineering. |
 | **Mémoire** | Mécanisme de conservation et de réutilisation d'informations entre interactions ; elle peut alimenter le contexte sans être elle-même la fenêtre de contexte. |
