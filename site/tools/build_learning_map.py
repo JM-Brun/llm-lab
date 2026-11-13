@@ -1078,7 +1078,14 @@ def prepare_suggested_route_fragments(
             # the published route is guarded by its own test.
             completes_route=page["id"] == final_page_id and continuation_id in page_by_id,
             sidebar_neighbors=sidebar_neighbors_by_page.get(page["id"], {}),
-            preserve_pedagogical_cards=page["id"] in core_page_ids,
+            preserve_pedagogical_cards=(
+                page["id"] in core_page_ids
+                # The first Build walkthrough is the explicit entry from its hub.
+                # Keep this pedagogical return card even when the same destination
+                # is also the Quarto sidebar parent; the browser contract checks it
+                # as a visible, in-page way back to the Build path.
+                or page.get("route", {}).get("previous") == f"{language}/{ROUTE_CONTINUATION_PAGE}"
+            ),
         )
         output = includes / (f"generated-suggested-route-{page['id'].replace('/', '-')}.qmd")
         outputs[output] = rendered
