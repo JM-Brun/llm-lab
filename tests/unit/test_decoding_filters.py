@@ -111,10 +111,15 @@ def test_filters_do_not_mutate_the_input() -> None:
     np.testing.assert_array_equal(probabilities, original)
 
 
-@pytest.mark.parametrize("k", [0, -1])
-def test_top_k_invalid_k_raises(k: int) -> None:
-    with pytest.raises(ValueError):
+@pytest.mark.parametrize("k", [0, -1, 1.5, 2.0, True, "2"])
+def test_top_k_invalid_k_raises(k: object) -> None:
+    with pytest.raises(ValueError, match="k must be a positive integer"):
         top_k_filter(np.array([0.5, 0.5]), k)
+
+
+def test_top_k_accepts_numpy_integer() -> None:
+    filtered = top_k_filter(np.array([0.2, 0.3, 0.5]), np.int64(2))
+    np.testing.assert_allclose(filtered, [0.0, 0.375, 0.625])
 
 
 @pytest.mark.parametrize("p", [0.0, -0.5, 1.5])
