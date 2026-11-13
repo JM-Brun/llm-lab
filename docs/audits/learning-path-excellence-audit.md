@@ -601,3 +601,71 @@ The main opportunity is not another prose subsection. It is a possible later con
 - **Beginner:** can trace a token being selected and fed back, and explain why generation does not update model parameters.
 - **Experienced reader:** can distinguish prefill latency from incremental decode, identify what KV caching avoids recomputing, and explain why a larger context window does not guarantee correct use of every supplied token.
 - **Remaining opportunity:** test greedy, sampling, temperature and KV-cache behaviour in a controlled, reproducible experiment, without presenting one decoding strategy as universally best.
+
+
+---
+
+# Addendum — second-wave audit 3/6: `contextualized-representations`
+
+**Status:** French and English lessons reviewed. No content change is warranted in this pass; source-level review only.
+
+## Page identity and role
+
+- FR: `site/fr/contextualized-representations.qmd`; EN: `site/en/contextualized-representations.qmd`
+- Role: explain why the same token ID retrieves the same initial embedding but can produce different hidden states after position-aware Transformer processing.
+- Boundary: the embedding table and token IDs belong to `embedding-space`; positional mechanisms belong to `positional-encoding`; the Transformer page locates the blocks; detailed attention interactions are deferred to Q/K/V and attention lessons.
+
+## Page-level value record
+
+| Field | Finding |
+|---|---|
+| Learner question | If two occurrences share one token ID, how can the model represent their different contexts? |
+| Beginner outcome | Distinguish a static lookup from later hidden states, and identify where position and accessible context enter the computation. |
+| Experienced-reader value already present | The page separates lexical ambiguity (`bank`) from cross-token reference (`it` / `the animal`), and explicitly warns that contextualization does not guarantee clean geometric clusters matching human senses. It also distinguishes absolute positional addition from RoPE's rotation of Q/K inside attention. |
+| Bilingual check | FR/EN conceptual structure, examples, caveats and self-check questions align. Both state the assumption that the visible word is represented by the same token ID and warn that a visible word may split into several tokens. |
+| Gap found | No critical conceptual gap found. The page carefully avoids attributing semantic disambiguation to the embedding lookup or claiming that one attention head necessarily performs coreference resolution. |
+| Change made | None. The current page is appropriately concise relative to the advanced companion and Transformer/attention lessons. |
+| Depth placement | Preserve the advanced page for formal treatment and use this page to anchor the same-ID/same-lookup versus context-dependent-state distinction. |
+| Validation | Reviewed both lesson sources and checked the handoffs to embedding-space, positional encoding and Transformer. No rendered browser or learner validation is claimed. |
+
+## Double-audience test
+
+- **Beginner:** can explain why the lookup is identical but later hidden states can differ.
+- **Experienced reader:** can distinguish tokenization, position injection, contextual computation and semantic interpretation, without overclaiming a particular geometry or attention-head function.
+
+---
+
+# Addendum — second-wave audit 4/6: `transformer`
+
+**Status:** French and English lessons and exercise hubs reviewed. A mathematical overstatement about normalization is corrected in both languages and in both exercise answer sets.
+
+## Page identity and role
+
+- FR: `site/fr/transformer.qmd`; EN: `site/en/transformer.qmd`
+- Practice: `site/fr/exercises/transformer.qmd` and `site/en/exercises/transformer.qmd`
+- Role: locate the decoder-only GPT architecture, follow a forward pass through Transformer blocks to logits, and distinguish attention, MLP, residual stream, normalization and output head.
+- Boundary: Q/K/V projections, attention computation and causal visibility are handed to their canonical lessons; decoding and token selection remain in generation.
+
+## Page-level value record
+
+| Field | Finding |
+|---|---|
+| Learner question | What is a Transformer block, how do its sublayers interact, and where do logits come from? |
+| Beginner outcome | Follow embeddings and positional information through repeated blocks to logits; distinguish cross-position attention from position-wise MLP transformation and from downstream decoding. |
+| Experienced-reader value already present | The page distinguishes attention sublayer, block and complete GPT; explains residual stream, pre-LN layout, parallel training versus sequential generation, depth versus width, and the difference between `d_model`, `d_head` and `d_ff`. |
+| Bilingual check | FR/EN conceptual sequence and diagrams align. The practice hubs test the same five architectural distinctions. |
+| Gap found | The explanation said that without normalization activations and gradients become unstable and training a deep stack fails. This was too categorical: the stability effect depends strongly on normalization placement and the surrounding architecture/training setup. |
+| Change made | Replaced the categorical claim in both lessons and both exercise answer sets. The revised text says normalization helps control activation scale and gradient flow, then cites Xiong et al. (2020): the original Post-LN design can have large gradients near the output at initialization, whereas the studied Pre-LN variant has better-behaved gradients. It no longer implies that every deep architecture must fail without one particular arrangement. |
+| Best-source contribution | Xiong et al., *On Layer Normalization in the Transformer Architecture* (ICML 2020, PMLR 119): https://proceedings.mlr.press/v119/xiong20b.html. The paper analyzes how the placement of LayerNorm affects gradient behavior and warm-up requirements. |
+| Depth placement | Keep the page's pre-LN equations and model-family variants; avoid a full survey of normalization strategies. The linked paper supplies the deeper theoretical and empirical analysis. |
+| Validation | Updated FR/EN main pages and FR/EN exercise answers in parallel. Source text was checked for matching assumptions and terminology. No rendered-site, visual browser, learner or CI validation is claimed. |
+
+## Why this correction matters
+
+A reader should not leave with the rule “no LayerNorm means a deep Transformer cannot train.” The evidence cited here supports a more precise lesson: where normalization sits in the residual block affects gradient magnitudes and optimization stability. The original Post-LN arrangement and Pre-LN variants can behave differently even though both use normalization. The revision preserves the useful beginner intuition that normalization supports stable optimization while removing the unsupported universal failure claim.
+
+## Double-audience test
+
+- **Beginner:** can say that normalization helps keep deep computation trainable, without memorizing the Post-LN/Pre-LN derivation.
+- **Experienced reader:** can identify normalization placement as an architectural and optimization choice, and connect it to gradient behavior at initialization.
+- **Remaining opportunity:** a controlled experiment could compare gradient norms across depth for Post-LN and Pre-LN on the same small Transformer. It should be implemented as a reproducible experiment rather than added as a long derivation to this overview lesson.
