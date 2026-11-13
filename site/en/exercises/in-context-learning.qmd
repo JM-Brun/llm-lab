@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["en/in-context-learning"]
+related: ["en/in-context-learning", "en/context-engineering"]
 tags: ["type:exercise-hub", "destination:practice", "topic:in-context-learning-exercises", "level:applied", "language:en", "status:published"]
 -->
 
@@ -66,6 +66,26 @@ Prepare held-out test cases, including combinations or inputs never shown in the
 A good answer should specify at least the comparison conditions, unseen test cases, and a measure of rule success distinct from formatting. Several protocols are defensible if they control confounding factors and make this distinction possible.
 
 </details>
+[4. **An application stores the full conversation in a database but sends the model an assembled context for each call.** To answer a question, it supplies instructions, two examples, two passages retrieved from an internal policy, a tool result about an order's status, and a summary of earlier messages. The model weights remain fixed. Distinguish:
+- what belongs to this call's active context;
+- what counts as context engineering;
+- where RAG and ICL appear;
+- what may remain stored outside the active context;
+- the context window and this call's actual length.
+
+<details>
+<summary>Show the worked answer and success criterion</summary>
+
+The **active context** contains the elements actually supplied for this call: instructions, the current question, examples, retrieved passages, the tool result, and the retained summary. The full conversation stored in the database is not automatically part of it: the application has injected only a selection.
+
+**Context engineering** is the application's work of selecting, assembling, ordering, and summarizing those elements, then deciding what to retain or remove on later turns. **RAG** is used to retrieve the policy passages; those passages become useful to the model only when added to context. **ICL** describes the model's possible use of the two examples in context to steer its response. Neither retrieval through RAG nor ICL updates the weights in this scenario.
+
+The **context window** is the maximum supported token budget; the **active length** is the number of tokens actually supplied to this call. The stored conversation may be much longer than the active context.
+
+**Success criterion:** distinguish supplied information from data stored outside the call, identify RAG and ICL separately, and explain why maximum capacity differs from actual length.
+
+</details>
+
 
 [Exercises and experiments](../exercises.qmd).
 
