@@ -29,6 +29,9 @@
   - [Panorama : qu’est-ce qu’un LLM ?](llm-overview.html)
   - [Générer du texte : l'inférence pas à pas](generation.html)
   - Contexte et adaptation
+    - [Apprentissage en contexte (in-context learning)](in-context-learning.html)
+    - [Ingénierie du contexte (context engineering)](context-engineering.html)
+  - Contexte et adaptation
     - [Ingénierie du contexte (context engineering)](context-engineering.html)
 - **Construire un petit GPT**
   - Préparer les données d'entraînement
@@ -79,7 +82,6 @@
     - [La chaîne mathématique de l’entraînement d’un LLM](mathematical-foundations.html)
     - [Centrage du score en apprentissage par renforcement hors politique](score-centering.html)
   - Inférence et efficacité
-    - [Apprentissage en contexte (in-context learning)](in-context-learning.html)
     - [Stratégies avancées de décodage](decoding-strategies.html)
     - [Complexité et parallélisme dans les LLM](llm-computational-complexity.html)
   - Échelle et questions de recherche
