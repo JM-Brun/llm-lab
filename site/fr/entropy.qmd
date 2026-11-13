@@ -94,22 +94,22 @@ Reprenons le premier tour du scribe et sa distribution illustrative sur quatre t
 
 Avec des logarithmes naturels, l'entropie vaut :
 
-$
+$$
 \begin{aligned}
 H(p)&=-\sum_v p(v)\ln p(v)\\
 &=-(0{,}6\ln0{,}6+0{,}2\ln0{,}2
 +2\times0{,}1\ln0{,}1)\\
 &\approx 1{,}089\text{ nats}.
 \end{aligned}
-$
+$$
 
 Le maximum pour quatre issues est $\ln4\approx1{,}386$ nats : cette distribution atteint donc environ 79 % de ce maximum. Les valeurs sont illustratives ; elles servent à suivre le même exemple dans les pages sur la [vraisemblance](vraisemblance.qmd), l'[entropie croisée](cross-entropy.qmd) et les [gradients](gradients.qmd).
 
 L'identité centrale est :
 
-$
+$$
 H(p)=\mathbb E_{X\sim p}[-\ln p(X)].
-$
+$$
 
 Autrement dit, l'entropie est la surprise **attendue** si l'issue est tirée selon $p$. Elle est une propriété de toute la distribution, pas la surprise d'un résultat particulier.
 
