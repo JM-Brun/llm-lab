@@ -8,7 +8,7 @@ This plan defines two paths with different completion evidence, not one sequence
 
 ## Reader-facing short overview
 
-For a concise, learner-facing explanation of the Understand route and its navigation, see the [simplified path overview and audit](understand-path-overview.md). This is an orientation layer only; the eight-stage route below remains canonical in `data/guided-route.yml`.
+For a concise, learner-facing explanation of the Understand route and its navigation, see the [simplified path overview and audit](understand-path-overview.md). This is an orientation layer only; the nine-stage route below remains canonical in `data/guided-route.yml`.
 
 ## Theory / Understand guided route — machine-readable map source
 
