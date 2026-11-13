@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["en/scaling-laws", "en/emergence", "en/in-context-learning", "en/hybrid-llm-architectures", "en/llm-computational-complexity", "en/llm-limits", "en/experimental-evaluation", "en/llm-evolution-exercises"]
+related: ["en/llm-overview", "en/transformer-history", "en/scaling-laws", "en/emergence", "en/in-context-learning", "en/context-engineering", "en/rag-memory-boundaries", "en/post-training", "en/hybrid-llm-architectures", "en/llm-computational-complexity", "en/llm-limits", "en/experimental-evaluation", "en/llm-evolution-exercises"]
 tags: ["type:concept-lesson", "destination:deepen", "topic:llm-evolution", "level:advanced", "language:en", "status:published"]
 -->
 
@@ -51,6 +51,21 @@ The table summarizes public information highlighted by the cited sources. It is 
 | **GPT-6 (2026)** | API documentation describes, among other features, asynchronous tool calling and *mid-turn steering* through the Responses API over WebSocket. | Interaction between the model, application, and tools becomes an important part of observable behavior. |
 
 **Reading caveat.** The ByteByteGo article is a useful pedagogical summary, but some of its statements compress complex topics. For example, GPT-2 already showed zero-shot transfer on some tasks; it would be inaccurate to say it could only continue text and had no question-answering capability. The GPT-3 paper explicitly documents few-shot use *without gradient updates*, whereas complete internal details of newer models are not all public.
+
+## Connect the mechanisms without turning them into a rigid sequence
+
+The conceptual progression can be read as follows, provided the different levels are not conflated:
+
+1. **Pretraining**: learns regularities and builds a reusable parameter foundation.
+2. **Scaling**: studies how parameters, data, and compute affect results; it is a dimension of the training regime, not a step that comes after pretraining.
+3. **Transfer**: refers to reusing what has been learned on tasks different from the original training objective.
+4. **Post-training**: adapts a pretrained model with additional data or optimization signals; it changes parameters.
+5. **ICL**: uses instructions and examples present in context, without updating parameters.
+6. **RAG**: retrieves external information and usually supplies it through context; retrieval alone does not make it accessible to the model.
+
+These routes are **complementary and combinable**, not mandatory phases that must all occur in sequence. A system can, for example, combine a post-trained model, few-shot prompting, and a RAG pipeline.
+
+**Useful prerequisites.** This page assumes that readers can already distinguish parameters, context, and inference (see [the overview](llm-overview.qmd)). For detailed mechanisms, see [the training loop](training-loop.qmd), [post-training](post-training.qmd), [ICL](in-context-learning.qmd), [context engineering](context-engineering.qmd), and [RAG/memory boundaries](rag-memory-boundaries.qmd). [Scaling laws](scaling-laws.qmd) additionally require familiarity with loss and the distinction between parameters, data, and compute; [emergence](emergence.qmd) requires an understanding of evaluation metrics and protocols.
 
 ## 1. From scale to in-context learning
 
