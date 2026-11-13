@@ -74,7 +74,7 @@ For a batch of sequences, the output head may produce a tensor of shape $(B,T,V)
 - **Score gaps:** differences between scores describe their relative separation within that vector.
 - **Not absolute confidence:** a raw logit depends on the scores' scale and offset. It is not a percentage and cannot, by itself, establish confidence or factual truth.
 
-A useful property of softmax explains why raw logits are not probabilities: **adding the same constant to every logit does not change the resulting distribution**. By contrast, multiplying logits by a positive factor preserves their ranking but changes the distribution's concentration: a larger factor generally makes it more concentrated. This is the role of temperature, covered in [Output probabilities](probabilities.qmd), the canonical page for softmax and distribution interpretation.
+Converting scores into a probability distribution is a separate operation. It is covered in [Output probabilities](probabilities.qmd), the canonical page for softmax, temperature, and distribution interpretation.
 
 ## In an LLM
 
