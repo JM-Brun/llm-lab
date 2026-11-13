@@ -53,6 +53,41 @@ In a decoder-only GPT, blocks are **stacked**: the output of one becomes the inp
 
 If you have already come across the classic diagram from the founding paper (*Attention Is All You Need*), you will recognize the same building blocks here: the *Multi-Head Attention*, *Feed Forward*, and *Add & Norm* boxes correspond to the multi-head attention, the MLP, and the residual-plus-normalization pair described on this page. The paper and its visualizations are referenced in the [Deepen resources](deepen.qmd#transformer-resources).
 
+### Also read the Transformer's original architecture diagram
+
+The GPT diagram above is not the historical diagram of every Transformer. To understand where the component names and block organization come from, also learn to read the 2017 paper [*Attention Is All You Need*](https://arxiv.org/abs/1706.03762), which describes an **encoder–decoder Transformer**. Jay Alammar's [*The Illustrated Transformer*](https://jalammar.github.io/illustrated-transformer/) provides a step-by-step reading; it complements but does not replace the architectural distinction made here.
+
+In the original diagram, follow two streams:
+
+- **Encoder (left):** embeddings and positional encoding, then a stack of layers with multi-head self-attention and a feed-forward network. Each encoder position can use information from the other input positions.
+- **Decoder (right):** shifted target-sequence embeddings, masked self-attention to prevent access to future target tokens, then encoder–decoder attention over encoder representations, followed by the feed-forward network.
+- **Output:** a linear projection to vocabulary scores, then softmax in the paper's diagram to obtain a distribution.
+
+| Historical label | What to understand | Where to continue in LLM Lab |
+|---|---|---|
+| Input / Output Embedding | Lookup of vectors associated with IDs; during training, decoder inputs use the shifted target sequence | [Embeddings](embedding-space.qmd), [text and IDs](text-data.qmd) |
+| Positional Encoding | Order information; the original paper uses sinusoidal functions | [Positional information](positional-encoding.qmd), [sinusoidal derivation](sinusoidal-positional-encoding.qmd) |
+| Multi-Head Attention | Multiple heads computed from learned Q, K and V projections | [Q/K/V](queries-keys-values.qmd), [attention](scaled-dot-product-attention.qmd) |
+| Masked Multi-Head Attention | Decoder self-attention with a causal constraint | [Causal masking](causal-masking.qmd) |
+| Encoder–Decoder Attention | Cross-attention: Q comes from the decoder, K and V from encoder outputs | [Cross-attention](cross-attention.qmd) |
+| Add & Norm | Residual addition followed by normalization; the historical diagram is post-LN, unlike the pre-LN block above | [Transformer block](transformer-block-walkthrough.qmd), [tensors](tensors.qmd) |
+| Feed Forward | An MLP applied independently at each position, with parameters shared across positions | [Transformer block](transformer-block-walkthrough.qmd) |
+| Linear / Softmax | Projection to vocabulary logits, then conversion to probabilities | [Logits](logits.qmd), [probabilities](probabilities.qmd) |
+
+**Do not conflate three architectures:** the original encoder–decoder combines an encoder that reads the input and a decoder that produces an output conditioned on it; an encoder-only model (for example, BERT) builds input representations; a decoder-only model (for example, GPT) predicts sequence continuations using causal self-attention. GPT therefore does not contain the encoder–decoder attention block from the 2017 diagram. The [architecture comparison](transformer-architectures.qmd) explores these differences.
+
+#### Guided reading route
+
+Return to the diagram after studying the linked lessons. At each pass, answer a more precise question:
+
+1. **Locate:** where does information enter, which stacks are repeated, where do encoder and decoder streams separate, and where are output scores produced?
+2. **Explain:** where do Q, K and V come from for each attention operation? Which positions are allowed by the mask? Why is encoder–decoder attention not a third form of self-attention?
+3. **Compare:** what does Add & Norm mean? In what order are addition and normalization applied? Why does the historical post-LN diagram differ from the pre-LN block shown here?
+4. **Transfer:** which boxes disappear in decoder-only GPT? Which remain in an adapted form? Why does causal masking change the permitted computation?
+5. **Reconstruct:** explain the path of a representation from input to logits, separating network computation, conversion to probabilities, and generation of the next token.
+
+**What the diagram does not show:** tensor dimensions and axes, parameter sharing, projection details, memory and compute costs, training-versus-inference differences, or architectural variants introduced since 2017. The canonical lessons provide these details. Treat the diagram as a reading map, not an exhaustive specification of a modern model.
+
 This diagram represents the **decoder-only** family used by autoregressive GPT models. Transformers are not limited to this architecture: the [Transformer architecture comparison](transformer-architectures.qmd) shows what changes in encoder-only and encoder-decoder models.
 
 ### Placing the network in the generation process

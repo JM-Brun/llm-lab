@@ -53,6 +53,41 @@ Dans un GPT décodeur seul, les blocs sont **empilés** : la sortie de l'un devi
 
 Si vous avez déjà croisé le schéma classique de l'article fondateur (*Attention Is All You Need*), vous y retrouverez les mêmes briques : les boîtes *Multi-Head Attention*, *Feed Forward* et *Add & Norm* correspondent à l'attention multi-têtes, au MLP et au couple connexion résiduelle + normalisation décrits ici. L'article et ses visualisations sont référencés dans la [rubrique Approfondir](deepen.qmd#ressources-transformer).
 
+### Lire aussi le schéma fondateur du Transformer
+
+Le schéma de GPT ci-dessus n'est pas le schéma historique de tous les Transformers. Pour comprendre d'où viennent les noms et l'organisation des blocs, apprenez aussi à lire la représentation de l'article de 2017 [*Attention Is All You Need*](https://arxiv.org/abs/1706.03762), qui décrit un **Transformer encodeur-décodeur**. La visualisation de [Jay Alammar, *The Illustrated Transformer*](https://jalammar.github.io/illustrated-transformer/) en propose une lecture progressive ; elle complète, mais ne remplace pas, la distinction architecturale faite ici.
+
+Dans le schéma original, suivez deux flux :
+
+- **Encodeur (gauche)** : embeddings et encodage positionnel, puis une pile de couches avec auto-attention multi-têtes et réseau feed-forward. Chaque position de l'encodeur peut prendre en compte les autres positions de l'entrée.
+- **Décodeur (droite)** : embeddings décalés de la séquence cible, auto-attention masquée pour ne pas consulter les tokens futurs, puis attention encodeur-décodeur sur les représentations de l'encodeur, avant le réseau feed-forward.
+- **Sortie** : projection linéaire vers les scores du vocabulaire, puis softmax dans le schéma de l'article pour obtenir une distribution.
+
+| Libellé historique | Ce qu'il faut comprendre | Où poursuivre dans LLM Lab |
+|---|---|---|
+| Input / Output Embedding | Recherche de vecteurs associés aux identifiants ; le décodeur reçoit la séquence cible décalée pendant l'entraînement | [Embeddings](embedding-space.qmd), [texte et identifiants](text-data.qmd) |
+| Positional Encoding | Information d'ordre ; l'article original utilise des fonctions sinusoïdales | [Information positionnelle](positional-encoding.qmd), [dérivation sinusoïdale](sinusoidal-positional-encoding.qmd) |
+| Multi-Head Attention | Plusieurs têtes calculées à partir de projections apprises Q, K et V | [Q/K/V](queries-keys-values.qmd), [attention](scaled-dot-product-attention.qmd) |
+| Masked Multi-Head Attention | Auto-attention du décodeur avec contrainte causale | [Masquage causal](causal-masking.qmd) |
+| Encoder–Decoder Attention | Attention croisée : Q vient du décodeur, K et V des sorties de l'encodeur | [Attention croisée](cross-attention.qmd) |
+| Add & Norm | Addition résiduelle puis normalisation ; le dessin historique est post-LN, contrairement au bloc pré-LN illustré plus haut | [Bloc Transformer](transformer-block-walkthrough.qmd), [tenseurs](tensors.qmd) |
+| Feed Forward | MLP appliqué indépendamment à chaque position, avec paramètres partagés entre positions | [Bloc Transformer](transformer-block-walkthrough.qmd) |
+| Linear / Softmax | Projection vers les logits du vocabulaire, puis conversion en probabilités | [Logits](logits.qmd), [probabilités](probabilites.qmd) |
+
+**Trois architectures à ne pas confondre :** l'encodeur-décodeur original combine un encodeur qui lit l'entrée et un décodeur qui produit une sortie conditionnée par lui ; un encodeur seul (par exemple BERT) construit des représentations de l'entrée ; un décodeur seul (par exemple GPT) prédit la suite avec une auto-attention causale. GPT ne contient donc pas le bloc d'attention encodeur-décodeur du schéma de 2017. La [comparaison des architectures](transformer-architectures.qmd) détaille ces différences.
+
+#### Parcours de lecture guidée
+
+Revenez au schéma après avoir étudié les pages liées. À chaque passage, répondez à une question plus précise :
+
+1. **Repérer :** où l'information entre-t-elle, quelles piles sont répétées, où se séparent les flux encodeur et décodeur, et où apparaissent les scores de sortie ?
+2. **Expliquer :** d'où viennent Q, K et V pour chaque attention ? Quelles positions le masque autorise-t-il ? Pourquoi l'attention encodeur-décodeur n'est-elle pas une troisième forme d'auto-attention ?
+3. **Comparer :** que signifie Add & Norm ? Dans quel ordre l'addition et la normalisation sont-elles placées ? Pourquoi le schéma historique post-LN diffère-t-il du bloc pré-LN présenté ici ?
+4. **Transférer :** quelles boîtes disparaissent dans GPT décodeur seul ? Lesquelles restent sous une forme adaptée ? Pourquoi le masque causal change-t-il le calcul autorisé ?
+5. **Reconstruire :** racontez le trajet d'une représentation depuis l'entrée jusqu'aux logits, en séparant calcul du réseau, conversion en probabilités et génération du token suivant.
+
+**Ce que le schéma ne montre pas :** dimensions et axes des tenseurs, partage des paramètres, détails des projections, coûts mémoire et calcul, différences entre entraînement et inférence, ni variantes apparues depuis 2017. Les pages canoniques apportent ces précisions. Le schéma est une carte de lecture, pas une spécification exhaustive d'un modèle moderne.
+
 Cette représentation concerne la famille **décodeur seul**, utilisée notamment par les GPT autorégressifs. Les Transformers ne se limitent pas à cette architecture : la [comparaison des architectures Transformer](transformer-architectures.qmd) montre ce qui change dans un encodeur seul ou un modèle encodeur-décodeur.
 
 ### Situer le réseau dans la génération

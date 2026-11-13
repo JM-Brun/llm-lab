@@ -28,6 +28,46 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-trans
 
 **Périmètre actuel :** trois exercices formatifs progressifs, aux identifiants stables TF-A, TF-B et TF-C partagés avec la version anglaise, couvrent le suivi des formes et un calcul de normalisation à la main dans le bloc de référence pré-LN, le comptage des paramètres de ce bloc, puis le diagnostic d'affirmations et la prédiction d'interventions contrôlées. Les exercices sur les variantes d'architecture (post-LN, RMSNorm, MQA/GQA, attention fenêtrée) restent à construire. Ordre conseillé : TF-A, puis TF-B, puis TF-C.
 
+<a id="exercice-tf-d-lire-le-transformer-original-et-le-comparer-a-gpt"></a>
+<a id="ex-transformer-original-diagram"></a>
+### Exercice — Lire le Transformer original et le comparer à GPT (TF-D)
+
+**Préparation :** la section [Lire aussi le schéma fondateur](transformer.qmd) et la [comparaison des architectures](transformer-architectures.qmd). Cet exercice vérifie que vous savez lire le schéma encodeur-décodeur de 2017 sans le confondre avec le GPT décodeur seul.
+
+1. Dans le schéma original, identifiez les trois sous-couches d'attention : auto-attention de l'encodeur, auto-attention masquée du décodeur et attention encodeur-décodeur.
+2. Pour l'attention encodeur-décodeur, indiquez la provenance de Q, K et V.
+3. Associez chacun des libellés suivants à son rôle : **Add & Norm**, **Feed Forward**, **Linear**, **Softmax**. Lequel produit les logits ? Lequel transforme ces scores en probabilités ?
+4. Quelles composantes du schéma original ne figurent pas dans un GPT décodeur seul ? Pourquoi ?
+5. Le schéma historique utilise-t-il le même placement de normalisation que le bloc pré-LN de la page LLM Lab ? Expliquez la différence en une phrase.
+
+<details>
+<summary>Afficher les indices</summary>
+
+- Dans l'attention croisée, les deux sources de représentations sont différentes.
+- La projection linéaire vers le vocabulaire précède la softmax.
+- Le GPT décodeur seul n'a pas de flux encodeur séparé.
+
+</details>
+
+<details>
+<summary>Afficher le corrigé détaillé</summary>
+
+1. L'encodeur possède une auto-attention non causale sur les positions de l'entrée ; le décodeur possède une auto-attention masquée causalement ; la troisième sous-couche est l'attention croisée entre décodeur et sorties de l'encodeur.
+2. Q vient des représentations du décodeur ; K et V viennent des sorties de l'encodeur.
+3. Add & Norm désigne l'addition résiduelle suivie d'une normalisation ; Feed Forward est le MLP appliqué position par position ; Linear projette les états vers les scores du vocabulaire, les **logits** ; Softmax transforme ces logits en probabilités normalisées.
+4. Le GPT décodeur seul n'a ni pile d'encodeur distincte ni attention encodeur-décodeur, puisqu'il traite le préfixe disponible dans un seul flux de représentations avec attention causale. Il conserve une auto-attention causale, un MLP, des chemins résiduels et des normalisations.
+5. Le schéma de 2017 est post-LN : l'addition résiduelle précède la normalisation. Le bloc de référence illustré par LLM Lab est pré-LN : la normalisation précède la sous-couche, puis sa sortie est ajoutée au flux résiduel.
+
+**Erreurs fréquentes :**
+
+- Dire que Q, K et V viennent tous du même flux dans l'attention croisée.
+- Confondre logits et probabilités, ou placer la sélection du token dans la boîte Linear.
+- Dire que GPT est le schéma original auquel on aurait simplement retiré l'encodeur : il faut aussi expliquer le changement de flux et le masque causal.
+- Présenter post-LN et pré-LN comme deux noms du même ordre de calcul.
+
+</details>
+
+
 <a id="exercice-tf-a-tracer-un-bloc-pre-ln-des-formes-a-la-normalisation"></a>
 <a id="ex-transformer-preln-block-trace"></a>
 ### Exercice — Tracer un bloc pré-LN, des formes à la normalisation
