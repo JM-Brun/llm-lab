@@ -1,0 +1,130 @@
+---
+title: "Concevoir le contexte d'un LLM (context engineering)"
+subtitle: "Sélectionner, organiser et actualiser ce que le modèle peut utiliser"
+description-meta: "Définit le context engineering et le distingue du prompt engineering, de l'apprentissage en contexte, du RAG, de la fenêtre de contexte et de la mémoire."
+keywords: ["type:concept-lesson", "destination:understand", "topic:context-engineering", "level:core", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/context-engineering"
+summary: "Définit la conception et la gestion du contexte réellement fourni au modèle à chaque étape d'inférence."
+scope: "Distingue contexte actif, fenêtre de contexte, contexte accessible par l'attention, historique, mémoire et données récupérées ; présente la sélection, l'assemblage, l'ordonnancement, la compression et l'actualisation du contexte. Ne traite pas le context engineering comme une architecture ou un algorithme unique."
+purpose: "Le lecteur doit pouvoir expliquer ce que le modèle reçoit à une étape donnée, distinguer capacité et contenu, décrire les opérations de conception du contexte et relier context engineering, ICL, prompt engineering et RAG sans les confondre."
+suggested_route:
+  previous: "fr/in-context-learning"
+  next: "fr/text-data"
+hierarchy:
+  parents: ["fr/generation"]
+  children: []
+related: ["fr/in-context-learning", "fr/generation", "fr/text-data", "fr/llm-limits"]
+tags: ["type:concept-lesson", "destination:understand", "topic:context-engineering", "level:core", "language:fr", "status:published"]
+-->
+
+{{< include ../includes/generated-guided-context-fr-context-engineering.qmd >}}
+
+::: {.chapter-lead}
+À chaque étape d'inférence, un LLM ne dispose pas automatiquement de tout ce qui a été dit, écrit ou stocké autour de lui. Il reçoit un **contexte actif** : les informations effectivement assemblées pour ce calcul, dans les limites de sa fenêtre de contexte. Le **context engineering** (conception et gestion du contexte) consiste à choisir, organiser et actualiser ces informations pour aider le système à accomplir une tâche.
+:::
+
+::: {.callout-tip title="L'idée à retenir en une minute"}
+- **Le contexte actif** est ce qui est effectivement fourni au modèle à cette étape, pas tout l'historique disponible dans l'application.
+- **La fenêtre de contexte** est une limite de capacité ; elle ne dit pas quelles informations ont été retenues ni si elles sont utiles.
+- **Le context engineering** organise instructions, messages, exemples, résultats d'outils et informations récupérées, puis décide quoi conserver, résumer ou retirer.
+- **L'ICL** décrit une capacité du modèle à exploiter des exemples dans le contexte ; le context engineering décide notamment si et comment ces exemples y sont placés.
+:::
+
+## Plusieurs sens du mot « contexte »
+
+Le mot est utilisé pour désigner des objets liés, mais différents :
+
+| Notion | Ce qu'elle désigne | Ce qu'elle ne garantit pas |
+|---|---|---|
+| **Contexte actif** | Les tokens et contenus effectivement présentés au modèle pour un calcul donné | Que tout l'historique de l'application soit inclus |
+| **Fenêtre de contexte** | La capacité maximale d'entrée/contexte prise en charge par le modèle ou le service | Que remplir cette capacité améliore la réponse |
+| **Contexte accessible par l'attention** | Les positions qu'une position donnée peut utiliser, selon l'architecture et le masque | Que tous les tokens fournis soient accessibles à chaque position |
+| **Historique de conversation** | Les messages conservés par l'application | Qu'ils soient tous renvoyés au modèle à chaque tour |
+| **Mémoire** | Des informations conservées hors du calcul courant, éventuellement entre sessions | Qu'elles soient présentes dans le contexte tant qu'elles ne sont pas récupérées et injectées |
+| **Documents récupérés (RAG)** | Des passages sélectionnés dans une source externe | Qu'ils modifient les paramètres du modèle ou soient fiables par défaut |
+
+Dans un Transformer causal, le masque d'attention restreint ce que chaque position peut consulter à l'intérieur de la séquence fournie. C'est un **contexte accessible au niveau du calcul**. Le context engineering agit à un autre niveau : il détermine largement quelle séquence et quelles informations le système fournit au modèle.
+
+La capacité de contexte et le contexte actif ne sont donc pas synonymes. Une application peut conserver un historique long tout en n'en transmettant qu'un résumé et quelques messages récents.
+
+## Que peut contenir le contexte actif ?
+
+Selon le produit et l'architecture du système, il peut réunir :
+
+- des instructions de système ou de développeur et des contraintes de sortie ;
+- la demande courante et une partie de l'historique ;
+- des exemples de démonstration ;
+- des descriptions d'outils disponibles et leurs paramètres ;
+- des résultats d'appels d'outils ;
+- des passages documentaires récupérés par recherche (RAG) ;
+- un résumé d'informations utiles issues d'échanges précédents ;
+- des contenus multimodaux, représentés selon les modalités prises en charge.
+
+La composition exacte dépend de l'interface et du système. Il ne faut pas supposer que chaque application transmet tous ces éléments, ni qu'ils apparaissent tous sous la forme d'un simple texte concaténé.
+
+## Le travail de conception du contexte
+
+Le context engineering n'est pas une phrase magique ajoutée au prompt. C'est un cycle de conception et de maintenance :
+
+1. **Définir le besoin.** Quelles informations sont nécessaires à la tâche et lesquelles sont hors sujet ?
+2. **Sélectionner les sources.** Instructions, historique utile, exemples, documents ou outils.
+3. **Assembler et structurer.** Séparer consignes, données, résultats et contraintes ; rendre leur provenance lisible.
+4. **Gérer le budget.** Éviter les répétitions, choisir les passages pertinents, résumer ou compacter lorsque le contexte devient trop long.
+5. **Actualiser.** Ajouter les nouveaux résultats utiles, retirer les éléments périmés et préserver les informations nécessaires aux étapes suivantes.
+6. **Vérifier.** Tester les oublis, contradictions, effets d'ordre, injections malveillantes et cas où une source manque.
+
+L'objectif n'est pas de remplir la fenêtre au maximum, mais de fournir un ensemble suffisamment pertinent et fiable pour la tâche. Un contexte plus long peut apporter des informations utiles, mais aussi du bruit, des contradictions, des coûts et des difficultés de repérage.
+
+## Distinguer quatre notions proches
+
+| Notion | Question principale | Relation |
+|---|---|---|
+| **Prompt engineering** | Comment formuler et structurer les instructions et exemples ? | Une partie du travail de conception du contexte |
+| **Context engineering** | Quelles informations fournir, dans quel ordre, depuis quelles sources, et comment les maintenir ? | Englobe le prompt, mais aussi l'historique, les outils, la récupération et la compression |
+| **In-context learning (ICL)** | Comment le modèle adapte-t-il sa réponse à des exemples présents dans le prompt ? | Comportement/capacité du modèle, sans mise à jour des paramètres |
+| **RAG** | Comment retrouver des informations externes pertinentes et les fournir au modèle ? | Une stratégie d'acquisition de contenu qui peut alimenter le contexte |
+
+Le RAG ne constitue donc pas à lui seul tout le context engineering : il faut encore choisir les passages, les ordonner, les accompagner de consignes et décider comment les conserver. De même, le context engineering peut inclure des exemples qui favorisent l'ICL, mais les deux termes ne désignent pas le même phénomène.
+
+Le terme *context engineering* est une appellation de pratique en évolution, pas le nom d'un algorithme unique ni d'une architecture normalisée. Les équipes peuvent donc employer des périmètres légèrement différents.
+
+## Exemple : préparer une réponse documentaire
+
+Imaginons un assistant qui doit répondre à une question sur une politique de remboursement :
+
+- l'instruction fixe le rôle et demande de citer les sources ;
+- la question de l'utilisateur précise le produit et la date ;
+- une recherche documentaire récupère trois passages ;
+- le système écarte un passage obsolète et conserve les deux passages pertinents ;
+- un résumé très court garde la contrainte déjà précisée dans l'échange ;
+- les extraits sont transmis avec leur titre et leur date, en distinguant les documents des instructions.
+
+Le modèle ne « se souvient » pas nécessairement de toute la base documentaire. Il calcule à partir des éléments qui lui sont effectivement fournis à ce tour. Si un outil renvoie une nouvelle information, le système peut l'ajouter au contexte de l'étape suivante.
+
+## Ce que le context engineering n'est pas
+
+- **Pas une augmentation des poids :** ajouter un document au contexte ne réalise pas un fine-tuning.
+- **Pas une mémoire automatique :** une donnée stockée ailleurs n'est utile au modèle que si le système la rend disponible au bon moment.
+- **Pas une garantie de vérité :** un document récupéré peut être erroné, dépassé ou contradictoire.
+- **Pas une garantie de sécurité :** un passage externe peut contenir des instructions malveillantes ; sa provenance et son statut non fiable doivent être traités explicitement.
+- **Pas une solution magique à la longueur :** une grande fenêtre ne supprime ni les effets de position, ni le bruit, ni les limites de raisonnement et de récupération.
+
+## Pour continuer
+
+- **Comprendre l'ICL :** [apprentissage en contexte](in-context-learning.qmd) — comment les exemples dans le prompt influencent la réponse sans mise à jour des paramètres.
+- **Revenir à la génération :** [générer du texte](generation.qmd) — comment le contexte s'étend token après token.
+- **Suivre l'entrée du modèle :** [du texte aux tokens](text-data.qmd) — comment le contenu textuel devient une séquence d'IDs.
+
+## Références
+
+- Anthropic (2025), [*Effective context engineering for AI agents*](https://www.anthropic.com/research/effective-context-engineering-for-ai-agents) — sélection et maintenance du contexte, outils, historique et récupération.
+- Okcular (2025), [*Context Engineering — Short-Term Memory Management with Sessions*](https://developers.openai.com/cookbook/examples/agents_sdk/session_memory) — gestion de l'historique, troncature et compression dans des interactions multi-tours.
+
+::: {.language-switch}
+**Langue :** [Français](context-engineering.qmd) · [English](../en/context-engineering.qmd)
+:::
