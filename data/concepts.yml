@@ -652,6 +652,8 @@ concepts:
     domains: [inference-efficiency]
     resources: [fr/rag-memory-boundaries, en/rag-memory-boundaries]
 
+
+
 relation_types:
   represented-by:
     direction: directed
@@ -775,6 +777,147 @@ relation_types:
       fr: "La source est évaluée au moyen de la cible."
       en: "The source is evaluated using the target."
 relations:
+  - {from: document-retrieval, type: contributes-to, to: retrieval-augmented-generation}
+  - {from: retrieval-augmented-generation, type: contributes-to, to: context-engineering}
+  - {from: persistent-memory, type: contributes-to, to: context-engineering}
+  - {from: fine-tuning, type: part-of, to: post-training}
+  - {from: fine-tuning, type: contrasts-with, to: context-injection}
+  - {from: context-injection, type: contributes-to, to: in-context-learning}
+  - {from: document-retrieval, type: contrasts-with, to: in-context-learning}
+  - {from: policy-gradient, type: part-of, to: post-training}
+  - {from: score-function, type: part-of, to: policy-gradient}
+  - from: score-function
+    type: prerequisite
+    to: score-centering
+    rationale:
+      fr: "Le centrage porte sur le gradient de log-probabilité de la politique ; il faut définir cette fonction score avant de la centrer."
+      en: "Centering operates on the policy log-probability gradient; define the score function before centering it."
+  - {from: off-policy-reinforcement-learning, type: part-of, to: post-training}
+  - {from: training-inference-mismatch, type: constrains, to: policy-gradient}
+  - {from: score-centering, type: applies-to, to: off-policy-reinforcement-learning}
+  - {from: attention-score, type: contrasts-with, to: score-centering}
+  - {from: importance-sampling, type: contrasts-with, to: score-centering}
+  - {from: importance-sampling, type: applies-to, to: off-policy-reinforcement-learning}
+  - {from: post-training, type: contrasts-with, to: pretraining}
+  - {from: instruction-tuning, type: part-of, to: post-training}
+  - {from: reinforcement-learning-from-human-feedback, type: part-of, to: post-training}
+  - {from: direct-preference-optimization, type: part-of, to: post-training}
+  - {from: in-context-learning, type: contrasts-with, to: instruction-tuning}
+  - {from: context-engineering, type: contributes-to, to: in-context-learning}
+  - {from: inference-time-compute, type: applies-to, to: reasoning-model}
+  - {from: tool-calling, type: part-of, to: agentic-system}
+  - {from: token, type: represented-by, to: token-embedding}
+  - from: token-embedding
+    type: prerequisite
+    to: contextualized-representation
+    rationale:
+      fr: "La représentation initiale du token doit être comprise avant les transformations contextuelles."
+      en: "The initial token representation should be understood before its contextual transformations."
+  - {from: query, type: part-of, to: self-attention}
+  - {from: key, type: part-of, to: self-attention}
+  - {from: value, type: part-of, to: self-attention}
+  - {from: query, type: part-of, to: scaled-dot-product-attention}
+  - {from: key, type: part-of, to: scaled-dot-product-attention}
+  - {from: value, type: part-of, to: scaled-dot-product-attention}
+  - {from: query, type: contributes-to, to: attention-score}
+  - {from: key, type: contributes-to, to: attention-score}
+  - {from: attention-score, type: part-of, to: scaled-dot-product-attention}
+  - {from: attention-weight, type: part-of, to: scaled-dot-product-attention}
+  - {from: attention-score, type: normalized-by, to: softmax}
+  - {from: softmax, type: produces, to: attention-weight}
+  - {from: causal-mask, type: constrains, to: scaled-dot-product-attention}
+  - {from: attention-mask, type: constrains, to: self-attention}
+  - {from: padding-mask, type: constrains, to: self-attention}
+  - {from: document-boundary-mask, type: constrains, to: self-attention}
+  - {from: loss-mask, type: constrains, to: training-objective}
+  - {from: attention-mask, type: contrasts-with, to: loss-mask}
+  - {from: scaled-dot-product-attention, type: applies-to, to: self-attention}
+  - {from: scaled-dot-product-attention, type: part-of, to: multi-head-attention}
+  - {from: multi-head-attention, type: contributes-to, to: contextualized-representation}
+  - {from: causal-mask, type: constrains, to: self-attention}
+  - {from: positional-encoding, type: contributes-to, to: self-attention}
+  - {from: self-attention, type: contributes-to, to: contextualized-representation}
+  - {from: output-projection, type: produces, to: logits}
+  - {from: logits, type: normalized-by, to: softmax}
+  - {from: softmax, type: evaluated-by, to: cross-entropy}
+  - {from: training-objective, type: evaluated-by, to: cross-entropy}
+  - {from: softmax, type: produces, to: conditional-distribution}
+  - {from: conditional-distribution, type: contributes-to, to: sequence-likelihood}
+  - {from: observed-target, type: contributes-to, to: sequence-likelihood}
+  - from: conditional-distribution
+    type: prerequisite
+    to: sequence-likelihood
+    rationale:
+      fr: "La vraisemblance d'une séquence est construite à partir des probabilités conditionnelles des tokens observés."
+      en: "Sequence likelihood is built from conditional probabilities of the observed tokens."
+  - from: observed-target
+    type: prerequisite
+    to: sequence-likelihood
+    rationale:
+      fr: "Une vraisemblance de séquence porte sur des tokens effectivement observés."
+      en: "A sequence likelihood is defined with respect to actually observed tokens."
+  - {from: sequence-likelihood, type: mapped-by, to: logarithm}
+  - {from: logarithm, type: produces, to: log-likelihood}
+  - from: sequence-likelihood
+    type: prerequisite
+    to: log-likelihood
+    rationale:
+      fr: "La log-vraisemblance est obtenue en prenant le logarithme de la vraisemblance."
+      en: "Log-likelihood is obtained by taking the logarithm of likelihood."
+  - {from: log-likelihood, type: mapped-by, to: negation}
+  - {from: negation, type: produces, to: negative-log-likelihood}
+  - from: log-likelihood
+    type: prerequisite
+    to: negative-log-likelihood
+    rationale:
+      fr: "La négative log-vraisemblance est l'opposé de la log-vraisemblance."
+      en: "Negative log-likelihood is the negation of log-likelihood."
+  - {from: negative-log-likelihood, type: contributes-to, to: training-objective}
+  - {from: observed-target, type: part-of, to: training-example}
+  - {from: teacher-forcing, type: applies-to, to: training-example}
+  - from: cross-entropy
+    type: prerequisite
+    to: training-objective
+    rationale:
+      fr: "L'objectif usuel d'un GPT agrège les coûts de prédiction des tokens cibles."
+      en: "The usual GPT objective aggregates prediction costs for target tokens."
+  - {from: training-objective, type: produces, to: gradient}
+  - from: gradient
+    type: prerequisite
+    to: parameter-update
+    rationale:
+      fr: "Dans le parcours minimal d'entraînement par descente de gradient, l'optimiseur utilise les gradients pour mettre à jour les paramètres."
+      en: "In the minimum gradient-based training path, the optimizer uses gradients to update parameters."
+  - {from: optimizer, type: contributes-to, to: parameter-update}
+  - {from: parameter-update, type: contributes-to, to: next-token-prediction}
+  - {from: observed-target, type: contributes-to, to: cross-entropy}
+  - {from: generated-token-feedback, type: contributes-to, to: decode-step}
+  - {from: decoding-policy, type: applies-to, to: conditional-distribution}
+  - {from: decoding-policy, type: produces, to: token}
+  - {from: token, type: contributes-to, to: generated-token-feedback}
+  - {from: generated-token-feedback, type: part-of, to: autoregressive-generation}
+  - {from: prefill, type: part-of, to: autoregressive-generation}
+  - {from: decode-step, type: part-of, to: autoregressive-generation}
+  - {from: decoding-policy, type: part-of, to: autoregressive-generation}
+  - {from: kv-cache, type: contributes-to, to: decode-step}
+  - {from: conditional-distribution, type: contributes-to, to: autoregressive-generation}
+  - {from: sequence-likelihood, type: contributes-to, to: held-out-evaluation}
+  - {from: cross-entropy, type: contributes-to, to: held-out-evaluation}
+  - {from: conditional-distribution, type: evaluated-by, to: held-out-evaluation}
+  - {from: conditional-distribution, type: evaluated-by, to: cross-entropy}
+
+  - {from: autoregressive-generation, type: contrasts-with, to: next-concept-modeling}
+  - {from: hierarchical-discrete-codes, type: part-of, to: next-concept-modeling}
+  - {from: coarse-to-fine-generation, type: part-of, to: next-concept-modeling}
+  - {from: multiscale-residual-vector-quantization, type: part-of, to: next-concept-modeling}
+
+  - {from: positive-pair-distribution, type: part-of, to: joint-embedding-predictive-architecture}
+  - {from: positive-pair-distribution, type: constrains, to: training-objective}
+  - {from: joint-embedding-predictive-architecture, type: contrasts-with, to: next-token-prediction}
+  - {from: platonic-representation-hypothesis, type: evaluated-by, to: held-out-evaluation}
+  - {from: laplacian-eigenmaps, type: applies-to, to: positive-pair-distribution}
+  - {from: laplacian-eigenmaps, type: contributes-to, to: platonic-representation-hypothesis}
+  - {from: joint-embedding-predictive-architecture, type: represented-by, to: laplacian-eigenmaps}relations:
   - {from: document-retrieval, type: contributes-to, to: retrieval-augmented-generation}
   - {from: retrieval-augmented-generation, type: contributes-to, to: context-engineering}
   - {from: persistent-memory, type: contributes-to, to: context-engineering}
