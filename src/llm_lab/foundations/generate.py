@@ -91,7 +91,7 @@ def generate(
 
     Raises:
         ValueError: If the prompt is not a non-empty 1D integer array
-            within range, if max_new_tokens is negative, if
+            within range, if max_new_tokens is not a non-negative integer, if
             temperature <= 0, if top_k is provided and is not an integer
             >= 1, if top_p is provided and lies outside (0, 1], or if
             no rng is provided for sampling.
