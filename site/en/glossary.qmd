@@ -42,6 +42,9 @@ This glossary gives a concise first definition for terms used across the site. I
 - **Incremental decode** — the phase after prefill that repeats prediction from the context extended with generated tokens. Do not confuse it with *decoding*, the token-selection rule. See [Generating text](generation.qmd).
 - **KV cache** — a mechanism that retains previously computed attention keys and values to avoid recomputing the prefix during decode; an optional inference optimization.
 - **Context window** — the amount of token context a model can process in a given input.
+- **In-context learning (ICL)** — adaptation of predictions to instructions, examples, or patterns in the input context without updating model parameters. See [in-context learning](in-context-learning.qmd).
+- **Context engineering** — the design and management of the information actually supplied to a model: selection, retrieval, structuring, updating, security, and evaluation. See [context engineering](context-engineering.qmd).
+- **Prompt engineering** — formulating and organizing a prompt's instructions and examples; it is one part of context work, not a synonym for context engineering.
 
 ## Representations and geometry
 
