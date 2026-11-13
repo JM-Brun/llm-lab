@@ -13,7 +13,7 @@ summary: "Exercices pour concevoir, diagnostiquer et évaluer le contexte fourni
 scope: "Propose des mises en situation et critères de correction sans répéter la leçon conceptuelle."
 purpose: "Le lecteur doit savoir distinguer les composantes d'un contexte, repérer ses défauts et proposer une évaluation contrôlée."
 suggested_route:
-  previous: "fr/context-engineering"
+  previous: null
   next: null
 hierarchy:
   parents: []
