@@ -138,12 +138,6 @@ The next lesson, [Scaled dot-product attention](scaled-dot-product-attention.qmd
 
 To practise the skills associated with this lesson, the [Attention exercises](exercises-attention.qmd#attention) cover projection calculations and dimensions, predicting the effects of changing $W_Q$, $W_K$, or $W_V$, connecting projections to backpropagation, and transferring the reasoning to cross-attention and GQA/MQA. Numerical calculations remain in that practice route.
 
-::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
-By the end of this lesson, you should be able to:
-- distinguish the roles of Q, K, and V in the attention mechanism;
-- explain why Q and K determine the weights while V supplies the aggregated content;
-- describe the qualitative dependencies between projections, weights, and content, without performing matrix calculations.
-:::
 
 
 
