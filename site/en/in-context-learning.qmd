@@ -1,14 +1,15 @@
 ---
 title: "In-context learning"
 subtitle: "Adapting from a prompt without updating model parameters"
-keywords: ["type:concept-lesson", "destination:deepen", "topic:in-context-learning", "level:advanced", "language:en", "status:published"]
+keywords: ["type:concept-lesson", "destination:understand", "topic:in-context-learning", "level:core", "language:en", "status:published"]
 lang: en
 ---
 
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/in-context-learning"
-scope: "Introduces in-context learning, its differences from training and fine-tuning, its manifestations, and leading explanatory hypotheses."
+summary: "Explains how a model uses instructions and demonstrations in context without updating its parameters."
+scope: "Introduces in-context learning as an inference-time behavior, its differences from training and fine-tuning, and the limits of mechanistic explanations."
 purpose: "Readers should explain how a model uses examples in a prompt without updating its parameters, distinguish zero-shot, one-shot, and few-shot settings, and recognize the limits of current mechanistic explanations."
 domain: "inference-efficiency"
 suggested_route:
@@ -17,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["en/llm-overview", "en/generation", "en/contextualized-representations", "en/in-context-learning-exercises"]
+related: ["en/llm-overview", "en/generation", "en/context-engineering", "en/contextualized-representations", "en/in-context-learning-exercises"]
 tags: ["type:concept-lesson", "destination:deepen", "topic:in-context-learning", "level:advanced", "language:en", "status:published"]
 -->
 
