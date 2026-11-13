@@ -75,7 +75,7 @@ To connect these ideas to the model's internal computation, see [contextualized 
 | Concept | What it refers to |
 |---|---|
 | **Prompt engineering** | Formulating and organizing a prompt's instructions and examples. |
-| **In-context learning (ICL)** | A phenomenon in which a model adapts its behavior from information and demonstrations in context, without updating its parameters. |
+| **In-context learning (ICL)** | A phenomenon in which a model adapts its behavior from instructions, examples, or patterns in context, without updating its parameters. |
 | **Context engineering** | The broader work of selecting, retrieving, structuring, updating, and securing all the context supplied to the model. |
 | **RAG** | An architecture that retrieves external information and injects it into context; it is one technique context engineering can use. |
 | **Memory** | A mechanism for retaining and reusing information across interactions; it can supply context but is not itself the context window. |
