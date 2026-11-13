@@ -177,4 +177,4 @@ These exercises focus on distribution controls. Sequence search (beam search) an
 
 [← Back to the exercise catalogue](exercises.qmd)
 
-**Language:** [Français](../fr/exercises.qmd) · [English](exercises-generation.qmd)
+**Language:** [Français](../fr/exercises-generation.qmd) · [English](exercises-generation.qmd)
