@@ -28,6 +28,8 @@
     - [Objectif d'entraînement : garanties et limites](llm-limits.html)
   - [Panorama : qu’est-ce qu’un LLM ?](llm-overview.html)
   - [Générer du texte : l'inférence pas à pas](generation.html)
+  - Contexte et adaptation
+    - [Ingénierie du contexte (context engineering)](context-engineering.html)
 - **Construire un petit GPT**
   - Préparer les données d'entraînement
     - [Préparer un corpus pour le préentraînement](corpus-preparation.html)
