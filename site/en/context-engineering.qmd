@@ -124,7 +124,7 @@ The model does not necessarily “remember” the entire document collection. It
 ## References
 
 - Anthropic (2025), [*Effective context engineering for AI agents*](https://www.anthropic.com/research/effective-context-engineering-for-ai-agents) — context selection and maintenance, tools, history, and retrieval.
-- Okcular (2025), [*Context Engineering — Short-Term Memory Management with Sessions*](https://developers.openai.com/cookbook/examples/agents_sdk/session_memory) — history management, trimming, and compaction in multi-turn interactions.
+- OpenAI, [*Context Engineering — Short-Term Memory Management with Sessions*](https://developers.openai.com/cookbook/examples/agents_sdk/session_memory) — an example of managing state and memory across a multi-turn session.
 
 ::: {.language-switch}
 **Language:** [Français](../fr/context-engineering.qmd) · [English](context-engineering.qmd)
