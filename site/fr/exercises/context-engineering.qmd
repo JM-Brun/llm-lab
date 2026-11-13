@@ -70,6 +70,26 @@ Il s'agit d'une tentative d'injection indirecte de prompt. Le contenu récupér�
 Comparer, sur un jeu de questions tenu à l'écart, une condition sans récupération à une condition avec récupération. Mesurer l'exactitude et la fidélité aux sources, mais aussi les réponses non fondées, la latence et le coût. Contrôler la pertinence des documents et inclure des questions auxquelles le corpus ne permet pas de répondre.
 </details>
 
+## Distinguer les niveaux de contexte
+
+6. **Une application conserve 200 messages et une mémoire persistante, mais n'envoie au modèle que les instructions système, la question actuelle et deux passages récupérés. Que désignent le contexte du système, la séquence d'entrée et le contexte accessible à une position ? Les 200 messages sont-ils visibles ?**
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Le contexte du système est l'ensemble sélectionné et transmis : instructions, question et deux passages. La séquence d'entrée est leur représentation tokenisée (et éventuellement structurée). À la position $t$, le contexte accessible est limité par le masque causal et la fenêtre disponible ; les positions futures sont masquées. Les 200 messages et la mémoire restent des données de l'application tant qu'ils ne sont pas sélectionnés et transmis.
+</details>
+
+## Suivre le devenir d'une information externe
+
+7. **Un moteur renvoie cinq passages, mais le système n'en conserve que deux après filtrage. La mémoire contient aussi une préférence utilisateur qui n'est pas sélectionnée. Enfin, un exemple résolu est ajouté au prompt. Qu'est-ce qui peut conditionner la réponse, et où intervient l'ICL ?**
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Seuls les deux passages retenus et effectivement transmis peuvent directement conditionner le calcul, avec la question et les autres éléments du contexte. Les trois passages rejetés et la préférence stockée mais non sélectionnée ne sont pas visibles du modèle. L'exemple résolu transmis peut soutenir l'ICL : le modèle adapte sa réponse à une démonstration présente dans le contexte, sans mise à jour des paramètres. RAG et ICL sont donc deux dimensions distinctes qui peuvent coexister.
+</details>
+
 ::: {.language-switch}
 **Langue :** [Français](context-engineering.qmd) · [English](../../en/exercises/context-engineering.qmd)
 :::
