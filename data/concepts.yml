@@ -410,11 +410,19 @@ concepts:
   - id: in-context-learning
     labels: {fr: "Apprentissage en contexte", en: "In-context learning"}
     definitions:
-      fr: "Adaptation du comportement du modèle à des instructions ou exemples présents dans le prompt, sans mise à jour de ses paramètres."
-      en: "Adaptation of model behavior to instructions or examples in the prompt, without updating its parameters."
+      fr: "Comportement par lequel un modèle adapte ses prédictions aux instructions, exemples ou régularités présents dans son contexte d'entrée, sans mise à jour de ses paramètres."
+      en: "Behavior in which a model adapts its predictions to instructions, examples, or patterns in its input context without updating its parameters."
     domains: [inference-efficiency]
-    importance: supporting
-    resources: [fr/in-context-learning, en/in-context-learning, fr/llm-evolution, en/llm-evolution]
+    importance: core
+    resources: [fr/in-context-learning, en/in-context-learning, fr/in-context-learning-exercises, en/in-context-learning-exercises, fr/llm-evolution, en/llm-evolution]
+  - id: context-engineering
+    labels: {fr: "Ingénierie du contexte", en: "Context engineering"}
+    definitions:
+      fr: "Pratique d'ingénierie qui sélectionne, récupère, structure, hiérarchise, actualise et sécurise les informations fournies à un modèle pour une tâche donnée."
+      en: "Engineering practice that selects, retrieves, structures, prioritizes, updates, and secures the information supplied to a model for a given task."
+    domains: [inference-efficiency]
+    importance: core
+    resources: [fr/context-engineering, en/context-engineering]
   - id: pretraining
     labels: {fr: "Pré-entraînement", en: "Pretraining"}
     definitions:
@@ -745,6 +753,7 @@ relations:
   - {from: reinforcement-learning-from-human-feedback, type: part-of, to: post-training}
   - {from: direct-preference-optimization, type: part-of, to: post-training}
   - {from: in-context-learning, type: contrasts-with, to: instruction-tuning}
+  - {from: context-engineering, type: contributes-to, to: in-context-learning}
   - {from: inference-time-compute, type: applies-to, to: reasoning-model}
   - {from: tool-calling, type: part-of, to: agentic-system}
   - {from: token, type: represented-by, to: token-embedding}
