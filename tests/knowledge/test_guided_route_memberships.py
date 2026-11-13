@@ -459,6 +459,17 @@ def test_every_route_member_wires_exactly_its_generated_context_include(language
     assert observed_page_ids == expected_page_ids
 
 
+@pytest.mark.parametrize("language", ["fr", "en"])
+def test_context_use_pages_include_their_generated_suggested_route(language: str) -> None:
+    for page_id in ("in-context-learning", "context-engineering"):
+        source = (ROOT / "site" / language / f"{page_id}.qmd").read_text(encoding="utf-8")
+        include = (
+            "{{< include ../includes/generated-suggested-route-"
+            f"{language}-{page_id}.qmd >}}"
+        )
+        assert source.count(include) == 1
+
+
 @pytest.mark.parametrize(
     ("language", "expected_label", "next_label", "next_title"),
     [
