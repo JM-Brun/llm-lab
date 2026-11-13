@@ -669,3 +669,69 @@ A reader should not leave with the rule “no LayerNorm means a deep Transformer
 - **Beginner:** can say that normalization helps keep deep computation trainable, without memorizing the Post-LN/Pre-LN derivation.
 - **Experienced reader:** can identify normalization placement as an architectural and optimization choice, and connect it to gradient behavior at initialization.
 - **Remaining opportunity:** a controlled experiment could compare gradient norms across depth for Post-LN and Pre-LN on the same small Transformer. It should be implemented as a reproducible experiment rather than added as a long derivation to this overview lesson.
+
+
+---
+
+# Addendum — second-wave audit 5/6: `queries-keys-values`
+
+**Status:** French and English lessons and their exercise hubs reviewed. No content change is warranted in this pass; source-level review only.
+
+## Page identity and role
+
+- FR: `site/fr/queries-keys-values.qmd`; EN: `site/en/queries-keys-values.qmd`
+- Practice: `site/fr/exercises/queries-keys-values.qmd` and `site/en/exercises/queries-keys-values.qmd`
+- Role: introduce the three learned projections from a shared input and explain why Q/K determine attention weights while V supplies the content being aggregated.
+- Boundary: score scaling, masking, softmax and weighted aggregation are derived in the scaled-dot-product-attention lesson; causal visibility belongs to causal masking; detailed geometry and multi-head variants are deferred to the advanced Q/K/V page and practice collection.
+
+## Page-level value record
+
+| Field | Finding |
+|---|---|
+| Learner question | Why does self-attention need three learned projections from one representation stream? |
+| Beginner outcome | Distinguish the query, key and value roles and explain the two paths: compatibility/routing (Q and K) and content aggregation (V). |
+| Experienced-reader value already present | The lesson states the shared-input parameterization, distinct learned matrices, dimensions `d_k` and `d_v`, and the distinction from cross-attention where Q and K/V originate from different streams. It avoids anthropomorphic claims and does not treat attention weights as universal semantic relevance. |
+| Bilingual check | FR/EN definitions, equations, dimensions, examples and self-checks align. Exercise hubs add a useful nuance: changing V with Q/K fixed leaves weights unchanged, but the aggregate need not change if weighted differences cancel. |
+| Gap found | No critical conceptual gap found. The page's deliberate decision not to perform matrix calculations is appropriate for its core role; the deeper exercises carry those operations and transfer to cross-attention and GQA/MQA. |
+| Change made | None. The lesson already contains the distinctive routing-versus-content insight and the exercise hub tests it without duplicating the full derivation. |
+| Depth placement | Keep the core page conceptual; leave dot-product scaling, causal constraints and the output weighted sum to their canonical pages. |
+| Validation | Reviewed both lessons and both exercise hubs. No rendered browser or learner validation is claimed. |
+
+## Double-audience test
+
+- **Beginner:** can explain Q/K as determining where information is weighted and V as supplying what is combined.
+- **Experienced reader:** can reason about independent changes to Q, K and V, distinguish self-attention from cross-attention, and recognize that weights are not semantic labels.
+
+---
+
+# Addendum — second-wave audit 6/6: `causal-masking`
+
+**Status:** French and English lessons and exercise hubs reviewed, with a source-level cross-check of the reference implementation and tests. No content change is warranted in this pass.
+
+## Page identity and role
+
+- FR: `site/fr/causal-masking.qmd`; EN: `site/en/causal-masking.qmd`
+- Practice: `site/fr/exercises/causal-masking.qmd` and `site/en/exercises/causal-masking.qmd`
+- Implementation: `src/llm_lab/foundations/attention.py`; tests: `tests/unit/test_attention.py`
+- Role: express the autoregressive information constraint as a lower-triangular attention mask and explain why it must be applied before softmax.
+- Boundary: Q/K/V projections belong to the preceding lesson; score computation and weighted aggregation belong to scaled dot-product attention; target shifting and loss masking are distinct training-data/objective concerns.
+
+## Page-level value record
+
+| Field | Finding |
+|---|---|
+| Learner question | How can all training positions be computed in parallel without allowing a position to use future tokens? |
+| Beginner outcome | Read the rule `j ≤ i`, understand why the diagonal is allowed when predicting the next token, and distinguish causal masking from padding and loss masks. |
+| Experienced-reader value already present | The page treats masking as an information-flow constraint, not a visual convention; explains boolean-mask polarity differences between PyTorch APIs; handles fully masked rows explicitly; and states the prefix-invariance property needed to detect future leakage beyond inspecting the mask matrix. |
+| Bilingual check | FR/EN equations, mask conventions, API warning, misconception checks and exercise hub align. The documentation-version note is explicit rather than silently assuming boolean-mask polarity is universal. |
+| Implementation check | The reference `causal_mask` returns a lower-triangular additive mask with 0 on allowed positions and `-inf` on future positions. The attention primitive accepts an additive mask of exact shape `(T_q, T_k)`, rejects invalid entries and handles fully masked rows with zero weights and output. Unit tests verify mask structure, fully masked-row behaviour, zero future weights and prefix invariance when a future key/value is changed. The page correctly warns that this is a primitive-level test, not a complete-GPT test. |
+| Gap found | No critical gap found. The implementation note is accurately scoped and does not overclaim that testing the mask alone proves the complete model is free of leakage. |
+| Change made | None. The lesson is already unusually precise about API conventions, numerical edge cases and the difference between an attention primitive and a full model. |
+| Depth placement | Preserve the main explanation and the advanced API/code note. Future extension should test a complete model's prefix invariance, but that is a separate implementation milestone, not a reason to expand this concept page. |
+| Validation | Reviewed both lessons, both exercise hubs, `attention.py` and `test_attention.py`. Source-level cross-check only; tests were read, not executed in this pass. No full model test or browser validation is claimed. |
+
+## Double-audience test
+
+- **Beginner:** can explain why future tokens must be blocked before softmax and why the current position remains visible when predicting the next token.
+- **Experienced reader:** can distinguish boolean-mask API polarity, handle fully masked rows, and understand why prefix-invariance tests are stronger than checking the triangular matrix alone.
+- **Remaining opportunity:** add an end-to-end causal-invariance test for a complete small GPT once the implementation milestone exists; retain the current primitive-level test as a lower-level invariant.
