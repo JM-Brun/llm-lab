@@ -184,7 +184,12 @@ The questions for this tour and their worked answers are collected on its [dedic
 
 ## Build path navigation
 
-{{< include ../includes/generated-suggested-route-en-gpt-config-walkthrough.qmd >}}
+<div class="route-nav-cards">
+  <a class="route-nav-card" href="build-path.qmd">
+    <span class="nav-direction">← Back to the Build path</span>
+    <span class="nav-title">Build a small GPT</span>
+  </a>
+</div>
 
 ## Connections
 
