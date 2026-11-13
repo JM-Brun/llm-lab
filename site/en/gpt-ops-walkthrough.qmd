@@ -168,15 +168,7 @@ def linear(x: FloatArray, weight: FloatArray, bias: FloatArray) -> FloatArray:
 
 ## Exercises
 
-1. An `x` of shape `(3, 7, 12)` passes through `linear` with `weight` of shape `(8, 12)`: what is the output shape?
-2. What happens when normalizing a position whose 16 activations are all identical? What role does `eps` play?
-
-<details>
-<summary>Show answers and reasoning</summary>
-
-1. `(3, 7, 8)`: the last axis (12) is replaced by the output width (8); the batch axes (3, 7) are preserved.
-2. The variance is exactly 0; without `eps` the division would produce `inf` or `nan`. With `eps`, the denominator is `sqrt(eps)` and the output stays finite (close to the mean, rescaled by `gamma` and `beta`).
-</details>
+The questions for this tour and their worked answers are collected on its [dedicated practice page](exercises/gpt-ops-walkthrough.qmd). Try them before opening the answers: they check the stated outcomes without duplicating the prompts in the walkthrough.
 
 ## Build path navigation
 

@@ -198,15 +198,7 @@ The shape journey, line by line:
 
 ## Exercises
 
-1. Why `position_embedding[:seq_len]` and not the whole `position_embedding`?
-2. With `V=50, T=16, d=16, H=2, L=2, hidden=32`, compute the total parameter count without running the code.
-
-<details>
-<summary>Show answers and reasoning</summary>
-
-1. The table always has `context_length` rows; a shorter sequence uses only the first `seq_len`. Without the slice, adding `(B, T, d) + (T_max, d)` would fail as soon as `T < T_max`.
-2. Per block: `4×16×16 + 4×16 + 2×32×16 + 32 + 16 + 4×16 = 1024+64+1024+48+64+64 = 2288`. Two blocks: `4576`. Embeddings: `2×50×16 = 1600` (table + untied head); positions `16×16 = 256`; final norm `32`; head bias `50`. Total: `4576 + 1600 + 256 + 32 + 50 = 6514`.
-</details>
+The questions for this tour and their worked answers are collected on its [dedicated practice page](exercises/gpt-model-walkthrough.qmd). Try them before opening the answers: they check the stated outcomes without duplicating the prompts in the walkthrough.
 
 ## Build path navigation
 

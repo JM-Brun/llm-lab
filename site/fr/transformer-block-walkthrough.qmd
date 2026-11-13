@@ -192,15 +192,7 @@ Chaque position passe seule dans `d → mlp_hidden_dim` (souvent `4d`), puis GEL
 
 ## Exercices
 
-1. Avec `d=16` et `H=2`, quelles colonnes de `q` la tête 1 lit-elle ?
-2. Pourquoi `attended` est-il alloué avec `np.empty_like(x)` plutôt que rempli de zéros ?
-
-<details>
-<summary>Afficher les réponses et le raisonnement</summary>
-
-1. Les colonnes 8 à 15 (`slice(8, 16)`) : chaque colonne n'appartient qu'à une tête, la répartition est contiguë.
-2. Chaque position de `attended` est écrite exactement une fois par la boucle (chaque couple `(b, h)` écrit sa tranche pour toutes les positions) ; aucune cellule n'est lue avant d'être écrite, donc l'initialisation à zéro serait du travail inutile.
-</details>
+Les questions de cette visite et leurs corrigés sont regroupés sur la [page de pratique dédiée](exercises/transformer-block-walkthrough.qmd). Essayez-les avant d'ouvrir les réponses : elles vérifient les objectifs annoncés sans dupliquer les énoncés dans la visite guidée.
 
 ## Navigation dans le parcours
 

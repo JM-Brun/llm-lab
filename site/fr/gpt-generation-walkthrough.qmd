@@ -133,15 +133,7 @@ Ligne par ligne :
 
 ## Exercices
 
-1. Avec un prompt de 16 tokens, `context_length=16` et 4 tokens à générer : combien de passes avant sont exécutées, et avec quelles longueurs de fenêtre ?
-2. Pourquoi la sortie d'un modèle non entraîné est-elle incohérente, et pourquoi est-ce un résultat **attendu** plutôt qu'un bug ?
-
-<details>
-<summary>Afficher les réponses et le raisonnement</summary>
-
-1. Quatre passes, chacune sur une fenêtre de 16 tokens : après le premier token ajouté (17 tokens), la fenêtre ne retient que les 16 derniers à chaque étape.
-2. Les paramètres sont aléatoires : les logits n'encodent aucune statistique de langue. La boucle, elle, fonctionne parfaitement (formes, causalité, sélection) — c'est exactement ce que ce jalon sépare : **la mécanique** de génération de **la qualité acquise par l'apprentissage**.
-</details>
+Les questions de cette visite et leurs corrigés sont regroupés sur la [page de pratique dédiée](exercises/gpt-generation-walkthrough.qmd). Essayez-les avant d'ouvrir les réponses : elles vérifient les objectifs annoncés sans dupliquer les énoncés dans la visite guidée.
 
 ## Navigation dans le parcours
 

@@ -133,15 +133,7 @@ Line by line:
 
 ## Exercises
 
-1. With a 16-token prompt, `context_length=16` and 4 tokens to generate: how many forward passes run, and with what window lengths?
-2. Why is an untrained model's output incoherent, and why is that an **expected** result rather than a bug?
-
-<details>
-<summary>Show answers and reasoning</summary>
-
-1. Four passes, each on a 16-token window: after the first appended token (17 tokens), the window keeps only the last 16 at every step.
-2. The parameters are random: the logits encode no language statistics. The loop itself works perfectly (shapes, causality, selection) — exactly what this milestone separates: **the mechanics** of generation from **the quality acquired through learning**.
-</details>
+The questions for this tour and their worked answers are collected on its [dedicated practice page](exercises/gpt-generation-walkthrough.qmd). Try them before opening the answers: they check the stated outcomes without duplicating the prompts in the walkthrough.
 
 ## Build path navigation
 

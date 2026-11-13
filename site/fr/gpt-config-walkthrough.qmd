@@ -23,6 +23,7 @@ tags: ["type:guided-build", "destination:build", "topic:reference-gpt-config", "
 ::: {.chapter-lead}
 Cette page est la première étape (1 sur 5) de la visite guidée du code de référence : le fichier le plus petit du paquet, celui qui définit **ce qu'est le modèle** avant que tout autre fichier ne définisse **ce qu'il fait**. Chaque extrait de code est commenté ligne par ligne ; le code complet vit dans [`src/llm_lab/foundations/gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt_config.py).
 :::
+
 :::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d'apprentissage"}
 À l'issue de cette visite, vous pourrez :
 - nommer chaque dimension de configuration et ce qu'elle détermine ailleurs dans le modèle ;
@@ -178,18 +179,17 @@ Ligne par ligne :
 
 ## Exercices
 
-1. Quelle erreur obtient-on avec `embedding_dim=10, num_heads=4` ? Et avec `embedding_dim=12, num_heads=4` ?
-2. Combien de lignes a la table de positions d'une configuration `context_length=256, embedding_dim=64` ?
+Les questions de cette visite et leurs corrigés sont regroupés sur la [page de pratique dédiée](exercises/gpt-config-walkthrough.qmd). Essayez-les avant d'ouvrir les réponses : elles vérifient les objectifs annoncés sans dupliquer les énoncés dans la visite guidée.
 
-<details>
-<summary>Afficher les réponses et le raisonnement</summary>
-
-1. `10 % 4 == 2` : la divisibilité échoue, donc `ValueError` à la construction. Avec `12 % 4 == 0` : configuration acceptée, chaque tête reçoit `12/4 = 3` colonnes.
-2. `256 × 64 = 16384` valeurs, soit 16384 paramètres appris — un par position et par dimension. Ce nombre est indépendant du vocabulaire et du nombre de têtes.
-</details>
 
 ## Navigation dans le parcours
 
+<div class="route-nav-cards">
+  <a class="route-nav-card" href="build-path.qmd">
+    <span class="nav-direction">← Retour au parcours Build</span>
+    <span class="nav-title">Construire un petit GPT</span>
+  </a>
+</div>
 
 ## Connexions
 

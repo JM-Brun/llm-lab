@@ -192,15 +192,7 @@ Each position goes on its own through `d -> mlp_hidden_dim` (often `4d`), then G
 
 ## Exercises
 
-1. With `d=16` and `H=2`, which columns of `q` does head 1 read?
-2. Why is `attended` allocated with `np.empty_like(x)` instead of zeros?
-
-<details>
-<summary>Show answers and reasoning</summary>
-
-1. Columns 8 to 15 (`slice(8, 16)`): every column belongs to exactly one head, and the split is contiguous.
-2. Every cell of `attended` is written exactly once by the loop (each `(b, h)` pair writes its slice for all positions); no cell is read before being written, so zero-initialization would be wasted work.
-</details>
+The questions for this tour and their worked answers are collected on its [dedicated practice page](exercises/transformer-block-walkthrough.qmd). Try them before opening the answers: they check the stated outcomes without duplicating the prompts in the walkthrough.
 
 ## Build path navigation
 
