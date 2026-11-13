@@ -97,6 +97,10 @@ Le context engineering réduit certains risques mais ne garantit ni la vérité 
 - RAG, mémoire et résultats d'outils peuvent contribuer au contexte ; ils ne se confondent pas avec lui.
 - Une fenêtre plus grande ou un contexte plus long ne garantit pas une meilleure réponse.
 
+## Pour s'exercer
+
+Mettre ces principes en pratique avec les [exercices d'ingénierie du contexte](exercises/context-engineering.qmd).
+
 ## Références
 
 - Anthropic, [*Effective context engineering for AI agents*](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents).
