@@ -55,6 +55,21 @@ La **fenêtre de contexte** décrit une limite de capacité exprimée en tokens.
 
 Un contexte plus long peut aider lorsqu'il apporte des éléments pertinents. Il peut aussi nuire s'il accumule du bruit, des répétitions, des consignes incompatibles ou des documents mal sélectionnés. La position, la lisibilité et la fiabilité des informations comptent également. L'objectif n'est donc pas de remplir la fenêtre, mais de construire un contexte adapté à la tâche, sous les contraintes de capacité, de coût et de sécurité.
 
+## Trois niveaux de contexte à ne pas confondre
+
+Le mot *contexte* désigne plusieurs objets liés, mais différents :
+
+| Niveau | Ce qu'il désigne | Question utile |
+|---|---|---|
+| **Contexte du système** | Les instructions, messages, exemples, documents récupérés, résultats d'outils et éléments de mémoire que l'application choisit de fournir pour un appel. | Quelles informations l'application transmet-elle réellement ? |
+| **Séquence d'entrée et fenêtre de contexte** | La séquence de tokens (ou les éléments multimodaux structurés) traitée par le modèle. La fenêtre désigne une limite de capacité, pas une mémoire de tout ce que l'application possède. En génération autorégressive, les tokens produits s'ajoutent progressivement à cette séquence. | Quelle séquence le modèle traite-t-il, et quelle est sa limite ? |
+| **Contexte accessible à une position** | Pour un Transformer décodeur causal, les positions auxquelles une position donnée peut accéder selon le masque causal et la fenêtre disponible : à la position $t$, les positions futures sont masquées. | Quelles informations cette position peut-elle utiliser dans le calcul ? |
+
+Ces niveaux ne sont pas interchangeables. Un historique conservé par l'application n'est pas nécessairement transmis ; une mémoire persistante ne devient contexte du modèle que si le système en sélectionne le contenu ; et un état caché contextualisé est le **résultat d'un calcul** conditionné par les informations accessibles, pas un autre nom pour le contexte.
+
+Pour relier ces notions au calcul interne, voir [les représentations contextualisées](contextualized-representations.qmd) et [le masque causal](causal-masking.qmd). La [génération autorégressive](generation.qmd) montre comment les tokens choisis rejoignent progressivement la séquence traitée.
+
+
 ## Distinguer les notions voisines
 
 | Notion | Ce qu'elle désigne |
