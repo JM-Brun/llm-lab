@@ -32,7 +32,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:context-engineeri
 
 A prompt is often understood as text written by the user. In a real application, the model input may be a structured assembly of instructions defining the role and constraints, the current message, relevant conversation history, demonstration examples, retrieved documents, tool results, and selected task state or memory.
 
-The **context actually supplied** is the selection and organization of these elements for a particular model call. Not everything stored by the application is necessarily sent to the model.
+The **context actually supplied** is the selection and organization of these elements for a particular model call. Not everything stored by the application is necessarily sent to the model. Depending on model and API capabilities, context may also contain multimodal payloads (such as images or audio) and structured tool descriptions, not only text.
 
 ## Definition and main operations
 
