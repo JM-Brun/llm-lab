@@ -109,6 +109,7 @@ Le modèle ne « se souvient » pas nécessairement de toute la base documentair
 
 ## Ce que le context engineering n'est pas
 
+- **Pas un composant du Transformer :** le context engineering est une pratique de conception du système et de l'application, pas une nouvelle couche ni une architecture de réseau.
 - **Pas une augmentation des poids :** ajouter un document au contexte ne réalise pas un fine-tuning.
 - **Pas une mémoire automatique :** une donnée stockée ailleurs n'est utile au modèle que si le système la rend disponible au bon moment.
 - **Pas une garantie de vérité :** un document récupéré peut être erroné, dépassé ou contradictoire.
