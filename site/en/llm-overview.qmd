@@ -67,7 +67,7 @@ This table is a **conditional distribution**: it depends on the context. The fou
 Three terms are enough to read the rest of the path.
 
 - **Token.** The unit the model handles. It is not necessarily a word: “Aqueducts” may be split into several pieces, and a question mark is a token. The program that splits text and numbers the tokens is the *tokenizer*; [From text to tokens](text-data.qmd) describes this split.
-- **Context.** The tokens the model has available to predict the next one: the text supplied, then, during generation, the tokens already produced.
+- **Context.** In this simple example, the tokens from the supplied text followed by those already generated. In a real system, active context may also include instructions, selected history, examples, retrieved documents, tool descriptions and results, or multimodal content. [Context engineering](context-engineering.qmd) explains how these elements are selected and assembled.
 - **Parameters.** The numbers learned during training, weights and biases among them, that determine the computation. They are fixed during ordinary inference, that is, while the model is being used.
 
 The model predicts one token at a time. The probability of a whole sentence is obtained by multiplying the probabilities of its successive tokens, each conditioned on what precedes it; the [mathematical formulation of language modeling](language-modeling-math.qmd) derives this result.
@@ -136,7 +136,7 @@ Describing a model means answering three independent questions.
 
 A **foundation model** is a broader category than a *base model*: a model trained on broad data at scale and adaptable to many tasks, including tasks beyond language ([Bommasani et al., 2021](https://crfm.stanford.edu/report)).
 
-**Use.** At inference time, the parameters do not move. Context is the main way to steer the answer: the **prompt** (the text supplied), the examples placed in it, or the documents that a **retrieval-augmented generation** (RAG) system fetches and inserts into it. Decoding settings (for example, temperature or *top-p*) can also change the selected token without changing the context or the parameters.
+**Use.** At inference time, the parameters do not move. Context is the main way to steer the answer: the instructions and request in the **prompt**, examples, retained history, documents retrieved through **RAG**, and, depending on the system, tool descriptions and results. [Context engineering](context-engineering.qmd) is the practice of selecting and maintaining these elements. Decoding settings (for example, temperature or *top-p*) can also change the selected token without changing the context or the parameters.
 
 ## Choosing an approach
 
