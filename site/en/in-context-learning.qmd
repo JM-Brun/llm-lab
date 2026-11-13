@@ -91,7 +91,7 @@ However, results depend strongly on:
 
 A model may reproduce a format without identifying the relevant rule. It may also be sensitive to example order, contradictory demonstrations, or irrelevant details. ICL therefore guarantees neither correct generalization nor human-like understanding of the task.
 
-## How to study it experimentally
+::: {.callout-note collapse="true" title="Further exploration: experimental study of ICL"}
 
 To distinguish rule learning from simple imitation:
 
@@ -101,8 +101,9 @@ To distinguish rule learning from simple imitation:
 4. test novel cases that require applying the rule rather than copying;
 5. control prompt length and position effects;
 6. repeat trials with multiple phrasings and sampling seeds.
+:::
 
-A good protocol separates success on seen examples from generalization to unseen cases.
+
 
 ## Key points
 
