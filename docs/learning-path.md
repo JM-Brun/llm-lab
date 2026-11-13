@@ -39,7 +39,7 @@ The learner-facing course and the implementation dependency graph answer differe
 
 The public page-navigation arrows follow the **conceptual inference route**, not the order in which every component is implemented:
 
-`LLM panorama → generation preview → text and tokens → tokenization → embeddings → positional information → contextualized representations → Transformer → Q/K/V → scaled attention → causal masking → logits → probabilities`.
+`LLM panorama → generation preview → text and tokens → tokenization → embeddings → positional information → contextualized representations → Transformer → Q/K/V → scaled attention → causal masking → logits → probabilities → context use (ICL and context engineering)`.
 
 The generation lesson appears early as a system-level preview: it establishes the autoregressive loop with fixed parameters before the learner studies each internal component. Its appearance before the detailed input and probability lessons is deliberate, not a claim that those details are unnecessary.
 
