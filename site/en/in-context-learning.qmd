@@ -122,6 +122,8 @@ To distinguish rule learning from simple imitation:
 
 
 
+{{< include ../includes/generated-suggested-route-en-in-context-learning.qmd >}}
+
 ::: {.language-switch}
 **Language:** [Français](../fr/in-context-learning.qmd) · [English](in-context-learning.qmd)
 :::
