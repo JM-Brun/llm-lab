@@ -492,6 +492,7 @@ def test_overview_preserves_cross_cutting_coverage_and_explicit_next_page(
         "computation",
         "prediction",
         "inference",
+        "context-use",
         "scoring",
         "training",
     ]
