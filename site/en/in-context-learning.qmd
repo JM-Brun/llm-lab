@@ -51,6 +51,8 @@ Sentiment:
 
 The first example provides a local demonstration. The model can use it to produce a consistent label for the second text even though no weight update occurs.
 
+The term's scope varies across the literature: some authors reserve *in-context learning* for demonstrations supplied in the prompt (especially few-shot settings), while others use it more broadly for instruction-conditioned adaptation. This path uses the broader operational definition while keeping zero-shot, one-shot, and few-shot settings distinct.
+
 ## Why this is not fine-tuning
 
 | Operation | Where is adaptation information supplied? | Do parameters change? |
