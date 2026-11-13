@@ -43,7 +43,7 @@ Le post-entraînement part des paramètres $\theta_0$ obtenus par le [pré-entra
 
 | Méthode | Données | Signal d'entraînement | Paramètres modifiés |
 |---|---|---|---|
-| **Pré-entraînement** | Grand corpus de texte non annoté | Entropie croisée du token suivant sur chaque position | Tous |
+| **Pré-entraînement** | Grand corpus de texte non annoté | Entropie croisée du token suivant sur chaque position cible valide | Tous |
 | **Fine-tuning supervisé (SFT) / instruction tuning** | Démonstrations instruction–réponse sélectionnées | Entropie croisée du token suivant, en général sur les seuls tokens de la réponse | Généralement tous, ou un petit sous-ensemble ajouté (voir plus bas) |
 | **Méthodes à préférences** (RLHF, DPO) | Comparaisons entre réponses candidates à un même prompt | Une récompense apprise (RLHF) ou une loss définie directement sur les réponses préférée et rejetée (DPO) | Généralement tous, ou un petit sous-ensemble ajouté |
 | **Prompting, exemples few-shot, RAG** | Texte placé dans le contexte au moment de la requête | Aucun : pas d'entraînement | Aucun |
@@ -54,7 +54,7 @@ Le tableau décrit la pratique courante ; les systèmes diffèrent, et la docume
 
 Une paire instruction–réponse est concaténée en une seule séquence de tokens, par exemple un prompt suivi de la réponse souhaitée. Le SFT applique ensuite l'objectif du token suivant décrit dans [Loss](loss.qmd). Le choix usuel consiste à ne laisser contribuer à la loss que les tokens de la **réponse** : les positions du prompt fournissent du contexte grâce au masque causal, mais sont exclues de la moyenne par le [masque de loss](loss.qmd#masquage-et-cibles-décalées). Compter aussi le prompt est possible et change l'objectif.
 
-C'est pourquoi le masque de loss compte : il sélectionne les cibles qui contribuent à l'objectif ; il ne décide pas quelles positions l'attention peut lire. Rien d'autre ne change dans la passe avant. On obtient un modèle dont la continuation la plus probable d'un prompt en forme d'instruction est une réponse dans le style démontré.
+C'est pourquoi le masque de loss compte : il sélectionne les cibles qui contribuent à l'objectif ; il ne décide pas quelles positions l'attention peut lire. Rien d'autre ne change dans la passe avant. Le SFT déplace la distribution du modèle vers les réponses démontrées : il rend plus probables les continuations qui ressemblent aux réponses d'entraînement, sans garantir qu'une réponse donnée sera correcte, utile ou même toujours produite.
 
 Le SFT enseigne par imitation des démonstrations. Il n'indique pas à lui seul laquelle de deux réponses acceptables une personne préférerait, et sa qualité dépend de celle et de la couverture des démonstrations.
 
