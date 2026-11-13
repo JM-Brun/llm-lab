@@ -70,6 +70,26 @@ This is an indirect prompt-injection attempt. Retrieved content must remain untr
 Compare a no-retrieval condition with a retrieval condition on a held-out question set. Measure accuracy and source faithfulness, as well as unsupported answers, latency, and cost. Control document relevance and include questions the corpus cannot answer.
 </details>
 
+## Distinguish the levels of context
+
+6. **An application stores 200 messages and persistent memory, but sends the model only system instructions, the current question, and two retrieved passages. What do system context, input sequence, and position-specific accessible context refer to? Can the 200 messages be seen?**
+
+<details>
+<summary>Show the worked answer</summary>
+
+System context is the selected information supplied: instructions, question, and two passages. The input sequence is their tokenized (and possibly structured) representation. At position $t$, accessible context is limited by the causal mask and available window; future positions are masked. The 200 messages and memory remain application data unless selected and supplied.
+</details>
+
+## Trace what happens to external information
+
+7. **A search engine returns five passages, but the system keeps only two after filtering. Memory also contains a user preference that is not selected. Finally, a solved example is added to the prompt. What can condition the answer, and where does ICL occur?**
+
+<details>
+<summary>Show the worked answer</summary>
+
+Only the two retained passages that are actually supplied can directly condition the computation, together with the question and other context elements. The three rejected passages and the unselected stored preference are not visible to the model. The supplied solved example may support ICL: the model adapts its response to a demonstration in context without updating its parameters. RAG and ICL are distinct dimensions that can coexist.
+</details>
+
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/context-engineering.qmd) · [English](context-engineering.qmd)
 :::

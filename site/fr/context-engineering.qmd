@@ -10,7 +10,7 @@ lang: fr
 LLM-LAB-PAGE-MAP v1
 id: "fr/context-engineering"
 summary: "Définit l'ingénierie du contexte et situe ses principales opérations dans un système LLM."
-scope: "Présente la conception et la gestion du contexte à l'inférence ; les architectures détaillées de RAG, de mémoire et d'agents restent dans leurs pages dédiées."
+scope: "Présente la conception et la gestion du contexte à l'inférence, avec une distinction opérationnelle entre récupération documentaire, RAG, mémoire persistante et ICL."
 purpose: "Le lecteur doit distinguer le contexte du modèle, l'ICL et le context engineering, puis identifier les décisions qui déterminent la qualité du contexte transmis."
 suggested_route:
   previous: "fr/in-context-learning"
@@ -55,6 +55,16 @@ La **fenêtre de contexte** décrit une limite de capacité exprimée en tokens.
 
 Un contexte plus long peut aider lorsqu'il apporte des éléments pertinents. Il peut aussi nuire s'il accumule du bruit, des répétitions, des consignes incompatibles ou des documents mal sélectionnés. La position, la lisibilité et la fiabilité des informations comptent également. L'objectif n'est donc pas de remplir la fenêtre, mais de construire un contexte adapté à la tâche, sous les contraintes de capacité, de coût et de sécurité.
 
+## Trois niveaux de contexte à ne pas confondre
+
+| Niveau | Ce qu'il désigne |
+|---|---|
+| **Contexte du système** | Instructions, messages, exemples, documents récupérés, résultats d'outils et éléments de mémoire que l'application choisit de fournir pour un appel. |
+| **Séquence d'entrée et fenêtre de contexte** | Séquence de tokens (ou éléments multimodaux structurés) traitée par le modèle. La fenêtre est une limite de capacité ; en génération autorégressive, les tokens produits s'ajoutent à la séquence. |
+| **Contexte accessible à une position** | Pour un décodeur causal, positions consultables selon le masque causal et la fenêtre disponible : à la position $t$, les positions futures sont masquées. |
+
+Un historique conservé par l'application n'est pas nécessairement transmis. Une mémoire persistante ne devient contexte du modèle que si le système en sélectionne le contenu. Une représentation contextualisée est le **résultat d'un calcul** conditionné par les informations accessibles, pas un autre nom pour le contexte.
+
 | Notion | Ce qu'elle désigne | Confusion à éviter |
 |---|---|---|
 | **Fenêtre de contexte** | Budget maximal de tokens utilisable pour un appel ; les conventions de comptage entrée/sortie dépendent du modèle et de l'API | La longueur réellement transmise |
@@ -78,6 +88,40 @@ Le contexte actif désigne les informations d'entrée ; les [représentations co
 | **Fine-tuning** | Adaptation qui modifie les paramètres du modèle par optimisation, au lieu de seulement modifier les informations fournies à l'inférence. |
 
 L'ICL décrit une capacité ou un comportement du modèle ; le context engineering décrit une démarche de conception du système qui prépare son entrée. Un bon contexte peut favoriser l'ICL, mais les deux notions ne sont pas synonymes.
+
+## De la récupération documentaire à une information exploitable
+
+La **récupération documentaire** (*retrieval*) est une opération : rechercher et sélectionner des éléments dans une collection externe. Elle peut utiliser des mots-clés, des vecteurs, une recherche hybride, des filtres de métadonnées ou un reclassement (*reranking*). Elle ne désigne pas à elle seule un système RAG.
+
+Un pipeline RAG (*retrieval-augmented generation*) ajoute une étape d'intégration au modèle :
+
+1. **Indexer** une collection : découpage, embeddings éventuels, index et métadonnées.
+2. **Rechercher** des passages candidats à partir de la question ou de l'état courant.
+3. **Filtrer et classer** les résultats selon leur pertinence, leur fraîcheur, les droits d'accès et leur qualité.
+4. **Assembler** un contexte avec la question, les passages retenus et leurs références.
+5. **Transmettre** cet assemblage au modèle, qui calcule sa réponse conditionnellement à l'entrée reçue.
+6. **Contrôler** la réponse : vérifier le soutien des affirmations, traiter l'absence de preuve suffisante et conserver la provenance.
+
+La frontière décisive est entre **retrouvé** et **transmis**. Un document présent dans un index ou renvoyé par un moteur de recherche n'est pas automatiquement accessible au modèle. Il ne peut conditionner directement le calcul que si le système l'intègre effectivement à l'entrée (ou le rend accessible par un mécanisme explicitement appelé). Un passage écarté au filtrage, tronqué ou absent du contexte final ne devient pas une connaissance disponible par magie.
+
+**RAG n'est pas ICL.** RAG décrit une architecture de récupération et d'injection de contenu externe ; ICL décrit l'adaptation du comportement du modèle à des consignes, exemples ou régularités présents dans le contexte, sans mise à jour des paramètres. Un RAG peut fournir des faits, des exemples ou les deux. La présence de passages factuels ne signifie pas nécessairement qu'il y a apprentissage en contexte au sens des démonstrations *few-shot*.
+
+## Mémoire persistante : stocker n'est pas transmettre
+
+Une **mémoire persistante** conserve des informations au-delà d'un appel ou d'une conversation : préférences, faits utiles, décisions, résumés ou état d'une tâche. Elle peut utiliser une base de données, des fichiers, un magasin vectoriel ou une combinaison de ces moyens. Ce stockage est extérieur aux paramètres du modèle et à sa fenêtre de contexte.
+
+Pour influencer une réponse, une information mémorisée doit être conservée correctement, retrouvée ou sélectionnée au bon moment, vérifiée (actualité, pertinence, droits, contradictions), puis injectée dans le contexte du modèle. Une mémoire peut exister sans être consultée ; être consultée sans être retenue ; ou être injectée sans être correctement exploitée. Elle n'est pas automatiquement un RAG : elle peut utiliser la récupération, mais sa fonction inclut aussi la persistance et la gestion de l'état dans le temps.
+
+| Situation | Où se trouve l'information ? | Le modèle peut-il l'utiliser directement ? |
+|---|---|---|
+| Document dans un dépôt ou un index | Stockage externe | Non, tant qu'il n'est pas transmis ou rendu accessible |
+| Passage renvoyé par la recherche mais rejeté | Résultat intermédiaire | Non |
+| Passage retenu et ajouté au prompt | Contexte de l'appel | Oui, sans garantie d'usage fidèle |
+| Préférence stockée mais non sélectionnée | Stockage persistant | Non pour cet appel |
+| Préférence retrouvée et ajoutée au contexte | Mémoire sélectionnée puis entrée active | Oui, sous réserve des limites du modèle |
+| Exemple résolu ajouté au prompt | Démonstration dans le contexte | Peut soutenir l'ICL sans modifier les paramètres |
+
+L'information externe ne devient pas une information « dans les poids » : elle devient, au mieux, un élément de l'entrée qui conditionne un calcul à l'inférence. La mise à jour des paramètres relève de l'entraînement ou du fine-tuning, pas de la récupération ni de l'injection RAG.
 
 ## Un exemple de conception
 
