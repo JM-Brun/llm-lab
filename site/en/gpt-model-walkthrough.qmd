@@ -201,13 +201,14 @@ The shape journey, line by line:
 1. Why `position_embedding[:seq_len]` and not the whole `position_embedding`?
 2. With `V=50, T=16, d=16, H=2, L=2, hidden=32`, compute the total parameter count without running the code.
 
+
+3. A prefix-invariance test compares the logits for a prefix alone with the logits at those same positions after future tokens are appended. What result is expected, and what can this test not establish on its own?
 <details>
 <summary>Show answers and reasoning</summary>
 
 1. The table always has `context_length` rows; a shorter sequence uses only the first `seq_len`. Without the slice, adding `(B, T, d) + (T_max, d)` would fail as soon as `T < T_max`.
 2. Per block: `4×16×16 + 4×16 + 2×32×16 + 32 + 16 + 4×16 = 1024+64+1024+48+64+64 = 2288`. Two blocks: `4576`. Embeddings: `2×50×16 = 1600` (table + untied head); positions `16×16 = 256`; final norm `32`; head bias `50`. Total: `4576 + 1600 + 256 + 32 + 50 = 6514`.
 
-3. A prefix-invariance test compares the logits for a prefix alone with the logits at those same positions after future tokens are appended. What result is expected, and what can this test not establish on its own?
 
 3. The prefix-position logits should remain identical up to numerical tolerance: future tokens must not influence earlier predictions. This is targeted evidence for the tested inputs and configurations; by itself it does not prove causality for every possible input.
 </details>
