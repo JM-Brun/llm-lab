@@ -81,34 +81,51 @@ Une distribution concentrée sur quelques tokens a généralement une entropie p
 
 L'entropie dépend du contexte et de la distribution effectivement considérée. Le même préfixe peut conduire à des distributions différentes selon le modèle, le tokenizer ou la température appliquée aux logits.
 
-### Exemple numérique
+### Exemple numérique : la distribution du scribe
 
-Pour deux tokens de probabilités $(0.5,0.5)$, l'entropie vaut 1 bit, soit $\log 2$ nats. Pour $(0.9,0.1)$, elle vaut environ $0.469$ bit, soit $0.325$ nat. La seconde distribution est plus concentrée, mais cela ne prouve pas que son token le plus probable soit correct.
+Reprenons le premier tour du scribe et sa distribution illustrative sur quatre tokens candidats :
+
+| Token candidat | Probabilité |
+|---|---:|
+| « Être » | 0,6 |
+| « Vous » | 0,2 |
+| « Oui » | 0,1 |
+| « Non » | 0,1 |
+
+Avec des logarithmes naturels, l'entropie vaut :
+
+$
+\begin{aligned}
+H(p)&=-\sum_v p(v)\ln p(v)\\
+&=-(0{,}6\ln0{,}6+0{,}2\ln0{,}2
++2\times0{,}1\ln0{,}1)\\
+&\approx 1{,}089\text{ nats}.
+\end{aligned}
+$
+
+Le maximum pour quatre issues est $\ln4\approx1{,}386$ nats : cette distribution atteint donc environ 79 % de ce maximum. Les valeurs sont illustratives ; elles servent à suivre le même exemple dans les pages sur la [vraisemblance](vraisemblance.qmd), l'[entropie croisée](cross-entropy.qmd) et les [gradients](gradients.qmd).
+
+L'identité centrale est :
+
+$
+H(p)=\mathbb E_{X\sim p}[-\ln p(X)].
+$
+
+Autrement dit, l'entropie est la surprise **attendue** si l'issue est tirée selon $p$. Elle est une propriété de toute la distribution, pas la surprise d'un résultat particulier.
 
 ## Entropie prédictive et token observé : deux questions différentes
 
-L'entropie moyenne décrit l'incertitude *avant* de connaître le token suivant. Une fois le token cible $x_t$ observé, sa surprise sous le modèle est :
+L'entropie $H(p)$ décrit la surprise attendue *avant* de connaître le token suivant. Une fois le token cible $x_t$ observé, sa surprise sous le modèle est :
 
 $$
 -\log p_\theta(x_t\mid x_{<t}).
 $$
 
-Cette quantité est une contribution à la perte de prédiction du token. Elle peut être élevée même si la distribution avait une entropie élevée, ou faible si le token observé avait reçu une probabilité importante. Il ne faut pas confondre l'entropie d'une distribution et la surprise d'une issue particulière.
+Cette quantité est la **surprise** du token observé. Dans le cas d'une cible one-hot, elle est aussi sa **contribution à la perte** et sa **log-vraisemblance négative** (NLL) : $-\ln p_\theta(x_t\mid x_{<t})$. Ces expressions désignent ici la même quantité, selon que l'on insiste sur son interprétation informationnelle, son rôle dans l'objectif ou son lien avec la vraisemblance.
 
-Pour une séquence entière, la factorisation autorégressive donne :
+Un modèle peut être très sûr de lui et se tromper : si $p=(0{,}99;0{,}01)$, son entropie est faible (environ $0{,}056$ nat), mais observer le second token produit une surprise de $-\ln0{,}01\approx4{,}605$ nats. À l'inverse, observer le premier token ne produit que $-\ln0{,}99\approx0{,}010$ nat. L'entropie est la moyenne de ces surprises possibles, pondérées par leurs probabilités.
 
-$$
-p_\theta(x_{1:T})=\prod_{t=1}^{T}p_\theta(x_t\mid x_{<t}),
-$$
-
-donc :
-
-$$
--\log p_\theta(x_{1:T})
-=-\sum_{t=1}^{T}\log p_\theta(x_t\mid x_{<t}).
-$$
-
-Cette somme de log-probabilités négatives est le lien direct entre la prédiction token par token et la vraisemblance de la séquence. La moyenne calculée sur un corpus dépend des tokens réellement inclus, du tokenizer et du protocole de réduction.
+La somme des NLL token par token donne la NLL de la séquence, selon la factorisation autorégressive présentée dans la page canonique [Vraisemblance](vraisemblance.qmd).
 
 ## Entropie, température et génération
 
@@ -125,8 +142,8 @@ Une température plus faible tend à concentrer la distribution ; une températu
 - Une entropie faible ne garantit pas que le token choisi soit correct : le modèle peut être très confiant et se tromper.
 - Une entropie élevée ne signifie pas que la sortie est fausse ; plusieurs continuations peuvent être plausibles.
 - Les probabilités normalisées ne garantissent pas la calibration.
-- Une entropie ou une perplexité calculée avec un tokenizer différent n'est pas directement comparable sans précautions.
-- L'entropie moyenne observée sous un modèle n'est pas automatiquement l'entropie vraie de la source des données.
+- La **perplexité** est l'exponentielle de la NLL moyenne par token (ou $e^{\bar\ell}$ si la moyenne est en nats). Elle résume la performance probabiliste sur un corpus ; elle dépend du tokenizer et du protocole d'évaluation.
+- Si les données suivent une distribution réelle $q$ et que le modèle prédit $p$, la surprise moyenne sous les données est la cross-entropy $H(q,p)=\mathbb E_{X\sim q}[-\ln p(X)]$. Elle n'est pas automatiquement l'entropie de la source $H(q)$ : l'égalité vaut lorsque $p=q$ (et, plus généralement, l'écart est la divergence KL $D_{KL}(q\|p)$).
 
 
 
@@ -176,7 +193,7 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 <summary>Afficher les réponses</summary>
 
 1. Non. L'entropie décrit la dispersion de la distribution, pas la correction factuelle.
-2. L'entropie moyenne la surprise sur tous les tokens possibles ; la surprise observée utilise la probabilité attribuée à la cible réelle.
+2. L'entropie est l'espérance de la surprise sous $p$ ; la surprise observée est la valeur $-\ln p(x_t)$ pour la cible effectivement rencontrée.
 3. Les tokenizers segmentent différemment le texte, ce qui change les unités et le nombre de positions évaluées.
 
 </details>
