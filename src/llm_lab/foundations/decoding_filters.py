@@ -47,8 +47,8 @@ def top_k_filter(probabilities: FloatArray, k: int) -> FloatArray:
         ValueError: If `k` is below one, or if `probabilities` is not a
             non-empty 1-D finite, non-negative distribution summing to 1.
     """
-    if k < 1:
-        raise ValueError("k must be at least 1")
+    if isinstance(k, (bool, np.bool_)) or not isinstance(k, (int, np.integer)) or k < 1:
+        raise ValueError("k must be a positive integer")
     probs = _validated_probabilities(probabilities)
     if k >= probs.shape[0]:
         return probs.copy()
