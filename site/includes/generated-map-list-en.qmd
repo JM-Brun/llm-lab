@@ -80,6 +80,7 @@
     - [The mathematical chain of LLM training](mathematical-foundations.html)
     - [Score centering in off-policy LLM reinforcement learning](score-centering.html)
   - Inference and efficiency
+    - [RAG, memory, and document retrieval](rag-memory-boundaries.html)
     - [Advanced decoding strategies](decoding-strategies.html)
     - [Complexity and parallelism in LLMs](llm-computational-complexity.html)
   - Scale and research questions
