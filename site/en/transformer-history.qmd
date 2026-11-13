@@ -51,6 +51,52 @@ Dates distinguish submissions, announcements, and releases. Milestones are group
 {{< include /includes/_history-timeline-en.qmd >}}
 
 
+## Which bottlenecks changed—and which remain
+
+The timeline becomes more meaningful when we follow the problems researchers were trying to overcome. This is not a story in which each new architecture makes the previous one obsolete: each family addresses particular needs and retains trade-offs.
+
+### 1. Recurrence: a dependency cost over time
+
+In an RNN, the hidden state at position (t) depends on the state at (t-1). This imposes a computation order within an example: all positions cannot be computed simultaneously as though they were independent. It limits the parallelism available during training, especially for long sequences.
+
+LSTMs and GRUs improved information flow and the learning of long-range dependencies; they did not remove the sequential dependency chain. Sequence-to-sequence models also used fixed-size states to summarize a sequence, which could become a bottleneck. Attention in neural machine translation let the decoder consult different parts of the source sequence rather than relying only on a single summary ([Bahdanau et al., 2014](https://arxiv.org/abs/1409.0473)).
+
+### 2. 2017: changing the path of computation
+
+The Transformer introduced by Vaswani et al. generalizes this idea by placing attention at the center of the architecture. In the encoder's central computation, positions can be processed in parallel: they interact through attention rather than through a chain of recurrent states. This structural change is particularly well suited to parallel accelerators ([Vaswani et al., 2017](https://arxiv.org/abs/1706.03762)).
+
+The advance has its own costs. Dense attention compares positions with one another; in its standard form, its compute and memory costs grow quadratically with sequence length. And in an autoregressive GPT, the next token still depends on previous ones: *prefill* processes the prompt in parallel, but *decode* produces new tokens one at a time.
+
+### 3. Transfer: learn once, reuse in several ways
+
+The decisive change did not come from architecture alone. Pretrained representations gradually replaced pipelines in which each task often required its own model or architecture. Work on word representations, followed by contextualized pretrained models, made it possible to transfer parameters to downstream tasks. With GPT-2 and then GPT-3, the pretrained language model became increasingly reusable directly.
+
+GPT-3 made this possibility especially visible: its authors evaluated a 175-billion-parameter autoregressive model on many tasks without gradient updates, specifying tasks and examples only in the prompt text. The authors also report limitations and tasks on which this approach struggles ([Brown et al., 2020](https://arxiv.org/abs/2005.14165)).
+
+Three forms of transfer should be distinguished:
+- **Fine-tuning**: parameters are adapted to the downstream task.
+- **Zero-shot / few-shot and ICL**: the task and possibly examples are supplied in context, without updating parameters. Here, *zero-shot* means no task demonstrations in the prompt, not an absence of prior learning.
+- **RAG**: external information is retrieved at use time and inserted into context; this complements the model rather than transferring its parameters.
+
+A model therefore does not need an explicit training label for every task it can sometimes perform. Pretraining on large corpora teaches reusable linguistic patterns, formats, associations, and knowledge. An instruction can then select or combine some of these capabilities. But training data may also contain examples close to the downstream task: “not specifically trained for it” does not mean “never exposed to anything similar”.
+
+### 4. Scale and post-training: making capabilities usable
+
+Increasing model size was not simply a multiplier. Results depend on the balance among parameter count, data quantity and quality, compute budget, training duration, architecture, and optimization procedure. Work on scaling laws and compute-optimal resource allocation helped make these choices more measurable ([Kaplan et al., 2020](https://arxiv.org/abs/2001.08361); [Hoffmann et al., 2022](https://arxiv.org/abs/2203.15556)).
+
+A base model trained to predict the next token is not automatically a reliable assistant. Post-training—including supervised instruction tuning and preference optimization—improves its ability to respond to requests and follow interaction formats. This is a distinct stage from pretraining, not a mechanical consequence of attention.
+
+### 5. “Emergence”: observe without overinterpreting
+
+Some capabilities seem to appear beyond a certain model size or performance level. But *emergence* covers several phenomena: rapid improvement, crossing an evaluation threshold, combining existing skills, or a genuine qualitative change. Schaeffer et al. show that discontinuous metrics can make gradual progress look like sudden appearance, while continuous metrics reveal smoother improvement ([2023](https://arxiv.org/abs/2304.15004)). Lu et al. also analyze the possible role of ICL, knowledge acquired during pretraining, and linguistic knowledge ([2024](https://aclanthology.org/2024.acl-long.279/)).
+
+The right teaching stance is therefore twofold: do not deny the new practical capabilities enabled by scale, but do not present their appearance as a mysterious law or proof of general understanding. Specify the task, protocol, metric, and model being evaluated.
+
+### What this history lets us conclude
+
+The Transformer removed an important architectural bottleneck: parallel computation across positions during training and more direct information paths. Large-scale pretraining turned a language model into a transferable foundation. Few-shot prompting and ICL enabled adaptation through context without changing weights. Post-training made models more capable of interacting with users. These developments reinforce one another, but they are neither identical nor reducible to one invention.
+
+
 ## What the timeline should not imply
 
 - **Transformer does not mean autoregressive LLM.** The 2017 paper presents an encoder-decoder architecture for translation; BERT uses an encoder and a masked prediction objective.
