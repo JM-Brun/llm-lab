@@ -6,12 +6,14 @@
 
 ### 01 · Situer le système
 
-Comprendre ce qu'est un LLM et suivre une génération complète comme une boîte noire, avec des paramètres fixes, avant d'en étudier les mécanismes internes.
+Comprendre ce qu'est un LLM, suivre une génération complète, définir l'apprentissage en contexte et comprendre comment un système conçoit le contexte fourni au modèle.
 
 **Pages centrales**
 
 - [Panorama : qu’est-ce qu’un LLM ?](llm-overview.html)
 - [Générer du texte : l'inférence pas à pas](generation.html)
+- [Apprentissage en contexte (in-context learning)](in-context-learning.html)
+- [Concevoir le contexte d'un LLM (context engineering)](context-engineering.html)
 
 **Ressources facultatives**
 
