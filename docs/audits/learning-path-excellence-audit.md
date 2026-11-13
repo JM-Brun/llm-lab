@@ -186,7 +186,7 @@ Résultat : les fondations se sont révélées solides. L'écart FR/EN le plus n
 
 ### Bilan des vérifications transversales
 
-- CI passée sur le commit `03f17a1` : tests, contrôles qualité, délimiteurs mathématiques, formatage, lint et typage ;
+- CI passée sur le commit `03f17a1`, puis confirmée sur le dernier commit de la PR (`4e29b7c`) : tests, contrôles qualité, délimiteurs mathématiques, formatage, lint et typage ;
 - rendu Quarto incrémental des pages modifiées réussi ; les contrôles de navigation des learning maps, du graphe, de la timeline et des liens internes ont réussi ;
 - audit Playwright des pages bilingues modifiées et de la navigation conceptuelle réussi ;
 - restent à faire : revue visuelle humaine, tests lecteurs débutants/expérimentés et exécution ciblée des exemples de code qui n'ont été que lus ;
