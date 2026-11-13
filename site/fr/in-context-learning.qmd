@@ -64,6 +64,27 @@ Le périmètre du terme varie selon les travaux : certains réservent *in-contex
 
 L'ICL est temporaire et conditionné par le contenu et la disposition du prompt. Une nouvelle conversation ou un prompt différent peut conduire à un comportement différent. Le fine-tuning modifie les paramètres et peut produire une adaptation qui persiste au-delà d'un prompt particulier.
 
+### Où se fait l'adaptation ?
+
+Le schéma distingue deux opérations souvent confondues : fournir de l'information dans le contexte d'un appel et modifier les paramètres du modèle pendant un entraînement. Le RAG alimente le premier chemin ; à lui seul, il ne met pas à jour les poids.
+
+```{mermaid}
+flowchart TD
+  subgraph inference["Inférence : paramètres fixes"]
+    P["Prompt : instruction + exemples"] --> C["Contexte de l'appel"]
+    R["Documents récupérés (RAG)"] --> C
+    W["Paramètres du modèle θ"] --> M["Modèle en inférence"]
+    C --> M
+    M --> O["Réponse"]
+  end
+  subgraph training["Fine-tuning : mise à jour des paramètres"]
+    D["Exemples d'entraînement"] --> U["Calcul de la perte et optimisation"]
+    U --> W2["Nouveaux paramètres θ′"]
+  end
+```
+
+**À retenir :** ICL et RAG changent les informations disponibles pour un appel ; le fine-tuning change les paramètres utilisés par les appels suivants. Le préentraînement constitue une autre phase d'optimisation, généralement à plus grande échelle, à partir d'un corpus.
+
 ## Que fait le modèle avec les exemples ?
 
 Le modèle reçoit une séquence qui contient à la fois la tâche et les démonstrations. À chaque couche, les mécanismes d'attention et les autres opérations du réseau transforment les représentations en fonction de ce contexte. Lorsqu'il génère la suite, il produit une continuation conditionnée par les exemples précédents. Les exemples font partie de l'entrée active : ils orientent le calcul, sans modifier les poids.
