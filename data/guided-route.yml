@@ -5,11 +5,11 @@ stages:
       fr: "Situer le système"
       en: "Place the system in context"
     objective:
-      fr: "Comprendre ce qu'est un LLM et suivre une génération complète comme une boîte noire, avec des paramètres fixes, avant d'en étudier les mécanismes internes."
-      en: "Understand what an LLM is and follow a complete generation loop as a black box with fixed parameters before studying its internal mechanisms."
+      fr: "Comprendre ce qu'est un LLM, suivre une génération complète, définir l'apprentissage en contexte et comprendre comment un système conçoit le contexte fourni au modèle."
+      en: "Understand what an LLM is, follow a complete generation loop, define in-context learning, and understand how a system engineers the context supplied to the model."
     pages:
-      fr: [fr/llm-overview, fr/generation]
-      en: [en/llm-overview, en/generation]
+      fr: [fr/llm-overview, fr/generation, fr/in-context-learning, fr/context-engineering]
+      en: [en/llm-overview, en/generation, en/in-context-learning, en/context-engineering]
     optional_pages:
       fr: [fr/transformer-architectures, fr/llm-limits]
       en: [en/transformer-architectures, en/llm-limits]
