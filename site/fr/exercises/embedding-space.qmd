@@ -48,6 +48,18 @@ Non. Une projection 2D ne préserve qu’une partie de la géométrie et peut cr
 
 **Vous avez compris cette étape si** vous pouvez expliquer qu'un ID sélectionne une ligne de la table, distinguer l'indice du vecteur stocké, et séparer le vecteur initial des états contextualisés.
 
+
+3. On compare deux architectures. Dans A, un embedding positionnel appris est ajouté au lookup des tokens avant le premier bloc. Dans B, RoPE est appliqué aux requêtes et aux clés dans chaque couche d'attention. Pour une même séquence d'IDs, que pouvez-vous affirmer sur les vecteurs issus du lookup, sur l'endroit où intervient l'information positionnelle et sur les états contextualisés ? Pourquoi serait-il faux de dire que les deux architectures « ajoutent un vecteur de position au lookup » ?
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+Le lookup sélectionne les mêmes vecteurs de tokens pour les mêmes IDs dans les deux cas : le lookup seul ne dépend pas de la position. Dans A, le vecteur positionnel appris est ajouté aux embeddings avant les blocs. Dans B, RoPE transforme les composantes des requêtes et des clés dans le calcul d'attention ; il n'ajoute pas un vecteur positionnel au résultat du lookup. Dans les deux architectures, les couches du Transformer produisent ensuite des états contextualisés qui dépendent des autres positions accessibles et du mécanisme positionnel. Il faut donc distinguer le vecteur de token initial, le mécanisme positionnel propre à l'architecture et l'état contextualisé.
+
+**Critère de réussite :** décrire correctement les deux lieux d'injection de l'information positionnelle sans généraliser le mécanisme de A à tous les modèles, et distinguer lookup initial et état contextualisé.
+
+</details>
+
 ## Inspecter une petite matrice d'embeddings d'entrée
 
 Cette expérience indépendante d'un modèle utilise une toute petite matrice NumPy. Elle ne nécessite ni tokenizer, ni téléchargement de checkpoint, ni GPU. Les fonctions opèrent sur les **lignes d'une table d'embeddings d'entrée**, pas sur des états cachés contextualisés.

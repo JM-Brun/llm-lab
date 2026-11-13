@@ -174,6 +174,19 @@ Validation guides repeated decisions (stopping, hyperparameters, model selection
 
 </details>
 
+
+4. **Can you calculate one SGD step without confusing the gradient with the update?** Take an illustrative loss $L(\theta)=(\theta-5)^2$, current value $\theta=2$, and learning rate $\eta=0.1$. Calculate the gradient and then the new parameter under SGD. Should a validation-loss measurement performed afterwards change $\theta$?
+
+<details>
+<summary>Show the worked answer</summary>
+
+The gradient is $L'(\theta)=2(\theta-5)$, so $L'(2)=-6$. SGD applies $\theta_{new}=\theta-\eta L'(\theta)=2-0.1(-6)=2.6$. The gradient is the quantity being computed; the optimizer uses it to change the parameter. A validation measurement is a forward pass with fixed parameters: it computes a metric but must not update $\theta$.
+
+**Success criterion:** get the gradient's sign and value right, apply the learning rate with the correct sign, and explicitly distinguish measurement from update.
+
+</details>
+
+
 {{< include ../includes/generated-suggested-route-en-training-loop.qmd >}}
 
 :::: {.language-switch}
