@@ -23,7 +23,7 @@ The practical GPT construction route remains the separate [Build path](../site/f
 
 The learner-facing course and the implementation dependency graph answer different questions. **The conceptual course starts with what a model does; the build route follows the dependencies needed to construct one.** Do not force these into one identical chapter order.
 
-1. **Orient and preview inference:** what the broad term LLM covers, where GPT fits, and how architecture differs from objective and task. Follow one complete request as a black box with fixed parameters to establish the autoregressive loop before unpacking its mechanisms.
+1. **Orient and preview inference:** what the broad term LLM covers, where GPT fits, and how architecture differs from objective and task. Follow one complete request as a black box with fixed parameters to establish the autoregressive loop. Then distinguish **in-context learning (ICL)**—using examples in the prompt without changing weights—from **context engineering**—selecting, assembling, and maintaining the information supplied to the model.
 2. **Unpack the input:** raw text, tokenization, vocabulary, token IDs and the prompt/context supplied at inference. Unicode/UTF-8 representation and normalization are optional technical depth, not a prerequisite in the core route.
 3. **Understand representations:** embeddings, positional information and the distinction between initial and contextualized hidden states.
 4. **Understand Transformer computation:** Transformer blocks, Q/K/V projections, attention, causal masking, MLP, residual connections and normalization.
@@ -32,13 +32,13 @@ The learner-facing course and the implementation dependency graph answer differe
 7. **Score observed targets:** target probabilities, sequence likelihood, log-likelihood, negative log-likelihood and cross-entropy; distinguish scoring/evaluation from generation and parameter updates.
 8. **Explain learning:** the next-token objective, loss aggregation, gradients, backpropagation, optimization, pretraining and validation. Explain teacher forcing as the use of the observed prefix. The [training-loop lesson](../site/en/training-loop.qmd) owns the repeated step, the optimizer-versus-gradient distinction, train versus validation loss, overfitting and pretraining as the same loop at scale; AdamW internals, learning-rate schedules and gradient clipping stay in Deepen or Build. Do not turn corpus engineering or batch construction into prerequisites for this conceptual explanation.
 
-**Optional extension — adaptation and use:** pretrained checkpoints, supervised fine-tuning, instruction tuning, prompting and retrieval-augmented generation. Keep context-only methods, parameter updates and model use distinct; this extension is discoverable from the core route but is not an additional mandatory stage in the eight-stage guided route. The [post-training lesson](../site/en/post-training.qmd) is its entry page, attached as an optional page of the `training` stage; pretrained-checkpoint loading, classification fine-tuning and LoRA/quantization as implementation milestones (A1–A4) remain in the Build adaptation branch.
+**Optional extension — model adaptation and retrieval systems:** pretrained checkpoints, supervised fine-tuning, instruction tuning, and retrieval-augmented generation. ICL and context engineering are already introduced in the core route; this extension explores how retrieval and parameter-changing adaptations fit alongside them. The [post-training lesson](../site/en/post-training.qmd) is its entry page, attached as an optional page of the `training` stage; pretrained-checkpoint loading, classification fine-tuning and LoRA/quantization as implementation milestones (A1–A4) remain in the Build adaptation branch.
 
 ### Reader-facing sequence and operational branches
 
 The public page-navigation arrows follow the **conceptual inference route**, not the order in which every component is implemented:
 
-`LLM panorama → generation preview → text and tokens → tokenization → embeddings → positional information → contextualized representations → Transformer → Q/K/V → scaled attention → causal masking → logits → probabilities`.
+`LLM panorama → generation preview → in-context learning → context engineering → text and tokens → tokenization → embeddings → positional information → contextualized representations → Transformer → Q/K/V → scaled attention → causal masking → logits → probabilities`.
 
 The generation lesson appears early as a system-level preview: it establishes the autoregressive loop with fixed parameters before the learner studies each internal component. Its appearance before the detailed input and probability lessons is deliberate, not a claim that those details are unnecessary.
 
