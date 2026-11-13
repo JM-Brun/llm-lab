@@ -48,6 +48,18 @@ No. A 2D projection preserves only selected aspects of the geometry and may crea
 
 **You have understood this step if** you can explain that an ID selects a table row, distinguish the row index from the stored vector, and separate the initial vector from contextualized states.
 
+
+3. Compare two architectures. In A, a learned positional embedding is added to token lookups before the first block. In B, RoPE is applied to queries and keys inside each attention layer. For the same sequence of token IDs, what can you say about the lookup vectors, where positional information enters, and the contextualized states? Why would it be wrong to say that both architectures “add a positional vector to the lookup”?
+
+<details>
+<summary>Show the reasoning</summary>
+
+The lookup selects the same token vectors for the same IDs in both cases: lookup alone does not depend on position. In A, the learned positional vector is added to the embeddings before the blocks. In B, RoPE transforms query and key components in the attention computation; it does not add a positional vector to the lookup result. In both architectures, Transformer layers then produce contextualized states that depend on the other accessible positions and on the positional mechanism. Keep the initial token vector, the architecture-specific positional mechanism, and the contextualized state distinct.
+
+**Success criterion:** describe the two locations where positional information enters without generalizing A's mechanism to every model, and distinguish the initial lookup from a contextualized state.
+
+</details>
+
 ## Inspect a tiny input embedding table
 
 This model-independent exercise uses a deliberately tiny NumPy matrix. It needs no tokenizer, checkpoint download or GPU. The helper functions operate on **input embedding rows**, not contextualized hidden states.
