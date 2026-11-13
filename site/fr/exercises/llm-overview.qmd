@@ -31,6 +31,15 @@ tags: ["type:exercise-hub", "destination:practice", "topic:llm-overview-exercise
 3. **Un modèle renvoie une demande structurée pour appeler `lookup_order(order_id=42)`. Le système de commande a-t-il déjà été interrogé ?** Non. Le modèle a produit une demande ; l'application qui l'entoure doit en valider les arguments et les permissions, exécuter l'outil, puis renvoyer son résultat au modèle. Produire un appel d'outil ne signifie pas l'exécuter.
 4. **Une conversation étiquette les messages `system`, `user` et `assistant`. S'agit-il de trois couches du Transformer ?** Non. Ce sont des rôles du format de message utilisé par l'application ou l'API. L'architecture du modèle est une question distincte, et une étiquette de rôle n'impose pas à elle seule une politique.
 
+5. **Un modèle pré-entraîné doit classer des avis comme positifs ou négatifs.** On lui donne une consigne et trois exemples étiquetés dans le prompt ; aucun entraînement supplémentaire n'est lancé. Quel mécanisme est mobilisé ? Qu'est-ce qui changerait si l'on ajustait les poids sur un jeu d'exemples ? Et si l'on récupérait des avis ou une documentation externe pour les ajouter au contexte ?
+   
+<details>
+<summary>Afficher la réponse et le raisonnement</summary>
+
+Le premier cas relève du **few-shot / in-context learning** : les exemples conditionnent la réponse pendant l'inférence, sans mise à jour des paramètres. Ajuster les poids sur les exemples serait du **fine-tuning**. Récupérer des documents externes et les ajouter au contexte relèverait d'un système **RAG**. Ces mécanismes sont complémentaires, mais ne sont pas interchangeables. Le pré-entraînement a pu exposer le modèle à des formulations et régularités proches de la tâche ; « non entraîné spécifiquement pour cette classification » ne signifie pas « sans apprentissage pertinent ».
+
+</details>
+
 5. **Reconstituer la boucle de génération.** Un assistant reçoit un prompt et doit produire trois tokens. Remettez dans l'ordre ces opérations : (a) ajouter le token choisi au contexte ; (b) convertir le texte en tokens ; (c) vérifier si la limite de trois nouveaux tokens est atteinte ; (d) calculer la distribution du prochain token ; (e) choisir un token selon la règle de décodage ; (f) traiter le contexte initial. Les paramètres du modèle changent-ils à chaque tour ?
 
 <details>
