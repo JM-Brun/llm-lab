@@ -34,3 +34,13 @@ tags: ["type:exercise-hub", "destination:practice", "topic:llm-overview-exercise
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/llm-overview.qmd) · [English](llm-overview.qmd)
 :::
+
+
+5. **Reconstruct the generation loop.** An assistant receives a prompt and must produce three tokens. Put these operations in order: (a) append the selected token to the context; (b) convert the text into tokens; (c) check whether the three-new-token limit has been reached; (d) compute the next-token distribution; (e) select a token using the decoding rule; (f) process the initial context. Do the model parameters change at each iteration?
+
+<details>
+<summary>Show the answer and reasoning</summary>
+
+The initial prompt processing (f) starts with tokenizing the text (b), then the model computes the distribution (d). The decoding rule selects a token (e), which is appended to the context (a). The stopping condition is then checked (c); if the limit has not been reached, a new distribution is computed from the extended context and selection repeats. The parameters remain fixed throughout inference: only the context changes. The three-token limit is an external stopping condition, not a model update.
+
+</details>
