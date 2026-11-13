@@ -14,11 +14,11 @@ scope: "Describes autoregressive inference for an already trained model: context
 purpose: "Readers should be able to step through token-by-token generation, distinguish model computation, token selection, and the complete loop, explain prefill and incremental decode, and predict how a decoding rule changes output without updating parameters."
 suggested_route:
   previous: "en/llm-overview"
-  next: "en/text-data"
+  next: "en/in-context-learning"
 hierarchy:
   parents: ["en/llm-overview"]
   children: ["en/logits", "en/probabilities"]
-related: ["en/text-data", "en/transformer", "en/build-path", "en/decoding-strategies", "en/gpt-generation-walkthrough", "en/training-examples", "en/generation-exercises"]
+related: ["en/in-context-learning", "en/context-engineering", "en/text-data", "en/transformer", "en/build-path", "en/decoding-strategies", "en/gpt-generation-walkthrough", "en/training-examples", "en/generation-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:en", "status:published"]
 -->
 
