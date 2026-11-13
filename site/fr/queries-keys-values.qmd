@@ -99,7 +99,7 @@ Le schéma fait apparaître deux chemins : l'un détermine la pondération, l'au
 
 ## Pourquoi trois projections à partir de la même entrée ?
 
-En auto-attention, Q, K et V sont trois transformations apprises du même flux de représentations. $X$ désigne l'entrée du sous-module d'attention : dans le premier bloc, elle part des embeddings de tokens ; dans les blocs suivants, elle correspond à un état caché déjà contextualisé. L'information positionnelle peut être ajoutée en amont ([embeddings positionnels](positional-encoding.qmd)) ou intégrée aux requêtes et aux clés, comme avec [RoPE](rope.qmd).
+En auto-attention, Q, K et V sont trois transformations apprises du même flux de représentations. $X$ désigne l'entrée du sous-module d'attention : dans le premier bloc, elle correspond à la représentation construite à partir des embeddings de tokens et du traitement positionnel ; dans les blocs suivants, elle correspond à un état caché déjà contextualisé. Dans le GPT de référence de ce projet, les embeddings positionnels absolus appris sont **additionnés** aux embeddings de tokens avant le premier bloc ([embeddings positionnels](positional-encoding.qmd)). D'autres architectures, comme celles qui utilisent [RoPE](rope.qmd), injectent l'information positionnelle dans les requêtes et les clés au sein de l'attention.
 
 Pour une séquence de $T$ positions, on écrit $X\in\mathbb{R}^{T\times d_{model}}$ :
 
