@@ -43,7 +43,7 @@ Post-training starts from the parameters $\theta_0$ obtained by [pretraining](tr
 
 | Method | Data | Training signal | Parameters changed |
 |---|---|---|---|
-| **Pretraining** | Large unannotated text corpus | Next-token cross-entropy on every position | All |
+| **Pretraining** | Large unannotated text corpus | Next-token cross-entropy on every valid target position | All |
 | **Supervised fine-tuning (SFT) / instruction tuning** | Curated instruction–response demonstrations | Next-token cross-entropy, typically on the response tokens only | Usually all, or a small added subset (see below) |
 | **Preference-based methods** (RLHF, DPO) | Comparisons between candidate responses to the same prompt | A learned reward (RLHF) or a loss defined directly on the preferred and rejected responses (DPO) | Usually all, or a small added subset |
 | **Prompting, few-shot examples, RAG** | Text placed in the context at request time | None: no training | None |
@@ -54,7 +54,7 @@ The table states typical practice; individual systems differ and public document
 
 An instruction–response pair is concatenated into one token sequence, for example a prompt followed by the desired answer. SFT then applies the next-token objective from [Loss](loss.qmd). The common choice is to let only the **response** tokens contribute to the loss: prompt positions provide context through the causal mask but are excluded from the mean through the [loss mask](loss.qmd#masking-and-shifted-targets). Counting the prompt as well is also possible and changes the objective.
 
-This is why the loss mask matters: it selects which targets contribute to the objective; it does not decide which positions the attention can read. Nothing else in the forward pass changes. The result is a model whose most probable continuation of an instruction-shaped prompt is an answer in the demonstrated style.
+This is why the loss mask matters: it selects which targets contribute to the objective; it does not decide which positions the attention can read. Nothing else in the forward pass changes. SFT shifts the model's distribution toward the demonstrated answers: it makes continuations resembling the training responses more likely, without guaranteeing that a given answer will be correct, useful, or even consistently produced.
 
 SFT teaches by imitation of the demonstrations. It does not by itself tell the model which of two acceptable answers a person would prefer, and its quality depends on the quality and coverage of the demonstrations.
 
