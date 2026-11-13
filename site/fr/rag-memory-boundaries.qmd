@@ -9,6 +9,7 @@ keywords: ["type:deep-dive", "destination:deepen", "topic:rag-memory", "level:ad
 LLM-LAB-PAGE-MAP v1
 id: "fr/rag-memory-boundaries"
 scope: "Frontières entre stockage externe, récupération documentaire, mémoire applicative, construction du contexte, RAG et ICL."
+domain: "inference-efficiency"
 purpose: "Tracer le trajet d'une information externe jusqu'à son éventuelle exploitation par un LLM et diagnostiquer les défaillances de chaque étape."
 suggested_route:
   previous: null
