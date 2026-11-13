@@ -128,6 +128,8 @@ Le modèle ne « se souvient » pas nécessairement de toute la base documentair
 - Anthropic (2025), [*Effective context engineering for AI agents*](https://www.anthropic.com/research/effective-context-engineering-for-ai-agents) — sélection et maintenance du contexte, outils, historique et récupération.
 - OpenAI, [*Context Engineering — Short-Term Memory Management with Sessions*](https://developers.openai.com/cookbook/examples/agents_sdk/session_memory) — exemple de gestion de l'état et de la mémoire d'une session multi-tours.
 
+{{< include ../includes/generated-suggested-route-fr-context-engineering.qmd >}}
+
 ::: {.language-switch}
 **Langue :** [Français](context-engineering.qmd) · [English](../en/context-engineering.qmd)
 :::
