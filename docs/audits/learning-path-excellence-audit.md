@@ -381,3 +381,51 @@ The review also caught a small but genuine conceptual inconsistency in the exerc
 - `site/en/exercises/positional-encoding.qmd`
 
 **Not claimed:** no full site render, visual inspection, learner study, or CI run has been completed as part of this page pass.
+
+
+---
+
+# Addendum — page audit 4/6: `scaled-dot-product-attention`
+
+**Status:** fourth page of wave 1 reviewed. The core lesson already meets much of the dual-audience ambition; the only change in this pass is a matching practice question in French and English. Source-level review only; rendered browser experience and CI remain unverified.
+
+## Page identity and ownership
+
+- FR: `site/fr/scaled-dot-product-attention.qmd`
+- EN: `site/en/scaled-dot-product-attention.qmd`
+- Practice: `site/fr/exercises/scaled-dot-product-attention.qmd` and `site/en/exercises/scaled-dot-product-attention.qmd`
+- Role: core Understand lesson after Q/K/V and before causal masking.
+- Canonical boundary: explain the full scaled dot-product attention computation and weighted aggregation; the scaling derivation belongs to `attention-score-scaling`, causal visibility to `causal-masking`, and Q/K/V roles to the preceding lesson.
+
+## Page-level value record
+
+| Field | Finding |
+|---|---|
+| Learner question | How does a position use learned compatibility scores to aggregate information from other accessible positions? |
+| Beginner outcome | Follow scores → scaling → optional mask → row-wise softmax → weighted sum of values, and distinguish scores, weights and output vectors. |
+| Experienced-reader value already present | The page explicitly rejects the interpretation of attention weights as semantic relevance or causal explanation. Its counterexample follows the contribution through `alpha_ij v_j`, notes that the value-vector norm matters, and traces the signal through output projection, residual connections, normalization and MLP. |
+| Best-source contribution | Vaswani et al. (2017) grounds the scaled dot-product formulation. The project's dedicated scaling page supplies a Gaussian-assumption derivation and a numerical simulation, while the Q/K/V lesson explains the distinct routing and content paths. |
+| LLM Lab synthesis | The page already gives a strong local-to-system explanation and a rigorous interpretive boundary. The improvement opportunity was to make the attention-weight caveat an explicit learner check, not to add another explanatory section. |
+| Weak element before this change | The key caveat was explained in the lesson but not tested in the dedicated practice page, which contained only a numerical softmax calculation. |
+| Change made | Added a bilingual exercise asking whether a weight of 0.95 proves the largest output contribution or causal importance. The worked answer uses the norm of `alpha_ij v_j` and the later transformations to explain why not. |
+| Depth placement | The full argument remains in the core lesson; the exercise checks transfer of that argument. The scaling derivation remains in its Deepen page. |
+| Validation | FR/EN exercise sources updated in parallel; LaTeX norm delimiters were checked and corrected. No rendered-site or CI verification yet. |
+
+## Why no main-page rewrite was made
+
+The preliminary prioritization correctly identified this page as a place where the distinction between attention and explanation matters, but the detailed source inspection shows that the published page already treats it unusually well. It explicitly explains that a high weight is only a relative aggregation weight, not a causal claim, and goes beyond the generic warning by examining the direct vector contribution and subsequent network transformations.
+
+Adding a second generic “attention is not explanation” box would have duplicated existing content and weakened editorial economy. The appropriate correction was to reinforce the insight in practice instead.
+
+## Double-audience test
+
+- **Beginner:** can calculate the attention weights and explain that they are relative weights used to combine value vectors, not percentages of semantic relevance.
+- **Experienced reader:** can distinguish attention weight, vector contribution, downstream influence and causal importance.
+- **Remaining opportunity:** a later experiment could compare attention-weight visualizations with intervention-based changes to outputs, but it should be a controlled Practice experiment and must not imply that one intervention metric is a universal explanation method.
+
+## Files changed in this page pass
+
+- `site/fr/exercises/scaled-dot-product-attention.qmd`
+- `site/en/exercises/scaled-dot-product-attention.qmd`
+
+**Not claimed:** no full site render, visual inspection, learner study, or CI run has been completed as part of this page pass.
