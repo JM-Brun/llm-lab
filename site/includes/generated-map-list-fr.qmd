@@ -80,9 +80,9 @@
     - [La chaîne mathématique de l’entraînement d’un LLM](mathematical-foundations.html)
     - [Centrage du score en apprentissage par renforcement hors politique](score-centering.html)
   - Inférence et efficacité
-    - [RAG, mémoire et récupération documentaire](rag-memory-boundaries.html)
     - [Stratégies avancées de décodage](decoding-strategies.html)
     - [Complexité et parallélisme dans les LLM](llm-computational-complexity.html)
+    - [RAG, mémoire et récupération documentaire](rag-memory-boundaries.html)
   - Échelle et questions de recherche
     - [Lois d'échelle : paramètres, données et calcul](scaling-laws.html)
     - [Émergence des capacités : que change l’échelle ?](emergence.html)
