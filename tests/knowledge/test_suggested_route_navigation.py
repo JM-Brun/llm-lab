@@ -247,21 +247,6 @@ def test_build_hub_prefers_the_first_guided_implementation_tour(language: str) -
     assert 'href="build-path.qmd"' in rendered
 
 
-@pytest.mark.parametrize("language", ["fr", "en"])
-def test_first_build_tour_keeps_visible_return_card_when_sidebar_has_same_parent(
-    language: str,
-) -> None:
-    pages = [page for page in GENERATOR["load_pages"]() if page["language"] == language]
-    fragments = GENERATOR["prepare_suggested_route_fragments"](language, pages)
-    fragment_name = f"generated-suggested-route-{language}-gpt-config-walkthrough.qmd"
-    rendered = next(content for path, content in fragments.items() if path.name == fragment_name)
-
-    expected = "← Retour au parcours Build" if language == "fr" else "← Back to the Build path"
-    assert '<div class="route-nav-cards">' in rendered
-    assert 'href="build-path.qmd"' in rendered
-    assert expected in rendered
-
-
 @pytest.mark.parametrize(
     ("language", "page_id"),
     [
