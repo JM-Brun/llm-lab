@@ -15,7 +15,8 @@ Le parcours doit construire une représentation mentale progressive du système,
 3. comment cette entrée devient une représentation numérique puis contextuelle ;
 4. comment le Transformer transforme ces représentations ;
 5. comment le calcul aboutit à une distribution de probabilité sur le prochain token ;
-6. ce que l'on peut faire de cette distribution : générer, scorer une cible observée ou apprendre en ajustant les paramètres.
+6. comment le modèle exploite les instructions et exemples du contexte sans mise à jour des paramètres, et comment le système prépare ce contexte ;
+7. ce que l'on peut faire de la distribution : générer, scorer une cible observée ou apprendre en ajustant les paramètres.
 
 Le fil directeur est une question : **comment un modèle transforme-t-il un contexte en prédiction, et comment cette prédiction est-elle utilisée ?**
 
