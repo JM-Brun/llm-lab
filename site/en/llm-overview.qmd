@@ -9,8 +9,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/llm-overview"
-summary: "Provides a system-level view of an LLM: next-token prediction, context processing, and the distinct uses of generation, scoring, and training. Directs readers to the pages that explain each mechanism."
-scope: "Defines LLMs and GPTs, illustrates next-token prediction, and distinguishes architecture, parameter learning, and use. Directs readers to canonical lessons without duplicating their mechanisms."
+summary: "Provides a system-level view of an LLM: next-token prediction, context processing, distinct uses, and the provenance of information used by the model."
+scope: "Defines LLMs and GPTs, illustrates next-token prediction, and distinguishes architecture, parameter learning, and use. Introduces the distinction between parametric knowledge, adaptation, external retrieval, and inference-time context."
 purpose: "Give readers a first mental model of an LLM: what it predicts, how it maps context to a token distribution, and how that distribution is used for generation, scoring, and training."
 suggested_route:
   previous: "en/index"
@@ -19,7 +19,7 @@ hierarchy:
   parents: ["en/index"]
   children: ["en/transformer", "en/transformer-architectures", "en/generation", "en/build-path", "en/language-modeling-math", "en/mathematical-foundations", "en/llm-limits", "en/llm-computational-complexity"]
 covered_stages: [orientation, text-input, representations, computation, prediction, inference, context-use, scoring, training]
-related: ["en/transformer-history", "en/scaling-laws", "en/in-context-learning", "en/context-engineering", "en/llm-overview-exercises"]
+related: ["en/transformer-history", "en/scaling-laws", "en/in-context-learning", "en/context-engineering", "en/rag-memory-boundaries", "en/post-training", "en/llm-overview-exercises"]
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:en", "status:published"]
 -->
 
@@ -137,6 +137,27 @@ Describing a model means answering three independent questions.
 A **foundation model** is a broader category than a *base model*: a model trained on broad data at scale and adaptable to many tasks, including tasks beyond language ([Bommasani et al., 2021](https://crfm.stanford.edu/report)).
 
 **Use.** At inference time, the parameters do not move. Context is the main way to steer the answer: the **prompt** (the text supplied), the examples placed in it, or the documents that a **retrieval-augmented generation** (RAG) system fetches and inserts into it. Decoding settings (for example, temperature or *top-p*) can also change the selected token without changing the context or the parameters.
+
+## Where does information reside?
+
+A model can answer from several sources that do not reside in the same place. Distinguish **where information is stored**, **how it becomes accessible**, and **how the model uses it**. A correct answer alone does not reveal which mechanism was involved.
+
+| Mechanism | Where information is stored | How it can influence the answer | What changes |
+|---|---|---|---|
+| **Pretraining** | In learned parameters, as distributed representations and regularities shaped by the training corpus | Parameters participate in every prediction, even when a specific fact cannot be recalled faithfully | Weights are learned during training |
+| **Post-training (including fine-tuning)** | In adapted parameters or additional parameters (for example, an adapter) | Adaptation shifts likely continuations: style, instruction following, behaviours, and sometimes factual associations | Parameters or adapters are optimized |
+| **RAG** | In external sources and indexes: documents, databases, search systems | The system retrieves relevant material and supplies it to the model, usually in context | External sources can be updated without retraining the model |
+| **Context supplied at inference** | In messages, instructions, examples, documents, and tool results supplied for a call | The model conditions its computation on information actually accessible in that input | Content can change from request to request without updating weights |
+
+Pretraining and fine-tuning change parameters; RAG and ordinary context change the information available at inference time. These are not four equivalent memories. Parameters are not a queryable document database: they encode learned regularities in a distributed form, and factual recall may be uncertain. Fine-tuning can change associations or teach facts, but it does not guarantee exact recall or reliable freshness. See [Post-training](post-training.qmd).
+
+**RAG and context are not opposites.** RAG is one way to retrieve external information and add it to context. Search alone is not enough: a document can be stored, indexed, or even retrieved without being supplied to the model. The decisive boundary is actual inclusion in the input (or availability through a tool that is actually called). [Context engineering](context-engineering.qmd) explains how to select, structure, update, and secure that input; [RAG, memory, and document retrieval](rag-memory-boundaries.qmd) examines the stages and their failure modes.
+
+**Application memory and the KV cache are not parametric knowledge.** Application memory retains information across interactions, but that information must be retrieved and made available again to influence a later answer. The KV cache temporarily retains keys and values computed during inference to avoid recomputing some states; it speeds up decoding but is neither a document memory nor learning.
+
+A useful chain is: **source available → information prepared or indexed → information retrieved → information supplied → information potentially used**. Every transition can fail. Available does not mean retrieved; retrieved does not mean supplied; supplied does not mean correctly used.
+
+**In-context learning (ICL)** concerns what the model does with certain information and demonstrations in context, without updating its parameters. Not every use of context is necessarily ICL in the strict sense: an instruction, a documentary fact, and a sequence of examples do not play the same role. See [In-context learning](in-context-learning.qmd).
 
 ## Why Transformers and pretrained LLMs changed the game
 
