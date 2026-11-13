@@ -155,7 +155,7 @@ Pour les précurseurs, les jalons documentés et les compromis techniques, voir 
 
 | Changement | Idée essentielle | Ce que cela rend possible — sans le garantir |
 |---|---|---|
-| **Du calcul récurrent à l'attention** | Les positions peuvent interagir directement, selon le masque, au lieu de transmettre l'information uniquement par une chaîne d'états. | Mieux exploiter les relations entre positions et paralléliser le calcul d'entraînement ; cela ne supprime ni les coûts de l'attention ni la génération séquentielle. |
+| **Du calcul récurrent à l'attention** | Les positions peuvent interagir directement, selon le masque, au lieu de transmettre l'information uniquement par une chaîne d'états. | Mieux exploiter les relations entre positions et paralléliser le calcul d'entraînement ; les relations à longue distance deviennent plus faciles à apprendre, sans être garanties. L'attention dense reste coûteuse lorsque le contexte s'allonge, et la génération demeure séquentielle. |
 | **Des représentations contextualisées** | La représentation d'un token dépend des autres tokens auxquels il peut accéder. | Un même token peut jouer un rôle différent selon son contexte ; cela ne crée pas une mémoire persistante ou illimitée. |
 | **Du modèle spécialisé au modèle pré-entraîné réutilisable** | Un objectif général — prédire le prochain token — apprend des régularités linguistiques et des représentations réutilisables. | Un même socle peut contribuer à la traduction, au résumé, à la classification ou à la réponse à des questions, sans reconstruire un modèle propre à chaque tâche. |
 
@@ -165,7 +165,13 @@ Le pré-entraînement n'enseigne pas explicitement chaque tâche aval. Il appren
 
 C'est le **transfert d'apprentissage** : un modèle entraîné sur un objectif général devient une base réutilisable pour des tâches qui n'étaient pas nécessairement ses objectifs d'entraînement explicites. « Pas entraîné spécifiquement pour cette tâche » ne signifie donc pas « sans apprentissage pertinent pour cette tâche ».
 
-Le parcours de base introduit les différentes façons de mobiliser ce socle, notamment l'[apprentissage en contexte (ICL)](in-context-learning.qmd). Les mécanismes et limites propres à l'ICL, les [lois d'échelle](scaling-laws.qmd) et le [post-entraînement](post-training.qmd) sont étudiés dans leurs pages dédiées : ils complètent cette explication, sans être nécessaires pour retenir l'idée générale de la rupture.
+Le parcours de base introduit les différentes façons de mobiliser ce socle. Il faut distinguer trois voies complémentaires :
+
+- **Adapter les paramètres** : le fine-tuning et les autres méthodes de post-entraînement modifient les poids à partir de nouvelles données et de nouveaux signaux d'entraînement ([post-entraînement](post-training.qmd)).
+- **Agir sur le contexte** : le prompting et l'[apprentissage en contexte (ICL)](in-context-learning.qmd) utilisent des consignes ou des exemples (*zero-shot*, *one-shot*, *few-shot*) sans mise à jour des poids.
+- **Apporter des informations externes** : le [RAG et l'ingénierie du contexte](context-engineering.qmd) organisent la récupération et l'injection de documents dans l'entrée du modèle. Le RAG complète ces voies ; il ne constitue pas un transfert des connaissances dans les paramètres.
+
+Les mécanismes et limites propres à l'ICL, les [lois d'échelle](scaling-laws.qmd), l'[émergence](emergence.qmd) et le [post-entraînement](post-training.qmd) sont étudiés dans leurs pages dédiées : ils complètent cette explication, sans être nécessaires pour retenir l'idée générale de la rupture. Le transfert dépend des données, de la tâche et de l'évaluation ; il n'est ni universel ni automatique.
 
 **La carte mentale à retenir :** le Transformer change le chemin du calcul ; le pré-entraînement construit un socle réutilisable ; le transfert explique pourquoi ce socle sert à des tâches variées. L'échelle et les méthodes d'adaptation ont ensuite élargi les capacités et les usages, sans se substituer à ces trois idées fondamentales.
 

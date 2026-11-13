@@ -155,7 +155,7 @@ For the precursors, documented milestones, and technical trade-offs, see [A hist
 
 | Change | Core idea | What it makes possible — without guaranteeing it |
 |---|---|---|
-| **From recurrent computation to attention** | Positions can interact directly, subject to the mask, rather than passing information only through a chain of states. | Better use of relationships between positions and parallel training computation; attention still has costs, and generation remains sequential. |
+| **From recurrent computation to attention** | Positions can interact directly, subject to the mask, rather than passing information only through a chain of states. | Better use of relationships between positions and parallel training computation; long-range relations become easier to learn, but are not guaranteed. Dense attention remains costly as context grows, and generation remains sequential. |
 | **Contextualized representations** | A token's representation depends on the other tokens it can access. | The same token can play a different role in different contexts; this does not create persistent or unlimited memory. |
 | **From task-specific models to reusable pretrained models** | A general objective—predicting the next token—learns linguistic patterns and reusable representations. | One foundation can contribute to translation, summarization, classification, or question answering, without rebuilding a model for every task. |
 
@@ -165,7 +165,13 @@ Pretraining does not explicitly teach every downstream task. It learns linguisti
 
 This is **transfer learning**: a model trained with a general objective becomes a reusable foundation for tasks that were not necessarily explicit training objectives. “Not specifically trained for this task” therefore does not mean “learned nothing relevant to it”.
 
-The core path introduces different ways to make use of this foundation, including [in-context learning (ICL)](in-context-learning.qmd). The mechanisms and limitations of ICL, [scaling laws](scaling-laws.qmd), and [post-training](post-training.qmd) are explored in their dedicated pages: they extend this explanation but are not required to retain the central idea of the breakthrough.
+The core path introduces different ways to make use of this foundation. Three complementary routes should be distinguished:
+
+- **Adapt the parameters:** fine-tuning and other post-training methods update weights using additional data and training signals ([post-training](post-training.qmd)).
+- **Change the context:** prompting and [in-context learning (ICL)](in-context-learning.qmd) use instructions or demonstrations (*zero-shot*, *one-shot*, *few-shot*) without updating the weights.
+- **Supply external information:** [RAG and context engineering](context-engineering.qmd) organize the retrieval and injection of documents into the model's input. RAG complements these routes; it is not a transfer of knowledge into the parameters.
+
+The mechanisms and limitations of ICL, [scaling laws](scaling-laws.qmd), [emergence](emergence.qmd), and [post-training](post-training.qmd) are explored in their dedicated pages: they extend this explanation but are not required to retain the central idea of the breakthrough. Transfer depends on the data, task, and evaluation; it is neither universal nor automatic.
 
 **The mental model to keep:** the Transformer changes the path of computation; pretraining builds a reusable foundation; transfer explains why that foundation can support varied tasks. Scale and adaptation methods later broadened capabilities and uses without replacing these three foundational ideas.
 

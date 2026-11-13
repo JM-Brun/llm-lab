@@ -37,8 +37,9 @@ Purpose: form a correct mental model of the complete system before studying ever
 - Explain what an autoregressive LLM does, its inputs and outputs, what training optimizes, and how the main components connect.
 - Give a compact historical frame for the conceptual breakthrough: the limits of recurrent sequence processing, the role of attention, the 2017 Transformer, and the later reuse of pretrained models. Link to the dedicated history page for chronology and detail.
 - Explain the transferable-pretraining idea at overview level: a general next-token objective can produce a reusable foundation for downstream tasks, without implying that every task was an explicit training objective.
-- Introduce in-context learning and context engineering at the level needed to distinguish use-time context from parameter updates; link to their canonical lessons rather than reproducing their mechanisms here.
-- Mention scaling and post-training as later developments that broadened capability and usability, but reserve their quantitative, mechanistic, and methodological explanations for Deepen / dedicated concept pages.
+- Introduce in-context learning and context engineering at the level needed to distinguish use-time context from parameter updates; retain the distinction between zero-shot/few-shot prompting, parameter adaptation, and RAG as external retrieval/injection. Link to their canonical lessons rather than reproducing their mechanisms here.
+- Preserve the transfer caveat: reuse is not universal or automatic; it depends on data, task and evaluation.
+- Mention scaling, emergence and post-training as later developments that broadened capability and usability, but reserve their quantitative, mechanistic, methodological and scientific-debate details for their dedicated concept pages. Keep the emergence discussion and its references in the dedicated emergence lesson.
 - Prefer a coherent visual map, a small number of clear diagrams, and a concise narrative.
 - Keep mathematics light initially, but avoid misleading simplifications; link to the precise formulation.
 - Make every major component clickable or otherwise directly linked to its concept page and relevant experiment.
