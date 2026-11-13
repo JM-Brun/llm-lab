@@ -138,7 +138,7 @@ A **foundation model** is a broader category than a *base model*: a model traine
 
 **Use.** At inference time, the parameters do not move. Context is the main way to steer the answer: the **prompt** (the text supplied), the examples placed in it, or the documents that a **retrieval-augmented generation** (RAG) system fetches and inserts into it. Decoding settings (for example, temperature or *top-p*) can also change the selected token without changing the context or the parameters.
 
-## Why Transformers changed the game
+## Why Transformers and pretrained LLMs changed the game
 
 The breakthrough was not a single invention. It came from combining an architecture that could be trained more efficiently at scale, a reusable learning objective, and sufficiently large datasets. The comparison below shows what changed—and what did not.
 
