@@ -524,3 +524,80 @@ The page otherwise needs no broad rewrite. Its strongest contribution is the com
 - `docs/audits/learning-path-excellence-audit.md`
 
 **Not claimed:** no full site render, visual inspection, learner study, code execution, or CI validation has been completed as part of this page pass.
+
+
+---
+
+# Addendum — second-wave audit 1/6: `llm-overview`
+
+**Status:** French and English overview lessons and their exercise hubs reviewed. No content change is warranted in this pass; source-level review only.
+
+## Page identity and role
+
+- FR: `site/fr/llm-overview.qmd`; EN: `site/en/llm-overview.qmd`
+- Practice: `site/fr/exercises/llm-overview.qmd` and `site/en/exercises/llm-overview.qmd`
+- Role: orient the reader to what an LLM predicts, how a token distribution is used, and how architecture, training and application-level use differ.
+- Boundary: this is a system overview, not a substitute for the canonical lessons on tokenization, Transformer internals, probabilities, generation, likelihood or training.
+
+## Page-level value record
+
+| Field | Finding |
+|---|---|
+| Learner question | What is an LLM, what does it compute, and how does that computation become a useful application? |
+| Beginner outcome | Explain next-token prediction, context and fixed parameters; distinguish generating, scoring and learning; distinguish LLM, Transformer and GPT. |
+| Experienced-reader value already present | The page separates model computation from token selection, scoring from evaluation, base models from foundation models, and model-generated tool requests from application-side execution. It also states that a role label does not enforce a policy and that persistent memory requires application-side storage. |
+| Bilingual check | The French Asterix and English Monty Python hooks are deliberate localizations, not a conceptual mismatch. Both versions retain the same conceptual progression and distinguish the fictional scene from the original LLM Lab continuation used for calculations. Exercise hubs are aligned on fine-tuning, RAG, tool execution and message roles. |
+| Gap found | No critical conceptual gap found in the reviewed source. The page is long for an overview, but its first-minute summary, “cross-cutting overview” note and explicit first-pass reading guidance make the intended progressive reading visible. |
+| Change made | None. Rewriting the page to shorten it would risk removing useful system-boundary distinctions; duplicating the detailed mechanics would blur the canonical lesson boundaries. |
+| Depth placement | Keep the overview's role as a map of the system. Defer mechanisms and derivations to the linked canonical lessons; retain tool orchestration and application memory as system-level distinctions rather than Transformer internals. |
+| Validation | Reviewed both main lessons and both exercise hubs. No rendered browser inspection, learner study or CI validation is claimed. |
+
+## Why no rewrite was made
+
+The overview already contributes more than a generic definition: it teaches readers not to conflate a model with the application around it. In particular, it distinguishes a model's structured tool-call request from actual tool execution, message-format roles from Transformer layers, and context-window contents from persistent memory. These are useful conceptual boundaries for readers moving from model fundamentals to deployed systems.
+
+The page is information-dense, but it explicitly marks itself as cross-cutting and offers a first-pass route through the essential concepts. The better editorial choice is to preserve that layering and avoid turning the overview into another detailed chapter.
+
+## Double-audience test
+
+- **Beginner:** can explain next-token prediction and distinguish generation, scoring and training without memorizing every implementation term.
+- **Experienced reader:** can identify where the model ends and application orchestration, retrieval, persistent storage and evaluation begin.
+- **Remaining opportunity:** a future visual systems map could make the boundary between model, inference runtime and surrounding application even more explicit, but only if it clarifies rather than duplicates the existing three-use and application diagrams.
+
+---
+
+# Addendum — second-wave audit 2/6: `generation`
+
+**Status:** French and English generation lessons and their exercise hubs reviewed. No content change is warranted in this pass; source-level review only.
+
+## Page identity and role
+
+- FR: `site/fr/generation.qmd`; EN: `site/en/generation.qmd`
+- Practice: `site/fr/exercises/generation.qmd` and `site/en/exercises/generation.qmd`
+- Role: explain autoregressive inference as a loop of prediction, selection, feedback and stopping for a model whose parameters are fixed.
+- Boundary: the page owns the generation loop, prefill/decode distinction, selection strategies and context constraints. Transformer internals, probability derivations, and training updates remain in their respective lessons.
+
+## Page-level value record
+
+| Field | Finding |
+|---|---|
+| Learner question | How does a next-token distribution become a complete response, and what changes at each step? |
+| Beginner outcome | Trace predict → select → append → continue/stop; understand that the selected token changes the next context while model parameters remain fixed. |
+| Experienced-reader value already present | The page distinguishes the forward pass, token-selection rule and complete generation loop; explains prefill versus incremental decode and the KV cache; separates the advertised context window from the tokens actually available to the response; and identifies application-level stopping and output validation. |
+| Bilingual check | Both versions cover the same mechanism and caveats. Their running examples are intentionally localized (Asterix in French; Monty Python in English), while both distinguish the source scene from the original LLM Lab continuation. Exercise hubs align on stochastic sampling, temperature, fixed parameters and prefill versus teacher forcing. |
+| Gap found | No critical conceptual or mathematical gap found in the reviewed source. The temperature examples are consistent with the stated distribution: squaring probabilities for `tau=0.5` and taking square roots for `tau=2` gives the displayed normalized values. |
+| Change made | None. The core page already has a clear beginner route and progressive detail; advanced filters are handed off to the dedicated decoding-strategies lesson rather than expanded redundantly. |
+| Depth placement | Keep KV-cache and prefill/decode explanations here at the inference-system level; leave attention internals to Q/K/V and causal attention lessons, and leave advanced decoding trade-offs to the dedicated strategy page. |
+| Validation | Reviewed both main lessons and both exercise hubs. Numerical temperature table checked algebraically. No code execution, rendered browser inspection, learner study or CI validation is claimed. |
+
+## Why no rewrite was made
+
+The strongest pedagogical move is the separation of three levels: the network's forward computation, the decoding rule that selects a token, and the generation loop that repeats until a stopping condition. The page then builds from an accessible three-step trace to notation, prefill/decode, caching, temperature and context-window constraints. The distinction between teacher forcing and prefill is explicitly tested in both exercise hubs.
+
+The main opportunity is not another prose subsection. It is a possible later controlled experiment comparing generation strategies while holding model, prompt and random seed protocol fixed. That experiment belongs in Practice or the decoding-strategies lesson.
+
+## Double-audience test
+
+- **Beginner:** can trace a token being selected and fed back, and explain why generation does not update model parameters.
+- **Experienced reader:** can distinguish prefill latency from incremental decode, identify what KV caching avoids recomputing, and explain why a larger context window does not guarantee correct use of every supplied token.
+- **Remaining opportunity:** test greedy, sampling, temperature and KV-cache behaviour in a controlled, reproducible experiment, without presenting one decoding strategy as universally best.
