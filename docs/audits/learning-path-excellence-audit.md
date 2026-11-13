@@ -429,3 +429,98 @@ Adding a second generic “attention is not explanation” box would have duplic
 - `site/en/exercises/scaled-dot-product-attention.qmd`
 
 **Not claimed:** no full site render, visual inspection, learner study, or CI run has been completed as part of this page pass.
+
+
+---
+
+# Addendum — page audit 5/6: `vraisemblance` / `likelihood`
+
+**Status:** fifth page of wave 1 reviewed in French and English, including the dedicated exercise pages and the adjacent entropy, cross-entropy and loss lessons. A small bilingual clarification is added; source-level review only.
+
+## Page identity and conceptual boundary
+
+- FR: `site/fr/vraisemblance.qmd`; EN: `site/en/likelihood.qmd`
+- Practice: `site/fr/exercises/vraisemblance.qmd` and `site/en/exercises/likelihood.qmd`
+- Role: evaluate the probability assigned to an already observed token sequence under fixed model parameters.
+- Boundary: entropy describes the spread of a predictive distribution before observing a target; sequence likelihood multiplies conditional probabilities of observed targets; cross-entropy expresses the penalty against a target distribution at a position; loss aggregates valid local penalties into an objective.
+
+## Page-level value record
+
+| Field | Finding |
+|---|---|
+| Learner question | How does a model score a known sequence, and what does that score mean? |
+| Beginner outcome | Understand reference-prefix scoring, the chain-rule product, log-likelihood and NLL without confusing scoring, generation and training. |
+| Experienced-reader value already present | The page correctly distinguishes teacher-forced scoring from autoregressive generation and parameter updates; it also discusses context-window limits, tokenizer dependence and reduction conventions. |
+| Adjacent-page check | `entropy` distinguishes predictive entropy from realized surprisal; `cross-entropy` derives the one-position target penalty and its relation to NLL; `loss` covers masking, target alignment, reduction and perplexity. The conceptual handoffs are sound and mostly non-duplicative. |
+| Exercise check | FR/EN exercises correctly state that the chain rule requires no token-independence assumption, distinguish sequence NLL from mean per-token NLL, and connect the mean to one-hot cross-entropies. |
+| Gap found | The main likelihood lesson explained NLL and comparison conventions but did not explicitly state the familiar bridge from mean NLL to perplexity, although the exercise hub and adjacent loss lesson already referred to perplexity. |
+| Change made | Added a concise bilingual paragraph: for natural-log mean NLL, `PPL = exp(mean NLL)`; interpreted it as the geometric mean of inverse observed-token probabilities; and reiterated that corpus, tokenizer, evaluated positions and reduction must be compatible for comparison. Linked the detailed metric discussion to the Loss lesson. |
+| Depth placement | Kept implementation details, masks and batch aggregation in `cross-entropy` and `loss`; did not duplicate their explanations in the likelihood page. |
+| Validation | Reviewed source content of both lessons, both exercise pages, entropy, cross-entropy and loss. The new FR/EN paragraph uses the same formula and qualifications. No rendered-site, browser or CI validation is claimed. |
+
+## Why this is the right addition
+
+The page already explains the probability of an observed sequence and the transformation from product to sum. The missing conceptual bridge was not another derivation of NLL, but a clear statement of what the commonly reported perplexity is mathematically and what it does not measure. The geometric-mean interpretation makes the exponentiation less arbitrary, while the comparison caveat prevents readers from treating perplexity as tokenizer-independent or as a direct measure of answer quality.
+
+The audit also confirms that several likely additions would be redundant: the chain rule and independence caveat are already tested in the exercises; entropy versus observed surprise is handled by the preceding page; one-token cross-entropy and valid-target masking belong to the next page; batch reduction and metric interpretation belong to Loss. No broad rewrite is warranted.
+
+## Double-audience test
+
+- **Beginner:** can explain that perplexity is the exponential of mean token NLL and is not a truth or answer-quality score.
+- **Experienced reader:** can connect perplexity to the geometric mean of inverse token probabilities and identify tokenizer, corpus, target-position and reduction constraints on comparisons.
+- **Remaining opportunity:** a future controlled experiment could show how tokenization changes token-level perplexity for the same text, but it should report the tokenizer and evaluation protocol explicitly rather than imply a universal cross-tokenizer conversion.
+
+## Files changed in this page pass
+
+- `site/fr/vraisemblance.qmd`
+- `site/en/likelihood.qmd`
+- `docs/audits/learning-path-excellence-audit.md`
+
+**Not claimed:** no full site render, visual inspection, learner study, or CI run has been completed as part of this page pass.
+
+
+---
+
+# Addendum — page audit 6/6: `training-loop`
+
+**Status:** sixth page of wave 1 reviewed in French and English, with a cross-check against `loss` and `gradients`. One mathematical qualification is tightened in both languages. Source-level review only.
+
+## Page identity and conceptual boundary
+
+- FR: `site/fr/training-loop.qmd`; EN: `site/en/training-loop.qmd`
+- Role: connect the forward pass, loss, backpropagation, optimizer update, repeated batches and held-out validation into one training process.
+- Boundary: `loss` owns target alignment, masking and reduction; `gradients` owns differentiation and the basic update derivation; this page owns the iteration-level system, optimizer role, train/validation/test distinction, overfitting and pretraining scale. Optimizer internals, schedules, clipping and distributed training are explicitly deferred.
+
+## Page-level value record
+
+| Field | Finding |
+|---|---|
+| Learner question | What actually changes the model during training, and how can we tell whether repeated updates generalize? |
+| Beginner outcome | Follow one update, distinguish gradient from optimizer, understand epochs and stochastic batches, and read training versus validation curves. |
+| Experienced-reader value already present | The page includes a runnable minimal language-model experiment with a held-out split, a reproducible seed, qualitative assertions, and explicit limits on what the toy table demonstrates. It explains why validation-guided decisions make the validation score optimistic and why a test split must remain reserved. |
+| Adjacent-page check | `loss` supplies the target/mask/reduction contract; `gradients` supplies the derivative and SGD update. The training-loop lesson correctly links these without reproducing their derivations. |
+| Bilingual check | The main FR and EN lessons have matching conceptual sequence, toy experiment, caveats and self-check questions. A dedicated `exercises/training-loop.qmd` file was not present at the expected paths; the main lesson itself contains three worked self-check questions, so no missing exercise page is assumed. |
+| Gap found | One warning about cross-entropy having “no finite minimum on a perfectly fitted dataset” was broader than the mathematical condition warrants. The asymptotic statement applies to perfectly separable one-hot targets with unregularized softmax logits, not universally to every objective or dataset. |
+| Change made | Qualified the statement identically in FR and EN: for perfectly separable one-hot targets without regularization, softmax cross-entropy can approach zero as logit confidence grows, without reaching zero at finite logits. Explicitly stated that this is not universal. |
+| Depth placement | Kept schedules, clipping, optimizer internals and distributed training out of the core page, as its scope promises. The toy experiment remains the distinctive advanced contribution rather than adding a generic expert callout. |
+| Validation | Reviewed both lesson sources and adjacent loss/gradient explanations. The FR/EN qualification is conceptually aligned. No code execution, full site render, browser inspection, or CI pass is claimed for this page audit. |
+
+## Why this is the right correction
+
+The original sentence compressed a useful intuition into a statement that could be read as a theorem about all perfectly fitted datasets. For ordinary unregularized softmax classification with one-hot targets that are perfectly separable, increasing the logit margin can keep lowering cross-entropy toward zero; finite logits still assign nonzero probability to alternatives. But non-separable data, soft targets, regularization, or other objective terms change that conclusion. Naming the assumptions makes the statement useful to an advanced reader without burdening the beginner with a full optimization detour.
+
+The page otherwise needs no broad rewrite. Its strongest contribution is the compact, executable experiment showing that training loss can keep falling while held-out validation loss turns upward, together with a clear warning that this tiny lookup-table model is not a Transformer and does not prove a universal curve shape.
+
+## Double-audience test
+
+- **Beginner:** can identify the optimizer update as the operation that changes parameters and explain why validation data must not update them.
+- **Experienced reader:** can distinguish the stochastic batch gradient from the full-data gradient, recognize validation-selection optimism, and state the assumptions behind the softmax cross-entropy asymptote.
+- **Remaining opportunity:** a future extension could compare fixed-step SGD with a learning-rate schedule or AdamW on the same controlled toy problem, but it should preserve the fixed data split and report optimizer state and stopping rules. This belongs in a reproducible experiment, not another prose subsection.
+
+## Files changed in this page pass
+
+- `site/fr/training-loop.qmd`
+- `site/en/training-loop.qmd`
+- `docs/audits/learning-path-excellence-audit.md`
+
+**Not claimed:** no full site render, visual inspection, learner study, code execution, or CI validation has been completed as part of this page pass.
