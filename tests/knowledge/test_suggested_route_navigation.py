@@ -208,9 +208,7 @@ def test_forward_card_requires_a_published_build_path() -> None:
 
 @pytest.mark.parametrize("language", ["fr", "en"])
 def test_published_route_ends_with_exactly_one_forward_card(language: str) -> None:
-    pages = [
-        page for page in GENERATOR["load_pages"]() if page["language"] == language
-    ]
+    pages = [page for page in GENERATOR["load_pages"]() if page["language"] == language]
     stages = GENERATOR["load_guided_route"](language, pages)
     fragments = {
         path.name: text
@@ -256,13 +254,9 @@ def test_first_build_tour_keeps_visible_return_card_when_sidebar_has_same_parent
     pages = [page for page in GENERATOR["load_pages"]() if page["language"] == language]
     fragments = GENERATOR["prepare_suggested_route_fragments"](language, pages)
     fragment_name = f"generated-suggested-route-{language}-gpt-config-walkthrough.qmd"
-    rendered = next(
-        content for path, content in fragments.items() if path.name == fragment_name
-    )
+    rendered = next(content for path, content in fragments.items() if path.name == fragment_name)
 
-    expected = (
-        "← Retour au parcours Build" if language == "fr" else "← Back to the Build path"
-    )
+    expected = "← Retour au parcours Build" if language == "fr" else "← Back to the Build path"
     assert '<div class="route-nav-cards">' in rendered
     assert 'href="build-path.qmd"' in rendered
     assert expected in rendered
