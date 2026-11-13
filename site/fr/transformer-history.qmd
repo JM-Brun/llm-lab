@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/index"]
   children: []
-related: []
+related: ["fr/llm-overview", "fr/llm-evolution", "fr/scaling-laws", "fr/emergence", "fr/in-context-learning", "fr/post-training"]
 tags: ["type:historical-reference", "destination:reference", "topic:transformer-history", "level:reference", "language:fr", "status:published"]
 -->
 
@@ -67,35 +67,26 @@ Le Transformer de Vaswani et al. généralise cette idée en plaçant l’attent
 
 Cette avancée a ses propres coûts. L’attention dense compare les positions entre elles ; son coût en calcul et en mémoire croît quadratiquement avec la longueur de la séquence dans sa forme standard. Et dans un GPT autorégressif, le prochain token dépend toujours des précédents : le calcul du *prefill* traite le prompt en parallèle, mais le *decode* produit les nouveaux tokens l’un après l’autre.
 
-### 3. Le transfert : apprendre une fois, réutiliser de plusieurs façons
+### 3. Du modèle spécialisé au modèle réutilisable
 
-Le changement décisif ne vient pas de l’architecture seule. Les représentations pré-entraînées ont progressivement remplacé des pipelines où chaque tâche exigeait souvent son propre modèle ou sa propre architecture. Les travaux sur les représentations de mots, puis les modèles contextualisés pré-entraînés, ont rendu possible le transfert de paramètres vers des tâches aval. Avec GPT-2, puis GPT-3, le modèle de langage pré-entraîné est devenu de plus en plus directement réutilisable.
+Le transfert d'apprentissage constitue un changement historique majeur : au lieu de concevoir un modèle indépendant pour chaque tâche, on peut réutiliser les représentations et paramètres appris sur de grands corpus. Les représentations pré-entraînées, puis les modèles contextualisés, ont préparé cette évolution. GPT-2 a illustré le potentiel du transfert zero-shot ; GPT-3 l'a rendu particulièrement visible avec des évaluations few-shot où la tâche et les démonstrations étaient fournies dans le prompt, sans mise à jour des gradients ([Brown et al., 2020](https://arxiv.org/abs/2005.14165)).
 
-GPT-3 a rendu cette possibilité particulièrement visible : les auteurs ont évalué un modèle autorégressif de 175 milliards de paramètres sur de nombreuses tâches, sans mise à jour des gradients, en indiquant la tâche et des exemples uniquement dans le texte du prompt. Les auteurs soulignent aussi les limites et les tâches sur lesquelles cette approche échoue ([Brown et al., 2020](https://arxiv.org/abs/2005.14165)).
+Cette histoire ouvre plusieurs mécanismes qu'il faut désormais distinguer, plutôt que les confondre dans une seule chronologie :
+- **Transfert avec adaptation** : ajuster les paramètres sur une tâche aval (*fine-tuning*).
+- **Adaptation par le contexte** : fournir une consigne ou des exemples sans modifier les paramètres (*zero-shot*, *few-shot*, ICL).
+- **Apport de connaissances externes** : récupérer des informations et les transmettre au modèle, par exemple avec le RAG ; ce n'est pas un transfert de paramètres.
 
-Il faut distinguer deux mécanismes de réutilisation du modèle, auxquels s’ajoute une approche complémentaire :
-- **Transfert avec adaptation (*fine-tuning*)** : les paramètres sont ajustés sur des exemples de la tâche aval.
-- **Réutilisation sans mise à jour des poids (*zero-shot* / *few-shot*, dont l’ICL)** : la tâche et éventuellement des démonstrations sont fournies dans le contexte. *Zero-shot* signifie ici zéro démonstration de la tâche dans le prompt, pas absence de tout apprentissage antérieur.
-- **RAG (approche complémentaire)** : des informations externes sont récupérées à l’utilisation et insérées dans le contexte. Le RAG complète les connaissances mobilisables par le modèle, mais ne transfère pas ses paramètres et ne constitue pas, au sens strict, du transfert d’apprentissage.
+Les mécanismes, leurs conditions de réussite et leurs limites sont approfondis dans [l'évolution des LLM](llm-evolution.qmd) et [l'apprentissage en contexte](in-context-learning.qmd). Le [RAG et les frontières de la mémoire](rag-memory-boundaries.qmd) expliquent pourquoi retrouver une information ne signifie pas encore qu'elle est accessible au modèle.
 
-Le modèle n’a donc pas besoin d’avoir reçu une étiquette explicite pour chaque tâche qu’il saura parfois effectuer. Le pré-entraînement sur de grands corpus lui fait apprendre des régularités linguistiques, des formats, des associations et des connaissances réutilisables. Une consigne peut ensuite sélectionner ou combiner ces compétences. Mais les données d’entraînement peuvent aussi contenir des exemples proches de la tâche : « jamais entraîné spécifiquement » ne signifie pas « jamais exposé à quelque chose de similaire ».
+### 4. Échelle, post-entraînement et capacités observées
 
-### 4. L’échelle et le post-entraînement : des capacités à rendre utilisables
+À partir des années 2020, l'évolution ne se limite plus à l'architecture : la taille des modèles, la quantité et la qualité des données, le calcul d'entraînement et les procédures d'optimisation deviennent des variables étudiées conjointement. Les lois d'échelle et l'allocation optimale des ressources contribuent à formaliser ces arbitrages ([Kaplan et al., 2020](https://arxiv.org/abs/2001.08361) ; [Hoffmann et al., 2022](https://arxiv.org/abs/2203.15556)).
 
-L’augmentation de la taille des modèles n’a pas été un simple multiplicateur. Les résultats dépendent de l’équilibre entre nombre de paramètres, quantité et qualité des données, budget de calcul, durée d’entraînement, architecture et procédure d’optimisation. Les travaux sur les lois d’échelle et l’allocation optimale des ressources ont contribué à rendre ces choix plus mesurables ([Kaplan et al., 2020](https://arxiv.org/abs/2001.08361) ; [Hoffmann et al., 2022](https://arxiv.org/abs/2203.15556)).
-
-Un modèle de base entraîné à prédire le prochain token n’est pas automatiquement un assistant fiable. Le post-entraînement — notamment l’entraînement supervisé sur des instructions et l’optimisation par préférences — améliore la capacité à répondre aux demandes et à respecter un format d’interaction. Il s’agit d’une étape distincte du pré-entraînement, pas d’une conséquence mécanique de l’attention.
-
-### 5. « Émergence » : observer sans surinterpréter
-
-Certaines capacités semblent apparaître à partir d’une certaine taille ou d’un certain niveau de performance. Mais le terme *émergence* recouvre plusieurs phénomènes : progression rapide, franchissement d’un seuil d’évaluation, combinaison de compétences déjà présentes, ou véritable changement qualitatif. Schaeffer et al. montrent que des métriques discontinues peuvent donner l’apparence d’une apparition soudaine là où des métriques continues révèlent une progression plus graduelle ([2023](https://arxiv.org/abs/2304.15004)). Lu et al. analysent également le rôle possible de l’ICL, de la mémoire acquise pendant le pré-entraînement et des connaissances linguistiques ([2024](https://aclanthology.org/2024.acl-long.279/)).
-
-La bonne posture pédagogique est donc double : ne pas nier les nouvelles capacités pratiques rendues possibles par l’échelle, mais ne pas présenter leur apparition comme une loi mystérieuse ou une preuve de compréhension générale. Il faut préciser la tâche, le protocole, la métrique et le modèle évalué.
+En parallèle, le post-entraînement — instruction tuning et optimisation sur les préférences notamment — oriente les modèles pré-entraînés vers des comportements d'assistant. Certaines performances semblent aussi émerger à mesure que l'échelle augmente, mais leur interprétation dépend des tâches et des métriques : des seuils d'évaluation peuvent donner l'impression d'une apparition soudaine ([Schaeffer et al., 2023](https://arxiv.org/abs/2304.15004)). Ces sujets sont traités en détail dans [l'évolution des LLM](llm-evolution.qmd), les [lois d'échelle](scaling-laws.qmd), l'[émergence](emergence.qmd) et le [post-entraînement](post-training.qmd).
 
 ### Ce que cette histoire permet de conclure
 
-Le Transformer a levé un verrou architectural important : le calcul parallèle des positions pendant l’entraînement et des chemins d’information plus directs. Le pré-entraînement à grande échelle a transformé un modèle de langage en socle transférable. Le *few-shot* et l’ICL ont rendu possible une adaptation par le contexte, sans modifier les poids. Le post-entraînement a rendu les modèles plus aptes à interagir avec des utilisateurs. Ces évolutions se renforcent, mais elles ne sont ni identiques ni réductibles à une seule invention.
-
+La chronologie éclaire trois transformations qui se renforcent sans se confondre : le Transformer modifie le chemin du calcul ; le pré-entraînement à grande échelle rend les paramètres réutilisables ; les méthodes ultérieures permettent d'adapter le modèle par ses paramètres, par le contexte ou par l'apport d'informations externes. Pour comparer les générations et comprendre les axes qui évoluent en parallèle — multimodalité, calcul à l'inférence, efficacité et systèmes à outils — voir [De GPT-2 aux systèmes LLM contemporains](llm-evolution.qmd).
 
 ## Quelques précautions de lecture
 
