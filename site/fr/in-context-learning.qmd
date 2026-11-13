@@ -22,6 +22,8 @@ related: ["fr/llm-overview", "fr/generation", "fr/context-engineering", "fr/cont
 tags: ["type:concept-lesson", "destination:understand", "topic:in-context-learning", "level:core", "language:fr", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-fr-in-context-learning.qmd >}}
+
 ::: {.chapter-lead}
 L'**apprentissage en contexte** (*in-context learning*, ICL) désigne la capacité d'un modèle à adapter sa réponse à des exemples, des consignes ou des régularités présentés directement dans le prompt. Cette adaptation se produit pendant l'inférence : les paramètres du modèle restent fixes. Le modèle exploite le contexte fourni ; il ne réalise pas pour autant une nouvelle étape de fine-tuning.
 :::
