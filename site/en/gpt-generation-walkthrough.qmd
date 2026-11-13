@@ -141,6 +141,10 @@ Line by line:
 
 1. Four passes, each on a 16-token window: after the first appended token (17 tokens), the window keeps only the last 16 at every step.
 2. The parameters are random: the logits encode no language statistics. The loop itself works perfectly (shapes, causality, selection) — exactly what this milestone separates: **the mechanics** of generation from **the quality acquired through learning**.
+
+3. If all logits are divided by a strictly positive temperature before softmax, why does greedy selection stay unchanged while sampling may change? Under what conditions is sampling reproducible?
+
+3. Dividing by a positive temperature preserves the ordering of logits, so their argmax is unchanged. It does change how concentrated the distribution is, which can change the sampled token. Sampling is reproducible when the same random-generator state (for example, the same seed) is reused with the same inputs and parameters.
 </details>
 
 ## Build path navigation
