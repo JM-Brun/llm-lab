@@ -119,9 +119,22 @@ Distinguer le prefill du prompt du decode itératif, sélectionner un token selo
 
 :::
 
+::: {.guided-route-stage #guided-stage-context-use}
+
+### 07 · Exploiter et concevoir le contexte
+
+Distinguer l'apprentissage en contexte de la mise à jour des paramètres, puis comprendre comment un système sélectionne, structure, actualise et sécurise les informations fournies au modèle.
+
+**Pages centrales**
+
+- [Apprentissage en contexte (in-context learning)](in-context-learning.html)
+- [Ingénierie du contexte (context engineering)](context-engineering.html)
+
+:::
+
 ::: {.guided-route-stage #guided-stage-scoring}
 
-### 07 · Attribuer un score aux tokens observés
+### 08 · Attribuer un score aux tokens observés
 
 Évaluer la probabilité attribuée à une cible connue, construire la vraisemblance d'une séquence et relier la log-vraisemblance négative à l'entropie croisée, sans sélectionner de token ni modifier les paramètres.
 
@@ -134,7 +147,7 @@ Distinguer le prefill du prompt du decode itératif, sélectionner un token selo
 
 ::: {.guided-route-stage #guided-stage-training}
 
-### 08 · Apprendre et mettre à jour les paramètres
+### 09 · Apprendre et mettre à jour les paramètres
 
 Relier les cibles observées à la loss agrégée, aux gradients et aux mises à jour des paramètres, puis à la boucle d'entraînement répétée et à la loss de validation ; comprendre conceptuellement le teacher forcing, sans faire de la préparation des exemples décalés une étape du parcours théorique.
 
