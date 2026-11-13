@@ -35,7 +35,10 @@ Deepen and Practice & experiment are supporting destinations that can enrich eit
 Purpose: form a correct mental model of the complete system before studying every detail.
 
 - Explain what an autoregressive LLM does, its inputs and outputs, what training optimizes, and how the main components connect.
-- Define in-context learning (using examples in the prompt without updating weights) and context engineering (selecting, assembling, and maintaining the active context); distinguish both from fine-tuning and RAG.
+- Give a compact historical frame for the conceptual breakthrough: the limits of recurrent sequence processing, the role of attention, the 2017 Transformer, and the later reuse of pretrained models. Link to the dedicated history page for chronology and detail.
+- Explain the transferable-pretraining idea at overview level: a general next-token objective can produce a reusable foundation for downstream tasks, without implying that every task was an explicit training objective.
+- Introduce in-context learning and context engineering at the level needed to distinguish use-time context from parameter updates; link to their canonical lessons rather than reproducing their mechanisms here.
+- Mention scaling and post-training as later developments that broadened capability and usability, but reserve their quantitative, mechanistic, and methodological explanations for Deepen / dedicated concept pages.
 - Prefer a coherent visual map, a small number of clear diagrams, and a concise narrative.
 - Keep mathematics light initially, but avoid misleading simplifications; link to the precise formulation.
 - Make every major component clickable or otherwise directly linked to its concept page and relevant experiment.
