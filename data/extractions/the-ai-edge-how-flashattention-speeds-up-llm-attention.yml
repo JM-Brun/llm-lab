@@ -64,7 +64,7 @@ pedagogical_model:
     structures_kept_separate: [source-semantic-graph, source-pedagogical-route, canonical-concept-graph, theory-understand-route, build-dependency-graph]
 items:
   - id: the-ai-edge-how-flashattention-speeds-up-llm-attention:function-versus-kernel
-    kind: distinction
+    kind: claim
     summary: "The attention function specifies the mathematical mapping from Q, K and V under a mask; a kernel specifies how hardware executes that mapping. Kernel optimization need not redefine the function."
     locator: "Introduction, paragraphs 1–3"
     locator_type: section
