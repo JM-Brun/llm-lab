@@ -130,7 +130,6 @@ Distinguish information encoded in parameters (pretraining and fine-tuning) from
 - [In-context learning](in-context-learning.html)
 - [Context engineering](context-engineering.html)
 
-
 **Optional resources**
 
 - [RAG, memory, and document retrieval](rag-memory-boundaries.html)
