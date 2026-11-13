@@ -186,6 +186,10 @@ Ligne par ligne :
 
 1. `10 % 4 == 2` : la divisibilité échoue, donc `ValueError` à la construction. Avec `12 % 4 == 0` : configuration acceptée, chaque tête reçoit `12/4 = 3` colonnes.
 2. `256 × 64 = 16384` valeurs, soit 16384 paramètres appris — un par position et par dimension. Ce nombre est indépendant du vocabulaire et du nombre de têtes.
+
+3. Pour une configuration avec `vocab_size=50`, `context_length=32`, `embedding_dim=64`, `num_heads=4`, `num_layers=6` et `mlp_hidden_dim=256`, associez chaque champ à ce qu'il contrôle. Que change `seed` ?
+
+3. `vocab_size` fixe les lignes de la table de tokens et la dernière dimension des logits (`V`) ; `context_length` fixe la longueur maximale et la table de positions ; `embedding_dim` fixe la largeur `d` du flux et des projections ; `num_heads` découpe cette largeur en `H` têtes de `d/H` colonnes ; `num_layers` fixe le nombre de blocs ; `mlp_hidden_dim` fixe la largeur intermédiaire du MLP. `seed` change les valeurs initiales, pas les formes ni l'architecture.
 </details>
 
 ## Navigation dans le parcours
