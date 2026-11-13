@@ -43,7 +43,7 @@ Un objectif de prédiction apprend à attribuer des probabilités aux suites de 
 - qu’une capacité observée se généralise à toute tâche ou tout contexte ;
 - qu’un comportement soit causalement expliqué par un motif d’attention isolé.
 
-Ces absences de garantie ne sont pas des défauts de réalisation : elles découlent de l’objectif lui-même. Chacune se traite par une évaluation adaptée — mesures, baselines, contrôles — dont la méthode fait l’objet de la page [Évaluation expérimentale](evaluation-experimentale.qmd).
+Ces absences de garantie ne sont pas des défauts de réalisation : elles découlent de l’objectif lui-même. Chacune appelle une évaluation adaptée — mesures, baselines et contrôles — définie en fonction de la tâche et de l'usage visés. L'[exercice d'évaluation expérimentale](evaluation-experimentale.qmd) illustre cette démarche sur un cas précis de classement de passages scientifiques ; il ne constitue pas une méthode générale d'évaluation des assistants conversationnels.
 
 ## 2. Que veut dire « comprendre » ?
 
@@ -56,7 +56,7 @@ Les performances observables peuvent étayer la première interprétation dans u
 
 ## 3. Capacités « émergentes » et effets d’échelle
 
-Les discussions sur les capacités dites *émergentes* demandent de préciser la tâche, la métrique, les seuils et les modèles comparés. Une capacité qui semble apparaître brutalement avec une métrique donnée peut dépendre de la résolution de mesure ou du protocole : des analyses récentes montrent que plusieurs effets « émergents » disparaissent lorsque la métrique est lissée ou remplacée. Examinez les résultats, les contrôles et les définitions avant de conclure à une transition qualitative ; l’[évaluation expérimentale](evaluation-experimentale.qmd) explicite ces exigences. Le [débat sur l’émergence des capacités](emergence.qmd) examine les protocoles et les métriques qui permettent de tester ces affirmations.
+Les discussions sur les capacités dites *émergentes* demandent de préciser la tâche, la métrique, les seuils et les modèles comparés. Une capacité qui semble apparaître brutalement avec une métrique donnée peut dépendre de la résolution de mesure ou du protocole : des analyses récentes montrent que plusieurs effets « émergents » disparaissent lorsque la métrique est lissée ou remplacée. Examinez les résultats, les contrôles et les définitions avant de conclure à une transition qualitative ; l'[exercice d'évaluation expérimentale](evaluation-experimentale.qmd) fournit un exemple de protocole rigoureux, dans le contexte limité du classement de passages. Le [débat sur l’émergence des capacités](emergence.qmd) examine les protocoles et les métriques qui permettent de tester ces affirmations.
 
 La taille du modèle ne suffit pas non plus à expliquer ses performances. La qualité, la diversité et la provenance des données, l’objectif, l’architecture, le procédé d’entraînement, l’adaptation et le protocole d’évaluation contribuent ensemble aux résultats.
 
@@ -65,7 +65,7 @@ La taille du modèle ne suffit pas non plus à expliquer ses performances. La qu
 - **Calibration :** une probabilité élevée n'est pas, à elle seule, une garantie de fiabilité.
 - **Compréhension :** une compétence opérationnelle mesurée sur une tâche ne démontre pas une compréhension humaine.
 - **Émergence :** une rupture apparente dépend de la métrique, des seuils, des modèles comparés et du protocole.
-- **Méthode :** formuler les limites comme des hypothèses testables et les examiner avec des baselines, des contrôles et une évaluation adaptée.
+- **Méthode :** formuler les limites comme des hypothèses testables et les examiner avec des baselines, des contrôles et une évaluation adaptée à l'usage.
 
 **Question rapide :** quelle observation permettrait de distinguer une amélioration mesurée d'une véritable transition qualitative ?
 :::

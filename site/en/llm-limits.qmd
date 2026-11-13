@@ -43,7 +43,7 @@ A prediction objective learns to assign probabilities to observed token sequence
 - that an observed ability generalizes to every task or context;
 - that a behavior is causally explained by an isolated attention pattern.
 
-These missing guarantees are not implementation defects: they follow from the objective itself. Each is addressed by an adapted evaluation — metrics, baselines, controls — whose method is the subject of the [Experimental evaluation](experimental-evaluation.qmd) page.
+These missing guarantees are not implementation defects: they follow from the objective itself. Each calls for an evaluation suited to the task and intended use, with appropriate measures, baselines, and controls. The [experimental evaluation exercise](experimental-evaluation.qmd) illustrates this approach in one specific setting: ranking scientific passages. It is not a general evaluation method for conversational assistants.
 
 ## 2. What does "understand" mean?
 
@@ -56,7 +56,7 @@ Observable performance can support the first interpretation within a given scope
 
 ## 3. "Emergent" abilities and scale effects
 
-Discussions of so-called *emergent* abilities require specifying the task, the metric, the thresholds, and the models compared. An ability that seems to appear abruptly under a given metric may depend on measurement resolution or protocol: recent analyses show that several "emergent" effects disappear when the metric is smoothed or replaced. Examine the results, controls, and definitions before concluding a qualitative transition; [experimental evaluation](experimental-evaluation.qmd) makes these requirements explicit. The [debate over emergent abilities](emergence.qmd) examines the protocols and metrics used to test such claims.
+Discussions of so-called *emergent* abilities require specifying the task, the metric, the thresholds, and the models compared. An ability that seems to appear abruptly under a given metric may depend on measurement resolution or protocol: recent analyses show that several "emergent" effects disappear when the metric is smoothed or replaced. Examine the results, controls, and definitions before concluding a qualitative transition; the [experimental evaluation exercise](experimental-evaluation.qmd) provides one example of a rigorous protocol, in the limited context of passage ranking. The [debate over emergent abilities](emergence.qmd) examines the protocols and metrics used to test such claims.
 
 Model size alone does not explain performance either. Data quality, diversity, and provenance, the objective, the architecture, the training procedure, adaptation, and the evaluation protocol jointly shape the results.
 
@@ -65,7 +65,7 @@ Model size alone does not explain performance either. Data quality, diversity, a
 - **Calibration:** a high probability is not, by itself, a guarantee of reliability.
 - **Understanding:** operational competence measured on a task does not establish human-like understanding.
 - **Emergence:** an apparent discontinuity depends on the metric, thresholds, compared models, and protocol.
-- **Method:** frame limitations as testable hypotheses and examine them with baselines, controls, and task-appropriate evaluation.
+- **Method:** frame limitations as testable hypotheses and examine them with baselines, controls, and evaluation suited to the intended use.
 
 **Quick question:** what observation would distinguish measured improvement from a genuine qualitative transition?
 :::
