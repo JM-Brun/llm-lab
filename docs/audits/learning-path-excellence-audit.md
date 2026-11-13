@@ -279,3 +279,53 @@ The detailed study summaries and caveats remain on the companion page. The core 
 - `site/en/exercises/text-data.qmd`
 
 **Not claimed:** no full site render, visual inspection, learner study, or CI run has been completed as part of this page pass.
+
+
+---
+
+# Addendum — page audit 2/6: `logits`
+
+**Status:** second page of wave 1 reviewed and enriched in both languages. Source-level review only; rendered browser experience and CI build remain unverified.
+
+## Page identity and ownership
+
+- FR: `site/fr/logits.qmd`
+- EN: `site/en/logits.qmd`
+- Practice: `site/fr/exercises/logits.qmd` and `site/en/exercises/logits.qmd`
+- Role: core Understand lesson between causal masking and output probabilities.
+- Canonical boundary: define the vocabulary score vector, its dimensions and local ranking; the next page owns softmax, probability distributions, temperature and calibration.
+
+## Page-level value record
+
+| Field | Finding |
+|---|---|
+| Learner question | What does the model produce immediately before a next-token probability distribution is formed? |
+| Beginner outcome | Understand that the output head produces one real-valued score per vocabulary item, and that scores are not probabilities. |
+| Experienced-reader value already present | The page connects the final hidden state to a vocabulary-sized output projection and notes that cross-entropy implementations can consume unnormalized logits directly. |
+| Best-source contribution | The existing PyTorch CrossEntropyLoss documentation gives an implementation-level contract: the loss expects unnormalized logits. The adjacent probability lesson supplies the softmax mathematics and temperature interpretation. |
+| LLM Lab synthesis | Make the distinction between absolute score level and relative score differences explicit, then connect the invariance to the next page's softmax treatment. |
+| Weak element before this change | The page warned that raw logits depend on scale and offset, but did not explain what that means. A reader could still treat a large positive logit as an absolute confidence signal. |
+| Change made | Added a worked common-offset example, `(2, 1)` versus `(102, 101)`, explaining why both produce the same softmax distribution. Clarified that multiplying logits by a positive factor can change distribution concentration while preserving ranking. Added a matching exercise in both languages. |
+| Depth placement | The page gives the invariant and its intuition; the probability page retains the formal softmax properties, probability ratios and temperature treatment. |
+| Validation | Source files fetched; FR/EN pages and exercise pages updated in parallel. No rendered-site or CI verification yet. |
+
+## Why this is the right addition
+
+The important distinction is not merely that logits may be positive or negative. Their absolute origin is arbitrary for softmax: adding a common constant to every component changes neither the normalized distribution nor the ranking. Differences between logits determine probability ratios. By contrast, positive rescaling can change the distribution's concentration, which is why temperature can alter sampling behavior without changing the argmax.
+
+This provides a concrete experienced-reader insight while remaining accessible through a two-number example. It also clarifies why raw logits from different prompts or models should not be compared as if they were absolute confidence measurements. The adjacent probability page already contains the formal invariance and temperature relationships; it now acts as the mathematical follow-through rather than having that material copied into this lesson.
+
+## Double-audience test after the change
+
+- **Beginner:** can explain why a logit of 100 is not automatically stronger evidence than a logit of 2, and why scores must be interpreted relative to the rest of the vector.
+- **Experienced reader:** can state the softmax shift invariance, distinguish offset from scale, and connect the latter to temperature.
+- **Remaining opportunity:** a small numerical comparison in the probability lesson could explicitly compute the same distribution for the two shifted vectors, if that would aid the derivation. Avoid duplicating the current concept-page example verbatim.
+
+## Files changed in this page pass
+
+- `site/fr/logits.qmd`
+- `site/en/logits.qmd`
+- `site/fr/exercises/logits.qmd`
+- `site/en/exercises/logits.qmd`
+
+**Not claimed:** no full site render, visual inspection, learner study, or CI run has been completed as part of this page pass.
