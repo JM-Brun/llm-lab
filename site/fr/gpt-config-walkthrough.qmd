@@ -184,6 +184,8 @@ Les questions de cette visite et leurs corrigés sont regroupés sur la [page de
 
 ## Navigation dans le parcours
 
+{{< include ../includes/generated-suggested-route-fr-gpt-config-walkthrough.qmd >}}
+
 ## Connexions
 
 - **Étape suivante** : [les briques numériques (`gpt_ops.py`)](gpt-ops-walkthrough.qmd).
