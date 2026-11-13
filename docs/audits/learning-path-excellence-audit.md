@@ -329,3 +329,55 @@ This provides a concrete experienced-reader insight while remaining accessible t
 - `site/en/exercises/logits.qmd`
 
 **Not claimed:** no full site render, visual inspection, learner study, or CI run has been completed as part of this page pass.
+
+
+---
+
+# Addendum — page audit 3/6: `positional-encoding`
+
+**Status:** third page of wave 1 reviewed and enriched in both languages. Source-level review only; rendered browser experience and CI remain unverified.
+
+## Page identity and ownership
+
+- FR: `site/fr/positional-encoding.qmd`
+- EN: `site/en/positional-encoding.qmd`
+- Practice: `site/fr/exercises/positional-encoding.qmd` and `site/en/exercises/positional-encoding.qmd`
+- Role: core Understand lesson between embedding lookup and contextualized representations.
+- Canonical boundary: explain why order must enter the computation and distinguish absolute encodings, relative mechanisms, RoPE and causal visibility. Mathematical derivations remain in the sinusoidal and RoPE deep dives.
+
+## Page-level value record
+
+| Field | Finding |
+|---|---|
+| Learner question | How can a Transformer distinguish sequences whose tokens are the same but occur in a different order? |
+| Beginner outcome | Understand why content-only attention is permutation equivariant, where positional information enters, and why causal masking is a separate constraint. |
+| Experienced-reader value already present | The page includes a permutation-equivariance derivation and an optional derivation of the fixed-shift property of sinusoidal encodings. It correctly classifies RoPE as a relative mechanism rather than a third disjoint family. |
+| Best-source contribution | Vaswani et al. (2017) establishes the original sinusoidal design; Su et al. (2021) gives the RoPE formulation. The existing deep dives derive their geometry and discuss implementation and extrapolation limitations. |
+| LLM Lab synthesis | Connect the mathematical ability to compute positional signals with the separate empirical question of whether a trained model generalizes to longer contexts. |
+| Weak element before this change | The core page explained insertion points and the mathematical structure but did not surface the crucial distinction between computing a positional signal at a new index and reliably using that position beyond the training regime. |
+| Change made | Added a bilingual callout: computability of sinusoidal positions and the existence of RoPE do not by themselves guarantee long-context extrapolation. Added a matching practice question. Corrected the exercise-page closing criterion, which had inaccurately called absolute encodings, relative mechanisms and RoPE “three families”. |
+| Depth placement | The core page states the general caveat; the sinusoidal and RoPE deep dives retain the detailed analysis of frequencies, scaling methods, implementation conventions and evaluation. |
+| Validation | FR/EN source files and exercises updated in parallel. The exercise terminology now matches the canonical classification in both lessons. No rendered-site or CI verification yet. |
+
+## Why this is the right addition
+
+This page was already one of the stronger candidates in the initial diagnostic. It is not a generic introduction: the permutation-equivariance argument, the distinction between absolute and relative information, the exact insertion point of RoPE, and the optional sinusoidal shift derivation provide real intellectual value.
+
+The missing high-level insight was a common extrapolation misconception. A positional formula may be defined for arbitrary indices, but the trained network's behaviour at those indices is a separate empirical question. The same caution applies to RoPE: the mechanism alone does not guarantee reliable long-context use. The detailed deep dives already explain the relevant conditions, so the core page needed only a concise warning and a handoff.
+
+The review also caught a small but genuine conceptual inconsistency in the exercises: RoPE is explicitly described in the lesson as a member of the relative family, but the exercise summary asked learners to distinguish “three families”. That wording is now corrected to distinguish absolute encodings from relative mechanisms and to identify RoPE as one example of the latter.
+
+## Double-audience test after the change
+
+- **Beginner:** can distinguish “the formula returns a vector” from “the model can use that position reliably”.
+- **Experienced reader:** is reminded that positional extrapolation is a property of the trained system and its context-extension recipe, not a guarantee conferred by a positional encoding in isolation.
+- **Remaining opportunity:** the next audit should check whether `generation` and `llm-computational-complexity` explain the operational distinction between nominal context length, usable context and inference cost without duplicating this positional caveat.
+
+## Files changed in this page pass
+
+- `site/fr/positional-encoding.qmd`
+- `site/en/positional-encoding.qmd`
+- `site/fr/exercises/positional-encoding.qmd`
+- `site/en/exercises/positional-encoding.qmd`
+
+**Not claimed:** no full site render, visual inspection, learner study, or CI run has been completed as part of this page pass.
