@@ -16,7 +16,7 @@ suggested_route:
 hierarchy:
   parents: ["en/index"]
   children: []
-related: []
+related: ["en/llm-overview", "en/llm-evolution", "en/scaling-laws", "en/emergence", "en/in-context-learning", "en/post-training"]
 tags: ["type:historical-reference", "destination:reference", "topic:transformer-history", "level:reference", "language:en", "status:published"]
 -->
 
@@ -67,35 +67,26 @@ The Transformer introduced by Vaswani et al. generalizes this idea by placing at
 
 The advance has its own costs. Dense attention compares positions with one another; in its standard form, its compute and memory costs grow quadratically with sequence length. And in an autoregressive GPT, the next token still depends on previous ones: *prefill* processes the prompt in parallel, but *decode* produces new tokens one at a time.
 
-### 3. Transfer: learn once, reuse in several ways
+### 3. From task-specific models to reusable models
 
-The decisive change did not come from architecture alone. Pretrained representations gradually replaced pipelines in which each task often required its own model or architecture. Work on word representations, followed by contextualized pretrained models, made it possible to transfer parameters to downstream tasks. With GPT-2 and then GPT-3, the pretrained language model became increasingly reusable directly.
+Transfer learning was a major historical shift: instead of designing an independent model for every task, learned representations and parameters could be reused across downstream tasks. Pretrained word representations, followed by contextualized pretrained models, prepared this change. GPT-2 illustrated the potential of zero-shot transfer; GPT-3 made it especially visible through few-shot evaluations in which tasks and demonstrations were supplied in the prompt, without gradient updates ([Brown et al., 2020](https://arxiv.org/abs/2005.14165)).
 
-GPT-3 made this possibility especially visible: its authors evaluated a 175-billion-parameter autoregressive model on many tasks without gradient updates, specifying tasks and examples only in the prompt text. The authors also report limitations and tasks on which this approach struggles ([Brown et al., 2020](https://arxiv.org/abs/2005.14165)).
+This history leads to several mechanisms that should now be distinguished rather than collapsed into one timeline:
+- **Transfer with adaptation**: update parameters on a downstream task (*fine-tuning*).
+- **Context-based adaptation**: provide instructions or examples without changing parameters (*zero-shot*, *few-shot*, ICL).
+- **External knowledge supply**: retrieve information and transmit it to the model, for example through RAG; this is not parameter transfer.
 
-Two mechanisms for reusing a model should be distinguished, alongside a complementary approach:
-- **Transfer with adaptation (*fine-tuning*)**: parameters are updated on downstream task examples.
-- **Reuse without weight updates (*zero-shot* / *few-shot*, including ICL)**: the task and possibly demonstrations are supplied in context. Here, *zero-shot* means no task demonstrations in the prompt, not an absence of prior learning.
-- **RAG (complementary approach)**: external information is retrieved at use time and inserted into context. RAG complements the knowledge the model can use, but it does not transfer model parameters and is not, strictly speaking, transfer learning.
+Their mechanisms, conditions for success, and limitations are explored in [LLM evolution](llm-evolution.qmd) and [in-context learning](in-context-learning.qmd). [RAG and memory boundaries](rag-memory-boundaries.qmd) explain why retrieving information does not yet mean it is accessible to the model.
 
-A model therefore does not need an explicit training label for every task it can sometimes perform. Pretraining on large corpora teaches reusable linguistic patterns, formats, associations, and knowledge. An instruction can then select or combine some of these capabilities. But training data may also contain examples close to the downstream task: “not specifically trained for it” does not mean “never exposed to anything similar”.
+### 4. Scale, post-training, and observed capabilities
 
-### 4. Scale and post-training: making capabilities usable
+From the 2020s onward, progress was no longer only about architecture: model size, data quantity and quality, training compute, and optimization procedures became variables studied together. Scaling laws and compute-optimal allocation helped formalize these trade-offs ([Kaplan et al., 2020](https://arxiv.org/abs/2001.08361); [Hoffmann et al., 2022](https://arxiv.org/abs/2203.15556)).
 
-Increasing model size was not simply a multiplier. Results depend on the balance among parameter count, data quantity and quality, compute budget, training duration, architecture, and optimization procedure. Work on scaling laws and compute-optimal resource allocation helped make these choices more measurable ([Kaplan et al., 2020](https://arxiv.org/abs/2001.08361); [Hoffmann et al., 2022](https://arxiv.org/abs/2203.15556)).
-
-A base model trained to predict the next token is not automatically a reliable assistant. Post-training—including supervised instruction tuning and preference optimization—improves its ability to respond to requests and follow interaction formats. This is a distinct stage from pretraining, not a mechanical consequence of attention.
-
-### 5. “Emergence”: observe without overinterpreting
-
-Some capabilities seem to appear beyond a certain model size or performance level. But *emergence* covers several phenomena: rapid improvement, crossing an evaluation threshold, combining existing skills, or a genuine qualitative change. Schaeffer et al. show that discontinuous metrics can make gradual progress look like sudden appearance, while continuous metrics reveal smoother improvement ([2023](https://arxiv.org/abs/2304.15004)). Lu et al. also analyze the possible role of ICL, knowledge acquired during pretraining, and linguistic knowledge ([2024](https://aclanthology.org/2024.acl-long.279/)).
-
-The right teaching stance is therefore twofold: do not deny the new practical capabilities enabled by scale, but do not present their appearance as a mysterious law or proof of general understanding. Specify the task, protocol, metric, and model being evaluated.
+In parallel, post-training—especially instruction tuning and preference optimization—shaped pretrained models toward assistant-like behavior. Some capabilities also appear to emerge as scale increases, but interpretation depends on tasks and metrics: evaluation thresholds can make gradual progress look sudden ([Schaeffer et al., 2023](https://arxiv.org/abs/2304.15004)). These topics are examined in [LLM evolution](llm-evolution.qmd), [scaling laws](scaling-laws.qmd), [emergence](emergence.qmd), and [post-training](post-training.qmd).
 
 ### What this history lets us conclude
 
-The Transformer removed an important architectural bottleneck: parallel computation across positions during training and more direct information paths. Large-scale pretraining turned a language model into a transferable foundation. Few-shot prompting and ICL enabled adaptation through context without changing weights. Post-training made models more capable of interacting with users. These developments reinforce one another, but they are neither identical nor reducible to one invention.
-
+The timeline highlights three mutually reinforcing but distinct transformations: the Transformer changes the path of computation; large-scale pretraining makes learned parameters reusable; later methods adapt a model through its parameters, through context, or by supplying external information. To compare generations and understand the dimensions evolving in parallel—multimodality, inference-time compute, efficiency, and tool-using systems—see [From GPT-2 to contemporary LLM systems](llm-evolution.qmd).
 
 ## What the timeline should not imply
 
