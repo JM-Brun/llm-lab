@@ -477,3 +477,50 @@ The audit also confirms that several likely additions would be redundant: the ch
 - `docs/audits/learning-path-excellence-audit.md`
 
 **Not claimed:** no full site render, visual inspection, learner study, or CI run has been completed as part of this page pass.
+
+
+---
+
+# Addendum — page audit 6/6: `training-loop`
+
+**Status:** sixth page of wave 1 reviewed in French and English, with a cross-check against `loss` and `gradients`. One mathematical qualification is tightened in both languages. Source-level review only.
+
+## Page identity and conceptual boundary
+
+- FR: `site/fr/training-loop.qmd`; EN: `site/en/training-loop.qmd`
+- Role: connect the forward pass, loss, backpropagation, optimizer update, repeated batches and held-out validation into one training process.
+- Boundary: `loss` owns target alignment, masking and reduction; `gradients` owns differentiation and the basic update derivation; this page owns the iteration-level system, optimizer role, train/validation/test distinction, overfitting and pretraining scale. Optimizer internals, schedules, clipping and distributed training are explicitly deferred.
+
+## Page-level value record
+
+| Field | Finding |
+|---|---|
+| Learner question | What actually changes the model during training, and how can we tell whether repeated updates generalize? |
+| Beginner outcome | Follow one update, distinguish gradient from optimizer, understand epochs and stochastic batches, and read training versus validation curves. |
+| Experienced-reader value already present | The page includes a runnable minimal language-model experiment with a held-out split, a reproducible seed, qualitative assertions, and explicit limits on what the toy table demonstrates. It explains why validation-guided decisions make the validation score optimistic and why a test split must remain reserved. |
+| Adjacent-page check | `loss` supplies the target/mask/reduction contract; `gradients` supplies the derivative and SGD update. The training-loop lesson correctly links these without reproducing their derivations. |
+| Bilingual check | The main FR and EN lessons have matching conceptual sequence, toy experiment, caveats and self-check questions. A dedicated `exercises/training-loop.qmd` file was not present at the expected paths; the main lesson itself contains three worked self-check questions, so no missing exercise page is assumed. |
+| Gap found | One warning about cross-entropy having “no finite minimum on a perfectly fitted dataset” was broader than the mathematical condition warrants. The asymptotic statement applies to perfectly separable one-hot targets with unregularized softmax logits, not universally to every objective or dataset. |
+| Change made | Qualified the statement identically in FR and EN: for perfectly separable one-hot targets without regularization, softmax cross-entropy can approach zero as logit confidence grows, without reaching zero at finite logits. Explicitly stated that this is not universal. |
+| Depth placement | Kept schedules, clipping, optimizer internals and distributed training out of the core page, as its scope promises. The toy experiment remains the distinctive advanced contribution rather than adding a generic expert callout. |
+| Validation | Reviewed both lesson sources and adjacent loss/gradient explanations. The FR/EN qualification is conceptually aligned. No code execution, full site render, browser inspection, or CI pass is claimed for this page audit. |
+
+## Why this is the right correction
+
+The original sentence compressed a useful intuition into a statement that could be read as a theorem about all perfectly fitted datasets. For ordinary unregularized softmax classification with one-hot targets that are perfectly separable, increasing the logit margin can keep lowering cross-entropy toward zero; finite logits still assign nonzero probability to alternatives. But non-separable data, soft targets, regularization, or other objective terms change that conclusion. Naming the assumptions makes the statement useful to an advanced reader without burdening the beginner with a full optimization detour.
+
+The page otherwise needs no broad rewrite. Its strongest contribution is the compact, executable experiment showing that training loss can keep falling while held-out validation loss turns upward, together with a clear warning that this tiny lookup-table model is not a Transformer and does not prove a universal curve shape.
+
+## Double-audience test
+
+- **Beginner:** can identify the optimizer update as the operation that changes parameters and explain why validation data must not update them.
+- **Experienced reader:** can distinguish the stochastic batch gradient from the full-data gradient, recognize validation-selection optimism, and state the assumptions behind the softmax cross-entropy asymptote.
+- **Remaining opportunity:** a future extension could compare fixed-step SGD with a learning-rate schedule or AdamW on the same controlled toy problem, but it should preserve the fixed data split and report optimizer state and stopping rules. This belongs in a reproducible experiment, not another prose subsection.
+
+## Files changed in this page pass
+
+- `site/fr/training-loop.qmd`
+- `site/en/training-loop.qmd`
+- `docs/audits/learning-path-excellence-audit.md`
+
+**Not claimed:** no full site render, visual inspection, learner study, code execution, or CI validation has been completed as part of this page pass.
