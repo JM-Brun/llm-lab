@@ -13,8 +13,8 @@ scope: "Présente l’apprentissage en contexte comme un comportement à l’inf
 purpose: "Le lecteur doit pouvoir expliquer comment un modèle exploite des exemples dans le prompt sans mise à jour de ses paramètres, distinguer zero-shot, one-shot et few-shot, et reconnaître les limites des explications mécanistes actuelles."
 domain: "inference-efficiency"
 suggested_route:
-  previous: null
-  next: null
+  previous: "fr/generation"
+  next: "fr/context-engineering"
 hierarchy:
   parents: []
   children: []
