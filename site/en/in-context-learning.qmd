@@ -22,6 +22,8 @@ related: ["en/llm-overview", "en/generation", "en/context-engineering", "en/cont
 tags: ["type:concept-lesson", "destination:understand", "topic:in-context-learning", "level:core", "language:en", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-en-in-context-learning.qmd >}}
+
 ::: {.chapter-lead}
 **In-context learning (ICL)** is a model's ability to adapt its response to examples, instructions, or patterns provided directly in the prompt. This adaptation happens during inference: the model's parameters remain fixed. The model uses the supplied context; it does not thereby perform another fine-tuning step.
 :::
