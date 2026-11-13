@@ -1,0 +1,125 @@
+---
+title: "Exercises — RAG, memory, and document retrieval"
+subtitle: "Trace external information and evaluate its use"
+description-meta: "Applied exercises on document retrieval, RAG, memory, and in-context learning."
+keywords: ["type:exercise-hub", "destination:practice", "topic:rag-memory-exercises", "level:applied", "language:en", "status:published"]
+lang: en
+---
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/rag-memory-boundaries-exercises"
+summary: "Exercises for distinguishing storage, search, model transmission, and use."
+scope: "Provides diagnostic scenarios and a controlled experiment on the boundaries between document retrieval, memory, RAG, and ICL."
+purpose: "Identify what is actually visible to the model, locate failures, and design an evaluation separating retrieval from generation."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/rag-memory-boundaries", "en/context-engineering", "en/in-context-learning"]
+tags: ["type:exercise-hub", "destination:practice", "topic:rag-memory-exercises", "level:applied", "language:en", "status:published"]
+-->
+
+[← Back to the deep dive: RAG, memory, and document retrieval](../rag-memory-boundaries.qmd)
+
+## 1. Identify the transmission boundary
+
+For each situation, state whether the information is actually supplied to the model.
+
+1. A document is present in a folder the application can access, but no read operation occurs.
+2. A search engine finds a passage and returns it to the application server, but the prompt is not changed.
+3. The retrieved passage is added to the message supplied to the model.
+4. Memory contains a preference, but the system does not consult it for this task.
+5. The model calls a search tool and its result is added to the conversation before the next turn.
+
+<details>
+<summary>Show the worked answer</summary>
+
+1. No: external availability only.
+2. No: the system retrieved the information but did not supply it.
+3. Yes: the passage is part of the model input.
+4. No: memory is stored but neither recalled nor injected.
+5. Yes, on the next turn: the tool result becomes part of the supplied context. The tool call and the returned result are distinct moments.
+
+</details>
+
+## 2. Diagnose a failing RAG system
+
+An assistant answers a question about an internal policy incorrectly. The correct passage exists in the corpus but does not appear in the answer.
+
+Propose at least four checkpoints, from source to answer.
+
+<details>
+<summary>Show one possible approach</summary>
+
+Check in sequence: (1) is the source document current and correctly ingested? (2) did parsing preserve the policy and its exceptions? (3) did chunking preserve context? (4) do the query and filters retrieve the right passage? (5) does ranking retain it? (6) does context assembly inject it without truncation? (7) does the model use it faithfully? Each stage should leave observable traces so the failure can be localized.
+
+</details>
+
+## 3. Distinguish RAG, memory, and ICL
+
+A project assistant must answer three questions:
+- “What does the official manual specify?”
+- “Which option did we choose at the previous meeting?”
+- “Answer using the format of the example below.”
+
+Match each need to its primary mechanism and explain possible combinations.
+
+<details>
+<summary>Show the worked answer</summary>
+
+The official manual primarily calls for document retrieval/RAG. The decision made at the meeting calls for memory (often episodic memory or project state), provided it was retained and recalled. The expected format calls for an instruction or ICL demonstration if the example is included in context. All three can be assembled into one context; they do not serve the same purpose.
+
+</details>
+
+## 4. Design a controlled experiment
+
+You have a model, an artificial fact absent from its initial knowledge, a document containing that fact, and a search engine.
+
+Define at least four experimental conditions that distinguish storage, retrieval, and transmission. State which variables to hold constant and which measurements to collect.
+
+<details>
+<summary>Show one possible protocol</summary>
+
+Compare at least: A) no document; B) document stored but not indexed; C) document indexed and retrieved, but result not supplied; D) passage retrieved and added to context. Optionally add E) passage supplied with an ICL format example. Keep the model, question, generation settings, and fact constant. Repeat with multiple query formulations and passage orders. Measure accuracy, passage faithfulness, citation, abstention, latency, and cost. Verify that conditions B and C truly supply no retrieval result.
+
+</details>
+
+## 5. Separate retrieval quality from use quality
+
+A system retrieves the correct passage in 95% of cases, but produces a faithful answer in only 65% of cases where that passage is present. What can be concluded? What should be tested next?
+
+<details>
+<summary>Show the worked answer</summary>
+
+Retrieval recall is high, but passage presence does not guarantee use. Examine actual passage relevance, position and length in context, instructions, contradictions, and the model's ability to cite or abstain. Evaluating separately the cases where the correct passage is actually supplied helps isolate generation problems from search problems. These figures are hypothetical protocol values, not general performance claims.
+
+</details>
+
+## 6. Govern a memory
+
+A memory contains two contradictory preferences, one dated two years ago and the other from last week. Describe how the system should decide what to recall and preserve provenance.
+
+<details>
+<summary>Show one possible answer</summary>
+
+Retain both facts with their dates and sources rather than silently merging them. Apply an explicit freshness and priority rule, consider the current context, and ask for clarification when the stakes matter. Memory should be able to mark a fact as superseded or uncertain and propagate updates or deletions to affected summaries and indexes.
+
+</details>
+
+
+## 7. Distinguish parametric knowledge from supplied information
+
+A model faces four situations: (A) it recalls a general fact learned during pretraining; (B) its style was changed by fine-tuning; (C) a recent value is retrieved from a document and supplied through RAG; (D) a new fact is simply added to the prompt. For each, identify where the information is stored, whether parameters change, whether it remains available after the request, and what prevents us from concluding too quickly that the model “knows” the fact.
+
+<details>
+<summary>Show the answer</summary>
+
+A concerns parameters shaped by pretraining, with no guarantee of exact recall. B concerns parametric adaptation that shifts likely continuations without turning the model into a reliable database. C concerns external storage and retrieval followed by transmission into context; updating the source does not require retraining. D concerns the current call's context; the model can use the fact without a parameter update, but future availability is not guaranteed. In all four cases, a correct answer alone does not reveal its provenance: the data, context, and protocol must be controlled.
+
+</details>
+
+::: {.language-switch}
+**Language:** [Français](../../fr/exercises/rag-memory-boundaries.qmd) · [English](rag-memory-boundaries.qmd)
+:::
