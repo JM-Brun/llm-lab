@@ -1,28 +1,36 @@
 ---
 title: "Apprentissage en contexte (in-context learning)"
 subtitle: "Apprendre à partir du prompt sans mettre à jour les paramètres"
-keywords: ["type:concept-lesson", "destination:deepen", "topic:in-context-learning", "level:advanced", "language:fr", "status:published"]
+description-meta: "Définit l’apprentissage en contexte et le distingue du fine-tuning, du RAG et de la conception du contexte."
+keywords: ["type:concept-lesson", "destination:understand", "topic:in-context-learning", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
 
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/in-context-learning"
-scope: "Présente l'apprentissage en contexte, ses différences avec l'entraînement et le fine-tuning, ses manifestations et les principales hypothèses explicatives."
-purpose: "Le lecteur doit pouvoir expliquer comment un modèle exploite des exemples dans le prompt sans mise à jour de ses paramètres, distinguer zero-shot, one-shot et few-shot, et reconnaître les limites des explications mécanistes actuelles."
+scope: "Présente l'apprentissage en contexte comme l'exploitation d'instructions et d'exemples présents dans le prompt sans mise à jour des paramètres ; distingue zero-shot, one-shot et few-shot, fine-tuning, RAG et context engineering. Les hypothèses mécanistes et les protocoles expérimentaux sont des approfondissements."
+purpose: "Le lecteur doit pouvoir définir l'ICL, distinguer zero-shot, one-shot et few-shot, expliquer pourquoi les paramètres restent fixes et ne pas confondre ICL, fine-tuning, RAG et context engineering."
 domain: "inference-efficiency"
 suggested_route:
-  previous: null
-  next: null
+  previous: "fr/generation"
+  next: "fr/context-engineering"
 hierarchy:
-  parents: []
+  parents: ["fr/generation"]
   children: []
 related: ["fr/llm-overview", "fr/generation", "fr/contextualized-representations", "fr/in-context-learning-exercises"]
-tags: ["type:concept-lesson", "destination:deepen", "topic:in-context-learning", "level:advanced", "language:fr", "status:published"]
+tags: ["type:concept-lesson", "destination:understand", "topic:in-context-learning", "level:core", "language:fr", "status:published"]
 -->
 
 ::: {.chapter-lead}
 L'**apprentissage en contexte** (*in-context learning*, ICL) désigne la capacité d'un modèle à adapter sa réponse à des exemples, des consignes ou des régularités présentés directement dans le prompt. Cette adaptation se produit pendant l'inférence : les paramètres du modèle restent fixes. Le modèle exploite le contexte fourni ; il ne réalise pas pour autant une nouvelle étape de fine-tuning.
+:::
+
+::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
+À la fin de cette leçon, vous devriez pouvoir :
+- définir l’apprentissage en contexte et expliquer que les paramètres restent fixes ;
+- distinguer zero-shot, one-shot et few-shot ;
+- différencier ICL, fine-tuning, RAG et context engineering.
 :::
 
 ## Zero-shot, one-shot et few-shot
@@ -55,6 +63,8 @@ Le premier exemple fournit une démonstration locale. Le modèle peut l'utiliser
 | RAG | Documents récupérés puis ajoutés au contexte | Non, pas par la seule récupération |
 
 L'ICL est temporaire et conditionné par le contenu et la disposition du prompt. Une nouvelle conversation ou un prompt différent peut conduire à un comportement différent. Le fine-tuning modifie les paramètres et peut produire une adaptation qui persiste au-delà d'un prompt particulier.
+
+Le **RAG** récupère des informations externes et les ajoute au contexte ; cette récupération ne constitue pas, à elle seule, de l'ICL. Le **context engineering** désigne la conception et la maintenance de l'ensemble du contexte fourni au modèle. Il peut décider d'inclure des exemples qui favorisent l'ICL, mais décrit le travail sur l'entrée du système, pas la capacité du modèle à exploiter ces exemples.
 
 ## Que fait le modèle avec les exemples ?
 
