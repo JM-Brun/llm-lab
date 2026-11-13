@@ -862,10 +862,23 @@ async function runCase(testCase, caseIndex) {
       }
 
       if (index === 0) {
-        const returnCard = page.locator('.route-nav-cards a[href="build-path.qmd"]');
         const returnLabel = lang === "fr" ? "Retour au parcours Build" : "Back to the Build path";
-        if (await returnCard.count() !== 1 || !(await returnCard.first().innerText()).includes(returnLabel)) {
-          throw new Error("first build-tour page must expose one explicitly labelled return to the Build hub");
+        const returnCards = await page.locator(".route-nav-cards a").evaluateAll(links =>
+          links.map(link => ({
+            href: link.getAttribute("href"),
+            text: link.innerText.trim().toLocaleLowerCase(),
+          }))
+        );
+        const matches = returnCards.filter(link =>
+          link.text.includes(returnLabel.toLocaleLowerCase())
+          && link.href
+          && new URL(link.href, page.url()).pathname.endsWith("/build-path.html")
+        );
+        if (matches.length !== 1) {
+          throw new Error(
+            "first build-tour page must expose one explicitly labelled return to the Build hub "
+            + JSON.stringify(returnCards)
+          );
         }
       }
       if (item.buildTour.navigationLinks.some(link =>
