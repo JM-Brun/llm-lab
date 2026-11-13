@@ -798,3 +798,66 @@ A reader should not leave with the rule “no LayerNorm means a deep Transformer
 
 - **Beginner:** can explain why softmax probabilities sum to one but do not represent probabilities of truth.
 - **Experienced reader:** can use logit differences to reason about probability ratios, explain temperature scaling and recognize why a top logit or normalized distribution alone does not establish calibration.
+
+
+---
+
+# Addendum — third-wave audit 3/6: `entropy`
+
+**Status:** French and English lessons and exercise hubs reviewed. No content change is warranted in this pass; source-level review only.
+
+## Page identity and role
+
+- FR: `site/fr/entropy.qmd`; EN: `site/en/entropy.qmd`
+- Practice: `site/fr/exercises/entropy.qmd` and `site/en/exercises/entropy.qmd`
+- Role: define the entropy of a next-token predictive distribution as expected surprisal before observing the target.
+- Boundary: the probability page constructs the distribution; likelihood scores an observed sequence; cross-entropy compares a target distribution with a model distribution; loss aggregates local penalties.
+
+## Page-level value record
+
+| Field | Finding |
+|---|---|
+| Learner question | What does uncertainty over the next token mean, and how does it differ from the surprise of the token that actually occurs? |
+| Beginner outcome | Calculate entropy for a small distribution, understand the expected-surprisal interpretation, and distinguish it from one realized token's surprisal. |
+| Experienced-reader value already present | The lesson connects entropy to NLL and perplexity, distinguishes model entropy from data cross-entropy, states the finite-vocabulary bounds, and warns that low entropy is not calibration or truth. |
+| Bilingual check | FR/EN equations, numerical distribution, interpretation, temperature discussion and exercises align. The exercise hubs progress from conceptual checks to token and sequence surprisal calculations in bits, and explicitly explain why an observed sample mean is not automatically the model entropy. |
+| Gap found | No critical conceptual gap found. The page already contains the important distinction between $H(p)$ and realized $-log p(x_t)$, and the exercises test it quantitatively. |
+| Change made | None. Repeating the same distinction in another callout would add length without adding a new learning outcome. |
+| Depth placement | Preserve the expected-surprisal derivation here; keep sequence factorization in likelihood and target-distribution cross-entropy in its dedicated lesson. |
+| Validation | Reviewed both lessons and both exercise hubs. No code execution, browser render or learner validation is claimed. |
+
+## Double-audience test
+
+- **Beginner:** can explain entropy as the average surprise across possible next tokens, not the surprise of the token that happened.
+- **Experienced reader:** can distinguish predictive entropy, realized surprisal, empirical cross-entropy and source entropy, and identify the distribution under which each expectation is taken.
+
+---
+
+# Addendum — third-wave audit 4/6: `cross-entropy`
+
+**Status:** French and English lessons and exercise hubs reviewed. No content change is warranted in this pass; source-level review only.
+
+## Page identity and role
+
+- FR: `site/fr/cross-entropy.qmd`; EN: `site/en/cross-entropy.qmd`
+- Practice: `site/fr/exercises/cross-entropy.qmd` and `site/en/exercises/cross-entropy.qmd`
+- Role: derive the per-position cross-entropy between a target distribution and the model distribution, and recover token NLL in the one-hot case.
+- Boundary: sequence likelihood supplies the observed-token factorization; this lesson owns the local target penalty and its logit expression; loss owns batch masking and reduction; gradients owns differentiation and parameter updates.
+
+## Page-level value record
+
+| Field | Finding |
+|---|---|
+| Learner question | How does a target token or target distribution become a numerical penalty on the model's prediction? |
+| Beginner outcome | Derive `-log p(y)` for a one-hot target, understand why assigning low probability to the observed target is costly, and distinguish the local term from a batch objective. |
+| Experienced-reader value already present | The page gives the general $H(q,p)$ expression, the one-hot special case, the logit-level expression, the KL decomposition handoff, target alignment and mask distinctions, and several implementation-level edge cases. |
+| Bilingual check | FR/EN headings, derivations, examples, code scope and exercise questions align. Both versions include the PyTorch example, vocabulary-axis warning, stable log-softmax edge case, perplexity and gradient connections. |
+| Gap found | No critical conceptual gap found. The implementation notes are unusually explicit about what the NumPy reference does not implement and why the PyTorch snippet assumes targets are already aligned. |
+| Change made | None. The page already carries substantial mathematical and implementation depth; more detail in the core explanation would risk obscuring the single-position concept. |
+| Depth placement | Keep target distribution and KL relation in this lesson or its linked mathematical derivation; keep valid-position aggregation and sequence-level conventions in Loss; keep parameter-gradient propagation in Gradients. |
+| Validation | Reviewed both lessons and both exercise hubs. Source-level review only; the included code examples were not executed in this pass. No rendered browser or learner validation is claimed. |
+
+## Double-audience test
+
+- **Beginner:** can explain why a one-hot target reduces cross-entropy to the negative log-probability of the observed token.
+- **Experienced reader:** can distinguish local cross-entropy from batch loss, identify the conditions under which KL minimization is equivalent for fixed targets, and recognize alignment, masking and numerical-stability requirements.
