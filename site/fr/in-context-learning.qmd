@@ -12,7 +12,7 @@ summary: "Explique comment le modèle exploite les instructions et démonstratio
 scope: "Présente l’apprentissage en contexte comme un comportement à l’inférence, ses différences avec l’entraînement et le fine-tuning, et les limites des explications mécanistes."
 purpose: "Le lecteur doit pouvoir expliquer comment un modèle exploite des exemples dans le prompt sans mise à jour de ses paramètres, distinguer zero-shot, one-shot et few-shot, et reconnaître les limites des explications mécanistes actuelles."
 suggested_route:
-  previous: "fr/generation"
+  previous: null
   next: "fr/context-engineering"
 hierarchy:
   parents: []
