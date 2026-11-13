@@ -188,6 +188,8 @@ Cette page décrit des principes d'architecture, pas une implémentation RAG uni
 
 Les exercices associés permettent de diagnostiquer les frontières de transmission et de concevoir une expérience contrôlée : [Exercices — RAG, mémoire et récupération documentaire](exercises/rag-memory-boundaries.qmd).
 
+{{< include ../includes/generated-guided-context-fr-rag-memory-boundaries.qmd >}}
+
 ::: {.language-switch}
 [Français](rag-memory-boundaries.qmd) · [English](../en/rag-memory-boundaries.qmd)
 :::
