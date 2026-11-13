@@ -429,3 +429,51 @@ Adding a second generic “attention is not explanation” box would have duplic
 - `site/en/exercises/scaled-dot-product-attention.qmd`
 
 **Not claimed:** no full site render, visual inspection, learner study, or CI run has been completed as part of this page pass.
+
+
+---
+
+# Addendum — page audit 5/6: `vraisemblance` / `likelihood`
+
+**Status:** fifth page of wave 1 reviewed in French and English, including the dedicated exercise pages and the adjacent entropy, cross-entropy and loss lessons. A small bilingual clarification is added; source-level review only.
+
+## Page identity and conceptual boundary
+
+- FR: `site/fr/vraisemblance.qmd`; EN: `site/en/likelihood.qmd`
+- Practice: `site/fr/exercises/vraisemblance.qmd` and `site/en/exercises/likelihood.qmd`
+- Role: evaluate the probability assigned to an already observed token sequence under fixed model parameters.
+- Boundary: entropy describes the spread of a predictive distribution before observing a target; sequence likelihood multiplies conditional probabilities of observed targets; cross-entropy expresses the penalty against a target distribution at a position; loss aggregates valid local penalties into an objective.
+
+## Page-level value record
+
+| Field | Finding |
+|---|---|
+| Learner question | How does a model score a known sequence, and what does that score mean? |
+| Beginner outcome | Understand reference-prefix scoring, the chain-rule product, log-likelihood and NLL without confusing scoring, generation and training. |
+| Experienced-reader value already present | The page correctly distinguishes teacher-forced scoring from autoregressive generation and parameter updates; it also discusses context-window limits, tokenizer dependence and reduction conventions. |
+| Adjacent-page check | `entropy` distinguishes predictive entropy from realized surprisal; `cross-entropy` derives the one-position target penalty and its relation to NLL; `loss` covers masking, target alignment, reduction and perplexity. The conceptual handoffs are sound and mostly non-duplicative. |
+| Exercise check | FR/EN exercises correctly state that the chain rule requires no token-independence assumption, distinguish sequence NLL from mean per-token NLL, and connect the mean to one-hot cross-entropies. |
+| Gap found | The main likelihood lesson explained NLL and comparison conventions but did not explicitly state the familiar bridge from mean NLL to perplexity, although the exercise hub and adjacent loss lesson already referred to perplexity. |
+| Change made | Added a concise bilingual paragraph: for natural-log mean NLL, `PPL = exp(mean NLL)`; interpreted it as the geometric mean of inverse observed-token probabilities; and reiterated that corpus, tokenizer, evaluated positions and reduction must be compatible for comparison. Linked the detailed metric discussion to the Loss lesson. |
+| Depth placement | Kept implementation details, masks and batch aggregation in `cross-entropy` and `loss`; did not duplicate their explanations in the likelihood page. |
+| Validation | Reviewed source content of both lessons, both exercise pages, entropy, cross-entropy and loss. The new FR/EN paragraph uses the same formula and qualifications. No rendered-site, browser or CI validation is claimed. |
+
+## Why this is the right addition
+
+The page already explains the probability of an observed sequence and the transformation from product to sum. The missing conceptual bridge was not another derivation of NLL, but a clear statement of what the commonly reported perplexity is mathematically and what it does not measure. The geometric-mean interpretation makes the exponentiation less arbitrary, while the comparison caveat prevents readers from treating perplexity as tokenizer-independent or as a direct measure of answer quality.
+
+The audit also confirms that several likely additions would be redundant: the chain rule and independence caveat are already tested in the exercises; entropy versus observed surprise is handled by the preceding page; one-token cross-entropy and valid-target masking belong to the next page; batch reduction and metric interpretation belong to Loss. No broad rewrite is warranted.
+
+## Double-audience test
+
+- **Beginner:** can explain that perplexity is the exponential of mean token NLL and is not a truth or answer-quality score.
+- **Experienced reader:** can connect perplexity to the geometric mean of inverse token probabilities and identify tokenizer, corpus, target-position and reduction constraints on comparisons.
+- **Remaining opportunity:** a future controlled experiment could show how tokenization changes token-level perplexity for the same text, but it should report the tokenizer and evaluation protocol explicitly rather than imply a universal cross-tokenizer conversion.
+
+## Files changed in this page pass
+
+- `site/fr/vraisemblance.qmd`
+- `site/en/likelihood.qmd`
+- `docs/audits/learning-path-excellence-audit.md`
+
+**Not claimed:** no full site render, visual inspection, learner study, or CI run has been completed as part of this page pass.
