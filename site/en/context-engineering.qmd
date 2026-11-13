@@ -42,7 +42,8 @@ The word is used for related but different objects:
 | Term | What it denotes | What it does not guarantee |
 |---|---|---|
 | **Active context** | Tokens and content actually presented to the model for a given computation | That the application's entire history is included |
-| **Context window** | The maximum input/context capacity supported by the model or service | That filling this capacity improves the answer |
+| **Context window** | The maximum token budget usable by a call; input/output counting conventions depend on the model and API | That filling this capacity improves the answer |
+| **Active-context length** | The number of tokens actually present in context at this step | That it is close to the maximum capacity |
 | **Attention-accessible context** | Positions a given position may use, according to the architecture and mask | That every supplied token is accessible to every position |
 | **Conversation history** | Messages retained by the application | That all of them are sent to the model on every turn |
 | **Memory** | Information stored outside the current computation, possibly across sessions | That it is present in context before it is retrieved and injected |
