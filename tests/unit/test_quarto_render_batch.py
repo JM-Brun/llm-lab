@@ -28,10 +28,20 @@ def test_replaces_only_project_render_list():
     )
     assert result == CONFIG.replace(
         "    - fr/old.qmd\n    - en/old.qmd\n    - fr/learning-map.qmd\n    - en/learning-map.qmd",
-        '    - "fr/new.qmd"\n    - "en/new.qmd"',
+        '    - "index.qmd"\n    - "fr/new.qmd"\n    - "en/new.qmd"',
     )
     assert "website:\n  title: Example" in result
     assert "format:\n  html:\n    toc: true" in result
+
+
+def test_keeps_homepage_first_without_duplicating_it():
+    result = batch["replace_project_render_targets"](
+        CONFIG,
+        ["site/en/new.qmd", "site/index.qmd", "site/fr/new.qmd"],
+    )
+    render_block = result.split("render:", 1)[1]
+    assert render_block.count('    - "index.qmd"') == 1
+    assert render_block.index('    - "index.qmd"') < render_block.index('    - "en/new.qmd"')
 
 
 def test_rejects_unsafe_or_empty_targets():
