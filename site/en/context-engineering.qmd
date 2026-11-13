@@ -64,6 +64,8 @@ A longer context can help when it adds relevant evidence. It can also hurt when 
 | **Context engineering** | The broader work of selecting, retrieving, structuring, updating, and securing all the context supplied to the model. |
 | **RAG** | An architecture that retrieves external information and injects it into context; it is one technique context engineering can use. |
 | **Memory** | A mechanism for retaining and reusing information across interactions; it can supply context but is not itself the context window. |
+| **Tool use** | A system capability to request an external action; tool descriptions and results may enter context. Context engineering determines how they are presented and controlled. |
+| **Agent engineering** | The design of an agent's decision, action, observation, and control loop; it uses context engineering but is not reducible to it. |
 | **Fine-tuning** | Adaptation that changes model parameters through optimization rather than only changing the information supplied at inference. |
 
 ICL describes a model capability or behavior; context engineering describes the system-design work that prepares its input. Good context can support ICL, but the two concepts are not synonyms.
