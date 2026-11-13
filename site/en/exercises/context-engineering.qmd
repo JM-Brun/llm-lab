@@ -13,7 +13,7 @@ summary: "Exercises for designing, diagnosing, and evaluating the context suppli
 scope: "Provides applied scenarios and answer criteria without repeating the conceptual lesson."
 purpose: "Readers should distinguish context components, identify context failures, and propose controlled evaluations."
 suggested_route:
-  previous: "en/context-engineering"
+  previous: null
   next: null
 hierarchy:
   parents: []
