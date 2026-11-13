@@ -64,6 +64,8 @@ Un contexte plus long peut aider lorsqu'il apporte des éléments pertinents. Il
 | **Context engineering** | Travail plus large de sélection, récupération, structuration, actualisation et sécurisation de l'ensemble du contexte transmis. |
 | **RAG** | Architecture qui récupère des informations externes et les injecte dans le contexte ; c'est une technique mobilisable par le context engineering. |
 | **Mémoire** | Mécanisme de conservation et de réutilisation d'informations entre interactions ; elle peut alimenter le contexte sans être elle-même la fenêtre de contexte. |
+| **Tool use (utilisation d'outils)** | Capacité du système à demander une action externe ; les descriptions d'outils et leurs résultats peuvent entrer dans le contexte. Le context engineering décide comment les présenter et les contrôler. |
+| **Ingénierie agentique** | Conception de la boucle de décision, d'action, d'observation et de contrôle d'un agent ; elle mobilise le context engineering sans s'y réduire. |
 | **Fine-tuning** | Adaptation qui modifie les paramètres du modèle par optimisation, au lieu de seulement modifier les informations fournies à l'inférence. |
 
 L'ICL décrit une capacité ou un comportement du modèle ; le context engineering décrit une démarche de conception du système qui prépare son entrée. Un bon contexte peut favoriser l'ICL, mais les deux notions ne sont pas synonymes.
