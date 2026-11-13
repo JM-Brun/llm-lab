@@ -108,8 +108,10 @@ def generate(
         )
     if np.any(ids < 0) or np.any(ids >= model.config.vocab_size):
         raise ValueError("prompt token ids are out of range [0, vocab_size)")
-    if max_new_tokens < 0:
-        raise ValueError("max_new_tokens must be >= 0")
+    if isinstance(max_new_tokens, (bool, np.bool_)) or not isinstance(
+        max_new_tokens, (int, np.integer)
+    ) or max_new_tokens < 0:
+        raise ValueError("max_new_tokens must be a non-negative integer")
     if not np.isfinite(temperature) or temperature <= 0:
         raise ValueError("temperature must be strictly positive and finite")
     if top_k is not None and (top_k < 1 or not np.issubdtype(np.asarray(top_k).dtype, np.integer)):
