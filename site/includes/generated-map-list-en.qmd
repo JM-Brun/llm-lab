@@ -28,6 +28,8 @@
     - [The training objective: guarantees and limits](llm-limits.html)
   - [Overview: what is an LLM?](llm-overview.html)
   - [Generating text: inference step by step](generation.html)
+  - [In-context learning](in-context-learning.html)
+  - [Engineering an LLM's context (context engineering)](context-engineering.html)
 - **Build a small GPT**
   - Prepare training data
     - [Preparing a corpus for pretraining](corpus-preparation.html)
