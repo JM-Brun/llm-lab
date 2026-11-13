@@ -31,8 +31,6 @@
   - Contexte et adaptation
     - [Apprentissage en contexte (in-context learning)](in-context-learning.html)
     - [Ingénierie du contexte (context engineering)](context-engineering.html)
-  - Contexte et adaptation
-    - [Ingénierie du contexte (context engineering)](context-engineering.html)
 - **Construire un petit GPT**
   - Préparer les données d'entraînement
     - [Préparer un corpus pour le préentraînement](corpus-preparation.html)
