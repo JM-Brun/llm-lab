@@ -33,6 +33,10 @@ tags: ["type:exercise-hub", "destination:practice", "topic:reference-gpt-generat
 
 1. Quatre passes, chacune sur une fenêtre de 16 tokens : après le premier token ajouté (17 tokens), la fenêtre ne retient que les 16 derniers à chaque étape.
 2. Les paramètres sont aléatoires : les logits n'encodent aucune statistique de langue. La boucle, elle, fonctionne parfaitement (formes, causalité, sélection) — c'est exactement ce que ce jalon sépare : **la mécanique** de génération de **la qualité acquise par l'apprentissage**.
+
+3. Si l'on divise les logits par une température strictement positive avant le softmax, pourquoi le choix glouton ne change-t-il pas, alors que l'échantillonnage peut changer ? Dans quelles conditions l'échantillonnage est-il reproductible ?
+
+3. La division par une température positive conserve l'ordre des logits : leur argmax ne change donc pas. En revanche, elle rend la distribution plus ou moins concentrée, ce qui peut changer le token tiré. L'échantillonnage est reproductible si l'on réutilise le même état de générateur aléatoire (par exemple la même graine) avec les mêmes entrées et paramètres.
 </details>
 
 ::: {.language-switch}
