@@ -163,3 +163,76 @@ Start selectively: compare representative pages against the soft target, record 
 - [ ] The counterpart language is substantively equivalent.
 
 Mark items not applicable when the page does not need them. The purpose is to notice missing support for the page's learning objective, not to maximise checked boxes.
+
+
+## 9. Synthesis sheets: a fast, trustworthy entry point
+
+A **synthesis sheet** is a deliberately edited orientation layer for a substantial subject. It helps a reader answer “what is this, how does it fit, and what should I remember?” quickly, then routes them to canonical explanations, evidence, code, tests, and practice. It is not a compressed copy of a lesson, a decorative infographic, or a replacement for the underlying material.
+
+This is a use of the existing **Overview / synthesis** pattern, not a new page archetype or learning stage. Apply the same metadata contract, page ownership, bilingual identity, design system, and content-section boundaries as any other page. The sheet may be a dedicated page when it has a distinct reader task; otherwise, a clearly bounded synthesis section in an existing canonical overview may be better.
+
+### 9.1 Decide whether a separate sheet earns its place
+
+Create or maintain a distinct sheet only when it adds a useful reader outcome that is not already served well by the canonical page opening or overview. Good reasons include:
+
+- several concepts must be connected or contrasted to prevent a common misunderstanding;
+- a system, algorithm, or data flow benefits from one coherent visual overview;
+- readers need a compact decision aid or reference they can revisit;
+- the subject is substantial enough to merit an independent entry point and meaningful links to deeper material.
+
+Do **not** create a separate sheet when it would merely repeat a concise existing explanation, when the subject is too narrow to benefit from a separate entry point, or when the visual would add decoration rather than explanatory value. Record the decision through the existing page map / review workflow; do not introduce a second sheet registry.
+
+### 9.2 Flexible editorial anatomy
+
+Select only the elements that serve the sheet's central question. The order is a useful default, not a required checklist.
+
+| Element | Reader need | Editorial guidance |
+|---|---|---|
+| Question and short answer | “What am I looking at?” | State the central question and answer it precisely in a few sentences. |
+| Mental model | “How should I picture it?” | Offer one useful intuition and state where the analogy or simplification stops. |
+| Primary visual | “How do the parts or ideas relate?” | Prefer one original, legible diagram, trace, timeline, or comparison that carries real explanatory work. |
+| Mechanism / example | “Can I follow it?” | Show a small sequence, worked example, or concrete case that can be checked. |
+| Key distinctions | “What should I not confuse?” | Compare only along explicit, relevant dimensions; avoid false binaries. |
+| Practical significance | “When does this matter?” | Explain use, design consequences, costs, or trade-offs in context. |
+| Limits and misconceptions | “What does this not establish?” | Keep consequential assumptions, failure modes, uncertainty, and omitted details visible. |
+| Takeaways | “What should remain?” | End with a small number of precise, non-redundant conclusions. |
+| Go deeper | “Where can I verify or learn more?” | Link to canonical concept pages, derivations, implementation, tests, experiments, and exercises that actually exist. |
+| Evidence | “Why should I trust this?” | Cite primary / official sources for factual claims; identify pedagogical sources as such. |
+
+Topic-specific sheets may take another form: architecture map, algorithm trace, mathematical reference, historical synthesis, or decision matrix. Do not force every subject into the same infographic layout.
+
+### 9.3 Visual and evidence rules
+
+- A visual must make a structure, relationship, transformation, comparison, or quantitative pattern easier to understand than prose alone. If it does not, omit it.
+- Prefer original diagrams built from the project's own explanation. Record third-party asset provenance and licence in the existing [visual asset register](visual-assets-register.md); never assume that public availability grants reuse rights.
+- Every meaningful diagram needs a descriptive caption and useful alternative text. Its meaning must remain available without colour, hover, animation, or JavaScript.
+- Label boundaries, direction, units, tensor shapes, assumptions, and legend entries where they affect interpretation. Avoid visual precision that the evidence does not support.
+- Distinguish established facts, simplified mental models, measured empirical findings, active disagreements, and open questions. A polished diagram does not turn an assumption into a fact.
+- Comparisons must name their dimensions and context. Benchmark numbers need their workload, model / hardware / software conditions, metric, provenance, and date or version when relevant.
+- Use primary papers, official documentation, and reproducible project evidence for technical claims. Use secondary teaching resources to inspire explanation, not as sole support for contested or quantitative claims.
+- Do not reproduce third-party diagrams or copy their prose. References such as ByteByteGo, Distill, Jay Alammar, and Hugging Face are useful for studying pedagogical techniques; their assets and wording are not project assets.
+
+### 9.4 Bilingual and navigational contract
+
+- French and English counterparts must preserve the same substantive claims, caveats, examples, evidence quality, and useful links. Wording and layout may differ naturally by language.
+- Use the existing stable page IDs and LLM-LAB-PAGE-MAP semantics. Keep language-neutral anchors stable across counterparts where the page system requires them.
+- Link to canonical pages at the point where a reader is likely to want more detail. Do not create generic link dumps or imply that optional deep dives are prerequisites.
+- Identify the intended audience / level and prerequisites only when they materially help a reader choose the sheet. Do not render internal metadata keys as reader-facing badges.
+- State the last substantive review date where freshness matters; do not imply that a date alone guarantees currency.
+
+### 9.5 Lightweight quality review
+
+Before publishing or revising a sheet, ask:
+
+- [ ] Does it answer one identifiable reader question that is not already answered as well elsewhere?
+- [ ] Can a reader state the central idea after a quick scan without mistaking the simplification for the full theory?
+- [ ] Does the visual explain something specific, and can it be understood accessibly without colour or interaction?
+- [ ] Is there at least one concrete example, trace, or comparison when the subject needs one?
+- [ ] Are consequential assumptions, limitations, disagreements, and uncertainty visible?
+- [ ] Are factual and quantitative claims traceable to suitable sources?
+- [ ] Do links lead to canonical deeper resources that exist, rather than duplicated material or planned work presented as available?
+- [ ] Is the French / English counterpart substantively equivalent?
+- [ ] Has the rendered result been checked at narrow and wide widths, with keyboard navigation and meaningful alternative text?
+- [ ] Does the sheet complement the learning path rather than create a new mandatory stage?
+
+A review is evidence of editorial care, not proof of improved learning outcomes. Claims about learner impact require learner-facing evaluation.
