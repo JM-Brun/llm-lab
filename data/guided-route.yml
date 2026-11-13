@@ -127,6 +127,17 @@ stages:
       en: [en/cross-entropy, en/scaling-laws, en/post-training]
 
 transitions:
+  - id: inference-to-context-use
+    from: inference
+    to: context-use
+    direction: directed
+    pages:
+      fr: [fr/generation, fr/in-context-learning, fr/context-engineering]
+      en: [en/generation, en/in-context-learning, en/context-engineering]
+    purpose:
+      fr: "Relier la boucle d'inférence au contexte qui la conditionne : l'ICL décrit comment le modèle exploite les informations présentes, tandis que le context engineering décrit comment le système les prépare et les organise."
+      en: "Connect the inference loop to the context that conditions it: ICL describes how the model uses the supplied information, while context engineering describes how the system prepares and organizes it."
+
   - id: predictive-distribution-to-generation
     from: prediction
     to: inference
