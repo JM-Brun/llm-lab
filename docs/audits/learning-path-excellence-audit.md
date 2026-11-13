@@ -1,6 +1,6 @@
 # Audit éditorial du parcours principal — valeur pédagogique et profondeur intellectuelle
 
-> **Statut : audit éditorial des sources terminé pour les 18 leçons principales (FR/EN), en trois vagues.** Les addenda ci-dessous consignent les diagnostics page par page, les corrections effectuées et les décisions de ne pas réécrire lorsque le contenu était déjà solide. Ce statut ne vaut pas validation du site rendu : le contrôle visuel navigateur, une étude avec des apprenants et la validation CI/Quarto restent distincts et ne sont pas revendiqués ici.
+> **Statut : audit éditorial des sources terminé pour les 18 leçons principales (FR/EN), en trois vagues ; CI et rendu incrémental Quarto validés sur le commit `03f17a1`.** Le workflow a aussi passé l'audit navigateur automatisé des pages bilingues modifiées et de la navigation conceptuelle. Cela ne vaut pas étude avec des apprenants, revue visuelle humaine exhaustive ni build complet du site : le workflow a rendu les pages modifiées de façon incrémentale et a ignoré l'étape de rendu intégral.
 
 - Projet : [LLM Lab](https://jm-brun.github.io/llm-lab/)
 - Parcours : [LLM overview (FR)](https://jm-brun.github.io/llm-lab/fr/llm-overview.html)
@@ -28,10 +28,10 @@ Le diagnostic initial a été prolongé par trois vagues d'examen des sources. L
 - les principales affirmations de la page sur le masque causal ont été confrontées à l'implémentation et aux tests de référence.
 
 **Non établi / non revendiqué :**
-- le contrôle visuel de chaque page dans un navigateur après rendu ;
+- une revue visuelle humaine exhaustive des 18 pages ;
 - une étude utilisateur avec des apprenants débutants et expérimentés ;
 - l'exécution de tous les exemples de code intégrés et des tests cités ;
-- la réussite du build Quarto et des workflows CI sur le dernier commit de la PR #1084.
+- un rendu Quarto intégral du site : le workflow validé a rendu les pages modifiées de façon incrémentale, puis a passé les contrôles du site et l'audit navigateur.
 
 Les priorités des sections suivantes décrivent le **cadrage initial**. Elles ne constituent plus un état d'avancement : les 18 pages sont maintenant auditées au niveau des sources.
 
@@ -186,11 +186,11 @@ Résultat : les fondations se sont révélées solides. L'écart FR/EN le plus n
 
 ### Vérifications transversales encore à réaliser
 
-- contrôler le rendu Quarto et les liens internes après exécution du workflow ;
-- faire une passe visuelle sur les pages modifiées ;
-- tester les exemples de code intégrés et les tests de référence qui n'ont été que lus ;
-- organiser, si possible, des tests lecteurs débutants/expérimentés ;
-- vérifier que le parcours rendu et ses routes générées correspondent aux sources examinées.
+- CI passée sur le commit `03f17a1` : tests, contrôles qualité, délimiteurs mathématiques, formatage, lint et typage ;
+- rendu Quarto incrémental des pages modifiées réussi ; les contrôles de navigation des learning maps, du graphe, de la timeline et des liens internes ont réussi ;
+- audit Playwright des pages bilingues modifiées et de la navigation conceptuelle réussi ;
+- restent à faire : revue visuelle humaine, tests lecteurs débutants/expérimentés et exécution ciblée des exemples de code qui n'ont été que lus ;
+- le rendu complet du site a été explicitement ignoré par le workflow incrémental : ne pas le présenter comme un build intégral.
 
 ## 9. Conditions de validation
 
