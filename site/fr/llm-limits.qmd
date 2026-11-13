@@ -9,7 +9,7 @@ lang: fr
 LLM-LAB-PAGE-MAP v1
 id: "fr/llm-limits"
 scope: "Examine ce que l’objectif de prédiction du prochain token garantit et ne garantit pas : vérité des sorties, calibration, sens du mot « comprendre », capacités dites émergentes, rôle de la taille. Court complément critique du panorama ; ne détaille ni les mécanismes du Transformer ni les protocoles d’évaluation expérimentale."
-purpose: "À l’issue de cette page, le lecteur doit pouvoir distinguer ce qui se déduit de l’objectif d’entraînement de ce qui exige une évaluation, préciser le critère derrière le mot « comprendre » et expliquer pourquoi une capacité apparente dépend de la métrique et du protocole."
+purpose: "À l’issue de cette page, le lecteur doit pouvoir distinguer ce qui se déduit de l’objectif d’entraînement de ce qui exige une évaluation, préciser le critère derrière le mot « comprendre », distinguer l’évaluation du modèle et du système, et expliquer pourquoi une capacité apparente dépend de la métrique et du protocole."
 suggested_route:
   previous: null
   next: null
@@ -30,7 +30,7 @@ Prédire le prochain token est un **objectif d’entraînement**. Ce qu’un mod
 À l’issue de cette page, vous pourrez :
 - distinguer ce qui découle de l’objectif d’entraînement de ce qui exige une évaluation ;
 - préciser le critère utilisé derrière le mot « comprendre » ;
-- expliquer pourquoi une capacité apparente dépend de la métrique et du protocole.
+- distinguer l’évaluation du modèle seul de celle d’un assistant complet et citer plusieurs dimensions pertinentes ;\n- expliquer pourquoi une capacité apparente dépend de la métrique et du protocole.
 :::
 
 ## 1. Ce que l’objectif garantit — et ne garantit pas
