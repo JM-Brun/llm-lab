@@ -247,6 +247,10 @@ website:
           contents:
             - fr/llm-overview.qmd
             - fr/generation.qmd
+            - section: "Contexte et adaptation"
+              contents:
+                - fr/in-context-learning.qmd
+                - fr/context-engineering.qmd
             - section: "Comment le modèle calcule sa prédiction"
               href: fr/text-data.qmd
               contents:
@@ -434,6 +438,10 @@ website:
           contents:
             - en/llm-overview.qmd
             - en/generation.qmd
+            - section: "Context and adaptation"
+              contents:
+                - en/in-context-learning.qmd
+                - en/context-engineering.qmd
             - section: "How the model computes a prediction"
               href: en/text-data.qmd
               contents:
