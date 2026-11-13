@@ -31,7 +31,16 @@ tags: ["type:exercise-hub", "destination:practice", "topic:llm-overview-exercise
 3. **A model returns a structured request to call `lookup_order(order_id=42)`. Has the order system been queried yet?** No. The model has produced a request; the surrounding application must validate the arguments and permissions, execute the tool, and return its result to the model. Generating a tool call is not the same as executing it.
 4. **A chat transcript labels messages `system`, `user`, and `assistant`. Are these three Transformer layers?** No. They are roles in the message format used by the application/API. The model's architecture is a separate question, and a role label alone does not enforce a policy.
 
-5. **Reconstruct the generation loop.** An assistant receives a prompt and must produce three tokens. Put these operations in order: (a) append the selected token to the context; (b) convert the text into tokens; (c) check whether the three-new-token limit has been reached; (d) compute the next-token distribution; (e) select a token using the decoding rule; (f) process the initial context. Do the model parameters change at each iteration?
+5. **A pretrained model must classify reviews as positive or negative.** It receives an instruction and three labeled examples in the prompt; no additional training is run. Which mechanism is being used? What would change if the weights were updated on a set of examples? And what if external reviews or documentation were retrieved and added to the context?
+
+<details>
+<summary>Show the answer and reasoning</summary>
+
+The first case is **few-shot / in-context learning**: the examples condition the response during inference, without updating the parameters. Updating the weights on examples would be **fine-tuning**. Retrieving external documents and adding them to the context would be a **RAG** system. These mechanisms can complement one another, but they are not interchangeable. Pretraining may have exposed the model to related language patterns and task-like examples; “not specifically trained for this classification” does not mean “learned nothing relevant”.
+
+</details>
+
+6. **Reconstruct the generation loop.** An assistant receives a prompt and must produce three tokens. Put these operations in order: (a) append the selected token to the context; (b) convert the text into tokens; (c) check whether the three-new-token limit has been reached; (d) compute the next-token distribution; (e) select a token using the decoding rule; (f) process the initial context. Do the model parameters change at each iteration?
 
 <details>
 <summary>Show the answer and reasoning</summary>
