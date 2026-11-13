@@ -1,6 +1,6 @@
 # Audit éditorial du parcours principal — valeur pédagogique et profondeur intellectuelle
 
-> **Statut : diagnostic préliminaire, à confirmer.** Ce document conserve les constats et décisions de cadrage issus de l'audit initial du parcours principal. Il ne constitue pas une validation exhaustive du contenu publié : la lecture intégrale des 18 pages dans les deux langues et la vérification du rendu navigateur restent à effectuer.
+> **Statut : audit éditorial des sources terminé pour les 18 leçons principales (FR/EN), en trois vagues.** Les addenda ci-dessous consignent les diagnostics page par page, les corrections effectuées et les décisions de ne pas réécrire lorsque le contenu était déjà solide. Ce statut ne vaut pas validation du site rendu : le contrôle visuel navigateur, une étude avec des apprenants et la validation CI/Quarto restent distincts et ne sont pas revendiqués ici.
 
 - Projet : [LLM Lab](https://jm-brun.github.io/llm-lab/)
 - Parcours : [LLM overview (FR)](https://jm-brun.github.io/llm-lab/fr/llm-overview.html)
@@ -18,21 +18,22 @@ L'ambition est de compiler et synthétiser les meilleures idées pédagogiques e
 
 ## 2. Périmètre et niveau de confiance
 
-Le diagnostic préliminaire a porté sur les 18 pages principales inventoriées ci-dessous, avec une lecture de structures et de contenus, une comparaison structurelle de dix couples français/anglais et un premier benchmark de ressources externes.
+Le diagnostic initial a été prolongé par trois vagues d'examen des sources. Les 18 leçons principales ont désormais une fiche de valeur page-level dans les addenda : six pages prioritaires, six pages de priorité intermédiaire et six pages dont les fondations semblaient déjà solides. Les versions françaises et anglaises ont été confrontées, ainsi que les pages d'exercices pertinentes et les leçons adjacentes lorsque cela était nécessaire pour vérifier les frontières conceptuelles.
 
-**Ce qui est établi à ce stade :**
-- le périmètre de 18 pages est identifié ;
-- la progression générale et plusieurs distinctions conceptuelles structurantes sont repérées ;
-- des zones prioritaires d'enrichissement éditorial ont été identifiées ;
-- dix couples FR/EN ont fait l'objet d'une comparaison structurelle.
+**Établi par l'audit des sources :**
+- les 18 leçons principales sont couvertes par une fiche page-level ;
+- les décisions de modification et de non-modification sont justifiées page par page ;
+- les écarts FR/EN les plus nets repérés pendant cette passe ont été corrigés dans la PR [#1084](https://github.com/JM-Brun/llm-lab/pull/1084) ;
+- les liens conceptuels entre probabilités, entropie, vraisemblance, entropie croisée, loss et gradients ont été vérifiés transversalement ;
+- les principales affirmations de la page sur le masque causal ont été confrontées à l'implémentation et aux tests de référence.
 
-**Ce qui n'est pas encore établi :**
-- la lecture approfondie et exhaustive des 18 pages dans les deux langues ;
-- la vérification systématique de l'équivalence pédagogique et scientifique FR/EN ;
-- le contrôle visuel de chaque page dans le navigateur ;
-- la validation de chaque proposition sur le contenu et les exemples effectivement affichés.
+**Non établi / non revendiqué :**
+- le contrôle visuel de chaque page dans un navigateur après rendu ;
+- une étude utilisateur avec des apprenants débutants et expérimentés ;
+- l'exécution de tous les exemples de code intégrés et des tests cités ;
+- la réussite du build Quarto et des workflows CI sur le dernier commit de la PR #1084.
 
-Les classements ci-dessous sont donc des **priorités provisoires**, et non des verdicts définitifs sur l'exactitude ou la qualité de chaque page.
+Les priorités des sections suivantes décrivent le **cadrage initial**. Elles ne constituent plus un état d'avancement : les 18 pages sont maintenant auditées au niveau des sources.
 
 ## 3. Inventaire du parcours
 
@@ -163,35 +164,33 @@ Deux tests doivent être appliqués :
 
 La profondeur doit être progressive : intuition, mécanisme, formalisation, implications et limites. Les détails avancés ne doivent pas casser le fil principal.
 
-## 8. Plan de travail
+## 8. Déroulement et état d'avancement
 
-### Vague 1 — six pages prioritaires
+### Vague 1 — six pages prioritaires (auditée)
 
-Ordre de travail initial : `text-data`, `logits`, `positional-encoding`, `scaled-dot-product-attention`, `vraisemblance`, `training-loop`.
+`text-data`, `logits`, `positional-encoding`, `scaled-dot-product-attention`, `vraisemblance`, `training-loop`.
 
-Pour chaque page :
-1. lire la page française et sa version anglaise en entier ;
-2. examiner les pages liées et les prérequis pour éviter les doublons et les ruptures ;
-3. comparer avec les références pertinentes et, si nécessaire, consulter des sources primaires ;
-4. consigner le diagnostic : points forts, lacunes, risques de confusion ;
-5. formuler l'apport distinctif et son emplacement dans la progression ;
-6. modifier les deux langues en conservant une équivalence de fond ;
-7. vérifier liens, formules, exemples, navigation et rendu ;
-8. mettre à jour la fiche de valeur de la page et le présent document.
+Résultat : corrections bilingues ciblées sur la tokenisation, l'invariance des logits, l'extrapolation positionnelle, le pont NLL/perplexité et la qualification mathématique de l'asymptote de cross-entropie. Pour l'attention, l'audit a conclu qu'un exercice complémentaire suffisait et qu'une réécriture de la leçon aurait été redondante.
 
-### Vague 2 — enrichir sans dégrader
+### Vague 2 — six pages de priorité intermédiaire (auditée)
 
-Reprendre les pages de priorité intermédiaire et les pages déjà solides. Le critère n'est pas « ajouter du contenu », mais « ajouter une valeur démontrable sans répéter une autre page ni alourdir inutilement l'explication ».
+`llm-overview`, `generation`, `contextualized-representations`, `transformer`, `queries-keys-values`, `causal-masking`.
 
-### Vague 3 — audit cumulatif du parcours
+Résultat : correction bilingue d'une formulation trop catégorique sur la nécessité et les effets de la normalisation dans les Transformers, avec alignement des exercices. Les autres pages ont été conservées, leur valeur distinctive et leurs frontières conceptuelles étant déjà bien explicitées.
 
-Relire les 18 pages comme une expérience unique :
-- vérifier les prérequis et les transitions ;
-- vérifier que les notions sont réutilisées correctement ;
-- supprimer les répétitions et combler les trous ;
-- vérifier que les frontières conceptuelles restent nettes ;
-- vérifier la cohérence FR/EN ;
-- tester la progression depuis les intuitions initiales jusqu'à la compréhension systémique.
+### Vague 3 — six fondations (auditée)
+
+`embedding-space`, `probabilites`, `entropy`, `cross-entropy`, `loss`, `gradients`.
+
+Résultat : les fondations se sont révélées solides. L'écart FR/EN le plus net concernait la profondeur du calcul de gradient : l'exemple numérique complet présent en français a été ajouté à la version anglaise.
+
+### Vérifications transversales encore à réaliser
+
+- contrôler le rendu Quarto et les liens internes après exécution du workflow ;
+- faire une passe visuelle sur les pages modifiées ;
+- tester les exemples de code intégrés et les tests de référence qui n'ont été que lus ;
+- organiser, si possible, des tests lecteurs débutants/expérimentés ;
+- vérifier que le parcours rendu et ses routes générées correspondent aux sources examinées.
 
 ## 9. Conditions de validation
 
@@ -210,9 +209,9 @@ Un enrichissement ne doit être considéré comme terminé que si :
 
 ## 10. Décision éditoriale
 
-Le chantier doit commencer par les six pages de la vague 1. Le diagnostic actuel fournit une carte de priorisation, pas une autorisation à réécrire sans examen. Chaque modification doit être justifiée par une lacune vérifiée, documentée par des sources, et évaluée selon le double public du parcours.
+L'audit des sources des 18 leçons est achevé. La décision éditoriale est volontairement sélective : seules les lacunes démontrées ont déclenché des modifications ; plusieurs pages ont été conservées parce que leur contenu répondait déjà à leur rôle. La PR [#1084](https://github.com/JM-Brun/llm-lab/pull/1084) porte les corrections et les fiches d'audit correspondantes. Elle reste à valider par les workflows et le rendu du site.
 
-Le principe directeur est simple : **chaque page doit être une porte d'entrée pour le novice et une occasion de réflexion pour le lecteur expérimenté.**
+Le principe directeur demeure : **chaque page doit être une porte d'entrée pour le novice et une occasion de réflexion pour le lecteur expérimenté.**
 
 
 ---
