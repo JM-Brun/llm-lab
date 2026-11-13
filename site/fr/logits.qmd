@@ -74,7 +74,7 @@ Pour un lot de séquences, la tête de sortie peut produire un tenseur de forme 
 - **Les écarts :** les différences entre scores décrivent leur séparation relative dans ce vecteur.
 - **Pas une confiance absolue :** la valeur brute d'un logit dépend de l'échelle et du décalage des scores. Elle ne se lit pas comme un pourcentage et ne suffit pas à établir la confiance ou la vérité d'une sortie.
 
-Une propriété utile de la softmax permet de comprendre pourquoi les logits bruts ne sont pas des probabilités : **ajouter la même constante à tous les logits ne change pas la distribution obtenue**. En revanche, multiplier les logits par un facteur positif conserve leur classement mais modifie la concentration de la distribution : un facteur plus grand la rend généralement plus concentrée. C'est le rôle de la température, étudiée dans [Probabilités de sortie](probabilites.qmd), page de référence pour la softmax et l'interprétation de la distribution.
+La conversion en distribution de probabilité est une opération distincte. Elle est traitée dans [Probabilités de sortie](probabilites.qmd), page de référence pour la softmax, la température et l'interprétation de la distribution.
 
 ## Dans un LLM
 
