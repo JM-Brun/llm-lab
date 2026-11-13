@@ -8,6 +8,7 @@ keywords: ["type:deep-dive", "destination:deepen", "topic:rag-memory", "level:ad
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/rag-memory-boundaries"
+domain: inference-efficiency
 scope: "Boundaries between external storage, document retrieval, application memory, context construction, RAG, and ICL."
 domain: "inference-efficiency"
 purpose: "Trace external information to its possible use by an LLM and diagnose failures at each stage."
