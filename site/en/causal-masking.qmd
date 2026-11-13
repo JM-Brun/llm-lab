@@ -134,6 +134,7 @@ The causal rule can also be stated as a prefix property: with parameters and a p
 - [Scaled dot-product attention](scaled-dot-product-attention.qmd) explains the score → mask → softmax → aggregation sequence.
 - [Objective and mathematical foundations](mathematical-foundations.qmd) connects the constraint to next-token prediction and loss.
 - The [Transformer overview](transformer.qmd) places masking in the full architecture.
+- [Logits](logits.qmd) presents the scores produced by the output head after the Transformer blocks.
 
 
 
