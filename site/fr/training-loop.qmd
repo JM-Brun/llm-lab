@@ -78,7 +78,7 @@ L'entraînement des modèles de langage emploie couramment des optimiseurs *adap
 ::: {.callout-warning title="Idées reçues"}
 - **« L'optimiseur calcule le gradient. »** C'est la rétropropagation qui le calcule ; l'optimiseur ne fait que l'utiliser.
 - **« Un taux d'apprentissage plus petit est toujours plus sûr. »** Il est plus stable à chaque pas, mais peut être trop lent pour atteindre une loss utile avec le calcul disponible ; la meilleure valeur dépend du modèle, de la taille du batch et de l'optimiseur.
-- **« L'entraînement s'arrête quand la loss atteint zéro. »** L'entropie croisée avec une sortie softmax récompense une confiance toujours plus grande dans la cible et n'a pas de minimum fini sur un jeu de données parfaitement ajusté ; en pratique, un entraînement s'arrête faute de budget de calcul ou d'après le comportement en validation.
+- **« L'entraînement s'arrête quand la loss atteint zéro. »** Avec des cibles one-hot parfaitement séparables et sans régularisation, la cross-entropie softmax peut tendre vers zéro à mesure que les logits deviennent toujours plus confiants, sans atteindre zéro pour des logits finis. Ce n'est toutefois pas une propriété universelle de tout objectif ou jeu de données ; en pratique, l'arrêt dépend du budget de calcul et du comportement en validation.
 :::
 
 ## Loss d'entraînement et loss de validation

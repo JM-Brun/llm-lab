@@ -39,7 +39,7 @@ This check focuses on the network computation, not on decoding, which is covered
 
 1. Self-attention mixes information across permitted positions; the MLP applies a position-wise transformation with shared weights.
 2. The residual connection adds the sublayer output to its input: $x_{out}=x_{in}+F(x_{in})$. It preserves a direct path through the block while allowing the sublayer to contribute a learned transformation.
-3. Without normalization, the successive additions of the residual connections make the magnitudes of the representations grow: activations and gradients become unstable, and training a deep stack fails. Normalization re-centers and rescales the components of each position's vector, which stabilizes training.
+3. Normalization helps control activation scale and gradient flow. Its effect depends on placement: Xiong et al. (2020), for example, show that the original Post-LN design can have large gradients near the output at initialization, while the Pre-LN variant they study has better-behaved gradients. Do not conclude that every deep architecture fails without one particular normalization arrangement.
 4. `d_model` to `d_ff` (the MLP's intermediate dimension, often about 4 × `d_model`), a nonlinear activation on the intermediate representation, then back to `d_model`.
 5. Only those of the last position: the causal mask guarantees they depend only on tokens already known. During training, by contrast, the logits of every position are used, each position being supervised to predict its next token.
 
