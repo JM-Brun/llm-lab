@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/scaling-laws", "fr/emergence", "fr/in-context-learning", "fr/hybrid-llm-architectures", "fr/llm-computational-complexity", "fr/llm-limits", "fr/evaluation-experimentale", "fr/llm-evolution-exercises"]
+related: ["fr/llm-overview", "fr/transformer-history", "fr/scaling-laws", "fr/emergence", "fr/in-context-learning", "fr/context-engineering", "fr/rag-memory-boundaries", "fr/post-training", "fr/hybrid-llm-architectures", "fr/llm-computational-complexity", "fr/llm-limits", "fr/evaluation-experimentale", "fr/llm-evolution-exercises"]
 tags: ["type:concept-lesson", "destination:deepen", "topic:llm-evolution", "level:advanced", "language:fr", "status:published"]
 -->
 
@@ -51,6 +51,21 @@ Le tableau résume les éléments publics mis en avant par les sources citées. 
 | **GPT-6 (2026)** | La documentation API décrit notamment l'appel d'outils asynchrone et le *mid-turn steering* via l'API Responses sur WebSocket. | L'interaction entre modèle, application et outils devient une partie importante du comportement observable. |
 
 **Précaution de lecture.** Le billet ByteByteGo fournit une synthèse pédagogique utile, mais certaines formulations condensent des sujets complexes. Par exemple, GPT-2 montrait déjà des transferts zero-shot sur certaines tâches ; il serait donc inexact de dire qu'il ne pouvait que continuer du texte sans aucune capacité de question-réponse. De même, le rapport GPT-3 documente explicitement le few-shot *sans gradient update*, tandis que les détails internes complets des modèles plus récents ne sont pas tous publics.
+
+## Relier les mécanismes sans en faire une chaîne rigide
+
+Le parcours conceptuel peut se lire ainsi, à condition de ne pas confondre les niveaux :
+
+1. **Pré-entraînement** : apprend des régularités et construit un socle de paramètres réutilisable.
+2. **Scaling** : étudie comment paramètres, données et calcul influencent les résultats ; c'est une dimension du régime d'entraînement, pas une étape qui viendrait après le pré-entraînement.
+3. **Transfert** : désigne la réutilisation des acquis sur des tâches différentes de l'objectif initial.
+4. **Post-entraînement** : adapte le modèle pré-entraîné par de nouvelles données ou de nouveaux signaux d'optimisation ; il modifie les paramètres.
+5. **ICL** : exploite les consignes et exemples présents dans le contexte, sans mise à jour des paramètres.
+6. **RAG** : récupère des informations externes et les transmet généralement dans le contexte ; la récupération seule ne les rend pas accessibles au modèle.
+
+Ces voies sont **complémentaires et combinables**, pas des phases obligatoires qui se succèdent toutes. Un système peut, par exemple, associer un modèle post-entraîné, un prompt few-shot et un pipeline RAG.
+
+**Prérequis utiles.** Cette page suppose que le lecteur distingue déjà paramètres, contexte et inférence (voir [le panorama](llm-overview.qmd)). Pour les mécanismes détaillés : [boucle d'entraînement](training-loop.qmd), [post-entraînement](post-training.qmd), [ICL](in-context-learning.qmd), [ingénierie du contexte](context-engineering.qmd) et [frontières RAG/mémoire](rag-memory-boundaries.qmd). Les [lois d'échelle](scaling-laws.qmd) demandent en plus de savoir lire une loss et distinguer paramètres, données et calcul ; l'[émergence](emergence.qmd) demande de comprendre métriques et protocoles d'évaluation.
 
 ## 1. De l'échelle à l'apprentissage en contexte
 
