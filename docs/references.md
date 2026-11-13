@@ -236,5 +236,7 @@ Use these resources as complementary explanations and study aids, not as substit
   - **Use for:** primary source for IO-aware tiling, exact attention, reduced HBM traffic and IO analysis.
 - **Tri Dao — “FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning”** (ICLR 2024): https://arxiv.org/abs/2307.08691
   - **Use for:** follow-up improvements to work partitioning and GPU parallelism; benchmark claims remain hardware- and workload-specific.
+- **Jay Shah et al. — “FlashAttention-3: Fast and Accurate Attention with Asynchrony and Low-precision”** (NeurIPS 2024): https://arxiv.org/abs/2407.08608
+  - **Use for:** a hardware-specific follow-up exploiting Hopper GPU asynchrony, Tensor Memory Accelerator, warp specialization and low-precision FP8. Treat it as a distinct generation/implementation, not as an interchangeable synonym for the original FlashAttention kernel.
 - **PyTorch — Scaled dot product attention API:** https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html
   - **Use for:** API contract and backend-dispatch constraints. Calling SDPA does not prove that a FlashAttention backend was selected.
