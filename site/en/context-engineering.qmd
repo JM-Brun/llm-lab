@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: ["en/generation"]
   children: []
-related: ["en/in-context-learning", "en/text-data", "en/llm-limits"]
+related: ["en/in-context-learning", "en/contextualized-representations", "en/text-data", "en/llm-limits"]
 tags: ["type:concept-lesson", "destination:understand", "topic:context-engineering", "level:core", "language:en", "status:published"]
 -->
 
@@ -45,13 +45,14 @@ The word is used for related but different objects:
 | **Context window** | The maximum token budget usable by a call; input/output counting conventions depend on the model and API | That filling this capacity improves the answer |
 | **Active-context length** | The number of tokens actually present in context at this step | That it is close to the maximum capacity |
 | **Attention-accessible context** | Positions a given position may use, according to the architecture and mask | That every supplied token is accessible to every position |
+| **Contextualized representation** | A hidden/vector state computed by Transformer layers from accessible tokens | That it is the active context or stored history |
 | **Conversation history** | Messages retained by the application | That all of them are sent to the model on every turn |
 | **Memory** | Information stored outside the current computation, possibly across sessions | That it is present in context before it is retrieved and injected |
 | **Retrieved documents (RAG)** | Passages selected from an external source | That they update model parameters or are automatically trustworthy |
 
 In a causal Transformer, the attention mask restricts what each position can consult within the supplied sequence. This is **accessible context at the computation level**. Context engineering operates at another level: it largely determines which sequence and which information the system supplies to the model.
 
-Context capacity and active context are therefore not synonyms. An application may retain a long history while sending only a summary and a few recent messages.
+Context capacity and active context are therefore not synonyms. An application may retain a long history while sending only a summary and a few recent messages. Active context denotes input information; [contextualized representations](contextualized-representations.qmd) are the hidden states the Transformer computes from that information.
 
 ## What can active context contain?
 
