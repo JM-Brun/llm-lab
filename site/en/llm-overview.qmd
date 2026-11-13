@@ -19,7 +19,7 @@ hierarchy:
   parents: ["en/index"]
   children: ["en/transformer", "en/transformer-architectures", "en/generation", "en/build-path", "en/language-modeling-math", "en/mathematical-foundations", "en/llm-limits", "en/llm-computational-complexity"]
 covered_stages: [orientation, text-input, representations, computation, prediction, inference, scoring, training]
-related: ["en/transformer-history", "en/scaling-laws", "en/llm-overview-exercises"]
+related: ["en/transformer-history", "en/scaling-laws", "en/in-context-learning", "en/context-engineering", "en/llm-overview-exercises"]
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:en", "status:published"]
 -->
 
