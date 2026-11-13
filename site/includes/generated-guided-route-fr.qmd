@@ -130,6 +130,11 @@ Distinguer l'apprentissage en contexte de la mise à jour des paramètres, puis 
 - [Apprentissage en contexte (in-context learning)](in-context-learning.html)
 - [Ingénierie du contexte (context engineering)](context-engineering.html)
 
+
+**Ressources facultatives**
+
+- [RAG, mémoire et récupération documentaire](rag-memory-boundaries.html)
+
 :::
 
 ::: {.guided-route-stage #guided-stage-scoring}
