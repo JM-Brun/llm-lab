@@ -208,7 +208,9 @@ def test_forward_card_requires_a_published_build_path() -> None:
 
 @pytest.mark.parametrize("language", ["fr", "en"])
 def test_published_route_ends_with_exactly_one_forward_card(language: str) -> None:
-    pages = [page for page in GENERATOR["load_pages"]() if page["language"] == language]
+    pages = [
+        page for page in GENERATOR["load_pages"]() if page["language"] == language
+    ]
     stages = GENERATOR["load_guided_route"](language, pages)
     fragments = {
         path.name: text
