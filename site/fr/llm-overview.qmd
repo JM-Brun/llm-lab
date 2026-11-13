@@ -67,7 +67,7 @@ Ce tableau est une **distribution conditionnelle** : elle dépend du contexte. L
 Trois termes suffisent pour lire la suite du parcours.
 
 - **Token.** L'unité que le modèle manipule. Ce n'est pas nécessairement un mot : « situation » peut être découpé en plusieurs morceaux, une virgule est un token. Le programme qui découpe le texte et numérote les tokens est le *tokenizer* ; [Du texte aux tokens](text-data.qmd) décrit ce découpage.
-- **Contexte.** Les tokens dont le modèle dispose pour prédire le suivant : le texte fourni, puis, pendant une génération, les tokens déjà produits.
+- **Contexte.** Dans cet exemple simple, les tokens du texte fourni puis ceux déjà générés. Dans un système réel, le contexte actif peut aussi inclure des instructions, une partie de l'historique, des exemples, des documents récupérés, des descriptions et résultats d'outils ou des contenus multimodaux. La [conception et gestion du contexte](context-engineering.qmd) explique comment ces éléments sont sélectionnés et assemblés.
 - **Paramètres.** Les nombres appris pendant l'entraînement, poids et biais notamment, qui déterminent le calcul. Ils sont fixes pendant l'inférence ordinaire, c'est-à-dire quand on utilise le modèle.
 
 Le modèle prédit un token à la fois. La probabilité d'une phrase entière s'obtient en multipliant les probabilités de ses tokens successifs, chacune étant conditionnée par ce qui précède ; la [formalisation mathématique du langage](language-modeling-math.qmd) établit ce résultat.
@@ -136,7 +136,7 @@ Décrire un modèle, c'est répondre à trois questions indépendantes.
 
 Un **modèle de fondation** (*foundation model*) est une catégorie plus large que le *base model* : un modèle entraîné sur des données générales à grande échelle et adaptable à de nombreuses tâches, y compris hors du langage ([Bommasani et al., 2021](https://crfm.stanford.edu/report)).
 
-**Utilisation.** À l'inférence, les paramètres ne bougent pas. Le contexte est le principal levier pour orienter la réponse : le **prompt** (le texte fourni), les exemples qu'on y place, ou les documents qu'un système de **génération augmentée par récupération** (*retrieval-augmented generation*, RAG) va chercher et y insère. Le réglage du décodage (par exemple la température ou *top-p*) peut aussi modifier le token sélectionné, sans changer le contexte ni les paramètres.
+**Utilisation.** À l'inférence, les paramètres ne bougent pas. Le contexte est le principal levier pour orienter la réponse : les instructions et la demande du **prompt**, les exemples, l'historique retenu, les documents récupérés par **RAG**, ainsi que les descriptions et résultats d'outils selon le système. La [conception et gestion du contexte](context-engineering.qmd) consiste à sélectionner et maintenir ces éléments. Le réglage du décodage (par exemple la température ou *top-p*) peut aussi modifier le token sélectionné, sans changer le contexte ni les paramètres.
 
 ## Choisir une approche
 
