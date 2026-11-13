@@ -422,7 +422,7 @@ concepts:
       en: "Engineering practice that selects, retrieves, structures, prioritizes, updates, and secures the information supplied to a model for a given task."
     domains: [inference-efficiency]
     importance: core
-    resources: [fr/context-engineering, en/context-engineering]
+    resources: [fr/context-engineering, en/context-engineering, fr/context-engineering-exercises, en/context-engineering-exercises]
   - id: pretraining
     labels: {fr: "Pré-entraînement", en: "Pretraining"}
     definitions:
