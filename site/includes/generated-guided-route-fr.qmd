@@ -130,7 +130,6 @@ Distinguer les informations encodées dans les paramètres (pré-entraînement e
 - [Apprentissage en contexte (in-context learning)](in-context-learning.html)
 - [Ingénierie du contexte (context engineering)](context-engineering.html)
 
-
 **Ressources facultatives**
 
 - [RAG, mémoire et récupération documentaire](rag-memory-boundaries.html)
