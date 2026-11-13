@@ -13,8 +13,8 @@ scope: "Introduces in-context learning as an inference-time behavior, its differ
 purpose: "Readers should explain how a model uses examples in a prompt without updating its parameters, distinguish zero-shot, one-shot, and few-shot settings, and recognize the limits of current mechanistic explanations."
 domain: "inference-efficiency"
 suggested_route:
-  previous: null
-  next: null
+  previous: "en/generation"
+  next: "en/context-engineering"
 hierarchy:
   parents: []
   children: []
