@@ -106,6 +106,32 @@ La formulation est présentée dans [Vaswani et al. (2017), *Attention Is All Yo
 
 
 
+## FlashAttention en images (approfondissement facultatif)
+
+Ces schémas sont des **reconstructions pédagogiques originales** fondées sur l'article FlashAttention et ses travaux de suivi ; ils ne reproduisent pas les figures de la newsletter.
+
+### 1. Déplacer des blocs plutôt que matérialiser toute la matrice
+
+<figure>
+  <img src="../images/flashattention/io-aware-tiling.svg" alt="Des blocs Q, K et V sont chargés depuis la mémoire HBM vers la SRAM sur puce ; le calcul par tuiles met à jour un état compact, puis écrit le résultat sans matérialiser la matrice complète dans la HBM." />
+  <figcaption>Le gain central est la réduction des transferts HBM↔SRAM et des intermédiaires matérialisés en mémoire globale. La matrice des scores reste conceptuellement dense ; elle n'est simplement pas stockée en entier en HBM.</figcaption>
+</figure>
+
+### 2. Fusionner les statistiques du softmax en ligne
+
+<figure>
+  <img src="../images/flashattention/online-softmax.svg" alt="Un état courant (maximum, somme exponentielle, somme pondérée) est fusionné avec les statistiques d'une nouvelle tuile après remise à l'échelle sur le nouveau maximum." />
+  <figcaption>La mise à l'échelle par le nouveau maximum permet de fusionner les statistiques partielles de manière numériquement stable. À la fin, la somme pondérée est divisée par le normalisateur.</figcaption>
+</figure>
+
+### 3. Ne pas confondre optimisation IO et sparsité
+
+<figure>
+  <img src="../images/flashattention/dense-vs-sparse.svg" alt="À gauche, toutes les positions query-key sont autorisées dans une matrice dense ; à droite, seule une bande et quelques blocs sont autorisés dans un exemple sparse." />
+  <figcaption>FlashAttention conserve les connexions de l'attention dense exacte (à tolérance flottante près). Une méthode sparse change le motif des connexions et donc le calcul mathématique effectué.</figcaption>
+</figure>
+
+
 {{< include ../includes/generated-suggested-route-fr-scaled-dot-product-attention.qmd >}}
 
 ::: {.language-switch}
