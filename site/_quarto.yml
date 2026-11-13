@@ -73,6 +73,8 @@ project:
     - fr/emergence.qmd
     - fr/jepa-platonic-representation.qmd
     - fr/in-context-learning.qmd
+    - fr/context-engineering.qmd
+    - en/context-engineering.qmd
     - en/llm-overview.qmd
     - en/deepen.qmd
     - en/language-modeling-math.qmd
