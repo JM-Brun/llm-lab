@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+<title id="title">FlashAttention: tiled data movement</title>
+<desc id="desc">Query, key and value tiles move from high-bandwidth GPU memory into fast on-chip SRAM. A tile of scores and online softmax state are processed on chip; only the output tile is written back, avoiding storage of the full attention matrix in high-bandwidth memory.</desc>
+<defs>
+ <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0 L9 3 L0 6Z" fill="#526579"/></marker>
+ <style>
+ text{font-family:Inter,ui-sans-serif,system-ui,sans-serif;fill:#172b3a}
+ .small{font-size:17px}.label{font-size:20px;font-weight:650}.heading{font-size:26px;font-weight:750}
+ .mem{fill:#e8f1fa;stroke:#527da8;stroke-width:2}.fast{fill:#e8f5ee;stroke:#39845d;stroke-width:2}
+ .tile{fill:#fff;stroke:#527da8;stroke-width:1.5}.proc{fill:#fff5df;stroke:#bd8732;stroke-width:2}
+ .arrow{stroke:#526579;stroke-width:3;fill:none;marker-end:url(#arrow)}
+ .dash{stroke-dasharray:7 7}
+ </style>
+</defs>
+<rect width="960" height="540" rx="24" fill="#f8fafc"/>
+<text x="48" y="52" class="heading">IO-aware tiling: move blocks, not the whole matrix</text>
+<rect x="42" y="104" width="230" height="340" rx="18" class="mem"/>
+<text x="157" y="143" text-anchor="middle" class="label">GPU HBM</text>
+<text x="157" y="169" text-anchor="middle" class="small">High-bandwidth memory</text>
+<g transform="translate(76 205)">
+ <rect x="0" y="0" width="150" height="55" rx="8" class="tile"/><text x="75" y="35" text-anchor="middle" class="label">Q tiles</text>
+ <rect x="0" y="72" width="150" height="55" rx="8" class="tile"/><text x="75" y="107" text-anchor="middle" class="label">K tiles</text>
+ <rect x="0" y="144" width="150" height="55" rx="8" class="tile"/><text x="75" y="179" text-anchor="middle" class="label">V tiles</text>
+</g>
+<path d="M290 235 H360" class="arrow"/><path d="M360 316 H290" class="arrow"/>
+<text x="325" y="214" text-anchor="middle" class="small">load</text><text x="325" y="343" text-anchor="middle" class="small">store output</text>
+<rect x="374" y="104" width="540" height="340" rx="18" class="fast"/>
+<text x="644" y="143" text-anchor="middle" class="label">On-chip SRAM</text>
+<text x="644" y="169" text-anchor="middle" class="small">Small, fast working set</text>
+<rect x="414" y="202" width="205" height="174" rx="12" class="proc"/>
+<text x="516" y="235" text-anchor="middle" class="label">Tile computation</text>
+<rect x="439" y="255" width="155" height="43" rx="7" fill="#fff" stroke="#bd8732"/><text x="516" y="283" text-anchor="middle" class="small">Qᵢ × Kⱼᵀ</text>
+<rect x="439" y="311" width="155" height="43" rx="7" fill="#fff" stroke="#bd8732"/><text x="516" y="339" text-anchor="middle" class="small">softmax + Vⱼ</text>
+<path d="M620 288 H665" class="arrow"/>
+<rect x="679" y="202" width="195" height="174" rx="12" fill="#fff" stroke="#39845d" stroke-width="2"/>
+<text x="776" y="235" text-anchor="middle" class="label">Running state</text>
+<text x="776" y="282" text-anchor="middle" class="small">row max m</text>
+<text x="776" y="313" text-anchor="middle" class="small">normalizer ℓ</text>
+<text x="776" y="344" text-anchor="middle" class="small">weighted sum u</text>
+<text x="480" y="410" text-anchor="middle" class="small">Reuse tiles; update compact state</text>
+<text x="644" y="490" text-anchor="middle" class="small">The full T × T score/probability matrix is never written to HBM.</text>
+</svg>
