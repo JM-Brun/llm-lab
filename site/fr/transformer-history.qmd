@@ -51,6 +51,52 @@ Les dates distinguent soumission, annonce et mise à disposition. Les jalons son
 {{< include /includes/_history-timeline-fr.qmd >}}
 
 
+## Les verrous qui ont changé — et ceux qui restent
+
+La chronologie prend davantage de sens si l’on suit les problèmes auxquels les chercheurs se heurtaient. Il ne s’agit pas d’une succession où chaque nouvelle architecture rendrait la précédente inutile : chaque famille répond à certains besoins et conserve des compromis.
+
+### 1. La récurrence : un coût de dépendance dans le temps
+
+Dans un RNN, l’état caché à la position (t) dépend de l’état à (t-1). Cette dépendance impose un ordre de calcul à l’intérieur d’un exemple : on ne peut pas calculer toutes les positions simultanément comme si elles étaient indépendantes. Cela limite le parallélisme disponible pendant l’entraînement, particulièrement lorsque les séquences sont longues.
+
+Les LSTM et GRU ont amélioré la circulation de l’information et l’apprentissage de dépendances longues ; ils n’ont pas supprimé la chaîne de dépendances séquentielles. Les modèles séquence-à-séquence ont aussi utilisé des états de taille fixe pour résumer une séquence, ce qui pouvait devenir un goulot d’étranglement. L’attention introduite dans les modèles de traduction neuronale a permis au décodeur de consulter différentes parties de la séquence source au lieu de dépendre uniquement d’un résumé unique ([Bahdanau et al., 2014](https://arxiv.org/abs/1409.0473)).
+
+### 2. 2017 : changer le chemin du calcul
+
+Le Transformer de Vaswani et al. généralise cette idée en plaçant l’attention au cœur de l’architecture. Dans le calcul central de l’encodeur, les positions peuvent être traitées en parallèle : elles interagissent par attention plutôt que par une chaîne d’états récurrents. C’est un changement de structure du calcul, particulièrement favorable aux accélérateurs parallèles ([Vaswani et al., 2017](https://arxiv.org/abs/1706.03762)).
+
+Cette avancée a ses propres coûts. L’attention dense compare les positions entre elles ; son coût en calcul et en mémoire croît quadratiquement avec la longueur de la séquence dans sa forme standard. Et dans un GPT autorégressif, le prochain token dépend toujours des précédents : le calcul du *prefill* traite le prompt en parallèle, mais le *decode* produit les nouveaux tokens l’un après l’autre.
+
+### 3. Le transfert : apprendre une fois, réutiliser de plusieurs façons
+
+Le changement décisif ne vient pas de l’architecture seule. Les représentations pré-entraînées ont progressivement remplacé des pipelines où chaque tâche exigeait souvent son propre modèle ou sa propre architecture. Les travaux sur les représentations de mots, puis les modèles contextualisés pré-entraînés, ont rendu possible le transfert de paramètres vers des tâches aval. Avec GPT-2, puis GPT-3, le modèle de langage pré-entraîné est devenu de plus en plus directement réutilisable.
+
+GPT-3 a rendu cette possibilité particulièrement visible : les auteurs ont évalué un modèle autorégressif de 175 milliards de paramètres sur de nombreuses tâches, sans mise à jour des gradients, en indiquant la tâche et des exemples uniquement dans le texte du prompt. Les auteurs soulignent aussi les limites et les tâches sur lesquelles cette approche échoue ([Brown et al., 2020](https://arxiv.org/abs/2005.14165)).
+
+Il faut distinguer trois formes de transfert :
+- **Fine-tuning** : les paramètres sont adaptés à la tâche aval.
+- **Zero-shot / few-shot et ICL** : la tâche et éventuellement des exemples sont fournis dans le contexte, sans mise à jour des paramètres. Le terme *zero-shot* signifie ici zéro démonstration de la tâche dans le prompt, pas absence de tout apprentissage antérieur.
+- **RAG** : des informations externes sont récupérées à l’utilisation et insérées dans le contexte ; ce mécanisme complète le modèle plutôt qu’il ne transfère ses paramètres.
+
+Le modèle n’a donc pas besoin d’avoir reçu une étiquette explicite pour chaque tâche qu’il saura parfois effectuer. Le pré-entraînement sur de grands corpus lui fait apprendre des régularités linguistiques, des formats, des associations et des connaissances réutilisables. Une consigne peut ensuite sélectionner ou combiner ces compétences. Mais les données d’entraînement peuvent aussi contenir des exemples proches de la tâche : « jamais entraîné spécifiquement » ne signifie pas « jamais exposé à quelque chose de similaire ».
+
+### 4. L’échelle et le post-entraînement : des capacités à rendre utilisables
+
+L’augmentation de la taille des modèles n’a pas été un simple multiplicateur. Les résultats dépendent de l’équilibre entre nombre de paramètres, quantité et qualité des données, budget de calcul, durée d’entraînement, architecture et procédure d’optimisation. Les travaux sur les lois d’échelle et l’allocation optimale des ressources ont contribué à rendre ces choix plus mesurables ([Kaplan et al., 2020](https://arxiv.org/abs/2001.08361) ; [Hoffmann et al., 2022](https://arxiv.org/abs/2203.15556)).
+
+Un modèle de base entraîné à prédire le prochain token n’est pas automatiquement un assistant fiable. Le post-entraînement — notamment l’entraînement supervisé sur des instructions et l’optimisation par préférences — améliore la capacité à répondre aux demandes et à respecter un format d’interaction. Il s’agit d’une étape distincte du pré-entraînement, pas d’une conséquence mécanique de l’attention.
+
+### 5. « Émergence » : observer sans surinterpréter
+
+Certaines capacités semblent apparaître à partir d’une certaine taille ou d’un certain niveau de performance. Mais le terme *émergence* recouvre plusieurs phénomènes : progression rapide, franchissement d’un seuil d’évaluation, combinaison de compétences déjà présentes, ou véritable changement qualitatif. Schaeffer et al. montrent que des métriques discontinues peuvent donner l’apparence d’une apparition soudaine là où des métriques continues révèlent une progression plus graduelle ([2023](https://arxiv.org/abs/2304.15004)). Lu et al. analysent également le rôle possible de l’ICL, de la mémoire acquise pendant le pré-entraînement et des connaissances linguistiques ([2024](https://aclanthology.org/2024.acl-long.279/)).
+
+La bonne posture pédagogique est donc double : ne pas nier les nouvelles capacités pratiques rendues possibles par l’échelle, mais ne pas présenter leur apparition comme une loi mystérieuse ou une preuve de compréhension générale. Il faut préciser la tâche, le protocole, la métrique et le modèle évalué.
+
+### Ce que cette histoire permet de conclure
+
+Le Transformer a levé un verrou architectural important : le calcul parallèle des positions pendant l’entraînement et des chemins d’information plus directs. Le pré-entraînement à grande échelle a transformé un modèle de langage en socle transférable. Le *few-shot* et l’ICL ont rendu possible une adaptation par le contexte, sans modifier les poids. Le post-entraînement a rendu les modèles plus aptes à interagir avec des utilisateurs. Ces évolutions se renforcent, mais elles ne sont ni identiques ni réductibles à une seule invention.
+
+
 ## Quelques précautions de lecture
 
 - **Le Transformer n'est pas synonyme de LLM autorégressif.** L'article de 2017 présente une architecture encodeur-décodeur pour la traduction ; BERT utilise un encodeur et un objectif de prédiction masquée.
