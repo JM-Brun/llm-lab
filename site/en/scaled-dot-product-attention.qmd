@@ -58,7 +58,7 @@ Attention is not one indivisible operation: it is the sequence **scores → scal
 
 ## Five computation steps
 
-For one head, $Q,K\in\mathbb{R}^{T\times d_k}$ and $V\in\mathbb{R}^{T\times d_v}$.
+For one head, $Q,K\in\mathbb{R}^{T\times d_k}$ and $V\in\mathbb{R}^{T\times d_v}$, where $T$ is the sequence length.
 
 1. **Scores:** $S=QK^\top$, with shape $T\times T$.
 2. **Scaling:** $S/\sqrt{d_k}$.
