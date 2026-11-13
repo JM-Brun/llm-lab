@@ -69,11 +69,13 @@ Le **RAG** récupère des informations externes et les ajoute au contexte ; cett
 
 ## Que fait le modèle avec les exemples ?
 
-Le modèle reçoit une séquence qui contient à la fois la tâche et les démonstrations. À chaque couche, les mécanismes d'attention et les autres opérations du réseau transforment les représentations en fonction de ce contexte. Lorsqu'il génère la suite, il produit une continuation conditionnée par les exemples précédents.
+Le modèle reçoit une séquence qui contient à la fois la tâche et les démonstrations. À chaque couche, les mécanismes d'attention et les autres opérations du réseau transforment les représentations en fonction de ce contexte. Lorsqu'il génère la suite, il produit une continuation conditionnée par les exemples précédents. Les exemples font partie de l'entrée active : ils orientent le calcul, sans modifier les poids.
 
+::: {.callout-note collapse="true" title="Approfondissement : hypothèses mécanistes"}
 Cela décrit le calcul observable, mais ne constitue pas à lui seul une explication complète de l'ICL. Plusieurs hypothèses sont étudiées : reconnaissance de motifs, inférence sur la règle qui a généré les exemples, apprentissage implicite d'algorithmes pendant le préentraînement, et circuits d'attention qui facilitent la copie ou l'association entre exemples.
 
 Les *induction heads* sont un mécanisme étudié dans certains Transformers : des têtes d'attention peuvent contribuer à repérer une séquence déjà vue et à en poursuivre le motif. Elles éclairent certains comportements de copie et de continuation, mais ne constituent pas une explication universelle de toutes les formes d'ICL.
+:::
 
 ## Ce que l'ICL permet — et ses limites
 
