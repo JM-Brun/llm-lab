@@ -188,6 +188,8 @@ This page describes architectural principles, not one RAG implementation or a un
 
 The companion exercises help diagnose transmission boundaries and design a controlled experiment: [Exercises — RAG, memory, and document retrieval](exercises/rag-memory-boundaries.qmd).
 
+{{< include ../includes/generated-guided-context-en-rag-memory-boundaries.qmd >}}
+
 ::: {.language-switch}
 [Français](../fr/rag-memory-boundaries.qmd) · [English](rag-memory-boundaries.qmd)
 :::
