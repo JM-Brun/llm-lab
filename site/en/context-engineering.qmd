@@ -1,0 +1,114 @@
+---
+title: "Context engineering"
+subtitle: "Designing the information a system provides to a model"
+description-meta: "Understand how to select, organize, update, and secure the context of an LLM system."
+keywords: ["type:concept-lesson", "destination:understand", "topic:context-engineering", "level:core", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/context-engineering"
+summary: "Defines context engineering and locates its main operations within an LLM system."
+scope: "Introduces context design and management at inference time; detailed RAG, memory, and agent architectures remain in their dedicated lessons."
+purpose: "Readers should distinguish model context, ICL, and context engineering, then identify the decisions that shape the quality of the input supplied to a model."
+suggested_route:
+  previous: "en/in-context-learning"
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/in-context-learning", "en/generation", "en/post-training", "en/llm-evolution", "en/llm-limits"]
+tags: ["type:concept-lesson", "destination:understand", "topic:context-engineering", "level:core", "language:en", "status:published"]
+-->
+
+{{< include ../includes/generated-guided-context-en-context-engineering.qmd >}}
+
+::: {.chapter-lead}
+**Context engineering** is the discipline of designing and managing the information a system makes available to a model at inference time. Its goal is to provide task-relevant elements in a usable form: instructions, history, examples, retrieved documents, tool results, and task state.
+:::
+
+## From a prompt to a system context
+
+A prompt is often understood as text written by the user. In a real application, the model input may be a structured assembly of instructions defining the role and constraints, the current message, relevant conversation history, demonstration examples, retrieved documents, tool results, and selected task state or memory.
+
+The **context actually supplied** is the selection and organization of these elements for a particular model call. Not everything stored by the application is necessarily sent to the model. Depending on model and API capabilities, context may also contain multimodal payloads (such as images or audio) and structured tool descriptions, not only text.
+
+## Definition and main operations
+
+Context engineering is not a particular model feature, nor a standard with a universally fixed scope. It is an engineering practice for LLM systems. It includes:
+
+1. **Selecting** task-relevant information and excluding noise.
+2. **Retrieving** useful knowledge at the right time, for example through search or RAG.
+3. **Structuring** messages, instructions, examples, and data so their roles are clear.
+4. **Prioritizing** important information and placing critical elements where they remain accessible.
+5. **Compressing** or summarizing history without losing necessary facts.
+6. **Updating** state and removing stale or contradictory information.
+7. **Securing** boundaries between trusted instructions, untrusted data, and tool outputs.
+8. **Evaluating** effects on quality, robustness, latency, and cost.
+
+These operations form a design-and-observation loop, not a single recipe. Their importance depends on the task and architecture.
+
+## Why the context window is not enough
+
+The **context window** describes a capacity limit measured in tokens. It does not guarantee that all useful information is present, or that the model will use it correctly.
+
+A longer context can help when it adds relevant evidence. It can also hurt when it accumulates noise, repetition, conflicting instructions, or poorly selected documents. Information position, readability, and trustworthiness matter too. The goal is not to fill the window, but to build a context suited to the task within capacity, cost, and security constraints.
+
+## Distinguishing neighboring concepts
+
+| Concept | What it refers to |
+|---|---|
+| **Prompt engineering** | Formulating and organizing a prompt's instructions and examples. |
+| **In-context learning (ICL)** | A phenomenon in which a model adapts its behavior from information and demonstrations in context, without updating its parameters. |
+| **Context engineering** | The broader work of selecting, retrieving, structuring, updating, and securing all the context supplied to the model. |
+| **RAG** | An architecture that retrieves external information and injects it into context; it is one technique context engineering can use. |
+| **Memory** | A mechanism for retaining and reusing information across interactions; it can supply context but is not itself the context window. |
+| **Tool use** | A system capability to request an external action; tool descriptions and results may enter context. Context engineering determines how they are presented and controlled. |
+| **Agent engineering** | The design of an agent's decision, action, observation, and control loop; it uses context engineering but is not reducible to it. |
+| **Fine-tuning** | Adaptation that changes model parameters through optimization rather than only changing the information supplied at inference. |
+
+ICL describes a model capability or behavior; context engineering describes the system-design work that prepares its input. Good context can support ICL, but the two concepts are not synonyms.
+
+## A design example
+
+An assistant must answer a question about a software repository. A useful context might combine response instructions and security rules, the user's question, relevant decisions from the conversation, file excerpts retrieved for this question, and tool results explicitly associated with their provenance.
+
+Injecting the entire repository and conversation history without selection is rarely useful. It is also important to distinguish observed code from instructions: a file may contain malicious or outdated text that must not become an instruction to the model.
+
+## Limitations and failure modes
+
+- **Missing context:** information that is absent generally cannot guide the response.
+- **Noise and contradictions:** excessive information or incompatible instructions can degrade the answer.
+- **Position effects:** information being present does not mean it will be used reliably.
+- **Indirect prompt injection:** a document or tool result may contain untrusted instructions.
+- **Freshness and provenance:** retrieved information may be stale, misattributed, or irrelevant.
+- **Cost and latency:** retrieving, processing, and sending more context has a cost.
+
+Context engineering can reduce some risks, but it does not guarantee truth, instruction compliance, or complete security. It must be combined with appropriate controls, permissions, and evaluation.
+
+## How can context be evaluated?
+
+Establish a baseline, add one source or example at a time, test questions with known answers, introduce irrelevant or contradictory documents in a controlled environment, then measure accuracy, source faithfulness, robustness, cost, and latency. An observed improvement on a test set is not a general guarantee: a context that performs well on a few examples may fail on other tasks or distributions.
+
+## Key takeaways
+
+- Context is the information actually supplied to the model for a call, not just the latest user message.
+- Context engineering organizes that context through selection, retrieval, structure, prioritization, compression, updating, security, and evaluation.
+- Prompt engineering is one part of it, not a synonym.
+- RAG, memory, and tool results can contribute to context; they are not interchangeable with it.
+- A larger window or longer context does not guarantee a better answer.
+
+## Practice
+
+Apply these principles with the [context engineering exercises](exercises/context-engineering.qmd).
+
+## References
+
+- Anthropic, [*Effective context engineering for AI agents*](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents).
+- Liu et al. (2024), [*Lost in the Middle: How Language Models Use Long Contexts*](https://arxiv.org/abs/2307.03172).
+- OWASP, [*LLM Prompt Injection Prevention Cheat Sheet*](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html).
+
+::: {.language-switch}
+**Language:** [Français](../fr/context-engineering.qmd) · [English](context-engineering.qmd)
+:::

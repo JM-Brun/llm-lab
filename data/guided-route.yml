@@ -84,6 +84,20 @@ stages:
       fr: [fr/decoding-strategies]
       en: [en/decoding-strategies]
 
+  - id: context-use
+    title:
+      fr: "Exploiter et concevoir le contexte"
+      en: "Use and design context"
+    objective:
+      fr: "Distinguer l'apprentissage en contexte de la mise à jour des paramètres, puis comprendre comment un système sélectionne, structure, actualise et sécurise les informations fournies au modèle."
+      en: "Distinguish in-context learning from parameter updates, then understand how a system selects, structures, updates, and secures the information supplied to the model."
+    pages:
+      fr: [fr/in-context-learning, fr/context-engineering]
+      en: [en/in-context-learning, en/context-engineering]
+    optional_pages:
+      fr: []
+      en: []
+
   - id: scoring
     title:
       fr: "Attribuer un score aux tokens observés"

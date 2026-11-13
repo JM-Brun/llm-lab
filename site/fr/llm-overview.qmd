@@ -18,8 +18,8 @@ suggested_route:
 hierarchy:
   parents: ["fr/index"]
   children: ["fr/transformer", "fr/transformer-architectures", "fr/generation", "fr/build-path", "fr/language-modeling-math", "fr/mathematical-foundations", "fr/llm-limits", "fr/llm-computational-complexity"]
-covered_stages: [orientation, text-input, representations, computation, prediction, inference, scoring, training]
-related: ["fr/transformer-history", "fr/scaling-laws", "fr/llm-overview-exercises"]
+covered_stages: [orientation, text-input, representations, computation, prediction, inference, context-use, scoring, training]
+related: ["fr/transformer-history", "fr/scaling-laws", "fr/in-context-learning", "fr/context-engineering", "fr/llm-overview-exercises"]
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:fr", "status:published"]
 -->
 
@@ -130,7 +130,7 @@ Décrire un modèle, c'est répondre à trois questions indépendantes.
 |---|---|---|
 | **Architecture** | Comment le réseau transforme-t-il l'information ? | Encodeur seul, encodeur-décodeur, décodeur seul |
 | **Apprentissage** | Comment les paramètres sont-ils obtenus ou adaptés ? | Pré-entraînement, fine-tuning, SFT, optimisation par préférences |
-| **Utilisation** | Que fait-on du modèle, paramètres fixés ? | Génération, classification, scoring, [apprentissage en contexte](in-context-learning.qmd), recherche documentaire (RAG) |
+| **Utilisation** | Que fait-on du modèle, paramètres fixés ? | Génération, classification, scoring, [apprentissage en contexte](in-context-learning.qmd), [ingénierie du contexte](context-engineering.qmd), recherche documentaire (RAG) |
 
 **Apprentissage.** Le **pré-entraînement** d'un GPT lui apprend à prédire le prochain token sur un grand corpus. Il est auto-supervisé : les réponses attendues sont les tokens du texte lui-même, sans annotation. Ce que le modèle peut apprendre dépend donc de la qualité et de la diversité de ce corpus. Le résultat est souvent appelé *base model*. Une **adaptation** peut suivre, sans être obligatoire : fine-tuning pour une tâche, *supervised fine-tuning* (SFT) sur des paires instruction-réponse, optimisation par préférences.
 

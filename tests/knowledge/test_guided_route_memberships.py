@@ -31,6 +31,7 @@ def test_membership_projection_preserves_core_optional_and_multiple_contexts(
         "computation",
         "prediction",
         "inference",
+        "context-use",
         "scoring",
         "training",
     ]
@@ -40,6 +41,11 @@ def test_membership_projection_preserves_core_optional_and_multiple_contexts(
         ("orientation", "core"),
         ("inference", "core"),
     ]
+
+    context_use = memberships[f"{language}/in-context-learning"]
+    assert [(item.stage_id, item.role) for item in context_use] == [("context-use", "core")]
+    context_engineering = memberships[f"{language}/context-engineering"]
+    assert [(item.stage_id, item.role) for item in context_engineering] == [("context-use", "core")]
 
     text_input = memberships[f"{language}/text-data"]
     assert [(item.stage_id, item.role) for item in text_input] == [("text-input", "core")]
@@ -241,8 +247,8 @@ def test_writer_generates_page_contexts_for_every_route_member(
 @pytest.mark.parametrize(
     ("language", "expected"),
     [
-        ("en", "Stage 4 of 8 · page 2 of 4"),
-        ("fr", "Étape 4 sur 8 · page 2 sur 4"),
+        ("en", "Stage 4 of 9 · page 2 of 4"),
+        ("fr", "Étape 4 sur 9 · page 2 sur 4"),
     ],
 )
 def test_core_page_context_states_position(language: str, expected: str) -> None:
@@ -252,7 +258,7 @@ def test_core_page_context_states_position(language: str, expected: str) -> None
         stage_title="Computation",
         stage_objective="objective",
         role="core",
-        stage_count=8,
+        stage_count=9,
         page_index=2,
         page_count=4,
     )
@@ -270,7 +276,7 @@ def test_optional_page_context_adds_no_position() -> None:
         stage_title="Representations",
         stage_objective="objective",
         role="optional",
-        stage_count=8,
+        stage_count=9,
     )
     page = GENERATOR["ResolvedPage"](id="en/rope", title="RoPE", href="rope.html")
 
@@ -332,7 +338,7 @@ def test_guided_rail_links_every_stage_in_registry_order(language: str) -> None:
     assert positions == sorted(positions)
     assert rendered.count('class="guided-rail__part"') == len(GENERATOR["ROUTE_PARTS"])
     assert "\\n" not in rendered
-    assert 'data-guided-rail data-total="8"' in rendered
+    assert 'data-guided-rail data-total="9"' in rendered
     assert "data-guided-rail-progress hidden" in rendered
     part_positions = [
         rendered.index(f'data-part="{part_id}"') for part_id in ("discover", "prediction", "usages")
@@ -380,7 +386,7 @@ def test_guided_route_fragment_places_rail_before_stage_anchors(
     assert "\\n" not in rendered
 
 
-@pytest.mark.parametrize(("language", "label"), [("fr", "Étape 3/8"), ("en", "Stage 3/8")])
+@pytest.mark.parametrize(("language", "label"), [("fr", "Étape 3/9"), ("en", "Stage 3/9")])
 def test_page_context_renders_stage_badge_and_tracking_attributes(
     language: str, label: str
 ) -> None:
@@ -390,7 +396,7 @@ def test_page_context_renders_stage_badge_and_tracking_attributes(
         stage_title="Representations",
         stage_objective="objective",
         role="core",
-        stage_count=8,
+        stage_count=9,
         page_index=1,
         page_count=4,
     )
@@ -402,7 +408,7 @@ def test_page_context_renders_stage_badge_and_tracking_attributes(
     assert label in rendered
     assert 'data-stage-id="representations"' in rendered
     assert 'data-stage-index="3"' in rendered
-    assert 'data-stage-total="8"' in rendered
+    assert 'data-stage-total="9"' in rendered
 
 
 @pytest.mark.parametrize("language", ["fr", "en"])
@@ -486,6 +492,7 @@ def test_overview_preserves_cross_cutting_coverage_and_explicit_next_page(
         "computation",
         "prediction",
         "inference",
+        "context-use",
         "scoring",
         "training",
     ]

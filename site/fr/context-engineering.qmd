@@ -1,0 +1,114 @@
+---
+title: "Ingénierie du contexte (context engineering)"
+subtitle: "Concevoir les informations qu'un système fournit au modèle"
+description-meta: "Comprendre comment sélectionner, organiser, actualiser et sécuriser le contexte d'un système LLM."
+keywords: ["type:concept-lesson", "destination:understand", "topic:context-engineering", "level:core", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/context-engineering"
+summary: "Définit l'ingénierie du contexte et situe ses principales opérations dans un système LLM."
+scope: "Présente la conception et la gestion du contexte à l'inférence ; les architectures détaillées de RAG, de mémoire et d'agents restent dans leurs pages dédiées."
+purpose: "Le lecteur doit distinguer le contexte du modèle, l'ICL et le context engineering, puis identifier les décisions qui déterminent la qualité du contexte transmis."
+suggested_route:
+  previous: "fr/in-context-learning"
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/in-context-learning", "fr/generation", "fr/post-training", "fr/llm-evolution", "fr/llm-limits"]
+tags: ["type:concept-lesson", "destination:understand", "topic:context-engineering", "level:core", "language:fr", "status:published"]
+-->
+
+{{< include ../includes/generated-guided-context-fr-context-engineering.qmd >}}
+
+::: {.chapter-lead}
+L'**ingénierie du contexte** (*context engineering*) est la discipline qui consiste à concevoir et à gérer les informations qu'un système met à la disposition d'un modèle au moment de l'inférence. Elle vise à fournir, au bon moment et sous une forme exploitable, les éléments utiles à la tâche : instructions, historique, exemples, documents récupérés, résultats d'outils et état du travail.
+:::
+
+## Du prompt au contexte du système
+
+Le prompt est souvent compris comme un texte rédigé par l'utilisateur. Dans une application réelle, l'entrée du modèle peut être un assemblage structuré de plusieurs messages et sources : instructions définissant le rôle et les contraintes, message courant, historique pertinent, exemples de démonstration, documents récupérés, résultats d'outils et état de tâche ou mémoire sélectionnée.
+
+Le **contexte effectivement transmis** est la sélection et l'organisation de ces éléments pour un appel donné. Tout ce qui existe dans l'application n'est pas nécessairement transmis au modèle. Selon les capacités du modèle et de l'API, le contexte peut aussi contenir des contenus multimodaux (par exemple des images ou de l'audio) et des descriptions structurées d'outils, pas seulement du texte.
+
+## Définition et opérations principales
+
+Le context engineering ne désigne pas une fonctionnalité particulière d'un modèle ni une norme dont le périmètre serait universellement fixé. C'est une pratique d'ingénierie des systèmes LLM. Elle comprend notamment :
+
+1. **Sélectionner** les informations pertinentes et écarter le bruit.
+2. **Récupérer** les connaissances utiles au moment opportun, par exemple avec une recherche ou un système RAG.
+3. **Structurer** les messages, instructions, exemples et données pour rendre leurs rôles compréhensibles.
+4. **Prioriser** les informations importantes et placer les éléments critiques là où ils restent accessibles.
+5. **Compresser** ou résumer l'historique sans effacer les faits nécessaires.
+6. **Actualiser** l'état et retirer les informations obsolètes ou contradictoires.
+7. **Sécuriser** les frontières entre instructions fiables, données non fiables et résultats d'outils.
+8. **Évaluer** l'effet du contexte sur la qualité, la robustesse, la latence et le coût.
+
+Ces opérations forment une boucle de conception et d'observation, pas une recette unique. Leur importance dépend de la tâche et de l'architecture.
+
+## Pourquoi la fenêtre de contexte ne suffit pas
+
+La **fenêtre de contexte** décrit une limite de capacité exprimée en tokens. Elle ne garantit ni que toutes les informations utiles y figurent, ni que le modèle les exploite correctement.
+
+Un contexte plus long peut aider lorsqu'il apporte des éléments pertinents. Il peut aussi nuire s'il accumule du bruit, des répétitions, des consignes incompatibles ou des documents mal sélectionnés. La position, la lisibilité et la fiabilité des informations comptent également. L'objectif n'est donc pas de remplir la fenêtre, mais de construire un contexte adapté à la tâche, sous les contraintes de capacité, de coût et de sécurité.
+
+## Distinguer les notions voisines
+
+| Notion | Ce qu'elle désigne |
+|---|---|
+| **Prompt engineering** | Formuler et organiser les instructions et les exemples d'un prompt. |
+| **In-context learning (ICL)** | Phénomène par lequel le modèle adapte son comportement à partir des informations et démonstrations présentes dans le contexte, sans mise à jour de ses paramètres. |
+| **Context engineering** | Travail plus large de sélection, récupération, structuration, actualisation et sécurisation de l'ensemble du contexte transmis. |
+| **RAG** | Architecture qui récupère des informations externes et les injecte dans le contexte ; c'est une technique mobilisable par le context engineering. |
+| **Mémoire** | Mécanisme de conservation et de réutilisation d'informations entre interactions ; elle peut alimenter le contexte sans être elle-même la fenêtre de contexte. |
+| **Tool use (utilisation d'outils)** | Capacité du système à demander une action externe ; les descriptions d'outils et leurs résultats peuvent entrer dans le contexte. Le context engineering décide comment les présenter et les contrôler. |
+| **Ingénierie agentique** | Conception de la boucle de décision, d'action, d'observation et de contrôle d'un agent ; elle mobilise le context engineering sans s'y réduire. |
+| **Fine-tuning** | Adaptation qui modifie les paramètres du modèle par optimisation, au lieu de seulement modifier les informations fournies à l'inférence. |
+
+L'ICL décrit une capacité ou un comportement du modèle ; le context engineering décrit une démarche de conception du système qui prépare son entrée. Un bon contexte peut favoriser l'ICL, mais les deux notions ne sont pas synonymes.
+
+## Un exemple de conception
+
+Un assistant doit répondre à une question sur un dépôt logiciel. Un contexte utile peut réunir les consignes de réponse et règles de sécurité, la question, les décisions pertinentes de la conversation, les extraits de fichiers retrouvés pour cette question et les résultats d'outils associés à leur provenance.
+
+Injecter tout le dépôt et tout l'historique sans sélection est rarement utile. Il faut aussi distinguer un extrait de code observé d'une instruction : un fichier peut contenir du texte malveillant ou obsolète qui ne doit pas devenir une consigne pour le modèle.
+
+## Limites et points de vigilance
+
+- **Contexte incomplet :** une information absente ne peut généralement pas guider la réponse.
+- **Bruit et contradictions :** trop d'informations ou des consignes incompatibles peuvent dégrader la réponse.
+- **Effets de position :** une information présente n'est pas nécessairement utilisée de façon fiable.
+- **Injection indirecte :** un document ou un résultat d'outil peut contenir des instructions non fiables.
+- **Fraîcheur et provenance :** une information récupérée peut être obsolète, mal attribuée ou hors sujet.
+- **Coût et latence :** récupérer, traiter et transmettre davantage de contexte a un coût.
+
+Le context engineering réduit certains risques mais ne garantit ni la vérité des réponses, ni le respect des consignes, ni une sécurité complète. Il doit être associé à des contrôles, des permissions et une évaluation adaptés.
+
+## Comment évaluer un contexte ?
+
+Établir une référence, ajouter une source ou un exemple à la fois, tester des questions dont la réponse est connue, introduire des documents non pertinents ou contradictoires dans un environnement contrôlé, puis mesurer exactitude, fidélité aux sources, robustesse, coût et latence. Il faut distinguer une amélioration observée sur un jeu de tests d'une garantie générale : un contexte performant sur quelques exemples peut échouer sur d'autres tâches ou distributions.
+
+## À retenir
+
+- Le contexte est l'ensemble des informations effectivement fournies au modèle pour un appel, pas seulement le dernier message utilisateur.
+- Le context engineering organise ce contexte : sélection, récupération, structure, priorité, compression, actualisation, sécurité et évaluation.
+- Le prompt engineering en est une partie, pas un synonyme.
+- RAG, mémoire et résultats d'outils peuvent contribuer au contexte ; ils ne se confondent pas avec lui.
+- Une fenêtre plus grande ou un contexte plus long ne garantit pas une meilleure réponse.
+
+## Pour s'exercer
+
+Mettre ces principes en pratique avec les [exercices d'ingénierie du contexte](exercises/context-engineering.qmd).
+
+## Références
+
+- Anthropic, [*Effective context engineering for AI agents*](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents).
+- Liu et al. (2024), [*Lost in the Middle: How Language Models Use Long Contexts*](https://arxiv.org/abs/2307.03172).
+- OWASP, [*LLM Prompt Injection Prevention Cheat Sheet*](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html).
+
+::: {.language-switch}
+**Langue :** [Français](context-engineering.qmd) · [English](../en/context-engineering.qmd)
+:::

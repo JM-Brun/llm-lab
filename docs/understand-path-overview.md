@@ -1,7 +1,7 @@
 # Parcours « Comprendre les LLM » — synthèse et audit de navigation
 
 **Statut :** note d'audit éditorial et proposition d'évolution  
-**Date :** 2026-11-09  
+**Date :** 2026-11-13  
 **Périmètre :** point d'entrée français, panorama LLM, navigation latérale, parcours guidé et carte des ressources.
 
 Cette note est fondée sur les sources du dépôt : `site/index.qmd`, `site/fr/learning-map.qmd`, `site/fr/llm-overview.qmd`, `site/fr/generation.qmd`, `data/guided-route.yml`, `docs/learning-path.md`, `docs/content-section-mapping.md` et `docs/information-architecture.md`. Il s'agit d'un audit éditorial des sources, pas encore d'une validation visuelle desktop/mobile ou d'un test utilisateur.
@@ -15,7 +15,8 @@ Le parcours doit construire une représentation mentale progressive du système,
 3. comment cette entrée devient une représentation numérique puis contextuelle ;
 4. comment le Transformer transforme ces représentations ;
 5. comment le calcul aboutit à une distribution de probabilité sur le prochain token ;
-6. ce que l'on peut faire de cette distribution : générer, scorer une cible observée ou apprendre en ajustant les paramètres.
+6. comment le modèle exploite les instructions et exemples du contexte sans mise à jour des paramètres, et comment le système prépare ce contexte ;
+7. ce que l'on peut faire de la distribution : générer, scorer une cible observée ou apprendre en ajustant les paramètres.
 
 Le fil directeur est une question : **comment un modèle transforme-t-il un contexte en prédiction, et comment cette prédiction est-elle utilisée ?**
 
@@ -29,7 +30,7 @@ Le parcours est une projection pédagogique des connaissances, pas une transcrip
 
 ## 2. Le parcours simplifié à présenter au lecteur
 
-Cette synthèse en cinq mouvements est la couche d'orientation. Elle ne remplace pas les huit étapes canoniques de `data/guided-route.yml`.
+Cette synthèse en six mouvements est la couche d'orientation. Elle ne remplace pas les neuf étapes canoniques de `data/guided-route.yml`.
 
 ### 1 — Situer : qu'est-ce qu'un LLM ?
 
@@ -62,7 +63,15 @@ Ouvrir progressivement la boîte en quatre mouvements :
 
 Pages centrales : [Texte et données](../site/fr/text-data.qmd), [Embeddings](../site/fr/embedding-space.qmd), [Représentations contextualisées](../site/fr/contextualized-representations.qmd), [Transformer](../site/fr/transformer.qmd), [Q/K/V](../site/fr/queries-keys-values.qmd), [Attention](../site/fr/scaled-dot-product-attention.qmd), [Masque causal](../site/fr/causal-masking.qmd), [Logits](../site/fr/logits.qmd), [Probabilités](../site/fr/probabilites.qmd).
 
-### 4 — Comprendre les usages : que fait-on de la prédiction ?
+### 4 — Concevoir et exploiter le contexte : que fournit-on au modèle ?
+
+L'**apprentissage en contexte** (*in-context learning*, ICL) décrit comment le modèle adapte ses réponses aux instructions et démonstrations présentes dans son contexte, sans mettre à jour ses paramètres. L'**ingénierie du contexte** (*context engineering*) désigne le travail du système qui sélectionne, récupère, structure, actualise et sécurise les informations transmises au modèle.
+
+Ces notions sont liées mais différentes : ICL décrit un comportement du modèle ; context engineering décrit une pratique de conception du système. Le prompt engineering en est une partie, tandis que RAG et mémoire sont des mécanismes qui peuvent alimenter le contexte sans se confondre avec lui.
+
+Pages centrales : [Apprentissage en contexte](../site/fr/in-context-learning.qmd), [Ingénierie du contexte](../site/fr/context-engineering.qmd). Exercices : [ICL](../site/fr/exercises/in-context-learning.qmd), [context engineering](../site/fr/exercises/context-engineering.qmd).
+
+### 5 — Comprendre les usages : que fait-on de la prédiction ?
 
 La distribution prédictive ouvre trois branches sœurs :
 
@@ -74,7 +83,7 @@ L'évaluation est transversale : elle mesure le comportement du modèle sur des 
 
 Pages centrales : [Génération](../site/fr/generation.qmd), [Vraisemblance](../site/fr/vraisemblance.qmd), [Cross-entropie](../site/fr/cross-entropy.qmd), [Loss](../site/fr/loss.qmd), [Gradients](../site/fr/gradients.qmd), [Évaluation expérimentale](../site/fr/evaluation-experimentale.qmd).
 
-### 5 — Explorer selon son besoin
+### 6 — Explorer selon son besoin
 
 Après cette vue d'ensemble, le lecteur choisit librement :
 
@@ -97,6 +106,10 @@ Observer une génération complète (boîte noire)
 Expliquer le calcul
 Texte → tokens → représentations → Transformer → distribution
       ↓
+Concevoir et exploiter le contexte
+      ├── ICL : exploiter les exemples sans mise à jour des paramètres
+      └── Context engineering : préparer et gérer les informations
+      ↓
 Comprendre les usages de la prédiction
       ├── Générer : sélectionner et réinjecter
       ├── Scorer : évaluer une cible observée
@@ -105,7 +118,7 @@ Comprendre les usages de la prédiction
 Explorer : construire · pratiquer · approfondir · consulter
 ```
 
-Ce schéma est un résumé de lecture. Il ne remplace ni le registre des huit étapes, ni le graphe computationnel, ni la carte des concepts.
+Ce schéma est un résumé de lecture. Il ne remplace ni le registre des neuf étapes, ni le graphe computationnel, ni la carte des concepts.
 
 ## 3. Audit de l'existant
 
@@ -115,17 +128,17 @@ Ce schéma est un résumé de lecture. Il ne remplace ni le registre des huit é
 - Le panorama commence par le système global et distingue LLM, GPT et Transformer.
 - La génération est volontairement présentée tôt comme aperçu « boîte noire », puis reprise plus en détail. Cette répétition a une justification pédagogique : voir le phénomène avant d'en étudier les mécanismes.
 - Le parcours guidé distingue le calcul prédictif des usages génération, scoring et apprentissage.
-- `guided-route.yml` centralise les huit étapes et leurs objectifs bilingues ; les pages facultatives ne sont pas des prérequis.
+- `guided-route.yml` centralise les neuf étapes et leurs objectifs bilingues ; les pages facultatives ne sont pas des prérequis.
 - La carte distingue pages, concepts et relations, au lieu de réduire tout le contenu à une arborescence unique.
 - Build, Practice et Deepen ont des destinations distinctes.
 
 ### Frictions observées dans les sources
 
 1. **La carte cumule plusieurs fonctions.** Elle présente le parcours guidé, les territoires, rubriques, pages, notions canoniques, filtres et vues interactives. C'est utile pour explorer, mais beaucoup à traiter pour quelqu'un qui veut seulement savoir par où commencer.
-2. **La vue courte n'est pas assez immédiatement distincte de la vue exhaustive.** Huit étapes et la carte détaillée arrivent rapidement, alors que le lecteur a d'abord besoin de retenir quelques idées structurantes.
+2. **La vue courte n'est pas assez immédiatement distincte de la vue exhaustive.** Neuf étapes et la carte détaillée arrivent rapidement, alors que le lecteur a d'abord besoin de retenir quelques idées structurantes.
 3. **La double présence de la génération peut sembler redondante.** Son rôle d'aperçu puis de reprise détaillée doit être explicitement annoncé.
 4. **La navigation latérale est profonde.** Les sous-sections aident à retrouver les pages, mais peuvent faire croire que chaque page est un chapitre obligatoire ou que l'arborescence représente exactement le calcul.
-5. **Les étapes détaillées mélangent plusieurs granularités.** Les huit étapes conviennent au guidage, mais les intitulés de haut niveau doivent rester formulés en questions et résultats compréhensibles.
+5. **Les étapes détaillées mélangent plusieurs granularités.** Les neuf étapes conviennent au guidage, mais les intitulés de haut niveau doivent rester formulés en questions et résultats compréhensibles.
 6. **Les branches scoring et apprentissage sont moins visibles dans la navigation que la chaîne de calcul.** Leur distinction mérite d'être présentée dans une synthèse simple, sans les transformer en étapes de génération.
 7. **La carte et la sidebar peuvent être prises pour deux parcours concurrents.** Leur rôle respectif doit être rappelé au point de choix.
 

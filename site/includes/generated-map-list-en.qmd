@@ -15,6 +15,9 @@
       - [Logits: scores before normalization](logits.html)
       - [Output probabilities: from logits to tokens](probabilities.html)
       - [Entropy: uncertainty over the next token](entropy.html)
+  - Context and adaptation
+    - [In-context learning](in-context-learning.html)
+    - [Context engineering](context-engineering.html)
   - Observed-target scoring
     - [Likelihood and log-likelihood](likelihood.html)
     - [Cross-entropy: the token-prediction objective](cross-entropy.html)
@@ -77,7 +80,6 @@
     - [The mathematical chain of LLM training](mathematical-foundations.html)
     - [Score centering in off-policy LLM reinforcement learning](score-centering.html)
   - Inference and efficiency
-    - [In-context learning](in-context-learning.html)
     - [Advanced decoding strategies](decoding-strategies.html)
     - [Complexity and parallelism in LLMs](llm-computational-complexity.html)
   - Scale and research questions

@@ -15,6 +15,9 @@
       - [Logits : les scores avant normalisation](logits.html)
       - [Probabilités de sortie : des logits aux tokens](probabilites.html)
       - [Entropie : incertitude sur le prochain token](entropy.html)
+  - Contexte et adaptation
+    - [Apprentissage en contexte (in-context learning)](in-context-learning.html)
+    - [Ingénierie du contexte (context engineering)](context-engineering.html)
   - Scoring des tokens observés
     - [Vraisemblance et log-vraisemblance](vraisemblance.html)
     - [Entropie croisée : l'objectif de prédiction des tokens](cross-entropy.html)
@@ -77,7 +80,6 @@
     - [La chaîne mathématique de l’entraînement d’un LLM](mathematical-foundations.html)
     - [Centrage du score en apprentissage par renforcement hors politique](score-centering.html)
   - Inférence et efficacité
-    - [Apprentissage en contexte (in-context learning)](in-context-learning.html)
     - [Stratégies avancées de décodage](decoding-strategies.html)
     - [Complexité et parallélisme dans les LLM](llm-computational-complexity.html)
   - Échelle et questions de recherche

@@ -800,7 +800,7 @@ ROUTE_PART_BY_FIRST_STAGE: dict[str, tuple[str, str, str]] = {
 def validate_route_projection(stages: list[ResolvedGuidedRouteStage]) -> None:
     """Guard the reader-facing three-part projection of the canonical route.
 
-    The eight-stage registry (data/guided-route.yml) remains the canonical
+    The nine-stage registry (data/guided-route.yml) remains the canonical
     curriculum model; the three parts are the orientation projection
     recommended by docs/understand-llms-route-audit-2026-11-09.md. Renaming
     or reordering a boundary stage must update ROUTE_PARTS, not silently

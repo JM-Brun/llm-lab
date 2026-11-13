@@ -157,7 +157,6 @@ Les pages canoniques du parcours principal restent propriétaires des définitio
 
 **Question directrice :** comment le modèle exploite-t-il le contexte, choisit-il ses sorties et mobilise-t-il ses ressources ?
 
-- [Apprentissage en contexte](in-context-learning.qmd) — exemples dans le prompt sans mise à jour des paramètres.
 - [Stratégies avancées de décodage](decoding-strategies.qmd) — transformations de distribution et recherche de séquences.
 - [Complexité et parallélisme dans les LLM](llm-computational-complexity.qmd) — calcul, mémoire et parallélisme en entraînement, préremplissage et décodage.
 
