@@ -76,7 +76,7 @@ Language-model training commonly uses *adaptive* optimizers such as Adam and its
 ::: {.callout-warning title="Misconceptions"}
 - **“The optimizer computes the gradient.”** Backpropagation computes it; the optimizer only consumes it.
 - **“A smaller learning rate is always safer.”** It is more stable per step but can be too slow to reach a useful loss within the available compute; the best value depends on model, batch size and optimizer.
-- **“Training stops when the loss reaches zero.”** Cross-entropy with a softmax output rewards ever-larger confidence in the target and has no finite minimum on a perfectly fitted dataset; in practice, runs are stopped by a compute budget or by validation behaviour.
+- **“Training stops when the loss reaches zero.”** With perfectly separable one-hot targets and no regularization, softmax cross-entropy can approach zero as logits become increasingly confident, without reaching zero at finite logits. This is not a universal property of every objective or dataset; in practice, stopping depends on the compute budget and validation behaviour.
 :::
 
 ## Training loss versus validation loss
