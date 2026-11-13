@@ -196,6 +196,10 @@ The mechanisms and limitations of ICL, [scaling laws](scaling-laws.qmd), [emerge
 
 **The mental model to keep:** the Transformer changes the path of computation; pretraining builds a reusable foundation; transfer explains why that foundation can support varied tasks. Scale and adaptation methods later broadened capabilities and uses without replacing these three foundational ideas.
 
+::: {.callout-note title="Three pages, three complementary perspectives"}
+The overview answers **what an LLM is and how it works**. [The history of Transformers](transformer-history.qmd) explains **which historical problems led to this architecture**. [LLM evolution](llm-evolution.qmd) compares **the dimensions that have changed since GPT-2**—scale, post-training, ICL, multimodality, inference-time compute, and tool-using systems. These pages complement one another; they are not three versions of the same story.
+:::
+
 ## Choosing an approach
 
 LLMs are commonly used to generate or rewrite text, summarize, translate, extract information, classify, assist with programming, and answer questions.
