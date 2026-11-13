@@ -119,9 +119,22 @@ Distinguish prompt prefill from iterative decode, select a token with a decoding
 
 :::
 
+::: {.guided-route-stage #guided-stage-context-use}
+
+### 07 · Use and design context
+
+Distinguish in-context learning from parameter updates, then understand how a system selects, structures, updates, and secures the information supplied to the model.
+
+**Core pages**
+
+- [In-context learning](in-context-learning.html)
+- [Context engineering](context-engineering.html)
+
+:::
+
 ::: {.guided-route-stage #guided-stage-scoring}
 
-### 07 · Score observed tokens
+### 08 · Score observed tokens
 
 Evaluate the probability assigned to a known target, build a sequence likelihood, and connect negative log-likelihood to cross-entropy without selecting a token or changing parameters.
 
@@ -134,7 +147,7 @@ Evaluate the probability assigned to a known target, build a sequence likelihood
 
 ::: {.guided-route-stage #guided-stage-training}
 
-### 08 · Learn and update parameters
+### 09 · Learn and update parameters
 
 Connect observed targets to the aggregated loss, gradients, and parameter updates, then to the repeated training loop and validation loss; understand teacher forcing conceptually without making shifted-example preparation a stage of the Theory path.
 
