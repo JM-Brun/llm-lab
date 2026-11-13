@@ -861,3 +861,70 @@ A reader should not leave with the rule “no LayerNorm means a deep Transformer
 
 - **Beginner:** can explain why a one-hot target reduces cross-entropy to the negative log-probability of the observed token.
 - **Experienced reader:** can distinguish local cross-entropy from batch loss, identify the conditions under which KL minimization is equivalent for fixed targets, and recognize alignment, masking and numerical-stability requirements.
+
+
+---
+
+# Addendum — third-wave audit 5/6: `loss`
+
+**Status:** French and English lessons and exercise hubs reviewed. No content change is warranted in this pass; source-level review only.
+
+## Page identity and role
+
+- FR: `site/fr/loss.qmd`; EN: `site/en/loss.qmd`
+- Practice: `site/fr/exercises/loss.qmd` and `site/en/exercises/loss.qmd`
+- Role: aggregate valid per-token penalties into a scalar batch objective, with explicit target alignment, masks and reduction conventions.
+- Boundary: cross-entropy derives the local penalty; this lesson owns aggregation, ignored positions and the distinction between target masks and attention visibility; gradients differentiates the resulting objective.
+
+## Page-level value record
+
+| Field | Finding |
+|---|---|
+| Learner question | How do token-level penalties become the scalar quantity actually optimized during training? |
+| Beginner outcome | Explain the mean over valid target positions and why padding/ignored positions must be excluded from both numerator and denominator. |
+| Experienced-reader value already present | The page distinguishes token-indexing conventions, sum/mean/per-sequence/weighted reductions, teacher forcing from prefill, target masking from attention masking, and objective loss from metrics. It explicitly warns that a one-token shift error can produce a plausible decreasing loss while training the wrong task. |
+| Bilingual check | FR/EN equations, illustrative token losses, teacher-forcing explanation, weighted denominator caveat, perplexity conversion and pipeline diagnostics align. The exercise hubs test valid-target denominators, generalization and comparability of perplexity. |
+| Gap found | No critical conceptual gap found. The distinction between loss masking and attention visibility is particularly important and is already explained precisely. |
+| Change made | None. The page already handles implementation conventions and failure modes without duplicating the derivation of cross-entropy. |
+| Depth placement | Preserve the detailed target-shift and reduction discussion here; keep local probability penalty in cross-entropy and parameter derivatives in gradients. |
+| Validation | Reviewed both lessons and both exercise hubs. No code execution or browser render is claimed. |
+
+## Double-audience test
+
+- **Beginner:** can explain why ignored targets must not affect either the numerator or denominator of a valid-token mean.
+- **Experienced reader:** can distinguish sequence and token averaging, weighted reductions, target alignment, and the separate roles of loss and attention masks.
+
+---
+
+# Addendum — third-wave audit 6/6: `gradients`
+
+**Status:** French and English lessons and exercise hubs reviewed. A bilingual depth mismatch is corrected in the English lesson.
+
+## Page identity and role
+
+- FR: `site/fr/gradients.qmd`; EN: `site/en/gradients.qmd`
+- Practice: `site/fr/exercises/gradients.qmd` and `site/en/exercises/gradients.qmd`
+- Role: connect the local loss derivative with respect to logits to parameter gradients through the chain rule and explain the optimizer's update.
+- Boundary: loss defines the scalar objective and reduction; gradients derives sensitivities and backpropagation; training-loop places the update into the repeated optimization process.
+
+## Page-level value record
+
+| Field | Finding |
+|---|---|
+| Learner question | How does a penalty on an observed token produce updates to millions or billions of model parameters? |
+| Beginner outcome | Interpret the gradient as local sensitivity, understand the one-hot softmax-cross-entropy derivative, and distinguish backpropagation from the optimizer update. |
+| Experienced-reader value already present | The lesson includes the valid-position gradient under mean reduction, a zero-gradient nuance for ignored logits that can still influence valid positions through attention, a Jacobian-vector interpretation of backpropagation, and finite-difference verification caveats. |
+| Bilingual check | The core equations and exercise questions align, but the French lesson had a more complete worked parameter example: it showed the full outer-product weight-gradient matrix and every row's numerical SGD change. The English version only showed the matrix and summarized the changes. The French lesson also explained why the one-hot logit-gradient components sum to zero, which was absent in English. |
+| Gap found | The English lesson provided less of the concrete mathematical depth present in French, despite covering the same topic and learner outcome. |
+| Change made | Added the sum-to-zero explanation and expanded the English affine-projection example to show the full $4\times2$ gradient matrix, each row's numerical parameter change under $\eta=0.1$, and the fact that earlier layers receive gradients through further chain-rule applications. |
+| Depth placement | Keep the explicit toy calculation in the lesson; the exercise hub already tests the derivative identity, finite differences and learning-rate effect without needing a duplicate matrix calculation. |
+| Validation | Compared both lessons and both exercise hubs; checked the outer product $g_z h^\top$ and update values algebraically against the French example. No code execution or rendered browser validation is claimed. |
+
+## Why this correction matters
+
+A bilingual learning path should not give one language a materially richer mathematical demonstration than the other. The English lesson now has the same bridge from the logit gradient to a concrete parameter matrix and a numerical SGD update, while retaining its own clear phrasing. The added sum-to-zero observation also connects the derivative to the softmax common-shift invariance already taught in the logits lesson.
+
+## Double-audience test
+
+- **Beginner:** can trace how the target's probability affects the logits and how a gradient indicates the direction of a parameter update.
+- **Experienced reader:** can derive the outer-product gradient for an affine output head, account for mean-reduction scaling, and distinguish a local derivative from an optimizer's full update dynamics.
