@@ -73,10 +73,10 @@ Le changement décisif ne vient pas de l’architecture seule. Les représentati
 
 GPT-3 a rendu cette possibilité particulièrement visible : les auteurs ont évalué un modèle autorégressif de 175 milliards de paramètres sur de nombreuses tâches, sans mise à jour des gradients, en indiquant la tâche et des exemples uniquement dans le texte du prompt. Les auteurs soulignent aussi les limites et les tâches sur lesquelles cette approche échoue ([Brown et al., 2020](https://arxiv.org/abs/2005.14165)).
 
-Il faut distinguer trois formes de transfert :
-- **Fine-tuning** : les paramètres sont adaptés à la tâche aval.
-- **Zero-shot / few-shot et ICL** : la tâche et éventuellement des exemples sont fournis dans le contexte, sans mise à jour des paramètres. Le terme *zero-shot* signifie ici zéro démonstration de la tâche dans le prompt, pas absence de tout apprentissage antérieur.
-- **RAG** : des informations externes sont récupérées à l’utilisation et insérées dans le contexte ; ce mécanisme complète le modèle plutôt qu’il ne transfère ses paramètres.
+Il faut distinguer deux mécanismes de réutilisation du modèle, auxquels s’ajoute une approche complémentaire :
+- **Transfert avec adaptation (*fine-tuning*)** : les paramètres sont ajustés sur des exemples de la tâche aval.
+- **Réutilisation sans mise à jour des poids (*zero-shot* / *few-shot*, dont l’ICL)** : la tâche et éventuellement des démonstrations sont fournies dans le contexte. *Zero-shot* signifie ici zéro démonstration de la tâche dans le prompt, pas absence de tout apprentissage antérieur.
+- **RAG (approche complémentaire)** : des informations externes sont récupérées à l’utilisation et insérées dans le contexte. Le RAG complète les connaissances mobilisables par le modèle, mais ne transfère pas ses paramètres et ne constitue pas, au sens strict, du transfert d’apprentissage.
 
 Le modèle n’a donc pas besoin d’avoir reçu une étiquette explicite pour chaque tâche qu’il saura parfois effectuer. Le pré-entraînement sur de grands corpus lui fait apprendre des régularités linguistiques, des formats, des associations et des connaissances réutilisables. Une consigne peut ensuite sélectionner ou combiner ces compétences. Mais les données d’entraînement peuvent aussi contenir des exemples proches de la tâche : « jamais entraîné spécifiquement » ne signifie pas « jamais exposé à quelque chose de similaire ».
 
