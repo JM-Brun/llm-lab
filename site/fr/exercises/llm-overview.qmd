@@ -31,6 +31,17 @@ tags: ["type:exercise-hub", "destination:practice", "topic:llm-overview-exercise
 3. **Un modèle renvoie une demande structurée pour appeler `lookup_order(order_id=42)`. Le système de commande a-t-il déjà été interrogé ?** Non. Le modèle a produit une demande ; l'application qui l'entoure doit en valider les arguments et les permissions, exécuter l'outil, puis renvoyer son résultat au modèle. Produire un appel d'outil ne signifie pas l'exécuter.
 4. **Une conversation étiquette les messages `system`, `user` et `assistant`. S'agit-il de trois couches du Transformer ?** Non. Ce sont des rôles du format de message utilisé par l'application ou l'API. L'architecture du modèle est une question distincte, et une étiquette de rôle n'impose pas à elle seule une politique.
 
+5. **Reconstituer la boucle de génération.** Un assistant reçoit un prompt et doit produire trois tokens. Remettez dans l'ordre ces opérations : (a) ajouter le token choisi au contexte ; (b) convertir le texte en tokens ; (c) vérifier si la limite de trois nouveaux tokens est atteinte ; (d) calculer la distribution du prochain token ; (e) choisir un token selon la règle de décodage ; (f) traiter le contexte initial. Les paramètres du modèle changent-ils à chaque tour ?
+
+<details>
+<summary>Afficher la réponse et le raisonnement</summary>
+
+Le traitement initial du prompt (f) commence par la tokenisation du texte (b), puis le modèle calcule la distribution (d). La règle de décodage sélectionne un token (e), qui est ajouté au contexte (a). On vérifie ensuite la condition d'arrêt (c) ; si la limite n'est pas atteinte, on recalcule une distribution à partir du contexte enrichi et on recommence la sélection. Les paramètres restent fixes pendant toute cette inférence : seul le contexte change. La limite de trois tokens est ici un critère d'arrêt externe, pas une modification du modèle.
+
+</details>
+
 ::: {.language-switch}
 **Langue :** [Français](llm-overview.qmd) · [English](../../en/exercises/llm-overview.qmd)
 :::
+
+
