@@ -917,7 +917,9 @@ relations:
   - {from: platonic-representation-hypothesis, type: evaluated-by, to: held-out-evaluation}
   - {from: laplacian-eigenmaps, type: applies-to, to: positive-pair-distribution}
   - {from: laplacian-eigenmaps, type: contributes-to, to: platonic-representation-hypothesis}
-  - {from: joint-embedding-predictive-architecture, type: represented-by, to: laplacian-eigenmaps}relations:
+  - {from: joint-embedding-predictive-architecture, type: represented-by, to: laplacian-eigenmaps}
+
+relations:
   - {from: document-retrieval, type: contributes-to, to: retrieval-augmented-generation}
   - {from: retrieval-augmented-generation, type: contributes-to, to: context-engineering}
   - {from: persistent-memory, type: contributes-to, to: context-engineering}
