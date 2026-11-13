@@ -37,6 +37,15 @@ First divide the scores by $\sqrt{4}=2$, giving $(1,0)$. Softmax is approximatel
 
 </details>
 
+2. A position receives an attention weight of $0.95$. Can we conclude that it makes the largest contribution to the output or is the primary cause of the prediction?
+
+<details>
+<summary>Show the reasoning</summary>
+
+No. Before the output projection, its direct contribution is $0.95v_j$: its norm also depends on $\\lVert v_j\\rVert$, not only on the weight. The output projection, residual connections, normalization, and MLP then transform the signal further. A high weight is a relative aggregation weight, not a measure of causal importance. Studying causal effect requires an appropriate intervention-based analysis.
+
+</details>
+
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/scaled-dot-product-attention.qmd) · [English](scaled-dot-product-attention.qmd)
 :::
