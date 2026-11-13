@@ -184,6 +184,8 @@ The questions for this tour and their worked answers are collected on its [dedic
 
 ## Build path navigation
 
+{{< include ../includes/generated-suggested-route-en-gpt-config-walkthrough.qmd >}}
+
 ## Connections
 
 - **Next stop**: [building-block operations (`gpt_ops.py`)](gpt-ops-walkthrough.qmd).
