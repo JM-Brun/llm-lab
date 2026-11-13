@@ -6,12 +6,14 @@
 
 ### 01 · Place the system in context
 
-Understand what an LLM is and follow a complete generation loop as a black box with fixed parameters before studying its internal mechanisms.
+Understand what an LLM is, follow a complete generation loop, define in-context learning, and understand how a system engineers the context supplied to the model.
 
 **Core pages**
 
 - [Overview: what is an LLM?](llm-overview.html)
 - [Generating text: inference step by step](generation.html)
+- [In-context learning](in-context-learning.html)
+- [Engineering an LLM's context (context engineering)](context-engineering.html)
 
 **Optional resources**
 
