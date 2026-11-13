@@ -213,3 +213,69 @@ Un enrichissement ne doit être considéré comme terminé que si :
 Le chantier doit commencer par les six pages de la vague 1. Le diagnostic actuel fournit une carte de priorisation, pas une autorisation à réécrire sans examen. Chaque modification doit être justifiée par une lacune vérifiée, documentée par des sources, et évaluée selon le double public du parcours.
 
 Le principe directeur est simple : **chaque page doit être une porte d'entrée pour le novice et une occasion de réflexion pour le lecteur expérimenté.**
+
+
+---
+
+# Addendum — page audit 1/6: `text-data`
+
+**Status:** first page of wave 1 reviewed and enriched in both languages. This is a source-level review of the Quarto files and neighboring canonical pages; the rendered browser experience and CI build have not yet been verified.
+
+## Page identity and ownership
+
+- FR: `site/fr/text-data.qmd`
+- EN: `site/en/text-data.qmd`
+- Practice: `site/fr/exercises/text-data.qmd` and `site/en/exercises/text-data.qmd`
+- Role: core Understand lesson, following generation and preceding embedding lookup.
+- Canonical boundary: explain the prompt path from text to tokens, IDs and initial embeddings. Corpus selection/cleaning belongs to `corpus-preparation`; tokenizer algorithms to `tokenization-strategies`; empirical design and multilingual comparisons to `tokenizer-design-evaluation`; Unicode details to `unicode-text`.
+
+## Page-level value record
+
+| Field | Finding |
+|---|---|
+| Learner question | How does an ordinary text prompt become the discrete input consumed by a language model? |
+| Beginner outcome | Trace text → tokenizer → tokens → IDs → embedding lookup, and distinguish IDs from vectors and contextual representations. |
+| Experienced-reader value already present | The page distinguishes vocabulary size from embedding dimension; prompt encoding from corpus preparation; and absolute position embeddings from RoPE's use inside attention. |
+| Best-source contribution | The existing companion material uses Hugging Face's component-level view of a tokenizer pipeline, inspectable BPE examples, and research on multilingual representation cost. |
+| LLM Lab synthesis | Connect the input representation to context budgets and system cost while preserving the conceptual boundary between the core prompt path and optional tokenizer engineering. |
+| Weak element before this change | The page stated that tokenization affects sequence length and compute cost, but left the practical implications mostly implicit. It did not make the unequal token-budget consequences of multilingual segmentation concrete for a core-route reader. |
+| Change made | Added a compact bilingual callout on context-budget consumption, sequence-processing cost, multilingual variation, and the distinction between representation efficiency and language quality. Added a corresponding self-check to both exercise pages. |
+| Depth placement | Core consequence on this page; tokenizer metrics, empirical comparisons, and algorithm details remain in the linked Deepen pages. |
+| Validation | Source files fetched from the repository; edits applied to both language versions and both exercise pages; FR/EN content intentionally parallel. Render, link checker, and CI remain unverified. |
+
+## Why this is the right addition
+
+The core page already had a strong pipeline explanation and explicitly warned that token IDs are not semantic quantities. Rewriting the whole page or importing tokenizer algorithms would have duplicated the existing Deepen material. The higher-value gap was the system-level consequence:
+
+1. At a fixed context limit, tokenization determines how much source text can fit alongside history, retrieved material, instructions and generated output.
+2. Longer sequences mean more positions to process and can raise inference time or cost, although the exact effect depends on architecture, implementation, hardware and service.
+3. The same content translated into different languages can occupy different token budgets. This is a representation-cost difference, not by itself evidence of a model capability gap or a language-quality ranking.
+
+The page now states those consequences without pretending that token count alone predicts downstream quality. It hands off empirical measurement to the existing tokenizer-evaluation page rather than reproducing its metrics and literature review.
+
+## Research basis already curated in the companion evaluation page
+
+The existing `tokenizer-design-evaluation` pages provide a more detailed and appropriately qualified research synthesis:
+
+- Goldman et al. (2024), [Unpacking Tokenization: Evaluating Text Compression and its Correlation with Model Performance](https://aclanthology.org/2024.findings-acl.134/): studies empirical relationships between compression and downstream results; correlation is not a universal causal selection rule.
+- Schmidt et al. (2024), [Tokenization Is More Than Compression](https://aclanthology.org/2024.emnlp-main.40/): argues that compression alone does not capture every relevant tokenizer property.
+- Ali et al. (2024), [Tokenizer Choice For LLM Training: Negligible or Crucial?](https://aclanthology.org/2024.findings-naacl.247/): studies tokenizer effects on decoder-only model training cost and downstream performance under specified model, language and evaluation conditions; individual reported cost differences must not be generalized as universal inference penalties.
+- Arnett et al. (2025), [Explaining and Mitigating Crosslingual Tokenizer Inequities](https://proceedings.neurips.cc/paper_files/paper/2025/hash/5b91cefbfa52340af2f16f249572dc76-Abstract-Conference.html): analyzes cross-language compression differences across many tokenizer configurations, but does not train LLMs in that study to establish downstream quality effects.
+- Chiu (ACL 2026), [TokLens: A Multilingual Lens on Tokenizer Quality for LLMs](https://aclanthology.org/2026.acl-srw.18/): proposes multilingual intrinsic metrics and reports associations in bounded benchmark settings; the observed relationships are correlational and do not establish causal tokenizer effects.
+
+The detailed study summaries and caveats remain on the companion page. The core lesson links there rather than duplicating its research table.
+
+## Double-audience test after the change
+
+- **Beginner:** can explain why a context limit is counted in tokens, why tokenization changes the amount of text that fits, and why fewer tokens do not mean more meaning.
+- **Experienced reader:** is prompted to distinguish representation efficiency, context allocation, system cost and downstream language quality—four quantities that are easy to conflate.
+- **Remaining opportunity:** a later exercise or controlled experiment could compare token counts for parallel texts using pinned tokenizer revisions and report distributions by language and text type. That experiment should live in Practice/experiment, not be simulated with invented counts on this concept page.
+
+## Files changed in this page pass
+
+- `site/fr/text-data.qmd`
+- `site/en/text-data.qmd`
+- `site/fr/exercises/text-data.qmd`
+- `site/en/exercises/text-data.qmd`
+
+**Not claimed:** no full site render, visual inspection, learner study, or CI run has been completed as part of this page pass.
