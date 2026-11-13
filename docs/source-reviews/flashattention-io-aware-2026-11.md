@@ -26,6 +26,7 @@ The retrieved newsletter page exposes the title, date, introductory text, runnin
 - “Exact” means mathematical equivalence subject to floating-point effects and implementation tolerances, not universal bitwise identity.
 - Online softmax maintains a running maximum m, exponential sum l and weighted-value accumulator u. For a new tile with local maximum mt, sum lt and weighted sum ut: m' = max(m, mt); a = exp(m - m'); b = exp(mt - m'); l' = a*l + b*lt; u' = a*u + b*ut. The final output is u/l. This merges partial statistics without approximation.
 - Backward recomputation trades additional arithmetic for avoiding storage of the full probability matrix. It is not free.
+- FlashAttention is a family of algorithm/kernel generations, not one immutable kernel. FlashAttention-2 improves parallelism and work partitioning; FlashAttention-3 targets Hopper GPUs with asynchronous overlap, warp specialization, TMA and low-precision execution. Its reported gains are tied to the paper's hardware and workload and must not be generalized to every GPU or dtype. See https://arxiv.org/abs/2307.08691 and https://arxiv.org/abs/2407.08608.
 - Speed depends on sequence length, head dimension, batch size, dtype, masks, layout, GPU architecture, backend eligibility, launch overhead and baseline quality.
 - Training, prefill and autoregressive decode have different shapes and bottlenecks. Do not generalize one phase's speedup to all others.
 - PyTorch SDPA dispatches among eligible implementations. Calling SDPA does not prove that a FlashAttention kernel ran.
@@ -46,5 +47,6 @@ The newsletter is a secondary pedagogical source and its full text was unavailab
 
 - Dao et al. (2022), *FlashAttention*, NeurIPS: https://arxiv.org/abs/2205.14135
 - Dao (2024), *FlashAttention-2*: https://arxiv.org/abs/2307.08691
+- Shah et al. (2024), *FlashAttention-3*: https://arxiv.org/abs/2407.08608
 - PyTorch SDPA API: https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html
 - PyTorch SDPA tutorial: https://docs.pytorch.org/tutorials/intermediate/scaled_dot_product_attention_tutorial.html
