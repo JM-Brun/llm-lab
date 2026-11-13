@@ -55,6 +55,18 @@ La traduction qui consomme davantage de tokens utilise une plus grande part du b
 
 </details>
 
+4. **Reconstituer la chaîne d'entrée.** On fournit au tokenizer le texte « chat suit le chat ». Il renvoie les tokens [« chat », « suit », « le », « chat »], puis le vocabulaire associe les IDs [17, 42, 8, 17]. La matrice d'embeddings $E$ a la forme $(V,d)$. Décrivez, dans l'ordre, les objets obtenus entre le texte et l'entrée vectorielle du Transformer. Quelle est la forme de la séquence d'IDs, quelle ligne de $E$ est lue pour le dernier token, et que peut-on affirmer des deux occurrences de « chat » ?
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+Le texte est d'abord segmenté par le tokenizer en tokens ; le vocabulaire associe ensuite à chaque token son ID, ici la séquence $(17,42,8,17)$ de forme $(L)=(4)$. Chaque ID sert d'indice de ligne dans $E$ : le dernier token sélectionne la ligne 17. Le lookup produit donc une séquence de quatre vecteurs, de forme $(L,d)=(4,d)$. Les deux occurrences de « chat » ont le même ID et sélectionnent le même vecteur initial. Cela ne signifie ni que l'ID 17 mesure le sens du token, ni que les états contextualisés des deux occurrences resteront identiques après les couches du Transformer.
+
+**Critère de réussite :** restituer l'ordre texte → tokens → IDs → lookup, donner les formes $(4)$ puis $(4,d)$, et distinguer le vecteur initial de l'état contextualisé.
+
+</details>
+
+
 ::: {.language-switch}
 **Langue :** [Français](text-data.qmd) · [English](../../en/exercises/text-data.qmd)
 :::
