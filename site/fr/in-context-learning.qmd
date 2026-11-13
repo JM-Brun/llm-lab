@@ -91,7 +91,7 @@ Mais ses résultats dépendent fortement :
 
 Un modèle peut reproduire le format sans avoir identifié la règle pertinente. Il peut aussi être sensible à l'ordre des exemples, aux exemples contradictoires ou à des détails non pertinents. L'ICL ne garantit donc ni une généralisation correcte ni une compréhension de la tâche au sens humain.
 
-## Comment l'étudier expérimentalement ?
+::: {.callout-note collapse="true" title="Approfondissement : étudier l'ICL expérimentalement"}
 
 Pour distinguer apprentissage de la règle et simple imitation :
 
@@ -101,8 +101,9 @@ Pour distinguer apprentissage de la règle et simple imitation :
 4. tester des cas nouveaux qui exigent l'application de la règle plutôt que la copie ;
 5. contrôler la longueur du prompt et les effets de position ;
 6. répéter les essais avec plusieurs formulations et graines d'échantillonnage.
+:::
 
-Un bon protocole sépare la réussite sur les exemples vus de la généralisation à des cas non montrés.
+
 
 ## À retenir
 
