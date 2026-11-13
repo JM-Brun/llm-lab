@@ -85,6 +85,8 @@ $$
 
 For fixed sequences and the same included positions, maximizing log-likelihood is equivalent to minimizing NLL. Averaging per token is a common scaling, useful for comparing sequences of different lengths, but it is not the same as the raw sum.
 
+For mean NLL computed with the natural logarithm, **perplexity** is $\operatorname{PPL}=\exp(\operatorname{NLL}_{\mathrm{mean}})$. It is the exponential of mean loss, or the geometric mean of the inverse probabilities assigned to observed tokens. It summarizes probabilistic fit over the units defined by the tokenizer; it does not measure overall answer quality or truth. Two perplexity values are directly comparable only when the corpus, tokenizer, evaluated positions, and reduction convention are compatible. The [Loss](loss.qmd) lesson revisits its use as a metric derived from the training objective.
+
 The next page decomposes this NLL at one target position and generalizes the one-hot case to a target distribution: [cross-entropy](cross-entropy.qmd).
 
 ## Example: the scribe continuation
