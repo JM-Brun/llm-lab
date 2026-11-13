@@ -1,6 +1,6 @@
 # Audit éditorial du parcours principal — valeur pédagogique et profondeur intellectuelle
 
-> **Statut : audit éditorial des sources terminé pour les 18 leçons principales (FR/EN), en trois vagues ; CI et rendu incrémental Quarto validés sur le commit `03f17a1`.** Le workflow a aussi passé l'audit navigateur automatisé des pages bilingues modifiées et de la navigation conceptuelle. Cela ne vaut pas étude avec des apprenants, revue visuelle humaine exhaustive ni build complet du site : le workflow a rendu les pages modifiées de façon incrémentale et a ignoré l'étape de rendu intégral.
+> **Statut : audit éditorial des sources terminé pour les 18 leçons principales (FR/EN), en trois vagues ; CI et rendu incrémental Quarto validés jusqu'au commit `4e29b7c` (PR #1084 fusionnée).** Le workflow a aussi passé l'audit navigateur automatisé des pages bilingues modifiées et de la navigation conceptuelle. Cela ne vaut pas étude avec des apprenants, revue visuelle humaine exhaustive ni build complet du site : le workflow a rendu les pages modifiées de façon incrémentale et a ignoré l'étape de rendu intégral.
 
 - Projet : [LLM Lab](https://jm-brun.github.io/llm-lab/)
 - Parcours : [LLM overview (FR)](https://jm-brun.github.io/llm-lab/fr/llm-overview.html)
@@ -184,7 +184,7 @@ Résultat : correction bilingue d'une formulation trop catégorique sur la néce
 
 Résultat : les fondations se sont révélées solides. L'écart FR/EN le plus net concernait la profondeur du calcul de gradient : l'exemple numérique complet présent en français a été ajouté à la version anglaise.
 
-### Vérifications transversales encore à réaliser
+### Bilan des vérifications transversales
 
 - CI passée sur le commit `03f17a1` : tests, contrôles qualité, délimiteurs mathématiques, formatage, lint et typage ;
 - rendu Quarto incrémental des pages modifiées réussi ; les contrôles de navigation des learning maps, du graphe, de la timeline et des liens internes ont réussi ;
@@ -209,12 +209,14 @@ Un enrichissement ne doit être considéré comme terminé que si :
 
 ## 10. Décision éditoriale
 
-L'audit des sources des 18 leçons est achevé. La décision éditoriale est volontairement sélective : seules les lacunes démontrées ont déclenché des modifications ; plusieurs pages ont été conservées parce que leur contenu répondait déjà à leur rôle. La PR [#1084](https://github.com/JM-Brun/llm-lab/pull/1084) porte les corrections et les fiches d'audit correspondantes. Elle reste à valider par les workflows et le rendu du site.
+L'audit des sources des 18 leçons est achevé. La décision éditoriale est volontairement sélective : seules les lacunes démontrées ont déclenché des modifications ; plusieurs pages ont été conservées parce que leur contenu répondait déjà à leur rôle. La PR [#1084](https://github.com/JM-Brun/llm-lab/pull/1084) a été fusionnée dans `main` le 13 novembre 2026 (merge commit `b41544e`). Les workflows CI et Quarto associés au dernier commit de la PR (`4e29b7c`) sont terminés avec succès. Le rendu complet du site reste non exécuté ; l'évaluation avec des apprenants et la revue visuelle humaine exhaustive restent à mener.
 
 Le principe directeur demeure : **chaque page doit être une porte d'entrée pour le novice et une occasion de réflexion pour le lecteur expérimenté.**
 
 
 ---
+
+> **Note de lecture :** les mentions de validation « non vérifiée » dans les fiches page-level ci-dessous sont des instantanés historiques de chaque vague d'audit. Le bilan transversal actualisé de la section 8 et le statut général en tête du document font foi pour les validations réalisées après ces vagues.
 
 # Addendum — page audit 1/6: `text-data`
 
