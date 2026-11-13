@@ -99,7 +99,7 @@ The diagram reveals two paths: one determines the weighting, the other supplies 
 
 ## Why three projections from the same input?
 
-In self-attention, Q, K, and V are three learned transformations of the same representation stream. $X$ denotes the input to the attention sublayer: in the first block it starts from token embeddings; in later blocks it is an already contextualized hidden state. Positional information may be added upstream ([positional embeddings](positional-encoding.qmd)) or incorporated into queries and keys, as with [RoPE](rope.qmd).
+In self-attention, Q, K, and V are three learned transformations of the same representation stream. $X$ denotes the input to the attention sublayer: in the first block it is the representation built from token embeddings and positional processing; in later blocks it is an already contextualized hidden state. In this project's reference GPT, learned absolute positional embeddings are **added** to token embeddings before the first block ([positional embeddings](positional-encoding.qmd)). Other architectures, such as those using [RoPE](rope.qmd), inject positional information into queries and keys inside attention.
 
 For a sequence of $T$ positions, write $X\in\mathbb{R}^{T\times d_{model}}$:
 
