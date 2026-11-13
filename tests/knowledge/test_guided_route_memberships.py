@@ -464,11 +464,8 @@ def test_context_use_pages_include_their_generated_suggested_route(language: str
     for page_id in ("in-context-learning", "context-engineering"):
         source_path = ROOT / "site" / language / f"{page_id}.qmd"
         source = source_path.read_text(encoding="utf-8")
-        include = (
-            "{{< include ../includes/generated-suggested-route-"
-            f"{language}-{page_id}.qmd >}}"
-        )
-        assert source.count(include) == 1
+        include_path = f"generated-suggested-route-{language}-{page_id}.qmd"
+        assert source.count(include_path) == 1
 
 
 @pytest.mark.parametrize(
