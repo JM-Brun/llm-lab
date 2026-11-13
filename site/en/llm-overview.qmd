@@ -164,6 +164,33 @@ This helps explain how a model trained mainly to predict the next token can tran
 **The mental model to keep:** the Transformer improved how computation is performed over a sequence; pretraining supplied a transferable foundation; scale made that foundation more capable; ICL, fine-tuning, and post-training made it usable across varied tasks. None of these elements alone explains modern LLMs. For the historical bottlenecks, precursors, and milestones, see [A history of Transformers](transformer-history.qmd).
 
 
+## Why Transformers and pretrained LLMs changed the game
+
+The breakthrough was not a single invention. It came from combining an architecture that could be trained more efficiently at scale, a reusable learning objective, and sufficiently large datasets. The comparison below shows what changed—and what did not.
+
+| Earlier bottleneck | What changed | What this enabled—and what it did not solve |
+|---|---|---|
+| **Sequential RNN computation**: each position depends on the previous hidden state, making positions within one training example difficult to process in parallel. | The Transformer computes interactions between positions through attention, without recurrence in its central computation. | Positions in a training sequence can be processed in parallel. **Autoregressive generation remains sequential**, one token at a time. |
+| **Long-distance dependencies**: useful information must pass through many recurrent steps. | Attention gives a position direct access to other positions allowed by the mask in the sequence. | Long-range relations become easier to learn, not guaranteed; dense attention still becomes more expensive as context length grows. |
+| **Representations weakly conditioned on context**: earlier approaches often relied on static vectors or states that progressively summarized the input. | Transformer representations are contextual: a token's representation depends on other accessible tokens. | The same word can have different representations in different sentences. This does not provide unlimited or persistent memory. |
+| **Task-specific training**: NLP systems often combined task-specific architectures and annotated datasets. | Self-supervised pretraining learns general patterns from text; its parameters can then be transferred, adapted, or reused directly. | One base model can support multiple tasks, sometimes without updating its weights. Transfer depends on the data, task, and evaluation; it is neither universal nor automatic. |
+| **Gap between the training objective and downstream tasks**: predicting tokens does not explicitly look like classifying, translating, summarizing, or answering questions. | Capable pretrained models can use a task instruction and examples supplied in context (*zero-shot* and *few-shot*). | *In-context learning* lets users specify a task without retraining the model. Examples condition the computation; they do not update the parameters. |
+| **Capabilities changing with scale**: some performances become useful only when several skills and resources come together. | Scaling parameters, data, and compute—and later post-training—improved performance and instruction following. | Some capabilities have been described as “emergent”, but whether they are abrupt or genuinely new depends on tasks and metrics. The interpretation remains debated. |
+
+**Transfer learning is one of the most important changes.** A model no longer has to be built and trained for only one task. Pretraining gives it reusable representations, linguistic regularities, and knowledge distributed across its parameters. This foundation can be reused in several ways:
+
+- **Transfer with adaptation (*fine-tuning*)**: update some or all parameters on task examples.
+- **Reuse without weight updates (*zero-shot* / *few-shot*, including ICL)**: describe the task in the prompt, with or without demonstrations. The model conditions its response on these elements without changing its parameters.
+
+**RAG is a complementary approach, not a form of parameter transfer learning**: a system retrieves external documents and adds them to the context at use time. It can provide information that is not necessarily present in the model, without retraining the model.
+
+This helps explain how a model trained mainly to predict the next token can translate, summarize, classify, or answer questions even when those tasks were not explicit training objectives. It has learned linguistic patterns, formats, and reusable knowledge; instructions and examples make some of these capabilities usable. “Not specifically trained for this task” does not mean “learned nothing relevant to it”.
+
+**What about emergence?** The term usually describes capabilities that seem to appear, or improve sharply, beyond some scale. It needs careful use: a binary success threshold can make gradual progress look sudden; other work connects some performances to in-context learning, memorized knowledge, or combinations of linguistic skills. Capabilities do change with scale, but their mechanisms and genuinely discontinuous nature remain debated ([Schaeffer et al., 2023](https://arxiv.org/abs/2304.15004); [Lu et al., 2024](https://aclanthology.org/2024.acl-long.279/)).
+
+**The mental model to keep:** the Transformer improved how computation is performed over a sequence; pretraining supplied a transferable foundation; scale made that foundation more capable; ICL, fine-tuning, and post-training made it usable across varied tasks. None of these elements alone explains modern LLMs. For the historical bottlenecks, precursors, and milestones, see [A history of Transformers](transformer-history.qmd).
+
+
 ## Choosing an approach
 
 LLMs are commonly used to generate or rewrite text, summarize, translate, extract information, classify, assist with programming, and answer questions.
