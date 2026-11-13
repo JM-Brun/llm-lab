@@ -196,6 +196,10 @@ Les mécanismes et limites propres à l'ICL, les [lois d'échelle](scaling-laws.
 
 **La carte mentale à retenir :** le Transformer change le chemin du calcul ; le pré-entraînement construit un socle réutilisable ; le transfert explique pourquoi ce socle sert à des tâches variées. L'échelle et les méthodes d'adaptation ont ensuite élargi les capacités et les usages, sans se substituer à ces trois idées fondamentales.
 
+::: {.callout-note title="Trois pages, trois angles complémentaires"}
+Le panorama répond à **ce qu'est un LLM et comment il fonctionne**. [L'histoire des Transformers](transformer-history.qmd) explique **quels problèmes historiques ont conduit à cette architecture**. [L'évolution des LLM](llm-evolution.qmd) compare **les dimensions qui ont changé depuis GPT-2** — échelle, post-entraînement, ICL, multimodalité, calcul à l'inférence et systèmes à outils. Ces pages se complètent : elles ne constituent pas trois versions successives du même récit.
+:::
+
 ## Choisir une approche
 
 Les LLM servent notamment à générer ou reformuler du texte, résumer, traduire, extraire des informations, classer, assister la programmation et répondre à des questions.
