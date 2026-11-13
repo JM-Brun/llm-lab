@@ -9,8 +9,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/llm-overview"
-summary: "Donne une vue d’ensemble d’un LLM : prédiction du prochain token, transformation du contexte, puis usages distincts en génération, scoring et apprentissage. Oriente vers les pages qui détaillent chaque mécanisme."
-scope: "Définit les LLM et GPT, illustre la prédiction du prochain token et distingue architecture, apprentissage des paramètres et utilisation. Oriente vers les pages canoniques sans détailler leurs mécanismes."
+summary: "Donne une vue d’ensemble d’un LLM : prédiction du prochain token, transformation du contexte, usages distincts et provenance des informations mobilisées par le modèle."
+scope: "Définit les LLM et GPT, illustre la prédiction du prochain token et distingue architecture, apprentissage des paramètres et utilisation. Introduit la distinction entre connaissances paramétriques, adaptation, récupération externe et contexte d’inférence."
 purpose: "Donner au lecteur une première représentation mentale d’un LLM : ce qu’il prédit, comment il transforme un contexte en distribution de tokens et comment cette distribution est utilisée en génération, scoring et apprentissage."
 suggested_route:
   previous: "fr/index"
@@ -19,7 +19,7 @@ hierarchy:
   parents: ["fr/index"]
   children: ["fr/transformer", "fr/transformer-architectures", "fr/generation", "fr/build-path", "fr/language-modeling-math", "fr/mathematical-foundations", "fr/llm-limits", "fr/llm-computational-complexity"]
 covered_stages: [orientation, text-input, representations, computation, prediction, inference, context-use, scoring, training]
-related: ["fr/transformer-history", "fr/scaling-laws", "fr/in-context-learning", "fr/context-engineering", "fr/llm-overview-exercises"]
+related: ["fr/transformer-history", "fr/scaling-laws", "fr/in-context-learning", "fr/context-engineering", "fr/rag-memory-boundaries", "fr/post-training", "fr/llm-overview-exercises"]
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:fr", "status:published"]
 -->
 
@@ -137,6 +137,27 @@ Décrire un modèle, c'est répondre à trois questions indépendantes.
 Un **modèle de fondation** (*foundation model*) est une catégorie plus large que le *base model* : un modèle entraîné sur des données générales à grande échelle et adaptable à de nombreuses tâches, y compris hors du langage ([Bommasani et al., 2021](https://crfm.stanford.edu/report)).
 
 **Utilisation.** À l'inférence, les paramètres ne bougent pas. Le contexte est le principal levier pour orienter la réponse : le **prompt** (le texte fourni), les exemples qu'on y place, ou les documents qu'un système de **génération augmentée par récupération** (*retrieval-augmented generation*, RAG) va chercher et y insère. Le réglage du décodage (par exemple la température ou *top-p*) peut aussi modifier le token sélectionné, sans changer le contexte ni les paramètres.
+
+## Où se trouve l'information ?
+
+Un modèle peut répondre à partir de plusieurs sources qui ne se trouvent pas au même endroit. Il faut distinguer **où une information est conservée**, **comment elle devient accessible** et **comment le modèle l'exploite**. Une réponse correcte ne permet pas, à elle seule, de savoir quel mécanisme a été utilisé.
+
+| Mécanisme | Où l'information est conservée | Comment elle peut influencer la réponse | Ce qui change |
+|---|---|---|---|
+| **Pré-entraînement** | Dans les paramètres appris, sous forme de régularités et de représentations distribuées issues du corpus | Les paramètres participent à chaque calcul de prédiction, même si le fait précis n'est pas restitué fidèlement | Les poids sont appris pendant l'entraînement |
+| **Post-entraînement (dont fine-tuning)** | Dans les paramètres adaptés ou dans des paramètres additionnels (par exemple un adaptateur) | L'adaptation modifie les continuations que le modèle tend à produire : style, suivi d'instructions, comportements et parfois associations factuelles | Les paramètres ou adaptateurs sont optimisés |
+| **RAG** | Dans des sources et index externes : documents, bases, moteurs de recherche | Le système récupère des éléments pertinents puis les transmet au modèle, généralement dans le contexte | La source externe peut être mise à jour sans réentraîner le modèle |
+| **Contexte fourni à l'inférence** | Dans les messages, instructions, exemples, documents et résultats d'outils transmis pour un appel | Le modèle conditionne son calcul sur les informations effectivement accessibles dans cette entrée | Le contenu peut changer d'une requête à l'autre, sans mise à jour des poids |
+
+Le pré-entraînement et le fine-tuning modifient les paramètres ; le RAG et le contexte ordinaire modifient les informations accessibles pendant l'inférence. Ce ne sont pas quatre mémoires équivalentes. Les paramètres ne constituent pas une base documentaire consultable : ils encodent de manière distribuée des régularités apprises, dont la restitution factuelle peut être incertaine. Le fine-tuning peut modifier des associations ou intégrer des faits, mais ne garantit pas leur mémorisation exacte ni leur actualisation fiable. Voir [Post-entraînement](post-training.qmd).
+
+**RAG et contexte ne s'opposent pas.** Le RAG est un moyen de rechercher une information externe et de l'ajouter au contexte. La recherche seule ne suffit pas : un document peut être stocké, indexé ou même récupéré sans être transmis au modèle. La frontière décisive est son intégration effective à l'entrée (ou sa mise à disposition par un outil effectivement appelé). [Ingénierie du contexte](context-engineering.qmd) décrit comment sélectionner, structurer, actualiser et sécuriser cette entrée ; [RAG, mémoire et récupération documentaire](rag-memory-boundaries.qmd) détaille les étapes et leurs défaillances.
+
+**Mémoire applicative et cache KV ne sont pas des connaissances paramétriques.** Une mémoire applicative conserve des informations entre interactions, mais celles-ci doivent être retrouvées et remises à disposition pour influencer une réponse ultérieure. Le cache KV conserve temporairement des clés et valeurs calculées pendant l'inférence pour éviter de recalculer certains états ; il accélère le décodage, sans constituer une mémoire documentaire ni un apprentissage.
+
+On peut donc suivre une chaîne simple : **source disponible → information préparée ou indexée → information récupérée → information transmise → information éventuellement exploitée**. Chaque transition peut échouer. Être disponible n'est pas être récupéré ; être récupéré n'est pas être transmis ; être transmis n'est pas être correctement utilisé.
+
+L'**apprentissage en contexte (ICL)** concerne ce que le modèle fait avec certaines informations et démonstrations présentes dans le contexte, sans mise à jour des paramètres. Toute utilisation d'un contexte n'est pas nécessairement un phénomène d'ICL au sens strict : une instruction, un fait documentaire et une série d'exemples n'ont pas le même rôle. Voir [Apprentissage en contexte](in-context-learning.qmd).
 
 ## Pourquoi les Transformers et les LLM pré-entraînés ont changé la donne
 
