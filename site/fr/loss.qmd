@@ -73,7 +73,7 @@ $$
 \sum_{(b,t)\in\mathcal{M}}\ell_{b,t}.
 $$
 
-La somme, la moyenne par séquence ou une moyenne pondérée sont également possibles. Elles ne définissent pas exactement le même objectif et peuvent modifier l'échelle des gradients ou le poids relatif des séquences.
+La somme et la moyenne par séquence sont également possibles. Une moyenne pondérée définit encore une autre convention : pour des poids non négatifs $w_{b,t}$ associés aux positions valides, on peut par exemple calculer $\mathcal{L}_w=\frac{\sum_{(b,t)\in\mathcal{M}}w_{b,t}\ell_{b,t}}{\sum_{(b,t)\in\mathcal{M}}w_{b,t}}$, lorsque le dénominateur est non nul. Le dénominateur est alors la somme des poids, et non le nombre de positions valides. Certaines API appliquent cette règle aux poids de classes ; d'autres conventions de pondération, notamment par séquence, peuvent utiliser un autre dénominateur. Ces choix changent l'objectif, l'échelle des gradients ou le poids relatif des séquences : il faut donc les documenter.
 
 ### Calcul repris du fil rouge : trois tokens du scribe
 
