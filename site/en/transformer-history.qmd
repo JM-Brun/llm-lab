@@ -73,10 +73,10 @@ The decisive change did not come from architecture alone. Pretrained representat
 
 GPT-3 made this possibility especially visible: its authors evaluated a 175-billion-parameter autoregressive model on many tasks without gradient updates, specifying tasks and examples only in the prompt text. The authors also report limitations and tasks on which this approach struggles ([Brown et al., 2020](https://arxiv.org/abs/2005.14165)).
 
-Three forms of transfer should be distinguished:
-- **Fine-tuning**: parameters are adapted to the downstream task.
-- **Zero-shot / few-shot and ICL**: the task and possibly examples are supplied in context, without updating parameters. Here, *zero-shot* means no task demonstrations in the prompt, not an absence of prior learning.
-- **RAG**: external information is retrieved at use time and inserted into context; this complements the model rather than transferring its parameters.
+Two mechanisms for reusing a model should be distinguished, alongside a complementary approach:
+- **Transfer with adaptation (*fine-tuning*)**: parameters are updated on downstream task examples.
+- **Reuse without weight updates (*zero-shot* / *few-shot*, including ICL)**: the task and possibly demonstrations are supplied in context. Here, *zero-shot* means no task demonstrations in the prompt, not an absence of prior learning.
+- **RAG (complementary approach)**: external information is retrieved at use time and inserted into context. RAG complements the knowledge the model can use, but it does not transfer model parameters and is not, strictly speaking, transfer learning.
 
 A model therefore does not need an explicit training label for every task it can sometimes perform. Pretraining on large corpora teaches reusable linguistic patterns, formats, associations, and knowledge. An instruction can then select or combine some of these capabilities. But training data may also contain examples close to the downstream task: “not specifically trained for it” does not mean “never exposed to anything similar”.
 
