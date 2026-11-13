@@ -14,7 +14,7 @@ scope: "Présente la conception et la gestion du contexte à l'inférence ; les 
 purpose: "Le lecteur doit distinguer le contexte du modèle, l'ICL et le context engineering, puis identifier les décisions qui déterminent la qualité du contexte transmis."
 suggested_route:
   previous: "fr/in-context-learning"
-  next: "fr/post-training"
+  next: null
 hierarchy:
   parents: []
   children: []
