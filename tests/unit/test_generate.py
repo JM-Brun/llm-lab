@@ -96,7 +96,7 @@ def test_generate_validation_errors() -> None:
         generate(model, np.ones(17, dtype=np.int64), 3)
     with pytest.raises(ValueError, match="out of range"):
         generate(model, np.array([1, 50], dtype=np.int64), 3)
-    with pytest.raises(ValueError, match="max_new_tokens must be >= 0"):
+    with pytest.raises(ValueError, match="max_new_tokens must be a non-negative integer"):
         generate(model, np.array([1, 2], dtype=np.int64), -1)
 
 
