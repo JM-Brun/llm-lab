@@ -143,6 +143,37 @@ This example is deliberately tiny: a lookup table, full-batch updates, plain SGD
 
 The from-scratch implementation of this loop, with checkpointing and a validation runner, is a milestone of the [Build path](build-path.qmd); its status is tracked there. This lesson does not require it. Training a pretrained model further on a narrower objective (supervised fine-tuning and related methods) reuses the same loop with different data and targets; it is introduced in the [LLM panorama](llm-overview.qmd), not here.
 
+## Check your understanding
+
+Try to answer before opening the worked answers. The goal is to connect the steps, not recite a definition.
+
+1. **After the loss and gradient have been computed, which operation actually changes the parameters?**
+
+<details>
+<summary>Show the worked answer</summary>
+
+The optimizer's update is the operation that changes the parameters. The forward pass computes predictions, the loss evaluates their mismatch with targets, and backpropagation computes the gradient; none of these operations changes the parameters by itself. The optimizer uses the gradient (and possibly its internal state) to produce the new parameters.
+
+</details>
+
+2. **Training loss decreases, but validation loss rises. What can you conclude, and what can you not conclude?**
+
+<details>
+<summary>Show the worked answer</summary>
+
+This is evidence of overfitting: the model keeps fitting the training examples better, but that fit transfers less well to held-out data. It does not, by itself, prove one unique cause or that every model capability is getting worse. Check the split protocol, data representativeness, and metrics, then make decisions using validation without reusing the test set to tune the model.
+
+</details>
+
+3. **Why keep a test set if a validation set is already available?**
+
+<details>
+<summary>Show the worked answer</summary>
+
+Validation guides repeated decisions (stopping, hyperparameters, model selection). By making those decisions based on validation results, we gradually adapt to that set indirectly. The test set therefore remains untouched until final assessment, providing an estimate less biased by those choices. If the test set is used again to tune the system, it no longer serves that role.
+
+</details>
+
 {{< include ../includes/generated-suggested-route-en-training-loop.qmd >}}
 
 :::: {.language-switch}
