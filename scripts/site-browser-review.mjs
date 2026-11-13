@@ -862,11 +862,26 @@ async function runCase(testCase, caseIndex) {
       }
 
       if (index === 0) {
-        // Quarto rewrites source .qmd links to their published .html targets.
-        const returnCard = page.locator('.route-nav-cards a[href="build-path.html"]');
         const returnLabel = lang === "fr" ? "Retour au parcours Build" : "Back to the Build path";
-        if (await returnCard.count() !== 1 || !(await returnCard.first().innerText()).includes(returnLabel)) {
-          throw new Error("first build-tour page must expose one explicitly labelled return to the Build hub");
+        item.buildTour.returnCardData = await page.locator(".route-nav-cards").evaluateAll(cards =>
+          cards.map(card => ({
+            html: card.outerHTML,
+            links: [...card.querySelectorAll("a")].map(link => ({
+              href: link.getAttribute("href"),
+              text: link.innerText.trim(),
+            })),
+          }))
+        );
+        const returnCards = item.buildTour.returnCardData.flatMap(card => card.links).filter(link =>
+          link.text.includes(returnLabel)
+          && link.href
+          && new URL(link.href, page.url()).pathname.endsWith("/build-path.html")
+        );
+        if (returnCards.length !== 1) {
+          throw new Error(
+            "first build-tour page must expose one explicitly labelled return to the Build hub "
+            + JSON.stringify(item.buildTour.returnCardData)
+          );
         }
       }
       if (item.buildTour.navigationLinks.some(link =>
