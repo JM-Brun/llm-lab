@@ -111,6 +111,14 @@ La limite de contexte d'un modèle se mesure en **tokens**, pas en mots ni en ca
 
 La segmentation détermine la séquence d'IDs fournie au modèle. Elle influe notamment sur la couverture des entrées, la longueur de séquence et la compatibilité entre tokenizer et poids. Elle ne constitue ni une analyse linguistique garantie, ni une mesure du sens, ni un score de qualité du modèle.
 
+::: {.callout-note title="Pourquoi le nombre de tokens a des conséquences concrètes"}
+- **Contexte :** à budget fixé en tokens, un texte qui en consomme davantage laisse moins de place à l'historique, aux documents récupérés ou à la réponse. Une limite de 8 000 tokens ne correspond donc pas à une quantité fixe de mots ou de caractères.
+- **Traitement :** une séquence plus longue fournit davantage de positions à traiter. Elle peut augmenter le temps et le coût de l'inférence ; l'effet exact dépend de l'architecture, du matériel et du service utilisé.
+- **Multilingue :** un même contenu traduit peut occuper des nombres de tokens différents. Le budget de contexte et, dans certains protocoles, le budget d'entraînement ne représentent alors pas la même quantité de texte pour chaque langue.
+
+Cela révèle une distinction importante : **l'efficacité de représentation n'est pas la qualité linguistique du modèle**. Un ratio de tokens plus faible est une propriété mesurable du tokenizer sur un corpus donné, pas une preuve que le modèle comprend ou génère mieux cette langue. Les écarts doivent être mesurés par langue et par type de texte, puis reliés à des résultats en aval avant toute conclusion. Voir [la conception et l'évaluation des tokenizers](tokenizer-design-evaluation.qmd).
+:::
+
 Un même texte peut produire des séquences différentes selon le vocabulaire, la pré-tokenisation et les règles du tokenizer. Pour comprendre et comparer ces mécanismes, consultez la page canonique sur les [stratégies de tokenisation](tokenization-strategies.qmd), qui rassemble les granularités, les composants, les algorithmes et les exemples comparatifs. Les métriques empiriques et les compromis avancés sont traités dans [la conception et l'évaluation des tokenizers](tokenizer-design-evaluation.qmd).
 
 

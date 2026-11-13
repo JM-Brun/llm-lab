@@ -87,7 +87,13 @@ This property assumes that no positional signal or order-dependent constraint is
 - **Relative mechanisms:** introduce the offset between positions into the attention computation, for example through a bias added to attention scores or through relative representations.
 - **RoPE:** this rotary method applies position-dependent rotations to queries and keys after their projections and before the $QK^\top$ product. The resulting score depends on the relative offset. RoPE is therefore a relative-position mechanism; it is separated here to make its particular insertion point clear.
 
-The first distinction is between **absolute** and **relative** positional information. RoPE is not a third disjoint family: it is a relative-position mechanism with a distinctive implementation point. These mechanisms inject positional information at different points and do not have exactly the same properties. The diagram compares two explicit positional mechanisms; it does not depict the causal mask, which is a separate visibility constraint. At this stage, it is enough to understand their role and approximate location in the computation. For relative-offset dependence, rotation conventions, and long-sequence limitations, see the [advanced RoPE deep dive](rope.qmd).
+The first distinction is between **absolute** and **relative** positional information. RoPE is not a third disjoint family: it is a relative-position mechanism with a distinctive implementation point. These mechanisms inject positional information at different points and do not have exactly the same properties. The diagram compares two explicit positional mechanisms; it does not depict the causal mask, which is a separate visibility constraint.
+
+::: {.callout-note title="A computable signal does not guarantee extrapolation"}
+The sinusoidal formula can be evaluated at arbitrarily large position indices. That does not guarantee that a model trained on shorter sequences will use those unseen positions reliably. Likewise, RoPE alone does not guarantee reliable long-context behaviour: this depends in part on the frequencies, any scaling method, training sequence length, and data. **Being able to represent a position is not the same as generalizing to it.** The deep dives on [sinusoidal encodings](sinusoidal-positional-encoding.qmd) and [RoPE](rope.qmd) examine these limitations.
+:::
+
+At this stage, it is enough to understand the mechanisms' role and approximate location in the computation. For relative-offset dependence and rotation conventions, see the [advanced RoPE deep dive](rope.qmd).
 
 ::: {.callout-note collapse="true" title="Optional deepening — the geometry of sinusoidal encodings"}
 In the original sinusoidal encoding, each coordinate pair uses its own frequency. Let $\omega_i=10000^{-2i/d}$. The pair associated with index $i$ is:

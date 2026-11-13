@@ -53,6 +53,15 @@ Il identifie le token dont le score est le plus élevé dans ce vecteur. Il ne d
 
 </details>
 
+4. On compare $z=(2,1)$ et $z'=(102,101)$. Les logits sont beaucoup plus grands dans le second vecteur. La distribution obtenue par softmax est-elle différente ? Pourquoi ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Non. Le second vecteur s'obtient en ajoutant la même constante (100) à chaque composante. Ce décalage s'annule dans la formule de softmax : les deux vecteurs produisent la même distribution. Le niveau absolu des logits n'a donc pas de signification isolée ; ce sont leurs écarts qui comptent.
+
+</details>
+
 ::: {.language-switch}
 **Langue :** [Français](logits.qmd) · [English](../../en/exercises/logits.qmd)
 :::

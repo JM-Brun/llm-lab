@@ -46,6 +46,15 @@ Non. Les IDs ne sont définis qu’à l’intérieur du vocabulaire de leur toke
 
 </details>
 
+3. Deux traductions fidèles d'un même passage produisent des séquences de longueurs différentes avec le même tokenizer. Si le modèle a une fenêtre de contexte fixe, quelle conséquence pratique cela peut-il avoir ? Peut-on en déduire que le modèle maîtrise mieux la langue qui utilise le moins de tokens ?
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+La traduction qui consomme davantage de tokens utilise une plus grande part du budget de contexte : à budget égal, il reste moins de place pour l'historique, les documents ou la réponse. Selon le système, la séquence plus longue peut aussi augmenter le coût de traitement. Mais on ne peut pas conclure à une meilleure maîtrise de la langue qui utilise moins de tokens : la longueur mesure ici l'efficacité de représentation sur ces textes, pas la qualité linguistique du modèle. Il faudrait évaluer séparément les résultats en aval, par langue et sur des tâches comparables.
+
+</details>
+
 ::: {.language-switch}
 **Langue :** [Français](text-data.qmd) · [English](../../en/exercises/text-data.qmd)
 :::

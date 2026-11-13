@@ -111,6 +111,14 @@ A model's context limit is measured in **tokens**, not words or characters. The 
 
 Segmentation determines the sequence of IDs supplied to the model. It affects input coverage, sequence length, and compatibility between tokenizer and model weights. It is not guaranteed linguistic analysis, a measure of meaning, or a model-quality score.
 
+::: {.callout-note title="Why token count has practical consequences"}
+- **Context:** with a fixed token budget, text that uses more tokens leaves less room for history, retrieved documents, or the answer. An 8,000-token limit therefore does not correspond to a fixed number of words or characters.
+- **Processing:** a longer sequence supplies more positions to process. It can increase inference time and cost; the exact effect depends on the architecture, hardware, and service.
+- **Multilingual use:** translated passages can consume different numbers of tokens. A context budget—and, in some training protocols, a token budget—may therefore represent different amounts of text across languages.
+
+This exposes an important distinction: **representation efficiency is not language quality**. A lower token ratio is a measurable tokenizer property on a particular corpus, not evidence that a model understands or generates that language better. Measure differences by language and text type, then relate them to downstream results before drawing conclusions. See [tokenizer design and evaluation](tokenizer-design-evaluation.qmd).
+:::
+
 The same text can produce different sequences depending on the vocabulary, pre-tokenization, and tokenizer rules. The canonical [tokenization strategies](tokenization-strategies.qmd) page explains granularity, components, algorithms, and comparative examples. Advanced empirical metrics and trade-offs belong to [tokenizer design and evaluation](tokenizer-design-evaluation.qmd).
 
 
