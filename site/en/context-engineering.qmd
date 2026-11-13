@@ -1,0 +1,130 @@
+---
+title: "Engineering an LLM's context (context engineering)"
+subtitle: "Selecting, organizing, and updating what the model can use"
+description-meta: "Defines context engineering and distinguishes it from prompt engineering, in-context learning, RAG, the context window, and memory."
+keywords: ["type:concept-lesson", "destination:understand", "topic:context-engineering", "level:core", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/context-engineering"
+summary: "Defines the design and management of the context actually supplied to a model at each inference step."
+scope: "Distinguishes active context, context window, attention-accessible context, history, memory, and retrieved data; introduces context selection, assembly, ordering, compression, and refresh. Does not present context engineering as one architecture or algorithm."
+purpose: "Readers should explain what the model receives at a given step, distinguish capacity from content, describe context-design operations, and relate context engineering, ICL, prompt engineering, and RAG without conflating them."
+suggested_route:
+  previous: "en/in-context-learning"
+  next: "en/text-data"
+hierarchy:
+  parents: ["en/generation"]
+  children: []
+related: ["en/in-context-learning", "en/generation", "en/text-data", "en/llm-limits"]
+tags: ["type:concept-lesson", "destination:understand", "topic:context-engineering", "level:core", "language:en", "status:published"]
+-->
+
+{{< include ../includes/generated-guided-context-en-context-engineering.qmd >}}
+
+::: {.chapter-lead}
+At each inference step, an LLM does not automatically receive everything that has been said, written, or stored around it. It receives an **active context**: the information actually assembled for that computation, within its context-window limits. **Context engineering** is the practice of selecting, organizing, and updating that information to help the system accomplish a task.
+:::
+
+::: {.callout-tip title="The one-minute mental model"}
+- **Active context** is what is actually supplied to the model at this step, not necessarily the application's entire available history.
+- The **context window** is a capacity limit; it does not tell us which information was retained or whether it is useful.
+- **Context engineering** organizes instructions, messages, examples, tool results, and retrieved information, then decides what to keep, summarize, or remove.
+- **ICL** describes a model capability to use examples in context; context engineering determines, among other things, whether and how those examples are placed there.
+:::
+
+## Several meanings of “context”
+
+The word is used for related but different objects:
+
+| Term | What it denotes | What it does not guarantee |
+|---|---|---|
+| **Active context** | Tokens and content actually presented to the model for a given computation | That the application's entire history is included |
+| **Context window** | The maximum input/context capacity supported by the model or service | That filling this capacity improves the answer |
+| **Attention-accessible context** | Positions a given position may use, according to the architecture and mask | That every supplied token is accessible to every position |
+| **Conversation history** | Messages retained by the application | That all of them are sent to the model on every turn |
+| **Memory** | Information stored outside the current computation, possibly across sessions | That it is present in context before it is retrieved and injected |
+| **Retrieved documents (RAG)** | Passages selected from an external source | That they update model parameters or are automatically trustworthy |
+
+In a causal Transformer, the attention mask restricts what each position can consult within the supplied sequence. This is **accessible context at the computation level**. Context engineering operates at another level: it largely determines which sequence and which information the system supplies to the model.
+
+Context capacity and active context are therefore not synonyms. An application may retain a long history while sending only a summary and a few recent messages.
+
+## What can active context contain?
+
+Depending on the product and system architecture, it may combine:
+
+- system or developer instructions and output constraints;
+- the current request and part of the conversation history;
+- demonstration examples;
+- descriptions of available tools and their parameters;
+- tool-call results;
+- document passages retrieved through search (RAG);
+- a summary of useful information from earlier interactions;
+- multimodal content represented according to supported modalities.
+
+The exact composition depends on the interface and system. Do not assume every application sends all these elements, or that they all appear as one simple concatenated text string.
+
+## The work of context engineering
+
+Context engineering is not a magic sentence added to a prompt. It is a design and maintenance cycle:
+
+1. **Define the need.** What information is required for the task, and what is irrelevant?
+2. **Select sources.** Instructions, useful history, examples, documents, or tools.
+3. **Assemble and structure.** Separate instructions, data, results, and constraints; make provenance legible.
+4. **Manage the budget.** Avoid repetition, select relevant passages, summarize or compact when context grows too long.
+5. **Refresh.** Add useful new results, remove stale material, and preserve information needed for later steps.
+6. **Verify.** Test omissions, contradictions, ordering effects, malicious injections, and missing-source cases.
+
+The goal is not to fill the window to its maximum, but to provide a sufficiently relevant and trustworthy set of information for the task. A longer context can add useful information, but it can also add noise, contradictions, cost, and retrieval difficulties.
+
+## Distinguishing four related ideas
+
+| Term | Main question | Relationship |
+|---|---|---|
+| **Prompt engineering** | How should instructions and examples be worded and structured? | One part of context design |
+| **Context engineering** | Which information should be supplied, in what order, from which sources, and how should it be maintained? | Encompasses the prompt as well as history, tools, retrieval, and compression |
+| **In-context learning (ICL)** | How does the model adapt its response to examples present in the prompt? | A model behavior/capability, without parameter updates |
+| **RAG** | How can relevant external information be retrieved and supplied to the model? | A content-acquisition strategy that can feed the context |
+
+RAG alone is therefore not the whole of context engineering: the system must still select passages, order them, accompany them with instructions, and decide how to retain them. Likewise, context engineering may include examples that support ICL, but the two terms do not describe the same phenomenon.
+
+*Context engineering* is an evolving practice label, not the name of one algorithm or standardized architecture. Teams may therefore use slightly different scopes for the term.
+
+## Example: preparing a document-based answer
+
+Imagine an assistant answering a question about a refund policy:
+
+- the instruction sets the role and asks for sources;
+- the user's question specifies the product and date;
+- a document search retrieves three passages;
+- the system rejects one outdated passage and keeps the two relevant ones;
+- a short summary preserves a constraint already clarified in the conversation;
+- the excerpts are passed with their titles and dates, distinguishing documents from instructions.
+
+The model does not necessarily “remember” the entire document collection. It computes from the information actually supplied at this turn. If a tool returns new information, the system can add it to the context for the next step.
+
+## What context engineering is not
+
+- **Not a weight update:** adding a document to context does not perform fine-tuning.
+- **Not automatic memory:** information stored elsewhere is useful to the model only if the system makes it available at the right time.
+- **Not a truth guarantee:** a retrieved document may be wrong, outdated, or contradictory.
+- **Not a security guarantee:** an external passage may contain malicious instructions; its provenance and untrusted status must be handled explicitly.
+- **Not a magic fix for length:** a large window does not eliminate position effects, noise, or limits in reasoning and retrieval.
+
+## Continue exploring
+
+- **Understand ICL:** [in-context learning](in-context-learning.qmd) — how examples in the prompt influence a response without parameter updates.
+- **Return to generation:** [generating text](generation.qmd) — how context grows token by token.
+- **Trace model input:** [from text to tokens](text-data.qmd) — how text becomes a sequence of IDs.
+
+## References
+
+- Anthropic (2025), [*Effective context engineering for AI agents*](https://www.anthropic.com/research/effective-context-engineering-for-ai-agents) — context selection and maintenance, tools, history, and retrieval.
+- Okcular (2025), [*Context Engineering — Short-Term Memory Management with Sessions*](https://developers.openai.com/cookbook/examples/agents_sdk/session_memory) — history management, trimming, and compaction in multi-turn interactions.
+
+::: {.language-switch}
+**Language:** [Français](../fr/context-engineering.qmd) · [English](context-engineering.qmd)
+:::
