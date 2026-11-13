@@ -106,6 +106,32 @@ The formulation is presented in [Vaswani et al. (2017), *Attention Is All You Ne
 
 
 
+## FlashAttention in pictures (optional deepening)
+
+These diagrams are **original pedagogical reconstructions** based on the FlashAttention paper and follow-up work; they do not reproduce figures from the newsletter.
+
+### 1. Move tiles instead of materializing the full matrix
+
+<figure>
+  <img src="../images/flashattention/io-aware-tiling.svg" alt="Q, K and V tiles are loaded from high-bandwidth memory into on-chip SRAM; tiled computation updates compact state and writes the result without materializing the full matrix in HBM." />
+  <figcaption>The central gain is fewer HBM↔SRAM transfers and fewer intermediates materialized in global memory. The score matrix remains conceptually dense; it simply is not stored in full in HBM.</figcaption>
+</figure>
+
+### 2. Merge online-softmax statistics
+
+<figure>
+  <img src="../images/flashattention/online-softmax.svg" alt="A running state (maximum, exponential sum, weighted sum) is merged with a new tile's statistics after rescaling to the new maximum." />
+  <figcaption>Rescaling by the new maximum makes it possible to merge partial statistics stably. At the end, the weighted sum is divided by the normalizer.</figcaption>
+</figure>
+
+### 3. Do not confuse IO optimization with sparsity
+
+<figure>
+  <img src="../images/flashattention/dense-vs-sparse.svg" alt="On the left, all query-key positions are allowed in a dense matrix; on the right, only a band and selected blocks are allowed in a sparse example." />
+  <figcaption>FlashAttention preserves the connectivity of exact dense attention (up to floating-point effects). A sparse method changes the connectivity pattern and therefore the mathematical computation.</figcaption>
+</figure>
+
+
 {{< include ../includes/generated-suggested-route-en-scaled-dot-product-attention.qmd >}}
 
 :::: {.language-switch}
