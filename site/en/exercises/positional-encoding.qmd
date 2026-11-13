@@ -55,7 +55,16 @@ No. The causal mask is a visibility constraint: it restricts each position to it
 
 </details>
 
-You have understood this step if you can explain why order must be taken into account, distinguish the three families of mechanisms, and separate explicit positional information from the causal visibility constraint.
+4. The sinusoidal formula can produce a vector for a position never seen during training. Can we conclude that the model will generalize correctly to that length?
+
+<details>
+<summary>Show the answer</summary>
+
+No. The formula defines a signal for that position, but the model still has to learn how to use it. Generalization also depends on training sequence length, data, architecture, and any context-extension methods.
+
+</details>
+
+You have understood this step if you can explain why order must be taken into account, distinguish absolute encodings from relative mechanisms (of which RoPE is one example), separate positional signals from the causal visibility constraint, and explain why a computable signal does not guarantee extrapolation.
 
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/positional-encoding.qmd) · [English](positional-encoding.qmd)
