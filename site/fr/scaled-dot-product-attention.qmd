@@ -128,5 +128,11 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 
 Cette page appartient au parcours conceptuel **Théorie / Understand** : elle explique le mécanisme et ses invariants. Pour voir comment la primitive est appelée dans une implémentation multi-têtes, consultez facultativement la [visite guidée du bloc Transformer](transformer-block-walkthrough.qmd), qui appartient au parcours **Build**, indépendant du parcours conceptuel. Les conventions générales sur les axes et les dimensions sont regroupées dans [Tenseurs](tensors.qmd).
 
+
+### Exécution optimisée (approfondissement facultatif)
+
+La définition mathématique de l'attention ne dicte pas à elle seule la manière dont le GPU exécute le calcul. [FlashAttention](https://arxiv.org/abs/2205.14135) conserve l'attention dense exacte tout en découpant le calcul en blocs et en réduisant les échanges entre mémoire GPU et mémoire rapide sur puce. Il ne faut pas le confondre avec l'attention sparse, qui modifie les positions autorisées. Pour comprendre le mécanisme, ses compromis et les limites des mesures, consultez [la revue pédagogique de FlashAttention](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-reviews/flashattention-io-aware-2026-11.md), puis la [documentation PyTorch SDPA](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html) et [le protocole de benchmark reproductible](https://github.com/JM-Brun/llm-lab/blob/main/docs/experiments/flashattention-benchmark-protocol.md). Cette optimisation matérielle est un approfondissement, pas une étape supplémentaire du parcours conceptuel.
+
+
 </div>
 </details>

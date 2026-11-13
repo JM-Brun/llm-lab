@@ -226,3 +226,17 @@ Use these resources as complementary explanations and study aids, not as substit
   - **Relationship to LLM Lab:** use as a complementary application-oriented synthesis, not as the canonical scientific authority or as a reason to make Microsoft Agent Framework a project dependency. Integrate concepts into their existing canonical bilingual pages, preserving the separate Understand and Build paths and avoiding a new duplicate “LLM fundamentals” chapter.
   - **Qualification:** the page is framework-oriented and simplifies some topics. Cross-check scientific claims against primary papers and established technical references; distinguish model-generated tool-call requests from application-side execution; qualify statements about reasoning, determinism, memory and tool-use training by model/provider/runtime.
   - **Access and reuse:** the page currently displays an authorization notice in the retrieved view. Link to the original rather than copying its prose, examples or diagrams; no third-party assets are reused.
+
+## Efficient attention and GPU execution
+
+- **Damien Benveniste — “How FlashAttention Speeds Up LLM Attention”** (The AI Edge, 13 November 2026): https://newsletter.theaiedge.io/p/how-flashattention-speeds-up-llm-attention
+  - **Use for:** an introduction to tiled exact attention, online normalization and the distinction between attention mathematics and GPU execution.
+  - **Review status:** only the introductory courtesy excerpt and table of contents were accessible; the full newsletter is paid. Technical framing is cross-checked against primary papers and PyTorch documentation. No figures or full text are reused. See [the source review](source-reviews/flashattention-io-aware-2026-11.md).
+- **Tri Dao et al. — “FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness”** (NeurIPS 2022): https://arxiv.org/abs/2205.14135
+  - **Use for:** primary source for IO-aware tiling, exact attention, reduced HBM traffic and IO analysis.
+- **Tri Dao — “FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning”** (ICLR 2024): https://arxiv.org/abs/2307.08691
+  - **Use for:** follow-up improvements to work partitioning and GPU parallelism; benchmark claims remain hardware- and workload-specific.
+- **Jay Shah et al. — “FlashAttention-3: Fast and Accurate Attention with Asynchrony and Low-precision”** (NeurIPS 2024): https://arxiv.org/abs/2407.08608
+  - **Use for:** a hardware-specific follow-up exploiting Hopper GPU asynchrony, Tensor Memory Accelerator, warp specialization and low-precision FP8. Treat it as a distinct generation/implementation, not as an interchangeable synonym for the original FlashAttention kernel.
+- **PyTorch — Scaled dot product attention API:** https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html
+  - **Use for:** API contract and backend-dispatch constraints. Calling SDPA does not prove that a FlashAttention backend was selected.
