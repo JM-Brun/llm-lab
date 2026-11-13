@@ -42,7 +42,8 @@ Le mot est utilisé pour désigner des objets liés, mais différents :
 | Notion | Ce qu'elle désigne | Ce qu'elle ne garantit pas |
 |---|---|---|
 | **Contexte actif** | Les tokens et contenus effectivement présentés au modèle pour un calcul donné | Que tout l'historique de l'application soit inclus |
-| **Fenêtre de contexte** | La capacité maximale d'entrée/contexte prise en charge par le modèle ou le service | Que remplir cette capacité améliore la réponse |
+| **Fenêtre de contexte** | Le budget maximal de tokens utilisable par un appel ; les conventions de comptage entrée/sortie dépendent du modèle et de l'API | Que remplir cette capacité améliore la réponse |
+| **Longueur du contexte actif** | Le nombre de tokens effectivement présents dans le contexte à cette étape | Qu'il soit proche de la capacité maximale |
 | **Contexte accessible par l'attention** | Les positions qu'une position donnée peut utiliser, selon l'architecture et le masque | Que tous les tokens fournis soient accessibles à chaque position |
 | **Historique de conversation** | Les messages conservés par l'application | Qu'ils soient tous renvoyés au modèle à chaque tour |
 | **Mémoire** | Des informations conservées hors du calcul courant, éventuellement entre sessions | Qu'elles soient présentes dans le contexte tant qu'elles ne sont pas récupérées et injectées |
