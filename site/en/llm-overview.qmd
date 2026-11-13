@@ -130,7 +130,7 @@ Describing a model means answering three independent questions.
 |---|---|---|
 | **Architecture** | How does the network transform information? | Encoder-only, encoder–decoder, decoder-only |
 | **Learning** | How are the parameters obtained or adapted? | Pretraining, fine-tuning, SFT, preference optimization |
-| **Use** | What do we do with the model, parameters fixed? | Generation, classification, scoring, [in-context learning](in-context-learning.qmd), retrieval-augmented generation (RAG) |
+| **Use** | What do we do with the model, parameters fixed? | Generation, classification, scoring, [in-context learning](in-context-learning.qmd), [context engineering](context-engineering.qmd), retrieval-augmented generation (RAG) |
 
 **Learning.** **Pretraining** teaches a GPT to predict the next token on a large corpus. It is self-supervised: the expected answers are the tokens of the text itself, with no annotation. What the model can learn therefore depends on the quality and diversity of that corpus. The result is often called a *base model*. An **adaptation** may follow, without being mandatory: fine-tuning for a task, *supervised fine-tuning* (SFT) on instruction–response pairs, preference optimization.
 
