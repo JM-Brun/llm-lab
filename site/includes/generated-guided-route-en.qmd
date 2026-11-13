@@ -123,12 +123,16 @@ Distinguish prompt prefill from iterative decode, select a token with a decoding
 
 ### 07 · Use and design context
 
-Distinguish in-context learning from parameter updates, then understand how a system selects, structures, updates, and secures the information supplied to the model.
+Distinguish information encoded in parameters (pretraining and fine-tuning) from information retrieved or supplied at inference (RAG and context), then understand how a system selects, structures, updates, and secures it.
 
 **Core pages**
 
 - [In-context learning](in-context-learning.html)
 - [Context engineering](context-engineering.html)
+
+**Optional resources**
+
+- [RAG, memory, and document retrieval](rag-memory-boundaries.html)
 
 :::
 

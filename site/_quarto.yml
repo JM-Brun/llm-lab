@@ -75,6 +75,8 @@ project:
     - fr/in-context-learning.qmd
     - fr/context-engineering.qmd
     - en/context-engineering.qmd
+    - fr/rag-memory-boundaries.qmd
+    - en/rag-memory-boundaries.qmd
     - en/llm-overview.qmd
     - en/deepen.qmd
     - en/language-modeling-math.qmd
@@ -179,6 +181,7 @@ project:
     - fr/exercises/tokenization-strategies.qmd
     - fr/exercises/in-context-learning.qmd
     - fr/exercises/context-engineering.qmd
+    - fr/exercises/rag-memory-boundaries.qmd
     - fr/exercises/llm-computational-complexity.qmd
     - fr/exercises/emergence.qmd
     - fr/exercises/llm-evolution.qmd
@@ -214,6 +217,7 @@ project:
     - en/exercises/tokenization-strategies.qmd
     - en/exercises/in-context-learning.qmd
     - en/exercises/context-engineering.qmd
+    - en/exercises/rag-memory-boundaries.qmd
     - en/exercises/llm-computational-complexity.qmd
     - en/exercises/emergence.qmd
     - en/exercises/llm-evolution.qmd
@@ -384,6 +388,7 @@ website:
                 - section: "Inférence et efficacité"
                   contents:
                     - fr/exercises/llm-computational-complexity.qmd
+                    - fr/exercises/rag-memory-boundaries.qmd
                 - section: "Échelle et recherche"
                   contents:
                     - fr/exercises/emergence.qmd
@@ -424,6 +429,7 @@ website:
               contents:
                 - fr/decoding-strategies.qmd
                 - fr/llm-computational-complexity.qmd
+                - fr/rag-memory-boundaries.qmd
             - section: "Échelle et questions de recherche"
               contents:
                 - fr/scaling-laws.qmd
@@ -578,6 +584,7 @@ website:
                 - section: "Inference and efficiency"
                   contents:
                     - en/exercises/llm-computational-complexity.qmd
+                    - en/exercises/rag-memory-boundaries.qmd
                 - section: "Scale and research"
                   contents:
                     - en/exercises/emergence.qmd
@@ -618,6 +625,7 @@ website:
               contents:
                 - en/decoding-strategies.qmd
                 - en/llm-computational-complexity.qmd
+                - en/rag-memory-boundaries.qmd
             - section: "Scale and research questions"
               contents:
                 - en/scaling-laws.qmd

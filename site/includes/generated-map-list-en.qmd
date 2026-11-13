@@ -82,6 +82,7 @@
   - Inference and efficiency
     - [Advanced decoding strategies](decoding-strategies.html)
     - [Complexity and parallelism in LLMs](llm-computational-complexity.html)
+    - [RAG, memory, and document retrieval](rag-memory-boundaries.html)
   - Scale and research questions
     - [Scaling laws: parameters, data, and compute](scaling-laws.html)
     - [Emergent capabilities: what changes with scale?](emergence.html)

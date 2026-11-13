@@ -203,6 +203,8 @@ Order:
 4. LoRA and quantization comparisons, keeping adapter rank, target modules, quantization, memory, latency, and quality distinct.
 5. Preference optimization as a controlled experiment or simulation if realistic compute/data are unavailable.
 6. Robustness evaluation: leakage, distribution shift, calibration where relevant, prompt sensitivity, contamination, and failure slices.
+7. **Deferred — controlled information-provenance comparison.** Once checkpoint loading and a small SFT path are available, compare the same controlled facts through a baseline pretrained checkpoint, an SFT-adapted checkpoint, direct context injection, and a minimal retrieval-to-context pipeline. Keep retrieval success separate from answer fidelity; vary source freshness, retrieval rank, context position/truncation, and contradictions. Do not claim to isolate pretraining from fine-tuning unless checkpoints, data, and evaluation splits make that comparison valid. A tiny local fixture is sufficient; a production RAG stack is not a prerequisite.
+
 
 **Acceptance criteria**
 - Every run records model/tokenizer revisions, data provenance, config, seed, device, package versions, runtime, peak memory where available, and evaluation protocol.

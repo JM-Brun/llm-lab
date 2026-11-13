@@ -14,7 +14,7 @@ suggested_route:
   next: null
 hierarchy:
   parents: []
-  children: ["fr/next-concept-modeling", "fr/contextualized-representations-advanced", "fr/embeddings-deep-dive"]
+  children: ["fr/next-concept-modeling", "fr/contextualized-representations-advanced", "fr/embeddings-deep-dive", "fr/rag-memory-boundaries"]
 related: []
 tags:
   - "type:entry-point"
@@ -159,6 +159,7 @@ Les pages canoniques du parcours principal restent propriétaires des définitio
 
 - [Stratégies avancées de décodage](decoding-strategies.qmd) — transformations de distribution et recherche de séquences.
 - [Complexité et parallélisme dans les LLM](llm-computational-complexity.qmd) — calcul, mémoire et parallélisme en entraînement, préremplissage et décodage.
+- [RAG, mémoire et récupération documentaire](rag-memory-boundaries.qmd) — distinguer stockage, indexation, recherche, transmission au contexte et exploitation par le modèle.
 
 Le parcours principal présente la génération autorégressive et ses opérations minimales. Cette rubrique traite les stratégies et coûts non nécessaires à cette première compréhension.
 

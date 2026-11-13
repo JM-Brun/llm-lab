@@ -439,6 +439,14 @@ concepts:
     domains: [probabilistic-foundations-training]
     importance: supporting
     resources: [fr/llm-evolution, en/llm-evolution, fr/post-training, en/post-training]
+  - id: fine-tuning
+    labels: {fr: "Fine-tuning (ajustement du modèle)", en: "Fine-tuning"}
+    definitions:
+      fr: "Adaptation d'un modèle pré-entraîné par une optimisation supplémentaire sur des données ou objectifs ciblés, qui modifie tout ou partie de ses paramètres."
+      en: "Adaptation of a pretrained model through additional optimization on targeted data or objectives, changing all or some of its parameters."
+    domains: [probabilistic-foundations-training]
+    importance: supporting
+    resources: [fr/post-training, en/post-training]
   - id: instruction-tuning
     labels: {fr: "Ajustement supervisé sur instructions", en: "Instruction tuning"}
     definitions:
@@ -611,6 +619,41 @@ concepts:
     domains: [mathematical-tools-geometry]
     resources: [fr/jepa-platonic-representation, en/jepa-platonic-representation]
 
+  - id: document-retrieval
+    importance: supporting
+    labels: {fr: "Récupération documentaire", en: "Document retrieval"}
+    definitions:
+      fr: "Sélection de documents ou de passages à partir d'une requête, au moyen de critères lexicaux, sémantiques, structurés ou hybrides."
+      en: "Selection of documents or passages from a query using lexical, semantic, structured, or hybrid criteria."
+    domains: [inference-efficiency]
+    resources: [fr/rag-memory-boundaries, en/rag-memory-boundaries]
+  - id: retrieval-augmented-generation
+    importance: supporting
+    labels: {fr: "Génération augmentée par récupération (RAG)", en: "Retrieval-augmented generation (RAG)"}
+    definitions:
+      fr: "Architecture qui récupère des informations externes puis les rend disponibles à un modèle génératif, généralement en les intégrant à son contexte."
+      en: "Architecture that retrieves external information and makes it available to a generative model, usually by adding it to the model context."
+    domains: [inference-efficiency]
+    resources: [fr/rag-memory-boundaries, en/rag-memory-boundaries]
+  - id: persistent-memory
+    importance: supporting
+    labels: {fr: "Mémoire persistante applicative", en: "Persistent application memory"}
+    definitions:
+      fr: "Informations conservées par un système LLM entre plusieurs appels ou sessions afin d'être sélectionnées et réutilisées ultérieurement."
+      en: "Information retained by an LLM system across calls or sessions so it can be selected and reused later."
+    domains: [inference-efficiency]
+    resources: [fr/rag-memory-boundaries, en/rag-memory-boundaries]
+  - id: context-injection
+    importance: supporting
+    labels: {fr: "Injection dans le contexte", en: "Context injection"}
+    definitions:
+      fr: "Opération par laquelle une application inclut une information sélectionnée dans l'entrée effectivement transmise au modèle."
+      en: "Operation by which an application includes selected information in the input actually supplied to the model."
+    domains: [inference-efficiency]
+    resources: [fr/rag-memory-boundaries, en/rag-memory-boundaries]
+
+
+
 relation_types:
   represented-by:
     direction: directed
@@ -734,6 +777,13 @@ relation_types:
       fr: "La source est évaluée au moyen de la cible."
       en: "The source is evaluated using the target."
 relations:
+  - {from: document-retrieval, type: contributes-to, to: retrieval-augmented-generation}
+  - {from: retrieval-augmented-generation, type: contributes-to, to: context-engineering}
+  - {from: persistent-memory, type: contributes-to, to: context-engineering}
+  - {from: fine-tuning, type: part-of, to: post-training}
+  - {from: context-injection, type: contrasts-with, to: fine-tuning}
+  - {from: context-injection, type: contributes-to, to: in-context-learning}
+  - {from: document-retrieval, type: contrasts-with, to: in-context-learning}
   - {from: policy-gradient, type: part-of, to: post-training}
   - {from: score-function, type: part-of, to: policy-gradient}
   - from: score-function

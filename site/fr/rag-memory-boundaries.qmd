@@ -1,0 +1,196 @@
+---
+title: "RAG, mémoire et récupération documentaire"
+subtitle: "Comment une information externe devient — ou ne devient pas — exploitable par un modèle"
+description-meta: "Distinguer recherche documentaire, RAG, mémoire persistante, injection dans le contexte et apprentissage en contexte."
+lang: fr
+keywords: ["type:deep-dive", "destination:deepen", "topic:rag-memory", "level:advanced", "language:fr", "status:published"]
+---
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/rag-memory-boundaries"
+scope: "Frontières entre stockage externe, récupération documentaire, mémoire applicative, construction du contexte, RAG et ICL."
+domain: "inference-efficiency"
+purpose: "Tracer le trajet d'une information externe jusqu'à son éventuelle exploitation par un LLM et diagnostiquer les défaillances de chaque étape."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: ["fr/deepen"]
+  children: []
+related: ["fr/in-context-learning", "fr/context-engineering", "fr/contextualized-representations", "fr/generation", "fr/post-training"]
+tags: ["type:deep-dive", "destination:deepen", "topic:rag-memory", "level:advanced", "language:fr", "status:published"]
+-->
+
+::: {.chapter-lead}
+Un document peut exister dans une base, être indexé et retrouvé par une recherche sans que le modèle en ait connaissance au moment de répondre. Pour devenir exploitable, une information externe doit franchir une frontière supplémentaire : être transmise au modèle dans son contexte, ou lui être rendue accessible par un outil effectivement appelé. Cette page distingue récupération documentaire, RAG, mémoire et *context engineering* de l'**in-context learning (ICL)**, qui décrit ce que le modèle fait avec les informations reçues.
+:::
+
+## 1. De la source à l'exploitation : six états distincts
+
+| État | Ce qui s'est produit | Ce que cela garantit au modèle |
+|---|---|---|
+| **Disponible** | L'information existe dans un fichier, une base, une conversation ou une API. | Rien : elle peut rester inaccessible. |
+| **Stockée et préparée** | Le contenu a été extrait, nettoyé, découpé, résumé ou conservé. | Rien : le stockage reste externe. |
+| **Indexée** | Des structures permettent de retrouver le contenu ou ses références. | Rien : un index n'est pas une entrée du modèle. |
+| **Récupérée** | Une requête sélectionne des documents, passages ou enregistrements. | Rien tant que le résultat n'est pas transmis. |
+| **Transmise** | Le contenu est inclus dans l'entrée du modèle ou rendu accessible via un outil appelé. | Le modèle peut le prendre en compte, sous réserve des limites de contexte et de calcul. |
+| **Exploitée** | Le modèle interprète et utilise le contenu pour la tâche. | Aucune garantie de vérité, de compréhension parfaite ou de fidélité. |
+
+**La frontière déterminante est la transmission.** Une base vectorielle, un historique applicatif ou un fichier sur un serveur ne deviennent pas spontanément des connaissances du modèle. Inversement, transmettre un passage ne garantit pas qu'il sera correctement interprété.
+
+Cette distinction prolonge les trois niveaux de contexte décrits dans [Ingénierie du contexte](context-engineering.qmd) : informations sélectionnées par l'application, séquence réellement fournie au modèle et positions accessibles dans le calcul du Transformer. Voir aussi [Représentations contextualisées](contextualized-representations.qmd) et [Masquage causal](causal-masking.qmd).
+
+## 2. Récupération documentaire : retrouver n'est pas transmettre
+
+La **récupération documentaire** (*document retrieval* ou *information retrieval*) sélectionne des documents ou passages pertinents à partir d'une requête. Elle peut alimenter un moteur de recherche classique, un pipeline RAG ou une mémoire.
+
+Un pipeline typique comprend :
+1. **Ingestion et parsing** : extraction du texte, de la structure et des métadonnées depuis des PDF, pages web, dépôts ou bases.
+2. **Normalisation et découpage** : production d'unités récupérables (*chunks*) en préservant autant que possible titres, tableaux, références et liens vers le document parent.
+3. **Indexation** : index lexical, représentations vectorielles, métadonnées filtrables ou combinaison de ces structures.
+4. **Formulation de requête** : reformulation, expansion des termes ou sous-requêtes éventuelles.
+5. **Recherche** : correspondance lexicale, similarité dense, filtres structurés ou recherche hybride.
+6. **Classement** : fusion, *reranking*, dédoublonnage et sélection des passages.
+7. **Restitution** : retour des extraits, identifiants, scores et métadonnées à l'application.
+
+La recherche n'est **pas nécessairement vectorielle**. BM25 et les index inversés sont lexicaux ; les embeddings denses permettent une recherche par proximité ; SQL et les filtres de métadonnées apportent des contraintes exactes. Le RAG ne requiert donc pas systématiquement une base vectorielle ni des embeddings.
+
+Un embedding de document est une représentation numérique utile à la recherche, pas le texte source. Le moteur l'utilise pour localiser des candidats ; le système doit ensuite restituer le contenu pertinent ou le rendre accessible au modèle. Le découpage compte : des segments trop courts perdent leur contexte, des segments trop longs diluent l'information et consomment davantage de tokens, et des frontières arbitraires peuvent séparer une affirmation de ses réserves.
+
+## 3. RAG : récupérer puis construire le contexte
+
+La **génération augmentée par récupération** (*retrieval-augmented generation*, RAG) associe une récupération d'informations externes à leur utilisation par un modèle génératif. Dans une forme courante, les passages sélectionnés sont intégrés au contexte avec la question et les instructions.
+
+```{mermaid}
+flowchart TD
+  A[Sources externes] --> B[Ingestion et parsing]
+  B --> C[Découpage et indexation]
+  D[Question] --> E[Formulation de requête]
+  C --> F[Recherche et filtres]
+  E --> F
+  F --> G[Classement et sélection]
+  G --> H[Assemblage du contexte]
+  H --> I[Modèle génératif]
+  I --> J[Réponse et citations]
+  J --> K[Vérification]
+```
+
+**Préparation en amont :** connecter les sources, suivre leur provenance, extraire et normaliser le contenu, choisir les unités, construire les index et planifier les mises à jour et suppressions.
+
+**Exécution à la question :** analyser la demande, récupérer les candidats, les filtrer et réordonner, assembler un contexte avec extraits et métadonnées, transmettre ce contexte, générer une réponse puis contrôler les citations et contradictions.
+
+Le RAG ne modifie pas nécessairement les paramètres du modèle. Il change les informations accessibles pendant l'inférence : il complète le pré-entraînement et le fine-tuning plutôt qu'il ne constitue un transfert learning des poids. Voir [Post-entraînement et adaptation](post-training.qmd).
+
+### Pourquoi un RAG peut-il échouer ?
+
+- Source absente, obsolète ou peu fiable.
+- Parsing qui perd une note, un tableau ou une relation structurelle.
+- Découpage qui sépare une affirmation de son contexte.
+- Requête mal formulée ou recherche qui manque le bon passage.
+- *Reranking* qui élimine une preuve utile.
+- Assemblage trop long ou contradictoire.
+- Modèle qui ignore, déforme ou extrapole au-delà des extraits.
+- Citations absentes, mal attribuées ou non justificatives.
+
+Il faut évaluer séparément la qualité de récupération et la qualité de la réponse conditionnée par les passages. Une bonne réponse sans récupération correcte peut être une coïncidence ou provenir des connaissances paramétriques ; une récupération correcte suivie d'une mauvaise réponse révèle un problème d'exploitation, d'instruction ou de génération.
+
+## 4. Mémoire : conserver pour réutiliser
+
+Dans un système LLM, la **mémoire** désigne généralement des informations conservées par l'application pour être réutilisées lors d'interactions ultérieures. Elle peut prendre la forme d'historique brut, de résumés, de faits structurés, de préférences, d'événements, de documents ou d'un état de tâche.
+
+Distinguer fonctionnellement :
+- **Historique conversationnel** : messages antérieurs conservés comme trace de l'échange.
+- **Mémoire épisodique** : événements situés dans le temps (« le projet a choisi cette option »).
+- **Mémoire sémantique** : faits ou relations réutilisables (« le projet utilise cette convention »).
+- **Mémoire procédurale** : procédures ou préférences de fonctionnement.
+- **État de tâche** : étapes achevées, décisions ouvertes et informations nécessaires à la reprise.
+
+Ce ne sont pas des catégories universelles imposées par le modèle. Elles peuvent être implémentées dans une base relationnelle, des fichiers, un journal d'événements, un moteur de recherche ou un graphe.
+
+Une architecture de mémoire doit au minimum **écrire**, **entretenir** et **lire** :
+1. sélectionner ce qui mérite d'être conservé, avec provenance et durée ;
+2. fusionner les doublons, dater les faits, gérer les contradictions et invalider les informations périmées ;
+3. rappeler les éléments utiles à la tâche puis les transmettre au modèle ou les rendre accessibles par un outil.
+
+Une mémoire volumineuse n'est pas nécessairement une bonne mémoire. La conservation indiscriminée augmente le bruit, les contradictions, les coûts et les risques de confidentialité. Une mémoire utile est sélective, traçable, actualisable et gouvernée.
+
+**Un élément mémorisé n'est pas automatiquement présent dans le contexte actif.** Il peut rester stocké sans être retrouvé, être retrouvé sans être transmis, ou être transmis sans être correctement utilisé. Mémoire persistante et contexte d'un appel sont deux couches distinctes.
+
+## 5. RAG et mémoire : même technologie possible, finalités différentes
+
+| Dimension | RAG documentaire | Mémoire applicative |
+|---|---|---|
+| Finalité | Répondre à partir de sources externes pertinentes | Préserver un état ou des informations entre interactions |
+| Contenu | Documents, pages, passages, données de référence | Historique, faits, préférences, événements, résumés, état |
+| Sélection | Pertinence pour la requête et fiabilité de la source | Utilité pour l'utilisateur, la tâche et la continuité |
+| Temporalité | Dépend des mises à jour du corpus | Conçue pour survivre à plusieurs appels ou sessions |
+| Provenance | Source et emplacement documentaire | Origine, date, contexte et confiance |
+| Défi | Trouver et transmettre les bonnes preuves | Conserver et rappeler les bonnes informations |
+
+Les deux peuvent partager un moteur de recherche ou une base vectorielle. Une mémoire peut être interrogée comme un corpus ; un RAG peut retrouver des décisions antérieures ; un agent peut conserver un état de tâche et rechercher simultanément de la documentation. Cette convergence technique ne supprime pas la différence fonctionnelle.
+
+## 6. ICL : ce que le modèle fait avec le contexte reçu
+
+L'**in-context learning** décrit le comportement par lequel le modèle adapte ses prédictions à des instructions, exemples ou régularités présents dans son contexte, sans mise à jour de ses paramètres. Ce n'est ni un mécanisme de stockage ni un moteur de recherche.
+
+- Un document récupéré apporte des **éléments factuels**.
+- Des exemples dans le prompt montrent une **règle, une tâche ou un format**.
+- Une mémoire réinjectée apporte des **informations de continuité**.
+- Une instruction précise **comment traiter** ces éléments.
+
+RAG organise l'accès à des informations externes ; la mémoire organise leur conservation et leur rappel ; le *context engineering* décide ce qui est transmis et comment ; ICL décrit l'adaptation du comportement du modèle à ce qui lui est présenté.
+
+ICL ne garantit pas qu'une règle soit conservée après l'appel ou que les poids changent. Une démonstration peut influencer la réponse courante sans produire de modification persistante. L'adaptation paramétrique exige une procédure d'entraînement ou de fine-tuning.
+
+## 7. Expérience contrôlée : quand l'information devient-elle utilisable ?
+
+Considérons un fait artificiel, absent du modèle de base :
+
+> Le projet Orion a adopté le protocole Delta le 12 septembre 2026.
+
+On prépare une source contenant ce fait et on compare, avec le même modèle et la même question :
+
+| Condition | Opération | Fait transmis ? |
+|---|---|---|
+| A — Référence | Aucun document ni mémoire | Non |
+| B — Stockage | Document conservé dans un dépôt externe | Non |
+| C — Indexation | Document indexé, sans recherche | Non |
+| D — Récupération seule | Passage retrouvé mais non transmis | Non |
+| E — RAG | Passage ajouté au contexte | Oui |
+| F — Mémoire rappelée | Fait conservé, sélectionné puis ajouté au contexte | Oui |
+| G — Démonstration ICL | Fait et exemple d'utilisation dans le contexte | Oui, avec démonstration |
+
+B à D doivent laisser le calcul du modèle inchangé si aucun résultat n'est transmis et aucun outil n'est appelé. E et F rendent le fait disponible dans l'entrée ; G ajoute un exemple de comportement. Cela ne prouve pas à soi seul une compréhension robuste.
+
+Faire varier un seul facteur à la fois : pertinence, rang du passage, troncature, résumé, position dans le contexte, contradiction, fraîcheur, présence d'exemples ICL. Mesurer exactitude, rappel du passage, fidélité aux sources, citations justifiées, abstention si la réponse manque, latence et coût. Distinguer une réponse correcte par hasard d'une réponse effectivement soutenue par les éléments transmis.
+
+## 8. Sécurité, provenance et gouvernance
+
+Un document récupéré est une **donnée**, pas une instruction de confiance. Il peut contenir une injection indirecte (« ignore les consignes précédentes »), une affirmation manipulatrice ou un contenu obsolète. Il faut préserver la frontière entre instructions de contrôle et contenus externes, limiter les permissions des outils et empêcher un document de redéfinir la politique de l'application.
+
+Pour chaque information réutilisée, conserver si possible sa source, son identifiant, ses dates, le passage d'origine, son statut (actif, remplacé, révoqué, incertain), les règles d'accès et les transformations appliquées. Une mémoire peut contenir des données personnelles ou sensibles : collecte, rappel et effacement doivent respecter les règles de confidentialité. Un effacement doit couvrir les couches réellement utilisées — index, résumés, caches et sauvegardes selon leur politique.
+
+## 9. Quatre questions pour diagnostiquer un système
+
+| Question | Notion à examiner |
+|---|---|
+| Où l'information existe-t-elle et sous quelle forme ? | Source, stockage, index, mémoire |
+| Comment le système la retrouve-t-il ? | Récupération documentaire et rappel |
+| Qu'est-ce qui est effectivement transmis au modèle ? | Context engineering, assemblage, fenêtre de contexte |
+| Comment le modèle utilise-t-il ce qu'il reçoit ? | ICL, génération, limites et évaluation |
+
+**Règle à retenir :** une information externe n'influence pas la prédiction du modèle simplement parce qu'elle existe ou a été retrouvée. Elle doit franchir le mécanisme de transmission — dans le contexte ou via un outil effectivement utilisé — puis être correctement exploitée.
+
+## Limites
+
+Cette page décrit des principes d'architecture, pas une implémentation RAG unique ni une taxonomie universelle de la mémoire. Les garanties doivent être établies par des tests de bout en bout, pas déduites de la seule présence d'un index ou d'un prompt.
+
+## Pour pratiquer
+
+Les exercices associés permettent de diagnostiquer les frontières de transmission et de concevoir une expérience contrôlée : [Exercices — RAG, mémoire et récupération documentaire](exercises/rag-memory-boundaries.qmd).
+
+{{< include ../includes/generated-guided-context-fr-rag-memory-boundaries.qmd >}}
+
+::: {.language-switch}
+[Français](rag-memory-boundaries.qmd) · [English](../en/rag-memory-boundaries.qmd)
+:::

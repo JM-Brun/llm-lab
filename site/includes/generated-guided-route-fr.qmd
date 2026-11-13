@@ -123,12 +123,16 @@ Distinguer le prefill du prompt du decode itératif, sélectionner un token selo
 
 ### 07 · Exploiter et concevoir le contexte
 
-Distinguer l'apprentissage en contexte de la mise à jour des paramètres, puis comprendre comment un système sélectionne, structure, actualise et sécurise les informations fournies au modèle.
+Distinguer les informations encodées dans les paramètres (pré-entraînement et fine-tuning) des informations récupérées ou fournies à l'inférence (RAG et contexte), puis comprendre comment un système les sélectionne, structure, actualise et sécurise.
 
 **Pages centrales**
 
 - [Apprentissage en contexte (in-context learning)](in-context-learning.html)
 - [Ingénierie du contexte (context engineering)](context-engineering.html)
+
+**Ressources facultatives**
+
+- [RAG, mémoire et récupération documentaire](rag-memory-boundaries.html)
 
 :::
 

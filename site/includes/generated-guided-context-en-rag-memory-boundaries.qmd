@@ -1,0 +1,6 @@
+<nav class="guided-page-context" aria-label="Learning path context">
+  <span class="guided-page-context__label">Learning path</span>
+  <a class="guided-page-context__stage" href="learning-map.html#guided-stage-context-use">07 · Use and design context</a>
+  <span class="guided-page-context__badge" data-stage-id="context-use" data-stage-index="7" data-stage-total="9">Stage 7/9</span>
+  <span class="guided-page-context__role">Optional resource</span>
+</nav>

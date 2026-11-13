@@ -10,7 +10,7 @@ lang: fr
 LLM-LAB-PAGE-MAP v1
 id: "fr/context-engineering"
 summary: "Définit l'ingénierie du contexte et situe ses principales opérations dans un système LLM."
-scope: "Présente la conception et la gestion du contexte à l'inférence, avec une distinction opérationnelle entre récupération documentaire, RAG, mémoire persistante et ICL."
+scope: "Présente la conception et la gestion du contexte à l’inférence ; les architectures détaillées de RAG, de mémoire et d’agents restent dans leurs pages dédiées."
 purpose: "Le lecteur doit distinguer le contexte du modèle, l'ICL et le context engineering, puis identifier les décisions qui déterminent la qualité du contexte transmis."
 suggested_route:
   previous: "fr/in-context-learning"
@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/in-context-learning", "fr/contextualized-representations", "fr/generation", "fr/post-training", "fr/llm-evolution", "fr/llm-limits"]
+related: ["fr/in-context-learning", "fr/contextualized-representations", "fr/generation", "fr/post-training", "fr/llm-evolution", "fr/llm-limits", "fr/rag-memory-boundaries"]
 tags: ["type:concept-lesson", "destination:understand", "topic:context-engineering", "level:core", "language:fr", "status:published"]
 -->
 
@@ -88,6 +88,10 @@ Le contexte actif désigne les informations d'entrée ; les [représentations co
 | **Fine-tuning** | Adaptation qui modifie les paramètres du modèle par optimisation, au lieu de seulement modifier les informations fournies à l'inférence. |
 
 L'ICL décrit une capacité ou un comportement du modèle ; le context engineering décrit une démarche de conception du système qui prépare son entrée. Un bon contexte peut favoriser l'ICL, mais les deux notions ne sont pas synonymes.
+
+## De la conception du contexte aux architectures de récupération et de mémoire
+
+Le *context engineering* décide quelles informations seront effectivement transmises et comment elles seront structurées. La récupération documentaire et la mémoire sont deux mécanismes possibles pour alimenter ce contexte, mais ils ne le remplacent pas : retrouver un document ou conserver un fait ne suffit pas à le rendre visible au modèle. L'approfondissement [RAG, mémoire et récupération documentaire](rag-memory-boundaries.qmd) suit cette chaîne depuis la source externe jusqu'à l'exploitation par le modèle.
 
 ## De la récupération documentaire à une information exploitable
 

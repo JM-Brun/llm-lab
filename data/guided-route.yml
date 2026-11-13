@@ -89,14 +89,14 @@ stages:
       fr: "Exploiter et concevoir le contexte"
       en: "Use and design context"
     objective:
-      fr: "Distinguer l'apprentissage en contexte de la mise à jour des paramètres, puis comprendre comment un système sélectionne, structure, actualise et sécurise les informations fournies au modèle."
-      en: "Distinguish in-context learning from parameter updates, then understand how a system selects, structures, updates, and secures the information supplied to the model."
+      fr: "Distinguer les informations encodées dans les paramètres (pré-entraînement et fine-tuning) des informations récupérées ou fournies à l'inférence (RAG et contexte), puis comprendre comment un système les sélectionne, structure, actualise et sécurise."
+      en: "Distinguish information encoded in parameters (pretraining and fine-tuning) from information retrieved or supplied at inference (RAG and context), then understand how a system selects, structures, updates, and secures it."
     pages:
       fr: [fr/in-context-learning, fr/context-engineering]
       en: [en/in-context-learning, en/context-engineering]
     optional_pages:
-      fr: []
-      en: []
+      fr: [fr/rag-memory-boundaries]
+      en: [en/rag-memory-boundaries]
 
   - id: scoring
     title:

@@ -13,7 +13,7 @@ suggested_route:
   next: null
 hierarchy:
   parents: []
-  children: ["en/next-concept-modeling", "en/contextualized-representations-advanced", "en/embeddings-deep-dive"]
+  children: ["en/next-concept-modeling", "en/contextualized-representations-advanced", "en/embeddings-deep-dive", "en/rag-memory-boundaries"]
 related: []
 tags:
   - "type:entry-point"
@@ -158,6 +158,7 @@ The core route's canonical pages remain responsible for local definitions of lik
 
 - [Advanced decoding strategies](decoding-strategies.qmd) — distribution transformations and sequence search.
 - [Computational complexity and parallelism in LLMs](llm-computational-complexity.qmd) — compute, memory, and parallelism in training, prefill, and decoding.
+- [RAG, memory, and document retrieval](rag-memory-boundaries.qmd) — distinguish storage, indexing, search, context transmission, and model use.
 
 The core route introduces autoregressive generation and its minimum operations. This category covers strategies and costs not needed for that first understanding.
 

@@ -10,7 +10,7 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/context-engineering"
 summary: "Defines context engineering and locates its main operations within an LLM system."
-scope: "Introduces context design and management at inference time, distinguishing document retrieval, RAG, persistent memory, and ICL operationally."
+scope: "Introduces context design and management at inference time; detailed RAG, memory, and agent architectures remain in their dedicated lessons."
 purpose: "Readers should distinguish model context, ICL, and context engineering, then identify the decisions that shape the quality of the input supplied to a model."
 suggested_route:
   previous: "en/in-context-learning"
@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["en/in-context-learning", "en/contextualized-representations", "en/generation", "en/post-training", "en/llm-evolution", "en/llm-limits"]
+related: ["en/in-context-learning", "en/contextualized-representations", "en/generation", "en/post-training", "en/llm-evolution", "en/llm-limits", "en/rag-memory-boundaries"]
 tags: ["type:concept-lesson", "destination:understand", "topic:context-engineering", "level:core", "language:en", "status:published"]
 -->
 
@@ -88,6 +88,10 @@ Active context denotes input information; [contextualized representations](conte
 | **Fine-tuning** | Adaptation that changes model parameters through optimization rather than only changing the information supplied at inference. |
 
 ICL describes a model capability or behavior; context engineering describes the system-design work that prepares its input. Good context can support ICL, but the two concepts are not synonyms.
+
+## From context design to retrieval and memory architectures
+
+Context engineering decides which information is actually supplied and how it is structured. Document retrieval and memory are two mechanisms that can provide information to this context, but they do not replace it: finding a document or retaining a fact does not make it visible to the model. The deep dive [RAG, memory, and document retrieval](rag-memory-boundaries.qmd) follows this chain from the external source to model use.
 
 ## From document retrieval to usable information
 

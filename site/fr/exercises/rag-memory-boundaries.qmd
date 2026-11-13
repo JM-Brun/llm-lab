@@ -1,0 +1,125 @@
+---
+title: "Exercices — RAG, mémoire et récupération documentaire"
+subtitle: "Suivre une information externe et évaluer son exploitation"
+description-meta: "Exercices appliqués sur la récupération documentaire, le RAG, la mémoire et l'apprentissage en contexte."
+keywords: ["type:exercise-hub", "destination:practice", "topic:rag-memory-exercises", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/rag-memory-boundaries-exercises"
+summary: "Exercices pour distinguer stockage, recherche, transmission au modèle et exploitation."
+scope: "Propose des scénarios de diagnostic et un protocole d'expérience contrôlée sur les frontières entre récupération documentaire, mémoire, RAG et ICL."
+purpose: "Savoir identifier ce qui est effectivement visible par le modèle, localiser les défaillances et construire une évaluation séparant récupération et génération."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/rag-memory-boundaries", "fr/context-engineering", "fr/in-context-learning"]
+tags: ["type:exercise-hub", "destination:practice", "topic:rag-memory-exercises", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Retour à l'approfondissement : RAG, mémoire et récupération documentaire](../rag-memory-boundaries.qmd)
+
+## 1. Identifier la frontière de transmission
+
+Pour chaque situation, indiquez si l'information est effectivement transmise au modèle.
+
+1. Un document est présent dans un dossier auquel l'application a accès, mais aucune lecture n'est effectuée.
+2. Un moteur de recherche retrouve un passage et le renvoie au serveur applicatif, mais le prompt n'est pas modifié.
+3. Le passage retrouvé est ajouté au message fourni au modèle.
+4. Une mémoire contient une préférence, mais le système ne la consulte pas pour cette tâche.
+5. Un outil de recherche est appelé par le modèle et son résultat est ajouté à la conversation avant le tour suivant.
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+1. Non : disponibilité externe seulement.
+2. Non : le système a récupéré l'information, mais ne l'a pas transmise.
+3. Oui : le passage fait partie de l'entrée du modèle.
+4. Non : la mémoire est stockée, mais non rappelée ni injectée.
+5. Oui, au tour suivant : le résultat de l'outil devient une partie du contexte transmis. L'appel d'outil et le retour du résultat sont deux moments distincts.
+
+</details>
+
+## 2. Diagnostiquer un RAG qui échoue
+
+Un assistant répond incorrectement à une question sur une règle interne. Le bon passage existe dans le corpus, mais n'apparaît pas dans la réponse.
+
+Proposez au moins quatre points de contrôle, depuis la source jusqu'à la réponse.
+
+<details>
+<summary>Afficher une démarche possible</summary>
+
+Vérifier successivement : (1) le document source est-il à jour et correctement ingéré ? (2) le parsing a-t-il conservé la règle et ses exceptions ? (3) le découpage a-t-il préservé le contexte ? (4) la requête et les filtres retrouvent-ils le bon passage ? (5) le classement le conserve-t-il ? (6) l'assemblage l'injecte-t-il sans troncature ? (7) le modèle l'utilise-t-il fidèlement ? Chaque étape doit laisser une trace observable afin de localiser la défaillance.
+
+</details>
+
+## 3. Distinguer RAG, mémoire et ICL
+
+Un assistant de projet doit répondre à trois questions :
+- « Que prévoit le manuel officiel ? »
+- « Quelle option avons-nous retenue lors de la réunion précédente ? »
+- « Réponds sous la forme du modèle d'exemple ci-dessous. »
+
+Associez chaque besoin au mécanisme principal et expliquez les combinaisons possibles.
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Le manuel officiel relève principalement de la récupération documentaire/RAG. La décision prise lors de la réunion relève de la mémoire (souvent épisodique ou état de projet), à condition qu'elle ait été conservée et rappelée. Le format attendu relève d'une instruction ou d'une démonstration ICL si l'exemple est inclus dans le contexte. Les trois éléments peuvent être réunis dans un même contexte ; ils ne remplissent pas la même fonction.
+
+</details>
+
+## 4. Concevoir une expérience contrôlée
+
+Vous disposez d'un modèle, d'un fait artificiel absent de ses connaissances initiales, d'un document qui contient ce fait et d'un moteur de recherche.
+
+Définissez au moins quatre conditions expérimentales permettant de distinguer stockage, récupération et transmission. Précisez les variables à maintenir constantes et les mesures à recueillir.
+
+<details>
+<summary>Afficher un protocole possible</summary>
+
+Comparer au minimum : A) aucun document ; B) document stocké mais non indexé ; C) document indexé et retrouvé, mais résultat non transmis ; D) passage retrouvé et ajouté au contexte. Ajouter éventuellement E) passage transmis avec un exemple de format ICL. Garder le modèle, la question, les paramètres de génération et le fait identiques. Répéter avec plusieurs formulations et ordres de passage. Mesurer exactitude, fidélité au passage, citation, abstention, latence et coût. Vérifier que les conditions B et C ne transmettent effectivement aucun résultat.
+
+</details>
+
+## 5. Séparer qualité de récupération et qualité d'exploitation
+
+Un système récupère correctement le bon passage dans 95 % des cas, mais ne produit une réponse fidèle que dans 65 % des cas où ce passage est présent. Que peut-on conclure ? Que faut-il tester ensuite ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Le rappel de récupération est élevé, mais la présence du passage ne suffit pas à garantir son exploitation. Il faut examiner la pertinence réelle du passage, sa position et sa longueur dans le contexte, les instructions, les contradictions et la capacité du modèle à citer ou s'abstenir. Évaluer séparément les cas où le bon passage est effectivement transmis permet d'isoler le problème de génération de celui de recherche. Ces chiffres illustrent un protocole fictif, pas une performance générale.
+
+</details>
+
+## 6. Gouverner une mémoire
+
+Une mémoire contient deux préférences contradictoires, l'une datée d'il y a deux ans et l'autre de la semaine dernière. Décrivez comment le système devrait décider quoi rappeler et comment conserver la provenance.
+
+<details>
+<summary>Afficher une réponse possible</summary>
+
+Conserver les deux faits avec leurs dates et leurs sources plutôt que les fusionner silencieusement. Appliquer une règle explicite de fraîcheur et de priorité, tenir compte du contexte et demander une clarification si l'enjeu est important. La mémoire doit pouvoir marquer un fait comme remplacé ou incertain, et propager les mises à jour ou suppressions aux résumés et index concernés.
+
+</details>
+
+
+## 7. Distinguer connaissances paramétriques et informations fournies
+
+Un modèle répond à quatre situations : (A) il restitue un fait général appris pendant le pré-entraînement ; (B) son style a été modifié par fine-tuning ; (C) une valeur récente est récupérée dans un document puis transmise par RAG ; (D) un fait inédit est simplement ajouté au prompt. Pour chaque situation, indiquez où l'information est conservée, si les paramètres changent, si elle reste disponible après la requête et quelle limite empêche de conclure trop vite que le modèle « sait » le fait.
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+A relève des paramètres issus du pré-entraînement, sans garantie de rappel exact. B relève d'une adaptation paramétrique qui modifie les continuations probables, sans transformer le modèle en base de données fiable. C relève d'un stockage externe et d'une récupération suivie d'une transmission au contexte ; mettre à jour la source ne nécessite pas de réentraîner le modèle. D relève du contexte de l'appel ; le modèle peut utiliser le fait sans mise à jour de ses paramètres, mais sa disponibilité ultérieure n'est pas garantie. Dans les quatre cas, une réponse correcte ne révèle pas à elle seule la provenance : il faut contrôler les données, le contexte et le protocole.
+
+</details>
+
+::: {.language-switch}
+**Langue :** [Français](rag-memory-boundaries.qmd) · [English](../../en/exercises/rag-memory-boundaries.qmd)
+:::

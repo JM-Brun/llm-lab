@@ -12,6 +12,10 @@ This is a high-level inventory; the [learning path](learning-path.md) owns curri
 | Reuse | Terms for project-owned code and prose in [LICENSE.md](../LICENSE.md) | Scope and exceptions documented | Rights and provenance of visual assets and externally sourced material remain under review |
 
 The inference implementation does not train its parameters. Tests check the cases and properties they exercise, not full model quality, general numerical safety, or learner mastery.
+A controlled comparison of parametric information, fine-tuning, direct context, and retrieval-to-context is **deferred** until checkpoint loading and the SFT path exist. The current random-weight inference implementation cannot establish pretrained factual knowledge or fine-tuning effects. A future experiment should use controlled facts and a minimal local retrieval fixture, and report provenance, answer fidelity, persistence across fresh calls, latency, and cost separately.
+
+The information-provenance curriculum update is tracked in [PR #1104](https://github.com/JM-Brun/llm-lab/pull/1104). Its first CI pass exposed a misplaced concept-registry block and stale generated navigation/context artifacts; both have been corrected on the PR branch. The corrected head still needs a fresh CI run and bilingual site render before the documentation change can be treated as validated.
+
 
 A [learner-validation pilot protocol](learner-validation-pilot.md) is ready to run; it is not evidence that a participant has been observed.
 

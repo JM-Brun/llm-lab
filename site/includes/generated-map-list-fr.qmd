@@ -82,6 +82,7 @@
   - Inférence et efficacité
     - [Stratégies avancées de décodage](decoding-strategies.html)
     - [Complexité et parallélisme dans les LLM](llm-computational-complexity.html)
+    - [RAG, mémoire et récupération documentaire](rag-memory-boundaries.html)
   - Échelle et questions de recherche
     - [Lois d'échelle : paramètres, données et calcul](scaling-laws.html)
     - [Émergence des capacités : que change l’échelle ?](emergence.html)
