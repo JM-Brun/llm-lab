@@ -210,7 +210,7 @@ Do not open parallel issues for milestones already owned above. Create a new iss
 
 ## Canonical module topology: shared core and operational branches
 
-**Status: canonical curriculum model, 2026-11-06.** This section defines the conceptual modules and their relations. It is the authority for module scope and pedagogical dependencies. The eight-stage guided route is the reader-facing projection of this module topology. It preserves the preview-first learning order while separating inference, observed-target scoring and training; it does not turn those sibling branches into a mandatory sequential dependency chain.
+**Status: canonical curriculum model, 2026-11-06.** This section defines the conceptual modules and their relations. It is the authority for module scope and pedagogical dependencies. The nine-stage guided route is the reader-facing projection of this module topology. It preserves the preview-first learning order while separating inference, observed-target scoring and training; it does not turn those sibling branches into a mandatory sequential dependency chain.
 
 ### 1. The hierarchy
 
