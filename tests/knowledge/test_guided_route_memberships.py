@@ -35,6 +35,12 @@ def test_membership_projection_preserves_core_optional_and_multiple_contexts(
         "training",
     ]
 
+    orientation = next(stage for stage in stages if stage.id == "orientation")
+    assert [page.id for page in orientation.pages][-2:] == [
+        f"{language}/in-context-learning",
+        f"{language}/context-engineering",
+    ]
+
     generation = memberships[f"{language}/generation"]
     assert [(item.stage_id, item.role) for item in generation] == [
         ("orientation", "core"),
