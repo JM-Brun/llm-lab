@@ -1,0 +1,6 @@
+<nav class="guided-page-context" aria-label="Contexte du parcours pédagogique">
+  <span class="guided-page-context__label">Parcours pédagogique</span>
+  <a class="guided-page-context__stage" href="learning-map.html#guided-stage-context-use">07 · Exploiter et concevoir le contexte</a>
+  <span class="guided-page-context__badge" data-stage-id="context-use" data-stage-index="7" data-stage-total="9">Étape 7/9</span>
+  <span class="guided-page-context__role">Ressource facultative</span>
+</nav>
