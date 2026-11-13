@@ -149,6 +149,7 @@ project:
     - en/exercises-generation.qmd
     - fr/exercises/llm-overview.qmd
     - fr/exercises/generation.qmd
+    - fr/exercises/in-context-learning.qmd
     - fr/exercises/text-data.qmd
     - fr/exercises/embedding-space.qmd
     - fr/exercises/positional-encoding.qmd
@@ -182,6 +183,7 @@ project:
     - fr/exercises/llm-evolution.qmd
     - en/exercises/llm-overview.qmd
     - en/exercises/generation.qmd
+    - en/exercises/in-context-learning.qmd
     - en/exercises/text-data.qmd
     - en/exercises/embedding-space.qmd
     - en/exercises/positional-encoding.qmd
