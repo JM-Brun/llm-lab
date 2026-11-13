@@ -35,6 +35,7 @@ Deepen and Practice & experiment are supporting destinations that can enrich eit
 Purpose: form a correct mental model of the complete system before studying every detail.
 
 - Explain what an autoregressive LLM does, its inputs and outputs, what training optimizes, and how the main components connect.
+- Introduce in-context learning (using prompt examples without weight updates) and context engineering (selecting, assembling, and maintaining active context) as distinct core ideas; distinguish both from fine-tuning and RAG. Keep mechanistic hypotheses about ICL as optional depth.
 - Prefer a coherent visual map, a small number of clear diagrams, and a concise narrative.
 - Keep mathematics light initially, but avoid misleading simplifications; link to the precise formulation.
 - Make every major component clickable or otherwise directly linked to its concept page and relevant experiment.
