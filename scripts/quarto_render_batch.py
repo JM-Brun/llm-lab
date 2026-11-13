@@ -42,8 +42,9 @@ def replace_project_render_targets(config: str, targets: list[str]) -> str:
     # Quarto treats the first rendered page as the site index when index.qmd
     # is absent from an isolated render subset. Always render the real homepage
     # first so a changed lesson cannot overwrite site/_site/index.html.
-    if "index.qmd" not in normalized:
-        normalized.insert(0, "index.qmd")
+    if "index.qmd" in normalized:
+        normalized.remove("index.qmd")
+    normalized.insert(0, "index.qmd")
 
     lines = config.splitlines(keepends=True)
     project_start = next(
