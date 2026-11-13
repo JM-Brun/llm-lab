@@ -39,8 +39,9 @@ def test_keeps_homepage_first_without_duplicating_it():
         CONFIG,
         ["site/en/new.qmd", "site/index.qmd", "site/fr/new.qmd"],
     )
-    assert result.count('    - "index.qmd"') == 1
-    assert result.index('    - "index.qmd"') < result.index('    - "en/new.qmd"')
+    render_block = result.split("render:", 1)[1]
+    assert render_block.count('    - "index.qmd"') == 1
+    assert render_block.index('    - "index.qmd"') < render_block.index('    - "en/new.qmd"')
 
 
 def test_rejects_unsafe_or_empty_targets():
