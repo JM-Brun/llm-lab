@@ -85,6 +85,8 @@ $$
 
 Pour des séquences fixes et les mêmes positions prises en compte, maximiser la log-vraisemblance équivaut à minimiser la NLL. La moyenne par token est une mise à l'échelle courante, utile pour comparer des séquences de longueurs différentes, mais elle n'est pas identique à la somme brute.
 
+Pour une NLL moyenne calculée avec le logarithme naturel, la **perplexité** vaut $\operatorname{PPL}=\exp(\operatorname{NLL}_{\mathrm{moyenne}})$. Elle correspond à l'exponentielle de la perte moyenne, ou à la moyenne géométrique des inverses des probabilités attribuées aux tokens observés. Elle résume le score probabiliste moyen sur les unités définies par le tokenizer ; elle ne mesure ni la qualité générale des réponses ni leur vérité. Deux perplexités ne sont directement comparables que si le corpus, le tokenizer, les positions évaluées et la convention de réduction sont compatibles. La page [Loss](loss.qmd) revient sur son usage comme métrique dérivée de l'objectif d'entraînement.
+
 La page suivante décompose cette NLL au niveau d'une position et généralise le cas d'une cible one-hot à une distribution cible : [Entropie croisée](cross-entropy.qmd).
 
 ## Exemple : la continuation du scribe
