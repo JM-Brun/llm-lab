@@ -69,11 +69,13 @@ ICL is temporary and conditioned on the prompt's content and layout. A new conve
 
 ## What does the model do with examples?
 
-The model receives a sequence containing both the task and the demonstrations. At each layer, attention and other network operations transform representations as a function of this context. When generating the continuation, the model conditions its output on the preceding examples.
+The model receives a sequence containing both the task and the demonstrations. At each layer, attention and other network operations transform representations as a function of this context. When generating the continuation, the model conditions its output on the preceding examples. The examples are part of the active input: they steer the computation without changing the weights.
 
+::: {.callout-note collapse="true" title="Further exploration: mechanistic hypotheses"}
 This describes the observable computation, but it is not a complete explanation of ICL. Several hypotheses are being studied: pattern recognition, inference about the rule that generated the examples, implicit learning of algorithms during pretraining, and attention circuits that facilitate copying or associations between examples.
 
 *Induction heads* are one mechanism studied in some Transformers: attention heads can help detect a previously seen sequence and continue its pattern. They illuminate some copying and continuation behaviors, but are not a universal explanation for every form of ICL.
+:::
 
 ## What ICL enables — and its limits
 
