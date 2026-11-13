@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: ["en/unicode-text", "en/tokenization-strategies", "en/embedding-space"]
-related: ["en/generation", "en/transformer", "en/text-data-exercises"]
+related: ["en/generation", "en/context-engineering", "en/transformer", "en/text-data-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:text-data", "level:core", "language:en", "status:published"]
 -->
 
