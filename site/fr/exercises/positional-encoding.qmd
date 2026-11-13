@@ -55,7 +55,16 @@ Non. Le masque causal est une contrainte de visibilité : il limite chaque posit
 
 </details>
 
-Vous avez compris cette étape si vous pouvez expliquer pourquoi l'ordre doit être pris en compte, distinguer les trois familles de mécanismes, et séparer l'information positionnelle explicite de la contrainte de visibilité causale.
+4. La formule sinusoïdale permet de calculer un vecteur pour une position jamais rencontrée pendant l'entraînement. Peut-on en conclure que le modèle généralisera correctement à cette longueur ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Non. La formule définit un signal pour cette position, mais le modèle doit encore apprendre à exploiter ce signal. La généralisation dépend aussi de la longueur des séquences d'entraînement, des données, de l'architecture et des éventuelles méthodes d'adaptation du contexte.
+
+</details>
+
+Vous avez compris cette étape si vous pouvez expliquer pourquoi l'ordre doit être pris en compte, distinguer les encodages absolus des mécanismes relatifs (dont RoPE est un exemple), séparer le signal positionnel de la contrainte de visibilité causale et expliquer pourquoi un signal calculable ne garantit pas l'extrapolation.
 
 ::: {.language-switch}
 **Langue :** [Français](positional-encoding.qmd) · [English](../../en/exercises/positional-encoding.qmd)
