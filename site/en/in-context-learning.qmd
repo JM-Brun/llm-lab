@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["en/generation"]
   children: []
-related: ["en/llm-overview", "en/generation", "en/context-engineering", "en/contextualized-representations", "en/in-context-learning-exercises"]
+related: ["en/llm-overview", "en/context-engineering", "en/contextualized-representations", "en/in-context-learning-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:in-context-learning", "level:core", "language:en", "status:published"]
 -->
 
