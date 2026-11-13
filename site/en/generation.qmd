@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: ["en/llm-overview"]
   children: ["en/in-context-learning", "en/context-engineering", "en/logits", "en/probabilities"]
-related: ["en/in-context-learning", "en/context-engineering", "en/text-data", "en/transformer", "en/build-path", "en/decoding-strategies", "en/gpt-generation-walkthrough", "en/training-examples", "en/generation-exercises"]
+related: ["en/text-data", "en/transformer", "en/build-path", "en/decoding-strategies", "en/gpt-generation-walkthrough", "en/training-examples", "en/generation-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:en", "status:published"]
 -->
 
