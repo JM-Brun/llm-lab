@@ -138,3 +138,64 @@ Publication or CI success alone does not establish learner mastery.
 ## 8. Maintenance triggers
 
 Revisit when the canonical Transformer page or component destinations change; a new architecture enters the core route; the Build implementation changes its block or normalization design; a source audit discovers a materially better explanation; learner validation reveals persistent confusion; or licensing/accessibility evidence changes.
+
+
+## 9. Lightweight learner-validation protocol
+
+The purpose of this test is to discover where the explanation fails, not to demonstrate that the page is effective. Run it with at least one learner who is new to Transformers and one who already knows the basic architecture. Two participants are a diagnostic pilot, not statistically representative evidence.
+
+### Preparation
+
+- Use the rendered page in the participant's preferred language and a normal desktop or mobile viewport.
+- Do not explain the diagram before the first task.
+- Ask for permission to take notes. Do not collect names or other identifying information.
+- Record the page/viewport, task completion, pauses, navigation detours, incorrect explanations and requests for clarification. Do not treat time-on-page or self-reported satisfaction as evidence of understanding.
+
+### 15–20 minute session
+
+1. **Unaided orientation (2 min):** show the canonical Transformer page and ask: “What do you think this diagram represents? Talk me through what you notice.”
+2. **Information flow (4 min):** ask the learner to trace one encoder representation and one decoder representation. Then ask where Q, K and V originate in encoder–decoder attention.
+3. **Architecture distinction (3 min):** ask what changes when moving from the 2017 encoder–decoder model to decoder-only GPT. Ask specifically what happens to the encoder stream and cross-attention.
+4. **Mechanism distinction (3 min):** ask the learner to explain the roles of attention, the position-wise feed-forward network, Add & Norm, Linear and Softmax. Probe logits versus probabilities without supplying the answer.
+5. **Transfer (3 min):** present a short claim: “GPT is the original Transformer with the encoder removed.” Ask whether this is sufficient and what else changes.
+6. **Practice hand-off (2–5 min):** ask the learner to attempt TF-D, using hints only if they choose to. Note whether the exercise tests reasoning or merely repeats wording from the page.
+
+Use neutral prompts (“What makes you say that?”, “Where do you see that?”). Do not correct the learner during the diagnostic tasks. Afterward, explain any misconception that could leave them with a materially false model.
+
+### Observation rubric
+
+For each task, record one of:
+
+- **Independent:** correct explanation without help.
+- **Recovered:** correct after rereading or navigating to a linked canonical page.
+- **Prompted:** correct only after a non-leading clarification prompt.
+- **Incorrect:** persistent misconception or incorrect information-flow account.
+- **Not attempted:** time, accessibility or navigation prevented a meaningful attempt.
+
+Record the learner's own wording for misconceptions, then classify them:
+
+- architecture confusion (encoder-only / encoder–decoder / decoder-only);
+- information-flow confusion (self-attention versus cross-attention; Q/K/V provenance);
+- operation confusion (attention versus MLP; residual versus normalization);
+- output confusion (hidden state versus logits versus probabilities versus selected token);
+- historical/current-design confusion (post-LN versus pre-LN; sinusoidal versus modern positional mechanisms);
+- interaction/accessibility friction (reading order, link discoverability, keyboard or screen-reader issue).
+
+### Decision rules
+
+- A single critical misconception reproduced by both participants warrants a wording or diagram revision before broader rollout.
+- A novice failing a task but recovering through a clearly discoverable canonical link may indicate a navigation/prerequisite issue rather than a factual defect.
+- An experienced learner finding the page too elementary is not, by itself, a reason to add advanced material to the main route; check whether the promised high-level distinction, caveat or transfer insight is missing.
+- Any keyboard, screen-reader, contrast or responsive-layout blocker is logged separately from conceptual performance and addressed as an accessibility defect.
+- After a revision, rerun only the affected tasks with a fresh reader where possible. Keep the original observation and revision rationale so improvements are auditable.
+
+### Reporting template
+
+Record date, language, viewport, participant experience level (novice / experienced only), tasks attempted, rubric outcomes, verbatim misconception notes without personal identifiers, accessibility observations, resulting content changes and unresolved questions. Do not publish participant details or claim general effectiveness from this small pilot.
+
+### Exit criteria for this validation task
+
+- At least one novice and one experienced reader have completed the protocol.
+- All critical misconceptions and interaction blockers have an explicit disposition (fix, accepted limitation with rationale, or further investigation).
+- Any resulting content changes have passed the relevant automated checks.
+- The issue/PR record distinguishes observed evidence from hypotheses and does not claim mastery from a small pilot.
