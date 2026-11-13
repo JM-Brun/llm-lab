@@ -55,6 +55,18 @@ The translation using more tokens consumes a larger share of the context budget:
 
 </details>
 
+4. **Reconstruct the input chain.** The tokenizer receives the text “cat follows the cat”. It returns the tokens [“cat”, “follows”, “the”, “cat”], and the vocabulary maps them to IDs [17, 42, 8, 17]. The embedding matrix $E$ has shape $(V,d)$. Describe, in order, the objects obtained between the text and the Transformer's vector input. What is the shape of the ID sequence, which row of $E$ is read for the final token, and what can we say about the two occurrences of “cat”?
+
+<details>
+<summary>Show the reasoning</summary>
+
+The text is first split by the tokenizer into tokens; the vocabulary then maps each token to an ID, here the sequence $(17,42,8,17)$ with shape $(L)=(4)$. Each ID is used as a row index in $E$: the final token selects row 17. The lookup therefore produces a sequence of four vectors with shape $(L,d)=(4,d)$. The two occurrences of “cat” have the same ID and select the same initial vector. This does not mean that ID 17 measures the token's meaning, nor that the two occurrences' contextualized states will remain identical after the Transformer's layers.
+
+**Success criterion:** reconstruct text → tokens → IDs → lookup, give the shapes $(4)$ and $(4,d)$, and distinguish the initial vector from the contextualized state.
+
+</details>
+
+
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/text-data.qmd) · [English](text-data.qmd)
 :::
