@@ -130,6 +130,11 @@ Distinguish in-context learning from parameter updates, then understand how a sy
 - [In-context learning](in-context-learning.html)
 - [Context engineering](context-engineering.html)
 
+
+**Optional resources**
+
+- [RAG, memory, and document retrieval](rag-memory-boundaries.html)
+
 :::
 
 ::: {.guided-route-stage #guided-stage-scoring}
