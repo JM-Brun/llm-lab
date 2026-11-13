@@ -138,7 +138,7 @@ Un **modèle de fondation** (*foundation model*) est une catégorie plus large q
 
 **Utilisation.** À l'inférence, les paramètres ne bougent pas. Le contexte est le principal levier pour orienter la réponse : le **prompt** (le texte fourni), les exemples qu'on y place, ou les documents qu'un système de **génération augmentée par récupération** (*retrieval-augmented generation*, RAG) va chercher et y insère. Le réglage du décodage (par exemple la température ou *top-p*) peut aussi modifier le token sélectionné, sans changer le contexte ni les paramètres.
 
-## Pourquoi les Transformers ont changé la donne
+## Pourquoi les Transformers et les LLM pré-entraînés ont changé la donne
 
 La rupture ne tient pas à une invention isolée. Elle vient de la rencontre entre une architecture plus facile à entraîner à grande échelle, un objectif d’apprentissage réutilisable et des corpus suffisamment vastes. Pour comprendre le changement, comparons les anciens points de friction avec ce qui est devenu possible.
 
