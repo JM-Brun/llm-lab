@@ -28,6 +28,46 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-trans
 
 **Current scope:** three progressive formative exercises, with stable IDs TF-A, TF-B and TF-C shared with the French version, cover shape tracing and a by-hand normalization computation in the reference pre-LN block, counting that block's parameters, then claim diagnosis and controlled-intervention prediction. Exercises on architecture variants (post-LN, RMSNorm, MQA/GQA, windowed attention) remain to be developed. Suggested order: TF-A, then TF-B, then TF-C.
 
+<a id="exercise-tf-d-read-the-original-transformer-and-compare-it-with-gpt"></a>
+<a id="ex-transformer-original-diagram"></a>
+### Exercise — Read the original Transformer and compare it with GPT (TF-D)
+
+**Preparation:** the [Read the original architecture diagram](transformer.qmd) section and the [architecture comparison](transformer-architectures.qmd). This exercise checks that you can read the 2017 encoder–decoder diagram without confusing it with decoder-only GPT.
+
+1. In the original diagram, identify the three attention sublayers: encoder self-attention, decoder masked self-attention, and encoder–decoder attention.
+2. For encoder–decoder attention, state where Q, K and V come from.
+3. Match each label to its role: **Add & Norm**, **Feed Forward**, **Linear**, **Softmax**. Which produces logits? Which turns those scores into probabilities?
+4. Which components of the original diagram are absent from decoder-only GPT, and why?
+5. Does the historical diagram use the same normalization placement as the pre-LN block on the LLM Lab page? Explain in one sentence.
+
+<details>
+<summary>Show hints</summary>
+
+- In cross-attention, the two representation sources differ.
+- The linear vocabulary projection comes before softmax.
+- Decoder-only GPT has no separate encoder stream.
+
+</details>
+
+<details>
+<summary>Show the worked solution</summary>
+
+1. The encoder has non-causal self-attention over input positions; the decoder has causally masked self-attention; the third sublayer is cross-attention between the decoder and encoder outputs.
+2. Q comes from decoder representations; K and V come from encoder outputs.
+3. Add & Norm means residual addition followed by normalization; Feed Forward is the position-wise MLP; Linear projects states to vocabulary scores, the **logits**; Softmax converts logits into normalized probabilities.
+4. Decoder-only GPT has neither a separate encoder stack nor encoder–decoder attention, because it processes the available prefix in one representation stream with causal attention. It retains causal self-attention, an MLP, residual paths and normalization.
+5. The 2017 diagram is post-LN: residual addition comes before normalization. The reference block illustrated by LLM Lab is pre-LN: normalization comes before the sublayer, whose output is then added to the residual stream.
+
+**Common errors:**
+
+- Saying Q, K and V all come from the same stream in cross-attention.
+- Confusing logits with probabilities, or placing token selection inside the Linear box.
+- Describing GPT as the original diagram with its encoder simply removed, without explaining the changed information flow and causal mask.
+- Treating post-LN and pre-LN as two names for the same computation order.
+
+</details>
+
+
 <a id="exercise-tf-a-trace-a-pre-ln-block-from-shapes-to-normalization"></a>
 <a id="ex-transformer-preln-block-trace"></a>
 ### Exercise — Trace a pre-LN block, from shapes to normalization
