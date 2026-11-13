@@ -22,6 +22,8 @@ related: ["en/in-context-learning", "en/generation", "en/post-training", "en/llm
 tags: ["type:concept-lesson", "destination:understand", "topic:context-engineering", "level:core", "language:en", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-en-context-engineering.qmd >}}
+
 ::: {.chapter-lead}
 **Context engineering** is the discipline of designing and managing the information a system makes available to a model at inference time. Its goal is to provide task-relevant elements in a usable form: instructions, history, examples, retrieved documents, tool results, and task state.
 :::
