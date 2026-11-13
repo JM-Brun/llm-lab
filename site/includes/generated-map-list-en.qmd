@@ -79,7 +79,6 @@
     - [The mathematical chain of LLM training](mathematical-foundations.html)
     - [Score centering in off-policy LLM reinforcement learning](score-centering.html)
   - Inference and efficiency
-    - [In-context learning](in-context-learning.html)
     - [Advanced decoding strategies](decoding-strategies.html)
     - [Complexity and parallelism in LLMs](llm-computational-complexity.html)
   - Scale and research questions
