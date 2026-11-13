@@ -13,7 +13,7 @@ summary: "Traces the transformation from source text to the discrete context sup
 scope: "Introduces the stages and objects that connect source text to a model input—preprocessing, tokenization, IDs, and embedding lookup—and distinguishes prompt encoding from training-corpus preparation; Unicode details, segmentation algorithms, and network computations are delegated to dedicated pages."
 purpose: "Readers should be able to trace the text → tokens → IDs → initial vectors chain, distinguish prompt encoding from training-data preparation, and identify what each stage does not establish."
 suggested_route:
-  previous: "en/generation"
+  previous: "en/context-engineering"
   next: "en/embedding-space"
 hierarchy:
   parents: []
