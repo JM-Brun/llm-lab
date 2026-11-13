@@ -23,6 +23,9 @@ tags: ["type:guided-build", "destination:build", "topic:reference-gpt-config", "
 ::: {.chapter-lead}
 Cette page est la première étape (1 sur 5) de la visite guidée du code de référence : le fichier le plus petit du paquet, celui qui définit **ce qu'est le modèle** avant que tout autre fichier ne définisse **ce qu'il fait**. Chaque extrait de code est commenté ligne par ligne ; le code complet vit dans [`src/llm_lab/foundations/gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt_config.py).
 :::
+
+[← Retour au hub Build](build-path.qmd)
+
 :::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d'apprentissage"}
 À l'issue de cette visite, vous pourrez :
 - nommer chaque dimension de configuration et ce qu'elle détermine ailleurs dans le modèle ;
@@ -179,10 +182,6 @@ Ligne par ligne :
 ## Exercices
 
 Les questions de cette visite et leurs corrigés sont regroupés sur la [page de pratique dédiée](exercises/gpt-config-walkthrough.qmd). Essayez-les avant d'ouvrir les réponses : elles vérifient les objectifs annoncés sans dupliquer les énoncés dans la visite guidée.
-
-## Navigation dans le parcours
-
-[← Retour au parcours Build](build-path.qmd)
 
 
 ## Connexions
