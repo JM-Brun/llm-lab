@@ -32,7 +32,7 @@ L'**ingénierie du contexte** (*context engineering*) est la discipline qui cons
 
 Le prompt est souvent compris comme un texte rédigé par l'utilisateur. Dans une application réelle, l'entrée du modèle peut être un assemblage structuré de plusieurs messages et sources : instructions définissant le rôle et les contraintes, message courant, historique pertinent, exemples de démonstration, documents récupérés, résultats d'outils et état de tâche ou mémoire sélectionnée.
 
-Le **contexte effectivement transmis** est la sélection et l'organisation de ces éléments pour un appel donné. Tout ce qui existe dans l'application n'est pas nécessairement transmis au modèle.
+Le **contexte effectivement transmis** est la sélection et l'organisation de ces éléments pour un appel donné. Tout ce qui existe dans l'application n'est pas nécessairement transmis au modèle. Selon les capacités du modèle et de l'API, le contexte peut aussi contenir des contenus multimodaux (par exemple des images ou de l'audio) et des descriptions structurées d'outils, pas seulement du texte.
 
 ## Définition et opérations principales
 
