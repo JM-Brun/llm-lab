@@ -274,7 +274,8 @@ website:
             - section: "Contexte et adaptation"
               contents:
                 - fr/in-context-learning.qmd
-                - fr/context-engineering.qmd            - section: "Scoring des tokens observés"
+                - fr/context-engineering.qmd
+            - section: "Scoring des tokens observés"
               contents:
                 - fr/vraisemblance.qmd
                 - fr/cross-entropy.qmd
@@ -467,7 +468,8 @@ website:
             - section: "Context and adaptation"
               contents:
                 - en/in-context-learning.qmd
-                - en/context-engineering.qmd            - section: "Observed-target scoring"
+                - en/context-engineering.qmd
+            - section: "Observed-target scoring"
               contents:
                 - en/likelihood.qmd
                 - en/cross-entropy.qmd
