@@ -17,6 +17,7 @@ pedagogical_model:
       - {id: src-key-value-tile, kind: data-block, description: "Key/value block streamed through the query-block computation.", locator: "Introduction; primary-paper cross-check"}
       - {id: src-score-tile, kind: intermediate, description: "Temporary query-key scores for one tile.", locator: "Introduction"}
       - {id: src-online-softmax-state, kind: numerical-state, description: "Running maximum, rescaled exponential sum and weighted-value accumulator.", locator: "Running-state explanation"}
+      - {id: src-output-accumulator, kind: intermediate, description: "Rescaled partial weighted-value sum combined across key/value tiles.", locator: "Running-state explanation"}
       - {id: src-hbm, kind: hardware-memory, description: "GPU high-bandwidth memory.", locator: "Primary-paper cross-check"}
       - {id: src-on-chip-memory, kind: hardware-memory, description: "Fast on-chip storage used for tiles.", locator: "Primary-paper cross-check"}
       - {id: src-sparse-attention, kind: alternative-method, description: "Attention variant changing which position pairs participate.", locator: "Exact-versus-sparse distinction"}
@@ -25,7 +26,8 @@ pedagogical_model:
       - {from: src-attention-function, type: implemented-by, to: src-attention-kernel}
       - {from: src-query-tile, type: scored-against, to: src-key-value-tile}
       - {from: src-score-tile, type: summarized-by, to: src-online-softmax-state}
-      - {from: src-online-softmax-state, type: updates, to: src-query-tile}
+      - {from: src-online-softmax-state, type: rescales-and-updates, to: src-output-accumulator}
+      - {from: src-key-value-tile, type: contributes-to, to: src-output-accumulator}
       - {from: src-attention-kernel, type: reduces-data-movement-between, to: src-hbm}
       - {from: src-attention-kernel, type: uses, to: src-on-chip-memory}
       - {from: src-attention-kernel, type: distinct-from, to: src-sparse-attention}
@@ -66,45 +68,55 @@ items:
   - id: the-ai-edge-how-flashattention-speeds-up-llm-attention:function-versus-kernel
     kind: claim
     summary: "The attention function specifies the mathematical mapping from Q, K and V under a mask; a kernel specifies how hardware executes that mapping. Kernel optimization need not redefine the function."
-    locator: "Introduction, paragraphs 1–3"
-    locator_type: section
-    evidence_kind: direct-text
-    evidence_confidence: well-supported
-    limitations: ["Exactness is mathematical equivalence subject to floating-point effects, not universal bitwise identity."]
+    locator: {type: section, value: "Introduction, paragraphs 1–3", label: "Attention function and execution kernel"}
+    evidence:
+      kind: direct-explanation
+      confidence: well-supported
+      scope: "The accessible introduction distinguishes the attention computation from the execution strategy."
+      assumptions: ["The standard masked scaled-dot-product attention operation is assumed."]
+      limitations: ["Exactness is mathematical equivalence subject to floating-point effects, not universal bitwise identity."]
     disposition: integrate
   - id: the-ai-edge-how-flashattention-speeds-up-llm-attention:exact-versus-sparse
     kind: misconception
     summary: "Exact FlashAttention preserves allowed attention connectivity while changing intermediate storage and data movement; sparse attention changes participating position pairs."
-    locator: "Introduction, paragraphs 3–4; Dao et al. 2022"
-    locator_type: section
-    evidence_kind: direct-text
-    evidence_confidence: established
-    limitations: ["The original paper also discusses a separate block-sparse extension; do not conflate it with exact dense FlashAttention."]
+    locator: {type: section, value: "Introduction, paragraphs 3–4", label: "Exact attention versus sparse attention"}
+    evidence:
+      kind: conceptual-distinction
+      confidence: established
+      scope: "The accessible excerpt distinguishes exact FlashAttention from sparse attention; the primary paper confirms the exact IO-aware algorithm."
+      assumptions: ["The claim concerns the exact dense FlashAttention algorithm, not its separate block-sparse extension."]
+      limitations: ["The original paper also discusses a separate block-sparse extension; do not conflate it with exact dense FlashAttention."]
     disposition: integrate
   - id: the-ai-edge-how-flashattention-speeds-up-llm-attention:online-softmax
     kind: mechanism
     summary: "Tiled attention merges per-tile maxima, exponential sums and weighted-value accumulators with rescaling, preserving global softmax normalization without retaining all scores simultaneously."
-    locator: "Running-state explanation; recurrence cross-checked against Dao et al. 2022 and FlashAttention-2"
-    locator_type: section
-    evidence_kind: synthesis
-    evidence_confidence: established
-    limitations: ["Masks, dropout, dtype and backward details require primary algorithm and kernel documentation."]
+    locator: {type: section, value: "Running-state explanation", label: "Online normalization across tiles"}
+    evidence:
+      kind: synthesis
+      confidence: established
+      scope: "The excerpt motivates the running state; the recurrence is reconciled with the primary FlashAttention and FlashAttention-2 papers."
+      assumptions: ["Per-tile statistics are merged using a common running maximum and exponential rescaling."]
+      limitations: ["Masks, dropout, dtype and backward details require primary algorithm and kernel documentation."]
     disposition: integrate
   - id: the-ai-edge-how-flashattention-speeds-up-llm-attention:io-not-compute-elimination
     kind: limitation
     summary: "FlashAttention primarily reduces IO and intermediate materialization; dense attention still performs pairwise query-key interactions and retains quadratic arithmetic in sequence length."
-    locator: "Dao et al. 2022, abstract and IO analysis"
-    locator_type: external-cross-check
-    evidence_kind: primary-paper
-    evidence_confidence: established
-    limitations: ["IO complexity is not a universal wall-clock prediction."]
+    locator: {type: external-source, value: "Dao et al. 2022, abstract and IO analysis", label: "IO complexity and dense attention"}
+    evidence:
+      kind: primary-paper
+      confidence: established
+      scope: "The original paper describes IO-aware tiling and its effect on data movement for exact dense attention."
+      assumptions: ["The comparison is with conventional materialized dense attention under the paper's memory model."]
+      limitations: ["IO complexity is not a universal wall-clock prediction."]
     disposition: integrate
   - id: the-ai-edge-how-flashattention-speeds-up-llm-attention:backend-dispatch
     kind: limitation
     summary: "PyTorch SDPA selects among eligible backends; invoking the API does not establish that a FlashAttention kernel was selected."
-    locator: "PyTorch scaled_dot_product_attention documentation"
-    locator_type: external-cross-check
-    evidence_kind: official-documentation
-    evidence_confidence: established
-    limitations: ["Eligibility and defaults vary by version, device, dtype, shape and mask."]
+    locator: {type: external-source, value: "PyTorch scaled_dot_product_attention documentation", label: "SDPA backend dispatch"}
+    evidence:
+      kind: official-documentation
+      confidence: established
+      scope: "The official API documentation describes backend selection and constraints."
+      assumptions: ["Backend selection is conditional on the actual runtime inputs and environment."]
+      limitations: ["Eligibility and defaults vary by version, device, dtype, shape and mask."]
     disposition: integrate
