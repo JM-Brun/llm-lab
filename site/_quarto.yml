@@ -72,7 +72,6 @@ project:
     - fr/llm-evolution.qmd
     - fr/emergence.qmd
     - fr/jepa-platonic-representation.qmd
-    - fr/in-context-learning.qmd
     - en/llm-overview.qmd
     - en/deepen.qmd
     - en/language-modeling-math.qmd
@@ -80,7 +79,6 @@ project:
     - en/llm-evolution.qmd
     - en/emergence.qmd
     - en/jepa-platonic-representation.qmd
-    - en/in-context-learning.qmd
     - fr/transformer-architectures.qmd
     - fr/cross-attention.qmd
     - fr/hybrid-llm-architectures.qmd
@@ -96,8 +94,12 @@ project:
     - en/transformer.qmd
     - en/transformer-explainer.qmd
     - fr/generation.qmd
+    - fr/in-context-learning.qmd
+    - fr/context-engineering.qmd
     - fr/llm-limits.qmd
     - en/generation.qmd
+    - en/in-context-learning.qmd
+    - en/context-engineering.qmd
     - en/llm-limits.qmd
     - fr/glossary.qmd
     - en/glossary.qmd
@@ -175,7 +177,6 @@ project:
     - fr/exercises/cross-attention.qmd
     - fr/exercises/hybrid-llm-architectures.qmd
     - fr/exercises/tokenization-strategies.qmd
-    - fr/exercises/in-context-learning.qmd
     - fr/exercises/llm-computational-complexity.qmd
     - fr/exercises/emergence.qmd
     - fr/exercises/llm-evolution.qmd
@@ -209,7 +210,6 @@ project:
     - en/exercises/cross-attention.qmd
     - en/exercises/hybrid-llm-architectures.qmd
     - en/exercises/tokenization-strategies.qmd
-    - en/exercises/in-context-learning.qmd
     - en/exercises/llm-computational-complexity.qmd
     - en/exercises/emergence.qmd
     - en/exercises/llm-evolution.qmd
@@ -247,6 +247,8 @@ website:
           contents:
             - fr/llm-overview.qmd
             - fr/generation.qmd
+            - fr/in-context-learning.qmd
+            - fr/context-engineering.qmd
             - section: "Comment le modèle calcule sa prédiction"
               href: fr/text-data.qmd
               contents:
@@ -317,6 +319,7 @@ website:
               contents:
                 - fr/exercises/llm-overview.qmd
                 - fr/exercises/generation.qmd
+                - fr/exercises/in-context-learning.qmd
                 - section: "Texte et représentations"
                   contents:
                     - fr/exercises/text-data.qmd
@@ -370,7 +373,6 @@ website:
                     - fr/exercises/tokenization-strategies.qmd
                 - section: "Inférence et efficacité"
                   contents:
-                    - fr/exercises/in-context-learning.qmd
                     - fr/exercises/llm-computational-complexity.qmd
                 - section: "Échelle et recherche"
                   contents:
@@ -410,7 +412,6 @@ website:
                 - fr/score-centering.qmd
             - section: "Inférence et efficacité"
               contents:
-                - fr/in-context-learning.qmd
                 - fr/decoding-strategies.qmd
                 - fr/llm-computational-complexity.qmd
             - section: "Échelle et questions de recherche"
@@ -434,6 +435,8 @@ website:
           contents:
             - en/llm-overview.qmd
             - en/generation.qmd
+            - en/in-context-learning.qmd
+            - en/context-engineering.qmd
             - section: "How the model computes a prediction"
               href: en/text-data.qmd
               contents:
@@ -504,6 +507,7 @@ website:
               contents:
                 - en/exercises/llm-overview.qmd
                 - en/exercises/generation.qmd
+                - en/exercises/in-context-learning.qmd
                 - section: "Text and representations"
                   contents:
                     - en/exercises/text-data.qmd
@@ -557,7 +561,6 @@ website:
                     - en/exercises/tokenization-strategies.qmd
                 - section: "Inference and efficiency"
                   contents:
-                    - en/exercises/in-context-learning.qmd
                     - en/exercises/llm-computational-complexity.qmd
                 - section: "Scale and research"
                   contents:
@@ -597,7 +600,6 @@ website:
                 - en/score-centering.qmd
             - section: "Inference and efficiency"
               contents:
-                - en/in-context-learning.qmd
                 - en/decoding-strategies.qmd
                 - en/llm-computational-complexity.qmd
             - section: "Scale and research questions"
