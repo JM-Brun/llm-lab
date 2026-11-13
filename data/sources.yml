@@ -3491,3 +3491,44 @@ sources:
       audit_records:
         - docs/source-reviews/raschka-understanding-large-language-models-2023.md
         - data/extractions/sebastian-raschka-understanding-large-language-models-2023.yml
+
+  - id: the-ai-edge-how-flashattention-speeds-up-llm-attention
+    title: "How FlashAttention Speeds Up LLM Attention"
+    creators: ["Damien Benveniste"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://newsletter.theaiedge.io/p/how-flashattention-speeds-up-llm-attention"
+    publisher: "The AI Edge"
+    publication_date: "2026-11-13"
+    updated_date: null
+    language: en
+    version: "newsletter page retrieved 2026-11-13"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [inference-efficiency]
+      tags: [topic:attention, topic:flashattention, method:io-aware-computation, ecosystem:pytorch]
+      concept_ids: [self-attention, scaled-dot-product-attention, attention-score, attention-weight, softmax, causal-mask]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [architecture, mathematical-derivation, pedagogy]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-13"
+        status: partially-scanned
+        inspected_scope:
+          - "Page metadata, date, introductory text, running-state explanation, exact-versus-sparse distinction and table of contents."
+          - "Cross-checked claims against Dao et al. 2022, FlashAttention-2 and official PyTorch SDPA documentation."
+        limitations:
+          - "Full newsletter is labelled paid; only the courtesy excerpt was retrieved."
+          - "Later pedagogical sequence is inferred from the table of contents, not inspected."
+          - "No newsletter figures or benchmark results were reused or independently reproduced."
+          - "Reuse rights are unknown; link-only treatment."
+    related:
+      pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/attention-score-scaling, en/attention-score-scaling, fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+      concepts: [self-attention, scaled-dot-product-attention, attention-score, attention-weight, softmax, causal-mask]
+      audit_records: [docs/source-reviews/flashattention-io-aware-2026-11.md]
