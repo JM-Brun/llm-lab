@@ -176,6 +176,19 @@ La validation sert à guider des décisions répétées (arrêt, hyperparamètre
 
 </details>
 
+
+4. **Un pas de SGD peut-il être calculé sans confondre gradient et mise à jour ?** On prend une loss illustrative $L(\theta)=(\theta-5)^2$, une valeur courante $\theta=2$ et un taux d'apprentissage $\eta=0{,}1$. Calculez le gradient puis le nouveau paramètre avec SGD. Une mesure de loss de validation effectuée ensuite doit-elle modifier $\theta$ ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Le gradient vaut $L'(\theta)=2(\theta-5)$, donc $L'(2)=-6$. SGD applique la règle de mise à jour $\theta_{nouveau}=\theta-\eta L'(\theta)=2-0{,}1(-6)=2{,}6$. Le gradient est la quantité calculée ; l'optimiseur l'utilise pour modifier le paramètre. Une mesure de validation est une passe avant avec paramètres fixes : elle calcule une métrique, mais ne doit pas mettre à jour $\theta$.
+
+**Critère de réussite :** obtenir le signe et la valeur du gradient, appliquer le taux d'apprentissage avec le bon signe, puis distinguer explicitement mesure et mise à jour.
+
+</details>
+
+
 {{< include ../includes/generated-suggested-route-fr-training-loop.qmd >}}
 
 ::: {.language-switch}
