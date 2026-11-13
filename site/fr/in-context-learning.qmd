@@ -66,11 +66,13 @@ L'ICL est temporaire et conditionné par le contenu et la disposition du prompt.
 
 ## Que fait le modèle avec les exemples ?
 
-Le modèle reçoit une séquence qui contient à la fois la tâche et les démonstrations. À chaque couche, les mécanismes d'attention et les autres opérations du réseau transforment les représentations en fonction de ce contexte. Lorsqu'il génère la suite, il produit une continuation conditionnée par les exemples précédents.
+Le modèle reçoit une séquence qui contient à la fois la tâche et les démonstrations. À chaque couche, les mécanismes d'attention et les autres opérations du réseau transforment les représentations en fonction de ce contexte. Lorsqu'il génère la suite, il produit une continuation conditionnée par les exemples précédents. Les exemples font partie de l'entrée active : ils orientent le calcul, sans modifier les poids.
 
+::: {.callout-note collapse="true" title="Approfondissement : hypothèses mécanistes"}
 Cela décrit le calcul observable, mais ne constitue pas à lui seul une explication complète de l'ICL. Plusieurs hypothèses sont étudiées : reconnaissance de motifs, inférence sur la règle qui a généré les exemples, apprentissage implicite d'algorithmes pendant le préentraînement, et circuits d'attention qui facilitent la copie ou l'association entre exemples.
 
 Les *induction heads* sont un mécanisme étudié dans certains Transformers : des têtes d'attention peuvent contribuer à repérer une séquence déjà vue et à en poursuivre le motif. Elles éclairent certains comportements de copie et de continuation, mais ne constituent pas une explication universelle de toutes les formes d'ICL.
+:::
 
 ## Ce que l'ICL permet — et ses limites
 
@@ -86,7 +88,7 @@ Mais ses résultats dépendent fortement :
 
 Un modèle peut reproduire le format sans avoir identifié la règle pertinente. Il peut aussi être sensible à l'ordre des exemples, aux exemples contradictoires ou à des détails non pertinents. L'ICL ne garantit donc ni une généralisation correcte ni une compréhension de la tâche au sens humain.
 
-## Comment l'étudier expérimentalement ?
+::: {.callout-note collapse="true" title="Approfondissement : étudier l'ICL expérimentalement"}
 
 Pour distinguer apprentissage de la règle et simple imitation :
 
@@ -98,6 +100,7 @@ Pour distinguer apprentissage de la règle et simple imitation :
 6. répéter les essais avec plusieurs formulations et graines d'échantillonnage.
 
 Un bon protocole sépare la réussite sur les exemples vus de la généralisation à des cas non montrés.
+:::
 
 ## À retenir
 
@@ -115,6 +118,8 @@ Un bon protocole sépare la réussite sur les exemples vus de la généralisatio
 - Min et al. (2022), [*Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?*](https://arxiv.org/abs/2202.12837).
 
 
+
+{{< include ../includes/generated-suggested-route-fr-in-context-learning.qmd >}}
 
 ::: {.language-switch}
 **Langue :** [Français](in-context-learning.qmd) · [English](../en/in-context-learning.qmd)

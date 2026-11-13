@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["en/in-context-learning", "en/generation", "en/post-training", "en/llm-evolution", "en/llm-limits"]
+related: ["en/in-context-learning", "en/contextualized-representations", "en/generation", "en/post-training", "en/llm-evolution", "en/llm-limits"]
 tags: ["type:concept-lesson", "destination:understand", "topic:context-engineering", "level:core", "language:en", "status:published"]
 -->
 
@@ -36,7 +36,7 @@ The **context actually supplied** is the selection and organization of these ele
 
 ## Definition and main operations
 
-Context engineering is not a particular model feature, nor a standard with a universally fixed scope. It is an engineering practice for LLM systems. It includes:
+Context engineering is not a particular model feature, nor a standard with a universally fixed scope. It is an engineering practice for LLM systems, not a Transformer layer or a new network architecture. It includes:
 
 1. **Selecting** task-relevant information and excluding noise.
 2. **Retrieving** useful knowledge at the right time, for example through search or RAG.
@@ -54,6 +54,15 @@ These operations form a design-and-observation loop, not a single recipe. Their 
 The **context window** describes a capacity limit measured in tokens. It does not guarantee that all useful information is present, or that the model will use it correctly.
 
 A longer context can help when it adds relevant evidence. It can also hurt when it accumulates noise, repetition, conflicting instructions, or poorly selected documents. Information position, readability, and trustworthiness matter too. The goal is not to fill the window, but to build a context suited to the task within capacity, cost, and security constraints.
+
+| Notion | What it denotes | Confusion to avoid |
+|---|---|---|
+| **Context window** | Maximum token budget usable for a call; input/output counting conventions depend on the model and API | The length actually supplied |
+| **Active-context length** | Number of tokens actually present in this call's context | Maximum capacity |
+| **Attention-accessible context** | Positions a given position may consult according to the architecture and mask | That every supplied token is accessible to every position |
+| **Contextualized representation** | A hidden/vector state computed by Transformer layers from accessible tokens | That it is the active context or stored history |
+
+Active context denotes input information; [contextualized representations](contextualized-representations.qmd) are the hidden states the Transformer computes from that information.
 
 ## Distinguishing neighboring concepts
 
@@ -108,6 +117,8 @@ Apply these principles with the [context engineering exercises](exercises/contex
 - Anthropic, [*Effective context engineering for AI agents*](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents).
 - Liu et al. (2024), [*Lost in the Middle: How Language Models Use Long Contexts*](https://arxiv.org/abs/2307.03172).
 - OWASP, [*LLM Prompt Injection Prevention Cheat Sheet*](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html).
+
+{{< include ../includes/generated-suggested-route-en-context-engineering.qmd >}}
 
 ::: {.language-switch}
 **Language:** [Français](../fr/context-engineering.qmd) · [English](context-engineering.qmd)

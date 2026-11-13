@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: ["en/llm-overview"]
   children: ["en/logits", "en/probabilities"]
-related: ["en/text-data", "en/transformer", "en/build-path", "en/decoding-strategies", "en/gpt-generation-walkthrough", "en/training-examples", "en/generation-exercises"]
+related: ["en/text-data", "en/transformer", "en/context-engineering", "en/build-path", "en/decoding-strategies", "en/gpt-generation-walkthrough", "en/training-examples", "en/generation-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:en", "status:published"]
 -->
 
@@ -157,7 +157,7 @@ An advanced optimization, **speculative decoding**, has a draft model propose se
 
 Prefill resembles the *teacher forcing* used in training, since in both cases the model reads a text it did not produce. The difference lies in what comes next: in generation, the context grows with the tokens chosen by the decoding rule; with teacher forcing, it grows with the tokens of the reference text, whatever the model predicted ([training examples](training-examples.qmd)).
 
-The project's reference program applies this loop without a KV cache; the [guided tour of the generation code](gpt-generation-walkthrough.qmd) shows how it processes the prompt and recomputes the context window.
+The project's reference program applies this loop without a KV cache; the [guided tour of the generation code](gpt-generation-walkthrough.qmd) shows how it processes the prompt and recomputes the forward pass from the current context.
 
 ## How is the next token chosen?
 
@@ -192,7 +192,7 @@ A low temperature concentrates probability on the leading token; a high temperat
 
 **It sees only the context supplied.** The model processes at most a window of maximum size. That budget covers all tokens supplied, instructions, history, tool messages, prompt, and any multimodal tokens, as well as generated tokens. The advertised capacity is therefore not fully available for the response: the application may reserve an output allowance, truncate, or select the history. Information absent from the supplied context no longer directly influences the prediction, and a larger window does not guarantee that every item will be used correctly.
 
-**It does not remember from one generation to the next.** If an application seems to retain a conversation, it is because it reinserts the history into the context, or keeps it outside the model. The weights themselves have recorded nothing.
+**It does not remember from one generation to the next.** If an application seems to retain a conversation, it is because it reinserts the history into the context, or keeps it outside the model. The weights themselves have recorded nothing. [Context engineering](context-engineering.qmd) explains how the application selects, summarizes, and updates that information.
 
 **It does not create quality.** The loop runs just as well with an untrained model; its outputs are then of no interest. The mechanics of generation and the quality acquired through learning are two separate questions.
 

@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/in-context-learning", "fr/generation", "fr/post-training", "fr/llm-evolution", "fr/llm-limits"]
+related: ["fr/in-context-learning", "fr/contextualized-representations", "fr/generation", "fr/post-training", "fr/llm-evolution", "fr/llm-limits"]
 tags: ["type:concept-lesson", "destination:understand", "topic:context-engineering", "level:core", "language:fr", "status:published"]
 -->
 
@@ -36,7 +36,7 @@ Le **contexte effectivement transmis** est la sélection et l'organisation de ce
 
 ## Définition et opérations principales
 
-Le context engineering ne désigne pas une fonctionnalité particulière d'un modèle ni une norme dont le périmètre serait universellement fixé. C'est une pratique d'ingénierie des systèmes LLM. Elle comprend notamment :
+Le context engineering ne désigne pas une fonctionnalité particulière d'un modèle ni une norme dont le périmètre serait universellement fixé. C'est une pratique d'ingénierie des systèmes LLM, pas une couche du Transformer ni une nouvelle architecture de réseau. Elle comprend notamment :
 
 1. **Sélectionner** les informations pertinentes et écarter le bruit.
 2. **Récupérer** les connaissances utiles au moment opportun, par exemple avec une recherche ou un système RAG.
@@ -54,6 +54,15 @@ Ces opérations forment une boucle de conception et d'observation, pas une recet
 La **fenêtre de contexte** décrit une limite de capacité exprimée en tokens. Elle ne garantit ni que toutes les informations utiles y figurent, ni que le modèle les exploite correctement.
 
 Un contexte plus long peut aider lorsqu'il apporte des éléments pertinents. Il peut aussi nuire s'il accumule du bruit, des répétitions, des consignes incompatibles ou des documents mal sélectionnés. La position, la lisibilité et la fiabilité des informations comptent également. L'objectif n'est donc pas de remplir la fenêtre, mais de construire un contexte adapté à la tâche, sous les contraintes de capacité, de coût et de sécurité.
+
+| Notion | Ce qu'elle désigne | Confusion à éviter |
+|---|---|---|
+| **Fenêtre de contexte** | Budget maximal de tokens utilisable pour un appel ; les conventions de comptage entrée/sortie dépendent du modèle et de l'API | La longueur réellement transmise |
+| **Longueur du contexte actif** | Nombre de tokens effectivement présents dans le contexte de cet appel | La capacité maximale |
+| **Contexte accessible par l'attention** | Positions qu'une position donnée peut consulter selon l'architecture et le masque | Que tous les tokens fournis soient accessibles à chaque position |
+| **Représentation contextualisée** | État caché/vectoriel calculé par les couches du Transformer à partir des tokens accessibles | Que ce soit le contexte actif ou un historique stocké |
+
+Le contexte actif désigne les informations d'entrée ; les [représentations contextualisées](contextualized-representations.qmd) sont les états cachés calculés par le Transformer à partir de ces informations.
 
 ## Distinguer les notions voisines
 
@@ -108,6 +117,8 @@ Mettre ces principes en pratique avec les [exercices d'ingénierie du contexte](
 - Anthropic, [*Effective context engineering for AI agents*](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents).
 - Liu et al. (2024), [*Lost in the Middle: How Language Models Use Long Contexts*](https://arxiv.org/abs/2307.03172).
 - OWASP, [*LLM Prompt Injection Prevention Cheat Sheet*](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html).
+
+{{< include ../includes/generated-suggested-route-fr-context-engineering.qmd >}}
 
 ::: {.language-switch}
 **Langue :** [Français](context-engineering.qmd) · [English](../en/context-engineering.qmd)

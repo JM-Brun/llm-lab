@@ -178,7 +178,7 @@ The choice is made on measured criteria: quality, errors, robustness, cost, late
 
 ## From a language model to an application
 
-A conversational assistant is a **system built around a model**: an application formats messages, manages context, and may coordinate external tools. Roles such as system, user, and assistant are message-format conventions—not Transformer layers. Likewise, a tool call is a structured request; the application remains responsible for authorization and execution. Persistent memory also requires application-side storage: it is not guaranteed by the model's context window.
+A conversational assistant is a **system built around a model**: an application formats messages, designs and manages context ([context engineering](context-engineering.qmd)), and may coordinate external tools. Roles such as system, user, and assistant are message-format conventions—not Transformer layers. Likewise, a tool call is a structured request; the application remains responsible for authorization and execution. Persistent memory also requires application-side storage: it is not guaranteed by the model's context window.
 
 These distinctions are useful when moving from model fundamentals to deployed systems, but they are not another stage in the core theory route. The optional [deep dive on LLM evolution](llm-evolution.qmd#tool-using-systems) examines tool use, orchestration, and system boundaries; [Microsoft Learn's LLM Fundamentals journey](https://learn.microsoft.com/en-us/agent-framework/journey/llm-fundamentals) provides a complementary developer-oriented perspective.
 

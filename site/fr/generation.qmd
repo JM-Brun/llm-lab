@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/llm-overview"]
   children: ["fr/logits", "fr/probabilites"]
-related: ["fr/text-data", "fr/transformer", "fr/build-path", "fr/decoding-strategies", "fr/gpt-generation-walkthrough", "fr/training-examples", "fr/generation-exercises"]
+related: ["fr/text-data", "fr/transformer", "fr/context-engineering", "fr/build-path", "fr/decoding-strategies", "fr/gpt-generation-walkthrough", "fr/training-examples", "fr/generation-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:fr", "status:published"]
 -->
 
@@ -157,7 +157,7 @@ Le schéma de [Brij Pandey sur le chemin d'inférence](https://www.linkedin.com/
 
 Le prefill ressemble au *teacher forcing* de l'entraînement, puisque dans les deux cas le modèle lit un texte qu'il n'a pas produit. La différence tient à la suite : en génération, le contexte s'allonge avec les tokens choisis par la règle de décodage ; en teacher forcing, il s'allonge avec les tokens du texte de référence, quoi que le modèle ait prédit ([exemples d'entraînement](training-examples.qmd)).
 
-Le programme de référence du projet applique cette boucle sans cache KV ; la [visite guidée du code de génération](gpt-generation-walkthrough.qmd) montre comment il traite le prompt et recalcule la fenêtre de contexte.
+Le programme de référence du projet applique cette boucle sans cache KV ; la [visite guidée du code de génération](gpt-generation-walkthrough.qmd) montre comment il traite le prompt et recalcule la passe avant à partir du contexte courant.
 
 ## Comment le prochain token est-il choisi ?
 
@@ -192,7 +192,7 @@ Les filtres **top-k** et **top-p** écartent les candidats les moins probables a
 
 **Elle ne voit que le contexte fourni.** Le modèle traite au plus une fenêtre de taille maximale. Ce budget couvre tous les tokens transmis, instructions, historique, messages d'outils, prompt et éventuels tokens multimodaux, ainsi que les tokens générés. La capacité annoncée n'est donc pas entièrement disponible pour la réponse : l'application peut réserver une longueur de sortie, tronquer ou sélectionner l'historique. Une information absente du contexte transmis n'influence plus directement la prédiction, et une fenêtre plus grande ne garantit pas que chaque élément sera utilisé correctement.
 
-**Elle ne se souvient pas d'une génération à l'autre.** Si une application semble retenir une conversation, c'est qu'elle en réinjecte l'historique dans le contexte, ou qu'elle le conserve hors du modèle. Les poids, eux, n'ont rien enregistré.
+**Elle ne se souvient pas d'une génération à l'autre.** Si une application semble retenir une conversation, c'est qu'elle en réinjecte l'historique dans le contexte, ou qu'elle le conserve hors du modèle. Les poids, eux, n'ont rien enregistré. La [conception et gestion du contexte](context-engineering.qmd) explique comment l'application sélectionne, résume et actualise ces informations.
 
 **Elle ne crée pas la qualité.** La boucle tourne aussi bien avec un modèle non entraîné ; ses sorties n'ont alors aucun intérêt. La mécanique de génération et la qualité acquise par apprentissage sont deux questions séparées.
 

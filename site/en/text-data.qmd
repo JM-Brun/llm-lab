@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: ["en/unicode-text", "en/tokenization-strategies", "en/embedding-space"]
-related: ["en/generation", "en/transformer", "en/text-data-exercises"]
+related: ["en/generation", "en/context-engineering", "en/transformer", "en/text-data-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:text-data", "level:core", "language:en", "status:published"]
 -->
 
@@ -104,7 +104,7 @@ The same tokenizer is used to encode an inference prompt and to convert corpus d
 The second branch is not a prerequisite for understanding how a model encodes a prompt.
 
 ::: {.callout-note title="Tokens and context windows"}
-A model's context limit is measured in **tokens**, not words or characters. The input budget may also include message history, instructions, retrieved content, tool descriptions, and space reserved for the answer; exact accounting depends on the model and API. The [deep dive on inference complexity](llm-computational-complexity.qmd) discusses context and resource costs, while [LLM evolution](llm-evolution.qmd#tool-using-systems) explains how applications manage longer interactions.
+A model's context limit is measured in **tokens**, not words or characters. The input budget may also include message history, instructions, retrieved content, tool descriptions, and space reserved for the answer; exact accounting depends on the model and API. To distinguish maximum capacity from the length actually supplied and understand how the application selects those elements, see [context engineering](context-engineering.qmd). The [deep dive on inference complexity](llm-computational-complexity.qmd) discusses context and resource costs, while [LLM evolution](llm-evolution.qmd#tool-using-systems) explains how applications manage longer interactions.
 :::
 
 ## 2. What tokenization changes — and what it does not tell us
