@@ -70,6 +70,16 @@ Il s'agit d'une tentative d'injection indirecte de prompt. Le contenu récupér�
 Comparer, sur un jeu de questions tenu à l'écart, une condition sans récupération à une condition avec récupération. Mesurer l'exactitude et la fidélité aux sources, mais aussi les réponses non fondées, la latence et le coût. Contrôler la pertinence des documents et inclure des questions auxquelles le corpus ne permet pas de répondre.
 </details>
 
+## Distinguer les niveaux
+
+6. **Une application conserve 200 messages et une mémoire persistante, mais n'envoie au modèle que les instructions système, la question actuelle et deux passages récupérés. Dans un Transformer décodeur causal, que désignent ici le contexte du système, la séquence d'entrée et le contexte accessible à une position donnée ? La mémoire et les 200 messages sont-ils nécessairement visibles du modèle ?**
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Le contexte du système est l'ensemble sélectionné et transmis pour cet appel : instructions, question et deux passages récupérés. La séquence d'entrée est la représentation tokenisée (et, selon le système, structurée) de ces éléments. À une position $t$, le contexte accessible est limité aux positions autorisées par le masque causal et la fenêtre disponible ; les positions futures sont masquées. Les 200 messages et la mémoire restent des données de l'application tant qu'ils ne sont pas sélectionnés et transmis. La fenêtre de contexte est une limite de capacité, pas un accès automatique à tout l'historique.
+</details>
+
 ::: {.language-switch}
 **Langue :** [Français](context-engineering.qmd) · [English](../../en/exercises/context-engineering.qmd)
 :::
