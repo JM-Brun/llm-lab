@@ -14,11 +14,11 @@ scope: "Décrit l’inférence autorégressive d’un modèle déjà entraîné 
 purpose: "Le lecteur doit pouvoir dérouler une génération token par token, distinguer le calcul du modèle, la sélection du token et la boucle complète, expliquer prefill et decode incrémental, et prévoir comment une règle de décodage modifie la sortie sans mettre à jour les paramètres."
 suggested_route:
   previous: "fr/llm-overview"
-  next: "fr/text-data"
+  next: "fr/in-context-learning"
 hierarchy:
   parents: ["fr/llm-overview"]
   children: ["fr/logits", "fr/probabilites"]
-related: ["fr/text-data", "fr/transformer", "fr/build-path", "fr/decoding-strategies", "fr/gpt-generation-walkthrough", "fr/training-examples", "fr/generation-exercises"]
+related: ["fr/in-context-learning", "fr/context-engineering", "fr/text-data", "fr/transformer", "fr/build-path", "fr/decoding-strategies", "fr/gpt-generation-walkthrough", "fr/training-examples", "fr/generation-exercises"]
 tags: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:fr", "status:published"]
 -->
 
