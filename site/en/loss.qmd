@@ -73,7 +73,7 @@ $$
 \sum_{(b,t)\in\mathcal{M}}\ell_{b,t}.
 $$
 
-A sum, per-sequence mean, or weighted mean is also possible. These do not define exactly the same objective and can change gradient scale or the relative weight of sequences.
+A sum and a per-sequence mean are also possible. A weighted mean defines another convention: for example, with nonnegative weights $w_{b,t}$ on valid positions, one may compute $\mathcal{L}_w=\frac{\sum_{(b,t)\in\mathcal{M}}w_{b,t}\ell_{b,t}}{\sum_{(b,t)\in\mathcal{M}}w_{b,t}}$, provided the denominator is nonzero. The denominator is then the sum of weights, not the number of valid positions. Some APIs use this rule for class weights; other weighting conventions, especially per-sequence weighting, may use a different denominator. These choices change the objective, gradient scale, or relative weight of sequences, so they must be documented.
 
 For the illustrative scribe continuation, the three local penalties are $-\log(0.6)\approx0.511$, $-\log(0.5)\approx0.693$, and $-\log(0.8)\approx0.223$ nats. Their sum is the sequence NLL, approximately $1.427$ nats; their mean is approximately $0.476$ nats per token. State whether a reported value is a sum or a mean: they answer different scale questions.
 
