@@ -109,6 +109,7 @@ The model does not necessarily “remember” the entire document collection. It
 
 ## What context engineering is not
 
+- **Not a Transformer component:** context engineering is a system- and application-design practice, not a new layer or network architecture.
 - **Not a weight update:** adding a document to context does not perform fine-tuning.
 - **Not automatic memory:** information stored elsewhere is useful to the model only if the system makes it available at the right time.
 - **Not a truth guarantee:** a retrieved document may be wrong, outdated, or contradictory.
