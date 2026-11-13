@@ -55,6 +55,21 @@ The **context window** describes a capacity limit measured in tokens. It does no
 
 A longer context can help when it adds relevant evidence. It can also hurt when it accumulates noise, repetition, conflicting instructions, or poorly selected documents. Information position, readability, and trustworthiness matter too. The goal is not to fill the window, but to build a context suited to the task within capacity, cost, and security constraints.
 
+## Three levels of context that should not be confused
+
+The word *context* refers to several related but different objects:
+
+| Level | What it refers to | Useful question |
+|---|---|---|
+| **System context** | The instructions, messages, examples, retrieved documents, tool results, and memory items that the application chooses to supply for a call. | What information does the application actually send? |
+| **Input sequence and context window** | The token sequence (or structured multimodal elements) processed by the model. The window is a capacity limit, not a memory of everything the application stores. During autoregressive generation, generated tokens are progressively appended to this sequence. | Which sequence does the model process, and what is its limit? |
+| **Context accessible at a position** | For a causal decoder Transformer, the positions a given position can access under the causal mask and available window: at position $t$, future positions are masked. | Which information can this position use in its computation? |
+
+These levels are not interchangeable. History stored by the application is not necessarily transmitted; persistent memory becomes model context only when the system selects and supplies it; and a contextualized hidden state is the **result of a computation** conditioned on accessible information, not another name for the context itself.
+
+To connect these ideas to the model's internal computation, see [contextualized representations](contextualized-representations.qmd) and [causal masking](causal-masking.qmd). [Autoregressive generation](generation.qmd) shows how selected tokens progressively join the processed sequence.
+
+
 ## Distinguishing neighboring concepts
 
 | Concept | What it refers to |
