@@ -14,7 +14,7 @@ scope: "Introduces context design and management at inference time; detailed RAG
 purpose: "Readers should distinguish model context, ICL, and context engineering, then identify the decisions that shape the quality of the input supplied to a model."
 suggested_route:
   previous: "en/in-context-learning"
-  next: "en/post-training"
+  next: null
 hierarchy:
   parents: []
   children: []
