@@ -414,7 +414,6 @@ website:
                 - fr/score-centering.qmd
             - section: "Inférence et efficacité"
               contents:
-                - fr/in-context-learning.qmd
                 - fr/decoding-strategies.qmd
                 - fr/llm-computational-complexity.qmd
             - section: "Échelle et questions de recherche"
@@ -605,7 +604,6 @@ website:
                 - en/score-centering.qmd
             - section: "Inference and efficiency"
               contents:
-                - en/in-context-learning.qmd
                 - en/decoding-strategies.qmd
                 - en/llm-computational-complexity.qmd
             - section: "Scale and research questions"
