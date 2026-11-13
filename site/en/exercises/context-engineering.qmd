@@ -70,6 +70,16 @@ This is an indirect prompt-injection attempt. Retrieved content must remain untr
 Compare a no-retrieval condition with a retrieval condition on a held-out question set. Measure accuracy and source faithfulness, as well as unsupported answers, latency, and cost. Control document relevance and include questions the corpus cannot answer.
 </details>
 
+## Distinguish the levels
+
+6. **An application stores 200 messages and persistent memory, but sends the model only system instructions, the current question, and two retrieved passages. In a causal decoder Transformer, what do system context, input sequence, and the context accessible at a given position refer to here? Are the memory and 200 messages necessarily visible to the model?**
+
+<details>
+<summary>Show the worked answer</summary>
+
+System context is the selected information supplied for this call: instructions, question, and two retrieved passages. The input sequence is the tokenized (and, depending on the system, structured) representation of those elements. At position $t$, accessible context is limited to positions allowed by the causal mask and available window; future positions are masked. The 200 messages and memory remain application data unless they are selected and supplied. The context window is a capacity limit, not automatic access to the entire history.
+</details>
+
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/context-engineering.qmd) · [English](context-engineering.qmd)
 :::
