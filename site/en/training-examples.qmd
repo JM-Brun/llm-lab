@@ -167,11 +167,12 @@ Consider the following per-position losses, which are **illustrative**:
 
 The mean over valid positions only is:
 
-[
+
+$$
 \mathcal{L}=\frac{\sum_i m_i\ell_i}{\sum_i m_i}
 =\frac{0.2+1.1+0.7}{3}
 =\frac{2}{3}\approx 0.667.
-]
+$$
 
 The illustrative losses at PAD positions do not contribute. A naive mean over all five positions would be (1.8), making the objective depend on the amount of padding. In practice, the exact reduction convention (sum, per-sequence mean, or valid-token mean) must be stated; this example illustrates only the valid-token mean.
 
