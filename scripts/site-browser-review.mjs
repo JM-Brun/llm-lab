@@ -874,10 +874,15 @@ async function runCase(testCase, caseIndex) {
         );
         const returnCards = item.buildTour.returnCardData.flatMap(card => card.links).filter(link =>
           link.text.includes(returnLabel)
-          && link.href
-          && new URL(link.href, page.url()).pathname.endsWith("/build-path.html")
         );
-        if (returnCards.length !== 1) {
+        const returnTarget = returnCards.length === 1 && returnCards[0].href
+          ? new URL(returnCards[0].href, page.url()).pathname
+          : null;
+        if (
+          returnCards.length !== 1
+          || !returnTarget
+          || !["/build-path.html", "/build-path.qmd", "/fr/build-path.html"].includes(returnTarget)
+        ) {
           throw new Error(
             "first build-tour page must expose one explicitly labelled return to the Build hub "
             + JSON.stringify(item.buildTour.returnCardData)
