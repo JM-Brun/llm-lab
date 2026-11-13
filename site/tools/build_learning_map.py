@@ -1071,8 +1071,7 @@ def prepare_suggested_route_fragments(
     outputs: dict[Path, str] = {}
     for page in pages:
         is_build_entry = (
-            page.get("route", {}).get("previous")
-            == f"{language}/{ROUTE_CONTINUATION_PAGE}"
+            page.get("route", {}).get("previous") == f"{language}/{ROUTE_CONTINUATION_PAGE}"
         )
         rendered = render_suggested_route_markdown(
             page,
