@@ -251,10 +251,6 @@ website:
           contents:
             - fr/llm-overview.qmd
             - fr/generation.qmd
-            - section: "Contexte et adaptation"
-              contents:
-                - fr/in-context-learning.qmd
-                - fr/context-engineering.qmd
             - section: "Comment le modèle calcule sa prédiction"
               href: fr/text-data.qmd
               contents:
@@ -274,7 +270,11 @@ website:
                     - fr/logits.qmd
                     - fr/probabilites.qmd
                     - fr/entropy.qmd
-            - section: "Scoring des tokens observés"
+
+            - section: "Contexte et adaptation"
+              contents:
+                - fr/in-context-learning.qmd
+                - fr/context-engineering.qmd            - section: "Scoring des tokens observés"
               contents:
                 - fr/vraisemblance.qmd
                 - fr/cross-entropy.qmd
@@ -444,10 +444,6 @@ website:
           contents:
             - en/llm-overview.qmd
             - en/generation.qmd
-            - section: "Context and adaptation"
-              contents:
-                - en/in-context-learning.qmd
-                - en/context-engineering.qmd
             - section: "How the model computes a prediction"
               href: en/text-data.qmd
               contents:
@@ -467,7 +463,11 @@ website:
                     - en/logits.qmd
                     - en/probabilities.qmd
                     - en/entropy.qmd
-            - section: "Observed-target scoring"
+
+            - section: "Context and adaptation"
+              contents:
+                - en/in-context-learning.qmd
+                - en/context-engineering.qmd            - section: "Observed-target scoring"
               contents:
                 - en/likelihood.qmd
                 - en/cross-entropy.qmd
