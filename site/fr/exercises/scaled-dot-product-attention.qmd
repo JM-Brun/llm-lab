@@ -42,7 +42,7 @@ On divise d’abord les scores par $\sqrt{4}=2$, ce qui donne $(1,0)$. Le softma
 <details>
 <summary>Afficher le raisonnement</summary>
 
-Non. Avant la projection de sortie, sa contribution directe est $0{,}95v_j$ : sa norme dépend aussi de $\\lVert v_j\\rVert$, pas seulement du poids. Ensuite, la projection de sortie, les connexions résiduelles, la normalisation et le MLP transforment encore le signal. Un poids élevé est une pondération relative, pas une mesure d'importance causale. Pour étudier un effet causal, il faut une analyse interventionnelle adaptée.
+Non. Avant la projection de sortie, sa contribution directe est $0{,}95v_j$ : sa norme dépend aussi de $\lVert v_j\\rVert$, pas seulement du poids. Ensuite, la projection de sortie, les connexions résiduelles, la normalisation et le MLP transforment encore le signal. Un poids élevé est une pondération relative, pas une mesure d'importance causale. Pour étudier un effet causal, il faut une analyse interventionnelle adaptée.
 
 </details>
 
