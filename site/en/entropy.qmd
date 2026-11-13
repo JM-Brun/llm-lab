@@ -81,34 +81,51 @@ A distribution concentrated on a few tokens generally has lower entropy than a s
 
 Entropy depends on the context and on the distribution being measured. The same prefix can lead to different distributions depending on the model, tokenizer, or temperature applied to the logits.
 
-### Numerical example
+### Numerical example: the scribe distribution
 
-For two candidate tokens with probabilities $(0.5,0.5)$, entropy is 1 bit, or $\log 2$ nats. For $(0.9,0.1)$, entropy is approximately $0.469$ bit, or $0.325$ nats. The second distribution is more concentrated, but this does not establish that its most likely token is correct.
+Return to the scribe's first prediction and its illustrative distribution over four candidate tokens:
+
+| Candidate token | Probability |
+|---|---:|
+| “Être” | 0.6 |
+| “Vous” | 0.2 |
+| “Oui” | 0.1 |
+| “Non” | 0.1 |
+
+Using natural logarithms, entropy is:
+
+$$
+\begin{aligned}
+H(p)&=-\sum_v p(v)\ln p(v)\\
+&=-(0.6\ln0.6+0.2\ln0.2
++2\times0.1\ln0.1)\\
+&\approx 1.089\text{ nats}.
+\end{aligned}
+$$
+
+The maximum for four outcomes is $\ln4\approx1.386$ nats, so this distribution reaches about 79% of that maximum. These illustrative values let us follow the same example through [likelihood](likelihood.qmd), [cross-entropy](cross-entropy.qmd), and [gradients](gradients.qmd).
+
+The key identity is:
+
+$$
+H(p)=\mathbb E_{X\sim p}[-\ln p(X)].
+$$
+
+In other words, entropy is the **expected** surprisal when the outcome is drawn from $p$. It is a property of the whole distribution, not the surprisal of one particular outcome.
 
 ## Predictive entropy and the observed token are different questions
 
-Average entropy describes uncertainty *before* the next token is known. Once the target token $x_t$ is observed, its surprisal under the model is:
+Entropy $H(p)$ describes expected surprisal *before* the next token is known. Once the target token $x_t$ is observed, its surprisal under the model is:
 
 $$
 -\log p_\theta(x_t\mid x_{<t}).
 $$
 
-This is a contribution to the token-prediction loss. It can be high even when the distribution had high entropy, or low when the observed token received high probability. Do not confuse a distribution's entropy with the surprisal of one particular outcome.
+This quantity is the observed token's **surprisal**. With a one-hot target, it is also that token's **loss contribution** and its **negative log-likelihood** (NLL): $-\ln p_\theta(x_t\mid x_{<t})$. These names refer here to the same quantity, emphasizing its information-theoretic interpretation, its role in the objective, or its connection to likelihood.
 
-For a full sequence, autoregressive factorization gives:
+A model can be very confident and still be wrong: if $p=(0.99;0.01)$, its entropy is low (about $0.056$ nats), but observing the second token gives surprisal $-\ln0.01\approx4.605$ nats. Observing the first token gives only $-\ln0.99\approx0.010$ nats. Entropy is the average of these possible surprisals, weighted by their probabilities.
 
-$$
-p_\theta(x_{1:T})=\prod_{t=1}^{T}p_\theta(x_t\mid x_{<t}),
-$$
-
-and therefore:
-
-$$
--\log p_\theta(x_{1:T})
-=-\sum_{t=1}^{T}\log p_\theta(x_t\mid x_{<t}).
-$$
-
-This sum of negative log-probabilities directly connects token-by-token prediction to sequence likelihood. A corpus average depends on which tokens are included, the tokenizer, and the reduction protocol.
+Summing token-level NLLs gives the sequence NLL, using the autoregressive factorization derived on the canonical [Likelihood](likelihood.qmd) page.
 
 ## Entropy, temperature, and generation
 
@@ -125,8 +142,8 @@ Lower temperature tends to concentrate the distribution; higher temperature tend
 - Low entropy does not guarantee that the selected token is correct: a model can be confident and wrong.
 - High entropy does not mean the output is false; multiple continuations may be plausible.
 - Normalized probabilities do not guarantee calibration.
-- Entropy or perplexity computed with different tokenizers is not directly comparable without care.
-- The average entropy observed under a model is not automatically the true entropy of the data source.
+- **Perplexity** is the exponential of mean NLL per token (or $e^{\bar\ell}$ when the mean is in nats). It summarizes probabilistic performance on a corpus and depends on the tokenizer and evaluation protocol.
+- If the data follow a true distribution $q$ and the model predicts $p$, mean surprisal under the data is cross-entropy $H(q,p)=\mathbb E_{X\sim q}[-\ln p(X)]$. It is not automatically the source entropy $H(q)$: equality holds when $p=q$ (more generally, the gap is KL divergence $D_{KL}(q\|p)$).
 
 
 
@@ -176,7 +193,7 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 <summary>Show the answers</summary>
 
 1. No. Entropy describes the spread of the distribution, not factual correctness.
-2. Entropy averages surprise over all possible tokens; observed surprise uses the probability assigned to the actual target.
+2. Entropy is the expected surprisal under $p$; observed surprisal is $-\ln p(x_t)$ for the target that actually occurred.
 3. Tokenizers segment text differently, changing the units and number of positions being evaluated.
 
 </details>
