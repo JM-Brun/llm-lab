@@ -45,6 +45,19 @@ A prediction objective learns to assign probabilities to observed token sequence
 
 These missing guarantees are not implementation defects: they follow from the objective itself. Each calls for an evaluation suited to the task and intended use, with appropriate measures, baselines, and controls. The [experimental evaluation exercise](experimental-evaluation.qmd) illustrates this approach in one specific setting: ranking scientific passages. It is not a general evaluation method for conversational assistants.
 
+## 2. What should be evaluated in an assistant?
+
+A single score cannot summarize an assistant's quality. First specify **what is being evaluated**: the model alone, or the complete system (model, instructions, document retrieval, tools, and interface). For an assistant, several dimensions can be examined separately:
+
+- **Factual accuracy and source faithfulness:** are claims correct and, when a source is provided, are answers actually supported by it? Use verifiable cases and appropriate adjudication; fluent wording is not evidence.
+- **Task success and instruction following:** does the result meet criteria defined in advance, including format and constraints? A few successful examples are not enough.
+- **Calibration:** do stated confidence levels match observed success frequencies across a set of cases? Measures such as calibration error or the Brier score add insight, but depend on how probabilities and evaluation data are defined.
+- **Robustness:** do results hold under paraphrases, ambiguous inputs, missing information, and edge cases? Comparing controlled variants helps reveal fragility.
+- **Safety and refusal:** does the system avoid harmful answers while still responding to legitimate requests? Measure both safety failures and unjustified refusals.
+- **Tools, retrieval, and operations:** if the system uses RAG or tools, are retrieved documents relevant, do citations support the claims, and are actions executed correctly? Add operational constraints that matter: latency, cost, and availability.
+
+These dimensions are neither a universal checklist nor a score to be mechanically summed. Their priority depends on the use and its risks. Results should be broken down by task and failure type; an overall average can hide an important weakness. Finally, an offline test does not guarantee production behavior: monitor changes in data, usage, and the system after deployment.
+
 ## 2. What does "understand" mean?
 
 The word "understanding" must be made precise. It can denote:
