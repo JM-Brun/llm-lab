@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/in-context-learning"]
+related: ["fr/in-context-learning", "fr/context-engineering"]
 tags: ["type:exercise-hub", "destination:practice", "topic:in-context-learning-exercises", "level:applied", "language:fr", "status:published"]
 -->
 
@@ -66,6 +66,26 @@ Préparer des cas de test tenus à l'écart, notamment des combinaisons ou entr�
 Une bonne réponse doit préciser au moins la condition de comparaison, les cas de test non vus et une mesure distincte de la réussite sur la règle. Plusieurs protocoles sont défendables s'ils contrôlent les facteurs confondants et permettent cette distinction.
 
 </details>
+[4. **Une application conserve toute la conversation dans une base, mais n'envoie au modèle qu'un contexte assemblé pour chaque appel.** Pour répondre à une question, elle transmet des instructions, deux exemples, deux extraits récupérés dans une politique interne, un résultat d'outil sur l'état d'une commande et un résumé de messages antérieurs. Les poids du modèle restent fixes. Distinguez :
+- ce qui appartient au contexte actif de cet appel ;
+- ce qui relève du context engineering ;
+- où interviennent le RAG et l'ICL ;
+- ce qui peut rester stocké hors du contexte actif ;
+- la fenêtre de contexte et la longueur effective de cet appel.
+
+<details>
+<summary>Afficher le corrigé et le critère de réussite</summary>
+
+Le **contexte actif** contient les éléments effectivement transmis pour cet appel : instructions, question courante, exemples, extraits récupérés, résultat d'outil et résumé retenu. La conversation complète conservée dans la base n'en fait pas automatiquement partie : l'application n'en a injecté qu'une sélection.
+
+Le **context engineering** correspond au travail de l'application qui sélectionne, assemble, ordonne et résume ces éléments, puis décide ce qu'elle conserve ou retire aux tours suivants. Le **RAG** intervient dans la récupération des extraits de politique ; ces extraits ne deviennent utiles au modèle que lorsqu'ils sont ajoutés au contexte. L'**ICL** décrit l'utilisation possible des deux exemples présents dans le contexte pour orienter la réponse. Ni la récupération RAG ni l'ICL ne mettent à jour les poids dans ce scénario.
+
+La **fenêtre de contexte** est le budget maximal pris en charge ; la **longueur active** est le nombre de tokens réellement transmis à cet appel. La conversation stockée peut être beaucoup plus longue que ce qui entre dans le contexte actif.
+
+**Critère de réussite :** distinguer les informations transmises des données stockées hors appel, identifier séparément RAG et ICL, et expliquer pourquoi capacité maximale et longueur effective ne sont pas identiques.
+
+</details>
+
 
 [Exercices et expérimentations](../exercises.qmd).
 
