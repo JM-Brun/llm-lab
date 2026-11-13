@@ -22,6 +22,8 @@ related: ["fr/in-context-learning", "fr/generation", "fr/post-training", "fr/llm
 tags: ["type:concept-lesson", "destination:understand", "topic:context-engineering", "level:core", "language:fr", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-fr-context-engineering.qmd >}}
+
 ::: {.chapter-lead}
 L'**ingénierie du contexte** (*context engineering*) est la discipline qui consiste à concevoir et à gérer les informations qu'un système met à la disposition d'un modèle au moment de l'inférence. Elle vise à fournir, au bon moment et sous une forme exploitable, les éléments utiles à la tâche : instructions, historique, exemples, documents récupérés, résultats d'outils et état du travail.
 :::
