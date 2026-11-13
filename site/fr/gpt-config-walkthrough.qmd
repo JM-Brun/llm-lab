@@ -184,7 +184,12 @@ Les questions de cette visite et leurs corrigés sont regroupés sur la [page de
 
 ## Navigation dans le parcours
 
-{{< include ../includes/generated-suggested-route-fr-gpt-config-walkthrough.qmd >}}
+<div class="route-nav-cards">
+  <a class="route-nav-card" href="build-path.qmd">
+    <span class="nav-direction">← Retour au parcours Build</span>
+    <span class="nav-title">Construire un petit GPT</span>
+  </a>
+</div>
 
 ## Connexions
 
