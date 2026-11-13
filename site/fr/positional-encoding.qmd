@@ -88,7 +88,13 @@ Cette propriété suppose l’absence de signal positionnel et de contrainte dé
   - les **biais ou représentations relatives**, qui modifient les scores ou les représentations en fonction de la distance entre positions ;
   - **RoPE**, qui applique des rotations dépendant de la position aux requêtes et aux clés après leurs projections, avant le produit $QK^\top$. Le score obtenu dépend du décalage relatif. RoPE appartient donc à la famille relative ; son mode d'injection rotatif justifie de le présenter séparément dans les schémas.
 
-La distinction principale est celle entre information **absolue** et information **relative** ; RoPE est un mécanisme particulier de la seconde famille, pas une troisième famille disjointe. Le schéma compare deux modes d'injection explicites ; il ne représente pas le masque causal, qui constitue une contrainte d'accès distincte. Pour comprendre la dépendance au décalage relatif, les conventions de rotation et les limites à longue séquence, voir l'[approfondissement avancé sur RoPE](rope.qmd).
+La distinction principale est celle entre information **absolue** et information **relative** ; RoPE est un mécanisme particulier de la seconde famille, pas une troisième famille disjointe. Le schéma compare deux modes d'injection explicites ; il ne représente pas le masque causal, qui constitue une contrainte d'accès distincte.
+
+::: {.callout-note title="Un signal calculable ne garantit pas l'extrapolation"}
+La formule sinusoïdale peut être calculée pour des indices de position arbitrairement grands. Cela ne garantit pas qu'un modèle entraîné sur des séquences plus courtes saura utiliser correctement ces positions inédites. De même, RoPE ne garantit pas à lui seul un contexte long fiable : le comportement dépend notamment des fréquences, des éventuelles méthodes de mise à l'échelle, de la longueur d'entraînement et des données. **Pouvoir représenter une position n'est pas la même chose que généraliser à cette position.** Les approfondissements sur les [encodages sinusoïdaux](sinusoidal-positional-encoding.qmd) et [RoPE](rope.qmd) détaillent ces limites.
+:::
+
+Pour comprendre la dépendance au décalage relatif et les conventions de rotation, voir l'[approfondissement avancé sur RoPE](rope.qmd).
 
 ::: {.callout-note collapse="true" title="Approfondissement facultatif — géométrie des encodages sinusoïdaux"}
 Dans l’encodage sinusoïdal original, chaque paire de coordonnées utilise une fréquence propre. En posant $\omega_i=10000^{-2i/d}$, la paire associée à l’indice $i$ s’écrit :
