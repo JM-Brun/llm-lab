@@ -260,7 +260,9 @@ def test_first_build_tour_keeps_visible_return_card_when_sidebar_has_same_parent
         content for path, content in fragments.items() if path.name == fragment_name
     )
 
-    expected = "← Retour au parcours Build" if language == "fr" else "← Back to the Build path"
+    expected = (
+        "← Retour au parcours Build" if language == "fr" else "← Back to the Build path"
+    )
     assert '<div class="route-nav-cards">' in rendered
     assert 'href="build-path.qmd"' in rendered
     assert expected in rendered
