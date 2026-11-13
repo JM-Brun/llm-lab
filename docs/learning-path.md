@@ -8,11 +8,11 @@ This plan defines two paths with different completion evidence, not one sequence
 
 ## Reader-facing short overview
 
-For a concise, learner-facing explanation of the Understand route and its navigation, see the [simplified path overview and audit](understand-path-overview.md). This is an orientation layer only; the eight-stage route below remains canonical in `data/guided-route.yml`.
+For a concise, learner-facing explanation of the Understand route and its navigation, see the [simplified path overview and audit](understand-path-overview.md). This is an orientation layer only; the nine-stage route below remains canonical in `data/guided-route.yml`.
 
 ## Theory / Understand guided route — machine-readable map source
 
-The eight-stage **Theory / Understand route** displayed above the exploratory graphs on the bilingual learning-map pages is maintained in [`data/guided-route.yml`](../data/guided-route.yml), a versioned bilingual YAML registry. It is not the Build route. This file is the **single machine-readable source** for stage IDs, titles, objectives, core page links and optional resources. A resource's optional role in a stage is distinct from its destination: it can be an Understand page or a Deepen page. The present document remains the narrative curriculum and explains the conceptual order; do not duplicate the stage registry here or in JavaScript.
+The nine-stage **Theory / Understand route** displayed above the exploratory graphs on the bilingual learning-map pages is maintained in [`data/guided-route.yml`](../data/guided-route.yml), a versioned bilingual YAML registry. It is not the Build route. This file is the **single machine-readable source** for stage IDs, titles, objectives, core page links and optional resources. A resource's optional role in a stage is distinct from its destination: it can be an Understand page or a Deepen page. The present document remains the narrative curriculum and explains the conceptual order; do not duplicate the stage registry here or in JavaScript.
 
 The generator resolves every core and optional page ID against published page metadata and fails on missing or unpublished destinations. The route is conceptual, not a strict prerequisite DAG: pages within a stage are complementary resources, not mandatory sequential gates. See the [2026-11-06 reconciliation audit](learning-route-reconciliation-2026-11-05.md) for the crosswalk between curriculum, guided route, Quarto navigation, page graph and concept/resource graph.
 
@@ -29,16 +29,17 @@ The learner-facing course and the implementation dependency graph answer differe
 4. **Understand Transformer computation:** Transformer blocks, Q/K/V projections, attention, causal masking, MLP, residual connections and normalization.
 5. **Understand prediction:** final hidden states, vocabulary logits and the conditional next-token probability distribution.
 6. **Understand inference and generation:** prefill, iterative decoding, token selection, stopping and the autoregressive feedback loop. The generation lesson is revisited here in detail after its initial overview.
-7. **Score observed targets:** target probabilities, sequence likelihood, log-likelihood, negative log-likelihood and cross-entropy; distinguish scoring/evaluation from generation and parameter updates.
-8. **Explain learning:** the next-token objective, loss aggregation, gradients, backpropagation, optimization, pretraining and validation. Explain teacher forcing as the use of the observed prefix. The [training-loop lesson](../site/en/training-loop.qmd) owns the repeated step, the optimizer-versus-gradient distinction, train versus validation loss, overfitting and pretraining as the same loop at scale; AdamW internals, learning-rate schedules and gradient clipping stay in Deepen or Build. Do not turn corpus engineering or batch construction into prerequisites for this conceptual explanation.
+7. **Understand context use and adaptation:** distinguish in-context learning from parameter updates, then explain how a system selects, structures, retrieves, updates and secures the information supplied to the model. The canonical lessons are [in-context learning](../site/en/in-context-learning.qmd) and [context engineering](../site/en/context-engineering.qmd); RAG, memory and agent architectures are connected applications, not synonyms.
+8. **Score observed targets:** target probabilities, sequence likelihood, log-likelihood, negative log-likelihood and cross-entropy; distinguish scoring/evaluation from generation and parameter updates.
+9. **Explain learning:** the next-token objective, loss aggregation, gradients, backpropagation, optimization, pretraining and validation. Explain teacher forcing as the use of the observed prefix. The [training-loop lesson](../site/en/training-loop.qmd) owns the repeated step, the optimizer-versus-gradient distinction, train versus validation loss, overfitting and pretraining as the same loop at scale; AdamW internals, learning-rate schedules and gradient clipping stay in Deepen or Build. Do not turn corpus engineering or batch construction into prerequisites for this conceptual explanation.
 
-**Optional extension — adaptation and use:** pretrained checkpoints, supervised fine-tuning, instruction tuning, prompting and retrieval-augmented generation. Keep context-only methods, parameter updates and model use distinct; this extension is discoverable from the core route but is not an additional mandatory stage in the eight-stage guided route. The [post-training lesson](../site/en/post-training.qmd) is its entry page, attached as an optional page of the `training` stage; pretrained-checkpoint loading, classification fine-tuning and LoRA/quantization as implementation milestones (A1–A4) remain in the Build adaptation branch.
+**Optional extension — adaptation and use:** pretrained checkpoints, supervised fine-tuning, instruction tuning, advanced prompting patterns and retrieval-augmented generation. In-context learning and context engineering now belong to the core route; keep them distinct from parameter updates and from the application architectures that may use them. This extension is discoverable from the core route but is not an additional mandatory stage beyond the nine-stage guided route. The [post-training lesson](../site/en/post-training.qmd) is its entry page, attached as an optional page of the `training` stage; pretrained-checkpoint loading, classification fine-tuning and LoRA/quantization as implementation milestones (A1–A4) remain in the Build adaptation branch.
 
 ### Reader-facing sequence and operational branches
 
 The public page-navigation arrows follow the **conceptual inference route**, not the order in which every component is implemented:
 
-`LLM panorama → generation preview → text and tokens → tokenization → embeddings → positional information → contextualized representations → Transformer → Q/K/V → scaled attention → causal masking → logits → probabilities`.
+`LLM panorama → generation preview → text and tokens → tokenization → embeddings → positional information → contextualized representations → Transformer → Q/K/V → scaled attention → causal masking → logits → probabilities → context use (ICL and context engineering)`.
 
 The generation lesson appears early as a system-level preview: it establishes the autoregressive loop with fixed parameters before the learner studies each internal component. Its appearance before the detailed input and probability lessons is deliberate, not a claim that those details are unnecessary.
 
@@ -209,7 +210,7 @@ Do not open parallel issues for milestones already owned above. Create a new iss
 
 ## Canonical module topology: shared core and operational branches
 
-**Status: canonical curriculum model, 2026-11-06.** This section defines the conceptual modules and their relations. It is the authority for module scope and pedagogical dependencies. The eight-stage guided route is the reader-facing projection of this module topology. It preserves the preview-first learning order while separating inference, observed-target scoring and training; it does not turn those sibling branches into a mandatory sequential dependency chain.
+**Status: canonical curriculum model, 2026-11-06.** This section defines the conceptual modules and their relations. It is the authority for module scope and pedagogical dependencies. The nine-stage guided route is the reader-facing projection of this module topology. It preserves the preview-first learning order while separating inference, observed-target scoring and training; it does not turn those sibling branches into a mandatory sequential dependency chain.
 
 ### 1. The hierarchy
 
