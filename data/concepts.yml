@@ -619,6 +619,39 @@ concepts:
     domains: [mathematical-tools-geometry]
     resources: [fr/jepa-platonic-representation, en/jepa-platonic-representation]
 
+  - id: document-retrieval
+    importance: supporting
+    labels: {fr: "Récupération documentaire", en: "Document retrieval"}
+    definitions:
+      fr: "Sélection de documents ou de passages à partir d'une requête, au moyen de critères lexicaux, sémantiques, structurés ou hybrides."
+      en: "Selection of documents or passages from a query using lexical, semantic, structured, or hybrid criteria."
+    domains: [inference-efficiency]
+    resources: [fr/rag-memory-boundaries, en/rag-memory-boundaries]
+  - id: retrieval-augmented-generation
+    importance: supporting
+    labels: {fr: "Génération augmentée par récupération (RAG)", en: "Retrieval-augmented generation (RAG)"}
+    definitions:
+      fr: "Architecture qui récupère des informations externes puis les rend disponibles à un modèle génératif, généralement en les intégrant à son contexte."
+      en: "Architecture that retrieves external information and makes it available to a generative model, usually by adding it to the model context."
+    domains: [inference-efficiency]
+    resources: [fr/rag-memory-boundaries, en/rag-memory-boundaries]
+  - id: persistent-memory
+    importance: supporting
+    labels: {fr: "Mémoire persistante applicative", en: "Persistent application memory"}
+    definitions:
+      fr: "Informations conservées par un système LLM entre plusieurs appels ou sessions afin d'être sélectionnées et réutilisées ultérieurement."
+      en: "Information retained by an LLM system across calls or sessions so it can be selected and reused later."
+    domains: [inference-efficiency]
+    resources: [fr/rag-memory-boundaries, en/rag-memory-boundaries]
+  - id: context-injection
+    importance: supporting
+    labels: {fr: "Injection dans le contexte", en: "Context injection"}
+    definitions:
+      fr: "Opération par laquelle une application inclut une information sélectionnée dans l'entrée effectivement transmise au modèle."
+      en: "Operation by which an application includes selected information in the input actually supplied to the model."
+    domains: [inference-efficiency]
+    resources: [fr/rag-memory-boundaries, en/rag-memory-boundaries]
+
 relation_types:
   represented-by:
     direction: directed
@@ -741,39 +774,6 @@ relation_types:
     descriptions:
       fr: "La source est évaluée au moyen de la cible."
       en: "The source is evaluated using the target."
-  - id: document-retrieval
-    importance: supporting
-    labels: {fr: "Récupération documentaire", en: "Document retrieval"}
-    definitions:
-      fr: "Sélection de documents ou de passages à partir d'une requête, au moyen de critères lexicaux, sémantiques, structurés ou hybrides."
-      en: "Selection of documents or passages from a query using lexical, semantic, structured, or hybrid criteria."
-    domains: [inference-efficiency]
-    resources: [fr/rag-memory-boundaries, en/rag-memory-boundaries]
-  - id: retrieval-augmented-generation
-    importance: supporting
-    labels: {fr: "Génération augmentée par récupération (RAG)", en: "Retrieval-augmented generation (RAG)"}
-    definitions:
-      fr: "Architecture qui récupère des informations externes puis les rend disponibles à un modèle génératif, généralement en les intégrant à son contexte."
-      en: "Architecture that retrieves external information and makes it available to a generative model, usually by adding it to the model context."
-    domains: [inference-efficiency]
-    resources: [fr/rag-memory-boundaries, en/rag-memory-boundaries]
-  - id: persistent-memory
-    importance: supporting
-    labels: {fr: "Mémoire persistante applicative", en: "Persistent application memory"}
-    definitions:
-      fr: "Informations conservées par un système LLM entre plusieurs appels ou sessions afin d'être sélectionnées et réutilisées ultérieurement."
-      en: "Information retained by an LLM system across calls or sessions so it can be selected and reused later."
-    domains: [inference-efficiency]
-    resources: [fr/rag-memory-boundaries, en/rag-memory-boundaries]
-  - id: context-injection
-    importance: supporting
-    labels: {fr: "Injection dans le contexte", en: "Context injection"}
-    definitions:
-      fr: "Opération par laquelle une application inclut une information sélectionnée dans l'entrée effectivement transmise au modèle."
-      en: "Operation by which an application includes selected information in the input actually supplied to the model."
-    domains: [inference-efficiency]
-    resources: [fr/rag-memory-boundaries, en/rag-memory-boundaries]
-
 relations:
   - {from: document-retrieval, type: contributes-to, to: retrieval-augmented-generation}
   - {from: retrieval-augmented-generation, type: contributes-to, to: context-engineering}
