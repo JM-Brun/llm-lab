@@ -10,7 +10,7 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/context-engineering"
 summary: "Defines context engineering and locates its main operations within an LLM system."
-scope: "Introduces context design and management at inference time; detailed RAG, memory, and agent architectures remain in their dedicated lessons."
+scope: "Introduces context design and management at inference time, distinguishing document retrieval, RAG, persistent memory, and ICL operationally."
 purpose: "Readers should distinguish model context, ICL, and context engineering, then identify the decisions that shape the quality of the input supplied to a model."
 suggested_route:
   previous: "en/in-context-learning"
@@ -55,6 +55,16 @@ The **context window** describes a capacity limit measured in tokens. It does no
 
 A longer context can help when it adds relevant evidence. It can also hurt when it accumulates noise, repetition, conflicting instructions, or poorly selected documents. Information position, readability, and trustworthiness matter too. The goal is not to fill the window, but to build a context suited to the task within capacity, cost, and security constraints.
 
+## Three levels of context that should not be confused
+
+| Level | What it refers to |
+|---|---|
+| **System context** | Instructions, messages, examples, retrieved documents, tool results, and memory items the application chooses to supply for a call. |
+| **Input sequence and context window** | Token sequence (or structured multimodal elements) processed by the model. The window is a capacity limit; during autoregressive generation, generated tokens are appended to the sequence. |
+| **Context accessible at a position** | For a causal decoder, positions accessible under the causal mask and available window: at position $t$, future positions are masked. |
+
+Application-stored history is not necessarily transmitted. Persistent memory becomes model context only when the system selects and supplies it. A contextualized representation is the **result of a computation** conditioned on accessible information, not another name for the context.
+
 | Notion | What it denotes | Confusion to avoid |
 |---|---|---|
 | **Context window** | Maximum token budget usable for a call; input/output counting conventions depend on the model and API | The length actually supplied |
@@ -78,6 +88,40 @@ Active context denotes input information; [contextualized representations](conte
 | **Fine-tuning** | Adaptation that changes model parameters through optimization rather than only changing the information supplied at inference. |
 
 ICL describes a model capability or behavior; context engineering describes the system-design work that prepares its input. Good context can support ICL, but the two concepts are not synonyms.
+
+## From document retrieval to usable information
+
+**Document retrieval** is an operation: searching and selecting items from an external collection. It may use keywords, vectors, hybrid search, metadata filters, or reranking. Retrieval alone is not a complete RAG system.
+
+A retrieval-augmented generation (RAG) pipeline adds an integration path into the model:
+
+1. **Index** a collection: chunking, optional embeddings, an index, and metadata.
+2. **Retrieve** candidate passages from the question or current state.
+3. **Filter and rank** results by relevance, freshness, access rights, and quality.
+4. **Assemble** context with the question, selected passages, and their references.
+5. **Supply** this assembly to the model, which computes its response conditioned on the received input.
+6. **Check** the response: verify that claims are supported, handle insufficient evidence, and preserve provenance.
+
+The decisive boundary is between **retrieved** and **supplied**. A document in an index or returned by a search engine is not automatically accessible to the model. It can directly condition the computation only if the system actually includes it in the input (or exposes it through an explicitly invoked mechanism). A passage filtered out, truncated, or absent from the final context does not become available knowledge by magic.
+
+**RAG is not ICL.** RAG describes an architecture for retrieving and injecting external content; ICL describes a model adapting its behavior to instructions, examples, or patterns in context, without updating its parameters. A RAG system may supply facts, demonstrations, or both. Factual passages do not necessarily mean few-shot-style in-context learning is taking place.
+
+## Persistent memory: storing is not supplying
+
+**Persistent memory** retains information beyond one call or conversation: preferences, useful facts, decisions, summaries, or task state. It may use a database, files, a vector store, or a combination. This storage is external to model parameters and the context window.
+
+For a remembered item to influence an answer, it must be stored correctly, retrieved or selected at the right time, checked (freshness, relevance, permissions, contradictions), and then injected into the model context. Memory can exist without being consulted; be consulted without being retained; or be injected without being used correctly. Memory is not automatically RAG: it may use retrieval, but its function also includes persistence and state management over time.
+
+| Situation | Where is the information? | Can the model use it directly? |
+|---|---|---|
+| Document in a repository or index | External storage | No, unless supplied or made accessible |
+| Passage returned by search but rejected | Intermediate pipeline result | No |
+| Selected passage added to the prompt | Current call context | Yes, with no guarantee of faithful use |
+| Preference stored but not selected | Persistent storage | Not for this call |
+| Preference retrieved and added to context | Selected memory, now active input | Yes, subject to model limits |
+| Solved example added to the prompt | Demonstration in context | May support ICL without changing parameters |
+
+External information does not thereby become information in the weights: at best, it becomes part of the input conditioning an inference-time computation. Updating parameters belongs to training or fine-tuning, not retrieval or RAG injection.
 
 ## A design example
 
