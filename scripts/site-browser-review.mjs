@@ -148,10 +148,13 @@ if (process.env.SITE_BROWSER_PROFILE === "targeted") {
   if (changedFiles.some(file => /^site\/images\/queries-keys-values(?:-en)?\.svg$/.test(file))) {
     changedPages.add("queries-keys-values.html");
   }
+  const hasSharedChromeChange = changedFiles.some(file =>
+    /^site\/(includes|filters)\//.test(file)
+  );
   const hasGlobalSiteChange = changedFiles.some(file =>
     /^site\/(\.quarto|_quarto\.yml|.*\.(css|scss|js))$/.test(file) ||
     /^site\/_extensions\//.test(file) || /^scripts\//.test(file)
-  );
+  ) || hasSharedChromeChange;
 
   if (hasGlobalSiteChange || changedPages.size === 0) {
     const smokePages = new Set(["learning-map.html", "llm-overview.html", "index.html", "text-data.html"]);
@@ -166,7 +169,7 @@ if (process.env.SITE_BROWSER_PROFILE === "targeted") {
       && !changedFiles.includes("site/_quarto.yml");
     const selectedPages = new Set([
       ...smokePages,
-      ...(reviewScriptOnly ? targetedReviewPages : []),
+      ...(reviewScriptOnly || hasSharedChromeChange ? targetedReviewPages : []),
       ...(changedFiles.includes("site/_quarto.yml") ? sidebarPilotPages : []),
       ...changedPages,
     ]);
