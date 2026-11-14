@@ -439,7 +439,7 @@ async function runCase(testCase, caseIndex) {
         const link = document.querySelector(selector);
         return {
           href: link?.href || null,
-          title: link?.querySelector(".nav-page-text")?.textContent?.trim().replace(/\\s+/g, " ") || null,
+          title: link?.querySelector(".nav-page-text")?.textContent?.trim().replace(/\s+/g, " ") || null,
           ariaLabel: link?.getAttribute("aria-label") || null,
           enhanced: link?.dataset.navigationLabelEnhanced === "true",
           classes: link?.className || null,
