@@ -629,14 +629,36 @@ async function runCase(testCase, caseIndex) {
     await page.evaluate(() => { window.scrollTo(0, 0); document.activeElement?.blur(); });
     item.keyboard = [];
     const seen = new Set();
-    for (let i = 0; i < 60; i++) {
+    // Bound traversal from the rendered page's actual sequentially focusable
+    // elements instead of a fixed sample size. The old 60-Tab cap silently
+    // truncated dense pages such as the learning map and mislabeled them as
+    // incomplete cycles even when no keyboard defect was present.
+    const focusableCount = await page.evaluate(() => [...document.querySelectorAll("*")]
+      .filter(el => el.tabIndex >= 0 && !el.matches(":disabled") &&
+        el.getClientRects().length > 0 &&
+        getComputedStyle(el).visibility !== "hidden" &&
+        getComputedStyle(el).display !== "none").length);
+    const tabTraversalLimit = Math.min(500, Math.max(60, focusableCount + 2));
+    item.keyboardSummary = {
+      expectedFocusableElements: focusableCount,
+      traversalLimit: tabTraversalLimit,
+      traversalLimitReached: false,
+    };
+    for (let i = 0; i < tabTraversalLimit; i++) {
       await page.keyboard.press("Tab");
       const focus = await page.evaluate(() => {
         const el = document.activeElement;
         if (!el || el === document.body) return null;
+        // Use element identity, not accessible text/href, because repeated
+        // labels and destinations can legitimately occur in navigation.
+        if (!el.__siteAuditFocusId) {
+          window.__siteAuditNextFocusId = (window.__siteAuditNextFocusId || 0) + 1;
+          Object.defineProperty(el, "__siteAuditFocusId", { value: window.__siteAuditNextFocusId });
+        }
         const style = getComputedStyle(el);
         const rect = el.getBoundingClientRect();
         return {
+          id: el.__siteAuditFocusId,
           tag: el.tagName.toLowerCase(),
           text: (el.innerText || el.getAttribute("aria-label") || el.getAttribute("title") || "").trim().slice(0, 100),
           href: el.getAttribute("href"),
@@ -650,15 +672,16 @@ async function runCase(testCase, caseIndex) {
         };
       });
       if (!focus) break;
-      const key = JSON.stringify([focus.tag, focus.text, focus.href, focus.role]);
-      if (seen.has(key)) { item.keyboardTabCycleCompleted = true; break; }
-      seen.add(key);
+      if (seen.has(focus.id)) { item.keyboardTabCycleCompleted = true; break; }
+      seen.add(focus.id);
       item.keyboard.push(focus);
     }
     item.keyboardSummary = {
+      ...item.keyboardSummary,
       focusTargets: item.keyboard.length,
       focusVisibleTargets: item.keyboard.filter(x => x.focusVisible).length,
       tabCycleCompleted: Boolean(item.keyboardTabCycleCompleted),
+      traversalLimitReached: !item.keyboardTabCycleCompleted && item.keyboard.length >= tabTraversalLimit,
       firstTargets: item.keyboard.slice(0, 12),
     };
 
