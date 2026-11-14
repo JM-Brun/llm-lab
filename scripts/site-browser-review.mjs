@@ -437,9 +437,24 @@ async function runCase(testCase, caseIndex) {
       const readLink = (direction) => {
         const selector = direction === "previous" ? ".page-navigation .nav-page-previous a.pagination-link" : ".page-navigation .nav-page-next a.pagination-link";
         const link = document.querySelector(selector);
-        return { href: link?.href || null, title: link?.querySelector(".nav-page-text")?.textContent?.trim().replace(/\s+/g, " ") || null, ariaLabel: link?.getAttribute("aria-label") || null };
+        return {
+          href: link?.href || null,
+          title: link?.querySelector(".nav-page-text")?.textContent?.trim().replace(/\\s+/g, " ") || null,
+          ariaLabel: link?.getAttribute("aria-label") || null,
+          enhanced: link?.dataset.navigationLabelEnhanced === "true",
+          classes: link?.className || null,
+          outerHTML: link?.outerHTML.slice(0, 1800) || null,
+        };
       };
-      return { previous: readLink("previous"), next: readLink("next") };
+      const navigation = document.querySelector(".page-navigation");
+      return {
+        language: document.documentElement.lang || null,
+        previous: readLink("previous"),
+        next: readLink("next"),
+        navigationPresent: Boolean(navigation),
+        navigationHTML: navigation?.outerHTML.slice(0, 3600) || null,
+        accessibilityFixScriptPresent: [...document.scripts].some(script => script.textContent.includes("enhancePageNavigation")),
+      };
     });
     const expectedCoreNavigation = {
       "text-data.html": { previous: "generation.html", next: "embedding-space.html" },
