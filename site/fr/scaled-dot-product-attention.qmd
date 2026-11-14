@@ -25,7 +25,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:scaled-dot-produc
 {{< include ../includes/generated-guided-context-fr-scaled-dot-product-attention.qmd >}}
 
 ::: {.chapter-lead}
-L'attention à produit scalaire compare les requêtes aux clés pour calculer des scores, puis transforme ces scores en poids qui servent à combiner les valeurs. Le softmax normalise les poids sur les positions accessibles ; il ne prouve ni pertinence sémantique ni causalité.
+L'attention à produit scalaire compare les requêtes aux clés pour calculer des scores, puis transforme ces scores en poids qui servent à combiner les valeurs. Le softmax transforme les scores (mis à l'échelle et éventuellement masqués) en poids normalisés sur les positions accessibles ; il ne prouve ni pertinence sémantique ni causalité.
 :::
 
 <div class="epistemic-badges">
