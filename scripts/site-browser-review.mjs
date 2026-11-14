@@ -649,9 +649,16 @@ async function runCase(testCase, caseIndex) {
       const focus = await page.evaluate(() => {
         const el = document.activeElement;
         if (!el || el === document.body) return null;
+        // Use element identity, not accessible text/href, because repeated
+        // labels and destinations can legitimately occur in navigation.
+        if (!el.__siteAuditFocusId) {
+          window.__siteAuditNextFocusId = (window.__siteAuditNextFocusId || 0) + 1;
+          Object.defineProperty(el, "__siteAuditFocusId", { value: window.__siteAuditNextFocusId });
+        }
         const style = getComputedStyle(el);
         const rect = el.getBoundingClientRect();
         return {
+          id: el.__siteAuditFocusId,
           tag: el.tagName.toLowerCase(),
           text: (el.innerText || el.getAttribute("aria-label") || el.getAttribute("title") || "").trim().slice(0, 100),
           href: el.getAttribute("href"),
@@ -665,9 +672,8 @@ async function runCase(testCase, caseIndex) {
         };
       });
       if (!focus) break;
-      const key = JSON.stringify([focus.tag, focus.text, focus.href, focus.role]);
-      if (seen.has(key)) { item.keyboardTabCycleCompleted = true; break; }
-      seen.add(key);
+      if (seen.has(focus.id)) { item.keyboardTabCycleCompleted = true; break; }
+      seen.add(focus.id);
       item.keyboard.push(focus);
     }
     item.keyboardSummary = {
