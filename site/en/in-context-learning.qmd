@@ -64,6 +64,27 @@ The term's scope varies across the literature: some authors reserve *in-context 
 
 ICL is temporary and conditioned on the prompt's content and layout. A new conversation or a different prompt can lead to different behavior. Fine-tuning changes parameters and can produce adaptation that persists beyond a particular prompt.
 
+### Where does adaptation happen?
+
+The diagram separates two operations that are often conflated: supplying information in an individual call's context and changing model parameters during training. RAG supplies information to the first path; retrieval alone does not update the weights.
+
+```{mermaid}
+flowchart TD
+  subgraph inference["Inference: fixed parameters"]
+    P["Prompt: instruction + examples"] --> C["Call context"]
+    R["Retrieved documents (RAG)"] --> C
+    W["Model parameters θ"] --> M["Model at inference"]
+    C --> M
+    M --> O["Response"]
+  end
+  subgraph training["Fine-tuning: parameter update"]
+    D["Training examples"] --> U["Loss computation and optimization"]
+    U --> W2["Updated parameters θ′"]
+  end
+```
+
+**Key distinction:** ICL and RAG change the information available to a call; fine-tuning changes the parameters used by subsequent calls. Pretraining is another optimization phase, generally at larger scale, using a training corpus.
+
 ## What does the model do with examples?
 
 The model receives a sequence containing both the task and the demonstrations. At each layer, attention and other network operations transform representations as a function of this context. When generating the continuation, the model conditions its output on the preceding examples. The examples are part of the active input: they steer the computation without changing the weights.
