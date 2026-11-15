@@ -87,11 +87,13 @@ project:
     - en/in-context-learning.qmd
     - fr/transformer-architectures.qmd
     - fr/cross-attention.qmd
+                - fr/multimodal-architectures.qmd
     - fr/hybrid-llm-architectures.qmd
     - fr/next-concept-modeling.qmd
     - fr/llm-computational-complexity.qmd
     - en/transformer-architectures.qmd
     - en/cross-attention.qmd
+                - en/multimodal-architectures.qmd
     - en/hybrid-llm-architectures.qmd
     - en/next-concept-modeling.qmd
     - en/llm-computational-complexity.qmd
@@ -405,6 +407,7 @@ website:
                 - fr/contextualized-representations-advanced.qmd
                 - fr/queries-keys-values-advanced.qmd
                 - fr/cross-attention.qmd
+                - fr/multimodal-architectures.qmd
                 - fr/rope.qmd
                 - fr/sinusoidal-positional-encoding.qmd
                 - fr/hybrid-llm-architectures.qmd
@@ -601,6 +604,7 @@ website:
                 - en/contextualized-representations-advanced.qmd
                 - en/queries-keys-values-advanced.qmd
                 - en/cross-attention.qmd
+                - en/multimodal-architectures.qmd
                 - en/rope.qmd
                 - en/sinusoidal-positional-encoding.qmd
                 - en/hybrid-llm-architectures.qmd
