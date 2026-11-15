@@ -2,7 +2,7 @@
 title: "Multimodal architectures: understanding and generation"
 subtitle: "Distinguishing input pathways, representations, and output mechanisms"
 description-meta: "Compares multimodal understanding and generation architectures, external decoders, learned projectors, autoregressive outputs, and diffusion."
-keywords: ["type:concept-lesson", "destination:deepen", "topic:multimodal-architectures", "level:intermediate", "language:en", "status:published"]
+keywords: ["type:concept-lesson", "destination:deepen", "topic:multimodal-architectures", "level:advanced", "language:en", "status:published"]
 lang: en
 ---
 
@@ -20,7 +20,7 @@ hierarchy:
   parents: []
   children: []
 related: ["en/llm-overview", "en/cross-attention", "en/generation", "en/transformer-architectures", "en/llm-evolution"]
-tags: ["type:concept-lesson", "destination:deepen", "topic:multimodal-architectures", "level:intermediate", "language:en", "status:published"]
+tags: ["type:concept-lesson", "destination:deepen", "topic:multimodal-architectures", "level:advanced", "language:en", "status:published"]
 -->
 
 ::: {.chapter-lead}
