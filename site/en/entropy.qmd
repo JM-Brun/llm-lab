@@ -81,16 +81,16 @@ A distribution concentrated on a few tokens generally has lower entropy than a s
 
 Entropy depends on the context and on the distribution being measured. The same prefix can lead to different distributions depending on the model, tokenizer, or temperature applied to the logits.
 
-### Numerical example: the scribe distribution
+### Numerical example: the Roman question's next-token distribution
 
-Return to the scribe's first prediction and its illustrative distribution over four candidate tokens:
+For the Roman question, consider this illustrative distribution over four candidate next tokens:
 
 | Candidate token | Probability |
 |---|---:|
-| “Être” | 0.6 |
-| “Vous” | 0.2 |
-| “Oui” | 0.1 |
-| “Non” | 0.1 |
+| “They” | 0.6 |
+| “Aqueducts” | 0.2 |
+| “Nothing” | 0.1 |
+| “Well” | 0.1 |
 
 Using natural logarithms, entropy is:
 
@@ -104,6 +104,8 @@ H(p)&=-\sum_v p(v)\ln p(v)\\
 $$
 
 The maximum for four outcomes is $\ln4\approx1.386$ nats, so this distribution reaches about 79% of that maximum. These illustrative values let us follow the same example through [likelihood](likelihood.qmd), [cross-entropy](cross-entropy.qmd), and [gradients](gradients.qmd).
+
+![Three distributions over four tokens, from most concentrated to most uniform, and their respective entropies.](../images/entropy-distributions-en.svg){fig-alt="Three distributions over four tokens. The concentrated distribution (100%, 0%, 0%, 0%) has entropy 0 nats. The Roman-question example (60%, 20%, 10%, 10%) has entropy 1.089 nats. The uniform distribution (25% each) reaches the maximum of 1.386 nats. The bars show probabilities; entropy summarizes the spread of the whole distribution." fig-cap="For four outcomes, entropy increases as the distribution spreads out: 0 nats for a certain outcome, 1.089 nats for the example, and 1.386 nats for the uniform distribution." width=100%}
 
 The key identity is:
 
