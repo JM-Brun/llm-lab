@@ -974,6 +974,44 @@ def final_core_page_id(stages: Sequence[ResolvedGuidedRouteStage]) -> str | None
     return None
 
 
+def build_suggested_route_contexts(
+    stages: Sequence[ResolvedGuidedRouteStage],
+) -> dict[str, list[dict[str, ResolvedPage | str | None]]]:
+    """Project ordered stage membership into contextual previous/next neighbors.
+
+    Stage order and page order are the canonical route. A page in several stages
+    receives one neighbor pair per membership instead of an arbitrary global pair.
+    Boundaries connect the last core page of one stage to the first core page of
+    the adjacent stage; explanatory transitions remain a separate concept.
+    """
+    contexts: dict[str, list[dict[str, ResolvedPage | str | None]]] = {}
+    for stage_index, stage in enumerate(stages):
+        for page_index, page in enumerate(stage.pages):
+            previous = (
+                stage.pages[page_index - 1]
+                if page_index > 0
+                else stages[stage_index - 1].pages[-1]
+                if stage_index > 0 and stages[stage_index - 1].pages
+                else None
+            )
+            following = (
+                stage.pages[page_index + 1]
+                if page_index + 1 < len(stage.pages)
+                else stages[stage_index + 1].pages[0]
+                if stage_index + 1 < len(stages) and stages[stage_index + 1].pages
+                else None
+            )
+            contexts.setdefault(page.id, []).append(
+                {
+                    "stage_id": stage.id,
+                    "stage_title": stage.title,
+                    "previous": previous,
+                    "next": following,
+                }
+            )
+    return contexts
+
+
 def render_suggested_route_markdown(
     page: dict[str, Any],
     page_by_id: dict[str, dict[str, Any]],
@@ -982,6 +1020,7 @@ def render_suggested_route_markdown(
     completes_route: bool = False,
     sidebar_neighbors: dict[str, str] | None = None,
     preserve_pedagogical_cards: bool = False,
+    stage_routes: Sequence[dict[str, ResolvedPage | str | None]] | None = None,
 ) -> str:
     """Render local previous/next links from the page's canonical suggested route.
 
@@ -994,6 +1033,37 @@ def render_suggested_route_markdown(
         raise ValueError(f"unsupported suggested-route language: {language!r}")
 
     route = page.get("route") or {}
+    if stage_routes:
+        cards: list[str] = []
+        for context in stage_routes:
+            stage_title = str(context["stage_title"])
+            for direction in ("previous", "next"):
+                target = context.get(direction)
+                if target is None:
+                    continue
+                if not isinstance(target, ResolvedPage):
+                    raise ValueError(
+                        f"invalid {direction} stage route for {page['id']!r}: {target!r}"
+                    )
+                label = (
+                    (f"← Étape précédente · {stage_title}" if language == "fr" else f"← Previous · {stage_title}")
+                    if direction == "previous"
+                    else (f"Continuer {stage_title} →" if language == "fr" else f"Continue {stage_title} →")
+                )
+                href = str(target.href)
+                if not href.endswith(".html"):
+                    raise ValueError(f"route target has no published HTML href: {target.id!r}")
+                source_href = f"{href[:-5]}.qmd"
+                cards.extend([
+                    f'  <a class="route-nav-card" href="{escape(source_href, quote=True)}">',
+                    f'    <span class="nav-direction">{escape(label)}</span>',
+                    f'    <span class="nav-title">{escape(str(target.title))}</span>',
+                    "  </a>",
+                ])
+        if not cards:
+            return ""
+        return "\\n".join(['<div class="route-nav-cards">', *cards, "</div>", ""])
+
     directions = (
         (
             "previous",
@@ -1067,6 +1137,7 @@ def prepare_suggested_route_fragments(
     core_page_ids = {page.id for stage in stages for page in stage.pages}
     continuation_id = f"{language}/{ROUTE_CONTINUATION_PAGE}"
     sidebar_neighbors_by_page = load_sidebar_page_neighbors(language)
+    stage_routes_by_page = build_suggested_route_contexts(stages)
     includes = SITE / "includes"
     outputs: dict[Path, str] = {}
     for page in pages:
@@ -1079,6 +1150,7 @@ def prepare_suggested_route_fragments(
             completes_route=page["id"] == final_page_id and continuation_id in page_by_id,
             sidebar_neighbors=sidebar_neighbors_by_page.get(page["id"], {}),
             preserve_pedagogical_cards=page["id"] in core_page_ids,
+            stage_routes=stage_routes_by_page.get(page["id"]),
         )
         output = includes / (f"generated-suggested-route-{page['id'].replace('/', '-')}.qmd")
         outputs[output] = rendered
