@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+<title id="title">Compare three distributions and their entropy</title>
+<desc id="desc">Three distributions over four tokens. A concentrated distribution (100%, 0%, 0%, 0%) has zero entropy. The example distribution (60%, 20%, 10%, 10%) has entropy 1.089 nats, about 79% of the maximum. A uniform distribution (25% each) reaches the maximum of 1.386 nats. Entropy summarizes the spread of the whole distribution, not the surprisal of one token.</desc>
+<rect width="1200" height="700" rx="24" fill="#F8FAFC"/>
+<text x="48" y="48" font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#15803D">REVISION SHEET · ENTROPY</text>
+<text x="600" y="94" text-anchor="middle" font-family="Arial,sans-serif" font-size="29" font-weight="700" fill="#17212B">Distribution spread determines entropy</text>
+<text x="600" y="122" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" fill="#475569">Four possible tokens · natural logarithm · illustrative probabilities</text>
+<g>
+<rect x="40" y="155" width="355" height="470" rx="18" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="2"/>
+<rect x="422" y="155" width="355" height="470" rx="18" fill="#FFFFFF" stroke="#15803D" stroke-width="3"/>
+<rect x="804" y="155" width="355" height="470" rx="18" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="2"/>
+</g>
+<g font-family="Arial,sans-serif" text-anchor="middle">
+<text x="217" y="196" font-size="22" font-weight="700" fill="#334155">Concentrated</text>
+<text x="599" y="196" font-size="22" font-weight="700" fill="#14532D">Roman-question example</text>
+<text x="981" y="196" font-size="22" font-weight="700" fill="#334155">Uniform</text>
+<text x="217" y="226" font-size="15" fill="#64748B">p = (1, 0, 0, 0)</text>
+<text x="599" y="226" font-size="15" fill="#64748B">p = (0.6, 0.2, 0.1, 0.1)</text>
+<text x="981" y="226" font-size="15" fill="#64748B">p = (0.25, 0.25, 0.25, 0.25)</text>
+</g>
+<g font-family="Arial,sans-serif" font-size="14" fill="#334155">
+<text x="62" y="294">They</text><text x="62" y="359">Aqueducts</text><text x="62" y="424">Nothing</text><text x="62" y="489">Well</text>
+<text x="444" y="294">They</text><text x="444" y="359">Aqueducts</text><text x="444" y="424">Nothing</text><text x="444" y="489">Well</text>
+<text x="826" y="294">They</text><text x="826" y="359">Aqueducts</text><text x="826" y="424">Nothing</text><text x="826" y="489">Well</text>
+</g>
+<g>
+<rect x="120" y="275" width="170" height="24" rx="6" fill="#E2E8F0"/><rect x="120" y="275" width="170" height="24" rx="6" fill="#15803D"/>
+<rect x="120" y="340" width="170" height="24" rx="6" fill="#E2E8F0"/>
+<rect x="120" y="405" width="170" height="24" rx="6" fill="#E2E8F0"/>
+<rect x="120" y="470" width="170" height="24" rx="6" fill="#E2E8F0"/>
+<rect x="502" y="275" width="170" height="24" rx="6" fill="#E2E8F0"/><rect x="502" y="275" width="102" height="24" rx="6" fill="#15803D"/>
+<rect x="502" y="340" width="170" height="24" rx="6" fill="#E2E8F0"/><rect x="502" y="340" width="34" height="24" rx="6" fill="#15803D"/>
+<rect x="502" y="405" width="170" height="24" rx="6" fill="#E2E8F0"/><rect x="502" y="405" width="17" height="24" rx="6" fill="#15803D"/>
+<rect x="502" y="470" width="170" height="24" rx="6" fill="#E2E8F0"/><rect x="502" y="470" width="17" height="24" rx="6" fill="#15803D"/>
+<rect x="884" y="275" width="170" height="24" rx="6" fill="#E2E8F0"/><rect x="884" y="275" width="42.5" height="24" rx="6" fill="#15803D"/>
+<rect x="884" y="340" width="170" height="24" rx="6" fill="#E2E8F0"/><rect x="884" y="340" width="42.5" height="24" rx="6" fill="#15803D"/>
+<rect x="884" y="405" width="170" height="24" rx="6" fill="#E2E8F0"/><rect x="884" y="405" width="42.5" height="24" rx="6" fill="#15803D"/>
+<rect x="884" y="470" width="170" height="24" rx="6" fill="#E2E8F0"/><rect x="884" y="470" width="42.5" height="24" rx="6" fill="#15803D"/>
+</g>
+<g font-family="Arial,sans-serif" font-size="14" font-weight="700" fill="#334155" text-anchor="end">
+<text x="328" y="293">100%</text><text x="328" y="358">0%</text><text x="328" y="423">0%</text><text x="328" y="488">0%</text>
+<text x="710" y="293">60%</text><text x="710" y="358">20%</text><text x="710" y="423">10%</text><text x="710" y="488">10%</text>
+<text x="1092" y="293">25%</text><text x="1092" y="358">25%</text><text x="1092" y="423">25%</text><text x="1092" y="488">25%</text>
+</g>
+<g font-family="Arial,sans-serif" text-anchor="middle">
+<path d="M62 525H373M444 525H755M826 525H1137" stroke="#E2E8F0" stroke-width="2"/>
+<text x="217" y="565" font-size="15" fill="#64748B">Entropy H(p)</text><text x="217" y="596" font-size="25" font-weight="700" fill="#17212B">0 nats</text>
+<text x="599" y="565" font-size="15" fill="#64748B">Entropy H(p)</text><text x="599" y="596" font-size="25" font-weight="700" fill="#14532D">1.089 nats</text>
+<text x="981" y="565" font-size="15" fill="#64748B">Entropy H(p)</text><text x="981" y="596" font-size="25" font-weight="700" fill="#17212B">1.386 nats</text>
+</g>
+<text x="600" y="662" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#475569">For four outcomes, the maximum is ln(4) ≈ 1.386 nats.</text>
+</svg>

@@ -105,6 +105,8 @@ $$
 
 Le maximum pour quatre issues est $\ln4\approx1{,}386$ nats : cette distribution atteint donc environ 79 % de ce maximum. Les valeurs sont illustratives ; elles servent à suivre le même exemple dans les pages sur la [vraisemblance](vraisemblance.qmd), l'[entropie croisée](cross-entropy.qmd) et les [gradients](gradients.qmd).
 
+![Trois distributions sur quatre tokens, de la plus concentrée à la plus uniforme, et leurs entropies respectives.](../images/entropy-distributions-fr.svg){fig-alt="Trois distributions sur quatre tokens. La distribution concentrée (100 %, 0 %, 0 %, 0 %) a une entropie de 0 nat. L'exemple du scribe (60 %, 20 %, 10 %, 10 %) a une entropie de 1,089 nat. La distribution uniforme (25 % chacun) atteint le maximum de 1,386 nats. Les barres montrent les probabilités ; l'entropie résume la dispersion de toute la distribution." fig-cap="À quatre issues, l'entropie augmente lorsque la distribution s'étale : 0 nat pour une issue certaine, 1,089 nats pour l'exemple et 1,386 nats pour l'uniforme." width=100%}
+
 L'identité centrale est :
 
 $$
