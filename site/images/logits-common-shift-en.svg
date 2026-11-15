@@ -17,8 +17,8 @@
 <text x="370" y="225" text-anchor="middle" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#315b9a">2</text>
 <text x="770" y="225" text-anchor="middle" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#087f8c">101</text>
 <text x="910" y="225" text-anchor="middle" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#315b9a">102</text>
-<path d="M230 278V292M370 278V292M770 278V292M910 278V292" stroke="#94a3b8" stroke-width="1.5"/>
-<text x="300" y="322" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#334155">Gap = 1</text>
+<text x="230" y="306" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="#087f8c">Token B</text><text x="370" y="306" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="#315b9a">Token A</text><text x="770" y="306" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="#087f8c">Token B</text><text x="910" y="306" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="#315b9a">Token A</text>
+<text x="300" y="344" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#334155">Gap = 1</text>
 <text x="840" y="322" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#334155">Gap = 1</text>
 <text x="560" y="405" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#526b9c">SOFTMAX</text>
 <path d="M300 378V390H560M840 378V390H560V395" fill="none" stroke="#64748b" stroke-width="2"/>
