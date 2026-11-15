@@ -474,13 +474,13 @@ def test_context_use_pages_include_their_generated_suggested_route(language: str
         (
             "fr",
             "Étapes du parcours abordées dans ce panorama",
-            "Étape suivante →",
+            "Continuer Orientation →",
             "Générer du texte : l'inférence pas à pas",
         ),
         (
             "en",
             "Learning stages covered by this overview",
-            "Next step →",
+            "Continue Orientation →",
             "Generating text: inference step by step",
         ),
     ],
