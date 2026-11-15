@@ -1077,7 +1077,7 @@ def render_suggested_route_markdown(
                 ])
         if not cards:
             return ""
-        return "\\n".join(['<div class="route-nav-cards">', *cards, "</div>", ""])
+        return "\n".join(['<div class="route-nav-cards">', *cards, "</div>", ""])
 
     directions = (
         (
