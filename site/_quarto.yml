@@ -87,13 +87,13 @@ project:
     - en/in-context-learning.qmd
     - fr/transformer-architectures.qmd
     - fr/cross-attention.qmd
-                - fr/multimodal-architectures.qmd
+    - fr/multimodal-architectures.qmd
     - fr/hybrid-llm-architectures.qmd
     - fr/next-concept-modeling.qmd
     - fr/llm-computational-complexity.qmd
     - en/transformer-architectures.qmd
     - en/cross-attention.qmd
-                - en/multimodal-architectures.qmd
+    - en/multimodal-architectures.qmd
     - en/hybrid-llm-architectures.qmd
     - en/next-concept-modeling.qmd
     - en/llm-computational-complexity.qmd
