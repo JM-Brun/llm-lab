@@ -2309,9 +2309,11 @@ sources:
         inspected_scope:
           - "Designed a concise, original bilingual optional deep-dive page from the source review and verified primary-paper crosswalk"
           - "Added an original Mermaid architecture map and comparison tables; no newsletter text or figures were copied"
+          - "Opened and inspected the four in-body image elements exposed by the live article retrieval: U-Net denoising schematic, two AudioLM stages, and NExT-GPT image output projection"
           - "Mapped the new pages into the Deepen index and FR/EN Quarto navigation"
         limitations:
-          - "The newsletter's individual figures have still not been audited one by one for content, placement, authorship, or reuse rights; none are reproduced"
+          - "The article advertises 50+ custom visuals, but the current page extraction exposes only four in-body image elements; the full asset inventory remains unreconciled"
+          - "No creator-specific reuse permission or licence was established for any inspected figure; none are reproduced"
           - "The new pages have not yet passed CI, Quarto rendering, link checks, or browser/accessibility review"
     related:
       pages:
