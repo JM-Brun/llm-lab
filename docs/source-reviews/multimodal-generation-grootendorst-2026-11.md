@@ -171,13 +171,17 @@ No new learning-route stage, page, concept-graph edge, computational-graph node 
 
 ## 7. Scan limitations and follow-up
 
-The source was retrieved through indexed search content because direct Substack retrieval returned a cache miss. The indexed extraction exposes the main image, audio, video and LLM-integration sections. This is a broad content scan, but not a complete visual or citation audit. Primary-source spot checks were performed for AudioLM, Janus and NExT-GPT.
+The canonical article page is now directly retrievable. Its indexed/body text exposes the main image, audio, video and LLM-integration sections. The current extraction exposes four in-body image elements, which were individually inspected in §12. The newsletter advertises 50+ custom visuals, but the underlying asset inventory is not fully reconciled.
 
-Remaining work before reader-facing integration:
-1. Inspect the figures individually and record their role; link to them rather than copying until reuse rights are known.
-2. Verify the remaining cited model papers (Stable Diffusion, SoundStream, w2v-BERT, Diffusion Transformers, OmniGen2 and BLIP-3o) against their primary sources.
-3. Compare the source against existing multimodal coverage to identify genuinely complementary material.
-4. Decide whether a concise optional multimodal overview page is justified; do not add the source to the main guided route.
+Primary-source checks now cover AudioLM, Janus, NExT-GPT, latent diffusion, SoundStream, w2v-BERT, Diffusion Transformers, OmniGen2, BLIP-3o and one early video-diffusion design (Ho et al., NeurIPS 2022). These are architectural spot checks, not complete paper, code, implementation or benchmark audits.
+
+Remaining limitations:
+1. The full inventory of the advertised 50+ visuals, their authorship and their rights status is not established. No newsletter figure is copied.
+2. The newsletter's video section remains a high-level survey. Ho et al. verifies one early spatiotemporal diffusion design; it does not establish a general taxonomy of current video models.
+3. No model was executed and no comparative performance claim was reproduced.
+4. Implementation repositories and full code/data provenance were not audited.
+
+The integration decision is now to provide a concise optional bilingual Deepen page. The source remains outside the main guided route, canonical text computational spine and Build path.
 
 ## 8. Provenance
 
