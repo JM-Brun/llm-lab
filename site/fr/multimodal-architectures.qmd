@@ -83,7 +83,7 @@ Les mécanismes de sortie diffèrent selon la représentation et la modalité.
 | Autorégressive | Prédire successivement des tokens/codes conditionnés par le préfixe | AudioLM génère des représentations audio discrètes de façon hiérarchique pour prolonger un contexte audio ; ce n'est pas, dans l'article original, un système général de texte vers audio |
 | Diffusion | Partir d'un bruit et appliquer une suite d'étapes de débruitage | Les modèles de diffusion latente opèrent dans l'espace compressé d'un autoencodeur ; DiT remplace le U-Net étudié dans ce cadre par un backbone Transformer |
 | Décodage de codec | Convertir une séquence de codes en signal audio | SoundStream reconstruit une forme d'onde à partir de codes appris ; le codec seul n'est pas le modèle qui décide de la séquence |
-| Vidéo | Générer une représentation visuelle structurée dans le temps | Il faut traiter la cohérence temporelle en plus du contenu de chaque image ; une suite d'images plausibles ne suffit pas à établir une vidéo cohérente |
+| Vidéo | Générer conjointement une séquence d'images avec une structure spatio-temporelle | *Video Diffusion Models* étend la diffusion d'image aux données vidéo ; ce cas d'étude ne représente pas toutes les architectures vidéo |
 
 La diffusion n'est donc pas une simple variante de la prédiction autorégressive du prochain token. Une étape de débruitage met à jour un état latent selon un processus itératif ; un décodeur de codec convertit ensuite des codes en signal. Ces opérations ne doivent pas être aplaties dans un unique schéma de génération textuelle.
 
@@ -121,5 +121,6 @@ Cette page est un **approfondissement facultatif**. Elle ne modifie ni le parcou
 - Borsos et al. (2023), [AudioLM: A Language Modeling Approach to Audio Generation](https://arxiv.org/abs/2209.03143) — génération autorégressive de représentations audio et continuation.
 - Zeghidour et al. (2021), [SoundStream: An End-to-End Neural Audio Codec](https://arxiv.org/abs/2107.03312) — codec neuronal et reconstruction audio.
 - Chung et al. (2021), [w2v-BERT](https://arxiv.org/abs/2108.06209) — apprentissage de représentations de parole, pas générateur audio général.
+- Ho et al. (2022), [Video Diffusion Models](https://arxiv.org/abs/2204.03458) — diffusion appliquée à des séquences vidéo avec génération spatio-temporelle.
 
 **Ressource à l'origine de cette porte d'entrée :** Maarten Grootendorst, [A Visual Guide to Multimodal Generation](https://newsletter.maartengrootendorst.com/p/a-visual-guide-to-multimodal-generation) (29 octobre 2026). Ses illustrations et son texte ne sont pas reproduits ici ; les descriptions techniques sont renvoyées aux publications primaires.
