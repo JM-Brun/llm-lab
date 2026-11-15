@@ -83,7 +83,7 @@ Output mechanisms differ with the representation and modality.
 | Autoregressive | Predict successive tokens/codes conditioned on the prefix | AudioLM hierarchically generates discrete audio representations to continue an audio context; the original paper is not a general text-to-audio system |
 | Diffusion | Start from noise and apply a sequence of denoising steps | Latent diffusion models operate in an autoencoder's compressed space; DiT replaces the U-Net studied in this setting with a Transformer backbone |
 | Codec decoding | Convert a sequence of codes into an audio signal | SoundStream reconstructs a waveform from learned codes; the codec alone does not choose the sequence |
-| Video | Generate a visual representation structured over time | Temporal coherence matters in addition to each frame's content; a sequence of plausible images alone does not establish coherent video |
+| Video | Jointly generate a sequence of frames with spatiotemporal structure | *Video Diffusion Models* extends image diffusion to video data; this case study does not represent every video architecture |
 
 Diffusion is therefore not merely another version of autoregressive next-token prediction. A denoising step updates a latent state through an iterative process; a codec decoder then converts codes into a signal. These operations should not be flattened into one text-generation diagram.
 
@@ -121,5 +121,6 @@ This page is an **optional deep dive**. It does not change the text-oriented Und
 - Borsos et al. (2023), [AudioLM: A Language Modeling Approach to Audio Generation](https://arxiv.org/abs/2209.03143) — autoregressive audio representations and continuation.
 - Zeghidour et al. (2021), [SoundStream: An End-to-End Neural Audio Codec](https://arxiv.org/abs/2107.03312) — neural codec and audio reconstruction.
 - Chung et al. (2021), [w2v-BERT](https://arxiv.org/abs/2108.06209) — speech representation learning, not a general audio generator.
+- Ho et al. (2022), [Video Diffusion Models](https://arxiv.org/abs/2204.03458) — diffusion applied to video sequences with spatiotemporal generation.
 
 **Source that motivated this entry point:** Maarten Grootendorst, [A Visual Guide to Multimodal Generation](https://newsletter.maartengrootendorst.com/p/a-visual-guide-to-multimodal-generation) (29 October 2026). Its illustrations and prose are not reproduced here; technical descriptions are traced to primary publications.
