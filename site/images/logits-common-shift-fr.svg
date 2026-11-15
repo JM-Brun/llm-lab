@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="500" viewBox="0 0 1120 500" role="img" aria-labelledby="title desc">
+<title id="title">Même écart de logits, même distribution</title>
+<desc id="desc">Deux vecteurs de logits, 2 et 1 puis 102 et 101, ont le même écart. Après softmax, ils donnent la même distribution : 73,1 pour cent pour le token A et 26,9 pour cent pour le token B.</desc>
+<rect width="1120" height="500" rx="22" fill="#f7f9fc"/>
+<text x="44" y="44" font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#526b9c">FICHE VISUELLE · LOGITS</text>
+<text x="560" y="80" text-anchor="middle" font-family="Arial,sans-serif" font-size="27" font-weight="700" fill="#172b4d">Même écart, même distribution</text>
+<rect x="40" y="108" width="500" height="270" rx="16" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
+<rect x="580" y="108" width="500" height="270" rx="16" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
+<text x="68" y="145" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#334155">Vecteur A · z = (2, 1)</text>
+<text x="608" y="145" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#334155">Vecteur B · z′ = (102, 101)</text>
+<text x="68" y="182" font-family="Arial,sans-serif" font-size="13" fill="#64748b">Scores des tokens (axe illustratif)</text>
+<text x="608" y="182" font-family="Arial,sans-serif" font-size="13" fill="#64748b">Scores des tokens (axe illustratif)</text>
+<path d="M100 250H475M640 250H1015" stroke="#94a3b8" stroke-width="2"/>
+<circle cx="230" cy="250" r="10" fill="#0f8792"/><circle cx="370" cy="250" r="10" fill="#315b9a"/>
+<circle cx="770" cy="250" r="10" fill="#0f8792"/><circle cx="910" cy="250" r="10" fill="#315b9a"/>
+<text x="230" y="225" text-anchor="middle" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#087f8c">1</text>
+<text x="370" y="225" text-anchor="middle" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#315b9a">2</text>
+<text x="770" y="225" text-anchor="middle" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#087f8c">101</text>
+<text x="910" y="225" text-anchor="middle" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#315b9a">102</text>
+<path d="M230 278V292M370 278V292M770 278V292M910 278V292" stroke="#94a3b8" stroke-width="1.5"/>
+<text x="300" y="322" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#334155">Écart = 1</text>
+<text x="840" y="322" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#334155">Écart = 1</text>
+<text x="560" y="405" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#526b9c">SOFTMAX</text>
+<path d="M300 378V390H560M840 378V390H560V395" fill="none" stroke="#64748b" stroke-width="2"/>
+<rect x="230" y="420" width="660" height="54" rx="12" fill="#e9eef6"/>
+<text x="560" y="443" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#334155">Dans les deux cas : token A = 73,1 % · token B = 26,9 %</text>
+<text x="560" y="463" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="#526b9c">Ajouter 100 à chaque logit ne change pas la distribution.</text>
+</svg>
