@@ -461,11 +461,24 @@ def test_every_route_member_wires_exactly_its_generated_context_include(language
 
 @pytest.mark.parametrize("language", ["fr", "en"])
 def test_context_use_pages_include_their_generated_suggested_route(language: str) -> None:
+    pages = [page for page in GENERATOR["load_pages"]() if page["language"] in {language, "shared"}]
+    stages = GENERATOR["load_guided_route"](language, pages)
     for page_id in ("in-context-learning", "context-engineering"):
         source_path = ROOT / "site" / language / f"{page_id}.qmd"
         source = source_path.read_text(encoding="utf-8")
         include_path = f"generated-suggested-route-{language}-{page_id}.qmd"
         assert source.count(include_path) == 1
+
+    route_fragments = GENERATOR["prepare_suggested_route_fragments"](language, pages, stages)
+    context_page_id = f"{language}/context-engineering"
+    context_route = route_fragments[
+        GENERATOR["SITE"] / "includes" /
+        f"generated-suggested-route-{context_page_id.replace('/', '-')}.qmd"
+    ]
+    expected_next = "vraisemblance.qmd" if language == "fr" else "likelihood.qmd"
+    expected_label = "Étape suivante →" if language == "fr" else "Next step →"
+    assert expected_label in context_route
+    assert f'href="{expected_next}"' in context_route
 
 
 @pytest.mark.parametrize(
