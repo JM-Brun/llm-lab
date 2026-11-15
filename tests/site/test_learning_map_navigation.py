@@ -6,6 +6,7 @@ from typing import Any
 import pytest
 from build_learning_map import (
     SITE,
+    build_suggested_route_contexts,
     final_core_page_id,
     load_guided_route,
     load_navigation,
@@ -164,32 +165,43 @@ def test_guided_route_cards_remain_visible_when_quarto_has_same_destination(
 
 
 @pytest.mark.parametrize("language", ["fr", "en"])
-def test_every_core_guided_route_page_keeps_its_pedagogical_cards(language: str) -> None:
-    """Derive navigation-card coverage from the canonical route, not a sample page."""
+def test_every_core_guided_route_page_keeps_contextual_navigation_cards(language: str) -> None:
+    """Every core page exposes the neighbors derived from each canonical stage."""
     pages = load_pages()
     stages = load_guided_route(language, pages)
     fragments = prepare_suggested_route_fragments(language, pages, stages)
-    page_by_id = {page["id"]: page for page in pages}
+    contexts_by_page = build_suggested_route_contexts(stages)
     core_page_ids = {page.id for stage in stages for page in stage.pages}
     final_page_id = final_core_page_id(stages)
 
     assert core_page_ids
     for page_id in sorted(core_page_ids):
-        page = page_by_id[page_id]
         fragment_path = (
             SITE / "includes" / (f"generated-suggested-route-{page_id.replace('/', '-')}.qmd")
         )
         rendered = fragments[fragment_path]
-        route = page["route"]
-        if route.get("previous") is not None:
-            previous_label = "← Étape précédente" if language == "fr" else "← Previous step"
-            assert previous_label in rendered, page_id
-        if route.get("next") is not None:
-            next_label = "Étape suivante →" if language == "fr" else "Next step →"
-            assert next_label in rendered, page_id
-            target = page_by_id[route["next"]]
-            assert html.escape(target["title"]) in rendered, page_id
-            assert target["href"].removesuffix(".html") + ".qmd" in rendered, page_id
+        contexts = contexts_by_page[page_id]
+        for context in contexts:
+            stage_title = context["stage_title"]
+            if context["previous"] is not None:
+                label = (
+                    f"← Étape précédente · {stage_title}"
+                    if language == "fr"
+                    else f"← Previous · {stage_title}"
+                )
+                target = context["previous"]
+                assert html.escape(label) in rendered, page_id
+                assert target.href.removesuffix(".html") + ".qmd" in rendered, page_id
+            if context["next"] is not None:
+                label = (
+                    f"Continuer {stage_title} →"
+                    if language == "fr"
+                    else f"Continue {stage_title} →"
+                )
+                target = context["next"]
+                assert html.escape(label) in rendered, page_id
+                assert html.escape(target.title) in rendered, page_id
+                assert target.href.removesuffix(".html") + ".qmd" in rendered, page_id
         if page_id == final_page_id:
             continuation_label = (
                 "Parcours terminé · voie complémentaire : construire un GPT →"
