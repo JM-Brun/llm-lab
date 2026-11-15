@@ -6,6 +6,7 @@ from typing import Any
 import pytest
 from build_learning_map import (
     SITE,
+    build_suggested_route_contexts,
     final_core_page_id,
     load_guided_route,
     load_navigation,
@@ -169,7 +170,7 @@ def test_every_core_guided_route_page_keeps_contextual_navigation_cards(language
     pages = load_pages()
     stages = load_guided_route(language, pages)
     fragments = prepare_suggested_route_fragments(language, pages, stages)
-    contexts_by_page = __import__("build_learning_map").build_suggested_route_contexts(stages)
+    contexts_by_page = build_suggested_route_contexts(stages)
     core_page_ids = {page.id for stage in stages for page in stage.pages}
     final_page_id = final_core_page_id(stages)
 
