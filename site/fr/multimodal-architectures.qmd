@@ -1,0 +1,125 @@
+---
+title: "Architectures multimodales : comprendre et générer"
+subtitle: "Distinguer les voies d’entrée, les représentations et les mécanismes de sortie"
+description-meta: "Compare les architectures de compréhension et de génération multimodales, les décodeurs externes, les projecteurs appris, les sorties autorégressives et la diffusion."
+keywords: ["type:concept-lesson", "destination:deepen", "topic:multimodal-architectures", "level:intermediate", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/multimodal-architectures"
+summary: "Compare les architectures de compréhension et de génération multimodales, sans les confondre avec le parcours textuel des LLM."
+scope: "Présente les capacités d'entrée et de sortie, les interfaces entre modèle de langage et composants de modalité, et les familles de génération autoregressive, par diffusion et par codec."
+purpose: "Identifier où se trouvent les encodeurs, projecteurs et décodeurs d'un système multimodal, puis distinguer les mécanismes de génération selon la modalité."
+domain: "architectures-mechanisms"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/llm-overview", "fr/cross-attention", "fr/generation", "fr/transformer-architectures", "fr/llm-evolution"]
+tags: ["type:concept-lesson", "destination:deepen", "topic:multimodal-architectures", "level:intermediate", "language:fr", "status:published"]
+-->
+
+::: {.chapter-lead}
+Un modèle qui **reçoit** une image n'est pas nécessairement capable d'en **produire** une. « Multimodal » peut désigner la compréhension d'entrées non textuelles, la génération de sorties non textuelles, ou les deux. Pour comprendre une architecture, il faut suivre séparément les représentations qui entrent dans le modèle et celles qui en sortent.
+:::
+
+::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
+Distinguer compréhension et génération multimodales ; reconnaître le rôle d'un encodeur, d'un projecteur et d'un décodeur ; différencier orchestration externe, génération autorégressive de représentations et débruitage par diffusion.
+:::
+
+## Deux capacités indépendantes
+
+| Question | Compréhension multimodale | Génération multimodale |
+|---|---|---|
+| Sens du flux | Image, audio ou vidéo → représentation exploitable | Représentation ou condition → image, audio ou vidéo |
+| Composants fréquents | Encodeur de modalité, projection/adaptation, modèle de langage | Modèle génératif, projecteur éventuel, décodeur ou codec |
+| Exemple de tâche | Décrire une image ou répondre à une question sur une vidéo | Créer une image, synthétiser de la parole ou prolonger un son |
+| Ce que cela ne prouve pas | La capacité à générer cette modalité | La capacité à comprendre toutes les entrées de cette modalité |
+
+Un système peut réunir les deux capacités, mais il peut aussi ne fournir que l'une d'elles. La présence d'un encodeur visuel ne démontre pas l'existence d'un décodeur d'images ; inversement, un générateur d'images appelé par une application ne rend pas automatiquement le modèle de langage lui-même multimodal en sortie.
+
+## Où se situe la frontière entre les composants ?
+
+Le schéma résume trois formes d'intégration. Les architectures réelles peuvent combiner ces motifs.
+
+```{mermaid}
+flowchart LR
+  subgraph IN["Comprendre une entrée"]
+    A["Image / audio / vidéo"] --> B["Encodeur de modalité"]
+    B --> C["Projection / adaptation"]
+    C --> D["Modèle de langage"]
+  end
+  subgraph OUT["Produire une sortie"]
+    D --> E["Requête textuelle"] --> F["Générateur externe"]
+    D --> G["Projecteur appris"] --> H["Décodeur de modalité"]
+    D --> I["Tokens / codes de modalité"] --> J["Décodeur ou codec"]
+  end
+```
+
+### 1. Orchestration d'un générateur externe
+
+Le modèle de langage formule une requête (par exemple un prompt d'image), puis l'application appelle un générateur séparé. Le runtime contrôle l'autorisation, l'exécution et le retour du résultat. C'est une intégration au niveau du **système** : elle peut être très utile sans que le LLM produise lui-même des représentations d'image.
+
+### 2. Projecteur appris vers un décodeur spécialisé
+
+Un projecteur transforme des états du modèle de langage en représentations attendues par un générateur spécialisé. NExT-GPT illustre cette famille avec des adaptateurs d'entrée/sortie et des composants préentraînés propres aux modalités. Le projecteur est une interface apprise, pas un décodeur universel ; le système conserve des composants spécifiques pour produire les modalités.
+
+### 3. Génération intégrée à une voie autorégressive
+
+Le modèle peut produire une séquence de tokens ou de codes propres à une modalité. Janus illustre une architecture où les voies visuelles de compréhension et de génération sont découplées, tandis qu'un Transformer autorégressif commun traite les séquences. Cela ne signifie pas que les représentations visuelles d'entrée et de sortie sont identiques : elles répondent à des objectifs différents.
+
+Les termes *early fusion* et *late fusion* sont des raccourcis descriptifs, pas une taxonomie exhaustive. Pour comparer deux systèmes, décrivez plutôt la frontière exacte entre encodeur, modèle de langage, projecteur, générateur et runtime.
+
+## « Générer » ne désigne pas une seule boucle
+
+Les mécanismes de sortie diffèrent selon la représentation et la modalité.
+
+| Famille | Opération générative | Exemple et limite |
+|---|---|---|
+| Autorégressive | Prédire successivement des tokens/codes conditionnés par le préfixe | AudioLM génère des représentations audio discrètes de façon hiérarchique pour prolonger un contexte audio ; ce n'est pas, dans l'article original, un système général de texte vers audio |
+| Diffusion | Partir d'un bruit et appliquer une suite d'étapes de débruitage | Les modèles de diffusion latente opèrent dans l'espace compressé d'un autoencodeur ; DiT remplace le U-Net étudié dans ce cadre par un backbone Transformer |
+| Décodage de codec | Convertir une séquence de codes en signal audio | SoundStream reconstruit une forme d'onde à partir de codes appris ; le codec seul n'est pas le modèle qui décide de la séquence |
+| Vidéo | Générer une représentation visuelle structurée dans le temps | Il faut traiter la cohérence temporelle en plus du contenu de chaque image ; une suite d'images plausibles ne suffit pas à établir une vidéo cohérente |
+
+La diffusion n'est donc pas une simple variante de la prédiction autorégressive du prochain token. Une étape de débruitage met à jour un état latent selon un processus itératif ; un décodeur de codec convertit ensuite des codes en signal. Ces opérations ne doivent pas être aplaties dans un unique schéma de génération textuelle.
+
+## Les représentations restent propres aux modalités
+
+Le mot *token* ne désigne pas toujours une unité de texte. Selon le système, il peut s'agir de patches d'image, de codes discrets issus d'un codec audio, de représentations sémantiques de la parole ou d'unités latentes apprises. Leur granularité, leur alignement et leur décodeur diffèrent.
+
+AudioLM, par exemple, combine des représentations sémantiques destinées à préserver une structure de long terme et des codes acoustiques qui portent davantage de détails de reconstruction. Les unités acoustiques ne sont pas des mots, et ne doivent pas être interprétées comme des tokens textuels simplement parce qu'un Transformer les prédit.
+
+## Questions à poser devant une architecture
+
+1. **Quelles modalités entrent et sortent réellement ?** Ne pas inférer la génération à partir de la seule compréhension.
+2. **Où sont les frontières ?** Identifier encodeurs, projecteurs, modèle de langage, générateurs, codecs et runtime.
+3. **Quelle représentation est prédite ?** Tokens textuels, codes audio, tokens visuels, patches ou états latents.
+4. **Quel mécanisme produit la sortie ?** Décodage autorégressif, débruitage itératif, décodage de codec ou appel externe.
+5. **Quelle preuve soutient la comparaison ?** Une architecture publiée ne prouve pas à elle seule une supériorité de qualité, de coût ou de vitesse.
+
+## À retenir
+
+- Comprendre une modalité et la générer sont deux capacités distinctes.
+- Un appel à un générateur externe est une capacité du système orchestré, pas nécessairement du LLM seul.
+- Un projecteur relie des espaces de représentation ; il ne remplace pas le décodeur spécialisé.
+- Les tokens audio/visuels ne sont pas des tokens textuels.
+- Diffusion, génération autorégressive et décodage de codec sont des opérations différentes.
+
+Cette page est un **approfondissement facultatif**. Elle ne modifie ni le parcours Understand centré sur les LLM textuels, ni le parcours Build d'un petit GPT.
+
+## Références primaires
+
+- Liu et al. (2023), [Visual Instruction Tuning (LLaVA)](https://arxiv.org/abs/2304.08485) — exemple de compréhension visuelle reliée à un modèle de langage.
+- Wu et al. (2024), [NExT-GPT: Any-to-Any Multimodal LLM](https://proceedings.mlr.press/v235/wu24e.html) — interfaces et composants génératifs spécifiques aux modalités.
+- Wu et al. (2025), [Janus: Decoupling Visual Encoding for Unified Multimodal Understanding and Generation](https://openaccess.thecvf.com/content/CVPR2025/html/Wu_Janus_Decoupling_Visual_Encoding_for_Unified_Multimodal_Understanding_and_Generation_CVPR_2025_paper.html) — voies visuelles distinctes pour compréhension et génération.
+- Rombach et al. (2022), [High-Resolution Image Synthesis with Latent Diffusion Models](https://openaccess.thecvf.com/content/CVPR2022/html/Rombach_High-Resolution_Image_Synthesis_With_Latent_Diffusion_Models_CVPR_2022_paper.html) — débruitage dans l'espace latent d'un autoencodeur.
+- Peebles et Xie (2023), [Scalable Diffusion Models with Transformers](https://openaccess.thecvf.com/content/ICCV2023/html/Peebles_Scalable_Diffusion_Models_with_Transformers_ICCV_2023_paper.html) — backbone Transformer pour la diffusion latente.
+- Borsos et al. (2023), [AudioLM: A Language Modeling Approach to Audio Generation](https://arxiv.org/abs/2209.03143) — génération autorégressive de représentations audio et continuation.
+- Zeghidour et al. (2021), [SoundStream: An End-to-End Neural Audio Codec](https://arxiv.org/abs/2107.03312) — codec neuronal et reconstruction audio.
+- Chung et al. (2021), [w2v-BERT](https://arxiv.org/abs/2108.06209) — apprentissage de représentations de parole, pas générateur audio général.
+
+**Ressource à l'origine de cette porte d'entrée :** Maarten Grootendorst, [A Visual Guide to Multimodal Generation](https://newsletter.maartengrootendorst.com/p/a-visual-guide-to-multimodal-generation) (29 octobre 2026). Ses illustrations et son texte ne sont pas reproduits ici ; les descriptions techniques sont renvoyées aux publications primaires.
