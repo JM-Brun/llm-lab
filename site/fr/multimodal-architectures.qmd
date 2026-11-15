@@ -2,7 +2,7 @@
 title: "Architectures multimodales : comprendre et générer"
 subtitle: "Distinguer les voies d’entrée, les représentations et les mécanismes de sortie"
 description-meta: "Compare les architectures de compréhension et de génération multimodales, les décodeurs externes, les projecteurs appris, les sorties autorégressives et la diffusion."
-keywords: ["type:concept-lesson", "destination:deepen", "topic:multimodal-architectures", "level:intermediate", "language:fr", "status:published"]
+keywords: ["type:concept-lesson", "destination:deepen", "topic:multimodal-architectures", "level:advanced", "language:fr", "status:published"]
 lang: fr
 ---
 
@@ -20,7 +20,7 @@ hierarchy:
   parents: []
   children: []
 related: ["fr/llm-overview", "fr/cross-attention", "fr/generation", "fr/transformer-architectures", "fr/llm-evolution"]
-tags: ["type:concept-lesson", "destination:deepen", "topic:multimodal-architectures", "level:intermediate", "language:fr", "status:published"]
+tags: ["type:concept-lesson", "destination:deepen", "topic:multimodal-architectures", "level:advanced", "language:fr", "status:published"]
 -->
 
 ::: {.chapter-lead}
