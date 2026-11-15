@@ -155,3 +155,61 @@ def test_transition_visual_identity_is_distinct_from_stage_membership() -> None:
     membership_styles = styles[membership_start:membership_end]
     assert "#E5F1E8" in membership_styles
     assert "#7651A8" not in membership_styles
+
+
+@pytest.mark.parametrize(
+    ("language", "generation_title", "context_title", "text_data", "in_context", "likelihood"),
+    [
+        ("fr", "Exécuter l'inférence et générer du texte", "Exploiter et concevoir le contexte",
+         "text-data.qmd", "in-context-learning.qmd", "vraisemblance.qmd"),
+        ("en", "Run inference and generate text", "Use and design context",
+         "text-data.qmd", "in-context-learning.qmd", "likelihood.qmd"),
+    ],
+)
+def test_suggested_route_navigation_is_projected_per_stage_membership(
+    language: str,
+    generation_title: str,
+    context_title: str,
+    text_data: str,
+    in_context: str,
+    likelihood: str,
+) -> None:
+    pages = [
+        page for page in GENERATOR["load_pages"]()
+        if page["language"] in {language, "shared"}
+    ]
+    stages = GENERATOR["load_guided_route"](language, pages)
+    contexts = GENERATOR["build_suggested_route_contexts"](stages)
+
+    generation = contexts[f"{language}/generation"]
+    assert len(generation) == 2
+    orientation = next(item for item in generation if item["stage_id"] == "orientation")
+    inference = next(item for item in generation if item["stage_id"] == "inference")
+    assert orientation["previous"].id == f"{language}/llm-overview"
+    assert orientation["next"].id == f"{language}/text-data"
+    assert inference["previous"].id == f"{language}/entropy"
+    assert inference["next"].id == f"{language}/in-context-learning"
+
+    context_engineering = contexts[f"{language}/context-engineering"]
+    assert len(context_engineering) == 1
+    assert context_engineering[0]["stage_id"] == "context-use"
+    assert context_engineering[0]["previous"].id == f"{language}/in-context-learning"
+    assert context_engineering[0]["next"].id == f"{language}/{'vraisemblance' if language == 'fr' else 'likelihood'}"
+
+    # The legacy global scoring chain remains intact; contextual navigation
+    # supplies the additional branch without rewriting likelihood.previous.
+    likelihood_page = next(
+        page for page in pages
+        if page["id"] == f"{language}/{'vraisemblance' if language == 'fr' else 'likelihood'}"
+    )
+    assert likelihood_page["route"]["previous"] == f"{language}/entropy"
+
+    fragments = GENERATOR["prepare_suggested_route_fragments"](language, pages, stages)
+    by_name = {path.name: content for path, content in fragments.items()}
+    generation_html = by_name[f"generated-suggested-route-{language}-generation.qmd"]
+    context_html = by_name[f"generated-suggested-route-{language}-context-engineering.qmd"]
+    assert f'href="{text_data}"' in generation_html
+    assert f'href="{in_context}"' in generation_html
+    assert generation_title in generation_html
+    assert context_title in context_html
+    assert f'href="{likelihood}"' in context_html
