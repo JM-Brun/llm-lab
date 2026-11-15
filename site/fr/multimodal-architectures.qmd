@@ -78,7 +78,7 @@ Les termes *early fusion* et *late fusion* sont des raccourcis descriptifs, pas 
 
 Les mécanismes de sortie diffèrent selon la représentation et la modalité.
 
-| Famille | Opération générative | Exemple et limite |
+| Mécanisme / modalité | Opération générative | Exemple et limite |
 |---|---|---|
 | Autorégressive | Prédire successivement des tokens/codes conditionnés par le préfixe | AudioLM génère des représentations audio discrètes de façon hiérarchique pour prolonger un contexte audio ; ce n'est pas, dans l'article original, un système général de texte vers audio |
 | Diffusion | Partir d'un bruit et appliquer une suite d'étapes de débruitage | Les modèles de diffusion latente opèrent dans l'espace compressé d'un autoencodeur ; DiT remplace le U-Net étudié dans ce cadre par un backbone Transformer |
