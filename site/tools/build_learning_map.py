@@ -1045,11 +1045,18 @@ def render_suggested_route_markdown(
                     raise ValueError(
                         f"invalid {direction} stage route for {page['id']!r}: {target!r}"
                     )
-                label = (
-                    (f"← Étape précédente · {stage_title}" if language == "fr" else f"← Previous · {stage_title}")
-                    if direction == "previous"
-                    else (f"Continuer {stage_title} →" if language == "fr" else f"Continue {stage_title} →")
-                )
+                if direction == "previous":
+                    label = (
+                        f"← Étape précédente · {stage_title}"
+                        if language == "fr"
+                        else f"← Previous · {stage_title}"
+                    )
+                else:
+                    label = (
+                        f"Continuer {stage_title} →"
+                        if language == "fr"
+                        else f"Continue {stage_title} →"
+                    )
                 href = str(target.href)
                 if not href.endswith(".html"):
                     raise ValueError(f"route target has no published HTML href: {target.id!r}")
