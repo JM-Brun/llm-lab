@@ -230,10 +230,7 @@ def test_suggested_route_navigation_is_projected_per_stage_membership(
 
 @pytest.mark.parametrize("language", ["fr", "en"])
 def test_contextual_route_keeps_optional_build_companion_at_terminal_page(language: str) -> None:
-    pages = [
-        page for page in GENERATOR["load_pages"]()
-        if page["language"] in {language, "shared"}
-    ]
+    pages = [page for page in GENERATOR["load_pages"]() if page["language"] in {language, "shared"}]
     stages = GENERATOR["load_guided_route"](language, pages)
     fragments = GENERATOR["prepare_suggested_route_fragments"](language, pages, stages)
     by_name = {path.name: content for path, content in fragments.items()}
