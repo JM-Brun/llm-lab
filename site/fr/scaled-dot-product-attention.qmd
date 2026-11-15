@@ -55,6 +55,12 @@ L'attention n'est pas une opération unique : elle enchaîne **scores → mise �
   <span class="step-item">Somme pondérée de V</span>
 </div>
 
+## Le calcul d'un seul regard
+
+<figure>
+  <img src="../images/attention-calculation-flow.svg" alt="Q et K produisent les scores QKᵀ mis à l’échelle par √dₖ ; un masque éventuel intervient avant le softmax ligne par ligne. Les poids A obtenus et les valeurs V alimentent ensemble l’agrégation O = AV." style="width:100%;height:auto">
+  <figcaption>Deux chemins se rejoignent : Q et K déterminent les poids, tandis que V fournit le contenu agrégé. Les scores bruts, les poids normalisés et la sortie sont trois objets différents ; pour chaque ligne non vide, les poids autorisés somment à 1.</figcaption>
+</figure>
 
 ## Calcul en cinq étapes
 

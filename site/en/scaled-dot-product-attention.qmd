@@ -55,6 +55,12 @@ Attention is not one indivisible operation: it is the sequence **scores → scal
   <span class="step-item">Weighted sum of V</span>
 </div>
 
+## The computation at a glance
+
+<figure>
+  <img src="../images/attention-calculation-flow-en.svg" alt="Q and K produce scores QKᵀ scaled by √dₖ; an optional mask is applied before row-wise softmax. The resulting weights A and values V jointly feed the aggregation O = AV." style="width:100%;height:auto">
+  <figcaption>Two paths meet: Q and K determine the weights, while V supplies the aggregated content. Raw scores, normalized weights, and the output are distinct objects; allowed weights sum to 1 in each non-empty row.</figcaption>
+</figure>
 
 ## Five computation steps
 
