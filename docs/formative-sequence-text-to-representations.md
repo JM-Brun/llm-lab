@@ -1,6 +1,6 @@
 # Formative sequence: text to representations
 
-> **Status: integrated into the bilingual exercise hub on 2026-11-08; learner release still gated by browser review.** This document operationalizes issue [#220](https://github.com/JM-Brun/llm-lab/issues/220). It reuses canonical lesson content; it is not a new concept chapter. The three bundles are published in the exercise hub (see the integration record below); rendered review remains tracked in [#329](https://github.com/JM-Brun/llm-lab/issues/329), the canonical prerequisite-page review in [#320](https://github.com/JM-Brun/llm-lab/issues/320), and source-level foundational work in the now-closed [#82](https://github.com/JM-Brun/llm-lab/issues/82).
+> **Status: integrated into the bilingual exercise hub and publicly rendered.** The hub's FR/EN desktop/mobile rendering and interaction checks passed in #329/#710. This does not replace the outstanding independent human subject-matter review of the TR-A/B/C answer keys, manual screen-reader and real touch-device review, or a learner evaluation; the activities are formative practice, not a validated instructional intervention. This document operationalizes issue [#220](https://github.com/JM-Brun/llm-lab/issues/220). It reuses canonical lesson content; it is not a new concept chapter. The three bundles are published in the exercise hub (see the integration record below); rendered review remains tracked in [#329](https://github.com/JM-Brun/llm-lab/issues/329), the canonical prerequisite-page review in [#320](https://github.com/JM-Brun/llm-lab/issues/320), and source-level foundational work in the now-closed [#82](https://github.com/JM-Brun/llm-lab/issues/82).
 
 ## Design contract
 
@@ -505,8 +505,8 @@ Il s'agit de prédictions qualitatives, pas de garanties sur l'amplitude d'un ch
 - [x] Check mathematical notation and FR/EN content parity. The internal design document is not itself a learner-facing Quarto page.
 - [x] Review the three bundles as one progression; do not turn every internal draft subpart into a separate compulsory activity.
 - [x] Check that feedback diagnoses the reasoning error, not merely the wrong answer.
-- [ ] After integration into learner-facing pages, review desktop/mobile rendering under [#329](https://github.com/JM-Brun/llm-lab/issues/329); #320 covers the canonical prerequisite pages only.
-- [ ] Only then decide whether to embed these activities in existing pages or publish a separate practice destination.
+- [x] The integrated exercise hub received FR/EN desktop/mobile rendered review under [#329](https://github.com/JM-Brun/llm-lab/issues/329) and #710, including all nine exercise IDs, MathJax, collapsed disclosures and keyboard activation. This verifies rendering and interaction, not scientific independence, screen-reader support, real touch-device behavior or learning outcomes.
+- [x] Integration decision completed: the three bundles are published in the existing bilingual exercise hub; no separate practice destination or duplicate concept pages were created.
 - [x] No transfer assessment is included; revisit it only after the first learning sequence is complete.
 
 ## Source-level review record — 2026-11-03
