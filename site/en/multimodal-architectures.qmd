@@ -78,7 +78,7 @@ The terms *early fusion* and *late fusion* are descriptive shorthand, not an exh
 
 Output mechanisms differ with the representation and modality.
 
-| Family | Generative operation | Example and boundary |
+| Mechanism / modality | Generative operation | Example and boundary |
 |---|---|---|
 | Autoregressive | Predict successive tokens/codes conditioned on the prefix | AudioLM hierarchically generates discrete audio representations to continue an audio context; the original paper is not a general text-to-audio system |
 | Diffusion | Start from noise and apply a sequence of denoising steps | Latent diffusion models operate in an autoencoder's compressed space; DiT replaces the U-Net studied in this setting with a Transformer backbone |
