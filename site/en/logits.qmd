@@ -74,7 +74,9 @@ For a batch of sequences, the output head may produce a tensor of shape $(B,T,V)
 - **Score gaps:** differences between scores describe their relative separation within that vector.
 - **Not absolute confidence:** a raw logit depends on the scores' scale and offset. It is not a percentage and cannot, by itself, establish confidence or factual truth.
 
-![Two logit vectors that differ by a common offset produce the same softmax distribution.](../images/logits-common-shift-en.svg){fig-alt="The vectors (2, 1) and (102, 101) have the same gap between their components. After softmax, each gives token A 73.1 percent and token B 26.9 percent. Adding 100 to every logit therefore leaves the distribution unchanged." fig-cap="Softmax is invariant to adding the same constant to every logit: the gaps matter, not the absolute level." width=100%}\n\n### The zero point of logits is arbitrary
+![Two logit vectors that differ by a common offset produce the same softmax distribution.](../images/logits-common-shift-en.svg){fig-alt="The vectors (2, 1) and (102, 101) have the same gap between their components. After softmax, each gives token A 73.1 percent and token B 26.9 percent. Adding 100 to every logit therefore leaves the distribution unchanged." fig-cap="Softmax is invariant to adding the same constant to every logit: the gaps matter, not the absolute level." width=100%}
+
+### The zero point of logits is arbitrary
 
 Consider two vectors: $z=(2,1)$ and $z'=(102,101)$. Their scores differ greatly in absolute value, but the second vector is obtained by adding 100 to every component. Softmax gives exactly the same distribution for both vectors: the common offset cancels between numerator and denominator. **Differences between logits determine probability ratios, not their absolute level.**
 
