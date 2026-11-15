@@ -1060,6 +1060,21 @@ def render_suggested_route_markdown(
                     f'    <span class="nav-title">{escape(str(target.title))}</span>',
                     "  </a>",
                 ])
+        if completes_route and page.get("route", {}).get("next") is None:
+            companion_id = f"{language}/{ROUTE_CONTINUATION_PAGE}"
+            companion = page_by_id.get(companion_id)
+            if companion is not None:
+                label = ROUTE_CONTINUATION_LABEL[language]
+                href = str(companion.get("href", ""))
+                if not href.endswith(".html"):
+                    raise ValueError(f"route target has no published HTML href: {companion_id!r}")
+                source_href = f"{href[:-5]}.qmd"
+                cards.extend([
+                    f'  <a class="route-nav-card" href="{escape(source_href, quote=True)}">',
+                    f'    <span class="nav-direction">{escape(label)}</span>',
+                    f'    <span class="nav-title">{escape(str(companion["title"]))}</span>',
+                    "  </a>",
+                ])
         if not cards:
             return ""
         return "\\n".join(['<div class="route-nav-cards">', *cards, "</div>", ""])
