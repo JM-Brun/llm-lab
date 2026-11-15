@@ -2268,7 +2268,7 @@ sources:
       contribution_types: [architecture, pedagogy, visualization]
       audiences: [learner, practitioner, educator]
     scan_status: partially-scanned
-    integration_status: deferred
+    integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-06"
         status: partially-scanned
@@ -2296,6 +2296,7 @@ sources:
           - "Primary-source verification of SoundStream and w2v-BERT using their arXiv papers"
           - "Primary-source verification of Diffusion Transformers using the ICCV 2023 paper"
           - "Primary-source verification of OmniGen2 and BLIP3-o using their arXiv papers"
+          - "Verified one early spatiotemporal video-diffusion architecture against Ho et al., NeurIPS 2022"
           - "Crosswalk of autoregressive audio-token generation, iterative diffusion sampling, codec decoding and multimodal LLM interfaces against the canonical computational spine"
         limitations:
           - "The article's more than 50 visuals remain individually uninspected; their placement, authorship and reuse conditions are unresolved."
@@ -2303,8 +2304,21 @@ sources:
           - "The video section remains a high-level scan; temporal modeling and coherence mechanisms are not established by this source."
           - "No model was executed and no benchmark or comparative performance claim was reproduced."
           - "No licence or permission for reproducing text, figures or code was established."
+      - accessed_at: "2026-11-15"
+        status: partially-scanned
+        inspected_scope:
+          - "Designed a concise, original bilingual optional deep-dive page from the source review and verified primary-paper crosswalk"
+          - "Added an original Mermaid architecture map and comparison tables; no newsletter text or figures were copied"
+          - "Opened and inspected the four in-body image elements exposed by the live article retrieval: U-Net denoising schematic, two AudioLM stages, and NExT-GPT image output projection"
+          - "Mapped the new pages into the Deepen index and FR/EN Quarto navigation"
+        limitations:
+          - "The article advertises 50+ custom visuals, but the current page extraction exposes only four in-body image elements; the full asset inventory remains unreconciled"
+          - "No creator-specific reuse permission or licence was established for any inspected figure; none are reproduced"
+          - "The new pages have not yet passed CI, Quarto rendering, link checks, or browser/accessibility review"
     related:
-      pages: []
+      pages:
+        - fr/multimodal-architectures
+        - en/multimodal-architectures
       concepts: []
       audit_records:
         - docs/source-reviews/multimodal-generation-grootendorst-2026-11.md

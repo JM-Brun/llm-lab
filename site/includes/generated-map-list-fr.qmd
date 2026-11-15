@@ -62,6 +62,7 @@
     - [Représentations contextualisées : dépendances entre positions et couches](contextualized-representations-advanced.html)
     - [Q/K/V : formulation mathématique et variantes](queries-keys-values-advanced.html)
     - [Attention croisée : faire communiquer deux séquences](cross-attention.html)
+    - [Architectures multimodales : comprendre et générer](multimodal-architectures.html)
     - [RoPE : géométrie, dérivation et limites](rope.html)
     - [Encodages positionnels sinusoïdaux : fréquences, géométrie et limites](sinusoidal-positional-encoding.html)
     - [Architectures hybrides : Nemotron 3 et 3.5](hybrid-llm-architectures.html)

@@ -1,0 +1,126 @@
+---
+title: "Multimodal architectures: understanding and generation"
+subtitle: "Distinguishing input pathways, representations, and output mechanisms"
+description-meta: "Compares multimodal understanding and generation architectures, external decoders, learned projectors, autoregressive outputs, and diffusion."
+keywords: ["type:concept-lesson", "destination:deepen", "topic:multimodal-architectures", "level:advanced", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/multimodal-architectures"
+summary: "Compares multimodal understanding and generation architectures without conflating them with the text-oriented LLM learning route."
+scope: "Introduces input and output capabilities, interfaces between language models and modality components, and autoregressive, diffusion, and codec-based generation families."
+purpose: "Identify where encoders, projectors, and decoders sit in a multimodal system, then distinguish generation mechanisms by modality."
+domain: "architectures-mechanisms"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/llm-overview", "en/cross-attention", "en/generation", "en/transformer-architectures", "en/llm-evolution"]
+tags: ["type:concept-lesson", "destination:deepen", "topic:multimodal-architectures", "level:advanced", "language:en", "status:published"]
+-->
+
+::: {.chapter-lead}
+A model that **accepts** an image cannot necessarily **produce** one. “Multimodal” may refer to understanding non-text inputs, generating non-text outputs, or both. To understand an architecture, trace the representations entering the model separately from those leaving it.
+:::
+
+::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
+Distinguish multimodal understanding from generation; recognize the roles of an encoder, projector, and decoder; and tell apart external orchestration, autoregressive generation of representations, and diffusion denoising.
+:::
+
+## Two independent capabilities
+
+| Question | Multimodal understanding | Multimodal generation |
+|---|---|---|
+| Direction | Image, audio, or video → usable representation | Representation or condition → image, audio, or video |
+| Common components | Modality encoder, projection/adaptation, language model | Generative model, optional projector, decoder, or codec |
+| Example task | Describe an image or answer a question about a video | Create an image, synthesize speech, or continue an audio clip |
+| What it does not establish | The ability to generate that modality | The ability to understand every input in that modality |
+
+A system may combine both capabilities, but it may also provide only one. The presence of a vision encoder does not demonstrate an image decoder; conversely, an application calling an image generator does not automatically make the language model itself multimodal on output.
+
+## Where is the boundary between components?
+
+The diagram summarizes three forms of integration. Real architectures may combine these patterns.
+
+```{mermaid}
+flowchart LR
+  subgraph IN["Understand an input"]
+    A["Image / audio / video"] --> B["Modality encoder"]
+    B --> C["Projection / adaptation"]
+    C --> D["Language model"]
+  end
+  subgraph OUT["Produce an output"]
+    D --> E["Text request"] --> F["External generator"]
+    D --> G["Learned projector"] --> H["Modality decoder"]
+    D --> I["Modality tokens / codes"] --> J["Decoder or codec"]
+  end
+```
+
+### 1. Orchestrating an external generator
+
+The language model formulates a request (for example, an image prompt), and the application calls a separate generator. The runtime controls authorization, execution, and result handling. This is **system-level** integration: it can be useful without the language model itself producing image representations.
+
+### 2. A learned projector connected to a specialized decoder
+
+A projector transforms language-model states into representations expected by a specialized generator. NExT-GPT illustrates this family with modality-specific input/output adaptors and pretrained components. The projector is a learned interface, not a universal decoder; the system retains specialized components to produce each modality.
+
+### 3. Generation integrated into an autoregressive pathway
+
+A model can emit a sequence of modality-specific tokens or codes. Janus illustrates an architecture in which visual pathways for understanding and generation are decoupled while a shared autoregressive Transformer processes sequences. This does not mean the input and output visual representations are identical: they serve different objectives.
+
+The terms *early fusion* and *late fusion* are descriptive shorthand, not an exhaustive taxonomy. To compare two systems, describe the exact boundary between encoder, language model, projector, generator, and runtime.
+
+## “Generation” is not one loop
+
+Output mechanisms differ with the representation and modality.
+
+| Mechanism / modality | Generative operation | Example and boundary |
+|---|---|---|
+| Autoregressive | Predict successive tokens/codes conditioned on the prefix | AudioLM hierarchically generates discrete audio representations to continue an audio context; the original paper is not a general text-to-audio system |
+| Diffusion | Start from noise and apply a sequence of denoising steps | Latent diffusion models operate in an autoencoder's compressed space; DiT replaces the U-Net studied in this setting with a Transformer backbone |
+| Codec decoding | Convert a sequence of codes into an audio signal | SoundStream reconstructs a waveform from learned codes; the codec alone does not choose the sequence |
+| Video | Jointly generate a sequence of frames with spatiotemporal structure | *Video Diffusion Models* extends image diffusion to video data; this case study does not represent every video architecture |
+
+Diffusion is therefore not merely another version of autoregressive next-token prediction. A denoising step updates a latent state through an iterative process; a codec decoder then converts codes into a signal. These operations should not be flattened into one text-generation diagram.
+
+## Representations remain modality-specific
+
+The word *token* does not always mean a unit of text. Depending on the system, it may refer to image patches, discrete codes from an audio codec, semantic speech representations, or learned latent units. Their granularity, alignment, and decoder differ.
+
+AudioLM, for example, combines semantic representations intended to preserve long-range structure with acoustic codes carrying more reconstruction detail. Acoustic units are not words, and should not be interpreted as text tokens merely because a Transformer predicts them.
+
+## Questions to ask when reading an architecture
+
+1. **Which modalities actually enter and leave?** Do not infer generation from input understanding alone.
+2. **Where are the boundaries?** Identify encoders, projectors, language models, generators, codecs, and runtime.
+3. **Which representation is predicted?** Text tokens, audio codes, visual tokens, patches, or latent states.
+4. **Which mechanism produces the output?** Autoregressive decoding, iterative denoising, codec decoding, or an external call.
+5. **What evidence supports the comparison?** A published architecture does not by itself prove better quality, cost, or speed.
+
+## Key takeaways
+
+- Understanding a modality and generating it are distinct capabilities.
+- Calling an external generator is a capability of the orchestrated system, not necessarily of the language model alone.
+- A projector connects representation spaces; it does not replace the specialized decoder.
+- Audio/visual tokens are not text tokens.
+- Diffusion, autoregressive generation, and codec decoding are different operations.
+
+This page is an **optional deep dive**. It does not change the text-oriented Understand route or the small-GPT Build path.
+
+## Primary references
+
+- Liu et al. (2023), [Visual Instruction Tuning (LLaVA)](https://arxiv.org/abs/2304.08485) — an example of visual understanding connected to a language model.
+- Wu et al. (2024), [NExT-GPT: Any-to-Any Multimodal LLM](https://proceedings.mlr.press/v235/wu24e.html) — modality-specific interfaces and generative components.
+- Wu et al. (2025), [Janus: Decoupling Visual Encoding for Unified Multimodal Understanding and Generation](https://openaccess.thecvf.com/content/CVPR2025/html/Wu_Janus_Decoupling_Visual_Encoding_for_Unified_Multimodal_Understanding_and_Generation_CVPR_2025_paper.html) — distinct visual pathways for understanding and generation.
+- Rombach et al. (2022), [High-Resolution Image Synthesis with Latent Diffusion Models](https://openaccess.thecvf.com/content/CVPR2022/html/Rombach_High-Resolution_Image_Synthesis_With_Latent_Diffusion_Models_CVPR_2022_paper.html) — denoising in an autoencoder's latent space.
+- Peebles and Xie (2023), [Scalable Diffusion Models with Transformers](https://openaccess.thecvf.com/content/ICCV2023/html/Peebles_Scalable_Diffusion_Models_with_Transformers_ICCV_2023_paper.html) — a Transformer backbone for latent diffusion.
+- Borsos et al. (2023), [AudioLM: A Language Modeling Approach to Audio Generation](https://arxiv.org/abs/2209.03143) — autoregressive audio representations and continuation.
+- Zeghidour et al. (2021), [SoundStream: An End-to-End Neural Audio Codec](https://arxiv.org/abs/2107.03312) — neural codec and audio reconstruction.
+- Chung et al. (2021), [w2v-BERT](https://arxiv.org/abs/2108.06209) — speech representation learning, not a general audio generator.
+- Ho et al. (2022), [Video Diffusion Models](https://arxiv.org/abs/2204.03458) — diffusion applied to video sequences with spatiotemporal generation.
+
+**Source that motivated this entry point:** Maarten Grootendorst, [A Visual Guide to Multimodal Generation](https://newsletter.maartengrootendorst.com/p/a-visual-guide-to-multimodal-generation) (29 October 2026). Its illustrations and prose are not reproduced here; technical descriptions are traced to primary publications.

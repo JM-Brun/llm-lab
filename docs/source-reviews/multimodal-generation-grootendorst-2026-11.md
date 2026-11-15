@@ -4,7 +4,7 @@
 **Canonical URL:** https://newsletter.maartengrootendorst.com/p/a-visual-guide-to-multimodal-generation  
 **Review date:** 2026-11-06  
 **Scan status:** partially scanned  
-**Integration decision:** reference-only; optional deepening, not part of the minimum learning route.
+**Integration decision:** cite the source and provide an original bilingual optional deep-dive; do not add it to the minimum learning route.
 
 ## 1. Why this source matters
 
@@ -171,13 +171,17 @@ No new learning-route stage, page, concept-graph edge, computational-graph node 
 
 ## 7. Scan limitations and follow-up
 
-The source was retrieved through indexed search content because direct Substack retrieval returned a cache miss. The indexed extraction exposes the main image, audio, video and LLM-integration sections. This is a broad content scan, but not a complete visual or citation audit. Primary-source spot checks were performed for AudioLM, Janus and NExT-GPT.
+The canonical article page is now directly retrievable. Its indexed/body text exposes the main image, audio, video and LLM-integration sections. The current extraction exposes four in-body image elements, which were individually inspected in §12. The newsletter advertises 50+ custom visuals, but the underlying asset inventory is not fully reconciled.
 
-Remaining work before reader-facing integration:
-1. Inspect the figures individually and record their role; link to them rather than copying until reuse rights are known.
-2. Verify the remaining cited model papers (Stable Diffusion, SoundStream, w2v-BERT, Diffusion Transformers, OmniGen2 and BLIP-3o) against their primary sources.
-3. Compare the source against existing multimodal coverage to identify genuinely complementary material.
-4. Decide whether a concise optional multimodal overview page is justified; do not add the source to the main guided route.
+Primary-source checks now cover AudioLM, Janus, NExT-GPT, latent diffusion, SoundStream, w2v-BERT, Diffusion Transformers, OmniGen2, BLIP-3o and one early video-diffusion design (Ho et al., NeurIPS 2022). These are architectural spot checks, not complete paper, code, implementation or benchmark audits.
+
+Remaining limitations:
+1. The full inventory of the advertised 50+ visuals, their authorship and their rights status is not established. No newsletter figure is copied.
+2. The newsletter's video section remains a high-level survey. Ho et al. verifies one early spatiotemporal diffusion design; it does not establish a general taxonomy of current video models.
+3. No model was executed and no comparative performance claim was reproduced.
+4. Implementation repositories and full code/data provenance were not audited.
+
+The integration decision is now to provide a concise optional bilingual Deepen page. The source remains outside the main guided route, canonical text computational spine and Build path.
 
 ## 8. Provenance
 
@@ -198,6 +202,7 @@ These checks validate selected architectural descriptions; they do not constitut
 | SoundStream | [Zeghidour et al., arXiv:2107.03312](https://arxiv.org/abs/2107.03312) | Neural audio codec with a convolutional encoder/decoder and residual vector quantization | Codec / reconstruction component; not by itself an autoregressive generator or semantic representation model |
 | w2v-BERT | [Chung et al., arXiv:2108.06209](https://arxiv.org/abs/2108.06209) | Self-supervised speech representation learning; contrastive learning discretizes speech into units and masked prediction learns contextualized representations | The paper describes representation learning, not a general-purpose audio generator; do not equate units with text tokens or word boundaries |
 | Diffusion Transformer (DiT) | [Peebles and Xie, ICCV 2023](https://openaccess.thecvf.com/content/ICCV2023/html/Peebles_Scalable_Diffusion_Models_with_Transformers_ICCV_2023_paper.html) | A Transformer backbone operates on latent patches in place of the commonly used U-Net in the studied latent-diffusion setup | A specific diffusion architecture; not the ordinary autoregressive Transformer used for next-token prediction |
+| Video diffusion | [Ho et al., NeurIPS 2022](https://proceedings.neurips.cc/paper/2022/hash/39235c56aef13fb05a6adc95eb9d8d66-Abstract-Conference.html) | Extends diffusion to video data, including spatiotemporal modeling and conditional spatial/temporal extension | One early video-diffusion design; not an exhaustive account of contemporary video architectures |
 | OmniGen2 | [Wu et al., arXiv:2506.18871](https://arxiv.org/abs/2506.18871) | Distinct text/image decoding pathways, unshared parameters and a decoupled image tokenizer | Its design is model-specific; do not collapse it into a universal early-/late-fusion template |
 | BLIP3-o | [Chen et al., arXiv:2505.09568](https://arxiv.org/abs/2505.09568) | Unified image understanding/generation study using a diffusion Transformer to generate semantically rich CLIP image features | Distinct design from OmniGen2; preserve the paper's precise representation and training claims |
 
@@ -216,3 +221,47 @@ The canonical computational spine in [docs/canonical-computational-spine.md](../
 - **Multimodal LLM systems** may combine an autoregressive language-model core with modality-specific encoders, projectors and/or external decoders. Those interfaces should be represented explicitly rather than flattening every component into one generic forward pass.
 
 Consequently, this source belongs to a **multimodal extension branch** linked to (but not inserted into) the text-LM computational spine. Any future canonical representation should distinguish autoregressive sequence generation, iterative diffusion sampling, codec decoding and orchestration of external generators as different operation families. The source-local graph remains a source-analysis artifact, not a proposal to extend the canonical computational registry without a dedicated architecture audit.
+
+
+## 11. Final placement decision — 2026-11-15
+
+The primary-source crosswalk is sufficient to support a short, useful reader-facing entry point, provided that the page remains a comparison of architectural boundaries rather than a survey of every multimodal model.
+
+A bilingual optional Deepen page is proposed in:
+- `site/fr/multimodal-architectures.qmd`
+- `site/en/multimodal-architectures.qmd`
+
+Its scope is deliberately limited to:
+1. understanding inputs versus generating outputs;
+2. external generator orchestration versus learned projectors and modality decoders;
+3. autoregressive modality-token generation versus iterative diffusion and codec decoding;
+4. modality-specific representations, with bounded image/audio/video examples.
+
+The page uses an original Mermaid diagram and original comparison tables. It cites primary papers for LLaVA, NExT-GPT, Janus, latent diffusion, DiT, AudioLM, SoundStream and w2v-BERT. It does not reproduce the newsletter's text or any of its 50+ illustrations. It is linked from the Deepen map and the bilingual Quarto sidebar only; it is not added to the guided route, canonical computational spine or Build path.
+
+### Remaining acceptance gates
+
+- Four in-body figure elements exposed by the current article retrieval have now been inspected individually (see §12). No figure is reused. The article advertises 50+ custom visuals, so the four exposed elements cannot be assumed to exhaust every visual asset; the source scan remains partial.
+- The video comparison is now grounded in Ho et al. (NeurIPS 2022), which studies a 3D U-Net diffusion model and conditional spatial/temporal extension; it is explicitly presented as one case, not a universal design.
+- CI, Quarto rendering, internal-link checks and metadata validation must pass on the proposed branch.
+- Rendered visual, responsive, keyboard and screen-reader review remain separate gates; no such validation is claimed here.
+
+**Decision:** a concise optional page is justified. Keep #632 open until source-level tests and Quarto checks pass; do not treat those checks as visual or learner validation.
+
+
+## 12. Individual figure audit — 2026-11-15
+
+The canonical article page is now directly retrievable. The page extraction exposes four in-body image elements; each was opened and visually inspected. These are source illustrations, not reusable LLM Lab assets: no creator-specific reuse permission or licence was established.
+
+| Figure element | Observed content | Pedagogical contribution | Limitation / decision |
+|---|---|---|---|
+| Article link 10 — U-Net | Noisy image and noise amount enter a U-Net; predicted noise is shown as output | Communicates the denoising objective at a glance | Highly schematic: does not show the encoder/decoder hierarchy, skip connections, timestep conditioning, latent VAE, or training objective. Do not reuse. |
+| Article link 21 — AudioLM semantic stage | Past semantic tokens enter a Transformer decoder and future semantic tokens are predicted | Makes the first autoregressive stage visible | Omits tokenization details, conditioning and the full hierarchy. Do not reuse. |
+| Article link 22 — AudioLM coarse acoustic stage | Future semantic tokens and past acoustic tokens condition a Transformer decoder that predicts future coarse acoustic tokens | Shows that semantic and acoustic streams play different roles | Does not show the final fine-acoustic stage or codec decoding. Do not reuse. |
+| Article link 33 — NExT-GPT output projection | Text instruction → LLM → image projection/alignment → image generator → image | Clearly communicates late-fusion projection to a separate image generator | Covers only the image example and omits input projectors, audio/video paths, runtime controls and training detail. Do not reuse. |
+
+No separate in-body figure for Janus or video architecture was exposed in the retrieved article body; those descriptions were therefore checked against the cited primary papers rather than inferred from a newsletter illustration.
+
+The article states that the guide contains more than 50 custom visuals, but the currently retrievable article body exposes only the four image elements listed above. This audit records what could actually be inspected; it does not claim that the 50+ figure count has been reconciled with the page's underlying asset inventory.
+
+**Decision:** retain link-only handling for every newsletter figure. The new LLM Lab diagram is independently authored and is not a redraw or crop of any of these four figures.

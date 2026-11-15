@@ -50,6 +50,7 @@ Chaque entrée répond à une question plus précise : pourquoi un mécanisme fo
 - [Représentations contextualisées : dépendances entre positions et couches](contextualized-representations-advanced.qmd) — formalisation du contexte accessible, des masques et de l'évolution des états cachés.
 - [Q/K/V : formulation mathématique et variantes](queries-keys-values-advanced.qmd) — équations par position, dimensions avec lot, géométrie des compatibilités, chemins de gradient et partage des têtes/projections.
 - [Attention croisée](cross-attention.qmd) — transfert d'information entre deux séquences, notamment dans les architectures encodeur-décodeur et multimodales.
+- [Architectures multimodales : comprendre et générer](multimodal-architectures.qmd) — distinguer les voies d'entrée, les projecteurs, les décodeurs et les mécanismes de génération propres aux modalités.
 - [Encodages positionnels sinusoïdaux](sinusoidal-positional-encoding.qmd) — fréquences logarithmiques, longueurs d'onde, dérivation de la propriété de décalage linéaire, implémentation et limites d'extrapolation.
 - [RoPE : encodage positionnel rotatif](rope.qmd) — géométrie des rotations, dépendance aux positions relatives et limites d'extrapolation.
 - [Architectures hybrides : Nemotron 3 et 3.5](hybrid-llm-architectures.qmd) — combinaison de récurrence, attention, experts et prédiction multi-token dans un cas concret.
