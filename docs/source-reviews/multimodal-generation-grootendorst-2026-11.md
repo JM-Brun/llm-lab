@@ -4,7 +4,7 @@
 **Canonical URL:** https://newsletter.maartengrootendorst.com/p/a-visual-guide-to-multimodal-generation  
 **Review date:** 2026-11-06  
 **Scan status:** partially scanned  
-**Integration decision:** reference-only; optional deepening, not part of the minimum learning route.
+**Integration decision:** cite the source and provide an original bilingual optional deep-dive; do not add it to the minimum learning route.
 
 ## 1. Why this source matters
 
@@ -216,3 +216,28 @@ The canonical computational spine in [docs/canonical-computational-spine.md](../
 - **Multimodal LLM systems** may combine an autoregressive language-model core with modality-specific encoders, projectors and/or external decoders. Those interfaces should be represented explicitly rather than flattening every component into one generic forward pass.
 
 Consequently, this source belongs to a **multimodal extension branch** linked to (but not inserted into) the text-LM computational spine. Any future canonical representation should distinguish autoregressive sequence generation, iterative diffusion sampling, codec decoding and orchestration of external generators as different operation families. The source-local graph remains a source-analysis artifact, not a proposal to extend the canonical computational registry without a dedicated architecture audit.
+
+
+## 11. Final placement decision — 2026-11-15
+
+The primary-source crosswalk is sufficient to support a short, useful reader-facing entry point, provided that the page remains a comparison of architectural boundaries rather than a survey of every multimodal model.
+
+A bilingual optional Deepen page is proposed in:
+- `site/fr/multimodal-architectures.qmd`
+- `site/en/multimodal-architectures.qmd`
+
+Its scope is deliberately limited to:
+1. understanding inputs versus generating outputs;
+2. external generator orchestration versus learned projectors and modality decoders;
+3. autoregressive modality-token generation versus iterative diffusion and codec decoding;
+4. modality-specific representations, with bounded image/audio/video examples.
+
+The page uses an original Mermaid diagram and original comparison tables. It cites primary papers for LLaVA, NExT-GPT, Janus, latent diffusion, DiT, AudioLM, SoundStream and w2v-BERT. It does not reproduce the newsletter's text or any of its 50+ illustrations. It is linked from the Deepen map and the bilingual Quarto sidebar only; it is not added to the guided route, canonical computational spine or Build path.
+
+### Remaining acceptance gates
+
+- The newsletter figures have not been inspected individually. Since no figure is reused, this is a provenance limitation rather than a blocker for the original page, but the source scan remains partial.
+- CI, Quarto rendering, internal-link checks and metadata validation must pass on the proposed branch.
+- Rendered visual, responsive, keyboard and screen-reader review remain separate gates; no such validation is claimed here.
+
+**Decision:** a concise optional page is justified. Keep #632 open until source-level tests and Quarto checks pass; do not treat those checks as visual or learner validation.
