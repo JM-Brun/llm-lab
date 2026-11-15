@@ -2296,6 +2296,7 @@ sources:
           - "Primary-source verification of SoundStream and w2v-BERT using their arXiv papers"
           - "Primary-source verification of Diffusion Transformers using the ICCV 2023 paper"
           - "Primary-source verification of OmniGen2 and BLIP3-o using their arXiv papers"
+          - "Verified one early spatiotemporal video-diffusion architecture against Ho et al., NeurIPS 2022"
           - "Crosswalk of autoregressive audio-token generation, iterative diffusion sampling, codec decoding and multimodal LLM interfaces against the canonical computational spine"
         limitations:
           - "The article's more than 50 visuals remain individually uninspected; their placement, authorship and reuse conditions are unresolved."
