@@ -237,9 +237,27 @@ The page uses an original Mermaid diagram and original comparison tables. It cit
 
 ### Remaining acceptance gates
 
-- The newsletter figures have not been inspected individually. Since no figure is reused, this is a provenance limitation rather than a blocker for the original page, but the source scan remains partial.
+- Four in-body figure elements exposed by the current article retrieval have now been inspected individually (see §12). No figure is reused. The article advertises 50+ custom visuals, so the four exposed elements cannot be assumed to exhaust every visual asset; the source scan remains partial.
 - The video comparison is now grounded in Ho et al. (NeurIPS 2022), which studies a 3D U-Net diffusion model and conditional spatial/temporal extension; it is explicitly presented as one case, not a universal design.
 - CI, Quarto rendering, internal-link checks and metadata validation must pass on the proposed branch.
 - Rendered visual, responsive, keyboard and screen-reader review remain separate gates; no such validation is claimed here.
 
 **Decision:** a concise optional page is justified. Keep #632 open until source-level tests and Quarto checks pass; do not treat those checks as visual or learner validation.
+
+
+## 12. Individual figure audit — 2026-11-15
+
+The canonical article page is now directly retrievable. The page extraction exposes four in-body image elements; each was opened and visually inspected. These are source illustrations, not reusable LLM Lab assets: no creator-specific reuse permission or licence was established.
+
+| Figure element | Observed content | Pedagogical contribution | Limitation / decision |
+|---|---|---|---|
+| Article link 10 — U-Net | Noisy image and noise amount enter a U-Net; predicted noise is shown as output | Communicates the denoising objective at a glance | Highly schematic: does not show the encoder/decoder hierarchy, skip connections, timestep conditioning, latent VAE, or training objective. Do not reuse. |
+| Article link 21 — AudioLM semantic stage | Past semantic tokens enter a Transformer decoder and future semantic tokens are predicted | Makes the first autoregressive stage visible | Omits tokenization details, conditioning and the full hierarchy. Do not reuse. |
+| Article link 22 — AudioLM coarse acoustic stage | Future semantic tokens and past acoustic tokens condition a Transformer decoder that predicts future coarse acoustic tokens | Shows that semantic and acoustic streams play different roles | Does not show the final fine-acoustic stage or codec decoding. Do not reuse. |
+| Article link 33 — NExT-GPT output projection | Text instruction → LLM → image projection/alignment → image generator → image | Clearly communicates late-fusion projection to a separate image generator | Covers only the image example and omits input projectors, audio/video paths, runtime controls and training detail. Do not reuse. |
+
+No separate in-body figure for Janus or video architecture was exposed in the retrieved article body; those descriptions were therefore checked against the cited primary papers rather than inferred from a newsletter illustration.
+
+The article states that the guide contains more than 50 custom visuals, but the currently retrievable article body exposes only the four image elements listed above. This audit records what could actually be inspected; it does not claim that the 50+ figure count has been reconciled with the page's underlying asset inventory.
+
+**Decision:** retain link-only handling for every newsletter figure. The new LLM Lab diagram is independently authored and is not a redraw or crop of any of these four figures.
