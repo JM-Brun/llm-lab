@@ -277,10 +277,10 @@ E. RoPE is applied to query/key representations inside attention, rather than be
 **Stage 2 — Predict what changes, and what stays invariant.** Assume a deterministic tokenizer and a fixed model checkpoint. Consider the same token ID $t$ in three situations:
 
 1. It occurs twice in the same input sequence.
-2. It occurs in two different input sequences with different preceding (visible) context; in a decoder-only causal model, tokens to the right are masked and cannot affect this position.
+2. It occurs at the same sequence position in two different input sequences with different preceding (visible) context; in a decoder-only causal model, tokens to the right are masked and cannot affect this position.
 3. It is replaced by a different ID $u$, while all other positions remain unchanged.
 
-For each situation, predict whether the initial embedding selected by lookup, the effect of the positional mechanism (whether applied to the token stream before the first block or inside attention), and the contextualized hidden state can change. State any architectural qualification needed; do not assume that a change at one position leaves all later states unchanged.
+For each situation, predict whether the initial embedding selected by lookup, the position-dependent operation or representation (whether position information is added to the token stream before the first block or applied inside attention), and the contextualized hidden state can change. State any architectural qualification needed; do not assume that a change at one position leaves all later states unchanged.
 
 <details>
 <summary>Show hints</summary>
@@ -295,7 +295,7 @@ For each situation, predict whether the initial embedding selected by lookup, th
 <summary>Show the worked solution</summary>
 
 1. The same ID selects the same initial embedding row. If the architecture adds learned absolute position embeddings before the first block, the resulting input representation can differ by position. With a mechanism such as RoPE, the token embedding itself is not changed by a position vector; positional effects enter later inside attention. Contextualized states may differ because position and surrounding context matter.
-2. The initial lookup row remains the same for the same ID and fixed table. Because the token is held at the same position, the positional contribution is also held fixed: an absolute position vector is the same, and a RoPE rotation uses the same position index (although the query/key content being rotated can differ). Contextualized states can differ because the preceding (visible) context differs; in a causal decoder, tokens to the right cannot affect this position.
+2. The initial lookup row remains the same for the same ID and fixed table. Because the token is held at the same position, the position index and position-dependent operation are fixed: an absolute position vector is identical, and RoPE applies the same position-indexed rotation, although the query/key content being rotated can differ. The resulting position-aware query/key representations can therefore differ because their content differs. Contextualized states can differ because the preceding (visible) context differs; in a causal decoder, tokens to the right cannot affect this position.
 3. A different ID generally selects a different row. If its position is unchanged, the positional operation itself need not change: an absolute scheme adds the same position vector, while RoPE applies the same position-dependent rotation to the newly computed query/key vectors. The resulting position-aware representations can nevertheless change because their content inputs changed. Contextualized states may change at that position and at other positions that depend on it.
 
 These are qualitative predictions, not guarantees about the magnitude of a numerical change. Exact effects depend on architecture, masking, position mechanism and model parameters.
