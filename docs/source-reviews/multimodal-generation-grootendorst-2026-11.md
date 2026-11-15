@@ -198,6 +198,7 @@ These checks validate selected architectural descriptions; they do not constitut
 | SoundStream | [Zeghidour et al., arXiv:2107.03312](https://arxiv.org/abs/2107.03312) | Neural audio codec with a convolutional encoder/decoder and residual vector quantization | Codec / reconstruction component; not by itself an autoregressive generator or semantic representation model |
 | w2v-BERT | [Chung et al., arXiv:2108.06209](https://arxiv.org/abs/2108.06209) | Self-supervised speech representation learning; contrastive learning discretizes speech into units and masked prediction learns contextualized representations | The paper describes representation learning, not a general-purpose audio generator; do not equate units with text tokens or word boundaries |
 | Diffusion Transformer (DiT) | [Peebles and Xie, ICCV 2023](https://openaccess.thecvf.com/content/ICCV2023/html/Peebles_Scalable_Diffusion_Models_with_Transformers_ICCV_2023_paper.html) | A Transformer backbone operates on latent patches in place of the commonly used U-Net in the studied latent-diffusion setup | A specific diffusion architecture; not the ordinary autoregressive Transformer used for next-token prediction |
+| Video diffusion | [Ho et al., NeurIPS 2022](https://proceedings.neurips.cc/paper/2022/hash/39235c56aef13fb05a6adc95eb9d8d66-Abstract-Conference.html) | Extends diffusion to video data, including spatiotemporal modeling and conditional spatial/temporal extension | One early video-diffusion design; not an exhaustive account of contemporary video architectures |
 | OmniGen2 | [Wu et al., arXiv:2506.18871](https://arxiv.org/abs/2506.18871) | Distinct text/image decoding pathways, unshared parameters and a decoupled image tokenizer | Its design is model-specific; do not collapse it into a universal early-/late-fusion template |
 | BLIP3-o | [Chen et al., arXiv:2505.09568](https://arxiv.org/abs/2505.09568) | Unified image understanding/generation study using a diffusion Transformer to generate semantically rich CLIP image features | Distinct design from OmniGen2; preserve the paper's precise representation and training claims |
 
@@ -237,6 +238,7 @@ The page uses an original Mermaid diagram and original comparison tables. It cit
 ### Remaining acceptance gates
 
 - The newsletter figures have not been inspected individually. Since no figure is reused, this is a provenance limitation rather than a blocker for the original page, but the source scan remains partial.
+- The video comparison is now grounded in Ho et al. (NeurIPS 2022), which studies a 3D U-Net diffusion model and conditional spatial/temporal extension; it is explicitly presented as one case, not a universal design.
 - CI, Quarto rendering, internal-link checks and metadata validation must pass on the proposed branch.
 - Rendered visual, responsive, keyboard and screen-reader review remain separate gates; no such validation is claimed here.
 
