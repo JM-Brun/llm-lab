@@ -74,7 +74,9 @@ Pour un lot de séquences, la tête de sortie peut produire un tenseur de forme 
 - **Les écarts :** les différences entre scores décrivent leur séparation relative dans ce vecteur.
 - **Pas une confiance absolue :** la valeur brute d'un logit dépend de l'échelle et du décalage des scores. Elle ne se lit pas comme un pourcentage et ne suffit pas à établir la confiance ou la vérité d'une sortie.
 
-![Deux vecteurs de logits qui diffèrent par un décalage commun produisent la même distribution softmax.](../images/logits-common-shift-fr.svg){fig-alt="Les vecteurs (2, 1) et (102, 101) ont le même écart entre leurs composantes. Après softmax, chacun donne 73,1 % au token A et 26,9 % au token B. Ajouter 100 à tous les logits ne change donc pas la distribution." fig-cap="La softmax est invariante à l'ajout d'une même constante à tous les logits : ce sont les écarts qui comptent, pas leur niveau absolu." width=100%}\n\n### Le niveau zéro des logits est arbitraire
+![Deux vecteurs de logits qui diffèrent par un décalage commun produisent la même distribution softmax.](../images/logits-common-shift-fr.svg){fig-alt="Les vecteurs (2, 1) et (102, 101) ont le même écart entre leurs composantes. Après softmax, chacun donne 73,1 % au token A et 26,9 % au token B. Ajouter 100 à tous les logits ne change donc pas la distribution." fig-cap="La softmax est invariante à l'ajout d'une même constante à tous les logits : ce sont les écarts qui comptent, pas leur niveau absolu." width=100%}
+
+### Le niveau zéro des logits est arbitraire
 
 Considérez deux vecteurs : $z=(2,1)$ et $z'=(102,101)$. Leurs scores sont très différents en valeur absolue, mais le second s'obtient en ajoutant 100 à chaque composante. La softmax donne exactement la même distribution pour les deux vecteurs : le décalage commun s'annule entre le numérateur et le dénominateur. **Ce sont les écarts entre logits qui déterminent les rapports de probabilités, pas leur niveau absolu.**
 
