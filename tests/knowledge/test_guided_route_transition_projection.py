@@ -213,3 +213,21 @@ def test_suggested_route_navigation_is_projected_per_stage_membership(
     assert generation_title in generation_html
     assert context_title in context_html
     assert f'href="{likelihood}"' in context_html
+
+
+@pytest.mark.parametrize("language", ["fr", "en"])
+def test_contextual_route_keeps_optional_build_companion_at_terminal_page(language: str) -> None:
+    pages = [
+        page for page in GENERATOR["load_pages"]()
+        if page["language"] in {language, "shared"}
+    ]
+    stages = GENERATOR["load_guided_route"](language, pages)
+    fragments = GENERATOR["prepare_suggested_route_fragments"](language, pages, stages)
+    by_name = {path.name: content for path, content in fragments.items()}
+    terminal = by_name[f"generated-suggested-route-{language}-training-loop.qmd"]
+    assert "build-path.qmd" in terminal
+    assert (
+        "voie complémentaire" in terminal
+        if language == "fr"
+        else "optional companion path" in terminal
+    )
