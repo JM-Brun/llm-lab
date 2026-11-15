@@ -51,6 +51,8 @@ La softmax transforme les logits en une **distribution conditionnée par le pré
 </div>
 <p id="probability-flow-description" class="meta-flow__relation">La température agit sur les logits avant la softmax. Dans l’implémentation de référence du projet, top-k et top-p filtrent ensuite la distribution et la renormalisent ; l’ordre peut varier selon les bibliothèques. Une distribution, même filtrée, n’est pas encore un token sélectionné.</p>
 
+![Chaîne de transformation des logits en token sélectionné, avec l'effet de la température sur un exemple numérique.](../images/probability-decoding-flow-fr.svg){fig-alt="Les logits passent éventuellement par une division par la température, puis par softmax. Des filtres top-k ou top-p facultatifs peuvent ensuite être appliqués avec renormalisation, avant une sélection par argmax ou échantillonnage. Avec z égal à (0, ln 3), les probabilités passent de 25/75 % à température 1 à 36,6/63,4 % à température 2 ; le classement reste inchangé." fig-cap="Les étapes ont des rôles distincts : transformer les scores, construire une distribution, restreindre les candidats, puis sélectionner un token." width=100%}
+
 ## Des logits à une distribution catégorielle
 
 À une position donnée, le modèle produit un logit $z_i$ pour chaque token $i$ du vocabulaire. Les logits sont des scores non normalisés : ils peuvent être négatifs ou positifs et ne somment pas à un.
