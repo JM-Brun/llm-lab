@@ -223,8 +223,8 @@ def test_suggested_route_navigation_is_projected_per_stage_membership(
     context_html = by_name[f"generated-suggested-route-{language}-context-engineering.qmd"]
     assert f'href="{text_data}"' in generation_html
     assert f'href="{in_context}"' in generation_html
-    assert generation_title in generation_html
-    assert context_title in context_html
+    assert escape(generation_title) in generation_html
+    assert escape(context_title) in context_html
     assert f'href="{likelihood}"' in context_html
 
 
