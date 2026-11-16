@@ -68,6 +68,13 @@ A probability p(x) corresponds to an ideal code length close to -log₂ p(x) bit
 2. **Attention weights are not mutual information.** Attention weights aggregate values; mutual information is defined from a joint distribution.
 3. **Landauer is not a universal learning ceiling.** Its bound concerns physical irreversible erasure, not a general limit on generalization.
 
+
+## Further study — predictive \(\\mathcal V\)-information
+
+Predictive \(I_{\\mathcal V}(X\\to Y)\) measures the prediction gain available to a specified family \(\\mathcal V\) under logarithmic loss. It therefore depends on the allowed models. If the family is expressive enough to contain all predictors, it recovers Shannon mutual information; with a restricted family, it may be smaller.
+
+Do not treat it as a new assumption-free quantity: always specify the family, target, side information and loss. See the controlled experiment below.
+
 ## Self-check
 
 1. Why is cross-entropy at least as large as target entropy?
