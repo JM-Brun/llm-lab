@@ -128,6 +128,12 @@ Cette page définit un cadre de traçabilité et de séparation des responsabili
 </summary>
 <div class="learning-resources__content" markdown="1">
 
+### Ressources d'implémentation complémentaires
+
+- [Hugging Face — Datasets, traitement et manipulation](https://huggingface.co/learn/llm-course/en/chapter5/3) : charger, inspecter, filtrer et transformer des données.
+- [Hugging Face — Grands datasets, mémoire et streaming](https://huggingface.co/learn/llm-course/en/chapter5/4) : comprendre les fichiers memory-mapped et le traitement de corpus volumineux.
+- [Hugging Face — Annotation et curation avec Argilla](https://huggingface.co/learn/llm-course/en/chapter10/1) : exemple d'outillage pour le protocole décrit plus haut.
+
 ### Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/corpus-preparation.qmd).
