@@ -63,7 +63,7 @@ def main() -> None:
         f"mutual information of toy joint distribution: {mutual_information(joint):.4f} bits",
         "Reminder: attention weights are not mutual information.",
     ))
-    sys.stdout.write("\\n".join(lines) + "\\n")
+    sys.stdout.write("\n".join(lines) + "\n")
 
 
 if __name__ == "__main__":
