@@ -190,7 +190,7 @@ concepts:
       fr: "Quantité qui mesure le coût probabiliste d’une distribution prédite relativement à une cible."
       en: "Quantity measuring the probabilistic cost of a predicted distribution relative to a target."
     domains: [probabilistic-foundations-training]
-    resources: [fr/cross-entropy, en/cross-entropy]
+    resources: [fr/cross-entropy, en/cross-entropy, fr/language-modeling-math, en/language-modeling-math]
   - id: training-objective
     importance: core
     labels: {fr: "Objectif d'entraînement", en: "Training objective"}
@@ -741,7 +741,7 @@ concepts:
       fr: "Entraînement d'un modèle étudiant à reproduire certains comportements ou sorties d'un modèle enseignant."
       en: "Training a student model to reproduce selected behaviours or outputs of a teacher model."
     domains: [inference-efficiency]
-    resources: [fr/llm-evolution, en/llm-evolution, fr/compression-revision, en/compression-revision]
+    resources: [fr/llm-evolution, en/llm-evolution, fr/language-modeling-math, en/language-modeling-math, fr/compression-revision, en/compression-revision]
 
 
   - id: entropy
@@ -1077,5 +1077,11 @@ relations:
     rationale:
       fr: "La divergence KL mesure le terme d'écart entre la distribution cible et la distribution prédite."
       en: "KL divergence measures the mismatch term between the target and predicted distributions."
+  - from: cross-entropy
+    type: prerequisite
+    to: knowledge-distillation
+    rationale:
+      fr: "La distillation par cibles souples compare la distribution de l'étudiant à celle de l'enseignant au moyen d'un objectif de cross-entropie ou de KL."
+      en: "Soft-target distillation compares the student's distribution with the teacher's using a cross-entropy or KL objective."
   - {from: attention-weight, type: contrasts-with, to: mutual-information}
   - {from: mutual-information, type: contrasts-with, to: v-information}
