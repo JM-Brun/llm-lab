@@ -10,8 +10,8 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/generation"
 summary: "Presents generation as an autoregressive loop: context, next-token prediction, selection, feedback, and stopping. Introduces prefill, incremental decode, and selection strategies, then distinguishes inference from scoring and training."
-scope: "Describes autoregressive inference for an already trained model: context, forward pass, next-token distribution, selection, feedback, and stopping; distinguishes prefill and decode phases from decoding rules. Transformer internals, advanced strategies, and parameter learning are outside its scope."
-purpose: "Readers should be able to step through token-by-token generation, distinguish model computation, token selection, and the complete loop, explain prefill and incremental decode, and predict how a decoding rule changes output without updating parameters."
+scope: "Describes autoregressive inference and its main serving mechanisms: prefill/decode, KV caching, latency, multi-request scheduling, continuous batching, prefix caching, and chunked prefill. Transformer internals and parameter learning remain outside its scope."
+purpose: "Readers should be able to step through token-by-token generation, distinguish model computation from selection, explain prefill/decode, and connect latency metrics to serving mechanisms without confusing scheduling with prediction."
 suggested_route:
   previous: "en/llm-overview"
   next: "en/text-data"
