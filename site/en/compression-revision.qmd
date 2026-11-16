@@ -2,7 +2,7 @@
 title: "Revision sheet — Compression and LLMs"
 subtitle: "Predict to code, compress a model, measure the actual cost"
 description-meta: "A bilingual revision sheet distinguishing predictive compression, model compression, and LLM runtime memory."
-keywords: ["type:revision-sheet", "destination:review", "topic:compression", "level:core", "language:en", "status:published"]
+keywords: ["type:concept-bridge", "destination:understand", "topic:compression", "level:core", "language:en", "status:published"]
 lang: en
 ---
 
@@ -12,15 +12,14 @@ id: "en/compression-revision"
 summary: "Visual revision sheet distinguishing predictive compression, model compression, and runtime memory, with formulas, protocol, and self-check."
 scope: "Consolidates the compression sources and connects them to conditional probabilities, cross-entropy, and model-reduction techniques."
 purpose: "Choose the correct meaning of compression, calculate an ideal predictive cost, and explain the conditions for lossless coding."
-domain: "probabilistic-foundations-training"
 suggested_route:
-  previous: "en/entropy"
-  next: "en/llm-computational-complexity"
+  previous: null
+  next: null
 hierarchy:
-  parents: ["en/entropy", "en/llm-computational-complexity"]
+  parents: []
   children: []
 related: ["en/cross-entropy", "en/likelihood", "en/llm-evolution", "en/llm-computational-complexity"]
-tags: ["type:revision-sheet", "destination:review", "topic:compression", "level:core", "language:en", "status:published"]
+tags: ["type:concept-bridge", "destination:understand", "topic:compression", "level:core", "language:en", "status:published"]
 -->
 
 ::: {.chapter-lead}
