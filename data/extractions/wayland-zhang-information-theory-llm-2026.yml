@@ -196,7 +196,7 @@ items:
     disposition: clarify
     disposition_rationale: "Retain the coding result and reject the equation of compression with intelligence as a theorem."
   - id: wayland-zhang-information-theory-llm-2026:v-information
-    kind: concept
+    kind: definition
     summary: "V-information extends information-theoretic reasoning by specifying a family of predictors or computationally constrained observers and measuring predictive information usable by that family."
     locator: {type: section, value: "06 V-Information: When Computation Matters", label: "V-Information"}
     evidence: {kind: primary-paper-summary, confidence: context-dependent, scope: "The linked Xu et al. (2020) paper proposes predictive V-information and reports theoretical and empirical results.", assumptions: ["The predictor family and loss are specified.", "The operational quantity depends on the chosen function class and estimation procedure."], limitations: ["It does not mean computation creates Shannon information or violates ordinary physical conservation.", "The article's 'more useful information' framing is heuristic unless the V-family and objective are stated."]}
