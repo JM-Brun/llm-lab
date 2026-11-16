@@ -143,7 +143,8 @@ No new concept IDs, introductory pages, copied figures or external code were add
 
 ## 6. Remaining work
 
-- Inspect the 38 figure assets individually and decide which original LLM Lab diagrams to create.
+- If access to the original image assets becomes available, perform a pixel-level visual audit; the complete caption-and-context audit is already recorded in §4.
+- Build the remaining P0/P1 original diagrams and interactive experiments from the visual blueprint. The first P0 position-entry-point comparison has now been added in French and English.
 - Execute the statically inspected Qwen3 notebook and compare its numerical outputs; separately add tests for explicit position IDs and incremental KV-cache decoding, which are not covered by the inspected forward path.
 - Validate bilingual Quarto rendering, source/extraction schemas, concept graph and navigation in CI.
 
@@ -152,4 +153,4 @@ No new concept IDs, introductory pages, copied figures or external code were add
 - [Su et al. (2021), RoFormer](https://arxiv.org/abs/2104.09864)
 - [Vaswani et al. (2017), Attention Is All You Need](https://arxiv.org/abs/1706.03762)
 - [The Impact of Positional Encoding on Length Generalization in Transformers](https://arxiv.org/abs/2305.19466)
-- [Raschka, Qwen3 from scratch](https://github.com/rasbt/LLMs-from-scratch) — linked, not independently inspected.
+- [Raschka, Qwen3 from scratch](https://github.com/rasbt/LLMs-from-scratch) — the linked standalone notebook was statically inspected for RoPE, QK normalization, GQA and buffers; it was not executed.
