@@ -59,10 +59,25 @@ def main() -> None:
             contrasting_rows, context_probabilities
         ),
         "interpretation": [
-            "A non-uniform row can have positive KL to uniform even when every context has the same row; then context and key are independent and mutual information is zero.",
-            "For a genuine joint distribution, mutual information equals the context-weighted KL from each conditional key distribution to the marginal key distribution.",
-            "Attention weights are not automatically calibrated conditional probabilities P(key | query); the identity applies only when a valid joint distribution and its conditionals have been specified.",
-            "The numerical equality in the contrasting toy case is incidental: KL-to-uniform and mutual information use different reference distributions.",
+            (
+                "A non-uniform row can have positive KL to uniform even when every context "
+                "has the same row; then context and key are independent and mutual "
+                "information is zero."
+            ),
+            (
+                "For a genuine joint distribution, mutual information equals the "
+                "context-weighted KL from each conditional key distribution to the "
+                "marginal key distribution."
+            ),
+            (
+                "Attention weights are not automatically calibrated conditional "
+                "probabilities P(key | query); the identity applies only when a valid "
+                "joint distribution and its conditionals have been specified."
+            ),
+            (
+                "The numerical equality in the contrasting toy case is incidental: "
+                "KL-to-uniform and mutual information use different reference distributions."
+            ),
         ],
     }
     print(json.dumps(output, indent=2))  # noqa: T201 - experiment CLI output
