@@ -58,6 +58,10 @@ The repository is an independent learning and experimentation project. These sou
 
 See the [source review and pedagogical synthesis](source-reviews/sinusoidal-positional-encoding-2026-11.md) for inspection scope, technical reconciliation, and reuse limits. The machine-readable scan records remain in [the source catalogue](../data/sources.yml).
 
+- **Khan et al. — Fractional Rotation, Full Potential? Investigating Performance and Convergence of Partial RoPE** (arXiv:2603.11611, v2, 15 October 2026): https://arxiv.org/abs/2603.11611
+  - **Use for:** experimental evidence on partial-RoPE fractions, training convergence, NoPE instability and the memory footprint of precomputed RoPE tables.
+  - **Qualification:** the up-to-10× saving concerns the RoPE sine/cosine cache, not the KV cache; results are bounded to the paper's 1B/8B configurations, data, sequence lengths and evaluation suite. See [the source review](source-reviews/partial-rope-fractional-rotation-2026-11.md).
+
 ## Q/K/V and attention perspectives
 
 - **Neha KK — Understanding Queries, Keys and Values in Transformers** (Medium, 31 December 2025): https://medium.com/@nkk18072004/understanding-queries-keys-and-values-in-transformers-149ed07c9f8b
