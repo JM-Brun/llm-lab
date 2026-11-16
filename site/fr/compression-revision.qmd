@@ -104,6 +104,14 @@ L'expérience [codage prédictif exact](https://github.com/JM-Brun/llm-lab/blob/
 
 Ces chiffres concernent uniquement le message de test. Ils excluent le coût de transmission du modèle appris sur 40 symboles, du tokenizer et des métadonnées. Ce n'est ni un benchmark de LLM ni une preuve de compression nette d'un système complet.
 
+## Apport de 3Blue1Brown : retrouver l'entropie à partir du codage
+
+La vidéo [Reinventing Entropy — Compression is Intelligence, Part 1](https://www.youtube.com/watch?v=l6DKRf-fAAM) reconstruit intuitivement le lien entre longueur de code idéale et information : un événement de probabilité $p$ correspond à $-\\log_2 p$ bits dans le cas idéal. Elle introduit les codes préfixes, puis passe de l'information d'un événement à l'entropie moyenne et enfin à l'entropie d'une source séquentielle.
+
+**Garde-fous à retenir :** la longueur d'un code préfixe est entière pour chaque mot de code, alors que le surprisal peut être fractionnaire ; la borne de Shannon porte sur la longueur moyenne. Un flux codé proche du bruit aléatoire est une intuition utile pour un codage idéal, pas un test universel d'optimalité. Enfin, l'estimation historique d'environ un bit par caractère pour l'anglais dépend du protocole de Shannon et ne constitue pas une constante universelle de la langue.
+
+L'article [AIhub du 16 juillet 2026](https://aihub.org/2026/07/16/reinventing-entropy-compression-is-intelligence-part-1/) relaie cette même vidéo, il ne s'agit pas d'une source indépendante.
+
 ## Auto-évaluation
 
 1. Pourquoi un LLM n'est-il pas un décompresseur LZW ?
