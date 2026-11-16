@@ -162,9 +162,7 @@ where $L$ is the number of layers, $B$ the batch size, $T$ the number of cached 
 The autoregressive loop describes **one sequence**. A server must handle several requests with different prompts and output lengths.
 
 - **TPOT (*time per output token*)**: the average gap between output tokens, excluding the first token. For a request producing $N_{out}>1$ tokens, one estimate is
-  $
-  \operatorname{TPOT}=\frac{\operatorname{E2E}-\operatorname{TTFT}}{N_{out}-1}.
-  $
+  It can be estimated as $\operatorname{TPOT}=\frac{\operatorname{E2E}-\operatorname{TTFT}}{N_{out}-1}$.
   **ITL** is the individual interval between consecutive tokens. For one request, mean ITL equals TPOT; aggregations across requests can differ depending on their weighting.
 - **Continuous batching** (*in-flight batching*): the server adjusts the set of sequences at each decode iteration. When one sequence finishes, it frees its slot; a new request can enter without waiting for all others to finish. Each sequence remains autoregressive: scheduling changes, not the prediction rule.
 - **Prefix caching**: two requests can reuse the KV cache of a shared prefix if their token prefixes are exactly identical and the cache entry is still available on a compatible worker. Semantic similarity or shared words are not enough; serialization or tokenization differences can break reuse. This is not response caching.
