@@ -124,6 +124,8 @@ Chaque ligne correspond à une position. Les mêmes matrices de projection sont 
 
 Les équations par position, la géométrie des compatibilités, les chemins de gradient et les variantes multi-têtes sont utiles une fois le modèle mental acquis. Ils sont regroupés dans l'[approfondissement avancé sur Q/K/V](queries-keys-values-advanced.qmd), plutôt que dispersés dans plusieurs encadrés repliés sur cette page.
 
+Pour comparer les architectures qui modifient le nombre de têtes K/V, compressent le cache ou limitent les positions consultées, consultez la section [Variantes d'attention](transformer-block-walkthrough.qmd#attention-variants) de la visite guidée du bloc Transformer. Elle distingue explicitement cette comparaison du code MHA réellement implémenté.
+
 ## À retenir et pour aller plus loin
 
 La distinction fonctionnelle est simple, mais fondamentale :
