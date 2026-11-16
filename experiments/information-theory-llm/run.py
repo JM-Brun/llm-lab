@@ -47,7 +47,6 @@ def mutual_information(joint: tuple[tuple[float, ...], ...]) -> float:
     )
 
 
-
 def xor_demo() -> dict[str, float]:
     """Exact balanced-XOR illustration of predictive-family dependence.
 
