@@ -3,7 +3,7 @@
 ## Sources et périmètre
 - Wayland Zhang, [Information Theory Is All You Need (to Understand LLMs)](https://waylandz.com/blog/information-theory-and-llm/), 17 février 2026 ; l'auteur indique une réécriture d'un texte du 27 mars 2025.
 - [Dépôt des notebooks anglais et chinois](https://github.com/waylandzhang/information-theory-and-language-models).
-- Xu et al. (2020), [A Theory of Usable Information Under Computational Constraints](https://arxiv.org/abs/2002.10689), notice et abstract consultés.
+- Xu et al. (2020), [A Theory of Usable Information Under Computational Constraints](https://openreview.net/forum?id=r1eBeyHFDH), également disponible sur [arXiv:2002.10689](https://arxiv.org/abs/2002.10689) ; texte intégral audité.
 
 Le texte de l'article a été inspecté intégralement. Le notebook anglais a été inspecté statiquement dans ses 18 cellules, mais n'a pas été exécuté. Les figures n'ont pas été auditées comme fichiers image. Le papier V-information complet a été relu : définitions, propriétés, borne PAC, apprentissage de structure, expériences et discussion sur l'équité. Les expériences des auteurs n'ont pas été reproduites. L'audit du notebook a aussi identifié une visualisation qui appelle à tort « approximation de MI » une divergence KL ligne-par-ligne entre poids d'attention et distribution uniforme ; ce calcul n'est pas une information mutuelle.
 
@@ -60,7 +60,7 @@ Le concept canonique avancé `v-information` est ajouté après audit complet du
 
 ## Fiche et expériences
 - [Fiche de révision](../revision-sheets/information-theory-and-llms-2026-11.md)
-- [Expérience de compression prédictive](../../experiments/predictive-compression/README.fr.md)
+- [Expérience V-information et théorie de l'information](../../experiments/information-theory-llm/README.fr.md)
 - [Mini-expérience sur entropie, cross-entropy, KL et information mutuelle](../../experiments/information-theory-llm/README.fr.md).
 
 ## Expérience complémentaire : dépendance à la famille de prédicteurs
