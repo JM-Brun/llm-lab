@@ -183,6 +183,22 @@ concepts:
       - en/probabilities
       - fr/scaled-dot-product-attention
       - en/scaled-dot-product-attention
+  - id: surprisal
+    importance: supporting
+    labels: {fr: "Surprisal (contenu informationnel)", en: "Surprisal"}
+    definitions:
+      fr: "Quantité d'information associée à un événement observé, égale à l'opposé du logarithme de sa probabilité sous une distribution spécifiée."
+      en: "Information content of an observed event, equal to the negative logarithm of its probability under a specified distribution."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/entropy, en/entropy]
+  - id: shannon-entropy
+    importance: core
+    labels: {fr: "Entropie de Shannon", en: "Shannon entropy"}
+    definitions:
+      fr: "Espérance du surprisal sous une distribution ; elle mesure l'incertitude moyenne avant l'observation d'un événement."
+      en: "Expected surprisal under a distribution; it measures average uncertainty before an event is observed."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/entropy, en/entropy]
   - id: cross-entropy
     importance: core
     labels: {fr: "Entropie croisée", en: "Cross-entropy"}
@@ -793,6 +809,8 @@ relation_types:
       fr: "La source est évaluée au moyen de la cible."
       en: "The source is evaluated using the target."
 relations:
+  - {from: surprisal, type: contributes-to, to: shannon-entropy}
+  - {from: shannon-entropy, type: contributes-to, to: cross-entropy}
   - {from: attention-weight, type: contrasts-with, to: mutual-information}
   - {from: kl-divergence, type: contributes-to, to: held-out-evaluation}
   - {from: document-retrieval, type: contributes-to, to: retrieval-augmented-generation}
