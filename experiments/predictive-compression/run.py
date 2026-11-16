@@ -6,7 +6,7 @@ from __future__ import annotations
 import sys
 from collections import Counter, defaultdict
 from fractions import Fraction
-from math import ceil, log2
+from math import log2
 
 ALPHABET = ("A", "B", "C", "D")
 TRAINING = "ABABACABADABABACABADABABACABADABABACABAD"
@@ -57,15 +57,15 @@ def interval_for(message: str, model: dict[str, dict[str, Fraction]]) -> tuple[F
 
 def dyadic_code_inside(low: Fraction, high: Fraction) -> tuple[int, int]:
     """Choose a binary fraction safely inside the final interval."""
-    width = high - low
-    bits = ceil(-log2(float(width))) + 1
-    denominator = 1 << bits
-    midpoint = (low + high) / 2
-    numerator = (midpoint.numerator * denominator) // midpoint.denominator
-    code_value = Fraction(numerator, denominator)
-    if not low <= code_value < high:
-        raise ArithmeticError("Chosen binary fraction is outside the coding interval")
-    return numerator, bits
+    bits = 0
+    while True:
+        denominator = 1 << bits
+        # Find the first dyadic value >= low, using integer arithmetic only.
+        numerator = (low.numerator * denominator + low.denominator - 1) // low.denominator
+        code_value = Fraction(numerator, denominator)
+        if code_value < high:
+            return numerator, bits
+        bits += 1
 
 
 def decode(numerator: int, bits: int, length: int, model: dict[str, dict[str, Fraction]]) -> str:
