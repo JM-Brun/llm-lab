@@ -1,0 +1,78 @@
+---
+title: "Revision sheet — Information theory and LLMs"
+subtitle: "From surprisal to predictive compression"
+description-meta: "A concise revision sheet for surprisal, entropy, cross-entropy, KL divergence and predictive coding."
+keywords: ["type:revision-sheet", "topic:information-theory", "level:review", "language:en", "status:published"]
+lang: en
+---
+
+[← Return to the entropy lesson](entropy.qmd) · [Cross-entropy](cross-entropy.qmd)
+
+## The central idea
+
+A model assigns a probability to the next token. A highly probable observation is unsurprising; a low-probability observation is costly to explain. Information theory turns this intuition into measurable quantities.
+
+## Five formulas to remember
+
+| Quantity | Formula | Interpretation |
+|---|---|---|
+| Surprisal | \(I(x)=-\log_2 p(x)\) | Information content of an observed event, in bits |
+| Entropy | \(H(X)=\mathbb E[-\log p(X)]\) | Average uncertainty of a distribution |
+| Cross-entropy | \(H(q,p)=\mathbb E_{x\sim q}[-\log p(x)]\) | Average cost of predicted distribution p on target q |
+| KL divergence | \(D_{KL}(q\|p)=\mathbb E_q[\log(q/p)]\) | Non-negative discrepancy between q and p |
+| Perplexity | \(\mathrm{PPL}=e^{\mathrm{NLL}}\) | Exponential of mean NLL in nats |
+
+The logarithm base sets the unit: base 2 gives bits; the natural logarithm gives nats.
+
+## The key identity
+
+```text
+H(q,p) = H(q) + D_KL(q || p)
+```
+
+For a fixed target q and context, H(q) does not depend on model parameters. Minimizing cross-entropy therefore minimizes D_KL(q || p). For a one-hot target, H(q)=0, so cross-entropy is exactly the NLL of the observed token.
+
+## Worked example
+
+For q = (0.5, 0.5) and p = (0.75, 0.25):
+
+- H(q) = 0.693 nats;
+- H(q,p) = 0.837 nats;
+- D_KL(q || p) = 0.144 nats.
+
+Thus 0.837 ≈ 0.693 + 0.144.
+
+## Connection to compression
+
+A probability p(x) corresponds to an ideal code length close to -log₂ p(x) bits. A good predictor can therefore support shorter codes. This does not prove compression = intelligence: the measurement depends on corpus, tokenization and coding protocol.
+
+## Three conceptual traps
+
+1. **Entropy is not the surprisal of one token.** Entropy is an average; surprisal concerns one event.
+2. **Attention weights are not mutual information.** Attention weights aggregate values; mutual information is defined from a joint distribution.
+3. **Landauer is not a universal learning ceiling.** Its bound concerns physical irreversible erasure, not a general limit on generalization.
+
+## Self-check
+
+1. Why is cross-entropy at least as large as target entropy?
+2. When does cross-entropy reduce to token NLL?
+3. Why does a high attention weight not measure mutual information?
+
+<details>
+<summary>Show answers</summary>
+
+1. Their difference is KL divergence, which is non-negative under the usual support conditions.
+2. When the target is one-hot: only the probability of the observed token contributes.
+3. Attention weights are normalized compatibility coefficients, not a joint distribution or an estimator of statistical dependence.
+
+</details>
+
+## Further study
+
+- [Experiment: entropy, KL and predictive coding](../experiments/information-theory/README.md)
+- [Source synthesis](../../docs/source-syntheses/information-theory-and-language-models-2026-11.md)
+- [Technical source review](../../docs/source-reviews/information-theory-wayland-zhang-2026-11.md)
+
+::: {.language-switch}
+**Language:** [Français](../fr/revision-information-theory.qmd) · English
+:::
