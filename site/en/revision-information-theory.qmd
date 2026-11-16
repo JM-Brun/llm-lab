@@ -101,3 +101,14 @@ Do not treat it as a new assumption-free quantity: always specify the family, ta
 ::: {.language-switch}
 **Language:** [Français](../fr/revision-information-theory.qmd) · [English](revision-information-theory.qmd)
 :::
+
+
+## Attention: distinguish KL from mutual information
+
+Mutual information is not the KL divergence of an attention row from uniform. For a genuine joint distribution:
+
+\[
+I(X;Y)=\mathbb E_X[D_{KL}(P(Y\mid X)\|P(Y))].
+\]
+
+The reference is the marginal \(P(Y)\). A row repeated for every context can be highly concentrated (positive KL to uniform) while still giving \(I(X;Y)=0\). Attention weights are not automatically conditional probabilities; do not interpret them as such without an explicit probabilistic model.
