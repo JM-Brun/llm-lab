@@ -89,7 +89,6 @@ def test_invalid_log_bases_are_rejected_by_every_metric(metric: str) -> None:
             ideal_code_lengths(probabilities, base=1.0)
 
 
-
 def test_kl_support_and_shape_edge_cases() -> None:
     assert np.isinf(kl_divergence(np.array([0.5, 0.5]), np.array([1.0, 0.0])))
     with pytest.raises(ValueError):
