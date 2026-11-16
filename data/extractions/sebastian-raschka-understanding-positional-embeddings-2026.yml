@@ -55,6 +55,13 @@ pedagogical_model:
     inspection_scope: "All 38 numbered figure captions and surrounding HTML explanations inspected; original image pixels not individually inspected."
     completeness: complete-caption-audit
     limitation: "Subscriber-only bulk gallery image export and metadata were not accessed; assessment is based on public captions, equations and context."
+    implemented_components:
+      - {id: positional-entry-points, status: implemented-bilingual, files: [site/images/positional-entry-points-fr.svg, site/images/positional-entry-points-en.svg], covers: "Input addition, Q/K RoPE, score-level relative bias."}
+      - {id: rope-pair-explorer, status: implemented-bilingual-pending-browser-validation, files: [site/includes/rope-pair-explorer-fr.html, site/includes/rope-pair-explorer-en.html, site/scripts/rope-pair-explorer.js, site/styles/rope-pair-explorer.css], covers: "Pairwise Q/K rotations, positions, frequency, shared-shift invariance and one-pair dot-product contribution."}
+    implementation_caveats:
+      - "The interactive explorer fixes the unrotated q and k vectors; it demonstrates the positional rotation identity, not changes to hidden states caused by adding a real prefix."
+      - "The displayed dot product is one 2D feature-pair contribution, not the full multi-pair attention-head score."
+      - "JavaScript and CSS are registered as Quarto resources; browser rendering and keyboard/screen-reader behaviour still require validation."
     figure_groups:
       - {figures: [1, 35, 36, 37, 38], role: architecture-orientation-and-evidence, decision: "Use dated and caveated context panels; do not teach core mechanisms through static gallery snapshots."}
       - {figures: [2, 5, 7, 14], role: architectural-placement, decision: "Recreate insertion points of absolute addition, sinusoidal addition and Q/K rotation."}
