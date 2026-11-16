@@ -83,7 +83,7 @@ items:
       disposition: integrate
       disposition_rationale: "Teach as an advanced supporting quantity, not as a replacement for Shannon mutual information."
     - id: xu-et-al-usable-information-2020:pac-estimation
-      kind: empirical-method
+      kind: result
       summary: "The paper gives a PAC-style estimation bound under bounded log-probabilities and a complexity measure for the predictive function family."
       locator: {type: section, value: "4 PAC Guarantees for V-information Estimation", label: "Theorem 1"}
       evidence:
