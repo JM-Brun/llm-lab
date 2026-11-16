@@ -43,6 +43,16 @@ Decoded message:  ABABACABADABABACABAD
 
 Le code fini de 21 bits est légèrement plus long que le coût idéal de 19,642 bits. Le décodage restitue exactement le message.
 
+## Comparer un domaine familier et un domaine décalé
+
+Le script `domain_shift.py` entraîne deux modèles sur des séquences AB ou CD, puis évalue chaque modèle sur les deux motifs :
+
+~~~bash
+python experiments/predictive-compression/domain_shift.py
+~~~
+
+Cette expérience contrôlée montre qu'un modèle peut attribuer un coût faible aux motifs proches de son entraînement et un coût plus élevé à un motif décalé. Elle illustre la dépendance à la distribution ; elle ne mesure pas les performances d'un LLM ni un effet universel de fréquence.
+
 ## Expériences à essayer
 
 1. Modifier MESSAGE pour obtenir une séquence moins prévisible.
