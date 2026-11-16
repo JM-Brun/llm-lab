@@ -46,12 +46,12 @@ pedagogical_model:
     inferred_elements: ["The article's implicit learning outcomes and source-to-project mappings are reviewer-inferred."]
   source_graph:
     nodes:
-      - {id: src-hutter-compression-intelligence, kind: thesis, description: "Lossless compression performance is proposed as an operational clue to discovery of regularities.", locator: "1. The Hutter Prize: Compression as Intelligence", inferred: false}
+      - {id: src-hutter-compression-intelligence, kind: claim, description: "Lossless compression performance is proposed as an operational clue to discovery of regularities.", locator: "1. The Hutter Prize: Compression as Intelligence", inferred: false}
       - {id: src-shannon-surprisal, kind: concept, description: "Information content is related to event probability through negative logarithm.", locator: "2. The 1948 Foundation: Quantifying Surprise", inferred: false}
       - {id: src-cross-entropy-llm, kind: concept, description: "Next-token cross-entropy measures model negative log probability on observed targets.", locator: "3. The LLM Connection: Why We Minimize Cross-Entropy", inferred: false}
       - {id: src-entropy-guided-pruning, kind: claim, description: "Entropy signals may help allocate cache or computation and identify redundancy.", locator: "4. The 2026 Frontier: Entropy-Guided Token Pruning", inferred: false}
       - {id: src-lossy-compression-hallucination, kind: analogy, description: "Hallucinations are compared to detail loss in lossy compression.", locator: "5. Hallucinations as Lossy Compression Artifacts", inferred: false}
-      - {id: src-entropy-surprisal-distinction, kind: qualification, description: "Predictive entropy, conditional entropy and realized surprisal are distinct quantities.", locator: "Reviewer technical audit", inferred: true}
+      - {id: src-entropy-surprisal-distinction, kind: limitation, description: "Predictive entropy, conditional entropy and realized surprisal are distinct quantities.", locator: "Reviewer technical audit", inferred: true}
       - {id: src-token-utility-limit, kind: limitation, description: "Confidence or low surprisal alone does not establish that a token can be removed without affecting task utility.", locator: "Reviewer technical audit", inferred: true}
     edges:
       - {from: src-shannon-surprisal, type: averaged-into, to: src-cross-entropy-llm, inferred: true}
@@ -135,7 +135,7 @@ pedagogical_model:
       evidence: {kind: primary-research, confidence: context-dependent, scope: "Published and preprint methods on attention-entropy cache allocation and decoded-token entropy signals.", assumptions: ["Method-specific definitions and evaluation settings are retained."], limitations: ["Attention entropy, next-token predictive entropy, surprisal and cache drift are not interchangeable.", "The article does not specify or reproduce a general low-entropy chain-of-thought pruning experiment."]}
       classification: {primary_theme: architectures-mechanisms, tags: [topic:kv-cache, topic:entropy, method:cache-eviction], concept_ids: [kv-cache, entropy, attention-weight]}
       candidate_destinations: {pages: [], concepts: [kv-cache, entropy, attention-weight]}
-      disposition: integrate-as-advanced
+      disposition: integrate
       disposition_rationale: "Add a research note and an experimental question; do not claim generic token-pruning results."
     - id: sourav-mukherjee-compression-intelligence-2026:hallucination-analogy
       kind: analogy
