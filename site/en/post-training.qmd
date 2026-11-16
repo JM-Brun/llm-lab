@@ -58,6 +58,18 @@ This is why the loss mask matters: it selects which targets contribute to the ob
 
 SFT teaches by imitation of the demonstrations. It does not by itself tell the model which of two acceptable answers a person would prefer, and its quality depends on the quality and coverage of the demonstrations.
 
+## Conversation format: chat templates
+
+Before training an assistant, messages must be serialized into a token sequence. A *chat template* defines this representation: role markers (system, user, assistant), content, message boundaries, and control markers indicating, for example, whether the assistant turn has ended or control is being handed to a tool.
+
+This format is a **model-specific input/output convention**, not a universal structure. Two models can represent the same conversation with different special tokens and rules. Use the template expected by the model and preserve it with the dataset provenance and tokenizer revision.
+
+During SFT, a mismatched template can teach the model role boundaries or end markers that are incompatible with those used at inference. The template prepares the sequence; the loss mask separately determines which positions contribute to the objective. Do not confuse the two.
+
+Templates can also encode tool calls. They represent control structure in the sequence, but do not execute the tool themselves: the host application interprets and executes the call.
+
+See the [Hugging Face documentation on chat templates](https://huggingface.co/docs/transformers/main/en/chat_templating) and [Chapter 11 of the course](https://huggingface.co/learn/llm-course/en/chapter11/2).
+
 ## Preference-based methods
 
 Preference data records which of two (or more) candidate responses to the same prompt a person or another judge preferred. Two families are common.
