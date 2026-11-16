@@ -26,7 +26,8 @@
         const s1 = rotate(splitInput[1], splitInput[3], a1);
         splitOutput = [s0[0], s1[0], s0[1], s1[1]];
       }
-      const maxDiff = Math.max(...interleaved.map((v, i) => Math.abs(v - splitOutput[i])));
+      const splitAsInterleaved = [splitOutput[0], splitOutput[2], splitOutput[1], splitOutput[3]];
+      const maxDiff = Math.max(...interleaved.map((v, i) => Math.abs(v - splitAsInterleaved[i])));
       out("a0").textContent = fr ? a0.toFixed(2).replace(".", ",") : a0.toFixed(2);
       out("a1").textContent = fr ? a1.toFixed(2).replace(".", ",") : a1.toFixed(2);
       out("interleaved").textContent = `[${fmt(interleaved)}]`;
