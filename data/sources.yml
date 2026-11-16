@@ -3570,7 +3570,7 @@ sources:
         - topic:mutual-information
         - topic:compression
         - topic:perplexity
-      concept_ids: [cross-entropy, negative-log-likelihood, training-objective, self-attention, attention-weight, scaled-dot-product-attention]
+      concept_ids: [cross-entropy, negative-log-likelihood, training-objective, self-attention, attention-weight, scaled-dot-product-attention, predictive-v-information]
     metadata:
       technical_level: mixed
       contribution_types: [theory, mathematical-derivation, pedagogy, visualization, experiment]
@@ -3609,7 +3609,7 @@ sources:
         - en/cross-entropy
         - fr/scaled-dot-product-attention
         - en/scaled-dot-product-attention
-      concepts: [cross-entropy, negative-log-likelihood, training-objective, self-attention, attention-weight, scaled-dot-product-attention]
+      concepts: [cross-entropy, negative-log-likelihood, training-objective, self-attention, attention-weight, scaled-dot-product-attention, predictive-v-information]
       audit_records:
         - docs/source-reviews/information-theory-wayland-zhang-2026-11.md
         - docs/source-reviews/wayland-notebook-audit-2026-11.md
