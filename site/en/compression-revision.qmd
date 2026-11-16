@@ -149,6 +149,31 @@ The [sequential-structure and predictive-compression experiment](https://github.
 
 See the [critical synthesis of Mingdi Fan's paper](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/fan-compression-intelligence-2026-11.md) and the [detailed source review](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-reviews/fan-compression-intelligence-2026-11.md).
 
+## Reconstruct the reasoning, step by step
+
+The pedagogical progression in 3Blue1Brown can be replayed as a chain of six questions. It complements the canonical lessons; it does not replace them.
+
+1. **Which events are frequent?** Start with a small alphabet and a frequency distribution. Ask which symbols deserve the shortest codewords.
+2. **How can decoding be unambiguous?** Build a binary tree and stop at leaves: no codeword may be a prefix of another. Check Kraft's sum. The experiment below provides a testable Huffman code.
+3. **What does an event cost?** Derive surprisal, $I(x)=-\log_2 p(x)$. A rarer event costs more. This ideal length can be fractional, unlike the integer length of a binary codeword.
+4. **What does a source cost on average?** Average surprisal under the distribution to obtain entropy. Do not confuse this expectation with the surprisal of one observed symbol.
+5. **What if events depend on context?** Replace $p(x_t)$ with $p(x_t\mid x_{<t})$. The chain rule turns the product of conditional probabilities into a sum of costs: the bridge to autoregressive prediction.
+6. **How do we evaluate an imperfect model?** Compare the target distribution $q$ with the predicted distribution $p$. Cross-entropy $H(q,p)$ is the average coding cost under $q$ when coding with $p$; for a one-hot target, it becomes the observed token's NLL. The [Cross-entropy lesson](cross-entropy.qmd) formalizes this final step.
+
+```{mermaid}
+flowchart TD
+  A["Symbol frequencies"] --> B["Prefix-code tree"]
+  B --> C["Ideal length: -log₂ p(x)"]
+  C --> D["Average: entropy H(X)"]
+  D --> E["Context: p(xₜ | x₍₍ₜ)"]
+  E --> F["Sequence cost: sum of surprisals"]
+  F --> G["Model p evaluated on targets q: H(q,p)"]
+```
+
+**Quick check.** For $p=(1/2,1/4,1/8,1/8)$, recover the ideal lengths $(1,2,3,3)$ bits and entropy $1.75$ bits. With the Huffman codewords $0,10,110,111$, verify that average length is also $1.75$ bits and Kraft's sum is 1. Finally, explain why exact equality holds here because the probabilities are dyadic, and is not guaranteed for every distribution.
+
+This sequence separates three levels: **coding intuition** (tree and codewords), **information-theoretic identities** (surprisal and entropy), and **language-model evaluation** (conditional cost and cross-entropy). It avoids jumping from a formula straight to a claim about “intelligence”.
+
 ## Self-check
 
 1. Why is an LLM not an LZW decompressor?
