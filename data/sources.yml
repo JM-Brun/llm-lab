@@ -3965,7 +3965,8 @@ sources:
         inspected_scope:
           - "User-supplied video description and chapter timestamps: introduction, training code, Jobs invocation, shell script, run/results."
           - "Official Hugging Face Jobs documentation: execution model, configuration, hardware flavors, timeout and pricing."
-          - "Public post by David Louapre introducing the video and describing its NanoGPT/A100/Hugging Face Jobs demonstration."\n          - "Third-party page reproducing a transcript attributed to the Hugging Face video: model size/configuration, TinyStories, uv runtime, Storage Bucket lifecycle and reported duration/cost."
+          - "Public post by David Louapre introducing the video and describing its NanoGPT/A100/Hugging Face Jobs demonstration."
+          - "Third-party page reproducing a transcript attributed to the Hugging Face video: model size/configuration, TinyStories, uv runtime, Storage Bucket lifecycle and reported duration/cost."
           - "Supplied GitHub URL was truncated and could not be identified or inspected."
         limitations:
           - "The audiovisual video was not independently inspected; transcript details come from a third-party rendering, not a first-party transcript or code review. Publication date remains unknown."
