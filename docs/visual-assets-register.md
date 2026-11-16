@@ -13,9 +13,9 @@ Attribution establishes provenance; it does not by itself grant permission. Conv
 
 ## Repository-level licensing finding
 
-[LICENSE.md](../LICENSE.md) offers project code under MIT and original project-authored prose in Quarto pages and documentation under CC BY-SA 4.0. The CC BY-SA grant explicitly excludes all non-text assets, including all 60 current local SVGs under `site/images/`, unless and until a separate asset-level licence is explicitly recorded. The provenance findings and their evidence are tracked separately below; provenance confirmation does not itself grant a licence. Externally hosted figures and other third-party material remain subject to their respective rights holders' terms; attribution or a source link is not, by itself, permission to reuse an asset.
+[LICENSE.md](../LICENSE.md) offers project code under MIT and original project-authored prose in Quarto pages and documentation under CC BY-SA 4.0. The CC BY-SA grant explicitly excludes all non-text assets, including all 64 current local SVGs under `site/images/`, unless and until a separate asset-level licence is explicitly recorded. The provenance findings and their evidence are tracked separately below; provenance confirmation does not itself grant a licence. Externally hosted figures and other third-party material remain subject to their respective rights holders' terms; attribution or a source link is not, by itself, permission to reuse an asset.
 
-The licence boundary remains independent of the provenance findings below: no asset-level licence has been declared for the 56 local SVGs. Third-party embeds retain their separate rights assessments. Do not remove, replace, hide, or disable an existing illustration solely because its rights are uncertain.
+The licence boundary remains independent of the provenance findings below: no asset-level licence has been declared for the 64 local SVGs. Third-party embeds retain their separate rights assessments. Do not remove, replace, hide, or disable an existing illustration solely because its rights are uncertain.
 
 ## Externally hosted images currently embedded
 
@@ -353,5 +353,24 @@ The four new bilingual training-loop visuals introduced in PR #1143 bring the cu
 - **8/60** require a narrow owner provenance confirmation: the four previously pending contextualization-pipeline / Transformer-stack assets and the four new training-loop variants above.
 - **60/60** remain excluded from the MIT code / CC BY-SA prose grants until an asset-level licence is separately and explicitly declared under #163.
 - The four new files have SVG `title` and `desc` elements, no embedded raster, script, `foreignObject`, or external HTTP(S) references, and are paired with page-level alt text/captions. These source-pattern checks do not establish full XML conformance, rendered accessibility, owner provenance confirmation, or a licence.
+
+No existing illustration was removed, replaced, hidden, or disabled. Preserve all assets unchanged while provenance and asset-level licensing remain unresolved.
+
+
+## Generation timeline visuals — 2026-11-16
+
+Four new bilingual responsive SVGs were added to the EN/FR `generation.qmd` pages. They visualize the page's existing worked examples rather than introduce new probabilities: prefill processes the known prompt positions together under a causal mask; the last prompt position supplies the first next-token distribution; incremental decode appends one selected token at a time; the loop stops on EOS, a length limit, or an application rule. The optional KV cache is explicitly an efficiency optimization, and parameters remain fixed throughout.
+
+| Files | Current use | Provenance / licence status |
+|---|---|---|
+| `generation-prefill-decode-en.svg`, `generation-prefill-decode-en-mobile.svg`, `generation-prefill-decode-fr.svg`, `generation-prefill-decode-fr-mobile.svg` | EN/FR `generation.qmd` | Original LLM Lab teaching schematics created in this contribution from the page's documented prefill/decode distinction and running examples. No third-party diagram or image was used. This PR record is evidence of the contribution, but owner provenance confirmation under #156 remains pending until explicitly ratified. No asset-level licence is declared. |
+
+### Updated count and preservation status
+
+- **64** local SVG files are currently present under `site/images/`.
+- **52/64** retain the owner-confirmed project-origin evidence recorded in the 2026-11-12 reconciliation.
+- **12/64** require narrow owner provenance confirmation: the four previously pending contextualization-pipeline / Transformer-stack assets, the four training-loop variants from PR #1143, and these four generation variants.
+- **64/64** remain excluded from the MIT code / CC BY-SA prose grants until an asset-level licence is separately and explicitly declared under #163.
+- The new SVGs contain accessible `title` and `desc` elements, no embedded raster, script, `foreignObject`, or external HTTP(S) references, and are paired with page-level alt text and captions. These source checks do not establish rendered accessibility or owner confirmation.
 
 No existing illustration was removed, replaced, hidden, or disabled. Preserve all assets unchanged while provenance and asset-level licensing remain unresolved.

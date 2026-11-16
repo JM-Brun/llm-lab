@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" role="img" aria-labelledby="title desc">
+<title id="title">Génération autorégressive : prefill, decode incrémental et arrêt</title>
+<desc id="desc">Le prompt est traité en une passe de prefill sur toutes les positions connues, sous masque causal. La dernière position du prompt fournit la première distribution du prochain token. Chaque token sélectionné est ensuite ajouté et traité un par un pendant le decode incrémental. Un cache KV facultatif réutilise les clés et valeurs précédentes. Les paramètres restent fixes ; la génération s’arrête sur EOS, une limite de longueur ou une règle de l’application.</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0 L9 3 L0 6Z" fill="#475569"/></marker></defs>
+<rect x="12" y="12" width="1176" height="476" rx="22" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+<text x="42" y="54" font-family="Arial,sans-serif" font-size="25" font-weight="700" fill="#0f172a">1 · PREFILL — traiter le prompt connu en une passe</text>
+<rect x="42" y="78" width="490" height="115" rx="14" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+<text x="62" y="108" font-family="Arial,sans-serif" font-size="18" font-weight="700" fill="#075985">Prompt connu · toutes les positions ensemble</text>
+<g font-family="Arial,sans-serif" font-size="17" fill="#0f172a">
+<rect x="62" y="128" width="100" height="42" rx="8" fill="#fff" stroke="#7dd3fc"/><text x="112" y="155" text-anchor="middle">C'est</text>
+<rect x="170" y="128" width="100" height="42" rx="8" fill="#fff" stroke="#7dd3fc"/><text x="220" y="155" text-anchor="middle">une</text>
+<rect x="278" y="128" width="100" height="42" rx="8" fill="#fff" stroke="#7dd3fc"/><text x="328" y="155" text-anchor="middle">bonne…</text>
+<rect x="386" y="128" width="126" height="42" rx="8" fill="#fff" stroke="#7dd3fc"/><text x="449" y="155" text-anchor="middle">scribe ?</text>
+</g>
+<path d="M540 136 H610" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="620" y="91" width="210" height="88" rx="14" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+<text x="725" y="124" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="700" fill="#1e3a8a">Passe avant causale</text><text x="725" y="151" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" fill="#1e3a8a">masque les tokens futurs</text>
+<path d="M840 136 H892" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="900" y="91" width="246" height="88" rx="14" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+<text x="1023" y="124" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="700" fill="#14532d">Dernière position du prompt</text><text x="1023" y="151" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" fill="#14532d">distribution → « Être » (0,6)</text>
+<path d="M1023 181 V230 H750" fill="none" stroke="#475569" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="42" y="244" font-family="Arial,sans-serif" font-size="25" font-weight="700" fill="#0f172a">2 · DECODE INCRÉMENTAL — un nouveau token sélectionné à chaque étape</text>
+<g font-family="Arial,sans-serif">
+<rect x="42" y="270" width="250" height="90" rx="14" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+<text x="167" y="302" text-anchor="middle" font-size="18" font-weight="700" fill="#78350f">Sélectionner et ajouter</text><text x="167" y="332" text-anchor="middle" font-size="17" fill="#78350f">« Être » → « scribe » → « , »</text>
+<path d="M300 315 H360" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="370" y="270" width="240" height="90" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<text x="490" y="302" text-anchor="middle" font-size="18" font-weight="700" fill="#4c1d95">Passe du token suivant</text><text x="490" y="332" text-anchor="middle" font-size="16" fill="#4c1d95">nouveau token + contexte antérieur</text>
+<path d="M618 315 H678" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="688" y="270" width="200" height="90" rx="14" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+<text x="788" y="302" text-anchor="middle" font-size="18" font-weight="700" fill="#14532d">Nouvelle distribution</text><text x="788" y="332" text-anchor="middle" font-size="16" fill="#14532d">choisir un token</text>
+<path d="M890 315 H948" stroke="#475569" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="958" y="270" width="188" height="90" rx="14" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+<text x="1052" y="302" text-anchor="middle" font-size="18" font-weight="700" fill="#7f1d1d">Arrêter ?</text><text x="1052" y="332" text-anchor="middle" font-size="15" fill="#7f1d1d">EOS · longueur max. · appli</text>
+</g>
+<path d="M788 365 V390 H490 V365" fill="none" stroke="#7c3aed" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#arrow)"/>
+<text x="640" y="414" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" fill="#5b21b6">Répéter tant qu'aucune règle d'arrêt n'est satisfaite</text>
+<rect x="42" y="432" width="1110" height="38" rx="10" fill="#e2e8f0"/>
+<text x="58" y="457" font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#0f172a">Cache KV facultatif :</text><text x="230" y="457" font-family="Arial,sans-serif" font-size="16" fill="#0f172a">réutilise les clés et valeurs précédentes pour éviter des recalculs — optimisation, pas condition de validité.</text>
+<text x="1146" y="54" text-anchor="end" font-family="Arial,sans-serif" font-size="15" fill="#475569">Les paramètres θ restent fixes</text>
+</svg>

@@ -61,6 +61,14 @@ By repeating four moves: predict, select, feed back, then continue or stop. This
   <span class="meta-flow__loop" aria-label="Selection and decoding repeat until a stopping criterion is reached">↺ Select, append to context, and decode again</span>
 </div>
 
+<figure id="fig-generation-prefill-decode">
+  <picture>
+    <source media="(max-width: 600px)" srcset="../images/generation-prefill-decode-en-mobile.svg">
+    <img src="../images/generation-prefill-decode-en.svg" alt="Generation timeline: the known prompt is processed together in prefill under a causal mask; the last prompt position supplies the first distribution. Incremental decode then selects and appends one token at a time, recomputes the next distribution, and repeats until EOS, a length limit or an application rule. The optional KV cache reuses prior keys and values; parameters stay fixed." style="width:100%;height:auto">
+  </picture>
+  <figcaption>Prefill processes the known prompt; incremental decode extends it one selected token at a time. The KV cache is an optional efficiency optimization, not a requirement for correct generation. The example probabilities are illustrative.</figcaption>
+</figure>
+
 ## The loop on an example
 
 Let us follow three turns of the loop. The probabilities are made up, as in the overview, and the decoding rule is the simplest one: take the most probable token.
