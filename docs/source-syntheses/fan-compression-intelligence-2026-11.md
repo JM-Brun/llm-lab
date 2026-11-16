@@ -68,15 +68,15 @@ Pour enseigner correctement :
 - Shannon entropy quantifie l'incertitude d'une source probabiliste ;
 - Kolmogorov complexity porte sur la longueur du plus court programme générateur (non calculable en général) ;
 - effective complexity vise la description des régularités, avec une séparation régularité/aléatoire qui dépend de choix de modélisation ;
-- epiplexity formalise une notion de structure accessible sous contraintes de calcul.
+- epiplexity formalise la longueur du programme optimal sous un objectif MDL à temps borné ; l'entropie à temps borné représente le coût résiduel des données sous ce programme.
 
-Ces quantités ne sont pas interchangeables. Le budget de calcul, la classe de modèles et la représentation choisie comptent.
+Ces quantités ne sont pas interchangeables. L'épiplexité dépend de l'observateur, de la classe de programmes et du budget de calcul ; elle mesure de l'information structurelle, pas une garantie de généralisation sur une tâche OOD donnée. Voir [Finzi et al. (2026)](https://arxiv.org/abs/2601.03220).
 
 ## 5. Le détour algébrique An/Fn : une analogie à encadrer
 
 Le texte rapproche la recombinaison libre de définitions dans un monoïde commutatif et la dépendance à l'ordre dans un monoïde libre non commutatif, puis met en correspondance ces structures avec la compression narrative et la modélisation de séquences. L'auteur reconnaît que cette correspondance n'est pas un isomorphisme et que les paramètres d'un réseau ne sont pas littéralement des macros indépendantes.
 
-Il faut donc conserver la valeur heuristique de l'analogie sans transférer les théorèmes à l'apprentissage profond. Les résultats algébriques ne prouvent pas que les LLM sont condamnés à une efficacité linéaire, ni qu'ils ne peuvent pas comprendre.
+Il faut donc conserver la valeur heuristique de l'analogie sans transférer les théorèmes à l'apprentissage profond. Aksenov et al. confrontent aussi leur cadre à MathLib/Lean 4, mais reconnaissent que l'identification du macro set qui correspondrait aux abstractions mathématiques humaines reste ouverte. Les résultats algébriques et cette analyse ne prouvent pas que les LLM sont condamnés à une efficacité linéaire, ni qu'ils ne peuvent pas comprendre. Voir [Aksenov et al. (2026)](https://arxiv.org/abs/2603.20396).
 
 ## 6. Les prédictions et les expériences à examiner
 
