@@ -1,0 +1,128 @@
+---
+title: "Revision sheet — Compression and LLMs"
+subtitle: "Predict to code, compress a model, measure the actual cost"
+description-meta: "A bilingual revision sheet distinguishing predictive compression, model compression, and LLM runtime memory."
+keywords: ["type:concept-bridge", "destination:deepen", "topic:compression", "level:core", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/compression-revision"
+summary: "Visual revision sheet distinguishing predictive compression, model compression, and runtime memory, with formulas, protocol, and self-check."
+scope: "Consolidates the compression sources and connects them to conditional probabilities, cross-entropy, and model-reduction techniques."
+purpose: "Choose the correct meaning of compression, calculate an ideal predictive cost, and explain the conditions for lossless coding."
+domain: "probabilistic-foundations-training"
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/cross-entropy", "en/likelihood", "en/llm-evolution", "en/llm-computational-complexity"]
+tags: ["type:concept-bridge", "destination:deepen", "topic:compression", "level:core", "language:en", "status:published"]
+-->
+
+::: {.chapter-lead}
+**The distinction to remember: what exactly is being compressed?** A sequence, the model parameters, or the memory used during inference? These are different budgets addressing different problems.
+:::
+
+## The mental map
+
+```{mermaid}
+flowchart TD
+  A["Compression around an LLM"] --> B["Sequence / data"]
+  A --> C["Model / checkpoint"]
+  A --> D["Runtime memory"]
+  B --> E["Conditional probabilities"]
+  E --> F["Surprisal: -log₂ p(token | context)"]
+  F --> G["Entropy coder: exact decoding"]
+  C --> H["Quantization · pruning · distillation"]
+  D --> I["KV cache · activations · buffers"]
+```
+
+| Question | Concept | Mechanisms / metrics |
+|---|---|---|
+| Can a sequence be represented with fewer bits? | **Predictive compression** | Probabilities, surprisal, bits/token, code length |
+| Can the model itself be made smaller to store or deploy? | **Model compression** | Quantization, pruning, distillation; size, memory, quality, latency |
+| How much memory is needed during generation? | **Runtime memory** | KV cache, activations, buffers; peak memory and throughput |
+
+## 1. Predict to code
+
+An autoregressive model factorizes a sequence probability:
+
+$$
+p(x_{1:T})=\prod_{t=1}^{T}p(x_t\mid x_{<t}).
+$$
+
+The ideal cost of an observed token, in bits, is its *surprisal*:
+
+$$
+I_t=-\log_2 p(x_t\mid x_{<t}).
+$$
+
+The ideal sequence length is therefore:
+
+$$
+L^*(x_{1:T})=-\sum_{t=1}^{T}\log_2 p(x_t\mid x_{<t}).
+$$
+
+**Interpretation:** the higher the probability assigned to an observed token, the lower its ideal code cost. Average cross-entropy measures this average cost under a given data distribution and logarithm convention.
+
+::: {.callout-warning title="A probability distribution is not enough to decompress"}
+A compatible encoder and decoder (for example, arithmetic coders), the same model, tokenizer, symbol order, and numerical conventions are required. Decoding must reconstruct the exact sequence. Generating a plausible continuation is not decompressing the corpus.
+:::
+
+## 2. Reduce the model
+
+| Technique | What changes | What must be measured |
+|---|---|---|
+| **Quantization** | Numerical precision of weights and/or activations | Size, memory, quality, latency under specific kernels and hardware |
+| **Pruning** | Weights or structures are removed | Is the resulting sparsity actually exploited by hardware? |
+| **Distillation** | A student learns to imitate selected teacher behaviours | Which behaviours are retained, on which tasks, and with what loss? |
+
+A smaller checkpoint is not automatically faster: format, kernels, hardware, batch size, and context length matter.
+
+## 3. Keep the budgets separate
+
+- **Persistent storage:** checkpoint weights and related files.
+- **Runtime memory:** KV cache, activations, and buffers during inference.
+- **Communication:** cost of transmitting the model, metadata, and possibly data.
+
+Quantizing the KV cache reduces a runtime-memory budget; it does not mean that the weight file has been reduced.
+
+## 4. What the repository experiment shows
+
+The [exact predictive-coding experiment](https://github.com/JM-Brun/llm-lab/blob/main/experiments/predictive-compression/README.md) uses a synthetic bigram model over four symbols.
+
+| Measure | Result |
+|---|---:|
+| Ideal model cost | 19.642 bits |
+| Actual finite binary code | 21 bits |
+| Uniform baseline | 40 bits |
+| Exact reconstruction | Yes |
+
+These numbers cover only the test message. They exclude transmission of the model trained on 40 symbols, the tokenizer, and metadata. This is neither an LLM benchmark nor evidence of net compression for a complete system.
+
+## Self-check
+
+1. Why is an LLM not an LZW decompressor?
+2. How does surprisal differ from entropy?
+3. Why is a shared decoder needed for lossless reconstruction?
+4. Why can a quantized model be smaller without being faster?
+5. Does the KV cache belong to the checkpoint or to runtime memory?
+
+::: {.callout-tip title="Expected answers"}
+1. It learns a parametric distribution; it does not store a reversible dictionary of the corpus.
+2. Surprisal concerns an observed event; entropy is expected surprisal under a distribution.
+3. Encoder and decoder must reconstruct the same intervals/symbols using identical conventions.
+4. Gains depend on kernels, hardware, format, and workload.
+5. It belongs to temporary runtime memory.
+:::
+
+## Go deeper
+
+- [Entropy](entropy.qmd) · [Cross-entropy](cross-entropy.qmd) · [Likelihood](likelihood.qmd)
+- [Complexity and parallelism](llm-computational-complexity.qmd) · [LLM evolution](llm-evolution.qmd)
+- [Critical synthesis of Karthik Shashidhar's article](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/llms-and-compression-algorithms-2026-11.md)
+- [Comparing the two meanings of compression](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/compression-two-meanings-2026-11.md)

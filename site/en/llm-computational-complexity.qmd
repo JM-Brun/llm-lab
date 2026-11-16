@@ -194,6 +194,8 @@ Apply these distinctions to concrete architecture choices: [hybrid architectures
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/llm-computational-complexity.qmd).
 
 
+[**Revision sheet — Compression and LLMs**](compression-revision.qmd): distinguish checkpoint size, temporary memory, and the cost of coding data.
+
 **Canonical lesson:** [LLM overview](llm-overview.qmd). This page deepens the computational and memory costs of LLMs; it complements the overview without being a required step.
 
 </div>

@@ -183,22 +183,6 @@ concepts:
       - en/probabilities
       - fr/scaled-dot-product-attention
       - en/scaled-dot-product-attention
-  - id: surprisal
-    importance: supporting
-    labels: {fr: "Surprisal (contenu informationnel)", en: "Surprisal"}
-    definitions:
-      fr: "Quantité d'information associée à un événement observé, égale à l'opposé du logarithme de sa probabilité sous une distribution spécifiée."
-      en: "Information content of an observed event, equal to the negative logarithm of its probability under a specified distribution."
-    domains: [probabilistic-foundations-training]
-    resources: [fr/entropy, en/entropy]
-  - id: shannon-entropy
-    importance: core
-    labels: {fr: "Entropie de Shannon", en: "Shannon entropy"}
-    definitions:
-      fr: "Espérance du surprisal sous une distribution ; elle mesure l'incertitude moyenne avant l'observation d'un événement."
-      en: "Expected surprisal under a distribution; it measures average uncertainty before an event is observed."
-    domains: [probabilistic-foundations-training]
-    resources: [fr/entropy, en/entropy]
   - id: cross-entropy
     importance: core
     labels: {fr: "Entropie croisée", en: "Cross-entropy"}
@@ -207,38 +191,6 @@ concepts:
       en: "Quantity measuring the probabilistic cost of a predicted distribution relative to a target."
     domains: [probabilistic-foundations-training]
     resources: [fr/cross-entropy, en/cross-entropy]
-  - id: kl-divergence
-    importance: supporting
-    labels: {fr: "Divergence KL", en: "KL divergence"}
-    definitions:
-      fr: "Divergence directionnelle mesurant l'écart entre une distribution cible et une distribution approximative, définie comme l'espérance de log(q/p) sous q."
-      en: "Directional divergence measuring the discrepancy between a target distribution and an approximation, defined as the expectation of log(q/p) under q."
-    domains: [probabilistic-foundations-training]
-    resources: [fr/cross-entropy, en/cross-entropy]
-  - id: mutual-information
-    importance: supporting
-    labels: {fr: "Information mutuelle", en: "Mutual information"}
-    definitions:
-      fr: "Quantité définie à partir d'une distribution jointe qui mesure la réduction d'incertitude sur une variable lorsqu'une autre est observée."
-      en: "Quantity defined from a joint distribution that measures the reduction in uncertainty about one variable when another is observed."
-    domains: [probabilistic-foundations-training, mathematical-tools-geometry]
-    resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
-  - id: predictive-v-information
-    importance: supporting
-    labels: {fr: "Information prédictive \\(\\mathcal V\\)", en: "Predictive \\(\\mathcal V\\)-information"}
-    definitions:
-      fr: "Gain de prédiction, sous perte logarithmique, entre le meilleur prédicteur d'une famille \\(\\mathcal V\\) sans information latérale et le meilleur prédicteur de cette même famille avec l'observation de X ; sa valeur dépend de la famille autorisée et de la condition d'ignorance optionnelle."
-      en: "Log-loss prediction gain between the best predictor in a family \\(\\mathcal V\\) without side information and the best predictor in that same family given X; its value depends on the allowed family and the optional-ignorance condition."
-    domains: [probabilistic-foundations-training]
-    resources: [fr/experience-information-theory, en/experience-information-theory]
-  - id: entropy-rate
-    importance: supporting
-    labels: {fr: "Taux d'entropie", en: "Entropy rate"}
-    definitions:
-      fr: "Limite de l'incertitude moyenne par symbole d'un processus stationnaire lorsque la longueur de séquence tend vers l'infini ; elle tient compte des dépendances entre symboles successifs."
-      en: "Limit of average uncertainty per symbol for a stationary process as sequence length tends to infinity; it accounts for dependencies between successive symbols."
-    domains: [probabilistic-foundations-training]
-    resources: [fr/experience-information-theory, en/experience-information-theory]
   - id: training-objective
     importance: core
     labels: {fr: "Objectif d'entraînement", en: "Training objective"}
@@ -702,6 +654,121 @@ concepts:
 
 
 
+
+  - id: surprisal
+    importance: supporting
+    labels: {fr: "Surprisal (contenu informationnel)", en: "Surprisal"}
+    definitions:
+      fr: "Quantité d'information associée à un événement observé, égale à l'opposé du logarithme de sa probabilité sous une distribution spécifiée."
+      en: "Information content of an observed event, equal to the negative logarithm of its probability under a specified distribution."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/entropy, en/entropy]
+  - id: predictive-compression
+    importance: supporting
+    labels: {fr: "Compression prédictive", en: "Predictive compression"}
+    definitions:
+      fr: "Codage d'une séquence en exploitant les probabilités conditionnelles d'un modèle pour attribuer des longueurs de code adaptées à la prévisibilité des événements."
+      en: "Coding a sequence using a model's conditional probabilities to assign code lengths according to how predictable events are."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/entropy, en/entropy, fr/cross-entropy, en/cross-entropy, fr/compression-revision, en/compression-revision]
+  - id: entropy-coding
+    importance: supporting
+    labels: {fr: "Codage entropique", en: "Entropy coding"}
+    definitions:
+      fr: "Famille de méthodes qui convertissent une distribution de probabilités en codes dont la longueur moyenne approche la limite informationnelle, avec décodage compatible."
+      en: "Family of methods that convert a probability distribution into codes whose average length approaches the information limit, with a compatible decoder."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/compression-revision, en/compression-revision]
+  - id: arithmetic-coding
+    importance: supporting
+    labels: {fr: "Codage arithmétique", en: "Arithmetic coding"}
+    definitions:
+      fr: "Méthode de codage entropique qui représente une séquence entière par un intervalle numérique progressivement resserré selon les probabilités conditionnelles des symboles."
+      en: "Entropy-coding method that represents an entire sequence by a numerical interval progressively narrowed according to symbols' conditional probabilities."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/compression-revision, en/compression-revision]
+  - id: model-compression
+    importance: supporting
+    labels: {fr: "Compression du modèle", en: "Model compression"}
+    definitions:
+      fr: "Ensemble de transformations visant à réduire le coût de stockage ou d'exécution d'un modèle, avec un compromis possible sur la qualité."
+      en: "Set of transformations intended to reduce a model's storage or execution cost, potentially trading off quality."
+    domains: [inference-efficiency]
+    resources: [fr/llm-computational-complexity, en/llm-computational-complexity, fr/llm-evolution, en/llm-evolution, fr/compression-revision, en/compression-revision]
+  - id: pruning
+    importance: supporting
+    labels: {fr: "Élagage des paramètres", en: "Pruning"}
+    definitions:
+      fr: "Suppression de poids ou de structures d'un modèle afin de réduire sa représentation ou son calcul, avec des gains dépendant notamment de la structure et du matériel."
+      en: "Removal of model weights or structures to reduce representation size or computation, with gains depending notably on structure and hardware."
+    domains: [inference-efficiency]
+    resources: [fr/llm-computational-complexity, en/llm-computational-complexity, fr/compression-revision, en/compression-revision]
+  - id: quantization
+    importance: supporting
+    labels: {fr: "Quantification numérique", en: "Quantization"}
+    definitions:
+      fr: "Réduction de la précision numérique utilisée pour représenter les poids ou activations, afin de diminuer le stockage ou les coûts d'exécution."
+      en: "Reduction of the numerical precision used to represent weights or activations to lower storage or execution costs."
+    domains: [inference-efficiency]
+    resources: [fr/llm-computational-complexity, en/llm-computational-complexity, fr/compression-revision, en/compression-revision]
+  - id: knowledge-distillation
+    importance: supporting
+    labels: {fr: "Distillation de connaissances", en: "Knowledge distillation"}
+    definitions:
+      fr: "Entraînement d'un modèle étudiant à reproduire certains comportements ou sorties d'un modèle enseignant."
+      en: "Training a student model to reproduce selected behaviours or outputs of a teacher model."
+    domains: [inference-efficiency]
+    resources: [fr/llm-evolution, en/llm-evolution, fr/compression-revision, en/compression-revision]
+
+
+  - id: entropy
+    importance: core
+    labels: {fr: "Entropie", en: "Entropy"}
+    definitions:
+      fr: "Information moyenne associée à une variable aléatoire, égale à l'espérance de son surprisal sous sa distribution."
+      en: "Average information associated with a random variable, equal to the expected surprisal under its distribution."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/entropy, en/entropy, fr/cross-entropy, en/cross-entropy, fr/compression-revision, en/compression-revision]
+  - id: kl-divergence
+    importance: supporting
+    labels: {fr: "Divergence KL", en: "KL divergence"}
+    definitions:
+      fr: "Divergence directionnelle mesurant l'écart entre une distribution cible et une distribution approximative, définie comme l'espérance de log(q/p) sous q."
+      en: "Directional divergence measuring the discrepancy between a target distribution and an approximation, defined as the expectation of log(q/p) under q."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/cross-entropy, en/cross-entropy]
+  - id: mutual-information
+    importance: supporting
+    labels: {fr: "Information mutuelle", en: "Mutual information"}
+    definitions:
+      fr: "Quantité définie à partir d'une distribution jointe qui mesure la réduction d'incertitude sur une variable lorsqu'une autre est observée."
+      en: "Quantity defined from a joint distribution that measures the reduction in uncertainty about one variable when another is observed."
+    domains: [probabilistic-foundations-training, mathematical-tools-geometry]
+    resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+  - id: shannon-entropy
+    importance: core
+    labels: {fr: "Entropie de Shannon", en: "Shannon entropy"}
+    definitions:
+      fr: "Espérance du surprisal sous une distribution ; elle mesure l'incertitude moyenne avant l'observation d'un événement."
+      en: "Expected surprisal under a distribution; it measures average uncertainty before an event is observed."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/entropy, en/entropy]
+  - id: predictive-v-information
+    importance: supporting
+    labels: {fr: "Information prédictive \\(\\mathcal V\\)", en: "Predictive \\(\\mathcal V\\)-information"}
+    definitions:
+      fr: "Gain de prédiction, sous perte logarithmique, entre le meilleur prédicteur d'une famille \\(\\mathcal V\\) sans information latérale et le meilleur prédicteur de cette même famille avec l'observation de X ; sa valeur dépend de la famille autorisée et de la condition d'ignorance optionnelle."
+      en: "Log-loss prediction gain between the best predictor in a family \\(\\mathcal V\\) without side information and the best predictor in that same family given X; its value depends on the allowed family and the optional-ignorance condition."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/experience-information-theory, en/experience-information-theory]
+  - id: entropy-rate
+    importance: supporting
+    labels: {fr: "Taux d'entropie", en: "Entropy rate"}
+    definitions:
+      fr: "Limite de l'incertitude moyenne par symbole d'un processus stationnaire lorsque la longueur de séquence tend vers l'infini ; elle tient compte des dépendances entre symboles successifs."
+      en: "Limit of average uncertainty per symbol for a stationary process as sequence length tends to infinity; it accounts for dependencies between successive symbols."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/experience-information-theory, en/experience-information-theory]
 relation_types:
   represented-by:
     direction: directed
