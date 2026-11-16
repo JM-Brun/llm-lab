@@ -23,10 +23,12 @@ scan:
     notes: ["Reader comments and author replies were not audited."]
   linked_resources:
     status: partial
-    coverage: "Official Hutter Prize rules and research on entropy-guided KV-cache allocation, entropy-guided recomputation, and attention-guided cache eviction consulted."
+    coverage: "Official Hutter Prize rules and primary research on layer-wise attention-entropy KV allocation (Kim & Jung, 2025), attention-guided KV eviction (SAGE-KV, 2025), and decoded-token entropy cache refresh for diffusion LMs (EntropyCache, 2026) consulted; see docs/source-reviews/compression-is-intelligence-followup-2026-11-16.md."
     notes:
       - "No claim of reproducing any cited research experiment."
-      - "Research methods use different entropy signals and model families; they must not be conflated."
+      - "Research methods use different entropy signals, intervention targets and model families; they must not be conflated."
+      - "The follow-up compares signal, object changed and scope for each method; autoregressive reasoning-token deletion remains a separate unvalidated hypothesis."
+      - "The Medium article's figures remain uninspected; this follow-up does not upgrade figures_media or rights status."
   metadata:
     status: complete
     coverage: "Title, author, publisher, publication date 2026-07-20 and article section headings."
