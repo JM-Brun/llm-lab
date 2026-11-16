@@ -8,7 +8,7 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/corpus-preparation"
-scope: "Décrit les décisions d'ingénierie des données en amont du préentraînement : admissibilité et provenance des sources, parsing et filtrage, déduplication, partitions d'évaluation, ajustement/fixation du tokenizer et transfert vers les flux de tokens."
+scope: "Décrit les décisions d'ingénierie des données en amont du préentraînement : admissibilité et provenance des sources, parsing et filtrage, déduplication, partitions d'évaluation, ajustement/fixation du tokenizer, annotation humaine et traçabilité des labels, puis transfert vers les flux de tokens."
 purpose: "Construire un protocole de préparation de corpus traçable et adapté à l'objectif d'entraînement ou d'évaluation, en évitant les fuites entre partitions et en séparant les décisions de corpus des opérations internes au tokenizer et de la construction des exemples."
 suggested_route:
   previous: null
@@ -30,6 +30,7 @@ Un modèle ne s'entraîne pas directement sur « Internet » ou sur un ensemble 
 - distinguer parsing, filtrage, déduplication et normalisation du tokenizer ;
 - choisir des partitions cohérentes avec la généralisation que l'évaluation doit mesurer ;
 - entraîner puis figer un tokenizer sans contaminer une évaluation tenue à l'écart ;
+- concevoir un protocole d'annotation traçable et interpréter les désaccords entre annotateurs ;
 - transmettre un corpus préparé à l'encodage et à la construction des exemples d'entraînement.
 :::
 
