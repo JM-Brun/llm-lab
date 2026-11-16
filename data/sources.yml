@@ -3837,3 +3837,49 @@ sources:
       audit_records:
         - docs/source-syntheses/reinventing-entropy-2026-11.md
         - data/extractions/3blue1brown-reinventing-entropy-compression-intelligence-part-1-2026.yml
+
+  - id: fan-compression-intelligence-2026
+    title: "Compression Is Intelligence: The Common Ground of Positive Subjectivity and Negative Subjectivity — With a Discussion on the Nature of Intelligence"
+    creators: ["Mingdi Fan"]
+    source_type: preprint
+    identifiers: {philarchive: "MINCII-3"}
+    canonical_url: "https://philarchive.org/archive/MINCII-3"
+    publisher: "PhilArchive"
+    publication_date: "2026"
+    updated_date: null
+    language: en
+    version: "PhilArchive version 1; uploaded 2026-05-17"
+    revision: "MINCII-3"
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [scale-research, mathematical-tools-geometry]
+      tags: [topic:predictive-compression, topic:epiplexity, topic:generalization, topic:representation, topic:intelligence, topic:philosophy-of-ai]
+      concept_ids: [predictive-compression, cross-entropy, entropy, generalization, conditional-distribution]
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, mathematical-argument, research-hypothesis]
+      audiences: [learner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    scan_history:
+      - accessed_at: "2026-11-16"
+        status: partially-scanned
+        inspected_scope:
+          - "Complete indexed PDF text: nine sections, conclusion and references"
+          - "Source-local argument structure, positive/negative compression strategies, functional/structural effectiveness distinction, four predictions and grey-subjectivity proposal"
+          - "Critical comparison with canonical compression lessons and existing project sources"
+        limitations:
+          - "The source is a philosophical preprint; its central thesis is not an established empirical theory or consensus definition of intelligence."
+          - "No independent reproduction of the cited experiments or proposed predictions."
+          - "Epiplexity's formal time-bounded MDL definition and the paper's intuitive structural-information gloss must remain distinct."
+          - "The An/Fn algebraic mapping is analogical and does not establish a theorem about neural networks or LLM understanding."
+          - "No licence or permission for text, figures, tables or code reuse was established."
+    related:
+      pages: [fr/entropy, en/entropy, fr/cross-entropy, en/cross-entropy, fr/compression-revision, en/compression-revision, fr/scaling-laws, en/scaling-laws, fr/llm-limits, en/llm-limits]
+      concepts: [predictive-compression, cross-entropy, entropy, generalization, conditional-distribution]
+      audit_records:
+        - docs/source-reviews/fan-compression-intelligence-2026-11.md
+        - docs/source-syntheses/fan-compression-intelligence-2026-11.md
+        - data/extractions/fan-compression-intelligence-2026.yml
