@@ -136,3 +136,17 @@ Ces trois notions interagissent, mais ne sont pas interchangeables. Pour compare
 - SparseGPT, [Frantar & Alistarh (2023)](https://proceedings.mlr.press/v202/frantar23a.html).
 - SmoothQuant, [Xiao et al. (2023)](https://proceedings.mlr.press/v202/xiao23c.html).
 - DistilBERT, [Sanh et al. (2019)](https://arxiv.org/abs/1910.01108).
+
+
+## 10. Audit de clarté et intégration pédagogique dans LLM Lab
+
+L'audit des pages existantes confirme que les notions de probabilité conditionnelle, entropie, surprise du token observé et entropie croisée étaient déjà expliquées dans les leçons canoniques. Le manque était le passage explicite entre ces notions et un protocole de codage sans perte, ainsi que la comparaison directe avec la compression du réseau.
+
+Intégrations réalisées sur cette branche :
+- La leçon bilingue sur l'entropie contient maintenant une section **« Les LLM sont-ils des algorithmes de compression ? » / “Are LLMs compression algorithms?”** qui explique le lien prédiction → surprisal en bits → longueur de code idéale → codeur/décodeur, puis les limites de l'analogie.
+- La leçon bilingue sur l'évolution des LLM distingue maintenant compression prédictive, compression du modèle (quantification, pruning, distillation) et mémoire d'exécution (KV cache/activations).
+- L'expérience predictive-compression entraîne un petit modèle bigramme sur un alphabet synthétique, construit un intervalle de codage arithmétique exact, encode une séquence, puis vérifie son décodage exact. Elle ne prétend pas mesurer un LLM ni la compression du langage naturel.
+
+Exécution vérifiée avec Python standard : coût idéal 19,642 bits, code fini 21 bits, référence uniforme 40 bits, reconstruction exacte. Cette expérience illustre le mécanisme ; elle ne démontre pas un gain net après coût de transmission du modèle, tokenizer et métadonnées.
+
+Les résultats CI de la PR doivent encore confirmer le rendu Quarto et les liens de ces ajouts ; aucun test utilisateur ou contrôle visuel indépendant n'est revendiqué ici.
