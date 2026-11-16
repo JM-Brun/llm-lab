@@ -32,7 +32,7 @@ concepts:
       fr: "Projection qui encode ce qu’une position cherche à récupérer dans les autres positions."
       en: "Projection encoding what a position seeks to retrieve from other positions."
     domains: [architectures-mechanisms, mathematical-tools-geometry]
-    resources: [fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/cross-attention, en/cross-attention]
+    resources: [fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/cross-attention, en/cross-attention, fr/rope, en/rope]
   - id: key
     importance: supporting
     labels: {fr: "Key (clé)", en: "Key"}
@@ -40,7 +40,7 @@ concepts:
       fr: "Projection qui rend une position adressable par les requêtes des autres positions."
       en: "Projection that makes a position addressable by queries from other positions."
     domains: [architectures-mechanisms, mathematical-tools-geometry]
-    resources: [fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/cross-attention, en/cross-attention]
+    resources: [fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/cross-attention, en/cross-attention, fr/rope, en/rope]
   - id: value
     importance: supporting
     labels: {fr: "Value (valeur)", en: "Value"}
@@ -48,7 +48,7 @@ concepts:
       fr: "Projection porteuse de l’information agrégée selon les poids d’attention."
       en: "Projection carrying the information aggregated according to attention weights."
     domains: [architectures-mechanisms, mathematical-tools-geometry]
-    resources: [fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/cross-attention, en/cross-attention]
+    resources: [fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/cross-attention, en/cross-attention, fr/rope, en/rope]
   - id: self-attention
     importance: core
     labels: {fr: "Auto-attention", en: "Self-attention"}
@@ -68,7 +68,7 @@ concepts:
         Compatibility score computed between a query and a key before conversion into normalized
         attention weights.
     domains: [architectures-mechanisms, mathematical-tools-geometry]
-    resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+    resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/rope, en/rope]
   - id: attention-weight
     importance: supporting
     labels: {fr: "Poids d'attention", en: "Attention weight"}
@@ -80,7 +80,7 @@ concepts:
         Normalized coefficient, after any applicable mask, that weights a value's contribution
         to an attention output.
     domains: [architectures-mechanisms, mathematical-tools-geometry]
-    resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+    resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/rope, en/rope]
   - id: scaled-dot-product-attention
     importance: core
     labels: {fr: "Attention à produit scalaire mise à l'échelle", en: "Scaled dot-product attention"}
@@ -92,7 +92,7 @@ concepts:
         Mechanism that computes query–key dot-product scores, scales and normalizes them, and
         aggregates value vectors.
     domains: [architectures-mechanisms, mathematical-tools-geometry]
-    resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+    resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/rope, en/rope]
   - id: multi-head-attention
     importance: supporting
     labels: {fr: "Attention multi-têtes", en: "Multi-head attention"}
@@ -121,6 +121,8 @@ concepts:
       - en/causal-masking
       - fr/scaled-dot-product-attention
       - en/scaled-dot-product-attention
+      - fr/rope
+      - en/rope
       - fr/transformer-architectures
       - en/transformer-architectures
   - id: attention-mask
@@ -183,6 +185,8 @@ concepts:
       - en/probabilities
       - fr/scaled-dot-product-attention
       - en/scaled-dot-product-attention
+      - fr/rope
+      - en/rope
   - id: cross-entropy
     importance: core
     labels: {fr: "Entropie croisée", en: "Cross-entropy"}
