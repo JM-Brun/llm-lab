@@ -1,7 +1,6 @@
 """Compare known source entropy rates with deterministic zlib coding costs."""
 
 import json
-import zlib
 
 import numpy as np
 from numpy.typing import NDArray
@@ -30,6 +29,8 @@ def generate_markov(length: int, transition: FloatArray, rng: np.random.Generato
 
 
 def describe_sequence(sequence: UIntArray, entropy_rate: float) -> dict[str, float | int]:
+    import zlib
+
     counts = np.bincount(sequence, minlength=ALPHABET_SIZE)
     marginal = counts / counts.sum()
     compressed = zlib.compress(sequence.tobytes(), level=9)
