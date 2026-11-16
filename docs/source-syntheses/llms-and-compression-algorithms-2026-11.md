@@ -86,6 +86,11 @@ Mesurer la cross-entropy moyenne, puis tester l'effet de l'ajout de données rep
 
 **Question de réflexion :** une séquence rare mais composée de motifs connus est-elle aussi difficile à prédire qu'une séquence fréquente contenant une relation nouvelle ?
 
+**Complément expérimental effectivement ajouté :** le script [domain_shift.py](../../experiments/predictive-compression/domain_shift.py) compare deux modèles bigrammes entraînés sur des motifs synthétiques distincts. Le coût idéal passe de 2,977 bits sur la séquence de même distribution à 80,322 bits sur la séquence décalée. Ce résultat illustre la sensibilité à un changement de distribution dans ce jouet déterministe ; il ne mesure ni un LLM, ni un domaine réel, ni l'effet causal de la fréquence isolée.
+
+Le protocole plus ambitieux ci-dessus reste à construire : il devra séparer fréquence, structure de tâche, qualité des données et transfert, puis évaluer un modèle linguistique réel.
+
+
 ## 8. Limites de la source
 
 - Billet court de vulgarisation, non évalué par les pairs.
@@ -120,7 +125,7 @@ L'article doit servir de **pont interprétatif**, pas de nouvelle leçon autonom
 
 - Ne pas ajouter une deuxième explication de l'entropie ou du surprisal : ces distinctions sont déjà explicites dans les leçons canoniques et leurs exercices.
 - Ne pas ajouter de contenu à la page Understand sur « les LLM compressent Internet ».
-- Utiliser cette source dans une fiche de synthèse transversale ou un encadré optionnel qui relie probabilités, longueur de code et généralisation.
+- Utiliser cette source dans la [fiche de révision bilingue](../../site/fr/compression-revision.qmd), qui relie probabilités, longueur de code, compression du modèle et mémoire d'exécution.
 - Pour une expérience, réutiliser l'issue [#1058](https://github.com/JM-Brun/llm-lab/issues/1058) comme point de coordination : elle conserve déjà le volet non résolu d'un calcul token-level sur un vrai modèle. Ne pas recopier les prototypes jouets rejetés ni créer un doublon de cette activité.
 - La proposition d'expérience du §7 reste un protocole de recherche pédagogique à construire et à contrôler, pas un résultat déjà obtenu.
 
