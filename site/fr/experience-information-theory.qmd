@@ -84,7 +84,7 @@ Pour une famille prédictive \(\mathcal V\) et une perte logarithmique :
 \[
 H_{\mathcal V}(Y\mid X)
 = \inf_{f\in\mathcal V}
-\mathbb E[-\log f[X](Y)]
+\mathbb E[-\log f\left[X\right](Y)]
 \]
 
 \[
