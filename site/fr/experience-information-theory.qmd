@@ -75,22 +75,22 @@ La perplexité est l'exponentielle de la NLL moyenne, avec la même base de loga
 Les fonctions réutilisables et leurs tests sont dans `src/llm_lab/foundations/information_theory.py` et `tests/unit/test_information_theory.py`.
 
 
-## Extension — information prédictive \(\\mathcal V\)
+## Extension — information prédictive \(\mathcal V\)
 
-La théorie de l'information prédictive \(\\mathcal V\) formalise une question différente de l'information mutuelle de Shannon : **quelle amélioration de prédiction une famille de modèles autorisée peut-elle tirer de l'observation de \(X\) pour prédire \(Y\) ?**
+La théorie de l'information prédictive \(\mathcal V\) formalise une question différente de l'information mutuelle de Shannon : **quelle amélioration de prédiction une famille de modèles autorisée peut-elle tirer de l'observation de \(X\) pour prédire \(Y\) ?**
 
-Pour une famille prédictive \(\\mathcal V\) et une perte logarithmique :
+Pour une famille prédictive \(\mathcal V\) et une perte logarithmique :
 
 \[
-H_{\\mathcal V}(Y\\mid X)
-= \\inf_{f\\in\\mathcal V}
-\\mathbb E[-\\log f[X](Y)]
+H_{\mathcal V}(Y\mid X)
+= \inf_{f\in\mathcal V}
+\mathbb E[-\log f[X](Y)]
 \]
 
 \[
-I_{\\mathcal V}(X\\to Y)
-=H_{\\mathcal V}(Y\\mid\\varnothing)
--H_{\\mathcal V}(Y\\mid X).
+I_{\mathcal V}(X\to Y)
+=H_{\mathcal V}(Y\mid\varnothing)
+-H_{\mathcal V}(Y\mid X).
 \]
 
 La famille doit respecter la condition d'**ignorance optionnelle** : tout résultat probabiliste qu'un prédicteur peut produire doit aussi pouvoir être produit par un prédicteur qui ignore l'entrée. Cette condition garantit notamment la non-négativité de la quantité populationnelle.
@@ -103,13 +103,13 @@ uv run --locked python experiments/information-theory/v_information.py
 
 Le script compare trois situations, calculées exactement à partir de distributions synthétiques :
 
-| Situation | Entropie \(\\mathcal V\) sans entrée | Entropie conditionnelle \(\\mathcal V\) | Information prédictive |
+| Situation | Entropie \(\mathcal V\) sans entrée | Entropie conditionnelle \(\mathcal V\) | Information prédictive |
 |---|---:|---:|---:|
 | Variable corrélée, famille capable de l'exploiter | 1 bit | 0,469 bit | 0,531 bit |
 | Variable indépendante | 1 bit | 1 bit | 0 bit |
 | Variable corrélée, famille limitée aux prédicteurs constants | 1 bit | 1 bit | 0 bit |
 
-Le dernier cas est le point pédagogique essentiel : les données contiennent une dépendance, mais une famille de prédicteurs trop restreinte ne sait pas l'exploiter. La quantité dépend donc explicitement de la famille \(\\mathcal V\), et pas seulement de la distribution jointe.
+Le dernier cas est le point pédagogique essentiel : les données contiennent une dépendance, mais une famille de prédicteurs trop restreinte ne sait pas l'exploiter. La quantité dépend donc explicitement de la famille \(\mathcal V\), et pas seulement de la distribution jointe.
 
 **Limites :** c'est un calcul de risque populationnel exact sur un petit exemple discret et une famille finie spécifiée à la main. Aucun modèle n'est entraîné ; il ne s'agit ni d'une estimation sur échantillon, ni d'une comparaison d'architectures, ni d'une preuve que l'attention extrait plus d'information qu'un modèle bag-of-words. Une expérience sur modèles entraînés exigerait des jeux d'entraînement/test, une classe et un protocole de sélection préenregistrés, ainsi qu'une analyse du surapprentissage.
 
