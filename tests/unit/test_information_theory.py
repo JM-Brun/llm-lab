@@ -98,7 +98,10 @@ def test_invalid_log_bases_are_rejected() -> None:
         shannon_entropy(np.array([0.5, 0.5]), base=1.0)
 
 
-@pytest.mark.parametrize("metric", ["entropy", "cross_entropy", "kl", "mutual_information", "perplexity", "code_lengths"])
+@pytest.mark.parametrize(
+    "metric",
+    ["entropy", "cross_entropy", "kl", "mutual_information", "perplexity", "code_lengths"],
+)
 def test_invalid_log_bases_are_rejected_by_every_metric(metric: str) -> None:
     probabilities = np.array([0.5, 0.5])
     with pytest.raises(ValueError):

@@ -24,9 +24,7 @@ def test_correlated_feature_has_positive_predictive_v_information() -> None:
         joint, _predictors_with_signal(), base=2.0
     )
     assert baseline == pytest.approx(1.0)
-    assert conditional == pytest.approx(
-        -0.9 * np.log2(0.9) - 0.1 * np.log2(0.1)
-    )
+    assert conditional == pytest.approx(-0.9 * np.log2(0.9) - 0.1 * np.log2(0.1))
     assert information == pytest.approx(0.5310044064)
 
 
@@ -63,7 +61,6 @@ def test_invalid_joint_distribution_is_rejected() -> None:
     predictors = np.array([[[0.5, 0.5], [0.5, 0.5]]])
     with pytest.raises(ValueError, match="sum to one"):
         predictive_v_information(np.array([[0.2, 0.2], [0.2, 0.2]]), predictors)
-
 
 
 def test_invalid_logarithm_base_is_rejected() -> None:

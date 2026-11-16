@@ -52,8 +52,7 @@ def predictive_v_information(
     for model in predictors:
         for row in model:
             if not any(
-                np.allclose(row, candidate, rtol=1e-9, atol=1e-12)
-                for candidate in constant_tables
+                np.allclose(row, candidate, rtol=1e-9, atol=1e-12) for candidate in constant_tables
             ):
                 raise ValueError(
                     "family violates optional ignorance: add a constant predictor "
@@ -65,8 +64,7 @@ def predictive_v_information(
     weighted = np.zeros_like(predictors)
     positive_joint = probabilities > 0.0
     weighted[:, positive_joint] = (
-        probabilities[positive_joint][None, :]
-        * log_predictions[:, positive_joint]
+        probabilities[positive_joint][None, :] * log_predictions[:, positive_joint]
     )
     conditional_risks = -weighted.sum(axis=(1, 2))
     conditional_v_entropy = float(np.min(conditional_risks))
@@ -78,10 +76,14 @@ def predictive_v_information(
         if np.any(prediction[positive] == 0.0):
             constant_risks.append(float("inf"))
         else:
-            risk = -np.sum(marginal_y[positive] * np.log(prediction[positive])) / np.log(base)
+            risk = (
+                -np.sum(marginal_y[positive] * np.log(prediction[positive])) / np.log(base)
+            )
             constant_risks.append(float(risk))
     v_entropy = float(min(constant_risks))
     if not np.isfinite(v_entropy):
-        raise ValueError("family must provide a finite baseline log-loss on the target support")
+        raise ValueError(
+            "family must provide a finite baseline log-loss on the target support"
+        )
     information = max(0.0, v_entropy - conditional_v_entropy)
     return v_entropy, conditional_v_entropy, information
