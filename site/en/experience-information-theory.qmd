@@ -74,6 +74,45 @@ Perplexity is the exponential of mean NLL using the same logarithm base: here ex
 
 Reusable functions and their tests live in `src/llm_lab/foundations/information_theory.py` and `tests/unit/test_information_theory.py`.
 
+
+## Extension — predictive \(\mathcal V\)-information
+
+Predictive \(\mathcal V\)-information formalizes a question different from Shannon mutual information: **how much can an allowed family of models improve its prediction of \(Y\) by observing \(X\)?**
+
+For a predictive family \(\mathcal V\) and logarithmic loss:
+
+\[
+H_{\mathcal V}(Y\mid X)
+= \inf_{f\in\mathcal V}
+\mathbb E[-\log f[X](Y)]
+\]
+
+\[
+I_{\mathcal V}(X\to Y)
+=H_{\mathcal V}(Y\mid\varnothing)
+-H_{\mathcal V}(Y\mid X).
+\]
+
+The family must satisfy **optional ignorance**: every probability distribution produced by a predictor must also be available from a predictor that ignores its input. This condition ensures, among other properties, non-negativity at the population level.
+
+### Run the controlled toy example
+
+\`\`\`bash
+uv run --locked python experiments/information-theory/v_information.py
+\`\`\`
+
+The script exactly compares three situations using synthetic joint distributions:
+
+| Situation | \(\mathcal V\)-entropy without input | Conditional \(\mathcal V\)-entropy | Predictive information |
+|---|---:|---:|---:|
+| Correlated feature, family can exploit it | 1 bit | 0.469 bits | 0.531 bits |
+| Independent feature | 1 bit | 1 bit | 0 bits |
+| Correlated feature, constant-only family | 1 bit | 1 bit | 0 bits |
+
+The last case is the key teaching point: the data contain a dependency, but a restricted predictive family cannot exploit it. The quantity therefore depends explicitly on the family \(\mathcal V\), not only on the joint distribution.
+
+**Limitations:** this is an exact population-risk calculation on a small discrete example and a hand-specified finite family. No model is trained; it is neither a sample-based estimate, nor an architecture comparison, nor evidence that attention extracts more information than a bag-of-words model. A trained-model experiment would require train/test splits, a pre-specified model class and selection protocol, and an overfitting analysis.
+
 ## What this experiment does — and does not — show
 
 It verifies mathematical identities on discrete distributions. It does not measure model intelligence, generalization or the quality of a trained LLM. Ideal lengths -log₂(p) may be fractional; a practical code adds constraints and overhead.
