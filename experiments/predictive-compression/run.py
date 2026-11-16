@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Exact arithmetic-coding demonstration using a tiny conditional bigram model."""
+
 from __future__ import annotations
 from collections import Counter, defaultdict
 from fractions import Fraction
@@ -23,8 +24,7 @@ def train_bigram_model(training: str) -> dict[str, dict[str, Fraction]]:
     for context, observed in counts.items():
         total = sum(observed.values()) + SMOOTHING * len(ALPHABET)
         model[context] = {
-            symbol: Fraction(observed[symbol] + SMOOTHING, total)
-            for symbol in ALPHABET
+            symbol: Fraction(observed[symbol] + SMOOTHING, total) for symbol in ALPHABET
         }
     return model
 
@@ -66,8 +66,7 @@ def dyadic_code_inside(low: Fraction, high: Fraction) -> tuple[int, int]:
     return numerator, bits
 
 
-def decode(numerator: int, bits: int, length: int,
-           model: dict[str, dict[str, Fraction]]) -> str:
+def decode(numerator: int, bits: int, length: int, model: dict[str, dict[str, Fraction]]) -> str:
     code_value = Fraction(numerator, 1 << bits)
     low, high = Fraction(0), Fraction(1)
     previous = "^"
