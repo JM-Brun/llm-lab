@@ -41,3 +41,44 @@ def test_domain_shift_increases_predictive_code_length() -> None:
 
     assert cost("AB" * 20, model_ab) < cost("CD" * 20, model_ab)
     assert cost("CD" * 20, model_cd) < cost("AB" * 20, model_cd)
+
+
+def test_huffman_code_is_prefix_free_and_meets_entropy_for_dyadic_source() -> None:
+    root = Path(__file__).resolve().parents[2]
+    module = runpy.run_path(str(root / "experiments/predictive-compression/run.py"))
+    probabilities = {
+        "A": Fraction(1, 2),
+        "B": Fraction(1, 4),
+        "C": Fraction(1, 8),
+        "D": Fraction(1, 8),
+    }
+    codes = module["huffman_code"](probabilities)
+
+    assert module["is_prefix_free"](codes)
+    assert module["kraft_sum"](codes) == 1
+    assert module["average_code_length"](probabilities, codes) == Fraction(7, 4)
+
+
+def test_huffman_rejects_invalid_probability_distributions() -> None:
+    root = Path(__file__).resolve().parents[2]
+    module = runpy.run_path(str(root / "experiments/predictive-compression/run.py"))
+
+    try:
+        module["huffman_code"]({"A": Fraction(1, 2), "B": Fraction(1, 3)})
+    except ValueError as error:
+        assert "sum to one" in str(error)
+    else:
+        raise AssertionError("Invalid probability distribution was accepted")
+
+
+def test_kraft_sum_rejects_non_binary_or_empty_codewords() -> None:
+    root = Path(__file__).resolve().parents[2]
+    module = runpy.run_path(str(root / "experiments/predictive-compression/run.py"))
+
+    for invalid in ({"A": ""}, {"A": "02"}):
+        try:
+            module["kraft_sum"](invalid)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError(f"Invalid codewords were accepted: {invalid}")
