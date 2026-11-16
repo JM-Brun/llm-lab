@@ -58,6 +58,18 @@ C'est pourquoi le masque de loss compte : il sélectionne les cibles qui contrib
 
 Le SFT enseigne par imitation des démonstrations. Il n'indique pas à lui seul laquelle de deux réponses acceptables une personne préférerait, et sa qualité dépend de celle et de la couverture des démonstrations.
 
+## Le format des conversations : les chat templates
+
+Avant d'entraîner un assistant, les messages doivent être sérialisés en une séquence de tokens. Un *chat template* définit cette représentation : marqueurs de rôle (système, utilisateur, assistant), contenu, frontières de message et marqueurs de contrôle indiquant notamment si le tour de l'assistant est terminé ou si le contrôle est transmis à un outil.
+
+Ce format est une **convention d'entrée et de sortie propre au modèle**, pas une structure universelle. Deux modèles peuvent représenter la même conversation avec des tokens spéciaux et des règles différentes. Il faut donc utiliser le template attendu par le modèle et le conserver avec la provenance du dataset et la révision du tokenizer.
+
+Pendant le SFT, un mauvais template peut apprendre au modèle des frontières de rôle ou des marqueurs de fin incompatibles avec ceux utilisés à l'inférence. Le template prépare la séquence ; le masque de loss détermine séparément quelles positions contribuent à l'objectif. Les deux ne doivent pas être confondus.
+
+Les templates peuvent aussi encoder des appels d'outils. Ils représentent alors une structure de contrôle dans la séquence, mais n'exécutent pas eux-mêmes l'outil : c'est l'application hôte qui interprète et exécute l'appel.
+
+Voir la [documentation Hugging Face sur les chat templates](https://huggingface.co/docs/transformers/main/en/chat_templating) et le [chapitre 11 du cours](https://huggingface.co/learn/llm-course/en/chapter11/2).
+
 ## Les méthodes à préférences
 
 Les données de préférence enregistrent laquelle de deux (ou plusieurs) réponses candidates à un même prompt une personne ou un autre juge a préférée. Deux familles sont courantes.
