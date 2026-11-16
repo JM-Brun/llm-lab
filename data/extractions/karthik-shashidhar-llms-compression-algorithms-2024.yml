@@ -75,7 +75,7 @@ items:
       pages: []
       concepts: []
       route_ids: []
-    disposition: qualify
+    disposition: correct
     disposition_rationale: "Retain the intuition as a hypothesis; qualify it with data quality, task structure, transfer, post-training and distribution shift."
   - id: karthik-shashidhar-llms-compression-algorithms-2024:short-prompt-reconstruction
     kind: mental-model
