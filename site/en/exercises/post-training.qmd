@@ -52,6 +52,15 @@ In the common RLHF pipeline, preference comparisons train a separate reward mode
 No. In the usual parameter-efficient setup, base weights are frozen and trainable low-rank adapter parameters are added to selected modules. QLoRA additionally uses a quantized frozen base to reduce memory; it is not simply another name for ordinary full fine-tuning.
 </details>
 
+4. **What does a chat template do in an SFT pipeline?** Why should it be preserved with the tokenizer and dataset versions?
+
+<details>
+<summary>Show the answer</summary>
+
+The template serializes messages, boundaries, and control markers into the token sequence expected by the model. A mismatched template can produce incorrect roles, message endings, or tool-call structure during training or inference. The template version is therefore part of dataset provenance and reproducibility. The loss mask remains a separate decision.
+
+</details>
+
 ## Choose the intervention
 
 A team has two problems:
