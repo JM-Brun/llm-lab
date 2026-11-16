@@ -23,8 +23,8 @@ def _distribution(values: FloatArray, name: str) -> FloatArray:
 def shannon_entropy(probabilities: FloatArray, *, base: float = np.e) -> float:
     """Return discrete Shannon entropy, in the selected logarithm base."""
     p = _distribution(probabilities, "probabilities")
-    if not np.isfinite(base) or base <= 0.0 or np.isclose(base, 1.0):
-        raise ValueError("base must be finite, positive, and different from one")
+    if not np.isfinite(base) or base <= 1.0:
+        raise ValueError("base must be finite and greater than one")
     positive = p > 0.0
     return float(-np.sum(p[positive] * np.log(p[positive])) / np.log(base))
 
@@ -57,16 +57,16 @@ def perplexity(mean_nll: float, *, base: float = np.e) -> float:
     """Convert mean negative log-likelihood to perplexity in its matching base."""
     if not np.isfinite(mean_nll) or mean_nll < 0.0:
         raise ValueError("mean_nll must be finite and non-negative")
-    if not np.isfinite(base) or base <= 0.0 or np.isclose(base, 1.0):
-        raise ValueError("base must be finite, positive, and different from one")
+    if not np.isfinite(base) or base <= 1.0:
+        raise ValueError("base must be finite and greater than one")
     return float(base**mean_nll)
 
 
 def ideal_code_lengths(probabilities: FloatArray, *, base: float = 2.0) -> FloatArray:
     """Return ideal information lengths -log_base(p); zero mass maps to infinity."""
     p = _distribution(probabilities, "probabilities")
-    if not np.isfinite(base) or base <= 0.0 or np.isclose(base, 1.0):
-        raise ValueError("base must be finite, positive, and different from one")
+    if not np.isfinite(base) or base <= 1.0:
+        raise ValueError("base must be finite and greater than one")
     lengths = np.full_like(p, np.inf)
     positive = p > 0.0
     lengths[positive] = -np.log(p[positive]) / np.log(base)
