@@ -3885,3 +3885,48 @@ sources:
         - docs/source-reviews/fan-compression-intelligence-2026-11.md
         - docs/source-syntheses/fan-compression-intelligence-2026-11.md
         - data/extractions/fan-compression-intelligence-2026.yml
+
+  - id: sebastian-raschka-understanding-positional-embeddings-2026
+    title: "Understanding Positional Embeddings in Modern LLMs"
+    creators: ["Sebastian Raschka"]
+    source_type: tutorial
+    identifiers: {}
+    canonical_url: "https://magazine.sebastianraschka.com/p/understanding-positional-embeddings"
+    publisher: "Ahead of AI / Sebastian Raschka"
+    publication_date: "2026-11-15"
+    updated_date: null
+    language: en
+    version: "Article published 15 November 2026"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:positional-information, method:rotary-position-embedding, method:partial-rope, method:nope, method:relative-position-bias, ecosystem:pytorch]
+      concept_ids: [positional-encoding, causal-mask, query, key, attention-score, self-attention]
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, mathematical-derivation, architecture, implementation, visualization, pedagogy]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-16"
+        status: partially-scanned
+        inspected_scope:
+          - "Complete article body, sections 1–7, equations, PyTorch snippets, figure captions and conclusion"
+          - "Compared with existing bilingual positional-encoding and RoPE pages, RoFormer source record, concept registry and bibliography"
+          - "Reviewed feature-pairing conventions, Q/K-only rotation, frequency tables, broadcasting, partial RoPE, NoPE, learned relative bias and hybrid architectures"
+        limitations:
+          - "The 38 figures were not individually downloaded or visually inspected; captions and placement were inspected. No assets are copied."
+          - "The linked Qwen3 implementation was identified but not independently inspected or executed."
+          - "Architecture-frequency comparisons use the author's gallery snapshot, not a systematic census."
+          - "No independent training, benchmark reproduction or long-context evaluation was performed."
+          - "NoPE length-generalization results are task- and training-regime-dependent."
+          - "Partial RoPE reduces positional cosine/sine table width, not the full KV cache; savings are configuration- and dtype-specific."
+          - "No reuse licence was established; text, figures and code remain link-only."
+    related:
+      pages: [fr/positional-encoding, en/positional-encoding, fr/rope, en/rope, fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+      concepts: [positional-encoding, causal-mask, query, key, attention-score, self-attention]
+      audit_records: [docs/source-reviews/raschka-positional-embeddings-2026-11.md, data/extractions/sebastian-raschka-understanding-positional-embeddings-2026.yml]
