@@ -3742,7 +3742,7 @@ sources:
           - "No independent experiment, code, dataset or formal proof is supplied by this video."
           - "No licence or permission to reuse video frames, animation, transcript or music was established; link-only treatment."
     related:
-      pages: [fr/entropy, en/entropy, fr/cross-entropy, en/cross-entropy, fr/vraisemblance, en/likelihood, fr/compression-revision, en/compression-revision, fr/entropy-exercises, en/entropy-exercises]
+      pages: [fr/entropy, en/entropy, fr/cross-entropy, en/cross-entropy, fr/vraisemblance, en/likelihood, fr/compression-revision, en/compression-revision]
       concepts: [entropy, surprisal, conditional-distribution, predictive-compression, entropy-coding, arithmetic-coding, cross-entropy]
       audit_records:
         - docs/source-syntheses/reinventing-entropy-2026-11.md
