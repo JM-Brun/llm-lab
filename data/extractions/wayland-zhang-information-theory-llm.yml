@@ -71,7 +71,7 @@ pedagogical_model:
     decision: "Use as a cross-cutting source. Enrich the existing cross-entropy lesson with the KL decomposition and the attention lesson with a precise mutual-information boundary. Do not create a parallel course or add unverified concepts to the canonical registry."
     structures_kept_separate: [source-semantic-graph, canonical-concept-graph, canonical-learning-routes, page-navigation]
 items:
-  - id: wayland-zhang-information-theory-llm:surprisal-and-entropy
+  - id: wayland-zhang-information-theory-llm-2026:surprisal-and-entropy
     kind: definition
     summary: "The information content (surprisal) of an event with probability p is -log p; Shannon entropy is the expected surprisal under the distribution. The logarithm base determines the unit: bits for base 2 and nats for the natural logarithm."
     pedagogical_assessment:
@@ -99,7 +99,7 @@ items:
     disposition: already-covered
     disposition_rationale: "The bilingual entropy pages already distinguish predictive entropy, observed surprisal, NLL, units and interpretation; retain the source as a corroborating reference rather than duplicating the lesson."
 
-  - id: wayland-zhang-information-theory-llm:cross-entropy-kl-decomposition
+  - id: wayland-zhang-information-theory-llm-2026:cross-entropy-kl-decomposition
     kind: derivation
     summary: "For a target distribution q and model distribution p, H(q,p)=H(q)+D_KL(q||p). Since H(q) is independent of model parameters when q and the evaluation context are fixed, minimizing expected cross-entropy over p is equivalent to minimizing the forward KL divergence. For one-hot token targets, cross-entropy reduces to token-level negative log probability."
     pedagogical_assessment:
@@ -126,7 +126,7 @@ items:
     disposition: integrate
     disposition_rationale: "Add the identity and assumptions to the existing bilingual cross-entropy lesson, with consistent log units and a worked numerical example."
 
-  - id: wayland-zhang-information-theory-llm:attention-mutual-information
+  - id: wayland-zhang-information-theory-llm-2026:attention-mutual-information
     kind: misconception
     summary: "The article compares attention weights with mutual information, while acknowledging that attention does not compute mutual information strictly. Attention weights are row-wise softmax-normalized compatibility coefficients over accessible positions; mutual information is a scalar or distribution-derived statistical quantity defined from a joint distribution. The former is not an estimator of the latter."
     pedagogical_assessment:
@@ -154,7 +154,7 @@ items:
     disposition: integrate
     disposition_rationale: "Add a concise distinction between attention weights and mutual information to the existing bilingual attention lesson."
 
-  - id: wayland-zhang-information-theory-llm:landauer-data-ceiling
+  - id: wayland-zhang-information-theory-llm-2026:landauer-data-ceiling
     kind: limitation
     summary: "The article invokes Landauer's minimum heat cost for logically irreversible erasure to support a broad ceiling on information extractable from a fixed dataset. This inference is not established: Landauer's principle concerns physical erasure under thermodynamic assumptions and does not prove a general statistical-learning bound or rule out generalization beyond explicitly observed examples."
     pedagogical_assessment:
@@ -182,7 +182,7 @@ items:
     disposition: correct
     disposition_rationale: "Record as a critical correction in the source review; do not add the thermodynamic claim to learner-facing core content."
 
-  - id: wayland-zhang-information-theory-llm:compression-intelligence
+  - id: wayland-zhang-information-theory-llm-2026:compression-intelligence
     kind: misconception
     summary: "Good probabilistic prediction can enable efficient lossless coding when probabilities are used to assign code lengths, linking model cross-entropy with expected coding cost. This does not establish that compression quality is equivalent to intelligence or that the best compressors are always the best language models across tasks."
     pedagogical_assessment:
@@ -210,7 +210,7 @@ items:
     disposition: clarify
     disposition_rationale: "Retain the predictive-coding link as a bounded interpretation of cross-entropy; explicitly reject compression-equals-intelligence as a scientific conclusion."
 
-  - id: wayland-zhang-information-theory-llm:v-information
+  - id: wayland-zhang-information-theory-llm-2026:v-information
     kind: open-question
     summary: "The article introduces V-information informally as a way to discuss information usable by a restricted predictive model class. The formal definition is supplied by Xu et al. (ICLR 2020), now catalogued as a separate primary source; the blog itself does not specify the predictive family, loss, estimator or a controlled architecture comparison."
     pedagogical_assessment:
