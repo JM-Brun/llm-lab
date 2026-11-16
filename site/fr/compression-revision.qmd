@@ -165,7 +165,7 @@ flowchart TD
   A["Fréquences des symboles"] --> B["Arbre de code préfixe"]
   B --> C["Longueur idéale : -log₂ p(x)"]
   C --> D["Moyenne : entropie H(X)"]
-  D --> E["Contexte : p(xₜ | x₍₍ₜ)"]
+  D --> E["Contexte : p(xₜ | contexte précédent)"]
   E --> F["Coût de séquence : somme des surprisals"]
   F --> G["Modèle p évalué sous les cibles q : H(q,p)"]
 ```
