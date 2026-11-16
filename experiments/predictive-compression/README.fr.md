@@ -9,7 +9,7 @@ Un modèle qui attribue de fortes probabilités aux symboles observés peut-il a
 Un petit **modèle bigramme** apprend des probabilités conditionnelles à partir d'une chaîne synthétique fixe. Il attribue ensuite une probabilité à chaque symbole en fonction du symbole précédent. Ces probabilités définissent des intervalles imbriqués de codage arithmétique. Le programme choisit une fraction binaire finie dans l'intervalle final, puis la décode.
 
 - Un symbole plus prévisible coûte moins de bits dans le code idéal.
-- La somme des surprises est le coût informationnel idéal : \`-sum(log2(p(token | contexte)))\`.
+- La somme des surprises est le coût informationnel idéal : `-sum(log2(p(token | contexte)))`.
 - Le codeur produit un code fini et le décodeur reconstruit exactement la séquence d'origine.
 - Un modèle uniforme sur quatre symboles sert de référence simple : 2 bits par symbole.
 
