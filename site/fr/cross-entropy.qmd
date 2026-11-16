@@ -239,19 +239,19 @@ Avec une moyenne en bits, la formule devient $2^{\bar{\ell}}$. La perplexité d�
 
 La cross-entropie relie directement l'objectif de prédiction à la théorie de l'information. Pour une distribution cible $q$ et une distribution prédite $p$ sur le même vocabulaire :
 
-$
+$$
 \begin{aligned}
 H(q,p)&=-\sum_x q(x)\ln p(x)\\
 &=\underbrace{-\sum_x q(x)\ln q(x)}_{H(q)}
 +\underbrace{\sum_x q(x)\ln\frac{q(x)}{p(x)}}_{D_{KL}(q\|p)}.
 \end{aligned}
-$
+$$
 
 Donc :
 
-$
+$$
 \boxed{H(q,p)=H(q)+D_{KL}(q\|p)}
-$
+$$
 
 La divergence KL est toujours positive ou nulle (sous les conditions usuelles de support), et elle vaut zéro lorsque $p=q$. Si la distribution cible $q$ et le contexte sont fixés, $H(q)$ ne dépend pas des paramètres du modèle : minimiser la cross-entropie par rapport à $p$ revient donc à minimiser $D_{KL}(q\|p)$. Cela ne signifie pas que l'entropie de la langue est une constante universelle : elle dépend de la distribution, du contexte, du corpus et de la tokenisation considérés.
 
