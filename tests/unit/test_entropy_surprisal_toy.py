@@ -15,3 +15,17 @@ def test_entropy_and_realized_surprisal_are_distinct() -> None:
     assert entropy_bits(distribution) < 0.1
     assert surprisal_bits(distribution[1]) > 6.6
     assert surprisal_bits(distribution[0]) < 0.02
+
+
+def test_entropy_rejects_invalid_distributions() -> None:
+    script = Path(__file__).resolve().parents[2] / "experiments/entropy-surprisal-toy/run.py"
+    namespace = runpy.run_path(str(script))
+    entropy_bits = namespace["entropy_bits"]
+
+    for invalid in ((), (0.2, 0.2), (-0.1, 1.1), (float("nan"), 1.0)):
+        try:
+            entropy_bits(invalid)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError(f"expected ValueError for {invalid!r}")
