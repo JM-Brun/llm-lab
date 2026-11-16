@@ -11,6 +11,12 @@ import math
 
 
 def entropy_bits(probabilities: tuple[float, ...]) -> float:
+    if not probabilities:
+        raise ValueError("at least one probability is required")
+    if any(not math.isfinite(p) or p < 0.0 or p > 1.0 for p in probabilities):
+        raise ValueError("probabilities must be finite values in [0, 1]")
+    if not math.isclose(sum(probabilities), 1.0, rel_tol=1e-9, abs_tol=1e-9):
+        raise ValueError("probabilities must sum to 1")
     return -sum(p * math.log2(p) for p in probabilities if p > 0.0)
 
 
