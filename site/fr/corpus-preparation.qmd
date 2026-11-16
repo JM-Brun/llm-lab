@@ -88,7 +88,7 @@ L'accord inter-annotateurs est un diagnostic du protocole, pas une preuve automa
 
 [Le chapitre 10 du cours Hugging Face](https://huggingface.co/learn/llm-course/en/chapter10/1) illustre ce workflow avec Argilla : configuration des champs et questions, consignes, annotation collaborative, réponses multiples et export. Argilla est ici un outil de workflow ; il ne remplace ni la définition scientifique de la tâche ni l'analyse de la qualité des annotations.
 
-## 4. Contrat de sortie vers les étapes suivantes
+## 5. Contrat de sortie vers les étapes suivantes
 
 À la fin de cette étape, on devrait pouvoir retrouver :
 
