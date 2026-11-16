@@ -3565,7 +3565,7 @@ sources:
       primary_theme: probabilistic-foundations-training
       secondary_themes: [scale-research]
       tags: [topic:predictive-compression, topic:generalization, method:analogy]
-      concept_ids: []
+      concept_ids: [conditional-distribution, surprisal, predictive-compression, entropy-coding, arithmetic-coding]
     metadata:
       technical_level: introductory
       contribution_types: [pedagogy, theory]
@@ -3585,10 +3585,11 @@ sources:
           - "The full comment discussion and linked materials were not exhaustively inspected."
           - "No reuse licence was established; link-only treatment."
     related:
-      pages: [fr/probabilites, en/probabilities, fr/entropy, en/entropy, fr/vraisemblance, en/likelihood, fr/cross-entropy, en/cross-entropy, fr/training-loop, en/training-loop, fr/scaling-laws, en/scaling-laws]
-      concepts: []
+      pages: [fr/probabilites, en/probabilities, fr/entropy, en/entropy, fr/vraisemblance, en/likelihood, fr/cross-entropy, en/cross-entropy, fr/training-loop, en/training-loop, fr/scaling-laws, en/scaling-laws, fr/compression-revision, en/compression-revision]
+      concepts: [conditional-distribution, surprisal, predictive-compression, entropy-coding, arithmetic-coding]
       audit_records:
         - docs/source-syntheses/llms-and-compression-algorithms-2026-11.md
+        - docs/source-reviews/karthik-shashidhar-llms-compression-algorithms-2024.md
 
   - id: sasirekha-cota-understanding-llm-compression-2023
     title: "Understanding Compression of Large Language Models (LLMs)"
@@ -3612,7 +3613,7 @@ sources:
         - method:pruning
         - method:quantization
         - method:knowledge-distillation
-      concept_ids: [kv-cache]
+      concept_ids: [kv-cache, model-compression, pruning, quantization, knowledge-distillation]
     metadata:
       technical_level: introductory
       contribution_types: [theory, pedagogy]
@@ -3639,7 +3640,9 @@ sources:
         - en/llm-computational-complexity
         - fr/llm-evolution
         - en/llm-evolution
-      concepts: [kv-cache]
+        - fr/compression-revision
+        - en/compression-revision
+      concepts: [kv-cache, model-compression, pruning, quantization, knowledge-distillation]
       audit_records:
         - docs/source-syntheses/model-compression-2026-11.md
 
