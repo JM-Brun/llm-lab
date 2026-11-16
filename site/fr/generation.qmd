@@ -213,6 +213,11 @@ Les filtres **top-k** et **top-p** écartent les candidats les moins probables a
 </summary>
 <div class="learning-resources__content" markdown="1">
 
+### Ressources d'implémentation complémentaires
+
+- [Hugging Face — Derrière le pipeline](https://huggingface.co/learn/llm-course/en/chapter2/2) : suivre les étapes qui relient l'API de haut niveau aux composants du modèle.
+- [Hugging Face — Déploiement et inférence optimisée](https://huggingface.co/learn/llm-course/en/chapter2/7) : prolongement pratique sur l'exécution des modèles.
+
 ### Exercices
 
 Les questions de cette leçon sont regroupées sur sa [page d'exercices dédiée](exercises/generation.qmd) ; le calcul d'une distribution et la comparaison entre sélection gloutonne et échantillonnage sont travaillés dans l'[exercice GE-A](exercises-generation.qmd#generation).
