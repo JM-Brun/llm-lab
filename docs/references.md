@@ -240,3 +240,11 @@ Use these resources as complementary explanations and study aids, not as substit
   - **Use for:** a hardware-specific follow-up exploiting Hopper GPU asynchrony, Tensor Memory Accelerator, warp specialization and low-precision FP8. Treat it as a distinct generation/implementation, not as an interchangeable synonym for the original FlashAttention kernel.
 - **PyTorch — Scaled dot product attention API:** https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html
   - **Use for:** API contract and backend-dispatch constraints. Calling SDPA does not prove that a FlashAttention backend was selected.
+
+## Information theory, entropy and predictive compression
+
+- **Grant Sanderson / 3Blue1Brown — [Reinventing Entropy | Compression is Intelligence Part 1](https://www.youtube.com/watch?v=l6DKRf-fAAM)** (7 June 2026; approximately 32 minutes).
+  - **Use for:** an intuitive derivation of surprisal from ideal code length, prefix-free codes and binary trees, Shannon entropy as expected information, and the transition from independent symbols to context-dependent language and entropy rate.
+  - **AIhub relay:** [Reinventing Entropy | Compression is Intelligence Part 1](https://aihub.org/2026/07/16/reinventing-entropy-compression-is-intelligence-part-1/) (16 July 2026). This page embeds the same video; it is not an independent second source.
+  - **Review status:** the full timestamped transcript was retrieved through a third-party caption mirror and reconciled with the existing bilingual entropy and compression lessons. The original video was not independently inspected frame by frame, and caption fidelity remains unverified. See the [critical synthesis](source-syntheses/reinventing-entropy-2026-11.md) and [structured extraction](../data/extractions/3blue1brown-reinventing-entropy-compression-intelligence-part-1-2026.yml).
+  - **Reuse:** link to the original video only; no transcript, screenshots, animation or music are republished. The source's idealized “random-looking compressed stream” intuition must not be treated as a necessary-and-sufficient test for optimal compression.
