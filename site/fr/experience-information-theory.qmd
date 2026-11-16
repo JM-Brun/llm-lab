@@ -76,5 +76,5 @@ Les fonctions réutilisables et leurs tests sont dans `src/llm_lab/foundations/i
 Elle vérifie des identités mathématiques sur des distributions discrètes. Elle ne mesure ni l'intelligence d'un modèle, ni sa capacité de généralisation, ni la qualité d'un LLM entraîné. Les longueurs -log₂(p) sont idéales et peuvent être fractionnaires ; un code réel ajoute des contraintes et des coûts.
 
 ::: {.language-switch}
-**Langue :** Français · [English](../en/experience-information-theory.qmd)
+**Langue :** [Français](experience-information-theory.qmd) · [English](../en/experience-information-theory.qmd)
 :::
