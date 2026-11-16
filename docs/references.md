@@ -42,6 +42,11 @@ The repository is an independent learning and experimentation project. These sou
 
 ## Positional encodings
 
+- **Sebastian Raschka — Understanding Positional Embeddings in Modern LLMs** (15 November 2026): https://magazine.sebastianraschka.com/p/understanding-positional-embeddings
+  - **Use for:** visual and mathematical walkthrough from learned absolute and sinusoidal vectors to RoPE, including PyTorch conventions, partial RoPE, NoPE and learned relative-position bias.
+  - **How this lab uses it:** as an advanced companion to the existing bilingual positional-encoding and RoPE lessons. See [the source review](source-reviews/raschka-positional-embeddings-2026-11.md). Figures and code remain link-only.
+
+
 - **Vaswani et al. — Attention Is All You Need** (2017), section 3.5: https://arxiv.org/abs/1706.03762
   - **Use for:** primary formulation of sinusoidal positional encodings, frequency schedule, wavelength range, and fixed-offset motivation.
 - **Jay Alammar — The Illustrated Transformer**: https://jalammar.github.io/illustrated-transformer/
