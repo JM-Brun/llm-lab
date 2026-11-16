@@ -55,6 +55,22 @@ def interval_for(message: str, model: dict[str, dict[str, Fraction]]) -> tuple[F
     return low, high
 
 
+
+def sequence_cost_bits(
+    message: str, model: dict[str, dict[str, Fraction]]
+) -> float:
+    """Return the ideal predictive code length for a message, in bits."""
+    previous = "^"
+    total = 0.0
+    for symbol in message:
+        if symbol not in ALPHABET:
+            raise ValueError(f"Unknown symbol: {symbol}")
+        probability = probs_for(model, previous)[symbol]
+        total -= log2(float(probability))
+        previous = symbol
+    return total
+
+
 def dyadic_code_inside(low: Fraction, high: Fraction) -> tuple[int, int]:
     """Choose a binary fraction safely inside the final interval."""
     bits = 0
