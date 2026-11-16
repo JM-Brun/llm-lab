@@ -132,6 +132,14 @@ The Markov case is instructive: its stationary marginal is uniform (2 bits per s
 
 **Limitations:** zlib is not an optimal code; results depend on the algorithm, compression level, finite sequence length and container overhead. This comparison illustrates a mechanism; it does not prove the source-coding theorem.
 
+For a stationary source, the entropy rate is:
+
+\[
+h(X)=\lim_{n\to\infty}\frac{1}{n}H(X_1,\ldots,X_n).
+\]
+
+For a first-order Markov chain, it is the conditional transition entropy \(H(X_t\mid X_{t-1})\). It can be much lower than marginal entropy \(H(X_t)\) when successive symbols are correlated.
+
 ## What this experiment does — and does not — show
 
 It verifies mathematical identities on discrete distributions. It does not measure model intelligence, generalization or the quality of a trained LLM. Ideal lengths -log₂(p) may be fractional; a practical code adds constraints and overhead.
