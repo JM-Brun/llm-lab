@@ -88,3 +88,22 @@ Ce contrôle synthétique montre que les probabilités apprises sur une source p
 ## Liens avec LLM Lab
 
 Consulter la leçon sur l'[entropie](../../site/fr/entropy.qmd), celle sur l'[entropie croisée](../../site/fr/cross-entropy.qmd) et la [synthèse comparative sur la compression](../../docs/source-syntheses/compression-two-meanings-2026-11.md).
+
+## Contrôle complémentaire : code de Huffman et inégalité de Kraft
+
+Le programme construit aussi un code de Huffman pour la distribution exacte :
+
+| Symbole | Probabilité | Longueur optimale |
+|---|---:|---:|
+| A | 1/2 | 1 bit |
+| B | 1/4 | 2 bits |
+| C | 1/8 | 3 bits |
+| D | 1/8 | 3 bits |
+
+Un code possible est `A=0, B=10, C=110, D=111`. Aucun mot n'est le préfixe d'un autre et la somme de Kraft vaut :
+
+`1/2 + 1/4 + 1/8 + 1/8 = 1`.
+
+L'entropie et la longueur moyenne de ce code valent toutes deux exactement 1,75 bit par symbole. Cette égalité est possible ici parce que les probabilités sont des puissances de deux ; elle n'est pas garantie pour une distribution quelconque avec des mots de code binaires entiers.
+
+Le script teste automatiquement la propriété préfixe, la somme de Kraft, la longueur moyenne exacte et le rejet de distributions invalides. Ce contrôle est distinct du codage arithmétique séquentiel déjà présent : il illustre le codage de symboles individuels sous une distribution connue.
