@@ -2,12 +2,13 @@
 
 **Source:** YouTube video, *GPU-POOR? NO PROBLEM!... thanks to 🤗 Jobs*  
 **URL:** https://www.youtube.com/watch?v=7Yx_7byZiFU  
+**Creator:** David Louapre (attribution corroborated by his public post introducing the video)  
 **Reviewed:** 2026-11-16  
-**Status:** partial. The description and chapter timestamps were supplied by the user; current official Hugging Face documentation was checked independently. The video and the truncated GitHub code URL were not inspected.
+**Status:** partial. The description and chapter timestamps were supplied by the user; the creator's public post and current official Hugging Face documentation were checked independently. The video and the truncated GitHub code URL were not inspected.
 
 ## Evidence boundary
 
-The supplied description presents a NanoGPT-like training run on an A100 through Hugging Face Jobs, launched with a generic shell script and allegedly without changing training code, manual data transfer or SSH. Supplied chapters: model/training code (01:21), Jobs (02:57), shell script (04:15), run/results (05:35). The code URL ends in `https://github.com/scienceetonnante/n...`; its repository cannot be identified reliably. No code execution, job launch or reproduction is claimed.
+The supplied description presents a NanoGPT-like training run on an A100 through Hugging Face Jobs, launched with a generic shell script and allegedly without changing training code, manual data transfer or SSH. David Louapre's public post independently introduces this same video and repeats the NanoGPT/A100/approximately-$1 claims. Supplied chapters: model/training code (01:21), Jobs (02:57), shell script (04:15), run/results (05:35). The code URL ends in `https://github.com/scienceetonnante/n...`; its repository cannot be identified reliably. No code execution, job launch or reproduction is claimed.
 
 ## Technical reconciliation
 
@@ -52,4 +53,4 @@ Do not add Hugging Face Jobs as a mandatory dependency or imply that LLM Lab cur
 
 ## Validation still required
 
-Recover the complete repository URL; inspect the script, training code, dependencies, data-loading path and output handling; inspect the video or a reliable transcript; verify the run duration and cost; then execute only under an explicit spending limit. No independent audiovisual inspection or reproduction is claimed.
+Recover the complete repository URL; inspect the script, training code, dependencies, data-loading path and output handling; inspect the video or a reliable transcript; verify the run duration and cost; then execute only under an explicit spending limit. The creator attribution is now corroborated, but this does not identify the linked code repository. No independent audiovisual inspection or reproduction is claimed.
