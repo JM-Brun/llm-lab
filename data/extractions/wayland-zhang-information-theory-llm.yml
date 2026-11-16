@@ -118,7 +118,7 @@ items:
       limitations: ["In ordinary supervised next-token training, the observed target is often represented as one-hot; the per-example cross-entropy is then token NLL.", "The source entropy may vary across contexts and datasets; it is not one universal constant of language."]
     classification:
       primary_theme: probabilistic-foundations-training
-      tags: [topic:cross-entropy, topic:information-theory]
+      tags: [topic:information-theory]
       concept_ids: [cross-entropy, negative-log-likelihood, training-objective]
     candidate_destinations:
       pages: [fr/cross-entropy, en/cross-entropy]
@@ -146,7 +146,7 @@ items:
     classification:
       primary_theme: architectures-mechanisms
       secondary_themes: [probabilistic-foundations-training]
-      tags: [topic:mutual-information, topic:self-attention]
+      tags: [topic:mutual-information]
       concept_ids: [self-attention, attention-weight, scaled-dot-product-attention]
     candidate_destinations:
       pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
