@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import sys
 
-from run import train_bigram_model, sequence_cost_bits
+from run import sequence_cost_bits, train_bigram_model
 
 TRAINING_AB = "AB" * 100
 TRAINING_CD = "CD" * 100
