@@ -71,7 +71,7 @@ def main() -> None:
             unigram, bigram = evaluate(sequence)
             output.append(f"seed={seed:3d} data={label:9s} unigram={unigram:.4f} bigram={bigram:.4f}")
     output.extend(("Interpretation: a lower held-out loss indicates better prediction only.", "This is not an epiplexity, understanding, or subjectivity measurement."))
-    sys.stdout.write("\\n".join(output) + "\\n")
+    sys.stdout.write("\n".join(output) + "\n")
 
 
 if __name__ == "__main__":
