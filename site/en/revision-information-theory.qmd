@@ -62,46 +62,12 @@ Thus 0.837 ≈ 0.693 + 0.144.
 
 A probability p(x) corresponds to an ideal code length close to -log₂ p(x) bits. A good predictor can therefore support shorter codes. For dependent sequences, distinguish marginal entropy from entropy rate. This does not prove compression = intelligence: the measurement depends on corpus, tokenization and coding protocol.
 
-## Three conceptual traps
+## Four conceptual traps
 
 1. **Entropy is not the surprisal of one token.** Entropy is an average; surprisal concerns one event.
 2. **Marginal entropy is not entropy rate.** For dependent sequences, single-symbol frequencies do not capture long-run uncertainty per symbol.
 3. **Attention weights are not mutual information.** Attention weights aggregate values; mutual information is defined from a joint distribution.
 4. **Landauer is not a universal learning ceiling.** Its bound concerns physical irreversible erasure, not a general limit on generalization.
-
-
-## Further study — predictive \(\mathcal V\)-information
-
-Predictive \(I_{\mathcal V}(X\to Y)\) measures the prediction gain available to a specified family \(\mathcal V\) under logarithmic loss. It therefore depends on the allowed models. If the family is expressive enough to contain all predictors, it recovers Shannon mutual information; with a restricted family, it may be smaller.
-
-Do not treat it as a new assumption-free quantity: always specify the family, target, side information and loss. See the controlled experiment below.
-
-
-## Self-check
-
-1. Why is cross-entropy at least as large as target entropy?
-2. When does cross-entropy reduce to token NLL?
-3. Why does a high attention weight not measure mutual information?
-
-<details>
-<summary>Show answers</summary>
-
-1. Their difference is KL divergence, which is non-negative under the usual support conditions.
-2. When the target is one-hot: only the probability of the observed token contributes.
-3. Attention weights are normalized compatibility coefficients, not a joint distribution or an estimator of statistical dependence.
-
-</details>
-
-## Further study
-
-- [Experiment: entropy, KL and predictive coding](experience-information-theory.qmd)
-- [Source synthesis](https://github.com/JM-Brun/llm-lab/blob/research/information-theory-wayland-zhang-validated/docs/source-syntheses/information-theory-and-language-models-2026-11.md)
-- [Technical source review](https://github.com/JM-Brun/llm-lab/blob/research/information-theory-wayland-zhang-validated/docs/source-reviews/information-theory-wayland-zhang-2026-11.md)
-
-::: {.language-switch}
-**Language:** [Français](../fr/revision-information-theory.qmd) · [English](revision-information-theory.qmd)
-:::
-
 
 ## Attention: distinguish KL from mutual information
 
@@ -112,3 +78,36 @@ I(X;Y)=\mathbb E_X[D_{KL}(P(Y\mid X)\|P(Y))].
 \]
 
 The reference is the marginal \(P(Y)\). A row repeated for every context can be highly concentrated (positive KL to uniform) while still giving \(I(X;Y)=0\). Attention weights are not automatically conditional probabilities; do not interpret them as such without an explicit probabilistic model.
+
+## Further study — predictive \(\mathcal V\)-information
+
+Predictive \(I_{\mathcal V}(X\to Y)\) measures the prediction gain available to a specified family \(\mathcal V\) under logarithmic loss. It therefore depends on the allowed models. If the family is expressive enough to contain all predictors, it recovers Shannon mutual information; with a restricted family, it may be smaller.
+
+Do not treat it as a new assumption-free quantity: always specify the family, target, side information and loss. See the [dedicated controlled experiment](experience-information-theory.qmd).
+
+## Self-check
+
+1. Why is cross-entropy at least as large as target entropy?
+2. When does cross-entropy reduce to token NLL?
+3. Why does a high attention weight not measure mutual information?
+4. Why does the Landauer analogy not define a learning ceiling?
+
+<details>
+<summary>Show answers</summary>
+
+1. Their difference is KL divergence, which is non-negative under the usual support conditions.
+2. When the target is one-hot: only the probability of the observed token contributes.
+3. Attention weights are normalized compatibility coefficients, not a joint distribution or an estimator of statistical dependence.
+4. Because Landauer's bound concerns physical irreversible erasure of information, not a model's ability to extract information from its training data.
+
+</details>
+
+## Further study
+
+- [Experiment: entropy, KL and predictive coding](experience-information-theory.qmd)
+- [Source synthesis](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/information-theory-and-language-models-2026-11.md)
+- [Technical source review](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-reviews/information-theory-wayland-zhang-2026-11.md)
+
+::: {.language-switch}
+**Language:** [Français](../fr/revision-information-theory.qmd) · [English](revision-information-theory.qmd)
+:::
