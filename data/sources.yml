@@ -3870,6 +3870,8 @@ sources:
           - "Complete indexed PDF text: nine sections, conclusion and references"
           - "Source-local argument structure, positive/negative compression strategies, functional/structural effectiveness distinction, four predictions and grey-subjectivity proposal"
           - "Critical comparison with canonical compression lessons and existing project sources"
+          - "Primary-source check of Finzi et al. (2026), arXiv:2601.03220: time-bounded MDL definition, observer dependence and explicit non-guarantee of task-specific OOD generalization"
+          - "Primary-source check of Aksenov et al. (2026), arXiv:2603.20396: monoid theorems, MathLib/Lean 4 analysis and open macro-set identification problem"
         limitations:
           - "The source is a philosophical preprint; its central thesis is not an established empirical theory or consensus definition of intelligence."
           - "No independent reproduction of the cited experiments or proposed predictions."
