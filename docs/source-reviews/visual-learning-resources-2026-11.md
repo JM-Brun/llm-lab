@@ -106,6 +106,17 @@ The official project is a browser-based neural-network playground, with editable
 
 Do not create all proposed pages immediately. Inspect the page inventory and concept graph first; place each activity on an existing page where possible. Create a new page only when its learner question is not already served.
 
+### Existing coverage check before implementation
+
+A repository-level page and review check confirms that several P1 themes already have substantial homes:
+
+- `site/fr/hybrid-llm-architectures.qmd` and its English counterpart already explain GQA, KV-cache scaling, MoE, Mamba-2, and the distinction between global attention and recurrent state. They should be extended only where the new attention-variants comparison adds a genuinely missing mechanism.
+- `site/fr/transformer-architectures.qmd` and its English counterpart compare encoder-only, encoder–decoder, and decoder-only families. They answer a different question from MHA/MQA/GQA/MLA and should not be overloaded with head-layout implementation details.
+- The existing pedagogical audit `docs/source-reviews/transformer-attention-pedagogical-comparison-2026-11.md` already compares the Illustrated Transformer, 3Blue1Brown, and Transformer Explainer. Reuse its learning sequence and notation warnings rather than repeating that source review.
+- `docs/source-reviews/raschka-full-to-hybrid-attention-2026-11.md` already distinguishes sparse/local attention from bounded recurrent state and documents the limits of the author's open-model sample. Do not flatten those mechanisms into a single “efficient attention” category.
+
+**Implementation decision:** make the next attention-variants slice a focused bilingual addition to the existing attention/architecture material, not a new standalone chapter by default. Its comparison should isolate (1) query-head versus KV-head sharing (MHA/MQA/GQA), (2) latent KV compression (MLA), and (3) context-selection patterns (sliding-window/chunked/sparse attention). For each, report what changes, what remains unchanged, which resource is targeted (KV memory, attention arithmetic, or memory bandwidth), and which trade-offs or runtime dependencies remain. Keep hybrid recurrent/state-space mechanisms as a separate family, linked to the existing hybrid-architecture lesson.
+
 ## Source and evidence boundary
 
 This review used official project/author pages, repository descriptions and indexed excerpts to identify scope and pedagogical roles. It did not fully inspect every article, execute every interactive tool, reproduce benchmarks, verify every architecture example against primary model papers, or test accessibility/responsive behavior. New source records therefore remain partially-scanned; no figure reuse rights are inferred from public accessibility.
