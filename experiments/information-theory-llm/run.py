@@ -52,11 +52,12 @@ def xor_demo() -> dict[str, float]:
 
     Both toy families can ignore the input (optional ignorance). The richer
     family additionally contains a predictor assigning probability 0.9 to
-    the correct XOR label for each input pair.
+    the correct XOR label and 0.1 to the other label for each input pair.
+    Its expected log loss is the binary entropy h2(0.1), not -log2(0.9).
     """
     baseline_cross_entropy = 1.0
     constant_conditional_cross_entropy = 1.0
-    interaction_conditional_cross_entropy = -log2(0.9)
+    interaction_conditional_cross_entropy = entropy((0.9, 0.1))
     return {
         "shannon_mi": 1.0,
         "constant_family": baseline_cross_entropy - constant_conditional_cross_entropy,
