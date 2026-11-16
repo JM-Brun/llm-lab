@@ -20,3 +20,8 @@ Préférer les liens vers les extractions et sections de pages aux duplications 
 ## Transfer validation
 
 The tokenization/embeddings collection includes a retrospective assessment of whether the Q/K/V-calibrated source-to-knowledge method transfers to a heterogeneous source family: [method transfer validation](tokenization-embeddings-method-transfer-validation-2026-11.md). This is a method assessment, not another source catalogue or a replacement for the collection dossier.
+
+
+## Information theory and language models
+
+The first synthesis combines a tutorial's information-theoretic narrative with LLM Lab's canonical explanations and mathematical guardrails: [information theory and language models](information-theory-and-language-models-2026-11.md).
