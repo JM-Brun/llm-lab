@@ -81,5 +81,7 @@ def predictive_v_information(
             risk = -np.sum(marginal_y[positive] * np.log(prediction[positive])) / np.log(base)
             constant_risks.append(float(risk))
     v_entropy = float(min(constant_risks))
+    if not np.isfinite(v_entropy):
+        raise ValueError("family must provide a finite baseline log-loss on the target support")
     information = max(0.0, v_entropy - conditional_v_entropy)
     return v_entropy, conditional_v_entropy, information
