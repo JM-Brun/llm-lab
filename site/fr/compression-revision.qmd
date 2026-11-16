@@ -1,0 +1,128 @@
+---
+title: "Fiche de révision — Compression et LLM"
+subtitle: "Prédire pour coder, compresser un modèle, mesurer le coût réel"
+description-meta: "Fiche bilingue de révision distinguant compression prédictive, codage entropique, compression des poids et mémoire d'exécution des LLM."
+keywords: ["type:revision-sheet", "destination:review", "topic:compression", "level:core", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/compression-revision"
+summary: "Fiche de révision visuelle distinguant compression prédictive, compression du modèle et mémoire d'exécution, avec formules, protocole et auto-évaluation."
+scope: "Consolider les notions introduites par les sources sur la compression et leurs liens avec les probabilités conditionnelles, l'entropie croisée et les techniques de réduction des modèles."
+purpose: "Choisir la bonne notion de compression, calculer un coût prédictif idéal et expliquer les conditions d'un codage sans perte."
+domain: "probabilistic-foundations-training"
+suggested_route:
+  previous: "fr/entropy"
+  next: "fr/llm-computational-complexity"
+hierarchy:
+  parents: ["fr/entropy", "fr/llm-computational-complexity"]
+  children: []
+related: ["fr/cross-entropy", "fr/vraisemblance", "fr/llm-evolution", "fr/llm-computational-complexity"]
+tags: ["type:revision-sheet", "destination:review", "topic:compression", "level:core", "language:fr", "status:published"]
+-->
+
+::: {.chapter-lead}
+**La question à ne plus confondre : qu'est-ce qui est compressé ?** Une séquence, les paramètres du modèle, ou la mémoire utilisée pendant l'inférence ? Ces trois budgets répondent à des problèmes différents.
+:::
+
+## La carte mentale
+
+```{mermaid}
+flowchart TD
+  A["Compression autour d'un LLM"] --> B["Séquence / données"]
+  A --> C["Modèle / checkpoint"]
+  A --> D["Mémoire d'exécution"]
+  B --> E["Probabilités conditionnelles"]
+  E --> F["Surprisal : -log₂ p(token | contexte)"]
+  F --> G["Code entropique : décodage exact"]
+  C --> H["Quantification · pruning · distillation"]
+  D --> I["Cache KV · activations · buffers"]
+```
+
+| Question | Notion | Mécanismes / métriques |
+|---|---|---|
+| Peut-on représenter une séquence avec moins de bits ? | **Compression prédictive** | Probabilités, surprisal, bits/token, longueur du code |
+| Peut-on réduire le modèle à stocker ou déployer ? | **Compression du modèle** | Quantification, pruning, distillation ; taille, mémoire, qualité, latence |
+| Combien de mémoire faut-il pendant la génération ? | **Mémoire d'exécution** | Cache KV, activations, buffers ; pic mémoire et débit |
+
+## 1. Prédire pour coder
+
+Un modèle autorégressif factorise la probabilité d'une séquence :
+
+$$
+p(x_{1:T})=\prod_{t=1}^{T}p(x_t\mid x_{<t}).
+$$
+
+Le coût idéal du token observé, en bits, est son *surprisal* :
+
+$$
+I_t=-\log_2 p(x_t\mid x_{<t}).
+$$
+
+La longueur idéale de la séquence est donc :
+
+$$
+L^*(x_{1:T})=-\sum_{t=1}^{T}\log_2 p(x_t\mid x_{<t}).
+$$
+
+**Lecture :** plus le modèle attribue une probabilité élevée au token observé, moins son coût idéal est élevé. La cross-entropy moyenne mesure ce coût moyen sous une distribution de données et une convention de logarithme données.
+
+::: {.callout-warning title="Une probabilité ne suffit pas à décompresser"}
+Il faut un codeur et un décodeur compatibles (par exemple arithmétiques), le même modèle, le même tokenizer, le même ordre des symboles et des conventions numériques identiques. Le décodage doit reconstruire exactement la séquence. Générer une continuation plausible n'est pas décompresser le corpus.
+:::
+
+## 2. Réduire le modèle
+
+| Technique | Ce qui change | Question à mesurer |
+|---|---|---|
+| **Quantification** | Précision numérique des poids et/ou activations | Taille, mémoire, qualité, latence selon kernels et matériel |
+| **Pruning** | Poids ou structures supprimés | La sparsité est-elle réellement exploitée par le matériel ? |
+| **Distillation** | Un étudiant apprend à imiter certains comportements d'un professeur | Quel comportement est conservé, sur quelles tâches et avec quelle perte ? |
+
+Un checkpoint plus petit n'est pas automatiquement plus rapide : le format, les kernels, le matériel, le batch et la longueur de contexte comptent.
+
+## 3. Ne pas confondre les budgets
+
+- **Stockage persistant :** poids du checkpoint et fichiers associés.
+- **Mémoire d'exécution :** cache KV, activations et buffers pendant l'inférence.
+- **Communication :** coût de transmission du modèle, des métadonnées et éventuellement des données.
+
+Quantifier le cache KV réduit un budget de mémoire d'exécution ; cela ne signifie pas que le fichier des poids a été réduit.
+
+## 4. Ce que montre l'expérience du dépôt
+
+L'expérience [codage prédictif exact](../../experiments/predictive-compression/README.fr.md) utilise un modèle bigramme synthétique à quatre symboles.
+
+| Mesure | Résultat |
+|---|---:|
+| Coût idéal selon le modèle | 19,642 bits |
+| Code binaire effectivement émis | 21 bits |
+| Référence uniforme | 40 bits |
+| Reconstruction exacte | Oui |
+
+Ces chiffres concernent uniquement le message de test. Ils excluent le coût de transmission du modèle appris sur 40 symboles, du tokenizer et des métadonnées. Ce n'est ni un benchmark de LLM ni une preuve de compression nette d'un système complet.
+
+## Auto-évaluation
+
+1. Pourquoi un LLM n'est-il pas un décompresseur LZW ?
+2. Quelle différence entre surprisal et entropie ?
+3. Pourquoi faut-il un décodeur partagé pour garantir une reconstruction sans perte ?
+4. Pourquoi un modèle quantifié peut-il être plus petit sans être plus rapide ?
+5. Le cache KV appartient-il au checkpoint ou à la mémoire d'exécution ?
+
+::: {.callout-tip title="Réponses attendues"}
+1. Il apprend une distribution paramétrique et ne stocke pas un dictionnaire réversible du corpus.
+2. Le surprisal porte sur un événement observé ; l'entropie est la moyenne du surprisal sous une distribution.
+3. L'encodeur et le décodeur doivent reconstruire les mêmes intervalles/symboles avec des conventions identiques.
+4. Le gain dépend des kernels, du matériel, du format et du workload.
+5. À la mémoire temporaire d'exécution.
+:::
+
+## Pour approfondir
+
+- [Entropie](entropy.qmd) · [Entropie croisée](cross-entropy.qmd) · [Vraisemblance](vraisemblance.qmd)
+- [Complexité et parallélisme](llm-computational-complexity.qmd) · [Évolution des LLM](llm-evolution.qmd)
+- [Synthèse critique de l'article de Karthik Shashidhar](../../docs/source-syntheses/llms-and-compression-algorithms-2026-11.md)
+- [Comparaison des deux sens de la compression](../../docs/source-syntheses/compression-two-meanings-2026-11.md)
