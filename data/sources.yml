@@ -3642,3 +3642,48 @@ sources:
       concepts: [kv-cache]
       audit_records:
         - docs/source-syntheses/model-compression-2026-11.md
+
+  - id: wayland-zhang-information-theory-llm-2026
+    title: "Information Theory Is All You Need (to Understand LLMs)"
+    creators: ["Wayland Zhang"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://waylandz.com/blog/information-theory-and-llm/"
+    publisher: "Wayland Zhang"
+    publication_date: "2026-02-17"
+    updated_date: null
+    language: en
+    version: "Article states it is a rewrite of a 2025-03-27 original"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:entropy, topic:cross-entropy, topic:mutual-information, topic:predictive-compression, topic:v-information]
+      concept_ids: [cross-entropy, self-attention]
+    metadata:
+      technical_level: mixed
+      contribution_types: [theory, pedagogy, visualization, experiment]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-16"
+        status: partially-scanned
+        inspected_scope:
+          - "Full article body retrieved directly: six sections and page metadata"
+          - "Linked GitHub repository landing page and English/Chinese notebook filenames inspected"
+          - "Linked V-information paper abstract and metadata inspected"
+          - "Critical source extraction and review created"
+        limitations:
+          - "Notebook cells were not executed or exhaustively inspected."
+          - "Article figures were not separately retrieved as image files."
+          - "Full V-information paper and remaining further-reading links were not audited."
+          - "Comments and reuse permissions were not established."
+    related:
+      pages: [fr/entropy, en/entropy, fr/cross-entropy, en/cross-entropy, fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+      concepts: [cross-entropy, self-attention]
+      audit_records:
+        - docs/source-reviews/wayland-zhang-information-theory-llm-2026-11.md
+        - docs/source-syntheses/information-theory-and-llms-2026-11.md
