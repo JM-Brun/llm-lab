@@ -118,9 +118,9 @@ Le dernier cas est le point pédagogique essentiel : les données contiennent un
 
 Pour éviter de comparer l'entropie marginale d'un caractère à la taille d'un fichier compressé par un algorithme qui exploite aussi les dépendances, lance une seconde expérience :
 
-\`\`\`bash
+```bash
 uv run --locked python experiments/information-theory/compression.py
-\`\`\`
+```
 
 Le script génère trois sources de même longueur sur un alphabet de quatre symboles : une séquence constante, une source IID uniforme et une chaîne de Markov symétrique où la probabilité de conserver le même symbole vaut 0,9. La graine est fixée. Il compare :
 
