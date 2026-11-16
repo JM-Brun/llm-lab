@@ -92,7 +92,7 @@ Quantifier le cache KV réduit un budget de mémoire d'exécution ; cela ne sign
 
 ## 4. Ce que montre l'expérience du dépôt
 
-L'expérience [codage prédictif exact](../../experiments/predictive-compression/README.fr.md) utilise un modèle bigramme synthétique à quatre symboles.
+L'expérience [codage prédictif exact](https://github.com/JM-Brun/llm-lab/blob/main/experiments/predictive-compression/README.fr.md) utilise un modèle bigramme synthétique à quatre symboles.
 
 | Mesure | Résultat |
 |---|---:|
@@ -123,5 +123,5 @@ Ces chiffres concernent uniquement le message de test. Ils excluent le coût de 
 
 - [Entropie](entropy.qmd) · [Entropie croisée](cross-entropy.qmd) · [Vraisemblance](vraisemblance.qmd)
 - [Complexité et parallélisme](llm-computational-complexity.qmd) · [Évolution des LLM](llm-evolution.qmd)
-- [Synthèse critique de l'article de Karthik Shashidhar](../../docs/source-syntheses/llms-and-compression-algorithms-2026-11.md)
-- [Comparaison des deux sens de la compression](../../docs/source-syntheses/compression-two-meanings-2026-11.md)
+- [Synthèse critique de l'article de Karthik Shashidhar](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/llms-and-compression-algorithms-2026-11.md)
+- [Comparaison des deux sens de la compression](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/compression-two-meanings-2026-11.md)
