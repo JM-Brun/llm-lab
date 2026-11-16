@@ -78,7 +78,7 @@ A compatible encoder and decoder (for example, arithmetic coders), the same mode
 For a given predictive distribution:
 
 - **Predictive entropy**: the model's average uncertainty about the next token.
-- **Observed surprisal**: the information cost of the token that actually occurred, \\( -\\log_2 p(x_t\\mid context) \\).
+- **Observed surprisal**: the information cost of the token that actually occurred, \( -\\log_2 p(x_t\\mid context) \).
 - **Attention-weight entropy**: how dispersed attention weights are across context positions.
 - **KV-cache drift**: the difference between a retained state and the state that would be recomputed.
 
