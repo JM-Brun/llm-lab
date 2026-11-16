@@ -1,0 +1,97 @@
+schema_version: 1
+source_id: huggingface-jobs-nanogpt-video-2026
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "User-supplied description and chapter timestamps inspected 2026-11-16."
+      - "Current official Hugging Face Jobs, configuration and pricing documentation checked."
+    inferred_elements:
+      - "Learning outcomes and workflow are inferred from the supplied description; the video itself was not independently inspected."
+      - "The supplied GitHub URL is truncated, so the code-level sequence cannot be reconstructed."
+  source_graph:
+    nodes:
+      - {id: src-local-training-program, kind: artifact, description: "A NanoGPT-like model and training program independent of the remote execution provider.", locator: "01:21 (supplied chapter label)"}
+      - {id: src-managed-job, kind: execution-environment, description: "Hugging Face Jobs executes a command on selected managed hardware.", locator: "02:57 (supplied chapter label)"}
+      - {id: src-shell-launcher, kind: implementation-pattern, description: "A generic shell script acts as a launch adapter.", locator: "04:15 (supplied chapter label)"}
+      - {id: src-remote-run, kind: process, description: "The training command runs remotely and produces results.", locator: "05:35 (supplied chapter label)"}
+      - {id: src-local-gpu-constraint, kind: constraint, description: "Limited local GPU capacity motivates managed remote execution.", locator: "00:00 (supplied chapter label)"}
+    edges:
+      - {from: src-local-gpu-constraint, type: motivates, to: src-managed-job}
+      - {from: src-local-training-program, type: executed-by, to: src-managed-job}
+      - {from: src-shell-launcher, type: submits, to: src-managed-job}
+      - {from: src-managed-job, type: runs, to: src-remote-run}
+    interpretation: "Partial editorial reconstruction from user-supplied summary and chapter labels; inferred relations are not a formal graph published by the creator."
+  learning_outcomes:
+    - {status: inferred, outcome: "Distinguish training code from its execution infrastructure.", basis: "Supplied description emphasizes unchanged training code and a generic launcher."}
+    - {status: inferred, outcome: "Describe the role of a managed GPU job and launch script.", basis: "Supplied chapter labels for Jobs and shell script."}
+    - {status: inferred, outcome: "Identify data, output and cost checks needed after remote execution.", basis: "Inferred from the run/results stage and official Jobs documentation."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "A working Python/PyTorch training program and basic shell familiarity.", basis: "The described workflow launches existing training code."}
+    - {status: inferred, topic: "Basic understanding of GPU memory and training runtime.", basis: "The stated motivation is insufficient local GPU capacity."}
+  teaching_route:
+    - {order: 1, section: "Introduction", function: motivate-remote-execution, moves: ["Start from local GPU constraints", "Introduce managed compute"]}
+    - {order: 2, section: "Model and training code", function: separate-program-from-infrastructure, moves: ["Show the training program before remote execution"]}
+    - {order: 3, section: "Using Jobs", function: introduce-managed-execution, moves: ["Select and invoke managed compute"]}
+    - {order: 4, section: "The shell script", function: encapsulate-launch-configuration, moves: ["Use a generic launcher as the execution boundary"]}
+    - {order: 5, section: "Run and results", function: observe-execution, moves: ["Inspect the run; exact output handling remains unknown"]}
+  pedagogical_strengths:
+    - "Makes remote GPU execution approachable without requiring remote-server administration."
+    - "Highlights separation between reusable training code and provider-specific execution configuration."
+    - "A thin shell launcher can make runs repeatable and parameterizable."
+  pedagogical_limits:
+    - "The video and code were not independently inspected."
+    - "The approximate $1 cost is run-specific, not a current general A100 price."
+    - "Data access, artifact persistence, secrets, timeouts and failure handling are not established by the supplied summary."
+    - "A successful remote run does not establish scientific validity or generalization."
+  comparison:
+    dossier: docs/source-reviews/huggingface-jobs-nanogpt-video-2026-11.md
+    canonical_graph: "data/concepts.yml and generated JSON-LD projection"
+    canonical_routes: [docs/learning-path.md, data/guided-route.yml]
+    decision: "Optional operational case study after a working training loop exists; no new core stage and no claim of current project training capability."
+    structures_kept_separate: [source-semantic-graph, source-pedagogical-route, canonical-concept-graph, canonical-learning-routes, site-navigation]
+items:
+  - id: huggingface-jobs-nanogpt-video-2026:separate-training-code-from-execution
+    kind: implementation-pattern
+    summary: "Keep model/training code provider-independent and use a thin launcher to select the container image, hardware flavor, command and runtime configuration."
+    locator: {type: timestamp, value: "01:21–04:15", label: "Training code and shell launcher; chapter labels supplied by user"}
+    evidence:
+      kind: source-summary-plus-official-documentation
+      confidence: well-supported
+      scope: "General separation of a training command from Hugging Face Jobs execution configuration."
+      assumptions: ["The training program is compatible with the remote image.", "Required code and data are accessible to the job."]
+      limitations: ["The video script and exact command were not inspected."]
+    disposition: integrate-by-reference
+  - id: huggingface-jobs-nanogpt-video-2026:remote-job-contract
+    kind: mechanism
+    summary: "A Hugging Face Job runs a command in a selected container image and hardware flavor; status and logs can be inspected separately from the local launcher."
+    locator: {type: section, value: "Hugging Face Jobs official documentation", label: "Run and manage Jobs"}
+    evidence:
+      kind: official-documentation
+      confidence: established
+      scope: "Current documented Jobs CLI/Python execution model."
+      assumptions: ["The account has permission and a positive Jobs credit balance."]
+      limitations: ["Timeout, data access, secrets and output persistence require explicit configuration."]
+    disposition: integrate-by-reference
+  - id: huggingface-jobs-nanogpt-video-2026:pricing-qualification
+    kind: limitation
+    summary: "The documented A100-large flavor is an 80 GB A100 at $2.50/hour, billed per minute while starting or running; the video's approximate $1 is a run-specific estimate."
+    locator: {type: section, value: "Hugging Face Jobs Pricing and Billing", label: "GPU pricing table"}
+    evidence:
+      kind: official-documentation
+      confidence: established
+      scope: "Pricing page consulted 2026-11-16."
+      assumptions: ["The listed A100-large price applies at consultation time."]
+      limitations: ["Prices and credits can change; actual cost depends on billed duration and configuration."]
+    disposition: clarify
+  - id: huggingface-jobs-nanogpt-video-2026:artifact-persistence
+    kind: misconception
+    summary: "Managed execution avoids much server administration but does not make data access or artifact persistence automatic; checkpoints and results must be deliberately saved to durable storage."
+    locator: {type: section, value: "Jobs lifecycle and configuration", label: "Data, secrets and job lifecycle"}
+    evidence:
+      kind: technical-assessment
+      confidence: well-supported
+      scope: "General requirements for reproducible remote training."
+      assumptions: ["Job storage may be ephemeral and external resources may require authentication."]
+      limitations: ["The video's exact persistence mechanism is unknown."]
+    disposition: integrate
