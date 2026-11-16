@@ -41,7 +41,7 @@ def unigram_cross_entropy(train: str, test: str) -> float:
 
 def bigram_cross_entropy(train: str, test: str) -> float:
     counts: dict[str, Counter[str]] = defaultdict(Counter)
-    for left, right in zip(train, train[1:]):
+    for left, right in zip(train, train[1:], strict=False):
         counts[left][right] += 1
 
     totals = {left: sum(row.values()) for left, row in counts.items()}
