@@ -87,3 +87,23 @@ def test_invalid_log_bases_are_rejected_by_every_metric(metric: str) -> None:
             perplexity(0.5, base=1.0)
         else:
             ideal_code_lengths(probabilities, base=1.0)
+
+
+
+def test_kl_support_and_shape_edge_cases() -> None:
+    assert np.isinf(kl_divergence(np.array([0.5, 0.5]), np.array([1.0, 0.0])))
+    with pytest.raises(ValueError):
+        kl_divergence(np.array([1.0, 0.0]), np.array([1.0]))
+
+
+def test_perplexity_rejects_negative_or_non_finite_nll() -> None:
+    with pytest.raises(ValueError):
+        perplexity(-0.1)
+    with pytest.raises(ValueError):
+        perplexity(float("inf"))
+
+
+def test_zero_probability_has_infinite_ideal_code_length() -> None:
+    lengths = ideal_code_lengths(np.array([1.0, 0.0]))
+    assert lengths[0] == 0.0
+    assert np.isinf(lengths[1])
