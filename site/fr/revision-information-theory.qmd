@@ -62,45 +62,12 @@ Donc 0,837 ≈ 0,693 + 0,144.
 
 Une probabilité p(x) correspond à une longueur idéale de code proche de -log₂ p(x) bits. Un bon prédicteur peut donc permettre un codage plus court. Pour une séquence dépendante, il faut distinguer entropie marginale et taux d'entropie. Mais cela ne prouve pas que compression = intelligence : la mesure dépend du corpus, de la tokenisation et du protocole de codage.
 
-## Trois pièges conceptuels
+## Quatre pièges conceptuels
 
 1. **Entropie ≠ surprise d'un token particulier.** L'entropie est une moyenne ; le surprisal concerne un événement.
 2. **Entropie marginale ≠ taux d'entropie.** Pour une séquence dépendante, les fréquences de symboles isolés ne suffisent pas à mesurer l'incertitude moyenne par symbole à long terme.
 3. **Poids d'attention ≠ information mutuelle.** Les poids d'attention agrègent des valeurs ; l'information mutuelle se définit à partir d'une distribution jointe.
 4. **Landauer ≠ plafond universel d'apprentissage.** La borne concerne l'effacement physique irréversible, pas une limite générale de généralisation.
-
-
-## Approfondissement — information prédictive \(\mathcal V\)
-
-L'information prédictive \(I_{\mathcal V}(X\to Y)\) mesure le gain de prédiction permis par une famille \(\mathcal V\) donnée, sous perte logarithmique. Elle dépend donc des modèles autorisés. Si la famille est assez expressive pour contenir tous les prédicteurs, elle retrouve l'information mutuelle de Shannon ; avec une famille restreinte, elle peut être plus faible.
-
-Ne pas la confondre avec une nouvelle quantité indépendante des hypothèses : il faut toujours préciser la famille, la cible, l'information fournie et la perte. Voir l'expérience contrôlée ci-dessous.
-
-## Auto-évaluation
-
-1. Pourquoi la cross-entropie est-elle toujours au moins aussi grande que l'entropie cible ?
-2. Dans quel cas la cross-entropie devient-elle la NLL d'un token ?
-3. Pourquoi un poids d'attention élevé ne mesure-t-il pas une quantité d'information mutuelle ?
-
-<details>
-<summary>Afficher le corrigé</summary>
-
-1. Parce que leur différence est la divergence KL, qui est positive ou nulle sous les conditions de support usuelles.
-2. Lorsque la cible est one-hot : seule la probabilité du token observé contribue.
-3. Parce que les poids sont des coefficients de compatibilité normalisés, pas une distribution jointe ni un estimateur de dépendance statistique.
-
-</details>
-
-## Pour aller plus loin
-
-- [Expérience : entropie, KL et codage prédictif](experience-information-theory.qmd)
-- [Synthèse documentaire](https://github.com/JM-Brun/llm-lab/blob/research/information-theory-wayland-zhang-validated/docs/source-syntheses/information-theory-and-language-models-2026-11.md)
-- [Revue critique de l'article](https://github.com/JM-Brun/llm-lab/blob/research/information-theory-wayland-zhang-validated/docs/source-reviews/information-theory-wayland-zhang-2026-11.md)
-
-::: {.language-switch}
-**Langue :** [Français](revision-information-theory.qmd) · [English](../en/revision-information-theory.qmd)
-:::
-
 
 ## Attention : distinguer KL et information mutuelle
 
@@ -111,3 +78,36 @@ I(X;Y)=\mathbb E_X[D_{KL}(P(Y\mid X)\|P(Y))].
 \]
 
 La référence est la marginale \(P(Y)\). Une ligne identique pour tous les contextes peut être très concentrée (KL vers l'uniforme positive) tout en donnant \(I(X;Y)=0\). Les poids d'attention ne sont pas automatiquement des probabilités conditionnelles ; ne les interprète pas comme telles sans modèle probabiliste explicite.
+
+## Approfondissement — information prédictive \(\mathcal V\)
+
+L'information prédictive \(I_{\mathcal V}(X\to Y)\) mesure le gain de prédiction permis par une famille \(\mathcal V\) donnée, sous perte logarithmique. Elle dépend donc des modèles autorisés. Si la famille est assez expressive pour contenir tous les prédicteurs, elle retrouve l'information mutuelle de Shannon ; avec une famille restreinte, elle peut être plus faible.
+
+Ne pas la confondre avec une nouvelle quantité indépendante des hypothèses : il faut toujours préciser la famille, la cible, l'information fournie et la perte. Voir [l'expérience contrôlée dédiée](experience-information-theory.qmd).
+
+## Auto-évaluation
+
+1. Pourquoi la cross-entropie est-elle toujours au moins aussi grande que l'entropie cible ?
+2. Dans quel cas la cross-entropie devient-elle la NLL d'un token ?
+3. Pourquoi un poids d'attention élevé ne mesure-t-il pas une quantité d'information mutuelle ?
+4. Pourquoi l'analogie de Landauer ne définit-elle pas un plafond d'apprentissage ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+1. Parce que leur différence est la divergence KL, qui est positive ou nulle sous les conditions de support usuelles.
+2. Lorsque la cible est one-hot : seule la probabilité du token observé contribue.
+3. Parce que les poids sont des coefficients de compatibilité normalisés, pas une distribution jointe ni un estimateur de dépendance statistique.
+4. Parce que la borne de Landauer concerne l'effacement physique irréversible de l'information, pas la capacité d'un modèle à extraire de l'information de ses données d'entraînement.
+
+</details>
+
+## Pour aller plus loin
+
+- [Expérience : entropie, KL et codage prédictif](experience-information-theory.qmd)
+- [Synthèse documentaire](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/information-theory-and-language-models-2026-11.md)
+- [Revue critique de l'article](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-reviews/information-theory-wayland-zhang-2026-11.md)
+
+::: {.language-switch}
+**Langue :** [Français](revision-information-theory.qmd) · [English](../en/revision-information-theory.qmd)
+:::
