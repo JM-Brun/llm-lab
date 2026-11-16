@@ -190,11 +190,7 @@ Let $H_q$ be the number of query heads and $H_{KV}$ the number of key/value head
 Q remains specific to each query head. What distinguishes MQA and GQA is sharing the K/V projections and states — not removing Q heads. GQA interpolates between MHA and MQA; the number of K/V heads is an architectural choice, not a free switch applied to an already-trained model.
 
 For dense attention with a KV cache, an approximate model-wide cache size is:
-
-$
-M_{KV}\approx 2 L B T H_{KV} d_h b,
-$
-
+ One estimate is $M_{KV}\approx 2 L B T H_{KV} d_h b$.
 where $L$ is the number of attention layers, $B$ the batch size, $T$ the retained context, $d_h$ the dimension of one KV head, and $b$ the number of bytes per element. The factor 2 stores both K and V. With dimensions and precision held fixed, moving from 32 KV heads (MHA) to 8 (GQA) therefore divides this cache by 4; moving to one (MQA) divides it by 32. This ratio applies to the K/V cache, not total model memory or necessarily measured latency.
 
 ### 2. MLA: jointly compressing K and V into a latent space
