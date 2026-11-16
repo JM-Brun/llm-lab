@@ -90,6 +90,18 @@ Read the full computation in order: scores from Q and K are scaled, an optional 
 
 The formulation is presented in [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762), which compares additive and dot-product attention and introduces the scaling factor. It supports efficient matrix computation and naturally fits multi-head mechanisms.
 
+## Attention and mutual information are different quantities
+
+Mutual information between two random variables is defined from their joint distribution:
+
+\[
+I(X;Y)=H(X)-H(X\mid Y).
+\]
+
+Attention weights do not compute this quantity. They are input-dependent normalized coefficients obtained from queries, keys and the mask; they weight the aggregation of value vectors. They therefore do not directly measure, in bits, how much information one token provides about another.
+
+The analogy between attention and statistical dependency can motivate a question, but **an attention weight is not mutual information**. An attention map alone also does not establish a causal or semantic explanation.
+
 ## Misconceptions and counterexamples
 
 - **“Softmax measures absolute similarity.”** No: it produces a distribution relative to the scores in a row. Adding the same constant to every score in a row leaves the weights unchanged.
