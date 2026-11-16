@@ -58,6 +58,18 @@ Follow links from these documents to the specific milestone specifications and s
 - Templates are soft targets. Harmonize interfaces, explanations and verification patterns without forcing identical page outlines.
 - Do not add a new workflow, GitHub Action, registry, framework or dependency unless the task demonstrates a concrete need. Prefer existing Python, Pydantic, pytest, Quarto and project conventions.
 
+
+## Source provenance for implementation and experiments
+
+When an implementation page, code example, benchmark or experiment is based on external material, audit the evidence chain as part of reproducibility:
+
+- Read `docs/source-catalogue-schema.md`, `data/extractions/README.md` and the target [source lineage architecture](../../../../docs/source-lineage-architecture.md).
+- Distinguish the external source/version, the exact inspection event, the atomic extraction item, the adapted implementation, and the experiment result. A citation alone does not establish that code was reproduced or a result independently verified.
+- Record pinned repository revisions, versions, exact code/data locators, licences and reuse constraints where known. Keep unknown rights explicitly unknown.
+- For experiments, link the relevant source/extraction to the experiment definition and report; keep the experiment's own configuration, seed, data provenance, metrics and limitations in the experiment's canonical records.
+- Treat `supports`, `contradicts` and `corroborates` as evidence relations, not tags. A paper that cites another paper is not independent corroboration.
+- Do not hand-edit generated source indexes or lineage projections. Until cutover is complete, use the currently validated `data/sources.yml` format and do not create parallel source records.
+
 ## When to run
 
 Choose the requested scope:
