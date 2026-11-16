@@ -17,3 +17,14 @@ uv run --locked python experiments/information-theory/run.py
 The JSON output records the distributions, units, entropy, cross-entropy, KL, perplexity and ideal code lengths. It also makes the expected ideal code length explicit and checks the one-hot NLL/perplexity special case. The calculation is deterministic and uses synthetic probabilities only; it does not train or evaluate an LLM.
 
 **Interpretation boundary.** Ideal lengths are real-valued information quantities, not a complete finite code construction. Actual codes have integer lengths and overhead; entropy is an asymptotic lower bound under source-coding assumptions. This experiment demonstrates identities, not model intelligence, generalization or a universal entropy of language.
+
+
+## Predictive V-information extension
+
+Run the separate finite-family example:
+
+```bash
+uv run --locked python experiments/information-theory/v_information.py
+```
+
+It computes population log-loss minima exactly for a finite predictive family that includes constant predictors for every output distribution (optional ignorance). The correlated feature gives about 0.531 bits to the feature-aware family; an independent feature and a constant-only family give zero. This isolates the model-class dependence of predictive V-information without training a model or estimating it from samples. See the bilingual experiment guide for the assumptions and interpretation limits.
