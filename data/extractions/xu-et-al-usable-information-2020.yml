@@ -9,7 +9,7 @@ pedagogical_model:
     inferred_elements:
       - "The teaching sequence below is a project reconstruction, not an author-declared course."
   comparison:
-    dossier: docs/source-reviews/v-information-xu-2020.md
+    dossier: docs/source-reviews/predictive-v-information-xu-2020.md
     canonical_graph: "data/concepts.yml"
     canonical_routes: [docs/learning-path.md, data/guided-route.yml, "Existing entropy, cross-entropy and information-theory experiment pages"]
     decision: "Use the paper as the primary theoretical source for predictive V-information. Keep the quantity relative to an explicitly specified predictive family and its log-loss; do not conflate it with Shannon mutual information except under the unrestricted-family special case."
@@ -19,12 +19,12 @@ pedagogical_model:
       - {id: src-predictive-family, kind: definition, description: "A family of probabilistic prediction functions satisfying optional ignorance.", locator: "Definition 1"}
       - {id: src-optional-ignorance, kind: condition, description: "Every output distribution available from a family member can also be output by a member that ignores the side information.", locator: "Definition 1"}
       - {id: src-predictive-v-entropy, kind: definition, description: "Minimum expected log-loss over the predictive family, with or without side information.", locator: "Definition 2"}
-      - {id: src-v-information, kind: definition, description: "Difference between no-input and conditional predictive V-entropy.", locator: "Definition 3"}
+      - {id: src-predictive-v-information, kind: definition, description: "Difference between no-input and conditional predictive V-entropy.", locator: "Definition 3"}
       - {id: src-pac-estimation, kind: guarantee, description: "A finite-sample estimation bound depending on bounded log-probabilities and function-family complexity.", locator: "Theorem 1"}
     edges:
       - {from: src-predictive-family, type: constrained-by, to: src-optional-ignorance}
       - {from: src-predictive-family, type: defines, to: src-predictive-v-entropy}
-      - {from: src-predictive-v-entropy, type: difference-defines, to: src-v-information}
+      - {from: src-predictive-v-entropy, type: difference-defines, to: src-predictive-v-information}
       - {from: src-predictive-family, type: controls-complexity-of, to: src-pac-estimation}
     interpretation: "Source-local formal reconstruction. The V-information quantity is relative to a predictive family and its loss; it is not interchangeable with Shannon mutual information except in the unrestricted-family special case."
   learning_outcomes:
@@ -62,14 +62,14 @@ items:
       classification:
         primary_theme: probabilistic-foundations-training
         secondary_themes: [scale-research]
-        tags: [topic:v-information, method:predictive-family]
-        concept_ids: [v-information]
+        tags: [topic:predictive-v-information, method:predictive-family]
+        concept_ids: [predictive-v-information]
       candidate_destinations:
         pages: [fr/experience-information-theory, en/experience-information-theory]
-        concepts: [v-information]
+        concepts: [predictive-v-information]
       disposition: integrate
       disposition_rationale: "Use the definition to ground the project's finite-family example; preserve optional ignorance as an explicit validation condition."
-    - id: xu-et-al-usable-information-2020:v-information-definition
+    - id: xu-et-al-usable-information-2020:predictive-v-information-definition
       kind: definition
       summary: "Predictive V-information is the no-side-information predictive V-entropy minus the predictive V-entropy conditioned on X."
       locator: {type: section, value: "2 Definitions and Notations", label: "Definition 3"}
@@ -81,11 +81,11 @@ items:
       classification:
         primary_theme: probabilistic-foundations-training
         secondary_themes: [mathematical-tools-geometry]
-        tags: [topic:v-information, topic:mutual-information]
-        concept_ids: [v-information, mutual-information]
+        tags: [topic:predictive-v-information, topic:mutual-information]
+        concept_ids: [predictive-v-information, mutual-information]
       candidate_destinations:
         pages: [fr/experience-information-theory, en/experience-information-theory]
-        concepts: [v-information]
+        concepts: [predictive-v-information]
       disposition: integrate
       disposition_rationale: "Teach as an advanced supporting quantity, not as a replacement for Shannon mutual information."
     - id: xu-et-al-usable-information-2020:pac-estimation
@@ -100,10 +100,10 @@ items:
       classification:
         primary_theme: probabilistic-foundations-training
         secondary_themes: [scale-research]
-        tags: [topic:v-information, method:pac-estimation]
-        concept_ids: [v-information]
+        tags: [topic:predictive-v-information, method:pac-estimation]
+        concept_ids: [predictive-v-information]
       candidate_destinations:
         pages: [fr/experience-information-theory, en/experience-information-theory]
-        concepts: [v-information]
+        concepts: [predictive-v-information]
       disposition: clarify
       disposition_rationale: "Record the theorem's assumptions and keep it out of the beginner-facing toy example's claims."

@@ -1,5 +1,5 @@
 schema_version: 1
-source_id: wayland-zhang-information-theory-llm-2026
+source_id: wayland-zhang-information-theory-llm
 pedagogical_model:
   reconstruction:
     status: complete
@@ -12,7 +12,7 @@ pedagogical_model:
   source_graph:
     nodes:
       - {id: src-information-content, kind: definition, description: "Surprisal of an event as negative logarithm of its probability.", locator: "Information Content and Entropy"}
-      - {id: src-entropy, kind: definition, description: "Expected surprisal under a probability distribution.", locator: "Information Content and Entropy"}
+      - {id: src-shannon-entropy, kind: definition, description: "Expected surprisal under a probability distribution.", locator: "Information Content and Entropy"}
       - {id: src-lossless-compression, kind: theoretical-limit, description: "Entropy as an asymptotic lower bound on average lossless code length under the relevant source-coding assumptions.", locator: "Information Content and Entropy"}
       - {id: src-cross-entropy, kind: objective, description: "Expected negative log probability assigned by a model distribution to outcomes from a target distribution.", locator: "Why LLMs Use Cross-Entropy Loss"}
       - {id: src-kl-divergence, kind: divergence, description: "Non-negative gap between cross-entropy and target entropy for distributions with compatible support.", locator: "Why LLMs Use Cross-Entropy Loss"}
@@ -26,8 +26,8 @@ pedagogical_model:
       - {id: src-intelligence-equivalence, kind: claim, description: "The article rhetorically equates compression ability with intelligence.", locator: "Compression Is Intelligence"}
       - {id: src-v-information, kind: advanced-framework, description: "A model-class-relative quantity intended to describe information accessible to a restricted predictive family.", locator: "V-Information: When Computation Matters"}
     edges:
-      - {from: src-information-content, type: averaged-into, to: src-entropy}
-      - {from: src-entropy, type: bounds-idealized-average-code-length, to: src-lossless-compression}
+      - {from: src-information-content, type: averaged-into, to: src-shannon-entropy}
+      - {from: src-shannon-entropy, type: bounds-idealized-average-code-length, to: src-lossless-compression}
       - {from: src-cross-entropy, type: decomposes-into, to: src-kl-divergence}
       - {from: src-next-token-training, type: minimizes, to: src-cross-entropy}
       - {from: src-mutual-information, type: quantifies, to: src-attention-analogy}
@@ -92,10 +92,10 @@ items:
       primary_theme: probabilistic-foundations-training
       secondary_themes: [mathematical-tools-geometry]
       tags: [topic:information-theory, topic:entropy]
-      concept_ids: [surprisal, entropy, negative-log-likelihood]
+      concept_ids: [surprisal, shannon-entropy, negative-log-likelihood]
     candidate_destinations:
       pages: [fr/entropy, en/entropy]
-      concepts: [surprisal, entropy]
+      concepts: [surprisal, shannon-entropy]
     disposition: already-covered
     disposition_rationale: "The bilingual entropy pages already distinguish predictive entropy, observed surprisal, NLL, units and interpretation; retain the source as a corroborating reference rather than duplicating the lesson."
 

@@ -3719,7 +3719,7 @@ sources:
       primary_theme: probabilistic-foundations-training
       secondary_themes: [mathematical-tools-geometry, scale-research]
       tags: [topic:predictive-v-information, topic:mutual-information, method:predictive-family]
-      concept_ids: [predictive-v-information, mutual-information, cross-entropy]
+      concept_ids: [v-information, mutual-information, cross-entropy]
     metadata:
       technical_level: advanced
       contribution_types: [theory, mathematical-derivation, experiment]
@@ -3738,5 +3738,5 @@ sources:
           - "No paper figures or source code are reused."
     related:
       pages: [fr/experience-information-theory, en/experience-information-theory, fr/revision-information-theory, en/revision-information-theory]
-      concepts: [predictive-v-information, mutual-information, cross-entropy]
+      concepts: [v-information, mutual-information, cross-entropy]
       audit_records: [docs/source-reviews/predictive-v-information-xu-2020.md]
