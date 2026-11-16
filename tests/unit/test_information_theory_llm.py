@@ -42,4 +42,7 @@ def test_v_information_depends_on_predictive_family() -> None:
     assert result["shannon_mi"] == pytest.approx(1.0)
     assert result["constant_family"] == pytest.approx(0.0)
     assert result["interaction_family"] > result["constant_family"]
+    assert result["interaction_family"] == pytest.approx(
+        1.0 - module["entropy"]((0.9, 0.1))
+    )
     assert result["interaction_family"] < result["shannon_mi"]
