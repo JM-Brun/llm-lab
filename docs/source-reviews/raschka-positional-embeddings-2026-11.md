@@ -115,8 +115,8 @@ The series alternates representational levels: sentence examples, architecture m
 
 Priority order; all diagrams should be newly authored, not copied:
 
-- **P0 — Position entry-point map:** absolute addition vs RoPE on Q/K vs learned bias on attention scores.
-- **P0 — RoPE pair explorer:** change query/key positions and pair frequency; display rotated vectors, relative angle and dot-product contribution.
+- **P0 — Position entry-point map (implemented):** original bilingual SVGs compare absolute addition, RoPE on Q/K and learned bias on attention scores.
+- **P0 — RoPE pair explorer (implemented):** bilingual controls change query/key positions, pair frequency and shared shift; the vector plot and numerical pair contribution update live. Fixed pre-rotation Q/K are explicitly stated.
 - **P0 — QK attention pipeline:** raw dot products → positional transformation → causal mask → softmax → weighted values, with Q/K/V lanes separated.
 - **P0 — Pair-layout explorer:** split-half/interleaved index maps, permutation and numerical equivalence test.
 - **P1 — Multi-frequency table:** show how base and pair index set angular frequencies and how position indexes cosine/sine rows.
@@ -136,6 +136,7 @@ For each P0/P1 component: **predict → manipulate one variable → observe tens
 - Registered the source with bounded scan scope and explicit reuse restrictions.
 - Added atomic extractions distinguishing established derivations from context-dependent architecture claims.
 - Extended the existing bilingual RoPE pages with modern variants, frequency schedule, pairing conventions, PyTorch table construction and test ideas.
+- Added a bilingual interactive RoPE pair explorer with a shared-shift control, live SVG vectors, pair-level dot product and explicit fixed-Q/K caveat; added shared JS/CSS assets and registered them as Quarto resources.
 - Added the annotated bibliography entry.
 - Linked both RoPE deep dives from the canonical positional-encoding concept.
 
@@ -144,7 +145,8 @@ No new concept IDs, introductory pages, copied figures or external code were add
 ## 6. Remaining work
 
 - If access to the original image assets becomes available, perform a pixel-level visual audit; the complete caption-and-context audit is already recorded in §4.
-- Build the remaining P0/P1 original diagrams and interactive experiments from the visual blueprint. The first P0 position-entry-point comparison has now been added in French and English.
+- Build the remaining P0 components (QK attention pipeline and split-half/interleaved pair-layout explorer), then the P1 experiments. The position-entry-point map and RoPE pair explorer are now implemented bilingually.
+- Browser-test the new interactive controls and rendered SVG in both languages; no browser rendering has yet been run in this branch.
 - Execute the statically inspected Qwen3 notebook and compare its numerical outputs; separately add tests for explicit position IDs and incremental KV-cache decoding, which are not covered by the inspected forward path.
 - Validate bilingual Quarto rendering, source/extraction schemas, concept graph and navigation in CI.
 
