@@ -106,3 +106,18 @@ The article and its companion repository are linked as external study resources.
 ## 6. Reproducibility and review boundary
 
 This review is a technical and pedagogical assessment of the article text retrieved on 2026-11-16. The notebook was statically inspected but not executed; the Xu et al. paper was inspected for the definitions and principal estimation assumptions needed for the project example, not exhaustively replicated. These are source-ingestion and reproducibility records, not evidence that learners have mastered the material. The article source remains `partially-scanned`.
+
+
+## 3.6 Controlled counterexample: attention-row KL is not mutual information
+
+LLM Lab now includes a deterministic counterexample in `experiments/information-theory/attention_kl_vs_mutual_information.py`. With two equally likely contexts and the same non-uniform row (0.9, 0.1) for each context, the mean row-wise KL to uniform is approximately 0.531 bits, while mutual information between context and key is exactly zero. The context does not change the key distribution, so the variables are independent.
+
+For a genuine joint distribution, the correct identity is:
+
+\[
+I(X;Y)=\mathbb E_X\left[D_{KL}\left(P(Y\mid X)\|P(Y)\right)\right].
+\]
+
+The reference distribution is the marginal \(P(Y)\), not an arbitrary uniform distribution. The experiment also includes opposite rows, where both quantities happen to equal approximately 0.531 bits; that numerical coincidence does not make the definitions equivalent. Attention weights are not automatically calibrated conditional probabilities, so even the conditional-KL identity cannot be applied to them without an explicit probabilistic model.
+
+A reusable discrete mutual-information function and tests for independence, perfect dependence and invalid joint tables were added to `src/llm_lab/foundations/information_theory.py` and `tests/unit/test_information_theory.py`. This is a mathematical counterexample, not an experiment on a trained Transformer.
