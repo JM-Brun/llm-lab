@@ -65,7 +65,8 @@ A probability p(x) corresponds to an ideal code length close to -log₂ p(x) bit
 ## Three conceptual traps
 
 1. **Entropy is not the surprisal of one token.** Entropy is an average; surprisal concerns one event.
-2. **Attention weights are not mutual information.** Attention weights aggregate values; mutual information is defined from a joint distribution.
+2. **Marginal entropy is not entropy rate.** For dependent sequences, single-symbol frequencies do not capture long-run uncertainty per symbol.
+3. **Attention weights are not mutual information.** Attention weights aggregate values; mutual information is defined from a joint distribution.
 3. **Landauer is not a universal learning ceiling.** Its bound concerns physical irreversible erasure, not a general limit on generalization.
 
 
