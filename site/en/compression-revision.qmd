@@ -86,7 +86,7 @@ These signals do not directly measure token utility. A highly predictable token 
 
 The [entropy-versus-surprisal experiment](https://github.com/JM-Brun/llm-lab/blob/main/experiments/entropy-surprisal-toy/README.md) illustrates the distinction with a binary source. It does not test an LLM.
 
-**Advanced direction:** some methods use attention-weight entropy to allocate a KV-cache budget, while others use decoded-distribution entropy to decide whether to recompute a cache. These are different signals and protocols. See the [critical synthesis on compression and inference efficiency](../../docs/source-syntheses/compression-intelligence-and-inference-efficiency-2026-11.md).
+**Advanced direction:** some methods use attention-weight entropy to allocate a KV-cache budget, while others use decoded-distribution entropy to decide whether to recompute a cache. These are different signals and protocols. See the [critical synthesis on compression and inference efficiency](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/compression-intelligence-and-inference-efficiency-2026-11.md).
 
 ## 2. Reduce the model
 
