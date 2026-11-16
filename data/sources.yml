@@ -3933,3 +3933,248 @@ sources:
       audit_records:
         - docs/source-reviews/huggingface-llm-course-2026-11.md
         - data/extractions/huggingface-llm-course.yml
+
+  - id: bbycroft-llm-visualization
+    title: "LLM Visualization"
+    creators: ["Brendan Bycroft"]
+    source_type: tutorial
+    identifiers: {}
+    canonical_url: "https://bbycroft.net/llm"
+    publisher: "Brendan Bycroft"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: "Live interactive walkthrough; version not pinned"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:transformer, topic:tensor-shapes, modality:interactive-visualization]
+      concept_ids: [token-embedding, self-attention, multi-head-attention]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [visualization, pedagogy, architecture]
+      audiences: [learner, educator, practitioner]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-16"
+        status: partially-scanned
+        inspected_scope: ["Public walkthrough description and indexed captures of overview and Transformer chapters"]
+        limitations: ["Full interactive walkthrough and source revision not inspected.", "Model-specific tensor dimensions and 3D proportions must not be generalized.", "No reuse licence for screenshots or explanatory text established."]
+    related:
+      pages: [fr/transformer, en/transformer, fr/tensors, en/tensors, fr/transformer-explainer, en/transformer-explainer]
+      concepts: [token-embedding, contextualized-representation, self-attention, multi-head-attention]
+      audit_records: [docs/source-reviews/visual-learning-resources-2026-11.md]
+
+  - id: tensorflow-playground
+    title: "A Neural Network Playground"
+    creators: ["TensorFlow Playground contributors"]
+    source_type: tutorial
+    identifiers: {}
+    canonical_url: "https://playground.tensorflow.org/"
+    publisher: "TensorFlow Playground project"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: "Live web application; version not pinned"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:neural-networks, topic:optimization, modality:interactive-visualization]
+      concept_ids: [gradient, optimizer, training-loop, overfitting]
+    metadata:
+      technical_level: introductory
+      contribution_types: [visualization, experiment, pedagogy]
+      audiences: [beginner, learner, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-16"
+        status: partially-scanned
+        inspected_scope: ["Official Playground landing page and project README"]
+        limitations: ["Small feed-forward network, not a Transformer or LLM.", "No full interaction protocol or browser compatibility audit.", "No reuse licence for screenshots established."]
+    related:
+      pages: [fr/gradients, en/gradients, fr/loss, en/loss, fr/training-loop, en/training-loop]
+      concepts: [gradient, optimizer, training-loop, overfitting]
+      audit_records: [docs/source-reviews/visual-learning-resources-2026-11.md]
+
+  - id: raschka-visual-attention-variants
+    title: "A Visual Guide to Attention Variants in Modern LLMs"
+    creators: ["Sebastian Raschka"]
+    source_type: tutorial
+    identifiers: {}
+    canonical_url: "https://magazine.sebastianraschka.com/p/visual-attention-variants"
+    publisher: "Ahead of AI"
+    publication_date: "2026-03-22"
+    updated_date: null
+    language: en
+    version: "Web article as accessed 2026-11-16"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [inference-efficiency]
+      tags: [topic:attention, topic:multi-head-attention, topic:grouped-query-attention, topic:multi-head-latent-attention, topic:sparse-attention, modality:visualization]
+      concept_ids: [multi-head-attention, self-attention, scaled-dot-product-attention]
+    metadata:
+      technical_level: advanced
+      contribution_types: [architecture, visualization, pedagogy]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-16"
+        status: partially-scanned
+        inspected_scope: ["Indexed article introduction, GQA sections, sparse-attention sections and conclusion"]
+        limitations: ["Full article and all architecture entries not independently checked.", "Model examples are time-sensitive and require primary-source verification.", "Not a controlled benchmark; figure reuse rights not established."]
+    related:
+      pages: [fr/transformer, en/transformer, fr/queries-keys-values, en/queries-keys-values, fr/generation, en/generation]
+      concepts: [scaled-dot-product-attention, multi-head-attention, self-attention]
+      audit_records: [docs/source-reviews/visual-learning-resources-2026-11.md]
+
+  - id: grootendorst-visual-guide-moe
+    title: "A Visual Guide to Mixture of Experts (MoE)"
+    creators: ["Maarten Grootendorst"]
+    source_type: tutorial
+    identifiers: {}
+    canonical_url: "https://www.maartengrootendorst.com/blog/moe/"
+    publisher: "Maarten Grootendorst"
+    publication_date: "2024-10-07"
+    updated_date: null
+    language: en
+    version: "Web article as accessed 2026-11-16"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [inference-efficiency, probabilistic-foundations-training]
+      tags: [topic:mixture-of-experts, topic:routing, topic:load-balancing, modality:visualization]
+      concept_ids: []
+    metadata:
+      technical_level: intermediate
+      contribution_types: [architecture, visualization, pedagogy]
+      audiences: [learner, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-16"
+        status: partially-scanned
+        inspected_scope: ["Official article outline and indexed sections on experts, routing, capacity and load balancing"]
+        limitations: ["Full article equations and linked primary papers not audited.", "No independent reproduction of routing examples.", "Figure reuse rights not established."]
+    related:
+      pages: [fr/transformer-architectures, en/transformer-architectures, fr/transformer, en/transformer]
+      concepts: []
+      audit_records: [docs/source-reviews/visual-learning-resources-2026-11.md]
+
+  - id: modular-llm-inference-handbook
+    title: "LLM Inference Handbook"
+    creators: ["Modular"]
+    source_type: documentation
+    identifiers: {repository: "modular/llm-inference-handbook"}
+    canonical_url: "https://handbook.modular.com/"
+    publisher: "Modular"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: "Living documentation; accessed 2026-11-16"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: inference-efficiency
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:inference, topic:prefill, topic:decode, topic:kv-cache, topic:serving, modality:interactive-visualization]
+      concept_ids: [prefill, decode-step, kv-cache, autoregressive-generation]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [implementation, visualization, pedagogy]
+      audiences: [learner, practitioner, researcher]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-16"
+        status: partially-scanned
+        inspected_scope: ["Official handbook landing page, audience, topic coverage and interactive-tool catalogue", "Public GitHub README and licence summary"]
+        limitations: ["Individual chapters, benchmarks and calculators not audited.", "Hardware/vendor performance claims are workload- and version-dependent.", "Full revision not pinned."]
+    related:
+      pages: [fr/generation, en/generation]
+      concepts: [prefill, decode-step, kv-cache, autoregressive-generation]
+      audit_records: [docs/source-reviews/visual-learning-resources-2026-11.md]
+
+  - id: neuronpedia-interpretability-platform
+    title: "Neuronpedia"
+    creators: ["Neuronpedia contributors"]
+    source_type: documentation
+    identifiers: {repository: "neuronpedia"}
+    canonical_url: "https://www.neuronpedia.org/"
+    publisher: "Neuronpedia"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: "Live platform and documentation; accessed 2026-11-16"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:mechanistic-interpretability, topic:sparse-autoencoders, topic:features, topic:attribution-graphs, modality:interactive-visualization]
+      concept_ids: []
+    metadata:
+      technical_level: advanced
+      contribution_types: [visualization, experiment, pedagogy]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-16"
+        status: partially-scanned
+        inspected_scope: ["Official platform landing page and documentation introduction/tool catalogue", "Documentation overview of auto-interpretability explanations"]
+        limitations: ["Specific models, feature datasets and attribution methods not audited.", "Model-generated feature explanations are hypotheses, not ground truth.", "No reuse licence for screenshots or datasets established."]
+    related:
+      pages: [fr/contextualized-representations, en/contextualized-representations, fr/llm-limits, en/llm-limits]
+      concepts: []
+      audit_records: [docs/source-reviews/visual-learning-resources-2026-11.md]
+
+  - id: apple-embedding-atlas
+    title: "Embedding Atlas: Low-Friction, Interactive Embedding Visualization"
+    creators: ["Donghao Ren", "Fred Hohman", "Halden Lin", "Dominik Moritz"]
+    source_type: repository
+    identifiers: {arxiv: "2505.06386", repository: "apple/embedding-atlas"}
+    canonical_url: "https://apple.github.io/embedding-atlas/"
+    publisher: "Apple Machine Learning Research"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: "Paper and live tool; accessed 2026-11-16"
+    revision: null
+    licence: {identifier: "MIT", url: "https://github.com/apple/embedding-atlas/blob/main/LICENSE", status: known}
+    reuse: {text: link-only, figures: unknown, code: link-only, data: unknown}
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:embeddings, topic:dimensionality-reduction, topic:clustering, modality:interactive-visualization]
+      concept_ids: [token-embedding, contextualized-representation]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [visualization, implementation, experiment, pedagogy]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-16"
+        status: partially-scanned
+        inspected_scope: ["Apple research abstract and demo description", "Official repository README feature list and stated MIT software licence"]
+        limitations: ["Full paper methodology and benchmarks not audited.", "MIT licence applies to repository software; figure, paper and example-data rights are separate.", "Projection and clustering artifacts require explicit teaching caveats."]
+    related:
+      pages: [fr/embedding-space, en/embedding-space, fr/contextualized-representations, en/contextualized-representations]
+      concepts: [token-embedding, contextualized-representation]
+      audit_records: [docs/source-reviews/visual-learning-resources-2026-11.md]
