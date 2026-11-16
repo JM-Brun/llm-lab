@@ -654,6 +654,73 @@ concepts:
 
 
 
+  - id: surprisal
+    importance: supporting
+    labels: {fr: "Surprise informationnelle", en: "Surprisal"}
+    definitions:
+      fr: "Quantité d'information associée à un événement observé, égale à l'opposé du logarithme de sa probabilité."
+      en: "Information associated with an observed event, equal to the negative logarithm of its probability."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/entropy, en/entropy, fr/vraisemblance, en/likelihood, fr/compression-revision, en/compression-revision]
+  - id: predictive-compression
+    importance: supporting
+    labels: {fr: "Compression prédictive", en: "Predictive compression"}
+    definitions:
+      fr: "Codage d'une séquence en exploitant les probabilités conditionnelles d'un modèle pour attribuer des longueurs de code adaptées à la prévisibilité des événements."
+      en: "Coding a sequence using a model's conditional probabilities to assign code lengths according to how predictable events are."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/entropy, en/entropy, fr/cross-entropy, en/cross-entropy, fr/compression-revision, en/compression-revision]
+  - id: entropy-coding
+    importance: supporting
+    labels: {fr: "Codage entropique", en: "Entropy coding"}
+    definitions:
+      fr: "Famille de méthodes qui convertissent une distribution de probabilités en codes dont la longueur moyenne approche la limite informationnelle, avec décodage compatible."
+      en: "Family of methods that convert a probability distribution into codes whose average length approaches the information limit, with a compatible decoder."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/compression-revision, en/compression-revision]
+  - id: arithmetic-coding
+    importance: supporting
+    labels: {fr: "Codage arithmétique", en: "Arithmetic coding"}
+    definitions:
+      fr: "Méthode de codage entropique qui représente une séquence entière par un intervalle numérique progressivement resserré selon les probabilités conditionnelles des symboles."
+      en: "Entropy-coding method that represents an entire sequence by a numerical interval progressively narrowed according to symbols' conditional probabilities."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/compression-revision, en/compression-revision]
+  - id: model-compression
+    importance: supporting
+    labels: {fr: "Compression du modèle", en: "Model compression"}
+    definitions:
+      fr: "Ensemble de transformations visant à réduire le coût de stockage ou d'exécution d'un modèle, avec un compromis possible sur la qualité."
+      en: "Set of transformations intended to reduce a model's storage or execution cost, potentially trading off quality."
+    domains: [inference-efficiency]
+    resources: [fr/llm-computational-complexity, en/llm-computational-complexity, fr/llm-evolution, en/llm-evolution, fr/compression-revision, en/compression-revision]
+  - id: pruning
+    importance: supporting
+    labels: {fr: "Élagage des paramètres", en: "Pruning"}
+    definitions:
+      fr: "Suppression de poids ou de structures d'un modèle afin de réduire sa représentation ou son calcul, avec des gains dépendant notamment de la structure et du matériel."
+      en: "Removal of model weights or structures to reduce representation size or computation, with gains depending notably on structure and hardware."
+    domains: [inference-efficiency]
+    resources: [fr/llm-computational-complexity, en/llm-computational-complexity, fr/compression-revision, en/compression-revision]
+  - id: quantization
+    importance: supporting
+    labels: {fr: "Quantification numérique", en: "Quantization"}
+    definitions:
+      fr: "Réduction de la précision numérique utilisée pour représenter les poids ou activations, afin de diminuer le stockage ou les coûts d'exécution."
+      en: "Reduction of the numerical precision used to represent weights or activations to lower storage or execution costs."
+    domains: [inference-efficiency]
+    resources: [fr/llm-computational-complexity, en/llm-computational-complexity, fr/compression-revision, en/compression-revision]
+  - id: knowledge-distillation
+    importance: supporting
+    labels: {fr: "Distillation de connaissances", en: "Knowledge distillation"}
+    definitions:
+      fr: "Entraînement d'un modèle étudiant à reproduire certains comportements ou sorties d'un modèle enseignant."
+      en: "Training a student model to reproduce selected behaviours or outputs of a teacher model."
+    domains: [inference-efficiency]
+    resources: [fr/llm-evolution, en/llm-evolution, fr/compression-revision, en/compression-revision]
+
+
+
 relation_types:
   represented-by:
     direction: directed
@@ -777,6 +844,15 @@ relation_types:
       fr: "La source est évaluée au moyen de la cible."
       en: "The source is evaluated using the target."
 relations:
+
+  - {from: predictive-compression, type: applies-to, to: conditional-distribution}
+  - {from: predictive-compression, type: contributes-to, to: entropy-coding}
+  - {from: arithmetic-coding, type: part-of, to: entropy-coding}
+  - {from: model-compression, type: contrasts-with, to: predictive-compression}
+  - {from: pruning, type: part-of, to: model-compression}
+  - {from: quantization, type: part-of, to: model-compression}
+  - {from: knowledge-distillation, type: part-of, to: model-compression}
+  - {from: surprisal, type: contributes-to, to: predictive-compression}
   - {from: document-retrieval, type: contributes-to, to: retrieval-augmented-generation}
   - {from: retrieval-augmented-generation, type: contributes-to, to: context-engineering}
   - {from: persistent-memory, type: contributes-to, to: context-engineering}
