@@ -17,9 +17,7 @@ def test_generated_sequences_are_deterministic() -> None:
 def test_markov_source_has_lower_conditional_than_marginal_entropy() -> None:
     module = _module()
     sequences = module["generate_sequences"]()
-    marginal, conditional = module["entropy_metrics"](
-        sequences["Markov (P[stay]=0.9)"]
-    )
+    marginal, conditional = module["entropy_metrics"](sequences["Markov (P[stay]=0.9)"])
     assert conditional < marginal
 
 
