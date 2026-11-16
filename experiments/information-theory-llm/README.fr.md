@@ -14,7 +14,7 @@ Il s'agit d'une illustration numérique, pas d'une expérience sur un LLM ni d'u
 Les résultats flottants sont approximatifs. Aucun réseau neuronal, entraînement, corpus réel ou tenseur d'attention n'est utilisé.
 
 
-Le script comprend aussi un exemple XOR équilibré pour la V-information prédictive. Il compare une famille limitée à des prédicteurs constants à une famille capable de représenter l'interaction XOR. C'est un calcul jouet exact illustrant la définition de Xu et al. (ICLR 2020), pas un benchmark de réseau neuronal ni une reproduction du théorème PAC de l'article.
+Le script comprend aussi un exemple XOR équilibré pour la V-information prédictive. Il compare une famille limitée à des prédicteurs constants à une famille capable de représenter l'interaction XOR. Si ce prédicteur attribue 0,9 à la bonne classe et 0,1 à l'autre, sa perte logarithmique moyenne vaut l'entropie binaire h₂(0,1) ≈ 0,469 bit ; le gain prédictif vaut donc 1 − h₂(0,1) ≈ 0,531 bit. Le calcul tient compte des erreurs et illustre la définition de Xu et al. (ICLR 2020) ; ce n'est ni un benchmark neuronal ni une reproduction du théorème PAC.
 
 Papier primaire : https://openreview.net/forum?id=r1eBeyHFDH (également https://arxiv.org/abs/2002.10689).
 
