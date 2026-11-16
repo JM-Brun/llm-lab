@@ -3,10 +3,10 @@
 
 from __future__ import annotations
 
+import sys
 from collections import Counter, defaultdict
 from fractions import Fraction
 from math import log2
-import sys
 
 ALPHABET = ("A", "B", "C", "D")
 TRAINING = "ABABACABADABABACABADABABACABADABABACABAD"
@@ -62,7 +62,6 @@ def dyadic_code_inside(low: Fraction, high: Fraction) -> tuple[int, int]:
         denominator = 1 << bits
         # Find the first dyadic value >= low, using integer arithmetic only.
         numerator = (low.numerator * denominator + low.denominator - 1) // low.denominator
-        code_value = Fraction(numerator, denominator)
         if Fraction(numerator + 1, denominator) <= high:
             return numerator, bits
         bits += 1
