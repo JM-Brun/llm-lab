@@ -221,7 +221,7 @@ I_{\\mathcal V}(X\\to Y)=H_{\\mathcal V}(Y\\mid\\varnothing)-H_{\\mathcal V}(Y\\
 
 It measures the predictive gain from the input for that family and loss. A restricted family may fail to exploit structure that is present in the data. The quantity can be directional; it does not replace Shannon mutual information and does not mean computation creates Shannon information.
 
-**XOR example:** two bits determine their XOR perfectly (1 bit of mutual information), yet a constant predictor gains nothing from observing them. A predictor able to represent their interaction can use almost all of that information. See the [reproducible experiment](../../experiments/information-theory-llm/README.md) and the [primary paper](https://openreview.net/forum?id=r1eBeyHFDH).
+**XOR example:** two bits determine their XOR perfectly (1 bit of mutual information), yet a constant predictor gains nothing from observing them. A predictor able to represent their interaction can use almost all of that information. See the [reproducible experiment](https://github.com/JM-Brun/llm-lab/blob/main/experiments/information-theory-llm/README.md) and the [primary paper](https://openreview.net/forum?id=r1eBeyHFDH).
 
 ### Takeaway
 
@@ -231,7 +231,7 @@ It measures the predictive gain from the input for that family and loss. A restr
 
 **Generation:** the model samples or selects a next token; this is not, by itself, lossless decoding.
 
-To make these ideas concrete, run the [reproducible predictive-compression experiment](https://github.com/JM-Brun/llm-lab/tree/main/experiments/predictive-compression). To compare marginal entropy, conditional entropy, and zlib compression, also run the [sequence-compression experiment](../../experiments/sequence-compression/README.md).
+To make these ideas concrete, run the [reproducible predictive-compression experiment](https://github.com/JM-Brun/llm-lab/tree/main/experiments/predictive-compression). To compare marginal entropy, conditional entropy, and zlib compression, also run the [sequence-compression experiment](https://github.com/JM-Brun/llm-lab/blob/main/experiments/sequence-compression/README.md).
 
 
 ### References
