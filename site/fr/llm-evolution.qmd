@@ -143,7 +143,7 @@ Une troisième dimension est la **mémoire d'exécution** : le cache KV et les a
 
 Ces leviers ne garantissent pas les mêmes bénéfices. Un checkpoint plus petit n'est pas automatiquement plus rapide ; une meilleure compression des poids ne signifie pas que le modèle prédit mieux ; un modèle prédictif n'est pas automatiquement un codeur sans perte. Pour comparer, mesurer séparément la taille du checkpoint, le pic mémoire, la latence, le débit et la qualité probabiliste.
 
-Pour la démonstration mathématique et le petit codeur entropique reproductible, voir [« Les LLM sont-ils des algorithmes de compression ? » dans la leçon sur l'entropie](entropy.qmd). La [synthèse comparative détaillée](../../docs/source-syntheses/compression-two-meanings-2026-11.md) donne les nuances et références.
+Pour la démonstration mathématique et le petit codeur entropique reproductible, voir [« Les LLM sont-ils des algorithmes de compression ? » dans la leçon sur l'entropie](entropy.qmd). La [synthèse comparative détaillée](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/compression-two-meanings-2026-11.md) donne les nuances et références.
 
 À approfondir : [Architectures hybrides](hybrid-llm-architectures.qmd) et [Complexité et parallélisme](llm-computational-complexity.qmd).
 
