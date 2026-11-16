@@ -9,6 +9,8 @@ project:
     - styles/rope-attention-pipeline.css
     - scripts/rope-pair-layout.js
     - styles/rope-pair-layout.css
+    - scripts/rope-frequency-explorer.js
+    - styles/rope-frequency-explorer.css
     - learning-map-data-fr.json
     - learning-map-data-en.json
     - knowledge-graph.jsonld
