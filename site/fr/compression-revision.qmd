@@ -131,6 +131,24 @@ La vidéo [Reinventing Entropy — Compression is Intelligence, Part 1](https://
 
 L'article [AIhub du 16 juillet 2026](https://aihub.org/2026/07/16/reinventing-entropy-compression-is-intelligence-part-1/) relaie cette même vidéo, il ne s'agit pas d'une source indépendante.
 
+## 5. Deux stratégies de compression : une hypothèse à discuter
+
+Un essai philosophique de Mingdi Fan propose de distinguer une compression **narrative et sélective**, orientée vers les structures causales, d'une compression **probabiliste**, qui ajuste une distribution pour réduire la cross-entropy. L'auteur nomme ces pôles « subjectivité positive » et « subjectivité négative ». Il propose aussi une stratégie mixte, dite « grise ».
+
+Cette distinction pose une bonne question : **une bonne prédiction mesure-t-elle à elle seule la qualité de la structure apprise ?** Non. La cross-entropy mesure la qualité des probabilités attribuées aux observations ; elle ne mesure pas directement la parcimonie des représentations, leur recombinaison, la compréhension ou l'ancrage sémantique.
+
+| Dimension | Ce qu'elle peut mesurer | Ce qu'elle ne démontre pas seule |
+|---|---|---|
+| Cross-entropy | Qualité prédictive moyenne sous une distribution et une convention de logarithme données | Compréhension, causalité, conscience |
+| Épiplexité | Information structurée accessible sous contraintes de calcul, selon une définition formelle donnée | Une mesure universelle de l'intelligence |
+| Transfert / recombinaison | Réutilisation de régularités dans des situations nouvelles | Une expérience subjective |
+
+**Garde-fous :** l'épiplexité est un concept de recherche récent ; la correspondance proposée par Fan entre structures algébriques An/Fn et réseaux neuronaux est analogique, pas un théorème sur les LLM. Sa définition de la compréhension par « efficacité structurelle » est une proposition philosophique, pas un consensus scientifique.
+
+L'expérience [structure séquentielle et compression prédictive](https://github.com/JM-Brun/llm-lab/blob/main/experiments/compression-strategy-spectrum/README.fr.md) compare un modèle unigramme et un bigramme sur des données synthétiques. Elle illustre l'exploitation de dépendances séquentielles ; elle ne calcule pas l'épiplexité et ne mesure pas la compréhension.
+
+Voir la [synthèse critique de Mingdi Fan](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/fan-compression-intelligence-2026-11.md) et la [revue détaillée](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-reviews/fan-compression-intelligence-2026-11.md).
+
 ## Auto-évaluation
 
 1. Pourquoi un LLM n'est-il pas un décompresseur LZW ?
