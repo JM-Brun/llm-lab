@@ -73,6 +73,21 @@ $$
 Il faut un codeur et un décodeur compatibles (par exemple arithmétiques), le même modèle, le même tokenizer, le même ordre des symboles et des conventions numériques identiques. Le décodage doit reconstruire exactement la séquence. Générer une continuation plausible n'est pas décompresser le corpus.
 :::
 
+## 2 bis. Entropie, surprise et utilité ne sont pas synonymes
+
+Pour une distribution prédictive donnée :
+
+- **Entropie prédictive** : incertitude moyenne du modèle sur le prochain token.
+- **Surprisal observé** : coût informationnel du token effectivement rencontré, \\( -\\log_2 p(x_t\\mid contexte) \\).
+- **Entropie des poids d'attention** : dispersion des poids sur les positions du contexte.
+- **Dérive du cache KV** : différence entre un état conservé et celui qui serait recalculé.
+
+Ces signaux ne mesurent pas directement l'utilité d'un token. Un token très prévisible peut rester essentiel à la syntaxe ou au raisonnement ; un token rare peut être décisif. Une faible entropie ne justifie donc pas, à elle seule, le pruning.
+
+L'expérience [entropie contre surprisal](https://github.com/JM-Brun/llm-lab/blob/main/experiments/entropy-surprisal-toy/README.fr.md) illustre cette différence sur une source binaire. Elle ne teste pas un LLM.
+
+**Piste avancée :** des travaux utilisent l'entropie des poids d'attention pour répartir un budget de cache KV, tandis que d'autres utilisent l'entropie de distributions décodées pour décider de recalculer un cache. Ce sont des signaux et des protocoles différents. Voir la [synthèse critique sur compression et efficacité d'inférence](../../docs/source-syntheses/compression-intelligence-and-inference-efficiency-2026-11.md).
+
 ## 2. Réduire le modèle
 
 | Technique | Ce qui change | Question à mesurer |
