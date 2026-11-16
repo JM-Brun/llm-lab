@@ -49,7 +49,7 @@ Une seconde mesure accompagne l'entraînement : la même loss calculée sur des 
 <figure id="fig-training-loop-update">
   <picture>
     <source media="(max-width: 600px)" srcset="../images/training-loop-visual-fr-mobile.svg">
-    <img src="../images/training-loop-visual-fr.svg" alt="Flux d'entraînement : un batch de préfixes et de cibles du token suivant traverse une passe avant, l'entropie croisée par cible et un masque, la rétropropagation puis une mise à jour de l'optimiseur, des paramètres thêta k vers thêta k plus un. Un batch de validation réservé est évalué avec des paramètres fixes et ne produit ni gradient ni mise à jour.">
+    <img src="../images/training-loop-visual-fr.svg" alt="Flux d'entraînement : un batch de préfixes et de cibles du token suivant traverse une passe avant, l'entropie croisée par cible et un masque, la rétropropagation puis une mise à jour de l'optimiseur, des paramètres thêta k vers thêta k plus un. Un batch de validation réservé est évalué avec des paramètres fixes et ne produit ni gradient ni mise à jour." style="width:100%;height:auto">
   </picture>
   <figcaption>Un batch d'entraînement ne modifie les paramètres qu'à l'étape de mise à jour de l'optimiseur. La validation mesure le modèle courant sur des données réservées ; elle ne met pas le modèle à jour. L'exemple de probabilité cible reprend les mêmes valeurs illustratives que le calcul ci-dessous.</figcaption>
 </figure>
