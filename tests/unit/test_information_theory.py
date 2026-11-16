@@ -131,3 +131,15 @@ def test_zero_probability_has_infinite_ideal_code_length() -> None:
     lengths = ideal_code_lengths(np.array([1.0, 0.0]))
     assert lengths[0] == 0.0
     assert np.isinf(lengths[1])
+
+
+def test_mutual_information_is_expected_conditional_kl_to_marginal() -> None:
+    joint = np.array([[0.45, 0.05], [0.10, 0.40]])
+    marginal_x = joint.sum(axis=1)
+    marginal_y = joint.sum(axis=0)
+    expected = sum(
+        weight * kl_divergence(row / weight, marginal_y, base=2.0)
+        for weight, row in zip(marginal_x, joint, strict=True)
+        if weight > 0.0
+    )
+    assert mutual_information(joint, base=2.0) == pytest.approx(expected)
