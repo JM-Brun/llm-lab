@@ -3,7 +3,7 @@
 from __future__ import annotations
 from collections import Counter, defaultdict
 from fractions import Fraction
-from math import log2
+from math import ceil, log2
 
 ALPHABET = ("A", "B", "C", "D")
 TRAINING = "ABABACABADABABACABADABABACABADABABACABAD"
@@ -53,13 +53,17 @@ def interval_for(message: str, model: dict[str, dict[str, Fraction]]) -> tuple[F
     return low, high
 
 
-def shortest_dyadic_inside(low: Fraction, high: Fraction) -> tuple[int, int]:
-    for bits in range(1, 4097):
-        denominator = 1 << bits
-        numerator = (low.numerator * denominator + low.denominator - 1) // low.denominator
-        if Fraction(numerator, denominator) < high:
-            return numerator, bits
-    raise ArithmeticError("No finite code found within 4096 bits")
+def dyadic_code_inside(low: Fraction, high: Fraction) -> tuple[int, int]:
+    """Choose a binary fraction safely inside the final interval."""
+    width = high - low
+    bits = ceil(-log2(float(width))) + 1
+    denominator = 1 << bits
+    midpoint = (low + high) / 2
+    numerator = (midpoint.numerator * denominator) // midpoint.denominator
+    code_value = Fraction(numerator, denominator)
+    if not low <= code_value < high:
+        raise ArithmeticError("Chosen binary fraction is outside the coding interval")
+    return numerator, bits
 
 
 def decode(numerator: int, bits: int, length: int,
@@ -89,7 +93,7 @@ def decode(numerator: int, bits: int, length: int,
 def main() -> None:
     model = train_bigram_model(TRAINING)
     low, high = interval_for(MESSAGE, model)
-    numerator, bit_count = shortest_dyadic_inside(low, high)
+    numerator, bit_count = dyadic_code_inside(low, high)
     recovered = decode(numerator, bit_count, len(MESSAGE), model)
     ideal_bits = -log2(float(high - low))
     uniform_bits = len(MESSAGE) * log2(len(ALPHABET))
