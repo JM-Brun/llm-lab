@@ -46,6 +46,14 @@ A second measurement runs alongside: the same loss computed on **validation** da
   <span class="step-item">5. Repeat, and measure on validation data</span>
 </div>
 
+<figure id="fig-training-loop-update">
+  <picture>
+    <source media="(max-width: 600px)" srcset="../images/training-loop-visual-en-mobile.svg">
+    <img src="../images/training-loop-visual-en.svg" alt="Training flow: a batch of prefixes and next-token targets goes through a forward pass, per-token cross-entropy and a target mask, backpropagation, and an optimizer update from parameters theta k to theta k plus 1. A separate held-out validation batch is evaluated with fixed parameters and never produces a gradient or update." style="width:100%;height:auto">
+  </picture>
+  <figcaption>One training batch changes the parameters only at the optimizer step. Validation measures the current model on held-out data; it does not update the model. The target-probability example uses the same illustrative values as the calculation below.</figcaption>
+</figure>
+
 ## One step, then many
 
 For a batch of observed prefixes with their next-token targets (see [teacher forcing](loss.qmd#observed-prefix-and-teacher-forcing)), one iteration performs:

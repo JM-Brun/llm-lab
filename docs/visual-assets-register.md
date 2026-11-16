@@ -13,7 +13,7 @@ Attribution establishes provenance; it does not by itself grant permission. Conv
 
 ## Repository-level licensing finding
 
-[LICENSE.md](../LICENSE.md) offers project code under MIT and original project-authored prose in Quarto pages and documentation under CC BY-SA 4.0. The CC BY-SA grant explicitly excludes all non-text assets, including all 56 current local SVGs under `site/images/`, unless and until a separate asset-level licence is explicitly recorded. The provenance findings and their evidence are tracked separately below; provenance confirmation does not itself grant a licence. Externally hosted figures and other third-party material remain subject to their respective rights holders' terms; attribution or a source link is not, by itself, permission to reuse an asset.
+[LICENSE.md](../LICENSE.md) offers project code under MIT and original project-authored prose in Quarto pages and documentation under CC BY-SA 4.0. The CC BY-SA grant explicitly excludes all non-text assets, including all 60 current local SVGs under `site/images/`, unless and until a separate asset-level licence is explicitly recorded. The provenance findings and their evidence are tracked separately below; provenance confirmation does not itself grant a licence. Externally hosted figures and other third-party material remain subject to their respective rights holders' terms; attribution or a source link is not, by itself, permission to reuse an asset.
 
 The licence boundary remains independent of the provenance findings below: no asset-level licence has been declared for the 56 local SVGs. Third-party embeds retain their separate rights assessments. Do not remove, replace, hide, or disable an existing illustration solely because its rights are uncertain.
 
@@ -66,6 +66,7 @@ The original 2026-10-30 source-level scan found 32 SVG files. A fresh recursive 
 | `entropy-distributions-en.svg`, `entropy-distributions-fr.svg` | EN/FR `entropy.qmd` | Bilingual distribution-comparison figures added by PR #1126; project-managed SVG pair; verify authorship/history and licence |
 | `logits-common-shift-en.svg`, `logits-common-shift-fr.svg` | EN/FR `logits.qmd` | Bilingual common-shift/softmax-invariance figures added by PR #1118; project-managed SVG pair; verify authorship/history and licence |
 | `probability-decoding-flow-en.svg`, `probability-decoding-flow-fr.svg` | EN/FR `probabilities.qmd` | Bilingual logits-to-selection pipeline figures added by PR #1119; project-managed SVG pair; verify authorship/history and licence |
+| `training-loop-visual-en.svg`, `training-loop-visual-en-mobile.svg`, `training-loop-visual-fr.svg`, `training-loop-visual-fr-mobile.svg` | EN/FR `training-loop.qmd` | New bilingual desktop/mobile diagrams showing the optimizer update path and separate validation-only path; created as original LLM Lab teaching schematics in PR #1143; owner provenance confirmation and asset-level licence remain pending |
 | `contextualization-pipeline-en.svg`, `contextualization-pipeline-fr.svg` | EN/FR `contextualized-representations.qmd` | New bilingual pipeline figures added after the previous 38-file inventory; provenance and asset-level licence confirmation pending |
 | `embedding-lookup-en.svg`, `embedding-lookup-fr.svg` | EN/FR `embedding-space.qmd` | New bilingual lookup figures illustrating token ID → embedding-table row → vector; owner-authored PR #915 describes purpose-built diagrams; asset-level licence remains undeclared |
 | `llm-shared-prediction-uses-en.svg`, `llm-shared-prediction-uses-en-mobile.svg`, `llm-shared-prediction-uses-fr.svg`, `llm-shared-prediction-uses-fr-mobile.svg` | EN/FR `llm-overview.qmd` | New bilingual desktop/mobile figures for generation, scoring and training uses of the predictive distribution; owner-authored PR #782 describes a purpose-built visual; asset-level licence remains undeclared |
@@ -335,3 +336,22 @@ A source-level structural inspection was also run on all 18 files on 2026-11-12.
 - **18/18 later additions:** mapped to their current EN/FR Quarto embedding locations; this remains a source-level check, not a rendered-DOM inventory.
 
 This reconciliation supersedes the 2026-11-09 statement that 38 files were the current complete directory inventory. It does not change any illustration, attribution, or licence term. Preserve all assets unchanged while the four provenance confirmations and asset-level licensing decision remain open.
+
+
+## Current local SVG inventory reconciliation — 2026-11-16
+
+The four new bilingual training-loop visuals introduced in PR #1143 bring the current `site/images/` inventory from **56 to 60 SVG files**. The new assets are referenced from the EN/FR `training-loop.qmd` pages using responsive desktop/mobile variants.
+
+| Files | Current use | Provenance / licence status |
+|---|---|---|
+| `training-loop-visual-en.svg`, `training-loop-visual-en-mobile.svg`, `training-loop-visual-fr.svg`, `training-loop-visual-fr-mobile.svg` | EN/FR `training-loop.qmd` | Original LLM Lab teaching schematics created in this contribution from the existing page's documented training-loop mechanism and numerical example. No third-party diagram or image was used. This source/PR record is evidence of the contribution, but the repository's owner-confirmation rule in #156 still applies; mark owner provenance confirmation pending until explicitly ratified. No asset-level licence is declared. |
+
+### Updated count and preservation status
+
+- **60** local SVG files are currently present under `site/images/`.
+- **52/60** retain the owner-confirmed project-origin evidence recorded in the 2026-11-12 reconciliation.
+- **8/60** require a narrow owner provenance confirmation: the four previously pending contextualization-pipeline / Transformer-stack assets and the four new training-loop variants above.
+- **60/60** remain excluded from the MIT code / CC BY-SA prose grants until an asset-level licence is separately and explicitly declared under #163.
+- The four new files have SVG `title` and `desc` elements, no embedded raster, script, `foreignObject`, or external HTTP(S) references, and are paired with page-level alt text/captions. These source-pattern checks do not establish full XML conformance, rendered accessibility, owner provenance confirmation, or a licence.
+
+No existing illustration was removed, replaced, hidden, or disabled. Preserve all assets unchanged while provenance and asset-level licensing remain unresolved.
