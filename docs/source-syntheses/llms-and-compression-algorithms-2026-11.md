@@ -102,6 +102,28 @@ Mesurer la cross-entropy moyenne, puis tester l'effet de l'ajout de données rep
 
 **Valeur pour le parcours :** élevée comme accroche intuitive ; moyenne comme explication autonome ; faible comme preuve empirique. La leçon doit prolonger l'analogie par la probabilité conditionnelle, la cross-entropy, l'entropie et des expériences de généralisation.
 
+## 10. Raccordement au parcours canonique existant
+
+L'article doit servir de **pont interprétatif**, pas de nouvelle leçon autonome. Les pages existantes couvrent déjà les définitions mathématiques nécessaires :
+
+| Étape du raisonnement | Ressource canonique FR | Ressource canonique EN | Rôle de l'article |
+|---|---|---|---|
+| Une continuation est une distribution conditionnelle | [Probabilités de sortie](../../site/fr/probabilites.qmd) | [Output probabilities](../../site/en/probabilities.qmd) | Introduire l'idée qu'un modèle apprend des régularités utiles à la prédiction du prochain token |
+| L'incertitude moyenne dépend de la distribution | [Entropie](../../site/fr/entropy.qmd) | [Entropy](../../site/en/entropy.qmd) | Distinguer l'intuition de compression de la mesure formelle d'entropie |
+| La surprise dépend du token observé | [Vraisemblance](../../site/fr/vraisemblance.qmd) | [Likelihood](../../site/en/likelihood.qmd) | Relier une faible probabilité attribuée à une continuation à une longueur de code prédictive plus élevée |
+| L'écart entre cible et prédiction produit une pénalité | [Entropie croisée](../../site/fr/cross-entropy.qmd) | [Cross-entropy](../../site/en/cross-entropy.qmd) | Faire le lien formel le plus direct entre prédiction probabiliste, NLL et codage arithmétique idéal |
+| L'objectif est optimisé sur des données et évalué sur d'autres | [Boucle d'entraînement](../../site/fr/training-loop.qmd) | [Training loop](../../site/en/training-loop.qmd) | Introduire la question de la généralisation, des données représentatives et du décalage de distribution |
+
+**Précaution sur le codage :** pour un événement de probabilité (p), le coût idéal associé est (-\log_2 p) bits. En revanche, la loss usuelle exprimée avec le logarithme naturel est en nats. La cross-entropy moyenne correspond à une longueur de code idéale moyenne seulement sous les hypothèses du codage probabiliste approprié ; elle ne signifie pas que les poids du modèle sont eux-mêmes un fichier compressé du corpus.
+
+### Décision éditoriale
+
+- Ne pas ajouter une deuxième explication de l'entropie ou du surprisal : ces distinctions sont déjà explicites dans les leçons canoniques et leurs exercices.
+- Ne pas ajouter de contenu à la page Understand sur « les LLM compressent Internet ».
+- Utiliser cette source dans une fiche de synthèse transversale ou un encadré optionnel qui relie probabilités, longueur de code et généralisation.
+- Pour une expérience, réutiliser l'issue [#1058](https://github.com/JM-Brun/llm-lab/issues/1058) comme point de coordination : elle conserve déjà le volet non résolu d'un calcul token-level sur un vrai modèle. Ne pas recopier les prototypes jouets rejetés ni créer un doublon de cette activité.
+- La proposition d'expérience du §7 reste un protocole de recherche pédagogique à construire et à contrôler, pas un résultat déjà obtenu.
+
 ## Référence
 
 Karthik Shashidhar (2024), [LLMs and compression algorithms](https://artofdatascience.substack.com/p/llms-and-compression-algorithms), *Art of Data Science*, 27 août 2024. Consulté le 16 novembre 2026.
