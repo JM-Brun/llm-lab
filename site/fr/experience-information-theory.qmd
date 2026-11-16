@@ -1,0 +1,64 @@
+---
+title: "Expérience — Entropie, KL et compression prédictive"
+subtitle: "Manipuler des distributions et vérifier les identités"
+description-meta: "Expérience reproductible pour calculer entropie, cross-entropie, divergence KL, perplexité et longueurs de code idéales."
+keywords: ["type:experiment", "topic:information-theory", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+[← Fiche de révision](revision-information-theory.qmd) · [Leçon : entropie croisée](cross-entropy.qmd)
+
+## Question
+
+Comment distinguer l'incertitude de la cible, l'erreur de prédiction et le coût idéal de codage ?
+
+## Lancer l'expérience
+
+Depuis la racine du dépôt :
+
+```bash
+uv run --locked python experiments/information-theory/run.py
+```
+
+Le script utilise deux distributions synthétiques :
+
+- cible q = (0,5 ; 0,5) ;
+- prédiction p = (0,75 ; 0,25).
+
+Il calcule les métriques en nats et en bits, les longueurs de code idéales, puis vérifie que la cross-entropie est égale à l'entropie cible plus la divergence KL.
+
+## Résultat attendu
+
+| Mesure | Valeur approximative |
+|---|---:|
+| Entropie cible H(q) | 0,693 nat |
+| Cross-entropie H(q,p) | 0,837 nat |
+| Divergence KL D(q‖p) | 0,144 nat |
+| Entropie cible H(q) | 1 bit |
+| Cross-entropie H(q,p) | 1,208 bit |
+| Divergence KL D(q‖p) | 0,208 bit |
+
+L'identité à vérifier est :
+
+```text
+0,837 ≈ 0,693 + 0,144
+```
+
+## À manipuler
+
+Ouvre `experiments/information-theory/run.py` et modifie q et p en conservant des distributions normalisées. Essaie notamment :
+
+1. p = q : la divergence KL doit être nulle.
+2. p = (0,5 ; 0,5) : la prédiction devient parfaitement uniforme.
+3. Une cible one-hot : la cross-entropie devient la NLL du token observé.
+4. Une probabilité prédite nulle là où q est positive : la cross-entropie et la KL deviennent infinies.
+
+Les fonctions réutilisables et leurs tests sont dans `src/llm_lab/foundations/information_theory.py` et `tests/unit/test_information_theory.py`.
+
+## Ce que l'expérience démontre — et ne démontre pas
+
+Elle vérifie des identités mathématiques sur des distributions discrètes. Elle ne mesure ni l'intelligence d'un modèle, ni sa capacité de généralisation, ni la qualité d'un LLM entraîné. Les longueurs -log₂(p) sont idéales et peuvent être fractionnaires ; un code réel ajoute des contraintes et des coûts.
+
+::: {.language-switch}
+**Langue :** Français · [English](../en/experience-information-theory.qmd)
+:::
