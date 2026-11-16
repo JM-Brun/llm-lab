@@ -720,6 +720,30 @@ concepts:
     resources: [fr/llm-evolution, en/llm-evolution, fr/compression-revision, en/compression-revision]
 
 
+  - id: entropy
+    importance: core
+    labels: {fr: "Entropie", en: "Entropy"}
+    definitions:
+      fr: "Information moyenne associée à une variable aléatoire, égale à l'espérance de son surprisal sous sa distribution."
+      en: "Average information associated with a random variable, equal to the expected surprisal under its distribution."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/entropy, en/entropy, fr/cross-entropy, en/cross-entropy, fr/compression-revision, en/compression-revision]
+  - id: kl-divergence
+    importance: supporting
+    labels: {fr: "Divergence KL", en: "KL divergence"}
+    definitions:
+      fr: "Mesure asymétrique de l'écart entre deux distributions, égale à l'espérance sous la distribution cible du logarithme du rapport entre les probabilités."
+      en: "Asymmetric measure of the discrepancy between two distributions, equal to the target-distribution expectation of the log probability ratio."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/cross-entropy, en/cross-entropy, fr/compression-revision, en/compression-revision]
+  - id: mutual-information
+    importance: supporting
+    labels: {fr: "Information mutuelle", en: "Mutual information"}
+    definitions:
+      fr: "Quantité qui mesure la réduction de l'incertitude sur une variable lorsque l'autre est connue, définie à partir de leur distribution jointe."
+      en: "Quantity measuring the reduction in uncertainty about one variable when the other is known, defined from their joint distribution."
+    domains: [probabilistic-foundations-training, architectures-mechanisms]
+    resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/compression-revision, en/compression-revision]
 
 relation_types:
   represented-by:
@@ -844,30 +868,7 @@ relation_types:
       fr: "La source est évaluée au moyen de la cible."
       en: "The source is evaluated using the target."
 
-  - id: entropy
-    importance: core
-    labels: {fr: "Entropie", en: "Entropy"}
-    definitions:
-      fr: "Information moyenne associée à une variable aléatoire, égale à l'espérance de son surprisal sous sa distribution."
-      en: "Average information associated with a random variable, equal to the expected surprisal under its distribution."
-    domains: [probabilistic-foundations-training]
-    resources: [fr/entropy, en/entropy, fr/cross-entropy, en/cross-entropy, fr/compression-revision, en/compression-revision]
-  - id: kl-divergence
-    importance: supporting
-    labels: {fr: "Divergence KL", en: "KL divergence"}
-    definitions:
-      fr: "Mesure asymétrique de l'écart entre deux distributions, égale à l'espérance sous la distribution cible du logarithme du rapport entre les probabilités."
-      en: "Asymmetric measure of the discrepancy between two distributions, equal to the target-distribution expectation of the log probability ratio."
-    domains: [probabilistic-foundations-training]
-    resources: [fr/cross-entropy, en/cross-entropy, fr/compression-revision, en/compression-revision]
-  - id: mutual-information
-    importance: supporting
-    labels: {fr: "Information mutuelle", en: "Mutual information"}
-    definitions:
-      fr: "Quantité qui mesure la réduction de l'incertitude sur une variable lorsque l'autre est connue, définie à partir de leur distribution jointe."
-      en: "Quantity measuring the reduction in uncertainty about one variable when the other is known, defined from their joint distribution."
-    domains: [probabilistic-foundations-training, architectures-mechanisms]
-    resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/compression-revision, en/compression-revision]
+
 
 relations:
 
