@@ -94,6 +94,28 @@ For a fixed source and coding protocol, a better predictive distribution can red
 
 No new canonical concept ID is proposed. Existing concepts cover entropy-related training and self-attention; V-information remains a research extension.
 
+## 6.1 Audit statique du notebook anglais (18 cellules)
+
+Le notebook anglais `information-theory-and-llm-en.ipynb` a été récupéré depuis le dépôt public et ses 18 cellules (Markdown et code) ont été inspectées statiquement. Le code n'a pas été exécuté ; les sorties graphiques enregistrées n'ont pas été traitées comme des résultats reproduits.
+
+| Cellule / partie | Ce qu'elle fait | Audit et décision |
+|---|---|---|
+| 1–3 : logarithme, entropie binaire, surprise | Trace log₂, entropie binaire et exemples d'événements rares | Bonne intuition visuelle ; corriger la phrase qui assimile l'entropie maximale à l'information d'un événement individuel. |
+| 4–6 : information mutuelle | Calcule une distribution jointe météo/parapluie, les entropies et la MI | Exemple mathématiquement pertinent ; le diagramme de Venn reste une représentation conceptuelle, pas une géométrie exacte des ensembles. |
+| 8–9 : cross-entropy et KL | Compare une cible synthétique à trois distributions prédites | Bon exercice de décomposition ; l'ajout d'un epsilon dans les logarithmes est un artifice numérique à expliciter. |
+| 10–11 : attention et « MI approximée » | Récupère ou simule une matrice d'attention, puis calcule pour chaque ligne une KL vers une distribution uniforme | **Erreur conceptuelle majeure :** cette KL ligne-par-ligne n'est pas l'information mutuelle entre variables aléatoires. Le titre et l'interprétation « association sémantique » ne sont pas justifiés. Le modèle chargé est BERT (encodeur bidirectionnel), pas un LLM autorégressif ; le chemin de secours utilise des poids simulés. Ne pas réutiliser ce panneau comme mesure de MI. |
+| 12 : V-information | Résume l'article arXiv:2002.10689 et les familles de prédicteurs | Piste avancée utile, mais la formulation est très simplifiée ; vérifier le papier complet avant intégration canonique. |
+| 13 : thermodynamique | Relie Landauer à une limite d'extraction d'information depuis les données | Même extrapolation non fondée que dans l'article : une borne physique d'effacement n'est pas une borne générale d'apprentissage. |
+| 14–16 : compression | Présente des familles de codeurs puis propose une comparaison avec zlib | Bonne occasion d'expérimenter, mais ne pas assimiler directement l'entropie marginale empirique par caractère à la limite de compression d'une source dépendante. |
+| 17 : zlib | Compare répétitions, texte anglais, texte mixte et chaîne aléatoire | La chaîne aléatoire n'a pas de graine fixe ; l'expérience n'est donc pas entièrement reproductible. L'entropie calculée ignore les dépendances entre caractères alors que zlib les exploite ; l'overhead et les conventions de mesure comptent. Refaire avec graine fixe et comparer aussi des coûts conditionnels ou bits/octet. |
+
+### Décisions notebook
+
+- **Réutiliser l'idée, pas le code ni les figures :** entropie binaire, exemple de distribution jointe, comparaison de distributions et compression zlib.
+- **Corriger avant toute reprise :** panneau attention/MI, confusion entre entropie et surprise individuelle, inférence Landauer.
+- **Renforcer la reproductibilité :** graine aléatoire fixe, dépendances/versionnement déclarés, résultats générés à l'exécution et séparation entre entropie marginale et coût de codage réel.
+- **Ne pas copier :** aucun code ni figure upstream n'est repris ; les expériences du projet sont réécrites indépendamment.
+
 ## 6. Evidence and open work
 
 - Directly inspected: full article text, page date and author; upstream repository landing page.
