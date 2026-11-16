@@ -2,7 +2,7 @@
 
 ## Scope and evidence boundary
 
-**Audit depth: architecture scan + bounded Chapter 1 inspection + deep content review of Chapters 10, 11 and 12.** This is an initial pass within project owner issue [#765](https://github.com/JM-Brun/llm-lab/issues/765), not a claim that all course chapters have been read or that the whole Hugging Face ecosystem has been audited.
+**Audit depth: architecture scan + bounded Chapter 1 inspection + selected lesson-body review of Chapters 2–5 + deep content review of Chapters 10–12.** This is an initial pass within project owner issue [#765](https://github.com/JM-Brun/llm-lab/issues/765), not a claim that all course chapters have been read or that the whole Hugging Face ecosystem has been audited.
 
 Inspected:
 - Current English course index: chapters 0–12 and their published headings.
@@ -130,7 +130,52 @@ Inspected the chapter outline, RL introduction, DeepSeek R1 paper walkthrough, G
 - The “Aha moment” is a description of an observed output/training pattern, not evidence that a model has human-like introspection or that generated chain-of-thought is a faithful report of internal computation.
 - GRPO's group normalization and KL control have nontrivial trade-offs; current TRL documentation notes reward-scaling variants and potential question-difficulty bias. Library defaults and parameters evolve and must be pinned for reproducible experiments.
 
-### Graph and route decisions
+### Selected review of Chapters 2–5 — 2026-11-16
+
+### Chapter 2 — Using Transformers
+
+Inspected the chapter overview, the pipeline walkthrough and model/tokenizer sections; the chapter navigation also exposes batching and optimized inference deployment.
+
+**Contribution:** a practical bridge from a high-level pipeline to the underlying tokenizer/model calls, model loading/configuration and batched inputs. It is useful for showing what a library abstraction does and where its model-specific components begin.
+
+**LLM Lab coverage:** the conceptual pipeline from prompt text to tokenization, model computation, prefill/decode and token selection is already covered in bilingual canonical lessons. The project does not aim to reproduce the Transformers library API surface.
+
+**Decision:** add the course's pipeline walkthrough and optimized-inference chapter as optional implementation references from the generation lesson. Do not create an API tutorial or duplicate the canonical generation mechanism.
+
+### Chapter 3 — Fine-tuning a pretrained model
+
+Inspected data processing, Trainer, custom training loop and learning-curve sections.
+
+**Contribution:** shows the same task fine-tuning through both a high-level Trainer abstraction and a transparent PyTorch loop; exposes preprocessing, data collators, labels, optimizer steps, evaluation strategy, metrics, mixed precision, gradient accumulation, scheduling and learning curves.
+
+**LLM Lab coverage:** the training-loop lesson already teaches the optimizer/gradient/learning-rate loop and explicitly distinguishes training from validation loss. The Build route deliberately constructs a small GPT rather than teaching the Transformers Trainer API. Post-training explains SFT and preference adaptation conceptually.
+
+**Actual gap:** no major conceptual gap in the selected material. The distinct value is the practical API workflow and a worked interpretation of learning curves for fine-tuning a pretrained task model.
+
+**Decision:** add the custom-loop and learning-curve sections as optional implementation references to the existing training-loop lesson. No new lesson or route stage; pin library versions before turning examples into executable project code.
+
+### Chapter 4 — Sharing models and tokenizers
+
+Inspected the Hub overview and model-card lesson.
+
+**Contribution:** treats a model card as a first-class artifact documenting model description, intended use, limitations/bias, training data/procedure and evaluation results. This connects publication to reproducibility and responsible interpretation rather than merely uploading weight files.
+
+**LLM Lab coverage:** source lineage and provenance are strong at the research/documentation level, and the Build route includes reproducible code/tests. There was no direct model-card learning reference in the Build route.
+
+**Decision:** add the model-card lesson as an optional next-step reference from Build. Do not invent a parallel model-card schema; the project source lineage, model card and training artifact have different purposes.
+
+### Chapter 5 — The Datasets library
+
+Inspected the chapter introduction, data manipulation and large-dataset/memory section; the chapter outline also includes local/remote loading, dataset creation and semantic search with FAISS.
+
+**Contribution:** practical dataset operations (mapping, filtering, slicing, selecting, formatting), loading from local and remote sources, memory-mapped datasets and streaming for large corpora, plus a semantic-search example.
+
+**LLM Lab coverage:** corpus preparation already covers provenance, filtering, deduplication, split leakage, tokenizer fitting and the handoff contract. Embedding-space and retrieval-related lessons cover representation and similarity concepts. The project does not yet teach the Datasets library API or storage backend.
+
+**Decision:** add selected chapter sections as optional implementation references from corpus preparation. Keep Arrow/memory mapping/streaming as implementation concepts, not mandatory additions to the conceptual route. A future runnable example should compare streaming and materialized access under a pinned Datasets version and measured memory use.
+
+
+## Graph and route decisions
 
 The course has now contributed three bounded changes:
 - human annotation and label-quality protocol within the existing corpus-preparation lesson and exercise;
@@ -142,4 +187,4 @@ No new learner-facing page, top-level curriculum stage or Build dependency was a
 
 ## Summary
 
-The course is valuable less as a replacement curriculum than as a **bridge from conceptual understanding to modern Hugging Face practice**. LLM Lab already has strong foundations in Transformer mechanics, tokenization, generation and training fundamentals. The most valuable validated additions from Chapters 10–12 are human annotation protocol, chat-template serialization and a first-class GRPO concept. A deeper practical GRPO experiment and a broader dataset-quality treatment remain optional future work; Hub/reproducibility practice and Chapters 2–9 still require inspection.
+The course is valuable less as a replacement curriculum than as a **bridge from conceptual understanding to modern Hugging Face practice**. LLM Lab already has strong foundations in Transformer mechanics, tokenization, generation and training fundamentals. The most valuable validated additions are human annotation protocol, chat-template serialization and a first-class GRPO concept. Chapters 2–5 add contextual implementation references for pipelines, fine-tuning loops, learning curves, model cards and large-dataset handling. A practical GRPO experiment remains optional; Chapters 6–9 still require inspection.
