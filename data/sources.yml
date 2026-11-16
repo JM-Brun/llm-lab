@@ -3890,7 +3890,7 @@ sources:
   - id: bbycroft-llm-visualization
     title: "LLM Visualization"
     creators: ["Brendan Bycroft"]
-    source_type: visualization
+    source_type: tutorial
     identifiers: {}
     canonical_url: "https://bbycroft.net/llm"
     publisher: "Brendan Bycroft"
@@ -3905,7 +3905,7 @@ sources:
       primary_theme: architectures-mechanisms
       secondary_themes: [mathematical-tools-geometry]
       tags: [topic:transformer, topic:tensor-shapes, modality:interactive-visualization]
-      concept_ids: [transformer, embedding, self-attention, multi-head-attention]
+      concept_ids: [token-embedding, self-attention, multi-head-attention]
     metadata:
       technical_level: intermediate
       contribution_types: [visualization, pedagogy, architecture]
@@ -3925,7 +3925,7 @@ sources:
   - id: tensorflow-playground
     title: "A Neural Network Playground"
     creators: ["TensorFlow Playground contributors"]
-    source_type: visualization
+    source_type: tutorial
     identifiers: {}
     canonical_url: "https://playground.tensorflow.org/"
     publisher: "TensorFlow Playground project"
@@ -3940,7 +3940,7 @@ sources:
       primary_theme: probabilistic-foundations-training
       secondary_themes: [mathematical-tools-geometry]
       tags: [topic:neural-networks, topic:optimization, modality:interactive-visualization]
-      concept_ids: [gradient, gradient-descent, loss]
+      concept_ids: [gradient, optimizer, training-loop, overfitting]
     metadata:
       technical_level: introductory
       contribution_types: [visualization, experiment, pedagogy]
@@ -3973,9 +3973,9 @@ sources:
     reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
     classification:
       primary_theme: architectures-mechanisms
-      secondary_themes: [inference-systems-efficiency]
+      secondary_themes: [inference-efficiency]
       tags: [topic:attention, topic:multi-head-attention, topic:grouped-query-attention, topic:multi-head-latent-attention, topic:sparse-attention, modality:visualization]
-      concept_ids: [attention, multi-head-attention, self-attention]
+      concept_ids: [multi-head-attention, self-attention, scaled-dot-product-attention]
     metadata:
       technical_level: advanced
       contribution_types: [architecture, visualization, pedagogy]
@@ -4008,7 +4008,7 @@ sources:
     reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
     classification:
       primary_theme: architectures-mechanisms
-      secondary_themes: [inference-systems-efficiency, probabilistic-foundations-training]
+      secondary_themes: [inference-efficiency, probabilistic-foundations-training]
       tags: [topic:mixture-of-experts, topic:routing, topic:load-balancing, modality:visualization]
       concept_ids: []
     metadata:
@@ -4042,10 +4042,10 @@ sources:
     licence: {identifier: null, url: null, status: unknown}
     reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
     classification:
-      primary_theme: inference-systems-efficiency
+      primary_theme: inference-efficiency
       secondary_themes: [architectures-mechanisms]
       tags: [topic:inference, topic:prefill, topic:decode, topic:kv-cache, topic:serving, modality:interactive-visualization]
-      concept_ids: [inference, kv-cache, autoregressive-generation]
+      concept_ids: [prefill, decode-step, kv-cache, autoregressive-generation]
     metadata:
       technical_level: intermediate
       contribution_types: [implementation, visualization, pedagogy]
@@ -4065,7 +4065,7 @@ sources:
   - id: neuronpedia-interpretability-platform
     title: "Neuronpedia"
     creators: ["Neuronpedia contributors"]
-    source_type: visualization
+    source_type: documentation
     identifiers: {repository: "neuronpedia"}
     canonical_url: "https://www.neuronpedia.org/"
     publisher: "Neuronpedia"
@@ -4100,22 +4100,22 @@ sources:
   - id: apple-embedding-atlas
     title: "Embedding Atlas: Low-Friction, Interactive Embedding Visualization"
     creators: ["Donghao Ren", "Fred Hohman", "Halden Lin", "Dominik Moritz"]
-    source_type: visualization
+    source_type: repository
     identifiers: {arxiv: "2505.06386", repository: "apple/embedding-atlas"}
     canonical_url: "https://apple.github.io/embedding-atlas/"
     publisher: "Apple Machine Learning Research"
-    publication_date: "2025-11"
+    publication_date: null
     updated_date: null
     language: en
     version: "Paper and live tool; accessed 2026-11-16"
     revision: null
-    licence: {identifier: "MIT", url: "https://github.com/apple/embedding-atlas/blob/main/LICENSE", status: declared-for-code}
+    licence: {identifier: "MIT", url: "https://github.com/apple/embedding-atlas/blob/main/LICENSE", status: known}
     reuse: {text: link-only, figures: unknown, code: link-only, data: unknown}
     classification:
       primary_theme: representations-embeddings
       secondary_themes: [mathematical-tools-geometry]
       tags: [topic:embeddings, topic:dimensionality-reduction, topic:clustering, modality:interactive-visualization]
-      concept_ids: [embedding, embedding-space]
+      concept_ids: [token-embedding, contextualized-representation]
     metadata:
       technical_level: intermediate
       contribution_types: [visualization, implementation, experiment, pedagogy]
