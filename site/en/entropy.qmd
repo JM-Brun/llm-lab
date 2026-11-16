@@ -231,7 +231,7 @@ It measures the predictive gain from the input for that family and loss. A restr
 
 **Generation:** the model samples or selects a next token; this is not, by itself, lossless decoding.
 
-To make these ideas concrete, run the [reproducible predictive-compression experiment](https://github.com/JM-Brun/llm-lab/tree/main/experiments/predictive-compression).
+To make these ideas concrete, run the [reproducible predictive-compression experiment](https://github.com/JM-Brun/llm-lab/tree/main/experiments/predictive-compression). To compare marginal entropy, conditional entropy, and zlib compression, also run the [sequence-compression experiment](../../experiments/sequence-compression/README.md).
 
 
 ### References
