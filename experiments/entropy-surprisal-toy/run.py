@@ -8,6 +8,7 @@ Uses only the Python standard library.
 from __future__ import annotations
 
 import math
+import sys
 
 
 def entropy_bits(probabilities: tuple[float, ...]) -> float:
@@ -32,14 +33,17 @@ def main() -> None:
     common_surprisal = surprisal_bits(probabilities[0])
     rare_surprisal = surprisal_bits(probabilities[1])
 
-    print("Entropy vs. realized surprisal — binary toy example")
-    print(f"P(A) = {probabilities[0]:.2f}")
-    print(f"P(B) = {probabilities[1]:.2f}")
-    print(f"Predictive entropy = {entropy:.6f} bits per draw")
-    print(f"Surprisal if A occurs = {common_surprisal:.6f} bits")
-    print(f"Surprisal if B occurs = {rare_surprisal:.6f} bits")
-    print("The source has low average entropy, yet B is highly surprising.")
-    print("This does not measure token usefulness or justify pruning.")
+    lines = (
+        "Entropy vs. realized surprisal — binary toy example",
+        f"P(A) = {probabilities[0]:.2f}",
+        f"P(B) = {probabilities[1]:.2f}",
+        f"Predictive entropy = {entropy:.6f} bits per draw",
+        f"Surprisal if A occurs = {common_surprisal:.6f} bits",
+        f"Surprisal if B occurs = {rare_surprisal:.6f} bits",
+        "The source has low average entropy, yet B is highly surprising.",
+        "This does not measure token usefulness or justify pruning.",
+    )
+    sys.stdout.write("\n".join(lines) + "\n")
 
 
 if __name__ == "__main__":
