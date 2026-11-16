@@ -50,6 +50,7 @@ Il calcule les métriques en nats et en bits, les longueurs de code idéales, pu
 | Entropie cible H(q) | 0,693 nat |
 | Cross-entropie H(q,p) | 0,837 nat |
 | Divergence KL D(q‖p) | 0,144 nat |
+| Perplexité sous q | 2,309 |
 | Entropie cible H(q) | 1 bit |
 | Cross-entropie H(q,p) | 1,208 bit |
 | Divergence KL D(q‖p) | 0,208 bit |
@@ -68,6 +69,8 @@ Ouvre `experiments/information-theory/run.py` et modifie q et p en conservant de
 2. p = (0,5 ; 0,5) : la prédiction devient parfaitement uniforme.
 3. Une cible one-hot : la cross-entropie devient la NLL du token observé.
 4. Une probabilité prédite nulle là où q est positive : la cross-entropie et la KL deviennent infinies.
+
+La perplexité est l'exponentielle de la NLL moyenne, avec la même base de logarithme : ici exp(0,837) ≈ 2,309. Dans le cas one-hot avec une probabilité observée de 0,25, la perplexité vaut 4.
 
 Les fonctions réutilisables et leurs tests sont dans `src/llm_lab/foundations/information_theory.py` et `tests/unit/test_information_theory.py`.
 
