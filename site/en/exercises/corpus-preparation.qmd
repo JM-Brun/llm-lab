@@ -62,6 +62,15 @@ At minimum, corpus provenance, the exact tokenizer revision, encoding parameters
 
 </details>
 
+5. Why does high inter-annotator agreement not, by itself, prove that labels are correct?
+
+<details>
+<summary>Show answer</summary>
+
+Annotators may share the same bias, consistently apply an ambiguous guideline, or agree on a task that does not actually measure the intended target. Agreement informs us about protocol reproducibility; task validity, edge cases, provenance, and adjudication errors must also be examined.
+
+</details>
+
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/corpus-preparation.qmd) · [English](corpus-preparation.qmd)
 :::

@@ -210,6 +210,11 @@ Le gradient vaut $L'(\theta)=2(\theta-5)$, donc $L'(2)=-6$. SGD applique la règ
 </summary>
 <div class="learning-resources__content" markdown="1">
 
+### Ressources d'implémentation complémentaires
+
+- [Hugging Face — Boucle d'entraînement personnalisée](https://huggingface.co/learn/llm-course/en/chapter3/4) : exemple PyTorch qui rend visibles les étapes prises en charge par une API de haut niveau.
+- [Hugging Face — Comprendre les courbes d'apprentissage](https://huggingface.co/learn/llm-course/en/chapter3/5) : lecture des courbes de perte et de métriques pendant le fine-tuning.
+
 ### Pour approfondir
 
 - [Kingma et Ba — Adam: A Method for Stochastic Optimization](https://arxiv.org/abs/1412.6980) : l'optimiseur adaptatif présenté dans l'article d'origine.

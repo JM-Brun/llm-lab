@@ -1,0 +1,287 @@
+schema_version: 1
+source_id: huggingface-llm-course
+
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Inspected the current English course index (chapters 0–12) and the supplied French Chapter 1 introduction on 2026-11-16."
+      - "Inspected selected Chapter 2 lesson bodies on pipeline internals, model/tokenizer APIs and batching/deployment outline."
+      - "Inspected Chapter 3 lesson bodies on data processing, Trainer, a custom training loop and learning curves."
+      - "Inspected Chapter 4 Hub overview and model-card lesson."
+      - "Inspected Chapter 5 lesson bodies on dataset manipulation, large-dataset memory mapping/streaming and semantic-search outline."
+      - "Inspected Chapter 10 lesson bodies on Argilla setup, dataset configuration, annotation guidelines, multiple responses, export and quiz."
+      - "Inspected Chapter 11 lesson bodies on chat templates, SFTTrainer, LoRA and evaluation."
+      - "Inspected Chapter 12 lesson bodies on reinforcement learning, DeepSeek R1, GRPO and selected TRL implementation details."
+      - "Compared the course sequence and selected chapter content with LLM Lab's bilingual lessons, exercises, concept registry, computational graph and guided route."
+    inferred_elements:
+      - "The learning outcomes and assumed prerequisites below combine the course's declared outcomes with editorial inferences from its chapter sequence."
+      - "The chapter sequence is reconstructed from the current English index; it is not represented as a formal prerequisite graph authored by Hugging Face."
+      - "Chapters 2–5 are a selected lesson review; Chapters 10–12 are inspected at lesson-text level. Code was not executed and learner outcomes were not measured."
+  source_graph:
+    nodes:
+      - {id: src-python-setup, kind: prerequisite, description: "Environment setup and Python prerequisites.", locator: "Chapter 0"}
+      - {id: src-transformer-foundations, kind: learning-block, description: "Transformer architecture, model families, capabilities and limitations.", locator: "Chapter 1"}
+      - {id: src-pretrained-model-use, kind: learning-block, description: "Use tokenizers and pretrained Transformer models for predictions.", locator: "Chapter 2"}
+      - {id: src-task-finetuning, kind: learning-block, description: "Prepare data and fine-tune a pretrained model using Trainer or a custom training loop.", locator: "Chapter 3"}
+      - {id: src-hub-sharing, kind: workflow, description: "Share models and tokenizers through the Hugging Face Hub.", locator: "Chapter 4"}
+      - {id: src-dataset-tooling, kind: workflow, description: "Load, transform, stream and publish datasets; construct semantic search examples.", locator: "Chapter 5"}
+      - {id: src-tokenizer-tooling, kind: workflow, description: "Explore and build tokenizers.", locator: "Chapter 6"}
+      - {id: src-nlp-task-recipes, kind: learning-block, description: "Apply Transformer models to common NLP tasks and causal language modeling.", locator: "Chapter 7"}
+      - {id: src-community-debugging, kind: practice, description: "Use community and issue-reporting practices to ask for help.", locator: "Chapter 8"}
+      - {id: src-demo-building, kind: workflow, description: "Build and share interactive model demonstrations.", locator: "Chapter 9"}
+      - {id: src-human-annotation, kind: workflow, description: "Configure annotation tasks, write guidelines, collect multiple responses and curate records with Argilla.", locator: "Chapter 10"}
+      - {id: src-llm-sft, kind: workflow, description: "Serialize conversations, perform supervised fine-tuning, use LoRA and evaluate adapted LLMs.", locator: "Chapter 11"}
+      - {id: src-reasoning-rl, kind: learning-block, description: "Study reinforcement learning for LLMs, DeepSeek R1 and group-relative policy optimization.", locator: "Chapter 12"}
+    edges:
+      - {from: src-python-setup, type: prepares-for, to: src-transformer-foundations}
+      - {from: src-transformer-foundations, type: prepares-for, to: src-pretrained-model-use}
+      - {from: src-pretrained-model-use, type: extends-to, to: src-task-finetuning}
+      - {from: src-task-finetuning, type: publishes-through, to: src-hub-sharing}
+      - {from: src-dataset-tooling, type: supports, to: src-task-finetuning}
+      - {from: src-tokenizer-tooling, type: supports, to: src-nlp-task-recipes}
+      - {from: src-task-finetuning, type: supports, to: src-nlp-task-recipes}
+      - {from: src-hub-sharing, type: supports, to: src-demo-building}
+      - {from: src-dataset-tooling, type: prepares-for, to: src-human-annotation}
+      - {from: src-human-annotation, type: produces-curated-data-for, to: src-llm-sft}
+      - {from: src-llm-sft, type: precedes-in-this-course, to: src-reasoning-rl}
+      - {from: src-community-debugging, type: supports, to: src-demo-building}
+    interpretation: "Editorial reconstruction of the current course sequence and selected chapter dependencies. It is source-local, not the canonical LLM Lab concept graph, computational graph or prerequisite route. Chapter order does not prove every listed dependency."
+  learning_outcomes:
+    - {status: declared, outcome: "Understand Transformer models and common NLP/LLM tasks.", basis: "Course overview and Chapter 1 introduction."}
+    - {status: declared, outcome: "Use pretrained models and fine-tune them on datasets with Hugging Face libraries.", basis: "Course overview and Chapters 2–7."}
+    - {status: declared, outcome: "Curate datasets, fine-tune LLMs and explore reasoning-model training.", basis: "Current English course overview and Chapters 10–12."}
+    - {status: inferred, outcome: "Translate selected training workflows into reproducible model, dataset and demo artifacts.", basis: "Chapters 4, 5, 9, 10 and 11."}
+  assumed_prerequisites:
+    - {status: declared, topic: "Good Python knowledge.", basis: "Course introduction."}
+    - {status: declared, topic: "An introductory deep-learning course is recommended; prior PyTorch or TensorFlow expertise is not required.", basis: "Course introduction."}
+    - {status: inferred, topic: "Basic familiarity with supervised learning, datasets, model evaluation and command-line development helps with the practical chapters.", basis: "The sequence of Chapters 3, 5, 10 and 11."}
+  teaching_route:
+    - {order: 1, section: "0. Setup", function: prepare-environment, moves: ["Install and configure the software environment", "Establish Python prerequisites"]}
+    - {order: 2, section: "1. Transformer models", function: establish-concepts, moves: ["Introduce NLP and LLMs", "Explain Transformer families and internal operation", "Discuss capabilities, bias and limitations"]}
+    - {order: 3, section: "2. Using Transformers", function: apply-pretrained-models, moves: ["Load tokenizers and pretrained models", "Run inference and task pipelines"]}
+    - {order: 4, section: "3. Fine-tuning a pretrained model", function: train-a-task-model, moves: ["Prepare datasets", "Use Trainer", "Write a custom loop", "Introduce Accelerate and learning curves"]}
+    - {order: 5, section: "4. Sharing models and tokenizers", function: publish-artifacts, moves: ["Package model/tokenizer artifacts", "Publish to the Hub"]}
+    - {order: 6, section: "5. The Datasets library", function: engineer-datasets, moves: ["Load and transform data", "Handle large datasets", "Create and publish datasets", "Build semantic search"]}
+    - {order: 7, section: "6. The Tokenizers library", function: inspect-tokenization, moves: ["Understand tokenizer components", "Build tokenizers"]}
+    - {order: 8, section: "7. Classical NLP tasks", function: transfer-to-tasks, moves: ["Apply models to token classification, masked LM, translation, summarization, causal LM and QA"]}
+    - {order: 9, section: "8. How to ask for help", function: practice-debugging, moves: ["Prepare useful questions and reproducible reports"]}
+    - {order: 10, section: "9. Building and sharing demos", function: demonstrate-applications, moves: ["Build interactive model demos", "Share applications"]}
+    - {order: 11, section: "10. Curate high-quality datasets", function: curate-human-labelled-data, moves: ["Configure annotation tasks", "Write guidelines", "Collect and review multiple annotations", "Export curated records"]}
+    - {order: 12, section: "11. Fine-tune Large Language Models", function: adapt-conversational-models, moves: ["Serialize conversations with chat templates", "Perform SFT", "Use LoRA", "Evaluate the adapted model"]}
+    - {order: 13, section: "12. Build Reasoning Models", function: train-reasoning-oriented-models, moves: ["Introduce RL for LLMs", "Read the DeepSeek R1 recipe", "Understand GRPO", "Implement a reward function and trainer workflow"]}
+  pedagogical_strengths:
+    - "Connects conceptual Transformer explanations to concrete Hugging Face library workflows."
+    - "Provides a progressive bridge from pretrained-model use to task fine-tuning, dataset tooling and LLM-specific adaptation."
+    - "Makes human annotation and curation a visible stage rather than treating datasets as already-clean inputs."
+    - "Combines algorithmic explanation with runnable implementation patterns and exercises in the advanced chapters."
+    - "Uses the Hub to connect models, datasets and demos as shareable artifacts."
+  pedagogical_limits:
+    - "The course is ecosystem- and API-oriented; its chapter order should not be copied as a universal scientific prerequisite graph."
+    - "The Argilla chapter is a workflow example, not a complete treatment of corpus deduplication, contamination, representativeness, licensing or statistical annotation reliability."
+    - "The short LoRA overview can overstate attention-only targeting; target modules and resource savings depend on configuration."
+    - "Chat templates are model-specific serialization conventions; they are not a universal format or tool executor."
+    - "The GRPO chapter's simple length reward is a pedagogical example, not a valid general proxy for reasoning quality."
+    - "DeepSeek R1 is a particular multi-stage training recipe, not synonymous with GRPO or a universal reasoning-model recipe."
+    - "Generated chain-of-thought and the described 'Aha moment' do not establish human-like introspection or faithful access to internal computation."
+    - "The course and APIs are living resources; code and version-sensitive behavior require pinned versions and execution before reuse."
+  comparison:
+    dossier: "docs/source-reviews/huggingface-llm-course-2026-11.md"
+    canonical_graph: "data/concepts.yml and data/computational-graph.yml"
+    canonical_routes:
+      - "data/guided-route.yml"
+      - "docs/learning-path.md"
+      - "site page-level suggested_route metadata"
+    decision: "Use the course as a complementary bridge from conceptual understanding to Hugging Face practice. Integrate human annotation protocol and chat-template serialization into existing bilingual lessons; represent GRPO in the concept graph without making it a mandatory stage. Continue auditing Chapters 2–9 before further page or route changes."
+    structures_kept_separate:
+      - "The course-local chapter order is not the LLM Lab guided route."
+      - "The source-local teaching graph is not the canonical concept or computational graph."
+      - "Hugging Face API recipes are contextual implementation references, not canonical scientific definitions."
+      - "Course screenshots and code are not copied; source material remains link-only."
+
+items:
+  - id: huggingface-llm-course:course-architecture
+    kind: teaching-sequence
+    summary: "The current English course progresses from Transformer concepts and pretrained-model use through fine-tuning, Hub sharing, datasets, tokenizers and NLP tasks, then advances to human dataset curation, LLM SFT and reasoning-model training."
+    locator: {type: page, value: "https://huggingface.co/learn/llm-course/", label: "Current English course index"}
+    evidence:
+      kind: course-outline
+      confidence: established
+      scope: "Visible chapter titles and overview outcomes for chapters 0–12."
+      assumptions: []
+      limitations: ["Does not establish lesson-level depth or prove every chapter-order relation is a prerequisite."]
+    classification:
+      primary_theme: architectures-mechanisms
+      tags: [topic:transformer, topic:llm-training, ecosystem:huggingface]
+      concept_ids: [self-attention, token]
+    candidate_destinations:
+      pages: [fr/transformer, en/transformer]
+      concepts: [self-attention, token]
+    disposition: already-covered
+  - id: huggingface-llm-course:chapter1-scope
+    kind: teaching-sequence
+    summary: "Chapter 1 frames NLP as the broader field and LLMs as a subset, then introduces Transformer families, operation, capabilities, bias and limitations."
+    locator: {type: page, value: "https://huggingface.co/learn/llm-course/fr/chapter1/1", label: "French Chapter 1 introduction"}
+    evidence:
+      kind: course-outline
+      confidence: well-supported
+      scope: "Visible French introduction and chapter outline."
+      assumptions: []
+      limitations: ["Only the introduction and visible outline were inspected."]
+    classification:
+      primary_theme: architectures-mechanisms
+      tags: [topic:transformer, topic:model-limitations, ecosystem:huggingface]
+      concept_ids: [self-attention]
+    candidate_destinations:
+      pages: [fr/transformer, en/transformer]
+      concepts: [self-attention]
+    disposition: already-covered
+  - id: huggingface-llm-course:chapter10-human-annotation
+    kind: implementation-pattern
+    summary: "Chapter 10 teaches human-in-the-loop dataset curation with Argilla: configure fields and questions, write annotation guidelines, collect independent responses, inspect disagreements, filter records and export curated data. LLM Lab lacked an explicit annotation-protocol stage; this gap is now addressed bilingually."
+    locator: {type: page, value: "https://huggingface.co/learn/llm-course/en/chapter10/1", label: "Chapter 10 — Introduction to Argilla"}
+    evidence:
+      kind: course-lesson
+      confidence: well-supported
+      scope: "Introduction, dataset configuration, annotation guidelines, multiple responses, export and quiz."
+      assumptions: []
+      limitations: ["Tool workflow, not a comprehensive corpus-quality methodology; agreement is not validity."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      tags: [topic:dataset-curation, topic:human-annotation, ecosystem:argilla, ecosystem:huggingface]
+      concept_ids: [dataset-curation]
+    candidate_destinations:
+      pages: [fr/corpus-preparation, en/corpus-preparation]
+      concepts: [dataset-curation]
+    disposition: integrate
+  - id: huggingface-llm-course:chapter11-chat-templates
+    kind: mechanism
+    summary: "Chat templates serialize message roles, boundaries and control markers into model-specific token sequences. Correct template/tokenizer alignment is part of conversational SFT data provenance and is distinct from loss masking and host-side tool execution. Integrated into the bilingual post-training lesson and exercises."
+    locator: {type: page, value: "https://huggingface.co/learn/llm-course/en/chapter11/2", label: "Chapter 11 — Chat Templates"}
+    evidence:
+      kind: course-lesson
+      confidence: well-supported
+      scope: "Chat template purpose, base versus instruction models, role markers and tool-call serialization."
+      assumptions: []
+      limitations: ["Chat formats and API behavior are model/library-version dependent; no code was executed."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      tags: [topic:chat-template, topic:supervised-fine-tuning, ecosystem:huggingface]
+      concept_ids: [chat-template, instruction-tuning]
+    candidate_destinations:
+      pages: [fr/post-training, en/post-training]
+      concepts: [chat-template, instruction-tuning]
+    disposition: integrate
+  - id: huggingface-llm-course:chapter11-lora-sft-evaluation
+    kind: implementation-pattern
+    summary: "Chapter 11 connects SFT with conversational instruction data, SFTTrainer, LoRA and evaluation. LLM Lab already covers the underlying SFT, preference-learning and parameter-efficient adaptation distinctions; the main new teaching point was chat serialization. LoRA target modules and reported savings are configuration-dependent."
+    locator: {type: page, value: "https://huggingface.co/learn/llm-course/en/chapter11/1", label: "Chapter 11 — Supervised Fine-Tuning"}
+    evidence:
+      kind: course-lesson
+      confidence: well-supported
+      scope: "Chapter overview, SFT, LoRA and evaluation sections."
+      assumptions: []
+      limitations: ["Trainer code and current APIs were not executed; no universal LoRA savings claim is inferred."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      tags: [topic:fine-tuning, topic:supervised-fine-tuning, ecosystem:trl]
+      concept_ids: [fine-tuning, instruction-tuning]
+    candidate_destinations:
+      pages: [fr/post-training, en/post-training]
+      concepts: [fine-tuning, instruction-tuning]
+    disposition: already-covered
+  - id: huggingface-llm-course:chapter12-grpo
+    kind: mechanism
+    summary: "Chapter 12 introduces RL for LLMs, analyzes DeepSeek R1 and implements GRPO. GRPO samples multiple completions per prompt and uses group-relative reward advantages; the original formulation avoids a separate critic, but reward source and implementation details vary. The project now has a first-class GRPO concept and graph relations."
+    locator: {type: page, value: "https://huggingface.co/learn/llm-course/en/chapter12/4", label: "Chapter 12 — Implementing GRPO in TRL"}
+    evidence:
+      kind: course-lesson
+      confidence: well-supported
+      scope: "RL introduction, R1 paper walkthrough, GRPO algorithm and selected TRL implementation details."
+      assumptions: []
+      limitations: ["No code was executed; the course's simple length reward is not endorsed as a quality objective; no learner-outcome claim."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [inference-efficiency]
+      tags: [topic:grpo, topic:reinforcement-learning, topic:reasoning-models, ecosystem:trl]
+      concept_ids: [group-relative-policy-optimization, policy-gradient, reasoning-model]
+    candidate_destinations:
+      pages: [fr/glossary, en/glossary, fr/score-centering, en/score-centering]
+      concepts: [group-relative-policy-optimization, policy-gradient, reasoning-model]
+    disposition: integrate-by-reference
+
+  - id: huggingface-llm-course:chapter2-transformers-workflow
+    kind: implementation-pattern
+    summary: "Chapter 2 bridges a high-level Transformers pipeline to tokenizer and model APIs, including model loading, tokenizer processing and handling multiple sequences. LLM Lab already explains the underlying text-to-token and autoregressive-generation mechanisms; the course adds an optional library workflow."
+    locator: {type: page, value: "https://huggingface.co/learn/llm-course/en/chapter2/2", label: "Chapter 2 — Behind the pipeline"}
+    evidence:
+      kind: course-lesson
+      confidence: well-supported
+      scope: "Chapter overview, pipeline walkthrough, model/tokenizer sections and visible batching/deployment outline."
+      assumptions: []
+      limitations: ["Only selected lesson bodies were inspected; library APIs and code were not executed."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [inference-efficiency, text-tokenization]
+      tags: [topic:inference, topic:tokenization, ecosystem:transformers, ecosystem:huggingface]
+      concept_ids: [token, self-attention]
+    candidate_destinations:
+      pages: [fr/generation, en/generation]
+      concepts: [token, self-attention]
+    disposition: integrate-by-reference
+  - id: huggingface-llm-course:chapter3-trainer-learning-curves
+    kind: implementation-pattern
+    summary: "Chapter 3 presents a pretrained task-fine-tuning workflow through both Trainer and a custom PyTorch loop, then teaches evaluation metrics and learning-curve interpretation. LLM Lab already covers the conceptual training loop and train/validation losses; the distinct value is the library-oriented implementation."
+    locator: {type: page, value: "https://huggingface.co/learn/llm-course/en/chapter3/5", label: "Chapter 3 — Understanding Learning Curves"}
+    evidence:
+      kind: course-lesson
+      confidence: well-supported
+      scope: "Data processing, Trainer API, custom training loop and learning-curves sections."
+      assumptions: []
+      limitations: ["No Trainer code was executed; current API arguments are version-sensitive."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      tags: [topic:fine-tuning, topic:learning-curves, ecosystem:transformers, ecosystem:huggingface]
+      concept_ids: [fine-tuning]
+    candidate_destinations:
+      pages: [fr/training-loop, en/training-loop]
+      concepts: [fine-tuning]
+    disposition: integrate-by-reference
+  - id: huggingface-llm-course:chapter4-model-cards
+    kind: implementation-pattern
+    summary: "Chapter 4 treats a model card as a reusable and reproducible description of a shared model, covering intended uses, limitations, training data/procedure and evaluation. Added as an optional Build-path reference rather than a duplicate project provenance schema."
+    locator: {type: page, value: "https://huggingface.co/learn/llm-course/en/chapter4/4", label: "Chapter 4 — Building a model card"}
+    evidence:
+      kind: course-lesson
+      confidence: well-supported
+      scope: "Model-card rationale and listed sections."
+      assumptions: []
+      limitations: ["Selected lesson text only; no Hub publication workflow was executed."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [inference-efficiency]
+      tags: [topic:model-card, topic:reproducibility, ecosystem:huggingface]
+      concept_ids: []
+    candidate_destinations:
+      pages: [fr/build-path, en/build-path]
+      concepts: []
+    disposition: integrate-by-reference
+  - id: huggingface-llm-course:chapter5-datasets-library
+    kind: implementation-pattern
+    summary: "Chapter 5 teaches practical dataset loading, mapping/filtering/slicing/formatting, dataset creation, memory-mapped storage and streaming for large corpora, plus a FAISS semantic-search example. LLM Lab already covers corpus provenance, filtering, deduplication and split design; the library-specific workflow is linked as optional practice."
+    locator: {type: page, value: "https://huggingface.co/learn/llm-course/en/chapter5/4", label: "Chapter 5 — Large datasets, memory and streaming"}
+    evidence:
+      kind: course-lesson
+      confidence: well-supported
+      scope: "Chapter overview, manipulation section, large-data section and semantic-search chapter outline."
+      assumptions: []
+      limitations: ["Only selected lesson bodies and chapter outline were inspected; no large dataset was loaded or benchmarked."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [inference-efficiency]
+      tags: [topic:dataset-engineering, topic:streaming, ecosystem:datasets, ecosystem:huggingface]
+      concept_ids: [dataset-curation]
+    candidate_destinations:
+      pages: [fr/corpus-preparation, en/corpus-preparation]
+      concepts: [dataset-curation]
+    disposition: integrate-by-reference

@@ -33,6 +33,8 @@ Ce glossaire donne une définition courte des termes rencontrés dans le site. I
 
 - **Token** — unité discrète manipulée par le modèle ; elle peut correspondre à un mot, une partie de mot, un caractère ou un autre segment.
 - **Tokenisation** — transformation du texte en une séquence d'identifiants de tokens.
+- **Chat template (modèle de conversation)** — règle de sérialisation des messages, rôles, frontières et marqueurs de contrôle en une séquence de tokens attendue par un modèle. Il doit être cohérent avec le tokenizer et la convention du modèle ; il ne constitue pas à lui seul un mécanisme d'exécution des outils.
+- **Curation de dataset** — processus de sélection, structuration, annotation, contrôle et documentation d'un jeu de données pour un usage défini. La qualité dépend aussi de la validité de la tâche et du protocole d'annotation, pas seulement du nettoyage.
 - **Vocabulaire** — ensemble des tokens que le tokenizer peut représenter.
 - **Préfixe** — partie déjà disponible d'une séquence, utilisée pour conditionner la prédiction suivante.
 - **Passe avant (*forward pass*)** — calcul du réseau qui transforme le contexte en représentations et en logits, avec les paramètres du modèle fixés. Voir [GPT et Transformer](transformer.qmd).
