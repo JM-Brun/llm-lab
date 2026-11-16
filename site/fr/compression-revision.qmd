@@ -78,7 +78,7 @@ Il faut un codeur et un décodeur compatibles (par exemple arithmétiques), le m
 Pour une distribution prédictive donnée :
 
 - **Entropie prédictive** : incertitude moyenne du modèle sur le prochain token.
-- **Surprisal observé** : coût informationnel du token effectivement rencontré, \\( -\\log_2 p(x_t\\mid contexte) \\).
+- **Surprisal observé** : coût informationnel du token effectivement rencontré, \( -\\log_2 p(x_t\\mid contexte) \).
 - **Entropie des poids d'attention** : dispersion des poids sur les positions du contexte.
 - **Dérive du cache KV** : différence entre un état conservé et celui qui serait recalculé.
 
