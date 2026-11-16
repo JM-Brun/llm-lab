@@ -73,12 +73,16 @@ $$
 A compatible encoder and decoder (for example, arithmetic coders), the same model, tokenizer, symbol order, and numerical conventions are required. Decoding must reconstruct the exact sequence. Generating a plausible continuation is not decompressing the corpus.
 :::
 
+::: {.callout-note title="The corpus is a ceiling, not a floor"}
+For a fixed dataset, training cannot place more information about the data distribution into the parameters than the corpus and the prior choices (architecture, preprocessing) contain. Changing architecture (Transformer, Mamba, RWKV...) changes extraction efficiency, not the ceiling. Two qualifications: the thermodynamic analogy (Landauer's limit) is an illustration, not a proof — it concerns physical irreversible erasure, not learning; and Shannon's absolute ceiling differs from the information extractable by a given model family (predictive \(\mathcal V\)-information): synthetic data produced by a model adds, by itself, no Shannon information beyond what the generator encodes, but it can restructure regularities to make them more extractible — at the risk of also baking in the generator's errors. See the [information-theory revision sheet](revision-information-theory.qmd).
+:::
+
 ## 2 bis. Entropy, surprise, and utility are not synonyms
 
 For a given predictive distribution:
 
 - **Predictive entropy**: the model's average uncertainty about the next token.
-- **Observed surprisal**: the information cost of the token that actually occurred, \( -\\log_2 p(x_t\\mid context) \).
+- **Observed surprisal**: the information cost of the token that actually occurred, \( -\log_2 p(x_t\mid x_{<t}) \).
 - **Attention-weight entropy**: how dispersed attention weights are across context positions.
 - **KV-cache drift**: the difference between a retained state and the state that would be recomputed.
 
