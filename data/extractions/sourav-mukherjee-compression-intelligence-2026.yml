@@ -1,0 +1,148 @@
+schema_version: 1
+source_id: sourav-mukherjee-compression-intelligence-2026
+scan:
+  accessed_at: "2026-11-16"
+  retrieval_method: author-page-and-mirror
+  author_text:
+    status: complete
+    coverage: "Full article body retrieved from Freedium mirror: Hutter Prize, Shannon information, cross-entropy training, entropy-guided token/cache pruning, hallucinations as lossy-compression artifacts, conclusion."
+    notes:
+      - "Canonical Medium page is member-only; mirror supplies the full visible author-authored text."
+      - "Canonical page metadata identifies Sourav Mukherjee and publication date 2026-07-20."
+  figures_media:
+    status: not-inspected
+    coverage: null
+    notes: ["No article figure was separately retrieved or visually inspected.", "No figure reuse rights established."]
+  code_data:
+    status: not-present
+    coverage: null
+    notes: ["The article text does not provide a reproducible code artifact or sufficiently specified pruning experiment."]
+  comments:
+    status: not-inspected
+    coverage: null
+    notes: ["Reader comments and author replies were not audited."]
+  linked_resources:
+    status: partial
+    coverage: "Official Hutter Prize rules and research on entropy-guided KV-cache allocation, entropy-guided recomputation, and attention-guided cache eviction consulted."
+    notes:
+      - "No claim of reproducing any cited research experiment."
+      - "Research methods use different entropy signals and model families; they must not be conflated."
+  metadata:
+    status: complete
+    coverage: "Title, author, publisher, publication date 2026-07-20 and article section headings."
+    notes: ["Medium canonical URL retained; Freedium is recorded only as retrieval route."]
+  rights:
+    status: unknown
+    coverage: null
+    notes: ["Article text and figures remain link-only; no reuse licence or permission established."]
+  unresolved_questions:
+    - "Which exact primary sources support the article's claim about pruning low-entropy chain-of-thought tokens?"
+    - "Can predictive entropy or realized surprisal predict token utility under controlled pruning?"
+    - "How do entropy-guided cache allocation methods compare under matched models, workloads, memory budgets and quality constraints?"
+pedagogical_model:
+  reconstruction:
+    status: complete
+    basis: ["Full author-authored article body retrieved from the mirror.", "Canonical Medium metadata inspected."]
+    inferred_elements: ["The article's implicit learning outcomes and source-to-project mappings are reviewer-inferred."]
+  source_graph:
+    nodes:
+      - {id: src-hutter-compression-intelligence, kind: claim, description: "Lossless compression performance is proposed as an operational clue to discovery of regularities.", locator: "1. The Hutter Prize: Compression as Intelligence", inferred: false}
+      - {id: src-shannon-surprisal, kind: concept, description: "Information content is related to event probability through negative logarithm.", locator: "2. The 1948 Foundation: Quantifying Surprise", inferred: false}
+      - {id: src-cross-entropy-llm, kind: concept, description: "Next-token cross-entropy measures model negative log probability on observed targets.", locator: "3. The LLM Connection: Why We Minimize Cross-Entropy", inferred: false}
+      - {id: src-entropy-guided-pruning, kind: claim, description: "Entropy signals may help allocate cache or computation and identify redundancy.", locator: "4. The 2026 Frontier: Entropy-Guided Token Pruning", inferred: false}
+      - {id: src-lossy-compression-hallucination, kind: analogy, description: "Hallucinations are compared to detail loss in lossy compression.", locator: "5. Hallucinations as Lossy Compression Artifacts", inferred: false}
+      - {id: src-entropy-surprisal-distinction, kind: limitation, description: "Predictive entropy, conditional entropy and realized surprisal are distinct quantities.", locator: "Reviewer technical audit", inferred: true}
+      - {id: src-token-utility-limit, kind: limitation, description: "Confidence or low surprisal alone does not establish that a token can be removed without affecting task utility.", locator: "Reviewer technical audit", inferred: true}
+    edges:
+      - {from: src-shannon-surprisal, type: averaged-into, to: src-cross-entropy-llm, inferred: true}
+      - {from: src-entropy-guided-pruning, type: requires-distinguishing, to: src-entropy-surprisal-distinction, inferred: true}
+      - {from: src-entropy-guided-pruning, type: requires-evaluation-of, to: src-token-utility-limit, inferred: true}
+      - {from: src-lossy-compression-hallucination, type: analogy-limited-by, to: src-token-utility-limit, inferred: true}
+    interpretation: "The article's five-part narrative is preserved; reviewer qualifications are explicitly marked as inferred."
+  learning_outcomes:
+    - {status: inferred, outcome: "Distinguish predictive entropy, realized surprisal, attention entropy and cache drift.", basis: "Technical audit of sections 2 and 4."}
+    - {status: inferred, outcome: "Explain why predictive probabilities can support ideal coding without defining intelligence.", basis: "Sections 1 and 3; critical qualification."}
+    - {status: inferred, outcome: "Describe entropy-derived cache signals without treating them as universal token-utility scores.", basis: "Section 4 and consulted primary research."}
+    - {status: inferred, outcome: "Evaluate the limits of the lossy-compression analogy for hallucinations.", basis: "Section 5; critical qualification."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Probability distributions, logarithms, conditional probability and entropy.", basis: "Sections 2 and 3."}
+    - {status: inferred, topic: "Basic transformer inference and key-value caching.", basis: "Section 4."}
+  teaching_route:
+    - {order: 1, section: "The Hutter Prize: Compression as Intelligence", function: motivation, moves: ["Introduce compression as a challenge in discovering regularities.", "Qualify the relationship with intelligence."]}
+    - {order: 2, section: "The 1948 Foundation: Quantifying Surprise", function: foundations, moves: ["Define event surprisal and entropy.", "Distinguish average uncertainty from a realized event."]}
+    - {order: 3, section: "The LLM Connection: Why We Minimize Cross-Entropy", function: training-objective, moves: ["Connect negative log probability to predictive code cost.", "Specify logarithm base and units."]}
+    - {order: 4, section: "The 2026 Frontier: Entropy-Guided Token Pruning", function: advanced-application, moves: ["Introduce entropy-derived inference signals.", "Separate cache allocation, recomputation and reasoning-token pruning."]}
+    - {order: 5, section: "Hallucinations as Lossy Compression Artifacts", function: analogy, moves: ["Use lossy compression as a limited intuition.", "Name alternative mechanisms and the role of external verification."]}
+  pedagogical_strengths:
+    - "Accessible narrative linking information theory, predictive training and inference efficiency."
+    - "Connects abstract entropy vocabulary to a practical memory and latency problem."
+  pedagogical_limits:
+    - "The claim that low-entropy reasoning tokens can generally be pruned is not supported by a sufficiently specified experiment in the article."
+    - "The hallucination analogy is incomplete and must not be presented as a causal theory."
+    - "The article compresses distinct entropy signals and cache methods into a single broad narrative."
+  comparison:
+    dossier: "docs/source-syntheses/compression-intelligence-and-inference-efficiency-2026-11.md"
+    canonical_graph: "data/concepts.yml"
+    canonical_routes:
+      - "site/fr/entropy.qmd"
+      - "site/en/entropy.qmd"
+      - "site/fr/cross-entropy.qmd"
+      - "site/en/cross-entropy.qmd"
+      - "site/fr/compression-revision.qmd"
+      - "site/en/compression-revision.qmd"
+    decision: "Reuse canonical definitions, add the entropy-signal distinctions to the existing revision sheet, and treat reasoning-token pruning as an unvalidated experimental question."
+    structures_kept_separate:
+      - "Article's five-part narrative"
+      - "Canonical concept graph"
+      - "Bilingual learning route"
+items:
+  - id: sourav-mukherjee-compression-intelligence-2026:hutter-prize
+    kind: claim
+    summary: "The Hutter Prize motivates lossless compression of a fixed Wikipedia benchmark as a challenge in discovering reusable regularities."
+    locator: {type: section, value: "1. The Hutter Prize: Compression as Intelligence"}
+    evidence: {kind: official-rules, confidence: established, scope: "Official enwik9 benchmark and exact reconstruction requirements.", assumptions: ["Compressor and archive accounting follow the current official rules."], limitations: ["Compression performance on a fixed text benchmark is not a complete definition or measure of intelligence."]}
+    pedagogical_assessment: {novelty: {level: moderate, rationale: "The Hutter Prize context adds a concrete benchmark, while the intelligence caveat is new to this source comparison."}, complementarity: {level: high, rationale: "It links compression to a broader discussion of capability."}, pedagogical_value: {level: moderate, rationale: "Useful motivation when explicitly bounded."}, applicability: {level: high, rationale: "Fits the existing compression synthesis."}, redundancy: {level: moderate, rationale: "Predictive compression is already covered."}, evidence_quality: {level: high, rationale: "Official benchmark rules can be checked independently."}}
+    classification: {primary_theme: probabilistic-foundations-training, tags: [topic:generalization], concept_ids: [predictive-compression, entropy]}
+    candidate_destinations: {pages: [], concepts: [predictive-compression, entropy]}
+    disposition: integrate-by-reference
+    disposition_rationale: "Add qualification to the existing compression synthesis; no duplicate Hutter Prize lesson."
+  - id: sourav-mukherjee-compression-intelligence-2026:entropy-vs-surprisal
+    kind: misconception
+    summary: "The article moves between entropy and surprise; these must be distinguished at distribution and realized-event levels."
+    locator: {type: section, value: "2. The 1948 Foundation: Quantifying Surprise"}
+    evidence: {kind: mathematical-definition, confidence: established, scope: "Discrete predictive distributions with a specified context and logarithm base.", assumptions: ["The probability model and target event are specified."], limitations: ["Predictive entropy is not realized surprisal and neither measures utility by itself."]}
+    pedagogical_assessment: {novelty: {level: moderate, rationale: "The distinction is foundational but the source blurs adjacent quantities."}, complementarity: {level: high, rationale: "A concrete counterexample sharpens the existing entropy lesson."}, pedagogical_value: {level: high, rationale: "Prevents a consequential inference error."}, applicability: {level: high, rationale: "The bilingual revision sheet is an appropriate destination."}, redundancy: {level: low, rationale: "The rare-event counterexample adds a distinct teaching check."}, evidence_quality: {level: high, rationale: "The distinction follows directly from standard definitions."}}
+    classification: {primary_theme: probabilistic-foundations-training, concept_ids: [entropy, surprisal]}
+    candidate_destinations: {pages: [fr/entropy, en/entropy], concepts: [entropy, surprisal]}
+    disposition: clarify
+    disposition_rationale: "Use existing canonical definitions; add a worked contrast and no new concept ID."
+  - id: sourav-mukherjee-compression-intelligence-2026:cross-entropy-units
+    kind: misconception
+    summary: "A cross-entropy loss value has units determined by the logarithm base; natural-log losses are in nats, not bits."
+    locator: {type: section, value: "3. The LLM Connection: Why We Minimize Cross-Entropy"}
+    evidence: {kind: implementation-convention, confidence: established, scope: "Standard neural-network cross-entropy implementations using natural logarithms.", assumptions: ["The implementation's logarithm convention is checked."], limitations: ["Do not infer bits/token from a scalar loss without checking its base and token averaging convention."]}
+    pedagogical_assessment: {novelty: {level: low, rationale: "Cross-entropy is already a canonical lesson."}, complementarity: {level: moderate, rationale: "The unit warning strengthens quantitative interpretation."}, pedagogical_value: {level: high, rationale: "Prevents confusing nats with bits."}, applicability: {level: high, rationale: "Add a short note to existing material."}, redundancy: {level: high, rationale: "The objective derivation is already covered."}, evidence_quality: {level: high, rationale: "Logarithm-base conversion is exact."}}
+    classification: {primary_theme: probabilistic-foundations-training, concept_ids: [cross-entropy, surprisal]}
+    candidate_destinations: {pages: [fr/cross-entropy, en/cross-entropy], concepts: [cross-entropy]}
+    disposition: clarify
+    disposition_rationale: "Add a units warning to the existing material rather than duplicating the loss derivation."
+  - id: sourav-mukherjee-compression-intelligence-2026:entropy-guided-inference
+    kind: mechanism
+    summary: "Entropy-derived signals can be used for layer-wise KV-cache allocation or recomputation decisions, but different methods use different distributions and target different model families."
+    locator: {type: section, value: "4. The 2026 Frontier: Entropy-Guided Token Pruning"}
+    evidence: {kind: primary-research, confidence: context-dependent, scope: "Published and preprint methods on attention-entropy cache allocation and decoded-token entropy signals.", assumptions: ["Method-specific definitions and evaluation settings are retained."], limitations: ["Attention entropy, next-token predictive entropy, surprisal and cache drift are not interchangeable.", "The article does not specify or reproduce a general low-entropy chain-of-thought pruning experiment."]}
+    pedagogical_assessment: {novelty: {level: high, rationale: "Entropy-guided cache decisions extend the existing compression discussion."}, complementarity: {level: high, rationale: "Connects information measures to runtime memory management."}, pedagogical_value: {level: high, rationale: "Makes the choice of signal and target explicit."}, applicability: {level: high, rationale: "Suitable for an optional advanced research note."}, redundancy: {level: low, rationale: "The specific inference-time signals are not covered by the compression distinction alone."}, evidence_quality: {level: moderate, rationale: "Primary papers exist, but methods and model families differ."}}
+    classification: {primary_theme: inference-efficiency, tags: [method:cache-eviction], concept_ids: [kv-cache, entropy, attention-weight]}
+    candidate_destinations: {pages: [], concepts: [kv-cache, entropy, attention-weight]}
+    disposition: integrate
+    disposition_rationale: "Add a research note and an experimental question; do not claim generic token-pruning results."
+  - id: sourav-mukherjee-compression-intelligence-2026:hallucination-analogy
+    kind: analogy
+    summary: "The article compares hallucinations to details lost in lossy compression."
+    locator: {type: section, value: "5. Hallucinations as Lossy Compression Artifacts"}
+    evidence: {kind: author-analogy, confidence: context-dependent, scope: "Illustrative analogy about structural regularities and exact details.", assumptions: [], limitations: ["Does not explain all hallucinations; rarity, entropy, confidence and factual reliability are different.", "Retrieval can help only with provenance, freshness and conflict checks."]}
+    pedagogical_assessment: {novelty: {level: moderate, rationale: "The JPEG analogy is memorable but familiar."}, complementarity: {level: moderate, rationale: "Adds an intuition to existing limitations material."}, pedagogical_value: {level: moderate, rationale: "Useful only with alternative causes stated."}, applicability: {level: moderate, rationale: "Can be a bounded analogy in the limitations lesson."}, redundancy: {level: moderate, rationale: "Related hallucination explanations already exist."}, evidence_quality: {level: moderate, rationale: "The analogy is illustrative rather than a validated causal model."}}
+    classification: {primary_theme: scale-research, tags: [topic:hallucination, topic:grounding], concept_ids: [predictive-compression]}
+    candidate_destinations: {pages: [fr/llm-limits, en/llm-limits], concepts: []}
+    disposition: clarify
+    disposition_rationale: "Use as a bounded analogy in the limitations material, not a causal theory or new canonical concept."

@@ -3700,3 +3700,53 @@ sources:
       audit_records:
         - docs/source-reviews/wayland-zhang-information-theory-llm-2026-11.md
         - docs/source-syntheses/information-theory-and-llms-2026-11.md
+
+  - id: sourav-mukherjee-compression-intelligence-2026
+    title: "Compression Is Intelligence: The Information Theory Behind LLMs"
+    creators: ["Sourav Mukherjee"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://medium.com/bongquisitive-tech/compression-is-intelligence-the-information-theory-behind-llms-70022356dad8"
+    publisher: "Medium / Bongquisitive Tech"
+    publication_date: "2026-07-20"
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [inference-efficiency, scale-research]
+      tags:
+        - topic:hallucination
+        - topic:reasoning-redundancy
+        - method:cache-eviction
+        - method:entropy-guided-allocation
+      concept_ids: [predictive-compression, entropy, surprisal, cross-entropy, kv-cache, attention-weight]
+    metadata:
+      technical_level: introductory
+      contribution_types: [theory, pedagogy]
+      audiences: [learner, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    scan_history:
+      - accessed_at: "2026-11-16"
+        status: partially-scanned
+        inspected_scope:
+          - "Full author-authored article body retrieved from the Freedium mirror; canonical Medium title, author and publication date checked"
+          - "Official Hutter Prize requirements checked for benchmark and lossless-reconstruction details"
+          - "Entropy-guided KV-cache allocation, entropy-guided recomputation and attention-guided cache eviction research consulted"
+          - "Structured source extraction, critical review, cross-source synthesis and a reproducible entropy-versus-surprisal toy experiment added"
+        limitations:
+          - "Canonical Medium article is member-only; complete text was retrieved through a third-party mirror."
+          - "Article figures and comments were not inspected."
+          - "No article experiment was reproduced; the claim about safely pruning low-entropy reasoning tokens remains unverified."
+          - "The article's entropy-guided pruning narrative combines distinct signals and methods; see the critical review."
+          - "No licence or permission was established; article text and figures remain link-only."
+    related:
+      pages: [fr/entropy, en/entropy, fr/cross-entropy, en/cross-entropy, fr/compression-revision, en/compression-revision, fr/llm-limits, en/llm-limits]
+      concepts: [predictive-compression, entropy, surprisal, cross-entropy, kv-cache, attention-weight]
+      audit_records:
+        - docs/source-reviews/compression-is-intelligence-mukherjee-2026-11.md
+        - docs/source-syntheses/compression-intelligence-and-inference-efficiency-2026-11.md
