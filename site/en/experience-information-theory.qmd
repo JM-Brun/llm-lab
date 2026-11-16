@@ -1,0 +1,173 @@
+---
+title: "Experiment — Entropy, KL and predictive coding"
+subtitle: "Manipulate distributions and verify the identities"
+description-meta: "A reproducible experiment for entropy, cross-entropy, KL divergence, perplexity and ideal code lengths."
+keywords: ["type:experiment-guide", "destination:practice", "topic:information-theory-experiment", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/experience-information-theory"
+summary: "Reproducible experiment for manipulating distributions and checking identities between entropy, cross-entropy, KL and coding."
+scope: "Guides a deterministic calculation on synthetic distributions and states what the results do and do not support."
+purpose: "Turn definitions into a reproducible numerical check, including edge cases to explore."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/entropy", "en/cross-entropy", "en/revision-information-theory"]
+tags: ["type:experiment-guide", "destination:practice", "topic:information-theory-experiment", "level:applied", "language:en", "status:published"]
+-->
+
+[← Revision sheet](revision-information-theory.qmd) · [Lesson: Cross-entropy](cross-entropy.qmd)
+
+## Question
+
+How can we distinguish target uncertainty, prediction mismatch and ideal coding cost?
+
+## Run the experiment
+
+From the repository root:
+
+```bash
+uv run --locked python experiments/information-theory/run.py
+```
+
+The script uses two synthetic distributions:
+
+- target q = (0.5, 0.5);
+- prediction p = (0.75, 0.25).
+
+It computes metrics in nats and bits, ideal code lengths, and checks that cross-entropy equals target entropy plus KL divergence.
+
+## Expected result
+
+| Measure | Approximate value |
+|---|---:|
+| Target entropy H(q) | 0.693 nats |
+| Cross-entropy H(q,p) | 0.837 nats |
+| KL divergence D(q‖p) | 0.144 nats |
+| Perplexity under q | 2.309 |
+| Target entropy H(q) | 1 bit |
+| Cross-entropy H(q,p) | 1.208 bits |
+| KL divergence D(q‖p) | 0.208 bits |
+
+The identity to verify is:
+
+```text
+0.837 ≈ 0.693 + 0.144
+```
+
+## Try changing the distributions
+
+Open `experiments/information-theory/run.py` and modify q and p while keeping them normalized. Try:
+
+1. p = q: KL divergence should be zero.
+2. p = (0.5, 0.5): the prediction becomes uniform.
+3. A one-hot target: cross-entropy becomes the observed token's NLL.
+4. A predicted zero probability where q is positive: cross-entropy and KL become infinite.
+
+Perplexity is the exponential of mean NLL using the same logarithm base: here exp(0.837) ≈ 2.309. For the one-hot case with an observed probability of 0.25, perplexity is 4.
+
+Reusable functions and their tests live in `src/llm_lab/foundations/information_theory.py` and `tests/unit/test_information_theory.py`.
+
+
+## Extension — predictive \(\mathcal V\)-information
+
+Predictive \(\mathcal V\)-information formalizes a question different from Shannon mutual information: **how much can an allowed family of models improve its prediction of \(Y\) by observing \(X\)?**
+
+For a predictive family \(\mathcal V\) and logarithmic loss:
+
+\[
+H_{\mathcal V}(Y\mid X)
+= \inf_{f\in\mathcal V}
+\mathbb E[-\log f[X](Y)]
+\]
+
+\[
+I_{\mathcal V}(X\to Y)
+=H_{\mathcal V}(Y\mid\varnothing)
+-H_{\mathcal V}(Y\mid X).
+\]
+
+The family must satisfy **optional ignorance**: every probability distribution produced by a predictor must also be available from a predictor that ignores its input. This condition ensures, among other properties, non-negativity at the population level.
+
+### Run the controlled toy example
+
+```bash
+uv run --locked python experiments/information-theory/v_information.py
+```
+
+The script exactly compares three situations using synthetic joint distributions:
+
+| Situation | \(\mathcal V\)-entropy without input | Conditional \(\mathcal V\)-entropy | Predictive information |
+|---|---:|---:|---:|
+| Correlated feature, family can exploit it | 1 bit | 0.469 bits | 0.531 bits |
+| Independent feature | 1 bit | 1 bit | 0 bits |
+| Correlated feature, constant-only family | 1 bit | 1 bit | 0 bits |
+
+The last case is the key teaching point: the data contain a dependency, but a restricted predictive family cannot exploit it. The quantity therefore depends explicitly on the family \(\mathcal V\), not only on the joint distribution.
+
+**Limitations:** this is an exact population-risk calculation on a small discrete example and a hand-specified finite family. No model is trained; it is neither a sample-based estimate, nor an architecture comparison, nor evidence that attention extracts more information than a bag-of-words model. A trained-model experiment would require train/test splits, a pre-specified model class and selection protocol, and an overfitting analysis.
+
+
+## Extension — entropy rate and practical compression
+
+To avoid comparing marginal single-character entropy with a compressed file size from an algorithm that also exploits dependencies, run a second experiment:
+
+```bash
+uv run --locked python experiments/information-theory/compression.py
+```
+
+The script generates three equal-length sources over a four-symbol alphabet: a constant sequence, an IID-uniform source, and a symmetric first-order Markov chain whose probability of staying on the same symbol is 0.9. The seed is fixed. It compares:
+
+- empirical marginal entropy per symbol;
+- the theoretical source entropy rate;
+- zlib output size in bits per symbol, including container overhead.
+
+The Markov case is instructive: its stationary marginal is uniform (2 bits per symbol), but its entropy rate is lower because successive symbols are dependent. For asymptotic coding of a dependent source, entropy rate—not marginal entropy alone—is the relevant benchmark.
+
+**Limitations:** zlib is not an optimal code; results depend on the algorithm, compression level, finite sequence length and container overhead. This comparison illustrates a mechanism; it does not prove the source-coding theorem.
+
+For a stationary source, the entropy rate is:
+
+\[
+h(X)=\lim_{n\to\infty}\frac{1}{n}H(X_1,\ldots,X_n).
+\]
+
+For a first-order Markov chain, it is the conditional transition entropy \(H(X_t\mid X_{t-1})\). It can be much lower than marginal entropy \(H(X_t)\) when successive symbols are correlated.
+
+## What this experiment does — and does not — show
+
+It verifies mathematical identities on discrete distributions. It does not measure model intelligence, generalization or the quality of a trained LLM. Ideal lengths -log₂(p) may be fractional; a practical code adds constraints and overhead.
+
+::: {.language-switch}
+**Language:** [Français](../fr/experience-information-theory.qmd) · [English](experience-information-theory.qmd)
+:::
+
+
+## Extension — attention-row KL versus mutual information
+
+A non-uniform attention row can have positive KL divergence from the uniform distribution even when it reveals no dependency between queries and keys. Run:
+
+```bash
+uv run --locked python experiments/information-theory/attention_kl_vs_mutual_information.py
+```
+
+The experiment compares two conditional tables:
+
+- **Repeated row**: every context receives the same distribution (0.9, 0.1). Mean KL to uniform is about 0.531 bits, but mutual information between context and key is 0 bits: knowing the context does not change the key distribution.
+- **Opposite rows**: the two contexts receive (0.9, 0.1) and (0.1, 0.9), respectively. Mutual information is about 0.531 bits. Its numerical equality with KL-to-uniform is incidental.
+
+For a genuine joint distribution, the correct identity is:
+
+\[
+I(X;Y)=\mathbb E_{X}\left[D_{KL}\big(P(Y\mid X)\|P(Y)\big)\right].
+\]
+
+The KL reference is therefore the **marginal** \(P(Y)\), not an arbitrary uniform distribution. Crucially, attention weights are not automatically calibrated conditional probabilities \(P(\text{key}\mid\text{query})\). A joint distribution must be defined and justified before this identity can be interpreted statistically.
+
+The general mutual-information calculation is tested in `src/llm_lab/foundations/information_theory.py`.

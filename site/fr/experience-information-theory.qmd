@@ -1,0 +1,173 @@
+---
+title: "Expérience — Entropie, KL et compression prédictive"
+subtitle: "Manipuler des distributions et vérifier les identités"
+description-meta: "Expérience reproductible pour calculer entropie, cross-entropie, divergence KL, perplexité et longueurs de code idéales."
+keywords: ["type:experiment-guide", "destination:practice", "topic:information-theory-experiment", "level:applied", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/experience-information-theory"
+summary: "Expérience reproductible pour manipuler des distributions et vérifier les identités entre entropie, cross-entropie, KL et codage."
+scope: "Guide l'exécution d'un calcul déterministe sur des distributions synthétiques et explicite ce que les résultats permettent ou non de conclure."
+purpose: "Faire passer les définitions à une vérification numérique reproductible, avec des cas limites à explorer."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/entropy", "fr/cross-entropy", "fr/revision-information-theory"]
+tags: ["type:experiment-guide", "destination:practice", "topic:information-theory-experiment", "level:applied", "language:fr", "status:published"]
+-->
+
+[← Fiche de révision](revision-information-theory.qmd) · [Leçon : entropie croisée](cross-entropy.qmd)
+
+## Question
+
+Comment distinguer l'incertitude de la cible, l'erreur de prédiction et le coût idéal de codage ?
+
+## Lancer l'expérience
+
+Depuis la racine du dépôt :
+
+```bash
+uv run --locked python experiments/information-theory/run.py
+```
+
+Le script utilise deux distributions synthétiques :
+
+- cible q = (0,5 ; 0,5) ;
+- prédiction p = (0,75 ; 0,25).
+
+Il calcule les métriques en nats et en bits, les longueurs de code idéales, puis vérifie que la cross-entropie est égale à l'entropie cible plus la divergence KL.
+
+## Résultat attendu
+
+| Mesure | Valeur approximative |
+|---|---:|
+| Entropie cible H(q) | 0,693 nat |
+| Cross-entropie H(q,p) | 0,837 nat |
+| Divergence KL D(q‖p) | 0,144 nat |
+| Perplexité sous q | 2,309 |
+| Entropie cible H(q) | 1 bit |
+| Cross-entropie H(q,p) | 1,208 bit |
+| Divergence KL D(q‖p) | 0,208 bit |
+
+L'identité à vérifier est :
+
+```text
+0,837 ≈ 0,693 + 0,144
+```
+
+## À manipuler
+
+Ouvre `experiments/information-theory/run.py` et modifie q et p en conservant des distributions normalisées. Essaie notamment :
+
+1. p = q : la divergence KL doit être nulle.
+2. p = (0,5 ; 0,5) : la prédiction devient parfaitement uniforme.
+3. Une cible one-hot : la cross-entropie devient la NLL du token observé.
+4. Une probabilité prédite nulle là où q est positive : la cross-entropie et la KL deviennent infinies.
+
+La perplexité est l'exponentielle de la NLL moyenne, avec la même base de logarithme : ici exp(0,837) ≈ 2,309. Dans le cas one-hot avec une probabilité observée de 0,25, la perplexité vaut 4.
+
+Les fonctions réutilisables et leurs tests sont dans `src/llm_lab/foundations/information_theory.py` et `tests/unit/test_information_theory.py`.
+
+
+## Extension — information prédictive \(\mathcal V\)
+
+La théorie de l'information prédictive \(\mathcal V\) formalise une question différente de l'information mutuelle de Shannon : **quelle amélioration de prédiction une famille de modèles autorisée peut-elle tirer de l'observation de \(X\) pour prédire \(Y\) ?**
+
+Pour une famille prédictive \(\mathcal V\) et une perte logarithmique :
+
+\[
+H_{\mathcal V}(Y\mid X)
+= \inf_{f\in\mathcal V}
+\mathbb E[-\log f[X](Y)]
+\]
+
+\[
+I_{\mathcal V}(X\to Y)
+=H_{\mathcal V}(Y\mid\varnothing)
+-H_{\mathcal V}(Y\mid X).
+\]
+
+La famille doit respecter la condition d'**ignorance optionnelle** : tout résultat probabiliste qu'un prédicteur peut produire doit aussi pouvoir être produit par un prédicteur qui ignore l'entrée. Cette condition garantit notamment la non-négativité de la quantité populationnelle.
+
+### Lancer le mini-exemple contrôlé
+
+```bash
+uv run --locked python experiments/information-theory/v_information.py
+```
+
+Le script compare trois situations, calculées exactement à partir de distributions synthétiques :
+
+| Situation | Entropie \(\mathcal V\) sans entrée | Entropie conditionnelle \(\mathcal V\) | Information prédictive |
+|---|---:|---:|---:|
+| Variable corrélée, famille capable de l'exploiter | 1 bit | 0,469 bit | 0,531 bit |
+| Variable indépendante | 1 bit | 1 bit | 0 bit |
+| Variable corrélée, famille limitée aux prédicteurs constants | 1 bit | 1 bit | 0 bit |
+
+Le dernier cas est le point pédagogique essentiel : les données contiennent une dépendance, mais une famille de prédicteurs trop restreinte ne sait pas l'exploiter. La quantité dépend donc explicitement de la famille \(\mathcal V\), et pas seulement de la distribution jointe.
+
+**Limites :** c'est un calcul de risque populationnel exact sur un petit exemple discret et une famille finie spécifiée à la main. Aucun modèle n'est entraîné ; il ne s'agit ni d'une estimation sur échantillon, ni d'une comparaison d'architectures, ni d'une preuve que l'attention extrait plus d'information qu'un modèle bag-of-words. Une expérience sur modèles entraînés exigerait des jeux d'entraînement/test, une classe et un protocole de sélection préenregistrés, ainsi qu'une analyse du surapprentissage.
+
+
+## Extension — taux d'entropie et compression réelle
+
+Pour éviter de comparer l'entropie marginale d'un caractère à la taille d'un fichier compressé par un algorithme qui exploite aussi les dépendances, lance une seconde expérience :
+
+```bash
+uv run --locked python experiments/information-theory/compression.py
+```
+
+Le script génère trois sources de même longueur sur un alphabet de quatre symboles : une séquence constante, une source IID uniforme et une chaîne de Markov symétrique où la probabilité de conserver le même symbole vaut 0,9. La graine est fixée. Il compare :
+
+- l'entropie marginale empirique d'un symbole ;
+- le taux d'entropie théorique de la source ;
+- la taille produite par zlib, en bits par symbole, surcharge du conteneur comprise.
+
+Le cas Markov est instructif : sa distribution marginale stationnaire est uniforme (2 bits par symbole), mais son taux d'entropie est plus faible, car les symboles successifs sont dépendants. Le taux d'entropie, et non la seule entropie marginale, est le repère pertinent pour le codage asymptotique d'une source dépendante.
+
+**Limites :** zlib n'est pas un code optimal ; les résultats dépendent de l'algorithme, du niveau de compression, de la longueur finie et de la surcharge du format. Cette comparaison illustre un mécanisme, elle ne prouve pas le théorème de codage source.
+
+Pour une source stationnaire, le taux d'entropie s'écrit :
+
+\[
+h(X)=\lim_{n\to\infty}\frac{1}{n}H(X_1,\ldots,X_n).
+\]
+
+Pour une chaîne de Markov du premier ordre, il se calcule avec l'entropie conditionnelle d'une transition, \(H(X_t\mid X_{t-1})\). Il peut être bien inférieur à l'entropie marginale \(H(X_t)\) lorsque les symboles successifs sont corrélés.
+
+## Ce que l'expérience démontre — et ne démontre pas
+
+Elle vérifie des identités mathématiques sur des distributions discrètes. Elle ne mesure ni l'intelligence d'un modèle, ni sa capacité de généralisation, ni la qualité d'un LLM entraîné. Les longueurs -log₂(p) sont idéales et peuvent être fractionnaires ; un code réel ajoute des contraintes et des coûts.
+
+::: {.language-switch}
+**Langue :** [Français](experience-information-theory.qmd) · [English](../en/experience-information-theory.qmd)
+:::
+
+
+## Extension — KL d'une ligne d'attention et information mutuelle
+
+Une ligne d'attention non uniforme peut avoir une divergence KL positive par rapport à l'uniforme, même si elle ne révèle aucune dépendance entre la requête et les clés. Pour le vérifier :
+
+```bash
+uv run --locked python experiments/information-theory/attention_kl_vs_mutual_information.py
+```
+
+L'expérience compare deux tables conditionnelles :
+
+- **Ligne répétée** : chaque contexte reçoit la même distribution (0,9 ; 0,1). La KL moyenne vers l'uniforme vaut environ 0,531 bit, mais l'information mutuelle entre contexte et clé vaut 0 bit : connaître le contexte ne change pas la distribution des clés.
+- **Lignes opposées** : les deux contextes reçoivent respectivement (0,9 ; 0,1) et (0,1 ; 0,9). L'information mutuelle vaut alors environ 0,531 bit. L'égalité numérique avec la KL vers l'uniforme est accidentelle.
+
+Pour une véritable distribution jointe, l'identité correcte est :
+
+\[
+I(X;Y)=\mathbb E_{X}\left[D_{KL}\big(P(Y\mid X)\|P(Y)\big)\right].
+\]
+
+La référence de la KL est donc la **marginale** \(P(Y)\), et non une distribution uniforme choisie par défaut. Surtout, les poids d'attention ne sont pas automatiquement des probabilités conditionnelles calibrées \(P(\text{clé}\mid\text{requête})\). Il faut définir et justifier une distribution jointe avant d'interpréter cette identité statistiquement.
+
+La fonction générale de calcul de l'information mutuelle est testée dans `src/llm_lab/foundations/information_theory.py`.
