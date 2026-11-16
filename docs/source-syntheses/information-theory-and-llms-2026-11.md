@@ -5,7 +5,7 @@
 - [Dépôt des notebooks anglais et chinois](https://github.com/waylandzhang/information-theory-and-language-models).
 - Xu et al. (2020), [A Theory of Usable Information Under Computational Constraints](https://arxiv.org/abs/2002.10689), notice et abstract consultés.
 
-Le texte de l'article a été inspecté intégralement. Le dépôt de notebooks a été ouvert, mais les cellules n'ont pas été exécutées. Les figures n'ont pas été auditées comme fichiers image. Le papier V-information complet n'a pas encore été relu.
+Le texte de l'article a été inspecté intégralement. Le notebook anglais a été inspecté statiquement dans ses 18 cellules, mais n'a pas été exécuté. Les figures n'ont pas été auditées comme fichiers image. Le papier V-information complet n'a pas encore été relu. L'audit du notebook a aussi identifié une visualisation qui appelle à tort « approximation de MI » une divergence KL ligne-par-ligne entre poids d'attention et distribution uniforme ; ce calcul n'est pas une information mutuelle.
 
 ## Synthèse des six contributions
 
