@@ -3915,12 +3915,13 @@ sources:
       - accessed_at: "2026-11-16"
         status: partially-scanned
         inspected_scope:
-          - "Complete article body, sections 1–7, equations, PyTorch snippets, figure captions and conclusion"
+          - "Complete article body, sections 1–7, equations, PyTorch snippets, all 38 numbered figure captions and their surrounding explanations, and conclusion"
+          - "Figure-by-figure pedagogical audit: instructional role, sequencing, redundancy, caveats, and original LLM Lab visual priorities"
           - "Compared with existing bilingual positional-encoding and RoPE pages, RoFormer source record, concept registry and bibliography"
           - "Reviewed feature-pairing conventions, Q/K-only rotation, frequency tables, broadcasting, partial RoPE, NoPE, learned relative bias and hybrid architectures"
           - "Statically inspected the linked standalone Qwen3 notebook: RoPE utility, GQA module, model-level cosine/sine buffers and model configuration"
         limitations:
-          - "The 38 figures were not individually downloaded or visually inspected; captions and placement were inspected. No assets are copied."
+          - "All 38 numbered figures received a caption-and-context pedagogical audit, but original image pixels were not individually downloaded or inspected. No assets are copied."
           - "The linked Qwen3 notebook was statically inspected but not executed; numerical outputs, runtime compatibility and generation behaviour remain unverified."
           - "Architecture-frequency comparisons use the author's gallery snapshot, not a systematic census."
           - "No independent training, benchmark reproduction or long-context evaluation was performed."
