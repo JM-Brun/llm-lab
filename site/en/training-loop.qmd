@@ -208,6 +208,11 @@ The gradient is $L'(\theta)=2(\theta-5)$, so $L'(2)=-6$. SGD applies $\theta_{ne
 </summary>
 <div class="learning-resources__content" markdown="1">
 
+### Additional implementation resources
+
+- [Hugging Face — A full training loop](https://huggingface.co/learn/llm-course/en/chapter3/4): a PyTorch example that makes visible the steps handled by a high-level API.
+- [Hugging Face — Understanding Learning Curves](https://huggingface.co/learn/llm-course/en/chapter3/5): interpreting loss and metric curves during fine-tuning.
+
 ### Further reading
 
 - [Kingma and Ba — Adam: A Method for Stochastic Optimization](https://arxiv.org/abs/1412.6980): the adaptive optimizer introduced in the original paper.
