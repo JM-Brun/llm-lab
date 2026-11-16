@@ -250,5 +250,7 @@ To make these ideas concrete, run the [reproducible predictive-compression exper
 :::
 
 
+[**Revision sheet — Compression and LLMs**](compression-revision.qmd): review the connection between conditional probabilities, code length, model compression, and runtime memory in one place.
+
 </div>
 </details>
