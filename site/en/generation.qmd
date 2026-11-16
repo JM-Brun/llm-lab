@@ -213,6 +213,11 @@ A low temperature concentrates probability on the leading token; a high temperat
 </summary>
 <div class="learning-resources__content" markdown="1">
 
+### Additional implementation resources
+
+- [Hugging Face — Behind the pipeline](https://huggingface.co/learn/llm-course/en/chapter2/2): trace the steps connecting the high-level API to model components.
+- [Hugging Face — Optimized Inference Deployment](https://huggingface.co/learn/llm-course/en/chapter2/7): a practical extension on running models.
+
 ### Practice
 
 The questions for this lesson are collected on its [dedicated practice page](exercises/generation.qmd); computing a distribution and comparing greedy selection with sampling are practised in [exercise GE-A](exercises-generation.qmd#generation).
