@@ -88,7 +88,7 @@ Inter-annotator agreement is a diagnostic of the protocol, not automatic proof o
 
 [Chapter 10 of the Hugging Face course](https://huggingface.co/learn/llm-course/en/chapter10/1) illustrates this workflow with Argilla: configuring fields and questions, writing guidelines, collaborative annotation, multiple responses, and export. Argilla is a workflow tool here; it does not replace the scientific definition of the task or analysis of annotation quality.
 
-## 4. Handoff contract to the next stages
+## 5. Handoff contract to the next stages
 
 At the end of this stage, it should be possible to recover:
 
