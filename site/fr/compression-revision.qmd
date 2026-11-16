@@ -86,7 +86,7 @@ Ces signaux ne mesurent pas directement l'utilité d'un token. Un token très pr
 
 L'expérience [entropie contre surprisal](https://github.com/JM-Brun/llm-lab/blob/main/experiments/entropy-surprisal-toy/README.fr.md) illustre cette différence sur une source binaire. Elle ne teste pas un LLM.
 
-**Piste avancée :** des travaux utilisent l'entropie des poids d'attention pour répartir un budget de cache KV, tandis que d'autres utilisent l'entropie de distributions décodées pour décider de recalculer un cache. Ce sont des signaux et des protocoles différents. Voir la [synthèse critique sur compression et efficacité d'inférence](../../docs/source-syntheses/compression-intelligence-and-inference-efficiency-2026-11.md).
+**Piste avancée :** des travaux utilisent l'entropie des poids d'attention pour répartir un budget de cache KV, tandis que d'autres utilisent l'entropie de distributions décodées pour décider de recalculer un cache. Ce sont des signaux et des protocoles différents. Voir la [synthèse critique sur compression et efficacité d'inférence](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/compression-intelligence-and-inference-efficiency-2026-11.md).
 
 ## 2. Réduire le modèle
 
