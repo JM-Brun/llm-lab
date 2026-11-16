@@ -77,6 +77,41 @@ Le comportement à grande longueur dépend aussi de la base de fréquences, de l
 
 Vérifier les dimensions, l'ordre des paires de coordonnées, les positions utilisées, la précision numérique et le comportement sur plusieurs longueurs. Une erreur d'indexation peut produire des tenseurs de forme correcte tout en encodant les mauvaises positions. Les tests doivent comparer les résultats à une référence connue et contrôler les scores d'attention.
 
+## Au-delà de RoPE complet : variantes architecturales
+
+RoPE complet fait tourner toutes les paires de coordonnées de Q et K. Les architectures récentes peuvent modifier la fraction de dimensions tournée, les couches qui appliquent RoPE ou la façon d'ajouter un signal relatif aux scores.
+
+- **Partial RoPE** ne fait tourner qu'un sous-ensemble des dimensions de chaque tête. Cela réduit la largeur des tables sinus/cosinus, mais pas la dimension des clés et valeurs du cache KV. L'exemple MiniMax-M3 discuté par Raschka utilise 64 dimensions rotatives sur 128.
+- **NoPE** omet toute transformation positionnelle explicite dans une couche, tout en conservant le masque causal. Les préfixes visibles emboîtés peuvent fournir un signal d'ordre implicite, mais pas une coordonnée absolue ou une distance relative explicite. Les résultats de généralisation en longueur dépendent des tâches et du régime d'entraînement.
+- **Couches hybrides RoPE/NoPE** appliquent RoPE dans certaines couches et l'omettent dans d'autres. SmolLM3 est un exemple décrit dans l'article ; vérifier le motif exact dans la configuration de la version étudiée.
+- **Biais positionnel relatif appris** ajoute un terme au score QK avant softmax. Dans l'exemple Inkling, ce terme dépend de l'état caché de la requête et de l'écart entre positions. Il diffère du biais par buckets de T5.
+
+Ces mécanismes ne sont pas interchangeables. Les exemples sont des instantanés datés, pas une taxonomie exhaustive.
+
+## Fréquences et conventions d'implémentation
+
+Pour une tête de dimension paire d, la fréquence inverse standard de la paire i est omega_i = b^(-2i/d), et l'angle à la position m vaut m * omega_i. Les tables cosinus/sinus sont généralement pré-calculées puis diffusées sur batch et têtes.
+
+~~~python
+indices = torch.arange(0, head_dim, 2, device=positions.device)
+inv_freq = base ** (-indices.float() / head_dim)
+angles = positions.float()[:, None] * inv_freq[None, :]
+cos, sin = angles.cos(), angles.sin()
+~~~
+
+**Interleaved** associe les coordonnées adjacentes ; **split-half** associe les deux moitiés du vecteur. Les deux conventions sont équivalentes après permutation cohérente des caractéristiques, mais ne doivent pas être mélangées. RoPE standard s'applique à Q et K après projection, pas à V.
+
+### Tests utiles
+
+- Vérifier les formes des tables cosinus/sinus et leur diffusion.
+- Vérifier que seules les dimensions rotatives changent en Partial RoPE.
+- Comparer les conventions après permutation explicite.
+- Décaler toutes les positions de la même constante et vérifier l'invariance des scores QK pour des Q/K fixes.
+- Tester les positions de préremplissage et de décodage incrémental avec cache KV.
+
+Pour une implémentation complète de Qwen3 en PyTorch, voir le [tutoriel et dépôt de Raschka](https://github.com/rasbt/LLMs-from-scratch) ; le code externe n'est pas recopié ici.
+
+
 ## Références
 
 - [Su et al. (2021), *RoFormer: Enhanced Transformer with Rotary Position Embedding*](https://arxiv.org/abs/2104.09864) — formulation originale de RoPE.
