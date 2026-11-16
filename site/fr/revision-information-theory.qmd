@@ -69,9 +69,9 @@ Une probabilité p(x) correspond à une longueur idéale de code proche de -log�
 3. **Landauer ≠ plafond universel d'apprentissage.** La borne concerne l'effacement physique irréversible, pas une limite générale de généralisation.
 
 
-## Approfondissement — information prédictive \(\\mathcal V\)
+## Approfondissement — information prédictive \(\mathcal V\)
 
-L'information prédictive \(I_{\\mathcal V}(X\\to Y)\) mesure le gain de prédiction permis par une famille \(\\mathcal V\) donnée, sous perte logarithmique. Elle dépend donc des modèles autorisés. Si la famille est assez expressive pour contenir tous les prédicteurs, elle retrouve l'information mutuelle de Shannon ; avec une famille restreinte, elle peut être plus faible.
+L'information prédictive \(I_{\mathcal V}(X\to Y)\) mesure le gain de prédiction permis par une famille \(\mathcal V\) donnée, sous perte logarithmique. Elle dépend donc des modèles autorisés. Si la famille est assez expressive pour contenir tous les prédicteurs, elle retrouve l'information mutuelle de Shannon ; avec une famille restreinte, elle peut être plus faible.
 
 Ne pas la confondre avec une nouvelle quantité indépendante des hypothèses : il faut toujours préciser la famille, la cible, l'information fournie et la perte. Voir l'expérience contrôlée ci-dessous.
 
