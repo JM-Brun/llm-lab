@@ -2,7 +2,7 @@
 title: "Experiment — Entropy, KL and predictive coding"
 subtitle: "Manipulate distributions and verify the identities"
 description-meta: "A reproducible experiment for entropy, cross-entropy, KL divergence, perplexity and ideal code lengths."
-keywords: ["type:experiment-guide", "destination:practice", "topic:information-theory", "level:applied", "language:en", "status:published"]
+keywords: ["type:experiment-guide", "destination:practice", "topic:information-theory-experiment", "level:applied", "language:en", "status:published"]
 lang: en
 ---
 
@@ -19,7 +19,7 @@ hierarchy:
   parents: []
   children: []
 related: ["en/entropy", "en/cross-entropy", "en/revision-information-theory"]
-tags: ["type:experiment-guide", "destination:practice", "topic:information-theory", "level:applied", "language:en", "status:published"]
+tags: ["type:experiment-guide", "destination:practice", "topic:information-theory-experiment", "level:applied", "language:en", "status:published"]
 -->
 
 [← Revision sheet](revision-information-theory.qmd) · [Lesson: Cross-entropy](cross-entropy.qmd)
