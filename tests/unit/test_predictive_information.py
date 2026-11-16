@@ -63,3 +63,52 @@ def test_invalid_joint_distribution_is_rejected() -> None:
     predictors = np.array([[[0.5, 0.5], [0.5, 0.5]]])
     with pytest.raises(ValueError, match="sum to one"):
         predictive_v_information(np.array([[0.2, 0.2], [0.2, 0.2]]), predictors)
+
+
+
+def test_invalid_logarithm_base_is_rejected() -> None:
+    joint = np.full((2, 2), 0.25)
+    with pytest.raises(ValueError, match="base"):
+        predictive_v_information(joint, _predictors_with_signal(), base=1.0)
+
+
+@pytest.mark.parametrize(
+    "joint",
+    [
+        np.array([0.5, 0.5]),
+        np.array([[0.5, -0.1], [0.1, 0.5]]),
+        np.array([[np.nan, 0.0], [0.0, 1.0]]),
+    ],
+)
+def test_invalid_joint_shapes_and_values_are_rejected(joint: np.ndarray) -> None:
+    with pytest.raises(ValueError):
+        predictive_v_information(joint, _predictors_with_signal())
+
+
+@pytest.mark.parametrize(
+    "family",
+    [
+        np.array([[0.5, 0.5]]),
+        np.empty((0, 2, 2)),
+        np.array([[[0.5, 0.5], [0.5, -0.5]]]),
+        np.array([[[0.5, 0.5], [0.4, 0.4]]]),
+        np.array([[[np.nan, 0.0], [0.5, 0.5]]]),
+    ],
+)
+def test_invalid_predictive_families_are_rejected(family: np.ndarray) -> None:
+    with pytest.raises(ValueError):
+        predictive_v_information(np.full((2, 2), 0.25), family)
+
+
+def test_family_without_constant_predictor_is_rejected() -> None:
+    joint = np.array([[0.45, 0.05], [0.05, 0.45]])
+    only_contextual = np.array([[[0.9, 0.1], [0.1, 0.9]]])
+    with pytest.raises(ValueError, match="constant predictor"):
+        predictive_v_information(joint, only_contextual)
+
+
+def test_family_without_finite_baseline_support_is_rejected() -> None:
+    joint = np.array([[0.45, 0.05], [0.05, 0.45]])
+    impossible = np.array([[[1.0, 0.0], [1.0, 0.0]]])
+    with pytest.raises(ValueError, match="finite baseline"):
+        predictive_v_information(joint, impossible)
