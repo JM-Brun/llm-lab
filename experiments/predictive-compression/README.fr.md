@@ -55,7 +55,7 @@ Le code fini de 21 bits est légèrement plus long que le coût idéal de 19,642
 
 - La longueur idéale est mesurée en **bits**, avec des logarithmes en base 2.
 - Le code binaire fini peut être un peu plus long que la longueur idéale.
-- Le décodeur est supposé connaître le modèle et la longueur du message ; leur coût de transmission n'est pas inclus.
+- Le décodeur est supposé connaître le modèle et la longueur du message ; leur coût de transmission n'est pas inclus. Le modèle d'entraînement de 40 symboles et les métadonnées ne sont pas comptés : les 21 bits ne représentent que le message codé.
 - Le modèle est entraîné et évalué sur une source synthétique ; cela ne mesure pas sa généralisation au langage naturel.
 - Le décodage exact démontre le codage sans perte pour ce protocole, pas la reconstruction sans perte à partir d'un simple prompt LLM.
 - Un LLM peut fournir des probabilités à un codeur entropique, mais la génération seule n'est pas une décompression.
