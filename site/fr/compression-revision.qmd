@@ -73,12 +73,16 @@ $$
 Il faut un codeur et un décodeur compatibles (par exemple arithmétiques), le même modèle, le même tokenizer, le même ordre des symboles et des conventions numériques identiques. Le décodage doit reconstruire exactement la séquence. Générer une continuation plausible n'est pas décompresser le corpus.
 :::
 
+::: {.callout-note title="Le corpus est un plafond, pas un plancher"}
+À jeu de données fixé, un entraînement ne peut pas placer dans les paramètres plus d'information sur la distribution des données que n'en contiennent le corpus et les choix a priori (architecture, prétraitement). Changer d'architecture (Transformer, Mamba, RWKV…) modifie l'efficacité d'extraction, pas le plafond. Deux précautions : l'analogie thermodynamique (limite de Landauer) est une illustration, pas une démonstration — elle concerne l'effacement physique irréversible, pas l'apprentissage ; et le plafond absolu de Shannon se distingue de l'information extractible par une classe de modèles donnée (information prédictive \(\mathcal V\)) : des données synthétiques produites par un modèle n'augmentent pas, par elles-mêmes, l'information de Shannon disponible, mais peuvent restructurer des régularités pour les rendre plus extractibles — au risque d'y graver aussi les erreurs du générateur. Voir la [fiche de révision théorie de l'information](revision-information-theory.qmd).
+:::
+
 ## 2 bis. Entropie, surprise et utilité ne sont pas synonymes
 
 Pour une distribution prédictive donnée :
 
 - **Entropie prédictive** : incertitude moyenne du modèle sur le prochain token.
-- **Surprisal observé** : coût informationnel du token effectivement rencontré, \( -\\log_2 p(x_t\\mid contexte) \).
+- **Surprisal observé** : coût informationnel du token effectivement rencontré, \( -\log_2 p(x_t\mid x_{<t}) \).
 - **Entropie des poids d'attention** : dispersion des poids sur les positions du contexte.
 - **Dérive du cache KV** : différence entre un état conservé et celui qui serait recalculé.
 
