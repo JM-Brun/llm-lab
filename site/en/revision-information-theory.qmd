@@ -2,9 +2,25 @@
 title: "Revision sheet — Information theory and LLMs"
 subtitle: "From surprisal to predictive compression"
 description-meta: "A concise revision sheet for surprisal, entropy, cross-entropy, KL divergence and predictive coding."
-keywords: ["type:revision-sheet", "topic:information-theory", "level:review", "language:en", "status:published"]
+keywords: ["type:exercise-collection", "destination:practice", "topic:information-theory", "level:applied", "language:en", "status:published"]
 lang: en
 ---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/revision-information-theory"
+summary: "Revision sheet for the information-theory quantities used to understand predictive LLM objectives."
+scope: "Summarizes surprisal, entropy, cross-entropy, KL divergence and predictive coding without replacing the detailed lessons."
+purpose: "Help learners review the core identities, units, assumptions and conceptual traps before practising."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["en/entropy", "en/cross-entropy", "en/experience-information-theory"]
+tags: ["type:exercise-collection", "destination:practice", "topic:information-theory", "level:applied", "language:en", "status:published"]
+-->
 
 [← Return to the entropy lesson](entropy.qmd) · [Cross-entropy](cross-entropy.qmd)
 
