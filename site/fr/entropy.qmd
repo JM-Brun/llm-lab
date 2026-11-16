@@ -221,7 +221,7 @@ I_{\\mathcal V}(X\\to Y)=H_{\\mathcal V}(Y\\mid\\varnothing)-H_{\\mathcal V}(Y\\
 
 Elle mesure le gain de prédictibilité obtenu grâce à l'entrée, pour cette famille et cette perte. Une famille trop limitée peut ne pas exploiter une structure pourtant présente. La quantité peut être directionnelle ; elle ne remplace pas l'information mutuelle de Shannon et ne signifie pas que le calcul crée de l'information de Shannon.
 
-**Exemple XOR :** deux bits déterminent parfaitement leur XOR (1 bit d'information mutuelle), mais un prédicteur constant ne gagne rien à observer les bits. Un prédicteur qui sait représenter leur interaction exploite presque toute cette information. Voir l'[expérience reproductible](../../experiments/information-theory-llm/README.fr.md) et le [papier primaire](https://openreview.net/forum?id=r1eBeyHFDH).
+**Exemple XOR :** deux bits déterminent parfaitement leur XOR (1 bit d'information mutuelle), mais un prédicteur constant ne gagne rien à observer les bits. Un prédicteur qui sait représenter leur interaction exploite presque toute cette information. Voir l'[expérience reproductible](https://github.com/JM-Brun/llm-lab/blob/main/experiments/information-theory-llm/README.fr.md) et le [papier primaire](https://openreview.net/forum?id=r1eBeyHFDH).
 
 ### À retenir
 
@@ -231,7 +231,7 @@ Elle mesure le gain de prédictibilité obtenu grâce à l'entrée, pour cette f
 
 **Génération :** le modèle échantillonne ou choisit un prochain token ; ce n'est pas, à elle seule, une opération de décodage sans perte.
 
-Pour manipuler ces idées, lancez l'[expérience reproductible de compression prédictive](https://github.com/JM-Brun/llm-lab/blob/main/experiments/predictive-compression/README.fr.md). Pour comparer entropie marginale, entropie conditionnelle et compression zlib, utilisez aussi l'[expérience sur les séquences](../../experiments/sequence-compression/README.fr.md).
+Pour manipuler ces idées, lancez l'[expérience reproductible de compression prédictive](https://github.com/JM-Brun/llm-lab/blob/main/experiments/predictive-compression/README.fr.md). Pour comparer entropie marginale, entropie conditionnelle et compression zlib, utilisez aussi l'[expérience sur les séquences](https://github.com/JM-Brun/llm-lab/blob/main/experiments/sequence-compression/README.fr.md).
 
 
 ### Références
