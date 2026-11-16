@@ -27,7 +27,9 @@ def main() -> None:
         "Training strings contain 200 symbols; each test contains 40 symbols.",
         "",
     ]
-    report.extend(f"{label}: {cost:.3f} bits ({cost / 40:.3f} bits/symbol)" for label, cost in cases)
+    report.extend(
+        f"{label}: {cost:.3f} bits ({cost / 40:.3f} bits/symbol)" for label, cost in cases
+    )
     sys.stdout.write("\n".join(report) + "\n")
 
 
