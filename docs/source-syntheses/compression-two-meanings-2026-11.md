@@ -109,15 +109,24 @@ Tableau de résultats à remplir :
 
 Contrôler matériel, versions, backend, tokenizer, corpus, batch, longueur de contexte et paramètres de génération. Les cellules « à mesurer » ne sont pas des résultats et ne doivent pas être remplacées par des estimations issues d'autres matériels.
 
+## 7 bis. Expérience jouet déjà reproductible
+
+Deux expériences distinctes sont disponibles dans [le répertoire d'expériences](../../experiments/predictive-compression/README.fr.md) :
+
+- Le codage arithmétique exact compare une longueur idéale de 19,642 bits à un code fini de 21 bits, contre 40 bits pour la référence uniforme ; le décodage est exact.
+- Le contrôle de décalage de distribution compare deux modèles bigrammes synthétiques : 2,977 bits en domaine correspondant contre 80,322 bits en domaine décalé.
+
+Ces expériences vérifient les mécanismes mathématiques sur un alphabet minuscule. Elles n'évaluent pas un LLM, ne mesurent pas les coûts de transmission du modèle et ne démontrent pas que la fréquence seule cause une baisse de performance. Le protocole réel proposé ci-dessus demeure un travail futur.
+
 ## 8. Placement dans LLM Lab
 
 | Ressource | Rôle éditorial | Destination |
 |---|---|---|
 | Shashidhar | Intuition de compression prédictive et lien avec la théorie de l'information | Probabilités, entropie, vraisemblance, cross-entropy, généralisation |
 | Cota | Panorama des techniques de compression du modèle | Complexité computationnelle, efficacité d'inférence, évolution des modèles |
-| Cette comparaison | Distinguer les sens du mot et relier les métriques | Fiche transversale optionnelle ; pas une nouvelle étape obligatoire du parcours |
+| Cette comparaison | Distinguer les sens du mot et relier les métriques | [Fiche de révision bilingue](../../site/fr/compression-revision.qmd) ; ressource optionnelle, pas une nouvelle étape obligatoire du parcours |
 
-Ne pas créer une nouvelle page canonique ou un concept de registre uniquement pour accueillir ces deux billets. Réutiliser les pages et exercices existants. Coordonner la quantification avec l'issue [#266](https://github.com/JM-Brun/llm-lab/issues/266), et le volet expérimental prédictif avec [#1058](https://github.com/JM-Brun/llm-lab/issues/1058), après vérification de leurs états courants.
+Ne pas créer une page canonique distincte pour chaque billet. En revanche, les notions transversales réutilisables ont maintenant des identifiants dans le graphe canonique (surprisal, compression prédictive, codage entropique, codage arithmétique, compression du modèle, pruning, quantification et distillation) ; elles pointent vers les leçons existantes et la fiche de révision, sans créer une nouvelle leçon autonome par concept. Réutiliser les pages et exercices existants. Coordonner la quantification avec l'issue [#266](https://github.com/JM-Brun/llm-lab/issues/266), et le volet expérimental prédictif avec [#1058](https://github.com/JM-Brun/llm-lab/issues/1058), après vérification de leurs états courants.
 
 ## 9. Conclusion à mémoriser
 
