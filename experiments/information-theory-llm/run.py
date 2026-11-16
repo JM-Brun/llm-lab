@@ -69,6 +69,7 @@ def main() -> None:
     target = (0.75, 0.25)
     models = (("good", (0.70, 0.30)), ("uniform", (0.50, 0.50)))
     h_target = entropy(target)
+    demo = xor_demo()
     lines = []
     for label, model in models:
         h_cross = cross_entropy(target, model)
@@ -81,9 +82,9 @@ def main() -> None:
             f"target entropy: {h_target:.4f} bits",
             f"mutual information of toy joint distribution: {mutual_information(joint):.4f} bits",
             "Reminder: attention weights are not mutual information.",
-            f"Shannon MI for balanced XOR: {xor_demo()[\"shannon_mi\"]:.4f} bits",
-            f"V-information, constant-only family: {xor_demo()[\"constant_family\"]:.4f} bits",
-            f"V-information, interaction-aware family: {xor_demo()[\"interaction_family\"]:.4f} bits",
+            f"Shannon MI for balanced XOR: {demo['shannon_mi']:.4f} bits",
+            f"V-information, constant-only family: {demo['constant_family']:.4f} bits",
+            f"V-information, interaction-aware family: {demo['interaction_family']:.4f} bits",
         )
     )
     sys.stdout.write("\n".join(lines) + "\n")
