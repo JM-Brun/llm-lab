@@ -147,3 +147,27 @@ Elle vérifie des identités mathématiques sur des distributions discrètes. El
 ::: {.language-switch}
 **Langue :** [Français](experience-information-theory.qmd) · [English](../en/experience-information-theory.qmd)
 :::
+
+
+## Extension — KL d'une ligne d'attention et information mutuelle
+
+Une ligne d'attention non uniforme peut avoir une divergence KL positive par rapport à l'uniforme, même si elle ne révèle aucune dépendance entre la requête et les clés. Pour le vérifier :
+
+```bash
+uv run --locked python experiments/information-theory/attention_kl_vs_mutual_information.py
+```
+
+L'expérience compare deux tables conditionnelles :
+
+- **Ligne répétée** : chaque contexte reçoit la même distribution (0,9 ; 0,1). La KL moyenne vers l'uniforme vaut environ 0,531 bit, mais l'information mutuelle entre contexte et clé vaut 0 bit : connaître le contexte ne change pas la distribution des clés.
+- **Lignes opposées** : les deux contextes reçoivent respectivement (0,9 ; 0,1) et (0,1 ; 0,9). L'information mutuelle vaut alors environ 0,531 bit. L'égalité numérique avec la KL vers l'uniforme est accidentelle.
+
+Pour une véritable distribution jointe, l'identité correcte est :
+
+\[
+I(X;Y)=\mathbb E_{X}\left[D_{KL}\big(P(Y\mid X)\|P(Y)\big)\right].
+\]
+
+La référence de la KL est donc la **marginale** \(P(Y)\), et non une distribution uniforme choisie par défaut. Surtout, les poids d'attention ne sont pas automatiquement des probabilités conditionnelles calibrées \(P(\text{clé}\mid\text{requête})\). Il faut définir et justifier une distribution jointe avant d'interpréter cette identité statistiquement.
+
+La fonction générale de calcul de l'information mutuelle est testée dans `src/llm_lab/foundations/information_theory.py`.
