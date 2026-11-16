@@ -455,6 +455,30 @@ concepts:
     domains: [probabilistic-foundations-training]
     importance: supporting
     resources: [fr/llm-evolution, en/llm-evolution]
+  - id: chat-template
+    importance: supporting
+    labels: {fr: "Modèle de conversation (chat template)", en: "Chat template"}
+    definitions:
+      fr: "Règle de sérialisation qui transforme des messages et leurs rôles, frontières et marqueurs de contrôle en une séquence de tokens conforme à la convention attendue par un modèle."
+      en: "Serialization rule that turns messages and their roles, boundaries, and control markers into a token sequence matching a model's expected convention."
+    domains: [text-tokenization, probabilistic-foundations-training]
+    resources: [fr/post-training, en/post-training]
+  - id: dataset-curation
+    importance: supporting
+    labels: {fr: "Curation de jeux de données", en: "Dataset curation"}
+    definitions:
+      fr: "Processus de sélection, structuration, annotation, contrôle et documentation d'un jeu de données pour un usage défini."
+      en: "Process of selecting, structuring, annotating, checking, and documenting a dataset for a defined use."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/corpus-preparation, en/corpus-preparation]
+  - id: group-relative-policy-optimization
+    importance: specialized
+    labels: {fr: "Optimisation de politique relative au groupe (GRPO)", en: "Group Relative Policy Optimization (GRPO)"}
+    definitions:
+      fr: "Algorithme d'optimisation de politique pour lequel plusieurs réponses sont échantillonnées par prompt et leurs récompenses comparées au sein du groupe pour construire un avantage relatif ; la méthode originale évite un critique séparé."
+      en: "Policy-optimization algorithm that samples multiple responses per prompt and compares their rewards within the group to form a relative advantage; the original method avoids a separate critic."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/glossary, en/glossary, fr/score-centering, en/score-centering]
   - id: reinforcement-learning-from-human-feedback
     labels: {fr: "Apprentissage par renforcement à partir de retours humains", en: "Reinforcement learning from human feedback"}
     definitions:
@@ -917,6 +941,11 @@ relations:
   - {from: importance-sampling, type: contrasts-with, to: score-centering}
   - {from: importance-sampling, type: applies-to, to: off-policy-reinforcement-learning}
   - {from: post-training, type: contrasts-with, to: pretraining}
+  - {from: chat-template, type: contributes-to, to: instruction-tuning}
+  - {from: dataset-curation, type: contributes-to, to: pretraining}
+  - {from: dataset-curation, type: contributes-to, to: post-training}
+  - {from: group-relative-policy-optimization, type: part-of, to: post-training}
+  - {from: group-relative-policy-optimization, type: uses, to: policy-gradient}
   - {from: instruction-tuning, type: part-of, to: post-training}
   - {from: reinforcement-learning-from-human-feedback, type: part-of, to: post-training}
   - {from: direct-preference-optimization, type: part-of, to: post-training}
