@@ -8,7 +8,8 @@ Suivre la [méthode de synthèse des sources](../source-synthesis-method.md). Co
 
 ## Dossiers
 
-- [LLMs and compression algorithms](llms-and-compression-algorithms-2026-11.md) — analogie entre modélisation du langage et compression statistique ; synthèse critique, garde-fous théoriques et proposition d'expérience.\n- [Compression des LLM](model-compression-2026-11.md) — pruning, quantification et distillation ; distinction entre taille du checkpoint, mémoire d'exécution et accélération réelle.
+- [LLMs and compression algorithms](llms-and-compression-algorithms-2026-11.md) — analogie entre modélisation du langage et compression statistique ; synthèse critique, garde-fous théoriques et proposition d'expérience.
+- [Compression des LLM](model-compression-2026-11.md) — pruning, quantification et distillation ; distinction entre taille du checkpoint, mémoire d'exécution et accélération réelle.
 
 ## Structure suggérée
 
