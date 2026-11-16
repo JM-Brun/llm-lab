@@ -90,6 +90,18 @@ Le calcul complet se lit dans l'ordre : les scores issus de Q et K sont mis à l
 
 La formulation est présentée dans [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762), qui compare l'attention additive et l'attention par produit scalaire et introduit le facteur de mise à l'échelle. Elle permet des calculs matriciels efficaces et s'intègre naturellement aux mécanismes multi-têtes.
 
+## Attention et information mutuelle : deux notions différentes
+
+L'information mutuelle entre deux variables aléatoires est une quantité définie à partir de leur distribution jointe :
+
+\[
+I(X;Y)=H(X)-H(X\mid Y).
+\]
+
+Les poids d'attention ne calculent pas cette quantité. Ce sont des coefficients normalisés, dépendant de l'entrée, obtenus à partir des requêtes, des clés et du masque ; ils pondèrent l'agrégation des vecteurs de valeur. Ils ne mesurent donc pas directement, en bits, l'information qu'un token apporte à un autre.
+
+L'analogie entre attention et dépendance statistique peut aider à poser une question, mais **un poids d'attention n'est pas une information mutuelle**. Une carte d'attention ne suffit pas non plus à établir une explication causale ou sémantique.
+
 ## Idées reçues et contre-exemples
 
 - **« Le softmax mesure la similarité absolue. »** Non : il produit une distribution relative aux scores d'une ligne. Ajouter une constante à tous les scores d'une ligne ne change pas les poids.
