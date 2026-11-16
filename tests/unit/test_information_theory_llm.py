@@ -15,11 +15,14 @@ def test_cross_entropy_decomposes_into_entropy_and_kl() -> None:
     module = _module()
     target = (0.75, 0.25)
     model = (0.70, 0.30)
-    assert abs(
-        module["cross_entropy"](target, model)
-        - module["entropy"](target)
-        - module["kl_divergence"](target, model)
-    ) < 1e-12
+    assert (
+        abs(
+            module["cross_entropy"](target, model)
+            - module["entropy"](target)
+            - module["kl_divergence"](target, model)
+        )
+        < 1e-12
+    )
 
 
 def test_mutual_information_is_zero_for_independent_variables() -> None:
