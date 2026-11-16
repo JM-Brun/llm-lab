@@ -46,7 +46,8 @@ A probabilistic predictor can support efficient coding: ideal information length
 4. A bilingual revision resource and a deterministic experiment make the central identities reviewable and executable.
 5. The companion notebook received a static 18-cell audit. Its purported attention-derived MI heatmap was identified as cellwise KL-to-uniform terms, not mutual information; the compression comparison was found to mix marginal character entropy with a dependency-aware finite-file compressor.
 6. Predictive V-information was added as an advanced supporting concept, grounded in Xu et al., with an exact finite-family binary example and tests.
-7. Entropy content was not duplicated; speculative claims were not promoted to canonical facts.
+7. A deterministic compression experiment now compares marginal entropy, source entropy rate and zlib output on fixed-seed equal-length sequences.
+8. Entropy content was not duplicated; speculative claims were not promoted to canonical facts.
 
 ## 6. Remaining limits and next steps
 
