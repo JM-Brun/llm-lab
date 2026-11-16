@@ -4,23 +4,23 @@ pedagogical_model:
   reconstruction:
     status: partial
     basis:
-      - "User-supplied description and chapter timestamps inspected 2026-11-16."
+      - "User-supplied description and chapter timestamps inspected 2026-11-16."\n      - "Third-party page reproducing a transcript attributed to the Hugging Face video inspected 2026-11-16; audiovisual content and code URL remain unverified."
       - "Current official Hugging Face Jobs, configuration and pricing documentation checked."
     inferred_elements:
       - "Learning outcomes and workflow are inferred from the supplied description; the video itself was not independently inspected."
-      - "The supplied GitHub URL is truncated, so the code-level sequence cannot be reconstructed."
+      - "The supplied GitHub URL is truncated, so the code-level sequence cannot be reconstructed."\n      - "Transcript-level details: ~50M-parameter GPT-2-style model, 8 layers, embedding size 512, GPT-2 tokenizer, TinyStories, cosine schedule with warm-up, uv/requirements.txt, Storage Bucket sync and mounted output directory."
   source_graph:
     nodes:
       - {id: src-local-training-program, kind: artifact, description: "A NanoGPT-like model and training program independent of the remote execution provider.", locator: "01:21 (supplied chapter label)"}
       - {id: src-managed-job, kind: execution-environment, description: "Hugging Face Jobs executes a command on selected managed hardware.", locator: "02:57 (supplied chapter label)"}
-      - {id: src-shell-launcher, kind: implementation-pattern, description: "A generic shell script acts as a launch adapter.", locator: "04:15 (supplied chapter label)"}
-      - {id: src-remote-run, kind: process, description: "The training command runs remotely and produces results.", locator: "05:35 (supplied chapter label)"}
-      - {id: src-local-gpu-constraint, kind: constraint, description: "Limited local GPU capacity motivates managed remote execution.", locator: "00:00 (supplied chapter label)"}
+      - {id: src-shell-launcher, kind: implementation-pattern, description: "A generic shell script creates/syncs a Storage Bucket, requests a GPU job, mounts the bucket, and runs the training command.", locator: "04:15 (supplied chapter label; details from third-party transcript)"}
+      - {id: src-remote-run, kind: process, description: "The training command runs remotely; checkpoints and outputs persist in the mounted bucket and can be synced back locally.", locator: "05:35 (supplied chapter label; details from third-party transcript)"}
+      - {id: src-local-gpu-constraint, kind: constraint, description: "Limited local GPU capacity motivates managed remote execution.", locator: "00:00 (supplied chapter label)"}\n      - {id: src-storage-bucket, kind: persistent-storage, description: "A Hub Storage Bucket transfers project files into the job and retains the output directory/checkpoints after compute shuts down.", locator: "04:15–05:35 (third-party transcript rendering)"}
     edges:
       - {from: src-local-gpu-constraint, type: motivates, to: src-managed-job}
       - {from: src-local-training-program, type: executed-by, to: src-managed-job}
-      - {from: src-shell-launcher, type: submits, to: src-managed-job}
-      - {from: src-managed-job, type: runs, to: src-remote-run}
+      - {from: src-shell-launcher, type: creates-and-syncs, to: src-storage-bucket}\n      - {from: src-storage-bucket, type: mounted-into, to: src-managed-job}\n      - {from: src-shell-launcher, type: submits, to: src-managed-job}
+      - {from: src-managed-job, type: runs, to: src-remote-run}\n      - {from: src-remote-run, type: persists-artifacts-to, to: src-storage-bucket}\n      - {from: src-storage-bucket, type: syncs-results-back-to, to: src-local-training-program}
     interpretation: "Partial editorial reconstruction from user-supplied summary and chapter labels; inferred relations are not a formal graph published by the creator."
   learning_outcomes:
     - {status: inferred, outcome: "Distinguish training code from its execution infrastructure.", basis: "Supplied description emphasizes unchanged training code and a generic launcher."}
@@ -38,9 +38,9 @@ pedagogical_model:
   pedagogical_strengths:
     - "Makes remote GPU execution approachable without requiring remote-server administration."
     - "Highlights separation between reusable training code and provider-specific execution configuration."
-    - "A thin shell launcher can make runs repeatable and parameterizable."
+    - "A thin shell launcher can make runs repeatable and parameterizable."\n    - "The persistent bucket makes the lifecycle concrete: stage code, mount storage, write checkpoints, then retrieve outputs after compute termination."
   pedagogical_limits:
-    - "The video and code were not independently inspected."
+    - "The audiovisual video and code were not independently inspected; technical detail comes from a third-party transcript rendering."
     - "The approximate $1 cost is run-specific, not a current general A100 price."
     - "Data access, artifact persistence, secrets, timeouts and failure handling are not established by the supplied summary."
     - "A successful remote run does not establish scientific validity or generalization."
