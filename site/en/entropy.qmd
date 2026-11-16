@@ -211,6 +211,18 @@ Without that shared protocol, an LLM's ability to continue a text does not mean 
 - Good predictions do not guarantee a net compression benefit once the model, tokenizer, and metadata are counted.
 - **Model compression** (quantization, pruning, distillation) reduces the network's storage or runtime cost: that is a different question. See the [model-compression synthesis](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/model-compression-2026-11.md).
 
+### Advanced extension — V-information: what an observer can use
+
+Shannon mutual information describes dependence in the joint distribution without restricting the observer's computational power. Xu et al. (ICLR 2020) define a quantity relative to an explicit predictor family \\(\\mathcal V\\):
+
+\\[
+I_{\\mathcal V}(X\\to Y)=H_{\\mathcal V}(Y\\mid\\varnothing)-H_{\\mathcal V}(Y\\mid X).
+\\]
+
+It measures the predictive gain from the input for that family and loss. A restricted family may fail to exploit structure that is present in the data. The quantity can be directional; it does not replace Shannon mutual information and does not mean computation creates Shannon information.
+
+**XOR example:** two bits determine their XOR perfectly (1 bit of mutual information), yet a constant predictor gains nothing from observing them. A predictor able to represent their interaction can use almost all of that information. See the [reproducible experiment](../../experiments/information-theory-llm/README.md) and the [primary paper](https://openreview.net/forum?id=r1eBeyHFDH).
+
 ### Takeaway
 
 **Predictive compression:** the model supplies probabilities; a coder can use them to represent data with fewer bits.
