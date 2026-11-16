@@ -1465,3 +1465,10 @@ A source-level pedagogical audit reviewed the bilingual Understand lessons on to
 Both French and English pages now incorporate these interactive pedagogical components while strictly preserving existing SVGs, asset reuse reviews, and reproducible tokenizer traces. The self-check sections now cross-link directly to the matching exercises in the catalogue (`Exercise TR-B` for embedding lookup and `Exercise TR-C` for context differentiation). The full methodology and preservation checks are recorded in [Representations and embedding-lookup audit](audits/representations-pedagogical-audit.md).
 
 **Status:** Updated in PR/branch; source-level checks completed. Quarto render, published-page browser review, and learner task testing remain open. This is not a rendered-site or learner-outcome certification.
+
+
+## Proposed page: generation-overview (2026-11-16)
+
+| Page / language pair | Role and reader question | Status | Context |
+|---|---|---|---|
+| `site/fr/generation-overview.qmd` + `site/en/generation-overview.qmd` | **Understand — orientation.** What does autoregressive generation look like before knowing how it works? Light overview of the predict/select/reinject loop using the running example and fictitious probabilities. No formal notation. ~600–800 words. Route position: 2 (replaces `generation` in the early route). | **Proposed — not reviewed.** No source file exists yet. | Proposed in [learner-feedback-integration-2026-11-13.md](learner-feedback-integration-2026-11-13.md) §2. Extends findings E2 from the [reader review](reviews/understand-path-reader-review-2026-11-10.md) and §4 from the [route audit](understand-llms-route-audit-2026-11-09.md). The existing `generation.qmd` would become the formal reference page, repositioned after `entropy`. Awaiting maintainer decision. |

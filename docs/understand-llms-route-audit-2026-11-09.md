@@ -356,3 +356,32 @@ Avant toute modification de page ou de navigation, répondre à ces questions :
 - Quel contrôle existant valide le résultat (CI, rendu navigateur, tâche de navigation ou pilote apprenant) ?
 
 Si aucun défaut concret n'est identifié, conserver l'existant. Le principal résultat de cet audit est la clarification de la lecture haut niveau et la priorisation des travaux existants, pas une refonte supplémentaire.
+
+
+---
+
+## 12. Addendum — Learner feedback integration (2026-11-16)
+
+This section cross-references the [learner feedback integration and generation-page split proposal](learner-feedback-integration-2026-11-13.md), which provides concrete evidence for several observations in this audit.
+
+### Forward-reference gap quantified (extends §4)
+
+The learner simulation (F-L1) counted **9 concepts and notations** used on the `generation` page before they are defined elsewhere in the route:
+- Token/tokenizer (defined on page 3), logits (page 11), softmax (page 12), forward pass (page 7), KV cache and Q/K/V (page 8), and $p_\theta(\cdot \mid c_t)$ notation (page 12).
+- Prefill/decode phases are not formally defined anywhere else in the current route.
+
+This quantified gap supports the audit's §4 observation that generation belongs conceptually to Q3 ("What can be done with this prediction?") rather than the early orientation stage.
+
+### Generation split aligns with the Q1/Q2/Q3 model
+
+The proposed split (§2 of the integration document) separates:
+- **Page A** (overview): fits Q1 orientation — shows *what* generation looks like before the reader knows *how* it works.
+- **Page B** (formal reference): fits Q3 — explains the mechanics after logits, softmax, and attention have been introduced.
+
+This alignment validates the three-question structure proposed in §4 of this audit without requiring changes to the audit's recommendations.
+
+### Additional learner-perspective findings
+
+The integration document adds 7 findings (F-L1 through F-L7) from a simulated learner walkthrough of all 17 core pages. These complement the route-level analysis in this audit with page-level reading-experience observations.
+
+**Evidence boundary:** the integration document is based on a simulated learner reading, not a live learner study. The quantified forward-reference count is a source-level observation.

@@ -290,3 +290,8 @@ The bilingual cosine-similarity pages now distinguish the mathematical definitio
 ### Focused bilingual audit — embedding-space language link (2026-10-28)
 
 A stale note in the English embedding-space lesson claimed that positional encoding/RoPE was available only in French, despite the English counterpart already existing. The lesson now links directly to its English counterpart. This is a targeted navigation correction; the full bilingual semantic and rendered-page reviews remain open.
+
+
+### Learner feedback integration — 2026-11-13
+
+A simulated learner walkthrough of the 17 core Understand pages produced 7 findings and a concrete proposal to split the `generation` page into an early overview and a late formal reference. The analysis is recorded in [learner-feedback-integration-2026-11-13.md](learner-feedback-integration-2026-11-13.md). It extends existing findings from the [reader review](reviews/understand-path-reader-review-2026-11-10.md) (E2), the [route audit](understand-llms-route-audit-2026-11-09.md) (§4), and the [journey audit](learner-journey-audit-2026-11-05.md) (§3.2). The generation split is a pending maintainer decision; no source files have been modified. Relevant issues: #130, #225, #447.

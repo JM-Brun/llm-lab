@@ -254,3 +254,39 @@ The first homepage diagram summarizes a learner-facing conceptual progression. T
 ### Evidence boundary and follow-up
 
 This was a **source-level** review of the French and English homepage files and the canonical editorial/map documents. It does not establish rendered legibility, responsive behavior, keyboard/touch equivalence, contrast, or WCAG conformance. Those checks remain with [#341 — homepage browser review](https://github.com/JM-Brun/llm-lab/issues/341); the broader rendered navigation/map crosswalk remains with [#337](https://github.com/JM-Brun/llm-lab/issues/337). Coordination remains under [#130](https://github.com/JM-Brun/llm-lab/issues/130). No new issue is needed for these wording and labeling corrections.
+
+
+---
+
+## Addendum — Learner feedback integration (2026-11-16)
+
+This section cross-references the [learner feedback integration and generation-page split proposal](learner-feedback-integration-2026-11-13.md), which extends the journey-level observations in this audit with page-level learner-perspective findings.
+
+### Relationship to this audit
+
+| This audit section | Integration finding | Contribution |
+|---|---|---|
+| §3.2 — Conceptual sequence is sound | F-L1 | Quantified the main exception: the `generation` page uses 9 concepts before their definition. The sequence is sound *given* that the generation page is repositioned or split. |
+| §1 — Route–representation correspondence | F-L2 | The path ends on `gradients` without a concluding synthesis page. The route's design intent (§3.2) is not visible to the reader at the end of the journey. |
+| §4.2 — Build route scope | F-L4 | The `transformer` page correctly distinguishes overview from implementation, but the learner needs a stronger handoff cue to the Build path at the end of Understand. |
+
+### Generation-page split proposal
+
+The integration document (§2) proposes splitting the current `generation` page into:
+- An early overview page for the route's second position (predict/select/reinject loop, no formal notation).
+- A formal reference page positioned after `entropy` (notation, prefill/decode, KV cache, sampling strategies).
+
+This resolves the route-representation mismatch identified in §1 of this audit: the current placement asks the reader to trust a page whose content won't be justified for 9 more pages.
+
+### 7 new learner findings
+
+Findings F-L1 through F-L7 are documented in the integration file §1. They cover:
+- Forward-reference overload on `generation` (F-L1)
+- Missing closing synthesis (F-L2)
+- Missing tokenization example on `text-data` (F-L3)
+- Transformer page well-paced but could use a stronger visual (F-L4)
+- Attention chain needs a numerical walkthrough (F-L5)
+- Logits→loss bridge needs a figure (F-L6)
+- `llm-limits` feels detached from the path (F-L7)
+
+**Evidence boundary:** these findings come from a simulated learner walkthrough, not a live learner study or a browser-based usability test.

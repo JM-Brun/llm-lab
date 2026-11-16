@@ -315,3 +315,40 @@ French core pages in route order. `x` present, `.` absent.
 
 Word counts exclude code blocks and inline figures, and include markup words; treat them as
 relative sizes.
+
+
+---
+
+## 8. Addendum — Learner feedback integration (2026-11-16)
+
+This section cross-references the [learner feedback integration and generation-page split proposal](../learner-feedback-integration-2026-11-13.md), which extends several findings from this review.
+
+### E2 — Generation asks too much as the second page
+
+A concrete split proposal is now documented in `learner-feedback-integration-2026-11-13.md` §2. It proposes:
+- **Page A** (`generation-overview.qmd`): light overview of the predict/select/reinject loop, positioned as page 2 in the route (~600–800 words, no notation beyond the running example).
+- **Page B** (`generation.qmd`): formal reference with $p_\theta$, prefill/decode, KV cache, speculative decoding, TTFT/ITL, and sampling strategies — positioned after `entropy` in the route.
+
+The proposal includes a complete line-by-line content-destination map (§2.2) and an information-preservation checklist (§2.4) guaranteeing zero content deletion. **Status:** split proposal documented; awaiting maintainer decision.
+
+The learner simulation quantified the forward-reference gap: **9 concepts/notations used before their definition** on the current `generation` page (F-L1 in the integration document, table in §1).
+
+### B6 — No closing synthesis
+
+Confirmed by the learner simulation as F-L2: the path ends on `gradients` without a page that reassembles the full pipeline. The integration document proposes adding a concluding synthesis page.
+
+### A1 — Text-data exercise link
+
+Extended by F-L3: beyond the stale exercise link already noted here, the `text-data` page lacks a concrete in-page tokenization example using the running example ("C'est une bonne situation, ça, scribe ?"). The integration document recommends adding an inline tokenization trace.
+
+### Other cross-references
+
+| This review | Integration finding | Note |
+|---|---|---|
+| E2 | F-L1 | Quantified: 9 forward references |
+| B6 | F-L2 | Synthesis page proposed |
+| A1 | F-L3 | In-page example gap identified |
+| C3 (attention worked example) | F-L5 | Learner confirms need for step-by-step numerical walkthrough |
+| D2 (logits/loss bridging) | F-L6 | Missing visual proposed |
+
+**Evidence boundary:** This addendum references findings from a simulated learner walkthrough, not from a live learner or browser-based study.
