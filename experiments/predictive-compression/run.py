@@ -3,10 +3,10 @@
 
 from __future__ import annotations
 
+import sys
 from collections import Counter, defaultdict
 from fractions import Fraction
 from math import ceil, log2
-import sys
 
 ALPHABET = ("A", "B", "C", "D")
 TRAINING = "ABABACABADABABACABADABABACABADABABACABAD"
@@ -108,7 +108,7 @@ def main() -> None:
         f"Decoded exactly:  {recovered == MESSAGE}",
         f"Decoded message:  {recovered}",
     )
-    sys.stdout.write("\\n".join(report) + "\\n")
+    sys.stdout.write("\n".join(report) + "\n")
     if recovered != MESSAGE:
         raise AssertionError("Lossless round-trip failed")
 
