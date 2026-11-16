@@ -3664,13 +3664,13 @@ sources:
       primary_theme: probabilistic-foundations-training
       secondary_themes: [architectures-mechanisms]
       tags: [topic:entropy, topic:cross-entropy, topic:mutual-information, topic:predictive-compression, topic:v-information]
-      concept_ids: [entropy, cross-entropy, kl-divergence, mutual-information, self-attention]
+      concept_ids: [entropy, cross-entropy, kl-divergence, mutual-information, self-attention, v-information]
     metadata:
       technical_level: mixed
       contribution_types: [theory, pedagogy, visualization, experiment]
       audiences: [learner, practitioner, researcher, educator]
     scan_status: partially-scanned
-    integration_status: partially-integrated
+    integration_status: integrated
     scan_history:
       - accessed_at: "2026-11-16"
         status: partially-scanned
@@ -3684,9 +3684,20 @@ sources:
           - "Article figures were not separately retrieved as image files."
           - "Full V-information paper and remaining further-reading links were not audited."
           - "Comments and reuse permissions were not established."
+    scan_history:
+      - accessed_at: "2026-11-16"
+        status: partially-scanned
+        inspected_scope:
+          - "Read the complete published ICLR 2020 paper by Xu et al., including definitions, propositions, PAC estimation theorem, structure-learning method, empirical sections and conclusion."
+          - "Cross-checked the published paper against arXiv:2002.10689 and the OpenReview publication record."
+          - "Added a bounded synthetic XOR example to illustrate dependence on the predictive family."
+        limitations:
+          - "The authors' experimental code and datasets were not independently rerun."
+          - "The paper's experiments do not directly validate LLM attention or language-model interpretability."
+          - "The synthetic example is an explanatory calculation, not a PAC-bound demonstration."
     related:
-      pages: [fr/entropy, en/entropy, fr/cross-entropy, en/cross-entropy, fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
-      concepts: [cross-entropy, self-attention]
+      pages: [fr/entropy, en/entropy, fr/cross-entropy, en/cross-entropy, fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/llm-limits, en/llm-limits]
+      concepts: [entropy, cross-entropy, kl-divergence, mutual-information, self-attention, v-information]
       audit_records:
         - docs/source-reviews/wayland-zhang-information-theory-llm-2026-11.md
         - docs/source-syntheses/information-theory-and-llms-2026-11.md
