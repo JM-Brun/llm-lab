@@ -73,6 +73,11 @@ Le score dépend donc du décalage $n-m$ pour cette paire et cette fréquence, p
 
 Dans une tête d'attention, les rotations sont appliquées à $Q$ et $K$ **après leurs projections et avant le calcul de $QK^\top$**. Les valeurs $V$ ne sont pas directement tournées par la version standard de RoPE. Voir [requêtes, clés et valeurs](queries-keys-values.qmd) et [attention à produit scalaire](scaled-dot-product-attention.qmd).
 
+{{< include ../includes/rope-pair-explorer-fr.html >}}
+
+<link rel="stylesheet" href="../styles/rope-pair-explorer.css">
+<script src="../scripts/rope-pair-explorer.js" defer></script>
+
 ## Ce que RoPE apporte — et ce qu'il ne garantit pas
 
 RoPE fournit une manière structurée d'introduire la position dans l'attention. Sa présence ne garantit pas, à elle seule, une extrapolation fiable vers des séquences beaucoup plus longues que celles vues pendant l'entraînement.
