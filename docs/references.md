@@ -240,3 +240,12 @@ Use these resources as complementary explanations and study aids, not as substit
   - **Use for:** a hardware-specific follow-up exploiting Hopper GPU asynchrony, Tensor Memory Accelerator, warp specialization and low-precision FP8. Treat it as a distinct generation/implementation, not as an interchangeable synonym for the original FlashAttention kernel.
 - **PyTorch — Scaled dot product attention API:** https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html
   - **Use for:** API contract and backend-dispatch constraints. Calling SDPA does not prove that a FlashAttention backend was selected.
+
+
+## Information theory and language models
+
+- **Wayland Zhang — Information Theory Is All You Need (to Understand LLMs)** (17 February 2026): https://waylandz.com/blog/information-theory-and-llm/
+  - **Use for:** a unifying introductory thread connecting Shannon information, entropy, next-token prediction, cross-entropy, KL divergence, attention, compression and model capacity.
+  - **Critical qualifications:** attention weights are not mutual information; Landauer's erasure bound does not establish a general information ceiling for learning from a dataset; compression performance is not equivalent to intelligence; V-information depends on a specified predictive/model class and operational setup.
+  - **Companion material:** the author links an English and Chinese notebook in https://github.com/waylandzhang/information-theory-and-language-models. The notebook is a further study lead, not an independently reproduced experiment in this repository.
+  - **Review status:** article text inspected on 16 November 2026; figures and notebook execution not verified. See the [source review](source-reviews/information-theory-wayland-zhang-2026-11.md). Text, figures and code are link-only; no reuse licence was established.
