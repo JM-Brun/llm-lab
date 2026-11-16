@@ -73,3 +73,19 @@ Si (p=1/8), alors (I=-\log_2(1/8)=3) bits. Si (p=1/2), le coût idéal est 1 bit
 - [Expérience prédictive](../../experiments/predictive-compression/README.fr.md)
 - [Synthèse documentaire](../source-syntheses/information-theory-and-llms-2026-11.md)
 - [Article original](https://waylandz.com/blog/information-theory-and-llm/)
+
+## 9. V-information : l'information utilisable dépend de l'observateur
+
+Xu et al. (ICLR 2020) définissent une quantité relative à une famille de prédicteurs \\(\\mathcal V\\) :
+
+\\[
+I_{\\mathcal V}(X\\to Y)=H_{\\mathcal V}(Y\\mid\\varnothing)-H_{\\mathcal V}(Y\\mid X).
+\\]
+
+Elle mesure le gain de prédictibilité obtenu grâce à l'entrée, pour cette famille et cette perte. Une famille restreinte peut ne pas exploiter une structure pourtant présente. La quantité est directionnelle en général. Avec une famille non restreinte, elle retrouve l'information mutuelle de Shannon.
+
+**À ne pas confondre :** la violation apparente de l'inégalité de traitement des données concerne cette notion d'information utilisable sous contraintes, pas l'information mutuelle de Shannon. Le théorème PAC du papier dépend notamment d'une perte logarithmique bornée et de la complexité de la famille.
+
+**Exemple XOR :** deux bits déterminent parfaitement leur XOR (1 bit d'information mutuelle), mais un prédicteur constant ne gagne rien à observer les bits. Un prédicteur capable de représenter leur interaction exploite presque toute cette information.
+
+Référence : [Xu et al., *A Theory of Usable Information Under Computational Constraints*, ICLR 2020](https://openreview.net/forum?id=r1eBeyHFDH). Voir aussi l'[expérience V-information](../../experiments/information-theory-llm/README.fr.md) et l'[expérience H0/H1/zlib](../../experiments/sequence-compression/README.fr.md).
