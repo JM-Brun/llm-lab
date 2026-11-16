@@ -746,7 +746,7 @@ concepts:
     resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/compression-revision, en/compression-revision]
 
   - id: v-information
-    importance: advanced
+    importance: specialized
     labels: {fr: "V-information prédictive", en: "Predictive V-information"}
     definitions:
       fr: >-
@@ -1049,4 +1049,4 @@ relations:
       fr: "La divergence KL mesure le terme d'écart entre la distribution cible et la distribution prédite."
       en: "KL divergence measures the mismatch term between the target and predicted distributions."
   - {from: attention-weight, type: contrasts-with, to: mutual-information}
-  - {from: v-information, type: contrasts-with, to: mutual-information}
+  - {from: mutual-information, type: contrasts-with, to: v-information}
