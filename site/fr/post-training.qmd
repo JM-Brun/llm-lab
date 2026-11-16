@@ -10,7 +10,7 @@ lang: fr
 LLM-LAB-PAGE-MAP v1
 id: "fr/post-training"
 summary: "Explique le post-entraînement comme la même boucle d'entraînement appliquée à un modèle pré-entraîné avec d'autres données et d'autres cibles, et le distingue du prompting et de la récupération, qui modifient le contexte mais pas les paramètres."
-scope: "Distinguer pré-entraînement, fine-tuning supervisé sur des paires instruction-réponse, méthodes à préférences (RLHF avec modèle de récompense et optimisation directe des préférences) et adaptation économe en paramètres, au niveau des données, des cibles et des paramètres modifiés ; les opposer à l'apprentissage en contexte et à la génération augmentée par récupération. Les algorithmes (PPO, dérivation de l'objectif DPO), les recettes de modèles particuliers et l'évaluation du comportement d'un assistant sont hors périmètre."
+scope: "Distinguer pré-entraînement, fine-tuning supervisé sur des paires instruction-réponse, méthodes à préférences (RLHF avec modèle de récompense et optimisation directe des préférences) et adaptation économe en paramètres, au niveau des données, des cibles et des paramètres modifiés ; expliquer la sérialisation des conversations par des chat templates propres au modèle ; les opposer à l'apprentissage en contexte et à la génération augmentée par récupération. Les algorithmes (PPO, dérivation de l'objectif DPO), les recettes de modèles particuliers et l'évaluation du comportement d'un assistant sont hors périmètre."
 purpose: "Indiquer, pour chaque méthode d'adaptation, quelles données elle utilise, quels tokens contribuent à la loss, quels paramètres changent et ce qui reste fixe ; choisir entre modifier le contexte et modifier les paramètres."
 suggested_route:
   previous: null
