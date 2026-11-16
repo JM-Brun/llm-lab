@@ -7,6 +7,7 @@ import random
 import sys
 import zlib
 from collections import Counter, defaultdict
+from itertools import pairwise
 from math import log2
 
 SEED = 20261116
@@ -43,7 +44,7 @@ def entropy(counts: Counter[str]) -> float:
 def entropy_metrics(sequence: str) -> tuple[float, float]:
     marginal = entropy(Counter(sequence))
     transitions: dict[str, Counter[str]] = defaultdict(Counter)
-    for previous, current in zip(sequence, sequence[1:], strict=False):
+    for previous, current in pairwise(sequence):
         transitions[previous][current] += 1
     total = len(sequence) - 1
     conditional = sum(
