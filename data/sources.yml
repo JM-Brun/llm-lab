@@ -3635,7 +3635,7 @@ sources:
       concept_ids: [predictive-v-information, mutual-information, cross-entropy]
     metadata:
       technical_level: advanced
-      contribution_types: [theory, mathematical-derivation, empirical-method]
+      contribution_types: [theory, mathematical-derivation, experiment]
       audiences: [practitioner, researcher, educator]
     scan_status: partially-scanned
     integration_status: integrated
