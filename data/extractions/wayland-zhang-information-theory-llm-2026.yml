@@ -15,8 +15,11 @@ scan:
     notes: ["Do not reuse figures; exact creator and licence terms were not verified."]
   code_data:
     status: partial
-    coverage: "The linked public repository and notebook filenames were inspected; notebook cells were not executed or exhaustively audited."
-    notes: ["The upstream notebook is an implementation companion, not an independently validated experiment in this review."]
+    coverage: "The English notebook's 18 Markdown/code cells were inspected statically; the notebook was not executed."
+    notes:
+      - "The attention visualization labels a row-wise KL-to-uniform quantity as an MI approximation; this is not mutual information."
+      - "The BERT attention branch is bidirectional and the fallback uses simulated weights."
+      - "The zlib comparison uses unseeded random text and marginal character entropy, which is not directly comparable to a sequence compressor's conditional coding cost."
   comments:
     status: not-inspected
     coverage: null
