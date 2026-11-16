@@ -165,6 +165,7 @@ pedagogical_model:
     - "The method families are not exhaustive and are not mutually exclusive."
     - "The brief KV-cache discussion risks conflating persistent weights with runtime state unless clarified."
   comparison:
+    dossier: "docs/source-syntheses/model-compression-2026-11.md"
     canonical_graph: "data/concepts.yml"
     canonical_routes:
       - "site/fr/llm-computational-complexity.qmd"
