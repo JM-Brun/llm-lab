@@ -1,7 +1,7 @@
 ---
 title: "Guided route and resource map"
-subtitle: "Three questions, eight stages, territories, sections, pages, and canonical concepts"
-description: "A guided route in three questions detailed as eight conceptual stages, a progressive territory map, and a canonical-concept registry to orient yourself across the site."
+subtitle: "Three questions, nine stages, territories, sections, pages, and canonical concepts"
+description: "A guided route in three questions detailed as nine conceptual stages, a progressive territory map, and a canonical-concept registry to orient yourself across the site."
 keywords: ["type:entry-point", "destination:orient", "topic:learning-map", "level:overview", "language:en", "status:published"]
 lang: en
 toc: true
@@ -23,10 +23,10 @@ related: []
 tags: ["type:entry-point", "destination:orient", "topic:learning-map", "level:overview", "language:en", "status:published"]
 -->
 
-This page presents the eight-stage **Theory / Understand path**, followed by a progressive resource map. The **Build path is independent**: it has its own implementation order and entry point. The route is derived from the canonical curriculum; the map starts from the high-level territories, then reveals sections and pages as you click. The reading notes below collapse by default; the map mirrors the search, filter, and selection in the URL, and the "Copy link" button shares that exact view.
+This page presents the nine-stage **Theory / Understand path**, followed by a progressive resource map. The **Build path is independent**: it has its own implementation order and entry point. The route is derived from the canonical curriculum; the map starts from the high-level territories, then reveals sections and pages as you click. The reading notes below collapse by default; the map mirrors the search, filter, and selection in the URL, and the "Copy link" button shares that exact view.
 
 ::: {.callout-note title="The path in brief"}
-You can remember the route in **five movements** before exploring the eight detailed stages:
+You can remember the route in **five movements** before exploring the nine detailed stages:
 
 1. **Place the system** — understand what an LLM is and what it predicts.
 2. **Observe** — follow a complete generation as a black box, from context to next token.
@@ -34,7 +34,7 @@ You can remember the route in **five movements** before exploring the eight deta
 4. **Understand the uses** — distinguish generation, scoring an observed target, and parameter learning. These are three uses of predictive computation, not successive steps in one generation loop.
 5. **Explore** — then choose to build, practice, deepen, or consult references.
 
-The eight stages below unpack this overview without making every page a strict prerequisite.
+The nine stages below unpack this overview without making every page a strict prerequisite.
 :::
 
 ::: {.callout-note collapse="true" title="How to read this map"}
@@ -52,7 +52,7 @@ Section headings shown in a page's details are editorial landmarks, not canonica
 
 ## Theory path — Understand
 
-This theory path first answers three questions: what is an LLM, how does it compute a prediction, and what can be done with that prediction? The first part places the system in context; the second covers four stages, from text to the next-token distribution; the third presents three sibling uses, generating, scoring an observed target, and learning by updating the parameters, which are not successive prerequisites. Evaluation remains cross-cutting: it measures the model on held-out data ([experimental evaluation](experimental-evaluation.qmd)). The eight detailed stages remain the suggested progression: core pages cover each stage's main ideas; optional resources offer further context or depth and can belong to any destination. Pages within a stage are complementary resources, not a list of strict prerequisites.
+This theory path first answers three questions: what is an LLM, how does it compute a prediction, and what can be done with that prediction? The first part places the system in context; the second covers four stages, from text to the next-token distribution; the third presents three sibling uses, generating, scoring an observed target, and learning by updating the parameters, which are not successive prerequisites. Evaluation remains cross-cutting: it measures the model on held-out data ([experimental evaluation](experimental-evaluation.qmd)). The nine detailed stages remain the suggested progression: core pages cover each stage's main ideas; optional resources offer further context or depth and can belong to any destination. Pages within a stage are complementary resources, not a list of strict prerequisites.
 
 {{< include ../includes/generated-guided-route-en.qmd >}}
 
