@@ -65,8 +65,9 @@ Une probabilité p(x) correspond à une longueur idéale de code proche de -log�
 ## Trois pièges conceptuels
 
 1. **Entropie ≠ surprise d'un token particulier.** L'entropie est une moyenne ; le surprisal concerne un événement.
-2. **Poids d'attention ≠ information mutuelle.** Les poids d'attention agrègent des valeurs ; l'information mutuelle se définit à partir d'une distribution jointe.
-3. **Landauer ≠ plafond universel d'apprentissage.** La borne concerne l'effacement physique irréversible, pas une limite générale de généralisation.
+2. **Entropie marginale ≠ taux d'entropie.** Pour une séquence dépendante, les fréquences de symboles isolés ne suffisent pas à mesurer l'incertitude moyenne par symbole à long terme.
+3. **Poids d'attention ≠ information mutuelle.** Les poids d'attention agrègent des valeurs ; l'information mutuelle se définit à partir d'une distribution jointe.
+4. **Landauer ≠ plafond universel d'apprentissage.** La borne concerne l'effacement physique irréversible, pas une limite générale de généralisation.
 
 
 ## Approfondissement — information prédictive \(\mathcal V\)
