@@ -75,9 +75,12 @@ def main() -> None:
             ),
         },
         "interpretation": [
-            "For the symmetric Markov source, the stationary marginal is uniform (2 bits per symbol), but dependencies reduce the entropy rate.",
-            "The entropy rate is the asymptotic optimal lossless coding benchmark for the specified source, not a prediction of exact finite-file zlib size.",
-            "zlib is one practical compressor, not an optimal code; finite samples and container overhead affect its measured size.",
+            "For the symmetric Markov source, the stationary marginal is uniform "
+            "(2 bits per symbol), but dependencies reduce the entropy rate.",
+            "The entropy rate is the asymptotic optimal lossless coding benchmark for "
+            "the specified source, not a prediction of exact finite-file zlib size.",
+            "zlib is one practical compressor, not an optimal code; finite samples and "
+            "container overhead affect its measured size.",
             "The fixed seed makes this generated sample reproducible.",
         ],
     }
