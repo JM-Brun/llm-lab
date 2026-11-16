@@ -1,0 +1,213 @@
+schema_version: 1
+source_id: wayland-zhang-information-theory-llm-2026
+scan:
+  accessed_at: "2026-11-16"
+  retrieval_method: direct-page
+  author_text:
+    status: complete
+    coverage: "Full article body retrieved directly: information content and entropy; cross-entropy loss; attention and mutual information; thermodynamic bound; compression and intelligence; V-information; notebook links."
+    notes:
+      - "Article is a conceptual tutorial, not a primary research paper."
+      - "The page identifies itself as a rewrite of a 2025-03-27 original."
+  figures_media:
+    status: partial
+    coverage: "Figure captions and their placement were visible; image assets were not separately retrieved or visually audited."
+    notes: ["Do not reuse figures; exact creator and licence terms were not verified."]
+  code_data:
+    status: partial
+    coverage: "The linked public repository and notebook filenames were inspected; notebook cells were not executed or exhaustively audited."
+    notes: ["The upstream notebook is an implementation companion, not an independently validated experiment in this review."]
+  comments:
+    status: not-inspected
+    coverage: null
+    notes: ["No comment thread was exposed in the retrieved article body."]
+  linked_resources:
+    status: partial
+    coverage: "The V-information paper and the linked English/Chinese notebook repository were opened."
+    notes: ["Other further-reading links were not exhaustively audited."]
+  metadata:
+    status: complete
+    coverage: "Title, author, page date 2026-02-17, topic category, and stated rewrite date 2025-03-27."
+    notes: []
+  rights:
+    status: unknown
+    coverage: null
+    notes: ["Article and figure reuse rights were not established; retain link-only treatment."]
+  unresolved_questions:
+    - "Which exact upstream notebook cells implement each visualization, and do they correctly distinguish Shannon mutual information, attention weights and V-information?"
+    - "What experimental evidence, if any, supports a direct relationship between attention weights and mutual information for particular trained models?"
+    - "How should dataset information, finite-sample uncertainty, inductive bias and generalization be distinguished in the article's thermodynamic-bound section?"
+pedagogical_model:
+  reconstruction:
+    status: complete
+    basis:
+      - "The complete article body and its six numbered sections were retrieved directly on 2026-11-16."
+      - "The linked GitHub repository landing page and English/Chinese notebook filenames were inspected."
+    inferred_elements:
+      - "Learning outcomes and prerequisites are reviewer-inferred; the article does not publish a formal syllabus."
+      - "Critical distinctions and proposed project exercises are editorial additions."
+  source_graph:
+    nodes:
+      - id: src-information-content
+        kind: concept
+        description: "Self-information is negative base-2 logarithm of event probability."
+        locator: "01 Information Content and Entropy"
+        inferred: false
+      - id: src-shannon-entropy
+        kind: concept
+        description: "Entropy is expected self-information under a probability distribution."
+        locator: "01 Information Content and Entropy"
+        inferred: false
+      - id: src-cross-entropy
+        kind: concept
+        description: "Cross-entropy scores a predicted distribution against a target distribution."
+        locator: "02 Why LLMs Use Cross-Entropy Loss"
+        inferred: false
+      - id: src-attention-mi-analogy
+        kind: analogy
+        description: "The article compares attention's contextual weighting to dependency described by mutual information, while explicitly saying it is not strict mutual information."
+        locator: "03 Attention as Mutual Information"
+        inferred: false
+      - id: src-landauer-claim
+        kind: claim
+        description: "The article invokes Landauer's erasure bound to argue that an architecture cannot extract more information from a dataset than it contains."
+        locator: "04 The Thermodynamic Bound"
+        inferred: false
+      - id: src-compression-intelligence
+        kind: claim
+        description: "The article argues that better prediction and compression are closely related to intelligence."
+        locator: "05 Compression Is Intelligence"
+        inferred: false
+      - id: src-v-information
+        kind: concept
+        description: "Computationally constrained predictive V-information measures information usable by a specified predictor class."
+        locator: "06 V-Information: When Computation Matters"
+        inferred: false
+      - id: src-claim-audit
+        kind: limitation
+        description: "Landauer's bound concerns physical energy dissipation when logically irreversible information is erased; it is not a direct bound on information learned from a dataset."
+        locator: "Reviewer-added technical qualification"
+        inferred: true
+    edges:
+      - {from: src-information-content, type: averaged-by, to: src-shannon-entropy, inferred: false}
+      - {from: src-shannon-entropy, type: motivates, to: src-cross-entropy, inferred: false}
+      - {from: src-attention-mi-analogy, type: relates-to, to: src-shannon-entropy, inferred: false}
+      - {from: src-landauer-claim, type: requires-qualification-by, to: src-claim-audit, inferred: true}
+      - {from: src-cross-entropy, type: motivates, to: src-compression-intelligence, inferred: false}
+      - {from: src-v-information, type: extends-under-computational-constraints, to: src-shannon-entropy, inferred: false}
+    interpretation: "The six numbered topics reconstruct the author's sequence. The Landauer qualification is editorial and must not be attributed to the author."
+  learning_outcomes:
+    - {status: inferred, outcome: "Compute self-information, Shannon entropy, cross-entropy and KL divergence, and explain their relationships.", basis: "Sections 1 and 2."}
+    - {status: inferred, outcome: "Explain why attention weights are not themselves mutual information.", basis: "Section 3 explicitly limits the analogy."}
+    - {status: inferred, outcome: "Distinguish a physical erasure-energy bound from statistical learning and generalization claims.", basis: "Critical review of section 4."}
+    - {status: inferred, outcome: "Relate predictive probability to ideal code length without equating compression with intelligence.", basis: "Critical review of section 5."}
+    - {status: inferred, outcome: "Explain why computationally bounded notions of usable information depend on the predictor class.", basis: "Section 6 and Xu et al. (2020)."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Probability distributions, logarithms and conditional probability.", basis: "Required by entropy and cross-entropy equations."}
+    - {status: inferred, topic: "Basic familiarity with self-attention and neural-network training.", basis: "Required by sections 2, 3 and 6."}
+  teaching_route:
+    - {order: 1, section: "Information Content and Entropy", function: foundations, moves: ["Introduce self-information.", "Derive expected information as entropy."]}
+    - {order: 2, section: "Why LLMs Use Cross-Entropy Loss", function: training-objective, moves: ["Define cross-entropy.", "Decompose it into target entropy plus KL divergence."]}
+    - {order: 3, section: "Attention as Mutual Information", function: analogy, moves: ["Motivate contextual dependencies.", "State the limits of interpreting attention as mutual information."]}
+    - {order: 4, section: "The Thermodynamic Bound", function: qualification-needed, moves: ["Connect information theory to Landauer.", "Require careful separation of physical erasure and statistical learning."]}
+    - {order: 5, section: "Compression Is Intelligence", function: synthesis, moves: ["Connect predictive quality to code length.", "Avoid treating compression as a complete definition of intelligence."]}
+    - {order: 6, section: "V-Information", function: advanced-extension, moves: ["Introduce observer/model constraints.", "Distinguish usable predictive information from Shannon mutual information."]}
+  pedagogical_strengths:
+    - "A coherent six-part narrative connects core information theory, training objectives, attention and advanced information measures."
+    - "The article explicitly qualifies the attention/mutual-information comparison rather than claiming an identity."
+    - "The linked notebook offers a practical route beyond static prose."
+  pedagogical_limits:
+    - "The thermodynamic section conflates Landauer's physical erasure bound with a statistical claim about information extracted from finite training data."
+    - "The claim that language models are necessarily the best compressors, and that compression is intelligence, is rhetorical rather than a general theorem."
+    - "Attention weights are not mutual information and do not directly measure the information one token provides about another."
+    - "The article's cross-entropy explanation needs the target distribution and model distribution to be distinguished consistently."
+    - "The notebook was not executed in this scan; its figures and outputs are not validated."
+  comparison:
+    dossier: "docs/source-syntheses/information-theory-and-llms-2026-11.md"
+    canonical_graph: "data/concepts.yml"
+    canonical_routes:
+      - "site/fr/probabilites.qmd"
+      - "site/en/probabilities.qmd"
+      - "site/fr/entropy.qmd"
+      - "site/en/entropy.qmd"
+      - "site/fr/cross-entropy.qmd"
+      - "site/en/cross-entropy.qmd"
+      - "site/fr/scaled-dot-product-attention.qmd"
+      - "site/en/scaled-dot-product-attention.qmd"
+    decision: "Use as a cross-topic map and source of advanced extensions. Integrate the correct entropy/cross-entropy connections, add explicit cautions for attention and Landauer, and build original reproducible exercises. Do not create duplicate canonical definitions."
+    structures_kept_separate:
+      - "Article's six-section sequence"
+      - "Canonical concept graph"
+      - "Bilingual learner route"
+items:
+  - id: wayland-zhang-information-theory-llm-2026:entropy-and-surprisal
+    kind: definition
+    summary: "The article defines self-information as -log2 p(x) and entropy as the expected self-information."
+    locator: {type: section, value: "01 Information Content and Entropy", label: "Information Content and Entropy"}
+    evidence: {kind: mathematical-definition, confidence: established, scope: "Standard Shannon definitions.", assumptions: ["Discrete outcomes and a normalized probability distribution."], limitations: ["The article moves between event, token and sequence levels; the conditioning context must be explicit for autoregressive models."]}
+    technical_assessment: {status: reviewed, rationale: "Consistent with Shannon information theory when the event distribution and logarithm base are specified.", corroborating_sources: ["Shannon (1948)", "Cover and Thomas, Elements of Information Theory"]}
+    pedagogical_assessment: {learner_question: "How does probability map to information?", explanatory_lens: "Rarity as surprisal; expected surprisal as entropy.", teaching_form: [definition, equation, examples], novelty: {level: low, rationale: "Already central to the entropy lesson."}, complementarity: {level: high, rationale: "The article gives a compact narrative link to LLM prediction."}, pedagogical_value: {level: high, rationale: "Reinforces the conditional information view."}, applicability: {level: high, rationale: "Fits the existing bilingual entropy page."}, redundancy: {level: high, rationale: "Core equations already covered."}, evidence_quality: {level: high, rationale: "Standard definitions."}}
+    classification: {primary_theme: probabilistic-foundations-training, tags: [topic:entropy, topic:surprisal], concept_ids: []}
+    candidate_destinations: {pages: [fr/entropy, en/entropy], concepts: [], route_ids: []}
+    disposition: already-covered
+    disposition_rationale: "Keep the existing canonical explanation; add no duplicate definition."
+  - id: wayland-zhang-information-theory-llm-2026:cross-entropy-kl
+    kind: derivation
+    summary: "For target distribution P and model distribution Q, H(P,Q)=H(P)+D_KL(P||Q); minimizing cross-entropy over Q is equivalent to minimizing KL when P is fixed."
+    locator: {type: section, value: "02 Why LLMs Use Cross-Entropy Loss", label: "Cross-entropy decomposition"}
+    evidence: {kind: mathematical-identity, confidence: established, scope: "Discrete distributions with compatible support; logarithm base fixed consistently.", assumptions: ["P is the data/target distribution and Q the model distribution.", "P is fixed while optimizing Q."], limitations: ["The article says 'true entropy is a property of language'; in practice the target distribution and data-generating process are not fully known."]}
+    technical_assessment: {status: reviewed, rationale: "Identity is correct with consistent notation; empirical token NLL estimates cross-entropy under the evaluation distribution.", corroborating_sources: ["Cover and Thomas, Elements of Information Theory"]}
+    pedagogical_assessment: {learner_question: "Why does next-token cross-entropy train a probabilistic model?", explanatory_lens: "Cross-entropy is target entropy plus mismatch penalty.", teaching_form: [equation, decomposition], novelty: {level: low, rationale: "The canonical cross-entropy page already covers the objective."}, complementarity: {level: moderate, rationale: "It reinforces the entropy-to-training bridge."}, pedagogical_value: {level: high, rationale: "The decomposition makes the optimization target precise."}, applicability: {level: high, rationale: "Cross-link the entropy and cross-entropy lessons."}, redundancy: {level: high, rationale: "Avoid copying a second derivation."}, evidence_quality: {level: high, rationale: "Exact mathematical identity."}}
+    classification: {primary_theme: probabilistic-foundations-training, tags: [topic:cross-entropy, topic:kl-divergence], concept_ids: [cross-entropy]}
+    candidate_destinations: {pages: [fr/cross-entropy, en/cross-entropy], concepts: [cross-entropy], route_ids: []}
+    disposition: integrate-by-reference
+    disposition_rationale: "Retain as a compact source for the entropy-to-training connection; canonical lesson remains authoritative."
+  - id: wayland-zhang-information-theory-llm-2026:attention-mutual-information
+    kind: analogy
+    summary: "The article compares attention's contextual weighting with dependencies described by mutual information, while explicitly acknowledging that attention does not calculate mutual information."
+    locator: {type: section, value: "03 Attention as Mutual Information", label: "Attention and mutual information"}
+    evidence: {kind: author-analogy, confidence: context-dependent, scope: "Conceptual analogy only.", assumptions: ["Attention weights parameterize a normalized distribution over accessible positions."], limitations: ["A softmax attention weight is not I(X;Y), does not estimate H(X)-H(X|Y), and is not a token-level information contribution."]}
+    technical_assessment: {status: reviewed, rationale: "The qualification is essential: mutual information is a distributional quantity over random variables; attention weights are input-dependent coefficients from learned projections.", corroborating_sources: ["Cover and Thomas, Elements of Information Theory"]}
+    pedagogical_assessment: {learner_question: "Do attention weights measure information shared between tokens?", explanatory_lens: "Contrast a probabilistic dependency measure with learned routing/aggregation coefficients.", teaching_form: [analogy, misconception-check], novelty: {level: moderate, rationale: "The explicit MI contrast is useful alongside existing attention interpretation cautions."}, complementarity: {level: high, rationale: "Adds an information-theoretic vocabulary without replacing the computational explanation."}, pedagogical_value: {level: high, rationale: "Prevents a common interpretability misconception."}, applicability: {level: high, rationale: "A short warning can cross-link the attention lesson."}, redundancy: {level: moderate, rationale: "Related cautions exist but this is a distinct MI misconception."}, evidence_quality: {level: high, rationale: "Definitions of MI and attention differ mathematically."}}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:mutual-information, topic:attention-interpretation], concept_ids: [self-attention]}
+    candidate_destinations: {pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention], concepts: [self-attention], route_ids: []}
+    disposition: clarify
+    disposition_rationale: "Integrate only the explicit statement that attention weights are not mutual information; no canonical MI node is needed yet."
+  - id: wayland-zhang-information-theory-llm-2026:landauer-bound
+    kind: misconception
+    summary: "The article uses Landauer's erasure-energy bound as if it established that a model cannot extract more information from a dataset than the dataset contains."
+    locator: {type: section, value: "04 The Thermodynamic Bound", label: "The Thermodynamic Bound"}
+    evidence: {kind: unsupported-inference, confidence: disputed, scope: "The article's physical analogy is extended to a broad learning-theory claim.", assumptions: [], limitations: ["Landauer's principle concerns the minimum heat dissipated by logically irreversible erasure at temperature T; it is not a direct theorem bounding learned information, generalization or model architecture.", "Finite samples can support generalization through inductive bias and assumptions about an underlying distribution; the sample is not the only relevant source of constraints."]}
+    technical_assessment: {status: reviewed, rationale: "The inference is invalid as stated; distinguish physical thermodynamics from statistical learning and information-theoretic generalization bounds.", corroborating_sources: ["Landauer (1961)", "Xu et al. (2020)"]}
+    pedagogical_assessment: {learner_question: "Does thermodynamics prove that models cannot learn information beyond their training examples?", explanatory_lens: "Separate physical erasure costs from statistical inference.", teaching_form: [misconception, counterexample, qualification], novelty: {level: high, rationale: "The article's section creates a useful opportunity to teach category errors."}, complementarity: {level: high, rationale: "Connects information theory to limits of learning without overstating a physical analogy."}, pedagogical_value: {level: high, rationale: "Prevents a false universal claim."}, applicability: {level: moderate, rationale: "Best as an optional note or source-review case, not a new core lesson."}, redundancy: {level: low, rationale: "No identical Landauer explanation currently identified."}, evidence_quality: {level: high, rationale: "The physical principle's scope is well established; the article's inference does not follow."}}
+    classification: {primary_theme: probabilistic-foundations-training, tags: [topic:landauer-principle, topic:generalization], concept_ids: []}
+    candidate_destinations: {pages: [fr/llm-limits, en/llm-limits], concepts: [], route_ids: []}
+    disposition: correct
+    disposition_rationale: "Do not teach the Landauer argument as a learning-theory theorem; record the category distinction and defer a fuller treatment pending primary-source review."
+  - id: wayland-zhang-information-theory-llm-2026:compression-intelligence
+    kind: claim
+    summary: "The article argues that good prediction and good compression are closely related, then rhetorically identifies compression with intelligence."
+    locator: {type: section, value: "05 Compression Is Intelligence", label: "Compression Is Intelligence"}
+    evidence: {kind: author-interpretation, confidence: context-dependent, scope: "Predictive coding relation plus a broader claim about intelligence.", assumptions: ["A shared probability model and entropy coder are used.", "Model cost and decoding protocol are accounted for when discussing net compression."], limitations: ["Predictive coding efficiency is one capability measure, not a sufficient definition of intelligence.", "The best compression algorithm is not universally a language model; algorithm choice depends on source and coding regime."]}
+    technical_assessment: {status: reviewed, rationale: "Better probabilistic prediction can lower expected ideal code length under a matched coding protocol; this does not establish intelligence equivalence.", corroborating_sources: ["Shannon (1948)", "Hutter Prize documentation"]}
+    pedagogical_assessment: {learner_question: "What does compression tell us about prediction, and what does it not tell us about intelligence?", explanatory_lens: "Separate a formal coding equivalence from a broad cognitive claim.", teaching_form: [claim-audit, example, limitation], novelty: {level: moderate, rationale: "The distinction is important to the project's compression discussion."}, complementarity: {level: high, rationale: "Connects the existing predictive-compression section to a broader debate."}, pedagogical_value: {level: high, rationale: "Teaches the boundary between mathematical result and rhetorical extrapolation."}, applicability: {level: high, rationale: "Use in the source synthesis and revision sheet."}, redundancy: {level: low, rationale: "The explicit intelligence claim is not otherwise central to the existing lesson."}, evidence_quality: {level: moderate, rationale: "The predictive coding link is formal; intelligence equivalence is not established."}}
+    classification: {primary_theme: probabilistic-foundations-training, tags: [topic:predictive-compression, topic:intelligence], concept_ids: []}
+    candidate_destinations: {pages: [fr/entropy, en/entropy], concepts: [], route_ids: []}
+    disposition: clarify
+    disposition_rationale: "Retain the coding result and reject the equation of compression with intelligence as a theorem."
+  - id: wayland-zhang-information-theory-llm-2026:v-information
+    kind: concept
+    summary: "V-information extends information-theoretic reasoning by specifying a family of predictors or computationally constrained observers and measuring predictive information usable by that family."
+    locator: {type: section, value: "06 V-Information: When Computation Matters", label: "V-Information"}
+    evidence: {kind: primary-paper-summary, confidence: context-dependent, scope: "The linked Xu et al. (2020) paper proposes predictive V-information and reports theoretical and empirical results.", assumptions: ["The predictor family and loss are specified.", "The operational quantity depends on the chosen function class and estimation procedure."], limitations: ["It does not mean computation creates Shannon information or violates ordinary physical conservation.", "The article's 'more useful information' framing is heuristic unless the V-family and objective are stated."]}
+    technical_assessment: {status: reviewed, rationale: "The linked paper formalizes predictive V-information relative to a family of functions; the article's short description is introductory and omits technical definitions.", corroborating_sources: ["Xu et al., A Theory of Usable Information Under Computational Constraints, arXiv:2002.10689"]}
+    pedagogical_assessment: {learner_question: "Can two observers extract different usable predictive information from the same data?", explanatory_lens: "Observer/model class constrains what can be predicted.", teaching_form: [advanced-concept, paper-link, comparison], novelty: {level: high, rationale: "Introduces an advanced framework not part of the current core path."}, complementarity: {level: high, rationale: "Adds a computational lens to classical Shannon measures."}, pedagogical_value: {level: moderate, rationale: "Valuable for advanced learners but too specialized for the core path."}, applicability: {level: moderate, rationale: "Keep as an optional research extension."}, redundancy: {level: low, rationale: "No existing canonical concept found."}, evidence_quality: {level: moderate, rationale: "Primary paper is linked and abstract inspected; full paper not yet audited."}}
+    classification: {primary_theme: probabilistic-foundations-training, tags: [topic:v-information, method:computational-constraints], concept_ids: []}
+    candidate_destinations: {pages: [fr/llm-limits, en/llm-limits], concepts: [], route_ids: []}
+    disposition: defer
+    disposition_rationale: "Link the primary paper as optional advanced reading; do not add a canonical concept until the full paper and a concrete learner use case are reviewed."
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "No new canonical concept IDs or graph edges are justified by this introductory article. Reuse existing entropy, cross-entropy and self-attention concepts; keep V-information as an optional advanced reference pending a full primary-paper review."
