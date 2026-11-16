@@ -157,6 +157,23 @@ where $L$ is the number of layers, $B$ the batch size, $T$ the number of cached 
 
 *Prefill* is often compute-bound, while *decode* can become memory-bandwidth-bound because each step reads the accumulated cache to produce only a small amount of new output. The actual bottleneck depends on hardware, batch size, context length, and kernels: measure rather than assume.
 
+### Serving multiple requests: scheduling and cache reuse
+
+The autoregressive loop describes **one sequence**. A server must handle several requests with different prompts and output lengths.
+
+- **TPOT (*time per output token*)**: the average gap between output tokens, excluding the first token. For a request producing $N_{out}>1$ tokens, one estimate is
+  $
+  \operatorname{TPOT}=\frac{\operatorname{E2E}-\operatorname{TTFT}}{N_{out}-1}.
+  $
+  **ITL** is the individual interval between consecutive tokens. For one request, mean ITL equals TPOT; aggregations across requests can differ depending on their weighting.
+- **Continuous batching** (*in-flight batching*): the server adjusts the set of sequences at each decode iteration. When one sequence finishes, it frees its slot; a new request can enter without waiting for all others to finish. Each sequence remains autoregressive: scheduling changes, not the prediction rule.
+- **Prefix caching**: two requests can reuse the KV cache of a shared prefix if their token prefixes are exactly identical and the cache entry is still available on a compatible worker. Semantic similarity or shared words are not enough; serialization or tokenization differences can break reuse. This is not response caching.
+- **Chunked prefill**: a long prompt is processed in chunks, between which the server can advance sequences already decoding. This limits stalls imposed on active requests, but may increase TTFT and add scheduling overhead.
+
+These techniques solve different problems: continuous batching improves GPU occupancy and sharing across requests; prefix caching avoids recomputing a strictly shared prefix; chunked prefill balances the arrival of a long prompt against the smoothness of ongoing decode. By themselves, they do not change the model's conditional next-token probabilities.
+
+For implementation details and serving trade-offs, see the [guide to static, dynamic, and continuous batching](https://handbook.modular.com/inference-optimization/static-dynamic-continuous-batching/), [prefix caching](https://handbook.modular.com/inference-optimization/prefix-caching/), and [inference metrics](https://handbook.modular.com/llm-inference-basics/llm-inference-metrics/).
+
 An advanced optimization, **speculative decoding**, has a draft model propose several tokens and a target model verify them. A proposed prefix can be accepted in one go; at the first mismatch, the procedure continues under a rule designed to preserve the target model's distribution. Speedup depends on verification cost and acceptance rate, so it is not automatically faster. This is an optional deep dive, not a prerequisite for understanding the basic loop.
 
 [Brij Pandey's inference-path diagram](https://www.linkedin.com/posts/brijpandeyji_you-ask-llm-a-question-it-pauses-then-share-7525787285829804032-YNEl) is a useful overview of these phases and diagnostics. It is cited as an external resource; its figure is not reproduced here.
