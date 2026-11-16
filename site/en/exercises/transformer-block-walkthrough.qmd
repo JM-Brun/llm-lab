@@ -11,7 +11,7 @@ LLM-LAB-PAGE-MAP v1
 id: "en/transformer-block-walkthrough-exercises"
 summary: "Exercises associated with the Transformer block guided tour."
 scope: "Collects exercises and worked answers for the guided tour without duplicating its code explanation."
-purpose: "Check understanding of the invariants, shapes, and implementation choices presented in the guided tour."
+purpose: "Check understanding of the block invariants, shapes, and implementation choices, as well as the comparison of attention variants."
 suggested_route:
   previous: null
   next: null
