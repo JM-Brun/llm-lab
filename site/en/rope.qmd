@@ -90,13 +90,15 @@ These mechanisms are not interchangeable. The examples are dated snapshots, not 
 
 ## Frequencies and implementation conventions
 
-For an even head dimension d, the standard inverse frequency for pair i is omega_i = b^(-2i/d), and the angle at position m is m * omega_i. Cosine/sine tables are commonly precomputed and broadcast across batch and heads. Note that the base is model-specific: the classic example often uses 10,000, while the Qwen3 configuration in Raschka's notebook uses theta = 1,000,000.
+For an even head dimension d, the standard inverse frequency for pair i is omega_i = b^(-2i/d), and the angle at position m is m * omega_i. Here the cosine/sine tables have shape (sequence_length, d/2): one column per feature pair. They are commonly precomputed and broadcast across batch and heads. Note that the base is model-specific: the classic example often uses 10,000, while the Qwen3 configuration in Raschka's notebook uses theta = 1,000,000.
 
 ~~~python
-indices = torch.arange(0, head_dim, 2, device=positions.device)
-inv_freq = base ** (-indices.float() / head_dim)
-angles = positions.float()[:, None] * inv_freq[None, :]
-cos, sin = angles.cos(), angles.sin()
+def rope_params(head_dim, positions, base=10_000):
+    assert head_dim % 2 == 0
+    indices = torch.arange(0, head_dim, 2, device=positions.device)
+    inv_freq = base ** (-indices.float() / head_dim)
+    angles = positions.float()[:, None] * inv_freq[None, :]
+    return angles.cos(), angles.sin()
 ~~~
 
 **Interleaved** pairs adjacent coordinates; **split-half** pairs the two halves. They are equivalent after a consistent feature permutation, but must not be mixed. Standard RoPE applies to Q and K after projection, not V.
