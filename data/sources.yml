@@ -3680,11 +3680,10 @@ sources:
           - "Linked V-information paper abstract and metadata inspected"
           - "Critical source extraction and review created"
         limitations:
-          - "Notebook cells were not executed or exhaustively inspected."
+          - "All 18 English notebook cells were inspected statically but not executed."
           - "Article figures were not separately retrieved as image files."
-          - "Full V-information paper and remaining further-reading links were not audited."
+          - "Remaining further-reading links were not exhaustively audited."
           - "Comments and reuse permissions were not established."
-    scan_history:
       - accessed_at: "2026-11-16"
         status: partially-scanned
         inspected_scope:
