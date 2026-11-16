@@ -94,7 +94,7 @@ For a fixed source and coding protocol, a better predictive distribution can red
 
 No new canonical concept ID is proposed. Existing concepts cover entropy-related training and self-attention; V-information remains a research extension.
 
-## 6.1 Audit statique du notebook anglais (18 cellules)
+## Audit statique du notebook anglais (18 cellules)
 
 Le notebook anglais `information-theory-and-llm-en.ipynb` a été récupéré depuis le dépôt public et ses 18 cellules (Markdown et code) ont été inspectées statiquement. Le code n'a pas été exécuté ; les sorties graphiques enregistrées n'ont pas été traitées comme des résultats reproduits.
 
