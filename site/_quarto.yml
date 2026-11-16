@@ -12,6 +12,8 @@ project:
     - images/queries-keys-values-mobile.svg
     - images/attention-matrices-en-mobile.svg
     - images/attention-matrices-mobile.svg
+    - images/training-loop-visual-en-mobile.svg
+    - images/training-loop-visual-fr-mobile.svg
   render:
     - index.qmd
     - fr/learning-map.qmd
