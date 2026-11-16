@@ -1,0 +1,94 @@
+schema_version: 1
+source_id: sebastian-raschka-understanding-positional-embeddings-2026
+items:
+  - id: sebastian-raschka-understanding-positional-embeddings-2026:rope-relative-offset
+    kind: derivation
+    summary: "For each feature pair and frequency, rotating Q and K makes their dot-product contribution depend on relative offset; a common shift of both positions preserves it."
+    locator: {type: section, value: "§§3.4–3.5"}
+    evidence:
+      kind: mathematical-derivation
+      confidence: established
+      scope: "Rotation identities and common-position-shift invariance."
+      assumptions: ["Unrotated Q/K components and frequency are fixed for the comparison."]
+      limitations: ["The full score does not depend on distance alone; content-derived Q/K also matter."]
+    disposition: already-covered
+    classification: {primary_theme: architectures-mechanisms, concept_ids: [positional-encoding, query, key, attention-score]}
+    candidate_destinations: {pages: [fr/rope, en/rope]}
+  - id: sebastian-raschka-understanding-positional-embeddings-2026:frequencies-pytorch
+    kind: implementation-pattern
+    summary: "Standard RoPE uses geometrically spaced inverse frequencies; position-scaled angles generate cosine/sine tables broadcast across batch and heads."
+    locator: {type: section, value: "§§4–5.2"}
+    evidence:
+      kind: directly-inspected-code-and-equations
+      confidence: established
+      scope: "Frequency formula, table shapes, broadcasting and PyTorch snippets."
+      assumptions: ["Base 10,000 is illustrative; model configurations may differ."]
+      limitations: ["Snippets are not production implementations for every RoPE variant."]
+    disposition: integrate
+    classification: {primary_theme: mathematical-tools-geometry, concept_ids: [positional-encoding, query, key]}
+    candidate_destinations: {pages: [fr/rope, en/rope]}
+  - id: sebastian-raschka-understanding-positional-embeddings-2026:pairing-conventions
+    kind: implementation-pattern
+    summary: "Split-half and interleaved feature pairing are equivalent after a consistent feature permutation; mismatched conventions change the computation."
+    locator: {type: section, value: "§§3.3, 5.3"}
+    evidence:
+      kind: implementation-comparison
+      confidence: established
+      scope: "Mathematical equivalence and PyTorch examples."
+      assumptions: ["The same permutation is applied consistently to Q, K and model parameters."]
+      limitations: ["Code alone does not establish checkpoint compatibility."]
+    disposition: integrate
+    classification: {primary_theme: architectures-mechanisms, concept_ids: [positional-encoding, query, key]}
+    candidate_destinations: {pages: [fr/rope, en/rope]}
+  - id: sebastian-raschka-understanding-positional-embeddings-2026:partial-rope
+    kind: mechanism
+    summary: "Partial RoPE rotates only a subset of each Q/K head's dimensions and leaves the rest unchanged."
+    locator: {type: section, value: "§6.1"}
+    evidence:
+      kind: architecture-configuration-and-author-analysis
+      confidence: context-dependent
+      scope: "MiniMax-M3 configuration and cosine/sine table memory discussion."
+      assumptions: ["Rotary dimension is interpreted relative to full head dimension."]
+      limitations: ["This reduces positional table width, not the full KV cache; savings depend on context length and dtype."]
+    disposition: integrate
+    classification: {primary_theme: architectures-mechanisms, concept_ids: [positional-encoding, query, key]}
+    candidate_destinations: {pages: [fr/rope, en/rope]}
+  - id: sebastian-raschka-understanding-positional-embeddings-2026:nope
+    kind: mechanism
+    summary: "NoPE omits explicit positional transformations in a layer while retaining causal masking, whose nested prefix visibility can provide an implicit order signal."
+    locator: {type: section, value: "§6.2"}
+    evidence:
+      kind: cited-research-and-toy-explanation
+      confidence: context-dependent
+      scope: "Prefix-average illustration and summary of length-generalization experiments."
+      assumptions: ["The model is autoregressive and retains its causal mask."]
+      limitations: ["Implicit order is not an explicit distance coordinate; results are task- and training-dependent."]
+    disposition: integrate
+    classification: {primary_theme: architectures-mechanisms, concept_ids: [positional-encoding, causal-mask, self-attention]}
+    candidate_destinations: {pages: [fr/rope, en/rope, fr/positional-encoding, en/positional-encoding]}
+  - id: sebastian-raschka-understanding-positional-embeddings-2026:relative-bias
+    kind: mechanism
+    summary: "A learned relative-position term can be added to scaled QK scores before softmax; the Inkling example conditions it on query hidden state and relative distance."
+    locator: {type: section, value: "§6.3"}
+    evidence:
+      kind: architecture-description
+      confidence: context-dependent
+      scope: "Article description of Inkling and comparison with T5."
+      assumptions: ["Exact bias function must be checked against model configuration."]
+      limitations: ["Inkling's described mechanism is not identical to T5's bucketed relative bias."]
+    disposition: integrate
+    classification: {primary_theme: architectures-mechanisms, concept_ids: [positional-encoding, attention-score, query]}
+    candidate_destinations: {pages: [fr/rope, en/rope]}
+  - id: sebastian-raschka-understanding-positional-embeddings-2026:gallery-snapshot
+    kind: claim
+    summary: "The author reports more partial-RoPE and mixed RoPE/NoPE entries in the 2026 gallery snapshot than in the 2025 grouping."
+    locator: {type: section, value: "§6.4; Figures 35–37"}
+    evidence:
+      kind: author-curated-gallery-count
+      confidence: context-dependent
+      scope: "Each gallery card is counted once."
+      assumptions: ["Gallery labels are consistent across release groups."]
+      limitations: ["Not a systematic census; small groups and multiple variants limit generalization."]
+    disposition: clarify
+    classification: {primary_theme: architectures-mechanisms, concept_ids: [positional-encoding]}
+    candidate_destinations: {pages: [fr/rope, en/rope]}
