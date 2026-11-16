@@ -211,6 +211,18 @@ Sans ce protocole partagé, le fait qu'un LLM puisse continuer un texte ne signi
 - Une bonne prédiction ne garantit pas une compression nette une fois comptés le modèle, le tokenizer et les métadonnées.
 - Une compression **du modèle** (quantification, pruning, distillation) réduit le coût de stockage ou d'exécution du réseau : c'est une autre question. Voir la [synthèse sur la compression des modèles](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/model-compression-2026-11.md).
 
+### Approfondissement — V-information : ce qu'un observateur peut exploiter
+
+L'information mutuelle de Shannon décrit une dépendance dans la distribution jointe, sans limiter les capacités du calculateur. Xu et al. (ICLR 2020) définissent une quantité relative à une famille explicite de prédicteurs \\(\\mathcal V\\) :
+
+\\[
+I_{\\mathcal V}(X\\to Y)=H_{\\mathcal V}(Y\\mid\\varnothing)-H_{\\mathcal V}(Y\\mid X).
+\\]
+
+Elle mesure le gain de prédictibilité obtenu grâce à l'entrée, pour cette famille et cette perte. Une famille trop limitée peut ne pas exploiter une structure pourtant présente. La quantité peut être directionnelle ; elle ne remplace pas l'information mutuelle de Shannon et ne signifie pas que le calcul crée de l'information de Shannon.
+
+**Exemple XOR :** deux bits déterminent parfaitement leur XOR (1 bit d'information mutuelle), mais un prédicteur constant ne gagne rien à observer les bits. Un prédicteur qui sait représenter leur interaction exploite presque toute cette information. Voir l'[expérience reproductible](../../experiments/information-theory-llm/README.fr.md) et le [papier primaire](https://openreview.net/forum?id=r1eBeyHFDH).
+
 ### À retenir
 
 **Compression prédictive :** le modèle fournit des probabilités ; un codeur peut les exploiter pour représenter les données en moins de bits.
