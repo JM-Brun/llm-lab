@@ -106,10 +106,10 @@ La formulation est présentée dans [Vaswani et al. (2017), *Attention Is All Yo
 
 L'information mutuelle entre deux variables aléatoires dépend d'une distribution jointe :
 
-$
+$$
 I(X;Y)=H(X)-H(X\mid Y)
 =\sum_{x,y}p(x,y)\ln\frac{p(x,y)}{p(x)p(y)}.
-$
+$$
 
 Elle mesure la réduction d'incertitude sur $X$ apportée par l'observation de $Y$. Les poids d'attention, eux, sont des coefficients de compatibilité normalisés par softmax sur les positions accessibles ; ils servent à agréger les vecteurs $V$. Une ligne de poids d'attention n'est donc ni une distribution jointe sur $(X,Y)$, ni un estimateur automatique de $I(X;Y)$.
 
