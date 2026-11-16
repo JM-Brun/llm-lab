@@ -56,3 +56,14 @@ The companion notebook has been statically audited across all 18 cells, includin
 ## 7. Operational conclusion
 
 Teach the robust chain — surprisal → entropy → cross-entropy/NLL → KL → predictive coding — as the core. Teach attention/MI and Landauer as examples of analogies that require careful boundaries. Keep compression/intelligence as a rejected equivalence. Teach predictive V-information as an advanced, explicitly model-class-relative quantity, never as a synonym for Shannon mutual information or as an unsupported ranking of architectures.
+
+
+## 5 bis. Contrôle expérimental : KL d'attention et information mutuelle
+
+Un contre-exemple déterministe a été ajouté dans `experiments/information-theory/attention_kl_vs_mutual_information.py`, avec une fonction générale `mutual_information` testée dans le module de fondations.
+
+Pour deux contextes équiprobables qui partagent tous deux la ligne (0,9 ; 0,1), la KL moyenne de chaque ligne vers l'uniforme vaut 0,531 bit, alors que l'information mutuelle contexte-clé vaut exactement 0 : la distribution de clé ne dépend pas du contexte. Cela suffit à réfuter l'identification générale entre KL-vers-uniforme et information mutuelle.
+
+L'identité statistique correcte est \(I(X;Y)=\mathbb E_X[D_{KL}(P(Y\mid X)\|P(Y))]\), où la référence est la marginale de Y. Même cette identité ne transforme pas automatiquement les poids d'attention en probabilités conditionnelles : leur interprétation comme telles doit être justifiée séparément. Le cas de deux lignes opposées donne ici 0,531 bit pour les deux métriques, mais cette égalité numérique est accidentelle et disparaît dans le contre-exemple à lignes répétées.
+
+Cette expérience ne mesure pas la qualité d'un Transformer entraîné ; elle isole uniquement la différence mathématique entre les quantités.
