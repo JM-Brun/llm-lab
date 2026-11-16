@@ -27,6 +27,18 @@ tags: ["type:deep-dive", "destination:deepen", "topic:rope", "level:advanced", "
 Cette page est un **approfondissement avancé**. Elle suppose compris le rôle de l'information positionnelle et le calcul général de l'attention. Elle étudie la géométrie de **RoPE** (*Rotary Position Embedding*), qui applique des rotations dépendant de la position aux requêtes et aux clés avant le calcul des scores d'attention.
 :::
 
+## Trois points d'injection de l'information positionnelle
+
+Le contraste le plus utile à garder en tête n'est pas seulement « absolu contre relatif » : les mécanismes interviennent à des endroits différents du calcul.
+
+![Comparaison des trois points d'injection : addition à l'entrée, rotations RoPE sur Q et K, biais relatif ajouté aux scores.](../images/positional-entry-points-fr.svg){fig-alt="Trois voies : le vecteur de position est additionné à l'embedding token avant les blocs ; RoPE transforme Q et K après projection tandis que V reste inchangé ; un biais relatif est ajouté au score QK avant softmax." width=100%}
+
+- **Addition à l'entrée :** le signal positionnel modifie la représentation avant le premier bloc.
+- **RoPE :** le signal agit dans l'attention, sur les requêtes et les clés avant le produit scalaire.
+- **Biais relatif :** le signal modifie les scores d'attention avant softmax.
+
+Ces voies sont des familles de mécanismes, pas trois opérations nécessairement exclusives dans toute architecture.
+
 ## Principe géométrique
 
 ![Principe géométrique de RoPE : une paire de coordonnées subit une rotation dépendant de la position.](../images/rope-fr.svg){fig-alt="RoPE applique des rotations dépendant de la position aux paires de coordonnées des requêtes et des clés. Les angles dépendent de la position et de la fréquence de chaque paire." width=100%}
