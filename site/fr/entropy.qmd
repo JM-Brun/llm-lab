@@ -250,5 +250,7 @@ Pour manipuler ces idées, lancez l'[expérience reproductible de compression pr
 :::
 
 
+[**Fiche de révision — Compression et LLM**](compression-revision.qmd) : retrouver en une page la relation entre probabilités conditionnelles, longueur de code, compression du modèle et mémoire d'exécution.
+
 </div>
 </details>
