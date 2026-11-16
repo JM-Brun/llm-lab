@@ -1,0 +1,64 @@
+---
+title: "Experiment — Entropy, KL and predictive coding"
+subtitle: "Manipulate distributions and verify the identities"
+description-meta: "A reproducible experiment for entropy, cross-entropy, KL divergence, perplexity and ideal code lengths."
+keywords: ["type:experiment", "topic:information-theory", "level:applied", "language:en", "status:published"]
+lang: en
+---
+
+[← Revision sheet](revision-information-theory.qmd) · [Lesson: Cross-entropy](cross-entropy.qmd)
+
+## Question
+
+How can we distinguish target uncertainty, prediction mismatch and ideal coding cost?
+
+## Run the experiment
+
+From the repository root:
+
+```bash
+uv run --locked python experiments/information-theory/run.py
+```
+
+The script uses two synthetic distributions:
+
+- target q = (0.5, 0.5);
+- prediction p = (0.75, 0.25).
+
+It computes metrics in nats and bits, ideal code lengths, and checks that cross-entropy equals target entropy plus KL divergence.
+
+## Expected result
+
+| Measure | Approximate value |
+|---|---:|
+| Target entropy H(q) | 0.693 nats |
+| Cross-entropy H(q,p) | 0.837 nats |
+| KL divergence D(q‖p) | 0.144 nats |
+| Target entropy H(q) | 1 bit |
+| Cross-entropy H(q,p) | 1.208 bits |
+| KL divergence D(q‖p) | 0.208 bits |
+
+The identity to verify is:
+
+```text
+0.837 ≈ 0.693 + 0.144
+```
+
+## Try changing the distributions
+
+Open `experiments/information-theory/run.py` and modify q and p while keeping them normalized. Try:
+
+1. p = q: KL divergence should be zero.
+2. p = (0.5, 0.5): the prediction becomes uniform.
+3. A one-hot target: cross-entropy becomes the observed token's NLL.
+4. A predicted zero probability where q is positive: cross-entropy and KL become infinite.
+
+Reusable functions and their tests live in `src/llm_lab/foundations/information_theory.py` and `tests/unit/test_information_theory.py`.
+
+## What this experiment does — and does not — show
+
+It verifies mathematical identities on discrete distributions. It does not measure model intelligence, generalization or the quality of a trained LLM. Ideal lengths -log₂(p) may be fractional; a practical code adds constraints and overhead.
+
+::: {.language-switch}
+**Language:** [Français](../fr/experience-information-theory.qmd) · English
+:::
