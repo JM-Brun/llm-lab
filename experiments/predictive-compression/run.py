@@ -55,10 +55,7 @@ def interval_for(message: str, model: dict[str, dict[str, Fraction]]) -> tuple[F
     return low, high
 
 
-
-def sequence_cost_bits(
-    message: str, model: dict[str, dict[str, Fraction]]
-) -> float:
+def sequence_cost_bits(message: str, model: dict[str, dict[str, Fraction]]) -> float:
     """Return the ideal predictive code length for a message, in bits."""
     previous = "^"
     total = 0.0
