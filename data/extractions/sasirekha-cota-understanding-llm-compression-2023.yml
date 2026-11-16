@@ -1,0 +1,142 @@
+schema_version: 1
+source_id: sasirekha-cota-understanding-llm-compression-2023
+scan:
+  accessed_at: "2026-11-16"
+  retrieval_method: direct-web
+  author_text:
+    status: complete
+    coverage: "Full article body retrieved: motivation, pruning, quantization (PTQ and QAT), knowledge distillation, and conclusion."
+    notes: ["Seven-minute introductory overview; not a systematic survey or empirical study."]
+  figures_media:
+    status: not-inspected
+    coverage: null
+    notes: ["No figure was needed for the extracted claims; asset-level inspection was not performed."]
+  code_data:
+    status: not-inspected
+    coverage: null
+    notes: ["No code, dataset or benchmark is supplied by the article."]
+  comments:
+    status: not-inspected
+    coverage: null
+    notes: ["The comment area was not part of this scan."]
+  linked_resources:
+    status: partial
+    coverage: "SparseGPT and TensorFlow Lite post-training quantization references noted; primary papers for SparseGPT, SmoothQuant and DistilBERT consulted at abstract/landing-page level."
+    notes: ["Linked resources were not exhaustively followed or fully audited."]
+  metadata:
+    status: complete
+    coverage: "Author, title, Medium publisher and publication date (22 November 2023) visible on the article page."
+    notes: []
+  rights:
+    status: unknown
+    coverage: null
+    notes: ["No text or figure reuse permission was established; paraphrase and link only."]
+  unresolved_questions:
+    - "Which structured or semi-structured sparsity patterns are accelerated by the target hardware and inference kernels?"
+    - "How do weight-only, weight-activation and KV-cache quantization compare on a fixed model, workload and hardware?"
+    - "What quality, latency, throughput and memory trade-offs arise at each bit width and calibration method?"
+    - "How should distillation objectives and teacher access be chosen for a specific student architecture and task?"
+items:
+  - id: sasirekha-cota-understanding-llm-compression-2023:compression-taxonomy
+    kind: teaching-sequence
+    summary: "The article organizes LLM compression around pruning, quantization and knowledge distillation, and suggests that combinations can be useful."
+    locator: {type: section, value: "Model Compression Techniques and Conclusion", label: "Three-family compression taxonomy"}
+    evidence:
+      kind: author-synthesis
+      confidence: established
+      scope: "The taxonomy is explicitly presented by the author as an introductory organization."
+      assumptions: []
+      limitations: ["These families are not exhaustive or mutually exclusive; low-rank factorization, parameter sharing, efficient architectures and runtime/cache optimizations are outside the article's scope."]
+    classification:
+      primary_theme: inference-efficiency
+      tags: [topic:model-compression]
+      concept_ids: []
+    candidate_destinations:
+      pages: [fr/llm-computational-complexity, en/llm-computational-complexity, fr/llm-evolution, en/llm-evolution]
+      concepts: []
+      route_ids: []
+    disposition: clarify
+    disposition_rationale: "Retain as a useful entry taxonomy, explicitly scoped as a selection of major methods rather than a complete taxonomy."
+  - id: sasirekha-cota-understanding-llm-compression-2023:pruning
+    kind: mechanism
+    summary: "Pruning removes or suppresses parameters or larger model structures; structured pruning removes organized components, while unstructured pruning targets individual weights and creates irregular sparsity."
+    locator: {type: section, value: "Pruning", label: "Structured and unstructured pruning"}
+    evidence:
+      kind: technical-explanation
+      confidence: established
+      scope: "The distinction between structured and unstructured pruning is standard; SparseGPT is cited as a one-shot example."
+      assumptions: []
+      limitations: ["Zeroing weights does not guarantee faster inference: benefits depend on sparsity pattern, sparse-kernel support, memory layout and hardware. SparseGPT's reported results are specific to evaluated models and perplexity settings."]
+    classification:
+      primary_theme: inference-efficiency
+      secondary_themes: [architectures-mechanisms]
+      tags: [method:pruning, topic:sparsity]
+      concept_ids: []
+    candidate_destinations:
+      pages: [fr/llm-computational-complexity, en/llm-computational-complexity]
+      concepts: []
+      route_ids: []
+    disposition: clarify
+    disposition_rationale: "Use the structural distinction, but pair parameter reduction with a hardware-aware distinction between theoretical sparsity and realized latency/throughput."
+  - id: sasirekha-cota-understanding-llm-compression-2023:quantization
+    kind: mechanism
+    summary: "Quantization represents weights and/or activations with lower numerical precision; post-training quantization is applied after training, while quantization-aware training exposes the model to quantization effects during training."
+    locator: {type: section, value: "Quantization", label: "PTQ, QAT, calibration and mixed precision"}
+    evidence:
+      kind: technical-explanation
+      confidence: established
+      scope: "The article introduces PTQ, dynamic-range quantization, float16 and QAT."
+      assumptions: []
+      limitations: ["The article's 4x size reduction and 2x–3x speedup statements are not universal guarantees; they depend on bit width, quantized tensors, metadata, kernels, hardware and workload. Weight-only quantization is not the same as W8A8 quantization. Activation outliers and calibration data can materially affect quality."]
+    classification:
+      primary_theme: inference-efficiency
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [method:quantization, topic:post-training-quantization, topic:quantization-aware-training]
+      concept_ids: []
+    candidate_destinations:
+      pages: [fr/llm-computational-complexity, en/llm-computational-complexity]
+      concepts: []
+      route_ids: []
+    disposition: correct
+    disposition_rationale: "Retain the PTQ/QAT distinction; replace blanket compression/speedup figures with benchmark-scoped claims and distinguish weights, activations and KV cache."
+  - id: sasirekha-cota-understanding-llm-compression-2023:knowledge-distillation
+    kind: mechanism
+    summary: "Knowledge distillation trains a smaller student to reproduce selected behavior or representations of a teacher, using one or more distillation objectives."
+    locator: {type: section, value: "Knowledge Distillation", label: "Teacher–student transfer and black-box/white-box KD"}
+    evidence:
+      kind: technical-explanation
+      confidence: established
+      scope: "The article distinguishes black-box from white-box teacher access and gives DistilBERT as an example."
+      assumptions: []
+      limitations: ["Distillation does not automatically preserve all teacher capabilities or guarantee generalization; results depend on task, student capacity, data, losses and evaluation. Teacher access and output-use restrictions are licensing and governance questions, not merely technical choices."]
+    classification:
+      primary_theme: inference-efficiency
+      secondary_themes: [probabilistic-foundations-training]
+      tags: [method:knowledge-distillation, topic:teacher-student-learning]
+      concept_ids: []
+    candidate_destinations:
+      pages: [fr/llm-evolution, en/llm-evolution]
+      concepts: []
+      route_ids: []
+    disposition: clarify
+    disposition_rationale: "Keep the teacher–student mental model and scope DistilBERT's reported figures to its original evaluation; do not generalize them to decoder-only generative LLMs."
+  - id: sasirekha-cota-understanding-llm-compression-2023:kv-cache-scope
+    kind: limitation
+    summary: "The article briefly includes KV-cache quantization in its quantization discussion, but the KV cache is runtime state rather than a persistent model parameter."
+    locator: {type: section, value: "Quantization, paragraph on KV caches", label: "KV-cache quantization"}
+    evidence:
+      kind: critical-reading
+      confidence: established
+      scope: "Clarification of the distinction between persistent model weights and inference-time key/value cache."
+      assumptions: []
+      limitations: ["KV-cache quantization is a separate runtime memory optimization with its own quality and kernel trade-offs; it should not be conflated with shrinking the checkpoint file."]
+    classification:
+      primary_theme: inference-efficiency
+      tags: [topic:kv-cache, topic:runtime-memory]
+      concept_ids: [kv-cache]
+    candidate_destinations:
+      pages: [fr/llm-computational-complexity, en/llm-computational-complexity]
+      concepts: []
+      route_ids: []
+    disposition: correct
+    disposition_rationale: "Use the paragraph to connect compression to runtime memory only after separating checkpoint compression from cache quantization."
