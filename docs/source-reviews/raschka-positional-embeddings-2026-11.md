@@ -137,6 +137,7 @@ For each P0/P1 component: **predict → manipulate one variable → observe tens
 - Added atomic extractions distinguishing established derivations from context-dependent architecture claims.
 - Extended the existing bilingual RoPE pages with modern variants, frequency schedule, pairing conventions, PyTorch table construction and test ideas.
 - Added a bilingual six-stage QK attention pipeline with a synthetic three-token example, Q/K positional rotations, causal-mask toggle, softmax weights and weighted V aggregation; registered its local JS/CSS resources.
+- Extended the concept-resource graph so Q/K/V, attention scores and weights, scaled dot-product attention, softmax and causal masking now link to the bilingual RoPE lessons; updated page relations to include causal masking.
 - Added a bilingual interactive RoPE pair explorer with a shared-shift control, live SVG vectors, pair-level dot product and explicit fixed-Q/K caveat; added shared JS/CSS assets and registered them as Quarto resources.
 - Added the annotated bibliography entry.
 - Linked both RoPE deep dives from the canonical positional-encoding concept.
