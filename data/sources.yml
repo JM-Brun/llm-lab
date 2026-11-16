@@ -3717,18 +3717,16 @@ sources:
     reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
     classification:
       primary_theme: probabilistic-foundations-training
-      secondary_themes: [architectures-mechanisms, model-evaluation-and-limitations]
+      secondary_themes: [inference-efficiency, scale-research]
       tags:
-        - topic:predictive-compression
-        - topic:entropy
-        - topic:surprisal
-        - topic:cross-entropy
-        - topic:kv-cache
         - topic:hallucination
+        - topic:reasoning-redundancy
+        - method:cache-eviction
+        - method:entropy-guided-allocation
       concept_ids: [predictive-compression, entropy, surprisal, cross-entropy, kv-cache, attention-weight]
     metadata:
       technical_level: introductory
-      contribution_types: [theory, pedagogy, research-direction]
+      contribution_types: [theory, pedagogy]
       audiences: [learner, practitioner, educator]
     scan_status: partially-scanned
     integration_status: reviewed
