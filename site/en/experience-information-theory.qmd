@@ -97,9 +97,9 @@ The family must satisfy **optional ignorance**: every probability distribution p
 
 ### Run the controlled toy example
 
-\`\`\`bash
+```bash
 uv run --locked python experiments/information-theory/v_information.py
-\`\`\`
+```
 
 The script exactly compares three situations using synthetic joint distributions:
 
