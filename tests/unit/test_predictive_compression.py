@@ -31,7 +31,6 @@ def test_predictive_model_beats_uniform_on_fixed_toy_message() -> None:
     assert ideal_bits < uniform_bits
 
 
-
 def test_domain_shift_increases_predictive_code_length() -> None:
     root = Path(__file__).resolve().parents[2]
     module = runpy.run_path(str(root / "experiments/predictive-compression/run.py"))
