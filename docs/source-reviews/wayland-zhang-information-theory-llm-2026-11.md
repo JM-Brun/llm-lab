@@ -90,7 +90,7 @@ For a fixed source and coding protocol, a better predictive distribution can red
 - **Attention:** add one explicit note that attention weights are not mutual information.
 - **Compression:** connect the article's slogan to the existing distinction between predictive compression, model compression and runtime memory.
 - **V-information:** link the primary paper as optional advanced reading only.
-- **Notebook:** create a small original standard-library experiment for entropy, cross-entropy, KL and mutual information. Do not copy upstream notebook code or figures.
+- **Notebook:** create a small original standard-library experiment for entropy, cross-entropy, KL and mutual information; this companion experiment is now available in `experiments/information-theory-llm/`. Do not copy upstream notebook code or figures.
 
 No new canonical concept ID is proposed. Existing concepts cover entropy-related training and self-attention; V-information remains a research extension.
 
