@@ -189,11 +189,7 @@ On note $H_q$ le nombre de têtes de requête et $H_{KV}$ le nombre de têtes cl
 Q reste propre à chaque tête. C'est le partage des projections et des états K/V — pas la suppression des têtes Q — qui distingue MQA et GQA. GQA interpole entre MHA et MQA ; le nombre de têtes K/V est un choix d'architecture, pas un réglage gratuit appliqué à un modèle déjà entraîné.
 
 Pour une attention dense avec cache KV, une approximation de la mémoire d'un modèle est :
-
-$
-M_{KV}\approx 2 L B T H_{KV} d_h b,
-$
-
+ On peut l'estimer par $M_{KV}\approx 2 L B T H_{KV} d_h b$.
 où $L$ est le nombre de couches d'attention, $B$ le batch, $T$ le contexte conservé, $d_h$ la dimension d'une tête KV et $b$ le nombre d'octets par élément. Le facteur 2 stocke K et V. À dimensions et précision égales, passer de 32 têtes KV (MHA) à 8 (GQA) divise donc ce cache par 4 ; passer à une tête (MQA) le divise par 32. Ce ratio concerne le cache K/V, pas la mémoire totale du modèle ni nécessairement la latence mesurée.
 
 ### 2. MLA : compresser conjointement K et V dans un espace latent
