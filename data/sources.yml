@@ -3751,7 +3751,7 @@ sources:
         - docs/source-reviews/compression-is-intelligence-mukherjee-2026-11.md
         - docs/source-syntheses/compression-intelligence-and-inference-efficiency-2026-11.md
 
-- id: 3blue1brown-reinventing-entropy-compression-intelligence-part-1-2026
+  - id: 3blue1brown-reinventing-entropy-compression-intelligence-part-1-2026
     title: "Reinventing Entropy | Compression is Intelligence Part 1"
     creators: ["Grant Sanderson (3Blue1Brown)"]
     source_type: video
