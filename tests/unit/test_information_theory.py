@@ -71,3 +71,19 @@ def test_mismatched_shapes_are_rejected() -> None:
 def test_invalid_log_bases_are_rejected() -> None:
     with pytest.raises(ValueError):
         shannon_entropy(np.array([0.5, 0.5]), base=1.0)
+
+
+@pytest.mark.parametrize("metric", ["entropy", "cross_entropy", "kl", "perplexity", "code_lengths"])
+def test_invalid_log_bases_are_rejected_by_every_metric(metric: str) -> None:
+    probabilities = np.array([0.5, 0.5])
+    with pytest.raises(ValueError):
+        if metric == "entropy":
+            shannon_entropy(probabilities, base=1.0)
+        elif metric == "cross_entropy":
+            cross_entropy(probabilities, probabilities, base=1.0)
+        elif metric == "kl":
+            kl_divergence(probabilities, probabilities, base=1.0)
+        elif metric == "perplexity":
+            perplexity(0.5, base=1.0)
+        else:
+            ideal_code_lengths(probabilities, base=1.0)
