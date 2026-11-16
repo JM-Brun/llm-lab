@@ -4,21 +4,25 @@ import json
 import zlib
 
 import numpy as np
+from numpy.typing import NDArray
 
+
+FloatArray = NDArray[np.float64]
+UIntArray = NDArray[np.uint8]
 
 SEED = 20261116
 SEQUENCE_LENGTH = 100_000
 ALPHABET_SIZE = 4
 
 
-def entropy_bits(probabilities: np.ndarray) -> float:
+def entropy_bits(probabilities: FloatArray) -> float:
     positive = probabilities > 0.0
     return float(-np.sum(probabilities[positive] * np.log2(probabilities[positive])))
 
 
 def generate_markov(
-    length: int, transition: np.ndarray, rng: np.random.Generator
-) -> np.ndarray:
+    length: int, transition: FloatArray, rng: np.random.Generator
+) -> UIntArray:
     sequence = np.empty(length, dtype=np.uint8)
     sequence[0] = rng.integers(0, transition.shape[0])
     for index in range(1, length):
@@ -28,7 +32,7 @@ def generate_markov(
 
 
 def describe_sequence(
-    sequence: np.ndarray, entropy_rate: float
+    sequence: UIntArray, entropy_rate: float
 ) -> dict[str, float | int]:
     counts = np.bincount(sequence, minlength=ALPHABET_SIZE)
     marginal = counts / counts.sum()
