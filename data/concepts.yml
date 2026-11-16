@@ -191,6 +191,22 @@ concepts:
       en: "Quantity measuring the probabilistic cost of a predicted distribution relative to a target."
     domains: [probabilistic-foundations-training]
     resources: [fr/cross-entropy, en/cross-entropy]
+  - id: kl-divergence
+    importance: supporting
+    labels: {fr: "Divergence KL", en: "KL divergence"}
+    definitions:
+      fr: "Divergence directionnelle mesurant l'écart entre une distribution cible et une distribution approximative, définie comme l'espérance de log(q/p) sous q."
+      en: "Directional divergence measuring the discrepancy between a target distribution and an approximation, defined as the expectation of log(q/p) under q."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/cross-entropy, en/cross-entropy]
+  - id: mutual-information
+    importance: supporting
+    labels: {fr: "Information mutuelle", en: "Mutual information"}
+    definitions:
+      fr: "Quantité définie à partir d'une distribution jointe qui mesure la réduction d'incertitude sur une variable lorsqu'une autre est observée."
+      en: "Quantity defined from a joint distribution that measures the reduction in uncertainty about one variable when another is observed."
+    domains: [probabilistic-foundations-training, mathematical-tools-geometry]
+    resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
   - id: training-objective
     importance: core
     labels: {fr: "Objectif d'entraînement", en: "Training objective"}
@@ -777,6 +793,8 @@ relation_types:
       fr: "La source est évaluée au moyen de la cible."
       en: "The source is evaluated using the target."
 relations:
+  - {from: attention-weight, type: contrasts-with, to: mutual-information}
+  - {from: kl-divergence, type: contributes-to, to: held-out-evaluation}
   - {from: document-retrieval, type: contributes-to, to: retrieval-augmented-generation}
   - {from: retrieval-augmented-generation, type: contributes-to, to: context-engineering}
   - {from: persistent-memory, type: contributes-to, to: context-engineering}
