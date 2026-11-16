@@ -12,23 +12,23 @@ pedagogical_model:
       - "The video’s P/Q notation is mapped to LLM Lab’s q(target)/p(prediction) convention; this is an editorial normalization, not the source’s notation."
   source_graph:
     nodes:
-      - {id: p2-old-code-distribution, kind: distribution, description: "Original probability distribution used to construct a codebook and ideal code lengths.", locator: "03:08–05:41"}
-      - {id: p2-shifted-data-distribution, kind: distribution, description: "New empirical/source distribution under which the old codebook is now used.", locator: "05:41–07:15"}
-      - {id: p2-cross-entropy, kind: quantity, description: "Expected code length under the new data distribution when lengths were derived from the old model distribution.", locator: "05:41–08:26"}
-      - {id: p2-kl-excess-cost, kind: quantity, description: "Excess expected coding cost over the entropy of the data distribution, with direction determined by target/model roles.", locator: "31:35–33:19"}
-      - {id: p2-language-tree-compression, kind: application, description: "Compression of concatenated snippets under a compressor adapted to another document, used as an approximate similarity signal.", locator: "00:00–03:02 and 12:59–14:55"}
-      - {id: p2-token-pretraining-loss, kind: mechanism, description: "Average negative log probability assigned to observed next tokens under model predictions.", locator: "14:55–20:38"}
-      - {id: p2-log-loss-optimality, kind: derivation, description: "Constrained optimization argument motivating the negative logarithm when expected separable loss should be minimized at the data distribution.", locator: "20:38–26:13"}
-      - {id: p2-teacher-distribution, kind: model, description: "Teacher model supplies a full next-token distribution as a soft target for a student model.", locator: "26:13–30:12"}
-      - {id: p2-student-cross-entropy, kind: quantity, description: "Cross-entropy between the teacher target distribution and the student predicted distribution at a context.", locator: "26:13–30:12"}
+      - {id: src-3b1b-p2-old-code-distribution, kind: distribution, description: "Original probability distribution used to construct a codebook and ideal code lengths.", locator: "03:08–05:41"}
+      - {id: src-3b1b-p2-shifted-data-distribution, kind: distribution, description: "New empirical/source distribution under which the old codebook is now used.", locator: "05:41–07:15"}
+      - {id: src-3b1b-p2-cross-entropy, kind: quantity, description: "Expected code length under the new data distribution when lengths were derived from the old model distribution.", locator: "05:41–08:26"}
+      - {id: src-3b1b-p2-kl-excess-cost, kind: quantity, description: "Excess expected coding cost over the entropy of the data distribution, with direction determined by target/model roles.", locator: "31:35–33:19"}
+      - {id: src-3b1b-p2-language-tree-compression, kind: application, description: "Compression of concatenated snippets under a compressor adapted to another document, used as an approximate similarity signal.", locator: "00:00–03:02 and 12:59–14:55"}
+      - {id: src-3b1b-p2-token-pretraining-loss, kind: mechanism, description: "Average negative log probability assigned to observed next tokens under model predictions.", locator: "14:55–20:38"}
+      - {id: src-3b1b-p2-log-loss-optimality, kind: derivation, description: "Constrained optimization argument motivating the negative logarithm when expected separable loss should be minimized at the data distribution.", locator: "20:38–26:13"}
+      - {id: src-3b1b-p2-teacher-distribution, kind: model, description: "Teacher model supplies a full next-token distribution as a soft target for a student model.", locator: "26:13–30:12"}
+      - {id: src-3b1b-p2-student-cross-entropy, kind: quantity, description: "Cross-entropy between the teacher target distribution and the student predicted distribution at a context.", locator: "26:13–30:12"}
     edges:
-      - {from: p2-old-code-distribution, type: determines, to: p2-cross-entropy}
-      - {from: p2-shifted-data-distribution, type: weights, to: p2-cross-entropy}
-      - {from: p2-cross-entropy, type: decomposes-into, to: p2-kl-excess-cost}
-      - {from: p2-language-tree-compression, type: illustrates, to: p2-cross-entropy}
-      - {from: p2-token-pretraining-loss, type: is-empirical-form-of, to: p2-cross-entropy}
-      - {from: p2-log-loss-optimality, type: motivates, to: p2-token-pretraining-loss}
-      - {from: p2-teacher-distribution, type: supervises, to: p2-student-cross-entropy}
+      - {from: src-3b1b-p2-old-code-distribution, type: determines, to: src-3b1b-p2-cross-entropy}
+      - {from: src-3b1b-p2-shifted-data-distribution, type: weights, to: src-3b1b-p2-cross-entropy}
+      - {from: src-3b1b-p2-cross-entropy, type: decomposes-into, to: src-3b1b-p2-kl-excess-cost}
+      - {from: src-3b1b-p2-language-tree-compression, type: illustrates, to: src-3b1b-p2-cross-entropy}
+      - {from: src-3b1b-p2-token-pretraining-loss, type: is-empirical-form-of, to: src-3b1b-p2-cross-entropy}
+      - {from: src-3b1b-p2-log-loss-optimality, type: motivates, to: src-3b1b-p2-token-pretraining-loss}
+      - {from: src-3b1b-p2-teacher-distribution, type: supervises, to: src-3b1b-p2-student-cross-entropy}
     interpretation: "The graph is a source-specific pedagogical reconstruction. The language-tree compression example is only an analogy/empirical approximation, not exact cross-entropy."
   learning_outcomes:
     - {status: inferred, outcome: "Explain cross-entropy as expected code length when data follow one distribution but the code lengths were optimized for another.", basis: "05:41–08:26."}
@@ -80,7 +80,7 @@ items:
       pedagogical_value: {level: high, rationale: "A numerical example lets learners calculate excess bits and see why argument order matters."}
       applicability: {level: high, rationale: "Directly supports the existing bilingual language-modeling math and compression lessons."}
       redundancy: {level: moderate, rationale: "The formal identity is already canonical; the source adds the coding interpretation."}
-      evidence_quality: {level: well-supported, rationale: "The formula is a standard definition and the transcript gives an explicit worked four-symbol example."}
+      evidence_quality: {level: high, rationale: "The formula is a standard definition and the transcript gives an explicit worked four-symbol example."}
     locator: {type: timestamp, value: "05:41–10:22", label: "Defining cross-entropy and comparing two distributions"}
     evidence:
       kind: source-explanation
@@ -100,7 +100,7 @@ items:
       pedagogical_value: {level: high, rationale: "It turns the loss from an arbitrary convention into a consequence of an explicit design requirement."}
       applicability: {level: high, rationale: "Useful as an optional advanced derivation for readers who know multivariable calculus."}
       redundancy: {level: low, rationale: "The prior pages did not derive this uniqueness-style argument."}
-      evidence_quality: {level: well-supported, rationale: "The transcript presents the Lagrange-multiplier condition; the extraction records the assumptions needed for a mathematically scoped derivation."}
+      evidence_quality: {level: high, rationale: "The transcript presents the Lagrange-multiplier condition; the extraction records the assumptions needed for a mathematically scoped derivation."}
     locator: {type: timestamp, value: "20:38–26:13", label: "Why logarithmic loss"}
     evidence:
       kind: source-explanation
@@ -120,7 +120,7 @@ items:
       pedagogical_value: {level: high, rationale: "It connects probabilistic objectives to the model-compression concept without conflating it with predictive data compression."}
       applicability: {level: high, rationale: "Supports the existing knowledge-distillation concept and LLM evolution lesson."}
       redundancy: {level: moderate, rationale: "Distillation is already named in the model-compression lesson; the mathematical teacher/student distribution bridge is new."}
-      evidence_quality: {level: well-supported, rationale: "The teacher/student distribution mechanism is explicit in the lesson captions and source scenes."}
+      evidence_quality: {level: high, rationale: "The teacher/student distribution mechanism is explicit in the lesson captions and source scenes."}
     locator: {type: timestamp, value: "26:13–30:12", label: "Distillation"}
     evidence:
       kind: source-explanation
@@ -140,7 +140,7 @@ items:
       pedagogical_value: {level: moderate, rationale: "Useful as an optional case study, provided the approximation is stated clearly."}
       applicability: {level: moderate, rationale: "Could motivate a future small experiment comparing cross-compression heuristics, but no new experiment is justified yet."}
       redundancy: {level: low, rationale: "No existing dedicated case study was found in the audited pages."}
-      evidence_quality: {level: context-dependent, rationale: "The video describes a published example but the original paper was not independently audited in this pass."}
+      evidence_quality: {level: moderate, rationale: "The video describes a published example but the original paper was not independently audited in this pass."}
     locator: {type: timestamp, value: "00:00–03:02 and 12:59–14:55", label: "Language trees and zipping"}
     evidence:
       kind: source-explanation
