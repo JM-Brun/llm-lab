@@ -3930,3 +3930,46 @@ sources:
       pages: [fr/positional-encoding, en/positional-encoding, fr/rope, en/rope, fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
       concepts: [positional-encoding, causal-mask, query, key, attention-score, self-attention]
       audit_records: [docs/source-reviews/raschka-positional-embeddings-2026-11.md, data/extractions/sebastian-raschka-understanding-positional-embeddings-2026.yml]
+
+  - id: khan-et-al-fractional-rotation-partial-rope-2026
+    title: "Fractional Rotation, Full Potential? Investigating Performance and Convergence of Partial RoPE"
+    creators: ["Mohammad Aflah Khan", "Krishna P. Gummadi", "Manish Gupta", "Abhilasha Ravichander"]
+    source_type: paper
+    identifiers: {arxiv: "2603.11611"}
+    canonical_url: "https://arxiv.org/abs/2603.11611"
+    publisher: "arXiv / EMNLP 2026"
+    publication_date: "2026-03-12"
+    updated_date: "2026-10-15"
+    language: en
+    version: "arXiv v2; accepted as an EMNLP 2026 short paper"
+    revision: "2603.11611v2"
+    licence: {identifier: "CC-BY-4.0", url: "https://creativecommons.org/licenses/by/4.0/", status: verified}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry, scale-research]
+      tags: [topic:positional-information, method:partial-rope, method:nope, method:qk-norm, ecosystem:pytorch]
+      concept_ids: [positional-encoding, causal-mask, query, key, attention-score]
+    metadata:
+      technical_level: advanced
+      contribution_types: [experiment, benchmark, architecture, implementation]
+      audiences: [practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-16"
+        status: partially-scanned
+        inspected_scope:
+          - "arXiv v2 HTML: abstract, introduction, related work, experimental setup, main partial-RoPE analysis, conclusion and stated limitations"
+          - "Appendix C RoPE-cache size calculation and tables reporting rotated dimensions, model configurations and evaluation results"
+          - "Cross-check against Raschka's article statements on partial-RoPE convergence, memory savings and NoPE"
+        limitations:
+          - "Appendices A, B, D and E were not exhaustively inspected; training artifacts, released checkpoints and experiment code were not run."
+          - "Results are bounded to the studied 1B/8B model configurations, selected FineWeb/FineWeb-Edu data, training budgets and sequence lengths."
+          - "The reported up-to-10x saving concerns the precomputed RoPE sine/cosine cache, not the model's KV cache."
+          - "Benchmark coverage is limited; broad MCQ similarity does not establish equivalence on all downstream tasks."
+          - "No independent reproduction was performed."
+    related:
+      pages: [fr/rope, en/rope, fr/positional-encoding, en/positional-encoding]
+      concepts: [positional-encoding, causal-mask, query, key, attention-score]
+      audit_records: [docs/source-reviews/partial-rope-fractional-rotation-2026-11.md, data/extractions/khan-et-al-fractional-rotation-partial-rope-2026.yml]
