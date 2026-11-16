@@ -121,7 +121,7 @@ Priority order; all diagrams should be newly authored, not copied:
 - **P0 — Pair-layout explorer (implemented bilingually):** split-half/interleaved maps, frequency-pair assignment, consistent permutation and a deliberate mismatch mode that exposes silent numerical errors.
 - **P1 — Multi-frequency explorer (implemented bilingually):** control head dimension, model base and position; compare inverse frequencies, wavelengths and accumulated angles for representative pairs. Numerical monotonicity checks cover dimensions 64/128/256 and bases 10,000/1,000,000.
 - **P1 — Partial RoPE memory ledger (implemented bilingually):** controls estimate cosine/sine table bytes separately from full-width K/V cache bytes, with explicit one-layer and dtype assumptions.
-- **P1 — NoPE causal-prefix experiment:** vary visible prefix length and attention distribution; include limitations and counterexamples.
+- **P1 — NoPE causal-prefix experiment (implemented bilingually):** vary query position, toy content pattern, attention distribution and softmax temperature; display nested causal visibility, attention weights and aggregate output, including a constant-content counterexample.
 - **P1 — Hybrid layer strip:** toggle RoPE/NoPE by layer and trace inherited positional information.
 - **P1 — Relative-bias score decomposition:** distinguish T5 distance buckets from an input-conditioned bias such as Inkling.
 - **P2 — Architecture evidence dashboard:** dated, filterable gallery summary with denominators and uncertainty; outside the core path.
@@ -142,6 +142,7 @@ For each P0/P1 component: **predict → manipulate one variable → observe tens
 - Added a bilingual interactive RoPE pair explorer with a shared-shift control, live SVG vectors, pair-level dot product and explicit fixed-Q/K caveat; added shared JS/CSS assets and registered them as Quarto resources.
 - Added a bilingual RoPE frequency explorer with controls for head dimension, model base and position; it displays representative inverse frequencies, wavelengths and accumulated angles. Added a dedicated `rope-inverse-frequency` concept and registered the component assets.
 - Added a bilingual Partial RoPE memory ledger that independently estimates precomputed cosine/sine tables and full-width K/V cache memory, with explicit assumptions for batch, sequence length, KV heads, head dimension and bytes per element.
+- Added a bilingual NoPE causal-prefix experiment: users vary query position, toy content pattern, uniform versus content-dependent attention and softmax temperature; the display separates visible-prefix structure from the resulting aggregate and includes a constant-content counterexample.
 - Added the annotated bibliography entry.
 - Linked both RoPE deep dives from the canonical positional-encoding concept.
 
@@ -150,8 +151,8 @@ No new concept IDs, introductory pages, copied figures or external code were add
 ## 6. Remaining work
 
 - If access to the original image assets becomes available, perform a pixel-level visual audit; the complete caption-and-context audit is already recorded in §4.
-- The P0 position-entry-point map, RoPE pair explorer, six-stage QK attention pipeline and split-half/interleaved pair-layout explorer are implemented bilingually. The P1 frequency explorer and Partial RoPE memory ledger are implemented bilingually. Remaining P1 work: NoPE causal-prefix, hybrid-layer and relative-bias experiments.
-- Browser-test all five interactive components in the rendered French and English pages, including keyboard and screen-reader behaviour; no browser rendering has yet been run in this branch.
+- The P0 position-entry-point map, RoPE pair explorer, six-stage QK attention pipeline and split-half/interleaved pair-layout explorer are implemented bilingually. The P1 frequency explorer, Partial RoPE memory ledger and NoPE causal-prefix experiment are implemented bilingually. Remaining P1 work: hybrid-layer and relative-bias experiments.
+- Browser-test all six interactive components in the rendered French and English pages, including keyboard and screen-reader behaviour; no browser rendering has yet been run in this branch.
 - Execute the statically inspected Qwen3 notebook and compare its numerical outputs; separately add tests for explicit position IDs and incremental KV-cache decoding, which are not covered by the inspected forward path.
 - Validate bilingual Quarto rendering, source/extraction schemas, concept graph and navigation in CI.
 
