@@ -90,18 +90,6 @@ Le calcul complet se lit dans l'ordre : les scores issus de Q et K sont mis à l
 
 La formulation est présentée dans [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762), qui compare l'attention additive et l'attention par produit scalaire et introduit le facteur de mise à l'échelle. Elle permet des calculs matriciels efficaces et s'intègre naturellement aux mécanismes multi-têtes.
 
-## Attention et information mutuelle : deux notions différentes
-
-L'information mutuelle entre deux variables aléatoires est une quantité définie à partir de leur distribution jointe :
-
-\[
-I(X;Y)=H(X)-H(X\mid Y).
-\]
-
-Les poids d'attention ne calculent pas cette quantité. Ce sont des coefficients normalisés, dépendant de l'entrée, obtenus à partir des requêtes, des clés et du masque ; ils pondèrent l'agrégation des vecteurs de valeur. Ils ne mesurent donc pas directement, en bits, l'information qu'un token apporte à un autre.
-
-L'analogie entre attention et dépendance statistique peut aider à poser une question, mais **un poids d'attention n'est pas une information mutuelle**. Une carte d'attention ne suffit pas non plus à établir une explication causale ou sémantique.
-
 ## Idées reçues et contre-exemples
 
 - **« Le softmax mesure la similarité absolue. »** Non : il produit une distribution relative aux scores d'une ligne. Ajouter une constante à tous les scores d'une ligne ne change pas les poids.
@@ -113,6 +101,19 @@ L'analogie entre attention et dépendance statistique peut aider à poser une qu
 </div>
 </details>
 - **« Le facteur d'échelle est une constante empirique sans justification. »** Non : il découle d'un raisonnement sur l'échelle des produits scalaires ; les hypothèses sont simplificatrices, mais le facteur répond à un problème numérique précis. La dérivation complète et la simulation numérique sont développées dans [Pourquoi mettre les scores à l'échelle ?](attention-score-scaling.qmd).
+
+### Attention et information mutuelle : une analogie, pas une identité
+
+L'information mutuelle entre deux variables aléatoires dépend d'une distribution jointe :
+
+$$
+I(X;Y)=H(X)-H(X\mid Y)
+=\sum_{x,y}p(x,y)\ln\frac{p(x,y)}{p(x)p(y)}.
+$$
+
+Elle mesure la réduction d'incertitude sur $X$ apportée par l'observation de $Y$. Les poids d'attention, eux, sont des coefficients de compatibilité normalisés par softmax sur les positions accessibles ; ils servent à agréger les vecteurs $V$. Une ligne de poids d'attention n'est donc ni une distribution jointe sur $(X,Y)$, ni un estimateur automatique de $I(X;Y)$.
+
+L'analogie peut aider à poser une question — quelles positions sont utiles au calcul d'une représentation contextualisée ? — mais elle ne constitue pas une équivalence mathématique. Un poids élevé ne quantifie pas « la quantité d'information » fournie par un token et ne démontre pas une dépendance statistique ou une importance causale.
 
 ## Liens avec les autres concepts
 
@@ -180,3 +181,11 @@ La définition mathématique de l'attention ne dicte pas à elle seule la maniè
 
 </div>
 </details>
+
+L'analogie entre attention et dépendance statistique peut aider à poser une question, mais **un poids d'attention n'est pas une information mutuelle**. Une carte d'attention ne suffit pas non plus à établir une explication causale ou sémantique.
+Les poids d'attention ne calculent pas cette quantité. Ce sont des coefficients normalisés, dépendant de l'entrée, obtenus à partir des requêtes, des clés et du masque ; ils pondèrent l'agrégation des vecteurs de valeur. Ils ne mesurent donc pas directement, en bits, l'information qu'un token apporte à un autre.
+\[
+I(X;Y)=H(X)-H(X\mid Y).
+\]
+L'information mutuelle entre deux variables aléatoires est une quantité définie à partir de leur distribution jointe :
+## Attention et information mutuelle : deux notions différentes
