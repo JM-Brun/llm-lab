@@ -8,6 +8,12 @@ pedagogical_model:
       - "The extraction focuses on the formal definitions needed to support one bounded introductory example in LLM Lab."
     inferred_elements:
       - "The teaching sequence below is a project reconstruction, not an author-declared course."
+  comparison:
+    dossier: docs/source-reviews/predictive-v-information-xu-2020.md
+    canonical_graph: "data/concepts.yml"
+    canonical_routes: [docs/learning-path.md, data/guided-route.yml, "Existing entropy, cross-entropy and information-theory experiment pages"]
+    decision: "Use the paper as the primary theoretical source for predictive V-information. Keep the quantity relative to an explicitly specified predictive family and its log-loss; do not conflate it with Shannon mutual information except under the unrestricted-family special case."
+    structures_kept_separate: [source-semantic-graph, canonical-concept-graph, canonical-learning-routes, page-navigation]
   source_graph:
     nodes:
       - {id: src-predictive-family, kind: definition, description: "A family of probabilistic prediction functions satisfying optional ignorance.", locator: "Definition 1"}
