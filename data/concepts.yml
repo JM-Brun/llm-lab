@@ -223,6 +223,14 @@ concepts:
       en: "Quantity defined from a joint distribution that measures the reduction in uncertainty about one variable when another is observed."
     domains: [probabilistic-foundations-training, mathematical-tools-geometry]
     resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+  - id: predictive-v-information
+    importance: supporting
+    labels: {fr: "Information prédictive \\(\\mathcal V\\)", en: "Predictive \\(\\mathcal V\\)-information"}
+    definitions:
+      fr: "Gain de prédiction, sous perte logarithmique, entre le meilleur prédicteur d'une famille \\(\\mathcal V\\) sans information latérale et le meilleur prédicteur de cette même famille avec l'observation de X ; sa valeur dépend de la famille autorisée et de la condition d'ignorance optionnelle."
+      en: "Log-loss prediction gain between the best predictor in a family \\(\\mathcal V\\) without side information and the best predictor in that same family given X; its value depends on the allowed family and the optional-ignorance condition."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/experience-information-theory, en/experience-information-theory]
   - id: training-objective
     importance: core
     labels: {fr: "Objectif d'entraînement", en: "Training objective"}
