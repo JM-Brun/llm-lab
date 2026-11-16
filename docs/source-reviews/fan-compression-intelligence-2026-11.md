@@ -46,7 +46,9 @@ La théorie de Shannon répond à un problème précis : les limites de codage p
 
 ### 4.2 Épiplexité : ne pas remplacer la définition formelle par l'intuition
 
-Fan mobilise l'épiplexité de Finzi et al. (2026) pour caractériser l'information structurée accessible sous contraintes de calcul. Le texte précise lui-même que la définition formelle renvoie à une longueur de programme optimale sous MDL à temps borné ; il utilise ensuite souvent « contenu d'information structurée » comme raccourci intuitif. Ces deux formulations ne sont pas interchangeables sans préciser le modèle de calcul, la classe de fonctions, le budget temporel et les choix de représentation. Le préprint de Finzi et al. est récent et ne doit pas être traité comme une mesure universelle déjà stabilisée.
+Fan mobilise l'épiplexité de Finzi et al. (2026) pour caractériser l'information structurée accessible sous contraintes de calcul. Le travail primaire définit l'épiplexité comme la longueur du programme optimal \(P^*\) qui minimise un MDL à temps borné ; l'entropie à temps borné correspond au coût résiduel attendu des données sous ce programme. La quantité dépend donc de la classe de programmes, du budget de calcul et de l'observateur. Finzi et al. précisent également que l'épiplexité est une mesure d'information et non une garantie de généralisation OOD pour une tâche donnée. Le papier de Fan emploie ensuite parfois « contenu d'information structurée » comme raccourci intuitif : ce raccourci ne doit pas remplacer la définition.
+
+Le préprint arXiv:2601.03220 a une version révisée déposée le 16 mars 2026 ; le dossier cite le même identifiant arXiv, mais la date et la version effectivement consultée doivent rester explicites. L'épiplexité est un cadre récent, dépendant de choix formels et de ressources de calcul ; elle ne doit pas être présentée comme une mesure universelle déjà stabilisée.
 
 ### 4.3 Cross-entropy ne signifie pas « apprendre indistinctement tout le bruit »
 
@@ -58,7 +60,7 @@ Le récit autobiographique, la mémoire épisodique, l'action incarnée et l'aju
 
 ### 4.5 La correspondance algébrique An/Fn n'est pas une preuve sur les réseaux neuronaux
 
-Les résultats attribués à Aksenov et al. concernent des structures algébriques formelles (monoïdes libres commutatifs et non commutatifs) et des propriétés de croissance sous des hypothèses données. Leur correspondance avec la recombinaison de concepts humains, les paramètres neuronaux ou les lois d'échelle des LLM est explicitement analogique. Les paramètres d'un réseau ne sont pas des macros indépendantes d'un monoïde libre. Les théorèmes ne démontrent donc pas que les LLM sont structurellement incapables de comprendre, ni que leurs rendements doivent être linéaires pour la raison proposée.
+Aksenov et al. établissent des résultats formels sur des monoïdes libres commutatifs et non commutatifs, puis confrontent leurs prédictions à une analyse empirique du graphe de dépendances de MathLib/Lean 4. Ils indiquent eux-mêmes ne pas identifier précisément le « macro set » qui correspondrait aux abstractions mathématiques humaines. Fan transpose ensuite cette structure vers la cognition humaine, les paramètres neuronaux et les lois d'échelle des LLM. Ce second transfert est analogique : les paramètres d'un réseau ne sont pas des macros indépendantes d'un monoïde libre. Les théorèmes et les observations MathLib ne démontrent donc pas que les LLM sont structurellement incapables de comprendre, ni que leurs rendements doivent être linéaires pour la raison proposée.
 
 ### 4.6 « Compréhension » : définition stipulative et contestable
 
@@ -120,8 +122,10 @@ Mesurer cross-entropy en bits/token sur un jeu de test tenu à l'écart, avec pl
 
 Cette source est utile parce qu'elle déplace la discussion de « combien un modèle prédit-il bien ? » vers « quelles structures son apprentissage lui permet-il de conserver et de réutiliser ? ». Son cadre est stimulant, mais ses conclusions philosophiques reposent sur plusieurs ponts analogiques et des hypothèses qui restent à tester. LLM Lab doit donc enseigner la distinction entre mesures informationnelles, critères de structure, résultats expérimentaux et interprétations ontologiques.
 
-## Références clés citées par la source
+## Références clés citées par la source et vérifications primaires
 
+- [Finzi et al. (2026), *From Entropy to Epiplexity*, arXiv:2601.03220](https://arxiv.org/abs/2601.03220) : résumé, définition et portée de l'épiplexité vérifiés dans le texte arXiv (version révisée du 16 mars 2026). Le papier souligne explicitement que la mesure n'est pas une garantie de généralisation OOD sur une tâche spécifique.
+- [Aksenov et al. (2026), *Compression Is All You Need: Modeling Mathematics*, arXiv:2603.20396](https://arxiv.org/abs/2603.20396) : introduction, résultats de monoïdes et analyse MathLib consultés. Les auteurs reconnaissent que l'identification d'un macro set précis dans MathLib reste un problème ouvert.
 - Shannon (1948), *A Mathematical Theory of Communication*.
 - Gell-Mann & Lloyd (1996), *Information Measures, Effective Complexity, and Total Information*.
 - Finzi et al. (2026), *From Entropy to Epiplexity*, arXiv:2601.03220.
