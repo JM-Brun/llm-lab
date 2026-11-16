@@ -114,7 +114,7 @@ L'article doit servir de **pont interprétatif**, pas de nouvelle leçon autonom
 | L'écart entre cible et prédiction produit une pénalité | [Entropie croisée](../../site/fr/cross-entropy.qmd) | [Cross-entropy](../../site/en/cross-entropy.qmd) | Faire le lien formel le plus direct entre prédiction probabiliste, NLL et codage arithmétique idéal |
 | L'objectif est optimisé sur des données et évalué sur d'autres | [Boucle d'entraînement](../../site/fr/training-loop.qmd) | [Training loop](../../site/en/training-loop.qmd) | Introduire la question de la généralisation, des données représentatives et du décalage de distribution |
 
-**Précaution sur le codage :** pour un événement de probabilité (p), le coût idéal associé est (-\log_2 p) bits. En revanche, la loss usuelle exprimée avec le logarithme naturel est en nats. La cross-entropy moyenne correspond à une longueur de code idéale moyenne seulement sous les hypothèses du codage probabiliste approprié ; elle ne signifie pas que les poids du modèle sont eux-mêmes un fichier compressé du corpus.
+**Précaution sur le codage :** pour un événement de probabilité $p$, le coût idéal associé est $-\log_2 p$ bits. En revanche, la loss usuelle exprimée avec le logarithme naturel est en nats. La cross-entropy moyenne correspond à une longueur de code idéale moyenne seulement sous les hypothèses du codage probabiliste approprié ; elle ne signifie pas que les poids du modèle sont eux-mêmes un fichier compressé du corpus.
 
 ### Décision éditoriale
 
