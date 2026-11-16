@@ -8,7 +8,7 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/exercises-generation"
-scope: "Exercices sur la sélection du prochain token, le décodage autoregressif, l'arrêt, le prefill et le cache KV."
+scope: "Exercices sur la sélection du prochain token, le décodage autoregressif, le prefill, le cache KV et les mécanismes de serving multi-requêtes."
 purpose: "Travailler la collection d'exercices génération indépendamment du parcours conceptuel, avec des prérequis, des corrigés détaillés et des questions de transfert."
 suggested_route:
   previous: null
