@@ -60,6 +60,26 @@ def kl_divergence(target: FloatArray, predicted: FloatArray, *, base: float = np
     return float(np.sum(q[positive] * np.log(q[positive] / p[positive])) / np.log(base))
 
 
+def mutual_information(joint: FloatArray, *, base: float = np.e) -> float:
+    """Return I(X;Y) from a normalized joint probability table."""
+    probabilities = np.asarray(joint, dtype=np.float64)
+    if probabilities.ndim != 2 or min(probabilities.shape) == 0:
+        raise ValueError("joint must be a non-empty two-dimensional probability table")
+    if not np.all(np.isfinite(probabilities)) or np.any(probabilities < 0.0):
+        raise ValueError("joint must contain finite, non-negative probabilities")
+    if not np.isclose(probabilities.sum(), 1.0, rtol=1e-9, atol=1e-12):
+        raise ValueError("joint must sum to one")
+    _validate_base(base)
+    marginal_x = probabilities.sum(axis=1)
+    marginal_y = probabilities.sum(axis=0)
+    independent = marginal_x[:, None] * marginal_y[None, :]
+    positive = probabilities > 0.0
+    return float(
+        np.sum(probabilities[positive] * np.log(probabilities[positive] / independent[positive]))
+        / np.log(base)
+    )
+
+
 def perplexity(mean_nll: float, *, base: float = np.e) -> float:
     """Convert mean negative log-likelihood to perplexity in its matching base."""
     if not np.isfinite(mean_nll) or mean_nll < 0.0:
