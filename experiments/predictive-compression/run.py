@@ -8,6 +8,7 @@ import sys
 from collections import Counter, defaultdict
 from fractions import Fraction
 from math import log2
+from typing import Any
 
 ALPHABET = ("A", "B", "C", "D")
 TRAINING = "ABABACABADABABACABADABABACABADABABACABAD"
@@ -115,7 +116,7 @@ def huffman_code(probabilities: dict[str, Fraction]) -> dict[str, str]:
     if len(probabilities) == 1:
         return {next(iter(probabilities)): "0"}
 
-    heap: list[tuple[Fraction, int, object]] = []
+    heap: list[tuple[Fraction, int, Any]] = []
     serial = 0
     for symbol, probability in probabilities.items():
         heapq.heappush(heap, (probability, serial, symbol))
@@ -128,7 +129,7 @@ def huffman_code(probabilities: dict[str, Fraction]) -> dict[str, str]:
 
     codes: dict[str, str] = {}
 
-    def visit(node: object, prefix: str) -> None:
+    def visit(node: Any, prefix: str) -> None:
         if isinstance(node, str):
             codes[node] = prefix or "0"
             return
@@ -168,6 +169,7 @@ def average_code_length(
         (probabilities[symbol] * len(codes[symbol]) for symbol in probabilities),
         Fraction(0),
     )
+
 
 def main() -> None:
     model = train_bigram_model(TRAINING)
