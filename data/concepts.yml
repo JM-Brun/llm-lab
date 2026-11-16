@@ -231,6 +231,14 @@ concepts:
       en: "Log-loss prediction gain between the best predictor in a family \\(\\mathcal V\\) without side information and the best predictor in that same family given X; its value depends on the allowed family and the optional-ignorance condition."
     domains: [probabilistic-foundations-training]
     resources: [fr/experience-information-theory, en/experience-information-theory]
+  - id: entropy-rate
+    importance: supporting
+    labels: {fr: "Taux d'entropie", en: "Entropy rate"}
+    definitions:
+      fr: "Limite de l'incertitude moyenne par symbole d'un processus stationnaire lorsque la longueur de séquence tend vers l'infini ; elle tient compte des dépendances entre symboles successifs."
+      en: "Limit of average uncertainty per symbol for a stationary process as sequence length tends to infinity; it accounts for dependencies between successive symbols."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/experience-information-theory, en/experience-information-theory]
   - id: training-objective
     importance: core
     labels: {fr: "Objectif d'entraînement", en: "Training objective"}
