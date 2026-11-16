@@ -78,3 +78,22 @@ This synthetic control shows that probabilities learned from one source may beco
 ## Connection to LLM Lab
 
 Read the [entropy lesson](../../site/en/entropy.qmd) and [cross-entropy lesson](../../site/en/cross-entropy.qmd). The [compression synthesis](../../docs/source-syntheses/compression-two-meanings-2026-11.md) distinguishes predictive data coding from model compression and runtime-memory optimization.
+
+## Additional control: Huffman coding and Kraft's inequality
+
+The program also builds a Huffman code for the exact distribution:
+
+| Symbol | Probability | Optimal length |
+|---|---:|---:|
+| A | 1/2 | 1 bit |
+| B | 1/4 | 2 bits |
+| C | 1/8 | 3 bits |
+| D | 1/8 | 3 bits |
+
+One valid code is `A=0, B=10, C=110, D=111`. No codeword is a prefix of another, and the Kraft sum is:
+
+`1/2 + 1/4 + 1/8 + 1/8 = 1`.
+
+Both the entropy and the average code length are exactly 1.75 bits per symbol. This equality is possible here because all probabilities are powers of two; it is not guaranteed for arbitrary distributions with integer-length binary codewords.
+
+The script automatically tests the prefix property, Kraft sum, exact average length, and rejection of invalid distributions. This is separate from the existing sequential arithmetic-coding demonstration: it illustrates symbol-by-symbol coding under a known distribution.

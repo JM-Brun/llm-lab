@@ -119,6 +119,14 @@ The [exact predictive-coding experiment](https://github.com/JM-Brun/llm-lab/blob
 
 These numbers cover only the test message. They exclude transmission of the model trained on 40 symbols, the tokenizer, and metadata. This is neither an LLM benchmark nor evidence of net compression for a complete system.
 
+## 3Blue1Brown: deriving entropy from coding
+
+The video [Reinventing Entropy — Compression is Intelligence, Part 1](https://www.youtube.com/watch?v=l6DKRf-fAAM) builds an intuition for the link between ideal code length and information: an event with probability $p$ corresponds to $-\log_2 p$ bits in the ideal case. It introduces prefix-free codes, moves from the information of one event to average information, and then to the entropy rate of a sequential source.
+
+**Keep the qualifications:** a prefix-codeword length is an integer, while surprisal can be fractional; Shannon's bound concerns average length. A coded stream that looks close to random noise is a useful idealized intuition, not a universal test of optimality. Shannon's historical estimate of roughly one bit per English character depends on his experimental protocol and is not a universal constant of the language.
+
+The [16 July 2026 AIhub page](https://aihub.org/2026/07/16/reinventing-entropy-compression-is-intelligence-part-1/) relays the same video; it is not an independent source.
+
 ## Self-check
 
 1. Why is an LLM not an LZW decompressor?

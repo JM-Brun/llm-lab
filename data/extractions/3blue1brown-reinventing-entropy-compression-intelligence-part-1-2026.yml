@@ -1,0 +1,156 @@
+schema_version: 1
+source_id: 3blue1brown-reinventing-entropy-compression-intelligence-part-1-2026
+pedagogical_model:
+  reconstruction:
+    status: complete
+    basis:
+      - "Complete timestamped caption transcript inspected on 2026-11-16; chapter timestamps and video description reconciled with the AIhub embedding page."
+      - "The source sequence from the robot-code warm-up through information, entropy and entropy rate was reconstructed from the transcript."
+      - "Completeness refers to the accessible transcript and source-local teaching model, not to independent audiovisual inspection."
+    inferred_elements:
+      - "Learning outcomes and prerequisites are inferred from the creator's teaching sequence; they are not formally declared."
+      - "The transcript's idealized random-looking-output argument is interpreted as an intuition for efficient coding, not as a universal characterization of all practical compressed streams."
+  source_graph:
+    nodes:
+      - {id: src-message-source, kind: system, description: "A source emits symbols or messages according to a probability model.", locator: "3:28–3:58"}
+      - {id: src-prefix-free-code, kind: representation, description: "A uniquely decodable prefix-free assignment whose codewords do not prefix one another.", locator: "8:03–9:12"}
+      - {id: src-binary-code-tree, kind: visualization, description: "A binary tree partitions possible codewords by successive bits; assigning a prefix consumes its descendant region.", locator: "8:27–9:12"}
+      - {id: src-ideal-code-length, kind: quantity, description: "Ideal information cost of an event, equal to negative base-two log probability.", locator: "14:47–16:57"}
+      - {id: src-event-surprisal, kind: quantity, description: "Information associated with one event; rare events carry more surprisal.", locator: "15:07–17:22"}
+      - {id: src-conditional-language-model, kind: model, description: "A predictor estimates the probability of the next character from the preceding context.", locator: "17:40–24:04"}
+      - {id: src-symbol-entropy, kind: quantity, description: "Expected information per symbol for a common symbol distribution.", locator: "25:05–27:13"}
+      - {id: src-entropy-rate, kind: quantity, description: "Average information per symbol for a sequential source with context-dependent probabilities.", locator: "29:00–30:39"}
+      - {id: src-noiseless-coding-theorem, kind: theorem, description: "No lossless code can beat the entropy limit on average, and codes can approach that limit under the theorem's assumptions.", locator: "27:13–29:24"}
+      - {id: src-random-looking-code-stream, kind: mental-model, description: "An idealized efficient code uses the available code space evenly, motivating the intuition that compressed output should have little exploitable redundancy.", locator: "10:46–14:47"}
+      - {id: src-shannon-language-estimate, kind: historical-result, description: "Shannon's historical estimate of roughly one bit per English character with a long preceding context.", locator: "29:50–30:39"}
+    edges:
+      - {from: src-message-source, type: encoded-by, to: src-prefix-free-code}
+      - {from: src-prefix-free-code, type: visualized-by, to: src-binary-code-tree}
+      - {from: src-ideal-code-length, type: equals-in-ideal-case, to: src-event-surprisal}
+      - {from: src-event-surprisal, type: averaged-into, to: src-symbol-entropy}
+      - {from: src-conditional-language-model, type: estimates, to: src-entropy-rate}
+      - {from: src-symbol-entropy, type: bounded-by, to: src-noiseless-coding-theorem}
+      - {from: src-entropy-rate, type: bounded-by, to: src-noiseless-coding-theorem}
+      - {from: src-random-looking-code-stream, type: motivates, to: src-symbol-entropy}
+      - {from: src-conditional-language-model, type: informs, to: src-shannon-language-estimate}
+    interpretation: "This graph reconstructs the source's pedagogical argument from captions. Relations are editorial interpretations unless stated as formal definitions or theorem claims in the video."
+  learning_outcomes:
+    - {status: inferred, outcome: "Explain why the surprisal of an event is -log2 p and interpret it as an ideal number of bits.", basis: "14:47–17:22."}
+    - {status: inferred, outcome: "Explain the prefix-free property and why it permits unambiguous sequential decoding.", basis: "8:03–9:12."}
+    - {status: inferred, outcome: "Distinguish the information of one observed event from the average information (entropy) of a distribution.", basis: "16:14–17:22 and 25:05–27:13."}
+    - {status: inferred, outcome: "Explain why language compression depends on conditional prediction from context.", basis: "17:40–24:04."}
+    - {status: inferred, outcome: "Distinguish single-symbol entropy from the entropy rate of a context-dependent sequence.", basis: "25:05–30:39."}
+    - {status: inferred, outcome: "State the operational meaning and scope of Shannon's noiseless coding limit.", basis: "27:13–29:24."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Basic probability and logarithms.", basis: "Probabilities and negative logarithms are used before being formally introduced."}
+    - {status: inferred, topic: "Binary representation and sequential symbol encoding.", basis: "The robot-instruction warm-up uses bit strings and codewords."}
+    - {status: inferred, topic: "A notion of conditional probability.", basis: "The language examples rely on probabilities conditioned on preceding characters."}
+  teaching_route:
+    - {order: 1, section: "Warm-up: encode robot instructions", function: motivate-code-design, moves: ["Simple finite symbol alphabet", "Compare fixed and variable code lengths", "Introduce unambiguous decoding"]}
+    - {order: 2, section: "Prefix-free codes and binary tree", function: establish-code-constraint, moves: ["No codeword is a prefix of another", "Visualize consumed subtrees", "Connect code length to available code space"]}
+    - {order: 3, section: "What perfect compression looks like", function: motivate-information-measure, moves: ["Use an idealized random-looking bitstream", "Argue that equally likely n-bit outputs correspond to 2^-n message probabilities", "Derive negative log probability"]}
+    - {order: 4, section: "Information of language", function: transfer-to-sequential-source, moves: ["Use model-estimated next-character probabilities", "Factor sequence probability into conditional terms", "Show logarithms turn products into sums"]}
+    - {order: 5, section: "Shannon's language experiments", function: motivate-context-modeling, moves: ["Introduce n-gram estimates and sparsity limits", "Use human next-character guessing as an implicit language model", "Highlight the role of long context"]}
+    - {order: 6, section: "Defining entropy", function: derive-average-information, moves: ["Take the expectation of surprisal", "Connect average information to the coding limit", "State the noiseless coding theorem"]}
+    - {order: 7, section: "Entropy rate and English", function: generalize-to-dependent-process, moves: ["Move from an identical symbol distribution to context-dependent probabilities", "Introduce entropy rate", "Report Shannon's historical estimate with its context"]}
+  pedagogical_strengths:
+    - "Derives the negative-log information measure from an intuitive code-length question instead of presenting it as an arbitrary formula."
+    - "Uses a binary-tree visualization to make the prefix-free constraint and code-space allocation concrete."
+    - "Connects probability factorization, additive log costs and language prediction."
+    - "Shows why estimating language entropy requires a predictive model of context, not only unigram frequencies."
+    - "Introduces the distinction between symbol entropy and entropy rate."
+  pedagogical_limits:
+    - "The random-looking-output argument is an idealized intuition; it should not be taught as a necessary-and-sufficient test for practical compression optimality."
+    - "The transcript does not develop Kraft's inequality, Huffman coding or arithmetic coding in sufficient implementation detail."
+    - "Integer codeword lengths and fractional surprisal are not fully reconciled in the visual argument; average-length bounds and arithmetic coding need a separate treatment."
+    - "The video does not derive the full stationary-process definition of entropy rate or discuss all assumptions."
+    - "The historical one-bit-per-character estimate is protocol-dependent and is not a universal constant or a current measurement."
+    - "The video motivates compression and intelligence but does not establish that compression alone defines intelligence."
+    - "No reproducible code, dataset or experiment is supplied."
+  comparison:
+    dossier: docs/source-syntheses/reinventing-entropy-2026-11.md
+    canonical_graph: "data/concepts.yml and generated JSON-LD projection"
+    canonical_routes: [data/guided-route.yml, docs/learning-path.md, "Page-level suggested_route metadata"]
+    decision: "Integrate as a visual and derivational companion to the existing entropy and predictive-compression material. Do not create a duplicate core entropy lesson or a new mandatory learning stage. Add a source link and qualifications to the bilingual compression revision sheet."
+    structures_kept_separate: [source-semantic-graph, source-pedagogical-route, canonical-concept-graph, canonical-learning-routes, site-navigation]
+items:
+  - id: 3blue1brown-reinventing-entropy-compression-intelligence-part-1-2026:surprisal-as-ideal-code-length
+    kind: derivation
+    summary: "For an event with probability p, its ideal information cost is -log2(p) bits. The logarithm makes the information of a sequence additive when its probability factorizes into conditional probabilities."
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "The canonical surprisal and autoregressive likelihood lessons already define the quantity; the source adds a derivational teaching route."}
+      complementarity: {level: high, rationale: "The robot-code example and binary-tree animation make the link between code length and negative log probability intuitive."}
+      pedagogical_value: {level: high, rationale: "Useful as a visual companion before the formal treatment."}
+      applicability: {level: high, rationale: "Can support the existing entropy and compression revision lessons without duplicating them."}
+      redundancy: {level: high, rationale: "The mathematical definition is already present in canonical pages."}
+      evidence_quality: {level: high, rationale: "Standard information-theoretic identity, presented pedagogically; the video is not a primary research source."}
+    locator: {type: timestamp, value: "14:47–20:13", label: "Defining information and information of language"}
+    evidence:
+      kind: source-explanation
+      confidence: well-supported
+      scope: "Ideal code length and surprisal for an event under a specified probability model."
+      assumptions: ["Base-two logarithm for bits.", "The event probability is defined under the source model.", "Idealized coding or an asymptotic/average coding interpretation."]
+      limitations: ["Actual finite codewords have integer bit lengths.", "A practical code has overhead and must be decodable.", "A model probability is not automatically the true source probability."]
+    disposition: already-covered
+    mapped_concepts: [surprisal, conditional-distribution, predictive-compression, entropy-coding]
+    target_resources: [fr/entropy, en/entropy, fr/vraisemblance, en/likelihood, fr/compression-revision, en/compression-revision]
+  - id: 3blue1brown-reinventing-entropy-compression-intelligence-part-1-2026:prefix-free-code-intuition
+    kind: mental-model
+    summary: "A prefix-free code assigns codewords so that no complete codeword is the prefix of another; a binary-tree view shows why decoding can stop unambiguously at a leaf."
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "Prefix-free code intuition is not a prominent part of the existing learner-facing revision sheet."}
+      complementarity: {level: high, rationale: "The visual tree supplies a missing bridge from probability to practical code construction."}
+      pedagogical_value: {level: high, rationale: "It explains why decodability constrains code assignments rather than merely assigning short labels."}
+      applicability: {level: high, rationale: "A compact optional section or exercise can extend the predictive-compression revision material."}
+      redundancy: {level: low, rationale: "Existing material mentions compatible coders but does not explain prefix-free code structure."}
+      evidence_quality: {level: high, rationale: "Standard coding-theory property; the source provides an intuitive explanation rather than a formal proof."}
+    locator: {type: timestamp, value: "8:03–9:12", label: "Prefix-free codes and binary tree"}
+    evidence:
+      kind: source-explanation
+      confidence: well-supported
+      scope: "Prefix-free property and unambiguous sequential decoding."
+      assumptions: ["Codewords are finite binary strings."]
+      limitations: ["The source does not derive Kraft's inequality or construct an optimal Huffman code."]
+    disposition: integrate
+    mapped_concepts: [entropy-coding, predictive-compression]
+    target_resources: [fr/compression-revision, en/compression-revision]
+  - id: 3blue1brown-reinventing-entropy-compression-intelligence-part-1-2026:entropy-rate-language
+    kind: definition
+    summary: "For context-dependent language, the relevant compression limit is average conditional information per symbol, not simply the entropy of one fixed character distribution."
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "The canonical entropy lesson is next-token and context-specific, but the distinction between iid symbol entropy and sequence entropy rate is not explicit in the revision sheet."}
+      complementarity: {level: high, rationale: "This clarifies why long context can improve prediction and why unigram frequencies do not characterize language compressibility."}
+      pedagogical_value: {level: high, rationale: "It links Shannon's historical language experiments to autoregressive conditional distributions."}
+      applicability: {level: high, rationale: "Add a concise conceptual distinction and link to the conditional-probability and likelihood lessons."}
+      redundancy: {level: moderate, rationale: "The conditional next-token formulation exists, but its role in a sequence entropy rate can be made more explicit."}
+      evidence_quality: {level: high, rationale: "Standard information-theoretic distinction; the video offers an introductory account."}
+    locator: {type: timestamp, value: "21:14–30:39", label: "Shannon's language experiments and entropy rate"}
+    evidence:
+      kind: source-explanation
+      confidence: well-supported
+      scope: "Context-dependent source and average information per symbol."
+      assumptions: ["A stochastic model for the sequence.", "A suitable limiting/averaging convention for the source."]
+      limitations: ["The full stationary/ergodic formalism is not developed in the video.", "A particular model's entropy rate estimate depends on its data and context."]
+    disposition: integrate
+    mapped_concepts: [entropy, conditional-distribution, predictive-compression]
+    target_resources: [fr/entropy, en/entropy, fr/compression-revision, en/compression-revision]
+  - id: 3blue1brown-reinventing-entropy-compression-intelligence-part-1-2026:randomness-as-idealized-intuition
+    kind: limitation
+    summary: "A compressed stream that looks random is an intuition for an efficient code that has removed exploitable regularity, but it is not a universal necessary-and-sufficient test for optimal compression."
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "The existing pages warn against conflating plausible generation and exact decompression, but this particular idealized-randomness caveat is not stated."}
+      complementarity: {level: high, rationale: "It prevents learners from mistaking an illustrative visual criterion for a general theorem."}
+      pedagogical_value: {level: high, rationale: "Important guardrail when interpreting randomness tests and compression claims."}
+      applicability: {level: high, rationale: "Add a concise qualification to the bilingual revision sheet."}
+      redundancy: {level: low, rationale: "No equivalent explicit caveat was found in the current revision sheet."}
+      evidence_quality: {level: high, rationale: "Conceptual qualification based on the distinction between ideal coding and practical finite codes."}
+    locator: {type: timestamp, value: "10:46–14:47", label: "What perfect compression looks like"}
+    evidence:
+      kind: source-interpretation
+      confidence: well-supported
+      scope: "The source's random-looking compressed-stream intuition."
+      assumptions: ["An idealized coding model and a clearly defined source distribution."]
+      limitations: ["Practical compressed streams can have headers, framing, finite-length effects and implementation-specific structure."]
+    disposition: clarify
+    mapped_concepts: [entropy-coding, predictive-compression]
+    target_resources: [fr/compression-revision, en/compression-revision]
