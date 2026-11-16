@@ -74,7 +74,7 @@ Deux phrases peuvent contenir le même token sans lui donner le même rôle : *b
 <strong>Représentations contextualisées</strong><small>Chaque état dépend du contenu et des interactions autorisées avec le contexte</small>
 :::
 ::::
-</div>
+
 
 
 
