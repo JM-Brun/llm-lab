@@ -92,7 +92,7 @@ Quantizing the KV cache reduces a runtime-memory budget; it does not mean that t
 
 ## 4. What the repository experiment shows
 
-The [exact predictive-coding experiment](../../experiments/predictive-compression/README.md) uses a synthetic bigram model over four symbols.
+The [exact predictive-coding experiment](https://github.com/JM-Brun/llm-lab/blob/main/experiments/predictive-compression/README.md) uses a synthetic bigram model over four symbols.
 
 | Measure | Result |
 |---|---:|
@@ -123,5 +123,5 @@ These numbers cover only the test message. They exclude transmission of the mode
 
 - [Entropy](entropy.qmd) · [Cross-entropy](cross-entropy.qmd) · [Likelihood](likelihood.qmd)
 - [Complexity and parallelism](llm-computational-complexity.qmd) · [LLM evolution](llm-evolution.qmd)
-- [Critical synthesis of Karthik Shashidhar's article](../../docs/source-syntheses/llms-and-compression-algorithms-2026-11.md)
-- [Comparing the two meanings of compression](../../docs/source-syntheses/compression-two-meanings-2026-11.md)
+- [Critical synthesis of Karthik Shashidhar's article](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/llms-and-compression-algorithms-2026-11.md)
+- [Comparing the two meanings of compression](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/compression-two-meanings-2026-11.md)
