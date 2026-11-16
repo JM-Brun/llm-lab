@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/transformer-block-walkthrough"
-scope: "Explains the transformer_block.py file line by line: the pre-LN order and its residual paths, the scaled initialization of residual weights, the column-slice head split, and the position-wise MLP. Excludes embeddings, the output head and the generation loop."
-purpose: "Readers should be able to trace a shape through the block, explain why normalization sits inside the branch instead of on the trunk, and describe the role of each Q, K, V and O projection."
+scope: "Explains the reference transformer_block.py block line by line, then separately compares MHA/MQA/GQA, MLA, and local/sparse patterns without claiming they are implemented in the reference code."
+purpose: "Readers should be able to trace a shape through the block, explain Q/K/V/O projections and residual paths, then distinguish K/V sharing, latent compression, and restrictions on attended positions."
 suggested_route:
   previous: "en/gpt-ops-walkthrough"
   next: "en/gpt-model-walkthrough"
@@ -27,7 +27,8 @@ This page is the third stop (3 of 5) of the guided tour. The block is the repeat
 By the end of this tour, you will be able to:
 - trace a `(B, T, d)` shape through the block, from input to output;
 - explain why normalization sits inside the branch instead of on the residual trunk;
-- describe the role of each Q, K, V and O projection, and why heads stay isolated until `w_o`.
+- describe the role of each Q, K, V and O projection, and why heads stay isolated until `w_o`;
+- distinguish MHA, MQA, GQA, MLA, and local/sparse attention by the factor each one changes.
 :::
 
 ## The block's recipe: pre-LN with residuals {#block-recipe}
