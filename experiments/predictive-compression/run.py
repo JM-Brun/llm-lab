@@ -3,10 +3,10 @@
 
 from __future__ import annotations
 
-import sys
 from collections import Counter, defaultdict
 from fractions import Fraction
 from math import log2
+import sys
 
 ALPHABET = ("A", "B", "C", "D")
 TRAINING = "ABABACABADABABACABADABABACABADABABACABAD"
