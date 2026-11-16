@@ -124,6 +124,8 @@ Each row corresponds to one position. The same projection matrices are applied a
 
 Per-position equations, compatibility geometry, gradient paths, and multi-head variants become useful once the mental model is established. They are collected in the [advanced Q/K/V deep dive](queries-keys-values-advanced.qmd), rather than scattered across several collapsed callouts on this page.
 
+To compare architectures that change the number of K/V heads, compress the cache, or restrict attended positions, see [Attention variants](transformer-block-walkthrough.qmd#attention-variants) in the guided Transformer-block walkthrough. It explicitly distinguishes this comparison from the MHA code actually implemented.
+
 ## Takeaway and next steps
 
 The functional distinction is simple but fundamental:
