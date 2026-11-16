@@ -35,10 +35,7 @@ def permute_preserving_marginals(sequence: str, seed: int) -> str:
 def unigram_cross_entropy(train: str, test: str) -> float:
     counts = Counter(train)
     total = len(train) + ALPHA * len(ALPHABET)
-    return -sum(
-        math.log2((counts.get(symbol, 0) + ALPHA) / total)
-        for symbol in test
-    ) / len(test)
+    return -sum(math.log2((counts.get(symbol, 0) + ALPHA) / total) for symbol in test) / len(test)
 
 
 def bigram_cross_entropy(train: str, test: str) -> float:
@@ -70,10 +67,7 @@ def main() -> None:
         permuted = permute_preserving_marginals(ordered, seed)
         for label, sequence in (("ordered", ordered), ("permuted", permuted)):
             unigram, bigram = evaluate(sequence)
-            print(
-                f"seed={seed:3d} data={label:9s} "
-                f"unigram={unigram:.4f} bigram={bigram:.4f}"
-            )
+            print(f"seed={seed:3d} data={label:9s} unigram={unigram:.4f} bigram={bigram:.4f}")
     print("Interpretation: a lower held-out loss indicates better prediction only.")
     print("This is not an epiplexity, understanding, or subjectivity measurement.")
 
