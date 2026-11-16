@@ -60,7 +60,7 @@ Donc 0,837 ≈ 0,693 + 0,144.
 
 ## Connexion à la compression
 
-Une probabilité p(x) correspond à une longueur idéale de code proche de -log₂ p(x) bits. Un bon prédicteur peut donc permettre un codage plus court. Mais cela ne prouve pas que compression = intelligence : la mesure dépend du corpus, de la tokenisation et du protocole de codage.
+Une probabilité p(x) correspond à une longueur idéale de code proche de -log₂ p(x) bits. Un bon prédicteur peut donc permettre un codage plus court. Pour une séquence dépendante, il faut distinguer entropie marginale et taux d'entropie. Mais cela ne prouve pas que compression = intelligence : la mesure dépend du corpus, de la tokenisation et du protocole de codage.
 
 ## Trois pièges conceptuels
 
