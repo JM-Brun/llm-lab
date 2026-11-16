@@ -26,7 +26,7 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-gener
 
 **Notions préalables :** [logits](logits.qmd), [probabilités de sortie](probabilites.qmd), [prédiction du prochain token et génération autoregressive](generation.qmd).
 
-**Huit exercices formatifs publiés :** GE-A à GE-H. Ils couvrent la sélection du prochain token, la boucle autoregressive et l'arrêt, le prefill/decode et le cache KV, puis les effets de la température et des filtres top-k/top-p.
+**Huit exercices formatifs publiés :** GE-A à GE-H. Ils couvrent la sélection du prochain token, la boucle autoregressive et l'arrêt, le prefill/decode, le cache KV, les mécanismes de serving multi-requêtes, puis les effets de la température et des filtres top-k/top-p.
 
 <a id="ge-a-distribution-et-selection"></a>
 ### Distribution et sélection {#ex-generation-distribution-selection}
