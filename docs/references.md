@@ -240,3 +240,17 @@ Use these resources as complementary explanations and study aids, not as substit
   - **Use for:** a hardware-specific follow-up exploiting Hopper GPU asynchrony, Tensor Memory Accelerator, warp specialization and low-precision FP8. Treat it as a distinct generation/implementation, not as an interchangeable synonym for the original FlashAttention kernel.
 - **PyTorch — Scaled dot product attention API:** https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html
   - **Use for:** API contract and backend-dispatch constraints. Calling SDPA does not prove that a FlashAttention backend was selected.
+
+
+## Information theory and language models
+
+- **Wayland Zhang — Information Theory Is All You Need (to Understand LLMs)** (17 February 2026): https://waylandz.com/blog/information-theory-and-llm/
+  - **Use for:** a unifying introductory thread connecting Shannon information, entropy, next-token prediction, cross-entropy, KL divergence, attention, compression and model capacity.
+  - **Critical qualifications:** attention weights are not mutual information; Landauer's erasure bound does not establish a general information ceiling for learning from a dataset; compression performance is not equivalent to intelligence; V-information depends on a specified predictive/model class and operational setup.
+  - **Companion material:** the author links an English and Chinese notebook in https://github.com/waylandzhang/information-theory-and-language-models. The English notebook received a static 18-cell audit; it was not executed. See the [notebook audit](source-reviews/wayland-notebook-audit-2026-11.md).
+  - **Review status:** article text inspected and notebook source cells plus saved text outputs statically audited on 16 November 2026; notebook execution and figure reuse were not verified. See the [article source review](source-reviews/information-theory-wayland-zhang-2026-11.md). Text, figures and code are link-only; no reuse licence was established.
+
+- **Yilun Xu, Shengjia Zhao, Jiaming Song, Russell Stewart and Stefano Ermon — “A Theory of Usable Information under Computational Constraints”** (ICLR 2020): https://arxiv.org/abs/2002.10689
+  - **Use for:** primary formal source for predictive \\(\\mathcal V\\)-information, predictive families, optional ignorance, predictive conditional \\(\\mathcal V\\)-entropy and the relation to Shannon mutual information.
+  - **Critical qualifications:** the quantity is relative to an explicitly specified predictive family and loss; it is asymmetric and is not a synonym for Shannon mutual information. The paper's estimation guarantees depend on bounded log-probabilities and complexity assumptions; an overly expressive class can overfit and an overly restrictive class can miss useful structure.
+  - **LLM Lab integration:** use the finite-family exact example in the bilingual information-theory experiment guide as a first operational illustration, not as evidence comparing Transformer attention with bag-of-words. See [the source review](source-reviews/predictive-v-information-xu-2020.md).
