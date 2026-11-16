@@ -162,9 +162,7 @@ Le *prefill* est souvent limité par la capacité de calcul, tandis que le *deco
 La boucle autorégressive décrit **une séquence**. Un serveur doit en gérer plusieurs, avec des prompts et des longueurs de sortie différents.
 
 - **TPOT (*time per output token*)** : moyenne du délai entre les tokens de sortie, hors premier token. Pour une requête qui produit $N_{out}>1$ tokens, on peut l'estimer par
-  $
-  \operatorname{TPOT}=\frac{\operatorname{E2E}-\operatorname{TTFT}}{N_{out}-1}.
-  $
+  On l'estime par $\operatorname{TPOT}=\frac{\operatorname{E2E}-\operatorname{TTFT}}{N_{out}-1}$.
   L'**ITL** est l'intervalle individuel entre deux tokens successifs. Pour une requête, la moyenne de ses ITL correspond au TPOT ; les agrégations sur plusieurs requêtes peuvent différer selon leur pondération.
 - **Continuous batching** (*in-flight batching*) : le serveur ajuste le groupe de séquences à chaque itération de decode. Lorsqu'une séquence termine, elle libère sa place ; une nouvelle requête peut entrer sans attendre la fin des autres. Chaque séquence reste autorégressive : c'est l'ordonnancement du lot qui change, pas la règle de prédiction.
 - **Prefix caching** : deux requêtes peuvent réutiliser le cache KV d'un préfixe commun si leur préfixe de tokens est exactement identique et si l'entrée de cache est encore disponible sur un worker compatible. Une ressemblance sémantique ou des mots communs ne suffisent pas ; une différence de sérialisation ou de tokenisation peut casser le partage. Ce n'est pas un cache de réponses.
