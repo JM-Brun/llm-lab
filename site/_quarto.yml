@@ -13,6 +13,8 @@ project:
     - styles/rope-frequency-explorer.css
     - scripts/rope-memory-ledger.js
     - styles/rope-memory-ledger.css
+    - scripts/nope-prefix-experiment.js
+    - styles/nope-prefix-experiment.css
     - learning-map-data-fr.json
     - learning-map-data-en.json
     - knowledge-graph.jsonld
