@@ -90,7 +90,7 @@ Ces mécanismes ne sont pas interchangeables. Les exemples sont des instantanés
 
 ## Fréquences et conventions d'implémentation
 
-Pour une tête de dimension paire d, la fréquence inverse standard de la paire i est omega_i = b^(-2i/d), et l'angle à la position m vaut m * omega_i. Les tables cosinus/sinus sont généralement pré-calculées puis diffusées sur batch et têtes.
+Pour une tête de dimension paire d, la fréquence inverse standard de la paire i est omega_i = b^(-2i/d), et l'angle à la position m vaut m * omega_i. Les tables cosinus/sinus sont généralement pré-calculées puis diffusées sur batch et têtes. Attention à la base : l'exemple classique utilise souvent 10 000, tandis que la configuration Qwen3 du notebook Raschka utilise theta = 1 000 000.
 
 ~~~python
 indices = torch.arange(0, head_dim, 2, device=positions.device)
