@@ -21,6 +21,8 @@
   - Observed-target scoring
     - [Likelihood and log-likelihood](likelihood.html)
     - [Cross-entropy: the token-prediction objective](cross-entropy.html)
+    - [Revision sheet — Information theory and LLMs](revision-information-theory.html)
+    - [Experiment — Entropy, KL and predictive coding](experience-information-theory.html)
   - Loss and gradients
     - [Loss: from per-token penalty to training objective](loss.html)
     - [Gradients: connecting loss to parameters](gradients.html)
