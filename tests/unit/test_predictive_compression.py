@@ -15,7 +15,8 @@ def test_predictive_coder_round_trips_exactly() -> None:
     numerator, bits = module["dyadic_code_inside"](low, high)
     code_value = Fraction(numerator, 1 << bits)
 
-    assert low <= code_value < high
+    assert low <= code_value
+    assert Fraction(numerator + 1, 1 << bits) <= high
     assert module["decode"](numerator, bits, len(message), model) == message
 
 
