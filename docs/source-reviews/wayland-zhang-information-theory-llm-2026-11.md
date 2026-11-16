@@ -2,7 +2,7 @@
 
 **Source:** [article original](https://waylandz.com/blog/information-theory-and-llm/) · [English/Chinese notebook repository](https://github.com/waylandzhang/information-theory-and-language-models) · [structured extraction](../../data/extractions/wayland-zhang-information-theory-llm-2026.yml)
 
-**Scan status: text complete; media and notebook partially inspected.** The complete six-section article was retrieved directly on 2026-11-16. The repository landing page and notebook filenames were inspected. Notebook cells were not run; figures were not separately inspected; no reuse rights were established.
+**Scan status: article text complete; notebook statically and visually inspected, not executed.** The complete six-section article was retrieved directly on 2026-11-16. All 18 cells of the English notebook were inspected statically, and its five embedded output figures (cells 1, 3, 6, 9 and 11) were visually inspected. The notebook was not executed. The upstream notebook repository contains an MIT License; this does not establish reuse rights for the separate article page or its figures.
 
 ## Executive synthesis
 
@@ -120,9 +120,9 @@ Le notebook anglais `information-theory-and-llm-en.ipynb` a été récupéré de
 
 - Directly inspected: full article text, page date and author; upstream repository landing page.
 - Fully inspected: Xu et al. (ICLR 2020), including formal definitions, propositions, PAC estimation theorem, structure-learning algorithm, empirical sections, fairness discussion and conclusion.
-- Statically inspected: all 18 cells of the English upstream notebook; it was not executed.
-- Not inspected/reproduced: upstream notebook execution and outputs, article image bytes, authors' V-information experiment code/datasets, comments and all further-reading links.
-- Rights: article text and figures remain link-only; no reuse permission established.
+- Statically inspected: all 18 cells of the English upstream notebook; its five embedded figures were also visually inspected. The notebook was not executed, so displayed outputs were not independently reproduced.
+- Not inspected/reproduced: article-page image assets, authors' V-information experiment code/datasets, comments and all further-reading links.
+- Rights: the notebook repository includes an MIT License (copyright 2025 Zhuo Zhang), whose notice conditions must be preserved when reusing repository material. This does not establish rights for the separate article text or article-page figures; those remain link-only.
 
 ## 7. Operational conclusion
 
