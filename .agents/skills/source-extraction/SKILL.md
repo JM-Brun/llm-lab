@@ -49,6 +49,8 @@ A homepage visit does not mean the whole site was scanned. Register exact pages 
 
 Read beyond the abstract, introduction, README or conclusion. Inspect relevant equations, tables, figures, appendices, supplementary material, linked primary sources, code and tests.
 
+**Source-level completion invariant:** never mark an article, chapter or tutorial fully scanned merely because its prose was retrieved. Track text, figures/media, linked resources, code/data, appendices and comments independently in the extraction record. If any relevant modality has not been inspected, preserve that modality's `not-inspected` or `partial` state and keep the overall scan status partial as required by `data/source-taxonomy.yml`. In particular, a figure mentioned in a caption or represented by a thumbnail/search result is not an inspected figure: retrieve its exact asset, inspect the actual bytes, record its locator and rights evidence, and hand off provenance/reuse questions to `visual-asset-audit`. Do not describe, recreate or reuse an unseen visual.
+
 Record the retrieval channel for each inspected artifact: direct canonical page, publisher API/feed, author-controlled mirror, repository source, or search index. Search-index text is useful for discovery and partial extraction, but it is not direct page retrieval; label it explicitly, retain the index/mirror limitations, and do not promote a source to `scanned` when intended content or media remains uninspected. If a mirror or profile snapshot conflicts with current indexed metadata, record the discrepancy and prefer neither silently.
 
 Assess according to source type:
