@@ -13,9 +13,9 @@ The article offers a useful unifying teaching narrative: event surprisal and Sha
 
 The strongest contribution is the cross-entropy decomposition:
 
-\\[
+\[
 H(q,p)=H(q)+D_{KL}(q\|p).
-\\]
+\]
 
 For a fixed target distribution (q) and conditioning context, (H(q)) does not depend on the model distribution (p). Minimizing expected cross-entropy over (p) is therefore equivalent to minimizing the forward KL divergence. In ordinary next-token training with a one-hot observed target, the per-token cross-entropy is simply the negative log probability assigned to that observed token.
 
@@ -38,16 +38,16 @@ The article is best used as a **cross-cutting explanatory source**, not as a new
 
 For discrete variables:
 
-\\[
+\[
 H(q)=-\sum_x q(x)\log q(x),\qquad
 H(q,p)=-\sum_x q(x)\log p(x).
-\\]
+\]
 
 Then:
 
-\\[
+\[
 H(q,p)-H(q)=D_{KL}(q\|p)\geq 0.
-\\]
+\]
 
 The identity assumes normalized distributions and a finite KL divergence; in particular, (p(x)) must be positive wherever (q(x)) is positive. In language modeling, the relevant distributions are conditional on a context and tokenization. There is no single context-free “entropy of language” that is fixed for every dataset, tokenizer and evaluation protocol. The target distribution is fixed during a particular model comparison, not universally fixed across all training settings.
 
@@ -57,18 +57,18 @@ Logarithm base is a unit convention: base 2 gives bits; natural logarithms give 
 
 Scaled dot-product attention computes:
 
-\\[
+\[
 A(Q,K,V)=operatorname{softmax}left(rac{QK^	op}{sqrt{d_k}}+Might)V,
-\\]
+\]
 
 where (M) represents any applicable mask. The softmax weights are normalized compatibility coefficients over accessible key positions. They are used to aggregate value vectors.
 
 Mutual information is defined from a joint probability distribution:
 
-\\[
+\[
 I(X;Y)=sum_{x,y}p(x,y)lograc{p(x,y)}{p(x)p(y)}
       =H(X)-H(Xmid Y).
-\\]
+\]
 
 These objects differ in definition, inputs and interpretation. A row of attention weights is not an estimate of mutual information, and a high attention weight does not prove that one token provides a corresponding amount of statistical information about another. Studying attention and statistical dependence together can be useful, but it requires an explicit estimator and experimental design.
 
