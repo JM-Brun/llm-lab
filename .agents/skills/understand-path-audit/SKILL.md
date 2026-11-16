@@ -57,6 +57,18 @@ If a referenced document has moved, locate its current canonical owner. Do not s
 - Preserve substantive information, examples, references, caveats and useful illustrations. Never remove an existing external illustration solely because its licence is unknown; record the unresolved asset in `docs/visual-assets-register.md` and escalate without hiding or replacing it.
 - Never present planned pages, exercises, code or experiments as available evidence.
 
+
+## Source provenance when auditing explanations
+
+When a page's scientific explanation, example or figure depends on external material, inspect the canonical source and extraction records rather than treating the bibliography as proof that the material was read:
+
+- Current source catalogue and extraction contract: `docs/source-catalogue-schema.md` and `data/extractions/README.md`.
+- Target distributed source/scan/lineage ownership and migration status: `docs/source-lineage-architecture.md`.
+- Keep source identity, inspection events, atomic extracted evidence, concepts and page content as distinct entities. Cite the exact source and, where available, the extraction item/locator supporting a claim.
+- Distinguish a source that merely cites another work from independent corroboration. Record author statements, reader comments and editorial interpretation as separate voices.
+- Do not hand-edit generated source indexes or graph projections. Until cutover is complete, use the currently validated `data/sources.yml` format; do not invent parallel per-source files.
+- When changing source-derived explanations, preserve provenance, uncertainty, access limitations and reuse restrictions in both FR and EN.
+
 ## When to run
 
 Choose an audit scope from the user's request:

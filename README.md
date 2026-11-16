@@ -19,7 +19,7 @@ See [the learning path](docs/learning-path.md) for the authoritative module-leve
 
 ## Inspiration and sources
 
-Sebastian Raschka's [*Build a Large Language Model (From Scratch)*](https://github.com/rasbt/LLMs-from-scratch) provides a major implementation and scope reference, not a mandatory table of contents. The lab also draws on visual explanations such as [Jay Alammar's Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/) and the practical perspective of the [Hugging Face LLM Course](https://huggingface.co/learn/llm-course/). The [annotated references](docs/references.md) describe these and other sources, their roles, and reuse boundaries; primary papers and official documentation remain important for checking technical claims.
+Sebastian Raschka's [*Build a Large Language Model (From Scratch)*](https://github.com/rasbt/LLMs-from-scratch) provides a major implementation and scope reference, not a mandatory table of contents. The lab also draws on visual explanations such as [Jay Alammar's Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/) and the practical perspective of the [Hugging Face LLM Course](https://huggingface.co/learn/llm-course/). The [annotated references](docs/references.md) describe these and other sources, their roles, and reuse boundaries; the [source lineage architecture](docs/source-lineage-architecture.md) defines how source identity, inspection history and evidence-linked provenance are maintained. Primary papers and official documentation remain important for checking technical claims.
 
 For how this lab positions itself against comparable public learning projects, see the [comparable-projects landscape](docs/comparable-projects-landscape.md).
 

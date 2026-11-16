@@ -2,7 +2,7 @@
 
 Store one YAML file per source in this directory, named with its stable source ID.
 
-The canonical source identity and scan history live in data/sources.yml.
+The current canonical source identity and scan history live in data/sources.yml. The target distributed model is documented in docs/source-lineage-architecture.md; until its migration and validator land, do not create parallel source or scan records.
 Extraction records contain atomic, evidence-linked items; they are not a second source catalogue or concept registry.
 
 ## Top-level shape
@@ -77,3 +77,8 @@ verification:
 Use `unverified` or `not-assessed` until the claim has actually been checked. A corroborating source must have its own source record and extraction when its content is retained.
 
 The exact schema and validation contract is specified in docs/source-catalogue-schema.md.
+
+
+## Provenance and lineage
+
+An extraction item is evidence-bearing content, not a source identity or a general graph node. Keep its exact locator and evidence limitations. When a claim is used to support, contradict or corroborate another claim, record the relationship in the source's lineage record after the distributed schema is implemented; do not encode scientific relations as tags or infer them from shared concepts. A source citation alone is not independent corroboration.
