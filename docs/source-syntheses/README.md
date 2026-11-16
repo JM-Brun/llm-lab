@@ -6,6 +6,10 @@ Créer un dossier lorsque les sources apportent des angles explicatifs compléme
 
 Suivre la [méthode de synthèse des sources](../source-synthesis-method.md). Conserver l'identité des sources et les preuves atomiques dans data/sources.yml et data/extractions/ ; le présent répertoire documente la comparaison éditoriale et les décisions d'intégration. Il ne constitue ni une seconde bibliographie, ni un catalogue, ni un graphe de concepts, ni une copie du contenu des leçons.
 
+## Dossiers
+
+- [LLMs and compression algorithms](llms-and-compression-algorithms-2026-11.md) — analogie entre modélisation du langage et compression statistique ; synthèse critique, garde-fous théoriques et proposition d'expérience.
+
 ## Structure suggérée
 
 1. **Question et périmètre** — pages canoniques, prérequis et position dans le parcours.
