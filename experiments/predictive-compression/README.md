@@ -33,11 +33,28 @@ Only the Python standard library is required. The training data, test message, a
 4. Inspect \`interval_for\`: each observed symbol narrows the interval according to its conditional probability.
 5. Inspect \`decode\`: the same model and conventions are required to recover the exact symbols.
 
+## Verified result
+
+With the repository constants:
+
+~~~text
+Predictive compression — exact toy experiment
+Training symbols: 40
+Message:          ABABACABADABABACABAD
+Ideal model cost: 19.642 bits
+Uniform baseline: 40.000 bits
+Actual code:      21 bits
+Decoded exactly:  True
+Decoded message:  ABABACABADABABACABAD
+~~~
+
+The finite 21-bit code is slightly longer than the ideal 19.642-bit cost. Decoding reproduces the message exactly.
+
 ## Interpretation and limits
 
 - Ideal code length is measured in **bits**, using base-2 logarithms.
 - The finite binary code can be slightly longer than the ideal length.
-- The decoder is assumed to know the model and message length; their transmission cost is excluded.
+- The decoder is assumed to know the model and message length; their transmission cost is excluded. The 40-symbol training string and metadata are not counted: the 21 bits cover only the encoded message.
 - The model is trained and evaluated on a synthetic source; this does not measure generalization to natural language.
 - Exact decoding demonstrates lossless coding for this protocol, not lossless reconstruction from an ordinary LLM prompt.
 - A neural language model can supply probabilities to an entropy coder, but generation alone is not decompression.
