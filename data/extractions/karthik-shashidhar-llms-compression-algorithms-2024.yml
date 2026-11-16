@@ -1,0 +1,139 @@
+schema_version: 1
+source_id: karthik-shashidhar-llms-compression-algorithms-2024
+scan:
+  accessed_at: "2026-11-16"
+  retrieval_method: direct-web
+  author_text:
+    status: complete
+    coverage: "Full article body: LZW introduction, coding assistants, compression analogy, model-size comparison, routine versus niche programming, and conclusion."
+    notes: ["The article is a short opinion/vulgarization piece, not an empirical study."]
+  figures_media:
+    status: not-inspected
+    coverage: null
+    notes: ["No figures were required for the extracted argument."]
+  code_data:
+    status: not-inspected
+    coverage: null
+    notes: ["No code, dataset or benchmark is supplied."]
+  comments:
+    status: partial
+    coverage: "Visible discussion excerpt including one reader comment on reinforcement learning and specialized training data."
+    notes: ["The complete discussion thread was not exhaustively inspected."]
+  linked_resources:
+    status: partial
+    coverage: "LZW link and named coding-assistant/model references noted."
+    notes: ["Outbound links were not exhaustively inspected."]
+  metadata:
+    status: complete
+    coverage: "Author, title, publication date and publication platform visible on article page."
+    notes: []
+  rights:
+    status: unknown
+    coverage: null
+    notes: ["No text or figure reuse permission was established; paraphrase and link only."]
+  unresolved_questions:
+    - "How strongly does training-data frequency predict performance after controlling for task structure, data quality, model scale and post-training?"
+    - "How do composition and transfer affect performance on rare but structurally familiar tasks?"
+    - "What empirical evidence supports the article's comparison of Llama 3.1 70B and 405B?"
+items:
+  - id: karthik-shashidhar-llms-compression-algorithms-2024:lzw-analogy
+    kind: analogy
+    summary: "The author uses Lempel–Ziv–Welch as an analogy for LLMs: repeated patterns can be represented compactly, while a language model learns statistical regularities that help predict continuations."
+    locator: {type: section, value: "Opening paragraphs and 'What does this have to do with compression?'", label: "LZW analogy and compression framing"}
+    evidence:
+      kind: author-analogy
+      confidence: established
+      scope: "The analogy explicitly proposed by the author."
+      assumptions: []
+      limitations: ["LZW is a lossless dictionary-based compressor; an LLM is a learned probabilistic model and does not store an explicit reversible dictionary of the corpus."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      tags: [topic:predictive-compression, method:analogy]
+      concept_ids: []
+    candidate_destinations:
+      pages: []
+      concepts: []
+      route_ids: []
+    disposition: clarify
+    disposition_rationale: "Useful as an opening intuition only when immediately distinguished from literal lossless compression and corpus storage."
+  - id: karthik-shashidhar-llms-compression-algorithms-2024:frequency-and-domain-coverage
+    kind: claim
+    summary: "The author argues that topics and code patterns represented frequently in training material are easier for LLMs to model than niche languages, libraries or tasks with fewer analogous examples."
+    locator: {type: section, value: "'What does this have to do with compression?' and 'Back to coding assistants'", label: "Frequency, domain coverage and code assistants"}
+    evidence:
+      kind: author-interpretation
+      confidence: context-dependent
+      scope: "General explanation illustrated with the author's experience using coding assistants for R and common web-app code."
+      assumptions: ["Training data contains relevant examples.", "Observed task familiarity is a useful proxy for learned statistical regularity."]
+      limitations: ["No controlled comparison, dataset analysis or performance measurements are provided.", "Frequency alone does not determine difficulty or generalization."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [scale-research]
+      tags: [topic:generalization, topic:training-data]
+      concept_ids: []
+    candidate_destinations:
+      pages: []
+      concepts: []
+      route_ids: []
+    disposition: qualify
+    disposition_rationale: "Retain the intuition as a hypothesis; qualify it with data quality, task structure, transfer, post-training and distribution shift."
+  - id: karthik-shashidhar-llms-compression-algorithms-2024:short-prompt-reconstruction
+    kind: mental-model
+    summary: "The article explains short-prompt-to-long-code generation as reconstruction of familiar, reusable patterns learned from broad code corpora."
+    locator: {type: section, value: "'Back to coding assistants' and 'How LLMs will change coding'", label: "Short prompts and reusable code patterns"}
+    evidence:
+      kind: author-interpretation
+      confidence: context-dependent
+      scope: "The author's explanatory account of coding-assistant behavior."
+      assumptions: []
+      limitations: ["A short prompt can also rely on context, tools, retrieval, inference-time computation and user constraints; these are not separated in the article."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      tags: [topic:next-token-prediction, topic:generalization]
+      concept_ids: []
+    candidate_destinations:
+      pages: []
+      concepts: []
+      route_ids: []
+    disposition: clarify
+    disposition_rationale: "Use to motivate conditional prediction and learned regularities, not as a complete account of code generation."
+  - id: karthik-shashidhar-llms-compression-algorithms-2024:model-size-claim
+    kind: limitation
+    summary: "The article suggests that the difference between Llama 3.1 70B and 405B is largely capacity for niche information, while the smaller model already contains the main knowledge of the world."
+    locator: {type: section, value: "'What does this have to do with compression?'", label: "70B versus 405B comparison"}
+    evidence:
+      kind: unsupported-author-claim
+      confidence: unverified
+      scope: "An illustrative model-size interpretation in the article."
+      assumptions: []
+      limitations: ["No controlled evaluation, scaling analysis or supporting citation is supplied.", "Model capability differences cannot be reduced to encoding niche information."]
+    classification:
+      primary_theme: scale-research
+      tags: [topic:model-scale, topic:capacity]
+      concept_ids: []
+    candidate_destinations:
+      pages: []
+      concepts: []
+      route_ids: []
+    disposition: reject
+    disposition_rationale: "Do not reproduce as an established finding; preserve only as an example of an unsupported simplification."
+  - id: karthik-shashidhar-llms-compression-algorithms-2024:programming-literacy
+    kind: claim
+    summary: "The author argues that programming knowledge remains valuable because learners must recognize incorrect outputs and solve unusual or high-information-content problems."
+    locator: {type: section, value: "'How LLMs will change coding'", label: "Why learning to code remains important"}
+    evidence:
+      kind: author-argument
+      confidence: context-dependent
+      scope: "Pedagogical conclusion of the article."
+      assumptions: []
+      limitations: ["The phrase 'high information content' is informal and is not defined using information theory."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      tags: [topic:verification, topic:human-ai-collaboration]
+      concept_ids: []
+    candidate_destinations:
+      pages: []
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Useful as a learner-facing motivation for testing, validation and critical evaluation of generated code."
