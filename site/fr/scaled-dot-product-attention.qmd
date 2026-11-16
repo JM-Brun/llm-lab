@@ -102,6 +102,19 @@ La formulation est présentée dans [Vaswani et al. (2017), *Attention Is All Yo
 </details>
 - **« Le facteur d'échelle est une constante empirique sans justification. »** Non : il découle d'un raisonnement sur l'échelle des produits scalaires ; les hypothèses sont simplificatrices, mais le facteur répond à un problème numérique précis. La dérivation complète et la simulation numérique sont développées dans [Pourquoi mettre les scores à l'échelle ?](attention-score-scaling.qmd).
 
+### Attention et information mutuelle : une analogie, pas une identité
+
+L'information mutuelle entre deux variables aléatoires dépend d'une distribution jointe :
+
+$
+I(X;Y)=H(X)-H(X\mid Y)
+=\sum_{x,y}p(x,y)\ln\frac{p(x,y)}{p(x)p(y)}.
+$
+
+Elle mesure la réduction d'incertitude sur $X$ apportée par l'observation de $Y$. Les poids d'attention, eux, sont des coefficients de compatibilité normalisés par softmax sur les positions accessibles ; ils servent à agréger les vecteurs $V$. Une ligne de poids d'attention n'est donc ni une distribution jointe sur $(X,Y)$, ni un estimateur automatique de $I(X;Y)$.
+
+L'analogie peut aider à poser une question — quelles positions sont utiles au calcul d'une représentation contextualisée ? — mais elle ne constitue pas une équivalence mathématique. Un poids élevé ne quantifie pas « la quantité d'information » fournie par un token et ne démontre pas une dépendance statistique ou une importance causale.
+
 ## Liens avec les autres concepts
 
 - La dérivation du facteur d'échelle et la simulation numérique de variance sont développées dans [Pourquoi mettre les scores à l'échelle ?](attention-score-scaling.qmd).
