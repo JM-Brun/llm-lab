@@ -73,6 +73,11 @@ Thus, for this pair and frequency, the score depends on the offset $n-m$, rather
 
 In an attention head, rotations are applied to $Q$ and $K$ **after their projections and before computing $QK^\top$**. In standard RoPE, the values $V$ are not directly rotated. See [queries, keys, and values](queries-keys-values.qmd) and [scaled dot-product attention](scaled-dot-product-attention.qmd).
 
+{{< include ../includes/rope-pair-explorer-en.html >}}
+
+<link rel="stylesheet" href="../styles/rope-pair-explorer.css">
+<script src="../scripts/rope-pair-explorer.js" defer></script>
+
 ## What RoPE provides — and what it does not guarantee
 
 RoPE provides a structured way to introduce position into attention. Its presence alone does not guarantee reliable extrapolation to sequences much longer than those seen during training.
