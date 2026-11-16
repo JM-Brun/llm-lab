@@ -3916,17 +3916,19 @@ sources:
         status: partially-scanned
         inspected_scope:
           - "Current English course index: chapter structure 0–12 and stated learning outcomes"
+          - "Deep lesson-body review of Chapters 10–12: Argilla annotation workflow; chat templates, SFTTrainer, LoRA and evaluation; RL, DeepSeek R1 and GRPO implementation"
+          - "Crosswalk against and updates to bilingual corpus-preparation and post-training lessons/exercises, bilingual glossary and concept graph"
           - "French Chapter 1 introduction: NLP/LLM distinction, course expectations, prerequisites and chapter outline"
           - "Existing LLM Lab source records, project audit issue #765, canonical learning paths, selected page and implementation inventories"
         limitations:
-          - "Architecture scan plus bounded Chapter 1 inspection, not a deep audit of all twelve chapters."
-          - "Lesson bodies, exercises, notebooks, videos, Hub examples, model/dataset revisions and live demonstrations in Chapters 2–12 have not yet been inspected."
+          - "Architecture scan plus bounded Chapter 1 inspection and deep text-level review of Chapters 10–12; Chapters 2–9 remain uninspected at lesson-body level."
+          - "Chapters 2–9 lesson bodies, exercises, notebooks, videos, Hub examples and live demonstrations remain uninspected; Chapters 10–12 code examples were read but not executed."
           - "Living documentation; no immutable upstream commit or release was pinned in this first pass."
           - "Current English index and supplied French Chapter 1 do not expose identical chapter outlines; preserve locale/version differences rather than assuming parity."
           - "Course text, figures and code remain link-only; no reuse permission was established."
     related:
-      pages: [fr/transformer-architecture, en/transformer-architecture, fr/tokenization-strategies, en/tokenization-strategies, fr/training-loop, en/training-loop, fr/post-training, en/post-training, fr/evaluation-experimentale, en/experimental-evaluation]
-      concepts: [self-attention, token, token-embedding, contextualized-representation]
+      pages: [fr/transformer-architecture, en/transformer-architecture, fr/tokenization-strategies, en/tokenization-strategies, fr/training-loop, en/training-loop, fr/corpus-preparation, en/corpus-preparation, fr/post-training, en/post-training, fr/evaluation-experimentale, en/experimental-evaluation, fr/glossary, en/glossary]
+      concepts: [self-attention, token, token-embedding, contextualized-representation, dataset-curation, chat-template, group-relative-policy-optimization]
       audit_records:
         - docs/source-reviews/huggingface-llm-course-2026-11.md
         - data/extractions/huggingface-llm-course.yml
