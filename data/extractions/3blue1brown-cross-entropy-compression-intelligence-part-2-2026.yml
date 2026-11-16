@@ -1,0 +1,153 @@
+schema_version: 1
+source_id: 3blue1brown-cross-entropy-compression-intelligence-part-2-2026
+pedagogical_model:
+  reconstruction:
+    status: complete
+    basis:
+      - "Creator-published captions for the 34-minute lesson reviewed on 2026-11-16 through a third-party transcript mirror; chapter timestamps and official lesson/video metadata reconciled."
+      - "Relevant upstream Manim source scripts in 3b1b/videos/_2026/cross_entropy were inspected statically."
+      - "Completeness refers to the accessible captions and inspected source-script sections, not to independent frame-by-frame audiovisual inspection or execution."
+    inferred_elements:
+      - "The learning outcomes are inferred from the sequence of examples and derivations; the video does not present a formal syllabus."
+      - "The video’s P/Q notation is mapped to LLM Lab’s q(target)/p(prediction) convention; this is an editorial normalization, not the source’s notation."
+  source_graph:
+    nodes:
+      - {id: p2-old-code-distribution, kind: distribution, description: "Original probability distribution used to construct a codebook and ideal code lengths.", locator: "03:08–05:41"}
+      - {id: p2-shifted-data-distribution, kind: distribution, description: "New empirical/source distribution under which the old codebook is now used.", locator: "05:41–07:15"}
+      - {id: p2-cross-entropy, kind: quantity, description: "Expected code length under the new data distribution when lengths were derived from the old model distribution.", locator: "05:41–08:26"}
+      - {id: p2-kl-excess-cost, kind: quantity, description: "Excess expected coding cost over the entropy of the data distribution, with direction determined by target/model roles.", locator: "31:35–33:19"}
+      - {id: p2-language-tree-compression, kind: application, description: "Compression of concatenated snippets under a compressor adapted to another document, used as an approximate similarity signal.", locator: "00:00–03:02 and 12:59–14:55"}
+      - {id: p2-token-pretraining-loss, kind: mechanism, description: "Average negative log probability assigned to observed next tokens under model predictions.", locator: "14:55–20:38"}
+      - {id: p2-log-loss-optimality, kind: derivation, description: "Constrained optimization argument motivating the negative logarithm when expected separable loss should be minimized at the data distribution.", locator: "20:38–26:13"}
+      - {id: p2-teacher-distribution, kind: model, description: "Teacher model supplies a full next-token distribution as a soft target for a student model.", locator: "26:13–30:12"}
+      - {id: p2-student-cross-entropy, kind: quantity, description: "Cross-entropy between the teacher target distribution and the student predicted distribution at a context.", locator: "26:13–30:12"}
+    edges:
+      - {from: p2-old-code-distribution, type: determines, to: p2-cross-entropy}
+      - {from: p2-shifted-data-distribution, type: weights, to: p2-cross-entropy}
+      - {from: p2-cross-entropy, type: decomposes-into, to: p2-kl-excess-cost}
+      - {from: p2-language-tree-compression, type: illustrates, to: p2-cross-entropy}
+      - {from: p2-token-pretraining-loss, type: is-empirical-form-of, to: p2-cross-entropy}
+      - {from: p2-log-loss-optimality, type: motivates, to: p2-token-pretraining-loss}
+      - {from: p2-teacher-distribution, type: supervises, to: p2-student-cross-entropy}
+    interpretation: "The graph is a source-specific pedagogical reconstruction. The language-tree compression example is only an analogy/empirical approximation, not exact cross-entropy."
+  learning_outcomes:
+    - {status: inferred, outcome: "Explain cross-entropy as expected code length when data follow one distribution but the code lengths were optimized for another.", basis: "05:41–08:26."}
+    - {status: inferred, outcome: "Explain why cross-entropy is minimized when the model distribution matches the data distribution, with minimum equal to data entropy.", basis: "10:22–12:59."}
+    - {status: inferred, outcome: "Map the roles of data and model distributions even when notation conventions differ.", basis: "07:15–10:22."}
+    - {status: inferred, outcome: "Explain how observed-token NLL aggregates into average pretraining loss.", basis: "14:55–20:38."}
+    - {status: inferred, outcome: "State the assumptions behind the Lagrange-multiplier motivation for logarithmic loss.", basis: "20:38–26:13."}
+    - {status: inferred, outcome: "Contrast one-hot next-token targets with soft teacher distributions in distillation.", basis: "26:13–30:12."}
+    - {status: inferred, outcome: "Interpret KL divergence as excess coding cost and recognize its directionality.", basis: "31:35–33:19."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Probability distributions and logarithms.", basis: "The cross-entropy formula is generalized from discrete distributions."}
+    - {status: inferred, topic: "Entropy and ideal code lengths from Part 1.", basis: "The lesson explicitly recaps the robot code example and entropy."}
+    - {status: inferred, topic: "Autoregressive next-token prediction and training loss.", basis: "The pretraining segment assumes familiarity with model predictions and gradient-based training."}
+  teaching_route:
+    - {order: 1, section: "Language trees and zipping", function: motivate-cross-context-compression, moves: ["Compare compressing one document alone with compressing another document after it", "Motivate cross-context regularity", "Introduce cross-entropy as an underlying analogy"]}
+    - {order: 2, section: "Recap optimal codes and shift the source distribution", function: motivate-mismatched-code-cost, moves: ["Recall a code optimized for a biased source", "Change the data distribution while keeping the code fixed", "Compute the new average code length"]}
+    - {order: 3, section: "Define cross-entropy", function: generalize-operational-cost, moves: ["Weight model-derived code lengths by the actual data distribution", "Compare the two directions", "Show the minimum occurs when the distributions match"]}
+    - {order: 4, section: "Apply to language trees", function: transfer-to-empirical-compression, moves: ["Connect cross-compression to cross-entropy intuition", "State why gzip is only an approximate proxy", "Keep algorithmic compression distinct from ideal probabilistic coding"]}
+    - {order: 5, section: "Pretraining loss", function: connect-model-prediction-to-data-cost, moves: ["Predict a distribution at each context", "Score the observed next token by negative log probability", "Average across valid tokens and training data"]}
+    - {order: 6, section: "Why logarithmic loss", function: justify-loss-form, moves: ["Start with a generic decreasing per-event penalty", "Average it under data frequencies", "Use a normalization constraint and Lagrange multipliers to motivate the logarithm"]}
+    - {order: 7, section: "Distillation and KL", function: generalize-to-soft-targets, moves: ["Replace one-hot observations with teacher distributions", "Compare student and teacher distributions", "Interpret KL as excess coding cost and note its asymmetry"]}
+  pedagogical_strengths:
+    - "Motivates cross-entropy operationally through a concrete codebook that becomes mismatched to a changed source."
+    - "Makes the direction of cross-entropy tangible by swapping the roles of the distributions."
+    - "Connects two seemingly different derivations: mismatched code lengths and average next-token negative log-likelihood."
+    - "Provides an optional constrained-optimization rationale for logarithmic loss."
+    - "Extends one-hot supervision to teacher-distribution soft targets in distillation."
+    - "Uses KL divergence as the excess cost of a mismatched code, connecting information theory to model training."
+  pedagogical_limits:
+    - "The source's P/Q notation is easy to reverse when compared with other conventions; roles must be stated explicitly."
+    - "The gzip language-tree example is not exact cross-entropy: gzip is a practical dictionary/repetition compressor and the cited distance includes additional details."
+    - "The uniqueness argument for logarithmic loss depends on separability, differentiability, normalization and the desired matching-minimizer property; it does not rule out other useful objectives for other tasks."
+    - "The analogy between a model's lower loss and a 'smarter' model is not a general guarantee of factuality, calibration or downstream performance."
+    - "Distillation transfers a teacher's distribution, which is not ground truth and may include its errors or biases."
+    - "The video points toward a later predictor-to-compressor construction; this part does not itself implement or validate that full coder."
+  comparison:
+    dossier: docs/source-syntheses/cross-entropy-compression-distillation-2026-11.md
+    canonical_graph: "data/concepts.yml and generated JSON-LD projection"
+    canonical_routes: [data/guided-route.yml, docs/learning-path.md, "Page-level suggested_route metadata"]
+    decision: "Integrate the mismatched-code interpretation, notation mapping, constrained-optimization rationale and teacher/student soft-target bridge into the existing advanced bilingual language-modeling math page. Reuse canonical cross-entropy, loss, KL and knowledge-distillation concepts; do not create a duplicate core cross-entropy lesson."
+    structures_kept_separate: [source-semantic-graph, source-pedagogical-route, canonical-concept-graph, canonical-learning-routes, site-navigation]
+items:
+  - id: 3blue1brown-cross-entropy-compression-intelligence-part-2-2026:mismatched-codebook-cost
+    kind: derivation
+    summary: "If data follow q while a codebook uses ideal lengths -log2(p_i), the expected coding cost is H(q,p)=-sum_i q_i log2(p_i); the excess over H(q) is D_KL(q||p)."
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "The formula and KL decomposition already exist, but the concrete codebook-mismatch interpretation and shifted-distribution example were not prominent in the advanced learner path."}
+      complementarity: {level: high, rationale: "It makes the operational meaning of cross-entropy tangible and connects Part 1's code lengths to Part 2's model evaluation."}
+      pedagogical_value: {level: high, rationale: "A numerical example lets learners calculate excess bits and see why argument order matters."}
+      applicability: {level: high, rationale: "Directly supports the existing bilingual language-modeling math and compression lessons."}
+      redundancy: {level: moderate, rationale: "The formal identity is already canonical; the source adds the coding interpretation."}
+      evidence_quality: {level: well-supported, rationale: "The formula is a standard definition and the transcript gives an explicit worked four-symbol example."}
+    locator: {type: timestamp, value: "05:41–10:22", label: "Defining cross-entropy and comparing two distributions"}
+    evidence:
+      kind: source-explanation
+      confidence: well-supported
+      scope: "Expected ideal code length under a data distribution when code lengths are derived from another normalized model distribution."
+      assumptions: ["Discrete finite alphabet.", "Model assigns positive probability wherever the data distribution has positive mass.", "Ideal lengths use the same logarithm base as the reported cost."]
+      limitations: ["Practical prefix-code lengths may be integer-valued and incur overhead.", "The direction of the arguments matters.", "The video's P/Q letters differ from LLM Lab's q/p convention."]
+    disposition: integrate
+    mapped_concepts: [cross-entropy, kl-divergence, predictive-compression]
+    target_resources: [fr/language-modeling-math, en/language-modeling-math, fr/compression-revision, en/compression-revision]
+  - id: 3blue1brown-cross-entropy-compression-intelligence-part-2-2026:logarithmic-loss-rationale
+    kind: derivation
+    summary: "Under a separable expected per-event loss, normalized predictions, differentiability and the requirement that the data distribution minimize expected loss for every interior data distribution, the Lagrange first-order condition forces F'(x)=c/x and hence a logarithmic penalty; a minimum requires the negative-log sign."
+    pedagogical_assessment:
+      novelty: {level: high, rationale: "The advanced page derives cross-entropy/KL but did not expose this constrained-optimization motivation for the logarithm."}
+      complementarity: {level: high, rationale: "It complements the existing one-hot NLL derivation by explaining why the logarithmic form is principled under stated assumptions."}
+      pedagogical_value: {level: high, rationale: "It turns the loss from an arbitrary convention into a consequence of an explicit design requirement."}
+      applicability: {level: high, rationale: "Useful as an optional advanced derivation for readers who know multivariable calculus."}
+      redundancy: {level: low, rationale: "The prior pages did not derive this uniqueness-style argument."}
+      evidence_quality: {level: well-supported, rationale: "The transcript presents the Lagrange-multiplier condition; the extraction records the assumptions needed for a mathematically scoped derivation."}
+    locator: {type: timestamp, value: "20:38–26:13", label: "Why logarithmic loss"}
+    evidence:
+      kind: source-explanation
+      confidence: well-supported
+      scope: "A family of separable per-event losses whose expected value is minimized at the true data distribution."
+      assumptions: ["Finite categorical outcomes.", "Positive interior distributions.", "Differentiable scalar penalty.", "Normalization constraint on the predicted distribution.", "The matching distribution is required to minimize expected loss for every data distribution."]
+      limitations: ["Does not prove log loss is the only useful objective for all tasks.", "Additional constraints or non-separable objectives change the problem.", "Boundary distributions require limiting conventions."]
+    disposition: integrate
+    mapped_concepts: [cross-entropy, negative-log-likelihood, training-objective]
+    target_resources: [fr/language-modeling-math, en/language-modeling-math]
+  - id: 3blue1brown-cross-entropy-compression-intelligence-part-2-2026:teacher-distribution-distillation
+    kind: mechanism
+    summary: "In distillation, a teacher supplies a full next-token probability distribution as a soft target and a student is trained to match it with cross-entropy or the equivalent fixed-target KL objective."
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "The project mentions teacher-provided soft targets but does not explain their contrast with one-hot next-token supervision in the canonical advanced math page."}
+      complementarity: {level: high, rationale: "The video supplies a concrete analogy for how a full distribution carries richer per-example information than one observed class."}
+      pedagogical_value: {level: high, rationale: "It connects probabilistic objectives to the model-compression concept without conflating it with predictive data compression."}
+      applicability: {level: high, rationale: "Supports the existing knowledge-distillation concept and LLM evolution lesson."}
+      redundancy: {level: moderate, rationale: "Distillation is already named in the model-compression lesson; the mathematical teacher/student distribution bridge is new."}
+      evidence_quality: {level: well-supported, rationale: "The teacher/student distribution mechanism is explicit in the lesson captions and source scenes."}
+    locator: {type: timestamp, value: "26:13–30:12", label: "Distillation"}
+    evidence:
+      kind: source-explanation
+      confidence: well-supported
+      scope: "Distribution-level teacher supervision at a token context."
+      assumptions: ["Teacher and student distributions are defined over the same vocabulary or a compatible mapped output space.", "Both are conditioned on the same context for the token-level comparison."]
+      limitations: ["Teacher outputs are not ground truth.", "The lesson does not cover temperature scaling, sequence-level distillation or all practical variants.", "A richer target signal does not guarantee that the student surpasses the teacher."]
+    disposition: integrate
+    mapped_concepts: [knowledge-distillation, cross-entropy, kl-divergence, model-compression]
+    target_resources: [fr/language-modeling-math, en/language-modeling-math, fr/llm-evolution, en/llm-evolution]
+  - id: 3blue1brown-cross-entropy-compression-intelligence-part-2-2026:language-tree-gzip-analogy
+    kind: analogy
+    summary: "Cross-compression of snippets from different documents can act as an empirical signal of shared statistical regularities, but gzip co-compression is only an approximation and is not exact cross-entropy."
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "This application is not part of the core cross-entropy lesson and offers a memorable bridge to language similarity."}
+      complementarity: {level: moderate, rationale: "It shows how compression can be used for a task beyond direct token prediction."}
+      pedagogical_value: {level: moderate, rationale: "Useful as an optional case study, provided the approximation is stated clearly."}
+      applicability: {level: moderate, rationale: "Could motivate a future small experiment comparing cross-compression heuristics, but no new experiment is justified yet."}
+      redundancy: {level: low, rationale: "No existing dedicated case study was found in the audited pages."}
+      evidence_quality: {level: context-dependent, rationale: "The video describes a published example but the original paper was not independently audited in this pass."}
+    locator: {type: timestamp, value: "00:00–03:02 and 12:59–14:55", label: "Language trees and zipping"}
+    evidence:
+      kind: source-explanation
+      confidence: context-dependent
+      scope: "Compression-based comparison of documents through concatenation and shared compressor state."
+      assumptions: ["The compressor captures useful repeated or shared structure across the compared snippets.", "Document samples are sufficiently representative for the comparison task."]
+      limitations: ["gzip is not an ideal entropy coder.", "The exact distance includes additional details beyond the video’s simplified account.", "It is not a metric identity with Shannon cross-entropy."]
+    disposition: case-study
+    mapped_concepts: [cross-entropy, predictive-compression]
+    target_resources: [fr/compression-revision, en/compression-revision]
