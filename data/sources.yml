@@ -3936,7 +3936,7 @@ sources:
 
   - id: huggingface-jobs-nanogpt-video-2026
     title: "GPU-POOR? NO PROBLEM!... thanks to Hugging Face Jobs"
-    creators: ["ScienceEtonnante (inferred from supplied GitHub URL; unverified)"]
+    creators: []
     source_type: video
     identifiers: {youtube: "7Yx_7byZiFU"}
     canonical_url: "https://www.youtube.com/watch?v=7Yx_7byZiFU"
@@ -3950,7 +3950,7 @@ sources:
     reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
     classification:
       primary_theme: probabilistic-foundations-training
-      secondary_themes: [inference-efficiency]
+      secondary_themes: []
       tags: [topic:training-loop, topic:remote-training, topic:gpu-compute, ecosystem:huggingface, modality:video]
       concept_ids: []
     metadata:
