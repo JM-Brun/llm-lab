@@ -212,6 +212,6 @@ items:
 canonical_mapping:
   proposed_concepts: [v-information]
   proposed_relations:
-    - {from: v-information, type: contrasts-with, to: mutual-information}
+    - {from: mutual-information, type: contrasts-with, to: v-information}
   route_implications: ["Optional advanced extension after entropy, cross-entropy and mutual information; not a prerequisite for the core LLM path."]
   decision_summary: "Added canonical bilingual v-information as an advanced concept after full review of Xu et al. (ICLR 2020). It is explicitly distinguished from Shannon mutual information and linked to an exact synthetic predictor-family demonstration."
