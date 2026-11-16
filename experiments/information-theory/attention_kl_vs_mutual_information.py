@@ -30,15 +30,15 @@ def describe_case(rows: np.ndarray, context_probabilities: np.ndarray) -> dict[s
     return {
         "mean_row_kl_to_uniform_bits": mean_row_kl_to_uniform(rows, context_probabilities),
         "mutual_information_bits": mutual_information(joint, base=2.0),
-        "mean_row_kl_to_marginal_bits": mean(
+        "mean_row_kl_to_marginal_bits": weighted_expectation(
             weight * kl_divergence(row, joint.sum(axis=0), base=2.0)
             for weight, row in zip(context_probabilities, rows, strict=True)
         ),
     }
 
 
-def mean(values: object) -> float:
-    """Small dependency-free mean for the finite weighted values above."""
+def weighted_expectation(values: object) -> float:
+    """Sum already-weighted values to form a finite expectation."""
     return float(np.sum(np.asarray(values, dtype=np.float64)))
 
 
