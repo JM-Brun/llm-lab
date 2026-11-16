@@ -11,8 +11,8 @@ scan:
       - "The page identifies itself as a rewrite of a 2025-03-27 original."
   figures_media:
     status: partial
-    coverage: "Figure captions and their placement were visible; image assets were not separately retrieved or visually audited."
-    notes: ["Do not reuse figures; exact creator and licence terms were not verified."]
+    coverage: "All five embedded output figures in the English notebook (cells 1, 3, 6, 9 and 11) were retrieved from the notebook JSON and visually inspected. Article-page image assets were not separately retrieved."
+    notes: ["The entropy and cross-entropy plots are broadly consistent with their displayed definitions; the joint-distribution panel is numerically coherent, while its Venn diagram is only schematic.", "The attention panel is explicitly titled MI Approximation, but its companion row-wise KL-to-uniform calculation is not mutual information; do not reuse that interpretation.", "Do not reuse article-page figures; their exact creator and licence terms were not verified."]
   code_data:
     status: partial
     coverage: "The English notebook's 18 Markdown/code cells were inspected statically; the notebook was not executed."
@@ -26,7 +26,7 @@ scan:
     notes: ["No comment thread was exposed in the retrieved article body."]
   linked_resources:
     status: partial
-    coverage: "The V-information paper and the linked English/Chinese notebook repository were opened."
+    coverage: "The V-information paper was fully audited; the linked English/Chinese notebook repository, its embedded English notebook outputs, and its LICENSE file were inspected."
     notes: ["Other further-reading links were not exhaustively audited."]
   metadata:
     status: complete
@@ -35,7 +35,7 @@ scan:
   rights:
     status: unknown
     coverage: null
-    notes: ["Article and figure reuse rights were not established; retain link-only treatment."]
+    notes: ["The notebook repository contains an MIT License (copyright 2025 Zhuo Zhang); any reuse of its repository code or documentation must preserve the required copyright and licence notice.", "This repository licence does not establish reuse rights for the separate article page or its figures; retain article and figure assets as link-only unless their rights are independently verified."]
   unresolved_questions:
     - "Which exact upstream notebook cells implement each visualization, and do they correctly distinguish Shannon mutual information, attention weights and V-information?"
     - "What experimental evidence, if any, supports a direct relationship between attention weights and mutual information for particular trained models?"
