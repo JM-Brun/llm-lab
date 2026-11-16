@@ -53,6 +53,8 @@ project:
     - en/likelihood.qmd
     - fr/entropy.qmd
     - en/entropy.qmd
+    - fr/compression-revision.qmd
+    - en/compression-revision.qmd
     - fr/cross-entropy.qmd
     - en/cross-entropy.qmd
     - fr/loss.qmd
@@ -432,6 +434,7 @@ website:
               contents:
                 - fr/decoding-strategies.qmd
                 - fr/llm-computational-complexity.qmd
+                - fr/compression-revision.qmd
                 - fr/rag-memory-boundaries.qmd
             - section: "Échelle et questions de recherche"
               contents:
@@ -629,6 +632,7 @@ website:
               contents:
                 - en/decoding-strategies.qmd
                 - en/llm-computational-complexity.qmd
+                - en/compression-revision.qmd
                 - en/rag-memory-boundaries.qmd
             - section: "Scale and research questions"
               contents:
