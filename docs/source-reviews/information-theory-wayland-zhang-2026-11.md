@@ -86,7 +86,7 @@ But compression performance is conditional on corpus, representation, tokenizer,
 
 ### 3.5 V-information requires a precise operational setup
 
-The article introduces V-information informally as information accessible to a restricted predictive model class. That motivation is useful, but an operational treatment needs a specified predictive family, target variable, conditioning information, loss or scoring rule, and estimator. The article supplies no controlled comparison showing that one architecture extracts a stated quantity of V-information better than another. LLM Lab should defer a dedicated lesson until a primary formal source and reproducible example are selected.
+The article introduces V-information informally as information accessible to a restricted predictive model class. The primary formal source is Xu et al., [A Theory of Usable Information under Computational Constraints](https://arxiv.org/abs/2002.10689) (ICLR 2020). It defines predictive families, optional ignorance, predictive conditional V-entropy and predictive V-information under logarithmic loss. The quantity is directional and family-relative; the unrestricted family recovers Shannon mutual information. The paper's estimation guarantees require bounded log-probabilities and complexity assumptions. The article itself still supplies no controlled comparison showing that self-attention extracts more V-information than bag-of-words. LLM Lab now teaches the formal concept through a small exact finite-family experiment; see the [primary-source review](predictive-v-information-xu-2020.md).
 
 ## 4. Integration decisions
 
@@ -97,12 +97,12 @@ The article introduces V-information informally as information accessible to a r
 5. **Attention lesson:** add a short “attention is not mutual information” guardrail beside the interpretation of attention weights.
 6. **Compression:** retain the predictive-coding interpretation as an optional connection; do not assert compression equals intelligence.
 7. **Landauer:** retain only as a critical-review example of an invalid cross-domain inference.
-8. **V-information:** defer canonical concept creation and a new page until the formalism and an operational experiment are independently sourced.
+8. **Predictive V-information:** integrate it as an advanced supporting concept from Xu et al., not as a claim established by the blog. A finite-family example is included in the existing bilingual experiment guide; no separate duplicate learning path is created.
 
 ## 5. Reuse and provenance
 
-The article and its companion repository are linked as external study resources. No article prose, figures or notebook code are copied. The author links the English notebook at https://github.com/waylandzhang/information-theory-and-language-models; its cells were not executed in this review and are not treated as reproduced experimental evidence. No licence or figure/code reuse permission was established.
+The article and its companion repository are linked as external study resources. No article prose, figures or notebook code are copied. The English companion notebook received a static audit of all 18 cells, code and saved textual outputs; it was not executed, so its runtime behavior and figures are not treated as reproduced experimental evidence. See [the notebook audit](wayland-notebook-audit-2026-11.md). The formal V-information source is separately catalogued and reviewed. No licence or figure/code reuse permission was established.
 
 ## 6. Reproducibility and review boundary
 
-This review is a technical and pedagogical assessment of the article text retrieved on 2026-11-16. It is not an independent replication of the companion notebook, a primary-paper survey of every advanced concept, or evidence that learners have mastered the material. The source remains `partially-scanned` for that reason.
+This review is a technical and pedagogical assessment of the article text retrieved on 2026-11-16. The notebook was statically inspected but not executed; the Xu et al. paper was inspected for the definitions and principal estimation assumptions needed for the project example, not exhaustively replicated. These are source-ingestion and reproducibility records, not evidence that learners have mastered the material. The article source remains `partially-scanned`.
