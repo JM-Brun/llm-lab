@@ -63,7 +63,7 @@ def dyadic_code_inside(low: Fraction, high: Fraction) -> tuple[int, int]:
         # Find the first dyadic value >= low, using integer arithmetic only.
         numerator = (low.numerator * denominator + low.denominator - 1) // low.denominator
         code_value = Fraction(numerator, denominator)
-        if code_value < high:
+        if Fraction(numerator + 1, denominator) <= high:
             return numerator, bits
         bits += 1
 
