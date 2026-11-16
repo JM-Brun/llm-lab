@@ -17,7 +17,9 @@ def test_generated_sequences_are_deterministic() -> None:
 def test_markov_source_has_lower_conditional_than_marginal_entropy() -> None:
     module = _module()
     sequences = module["generate_sequences"]()
-    marginal, conditional = module["entropy_metrics"](sequences["Markov (P[stay]=0.9)"])
+    marginal, conditional = module["entropy_metrics"](
+        sequences["Markov (P[stay]=0.9)"]
+    )
     assert conditional < marginal
 
 
@@ -25,4 +27,7 @@ def test_zlib_size_is_reproducible_and_markov_compresses_better_than_iid() -> No
     module = _module()
     rows = module["summarize"](module["generate_sequences"]())
     by_name = {row["source"]: row for row in rows}
-    assert by_name["Markov (P[stay]=0.9)"]["zlib_bits_per_symbol"] < by_name["IID uniform"]["zlib_bits_per_symbol"]
+    assert (
+        by_name["Markov (P[stay]=0.9)"]["zlib_bits_per_symbol"]
+        < by_name["IID uniform"]["zlib_bits_per_symbol"]
+    )
