@@ -1,0 +1,26 @@
+<section class="rope-pair-explorer" data-lang="en" aria-labelledby="rope-pair-title-en">
+  <h3 id="rope-pair-title-en">Explore one RoPE pair</h3>
+  <p class="rope-explorer-intro">Change the positions and frequency. The original q and k vectors stay fixed: this shows one feature-pair contribution, not a full attention-head score.</p>
+  <div class="rope-controls">
+    <label>Query position m <output data-out="m">2</output><input data-control="m" type="range" min="0" max="20" step="1" value="2"></label>
+    <label>Key position n <output data-out="n">7</output><input data-control="n" type="range" min="0" max="20" step="1" value="7"></label>
+    <label>Frequency θ (rad / position) <output data-out="theta">0.35</output><input data-control="theta" type="range" min="0" max="1.2" step="0.01" value="0.35"></label>
+    <label>Shared shift c <output data-out="shift">0</output><input data-control="shift" type="range" min="-10" max="10" step="1" value="0"></label>
+  </div>
+  <div class="rope-visual-wrap">
+    <svg class="rope-pair-plot" viewBox="0 0 520 300" role="img" aria-label="Original and rotated q and k vectors in a two-dimensional plane">
+      <defs><marker id="rope-arrow-q-en" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#2563eb"/></marker><marker id="rope-arrow-k-en" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#d97706"/></marker></defs>
+      <line x1="30" y1="150" x2="490" y2="150" stroke="currentColor" opacity=".35"/><line x1="260" y1="20" x2="260" y2="280" stroke="currentColor" opacity=".35"/>
+      <g data-drawing></g>
+    </svg>
+    <ul class="rope-legend"><li><span class="rope-swatch rope-q"></span>original q and rotated qₘ</li><li><span class="rope-swatch rope-k"></span>original k and rotated kₙ</li></ul>
+  </div>
+  <div class="rope-results" aria-live="polite">
+    <p><strong>Angles:</strong> <output data-out="angles"></output></p>
+    <p><strong>Contribution qₘ · kₙ:</strong> <output data-out="dot"></output></p>
+    <p><strong>Relative offset n − m:</strong> <output data-out="relative"></output></p>
+    <p><strong>After shared shift:</strong> <output data-out="shifted"></output></p>
+  </div>
+  <p class="rope-explorer-note">For fixed q and k, adding the same c to m and n leaves their relative offset and dot product unchanged. Adding a real prefix to a model can change its hidden states, and therefore q and k: that is a different experiment.</p>
+  <noscript>This interactive explorer requires JavaScript. The mathematical derivation above remains the reference.</noscript>
+</section>
