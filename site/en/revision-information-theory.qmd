@@ -90,5 +90,5 @@ A probability p(x) corresponds to an ideal code length close to -log₂ p(x) bit
 - [Technical source review](../../docs/source-reviews/information-theory-wayland-zhang-2026-11.md)
 
 ::: {.language-switch}
-**Language:** [Français](../fr/revision-information-theory.qmd) · English
+**Language:** [Français](../fr/revision-information-theory.qmd) · [English](revision-information-theory.qmd)
 :::
