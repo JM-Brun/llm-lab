@@ -5,7 +5,7 @@ from pathlib import Path
 
 
 def test_entropy_and_realized_surprisal_are_distinct() -> None:
-    script = Path("experiments/entropy-surprisal-toy/run.py")
+    script = Path(__file__).resolve().parents[2] / "experiments/entropy-surprisal-toy/run.py"
     namespace = runpy.run_path(str(script))
 
     entropy_bits = namespace["entropy_bits"]
