@@ -945,7 +945,7 @@ relations:
   - {from: dataset-curation, type: contributes-to, to: pretraining}
   - {from: dataset-curation, type: contributes-to, to: post-training}
   - {from: group-relative-policy-optimization, type: part-of, to: post-training}
-  - {from: group-relative-policy-optimization, type: uses, to: policy-gradient}
+  - {from: policy-gradient, type: part-of, to: group-relative-policy-optimization}
   - {from: instruction-tuning, type: part-of, to: post-training}
   - {from: reinforcement-learning-from-human-feedback, type: part-of, to: post-training}
   - {from: direct-preference-optimization, type: part-of, to: post-training}
