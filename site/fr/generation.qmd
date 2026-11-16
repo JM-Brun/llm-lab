@@ -10,8 +10,8 @@ lang: fr
 LLM-LAB-PAGE-MAP v1
 id: "fr/generation"
 summary: "Présente la génération comme une boucle autorégressive : contexte, prédiction du prochain token, sélection, réinjection et arrêt. Situe le prefill, le decode incrémental et les stratégies de sélection, puis distingue l’inférence du scoring et de l’apprentissage."
-scope: "Décrit l’inférence autorégressive d’un modèle déjà entraîné : contexte, passe avant, distribution du prochain token, sélection, réinjection et arrêt ; distingue les phases de prefill et de decode des règles de décodage. Les détails internes du Transformer, les stratégies avancées et l’apprentissage des paramètres sont hors périmètre."
-purpose: "Le lecteur doit pouvoir dérouler une génération token par token, distinguer le calcul du modèle, la sélection du token et la boucle complète, expliquer prefill et decode incrémental, et prévoir comment une règle de décodage modifie la sortie sans mettre à jour les paramètres."
+scope: "Décrit l’inférence autorégressive et ses principaux mécanismes de serving : prefill/decode, cache KV, latence, ordonnancement multi-requêtes, continuous batching, prefix caching et chunked prefill. Les détails internes du Transformer et l’apprentissage des paramètres restent hors périmètre."
+purpose: "Le lecteur doit pouvoir dérouler une génération token par token, distinguer le calcul du modèle de la sélection, expliquer les phases prefill/decode et relier les métriques de latence aux mécanismes de serving sans confondre ordonnancement et prédiction."
 suggested_route:
   previous: "fr/llm-overview"
   next: "fr/text-data"
