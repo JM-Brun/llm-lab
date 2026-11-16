@@ -233,6 +233,40 @@ $$
 
 For a mean measured in bits, use $2^{\bar{\ell}}$. Perplexity therefore depends on the logarithm base and evaluation convention. It measures probabilistic performance on the evaluated tokens; it is not a direct measure of factual truth or overall assistant quality.
 
+## Decomposition into target entropy and KL divergence
+
+Cross-entropy connects the prediction objective directly to information theory. For a target distribution $q$ and a predicted distribution $p$ over the same vocabulary:
+
+$
+\begin{aligned}
+H(q,p)&=-\sum_x q(x)\ln p(x)\\
+&=\underbrace{-\sum_x q(x)\ln q(x)}_{H(q)}
++\underbrace{\sum_x q(x)\ln\frac{q(x)}{p(x)}}_{D_{KL}(q\|p)}.
+\end{aligned}
+$
+
+Therefore:
+
+$
+\boxed{H(q,p)=H(q)+D_{KL}(q\|p)}
+$
+
+KL divergence is non-negative (under the usual support conditions), and it is zero when $p=q$. If the target distribution $q$ and context are fixed, $H(q)$ does not depend on the model parameters. Minimizing cross-entropy with respect to $p$ is therefore equivalent to minimizing $D_{KL}(q\|p)$. This does not mean that the entropy of language is one universal constant: it depends on the distribution, context, corpus, and tokenization under consideration.
+
+### Numerical example in nats
+
+Take $q=(0.5,0.5)$ and $p=(0.75,0.25)$:
+
+- $H(q)=-(0.5\ln0.5+0.5\ln0.5)\approx0.693$ nats;
+- $H(q,p)=-(0.5\ln0.75+0.5\ln0.25)\approx0.837$ nats;
+- $D_{KL}(q\|p)=H(q,p)-H(q)\approx0.144$ nats.
+
+Thus $0.837\approx0.693+0.144$. With base-2 logarithms, the same quantities would be measured in bits; common training-loss implementations use natural logarithms and therefore report nats.
+
+::: {.callout-note}
+**One-hot target as a special case.** If $q$ puts all its mass on the observed token $y$, then $H(q)=0$ and $D_{KL}(q\|p)=-\ln p(y)$. Cross-entropy is therefore exactly the token NLL. This is the usual observed-token supervision case; the “matching two distributions” interpretation is most visible when the target is itself a non-degenerate distribution, for example in distillation.
+:::
+
 ## Connection to the gradient
 
 The derivative of one-hot cross-entropy with respect to the logits is $p_i-\mathbb{1}[i=y]$. Its interpretation and role in backpropagation are developed in the [Gradients](gradients.qmd) lesson.
