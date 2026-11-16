@@ -165,7 +165,7 @@ flowchart TD
   A["Symbol frequencies"] --> B["Prefix-code tree"]
   B --> C["Ideal length: -log₂ p(x)"]
   C --> D["Average: entropy H(X)"]
-  D --> E["Context: p(xₜ | x₍₍ₜ)"]
+  D --> E["Context: p(xₜ | contexte précédent)"]
   E --> F["Sequence cost: sum of surprisals"]
   F --> G["Model p evaluated on targets q: H(q,p)"]
 ```
