@@ -10,7 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "fr/transformer-block-walkthrough-exercises"
 summary: "Exercices associés à la visite guidée Bloc Transformer."
 scope: "Regroupe les exercices et corrigés de la visite guidée sans dupliquer l'explication du code."
-purpose: "Vérifier la compréhension des invariants, des formes et des choix d'implémentation présentés dans la visite guidée."
+purpose: "Vérifier les invariants, les formes et les choix d'implémentation du bloc, ainsi que la comparaison des variantes d'attention."
 suggested_route:
   previous: null
   next: null
