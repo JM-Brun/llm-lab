@@ -98,6 +98,11 @@ In an attention head, rotations are applied to $Q$ and $K$ **after their project
 <link rel="stylesheet" href="../styles/rope-memory-ledger.css">
 <script src="../scripts/rope-memory-ledger.js" defer></script>
 
+{{< include ../includes/nope-prefix-experiment-en.html >}}
+
+<link rel="stylesheet" href="../styles/nope-prefix-experiment.css">
+<script src="../scripts/nope-prefix-experiment.js" defer></script>
+
 ## What RoPE provides — and what it does not guarantee
 
 RoPE provides a structured way to introduce position into attention. Its presence alone does not guarantee reliable extrapolation to sequences much longer than those seen during training.
