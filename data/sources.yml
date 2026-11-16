@@ -3585,7 +3585,7 @@ sources:
           - "The full comment discussion and linked materials were not exhaustively inspected."
           - "No reuse licence was established; link-only treatment."
     related:
-      pages: []
+      pages: [fr/probabilites, en/probabilities, fr/entropy, en/entropy, fr/vraisemblance, en/likelihood, fr/cross-entropy, en/cross-entropy, fr/training-loop, en/training-loop, fr/scaling-laws, en/scaling-laws]
       concepts: []
       audit_records:
         - docs/source-syntheses/llms-and-compression-algorithms-2026-11.md
