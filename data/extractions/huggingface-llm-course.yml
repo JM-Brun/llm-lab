@@ -1,0 +1,151 @@
+schema_version: 1
+source_id: huggingface-llm-course
+reconstruction_basis:
+  accessed_at: "2026-11-16"
+  inspected:
+    - "Current English LLM Course chapter index (chapters 0–12)"
+    - "French Chapter 1 introduction and its visible section outline"
+  not_inspected:
+    - "Lesson bodies and code for Chapters 2–12"
+    - "Notebooks, quizzes, videos, Hub artifacts and live demos"
+    - "Runtime execution or learner outcomes"
+  limitations:
+    - "Index-level statements are not evidence of chapter depth or technical correctness."
+    - "The English and French course outlines differ; the current French page appears to expose an earlier course outline."
+    - "Living documentation was not pinned to an immutable commit."
+pedagogical_model:
+  audience:
+    declared: "Learners with good Python knowledge; prior deep-learning exposure recommended; prior PyTorch/TensorFlow expertise not required."
+    confidence: high
+  outcomes:
+    - "Understand Transformer models and common NLP/LLM tasks."
+    - "Use pretrained models and fine-tune them on datasets."
+    - "Work with tokenizers and datasets."
+    - "Share models and demos through the Hugging Face Hub."
+    - "Explore dataset curation, LLM fine-tuning and reasoning-model construction."
+  route:
+    - "Setup"
+    - "Transformer models"
+    - "Using Transformers"
+    - "Fine-tune a pretrained model"
+    - "Share models and tokenizers"
+    - "Datasets"
+    - "Tokenizers"
+    - "Classical NLP tasks"
+    - "Ask for help"
+    - "Build and share demos"
+    - "Curate high-quality datasets"
+    - "Fine-tune LLMs"
+    - "Build reasoning models"
+  route_status: "Reconstructed from the current English index; not a prerequisite graph."
+items:
+  - id: huggingface-llm-course:course-architecture
+    kind: teaching-sequence
+    summary: "The course progresses from Transformer concepts and pretrained-model use through fine-tuning, artifact sharing, data/tokenizer tooling and task recipes, before introducing data curation, LLM fine-tuning and reasoning-model construction."
+    locator:
+      type: page
+      value: "https://huggingface.co/learn/llm-course/"
+      label: "Current English course index"
+    evidence:
+      kind: course-outline
+      confidence: high
+      scope: "Visible chapter titles and the overview's declared outcomes."
+      assumptions: []
+      limitations: ["Does not establish lesson-level depth, chapter prerequisites or learner mastery."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [training-learning, text-tokenization]
+      tags: [topic:transformer, topic:llm-training, ecosystem:huggingface]
+      concept_ids: [self-attention, token]
+    candidate_destinations:
+      pages: []
+      concepts: [self-attention, token]
+    disposition: already-covered
+  - id: huggingface-llm-course:chapter1-scope
+    kind: teaching-sequence
+    summary: "Chapter 1 introduces NLP as the broader field and LLMs as a subset, then frames Transformer capabilities, internal operation, encoder/decoder/sequence-to-sequence families, bias and limitations. The supplied French page exposes this outline."
+    locator:
+      type: page
+      value: "https://huggingface.co/learn/llm-course/fr/chapter1/1"
+      label: "French Chapter 1 introduction"
+    evidence:
+      kind: course-outline
+      confidence: high
+      scope: "Visible French chapter navigation and introductory text."
+      assumptions: []
+      limitations: ["Only the introduction and outline were inspected, not the linked lesson bodies."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: []
+      tags: [topic:transformer, topic:model-limitations, ecosystem:huggingface]
+      concept_ids: [self-attention]
+    candidate_destinations:
+      pages: [fr/transformer-architecture, en/transformer-architecture]
+      concepts: [self-attention]
+    disposition: already-covered
+  - id: huggingface-llm-course:dataset-curation
+    kind: new-page-proposal
+    summary: "The course dedicates a later chapter to curating high-quality datasets for LLMs. This is a high-priority candidate for a deeper comparison with LLM Lab's corpus preparation, data-quality and evaluation materials; the chapter itself has not yet been inspected."
+    locator:
+      type: page
+      value: "https://huggingface.co/learn/llm-course/"
+      label: "Chapter 10 listing"
+    evidence:
+      kind: course-outline
+      confidence: high
+      scope: "Chapter title only."
+      assumptions: []
+      limitations: ["No claim is made about specific curation methods or chapter recommendations."]
+    classification:
+      primary_theme: training-learning
+      secondary_themes: [evaluation]
+      tags: [topic:dataset-curation, ecosystem:huggingface]
+      concept_ids: []
+    candidate_destinations:
+      pages: []
+      concepts: []
+    disposition: defer
+  - id: huggingface-llm-course:llm-finetuning
+    kind: new-page-proposal
+    summary: "The course dedicates a later chapter to fine-tuning LLMs. Compare its methods and engineering trade-offs with the existing post-training lesson and separate Build adaptation branch before proposing any integration."
+    locator:
+      type: page
+      value: "https://huggingface.co/learn/llm-course/"
+      label: "Chapter 11 listing"
+    evidence:
+      kind: course-outline
+      confidence: high
+      scope: "Chapter title only."
+      assumptions: []
+      limitations: ["Specific fine-tuning methods and implementation details have not been inspected."]
+    classification:
+      primary_theme: training-learning
+      secondary_themes: [inference-efficiency]
+      tags: [topic:fine-tuning, ecosystem:huggingface]
+      concept_ids: []
+    candidate_destinations:
+      pages: [fr/post-training, en/post-training]
+      concepts: []
+    disposition: defer
+  - id: huggingface-llm-course:reasoning-models
+    kind: new-page-proposal
+    summary: "The course includes a chapter on building reasoning models. Treat this as a candidate for advanced training and evaluation coverage; distinguish post-training recipes from inference-time reasoning and avoid inferring a single accepted definition of reasoning."
+    locator:
+      type: page
+      value: "https://huggingface.co/learn/llm-course/"
+      label: "Chapter 12 listing"
+    evidence:
+      kind: course-outline
+      confidence: high
+      scope: "Chapter title only."
+      assumptions: []
+      limitations: ["The chapter body, algorithms, reward design and evaluation protocols have not been inspected."]
+    classification:
+      primary_theme: training-learning
+      secondary_themes: [evaluation]
+      tags: [topic:reasoning-models, ecosystem:huggingface]
+      concept_ids: []
+    candidate_destinations:
+      pages: []
+      concepts: []
+    disposition: defer
