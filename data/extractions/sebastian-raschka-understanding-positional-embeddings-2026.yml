@@ -60,6 +60,7 @@ pedagogical_model:
       - {id: rope-pair-explorer, status: implemented-bilingual-pending-browser-validation, files: [site/includes/rope-pair-explorer-fr.html, site/includes/rope-pair-explorer-en.html, site/scripts/rope-pair-explorer.js, site/styles/rope-pair-explorer.css], covers: "Pairwise Q/K rotations, positions, frequency, shared-shift invariance and one-pair dot-product contribution."}
       - {id: qk-attention-pipeline, status: implemented-bilingual-pending-browser-validation, files: [site/includes/rope-attention-pipeline-fr.html, site/includes/rope-attention-pipeline-en.html, site/scripts/rope-attention-pipeline.js, site/styles/rope-attention-pipeline.css], covers: "Q/K/V projections, optional RoPE, scaled dot-product scores, causal masking, softmax and weighted value aggregation."}
       - {id: rope-pair-layout-explorer, status: implemented-bilingual-pending-browser-validation, files: [site/includes/rope-pair-layout-fr.html, site/includes/rope-pair-layout-en.html, site/scripts/rope-pair-layout.js, site/styles/rope-pair-layout.css], covers: "Interleaved and split-half coordinate pairing, consistent permutation, frequency assignment and deliberate mismatch counterexample."}
+      - {id: rope-frequency-explorer, status: implemented-bilingual-pending-browser-validation, files: [site/includes/rope-frequency-explorer-fr.html, site/includes/rope-frequency-explorer-en.html, site/scripts/rope-frequency-explorer.js, site/styles/rope-frequency-explorer.css], covers: "Geometric inverse-frequency schedule, head dimension, model base, position-dependent phase and wavelength."}
     implementation_caveats:
       - "The interactive explorer fixes the unrotated q and k vectors; it demonstrates the positional rotation identity, not changes to hidden states caused by adding a real prefix."
       - "The displayed dot product is one 2D feature-pair contribution, not the full multi-pair attention-head score."
@@ -90,7 +91,7 @@ pedagogical_model:
       - "Partial RoPE reduces the precomputed cosine/sine table, not the full-width KV cache."
     build_priorities:
       P0: [position-entry-point-map, rope-pair-explorer, qk-attention-pipeline, feature-pair-layout-explorer]
-      P1: [multi-frequency-table, partial-rope-memory-ledger, nope-causal-prefix-experiment, hybrid-layer-strip, relative-bias-score-decomposition]
+      P1: [partial-rope-memory-ledger, nope-causal-prefix-experiment, hybrid-layer-strip, relative-bias-score-decomposition]
       P2: [dated-architecture-evidence-dashboard]
     interaction_pattern: "predict → manipulate one variable → observe tensor/geometry → explain invariant or failure → run a small test"
     accessibility: "Every interactive diagram must have a static annotated fallback and accompanying text explanation."
