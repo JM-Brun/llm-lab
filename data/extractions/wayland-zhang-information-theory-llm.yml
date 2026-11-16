@@ -119,10 +119,10 @@ items:
     classification:
       primary_theme: probabilistic-foundations-training
       tags: [topic:information-theory]
-      concept_ids: [cross-entropy, negative-log-likelihood, training-objective]
+      concept_ids: [cross-entropy, kl-divergence, negative-log-likelihood, training-objective]
     candidate_destinations:
       pages: [fr/cross-entropy, en/cross-entropy]
-      concepts: [cross-entropy, negative-log-likelihood, training-objective]
+      concepts: [cross-entropy, kl-divergence, negative-log-likelihood, training-objective]
     disposition: integrate
     disposition_rationale: "Add the identity and assumptions to the existing bilingual cross-entropy lesson, with consistent log units and a worked numerical example."
 
@@ -147,10 +147,10 @@ items:
       primary_theme: architectures-mechanisms
       secondary_themes: [probabilistic-foundations-training]
       tags: [topic:mutual-information]
-      concept_ids: [self-attention, attention-weight, scaled-dot-product-attention]
+      concept_ids: [self-attention, attention-weight, scaled-dot-product-attention, mutual-information]
     candidate_destinations:
       pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
-      concepts: [self-attention, attention-weight, scaled-dot-product-attention]
+      concepts: [self-attention, attention-weight, scaled-dot-product-attention, mutual-information]
     disposition: integrate
     disposition_rationale: "Add a concise distinction between attention weights and mutual information to the existing bilingual attention lesson."
 
