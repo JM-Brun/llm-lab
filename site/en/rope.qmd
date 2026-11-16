@@ -83,6 +83,11 @@ In an attention head, rotations are applied to $Q$ and $K$ **after their project
 <link rel="stylesheet" href="../styles/rope-attention-pipeline.css">
 <script src="../scripts/rope-attention-pipeline.js" defer></script>
 
+{{< include ../includes/rope-pair-layout-en.html >}}
+
+<link rel="stylesheet" href="../styles/rope-pair-layout.css">
+<script src="../scripts/rope-pair-layout.js" defer></script>
+
 ## What RoPE provides — and what it does not guarantee
 
 RoPE provides a structured way to introduce position into attention. Its presence alone does not guarantee reliable extrapolation to sequences much longer than those seen during training.
