@@ -28,7 +28,7 @@ def main() -> None:
         "",
     ]
     report.extend(f"{label}: {cost:.3f} bits ({cost / 40:.3f} bits/symbol)" for label, cost in cases)
-    sys.stdout.write("\\n".join(report) + "\\n")
+    sys.stdout.write("\n".join(report) + "\n")
 
 
 if __name__ == "__main__":
