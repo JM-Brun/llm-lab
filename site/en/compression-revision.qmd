@@ -141,9 +141,9 @@ This raises a useful question: **does good prediction alone measure the quality 
 
 **Keep the qualifications:** epiplexity is a recent research concept; Fan's mapping between An/Fn algebraic structures and neural networks is an analogy, not a theorem about LLMs. The paper's definition of understanding in terms of “structural effectiveness” is a philosophical proposal, not a scientific consensus.
 
-The [sequential-structure and predictive-compression experiment](../../experiments/compression-strategy-spectrum/README.md) compares unigram and bigram models on synthetic data. It illustrates the use of sequential dependencies; it does not calculate epiplexity or measure understanding.
+The [sequential-structure and predictive-compression experiment](https://github.com/JM-Brun/llm-lab/blob/main/experiments/compression-strategy-spectrum/README.md) compares unigram and bigram models on synthetic data. It illustrates the use of sequential dependencies; it does not calculate epiplexity or measure understanding.
 
-See the [critical synthesis of Mingdi Fan's paper](../../docs/source-syntheses/fan-compression-intelligence-2026-11.md) and the [detailed source review](../../docs/source-reviews/fan-compression-intelligence-2026-11.md).
+See the [critical synthesis of Mingdi Fan's paper](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/fan-compression-intelligence-2026-11.md) and the [detailed source review](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-reviews/fan-compression-intelligence-2026-11.md).
 
 ## Self-check
 
