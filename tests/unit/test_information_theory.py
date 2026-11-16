@@ -7,6 +7,7 @@ from llm_lab.foundations.information_theory import (
     cross_entropy,
     ideal_code_lengths,
     kl_divergence,
+    mutual_information,
     perplexity,
     shannon_entropy,
 )
@@ -46,6 +47,30 @@ def test_ideal_code_lengths_and_perplexity() -> None:
     np.testing.assert_allclose(ideal_code_lengths(probabilities), [1.0, 2.0, 2.0])
     assert perplexity(np.log(4.0)) == pytest.approx(4.0)
     assert perplexity(2.0, base=2.0) == pytest.approx(4.0)
+
+
+def test_mutual_information_is_zero_for_independent_variables() -> None:
+    joint = np.array([[0.25, 0.25], [0.25, 0.25]])
+    assert mutual_information(joint, base=2.0) == pytest.approx(0.0)
+
+
+def test_mutual_information_of_perfectly_correlated_bits_is_one_bit() -> None:
+    joint = np.array([[0.5, 0.0], [0.0, 0.5]])
+    assert mutual_information(joint, base=2.0) == pytest.approx(1.0)
+
+
+@pytest.mark.parametrize(
+    "joint",
+    [
+        np.array([0.5, 0.5]),
+        np.array([[0.2, 0.2], [0.2, 0.2]]),
+        np.array([[0.5, -0.1], [0.1, 0.5]]),
+        np.array([[np.nan, 0.0], [0.0, 1.0]]),
+    ],
+)
+def test_mutual_information_rejects_invalid_joint_tables(joint: np.ndarray) -> None:
+    with pytest.raises(ValueError):
+        mutual_information(joint)
 
 
 @pytest.mark.parametrize(
