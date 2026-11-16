@@ -8,7 +8,7 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/corpus-preparation"
-scope: "Covers data-engineering decisions upstream of pretraining: source eligibility and provenance, parsing and filtering, deduplication, evaluation splits, tokenizer fitting/freezing, and hand-off to token streams."
+scope: "Covers data-engineering decisions upstream of pretraining: source eligibility and provenance, parsing and filtering, deduplication, evaluation splits, tokenizer fitting/freezing, human annotation and label traceability, and hand-off to token streams."
 purpose: "Build a traceable corpus-preparation protocol suited to a training or evaluation objective, avoid split leakage, and distinguish corpus-level decisions from tokenizer internals and training-example construction."
 suggested_route:
   previous: null
@@ -30,6 +30,7 @@ By the end of this page, you will be able to:
 - distinguish parsing, filtering, deduplication, and tokenizer normalization;
 - choose splits that match the generalization claim an evaluation is intended to test;
 - fit and freeze a tokenizer without contaminating a held-out evaluation;
+- design a traceable annotation protocol and interpret annotator disagreement;
 - hand a prepared corpus off to encoding and training-example construction.
 :::
 
