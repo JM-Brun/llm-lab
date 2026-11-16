@@ -174,6 +174,54 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 - [Entropie croisée et divergence KL](cross-entropy.qmd) — objectif probabiliste utilisé pour entraîner le modèle.
 - [Loss](loss.qmd) — décalage des cibles, masques et réduction de la perte.
 
+## Les LLM sont-ils des algorithmes de compression ?
+
+**Réponse courte : pas exactement.** Un LLM apprend à prédire le prochain token. Cette capacité peut servir à compresser une séquence *si on lui associe un véritable codeur entropique*. Mais générer du texte n'est pas décompresser le corpus d'entraînement.
+
+### 1. Prédire donne une mesure de la quantité d'information
+
+Pour le contexte déjà observé, le modèle attribue une probabilité au prochain token :
+
+\[
+p(x_t\mid x_{<t}).
+\]
+
+Après observation du token, sa surprise — ou *surprisal* — en bits vaut :
+
+\[
+I(x_t\mid x_{<t})=-\log_2 p(x_t\mid x_{<t}).
+\]
+
+Si le modèle attribue une probabilité de $1/2$, le token coûte idéalement 1 bit ; s'il lui attribue $1/8$, il coûte 3 bits. **Plus le token est prévisible, moins son codage idéal demande de bits.** La somme de ces surprises donne la longueur idéale associée à la séquence :
+
+\[
+L(x_{1:T})\approx-\sum_{t=1}^{T}\log_2 p(x_t\mid x_{<t}).
+\]
+
+### 2. Mais il faut un codeur et un décodeur
+
+Les probabilités ne sont pas, à elles seules, un fichier compressé. Un codeur entropique (par exemple un codeur arithmétique) transforme ces probabilités en un flux de bits. Le décodeur utilise exactement le même modèle, le même tokenizer et les mêmes conventions pour retrouver les tokens.
+
+Sans ce protocole partagé, le fait qu'un LLM puisse continuer un texte ne signifie pas qu'il peut reconstruire exactement le texte original à partir d'une représentation plus courte.
+
+### 3. Ce que cela ne veut pas dire
+
+- Les poids du LLM ne sont pas une archive littérale du corpus d'entraînement.
+- Générer une continuation plausible n'est pas retrouver un exemple exact du corpus.
+- Une bonne prédiction ne garantit pas une compression nette une fois comptés le modèle, le tokenizer et les métadonnées.
+- Une compression **du modèle** (quantification, pruning, distillation) réduit le coût de stockage ou d'exécution du réseau : c'est une autre question. Voir la [synthèse sur la compression des modèles](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/model-compression-2026-11.md).
+
+### À retenir
+
+**Compression prédictive :** le modèle fournit des probabilités ; un codeur peut les exploiter pour représenter les données en moins de bits.
+
+**Compression du modèle :** on réduit la taille ou le coût du réseau lui-même.
+
+**Génération :** le modèle échantillonne ou choisit un prochain token ; ce n'est pas, à elle seule, une opération de décodage sans perte.
+
+Pour manipuler ces idées, lancez l'[expérience reproductible de compression prédictive](https://github.com/JM-Brun/llm-lab/blob/main/experiments/predictive-compression/README.fr.md).
+
+
 ### Références
 
 - Claude E. Shannon (1948), [*A Mathematical Theory of Communication*](https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf) — fondement de l'entropie informationnelle.
@@ -201,6 +249,8 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 </details>
 :::
 
+
+[**Fiche de révision — Compression et LLM**](compression-revision.qmd) : retrouver en une page la relation entre probabilités conditionnelles, longueur de code, compression du modèle et mémoire d'exécution.
 
 </div>
 </details>

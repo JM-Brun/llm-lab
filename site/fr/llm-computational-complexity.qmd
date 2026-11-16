@@ -194,6 +194,8 @@ Pour appliquer ces distinctions à des choix d'architecture : [architectures hyb
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/llm-computational-complexity.qmd).
 
 
+[**Fiche de révision — Compression et LLM**](compression-revision.qmd) : distinguer la taille du checkpoint, la mémoire temporaire et le coût de codage des données.
+
 **Notion canonique :** [Panorama des modèles de langage](llm-overview.qmd). Cette page approfondit les coûts de calcul et de mémoire des LLM ; elle complète la vue générale sans être une étape obligatoire.
 
 </div>

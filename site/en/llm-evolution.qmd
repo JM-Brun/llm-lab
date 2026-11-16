@@ -131,6 +131,20 @@ The evolution of LLM systems does not mean that the dense Transformer has simply
 
 These techniques are not mutually exclusive and do not solve the same problem. Some target compute cost, others memory traffic, throughput, or latency.
 
+
+### Model compression: a different question from prediction
+
+The word *compression* has two distinct meanings here:
+
+- **Predictive data compression:** the model assigns probabilities to tokens; an entropy coder can use those probabilities to reduce the number of bits needed to represent a sequence.
+- **Model compression:** the network itself is changed to reduce its footprint or cost. **Quantization** uses fewer bits for weights (and sometimes activations), **pruning** removes weights or structures, and **distillation** trains a smaller student to reproduce selected behaviors of a teacher.
+
+A third dimension is **runtime memory**: the KV cache and activations occupy temporary memory during inference; they are not the persistent size of the weights.
+
+These levers do not guarantee the same benefits. A smaller checkpoint is not automatically faster; better weight compression does not mean the model predicts better; and a predictive model is not automatically a lossless coder. Compare checkpoint size, peak memory, latency, throughput, and probabilistic quality separately.
+
+For the mathematical explanation and a small reproducible entropy coder, see [“Are LLMs compression algorithms?” in the entropy lesson](entropy.qmd). The [detailed comparison synthesis](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/compression-two-meanings-2026-11.md) provides qualifications and references.
+
 Further reading: [Hybrid architectures](hybrid-llm-architectures.qmd) and [Computational complexity and parallelism](llm-computational-complexity.qmd).
 
 ## 6. From a model to a system that uses tools {#tool-using-systems}

@@ -3546,3 +3546,147 @@ sources:
       pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/attention-score-scaling, en/attention-score-scaling, fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
       concepts: [self-attention, scaled-dot-product-attention, attention-score, attention-weight, softmax, causal-mask]
       audit_records: [docs/source-reviews/flashattention-io-aware-2026-11.md]
+
+  - id: karthik-shashidhar-llms-compression-algorithms-2024
+    title: "LLMs and compression algorithms"
+    creators: ["Karthik Shashidhar"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://artofdatascience.substack.com/p/llms-and-compression-algorithms"
+    publisher: "Art of Data Science (Substack)"
+    publication_date: "2024-08-27"
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [scale-research]
+      tags: [topic:predictive-compression, topic:generalization, method:analogy]
+      concept_ids: [conditional-distribution, surprisal, predictive-compression, entropy-coding, arithmetic-coding]
+    metadata:
+      technical_level: introductory
+      contribution_types: [pedagogy, theory]
+      audiences: [beginner, learner, educator]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    scan_history:
+      - accessed_at: "2026-11-16"
+        status: partially-scanned
+        inspected_scope:
+          - "Full article body retrieved and reviewed."
+          - "Visible discussion excerpt inspected, including a reader comment about reinforcement learning and specialized training data."
+          - "Claims, analogies, limitations and proposed pedagogical uses mapped in the source synthesis."
+        limitations:
+          - "No underlying datasets, code or quantitative experiments are supplied by the article."
+          - "The author's coding-assistant comparisons are anecdotal."
+          - "The full comment discussion and linked materials were not exhaustively inspected."
+          - "No reuse licence was established; link-only treatment."
+    related:
+      pages: [fr/probabilites, en/probabilities, fr/entropy, en/entropy, fr/vraisemblance, en/likelihood, fr/cross-entropy, en/cross-entropy, fr/training-loop, en/training-loop, fr/scaling-laws, en/scaling-laws, fr/compression-revision, en/compression-revision]
+      concepts: [conditional-distribution, surprisal, predictive-compression, entropy-coding, arithmetic-coding]
+      audit_records:
+        - docs/source-syntheses/llms-and-compression-algorithms-2026-11.md
+        - docs/source-reviews/karthik-shashidhar-llms-compression-algorithms-2024.md
+
+  - id: sasirekha-cota-understanding-llm-compression-2023
+    title: "Understanding Compression of Large Language Models (LLMs)"
+    creators: ["Sasirekha Cota"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://medium.com/@sasirekharameshkumar/understanding-compression-of-large-language-models-2ee3b8a350a2"
+    publisher: "Medium"
+    publication_date: "2023-11-22"
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: inference-efficiency
+      secondary_themes: [architectures-mechanisms, scale-research]
+      tags:
+        - topic:model-compression
+        - method:pruning
+        - method:quantization
+        - method:knowledge-distillation
+      concept_ids: [kv-cache, model-compression, pruning, quantization, knowledge-distillation]
+    metadata:
+      technical_level: introductory
+      contribution_types: [theory, pedagogy]
+      audiences: [beginner, learner, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    scan_history:
+      - accessed_at: "2026-11-16"
+        status: partially-scanned
+        inspected_scope:
+          - "Full author-authored article body: motivation, pruning, quantization, PTQ/QAT, knowledge distillation and conclusion"
+          - "Visible source metadata: author, Medium publisher and publication date"
+          - "Primary publication abstracts/landing pages for SparseGPT, SmoothQuant and DistilBERT consulted to qualify selected numerical claims"
+          - "Source claims and limits structured in the extraction artifact and critical synthesis"
+        limitations:
+          - "The article is an introductory overview, not a systematic survey or empirical study."
+          - "The full discussion, linked resources and article figures were not inspected."
+          - "Primary research papers were checked at abstract/landing-page level only; no method, code or benchmark was reproduced."
+          - "Reported size/speedup figures are not universal and are not independently validated for current hardware."
+          - "No reuse licence or permission was established; link-only treatment."
+    related:
+      pages:
+        - fr/llm-computational-complexity
+        - en/llm-computational-complexity
+        - fr/llm-evolution
+        - en/llm-evolution
+        - fr/compression-revision
+        - en/compression-revision
+      concepts: [kv-cache, model-compression, pruning, quantization, knowledge-distillation]
+      audit_records:
+        - docs/source-syntheses/model-compression-2026-11.md
+
+  - id: wayland-zhang-information-theory-llm-2026
+    title: "Information Theory Is All You Need (to Understand LLMs)"
+    creators: ["Wayland Zhang"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://waylandz.com/blog/information-theory-and-llm/"
+    publisher: "Wayland Zhang"
+    publication_date: "2026-02-17"
+    updated_date: null
+    language: en
+    version: "Article states it is a rewrite of a 2025-03-27 original"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:entropy, topic:cross-entropy, topic:mutual-information, topic:predictive-compression, topic:v-information]
+      concept_ids: [entropy, cross-entropy, kl-divergence, mutual-information, self-attention]
+    metadata:
+      technical_level: mixed
+      contribution_types: [theory, pedagogy, visualization, experiment]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-16"
+        status: partially-scanned
+        inspected_scope:
+          - "Full article body retrieved directly: six sections and page metadata"
+          - "Linked GitHub repository landing page and English/Chinese notebook filenames inspected"
+          - "Linked V-information paper abstract and metadata inspected"
+          - "Critical source extraction and review created"
+        limitations:
+          - "Notebook cells were not executed or exhaustively inspected."
+          - "Article figures were not separately retrieved as image files."
+          - "Full V-information paper and remaining further-reading links were not audited."
+          - "Comments and reuse permissions were not established."
+    related:
+      pages: [fr/entropy, en/entropy, fr/cross-entropy, en/cross-entropy, fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+      concepts: [cross-entropy, self-attention]
+      audit_records:
+        - docs/source-reviews/wayland-zhang-information-theory-llm-2026-11.md
+        - docs/source-syntheses/information-theory-and-llms-2026-11.md

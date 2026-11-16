@@ -1,0 +1,292 @@
+schema_version: 1
+source_id: karthik-shashidhar-llms-compression-algorithms-2024
+scan:
+  accessed_at: "2026-11-16"
+  retrieval_method: direct-web
+  author_text:
+    status: complete
+    coverage: "Full article body: LZW introduction, coding assistants, compression analogy, model-size comparison, routine versus niche programming, and conclusion."
+    notes: ["The article is a short opinion/vulgarization piece, not an empirical study."]
+  figures_media:
+    status: not-inspected
+    coverage: null
+    notes: ["No figures were required for the extracted argument."]
+  code_data:
+    status: not-inspected
+    coverage: null
+    notes: ["No code, dataset or benchmark is supplied."]
+  comments:
+    status: partial
+    coverage: "Visible discussion excerpt including one reader comment on reinforcement learning and specialized training data."
+    notes: ["The complete discussion thread was not exhaustively inspected."]
+  linked_resources:
+    status: partial
+    coverage: "LZW link and named coding-assistant/model references noted."
+    notes: ["Outbound links were not exhaustively inspected."]
+  metadata:
+    status: complete
+    coverage: "Author, title, publication date and publication platform visible on article page."
+    notes: []
+  rights:
+    status: unknown
+    coverage: null
+    notes: ["No text or figure reuse permission was established; paraphrase and link only."]
+  unresolved_questions:
+    - "How strongly does training-data frequency predict performance after controlling for task structure, data quality, model scale and post-training?"
+    - "How do composition and transfer affect performance on rare but structurally familiar tasks?"
+    - "What empirical evidence supports the article's comparison of Llama 3.1 70B and 405B?"
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Full article body retrieved and reviewed on 2026-11-16."
+      - "The source's argument sequence was reconstructed from its LZW analogy, coding-assistant examples, compression discussion and programming conclusion."
+      - "The proposed bridge to the project's probability, entropy and training lessons is an editorial addition, not a structure authored by the source."
+    inferred_elements:
+      - "The source does not declare formal learning outcomes or prerequisites; both are inferred."
+      - "The graph is a source-local reconstruction of the author's argument, not a canonical concept graph."
+  source_graph:
+    nodes:
+      - id: src-lzw-compression-analogy
+        kind: analogy
+        description: "LZW supplies an intuitive example of representing repeated sequences compactly."
+        locator: "Opening paragraphs"
+        inferred: false
+      - id: src-llm-statistical-regularities
+        kind: mental-model
+        description: "The author frames model parameters as capturing recurring statistical patterns in training material."
+        locator: "Section 'What does this have to do with compression?'"
+        inferred: false
+      - id: src-domain-coverage
+        kind: claim
+        description: "The author argues that common code and domains are more readily handled than niche or less represented ones."
+        locator: "Sections on compression and coding assistants"
+        inferred: false
+      - id: src-short-prompt-generation
+        kind: example
+        description: "A short instruction can elicit a longer code continuation when familiar patterns can be reused."
+        locator: "Coding-assistant examples"
+        inferred: false
+      - id: src-human-verification
+        kind: learning-implication
+        description: "Programming knowledge remains useful for checking generated code and handling unusual tasks."
+        locator: "Concluding section on how LLMs change coding"
+        inferred: false
+      - id: src-probabilistic-coding-bridge
+        kind: formal-connection
+        description: "Conditional probabilities and ideal code lengths connect language-model prediction to predictive compression."
+        locator: "Reviewer-added connection; not formalized in the article"
+        inferred: true
+      - id: src-generalization-boundary
+        kind: open-question
+        description: "Frequency, transfer, task structure and distribution shift jointly affect whether learned regularities generalize."
+        locator: "Reviewer-added qualification"
+        inferred: true
+    edges:
+      - from: src-lzw-compression-analogy
+        type: motivates
+        to: src-llm-statistical-regularities
+        inferred: false
+      - from: src-llm-statistical-regularities
+        type: offered-as-explanation-for
+        to: src-domain-coverage
+        inferred: false
+      - from: src-domain-coverage
+        type: illustrates
+        to: src-short-prompt-generation
+        inferred: false
+      - from: src-short-prompt-generation
+        type: motivates
+        to: src-human-verification
+        inferred: false
+      - from: src-llm-statistical-regularities
+        type: can-be-formalized-through
+        to: src-probabilistic-coding-bridge
+        inferred: true
+      - from: src-domain-coverage
+        type: requires-qualification-by
+        to: src-generalization-boundary
+        inferred: true
+    interpretation: "The first five nodes reconstruct the author's argument. The final two are reviewer-added formalization and qualification; they must not be attributed to the author."
+  learning_outcomes:
+    - status: inferred
+      outcome: "Explain why repeated statistical regularities can make some next-token continuations more predictable."
+      basis: "The article's LZW analogy and discussion of familiar code patterns."
+    - status: inferred
+      outcome: "Distinguish lossless dictionary compression from a neural language model's learned conditional probability distribution."
+      basis: "Critical comparison required to use the analogy accurately."
+    - status: inferred
+      outcome: "Relate token probability to ideal predictive code length without treating model weights as a reversible archive."
+      basis: "Reviewer-added bridge to information theory."
+    - status: inferred
+      outcome: "Explain why frequency alone does not determine generalization and identify transfer and distribution shift as confounding factors."
+      basis: "Reviewer qualification of the article's domain-frequency claim."
+  assumed_prerequisites:
+    - status: inferred
+      topic: "Basic familiarity with sequences, tokens and conditional probability."
+      basis: "Needed to connect the analogy to autoregressive language modelling; the article does not state prerequisites."
+    - status: inferred
+      topic: "Informal understanding of compression and programming examples."
+      basis: "The article introduces LZW and code-assistant examples without a formal prerequisite section."
+  teaching_route:
+    - order: 1
+      section: "LZW as an intuition for repeated patterns"
+      function: motivation
+      moves:
+        - "Introduce a lossless dictionary compressor as a concrete familiar example."
+        - "State immediately that the analogy is not an identity."
+    - order: 2
+      section: "Learned regularities and next-token prediction"
+      function: mental-model
+      moves:
+        - "Describe parameters as encoding statistical regularities rather than a literal corpus archive."
+        - "Connect the intuition to conditional token probabilities."
+    - order: 3
+      section: "Predictive compression and information theory"
+      function: formal-bridge
+      moves:
+        - "Relate surprisal to ideal code length."
+        - "Distinguish token surprisal, predictive entropy and average cross-entropy."
+    - order: 4
+      section: "Frequency, transfer and generalization"
+      function: qualification
+      moves:
+        - "Compare common, rare-but-compositional and genuinely out-of-distribution examples."
+        - "Avoid treating frequency as a direct measure of task difficulty."
+    - order: 5
+      section: "Verification and programming literacy"
+      function: practical-implication
+      moves:
+        - "Use tests and inspection to validate generated code."
+        - "Separate plausible generation from correctness."
+  pedagogical_strengths:
+    - "An accessible analogy makes statistical regularity and predictability intuitive."
+    - "Coding-assistant examples connect the abstraction to a recognizable practical domain."
+    - "The conclusion motivates verification rather than passive reliance on generated code."
+  pedagogical_limits:
+    - "The article is not a formal information-theory treatment or an empirical study."
+    - "The LZW analogy can mislead readers into imagining literal reversible corpus storage unless explicitly bounded."
+    - "Frequency and niche-domain claims are anecdotal and confounded by task difficulty, data quality, transfer and post-training."
+    - "The model-size comparison is unsupported and should not be taught as a factual scaling result."
+  comparison:
+    dossier: "docs/source-syntheses/llms-and-compression-algorithms-2026-11.md"
+    canonical_graph: "data/concepts.yml"
+    canonical_routes:
+      - "site/fr/probabilites.qmd"
+      - "site/en/probabilities.qmd"
+      - "site/fr/entropy.qmd"
+      - "site/en/entropy.qmd"
+      - "site/fr/vraisemblance.qmd"
+      - "site/en/likelihood.qmd"
+      - "site/fr/cross-entropy.qmd"
+      - "site/en/cross-entropy.qmd"
+      - "site/fr/training-loop.qmd"
+      - "site/en/training-loop.qmd"
+      - "site/fr/scaling-laws.qmd"
+      - "site/en/scaling-laws.qmd"
+    decision: "Use as a supplementary cross-topic mental model. Link to existing canonical lessons; do not create a duplicate Understand lesson or repeat the existing surprisal exercises."
+    structures_kept_separate:
+      - "The source's LZW analogy remains distinct from the mathematical definitions in canonical lessons."
+      - "Reviewer-added formal connections and qualifications are marked inferred and are not attributed to the author."
+items:
+  - id: karthik-shashidhar-llms-compression-algorithms-2024:lzw-analogy
+    kind: analogy
+    summary: "The author uses Lempel–Ziv–Welch as an analogy for LLMs: repeated patterns can be represented compactly, while a language model learns statistical regularities that help predict continuations."
+    locator: {type: section, value: "Opening paragraphs and 'What does this have to do with compression?'", label: "LZW analogy and compression framing"}
+    evidence:
+      kind: author-analogy
+      confidence: established
+      scope: "The analogy explicitly proposed by the author."
+      assumptions: []
+      limitations: ["LZW is a lossless dictionary-based compressor; an LLM is a learned probabilistic model and does not store an explicit reversible dictionary of the corpus."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      tags: [topic:predictive-compression, method:analogy]
+      concept_ids: []
+    candidate_destinations:
+      pages: [fr/probabilites, en/probabilities, fr/entropy, en/entropy]
+      concepts: []
+      route_ids: []
+    disposition: clarify
+    disposition_rationale: "Useful as an opening intuition only when immediately distinguished from literal lossless compression and corpus storage."
+  - id: karthik-shashidhar-llms-compression-algorithms-2024:frequency-and-domain-coverage
+    kind: claim
+    summary: "The author argues that topics and code patterns represented frequently in training material are easier for LLMs to model than niche languages, libraries or tasks with fewer analogous examples."
+    locator: {type: section, value: "'What does this have to do with compression?' and 'Back to coding assistants'", label: "Frequency, domain coverage and code assistants"}
+    evidence:
+      kind: author-interpretation
+      confidence: context-dependent
+      scope: "General explanation illustrated with the author's experience using coding assistants for R and common web-app code."
+      assumptions: ["Training data contains relevant examples.", "Observed task familiarity is a useful proxy for learned statistical regularity."]
+      limitations: ["No controlled comparison, dataset analysis or performance measurements are provided.", "Frequency alone does not determine difficulty or generalization."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [scale-research]
+      tags: [topic:generalization, topic:training-data]
+      concept_ids: []
+    candidate_destinations:
+      pages: [fr/training-loop, en/training-loop]
+      concepts: []
+      route_ids: []
+    disposition: correct
+    disposition_rationale: "Retain the intuition as a hypothesis; qualify it with data quality, task structure, transfer, post-training and distribution shift."
+  - id: karthik-shashidhar-llms-compression-algorithms-2024:short-prompt-reconstruction
+    kind: mental-model
+    summary: "The article explains short-prompt-to-long-code generation as reconstruction of familiar, reusable patterns learned from broad code corpora."
+    locator: {type: section, value: "'Back to coding assistants' and 'How LLMs will change coding'", label: "Short prompts and reusable code patterns"}
+    evidence:
+      kind: author-interpretation
+      confidence: context-dependent
+      scope: "The author's explanatory account of coding-assistant behavior."
+      assumptions: []
+      limitations: ["A short prompt can also rely on context, tools, retrieval, inference-time computation and user constraints; these are not separated in the article."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      tags: [topic:next-token-prediction, topic:generalization]
+      concept_ids: []
+    candidate_destinations:
+      pages: [fr/probabilites, en/probabilities, fr/vraisemblance, en/likelihood]
+      concepts: []
+      route_ids: []
+    disposition: clarify
+    disposition_rationale: "Use to motivate conditional prediction and learned regularities, not as a complete account of code generation."
+  - id: karthik-shashidhar-llms-compression-algorithms-2024:model-size-claim
+    kind: limitation
+    summary: "The article suggests that the difference between Llama 3.1 70B and 405B is largely capacity for niche information, while the smaller model already contains the main knowledge of the world."
+    locator: {type: section, value: "'What does this have to do with compression?'", label: "70B versus 405B comparison"}
+    evidence:
+      kind: unsupported-author-claim
+      confidence: unverified
+      scope: "An illustrative model-size interpretation in the article."
+      assumptions: []
+      limitations: ["No controlled evaluation, scaling analysis or supporting citation is supplied.", "Model capability differences cannot be reduced to encoding niche information."]
+    classification:
+      primary_theme: scale-research
+      tags: [topic:model-scale, topic:capacity]
+      concept_ids: []
+    candidate_destinations:
+      pages: [fr/scaling-laws, en/scaling-laws]
+      concepts: []
+      route_ids: []
+    disposition: reject
+    disposition_rationale: "Do not reproduce as an established finding; preserve only as an example of an unsupported simplification."
+  - id: karthik-shashidhar-llms-compression-algorithms-2024:programming-literacy
+    kind: claim
+    summary: "The author argues that programming knowledge remains valuable because learners must recognize incorrect outputs and solve unusual or high-information-content problems."
+    locator: {type: section, value: "'How LLMs will change coding'", label: "Why learning to code remains important"}
+    evidence:
+      kind: author-argument
+      confidence: context-dependent
+      scope: "Pedagogical conclusion of the article."
+      assumptions: []
+      limitations: ["The phrase 'high information content' is informal and is not defined using information theory."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      tags: [topic:verification, topic:human-ai-collaboration]
+      concept_ids: []
+    candidate_destinations:
+      pages: [fr/training-loop, en/training-loop]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Useful as a learner-facing motivation for testing, validation and critical evaluation of generated code."

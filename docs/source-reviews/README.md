@@ -4,6 +4,13 @@ This directory contains source-specific reviews and living multi-source collecti
 
 A collection dossier is not a replacement for the canonical concept graph, bilingual learning pages or project learning route. It compares external perspectives and records their integration decisions.
 
+## Compression and information theory
+
+| Review | Scope | Entry point | Current state |
+|---|---|---|---|
+| Karthik Shashidhar — LLMs and compression algorithms | Critical assessment of the LZW analogy, predictive coding, domain-frequency claims and evidence limits | [Source review](karthik-shashidhar-llms-compression-algorithms-2024.md) · [Comparative synthesis](../source-syntheses/compression-two-meanings-2026-11.md) | Full article text reviewed; anecdotal claims are not treated as empirical evidence |
+| Wayland Zhang — Information Theory Is All You Need | Entropy, cross-entropy/KL, attention/MI, Landauer, predictive compression and V-information; includes an audit of the linked notebook | [Source review](wayland-zhang-information-theory-llm-2026-11.md) · [Comparative synthesis](../source-syntheses/information-theory-and-llms-2026-11.md) | Full article and 18 English-notebook cells inspected statically; notebook not executed; invalid attention/MI visualization rejected |
+
 ## Curriculum and learning-path comparisons
 
 | Comparison | Scope | Entry point | Current state |
