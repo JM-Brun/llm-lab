@@ -10,48 +10,48 @@ Cross-entropy answers an operational question:
 
 > If events actually follow one distribution, but the code lengths were designed using another distribution, what is the average coding cost?
 
-In LLM Lab's notation, let (q) be the data/target distribution and (p) the model distribution. A code designed from (p) assigns ideal lengths (-\log_2 p_i), and the average cost when data follow (q) is:
+In LLM Lab's notation, let $q$ be the data/target distribution and $p$ the model distribution. A code designed from $p$ assigns ideal lengths $-\log_2 p_i$, and the average cost when data follow $q$ is:
 
-[
-H(q,p)=-\sum_i q_i\log_2 p_i.
-]
+$$
+$H(q,p)$=-\sum_i q_i\log_2 p_i.
+$$
 
 The decomposition
 
-[
-H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)
-]
+$$
+$H(q,p)$=H$q$+$D_{\mathrm{KL}}(q\Vert p)$
+$$
 
-says that the cost is the optimal source entropy plus the excess caused by the mismatch between the source and the code model. The minimum occurs at (p=q).
+says that the cost is the optimal source entropy plus the excess caused by the mismatch between the source and the code model. The minimum occurs at $p=q$.
 
 ## 2. A concrete distribution-shift example
 
 Part 2 reuses the four-symbol robot example from Part 1.
 
-- Original code/model distribution: (p=(1/2,1/4,1/8,1/8)).
-- Its ideal code lengths: ((1,2,3,3)) bits.
-- New data distribution: (q=(1/8,1/8,1/4,1/2)).
+- Original code/model distribution: $p=(1/2,1/4,1/8,1/8)$.
+- Its ideal code lengths: $(1,2,3,3)$ bits.
+- New data distribution: $q=(1/8,1/8,1/4,1/2)$.
 
 Keeping the old code gives:
 
-[
-H(q,p)=\tfrac18(1)+\tfrac18(2)+\tfrac14(3)+\tfrac12(3)
+$$
+$H(q,p)$=\tfrac18(1)+\tfrac18(2)+\tfrac14(3)+\tfrac12(3)
 =2.625\text{ bits}.
-]
+$$
 
-The entropy of the new source is (H(q)=1.75) bits, so the excess cost is (D_{\mathrm{KL}}(q\Vert p)=0.875) bit per symbol. Swapping the roles of the distributions changes the answer: cross-entropy is directional, not a symmetric distance.
+The entropy of the new source is (H$q$=1.75) bits, so the excess cost is ($D_{\mathrm{KL}}(q\Vert p)$=0.875) bit per symbol. Swapping the roles of the distributions changes the answer: cross-entropy is directional, not a symmetric distance.
 
 ### Notation warning
 
-The video labels the actual data distribution (P) and the code/model distribution (Q), giving a weighted sum (\sum_i P_i(-\log Q_i)). LLM Lab uses (q) for target/data and (p) for model prediction. The roles are identical, but the letters differ. Read the semantic roles before comparing formulas.
+The video labels the actual data distribution $P$ and the code/model distribution $Q$, giving a weighted sum $\sum_i P_i(-\log Q_i)$. LLM Lab uses $q$ for target/data and $p$ for model prediction. The roles are identical, but the letters differ. Read the semantic roles before comparing formulas.
 
 ## 3. From compression to language-model training
 
-At each context (x_{<t}), a language model produces a distribution over the next token. The observed token contributes:
+At each context $x_{<t}$, a language model produces a distribution over the next token. The observed token contributes:
 
-[
+$$
 -\log p_\theta(x_t\mid x_{<t}).
-]
+$$
 
 Averaging this quantity over observed target tokens is empirical next-token NLL / cross-entropy. In expectation under the data-generating distribution, it measures the model's expected information cost on those data. This is the bridge between the compression interpretation and the familiar pretraining objective.
 
@@ -66,15 +66,15 @@ No duplicate core cross-entropy lesson was needed.
 
 Part 2 motivates the negative logarithm through constrained optimization. Suppose the expected per-event loss has the separable form
 
-[
+$$
 \mathcal L(p;q)=\sum_i q_iF(p_i), \qquad \sum_i p_i=1.
-]
+$$
 
-If the loss must be minimized at (p=q) for every interior data distribution (q), and (F) is differentiable, the Lagrange first-order condition gives
+If the loss must be minimized at $p=q$ for every interior data distribution $q$, and (F) is differentiable, the Lagrange first-order condition gives
 
-[
+$$
 q_iF'(q_i)+\lambda=0.
-]
+$$
 
 Thus (xF'(x)) must be constant, so (F'(x)=c/x), and integration gives (F(x)=c\log x+d). A minimum requires (c<0), yielding negative log up to positive scaling and an additive constant.
 
@@ -84,12 +84,12 @@ This is a scoped argument, not a universal claim that all learning tasks must us
 
 Standard next-token pretraining uses a one-hot target: only the observed token receives target mass, so the loss is its negative log-probability.
 
-In distribution-level distillation, a teacher model supplies a full target distribution (q_T(\cdot\mid x_{<t})), and a student predicts (p_S(\cdot\mid x_{<t})). A token-level objective can be:
+In distribution-level distillation, a teacher model supplies a full target distribution $q_T(\cdot\mid x_{<t})$, and a student predicts $p_S(\cdot\mid x_{<t})$. A token-level objective can be:
 
-[
+$$
 \mathcal L_{\mathrm{KD}}=
 H(q_T(\cdot\mid x_{<t}),p_S(\cdot\mid x_{<t})).
-]
+$$
 
 This conveys relative probability across several candidate continuations rather than only the token that happened to occur in one training example. It is a richer soft-target signal per example, but it is not ground truth: the teacher can pass on its errors, biases and uncertainty. Distillation is model compression (a smaller student learns from a larger teacher), not predictive data compression (encoding a text stream).
 
@@ -121,9 +121,9 @@ Keep it as an optional case study, not as a definition or a benchmark of languag
 
 ## 8. What learners should now be able to do
 
-1. Given data (q) and model (p), compute the average ideal code length (H(q,p)).
-2. Explain why (H(q,p)-H(q)=D_{\mathrm{KL}}(q\Vert p)) is the excess coding cost.
-3. Explain why swapping (q) and (p) changes the result.
+1. Given data $q$ and model $p$, compute the average ideal code length ($H(q,p)$).
+2. Explain why ($H(q,p)$-H$q$=$D_{\mathrm{KL}}(q\Vert p)$) is the excess coding cost.
+3. Explain why swapping $q$ and $p$ changes the result.
 4. Map one-hot next-token NLL to the empirical cross-entropy objective.
 5. State the assumptions behind the Lagrange-multiplier argument for logarithmic loss.
 6. Explain what a teacher distribution contributes to student training, and why it is not ground truth.
