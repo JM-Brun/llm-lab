@@ -37,7 +37,7 @@ Its linked repository provides English and Chinese notebooks. The notebook is a 
 | Attention as mutual information | The article explicitly says the analogy is not strict MI. Attention weights are learned, input-dependent aggregation coefficients, not (I(X;Y)) | Add a concise misconception guard to the attention lesson |
 | Landauer bound | The article's inference from erasure energy to a universal learning-information ceiling does not follow | Correct the claim in this review; defer a full thermodynamics lesson |
 | Compression and intelligence | Predictive modelling and coding efficiency are formally connected, but compression is not a sufficient definition of intelligence | Keep the distinction in the compression synthesis and revision sheet |
-| V-information | Promising computationally constrained framework; the primary paper is linked but only its abstract was inspected | Advanced reference only; no canonical concept yet |
+| V-information | The full ICLR 2020 paper has been audited, including definitions, propositions, PAC bound, structure-learning method, experiments and fairness discussion | Advanced optional concept `v-information`, linked to Shannon MI and illustrated with a balanced-XOR toy experiment |
 
 ## 3. The mathematical bridge worth teaching
 
