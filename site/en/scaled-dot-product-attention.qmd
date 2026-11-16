@@ -106,10 +106,10 @@ The formulation is presented in [Vaswani et al. (2017), *Attention Is All You Ne
 
 Mutual information between two random variables depends on a joint distribution:
 
-$
+$$
 I(X;Y)=H(X)-H(X\mid Y)
 =\sum_{x,y}p(x,y)\ln\frac{p(x,y)}{p(x)p(y)}.
-$
+$$
 
 It measures how much observing $Y$ reduces uncertainty about $X$. Attention weights, by contrast, are softmax-normalized compatibility coefficients over accessible positions; they are used to aggregate the value vectors $V$. A row of attention weights is therefore neither a joint distribution over $(X,Y)$ nor an automatic estimator of $I(X;Y)$.
 
