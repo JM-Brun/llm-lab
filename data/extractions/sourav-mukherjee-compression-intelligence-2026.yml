@@ -59,12 +59,53 @@ pedagogical_model:
       - {from: src-entropy-guided-pruning, type: requires-evaluation-of, to: src-token-utility-limit, inferred: true}
       - {from: src-lossy-compression-hallucination, type: analogy-limited-by, to: src-token-utility-limit, inferred: true}
     interpretation: "The article's five-part narrative is preserved; reviewer qualifications are explicitly marked as inferred."
+  learning_outcomes:
+    - {status: inferred, outcome: "Distinguish predictive entropy, realized surprisal, attention entropy and cache drift.", basis: "Technical audit of sections 2 and 4."}
+    - {status: inferred, outcome: "Explain why predictive probabilities can support ideal coding without defining intelligence.", basis: "Sections 1 and 3; critical qualification."}
+    - {status: inferred, outcome: "Describe entropy-derived cache signals without treating them as universal token-utility scores.", basis: "Section 4 and consulted primary research."}
+    - {status: inferred, outcome: "Evaluate the limits of the lossy-compression analogy for hallucinations.", basis: "Section 5; critical qualification."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Probability distributions, logarithms, conditional probability and entropy.", basis: "Sections 2 and 3."}
+    - {status: inferred, topic: "Basic transformer inference and key-value caching.", basis: "Section 4."}
+  teaching_route:
+    - {order: 1, section: "The Hutter Prize: Compression as Intelligence", function: motivation, moves: ["Introduce compression as a challenge in discovering regularities.", "Qualify the relationship with intelligence."]}
+    - {order: 2, section: "The 1948 Foundation: Quantifying Surprise", function: foundations, moves: ["Define event surprisal and entropy.", "Distinguish average uncertainty from a realized event."]}
+    - {order: 3, section: "The LLM Connection: Why We Minimize Cross-Entropy", function: training-objective, moves: ["Connect negative log probability to predictive code cost.", "Specify logarithm base and units."]}
+    - {order: 4, section: "The 2026 Frontier: Entropy-Guided Token Pruning", function: advanced-application, moves: ["Introduce entropy-derived inference signals.", "Separate cache allocation, recomputation and reasoning-token pruning."]}
+    - {order: 5, section: "Hallucinations as Lossy Compression Artifacts", function: analogy, moves: ["Use lossy compression as a limited intuition.", "Name alternative mechanisms and the role of external verification."]}
+  pedagogical_strengths:
+    - "Accessible narrative linking information theory, predictive training and inference efficiency."
+    - "Connects abstract entropy vocabulary to a practical memory and latency problem."
+  pedagogical_limits:
+    - "The claim that low-entropy reasoning tokens can generally be pruned is not supported by a sufficiently specified experiment in the article."
+    - "The hallucination analogy is incomplete and must not be presented as a causal theory."
+    - "The article compresses distinct entropy signals and cache methods into a single broad narrative."
+  comparison:
+    dossier: "docs/source-syntheses/compression-intelligence-and-inference-efficiency-2026-11.md"
+    canonical_graph: "data/concepts.yml"
+    canonical_routes:
+      - "site/fr/entropy.qmd"
+      - "site/en/entropy.qmd"
+      - "site/fr/cross-entropy.qmd"
+      - "site/en/cross-entropy.qmd"
+      - "site/fr/compression-revision.qmd"
+      - "site/en/compression-revision.qmd"
+    decision: "Reuse canonical definitions, add the entropy-signal distinctions to the existing revision sheet, and treat reasoning-token pruning as an unvalidated experimental question."
+    structures_kept_separate:
+      - "Article's five-part narrative"
+      - "Canonical concept graph"
+      - "Bilingual learning route"
   items:
     - id: sourav-mukherjee-compression-intelligence-2026:hutter-prize
-      kind: historical-context
+      kind: claim
       summary: "The Hutter Prize motivates lossless compression of a fixed Wikipedia benchmark as a challenge in discovering reusable regularities."
       locator: {type: section, value: "1. The Hutter Prize: Compression as Intelligence"}
       evidence: {kind: official-rules, confidence: established, scope: "Official enwik9 benchmark and exact reconstruction requirements.", assumptions: ["Compressor and archive accounting follow the current official rules."], limitations: ["Compression performance on a fixed text benchmark is not a complete definition or measure of intelligence."]}
+      pedagogical_assessment: {novelty: {level: moderate, rationale: "The Hutter Prize context adds a concrete benchmark, while the intelligence caveat is new to this source comparison."}, complementarity: {level: high, rationale: "It links compression to a broader discussion of capability."}, pedagogical_value: {level: moderate, rationale: "Useful motivation when explicitly bounded."}, applicability: {level: high, rationale: "Fits the existing compression synthesis."}, redundancy: {level: moderate, rationale: "Predictive compression is already covered."}, evidence_quality: {level: high, rationale: "Official benchmark rules can be checked independently."}}
+      pedagogical_assessment: {novelty: {level: moderate, rationale: "The distinction is foundational but the source blurs adjacent quantities."}, complementarity: {level: high, rationale: "A concrete counterexample sharpens the existing entropy lesson."}, pedagogical_value: {level: high, rationale: "Prevents a consequential inference error."}, applicability: {level: high, rationale: "The bilingual revision sheet is an appropriate destination."}, redundancy: {level: low, rationale: "The rare-event counterexample adds a distinct teaching check."}, evidence_quality: {level: high, rationale: "The distinction follows directly from standard definitions."}}
+      pedagogical_assessment: {novelty: {level: low, rationale: "Cross-entropy is already a canonical lesson."}, complementarity: {level: moderate, rationale: "The unit warning strengthens quantitative interpretation."}, pedagogical_value: {level: high, rationale: "Prevents confusing nats with bits."}, applicability: {level: high, rationale: "Add a short note to existing material."}, redundancy: {level: high, rationale: "The objective derivation is already covered."}, evidence_quality: {level: high, rationale: "Logarithm-base conversion is exact."}}
+      pedagogical_assessment: {novelty: {level: high, rationale: "Entropy-guided cache decisions extend the existing compression discussion."}, complementarity: {level: high, rationale: "Connects information measures to runtime memory management."}, pedagogical_value: {level: high, rationale: "Makes the choice of signal and target explicit."}, applicability: {level: high, rationale: "Suitable for an optional advanced research note."}, redundancy: {level: low, rationale: "The specific inference-time signals are not covered by the compression distinction alone."}, evidence_quality: {level: moderate, rationale: "Primary papers exist, but methods and model families differ."}}
+      pedagogical_assessment: {novelty: {level: moderate, rationale: "The JPEG analogy is memorable but familiar."}, complementarity: {level: moderate, rationale: "Adds an intuition to existing limitations material."}, pedagogical_value: {level: moderate, rationale: "Useful only with alternative causes stated."}, applicability: {level: moderate, rationale: "Can be a bounded analogy in the limitations lesson."}, redundancy: {level: moderate, rationale: "Related hallucination explanations already exist."}, evidence_quality: {level: moderate, rationale: "The analogy is illustrative rather than a validated causal model."}}
       classification: {primary_theme: probabilistic-foundations-training, tags: [topic:predictive-compression, topic:generalization], concept_ids: [predictive-compression, entropy]}
       candidate_destinations: {pages: [], concepts: [predictive-compression, entropy]}
       disposition: integrate-by-reference
@@ -88,7 +129,7 @@ pedagogical_model:
       disposition: clarify
       disposition_rationale: "Add a units warning to the existing material rather than duplicating the loss derivation."
     - id: sourav-mukherjee-compression-intelligence-2026:entropy-guided-inference
-      kind: research-direction
+      kind: mechanism
       summary: "Entropy-derived signals can be used for layer-wise KV-cache allocation or recomputation decisions, but different methods use different distributions and target different model families."
       locator: {type: section, value: "4. The 2026 Frontier: Entropy-Guided Token Pruning"}
       evidence: {kind: primary-research, confidence: context-dependent, scope: "Published and preprint methods on attention-entropy cache allocation and decoded-token entropy signals.", assumptions: ["Method-specific definitions and evaluation settings are retained."], limitations: ["Attention entropy, next-token predictive entropy, surprisal and cache drift are not interchangeable.", "The article does not specify or reproduce a general low-entropy chain-of-thought pruning experiment."]}
@@ -105,16 +146,3 @@ pedagogical_model:
       candidate_destinations: {pages: [fr/llm-limits, en/llm-limits], concepts: []}
       disposition: clarify
       disposition_rationale: "Use as a bounded analogy in the limitations material, not a causal theory or new canonical concept."
-comparison:
-  prior_sources:
-    - "wayland-zhang-information-theory-llm-2026"
-    - "karthik-shashidhar-llms-compression-algorithms-2024"
-    - "sourav-mukherjee-model-compression-medium-2026"
-  novelty:
-    - "Entropy-derived signals as a family of inference-time cache/computation controls."
-    - "The need to distinguish predictive entropy, attention entropy, realized surprisal and cache drift."
-    - "A testable hypothesis about reasoning-token redundancy, not a validated result."
-  overlap:
-    - "Shannon entropy, surprisal, cross-entropy and predictive coding are already taught."
-    - "Pruning, quantization, distillation and runtime KV memory are already distinguished."
-  decision: "No duplicate canonical concepts or lessons. Add critical synthesis, a focused toy demonstration and a future real-model experiment protocol."
