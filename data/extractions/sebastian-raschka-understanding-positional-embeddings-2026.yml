@@ -20,6 +20,8 @@ pedagogical_model:
       - {id: src-absolute-position, kind: representation, description: "Learned absolute position vector added to token embeddings in early GPT models.", locator: "§2"}
       - {id: src-sinusoidal-position, kind: representation, description: "Fixed sinusoidal vector added at the input in the original Transformer.", locator: "§2"}
       - {id: src-query-key, kind: representation, description: "Projected query and key vectors whose dot product determines attention scores.", locator: "§3"}
+      - {id: src-attention-scores, kind: intermediate, description: "Scaled dot-product scores before softmax normalization.", locator: "§§3, 6.3"}
+      - {id: src-full-rope, kind: mechanism, description: "Standard RoPE rotates all paired dimensions of query and key vectors.", locator: "§3"}
       - {id: src-rotary-pair, kind: operation, description: "Two-dimensional rotation applied to paired query/key features at a position.", locator: "§3"}
       - {id: src-frequency-schedule, kind: parameterization, description: "Geometrically spaced inverse frequencies define the rotation angle of each feature pair.", locator: "§4"}
       - {id: src-relative-offset, kind: property, description: "The rotated QK contribution depends on the relative position offset for fixed content vectors and frequency.", locator: "§3"}
@@ -30,10 +32,12 @@ pedagogical_model:
       - {id: src-causal-prefix, kind: mechanism, description: "Nested causal prefixes can expose implicit order information without an explicit position vector.", locator: "§6.2"}
       - {id: src-relative-bias, kind: mechanism, description: "A learned relative-position term is added to attention scores before softmax.", locator: "§6.3"}
       - {id: src-hybrid-layers, kind: architecture, description: "A model mixes layers that use RoPE with layers that omit it.", locator: "§6.4"}
-      - {id: src-qwen3-implementation, kind: worked-implementation, description: "A from-scratch PyTorch Qwen3 implementation connects RoPE equations to a full model.", locator: "§5; linked notebook"}
+      - {id: src-qwen3-implementation, kind: worked-implementation, description: "A from-scratch PyTorch Qwen3 implementation uses split-half pairing, a model-configured theta base of 1,000,000, precomputed non-persistent cosine/sine buffers, grouped-query attention and QK normalization before RoPE.", locator: "§5; linked standalone-qwen3.ipynb, code cells 10–15"}
     edges:
       - {from: src-token-embedding, type: combined-with, to: src-absolute-position}
       - {from: src-token-embedding, type: combined-with, to: src-sinusoidal-position}
+      - {from: src-query-key, type: contributes-to, to: src-attention-scores}
+      - {from: src-full-rope, type: applies-to, to: src-query-key}
       - {from: src-query-key, type: transformed-by, to: src-rotary-pair}
       - {from: src-frequency-schedule, type: parameterizes, to: src-rotary-pair}
       - {from: src-rotary-pair, type: yields, to: src-relative-offset}
@@ -42,8 +46,8 @@ pedagogical_model:
       - {from: src-partial-rope, type: restricts-dimensions-of, to: src-rotary-pair}
       - {from: src-nope-layer, type: omits, to: src-rotary-pair}
       - {from: src-causal-prefix, type: provides-implicit-order-signal-to, to: src-nope-layer}
-      - {from: src-relative-bias, type: modifies, to: src-query-key}
-      - {from: src-hybrid-layers, type: combines, to: src-partial-rope}
+      - {from: src-relative-bias, type: modifies, to: src-attention-scores}
+      - {from: src-hybrid-layers, type: combines, to: src-full-rope}
       - {from: src-hybrid-layers, type: combines, to: src-nope-layer}
       - {from: src-qwen3-implementation, type: implements, to: src-rotary-pair}
     interpretation: "Editorial reconstruction of the article's explanatory and architectural model, not a formal ontology authored by the source. The edges summarize the article's technical account; they do not assert that its architecture examples are exhaustive."
@@ -172,4 +176,18 @@ items:
       limitations: ["Not a systematic census; small groups and multiple variants limit generalization."]
     disposition: clarify
     classification: {primary_theme: architectures-mechanisms, concept_ids: [positional-encoding]}
+    candidate_destinations: {pages: [fr/rope, en/rope]}
+
+  - id: sebastian-raschka-understanding-positional-embeddings-2026:qwen3-notebook-implementation
+    kind: implementation-pattern
+    summary: "The linked standalone Qwen3 notebook constructs RoPE cosine/sine tables from the configured theta base, applies split-half rotations to queries and keys after QK normalization, and registers the tables as non-persistent model buffers."
+    locator: {type: external-code, value: "rasbt/LLMs-from-scratch/ch05/11_qwen3/standalone-qwen3.ipynb; code cells 10, 11, 13 and 15"}
+    evidence:
+      kind: static-code-inspection
+      confidence: well-supported
+      scope: "Notebook JSON and relevant code cells inspected through the linked GitHub repository; no execution was performed."
+      assumptions: ["The inspected notebook revision is the one linked by the article at review time."]
+      limitations: ["The shown forward path precomputes a fixed context-length table and slices it by sequence length; no incremental KV-cache or explicit position-ID path was found in the inspected model forward cell.", "No numerical outputs or runtime compatibility were independently verified."]
+    disposition: integrate
+    classification: {primary_theme: architectures-mechanisms, concept_ids: [positional-encoding, query, key, attention-score]}
     candidate_destinations: {pages: [fr/rope, en/rope]}
