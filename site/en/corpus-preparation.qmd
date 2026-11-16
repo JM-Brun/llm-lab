@@ -128,6 +128,12 @@ This page defines a traceability framework and separation of responsibilities, n
 </summary>
 <div class="learning-resources__content" markdown="1">
 
+### Additional implementation resources
+
+- [Hugging Face — Datasets: processing and manipulation](https://huggingface.co/learn/llm-course/en/chapter5/3): load, inspect, filter, and transform data.
+- [Hugging Face — Large datasets, memory, and streaming](https://huggingface.co/learn/llm-course/en/chapter5/4): understand memory-mapped files and large-corpus processing.
+- [Hugging Face — Annotation and curation with Argilla](https://huggingface.co/learn/llm-course/en/chapter10/1): a tooling example for the protocol described above.
+
 ### Practice
 
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/corpus-preparation.qmd).
