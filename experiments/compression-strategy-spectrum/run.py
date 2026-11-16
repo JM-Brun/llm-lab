@@ -7,7 +7,9 @@ from __future__ import annotations
 
 import math
 import random
+import sys
 from collections import Counter, defaultdict
+from itertools import pairwise
 
 ALPHABET = ("A", "B", "C", "D")
 SEQUENCE_LENGTH = 2400
@@ -41,7 +43,7 @@ def unigram_cross_entropy(train: str, test: str) -> float:
 
 def bigram_cross_entropy(train: str, test: str) -> float:
     counts: dict[str, Counter[str]] = defaultdict(Counter)
-    for left, right in zip(train, train[1:], strict=False):
+    for left, right in pairwise(train):
         counts[left][right] += 1
 
     totals = {left: sum(row.values()) for left, row in counts.items()}
@@ -62,15 +64,14 @@ def evaluate(sequence: str) -> tuple[float, float]:
 
 def main() -> None:
     ordered = make_sequence(SEQUENCE_LENGTH)
-    print("Compression strategy spectrum — sequential-structure toy")
-    print("Metric: held-out cross-entropy (bits/token)")
+    output = ["Compression strategy spectrum — sequential-structure toy", "Metric: held-out cross-entropy (bits/token)"]
     for seed in SEEDS:
         permuted = permute_preserving_marginals(ordered, seed)
         for label, sequence in (("ordered", ordered), ("permuted", permuted)):
             unigram, bigram = evaluate(sequence)
-            print(f"seed={seed:3d} data={label:9s} unigram={unigram:.4f} bigram={bigram:.4f}")
-    print("Interpretation: a lower held-out loss indicates better prediction only.")
-    print("This is not an epiplexity, understanding, or subjectivity measurement.")
+            output.append(f"seed={seed:3d} data={label:9s} unigram={unigram:.4f} bigram={bigram:.4f}")
+    output.extend(("Interpretation: a lower held-out loss indicates better prediction only.", "This is not an epiplexity, understanding, or subjectivity measurement."))
+    sys.stdout.write("\\n".join(output) + "\\n")
 
 
 if __name__ == "__main__":
