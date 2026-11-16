@@ -1,0 +1,103 @@
+schema_version: 1
+source_id: xu-et-al-usable-information-2020
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Inspected the primary arXiv full text for definitions, core properties, special cases and the empirical-estimation theorem."
+      - "The extraction focuses on the formal definitions needed to support one bounded introductory example in LLM Lab."
+    inferred_elements:
+      - "The teaching sequence below is a project reconstruction, not an author-declared course."
+  source_graph:
+    nodes:
+      - {id: src-predictive-family, kind: definition, description: "A family of probabilistic prediction functions satisfying optional ignorance.", locator: "Definition 1"}
+      - {id: src-optional-ignorance, kind: condition, description: "Every output distribution available from a family member can also be output by a member that ignores the side information.", locator: "Definition 1"}
+      - {id: src-predictive-v-entropy, kind: definition, description: "Minimum expected log-loss over the predictive family, with or without side information.", locator: "Definition 2"}
+      - {id: src-predictive-v-information, kind: definition, description: "Difference between no-input and conditional predictive V-entropy.", locator: "Definition 3"}
+      - {id: src-pac-estimation, kind: guarantee, description: "A finite-sample estimation bound depending on bounded log-probabilities and function-family complexity.", locator: "Theorem 1"}
+    edges:
+      - {from: src-predictive-family, type: constrained-by, to: src-optional-ignorance}
+      - {from: src-predictive-family, type: defines, to: src-predictive-v-entropy}
+      - {from: src-predictive-v-entropy, type: difference-defines, to: src-predictive-v-information}
+      - {from: src-predictive-family, type: controls-complexity-of, to: src-pac-estimation}
+    interpretation: "Source-local formal reconstruction. The V-information quantity is relative to a predictive family and its loss; it is not interchangeable with Shannon mutual information except in the unrestricted-family special case."
+  learning_outcomes:
+    - {status: inferred, outcome: "Define predictive V-information as a reduction in optimal log-loss within a specified predictive family.", basis: "Definitions 1–3."}
+    - {status: inferred, outcome: "Explain optional ignorance and why it matters for non-negativity.", basis: "Definition 1 and Proposition 2."}
+    - {status: inferred, outcome: "Distinguish unrestricted Shannon mutual information from restricted family-relative predictive information.", basis: "Proposition 1 and Definition 3."}
+    - {status: inferred, outcome: "Explain why estimation guarantees depend on bounded loss and predictive-family complexity.", basis: "Theorem 1 and its discussion."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Conditional probability distributions and expected negative log-likelihood.", basis: "Predictive conditional V-entropy definition."}
+    - {status: inferred, topic: "Shannon entropy and mutual information.", basis: "Special-case relationship."}
+  teaching_route:
+    - {order: 1, section: "Predictive families", function: define-observer-capacity, moves: ["Specify allowed probabilistic predictors", "State optional ignorance explicitly"]}
+    - {order: 2, section: "Predictive V-entropy", function: define-best-achievable-risk, moves: ["Use expected logarithmic loss", "Compare prediction with and without side information"]}
+    - {order: 3, section: "Predictive V-information", function: quantify-predictive-gain, moves: ["Subtract conditional risk from no-input risk", "Explain unrestricted and restricted-family cases"]}
+    - {order: 4, section: "Estimation and limitations", function: qualify-empirical-use, moves: ["State bounded-log-loss and complexity assumptions", "Explain overfitting and underfitting risks"]}
+  pedagogical_strengths:
+    - "The predictive-family restriction makes the observer's modeling assumptions explicit."
+    - "The logarithmic-loss formulation connects naturally to cross-entropy and language-model evaluation."
+    - "The paper supplies formal properties and a PAC-style estimation analysis rather than only an intuition."
+  pedagogical_limitations:
+    - "The formal setup is advanced and depends on a precise function family and regularity assumptions."
+    - "The quantity is directional and family-relative; values from different families do not answer the same question automatically."
+    - "The PAC guarantee is not a blanket guarantee for arbitrary model classes or arbitrary empirical training procedures."
+    - "The project toy example is an exact population calculation, not a replication of the paper's high-dimensional experiments."
+  claims:
+    - id: xu-et-al-usable-information-2020:predictive-family-definition
+      kind: formal-definition
+      summary: "A predictive family specifies the probabilistic functions available to an observer and satisfies optional ignorance."
+      locator: {type: section, value: "2 Definitions and Notations", label: "Definition 1"}
+      evidence:
+        kind: formal-definition
+        confidence: established
+        assumptions: ["The paper's stated sample-space and regularity conditions apply."]
+        limitations: ["This extraction preserves the high-level condition and omits measure-theoretic details."]
+      classification:
+        primary_theme: probabilistic-foundations-training
+        secondary_themes: [scale-research]
+        tags: [topic:predictive-v-information, method:predictive-family]
+        concept_ids: [predictive-v-information]
+      candidate_destinations:
+        pages: [fr/experience-information-theory, en/experience-information-theory]
+        concepts: [predictive-v-information]
+      disposition: integrate
+      disposition_rationale: "Use the definition to ground the project's finite-family example; preserve optional ignorance as an explicit validation condition."
+    - id: xu-et-al-usable-information-2020:predictive-v-information-definition
+      kind: formal-definition
+      summary: "Predictive V-information is the no-side-information predictive V-entropy minus the predictive V-entropy conditioned on X."
+      locator: {type: section, value: "2 Definitions and Notations", label: "Definition 3"}
+      evidence:
+        kind: formal-definition
+        confidence: established
+        assumptions: ["Logarithmic loss and the predictive-family definition are used."]
+        limitations: ["Its value depends on the chosen family and direction."]
+      classification:
+        primary_theme: probabilistic-foundations-training
+        secondary_themes: [mathematical-tools-geometry]
+        tags: [topic:predictive-v-information, topic:mutual-information]
+        concept_ids: [predictive-v-information, mutual-information]
+      candidate_destinations:
+        pages: [fr/experience-information-theory, en/experience-information-theory]
+        concepts: [predictive-v-information]
+      disposition: integrate
+      disposition_rationale: "Teach as an advanced supporting quantity, not as a replacement for Shannon mutual information."
+    - id: xu-et-al-usable-information-2020:pac-estimation
+      kind: empirical-method
+      summary: "The paper gives a PAC-style estimation bound under bounded log-probabilities and a complexity measure for the predictive function family."
+      locator: {type: section, value: "4 PAC Guarantees for V-information Estimation", label: "Theorem 1"}
+      evidence:
+        kind: theorem
+        confidence: established
+        assumptions: ["Log-probabilities are uniformly bounded.", "The predictive function family has controlled complexity."]
+        limitations: ["The bound depends on the complexity of the selected family.", "It does not guarantee that arbitrary neural-model estimates are unbiased or immune to overfitting."]
+      classification:
+        primary_theme: probabilistic-foundations-training
+        secondary_themes: [scale-research]
+        tags: [topic:predictive-v-information, method:pac-estimation]
+        concept_ids: [predictive-v-information]
+      candidate_destinations:
+        pages: [fr/experience-information-theory, en/experience-information-theory]
+        concepts: [predictive-v-information]
+      disposition: qualify
+      disposition_rationale: "Record the theorem's assumptions and keep it out of the beginner-facing toy example's claims."
