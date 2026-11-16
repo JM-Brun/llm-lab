@@ -231,7 +231,7 @@ Elle mesure le gain de prédictibilité obtenu grâce à l'entrée, pour cette f
 
 **Génération :** le modèle échantillonne ou choisit un prochain token ; ce n'est pas, à elle seule, une opération de décodage sans perte.
 
-Pour manipuler ces idées, lancez l'[expérience reproductible de compression prédictive](https://github.com/JM-Brun/llm-lab/blob/main/experiments/predictive-compression/README.fr.md).
+Pour manipuler ces idées, lancez l'[expérience reproductible de compression prédictive](https://github.com/JM-Brun/llm-lab/blob/main/experiments/predictive-compression/README.fr.md). Pour comparer entropie marginale, entropie conditionnelle et compression zlib, utilisez aussi l'[expérience sur les séquences](../../experiments/sequence-compression/README.fr.md).
 
 
 ### Références
