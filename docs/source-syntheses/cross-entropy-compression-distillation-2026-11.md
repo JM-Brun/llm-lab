@@ -13,13 +13,13 @@ Cross-entropy answers an operational question:
 In LLM Lab's notation, let $q$ be the data/target distribution and $p$ the model distribution. A code designed from $p$ assigns ideal lengths $-\log_2 p_i$, and the average cost when data follow $q$ is:
 
 $$
-$H(q,p)$=-\sum_i q_i\log_2 p_i.
+H(q,p)=-\sum_i q_i\log_2 p_i.
 $$
 
 The decomposition
 
 $$
-$H(q,p)$=H$q$+$D_{\mathrm{KL}}(q\Vert p)$
+H(q,p)=H(q)+D_{\mathrm{KL}}(q\Vert p)
 $$
 
 says that the cost is the optimal source entropy plus the excess caused by the mismatch between the source and the code model. The minimum occurs at $p=q$.
@@ -35,11 +35,11 @@ Part 2 reuses the four-symbol robot example from Part 1.
 Keeping the old code gives:
 
 $$
-$H(q,p)$=\tfrac18(1)+\tfrac18(2)+\tfrac14(3)+\tfrac12(3)
+H(q,p)=\tfrac18(1)+\tfrac18(2)+\tfrac14(3)+\tfrac12(3)
 =2.625\text{ bits}.
 $$
 
-The entropy of the new source is (H$q$=1.75) bits, so the excess cost is ($D_{\mathrm{KL}}(q\Vert p)$=0.875) bit per symbol. Swapping the roles of the distributions changes the answer: cross-entropy is directional, not a symmetric distance.
+The entropy of the new source is $H(q)=1.75$ bits, so the excess cost is $D_{\mathrm{KL}}(q\Vert p)=0.875$ bit per symbol. Swapping the roles of the distributions changes the answer: cross-entropy is directional, not a symmetric distance.
 
 ### Notation warning
 
@@ -70,13 +70,13 @@ $$
 \mathcal L(p;q)=\sum_i q_iF(p_i), \qquad \sum_i p_i=1.
 $$
 
-If the loss must be minimized at $p=q$ for every interior data distribution $q$, and (F) is differentiable, the Lagrange first-order condition gives
+If the loss must be minimized at $p=q$ for every interior data distribution $q$, and $F$ is differentiable, the Lagrange first-order condition gives
 
 $$
 q_iF'(q_i)+\lambda=0.
 $$
 
-Thus (xF'(x)) must be constant, so (F'(x)=c/x), and integration gives (F(x)=c\log x+d). A minimum requires (c<0), yielding negative log up to positive scaling and an additive constant.
+Thus $xF'(x)$ must be constant, so $F'(x)=c/x$, and integration gives $F(x)=c\log x+d$. A minimum requires $c<0$, yielding negative log up to positive scaling and an additive constant.
 
 This is a scoped argument, not a universal claim that all learning tasks must use log loss. It depends on the separable expected-loss form, normalized predictions, differentiability and the matching-distribution minimizer requirement. Robust, decision-theoretic or otherwise task-specific objectives can have different goals.
 
@@ -112,7 +112,7 @@ Keep it as an optional case study, not as a definition or a benchmark of languag
 | Contribution from Part 2 | Existing coverage | Integration |
 |---|---|---|
 | Mismatched codebook cost | Formula and KL identity existed; operational code interpretation was less explicit | Add worked 2.625-bit example to advanced math FR/EN |
-| Direction and notation | Project notation was consistent but differed from video notation | Explicit mapping of video (P/Q) to project (q/p) |
+| Direction and notation | Project notation was consistent but differed from video notation | Explicit mapping of video $P/Q$ to project $q/p$ |
 | Log-loss rationale | NLL and KL decomposition existed; Lagrange argument was absent | Add optional derivation with assumptions and limits |
 | Pretraining loss | Already explained in canonical loss chain | Link/reuse; no duplication |
 | Teacher/student soft targets | Mentioned, but distribution-level distillation was not sufficiently concrete | Add teacher/student objective and warning about teacher errors |
@@ -121,8 +121,8 @@ Keep it as an optional case study, not as a definition or a benchmark of languag
 
 ## 8. What learners should now be able to do
 
-1. Given data $q$ and model $p$, compute the average ideal code length ($H(q,p)$).
-2. Explain why ($H(q,p)$-H$q$=$D_{\mathrm{KL}}(q\Vert p)$) is the excess coding cost.
+1. Given data $q$ and model $p$, compute the average ideal code length $H(q,p)$.
+2. Explain why $H(q,p)-H(q)=D_{\mathrm{KL}}(q\Vert p)$ is the excess coding cost.
 3. Explain why swapping $q$ and $p$ changes the result.
 4. Map one-hot next-token NLL to the empirical cross-entropy objective.
 5. State the assumptions behind the Lagrange-multiplier argument for logarithmic loss.
