@@ -157,6 +157,18 @@ concepts:
       en: "Mechanism that injects or exposes positional information in model computations."
     domains: [architectures-mechanisms, mathematical-tools-geometry]
     resources: [fr/positional-encoding, en/positional-encoding, fr/rope, en/rope]
+  - id: rope-inverse-frequency
+    importance: supporting
+    labels: {fr: "Fréquence inverse RoPE", en: "RoPE inverse frequency"}
+    definitions:
+      fr: >-
+        Fréquence angulaire associée à une paire de coordonnées RoPE ; sa progression géométrique
+        détermine l’angle accumulé selon la position et la longueur d’onde de la paire.
+      en: >-
+        Angular frequency assigned to a RoPE coordinate pair; its geometric schedule determines
+        the phase accumulated with position and the pair's wavelength.
+    domains: [architectures-mechanisms, mathematical-tools-geometry]
+    resources: [fr/rope, en/rope, fr/positional-encoding, en/positional-encoding]
   - id: output-projection
     importance: core
     labels: {fr: "Projection de sortie", en: "Output projection"}
