@@ -3591,6 +3591,16 @@ sources:
           - "The companion notebook was identified but its cells were not executed or independently audited; it is not treated as experimental evidence."
           - "The article is a secondary pedagogical source. Its claims about attention as mutual information, Landauer as a dataset ceiling, compression as intelligence, and V-information require the qualifications recorded in the source review."
           - "No licence or permission to reproduce article prose, figures, notebook code or data was established."
+      - accessed_at: "2026-11-16"
+        status: partially-scanned
+        inspected_scope:
+          - "Statically inspected all 18 cells of the linked English companion notebook, including source code and saved textual outputs."
+          - "Audited the attention-derived KL calculation, optional BERT branch, informal V-information summary, thermodynamic analogy, and zlib compression comparison."
+          - "Cross-checked the V-information section against Xu et al. (ICLR 2020), recorded as a separate primary source."
+        limitations:
+          - "The notebook was not executed; saved outputs were inspected but not independently reproduced."
+          - "No notebook code, figures or data were copied; reuse rights remain unverified."
+          - "The static audit does not establish runtime compatibility or the behavior of optional model-loading paths."
     related:
       pages:
         - fr/entropy
@@ -3602,6 +3612,7 @@ sources:
       concepts: [cross-entropy, negative-log-likelihood, training-objective, self-attention, attention-weight, scaled-dot-product-attention]
       audit_records:
         - docs/source-reviews/information-theory-wayland-zhang-2026-11.md
+        - docs/source-reviews/wayland-notebook-audit-2026-11.md
 
   - id: xu-et-al-usable-information-2020
     title: "A Theory of Usable Information under Computational Constraints"
