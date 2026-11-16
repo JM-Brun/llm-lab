@@ -131,6 +131,20 @@ L'évolution des systèmes ne signifie pas que le Transformer dense a été simp
 
 Ces techniques ne sont pas mutuellement exclusives et ne répondent pas au même problème. Certaines agissent sur le coût du calcul, d'autres sur le trafic mémoire, le débit ou la latence.
 
+
+### Compression du modèle : une autre question que la prédiction
+
+Il faut distinguer deux sens du mot *compression* :
+
+- **Compression prédictive des données :** le modèle attribue des probabilités aux tokens ; un codeur entropique peut exploiter ces probabilités pour réduire le nombre de bits nécessaires à représenter une séquence.
+- **Compression du modèle :** on modifie le réseau pour réduire son empreinte ou son coût. La **quantification** utilise moins de bits pour les poids (et parfois les activations), le **pruning** retire des poids ou structures, et la **distillation** entraîne un modèle étudiant plus petit à reproduire certains comportements d'un professeur.
+
+Une troisième dimension est la **mémoire d'exécution** : le cache KV et les activations occupent de la mémoire temporaire pendant l'inférence, sans être la taille persistante des poids.
+
+Ces leviers ne garantissent pas les mêmes bénéfices. Un checkpoint plus petit n'est pas automatiquement plus rapide ; une meilleure compression des poids ne signifie pas que le modèle prédit mieux ; un modèle prédictif n'est pas automatiquement un codeur sans perte. Pour comparer, mesurer séparément la taille du checkpoint, le pic mémoire, la latence, le débit et la qualité probabiliste.
+
+Pour la démonstration mathématique et le petit codeur entropique reproductible, voir [« Les LLM sont-ils des algorithmes de compression ? » dans la leçon sur l'entropie](entropy.qmd). La [synthèse comparative détaillée](../../docs/source-syntheses/compression-two-meanings-2026-11.md) donne les nuances et références.
+
 À approfondir : [Architectures hybrides](hybrid-llm-architectures.qmd) et [Complexité et parallélisme](llm-computational-complexity.qmd).
 
 ## 6. Du modèle au système qui utilise des outils {#tool-using-systems}
