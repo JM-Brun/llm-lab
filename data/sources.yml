@@ -3885,3 +3885,48 @@ sources:
         - docs/source-reviews/fan-compression-intelligence-2026-11.md
         - docs/source-syntheses/fan-compression-intelligence-2026-11.md
         - data/extractions/fan-compression-intelligence-2026.yml
+
+  - id: huggingface-llm-course
+    title: "Hugging Face LLM Course"
+    creators: ["Hugging Face contributors"]
+    source_type: course
+    identifiers: {}
+    canonical_url: "https://huggingface.co/learn/llm-course/"
+    publisher: "Hugging Face"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: "Living course; chapter index and French Chapter 1 checked 2026-11-16"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [text-tokenization, training-learning, inference-efficiency]
+      tags: [topic:transformer, topic:llm-training, topic:fine-tuning, topic:dataset-curation, topic:reasoning-models, ecosystem:huggingface]
+      concept_ids: [self-attention, token, token-embedding, contextualized-representation]
+    metadata:
+      technical_level: mixed
+      contribution_types: [theory, architecture, implementation, pedagogy, experiment]
+      audiences: [learner, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-16"
+        status: partially-scanned
+        inspected_scope:
+          - "Current English course index: chapter structure 0–12 and stated learning outcomes"
+          - "French Chapter 1 introduction: NLP/LLM distinction, course expectations, prerequisites and chapter outline"
+          - "Existing LLM Lab source records, project audit issue #765, canonical learning paths, selected page and implementation inventories"
+        limitations:
+          - "Architecture scan plus bounded Chapter 1 inspection, not a deep audit of all twelve chapters."
+          - "Lesson bodies, exercises, notebooks, videos, Hub examples, model/dataset revisions and live demonstrations in Chapters 2–12 have not yet been inspected."
+          - "Living documentation; no immutable upstream commit or release was pinned in this first pass."
+          - "Current English index and supplied French Chapter 1 do not expose identical chapter outlines; preserve locale/version differences rather than assuming parity."
+          - "Course text, figures and code remain link-only; no reuse permission was established."
+    related:
+      pages: [fr/transformer-architecture, en/transformer-architecture, fr/tokenization-strategies, en/tokenization-strategies, fr/training-loop, en/training-loop, fr/post-training, en/post-training, fr/evaluation-experimentale, en/experimental-evaluation]
+      concepts: [self-attention, token, token-embedding, contextualized-representation]
+      audit_records:
+        - docs/source-reviews/huggingface-llm-course-2026-11.md
+        - data/extractions/huggingface-llm-course.yml
