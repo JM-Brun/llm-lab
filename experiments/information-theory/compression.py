@@ -5,7 +5,6 @@ import json
 import numpy as np
 from numpy.typing import NDArray
 
-
 FloatArray = NDArray[np.float64]
 UIntArray = NDArray[np.uint8]
 
