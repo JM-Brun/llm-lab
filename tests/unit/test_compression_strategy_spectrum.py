@@ -3,7 +3,9 @@
 import importlib.util
 from pathlib import Path
 
-MODULE_PATH = Path(__file__).resolve().parents[2] / "experiments" / "compression-strategy-spectrum" / "run.py"
+MODULE_PATH = (
+    Path(__file__).resolve().parents[2] / "experiments" / "compression-strategy-spectrum" / "run.py"
+)
 SPEC = importlib.util.spec_from_file_location("compression_strategy_spectrum_run", MODULE_PATH)
 assert SPEC is not None and SPEC.loader is not None
 MODULE = importlib.util.module_from_spec(SPEC)
