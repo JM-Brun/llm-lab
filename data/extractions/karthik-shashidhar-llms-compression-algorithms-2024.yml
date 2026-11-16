@@ -169,6 +169,7 @@ pedagogical_model:
     - "Frequency and niche-domain claims are anecdotal and confounded by task difficulty, data quality, transfer and post-training."
     - "The model-size comparison is unsupported and should not be taught as a factual scaling result."
   comparison:
+    dossier: "docs/source-syntheses/llms-and-compression-algorithms-2026-11.md"
     canonical_graph: "data/concepts.yml"
     canonical_routes:
       - "site/fr/probabilites.qmd"
