@@ -146,3 +146,67 @@ items:
     candidate_destinations: {pages: [fr/llm-limits, en/llm-limits], concepts: []}
     disposition: clarify
     disposition_rationale: "Use as a bounded analogy in the limitations material, not a causal theory or new canonical concept."
+
+  - id: sourav-mukherjee-compression-intelligence-2026:analogy-autocomplete
+    kind: analogy
+    summary: "A phone keyboard completing 'I'm on my way' illustrates next-token prediction as a familiar, low-surprise interaction."
+    locator: {type: section, value: "Opening"}
+    evidence: {kind: author-analogy, confidence: context-dependent, scope: "Motivating analogy for conditional prediction and familiar continuations.", assumptions: [], limitations: ["Autocomplete is a simplified interface example; it does not establish equivalence between a phone keyboard and a frontier LLM in scale, capability or objective."]}
+    classification: {primary_theme: probabilistic-foundations-training, concept_ids: [predictive-compression, surprisal]}
+    candidate_destinations: {pages: [fr/entropy, en/entropy], concepts: [predictive-compression, surprisal]}
+    disposition: clarify
+    disposition_rationale: "A memorable entry point; retain the analogy without implying that the systems are equivalent in every respect."
+  - id: sourav-mukherjee-compression-intelligence-2026:analogy-novel-memory
+    kind: analogy
+    summary: "Remembering a novel through recurring characters, phrases and plot structure illustrates a compact predictive mental representation."
+    locator: {type: section, value: "1. The Hutter Prize: Compression as Intelligence"}
+    evidence: {kind: author-analogy, confidence: context-dependent, scope: "Human memory and pattern extraction as an intuition for compression.", assumptions: [], limitations: ["Human remembering is not a literal lossless compressor; reconstruction is approximate and shaped by goals, attention and prior knowledge."]}
+    classification: {primary_theme: probabilistic-foundations-training, concept_ids: [predictive-compression]}
+    candidate_destinations: {pages: [fr/compression-revision, en/compression-revision], concepts: [predictive-compression]}
+    disposition: clarify
+    disposition_rationale: "Useful for explaining abstraction and regularity discovery, with the distinction between approximate recall and exact decoding."
+  - id: sourav-mukherjee-compression-intelligence-2026:analogy-pianist
+    kind: analogy
+    summary: "Calling an LLM 'just' a next-token predictor is compared with describing a concert pianist as 'just' pressing keys: the simple operation can conceal complex learned competence."
+    locator: {type: section, value: "1. The Hutter Prize: Compression as Intelligence"}
+    evidence: {kind: author-analogy, confidence: context-dependent, scope: "Rhetorical response to reductive descriptions of next-token prediction.", assumptions: [], limitations: ["The analogy motivates looking beyond the surface operation; it does not prove that an LLM has human-like understanding or musical competence."]}
+    classification: {primary_theme: probabilistic-foundations-training, concept_ids: [predictive-compression]}
+    candidate_destinations: {pages: [fr/compression-revision, en/compression-revision], concepts: [predictive-compression]}
+    disposition: clarify
+    disposition_rationale: "Keep the rhetorical force while pairing it with the project's distinction between predictive capability and a complete theory of intelligence."
+  - id: sourav-mukherjee-compression-intelligence-2026:analogy-good-morning-lottery
+    kind: analogy
+    summary: "A routine 'Good morning' message and an unexpected lottery win illustrate that information content depends on probability, not message length."
+    locator: {type: section, value: "2. The 1948 Foundation: Quantifying Surprise"}
+    evidence: {kind: author-analogy, confidence: context-dependent, scope: "Intuitive contrast for event surprisal.", assumptions: [], limitations: ["The example assumes a recipient-specific probability model; surprise depends on context and expectations."]}
+    classification: {primary_theme: probabilistic-foundations-training, concept_ids: [surprisal, entropy]}
+    candidate_destinations: {pages: [fr/entropy, en/entropy], concepts: [surprisal, entropy]}
+    disposition: clarify
+    disposition_rationale: "Directly conveys why equal-length messages can carry very different information."
+  - id: sourav-mukherjee-compression-intelligence-2026:analogy-coin-weather-geiger
+    kind: analogy
+    summary: "Fair and two-headed coins illustrate one-bit versus zero-bit surprisal; repeated sunny weather and unpredictable Geiger-counter clicks contrast low- and high-entropy sources."
+    locator: {type: section, value: "2. The 1948 Foundation: Quantifying Surprise"}
+    evidence: {kind: author-analogy, confidence: context-dependent, scope: "Examples for event surprisal, source entropy and compressibility.", assumptions: [], limitations: ["The weather example is deliberately idealized; real weather is neither perfectly constant nor independent in the way the examples suggest."]}
+    classification: {primary_theme: probabilistic-foundations-training, concept_ids: [entropy, surprisal]}
+    candidate_destinations: {pages: [fr/entropy, en/entropy], concepts: [entropy, surprisal]}
+    disposition: clarify
+    disposition_rationale: "Retain as a linked teaching pair; make clear that entropy is an expectation over a specified source model."
+  - id: sourav-mukherjee-compression-intelligence-2026:analogy-spanish-cafe
+    kind: analogy
+    summary: "Learning to order coffee in a Madrid café illustrates how better conditional predictions reduce expected surprisal and cross-entropy over time."
+    locator: {type: section, value: "3. The LLM Connection: Why We Minimize Cross-Entropy"}
+    evidence: {kind: author-analogy, confidence: context-dependent, scope: "Human language-learning intuition for model adaptation and prediction error.", assumptions: [], limitations: ["Human language learning involves grounding, interaction and goals beyond minimizing next-token cross-entropy; it is an analogy, not an identity."]}
+    classification: {primary_theme: probabilistic-foundations-training, concept_ids: [cross-entropy, surprisal]}
+    candidate_destinations: {pages: [fr/cross-entropy, en/cross-entropy], concepts: [cross-entropy, surprisal]}
+    disposition: clarify
+    disposition_rationale: "A useful intuition for decreasing predictive loss, provided human learning is not reduced to a single training objective."
+  - id: sourav-mukherjee-compression-intelligence-2026:analogy-meeting-redundancy
+    kind: analogy
+    summary: "A colleague taking four minutes to explain a fifteen-second decision illustrates the potential cost of verbose, low-information intermediate tokens."
+    locator: {type: section, value: "4. The 2026 Frontier: Entropy-Guided Token Pruning"}
+    evidence: {kind: author-analogy, confidence: context-dependent, scope: "Motivation for reducing inference-time token and compute overhead.", assumptions: [], limitations: ["Human-perceived verbosity is not a measurement of model-token entropy or task utility; removing a token requires an intervention and evaluation."]}
+    classification: {primary_theme: inference-efficiency, concept_ids: [entropy, kv-cache]}
+    candidate_destinations: {pages: [fr/compression-revision, en/compression-revision], concepts: [entropy, kv-cache]}
+    disposition: clarify
+    disposition_rationale: "Keep as an intuitive motivation, never as evidence that low-entropy reasoning tokens are safe to prune."
