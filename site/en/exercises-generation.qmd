@@ -26,7 +26,7 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-gener
 
 **Prerequisites:** [logits](logits.qmd), [output probabilities](probabilities.qmd), [next-token prediction and autoregressive generation](generation.qmd).
 
-**Seven formative exercises published:** GE-A–GE-G. They cover next-token selection, the autoregressive loop and stopping, prefill/decode and KV caching, then the effects of temperature and top-k/top-p filters.
+**Eight formative exercises published:** GE-A–GE-H. They cover next-token selection, the autoregressive loop and stopping, prefill/decode and KV caching, then the effects of temperature and top-k/top-p filters.
 
 <a id="ge-a-distribution-and-selection"></a>
 ### Distribution and selection {#ex-generation-distribution-selection}
@@ -172,6 +172,28 @@ Top-k fixes the number of candidates; top-p fixes a target cumulative mass, so t
 </details>
 
 These exercises focus on distribution controls. Sequence search (beam search) and contrastive decoding remain optional deep dives, not prerequisites for the main learning path.
+
+
+<a id="ge-h-prefix-caching-and-continuous-batching"></a>
+### Prefix caching and continuous batching {#ex-generation-prefix-caching-continuous-batching}
+
+A server has already processed the tokenized prefix $S=(s_1,\ldots,s_{1200})$ for one request. A second request begins with exactly the same 1,200 tokens, then adds a 300-token suffix. The cache for $S$ is still available on the selected worker.
+
+1. How many tokens of the second prompt still need prefill processing?
+2. If the second prompt has the same meaning but differs from token 20 onward, can it reuse the cache for $S$ after that point?
+3. Sequences A, B, and C are active. A finishes after 2 iterations, B after 7; a new request D arrives. What does continuous batching allow?
+4. Does continuous batching make tokens within one sequence independent of one another?
+
+<details>
+<summary>Show the worked solution</summary>
+
+1. The prefix $S$ is reused; only the 300-token suffix needs prefill, assuming the cache is compatible and still available.
+2. No. Cache sharing requires an exactly identical tokenized prefix. Semantic similarity is not enough; after the first divergence, later states cannot be reused as a continuation of the same prefix.
+3. When A finishes, its slot can be assigned to D at a subsequent iteration, without waiting for B. Batch composition changes during decode.
+4. No. Each sequence keeps its autoregressive dependency: its next token depends on its own prefix. Batching combines computation across sequences; it does not remove that dependency.
+
+</details>
+
 
 ---
 
