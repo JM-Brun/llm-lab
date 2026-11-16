@@ -6,6 +6,9 @@ pedagogical_model:
     basis:
       - "Complete article body and figure captions inspected on 2026-11-16; sections 1–7 and the article's equations and PyTorch snippets were reviewed."
       - "The article explicitly presents a progression from absolute and sinusoidal position vectors to RoPE mechanics, implementation, and architecture comparisons."
+    inferred_elements:
+      - "The exact prerequisite structure is reconstructed from the mathematical and implementation steps; the article does not publish a formal prerequisite graph."
+      - "The pedagogical role of each figure is inferred from its caption and placement; the 38 visual assets were not inspected directly."
     limitations:
       - "The 38 figure assets were not individually downloaded or visually inspected; the graph reflects figure captions and their placement."
       - "The linked Qwen3 notebook was not independently audited or executed."
