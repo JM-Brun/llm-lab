@@ -141,9 +141,9 @@ Cette distinction pose une bonne question : **une bonne prédiction mesure-t-ell
 
 **Garde-fous :** l'épiplexité est un concept de recherche récent ; la correspondance proposée par Fan entre structures algébriques An/Fn et réseaux neuronaux est analogique, pas un théorème sur les LLM. Sa définition de la compréhension par « efficacité structurelle » est une proposition philosophique, pas un consensus scientifique.
 
-L'expérience [structure séquentielle et compression prédictive](../../experiments/compression-strategy-spectrum/README.fr.md) compare un modèle unigramme et un bigramme sur des données synthétiques. Elle illustre l'exploitation de dépendances séquentielles ; elle ne calcule pas l'épiplexité et ne mesure pas la compréhension.
+L'expérience [structure séquentielle et compression prédictive](https://github.com/JM-Brun/llm-lab/blob/main/experiments/compression-strategy-spectrum/README.fr.md) compare un modèle unigramme et un bigramme sur des données synthétiques. Elle illustre l'exploitation de dépendances séquentielles ; elle ne calcule pas l'épiplexité et ne mesure pas la compréhension.
 
-Voir la [synthèse critique de Mingdi Fan](../../docs/source-syntheses/fan-compression-intelligence-2026-11.md) et la [revue détaillée](../../docs/source-reviews/fan-compression-intelligence-2026-11.md).
+Voir la [synthèse critique de Mingdi Fan](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/fan-compression-intelligence-2026-11.md) et la [revue détaillée](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-reviews/fan-compression-intelligence-2026-11.md).
 
 ## Auto-évaluation
 
