@@ -2,9 +2,11 @@
 """Exact arithmetic-coding demonstration using a tiny conditional bigram model."""
 
 from __future__ import annotations
+
 from collections import Counter, defaultdict
 from fractions import Fraction
 from math import ceil, log2
+import sys
 
 ALPHABET = ("A", "B", "C", "D")
 TRAINING = "ABABACABADABABACABADABABACABADABABACABAD"
@@ -96,14 +98,17 @@ def main() -> None:
     recovered = decode(numerator, bit_count, len(MESSAGE), model)
     ideal_bits = -log2(float(high - low))
     uniform_bits = len(MESSAGE) * log2(len(ALPHABET))
-    print("Predictive compression — exact toy experiment")
-    print(f"Training symbols: {len(TRAINING)}")
-    print(f"Message:          {MESSAGE}")
-    print(f"Ideal model cost: {ideal_bits:.3f} bits")
-    print(f"Uniform baseline: {uniform_bits:.3f} bits")
-    print(f"Actual code:      {bit_count} bits")
-    print(f"Decoded exactly:  {recovered == MESSAGE}")
-    print(f"Decoded message:  {recovered}")
+    report = (
+        "Predictive compression — exact toy experiment",
+        f"Training symbols: {len(TRAINING)}",
+        f"Message:          {MESSAGE}",
+        f"Ideal model cost: {ideal_bits:.3f} bits",
+        f"Uniform baseline: {uniform_bits:.3f} bits",
+        f"Actual code:      {bit_count} bits",
+        f"Decoded exactly:  {recovered == MESSAGE}",
+        f"Decoded message:  {recovered}",
+    )
+    sys.stdout.write("\\n".join(report) + "\\n")
     if recovered != MESSAGE:
         raise AssertionError("Lossless round-trip failed")
 
