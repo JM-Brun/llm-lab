@@ -69,7 +69,7 @@ A probability p(x) corresponds to an ideal code length close to -log₂ p(x) bit
 
 ## Further study
 
-- [Experiment: entropy, KL and predictive coding](../../experiments/information-theory/README.md)
+- [Experiment: entropy, KL and predictive coding](experience-information-theory.qmd)
 - [Source synthesis](../../docs/source-syntheses/information-theory-and-language-models-2026-11.md)
 - [Technical source review](../../docs/source-reviews/information-theory-wayland-zhang-2026-11.md)
 
