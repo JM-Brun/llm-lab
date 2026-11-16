@@ -843,6 +843,32 @@ relation_types:
     descriptions:
       fr: "La source est évaluée au moyen de la cible."
       en: "The source is evaluated using the target."
+
+  - id: entropy
+    importance: core
+    labels: {fr: "Entropie", en: "Entropy"}
+    definitions:
+      fr: "Information moyenne associée à une variable aléatoire, égale à l'espérance de son surprisal sous sa distribution."
+      en: "Average information associated with a random variable, equal to the expected surprisal under its distribution."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/entropy, en/entropy, fr/cross-entropy, en/cross-entropy, fr/compression-revision, en/compression-revision]
+  - id: kl-divergence
+    importance: supporting
+    labels: {fr: "Divergence KL", en: "KL divergence"}
+    definitions:
+      fr: "Mesure asymétrique de l'écart entre deux distributions, égale à l'espérance sous la distribution cible du logarithme du rapport entre les probabilités."
+      en: "Asymmetric measure of the discrepancy between two distributions, equal to the target-distribution expectation of the log probability ratio."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/cross-entropy, en/cross-entropy, fr/compression-revision, en/compression-revision]
+  - id: mutual-information
+    importance: supporting
+    labels: {fr: "Information mutuelle", en: "Mutual information"}
+    definitions:
+      fr: "Quantité qui mesure la réduction de l'incertitude sur une variable lorsque l'autre est connue, définie à partir de leur distribution jointe."
+      en: "Quantity measuring the reduction in uncertainty about one variable when the other is known, defined from their joint distribution."
+    domains: [probabilistic-foundations-training, architectures-mechanisms]
+    resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/compression-revision, en/compression-revision]
+
 relations:
 
   - {from: predictive-compression, type: applies-to, to: conditional-distribution}
@@ -994,3 +1020,16 @@ relations:
   - {from: laplacian-eigenmaps, type: applies-to, to: positive-pair-distribution}
   - {from: laplacian-eigenmaps, type: contributes-to, to: platonic-representation-hypothesis}
   - {from: joint-embedding-predictive-architecture, type: represented-by, to: laplacian-eigenmaps}
+  - from: entropy
+    type: prerequisite
+    to: cross-entropy
+    rationale:
+      fr: "L'entropie de la cible est le terme de référence dans la décomposition de l'entropie croisée."
+      en: "Target entropy is the reference term in the cross-entropy decomposition."
+  - from: kl-divergence
+    type: prerequisite
+    to: cross-entropy
+    rationale:
+      fr: "La divergence KL mesure le terme d'écart entre la distribution cible et la distribution prédite."
+      en: "KL divergence measures the mismatch term between the target and predicted distributions."
+  - {from: attention-weight, type: contrasts-with, to: mutual-information}

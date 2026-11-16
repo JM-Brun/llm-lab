@@ -3664,7 +3664,7 @@ sources:
       primary_theme: probabilistic-foundations-training
       secondary_themes: [architectures-mechanisms]
       tags: [topic:entropy, topic:cross-entropy, topic:mutual-information, topic:predictive-compression, topic:v-information]
-      concept_ids: [cross-entropy, self-attention]
+      concept_ids: [entropy, cross-entropy, kl-divergence, mutual-information, self-attention]
     metadata:
       technical_level: mixed
       contribution_types: [theory, pedagogy, visualization, experiment]
