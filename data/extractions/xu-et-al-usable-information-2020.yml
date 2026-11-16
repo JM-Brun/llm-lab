@@ -43,7 +43,7 @@ pedagogical_model:
     - "The quantity is directional and family-relative; values from different families do not answer the same question automatically."
     - "The PAC guarantee is not a blanket guarantee for arbitrary model classes or arbitrary empirical training procedures."
     - "The project toy example is an exact population calculation, not a replication of the paper's high-dimensional experiments."
-  claims:
+items:
     - id: xu-et-al-usable-information-2020:predictive-family-definition
       kind: formal-definition
       summary: "A predictive family specifies the probabilistic functions available to an observer and satisfies optional ignorance."
