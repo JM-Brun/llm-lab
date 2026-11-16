@@ -26,7 +26,7 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-gener
 
 **Prerequisites:** [logits](logits.qmd), [output probabilities](probabilities.qmd), [next-token prediction and autoregressive generation](generation.qmd).
 
-**Eight formative exercises published:** GE-A–GE-H. They cover next-token selection, the autoregressive loop and stopping, prefill/decode and KV caching, then the effects of temperature and top-k/top-p filters.
+**Eight formative exercises published:** GE-A–GE-H. They cover next-token selection, the autoregressive loop and stopping, prefill/decode, KV caching, multi-request serving mechanisms, then the effects of temperature and top-k/top-p filters.
 
 <a id="ge-a-distribution-and-selection"></a>
 ### Distribution and selection {#ex-generation-distribution-selection}
