@@ -22,6 +22,7 @@ Depuis la racine du dépôt :
 ~~~bash
 python experiments/predictive-compression/run.py
 uv run pytest tests/unit/test_predictive_compression.py
+python experiments/predictive-compression/domain_shift.py
 ~~~
 
 Seule la bibliothèque standard de Python est nécessaire pour l'expérience. Le corpus d'entraînement, le message test, l'alphabet et le lissage sont fixés dans le script. Le test vérifie le décodage exact.
@@ -60,6 +61,20 @@ Cette expérience contrôlée montre qu'un modèle peut attribuer un coût faibl
 3. Modifier SMOOTHING ; une valeur positive évite les probabilités nulles pour les transitions jamais observées.
 4. Lire interval_for : chaque symbole observé réduit l'intervalle selon sa probabilité conditionnelle.
 5. Lire decode : le même modèle et les mêmes conventions sont nécessaires pour retrouver les symboles.
+
+
+## Expérience complémentaire : décalage de distribution
+
+Exécuter `python experiments/predictive-compression/domain_shift.py`. Deux modèles bigrammes sont entraînés sur des motifs alternés distincts (`AB` et `CD`), puis évalués sur les deux séquences de test.
+
+| Modèle et test | Coût idéal | Bits/symbole |
+|---|---:|---:|
+| Modèle AB → test AB (même distribution) | 2,977 bits | 0,074 |
+| Modèle AB → test CD (décalage) | 80,322 bits | 2,008 |
+| Modèle CD → test CD (même distribution) | 2,977 bits | 0,074 |
+| Modèle CD → test AB (décalage) | 80,322 bits | 2,008 |
+
+Ce contrôle synthétique montre que les probabilités apprises sur une source peuvent devenir peu utiles lorsque la distribution change. Il **n'isole pas la fréquence comme cause unique** et ne permet aucune conclusion quantitative sur les LLM ou les domaines réels.
 
 ## Interprétation et limites
 
