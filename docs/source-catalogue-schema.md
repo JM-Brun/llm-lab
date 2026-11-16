@@ -1,6 +1,6 @@
 # Source catalogue and extraction data contract
 
-**Status:** initial versioned contract (schema version 1).  
+**Status:** version 1 legacy catalogue contract; distributed lineage migration is specified in [Source lineage architecture](source-lineage-architecture.md).  
 **Canonical source:** this document defines external-source and extraction records.  
 **Scope:** research traceability and discovery; not page metadata, the concept graph, or the pedagogical route.
 
@@ -8,7 +8,10 @@
 
 | Data | Canonical owner | Meaning |
 |---|---|---|
-| External source identity and scan history | `data/sources.yml` | What source exists, what was actually inspected, when, and with what access/reuse constraints |
+| External source identity and bibliographic metadata | Current: `data/sources.yml`; target: `data/sources/<source-id>.yml` | Durable source identity and version metadata |
+| Inspection history | Current: `scan_history` in `data/sources.yml`; target: `data/source-scans/<source-id>/<event-id>.yml` | Append-only evidence of what was inspected and when |
+| Typed source lineage | Target: `data/source-lineage/<source-id>.yml` | Directional, evidence-linked relations to other sources and project artifacts |
+| Generated source index | Target: `data/sources.yml` | Compatibility/discovery projection, not a canonical authoring file |
 | Controlled source facets | `data/source-taxonomy.yml` | Allowed source types, levels, contributions, audiences, statuses, extraction kinds, and tag policy |
 | Atomic extracted knowledge | `data/extractions/<source-id>.yml` | What a source contributes at a precise locator, with evidence and limitations |
 | Knowledge domains | `data/domains.yml` | The six canonical subject domains |
@@ -60,7 +63,7 @@ Do not invent a generic `meta_tags` field. Typed metadata is easier to validate,
 
 ## 3. Source record
 
-A source record in `data/sources.yml` uses this shape:
+Until the migration is complete, a source record in the legacy `data/sources.yml` uses this shape:
 
     schema_version: 1
     sources:
@@ -131,7 +134,7 @@ A source record in `data/sources.yml` uses this shape:
 
 ### Scan status and history
 
-The current `scan_status` is a summary. Each inspection event belongs in `scan_history`, with date, status, exact scope and limitations. A source may be rescanned at a later version; do not overwrite the earlier inspection evidence.
+In the legacy catalogue, the current `scan_status` is a summary and inspection events are retained in `scan_history`. In the target architecture, each inspection event moves to its own append-only file under `data/source-scans/<source-id>/`. A source may be rescanned at a later version; do not overwrite earlier inspection evidence. See [Source lineage architecture](source-lineage-architecture.md).
 
 Allowed statuses are in `data/source-taxonomy.yml`. A source is `scanned` only when the declared intended scope has been inspected; otherwise use `partially-scanned`. A citation or link alone is `discovered` or `selected`, not scanned.
 
@@ -246,3 +249,8 @@ Any schema change must update this contract, examples, taxonomy, validator fixtu
 ## 8. Standards alignment
 
 Use stable URI-like identifiers and ISO 8601 dates. Use BCP 47 for language tags and SPDX identifiers only when the licence is known and correctly identified. The source catalogue can later be projected to Schema.org `CreativeWork` and PROV-O where useful, but do not introduce a second RDF store or an ontology toolchain for the current static project. SKOS domains/concepts remain owned by their existing registries; source tags are not a substitute for SKOS concepts.
+
+
+## 9. Distributed lineage migration
+
+The v1 schema above documents the current compatibility format. It does not authorize continued growth of the monolithic catalogue. The target ownership model, event immutability, typed relation vocabulary, migration gates and contributor rules are defined in [docs/source-lineage-architecture.md](source-lineage-architecture.md). Until the migration PR changes the validator and generator, contributors must continue using the current validated format; do not create parallel per-source files manually.
