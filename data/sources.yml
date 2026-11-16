@@ -3741,7 +3741,7 @@ sources:
       concepts: [v-information, mutual-information, cross-entropy]
       audit_records: [docs/source-reviews/predictive-v-information-xu-2020.md]
 
-- id: sourav-mukherjee-compression-intelligence-2026
+  - id: sourav-mukherjee-compression-intelligence-2026
     title: "Compression Is Intelligence: The Information Theory Behind LLMs"
     creators: ["Sourav Mukherjee"]
     source_type: blog
