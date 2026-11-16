@@ -212,7 +212,7 @@ items:
 
   - id: wayland-zhang-information-theory-llm:v-information
     kind: open-question
-    summary: "The article introduces V-information as a way to discuss information usable by a restricted predictive model class rather than information available without computational constraints. It does not supply a formal definition, choice of predictive family, loss, estimator or empirical comparison."
+    summary: "The article introduces V-information informally as a way to discuss information usable by a restricted predictive model class. The formal definition is supplied by Xu et al. (ICLR 2020), now catalogued as a separate primary source; the blog itself does not specify the predictive family, loss, estimator or a controlled architecture comparison."
     pedagogical_assessment:
       novelty: {level: high, rationale: "This is an advanced topic not currently represented in the core learning path."}
       complementarity: {level: moderate, rationale: "It raises a useful question about the interaction between data, inductive bias and computationally bounded extraction."}
@@ -236,4 +236,4 @@ items:
       pages: []
       concepts: []
     disposition: defer
-    disposition_rationale: "Do not add a canonical concept or learner-facing lesson from this informal mention alone; first identify the primary formulation and a reproducible example."
+    disposition_rationale: "Do not attribute the formal definition to this blog or treat its self-attention-versus-bag-of-words suggestion as evidence. The separate Xu et al. extraction now grounds the canonical concept and the project-owned finite-family example."
