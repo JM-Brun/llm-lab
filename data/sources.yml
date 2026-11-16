@@ -3546,3 +3546,60 @@ sources:
       pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/attention-score-scaling, en/attention-score-scaling, fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
       concepts: [self-attention, scaled-dot-product-attention, attention-score, attention-weight, softmax, causal-mask]
       audit_records: [docs/source-reviews/flashattention-io-aware-2026-11.md]
+
+  - id: wayland-zhang-information-theory-llm
+    title: "Information Theory Is All You Need (to Understand LLMs)"
+    creators: ["Wayland Zhang"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://waylandz.com/blog/information-theory-and-llm/"
+    publisher: "Wayland Zhang"
+    publication_date: "2026-02-17"
+    updated_date: null
+    language: en
+    version: "article version retrieved 2026-11-16"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [mathematical-tools-geometry, architectures-mechanisms, inference-efficiency]
+      tags:
+        - topic:information-theory
+        - topic:entropy
+        - topic:cross-entropy
+        - topic:mutual-information
+        - topic:compression
+        - topic:perplexity
+      concept_ids: [cross-entropy, negative-log-likelihood, training-objective, self-attention, attention-weight, scaled-dot-product-attention]
+    metadata:
+      technical_level: mixed
+      contribution_types: [theory, mathematical-derivation, pedagogy, visualization, experiment]
+      audiences: [beginner, learner, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-11-16"
+        status: partially-scanned
+        inspected_scope:
+          - "Full author-authored article text as exposed by the indexed article retrieval: information content and Shannon entropy; cross-entropy and KL decomposition; attention/mutual-information analogy; thermodynamic/Landauer bound; compression/intelligence; V-information; notebook link."
+          - "Article metadata: author, title and publication date (17 February 2026)."
+          - "Identified the linked English notebook in the author's companion GitHub repository."
+          - "Compared the article's main claims with the existing bilingual entropy, cross-entropy and scaled-dot-product-attention lessons and the canonical source-catalogue and concept-registry contracts."
+        limitations:
+          - "The article body was inspected through an indexed full-text retrieval; direct page DOM, comments and outbound link targets were not exhaustively inspected."
+          - "Embedded image bytes, exact figure authorship and reuse permissions were not verified; figures remain link-only."
+          - "The companion notebook was identified but its cells were not executed or independently audited; it is not treated as experimental evidence."
+          - "The article is a secondary pedagogical source. Its claims about attention as mutual information, Landauer as a dataset ceiling, compression as intelligence, and V-information require the qualifications recorded in the source review."
+          - "No licence or permission to reproduce article prose, figures, notebook code or data was established."
+    related:
+      pages:
+        - fr/entropy
+        - en/entropy
+        - fr/cross-entropy
+        - en/cross-entropy
+        - fr/scaled-dot-product-attention
+        - en/scaled-dot-product-attention
+      concepts: [cross-entropy, negative-log-likelihood, training-objective, self-attention, attention-weight, scaled-dot-product-attention]
+      audit_records:
+        - docs/source-reviews/information-theory-wayland-zhang-2026-11.md
