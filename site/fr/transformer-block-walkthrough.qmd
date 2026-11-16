@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/transformer-block-walkthrough"
-scope: "Explique ligne par ligne le fichier transformer_block.py : l'ordre pré-LN et ses chemins résiduels, l'initialisation mise à l'échelle des poids résiduels, le découpage en têtes par tranches de colonnes et le MLP position par position. Exclut les embeddings, la tête de sortie et la boucle de génération."
-purpose: "Le lecteur doit pouvoir tracer une forme à travers le bloc, expliquer pourquoi la normalisation est dans la branche et non sur le tronc, et décrire le rôle de chaque projection Q, K, V et O."
+scope: "Explique ligne par ligne le bloc de référence transformer_block.py, puis compare séparément les variantes MHA/MQA/GQA, MLA et les motifs locaux/sparse sans prétendre qu'elles sont implémentées dans le code de référence."
+purpose: "Le lecteur doit pouvoir tracer une forme à travers le bloc, expliquer les projections Q/K/V/O et les résidus, puis distinguer partage K/V, compression latente et restriction des positions consultées."
 suggested_route:
   previous: "fr/gpt-ops-walkthrough"
   next: "fr/gpt-model-walkthrough"
