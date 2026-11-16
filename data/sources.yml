@@ -3700,3 +3700,50 @@ sources:
       audit_records:
         - docs/source-reviews/wayland-zhang-information-theory-llm-2026-11.md
         - docs/source-syntheses/information-theory-and-llms-2026-11.md
+
+  - id: 3blue1brown-reinventing-entropy-compression-intelligence-part-1-2026
+    title: "Reinventing Entropy | Compression is Intelligence Part 1"
+    creators: ["Grant Sanderson (3Blue1Brown)"]
+    source_type: video
+    identifiers: {youtube_video_id: "l6DKRf-fAAM", aihub_article: "https://aihub.org/2026/07/16/reinventing-entropy-compression-is-intelligence-part-1/"}
+    canonical_url: "https://www.youtube.com/watch?v=l6DKRf-fAAM"
+    publisher: "3Blue1Brown"
+    publication_date: "2026-06-07"
+    updated_date: null
+    language: en
+    version: "Part 1 of the Compression is Intelligence trilogy"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:entropy, topic:predictive-compression, topic:entropy-coding, method:prefix-coding, modality:video]
+      concept_ids: [entropy, surprisal, conditional-distribution, predictive-compression, entropy-coding, arithmetic-coding, cross-entropy]
+    metadata:
+      technical_level: introductory
+      contribution_types: [mathematical-derivation, theory, visualization, pedagogy, historical-context]
+      audiences: [beginner, learner, educator]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-11-16"
+        status: partially-scanned
+        inspected_scope:
+          - "AIhub page metadata and embedded-video identity inspected; the AIhub page is a relay/embedding of the original 3Blue1Brown video, not a separate technical article."
+          - "Video description, chapter timestamps and a complete timestamped caption transcript retrieved from a third-party transcript mirror."
+          - "Transcript reviewed for prefix-free codes, binary-tree intuition, idealized random-looking compressed streams, surprisal, Shannon entropy, language prediction, entropy rate and Shannon's noiseless coding theorem."
+          - "Claims and pedagogical sequence reconciled against LLM Lab's existing entropy, cross-entropy, likelihood and predictive-compression material."
+        limitations:
+          - "The original YouTube video was not independently watched frame by frame; visual descriptions are based on the transcript and video description."
+          - "The transcript was retrieved through a third-party mirror, so caption fidelity and completeness have not been independently verified against the creator's original caption track."
+          - "The AIhub page contains the embedded video and metadata but no separately authored technical exposition."
+          - "The historical estimate of roughly one bit per English character is reported as Shannon's estimate under a particular experimental setup, not as a current universal constant."
+          - "No independent experiment, code, dataset or formal proof is supplied by this video."
+          - "No licence or permission to reuse video frames, animation, transcript or music was established; link-only treatment."
+    related:
+      pages: [fr/entropy, en/entropy, fr/cross-entropy, en/cross-entropy, fr/vraisemblance, en/likelihood, fr/compression-revision, en/compression-revision, fr/entropy-exercises, en/entropy-exercises]
+      concepts: [entropy, surprisal, conditional-distribution, predictive-compression, entropy-coding, arithmetic-coding, cross-entropy]
+      audit_records:
+        - docs/source-syntheses/reinventing-entropy-2026-11.md
+        - data/extractions/3blue1brown-reinventing-entropy-compression-intelligence-part-1-2026.yml
