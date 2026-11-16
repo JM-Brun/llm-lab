@@ -169,6 +169,18 @@ concepts:
         the phase accumulated with position and the pair's wavelength.
     domains: [architectures-mechanisms, mathematical-tools-geometry]
     resources: [fr/rope, en/rope, fr/positional-encoding, en/positional-encoding]
+  - id: causal-prefix-visibility
+    importance: supporting
+    labels: {fr: "Visibilité du préfixe causal", en: "Causal-prefix visibility"}
+    definitions:
+      fr: >-
+        Ensemble emboîté de positions antérieures ou courantes qu'une requête peut consulter sous
+        un masque causal ; sa structure dépend de l'index de requête même sans encodage positionnel explicite.
+      en: >-
+        Nested set of preceding or current positions available to a query under a causal mask;
+        its structure depends on the query index even without explicit positional encoding.
+    domains: [architectures-mechanisms, mathematical-tools-geometry]
+    resources: [fr/rope, en/rope, fr/causal-masking, en/causal-masking]
   - id: output-projection
     importance: core
     labels: {fr: "Projection de sortie", en: "Output projection"}
