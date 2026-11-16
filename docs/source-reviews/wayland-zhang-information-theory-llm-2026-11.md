@@ -13,7 +13,7 @@ Two sections need material qualification before being used as teaching claims:
 1. **Landauer's principle does not prove a general limit on what a model can learn from a dataset.** Landauer's bound concerns the minimum heat dissipation associated with logically irreversible erasure at temperature (T). It is not a theorem about model architectures, generalization or the amount of information learned from finite samples.
 2. **“Compression is intelligence” is a provocative thesis, not a mathematical identity.** Better predictive modelling can reduce ideal code length under a matched coding protocol. This is not sufficient to define intelligence, and it does not imply that every good compressor is a language model.
 
-The V-information section is an interesting advanced direction, but the article's short description should be supplemented by the primary paper before the concept is promoted into the canonical graph.
+The V-information section is an interesting advanced direction. The linked primary paper has now been read in full and the concept is integrated as an advanced optional node, with a small predictor-family demonstration.
 
 ## 1. Source and pedagogical model
 
@@ -119,10 +119,46 @@ Le notebook anglais `information-theory-and-llm-en.ipynb` a été récupéré de
 ## 6. Evidence and open work
 
 - Directly inspected: full article text, page date and author; upstream repository landing page.
-- Partially inspected: linked primary V-information paper (abstract and metadata only); notebook inventory (filenames only).
-- Not inspected: notebook execution, notebook visual outputs, article image bytes, comments, full V-information paper and all further-reading links.
+- Fully inspected: Xu et al. (ICLR 2020), including formal definitions, propositions, PAC estimation theorem, structure-learning algorithm, empirical sections, fairness discussion and conclusion.
+- Statically inspected: all 18 cells of the English upstream notebook; it was not executed.
+- Not inspected/reproduced: upstream notebook execution and outputs, article image bytes, authors' V-information experiment code/datasets, comments and all further-reading links.
 - Rights: article text and figures remain link-only; no reuse permission established.
 
 ## 7. Operational conclusion
 
-Use the article as a **conceptual map**, not as a single authority. Preserve its strong entropy/cross-entropy bridge, teach the attention/MI distinction explicitly, reject the Landauer inference as stated, qualify the compression/intelligence slogan, and defer V-information until its primary paper and a concrete experiment are reviewed.
+Use the article as a **conceptual map**, not as a single authority. Preserve its strong entropy/cross-entropy bridge, teach the attention/MI distinction explicitly, reject the Landauer inference as stated, qualify the compression/intelligence slogan, and teach V-information as an advanced, predictor-family-dependent quantity rather than as Shannon MI.
+
+
+## 8. Primary-paper audit — predictive V-information
+
+The linked primary paper is Xu, Zhao, Song, Stewart & Ermon, [*A Theory of Usable Information Under Computational Constraints* (ICLR 2020)](https://openreview.net/forum?id=r1eBeyHFDH), also available as [arXiv:2002.10689](https://arxiv.org/abs/2002.10689). The published paper was inspected beyond its abstract: definitions, propositions, PAC estimation theorem, structure-learning method, empirical sections, fairness discussion and conclusion.
+
+### Definition and interpretation
+
+For a predictive family \\(\\mathcal V\\), the paper defines the best achievable expected log loss with and without side information:
+
+\\[
+H_{\\mathcal V}(Y\\mid X)=\\inf_{f\\in\\mathcal V}\\mathbb E[-\\log f[X](Y)],
+\\qquad
+H_{\\mathcal V}(Y\\mid\\varnothing)=\\inf_{f\\in\\mathcal V}\\mathbb E[-\\log f[\\varnothing](Y)].
+\\]
+
+Then:
+
+\\[
+I_{\\mathcal V}(X\\to Y)=H_{\\mathcal V}(Y\\mid\\varnothing)-H_{\\mathcal V}(Y\\mid X).
+\\]
+
+The family \\(\\mathcal V\\) is part of the definition: it formalizes which predictors the observer can use. The paper imposes an optional-ignorance condition so a predictor can ignore side information; under its assumptions this supports non-negativity. With an unrestricted family, the definition recovers Shannon mutual information. Restricted families recover other notions, including variance-explained / coefficient-of-determination cases.
+
+### What the paper establishes — and does not
+
+- The quantity is directional in general: \\(I_{\\mathcal V}(X\\to Y)\\) need not equal \\(I_{\\mathcal V}(Y\\to X)\\).
+- The Shannon data-processing inequality remains true for Shannon mutual information. The paper's claim that computation can increase usable information concerns a restricted observer's predictive ability, not creation of new Shannon information.
+- A PAC-style estimation bound is proved under bounded log-loss and a controlled complexity term (Rademacher complexity of the predictor family). It is not a blanket guarantee for arbitrary high-capacity models or arbitrary datasets.
+- The paper evaluates directed structure learning on synthetic high-dimensional data, gene-regulatory-network inference, Moving-MNIST frame ordering, and adversarial/fair representation settings. These are reported paper experiments; LLM attention is not one of the demonstrated applications.
+- In the fairness experiments, information leakage depends on the attacker/predictor family. Low leakage to one discriminator does not prove invariance to every possible observer.
+
+### Integration decision
+
+Promote \\(v-information\\) to an **advanced optional concept**, not a core prerequisite. Link it to Shannon mutual information with an explicit contrast. The project's balanced-XOR demonstration illustrates model-family dependence; it does not reproduce the paper's PAC theorem or empirical experiments.
