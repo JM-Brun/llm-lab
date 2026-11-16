@@ -182,21 +182,21 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 
 Pour le contexte déjà observé, le modèle attribue une probabilité au prochain token :
 
-$
+$$
 p(x_t\mid x_{<t}).
-$
+$$
 
 Après observation du token, sa surprise — ou *surprisal* — en bits vaut :
 
-$
+$$
 I(x_t\mid x_{<t})=-\log_2 p(x_t\mid x_{<t}).
-$
+$$
 
 Si le modèle attribue une probabilité de $1/2$, le token coûte idéalement 1 bit ; s'il lui attribue $1/8$, il coûte 3 bits. **Plus le token est prévisible, moins son codage idéal demande de bits.** La somme de ces surprises donne la longueur idéale associée à la séquence :
 
-$
+$$
 L(x_{1:T})\approx-\sum_{t=1}^{T}\log_2 p(x_t\mid x_{<t}).
-$
+$$
 
 ### 2. Mais il faut un codeur et un décodeur
 
