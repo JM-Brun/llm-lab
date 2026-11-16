@@ -248,3 +248,17 @@ Use these resources as complementary explanations and study aids, not as substit
   - **AIhub relay:** [Reinventing Entropy | Compression is Intelligence Part 1](https://aihub.org/2026/07/16/reinventing-entropy-compression-is-intelligence-part-1/) (16 July 2026). This page embeds the same video; it is not an independent second source.
   - **Review status:** the full timestamped transcript was retrieved through a third-party caption mirror and reconciled with the existing bilingual entropy and compression lessons. The original video was not independently inspected frame by frame, and caption fidelity remains unverified. See the [critical synthesis](source-syntheses/reinventing-entropy-2026-11.md) and [structured extraction](../data/extractions/3blue1brown-reinventing-entropy-compression-intelligence-part-1-2026.yml).
   - **Reuse:** link to the original video only; no transcript, screenshots, animation or music are republished. The source's idealized “random-looking compressed stream” intuition must not be treated as a necessary-and-sufficient test for optimal compression.
+
+
+## Information theory and language models
+
+- **Wayland Zhang — Information Theory Is All You Need (to Understand LLMs)** (17 February 2026): https://waylandz.com/blog/information-theory-and-llm/
+  - **Use for:** a unifying introductory thread connecting Shannon information, entropy, next-token prediction, cross-entropy, KL divergence, attention, compression and model capacity.
+  - **Critical qualifications:** attention weights are not mutual information; Landauer's erasure bound does not establish a general information ceiling for learning from a dataset; compression performance is not equivalent to intelligence; V-information depends on a specified predictive/model class and operational setup.
+  - **Companion material:** the author links an English and Chinese notebook in https://github.com/waylandzhang/information-theory-and-language-models. The English notebook received a static 18-cell audit; it was not executed. See the [notebook audit](source-reviews/wayland-notebook-audit-2026-11.md).
+  - **Review status:** article text inspected and notebook source cells plus saved text outputs statically audited on 16 November 2026; notebook execution and figure reuse were not verified. See the [article source review](source-reviews/information-theory-wayland-zhang-2026-11.md). Text, figures and code are link-only; no reuse licence was established.
+
+- **Yilun Xu, Shengjia Zhao, Jiaming Song, Russell Stewart and Stefano Ermon — “A Theory of Usable Information under Computational Constraints”** (ICLR 2020): https://arxiv.org/abs/2002.10689
+  - **Use for:** primary formal source for predictive \\(\\mathcal V\\)-information, predictive families, optional ignorance, predictive conditional \\(\\mathcal V\\)-entropy and the relation to Shannon mutual information.
+  - **Critical qualifications:** the quantity is relative to an explicitly specified predictive family and loss; it is asymmetric and is not a synonym for Shannon mutual information. The paper's estimation guarantees depend on bounded log-probabilities and complexity assumptions; an overly expressive class can overfit and an overly restrictive class can miss useful structure.
+  - **LLM Lab integration:** use the finite-family exact example in the bilingual information-theory experiment guide as a first operational illustration, not as evidence comparing Transformer attention with bag-of-words. See [the source review](source-reviews/predictive-v-information-xu-2020.md).

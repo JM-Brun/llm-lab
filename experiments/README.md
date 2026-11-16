@@ -4,6 +4,8 @@ Store small, reviewable experiment definitions here—not model weights, raw dat
 
 Each experiment should include a stable identifier, hypothesis, baseline, configuration, command, data provenance, metrics, environment, results, and limitations. Follow [the experiment protocol](../docs/experiment-protocol.md).
 
+Current reproducible examples include [information theory: entropy, cross-entropy, KL and coding](information-theory/README.md) and [synthetic decoding distributions](decoding-distribution/README.md).
+
 Suggested layout:
 
 ```text
