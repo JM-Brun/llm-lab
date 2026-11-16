@@ -73,7 +73,7 @@ Two sentences can contain the same token without giving it the same role: *bank*
 <strong>Contextualized representations</strong><small>Each state depends on content and the interactions allowed with context</small>
 :::
 ::::
-</div>
+
 
 
 
