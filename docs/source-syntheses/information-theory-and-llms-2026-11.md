@@ -61,7 +61,7 @@ Aucun nouvel identifiant de concept canonique n'est proposé : les notions de ba
 ## Fiche et expériences
 - [Fiche de révision](../revision-sheets/information-theory-and-llms-2026-11.md)
 - [Expérience de compression prédictive](../../experiments/predictive-compression/README.fr.md)
-- Expérience complémentaire sur entropie, cross-entropy, KL et information mutuelle : à ajouter après validation.
+- [Mini-expérience sur entropie, cross-entropy, KL et information mutuelle](../../experiments/information-theory-llm/README.fr.md).
 
 ## Conclusion
 L'article est utile comme carte conceptuelle, mais ne doit pas être adopté sans filtre. On conserve son pont entropie → cross-entropy → prédiction, on limite l'analogie attention/MI, on rejette l'inférence Landauer telle quelle, on qualifie le slogan compression/intelligence et on réserve V-information à l'approfondissement.
