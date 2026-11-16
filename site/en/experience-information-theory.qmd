@@ -118,9 +118,9 @@ The last case is the key teaching point: the data contain a dependency, but a re
 
 To avoid comparing marginal single-character entropy with a compressed file size from an algorithm that also exploits dependencies, run a second experiment:
 
-\`\`\`bash
+```bash
 uv run --locked python experiments/information-theory/compression.py
-\`\`\`
+```
 
 The script generates three equal-length sources over a four-symbol alphabet: a constant sequence, an IID-uniform source, and a symmetric first-order Markov chain whose probability of staying on the same symbol is 0.9. The seed is fixed. It compares:
 
