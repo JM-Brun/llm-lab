@@ -2,6 +2,7 @@
 
 This is a teaching toy. It is not an epiplexity estimator or an LLM benchmark.
 """
+
 from __future__ import annotations
 
 import math
