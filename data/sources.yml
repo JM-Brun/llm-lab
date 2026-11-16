@@ -3602,3 +3602,43 @@ sources:
       concepts: [cross-entropy, negative-log-likelihood, training-objective, self-attention, attention-weight, scaled-dot-product-attention]
       audit_records:
         - docs/source-reviews/information-theory-wayland-zhang-2026-11.md
+
+  - id: xu-et-al-usable-information-2020
+    title: "A Theory of Usable Information under Computational Constraints"
+    creators: ["Yilun Xu", "Shengjia Zhao", "Jiaming Song", "Russell Stewart", "Stefano Ermon"]
+    source_type: paper
+    identifiers: {arxiv: "2002.10689", openreview: "r1eBeyHFDH"}
+    canonical_url: "https://arxiv.org/abs/2002.10689"
+    publisher: "International Conference on Learning Representations (ICLR)"
+    publication_date: "2020-02-25"
+    updated_date: null
+    language: en
+    version: "ICLR 2020 paper"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [mathematical-tools-geometry, scale-research]
+      tags: [topic:predictive-v-information, topic:mutual-information, method:predictive-family]
+      concept_ids: [predictive-v-information, mutual-information, cross-entropy]
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, mathematical-derivation, empirical-method]
+      audiences: [practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-11-16"
+        status: partially-scanned
+        inspected_scope:
+          - "Primary arXiv full text: predictive-family definition and optional ignorance; predictive conditional V-entropy; predictive V-information; relation to Shannon mutual information; non-negativity and independence properties; empirical estimation and PAC bound assumptions."
+          - "Selected the finite discrete predictive-family example implemented in the bilingual LLM Lab experiment guide."
+        limitations:
+          - "The paper's full proofs, appendices, code repository and all empirical experiments were not exhaustively reproduced in this integration pass."
+          - "The LLM Lab toy example is a new exact finite-distribution illustration, not a replication of the paper's experiments or PAC guarantees."
+          - "No paper figures or source code are reused."
+    related:
+      pages: [fr/experience-information-theory, en/experience-information-theory, fr/revision-information-theory, en/revision-information-theory]
+      concepts: [predictive-v-information, mutual-information, cross-entropy]
+      audit_records: [docs/source-reviews/predictive-v-information-xu-2020.md]
