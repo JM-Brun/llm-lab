@@ -2,7 +2,7 @@
 title: "Fiche de révision — Compression et LLM"
 subtitle: "Prédire pour coder, compresser un modèle, mesurer le coût réel"
 description-meta: "Fiche bilingue de révision distinguant compression prédictive, codage entropique, compression des poids et mémoire d'exécution des LLM."
-keywords: ["type:concept-bridge", "destination:understand", "topic:compression", "level:core", "language:fr", "status:published"]
+keywords: ["type:concept-bridge", "destination:deepen", "topic:compression", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
 
@@ -12,6 +12,7 @@ id: "fr/compression-revision"
 summary: "Fiche de révision visuelle distinguant compression prédictive, compression du modèle et mémoire d'exécution, avec formules, protocole et auto-évaluation."
 scope: "Consolider les notions introduites par les sources sur la compression et leurs liens avec les probabilités conditionnelles, l'entropie croisée et les techniques de réduction des modèles."
 purpose: "Choisir la bonne notion de compression, calculer un coût prédictif idéal et expliquer les conditions d'un codage sans perte."
+domain: "probabilistic-foundations-training"
 suggested_route:
   previous: null
   next: null
@@ -19,7 +20,7 @@ hierarchy:
   parents: []
   children: []
 related: ["fr/cross-entropy", "fr/vraisemblance", "fr/llm-evolution", "fr/llm-computational-complexity"]
-tags: ["type:concept-bridge", "destination:understand", "topic:compression", "level:core", "language:fr", "status:published"]
+tags: ["type:concept-bridge", "destination:deepen", "topic:compression", "level:core", "language:fr", "status:published"]
 -->
 
 ::: {.chapter-lead}
