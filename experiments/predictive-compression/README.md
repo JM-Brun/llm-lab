@@ -22,6 +22,7 @@ From the repository root:
 ~~~bash
 python experiments/predictive-compression/run.py
 uv run pytest tests/unit/test_predictive_compression.py
+python experiments/predictive-compression/domain_shift.py
 ~~~
 
 Only the Python standard library is required. The training data, test message, alphabet, and smoothing value are constants in the script. The unit test checks exact round-trip decoding.
@@ -50,6 +51,20 @@ Decoded message:  ABABACABADABABACABAD
 ~~~
 
 The finite 21-bit code is slightly longer than the ideal 19.642-bit cost. Decoding reproduces the message exactly.
+
+
+## Additional experiment: distribution shift
+
+Run `python experiments/predictive-compression/domain_shift.py`. Two bigram models are trained on distinct alternating patterns (`AB` and `CD`), then evaluated on both test sequences.
+
+| Model and test | Ideal cost | Bits/symbol |
+|---|---:|---:|
+| AB model → AB test (same distribution) | 2.977 bits | 0.074 |
+| AB model → CD test (shifted) | 80.322 bits | 2.008 |
+| CD model → CD test (same distribution) | 2.977 bits | 0.074 |
+| CD model → AB test (shifted) | 80.322 bits | 2.008 |
+
+This synthetic control shows that probabilities learned from one source may become unhelpful when the distribution changes. It **does not isolate frequency as the sole cause** and supports no quantitative conclusion about real LLMs or real-world domains.
 
 ## Interpretation and limits
 
