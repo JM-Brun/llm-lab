@@ -16,7 +16,7 @@ Le texte de l'article a été inspecté intégralement. Le notebook anglais a é
 | Attention et information mutuelle | Introduit les dépendances contextuelles | L'attention ne calcule pas la MI ; ses poids ne sont pas des bits ni une estimation de MI | Ajouter un garde-fou |
 | Borne thermodynamique | Invite à réfléchir aux limites physiques | Landauer concerne l'effacement irréversible, pas une limite générale d'apprentissage | Corriger l'inférence |
 | Compression et intelligence | Met en lumière le lien prédiction / longueur de code | L'efficacité de codage ne définit pas à elle seule l'intelligence | Qualifier le slogan |
-| V-information | Introduit les contraintes de calcul de l'observateur | Cadre spécialisé ; seul l'abstract primaire a été vérifié | Référence avancée |
+| V-information | Cadre défini relativement à une famille de prédicteurs ; le papier ICLR 2020 complet a été audité | Les garanties PAC dépendent de la complexité et des hypothèses de perte bornée | Concept avancé optionnel ; distinct de MI |
 
 ## Distinctions essentielles
 
@@ -72,6 +72,6 @@ Le concept canonique avancé `v-information` est ajouté après audit complet du
 Sur une distribution XOR équilibrée, l'information mutuelle de Shannon vaut 1 bit. Une famille de prédicteurs constante ne gagne aucun bit avec l'entrée (V-information = 0), tandis qu'une famille autorisant un prédicteur sensible à l'interaction exploite une grande partie de cette prédictibilité. Le résultat dépend donc de la famille, conformément à la définition. Une seconde expérience compare H0, H1 et la taille zlib avec une graine fixe.
 
 ## Conclusion
-L'article est utile comme carte conceptuelle, mais ne doit pas être adopté sans filtre. On conserve son pont entropie → cross-entropy → prédiction, on limite l'analogie attention/MI, on rejette l'inférence Landauer telle quelle, on qualifie le slogan compression/intelligence et on réserve V-information à l'approfondissement.
+L'article est utile comme carte conceptuelle, mais ne doit pas être adopté sans filtre. On conserve son pont entropie → cross-entropy → prédiction, on limite l'analogie attention/MI, on rejette l'inférence Landauer telle quelle, on qualifie le slogan compression/intelligence et on enseigne V-information comme notion avancée dépendante de la famille de prédicteurs.
 
 Voir la [revue détaillée](../source-reviews/wayland-zhang-information-theory-llm-2026-11.md) et l'[extraction structurée](../../data/extractions/wayland-zhang-information-theory-llm-2026.yml).
