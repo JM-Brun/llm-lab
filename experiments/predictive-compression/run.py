@@ -145,10 +145,7 @@ def is_prefix_free(codes: dict[str, str]) -> bool:
     """Return whether distinct codewords form a prefix-free set."""
     words = list(codes.values())
     return len(set(words)) == len(words) and all(
-        not other.startswith(word)
-        for word in words
-        for other in words
-        if word != other
+        not other.startswith(word) for word in words for other in words if word != other
     )
 
 
@@ -159,9 +156,7 @@ def kraft_sum(codes: dict[str, str]) -> Fraction:
     return sum((Fraction(1, 2 ** len(word)) for word in codes.values()), Fraction(0))
 
 
-def average_code_length(
-    probabilities: dict[str, Fraction], codes: dict[str, str]
-) -> Fraction:
+def average_code_length(probabilities: dict[str, Fraction], codes: dict[str, str]) -> Fraction:
     """Return expected code length; require exactly matching symbol sets."""
     if probabilities.keys() != codes.keys():
         raise ValueError("Probabilities and codewords must have identical symbols")
