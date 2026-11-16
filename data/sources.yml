@@ -3841,7 +3841,7 @@ sources:
   - id: fan-compression-intelligence-2026
     title: "Compression Is Intelligence: The Common Ground of Positive Subjectivity and Negative Subjectivity — With a Discussion on the Nature of Intelligence"
     creators: ["Mingdi Fan"]
-    source_type: preprint
+    source_type: paper
     identifiers: {philarchive: "MINCII-3"}
     canonical_url: "https://philarchive.org/archive/MINCII-3"
     publisher: "PhilArchive"
@@ -3856,7 +3856,7 @@ sources:
       primary_theme: probabilistic-foundations-training
       secondary_themes: [scale-research, mathematical-tools-geometry]
       tags: [topic:predictive-compression, topic:epiplexity, topic:generalization, topic:representation, topic:intelligence, topic:philosophy-of-ai]
-      concept_ids: [predictive-compression, cross-entropy, entropy, generalization, conditional-distribution]
+      concept_ids: [predictive-compression, cross-entropy, entropy, conditional-distribution]
     metadata:
       technical_level: advanced
       contribution_types: [theory, mathematical-argument, research-hypothesis]
@@ -3880,7 +3880,7 @@ sources:
           - "No licence or permission for text, figures, tables or code reuse was established."
     related:
       pages: [fr/entropy, en/entropy, fr/cross-entropy, en/cross-entropy, fr/compression-revision, en/compression-revision, fr/scaling-laws, en/scaling-laws, fr/llm-limits, en/llm-limits]
-      concepts: [predictive-compression, cross-entropy, entropy, generalization, conditional-distribution]
+      concepts: [predictive-compression, cross-entropy, entropy, conditional-distribution]
       audit_records:
         - docs/source-reviews/fan-compression-intelligence-2026-11.md
         - docs/source-syntheses/fan-compression-intelligence-2026-11.md
