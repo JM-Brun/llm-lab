@@ -3589,3 +3589,57 @@ sources:
       concepts: []
       audit_records:
         - docs/source-syntheses/llms-and-compression-algorithms-2026-11.md
+
+  - id: sasirekha-cota-understanding-llm-compression-2023
+    title: "Understanding Compression of Large Language Models (LLMs)"
+    creators: ["Sasirekha Cota"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://medium.com/@sasirekharameshkumar/understanding-compression-of-large-language-models-2ee3b8a350a2"
+    publisher: "Medium"
+    publication_date: "2023-11-22"
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: inference-efficiency
+      secondary_themes: [architectures-mechanisms, scale-research]
+      tags:
+        - topic:model-compression
+        - method:pruning
+        - method:quantization
+        - method:knowledge-distillation
+      concept_ids: [kv-cache]
+    metadata:
+      technical_level: introductory
+      contribution_types: [theory, pedagogy]
+      audiences: [beginner, learner, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    scan_history:
+      - accessed_at: "2026-11-16"
+        status: partially-scanned
+        inspected_scope:
+          - "Full author-authored article body: motivation, pruning, quantization, PTQ/QAT, knowledge distillation and conclusion"
+          - "Visible source metadata: author, Medium publisher and publication date"
+          - "Primary publication abstracts/landing pages for SparseGPT, SmoothQuant and DistilBERT consulted to qualify selected numerical claims"
+          - "Source claims and limits structured in the extraction artifact and critical synthesis"
+        limitations:
+          - "The article is an introductory overview, not a systematic survey or empirical study."
+          - "The full discussion, linked resources and article figures were not inspected."
+          - "Primary research papers were checked at abstract/landing-page level only; no method, code or benchmark was reproduced."
+          - "Reported size/speedup figures are not universal and are not independently validated for current hardware."
+          - "No reuse licence or permission was established; link-only treatment."
+    related:
+      pages:
+        - fr/llm-computational-complexity
+        - en/llm-computational-complexity
+        - fr/llm-evolution
+        - en/llm-evolution
+      concepts: [kv-cache]
+      audit_records:
+        - data/extractions/sasirekha-cota-understanding-llm-compression-2023.yml
+        - docs/source-syntheses/model-compression-2026-11.md
