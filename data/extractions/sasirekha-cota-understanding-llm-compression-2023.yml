@@ -36,6 +36,145 @@ scan:
     - "How do weight-only, weight-activation and KV-cache quantization compare on a fixed model, workload and hardware?"
     - "What quality, latency, throughput and memory trade-offs arise at each bit width and calibration method?"
     - "How should distillation objectives and teacher access be chosen for a specific student architecture and task?"
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Full author-authored article body retrieved and reviewed on 2026-11-16."
+      - "The source's three-family organization and its progression through pruning, quantization and distillation were reconstructed from the article."
+      - "The distinction between checkpoint compression and runtime KV-cache memory is an editorial clarification."
+    inferred_elements:
+      - "Learning outcomes, prerequisites and the teaching route are reviewer-inferred; the article does not declare them as a formal curriculum."
+      - "The graph represents the article's teaching structure, not a canonical model-compression taxonomy."
+  source_graph:
+    nodes:
+      - id: src-model-compression-goal
+        kind: concept
+        description: "Reduce model size or resource requirements while retaining acceptable task performance."
+        locator: "Introduction"
+        inferred: false
+      - id: src-pruning
+        kind: operation
+        description: "Remove or suppress weights or structured model components to reduce the represented model."
+        locator: "Section 'Pruning'"
+        inferred: false
+      - id: src-quantization
+        kind: operation
+        description: "Represent weights and/or activations using lower numerical precision; distinguish PTQ from QAT."
+        locator: "Section 'Quantization'"
+        inferred: false
+      - id: src-distillation
+        kind: operation
+        description: "Train a smaller student from selected outputs or information provided by a teacher model."
+        locator: "Section 'Knowledge Distillation'"
+        inferred: false
+      - id: src-kv-cache-runtime
+        kind: constraint
+        description: "KV-cache quantization affects inference-time working memory, not the persistent model checkpoint."
+        locator: "Quantization section; reviewer-added scope clarification"
+        inferred: true
+      - id: src-hardware-realization
+        kind: constraint
+        description: "Actual speed and memory gains depend on supported kernels, hardware, workload and measurement conditions."
+        locator: "Reviewer-added qualification informed by cited primary work"
+        inferred: true
+    edges:
+      - from: src-model-compression-goal
+        type: addressed-by
+        to: src-pruning
+        inferred: false
+      - from: src-model-compression-goal
+        type: addressed-by
+        to: src-quantization
+        inferred: false
+      - from: src-model-compression-goal
+        type: addressed-by
+        to: src-distillation
+        inferred: false
+      - from: src-quantization
+        type: distinguished-from
+        to: src-kv-cache-runtime
+        inferred: true
+      - from: src-pruning
+        type: performance-depends-on
+        to: src-hardware-realization
+        inferred: true
+      - from: src-quantization
+        type: performance-depends-on
+        to: src-hardware-realization
+        inferred: true
+    interpretation: "The three main method families are explicitly presented by the author. Runtime-cache separation and hardware-realization constraints are reviewer-added qualifications and must be attributed accordingly."
+  learning_outcomes:
+    - status: inferred
+      outcome: "Distinguish pruning, quantization and knowledge distillation by what each method changes."
+      basis: "The article's three-family organization."
+    - status: inferred
+      outcome: "Explain structured versus unstructured pruning and PTQ versus QAT at an introductory level."
+      basis: "The article's method subsections."
+    - status: inferred
+      outcome: "Separate checkpoint size, runtime memory and measured inference speed."
+      basis: "Critical clarification needed to interpret the article's examples."
+    - status: inferred
+      outcome: "Treat compression ratios and speedups as benchmark- and hardware-dependent rather than universal."
+      basis: "The article's illustrative claims and reviewer qualification."
+  assumed_prerequisites:
+    - status: inferred
+      topic: "Basic understanding of neural-network parameters and model inference."
+      basis: "Needed to understand pruning and quantization; the article does not specify prerequisites."
+    - status: inferred
+      topic: "Basic familiarity with model size, memory and numerical precision."
+      basis: "Needed to interpret the stated motivations and trade-offs."
+  teaching_route:
+    - order: 1
+      section: "Why compress a model?"
+      function: motivation
+      moves:
+        - "Introduce deployment constraints: memory, compute and latency."
+        - "Separate the resource objective from the quality constraint."
+    - order: 2
+      section: "Pruning"
+      function: mechanism-and-contrast
+      moves:
+        - "Distinguish structured and unstructured sparsity."
+        - "Explain why sparsity alone does not guarantee acceleration."
+    - order: 3
+      section: "Quantization"
+      function: mechanism-and-variants
+      moves:
+        - "Distinguish weights from activations and weight-only from W8A8."
+        - "Compare PTQ and QAT, including calibration and outliers."
+    - order: 4
+      section: "Knowledge distillation"
+      function: teacher-student-transfer
+      moves:
+        - "Introduce teacher and student roles."
+        - "Qualify black-box and white-box access and the limits of capability transfer."
+    - order: 5
+      section: "Runtime memory and evaluation"
+      function: scope-and-measurement
+      moves:
+        - "Separate KV-cache quantization from checkpoint compression."
+        - "Measure quality, memory, latency and throughput on a stated hardware/workload setup."
+  pedagogical_strengths:
+    - "A concise three-family organization gives beginners a usable first map of common compression methods."
+    - "PTQ/QAT and structured/unstructured distinctions provide natural comparison points."
+    - "Teacher–student language makes distillation accessible."
+  pedagogical_limits:
+    - "The article is introductory, not a systematic survey or reproducible benchmark study."
+    - "Headline size and speed claims lack universal applicability and require method-specific conditions."
+    - "The method families are not exhaustive and are not mutually exclusive."
+    - "The brief KV-cache discussion risks conflating persistent weights with runtime state unless clarified."
+  comparison:
+    canonical_graph: "data/concepts.yml"
+    canonical_routes:
+      - "site/fr/llm-computational-complexity.qmd"
+      - "site/en/llm-computational-complexity.qmd"
+      - "site/fr/llm-evolution.qmd"
+      - "site/en/llm-evolution.qmd"
+    decision: "Use as an introductory method taxonomy and link to existing computational-complexity and model-evolution lessons. Keep KV-cache runtime memory distinct from checkpoint size; do not create a duplicate compression lesson."
+    structures_kept_separate:
+      - "The source's pruning, quantization and distillation taxonomy remains distinct from predictive/statistical compression in the Shashidhar source."
+      - "Reviewer-added hardware and runtime qualifications are not attributed to the article."
 items:
   - id: sasirekha-cota-understanding-llm-compression-2023:compression-taxonomy
     kind: teaching-sequence
