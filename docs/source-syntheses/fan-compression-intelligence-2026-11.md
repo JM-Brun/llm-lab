@@ -119,3 +119,40 @@ Cette expérience rend visible le fait qu'un objectif prédictif peut exploiter 
 ## Conclusion opérationnelle
 
 L'intérêt de Fan pour LLM Lab est de formuler une question qui dépasse la loss : **quelles régularités un système apprend-il à conserver, avec quelle représentation, et peut-il les recombiner dans des situations nouvelles ?** Le projet doit traiter cette question en distinguant rigoureusement les métriques, les analogies et les hypothèses philosophiques. L'article mérite une lecture avancée et critique, pas une adoption comme théorie démontrée.
+
+## 10. Fiche de révision et critères de maîtrise
+
+### Questions
+
+1. **Pourquoi la cross-entropy ne suffit-elle pas à mesurer la compréhension ?**  
+   Parce qu'elle évalue l'assignation de probabilités aux observations sous une distribution donnée. Elle ne mesure pas directement la parcimonie des représentations, leur réutilisation ni leur ancrage causal.
+
+2. **Quelle différence entre entropie de Shannon et épiplexité ?**  
+   L'entropie de Shannon quantifie l'incertitude d'une source probabiliste. L'épiplexité, dans le cadre de Finzi et al., porte sur la longueur d'un programme optimal sous une contrainte de calcul et un objectif MDL à temps borné.
+
+3. **Pourquoi une baisse de loss ne prouve-t-elle pas une meilleure compréhension ?**  
+   Elle indique une amélioration prédictive sur la distribution et le protocole évalués. Pour parler de structure réutilisable, il faut ajouter des tests de transfert, de recombinaison et des contrôles contre la mémorisation.
+
+4. **Que montre l'expérience unigramme/bigramme ?**  
+   Qu'une dépendance séquentielle peut améliorer la prédiction au-delà des fréquences marginales. Elle ne mesure ni l'épiplexité ni la compréhension.
+
+5. **Pourquoi l'analogie An/Fn doit-elle rester une analogie ?**  
+   Les résultats algébriques portent sur des structures formelles définies. Le passage de ces structures aux paramètres et représentations des réseaux neuronaux n'est pas démontré.
+
+### Critères de maîtrise
+
+Le lecteur maîtrise cette source s'il peut :
+- expliquer les objets mesurés par entropie, cross-entropy et épiplexité sans les confondre ;
+- séparer une définition proposée par l'auteur d'un résultat expérimental ou d'un théorème ;
+- proposer un protocole qui contrôle la mémorisation et teste le transfert ;
+- énoncer au moins une observation qui pourrait réfuter une hypothèse de compression structurelle.
+
+### Mini-protocole de discussion
+
+Choisir une tâche de transfert qui combine deux régularités vues séparément à l'entraînement. Comparer un modèle de référence à un modèle entraîné sur les mêmes données et le même budget, puis mesurer :
+- la performance sur les combinaisons inédites ;
+- la sensibilité à des perturbations qui préservent la structure pertinente ;
+- la réutilisation de motifs intermédiaires, si une mesure interprétable est disponible ;
+- la longueur de description d'une solution, en explicitant le langage de description et le coût de calcul.
+
+Ce protocole teste des conséquences opérationnelles de l'hypothèse. Il ne constitue pas, sans définition formelle supplémentaire, un estimateur d'épiplexité.
