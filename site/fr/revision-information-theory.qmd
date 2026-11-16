@@ -1,0 +1,78 @@
+---
+title: "Fiche de révision — Théorie de l'information et LLM"
+subtitle: "De la surprise à la compression prédictive"
+description-meta: "Fiche synthétique pour réviser surprisal, entropie, cross-entropie, divergence KL et codage prédictif."
+keywords: ["type:revision-sheet", "topic:information-theory", "level:review", "language:fr", "status:published"]
+lang: fr
+---
+
+[← Revenir à la leçon d'entropie](entropy.qmd) · [Entropie croisée](cross-entropy.qmd)
+
+## L'idée centrale
+
+Un modèle attribue une probabilité au prochain token. Une prédiction élevée rend l'observation peu surprenante ; une prédiction faible la rend coûteuse à expliquer. La théorie de l'information transforme cette intuition en quantités mesurables.
+
+## Les cinq formules à connaître
+
+| Notion | Formule | Lecture |
+|---|---|---|
+| Surprise (surprisal) | \(I(x)=-\log_2 p(x)\) | Information d'un événement observé, en bits |
+| Entropie | \(H(X)=\mathbb E[-\log p(X)]\) | Incertitude moyenne d'une distribution |
+| Cross-entropie | \(H(q,p)=\mathbb E_{x\sim q}[-\log p(x)]\) | Coût moyen de la distribution prédite p sur la cible q |
+| Divergence KL | \(D_{KL}(q\|p)=\mathbb E_q[\log(q/p)]\) | Écart entre q et p, non négatif |
+| Perplexité | \(\mathrm{PPL}=e^{\mathrm{NLL}}\) | Exponentielle de la NLL moyenne en nats |
+
+La base du logarithme fixe l'unité : base 2 = bits ; logarithme naturel = nats.
+
+## L'identité fondamentale
+
+```text
+H(q,p) = H(q) + D_KL(q || p)
+```
+
+À cible q et contexte fixés, H(q) ne dépend pas des paramètres du modèle. Minimiser la cross-entropie revient donc à minimiser D_KL(q || p). Pour une cible one-hot, H(q)=0 : la cross-entropie devient exactement la NLL du token observé.
+
+## Exemple à mémoriser
+
+Avec q = (0,5 ; 0,5) et p = (0,75 ; 0,25) :
+
+- H(q) = 0,693 nat ;
+- H(q,p) = 0,837 nat ;
+- D_KL(q || p) = 0,144 nat.
+
+Donc 0,837 ≈ 0,693 + 0,144.
+
+## Connexion à la compression
+
+Une probabilité p(x) correspond à une longueur idéale de code proche de -log₂ p(x) bits. Un bon prédicteur peut donc permettre un codage plus court. Mais cela ne prouve pas que compression = intelligence : la mesure dépend du corpus, de la tokenisation et du protocole de codage.
+
+## Trois pièges conceptuels
+
+1. **Entropie ≠ surprise d'un token particulier.** L'entropie est une moyenne ; le surprisal concerne un événement.
+2. **Poids d'attention ≠ information mutuelle.** Les poids d'attention agrègent des valeurs ; l'information mutuelle se définit à partir d'une distribution jointe.
+3. **Landauer ≠ plafond universel d'apprentissage.** La borne concerne l'effacement physique irréversible, pas une limite générale de généralisation.
+
+## Auto-évaluation
+
+1. Pourquoi la cross-entropie est-elle toujours au moins aussi grande que l'entropie cible ?
+2. Dans quel cas la cross-entropie devient-elle la NLL d'un token ?
+3. Pourquoi un poids d'attention élevé ne mesure-t-il pas une quantité d'information mutuelle ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+1. Parce que leur différence est la divergence KL, qui est positive ou nulle sous les conditions de support usuelles.
+2. Lorsque la cible est one-hot : seule la probabilité du token observé contribue.
+3. Parce que les poids sont des coefficients de compatibilité normalisés, pas une distribution jointe ni un estimateur de dépendance statistique.
+
+</details>
+
+## Pour aller plus loin
+
+- [Expérience : entropie, KL et codage prédictif](../experiments/information-theory/README.md)
+- [Synthèse documentaire](../../docs/source-syntheses/information-theory-and-language-models-2026-11.md)
+- [Revue critique de l'article](../../docs/source-reviews/information-theory-wayland-zhang-2026-11.md)
+
+::: {.language-switch}
+**Langue :** Français · [English](../en/revision-information-theory.qmd)
+:::
