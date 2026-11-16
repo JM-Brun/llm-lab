@@ -3902,7 +3902,7 @@ sources:
     reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
     classification:
       primary_theme: architectures-mechanisms
-      secondary_themes: [text-tokenization, training-learning, inference-efficiency]
+      secondary_themes: [text-tokenization, probabilistic-foundations-training, inference-efficiency]
       tags: [topic:transformer, topic:llm-training, topic:fine-tuning, topic:dataset-curation, topic:reasoning-models, ecosystem:huggingface]
       concept_ids: [self-attention, token, token-embedding, contextualized-representation]
     metadata:
@@ -3927,7 +3927,7 @@ sources:
           - "Current English index and supplied French Chapter 1 do not expose identical chapter outlines; preserve locale/version differences rather than assuming parity."
           - "Course text, figures and code remain link-only; no reuse permission was established."
     related:
-      pages: [fr/transformer-architecture, en/transformer-architecture, fr/tokenization-strategies, en/tokenization-strategies, fr/training-loop, en/training-loop, fr/corpus-preparation, en/corpus-preparation, fr/post-training, en/post-training, fr/evaluation-experimentale, en/experimental-evaluation, fr/glossary, en/glossary]
+      pages: [fr/transformer, en/transformer, fr/tokenization-strategies, en/tokenization-strategies, fr/training-loop, en/training-loop, fr/corpus-preparation, en/corpus-preparation, fr/post-training, en/post-training, fr/evaluation-experimentale, en/experimental-evaluation, fr/glossary, en/glossary]
       concepts: [self-attention, token, token-embedding, contextualized-representation, dataset-curation, chat-template, group-relative-policy-optimization]
       audit_records:
         - docs/source-reviews/huggingface-llm-course-2026-11.md
