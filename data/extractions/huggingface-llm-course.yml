@@ -6,6 +6,10 @@ pedagogical_model:
     status: partial
     basis:
       - "Inspected the current English course index (chapters 0–12) and the supplied French Chapter 1 introduction on 2026-11-16."
+      - "Inspected selected Chapter 2 lesson bodies on pipeline internals, model/tokenizer APIs and batching/deployment outline."
+      - "Inspected Chapter 3 lesson bodies on data processing, Trainer, a custom training loop and learning curves."
+      - "Inspected Chapter 4 Hub overview and model-card lesson."
+      - "Inspected Chapter 5 lesson bodies on dataset manipulation, large-dataset memory mapping/streaming and semantic-search outline."
       - "Inspected Chapter 10 lesson bodies on Argilla setup, dataset configuration, annotation guidelines, multiple responses, export and quiz."
       - "Inspected Chapter 11 lesson bodies on chat templates, SFTTrainer, LoRA and evaluation."
       - "Inspected Chapter 12 lesson bodies on reinforcement learning, DeepSeek R1, GRPO and selected TRL implementation details."
@@ -13,7 +17,7 @@ pedagogical_model:
     inferred_elements:
       - "The learning outcomes and assumed prerequisites below combine the course's declared outcomes with editorial inferences from its chapter sequence."
       - "The chapter sequence is reconstructed from the current English index; it is not represented as a formal prerequisite graph authored by Hugging Face."
-      - "Chapters 10–12 are inspected at lesson-text level, but code was not executed and learner outcomes were not measured."
+      - "Chapters 2–5 are a selected lesson review; Chapters 10–12 are inspected at lesson-text level. Code was not executed and learner outcomes were not measured."
   source_graph:
     nodes:
       - {id: src-python-setup, kind: prerequisite, description: "Environment setup and Python prerequisites.", locator: "Chapter 0"}
@@ -204,4 +208,80 @@ items:
     candidate_destinations:
       pages: [fr/glossary, en/glossary, fr/score-centering, en/score-centering]
       concepts: [group-relative-policy-optimization, policy-gradient, reasoning-model]
+    disposition: integrate-by-reference
+
+  - id: huggingface-llm-course:chapter2-transformers-workflow
+    kind: implementation-pattern
+    summary: "Chapter 2 bridges a high-level Transformers pipeline to tokenizer and model APIs, including model loading, tokenizer processing and handling multiple sequences. LLM Lab already explains the underlying text-to-token and autoregressive-generation mechanisms; the course adds an optional library workflow."
+    locator: {type: page, value: "https://huggingface.co/learn/llm-course/en/chapter2/2", label: "Chapter 2 — Behind the pipeline"}
+    evidence:
+      kind: course-lesson
+      confidence: well-supported
+      scope: "Chapter overview, pipeline walkthrough, model/tokenizer sections and visible batching/deployment outline."
+      assumptions: []
+      limitations: ["Only selected lesson bodies were inspected; library APIs and code were not executed."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [inference-efficiency, text-tokenization]
+      tags: [topic:inference, topic:tokenization, ecosystem:transformers, ecosystem:huggingface]
+      concept_ids: [token, self-attention]
+    candidate_destinations:
+      pages: [fr/generation, en/generation]
+      concepts: [token, self-attention]
+    disposition: integrate-by-reference
+  - id: huggingface-llm-course:chapter3-trainer-learning-curves
+    kind: implementation-pattern
+    summary: "Chapter 3 presents a pretrained task-fine-tuning workflow through both Trainer and a custom PyTorch loop, then teaches evaluation metrics and learning-curve interpretation. LLM Lab already covers the conceptual training loop and train/validation losses; the distinct value is the library-oriented implementation."
+    locator: {type: page, value: "https://huggingface.co/learn/llm-course/en/chapter3/5", label: "Chapter 3 — Understanding Learning Curves"}
+    evidence:
+      kind: course-lesson
+      confidence: well-supported
+      scope: "Data processing, Trainer API, custom training loop and learning-curves sections."
+      assumptions: []
+      limitations: ["No Trainer code was executed; current API arguments are version-sensitive."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      tags: [topic:fine-tuning, topic:learning-curves, ecosystem:transformers, ecosystem:huggingface]
+      concept_ids: [fine-tuning]
+    candidate_destinations:
+      pages: [fr/training-loop, en/training-loop]
+      concepts: [fine-tuning]
+    disposition: integrate-by-reference
+  - id: huggingface-llm-course:chapter4-model-cards
+    kind: implementation-pattern
+    summary: "Chapter 4 treats a model card as a reusable and reproducible description of a shared model, covering intended uses, limitations, training data/procedure and evaluation. Added as an optional Build-path reference rather than a duplicate project provenance schema."
+    locator: {type: page, value: "https://huggingface.co/learn/llm-course/en/chapter4/4", label: "Chapter 4 — Building a model card"}
+    evidence:
+      kind: course-lesson
+      confidence: well-supported
+      scope: "Model-card rationale and listed sections."
+      assumptions: []
+      limitations: ["Selected lesson text only; no Hub publication workflow was executed."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [inference-efficiency]
+      tags: [topic:model-card, topic:reproducibility, ecosystem:huggingface]
+      concept_ids: []
+    candidate_destinations:
+      pages: [fr/build-path, en/build-path]
+      concepts: []
+    disposition: integrate-by-reference
+  - id: huggingface-llm-course:chapter5-datasets-library
+    kind: implementation-pattern
+    summary: "Chapter 5 teaches practical dataset loading, mapping/filtering/slicing/formatting, dataset creation, memory-mapped storage and streaming for large corpora, plus a FAISS semantic-search example. LLM Lab already covers corpus provenance, filtering, deduplication and split design; the library-specific workflow is linked as optional practice."
+    locator: {type: page, value: "https://huggingface.co/learn/llm-course/en/chapter5/4", label: "Chapter 5 — Large datasets, memory and streaming"}
+    evidence:
+      kind: course-lesson
+      confidence: well-supported
+      scope: "Chapter overview, manipulation section, large-data section and semantic-search chapter outline."
+      assumptions: []
+      limitations: ["Only selected lesson bodies and chapter outline were inspected; no large dataset was loaded or benchmarked."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [inference-efficiency]
+      tags: [topic:dataset-engineering, topic:streaming, ecosystem:datasets, ecosystem:huggingface]
+      concept_ids: [dataset-curation]
+    candidate_destinations:
+      pages: [fr/corpus-preparation, en/corpus-preparation]
+      concepts: [dataset-curation]
     disposition: integrate-by-reference
