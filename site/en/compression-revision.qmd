@@ -127,6 +127,24 @@ The video [Reinventing Entropy — Compression is Intelligence, Part 1](https://
 
 The [16 July 2026 AIhub page](https://aihub.org/2026/07/16/reinventing-entropy-compression-is-intelligence-part-1/) relays the same video; it is not an independent source.
 
+## 5. Two compression strategies: a hypothesis to examine
+
+Mingdi Fan's philosophical paper distinguishes **selective, narrative compression**, oriented toward causal structure, from **probabilistic compression**, which fits a distribution by minimizing cross-entropy. The author calls these poles “positive subjectivity” and “negative subjectivity”, and proposes a mixed, “grey” strategy.
+
+This raises a useful question: **does good prediction alone measure the quality of learned structure?** No. Cross-entropy measures how well a model assigns probabilities to observations; it does not directly measure representational parsimony, recombination, understanding, or semantic grounding.
+
+| Dimension | What it can measure | What it does not establish by itself |
+|---|---|---|
+| Cross-entropy | Average predictive quality under a specified distribution and logarithm convention | Understanding, causality, consciousness |
+| Epiplexity | Structured information accessible under specified computational constraints | A universal measure of intelligence |
+| Transfer / recombination | Reuse of regularities in new situations | Subjective experience |
+
+**Keep the qualifications:** epiplexity is a recent research concept; Fan's mapping between An/Fn algebraic structures and neural networks is an analogy, not a theorem about LLMs. The paper's definition of understanding in terms of “structural effectiveness” is a philosophical proposal, not a scientific consensus.
+
+The [sequential-structure and predictive-compression experiment](../../experiments/compression-strategy-spectrum/README.md) compares unigram and bigram models on synthetic data. It illustrates the use of sequential dependencies; it does not calculate epiplexity or measure understanding.
+
+See the [critical synthesis of Mingdi Fan's paper](../../docs/source-syntheses/fan-compression-intelligence-2026-11.md) and the [detailed source review](../../docs/source-reviews/fan-compression-intelligence-2026-11.md).
+
 ## Self-check
 
 1. Why is an LLM not an LZW decompressor?
