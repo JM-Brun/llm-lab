@@ -1,150 +1,83 @@
 schema_version: 1
-source:
-  id: fan-compression-intelligence-2026
-  title: "Compression Is Intelligence: The Common Ground of Positive Subjectivity and Negative Subjectivity — With a Discussion on the Nature of Intelligence"
-  creators: ["Mingdi Fan"]
-  canonical_url: "https://philarchive.org/archive/MINCII-3"
-  version_history_url: "https://philarchive.org/versions/MINCII-3"
-  source_type: preprint
-  publisher: "PhilArchive"
-  publication_date: "2026"
-  deposited_version_date: "2026-05-17"
-  language: en
-  scan_status: partially-scanned
-  inspected_scope:
-    - "Complete 9-section PDF text and references, retrieved through PhilArchive indexed PDF view on 2026-11-16"
-    - "Argument structure, definitions, four predictions, grey-subjectivity proposal and cited references"
-    - "Cross-check against existing LLM Lab compression sources and bilingual revision sheets"
-  limitations:
-    - "No independent reproduction of the cited empirical studies or the four proposed predictions."
-    - "No formal re-derivation of Finzi et al.'s epiplexity measure or Aksenov et al.'s monoid theorems."
-    - "No reuse rights for text, tables or figures established; link-only treatment."
-    - "The paper is a philosophical preprint, not a peer-reviewed empirical study."
-    - "The paper's analogies between human cognition, LLMs and algebraic structures are not established computational equivalences."
-  reuse:
-    text: link-only
-    figures: link-only
-    code: unknown
-    data: unknown
-  classification:
-    primary_theme: probabilistic-foundations-training
-    secondary_themes: [scale-research, mathematical-tools-geometry]
-    tags: [topic:predictive-compression, topic:epiplexity, topic:generalization, topic:representation, topic:intelligence, topic:philosophy-of-ai]
-    concept_ids: [predictive-compression, cross-entropy, entropy, generalization, conditional-distribution]
-  related:
-    pages:
-      - fr/entropy
-      - en/entropy
-      - fr/cross-entropy
-      - en/cross-entropy
-      - fr/compression-revision
-      - en/compression-revision
-      - fr/scaling-laws
-      - en/scaling-laws
-      - fr/llm-limits
-      - en/llm-limits
-    concepts: [predictive-compression, cross-entropy, entropy, generalization, conditional-distribution]
-    audit_records:
-      - docs/source-reviews/fan-compression-intelligence-2026-11.md
-      - docs/source-syntheses/fan-compression-intelligence-2026-11.md
-      - experiments/compression-strategy-spectrum/README.fr.md
-      - experiments/compression-strategy-spectrum/README.md
-  comparison:
-    canonical_graph: "data/concepts.yml"
-    decision: "Integrate as a critical theoretical source; reuse canonical information-theory concepts; do not add ontological concepts to the canonical graph pending operational definitions and independent review."
-    structures_kept_separate:
-      - "Source-local argument graph"
-      - "Canonical concept registry"
-      - "Bilingual learning route"
-      - "Philosophical hypotheses and empirical evidence"
-source_graph:
-  nodes:
-    - {id: src-compression-thesis, kind: thesis, description: "Both positive and negative subjectivity are presented as forms of effective compression.", locator: "Abstract; §§1, 9", inferred: false}
-    - {id: src-shannon-boundary, kind: distinction, description: "Shannon entropy quantifies uncertainty but does not itself assess semantic or ontological significance.", locator: "§1", inferred: false}
-    - {id: src-epiplexity, kind: concept, description: "Epiplexity is invoked as structured information extractable under computational constraints.", locator: "§2.1b", inferred: false}
-    - {id: src-positive-subjectivity, kind: model, description: "Narrative compression of embodied experience into a self-centred causal story.", locator: "§3", inferred: false}
-    - {id: src-negative-subjectivity, kind: model, description: "Probability-distribution compression through cross-entropy minimization.", locator: "§4", inferred: false}
-    - {id: src-functional-structural-effectiveness, kind: distinction, description: "Functional task success is separated from parsimonious, recombinable internal representation.", locator: "§6.4", inferred: false}
-    - {id: src-four-predictions, kind: prediction-set, description: "Claims about CoT scaling, data effective complexity, denoising trade-offs and autonomous definition discovery.", locator: "§7", inferred: false}
-    - {id: src-grey-subjectivity, kind: hypothesis, description: "A layered mixed compression strategy is proposed conditionally, especially under embodied interaction.", locator: "§8", inferred: false}
-    - {id: review-formal-boundary, kind: limitation, description: "The algebraic mapping and philosophical definitions do not establish a neural mechanism or consensus theory.", locator: "Critical review", inferred: true}
-    - {id: review-epiplexity-boundary, kind: limitation, description: "The formal time-bounded MDL definition must be distinguished from the paper's intuitive structural-information gloss.", locator: "Critical review", inferred: true}
-  edges:
-    - {from: src-shannon-boundary, type: motivates, to: src-epiplexity, inferred: false}
-    - {from: src-epiplexity, type: contrasts-with, to: src-negative-subjectivity, inferred: false}
-    - {from: src-positive-subjectivity, type: contrasted-with, to: src-negative-subjectivity, inferred: false}
-    - {from: src-functional-structural-effectiveness, type: qualifies, to: src-compression-thesis, inferred: false}
-    - {from: src-four-predictions, type: tests, to: src-compression-thesis, inferred: false}
-    - {from: src-grey-subjectivity, type: extends, to: src-negative-subjectivity, inferred: false}
-    - {from: review-formal-boundary, type: limits, to: src-positive-subjectivity, inferred: true}
-    - {from: review-formal-boundary, type: limits, to: src-grey-subjectivity, inferred: true}
-    - {from: review-epiplexity-boundary, type: qualifies, to: src-epiplexity, inferred: true}
-learning_outcomes:
-  - {status: inferred, outcome: "Distinguish predictive performance from structural properties of learned representations.", basis: "§§2, 6.4 and critical review."}
-  - {status: inferred, outcome: "Explain why cross-entropy does not directly measure understanding, causal knowledge or semantic grounding.", basis: "§§4, 6."}
-  - {status: inferred, outcome: "Separate formal definitions, mathematical analogies and philosophical interpretations.", basis: "§§2.2b, 6.4, 7, 8."}
-  - {status: inferred, outcome: "Design a controlled test of sequence structure while preserving marginal symbol frequencies.", basis: "§7 and project experiment proposal."}
-assumed_prerequisites:
-  - {status: inferred, topic: "Conditional probabilities, entropy, surprisal and cross-entropy.", basis: "§§1–2."}
-  - {status: inferred, topic: "Basic next-token training and generalization.", basis: "§§2.2, 4."}
-teaching_route:
-  - {order: 1, section: "§1–2: Shannon, algorithmic complexity and epiplexity", function: foundations, moves: ["State what Shannon entropy measures.", "Separate entropy, Kolmogorov complexity, effective complexity and epiplexity."]}
-  - {order: 2, section: "§3–4: positive and negative subjectivity", function: comparison, moves: ["Present narrative and probability-distribution compression as the author's models.", "Mark the comparison as philosophical rather than a demonstrated implementation equivalence."]}
-  - {order: 3, section: "§6: functional and structural effectiveness", function: conceptual-distinction, moves: ["Separate task success/generalization from representational parsimony and recombination.", "Explain that the proposed definition of understanding is stipulative."]}
-  - {order: 4, section: "§7: verifiable predictions", function: research-method, moves: ["Translate each prediction into measurable outcomes.", "List confounders and falsification criteria."]}
-  - {order: 5, section: "§8: grey subjectivity", function: hypothesis, moves: ["Describe the proposed mixed objective and embodied interaction condition.", "Keep the model explicitly hypothetical."]}
-pedagogical_strengths:
-  - "A clear contrast between predictive fit and selective retention of structure."
-  - "The paper offers explicit predictions rather than stopping at a metaphor."
-  - "Its own caveats about algebraic analogy and conditional embodiment support critical teaching."
-pedagogical_limits:
-  - "Several key terms (effective compression, understanding, positive/negative subjectivity) are author-defined and not consensus operational measures."
-  - "The An/Fn mapping to neural parameters and human cognition is analogical, not a demonstrated isomorphism."
-  - "Epiplexity is sometimes paraphrased intuitively in ways that can blur its formal time-bounded MDL definition."
-  - "Claims about FineWeb-Edu, CoT, RLHF/DPO and scaling require independent controlled evaluation."
+source_id: fan-compression-intelligence-2026
 items:
   - id: fan-compression-intelligence-2026:effective-compression
-    kind: thesis
-    summary: "Intelligence is framed as effective compression, with epiplexity-dominated and cross-entropy-dominated strategies."
+    kind: claim
+    summary: "Fan frames intelligence as effective compression, distinguishing epiplexity-oriented and cross-entropy-oriented strategies."
     locator: {type: section, value: "Abstract; §§1, 9"}
-    evidence: {kind: philosophical-argument, confidence: hypothesis, scope: "Conceptual framework proposed by the author.", assumptions: ["The definition of intelligence as effective compression is adopted for the argument."], limitations: ["Not a consensus definition or empirically established general theory."]}
-    classification: {primary_theme: probabilistic-foundations-training, concept_ids: [predictive-compression, cross-entropy]}
-    candidate_destinations: {pages: [fr/compression-revision, en/compression-revision], concepts: [predictive-compression, cross-entropy]}
-    disposition: integrate-with-qualification
-    disposition_rationale: "Use as a comparative hypothesis, not a new canonical definition."
+    evidence:
+      kind: philosophical-argument
+      confidence: speculative
+      scope: "Conceptual framework proposed by the author."
+      assumptions: ["The definition of intelligence as effective compression is adopted for the argument."]
+      limitations: ["Not a consensus definition or an empirically established general theory."]
+    disposition: clarify
+    classification:
+      primary_theme: probabilistic-foundations-training
+      concept_ids: [predictive-compression, cross-entropy]
+    candidate_destinations:
+      pages: [fr/compression-revision, en/compression-revision]
   - id: fan-compression-intelligence-2026:epiplexity
-    kind: concept
+    kind: definition
     summary: "Epiplexity is used for structured information accessible to a computationally bounded observer, with a formal time-bounded MDL basis."
     locator: {type: section, value: "§2.1b"}
-    evidence: {kind: cited-preprint, confidence: provisional, scope: "Finzi et al. 2026, arXiv:2601.03220, as cited by Fan.", assumptions: ["The relevant computational model and time budget are specified."], limitations: ["Preprint status and formal choices matter; do not equate with Shannon entropy or generic complexity."]}
-    classification: {primary_theme: probabilistic-foundations-training, concept_ids: [entropy, predictive-compression]}
-    candidate_destinations: {pages: [fr/compression-revision, en/compression-revision], concepts: [entropy, predictive-compression]}
+    evidence:
+      kind: cited-preprint
+      confidence: context-dependent
+      scope: "Finzi et al. 2026, arXiv:2601.03220, as cited by Fan and checked against the primary source."
+      assumptions: ["The relevant computational model, program class and time budget are specified."]
+      limitations: ["Do not equate epiplexity with Shannon entropy or generic complexity; it is not a guarantee of task-specific OOD generalization."]
     disposition: clarify
-    disposition_rationale: "Introduce as an advanced research term with a direct link to the primary paper; no canonical concept node yet."
+    classification:
+      primary_theme: probabilistic-foundations-training
+      concept_ids: [entropy, predictive-compression]
+    candidate_destinations:
+      pages: [fr/compression-revision, en/compression-revision]
   - id: fan-compression-intelligence-2026:functional-vs-structural
-    kind: distinction
-    summary: "Functional effectiveness is task success with generalization; structural effectiveness is parsimony and recombinability of internal representations."
+    kind: claim
+    summary: "The paper distinguishes functional task success from structural effectiveness, defined in terms of parsimonious and recombinable internal representations."
     locator: {type: section, value: "§6.4"}
-    evidence: {kind: author-definition, confidence: hypothesis, scope: "Stipulative distinction used to define intelligence and understanding.", assumptions: ["Structural effectiveness is a central criterion for understanding."], limitations: ["Other accounts of understanding are possible; the An/Fn bridge is not established for neural networks."]}
-    classification: {primary_theme: scale-research, concept_ids: [generalization, predictive-compression]}
-    candidate_destinations: {pages: [fr/llm-limits, en/llm-limits, fr/compression-revision, en/compression-revision], concepts: [generalization]}
-    disposition: integrate-with-qualification
-    disposition_rationale: "Teach as a proposed distinction and discussion prompt, not an accepted taxonomy."
+    evidence:
+      kind: author-definition
+      confidence: speculative
+      scope: "Stipulative distinction used by Fan to discuss intelligence and understanding."
+      assumptions: ["Structural effectiveness is treated as a central criterion for understanding."]
+      limitations: ["Other accounts of understanding are possible; the proposed An/Fn bridge is not established for neural networks."]
+    disposition: clarify
+    classification:
+      primary_theme: scale-research
+      concept_ids: [predictive-compression]
+    candidate_destinations:
+      pages: [fr/compression-revision, en/compression-revision]
   - id: fan-compression-intelligence-2026:grey-subjectivity
-    kind: hypothesis
+    kind: claim
     summary: "A mixed global probabilistic layer and temporary task-level structure is proposed as a possible intermediate strategy under embodied interaction."
     locator: {type: section, value: "§8"}
-    evidence: {kind: conceptual-model, confidence: speculative, scope: "Author's proposed layered architecture and conditional scenario.", assumptions: ["Sensorimotor interaction changes the relevant compression objective.", "Task-level causal structures can be represented and integrated across tasks."], limitations: ["No implementation or empirical validation supplied; embodiment does not establish subjective experience."]}
-    classification: {primary_theme: scale-research, concept_ids: [generalization]}
-    candidate_destinations: {pages: [fr/llm-limits, en/llm-limits], concepts: []}
+    evidence:
+      kind: conceptual-model
+      confidence: speculative
+      scope: "Author's proposed layered architecture and conditional scenario."
+      assumptions: ["Sensorimotor interaction changes the relevant compression objective.", "Task-level causal structures can be represented and integrated across tasks."]
+      limitations: ["No implementation or empirical validation is supplied; embodiment does not establish subjective experience."]
     disposition: defer
-    disposition_rationale: "Keep in source synthesis until operational definitions and independent evidence exist."
+    classification:
+      primary_theme: scale-research
+      concept_ids: [predictive-compression]
+    candidate_destinations:
+      pages: [fr/llm-limits, en/llm-limits]
   - id: fan-compression-intelligence-2026:an-fn-analogy
     kind: analogy
-    summary: "The paper maps commutative/non-commutative monoid expansion onto flexible conceptual recombination versus context-dependent sequence patterns."
+    summary: "The paper maps commutative and non-commutative monoid expansion onto flexible conceptual recombination versus context-dependent sequence patterns."
     locator: {type: section, value: "§2.2b; §6.4"}
-    evidence: {kind: mathematical-analogy, confidence: context-dependent, scope: "Analogy to the formal results of Aksenov et al. 2026, arXiv:2603.20396.", assumptions: ["The structural features being compared are specified."], limitations: ["Not an isomorphism; neural parameters are not independent macro symbols; formal theorems do not transfer automatically to LLMs."]}
-    classification: {primary_theme: mathematical-tools-geometry, concept_ids: [predictive-compression]}
-    candidate_destinations: {pages: [fr/compression-revision, en/compression-revision], concepts: []}
+    evidence:
+      kind: mathematical-analogy
+      confidence: context-dependent
+      scope: "Analogy to Aksenov et al. 2026, arXiv:2603.20396; primary-source qualifications are recorded in the source review."
+      assumptions: ["The structural features being compared are specified."]
+      limitations: ["Not an isomorphism; neural parameters are not independent macro symbols; formal theorems do not transfer automatically to LLMs."]
     disposition: clarify
-    disposition_rationale: "Retain as an analogy with explicit boundaries; do not use as proof of an LLM limitation."
+    classification:
+      primary_theme: mathematical-tools-geometry
+      concept_ids: [predictive-compression]
+    candidate_destinations:
+      pages: [fr/compression-revision, en/compression-revision]
