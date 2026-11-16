@@ -76,5 +76,5 @@ Reusable functions and their tests live in `src/llm_lab/foundations/information_
 It verifies mathematical identities on discrete distributions. It does not measure model intelligence, generalization or the quality of a trained LLM. Ideal lengths -log₂(p) may be fractional; a practical code adds constraints and overhead.
 
 ::: {.language-switch}
-**Language:** [Français](../fr/experience-information-theory.qmd) · English
+**Language:** [Français](../fr/experience-information-theory.qmd) · [English](experience-information-theory.qmd)
 :::
