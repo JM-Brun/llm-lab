@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 900" role="img" aria-labelledby="title desc">
+<title id="title">Generation timeline: prefill then incremental decode</title><desc id="desc">The prompt is processed together during prefill. Its final position predicts the first token. Decode then processes each newly selected token one at a time, appending it to context. The loop stops at EOS, a length limit or an application rule. KV cache is optional; parameters stay fixed.</desc>
+<defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0 L9 3 L0 6Z" fill="#475569"/></marker></defs>
+<rect x="12" y="12" width="696" height="876" rx="22" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+<text x="36" y="58" font-family="Arial,sans-serif" font-size="27" font-weight="700" fill="#0f172a">1 · PREFILL</text><text x="36" y="92" font-family="Arial,sans-serif" font-size="18" fill="#334155">All known prompt positions in one causal pass</text>
+<rect x="36" y="116" width="648" height="120" rx="16" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+<g font-family="Arial,sans-serif" font-size="19" fill="#0f172a"><rect x="58" y="154" width="125" height="48" rx="9" fill="#fff" stroke="#7dd3fc"/><text x="120" y="184" text-anchor="middle">What</text><rect x="196" y="154" width="125" height="48" rx="9" fill="#fff" stroke="#7dd3fc"/><text x="258" y="184" text-anchor="middle">have</text><rect x="334" y="154" width="125" height="48" rx="9" fill="#fff" stroke="#7dd3fc"/><text x="396" y="184" text-anchor="middle">the …</text><rect x="472" y="154" width="190" height="48" rx="9" fill="#fff" stroke="#7dd3fc"/><text x="567" y="184" text-anchor="middle">Romans … us?</text></g>
+<path d="M360 238 V278" stroke="#475569" stroke-width="3" marker-end="url(#a)"/>
+<rect x="105" y="290" width="510" height="88" rx="15" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+<text x="360" y="326" text-anchor="middle" font-family="Arial,sans-serif" font-size="21" font-weight="700" fill="#1e3a8a">Last prompt position</text><text x="360" y="354" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" fill="#1e3a8a">distribution → “They” (0.6)</text>
+<path d="M360 380 V424" stroke="#475569" stroke-width="3" marker-end="url(#a)"/>
+<text x="36" y="464" font-family="Arial,sans-serif" font-size="27" font-weight="700" fill="#0f172a">2 · INCREMENTAL DECODE</text><text x="36" y="496" font-family="Arial,sans-serif" font-size="18" fill="#334155">One newly selected token at a time</text>
+<g font-family="Arial,sans-serif"><rect x="105" y="520" width="510" height="74" rx="14" fill="#fef3c7" stroke="#d97706" stroke-width="2"/><text x="360" y="550" text-anchor="middle" font-size="20" font-weight="700" fill="#78350f">Select and append</text><text x="360" y="578" text-anchor="middle" font-size="18" fill="#78350f">“They” → “built” → “roads”</text>
+<path d="M360 596 V630" stroke="#475569" stroke-width="3" marker-end="url(#a)"/>
+<rect x="105" y="642" width="510" height="82" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/><text x="360" y="675" text-anchor="middle" font-size="20" font-weight="700" fill="#4c1d95">New distribution from extended context</text><text x="360" y="703" text-anchor="middle" font-size="17" fill="#4c1d95">choose one token, then repeat</text>
+<path d="M360 726 V750" stroke="#475569" stroke-width="3" marker-end="url(#a)"/>
+<rect x="105" y="762" width="510" height="58" rx="12" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/><text x="360" y="798" text-anchor="middle" font-size="18" font-weight="700" fill="#7f1d1d">Stop: EOS · max length · application rule</text></g>
+<text x="36" y="850" font-family="Arial,sans-serif" font-size="16" fill="#334155">Optional KV cache reuses prior K/V. Parameters θ stay fixed.</text>
+</svg>

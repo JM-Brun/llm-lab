@@ -61,6 +61,14 @@ En répétant quatre gestes : prédire, sélectionner, réinjecter, puis continu
   <span class="meta-flow__loop" aria-label="La sélection et le decode se répètent tant que le critère d’arrêt n’est pas atteint">↺ Sélectionner, ajouter au contexte et recommencer le decode</span>
 </div>
 
+<figure id="fig-generation-prefill-decode">
+  <picture>
+    <source media="(max-width: 600px)" srcset="../images/generation-prefill-decode-fr-mobile.svg">
+    <img src="../images/generation-prefill-decode-fr.svg" alt="Chronologie de génération : le prompt connu est traité ensemble pendant le prefill sous masque causal ; la dernière position fournit la première distribution. Le decode incrémental sélectionne et ajoute ensuite un token à la fois, recalcule la distribution suivante et recommence jusqu’à EOS, une limite de longueur ou une règle applicative. Le cache KV facultatif réutilise les clés et valeurs précédentes ; les paramètres restent fixes." style="width:100%;height:auto">
+  </picture>
+  <figcaption>Le prefill traite le prompt connu ; le decode incrémental l’allonge avec un token sélectionné à chaque étape. Le cache KV est une optimisation facultative, pas une condition de validité de la génération. Les probabilités de l’exemple sont illustratives.</figcaption>
+</figure>
+
 ## La boucle sur un exemple
 
 Suivons trois tours de boucle. Les probabilités sont fictives, comme dans le panorama, et la règle de décodage est la plus simple : prendre le token le plus probable.
