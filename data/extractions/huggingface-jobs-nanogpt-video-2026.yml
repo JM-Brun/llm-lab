@@ -4,11 +4,13 @@ pedagogical_model:
   reconstruction:
     status: partial
     basis:
-      - "User-supplied description and chapter timestamps inspected 2026-11-16."\n      - "Third-party page reproducing a transcript attributed to the Hugging Face video inspected 2026-11-16; audiovisual content and code URL remain unverified."
+      - "User-supplied description and chapter timestamps inspected 2026-11-16."
+      - "Third-party page reproducing a transcript attributed to the Hugging Face video inspected 2026-11-16; audiovisual content and code URL remain unverified."
       - "Current official Hugging Face Jobs, configuration and pricing documentation checked."
     inferred_elements:
       - "Learning outcomes and workflow are inferred from the supplied description; the video itself was not independently inspected."
-      - "The supplied GitHub URL is truncated, so the code-level sequence cannot be reconstructed."\n      - "Transcript-level details: ~50M-parameter GPT-2-style model, 8 layers, embedding size 512, GPT-2 tokenizer, TinyStories, cosine schedule with warm-up, uv/requirements.txt, Storage Bucket sync and mounted output directory."
+      - "The supplied GitHub URL is truncated, so the code-level sequence cannot be reconstructed."
+      - "Transcript-level details: ~50M-parameter GPT-2-style model, 8 layers, embedding size 512, GPT-2 tokenizer, TinyStories, cosine schedule with warm-up, uv/requirements.txt, Storage Bucket sync and mounted output directory."
   source_graph:
     nodes:
       - {id: src-local-training-program, kind: artifact, description: "A NanoGPT-like model and training program independent of the remote execution provider.", locator: "01:21 (supplied chapter label)"}
