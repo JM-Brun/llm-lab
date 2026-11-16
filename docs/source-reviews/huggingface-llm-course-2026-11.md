@@ -2,7 +2,7 @@
 
 ## Scope and evidence boundary
 
-**Audit depth: architecture scan + bounded Chapter 1 inspection.** This is an initial pass within project owner issue [#765](https://github.com/JM-Brun/llm-lab/issues/765), not a claim that all course chapters have been read or that the whole Hugging Face ecosystem has been audited.
+**Audit depth: architecture scan + bounded Chapter 1 inspection + deep content review of Chapters 10, 11 and 12.** This is an initial pass within project owner issue [#765](https://github.com/JM-Brun/llm-lab/issues/765), not a claim that all course chapters have been read or that the whole Hugging Face ecosystem has been audited.
 
 Inspected:
 - Current English course index: chapters 0–12 and their published headings.
@@ -66,8 +66,80 @@ Course prose, diagrams and code remain link-only. No figures, notebooks or code 
 
 ## Next audit increment
 
-Prioritize a representative deep audit of Chapters 10, 11 and 12 (dataset curation, LLM fine-tuning, reasoning models), then Chapters 2–5 for the operational workflow. For each selected chapter: inspect lesson text, equations, code/notebooks, exercises, prerequisites, visuals and version references; record exact locators; extract atomic claims and teaching moves; compare against actual LLM Lab pages, graph, Build path and Practice activities. Only then decide whether to update a canonical lesson, add an optional resource, create an experiment, or record an intentional no-op.
+The deep pass on Chapters 10–12 is complete at the lesson-body level. The remaining high-value audit is Chapters 2–5 for the operational workflow, followed by Chapters 6–9 where concrete implementation examples offer distinct value. For each selected chapter: inspect lesson text, equations, code/notebooks, exercises, prerequisites, visuals and version references; record exact locators; extract atomic claims and teaching moves; compare against actual LLM Lab pages, graph, Build path and Practice activities.
+
+## Deep chapter review — 2026-11-16
+
+### Chapter 10 — Curate high-quality datasets (Argilla)
+
+Inspected the chapter introduction, dataset loading/configuration, annotation workflow, export path and quiz. The chapter teaches a concrete human-in-the-loop curation workflow:
+- configure fields and annotation questions to match the task;
+- map existing labels as suggestions rather than treating them as unquestionable ground truth;
+- write annotation guidelines and clarify edge cases;
+- distribute work and request multiple independent responses where agreement analysis is useful;
+- preserve draft/submitted/discarded states and filter records according to task completion;
+- export annotations for downstream training/evaluation or preserve the full Argilla task configuration on the Hub.
+
+**What LLM Lab already covers:** corpus provenance, parsing/filtering, deduplication, leakage-safe splitting, tokenizer fitting and corpus handoff in the bilingual corpus-preparation pages; experimental evaluation already covers target estimands, grouped sampling and protocol design.
+
+**Actual gap:** explicit human annotation as a measurable stage of dataset construction. Existing corpus-preparation content did not explain annotation guidelines, calibration, independent double annotation, adjudication or the interpretation limits of inter-annotator agreement.
+
+**Integration made:** both corpus-preparation lessons now include a bounded section on annotation protocol and traceability; both exercise pages include an active-recall question distinguishing agreement from validity. Argilla is linked as an example workflow, not presented as the canonical or universal solution.
+
+**Limitations:** the chapter is mainly a tool-guided annotation workflow. It is not a comprehensive treatment of corpus deduplication, contamination, sampling bias, licensing, representativeness or statistical reliability. The course's default one-response completion setting should not be mistaken for a reliability protocol; multiple independent annotations are needed when agreement is an intended measurement.
+
+### Chapter 11 — Fine-tune Large Language Models
+
+Inspected the chapter overview, chat-template lesson, SFTTrainer lesson, LoRA lesson and evaluation lesson.
+
+Distinct teaching contributions:
+- chat templates serialize roles, messages, boundaries and control markers into model-specific token sequences;
+- the course explicitly distinguishes base and instruction-tuned models;
+- it recommends testing prompting with an existing instruction model before paying the compute and engineering cost of SFT;
+- SFT is framed around instruction/conversation/output-format demonstrations;
+- LoRA freezes base weights and trains low-rank adapter parameters;
+- evaluation is treated as a necessary stage rather than an optional final score.
+
+**What LLM Lab already covers:** the bilingual post-training lesson already explains SFT, response-only loss masking, preference methods (RLHF/DPO), parameter-efficient adaptation (LoRA) and the context-vs-parameters decision. Its exercise already tests the difference between loss masks and attention masks and the distinction between reward-model RLHF and DPO.
+
+**Actual gap:** chat serialization was not explained, despite being a prerequisite for correctly constructing conversational SFT data. The project did not explicitly teach that templates are model-specific, part of data/tokenizer provenance, and distinct from loss masking or tool execution.
+
+**Integration made:** both post-training lessons now explain chat templates and their relationship to SFT, tokenizer revisions, message/control markers and host-side tool execution. Both exercise pages now test template/version alignment.
+
+**Technical qualification:** the course's short description associates LoRA with attention weights, but LoRA can target different supported modules; the chosen target modules are configuration-dependent. Its reported parameter/memory reductions are examples tied to specific configurations, not universal constants. ChatML is an example format, not a universal chat standard. API examples remain version-sensitive and were not executed.
+
+### Chapter 12 — Build Reasoning Models (Open R1 / GRPO)
+
+Inspected the chapter outline, RL introduction, DeepSeek R1 paper walkthrough, GRPO implementation lesson and selected algorithm details. The course sequence is pedagogically useful:
+1. introduce agent, environment, action and reward;
+2. read the DeepSeek R1 training recipe;
+3. understand group-based relative reward/advantage construction;
+4. implement a reward function and train with TRL's GRPOTrainer;
+5. proceed to practical GRPO exercises.
+
+**What LLM Lab already covers:** the bilingual glossary already defines GRPO and RLVR; the concept system includes policy-gradient, score-centering, off-policy RL, training/inference mismatch and reasoning-model concepts. Existing post-training pages explain preference learning but explicitly leave detailed algorithms outside their scope. Prior work on score-centering supplies relevant mathematical background.
+
+**Actual gap:** GRPO did not yet have a first-class concept-registry node, and the relation between the chapter's algorithm, the policy-gradient foundation and post-training was not represented. The course also offers an accessible implementation path, but the current project deliberately does not have a dedicated practical GRPO experiment.
+
+**Integration made:** added a bilingual GRPO concept node and graph relations to post-training and policy-gradient; glossary definitions are now cross-linked by the concept registry. No new mandatory route stage or GRPO implementation was added.
+
+**Scientific qualifications required:**
+- GRPO compares multiple sampled completions for a prompt and forms relative advantages from their rewards; in its original formulation it avoids a separate critic/value model. It does not prescribe a single reward source.
+- The Hugging Face tutorial's illustrative length reward is intentionally simple and would be a poor proxy for reasoning quality if used as a real objective; reward design can create reward hacking.
+- DeepSeek-R1 is a particular multi-stage recipe, not synonymous with GRPO. The published R1 pipeline includes cold-start SFT, reasoning RL, rejection sampling plus SFT, and a further RL stage. R1-Zero and R1 should not be conflated.
+- The “Aha moment” is a description of an observed output/training pattern, not evidence that a model has human-like introspection or that generated chain-of-thought is a faithful report of internal computation.
+- GRPO's group normalization and KL control have nontrivial trade-offs; current TRL documentation notes reward-scaling variants and potential question-difficulty bias. Library defaults and parameters evolve and must be pinned for reproducible experiments.
+
+### Graph and route decisions
+
+The course has now contributed three bounded changes:
+- human annotation and label-quality protocol within the existing corpus-preparation lesson and exercise;
+- model-specific chat-template serialization within the existing post-training lesson and exercise;
+- GRPO as an advanced concept in the concept graph and glossary.
+
+No new learner-facing page, top-level curriculum stage or Build dependency was added. The chapter's tools (Argilla, TRL, Unsloth) remain contextual ecosystem references. This preserves the distinction between LLM Lab's conceptual route and Hugging Face's library-oriented practice route.
+
 
 ## Summary
 
-The course is valuable less as a replacement curriculum than as a **bridge from conceptual understanding to modern Hugging Face practice**. LLM Lab already has strong foundations in Transformer mechanics, tokenization, generation and training fundamentals. The most promising additions to investigate are dataset curation, real-world fine-tuning workflows, Hub/reproducibility practice and reasoning-model construction. These remain provisional until their chapter bodies and implementations are inspected.
+The course is valuable less as a replacement curriculum than as a **bridge from conceptual understanding to modern Hugging Face practice**. LLM Lab already has strong foundations in Transformer mechanics, tokenization, generation and training fundamentals. The most valuable validated additions from Chapters 10–12 are human annotation protocol, chat-template serialization and a first-class GRPO concept. A deeper practical GRPO experiment and a broader dataset-quality treatment remain optional future work; Hub/reproducibility practice and Chapters 2–9 still require inspection.
