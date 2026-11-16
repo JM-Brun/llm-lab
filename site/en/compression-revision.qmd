@@ -73,6 +73,21 @@ $$
 A compatible encoder and decoder (for example, arithmetic coders), the same model, tokenizer, symbol order, and numerical conventions are required. Decoding must reconstruct the exact sequence. Generating a plausible continuation is not decompressing the corpus.
 :::
 
+## 2 bis. Entropy, surprise, and utility are not synonyms
+
+For a given predictive distribution:
+
+- **Predictive entropy**: the model's average uncertainty about the next token.
+- **Observed surprisal**: the information cost of the token that actually occurred, \\( -\\log_2 p(x_t\\mid context) \\).
+- **Attention-weight entropy**: how dispersed attention weights are across context positions.
+- **KV-cache drift**: the difference between a retained state and the state that would be recomputed.
+
+These signals do not directly measure token utility. A highly predictable token can still be essential to syntax or reasoning; a rare token can be decisive. Low entropy alone does not justify pruning.
+
+The [entropy-versus-surprisal experiment](https://github.com/JM-Brun/llm-lab/blob/main/experiments/entropy-surprisal-toy/README.md) illustrates the distinction with a binary source. It does not test an LLM.
+
+**Advanced direction:** some methods use attention-weight entropy to allocate a KV-cache budget, while others use decoded-distribution entropy to decide whether to recompute a cache. These are different signals and protocols. See the [critical synthesis on compression and inference efficiency](../../docs/source-syntheses/compression-intelligence-and-inference-efficiency-2026-11.md).
+
 ## 2. Reduce the model
 
 | Technique | What changes | What must be measured |
