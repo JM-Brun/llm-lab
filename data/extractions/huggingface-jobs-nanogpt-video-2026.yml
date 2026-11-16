@@ -15,17 +15,24 @@ pedagogical_model:
       - {id: src-managed-job, kind: execution-environment, description: "Hugging Face Jobs executes a command on selected managed hardware.", locator: "02:57 (supplied chapter label)"}
       - {id: src-shell-launcher, kind: implementation-pattern, description: "A generic shell script creates/syncs a Storage Bucket, requests a GPU job, mounts the bucket, and runs the training command.", locator: "04:15 (supplied chapter label; details from third-party transcript)"}
       - {id: src-remote-run, kind: process, description: "The training command runs remotely; checkpoints and outputs persist in the mounted bucket and can be synced back locally.", locator: "05:35 (supplied chapter label; details from third-party transcript)"}
-      - {id: src-local-gpu-constraint, kind: constraint, description: "Limited local GPU capacity motivates managed remote execution.", locator: "00:00 (supplied chapter label)"}\n      - {id: src-storage-bucket, kind: persistent-storage, description: "A Hub Storage Bucket transfers project files into the job and retains the output directory/checkpoints after compute shuts down.", locator: "04:15–05:35 (third-party transcript rendering)"}
+      - {id: src-local-gpu-constraint, kind: constraint, description: "Limited local GPU capacity motivates managed remote execution.", locator: "00:00 (supplied chapter label)"}
+      - {id: src-storage-bucket, kind: persistent-storage, description: "A Hub Storage Bucket transfers project files into the job and retains the output directory/checkpoints after compute shuts down.", locator: "04:15–05:35 (third-party transcript rendering)"}
     edges:
       - {from: src-local-gpu-constraint, type: motivates, to: src-managed-job}
       - {from: src-local-training-program, type: executed-by, to: src-managed-job}
-      - {from: src-shell-launcher, type: creates-and-syncs, to: src-storage-bucket}\n      - {from: src-storage-bucket, type: mounted-into, to: src-managed-job}\n      - {from: src-shell-launcher, type: submits, to: src-managed-job}
-      - {from: src-managed-job, type: runs, to: src-remote-run}\n      - {from: src-remote-run, type: persists-artifacts-to, to: src-storage-bucket}\n      - {from: src-storage-bucket, type: syncs-results-back-to, to: src-local-training-program}
+      - {from: src-shell-launcher, type: creates-and-syncs, to: src-storage-bucket}
+      - {from: src-storage-bucket, type: mounted-into, to: src-managed-job}
+      - {from: src-shell-launcher, type: submits, to: src-managed-job}
+      - {from: src-managed-job, type: runs, to: src-remote-run}
+      - {from: src-remote-run, type: persists-artifacts-to, to: src-storage-bucket}
+      - {from: src-storage-bucket, type: syncs-results-back-to, to: src-local-training-program}
     interpretation: "Partial editorial reconstruction from user-supplied summary and chapter labels; inferred relations are not a formal graph published by the creator."
   learning_outcomes:
     - {status: inferred, outcome: "Distinguish training code from its execution infrastructure.", basis: "Supplied description emphasizes unchanged training code and a generic launcher."}
     - {status: inferred, outcome: "Describe the role of a managed GPU job and launch script.", basis: "Supplied chapter labels for Jobs and shell script."}
     - {status: inferred, outcome: "Identify data, output and cost checks needed after remote execution.", basis: "Inferred from the run/results stage and official Jobs documentation."}
+    - {status: transcript-supported, outcome: "Explain the Storage Bucket as the transfer and persistence boundary between local project, remote job and returned artifacts.", basis: "Third-party transcript rendering describes create/sync, mount, output persistence and post-job sync."}
+    - {status: transcript-supported, outcome: "Identify the example model/data/runtime stack: ~50M GPT-2-style model, 8 layers, 512 embedding dimension, GPT-2 tokenizer, TinyStories, uv and requirements.txt.", basis: "Third-party transcript rendering; exact code and hyperparameters remain uninspected."}
   assumed_prerequisites:
     - {status: inferred, topic: "A working Python/PyTorch training program and basic shell familiarity.", basis: "The described workflow launches existing training code."}
     - {status: inferred, topic: "Basic understanding of GPU memory and training runtime.", basis: "The stated motivation is insufficient local GPU capacity."}
