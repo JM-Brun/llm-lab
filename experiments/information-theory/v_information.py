@@ -68,7 +68,8 @@ def main() -> None:
             "The same correlated data yields zero V-information for a constant-only observer.",
             "A finite family that can exploit the feature obtains about 0.531 bits.",
             "An independent feature provides no predictive improvement in this family.",
-            "This is an exact population calculation for a toy finite family, not a fitted LLM or a benchmark of attention against bag-of-words.",
+            "This is an exact population calculation for a toy finite family, not a fitted LLM "
+            "or a benchmark of attention against bag-of-words.",
         ],
     }
     print(json.dumps(output, indent=2))  # noqa: T201 - experiment CLI output
