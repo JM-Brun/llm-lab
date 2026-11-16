@@ -5,14 +5,19 @@ reconstruction_basis:
   inspected:
     - "Current English LLM Course chapter index (chapters 0–12)"
     - "French Chapter 1 introduction and its visible section outline"
+    - "Chapter 10 lesson bodies: Argilla setup, dataset configuration, annotation guidelines, multiple responses, export and quiz"
+    - "Chapter 11 lesson bodies: chat templates, SFTTrainer, LoRA and evaluation"
+    - "Chapter 12 lesson bodies: RL introduction, DeepSeek R1 walkthrough, GRPO and TRL implementation"
   not_inspected:
-    - "Lesson bodies and code for Chapters 2–12"
+    - "Lesson bodies and code for Chapters 2–9"
     - "Notebooks, quizzes, videos, Hub artifacts and live demos"
     - "Runtime execution or learner outcomes"
   limitations:
     - "Index-level statements are not evidence of chapter depth or technical correctness."
     - "The English and French course outlines differ; the current French page appears to expose an earlier course outline."
     - "Living documentation was not pinned to an immutable commit."
+    - "Chapters 10–12 were inspected as text and selected code; examples were not executed and no learner outcomes were measured."
+    - "The course's GRPO code snippets and API defaults are version-sensitive; validate against a pinned TRL release before reproducing."
 pedagogical_model:
   audience:
     declared: "Learners with good Python knowledge; prior deep-learning exposure recommended; prior PyTorch/TensorFlow expertise not required."
@@ -149,3 +154,92 @@ items:
       pages: []
       concepts: []
     disposition: defer
+
+  - id: huggingface-llm-course:chapter10-human-annotation
+    kind: method
+    summary: "Chapter 10 teaches human-in-the-loop dataset curation with Argilla: configure fields/questions, write annotation guidelines, calibrate annotators, collect independent responses, inspect disagreement and export curated records. LLM Lab's corpus-preparation lesson lacked an explicit annotation-protocol stage; this gap is now addressed bilingually."
+    locator:
+      type: page
+      value: "https://huggingface.co/learn/llm-course/en/chapter10/1"
+      label: "Chapter 10 — Introduction to Argilla"
+    evidence:
+      kind: course-lesson
+      confidence: high
+      scope: "Introduction, dataset configuration, annotation guidelines, multiple responses and export sections."
+      assumptions: []
+      limitations: ["Tool workflow, not comprehensive corpus-quality methodology; agreement is not validity."]
+    classification:
+      primary_theme: training-learning
+      secondary_themes: [evaluation]
+      tags: [topic:dataset-curation, topic:human-annotation, ecosystem:argilla, ecosystem:huggingface]
+      concept_ids: [dataset-curation]
+    candidate_destinations:
+      pages: [fr/corpus-preparation, en/corpus-preparation, fr/exercises/corpus-preparation, en/exercises/corpus-preparation]
+      concepts: [dataset-curation]
+    disposition: integrated
+  - id: huggingface-llm-course:chapter11-chat-templates
+    kind: method
+    summary: "Chat templates serialize message roles, boundaries and control markers into model-specific token sequences. Correct template/tokenizer alignment is part of conversational SFT data provenance and is distinct from loss masking and host-side tool execution. Integrated into the bilingual post-training lesson and exercises."
+    locator:
+      type: page
+      value: "https://huggingface.co/learn/llm-course/en/chapter11/2"
+      label: "Chapter 11 — Chat Templates"
+    evidence:
+      kind: course-lesson
+      confidence: high
+      scope: "Chat template purpose, base versus instruction models, role markers and tool-call serialization."
+      assumptions: []
+      limitations: ["Chat formats and API behavior are model/library-version dependent; no code was executed."]
+    classification:
+      primary_theme: training-learning
+      secondary_themes: [text-tokenization]
+      tags: [topic:chat-template, topic:supervised-fine-tuning, ecosystem:huggingface]
+      concept_ids: [chat-template, instruction-tuning]
+    candidate_destinations:
+      pages: [fr/post-training, en/post-training, fr/exercises/post-training, en/exercises/post-training]
+      concepts: [chat-template, instruction-tuning]
+    disposition: integrated
+  - id: huggingface-llm-course:chapter11-lora-sft-evaluation
+    kind: method
+    summary: "Chapter 11 connects SFT with conversational instruction data, SFTTrainer, LoRA and evaluation. LLM Lab already covers the underlying SFT, preference-learning and parameter-efficient adaptation distinctions; the main new teaching point was chat serialization. LoRA target modules and reported savings are configuration-dependent."
+    locator:
+      type: page
+      value: "https://huggingface.co/learn/llm-course/en/chapter11/1"
+      label: "Chapter 11 — Supervised Fine-Tuning"
+    evidence:
+      kind: course-lesson
+      confidence: high
+      scope: "Chapter overview, SFT, LoRA and evaluation sections."
+      assumptions: []
+      limitations: ["Trainer code and current APIs were not executed; no universal LoRA savings claim is inferred."]
+    classification:
+      primary_theme: training-learning
+      secondary_themes: [evaluation]
+      tags: [topic:fine-tuning, topic:lora, topic:supervised-fine-tuning, ecosystem:trl]
+      concept_ids: [fine-tuning, instruction-tuning]
+    candidate_destinations:
+      pages: [fr/post-training, en/post-training]
+      concepts: [fine-tuning, instruction-tuning]
+    disposition: already-covered
+  - id: huggingface-llm-course:chapter12-grpo
+    kind: method
+    summary: "Chapter 12 introduces RL for LLMs, analyzes DeepSeek R1 and implements GRPO. GRPO samples multiple completions per prompt and uses group-relative reward advantages; the original formulation avoids a separate critic, but reward source and implementation details vary. The project already explained policy gradients and score centering; a first-class GRPO concept and graph relations have now been added."
+    locator:
+      type: page
+      value: "https://huggingface.co/learn/llm-course/en/chapter12/4"
+      label: "Chapter 12 — Implementing GRPO in TRL"
+    evidence:
+      kind: course-lesson
+      confidence: high
+      scope: "RL introduction, R1 paper walkthrough, GRPO algorithm and selected TRL implementation details."
+      assumptions: []
+      limitations: ["No code was executed; the course's simplified length reward is not endorsed as a quality objective; no learner-outcome claim."]
+    classification:
+      primary_theme: training-learning
+      secondary_themes: [evaluation, inference-efficiency]
+      tags: [topic:grpo, topic:reinforcement-learning, topic:reasoning-models, ecosystem:trl]
+      concept_ids: [group-relative-policy-optimization, policy-gradient, reasoning-model]
+    candidate_destinations:
+      pages: [fr/glossary, en/glossary, fr/score-centering, en/score-centering]
+      concepts: [group-relative-policy-optimization, policy-gradient, reasoning-model]
+    disposition: partially-integrated
