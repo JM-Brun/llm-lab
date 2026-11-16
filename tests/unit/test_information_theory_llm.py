@@ -34,3 +34,13 @@ def test_invalid_distribution_is_rejected() -> None:
     module = _module()
     with pytest.raises(ValueError):
         module["entropy"]((0.2, 0.2))
+
+
+def test_v_information_depends_on_predictive_family() -> None:
+    module = _module()
+    result = module["xor_demo"]()
+    assert result["shannon_mi"] == pytest.approx(1.0)
+    assert result["constant_family"] == pytest.approx(0.0)
+    assert result["interaction_family"] > result["constant_family"]
+    assert result["interaction_family"] == pytest.approx(1.0 - module["entropy"]((0.9, 0.1)))
+    assert result["interaction_family"] < result["shannon_mi"]

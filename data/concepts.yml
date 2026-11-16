@@ -745,6 +745,21 @@ concepts:
     domains: [probabilistic-foundations-training, architectures-mechanisms]
     resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/compression-revision, en/compression-revision]
 
+  - id: v-information
+    importance: specialized
+    labels: {fr: "V-information prédictive", en: "Predictive V-information"}
+    definitions:
+      fr: >-
+        Gain de prédictibilité d'une variable cible apporté par une information latérale,
+        mesuré relativement à une famille explicitement définie de prédicteurs et à une
+        perte logarithmique ; sa valeur dépend donc de la classe de modèles considérée.
+      en: >-
+        Gain in predictability of a target variable from side information, measured relative
+        to an explicitly specified family of predictors and logarithmic loss; its value
+        therefore depends on the model class considered.
+    domains: [probabilistic-foundations-training, architectures-mechanisms]
+    resources: [fr/entropy, en/entropy, fr/llm-limits, en/llm-limits]
+
 relation_types:
   represented-by:
     direction: directed
@@ -1034,3 +1049,4 @@ relations:
       fr: "La divergence KL mesure le terme d'écart entre la distribution cible et la distribution prédite."
       en: "KL divergence measures the mismatch term between the target and predicted distributions."
   - {from: attention-weight, type: contrasts-with, to: mutual-information}
+  - {from: mutual-information, type: contrasts-with, to: v-information}

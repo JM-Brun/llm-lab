@@ -47,10 +47,29 @@ def mutual_information(joint: tuple[tuple[float, ...], ...]) -> float:
     )
 
 
+def xor_demo() -> dict[str, float]:
+    """Exact balanced-XOR illustration of predictive-family dependence.
+
+    Both toy families can ignore the input (optional ignorance). The richer
+    family additionally contains a predictor assigning probability 0.9 to
+    the correct XOR label and 0.1 to the other label for each input pair.
+    Its expected log loss is the binary entropy h2(0.1), not -log2(0.9).
+    """
+    baseline_cross_entropy = 1.0
+    constant_conditional_cross_entropy = 1.0
+    interaction_conditional_cross_entropy = entropy((0.9, 0.1))
+    return {
+        "shannon_mi": 1.0,
+        "constant_family": baseline_cross_entropy - constant_conditional_cross_entropy,
+        "interaction_family": baseline_cross_entropy - interaction_conditional_cross_entropy,
+    }
+
+
 def main() -> None:
     target = (0.75, 0.25)
     models = (("good", (0.70, 0.30)), ("uniform", (0.50, 0.50)))
     h_target = entropy(target)
+    demo = xor_demo()
     lines = []
     for label, model in models:
         h_cross = cross_entropy(target, model)
@@ -63,6 +82,9 @@ def main() -> None:
             f"target entropy: {h_target:.4f} bits",
             f"mutual information of toy joint distribution: {mutual_information(joint):.4f} bits",
             "Reminder: attention weights are not mutual information.",
+            f"Shannon MI for balanced XOR: {demo['shannon_mi']:.4f} bits",
+            f"V-information, constant-only family: {demo['constant_family']:.4f} bits",
+            f"V-information, interaction-aware family: {demo['interaction_family']:.4f} bits",
         )
     )
     sys.stdout.write("\n".join(lines) + "\n")

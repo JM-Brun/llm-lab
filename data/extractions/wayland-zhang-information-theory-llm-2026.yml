@@ -11,8 +11,8 @@ scan:
       - "The page identifies itself as a rewrite of a 2025-03-27 original."
   figures_media:
     status: partial
-    coverage: "Figure captions and their placement were visible; image assets were not separately retrieved or visually audited."
-    notes: ["Do not reuse figures; exact creator and licence terms were not verified."]
+    coverage: "All five embedded output figures in the English notebook (cells 1, 3, 6, 9 and 11) were retrieved from the notebook JSON and visually inspected. Article-page image assets were not separately retrieved."
+    notes: ["The entropy and cross-entropy plots are broadly consistent with their displayed definitions; the joint-distribution panel is numerically coherent, while its Venn diagram is only schematic.", "The attention panel is explicitly titled MI Approximation, but its companion row-wise KL-to-uniform calculation is not mutual information; do not reuse that interpretation.", "Do not reuse article-page figures; their exact creator and licence terms were not verified."]
   code_data:
     status: partial
     coverage: "The English notebook's 18 Markdown/code cells were inspected statically; the notebook was not executed."
@@ -26,7 +26,7 @@ scan:
     notes: ["No comment thread was exposed in the retrieved article body."]
   linked_resources:
     status: partial
-    coverage: "The V-information paper and the linked English/Chinese notebook repository were opened."
+    coverage: "The V-information paper was fully audited; the linked English/Chinese notebook repository, its embedded English notebook outputs, and its LICENSE file were inspected."
     notes: ["Other further-reading links were not exhaustively audited."]
   metadata:
     status: complete
@@ -35,7 +35,7 @@ scan:
   rights:
     status: unknown
     coverage: null
-    notes: ["Article and figure reuse rights were not established; retain link-only treatment."]
+    notes: ["The notebook repository contains an MIT License (copyright 2025 Zhuo Zhang); any reuse of its repository code or documentation must preserve the required copyright and licence notice.", "This repository licence does not establish reuse rights for the separate article page or its figures; retain article and figure assets as link-only unless their rights are independently verified."]
   unresolved_questions:
     - "Which exact upstream notebook cells implement each visualization, and do they correctly distinguish Shannon mutual information, attention weights and V-information?"
     - "What experimental evidence, if any, supports a direct relationship between attention weights and mutual information for particular trained models?"
@@ -204,13 +204,14 @@ items:
     locator: {type: section, value: "06 V-Information: When Computation Matters", label: "V-Information"}
     evidence: {kind: primary-paper-summary, confidence: context-dependent, scope: "The linked Xu et al. (2020) paper proposes predictive V-information and reports theoretical and empirical results.", assumptions: ["The predictor family and loss are specified.", "The operational quantity depends on the chosen function class and estimation procedure."], limitations: ["It does not mean computation creates Shannon information or violates ordinary physical conservation.", "The article's 'more useful information' framing is heuristic unless the V-family and objective are stated."]}
     technical_assessment: {status: reviewed, rationale: "The linked paper formalizes predictive V-information relative to a family of functions; the article's short description is introductory and omits technical definitions.", corroborating_sources: ["Xu et al., A Theory of Usable Information Under Computational Constraints, arXiv:2002.10689"]}
-    pedagogical_assessment: {learner_question: "Can two observers extract different usable predictive information from the same data?", explanatory_lens: "Observer/model class constrains what can be predicted.", teaching_form: [advanced-concept, paper-link, comparison], novelty: {level: high, rationale: "Introduces an advanced framework not part of the current core path."}, complementarity: {level: high, rationale: "Adds a computational lens to classical Shannon measures."}, pedagogical_value: {level: moderate, rationale: "Valuable for advanced learners but too specialized for the core path."}, applicability: {level: moderate, rationale: "Keep as an optional research extension."}, redundancy: {level: low, rationale: "No existing canonical concept found."}, evidence_quality: {level: moderate, rationale: "Primary paper is linked and abstract inspected; full paper not yet audited."}}
-    classification: {primary_theme: probabilistic-foundations-training, tags: [topic:v-information, method:computational-constraints], concept_ids: []}
-    candidate_destinations: {pages: [fr/llm-limits, en/llm-limits], concepts: [], route_ids: []}
-    disposition: defer
-    disposition_rationale: "Link the primary paper as optional advanced reading; do not add a canonical concept until the full paper and a concrete learner use case are reviewed."
+    pedagogical_assessment: {learner_question: "Can two observers extract different usable predictive information from the same data?", explanatory_lens: "Observer/model class constrains what can be predicted.", teaching_form: [advanced-concept, paper-link, comparison], novelty: {level: high, rationale: "Introduces an advanced framework not part of the current core path."}, complementarity: {level: high, rationale: "Adds a computational lens to classical Shannon measures."}, pedagogical_value: {level: moderate, rationale: "Valuable for advanced learners but too specialized for the core path."}, applicability: {level: moderate, rationale: "Keep as an optional research extension."}, redundancy: {level: low, rationale: "No existing canonical concept found."}, evidence_quality: {level: high, rationale: "Published ICLR 2020 paper inspected in full; the theoretical definition and applications are explicit, although the reported experiments were not independently reproduced."}}
+    classification: {primary_theme: probabilistic-foundations-training, tags: [topic:v-information, method:computational-constraints], concept_ids: [v-information, mutual-information, cross-entropy]}
+    candidate_destinations: {pages: [fr/llm-limits, en/llm-limits], concepts: [v-information], route_ids: []}
+    disposition: integrate
+    disposition_rationale: "Integrate as an advanced optional concept after full primary-paper review and a small explanatory example. Keep it outside the core path because the quantity is defined relative to a specified predictive family and should not be mistaken for Shannon mutual information."
 canonical_mapping:
-  proposed_concepts: []
-  proposed_relations: []
-  route_implications: []
-  decision_summary: "Added canonical IDs for entropy, KL divergence and mutual information, linked to existing bilingual pages and concepts. Reuse existing surprisal, predictive-compression, entropy-coding, cross-entropy and self-attention IDs. Keep V-information as an optional advanced reference pending a full primary-paper review."
+  proposed_concepts: [v-information]
+  proposed_relations:
+    - {from: mutual-information, type: contrasts-with, to: v-information}
+  route_implications: ["Optional advanced extension after entropy, cross-entropy and mutual information; not a prerequisite for the core LLM path."]
+  decision_summary: "Added canonical bilingual v-information as an advanced concept after full review of Xu et al. (ICLR 2020). It is explicitly distinguished from Shannon mutual information and linked to an exact synthetic predictor-family demonstration."

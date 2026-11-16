@@ -182,21 +182,21 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 
 Given the context already observed, the model assigns a probability to the next token:
 
-\[
+$$
 p(x_t\mid x_{<t}).
-\]
+$$
 
 After the token is observed, its surprise, or *surprisal*, in bits is:
 
-\[
+$$
 I(x_t\mid x_{<t})=-\log_2 p(x_t\mid x_{<t}).
-\]
+$$
 
 If the model assigns probability $1/2$, the token ideally costs 1 bit; if it assigns $1/8$, it costs 3 bits. **The more predictable the token, the fewer bits its ideal code needs.** Summing these surprisals gives the ideal length associated with the sequence:
 
-\[
+$$
 L(x_{1:T})\approx-\sum_{t=1}^{T}\log_2 p(x_t\mid x_{<t}).
-\]
+$$
 
 ### 2. But a coder and decoder are still needed
 
@@ -211,6 +211,18 @@ Without that shared protocol, an LLM's ability to continue a text does not mean 
 - Good predictions do not guarantee a net compression benefit once the model, tokenizer, and metadata are counted.
 - **Model compression** (quantization, pruning, distillation) reduces the network's storage or runtime cost: that is a different question. See the [model-compression synthesis](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/model-compression-2026-11.md).
 
+### Advanced extension — V-information: what an observer can use
+
+Shannon mutual information describes dependence in the joint distribution without restricting the observer's computational power. Xu et al. (ICLR 2020) define a quantity relative to an explicit predictor family \\(\\mathcal V\\):
+
+\$
+I_{\\mathcal V}(X\\to Y)=H_{\\mathcal V}(Y\\mid\\varnothing)-H_{\\mathcal V}(Y\\mid X).
+\$
+
+It measures the predictive gain from the input for that family and loss. A restricted family may fail to exploit structure that is present in the data. The quantity can be directional; it does not replace Shannon mutual information and does not mean computation creates Shannon information.
+
+**XOR example:** two bits determine their XOR perfectly (1 bit of mutual information), yet a constant predictor gains nothing from observing them. A predictor able to represent their interaction can use almost all of that information. See the [reproducible experiment](https://github.com/JM-Brun/llm-lab/blob/main/experiments/information-theory-llm/README.md) and the [primary paper](https://openreview.net/forum?id=r1eBeyHFDH).
+
 ### Takeaway
 
 **Predictive compression:** the model supplies probabilities; a coder can use them to represent data with fewer bits.
@@ -219,7 +231,7 @@ Without that shared protocol, an LLM's ability to continue a text does not mean 
 
 **Generation:** the model samples or selects a next token; this is not, by itself, lossless decoding.
 
-To make these ideas concrete, run the [reproducible predictive-compression experiment](https://github.com/JM-Brun/llm-lab/tree/main/experiments/predictive-compression).
+To make these ideas concrete, run the [reproducible predictive-compression experiment](https://github.com/JM-Brun/llm-lab/tree/main/experiments/predictive-compression). To compare marginal entropy, conditional entropy, and zlib compression, also run the [sequence-compression experiment](https://github.com/JM-Brun/llm-lab/blob/main/experiments/sequence-compression/README.md).
 
 
 ### References
