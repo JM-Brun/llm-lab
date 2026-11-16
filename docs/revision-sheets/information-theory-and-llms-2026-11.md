@@ -59,7 +59,7 @@ Ne pas confondre **compression prédictive des données**, **compression des par
 
 ### XOR et famille de prédicteurs
 
-Deux bits équilibrés \(X_1,X_2\) déterminent \(Y=X_1\oplus X_2\). L'information mutuelle de Shannon vaut 1 bit. Une famille limitée aux prédicteurs constants ne tire aucun gain de l'entrée : sa V-information vaut 0. Une famille capable de représenter l'interaction XOR exploite cette dépendance. Avec une probabilité correcte de 0,9 sur chaque exemple, le gain illustratif vaut :
+Deux bits équilibrés \(X_1,X_2\) déterminent \(Y=X_1\oplus X_2\). L'information mutuelle de Shannon vaut 1 bit. Une famille limitée aux prédicteurs constants ne tire aucun gain de l'entrée : sa V-information vaut 0. Une famille capable de représenter l'interaction XOR exploite cette dépendance. Si elle attribue 0,9 à la bonne classe et 0,1 à l'autre, sa perte logarithmique moyenne inclut aussi les erreurs :
 
 \[
 1+\log_2(0.9)\approx 0.848\text{ bit}.
