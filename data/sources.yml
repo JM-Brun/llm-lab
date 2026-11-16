@@ -3919,7 +3919,7 @@ sources:
         limitations: ["Full interactive walkthrough and source revision not inspected.", "Model-specific tensor dimensions and 3D proportions must not be generalized.", "No reuse licence for screenshots or explanatory text established."]
     related:
       pages: [fr/transformer, en/transformer, fr/tensors, en/tensors, fr/transformer-explainer, en/transformer-explainer]
-      concepts: [transformer, embedding, self-attention, multi-head-attention]
+      concepts: [token-embedding, contextualized-representation, self-attention, multi-head-attention]
       audit_records: [docs/source-reviews/visual-learning-resources-2026-11.md]
 
   - id: tensorflow-playground
@@ -3954,7 +3954,7 @@ sources:
         limitations: ["Small feed-forward network, not a Transformer or LLM.", "No full interaction protocol or browser compatibility audit.", "No reuse licence for screenshots established."]
     related:
       pages: [fr/gradients, en/gradients, fr/loss, en/loss, fr/training-loop, en/training-loop]
-      concepts: [gradient, gradient-descent, loss]
+      concepts: [gradient, optimizer, training-loop, overfitting]
       audit_records: [docs/source-reviews/visual-learning-resources-2026-11.md]
 
   - id: raschka-visual-attention-variants
@@ -3989,7 +3989,7 @@ sources:
         limitations: ["Full article and all architecture entries not independently checked.", "Model examples are time-sensitive and require primary-source verification.", "Not a controlled benchmark; figure reuse rights not established."]
     related:
       pages: [fr/transformer, en/transformer, fr/queries-keys-values, en/queries-keys-values, fr/generation, en/generation]
-      concepts: [attention, multi-head-attention, self-attention]
+      concepts: [scaled-dot-product-attention, multi-head-attention, self-attention]
       audit_records: [docs/source-reviews/visual-learning-resources-2026-11.md]
 
   - id: grootendorst-visual-guide-moe
@@ -4059,7 +4059,7 @@ sources:
         limitations: ["Individual chapters, benchmarks and calculators not audited.", "Hardware/vendor performance claims are workload- and version-dependent.", "Full revision not pinned."]
     related:
       pages: [fr/generation, en/generation]
-      concepts: [inference, kv-cache, autoregressive-generation]
+      concepts: [prefill, decode-step, kv-cache, autoregressive-generation]
       audit_records: [docs/source-reviews/visual-learning-resources-2026-11.md]
 
   - id: neuronpedia-interpretability-platform
@@ -4077,8 +4077,8 @@ sources:
     licence: {identifier: null, url: null, status: unknown}
     reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
     classification:
-      primary_theme: interpretability-evaluation
-      secondary_themes: [architectures-mechanisms]
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
       tags: [topic:mechanistic-interpretability, topic:sparse-autoencoders, topic:features, topic:attribution-graphs, modality:interactive-visualization]
       concept_ids: []
     metadata:
@@ -4113,7 +4113,7 @@ sources:
     reuse: {text: link-only, figures: unknown, code: link-only, data: unknown}
     classification:
       primary_theme: mathematical-tools-geometry
-      secondary_themes: [mathematical-tools-geometry]
+      secondary_themes: [architectures-mechanisms]
       tags: [topic:embeddings, topic:dimensionality-reduction, topic:clustering, modality:interactive-visualization]
       concept_ids: [token-embedding, contextualized-representation]
     metadata:
@@ -4129,5 +4129,5 @@ sources:
         limitations: ["Full paper methodology and benchmarks not audited.", "MIT licence applies to repository software; figure, paper and example-data rights are separate.", "Projection and clustering artifacts require explicit teaching caveats."]
     related:
       pages: [fr/embedding-space, en/embedding-space, fr/contextualized-representations, en/contextualized-representations]
-      concepts: [embedding, embedding-space]
+      concepts: [token-embedding, contextualized-representation]
       audit_records: [docs/source-reviews/visual-learning-resources-2026-11.md]
