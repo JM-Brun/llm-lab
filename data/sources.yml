@@ -3641,5 +3641,4 @@ sources:
         - en/llm-evolution
       concepts: [kv-cache]
       audit_records:
-        - data/extractions/sasirekha-cota-understanding-llm-compression-2023.yml
         - docs/source-syntheses/model-compression-2026-11.md
