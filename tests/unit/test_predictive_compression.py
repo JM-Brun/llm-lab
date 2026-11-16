@@ -29,3 +29,16 @@ def test_predictive_model_beats_uniform_on_fixed_toy_message() -> None:
     uniform_bits = len(module["MESSAGE"]) * log2(len(module["ALPHABET"]))
 
     assert ideal_bits < uniform_bits
+
+
+
+def test_domain_shift_increases_predictive_code_length() -> None:
+    root = Path(__file__).resolve().parents[2]
+    module = runpy.run_path(str(root / "experiments/predictive-compression/run.py"))
+    train = module["train_bigram_model"]
+    cost = module["sequence_cost_bits"]
+    model_ab = train("AB" * 100)
+    model_cd = train("CD" * 100)
+
+    assert cost("AB" * 20, model_ab) < cost("CD" * 20, model_ab)
+    assert cost("CD" * 20, model_cd) < cost("AB" * 20, model_cd)
