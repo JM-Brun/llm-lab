@@ -100,3 +100,14 @@ Ne pas la confondre avec une nouvelle quantité indépendante des hypothèses : 
 ::: {.language-switch}
 **Langue :** [Français](revision-information-theory.qmd) · [English](../en/revision-information-theory.qmd)
 :::
+
+
+## Attention : distinguer KL et information mutuelle
+
+L'information mutuelle n'est pas la KL d'une ligne d'attention vers l'uniforme. Pour une vraie distribution jointe :
+
+\[
+I(X;Y)=\mathbb E_X[D_{KL}(P(Y\mid X)\|P(Y))].
+\]
+
+La référence est la marginale \(P(Y)\). Une ligne identique pour tous les contextes peut être très concentrée (KL vers l'uniforme positive) tout en donnant \(I(X;Y)=0\). Les poids d'attention ne sont pas automatiquement des probabilités conditionnelles ; ne les interprète pas comme telles sans modèle probabiliste explicite.
