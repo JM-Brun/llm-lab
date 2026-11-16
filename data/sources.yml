@@ -3567,7 +3567,6 @@ sources:
       tags:
         - topic:information-theory
         - topic:entropy
-        - topic:cross-entropy
         - topic:mutual-information
         - topic:compression
         - topic:perplexity
