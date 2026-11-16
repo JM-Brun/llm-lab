@@ -2,7 +2,7 @@
 
 **Source:** [Ahead of AI, 15 November 2026](https://magazine.sebastianraschka.com/p/understanding-positional-embeddings) · [structured extraction](../../data/extractions/sebastian-raschka-understanding-positional-embeddings-2026.yml)
 
-**Inspection:** complete article body (sections 1–7), equations, code snippets, figure captions and conclusion inspected on 16 November 2026. The 38 figures were not individually downloaded or visually inspected. The linked Qwen3 repository was identified but not independently audited or executed. No reuse rights were established; text, figures and code remain link-only.
+**Inspection:** complete article body (sections 1–7), equations, code snippets, figure captions and conclusion inspected on 16 November 2026. The 38 figures were not individually downloaded or visually inspected. The linked standalone Qwen3 notebook was statically inspected (RoPE utility, GQA and model configuration), but not executed. No reuse rights were established; text, figures and code remain link-only.
 
 ## 1. Integration decision
 
@@ -62,7 +62,7 @@ No new concept IDs, introductory pages, copied figures or external code were add
 ## 6. Remaining work
 
 - Inspect the 38 figure assets individually and decide which original LLM Lab diagrams to create.
-- Inspect and execute the linked Qwen3 implementation, including position IDs, cache behaviour and configuration.
+- Execute the statically inspected Qwen3 notebook and compare its numerical outputs; separately add tests for explicit position IDs and incremental KV-cache decoding, which are not covered by the inspected forward path.
 - Validate bilingual Quarto rendering, source/extraction schemas, concept graph and navigation in CI.
 
 ## 7. Technical references
