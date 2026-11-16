@@ -219,7 +219,7 @@ Sans ce protocole partagé, le fait qu'un LLM puisse continuer un texte ne signi
 
 **Génération :** le modèle échantillonne ou choisit un prochain token ; ce n'est pas, à elle seule, une opération de décodage sans perte.
 
-Pour manipuler ces idées, lancez l'[expérience reproductible de compression prédictive](https://github.com/JM-Brun/llm-lab/tree/main/experiments/predictive-compression).
+Pour manipuler ces idées, lancez l'[expérience reproductible de compression prédictive](https://github.com/JM-Brun/llm-lab/blob/main/experiments/predictive-compression/README.fr.md).
 
 
 ### Références
