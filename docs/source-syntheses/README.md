@@ -27,6 +27,7 @@ Préférer les liens vers les extractions et sections de pages aux duplications 
 
 - [Fiche de révision bilingue sur la compression](../../site/fr/compression-revision.qmd) — carte mentale, formules, distinctions et auto-évaluation.
 - [Expérience de codage prédictif exact](../../experiments/predictive-compression/README.fr.md) — codage arithmétique rationnel, comparaison à une référence uniforme et reconstruction sans perte sur un alphabet synthétique.
+- [Expérience entropie / zlib](../../experiments/sequence-compression/README.fr.md) — comparaison reproductible de l'entropie marginale, de l'entropie conditionnelle et de la taille réelle d'un flux compressé.
 
 ## Transfer validation
 
