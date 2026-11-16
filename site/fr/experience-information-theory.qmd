@@ -132,6 +132,14 @@ Le cas Markov est instructif : sa distribution marginale stationnaire est unifor
 
 **Limites :** zlib n'est pas un code optimal ; les résultats dépendent de l'algorithme, du niveau de compression, de la longueur finie et de la surcharge du format. Cette comparaison illustre un mécanisme, elle ne prouve pas le théorème de codage source.
 
+Pour une source stationnaire, le taux d'entropie s'écrit :
+
+\[
+h(X)=\lim_{n\to\infty}\frac{1}{n}H(X_1,\ldots,X_n).
+\]
+
+Pour une chaîne de Markov du premier ordre, il se calcule avec l'entropie conditionnelle d'une transition, \(H(X_t\mid X_{t-1})\). Il peut être bien inférieur à l'entropie marginale \(H(X_t)\) lorsque les symboles successifs sont corrélés.
+
 ## Ce que l'expérience démontre — et ne démontre pas
 
 Elle vérifie des identités mathématiques sur des distributions discrètes. Elle ne mesure ni l'intelligence d'un modèle, ni sa capacité de généralisation, ni la qualité d'un LLM entraîné. Les longueurs -log₂(p) sont idéales et peuvent être fractionnaires ; un code réel ajoute des contraintes et des coûts.
