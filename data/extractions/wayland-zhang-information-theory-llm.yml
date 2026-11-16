@@ -92,10 +92,10 @@ items:
       primary_theme: probabilistic-foundations-training
       secondary_themes: [mathematical-tools-geometry]
       tags: [topic:information-theory, topic:entropy]
-      concept_ids: [negative-log-likelihood]
+      concept_ids: [surprisal, shannon-entropy, negative-log-likelihood]
     candidate_destinations:
       pages: [fr/entropy, en/entropy]
-      concepts: []
+      concepts: [surprisal, shannon-entropy]
     disposition: already-covered
     disposition_rationale: "The bilingual entropy pages already distinguish predictive entropy, observed surprisal, NLL, units and interpretation; retain the source as a corroborating reference rather than duplicating the lesson."
 
