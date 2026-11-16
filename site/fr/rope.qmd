@@ -93,6 +93,11 @@ Dans une tête d'attention, les rotations sont appliquées à $Q$ et $K$ **aprè
 <link rel="stylesheet" href="../styles/rope-frequency-explorer.css">
 <script src="../scripts/rope-frequency-explorer.js" defer></script>
 
+{{< include ../includes/rope-memory-ledger-fr.html >}}
+
+<link rel="stylesheet" href="../styles/rope-memory-ledger.css">
+<script src="../scripts/rope-memory-ledger.js" defer></script>
+
 ## Ce que RoPE apporte — et ce qu'il ne garantit pas
 
 RoPE fournit une manière structurée d'introduire la position dans l'attention. Sa présence ne garantit pas, à elle seule, une extrapolation fiable vers des séquences beaucoup plus longues que celles vues pendant l'entraînement.
