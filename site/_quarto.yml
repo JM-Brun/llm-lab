@@ -5,6 +5,8 @@ project:
     - 404.html
     - scripts/rope-pair-explorer.js
     - styles/rope-pair-explorer.css
+    - scripts/rope-attention-pipeline.js
+    - styles/rope-attention-pipeline.css
     - learning-map-data-fr.json
     - learning-map-data-en.json
     - knowledge-graph.jsonld
