@@ -64,13 +64,23 @@ def evaluate(sequence: str) -> tuple[float, float]:
 
 def main() -> None:
     ordered = make_sequence(SEQUENCE_LENGTH)
-    output = ["Compression strategy spectrum — sequential-structure toy", "Metric: held-out cross-entropy (bits/token)"]
+    output = [
+        "Compression strategy spectrum — sequential-structure toy",
+        "Metric: held-out cross-entropy (bits/token)",
+    ]
     for seed in SEEDS:
         permuted = permute_preserving_marginals(ordered, seed)
         for label, sequence in (("ordered", ordered), ("permuted", permuted)):
             unigram, bigram = evaluate(sequence)
-            output.append(f"seed={seed:3d} data={label:9s} unigram={unigram:.4f} bigram={bigram:.4f}")
-    output.extend(("Interpretation: a lower held-out loss indicates better prediction only.", "This is not an epiplexity, understanding, or subjectivity measurement."))
+            output.append(
+                f"seed={seed:3d} data={label:9s} unigram={unigram:.4f} bigram={bigram:.4f}"
+            )
+    output.extend(
+        (
+            "Interpretation: a lower held-out loss indicates better prediction only.",
+            "This is not an epiplexity, understanding, or subjectivity measurement.",
+        )
+    )
     sys.stdout.write("\n".join(output) + "\n")
 
 
