@@ -2,7 +2,7 @@
 title: "Fiche de révision — Théorie de l'information et LLM"
 subtitle: "De la surprise à la compression prédictive"
 description-meta: "Fiche synthétique pour réviser surprisal, entropie, cross-entropie, divergence KL et codage prédictif."
-keywords: ["type:exercise-collection", "destination:practice", "topic:information-theory", "level:applied", "language:fr", "status:published"]
+keywords: ["type:exercise-collection", "destination:practice", "topic:information-theory-revision", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---
 
@@ -19,7 +19,7 @@ hierarchy:
   parents: []
   children: []
 related: ["fr/entropy", "fr/cross-entropy", "fr/experience-information-theory"]
-tags: ["type:exercise-collection", "destination:practice", "topic:information-theory", "level:applied", "language:fr", "status:published"]
+tags: ["type:exercise-collection", "destination:practice", "topic:information-theory-revision", "level:applied", "language:fr", "status:published"]
 -->
 
 [← Revenir à la leçon d'entropie](entropy.qmd) · [Entropie croisée](cross-entropy.qmd)
