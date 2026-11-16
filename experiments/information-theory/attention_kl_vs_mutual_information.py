@@ -1,6 +1,7 @@
 """Contrast row-to-uniform KL with mutual information in a toy attention table."""
 
 import json
+from collections.abc import Iterable
 
 import numpy as np
 
@@ -37,9 +38,9 @@ def describe_case(rows: np.ndarray, context_probabilities: np.ndarray) -> dict[s
     }
 
 
-def weighted_expectation(values: object) -> float:
+def weighted_expectation(values: Iterable[float]) -> float:
     """Sum already-weighted values to form a finite expectation."""
-    return float(np.sum(np.asarray(values, dtype=np.float64)))
+    return float(sum(values))
 
 
 def main() -> None:
