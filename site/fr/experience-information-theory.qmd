@@ -113,6 +113,25 @@ Le dernier cas est le point pédagogique essentiel : les données contiennent un
 
 **Limites :** c'est un calcul de risque populationnel exact sur un petit exemple discret et une famille finie spécifiée à la main. Aucun modèle n'est entraîné ; il ne s'agit ni d'une estimation sur échantillon, ni d'une comparaison d'architectures, ni d'une preuve que l'attention extrait plus d'information qu'un modèle bag-of-words. Une expérience sur modèles entraînés exigerait des jeux d'entraînement/test, une classe et un protocole de sélection préenregistrés, ainsi qu'une analyse du surapprentissage.
 
+
+## Extension — taux d'entropie et compression réelle
+
+Pour éviter de comparer l'entropie marginale d'un caractère à la taille d'un fichier compressé par un algorithme qui exploite aussi les dépendances, lance une seconde expérience :
+
+\`\`\`bash
+uv run --locked python experiments/information-theory/compression.py
+\`\`\`
+
+Le script génère trois sources de même longueur sur un alphabet de quatre symboles : une séquence constante, une source IID uniforme et une chaîne de Markov symétrique où la probabilité de conserver le même symbole vaut 0,9. La graine est fixée. Il compare :
+
+- l'entropie marginale empirique d'un symbole ;
+- le taux d'entropie théorique de la source ;
+- la taille produite par zlib, en bits par symbole, surcharge du conteneur comprise.
+
+Le cas Markov est instructif : sa distribution marginale stationnaire est uniforme (2 bits par symbole), mais son taux d'entropie est plus faible, car les symboles successifs sont dépendants. Le taux d'entropie, et non la seule entropie marginale, est le repère pertinent pour le codage asymptotique d'une source dépendante.
+
+**Limites :** zlib n'est pas un code optimal ; les résultats dépendent de l'algorithme, du niveau de compression, de la longueur finie et de la surcharge du format. Cette comparaison illustre un mécanisme, elle ne prouve pas le théorème de codage source.
+
 ## Ce que l'expérience démontre — et ne démontre pas
 
 Elle vérifie des identités mathématiques sur des distributions discrètes. Elle ne mesure ni l'intelligence d'un modèle, ni sa capacité de généralisation, ni la qualité d'un LLM entraîné. Les longueurs -log₂(p) sont idéales et peuvent être fractionnaires ; un code réel ajoute des contraintes et des coûts.
