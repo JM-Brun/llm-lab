@@ -50,6 +50,7 @@ It computes metrics in nats and bits, ideal code lengths, and checks that cross-
 | Target entropy H(q) | 0.693 nats |
 | Cross-entropy H(q,p) | 0.837 nats |
 | KL divergence D(q‖p) | 0.144 nats |
+| Perplexity under q | 2.309 |
 | Target entropy H(q) | 1 bit |
 | Cross-entropy H(q,p) | 1.208 bits |
 | KL divergence D(q‖p) | 0.208 bits |
@@ -68,6 +69,8 @@ Open `experiments/information-theory/run.py` and modify q and p while keeping th
 2. p = (0.5, 0.5): the prediction becomes uniform.
 3. A one-hot target: cross-entropy becomes the observed token's NLL.
 4. A predicted zero probability where q is positive: cross-entropy and KL become infinite.
+
+Perplexity is the exponential of mean NLL using the same logarithm base: here exp(0.837) ≈ 2.309. For the one-hot case with an observed probability of 0.25, perplexity is 4.
 
 Reusable functions and their tests live in `src/llm_lab/foundations/information_theory.py` and `tests/unit/test_information_theory.py`.
 
