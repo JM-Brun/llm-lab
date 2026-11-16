@@ -1,12 +1,26 @@
-from experiments.compression_strategy_spectrum.run import (
-    ALPHABET,
-    bigram_cross_entropy,
-    evaluate,
-    make_sequence,
-    permute_preserving_marginals,
-    split_sequence,
-    unigram_cross_entropy,
+"""Tests for the sequential-compression teaching experiment."""
+
+import importlib.util
+from pathlib import Path
+
+MODULE_PATH = (
+    Path(__file__).resolve().parents[2]
+    / "experiments"
+    / "compression-strategy-spectrum"
+    / "run.py"
 )
+SPEC = importlib.util.spec_from_file_location("compression_strategy_spectrum_run", MODULE_PATH)
+assert SPEC is not None and SPEC.loader is not None
+MODULE = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(MODULE)
+
+ALPHABET = MODULE.ALPHABET
+bigram_cross_entropy = MODULE.bigram_cross_entropy
+evaluate = MODULE.evaluate
+make_sequence = MODULE.make_sequence
+permute_preserving_marginals = MODULE.permute_preserving_marginals
+split_sequence = MODULE.split_sequence
+unigram_cross_entropy = MODULE.unigram_cross_entropy
 
 
 def test_permutation_preserves_marginal_frequencies():
