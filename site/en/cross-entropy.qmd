@@ -237,19 +237,19 @@ For a mean measured in bits, use $2^{\bar{\ell}}$. Perplexity therefore depends 
 
 Cross-entropy connects the prediction objective directly to information theory. For a target distribution $q$ and a predicted distribution $p$ over the same vocabulary:
 
-$
+$$
 \begin{aligned}
 H(q,p)&=-\sum_x q(x)\ln p(x)\\
 &=\underbrace{-\sum_x q(x)\ln q(x)}_{H(q)}
 +\underbrace{\sum_x q(x)\ln\frac{q(x)}{p(x)}}_{D_{KL}(q\|p)}.
 \end{aligned}
-$
+$$
 
 Therefore:
 
-$
+$$
 \boxed{H(q,p)=H(q)+D_{KL}(q\|p)}
-$
+$$
 
 KL divergence is non-negative (under the usual support conditions), and it is zero when $p=q$. If the target distribution $q$ and context are fixed, $H(q)$ does not depend on the model parameters. Minimizing cross-entropy with respect to $p$ is therefore equivalent to minimizing $D_{KL}(q\|p)$. This does not mean that the entropy of language is one universal constant: it depends on the distribution, context, corpus, and tokenization under consideration.
 
