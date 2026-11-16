@@ -154,7 +154,7 @@ concepts:
       fr: "Mécanisme qui injecte ou expose l’information de position dans les calculs du modèle."
       en: "Mechanism that injects or exposes positional information in model computations."
     domains: [architectures-mechanisms, mathematical-tools-geometry]
-    resources: [fr/positional-encoding, en/positional-encoding]
+    resources: [fr/positional-encoding, en/positional-encoding, fr/rope, en/rope]
   - id: output-projection
     importance: core
     labels: {fr: "Projection de sortie", en: "Output projection"}
