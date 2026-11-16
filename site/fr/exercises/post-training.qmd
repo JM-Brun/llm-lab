@@ -52,6 +52,15 @@ Dans le pipeline RLHF courant, les comparaisons de préférences servent à entr
 Non. Dans le cas usuel de l'adaptation économe en paramètres, les poids de base sont gelés et des paramètres d'adaptateurs de faible rang sont ajoutés à certains modules. QLoRA utilise en plus un modèle de base gelé et quantifié pour réduire la mémoire ; ce n'est pas simplement un autre nom pour le fine-tuning complet.
 </details>
 
+4. **À quoi sert un chat template dans un pipeline de SFT ?** Pourquoi faut-il conserver le template avec la version du tokenizer et du dataset ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+Le template sérialise les messages et leurs frontières en tokens et marqueurs de contrôle attendus par le modèle. Un template incompatible peut produire des rôles, fins de message ou appels d'outils incorrects à l'entraînement ou à l'inférence. La version du template fait donc partie de la provenance et de la reproductibilité du jeu de données. Le masque de loss reste une décision distincte.
+
+</details>
+
 ## Choisir l'intervention
 
 Une équipe rencontre deux problèmes :
