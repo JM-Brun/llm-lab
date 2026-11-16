@@ -26,7 +26,7 @@ pedagogical_model:
       - {from: src-managed-job, type: runs, to: src-remote-run}
       - {from: src-remote-run, type: persists-artifacts-to, to: src-storage-bucket}
       - {from: src-storage-bucket, type: syncs-results-back-to, to: src-local-training-program}
-    interpretation: "Partial editorial reconstruction from user-supplied summary and chapter labels; inferred relations are not a formal graph published by the creator."
+    interpretation: "Partial editorial reconstruction from user-supplied summary, chapter labels, third-party transcript rendering and official documentation; inferred relations are not a formal graph published by the creator."
   learning_outcomes:
     - {status: inferred, outcome: "Distinguish training code from its execution infrastructure.", basis: "Supplied description emphasizes unchanged training code and a generic launcher."}
     - {status: inferred, outcome: "Describe the role of a managed GPU job and launch script.", basis: "Supplied chapter labels for Jobs and shell script."}
@@ -45,11 +45,12 @@ pedagogical_model:
   pedagogical_strengths:
     - "Makes remote GPU execution approachable without requiring remote-server administration."
     - "Highlights separation between reusable training code and provider-specific execution configuration."
-    - "A thin shell launcher can make runs repeatable and parameterizable."\n    - "The persistent bucket makes the lifecycle concrete: stage code, mount storage, write checkpoints, then retrieve outputs after compute termination."
+    - "A thin shell launcher can make runs repeatable and parameterizable."
+    - "The persistent bucket makes the lifecycle concrete: stage code, mount storage, write checkpoints, then retrieve outputs after compute termination."
   pedagogical_limits:
     - "The audiovisual video and code were not independently inspected; technical detail comes from a third-party transcript rendering."
     - "The approximate $1 cost is run-specific, not a current general A100 price."
-    - "Data access, artifact persistence, secrets, timeouts and failure handling are not established by the supplied summary."
+    - "The transcript describes Hub dataset access and persistent bucket outputs, but exact permissions, bucket semantics, secret handling and failure recovery were not verified from code or execution."
     - "A successful remote run does not establish scientific validity or generalization."
   comparison:
     dossier: docs/source-reviews/huggingface-jobs-nanogpt-video-2026-11.md
