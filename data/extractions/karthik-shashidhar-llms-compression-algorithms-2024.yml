@@ -51,7 +51,7 @@ items:
       tags: [topic:predictive-compression, method:analogy]
       concept_ids: []
     candidate_destinations:
-      pages: []
+      pages: [fr/probabilites, en/probabilities, fr/entropy, en/entropy]
       concepts: []
       route_ids: []
     disposition: clarify
@@ -72,7 +72,7 @@ items:
       tags: [topic:generalization, topic:training-data]
       concept_ids: []
     candidate_destinations:
-      pages: []
+      pages: [fr/training-loop, en/training-loop]
       concepts: []
       route_ids: []
     disposition: correct
@@ -92,7 +92,7 @@ items:
       tags: [topic:next-token-prediction, topic:generalization]
       concept_ids: []
     candidate_destinations:
-      pages: []
+      pages: [fr/probabilites, en/probabilities, fr/vraisemblance, en/likelihood]
       concepts: []
       route_ids: []
     disposition: clarify
@@ -112,7 +112,7 @@ items:
       tags: [topic:model-scale, topic:capacity]
       concept_ids: []
     candidate_destinations:
-      pages: []
+      pages: [fr/scaling-laws, en/scaling-laws]
       concepts: []
       route_ids: []
     disposition: reject
@@ -132,7 +132,7 @@ items:
       tags: [topic:verification, topic:human-ai-collaboration]
       concept_ids: []
     candidate_destinations:
-      pages: []
+      pages: [fr/training-loop, en/training-loop]
       concepts: []
       route_ids: []
     disposition: integrate-by-reference
