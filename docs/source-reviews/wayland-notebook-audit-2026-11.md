@@ -70,6 +70,7 @@ The project adds:
 - src/llm_lab/foundations/predictive_information.py: exact finite-family calculation with validation of optional ignorance.
 - tests/unit/test_predictive_information.py: tests for correlated and independent variables, a constant-only family, and invalid families.
 - experiments/information-theory/v_information.py: deterministic binary example.
+- experiments/information-theory/compression.py: fixed-seed, equal-length constant, IID and Markov sources; compares marginal entropy, known source entropy rate and zlib size with container overhead included.
 - A bilingual section in the information-theory experiment guide and revision sheet.
 
 The controlled distribution has \(P(X=Y)=0.9\), with balanced binary \(X\) and \(Y\). A finite family that includes a context-dependent rule obtains about \(0.531\) bits; a constant-only family obtains zero on the very same correlated distribution. An independent feature also gives zero. This is an exact population-risk calculation for a small, hand-specified family, not a trained-model benchmark or a replication of Xu et al.'s experiments.
@@ -79,7 +80,7 @@ The controlled distribution has \(P(X=Y)=0.9\), with balanced binary \(X\) and \
 1. Keep the notebook linked as a visual companion; do not copy its code or figures.
 2. Do not label attention-to-uniform KL contributions as mutual information.
 3. Do not reuse the thermodynamic argument as a statistical-learning bound.
-4. Do not use marginal character entropy as a direct prediction of zlib's finite-file compression ratio.
+4. Do not use marginal character entropy as a direct prediction of zlib's finite-file compression ratio; use entropy rate for dependent sources and state finite-code overhead. The deterministic replacement experiment illustrates this distinction.
 5. Teach predictive V-information only with its predictive family, optional ignorance, loss, direction and estimation assumptions stated.
 6. Do not infer that self-attention extracts more predictive information than bag-of-words without a controlled, held-out comparison using explicitly defined model families.
 
