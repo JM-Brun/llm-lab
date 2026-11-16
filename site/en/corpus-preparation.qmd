@@ -71,6 +71,22 @@ Keep four operations distinct:
 
 Normalization and pre-tokenization do not replace document filtering. Conversely, cleaning a corpus does not by itself define tokenizer behaviour.
 
+## 4. Human annotation and label quality
+
+A corpus intended for training or evaluation may require human annotations. This is not merely adding columns: it turns an application question into an observable task with explicit units, categories, and decision rules.
+
+A defensible protocol should specify:
+
+- **The annotation unit and question:** document, passage, complete answer, span, or response pair. An ambiguous task produces ambiguous labels.
+- **The annotation guidelines:** operational definitions, positive and negative examples, edge cases, priority rules, and a procedure for cases that cannot be resolved.
+- **Calibration:** have several people annotate a small pilot batch, discuss disagreements, and revise the guidelines before scaling up.
+- **Disagreement controls:** independently annotate a subset with multiple people, measure agreement using a statistic appropriate to the task, and preserve disagreements before adjudication.
+- **Traceability:** retain the guideline version, individual responses, adjudication decisions, and dataset versions.
+
+Inter-annotator agreement is a diagnostic of the protocol, not automatic proof of truth. High agreement can reflect overly simple instructions or shared biases; disagreement can reveal genuine task ambiguity. The choice of statistic (for example, raw agreement, kappa, or alpha) depends on the label type, number of annotators, and sampling design.
+
+[Chapter 10 of the Hugging Face course](https://huggingface.co/learn/llm-course/en/chapter10/1) illustrates this workflow with Argilla: configuring fields and questions, writing guidelines, collaborative annotation, multiple responses, and export. Argilla is a workflow tool here; it does not replace the scientific definition of the task or analysis of annotation quality.
+
 ## 4. Handoff contract to the next stages
 
 At the end of this stage, it should be possible to recover:
