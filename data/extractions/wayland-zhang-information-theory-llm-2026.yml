@@ -210,7 +210,8 @@ items:
     disposition: integrate
     disposition_rationale: "Integrate as an advanced optional concept after full primary-paper review and a small explanatory example. Keep it outside the core path because the quantity is defined relative to a specified predictive family and should not be mistaken for Shannon mutual information."
 canonical_mapping:
-  proposed_concepts: []
-  proposed_relations: []
-  route_implications: []
-  decision_summary: "Added canonical IDs for entropy, KL divergence and mutual information, linked to existing bilingual pages and concepts. Reuse existing surprisal, predictive-compression, entropy-coding, cross-entropy and self-attention IDs. Keep V-information as an optional advanced reference pending a full primary-paper review."
+  proposed_concepts: [v-information]
+  proposed_relations:
+    - {from: v-information, type: contrasts-with, to: mutual-information}
+  route_implications: ["Optional advanced extension after entropy, cross-entropy and mutual information; not a prerequisite for the core LLM path."]
+  decision_summary: "Added canonical bilingual v-information as an advanced concept after full review of Xu et al. (ICLR 2020). It is explicitly distinguished from Shannon mutual information and linked to an exact synthetic predictor-family demonstration."
