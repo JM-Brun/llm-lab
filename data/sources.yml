@@ -4112,7 +4112,7 @@ sources:
     licence: {identifier: "MIT", url: "https://github.com/apple/embedding-atlas/blob/main/LICENSE", status: known}
     reuse: {text: link-only, figures: unknown, code: link-only, data: unknown}
     classification:
-      primary_theme: representations-embeddings
+      primary_theme: mathematical-tools-geometry
       secondary_themes: [mathematical-tools-geometry]
       tags: [topic:embeddings, topic:dimensionality-reduction, topic:clustering, modality:interactive-visualization]
       concept_ids: [token-embedding, contextualized-representation]
