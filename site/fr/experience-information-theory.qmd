@@ -2,7 +2,7 @@
 title: "Expérience — Entropie, KL et compression prédictive"
 subtitle: "Manipuler des distributions et vérifier les identités"
 description-meta: "Expérience reproductible pour calculer entropie, cross-entropie, divergence KL, perplexité et longueurs de code idéales."
-keywords: ["type:experiment-guide", "destination:practice", "topic:information-theory", "level:applied", "language:fr", "status:published"]
+keywords: ["type:experiment-guide", "destination:practice", "topic:information-theory-experiment", "level:applied", "language:fr", "status:published"]
 lang: fr
 ---
 
@@ -19,7 +19,7 @@ hierarchy:
   parents: []
   children: []
 related: ["fr/entropy", "fr/cross-entropy", "fr/revision-information-theory"]
-tags: ["type:experiment-guide", "destination:practice", "topic:information-theory", "level:applied", "language:fr", "status:published"]
+tags: ["type:experiment-guide", "destination:practice", "topic:information-theory-experiment", "level:applied", "language:fr", "status:published"]
 -->
 
 [← Fiche de révision](revision-information-theory.qmd) · [Leçon : entropie croisée](cross-entropy.qmd)
