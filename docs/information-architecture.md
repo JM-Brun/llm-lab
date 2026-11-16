@@ -18,7 +18,10 @@ The repository already has a navigable, bilingual page graph generated from `LLM
 | Learning content | `site/**/*.qmd` | Explanations, examples, equations, references and page body | A second copy in JSON/YAML indexes |
 | Page identity and editorial metadata | One `LLM-LAB-PAGE-MAP` block per page, governed by `docs/page-metadata-schema.md` | Stable page ID, scope, purpose, editorial type, destination, level, language, status, page relations | A concept record or a second archetype taxonomy |
 | Search keywords | Quarto `keywords` front matter | Search/indexing projection of controlled page tags | An independent tag vocabulary |
-| External source catalogue | `data/sources.yml`, governed by `docs/source-catalogue-schema.md` | Source identity, scan history, provenance, primary/secondary themes, retrieval tags and typed metadata | Bibliography, concept registry, page metadata or implementation-resource registry |
+| External source catalogue | Current: `data/sources.yml`; target: `data/sources/<source-id>.yml`, governed by `docs/source-catalogue-schema.md` and `docs/source-lineage-architecture.md` | Source identity, version metadata, primary/secondary themes, retrieval tags and typed metadata | Bibliography, concept registry, page metadata or implementation-resource registry |
+| Source inspection history | Current: `scan_history` in `data/sources.yml`; target: `data/source-scans/<source-id>/<event-id>.yml` | Append-only evidence of inspection scope, date, outcome and limitations | Mutable source metadata or extraction content |
+| Source lineage | Target: `data/source-lineage/<source-id>.yml` | Typed, directional and evidence-linked provenance edges; aggregate views are generated | A competing concept/page graph or a second central relation registry |
+| Source discovery index | Target: generated `data/sources.yml` during cutover | Deterministic compatibility/discovery projection | Canonical authoring data after migration |
 | Source extraction records | `data/extractions/<source-id>.yml` | Atomic evidence-linked claims, explanations, visuals, experiments and integration proposals | Source identity, canonical concepts or published page content |
 | Source facets | `data/source-taxonomy.yml` plus `data/domains.yml` | Controlled source types, contribution types, audiences, statuses and tag policy | A second domain or concept taxonomy |
 | Page classification | Controlled `type`, `destination`, `level`, `language`, `status` tags | Facets for filtering and site organization | A taxonomy of scientific concepts |
@@ -37,6 +40,8 @@ The repository already has a navigable, bilingual page graph generated from `LLM
 | Validation | `site/tools/check_page_metadata.py`, tests and CI | Contract enforcement | A hidden content authoring system |
 
 ### Important boundary: page tags, source tags and concepts are different things
+
+Source lineage is a separate provenance layer: it records how source records, extracted items and project artifacts relate; it does not replace the semantic concept graph or the pedagogical route. See [Source lineage architecture](source-lineage-architecture.md) for the staged migration and relation semantics.
 
 The `topic` tag in page metadata is a stable subject key attached to a page. Source tags in `data/sources.yml` are namespaced retrieval facets governed by `data/source-taxonomy.yml`. Neither is interchangeable with a concept entity ID. Source domains reuse `data/domains.yml`; source `concept_ids` explicitly reference `data/concepts.yml`. Do not infer concept membership or semantic relations from tag overlap. Likewise, headings extracted into the page-map `section_headings` array are display hints, not identified concepts.
 
