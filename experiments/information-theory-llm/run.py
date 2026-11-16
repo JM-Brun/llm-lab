@@ -58,11 +58,13 @@ def main() -> None:
         assert abs(h_cross - h_target - kl) < EPSILON
         lines.append(f"{label:7s} cross-entropy: {h_cross:.4f} bits; KL: {kl:.4f} bits")
     joint = ((0.4, 0.1), (0.1, 0.4))
-    lines.extend((
-        f"target entropy: {h_target:.4f} bits",
-        f"mutual information of toy joint distribution: {mutual_information(joint):.4f} bits",
-        "Reminder: attention weights are not mutual information.",
-    ))
+    lines.extend(
+        (
+            f"target entropy: {h_target:.4f} bits",
+            f"mutual information of toy joint distribution: {mutual_information(joint):.4f} bits",
+            "Reminder: attention weights are not mutual information.",
+        )
+    )
     sys.stdout.write("\n".join(lines) + "\n")
 
 
