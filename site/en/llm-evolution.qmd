@@ -143,7 +143,7 @@ A third dimension is **runtime memory**: the KV cache and activations occupy tem
 
 These levers do not guarantee the same benefits. A smaller checkpoint is not automatically faster; better weight compression does not mean the model predicts better; and a predictive model is not automatically a lossless coder. Compare checkpoint size, peak memory, latency, throughput, and probabilistic quality separately.
 
-For the mathematical explanation and a small reproducible entropy coder, see [“Are LLMs compression algorithms?” in the entropy lesson](entropy.qmd). The [detailed comparison synthesis](../../docs/source-syntheses/compression-two-meanings-2026-11.md) provides qualifications and references.
+For the mathematical explanation and a small reproducible entropy coder, see [“Are LLMs compression algorithms?” in the entropy lesson](entropy.qmd). The [detailed comparison synthesis](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/compression-two-meanings-2026-11.md) provides qualifications and references.
 
 Further reading: [Hybrid architectures](hybrid-llm-architectures.qmd) and [Computational complexity and parallelism](llm-computational-complexity.qmd).
 
