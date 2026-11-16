@@ -45,11 +45,11 @@ pedagogical_model:
     - "The project toy example is an exact population calculation, not a replication of the paper's high-dimensional experiments."
 items:
     - id: xu-et-al-usable-information-2020:predictive-family-definition
-      kind: formal-definition
+      kind: definition
       summary: "A predictive family specifies the probabilistic functions available to an observer and satisfies optional ignorance."
       locator: {type: section, value: "2 Definitions and Notations", label: "Definition 1"}
       evidence:
-        kind: formal-definition
+        kind: definition
         confidence: established
         assumptions: ["The paper's stated sample-space and regularity conditions apply."]
         limitations: ["This extraction preserves the high-level condition and omits measure-theoretic details."]
@@ -64,11 +64,11 @@ items:
       disposition: integrate
       disposition_rationale: "Use the definition to ground the project's finite-family example; preserve optional ignorance as an explicit validation condition."
     - id: xu-et-al-usable-information-2020:predictive-v-information-definition
-      kind: formal-definition
+      kind: definition
       summary: "Predictive V-information is the no-side-information predictive V-entropy minus the predictive V-entropy conditioned on X."
       locator: {type: section, value: "2 Definitions and Notations", label: "Definition 3"}
       evidence:
-        kind: formal-definition
+        kind: definition
         confidence: established
         assumptions: ["Logarithmic loss and the predictive-family definition are used."]
         limitations: ["Its value depends on the chosen family and direction."]
@@ -87,7 +87,7 @@ items:
       summary: "The paper gives a PAC-style estimation bound under bounded log-probabilities and a complexity measure for the predictive function family."
       locator: {type: section, value: "4 PAC Guarantees for V-information Estimation", label: "Theorem 1"}
       evidence:
-        kind: theorem
+        kind: result
         confidence: established
         assumptions: ["Log-probabilities are uniformly bounded.", "The predictive function family has controlled complexity."]
         limitations: ["The bound depends on the complexity of the selected family.", "It does not guarantee that arbitrary neural-model estimates are unbiased or immune to overfitting."]
@@ -99,5 +99,5 @@ items:
       candidate_destinations:
         pages: [fr/experience-information-theory, en/experience-information-theory]
         concepts: [predictive-v-information]
-      disposition: qualify
+      disposition: clarify
       disposition_rationale: "Record the theorem's assumptions and keep it out of the beginner-facing toy example's claims."
