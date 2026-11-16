@@ -4058,7 +4058,7 @@ sources:
         inspected_scope: ["Official handbook landing page, audience, topic coverage and interactive-tool catalogue", "Public GitHub README and licence summary"]
         limitations: ["Individual chapters, benchmarks and calculators not audited.", "Hardware/vendor performance claims are workload- and version-dependent.", "Full revision not pinned."]
     related:
-      pages: [fr/generation, en/generation, fr/kv-cache, en/kv-cache]
+      pages: [fr/generation, en/generation]
       concepts: [inference, kv-cache, autoregressive-generation]
       audit_records: [docs/source-reviews/visual-learning-resources-2026-11.md]
 
