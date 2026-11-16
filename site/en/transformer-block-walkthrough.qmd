@@ -8,8 +8,8 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/transformer-block-walkthrough"
-scope: "Explains the transformer_block.py file line by line: the pre-LN order and its residual paths, the scaled initialization of residual weights, the column-slice head split, and the position-wise MLP. Excludes embeddings, the output head and the generation loop."
-purpose: "Readers should be able to trace a shape through the block, explain why normalization sits inside the branch instead of on the trunk, and describe the role of each Q, K, V and O projection."
+scope: "Explains the reference transformer_block.py block line by line, then separately compares MHA/MQA/GQA, MLA, and local/sparse patterns without claiming they are implemented in the reference code."
+purpose: "Readers should be able to trace a shape through the block, explain Q/K/V/O projections and residual paths, then distinguish K/V sharing, latent compression, and restrictions on attended positions."
 suggested_route:
   previous: "en/gpt-ops-walkthrough"
   next: "en/gpt-model-walkthrough"
@@ -27,7 +27,8 @@ This page is the third stop (3 of 5) of the guided tour. The block is the repeat
 By the end of this tour, you will be able to:
 - trace a `(B, T, d)` shape through the block, from input to output;
 - explain why normalization sits inside the branch instead of on the residual trunk;
-- describe the role of each Q, K, V and O projection, and why heads stay isolated until `w_o`.
+- describe the role of each Q, K, V and O projection, and why heads stay isolated until `w_o`;
+- distinguish MHA, MQA, GQA, MLA, and local/sparse attention by the factor each one changes.
 :::
 
 ## The block's recipe: pre-LN with residuals {#block-recipe}
@@ -171,6 +172,48 @@ Maintained sources: [NumPy primitive](https://github.com/JM-Brun/llm-lab/blob/ma
 
 - [Current implementation and validation status](https://github.com/JM-Brun/llm-lab/blob/main/docs/project-status.md)
 - [Planned verification criteria](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
+
+## Attention variants: what actually changes {#attention-variants}
+
+The reference block above implements **standard multi-head attention (MHA)**: each head has its own Q, K, and V projections. Modern variants do not all change the same thing. Some share K/V heads to reduce the cache; others compress what is stored or restrict which positions can be attended to.
+
+### 1. MHA, MQA, and GQA: sharing K/V heads
+
+Let $H_q$ be the number of query heads and $H_{KV}$ the number of key/value heads.
+
+| Variant | Query heads Q | Key/value heads K/V | Idea |
+|---|---:|---:|---|
+| **MHA** | $H_q$ | $H_{KV}=H_q$ | Every Q head has its own K and V heads. |
+| **MQA** | $H_q$ | $H_{KV}=1$ | All Q heads share one K/V head. |
+| **GQA** | $H_q$ | $1 < H_{KV} < H_q$ | Q heads are partitioned into groups; each group shares K/V. |
+
+Q remains specific to each query head. What distinguishes MQA and GQA is sharing the K/V projections and states — not removing Q heads. GQA interpolates between MHA and MQA; the number of K/V heads is an architectural choice, not a free switch applied to an already-trained model.
+
+For dense attention with a KV cache, an approximate model-wide cache size is:
+ One estimate is $M_{KV}\approx 2 L B T H_{KV} d_h b$.
+where $L$ is the number of attention layers, $B$ the batch size, $T$ the retained context, $d_h$ the dimension of one KV head, and $b$ the number of bytes per element. The factor 2 stores both K and V. With dimensions and precision held fixed, moving from 32 KV heads (MHA) to 8 (GQA) therefore divides this cache by 4; moving to one (MQA) divides it by 32. This ratio applies to the K/V cache, not total model memory or necessarily measured latency.
+
+### 2. MLA: jointly compressing K and V into a latent space
+
+**Multi-head Latent Attention (MLA)** does more than choose fewer KV heads. In DeepSeek-V2, K/V information is projected into a lower-rank latent representation that is cached during decoding; the required components are reconstructed by projection. The design described in the paper also uses a decoupled RoPE path for positional information.
+
+The goal is to reduce the amount of KV state retained without simply replacing all heads with one shared head. The cost depends on latent dimensions, projections, kernels, and how the runtime absorbs certain projections. **Do not compare MLA with GQA only by counting KV heads**: the cached representation is different.
+
+### 3. Local windows and sparse attention: restricting the positions being read
+
+These methods change the **connectivity pattern**:
+
+- **Sliding-window attention**: each position attends only to a local window of a chosen size. Attention work per position is then tied to that window rather than the entire context, but distant information is not directly accessible within one local layer.
+- **Sparse or block-sparse attention**: only selected positions or blocks are allowed. Depending on the pattern, some long-range connections may remain; “sparse” therefore does not necessarily mean “strictly local.”
+- **Dense global attention**: all positions permitted by the causal mask remain accessible. FlashAttention can accelerate this dense operation by reducing memory transfers without changing its mathematical connectivity pattern.
+
+Restricting attended positions is not the same as sharing K/V heads: GQA and a local window can be combined, as illustrated by Mistral 7B. Keep three axes separate: **KV-state size**, **number of position pairs computed**, and **memory-transfer cost**.
+
+### What this implementation does — and does not do
+
+The NumPy code in this walkthrough is a pedagogical MHA example: $H_{KV}=H_q$, separate K/V projections per head, and dense causal attention. It does not implement GQA/MQA sharing, an inference-time KV cache, MLA latent compression, or a sparse pattern. The tables above describe distinct architectural choices; they do not claim that the reference code executes them.
+
+**Primary sources and visual comparison:** [MHA — Vaswani et al. (2017)](https://arxiv.org/abs/1706.03762) · [MQA — Shazeer (2019)](https://arxiv.org/abs/1911.02150) · [GQA — Ainslie et al. (2023)](https://arxiv.org/abs/2305.13245) · [MLA — DeepSeek-V2 (2024)](https://arxiv.org/abs/2405.04434) · [Sliding window — Mistral 7B (2023)](https://arxiv.org/abs/2310.06825) · [Sparse/local — Longformer (2020)](https://arxiv.org/abs/2004.05150) · [Visual guide to attention variants — Sebastian Raschka](https://magazine.sebastianraschka.com/p/visual-attention-variants).
 
 ## The MLP: widen, activate, project back
 

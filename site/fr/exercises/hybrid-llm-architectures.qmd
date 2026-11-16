@@ -10,7 +10,7 @@ lang: fr
 LLM-LAB-PAGE-MAP v1
 id: "fr/hybrid-llm-architectures-exercises"
 summary: "Questions de vérification et exercices associés à la leçon Architectures hybrides de LLM."
-scope: "Regroupe les questions, exercices et corrigés de la leçon correspondante, sans dupliquer son explication conceptuelle."
+scope: "Regroupe les questions, exercices et corrigés sur les architectures hybrides, le routage top-k et les compromis de capacité des experts."
 purpose: "Vérifier la compréhension, appliquer les notions et expliciter le raisonnement à partir des questions et exercices de cette leçon."
 suggested_route:
   previous: null
@@ -31,6 +31,36 @@ tags: ["type:exercise-hub", "destination:practice", "topic:hybrid-llm-architectu
 3. **GQA et Mamba réduisent-ils le même coût ?** Non : GQA réduit les têtes K/V et le cache attention ; Mamba maintient un état récurrent borné.
 4. **MTP rend-il la génération non autorégressive ?** Non : les propositions sont vérifiées par le modèle cible.
 5. **Un gain de débit publié est-il une loi générale ?** Non : il dépend du matériel et du protocole.
+
+
+## Exercice : routage top-k déterministe
+
+Un routeur attribue à chaque token une distribution de scores sur trois experts. Pour cet exercice, les nombres sont déjà normalisés et le routeur choisit les **deux experts de score le plus élevé** pour chaque token.
+
+| Token | Expert E1 | Expert E2 | Expert E3 |
+|---|---:|---:|---:|
+| $t_1$ | 0,70 | 0,20 | 0,10 |
+| $t_2$ | 0,60 | 0,30 | 0,10 |
+| $t_3$ | 0,10 | 0,80 | 0,10 |
+| $t_4$ | 0,20 | 0,20 | 0,60 |
+
+1. Quels experts sont sélectionnés pour chaque token ?
+2. Combien d'affectations reçoit chaque expert ? Vérifiez que le total vaut bien $4\times 2=8$.
+3. Si la capacité de chaque expert est fixée à 2 affectations pour ce mini-lot, lesquels sont en surcharge ?
+4. Peut-on déduire de ce seul tableau quels tokens seront rejetés ou reroutés dans un vrai système ? Pourquoi ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+1. $t_1\to(E1,E2)$ ; $t_2\to(E1,E2)$ ; $t_3\to(E2,E1)$ ; $t_4\to(E3,E1)$.
+2. E1 reçoit 4 affectations, E2 en reçoit 3 et E3 en reçoit 1. Le total est bien $4+3+1=8$.
+3. Avec une capacité de 2, E1 dépasse sa capacité de 2 affectations et E2 la dépasse d'une ; E3 reste sous sa capacité.
+4. Non. Les politiques de capacité et de débordement varient : rejet, reroutage, traitement partagé ou autre mécanisme. Le tableau mesure la pression de routage, pas une politique universelle de dispatch. Une loss auxiliaire d'équilibrage encourage une charge moins concentrée pendant l'entraînement ; elle ne garantit pas des comptes identiques pour chaque lot.
+
+**À distinguer :** les scores du routeur décrivent les préférences par token ; les comptes d'affectations décrivent la charge discrète des experts. Un expert peut recevoir beaucoup de tokens même si la somme des scores qui lui sont attribués est modérée.
+
+</details>
+
 
 ::: {.language-switch}
 **Langue :** [Français](hybrid-llm-architectures.qmd) · [English](../../en/exercises/hybrid-llm-architectures.qmd)

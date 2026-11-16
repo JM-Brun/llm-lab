@@ -11,7 +11,7 @@ LLM-LAB-PAGE-MAP v1
 id: "en/transformer-block-walkthrough-exercises"
 summary: "Exercises associated with the Transformer block guided tour."
 scope: "Collects exercises and worked answers for the guided tour without duplicating its code explanation."
-purpose: "Check understanding of the invariants, shapes, and implementation choices presented in the guided tour."
+purpose: "Check understanding of the block invariants, shapes, and implementation choices, as well as the comparison of attention variants."
 suggested_route:
   previous: null
   next: null
@@ -39,6 +39,16 @@ tags: ["type:exercise-hub", "destination:practice", "topic:reference-transformer
 
 
 3. Q and K determine compatibility scores between positions; the softmax of those scores weights V, which carries the aggregated information. Q, K, and V are projected from the same normalized stream. The O projection mixes the head outputs; its result is added to the original residual stream. Normalization stays inside the branch, not on the direct residual path.
+</details>
+
+
+3. A block has 32 Q heads. Compare the number of KV heads in MHA, MQA, and GQA with 8 groups. With all dimensions equal, what are the ratios between their KV-cache sizes?
+4. Do a 256-token sliding window and GQA with 8 KV heads optimize the same factor? Explain what changes in each case.
+<details>
+<summary>Show answers and reasoning</summary>
+
+3. MHA: 32 KV heads; MQA: 1; GQA: 8. With context length, layer count, head dimension, and precision held fixed, K/V cache size is proportional to the number of KV heads: GQA uses 1/4 of MHA's cache, and MQA 1/32.
+4. No. GQA shares K/V states across multiple Q heads and reduces the number of KV heads stored. A window limits which historical positions are attended to and changes the connectivity pattern. The two mechanisms can be combined; their effects do not add up to one universal factor.
 </details>
 
 ::: {.language-switch}
