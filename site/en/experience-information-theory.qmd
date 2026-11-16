@@ -147,3 +147,27 @@ It verifies mathematical identities on discrete distributions. It does not measu
 ::: {.language-switch}
 **Language:** [Français](../fr/experience-information-theory.qmd) · [English](experience-information-theory.qmd)
 :::
+
+
+## Extension — attention-row KL versus mutual information
+
+A non-uniform attention row can have positive KL divergence from the uniform distribution even when it reveals no dependency between queries and keys. Run:
+
+```bash
+uv run --locked python experiments/information-theory/attention_kl_vs_mutual_information.py
+```
+
+The experiment compares two conditional tables:
+
+- **Repeated row**: every context receives the same distribution (0.9, 0.1). Mean KL to uniform is about 0.531 bits, but mutual information between context and key is 0 bits: knowing the context does not change the key distribution.
+- **Opposite rows**: the two contexts receive (0.9, 0.1) and (0.1, 0.9), respectively. Mutual information is about 0.531 bits. Its numerical equality with KL-to-uniform is incidental.
+
+For a genuine joint distribution, the correct identity is:
+
+\[
+I(X;Y)=\mathbb E_{X}\left[D_{KL}\big(P(Y\mid X)\|P(Y)\big)\right].
+\]
+
+The KL reference is therefore the **marginal** \(P(Y)\), not an arbitrary uniform distribution. Crucially, attention weights are not automatically calibrated conditional probabilities \(P(\text{key}\mid\text{query})\). A joint distribution must be defined and justified before this identity can be interpreted statistically.
+
+The general mutual-information calculation is tested in `src/llm_lab/foundations/information_theory.py`.
