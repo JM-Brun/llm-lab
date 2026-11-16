@@ -60,7 +60,7 @@ Thus 0.837 ≈ 0.693 + 0.144.
 
 ## Connection to compression
 
-A probability p(x) corresponds to an ideal code length close to -log₂ p(x) bits. A good predictor can therefore support shorter codes. This does not prove compression = intelligence: the measurement depends on corpus, tokenization and coding protocol.
+A probability p(x) corresponds to an ideal code length close to -log₂ p(x) bits. A good predictor can therefore support shorter codes. For dependent sequences, distinguish marginal entropy from entropy rate. This does not prove compression = intelligence: the measurement depends on corpus, tokenization and coding protocol.
 
 ## Three conceptual traps
 
