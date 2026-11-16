@@ -46,7 +46,9 @@ def entropy_metrics(sequence: str) -> tuple[float, float]:
     for previous, current in zip(sequence, sequence[1:], strict=False):
         transitions[previous][current] += 1
     total = len(sequence) - 1
-    conditional = sum(sum(counts.values()) / total * entropy(counts) for counts in transitions.values())
+    conditional = sum(
+        sum(counts.values()) / total * entropy(counts) for counts in transitions.values()
+    )
     return marginal, conditional
 
 
