@@ -151,7 +151,7 @@ No new concept IDs, introductory pages, copied figures or external code were add
 
 - If access to the original image assets becomes available, perform a pixel-level visual audit; the complete caption-and-context audit is already recorded in §4.
 - The P0 position-entry-point map, RoPE pair explorer, six-stage QK attention pipeline and split-half/interleaved pair-layout explorer are implemented bilingually. The P1 frequency explorer and Partial RoPE memory ledger are implemented bilingually. Remaining P1 work: NoPE causal-prefix, hybrid-layer and relative-bias experiments.
-- Browser-test all six interactive components in the rendered French and English pages, including keyboard and screen-reader behaviour; no browser rendering has yet been run in this branch.
+- Browser-test all five interactive components in the rendered French and English pages, including keyboard and screen-reader behaviour; no browser rendering has yet been run in this branch.
 - Execute the statically inspected Qwen3 notebook and compare its numerical outputs; separately add tests for explicit position IDs and incremental KV-cache decoding, which are not covered by the inspected forward path.
 - Validate bilingual Quarto rendering, source/extraction schemas, concept graph and navigation in CI.
 
