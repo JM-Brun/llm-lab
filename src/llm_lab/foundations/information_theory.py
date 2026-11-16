@@ -53,6 +53,7 @@ def kl_divergence(target: FloatArray, predicted: FloatArray, *, base: float = np
     p = _distribution(predicted, "predicted")
     if q.shape != p.shape:
         raise ValueError("target and predicted must have the same shape")
+    _validate_base(base)
     if np.any((q > 0.0) & (p == 0.0)):
         return float("inf")
     positive = q > 0.0
