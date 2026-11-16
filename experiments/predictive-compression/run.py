@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import heapq
 import sys
 from collections import Counter, defaultdict
 from fractions import Fraction
@@ -103,6 +104,71 @@ def decode(numerator: int, bits: int, length: int, model: dict[str, dict[str, Fr
     return "".join(output)
 
 
+def huffman_code(probabilities: dict[str, Fraction]) -> dict[str, str]:
+    """Build a deterministic binary Huffman code for a positive distribution."""
+    if not probabilities:
+        raise ValueError("At least one symbol probability is required")
+    if any(probability <= 0 for probability in probabilities.values()):
+        raise ValueError("All symbol probabilities must be positive")
+    if sum(probabilities.values(), Fraction(0)) != 1:
+        raise ValueError("Symbol probabilities must sum to one")
+    if len(probabilities) == 1:
+        return {next(iter(probabilities)): "0"}
+
+    heap: list[tuple[Fraction, int, object]] = []
+    serial = 0
+    for symbol, probability in probabilities.items():
+        heapq.heappush(heap, (probability, serial, symbol))
+        serial += 1
+    while len(heap) > 1:
+        left_weight, _, left = heapq.heappop(heap)
+        right_weight, _, right = heapq.heappop(heap)
+        heapq.heappush(heap, (left_weight + right_weight, serial, (left, right)))
+        serial += 1
+
+    codes: dict[str, str] = {}
+
+    def visit(node: object, prefix: str) -> None:
+        if isinstance(node, str):
+            codes[node] = prefix or "0"
+            return
+        left, right = node
+        visit(left, prefix + "0")
+        visit(right, prefix + "1")
+
+    visit(heap[0][2], "")
+    return codes
+
+
+def is_prefix_free(codes: dict[str, str]) -> bool:
+    """Return whether distinct codewords form a prefix-free set."""
+    words = list(codes.values())
+    return len(set(words)) == len(words) and all(
+        not other.startswith(word)
+        for word in words
+        for other in words
+        if word != other
+    )
+
+
+def kraft_sum(codes: dict[str, str]) -> Fraction:
+    """Return the binary Kraft sum for a collection of codewords."""
+    if any(not word or set(word) - {"0", "1"} for word in codes.values()):
+        raise ValueError("Codewords must be non-empty binary strings")
+    return sum((Fraction(1, 2 ** len(word)) for word in codes.values()), Fraction(0))
+
+
+def average_code_length(
+    probabilities: dict[str, Fraction], codes: dict[str, str]
+) -> Fraction:
+    """Return expected code length; require exactly matching symbol sets."""
+    if probabilities.keys() != codes.keys():
+        raise ValueError("Probabilities and codewords must have identical symbols")
+    return sum(
+        (probabilities[symbol] * len(codes[symbol]) for symbol in probabilities),
+        Fraction(0),
+    )
+
 def main() -> None:
     model = train_bigram_model(TRAINING)
     low, high = interval_for(MESSAGE, model)
@@ -110,8 +176,24 @@ def main() -> None:
     recovered = decode(numerator, bit_count, len(MESSAGE), model)
     ideal_bits = -log2(float(high - low))
     uniform_bits = len(MESSAGE) * log2(len(ALPHABET))
+    prefix_probabilities = {
+        "A": Fraction(1, 2),
+        "B": Fraction(1, 4),
+        "C": Fraction(1, 8),
+        "D": Fraction(1, 8),
+    }
+    prefix_codes = huffman_code(prefix_probabilities)
+    prefix_average = average_code_length(prefix_probabilities, prefix_codes)
+    prefix_kraft = kraft_sum(prefix_codes)
     report = (
         "Predictive compression — exact toy experiment",
+        "Prefix-code control distribution: A=1/2, B=1/4, C=1/8, D=1/8",
+        f"Huffman codewords: {prefix_codes}",
+        f"Prefix-free:      {is_prefix_free(prefix_codes)}",
+        f"Kraft sum:        {prefix_kraft}",
+        "Entropy:          1.750 bits/symbol",
+        f"Average length:   {prefix_average} bits/symbol",
+        "",
         f"Training symbols: {len(TRAINING)}",
         f"Message:          {MESSAGE}",
         f"Ideal model cost: {ideal_bits:.3f} bits",
@@ -121,6 +203,10 @@ def main() -> None:
         f"Decoded message:  {recovered}",
     )
     sys.stdout.write("\n".join(report) + "\n")
+    if not is_prefix_free(prefix_codes) or prefix_kraft > 1:
+        raise AssertionError("Prefix-code validity check failed")
+    if prefix_average != Fraction(7, 4):
+        raise AssertionError("Unexpected Huffman average length")
     if recovered != MESSAGE:
         raise AssertionError("Lossless round-trip failed")
 
