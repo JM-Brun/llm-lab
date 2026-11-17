@@ -57,8 +57,8 @@ Donnons au modèle le préfixe « C'est une bonne situation, ça, scribe ? ». I
 |---|---|
 | « Vous » | 0,6 |
 | « Je » | 0,2 |
+| « Moi » | 0,1 |
 | « Oui » | 0,1 |
-| « Non » | 0,1 |
 
 Ces valeurs sont fictives : elles ne proviennent pas d'un modèle entraîné, et un vocabulaire réel compte des dizaines de milliers d'entrées, pas quatre. Dans cet exemple simplifié, chaque ligne représente un token unique ; les formes affichées ne garantissent pas qu'un tokenizer réel les traiterait chacune comme un seul token. Le parcours réutilise ces valeurs d'une page à l'autre pour que chaque calcul puisse être refait à la main.
 
