@@ -3,7 +3,7 @@
 **Statut :** référence éditoriale interne ; ne pas reproduire ses explications dans les pages publiques  
 **Langues :** français et anglais  
 **Périmètre :** parcours Understand, Build, Deepen et Practice lorsqu'un exemple de bout en bout est utile  
-**Dernière revue :** 2026-11-10
+**Dernière revue :** 2026-11-17
 
 > Ce document est la source de vérité pour l'exemple fil rouge. Il décrit le scénario, les formulations réutilisables, les déclinaisons pédagogiques par page et les garde-fous scientifiques. Il ne remplace ni les explications canoniques des pages ni les sources de vérité du curriculum.
 
