@@ -1,13 +1,14 @@
 # Compression, information and inference efficiency — synthesis of four complementary articles
 
-**Périmètre :** synthèse critique et différentielle de trois billets de vulgarisation, pas une revue systématique :
+**Périmètre :** synthèse critique et différentielle de quatre articles de vulgarisation, pas une revue systématique :
 - Karthik Shashidhar, [LLMs and compression algorithms](https://artofdatascience.substack.com/p/llms-and-compression-algorithms), 27 août 2024.
 - Wayland Zhang, [Information Theory Is All You Need (to Understand LLMs)](https://waylandz.com/blog/information-theory-and-llm/), rewrite dated 17 février 2026.
 - Sourav Mukherjee, [Compression Is Intelligence: The Information Theory Behind LLMs](https://medium.com/bongquisitive-tech/compression-is-intelligence-the-information-theory-behind-llms-70022356dad8), 20 juillet 2026.
+- Lewis (lewish.io), [Intelligence and compression](https://lewish.io/posts/intelligence-and-compression), 28 mai 2025 (identité complète du créateur non vérifiée).
 
 ## 1. Conclusion exécutive
 
-Les trois articles racontent une histoire voisine : apprendre des régularités améliore la prédiction ; de bonnes probabilités peuvent réduire le coût idéal d'encodage ; et les mêmes idées d'information peuvent éclairer les compromis d'efficacité.
+Les trois premiers articles racontent une histoire voisine : apprendre des régularités améliore la prédiction ; de bonnes probabilités peuvent réduire le coût idéal d'encodage ; et les mêmes idées d'information peuvent éclairer les compromis d'efficacité.
 
 Le nouvel article de Mukherjee n'apporte pas une nouvelle théorie de l'entropie ni une nouvelle définition de la compression prédictive. Son apport distinct est de mettre en avant l'usage de signaux dérivés de l'entropie dans l'optimisation de l'inférence, notamment l'allocation du cache KV et la sélection de calculs à conserver ou à recalculer. Cette contribution doit être présentée avec des distinctions précises entre les méthodes.
 
@@ -138,7 +139,7 @@ LLM Lab ajoute une expérience reproductible [forward/reverse compression and tw
 
 Le résultat pédagogique à retenir n'est pas qu'un sens temporel compresse toujours mieux : les différences de taille changent selon la source et le codec. Pour une source stationnaire, l'entropie de taux est invariante par renversement temporel ; les différences finies d'un compresseur ne prouvent donc pas la causalité. Le changement de régime est un contrôle non stationnaire, pas un mécanisme causal.
 
-Le second volet rend visible le compromis entre ajustement prédictif et coût de description du modèle. Son coût paramétrique fixe (33 bits IID, 129 bits bigramme) est une convention pédagogique explicite, pas un code universel optimal. Les résultats complets et limites sont documentés dans le README de l'expérience. The final GitHub Actions run on the PR head completed successfully: full Quarto render, local-link checks, rendered learning-map/knowledge-graph/history checks, and browser review of bilingual learning pages all passed. The Python quality/domain workflow and test suite also passed (618 passed, 1 skipped; 98.18% coverage).
+Le second volet rend visible le compromis entre ajustement prédictif et coût de description du modèle. Son coût paramétrique fixe (33 bits IID, 129 bits bigramme) est une convention pédagogique explicite, pas un code universel optimal. Les résultats complets et limites sont documentés dans le README de l'expérience. Les workflows GitHub Actions ont réussi sur le commit de validation : rendu Quarto complet, vérification des liens locaux, contrôles des cartes d'apprentissage/graphes/historique rendus et revue navigateur des pages bilingues. Le workflow Python (qualité et domaine) et la suite de tests ont également réussi : 618 tests passés, 1 ignoré, 98,18 % de couverture.
 
 
 ## 12. Corpus naming guardrail — enwik8 vs enwik9
