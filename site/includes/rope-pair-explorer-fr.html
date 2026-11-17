@@ -1,0 +1,26 @@
+<section class="rope-pair-explorer" data-lang="fr" aria-labelledby="rope-pair-title-fr">
+  <h3 id="rope-pair-title-fr">Explorer une paire RoPE</h3>
+  <p class="rope-explorer-intro">Modifiez les positions et la fréquence. Les vecteurs initiaux q et k restent fixes : vous observez la contribution d’une seule paire de caractéristiques, pas le score complet d’une tête.</p>
+  <div class="rope-controls">
+    <label>Position de la requête m <output data-out="m">2</output><input data-control="m" type="range" min="0" max="20" step="1" value="2"></label>
+    <label>Position de la clé n <output data-out="n">7</output><input data-control="n" type="range" min="0" max="20" step="1" value="7"></label>
+    <label>Fréquence θ (rad / position) <output data-out="theta">0,35</output><input data-control="theta" type="range" min="0" max="1.2" step="0.01" value="0.35"></label>
+    <label>Décalage commun c <output data-out="shift">0</output><input data-control="shift" type="range" min="-10" max="10" step="1" value="0"></label>
+  </div>
+  <div class="rope-visual-wrap">
+    <svg class="rope-pair-plot" viewBox="0 0 520 300" role="img" aria-label="Vecteurs q et k avant et après rotation, dans un plan à deux dimensions">
+      <defs><marker id="rope-arrow-q-fr" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#2563eb"/></marker><marker id="rope-arrow-k-fr" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#d97706"/></marker></defs>
+      <line x1="30" y1="150" x2="490" y2="150" stroke="currentColor" opacity=".35"/><line x1="260" y1="20" x2="260" y2="280" stroke="currentColor" opacity=".35"/>
+      <g data-drawing></g>
+    </svg>
+    <ul class="rope-legend"><li><span class="rope-swatch rope-q"></span>q initial et qₘ tourné</li><li><span class="rope-swatch rope-k"></span>k initial et kₙ tourné</li></ul>
+  </div>
+  <div class="rope-results" aria-live="polite">
+    <p><strong>Angles :</strong> <output data-out="angles"></output></p>
+    <p><strong>Contribution qₘ · kₙ :</strong> <output data-out="dot"></output></p>
+    <p><strong>Décalage relatif n − m :</strong> <output data-out="relative"></output></p>
+    <p><strong>Après décalage commun :</strong> <output data-out="shifted"></output></p>
+  </div>
+  <p class="rope-explorer-note">À q et k fixes, ajouter le même c à m et n ne change pas leur décalage relatif ni leur produit scalaire. Ajouter un vrai préfixe à un modèle peut toutefois modifier ses états cachés, donc q et k : ce n’est pas la même expérience.</p>
+  <noscript>Cette exploration interactive nécessite JavaScript. La dérivation mathématique ci-dessus reste la référence.</noscript>
+</section>

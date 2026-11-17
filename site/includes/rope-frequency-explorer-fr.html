@@ -1,0 +1,29 @@
+<section class="rope-frequency-explorer" data-lang="fr" aria-labelledby="rope-frequency-title-fr">
+  <h3 id="rope-frequency-title-fr">Explorer l’échelle des fréquences RoPE</h3>
+  <p class="rope-frequency-intro">Une tête répartit ses paires de coordonnées sur une gamme géométrique de fréquences. Avant de déplacer les curseurs, prévoyez : quelle paire tourne le plus vite, et laquelle conserve le plus longtemps une phase proche de zéro ?</p>
+  <div class="rope-frequency-controls">
+    <label>Dimension de tête d <output data-out="dim">128</output>
+      <select data-control="dim"><option value="64">64</option><option value="128" selected>128</option><option value="256">256</option></select>
+    </label>
+    <label>Base θ <output data-out="base">10 000</output>
+      <input data-control="base" type="range" min="1000" max="1000000" step="1000" value="10000">
+    </label>
+    <label>Position p <output data-out="position">128</output>
+      <input data-control="position" type="range" min="0" max="4096" step="1" value="128">
+    </label>
+  </div>
+  <div class="rope-frequency-summary" aria-live="polite">
+    <p><strong>Paire la plus rapide (i = 0) :</strong> <output data-out="fast"></output></p>
+    <p><strong>Paire la plus lente (i = d/2 − 1) :</strong> <output data-out="slow"></output></p>
+    <p><strong>Rapport des fréquences extrêmes :</strong> <output data-out="ratio"></output></p>
+  </div>
+  <div class="rope-frequency-table-wrap">
+    <table class="rope-frequency-table">
+      <caption>Échantillon de paires réparties sur la dimension</caption>
+      <thead><tr><th scope="col">Paire i</th><th scope="col">ωᵢ (rad/position)</th><th scope="col">Longueur d’onde 2π/ωᵢ</th><th scope="col">Angle p·ωᵢ (rad)</th></tr></thead>
+      <tbody data-frequency-rows><tr><td colspan="4">Activez JavaScript pour calculer les fréquences.</td></tr></tbody>
+    </table>
+  </div>
+  <p class="rope-frequency-note">Convention utilisée : ωᵢ = θ<sup>−2i/d</sup>, pour i = 0,…,d/2−1. La base θ est un paramètre de configuration du modèle, pas une constante universelle. L’angle est périodique modulo 2π ; la longueur d’onde indique après combien de positions une paire retrouve la même phase.</p>
+  <noscript>Cette exploration nécessite JavaScript. La formule et la convention sont données ci-dessus.</noscript>
+</section>

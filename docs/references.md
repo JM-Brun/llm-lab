@@ -42,6 +42,11 @@ The repository is an independent learning and experimentation project. These sou
 
 ## Positional encodings
 
+- **Sebastian Raschka — Understanding Positional Embeddings in Modern LLMs** (15 November 2026): https://magazine.sebastianraschka.com/p/understanding-positional-embeddings
+  - **Use for:** visual and mathematical walkthrough from learned absolute and sinusoidal vectors to RoPE, including PyTorch conventions, partial RoPE, NoPE and learned relative-position bias.
+  - **How this lab uses it:** as an advanced companion to the existing bilingual positional-encoding and RoPE lessons. See [the source review](source-reviews/raschka-positional-embeddings-2026-11.md). Figures and code remain link-only.
+
+
 - **Vaswani et al. — Attention Is All You Need** (2017), section 3.5: https://arxiv.org/abs/1706.03762
   - **Use for:** primary formulation of sinusoidal positional encodings, frequency schedule, wavelength range, and fixed-offset motivation.
 - **Jay Alammar — The Illustrated Transformer**: https://jalammar.github.io/illustrated-transformer/
@@ -52,6 +57,10 @@ The repository is an independent learning and experimentation project. These sou
   - **Use for:** a signal-processing interpretation of angular frequency, wavelength, and logarithmically spaced positional scales.
 
 See the [source review and pedagogical synthesis](source-reviews/sinusoidal-positional-encoding-2026-11.md) for inspection scope, technical reconciliation, and reuse limits. The machine-readable scan records remain in [the source catalogue](../data/sources.yml).
+
+- **Khan et al. — Fractional Rotation, Full Potential? Investigating Performance and Convergence of Partial RoPE** (arXiv:2603.11611, v2, 15 October 2026): https://arxiv.org/abs/2603.11611
+  - **Use for:** experimental evidence on partial-RoPE fractions, training convergence, NoPE instability and the memory footprint of precomputed RoPE tables.
+  - **Qualification:** the up-to-10× saving concerns the RoPE sine/cosine cache, not the KV cache; results are bounded to the paper's 1B/8B configurations, data, sequence lengths and evaluation suite. See [the source review](source-reviews/partial-rope-fractional-rotation-2026-11.md).
 
 ## Q/K/V and attention perspectives
 
@@ -162,6 +171,29 @@ Use these resources as complementary explanations and study aids, not as substit
 
 
 
+## Visual learning tools and interactive references
+
+These resources are curated for teaching design and guided experimentation. Inclusion here means they are useful candidates, not that every claim, figure, or licence has been fully audited. See the [focused review and integration map](source-reviews/visual-learning-resources-2026-11.md).
+
+- **Polo Club — Transformer Explainer**: https://poloclub.github.io/transformer-explainer/ ; research: https://research.ibm.com/publications/transformer-explainer-learning-llm-transformers-with-interactive-visual-explanation-and-experimentation
+  - Use for live GPT-2 inference, token-level input, attention/MLP flow, next-token probabilities, and sampling experiments. Boundary: a specific GPT-2 implementation, not a universal architecture.
+- **Brendan Bycroft — LLM Visualization**: https://bbycroft.net/llm
+  - Use for 3D inspection of components, layers, weights, activations, and tensor flow. Boundary: selected GPT-style models; diagram proportions are not universal.
+- **3Blue1Brown — GPT and Attention**: https://www.3blue1brown.com/lessons/gpt/ ; https://www.3blue1brown.com/lessons/attention/
+  - Use for visual intuition. Boundary: pair animations with formal notation and numerical checks.
+- **TensorFlow Playground**: https://playground.tensorflow.org/
+  - Use for small-network experiments on optimization, regularization and overfitting. Boundary: not a Transformer or LLM simulator.
+- **Sebastian Raschka — A Visual Guide to Attention Variants**: https://magazine.sebastianraschka.com/p/visual-attention-variants
+  - Use for MHA, MQA, GQA, MLA, sliding-window and sparse attention. Boundary: evolving survey, not a controlled benchmark.
+- **Maarten Grootendorst — A Visual Guide to Mixture of Experts**: https://www.maartengrootendorst.com/blog/moe/
+  - Use for experts, sparse layers, router selection, capacity and load balancing. Boundary: keep active versus total parameters distinct.
+- **Modular — LLM Inference Handbook**: https://handbook.modular.com/
+  - Use for request lifecycle, prefill/decode, KV cache, latency, batching, GPU memory and serving. Boundary: living engineering documentation; product/performance guidance is version-dependent.
+- **Neuronpedia**: https://www.neuronpedia.org/ ; documentation: https://docs.neuronpedia.org/
+  - Use for sparse autoencoder features, activations, attention heads and attribution/circuit exploration. Boundary: feature labels and attribution graphs are not automatic causal proof.
+- **Apple — Embedding Atlas**: https://apple.github.io/embedding-atlas/ ; research: https://machinelearning.apple.com/research/embedding-atlas
+  - Use for embedding projections, clustering, nearest-neighbour search and metadata-linked exploration. Boundary: projection and clustering choices can distort apparent structure.
+
 ## Inference performance and generation systems
 
 - **Sebastian Raschka — “From Full to Hybrid Attention in LLMs”** (LinkedIn post and author companion article, 10 November 2026):
@@ -262,29 +294,6 @@ Use these resources as complementary explanations and study aids, not as substit
   - **Use for:** primary formal source for predictive \\(\\mathcal V\\)-information, predictive families, optional ignorance, predictive conditional \\(\\mathcal V\\)-entropy and the relation to Shannon mutual information.
   - **Critical qualifications:** the quantity is relative to an explicitly specified predictive family and loss; it is asymmetric and is not a synonym for Shannon mutual information. The paper's estimation guarantees depend on bounded log-probabilities and complexity assumptions; an overly expressive class can overfit and an overly restrictive class can miss useful structure.
   - **LLM Lab integration:** use the finite-family exact example in the bilingual information-theory experiment guide as a first operational illustration, not as evidence comparing Transformer attention with bag-of-words. See [the source review](source-reviews/predictive-v-information-xu-2020.md).
-
-## Visual learning tools and interactive references
-
-These resources are curated for teaching design and guided experimentation. Inclusion here means they are useful candidates, not that every claim, figure, or licence has been fully audited. See the [focused review and integration map](source-reviews/visual-learning-resources-2026-11.md).
-
-- **Polo Club — Transformer Explainer**: https://poloclub.github.io/transformer-explainer/ ; research: https://research.ibm.com/publications/transformer-explainer-learning-llm-transformers-with-interactive-visual-explanation-and-experimentation
-  - Use for live GPT-2 inference, token-level input, attention/MLP flow, next-token probabilities, and sampling experiments. Boundary: a specific GPT-2 implementation, not a universal architecture.
-- **Brendan Bycroft — LLM Visualization**: https://bbycroft.net/llm
-  - Use for 3D inspection of components, layers, weights, activations, and tensor flow. Boundary: selected GPT-style models; diagram proportions are not universal.
-- **3Blue1Brown — GPT and Attention**: https://www.3blue1brown.com/lessons/gpt/ ; https://www.3blue1brown.com/lessons/attention/
-  - Use for visual intuition. Boundary: pair animations with formal notation and numerical checks.
-- **TensorFlow Playground**: https://playground.tensorflow.org/
-  - Use for small-network experiments on optimization, regularization and overfitting. Boundary: not a Transformer or LLM simulator.
-- **Sebastian Raschka — A Visual Guide to Attention Variants**: https://magazine.sebastianraschka.com/p/visual-attention-variants
-  - Use for MHA, MQA, GQA, MLA, sliding-window and sparse attention. Boundary: evolving survey, not a controlled benchmark.
-- **Maarten Grootendorst — A Visual Guide to Mixture of Experts**: https://www.maartengrootendorst.com/blog/moe/
-  - Use for experts, sparse layers, router selection, capacity and load balancing. Boundary: keep active versus total parameters distinct.
-- **Modular — LLM Inference Handbook**: https://handbook.modular.com/
-  - Use for request lifecycle, prefill/decode, KV cache, latency, batching, GPU memory and serving. Boundary: living engineering documentation; product/performance guidance is version-dependent.
-- **Neuronpedia**: https://www.neuronpedia.org/ ; documentation: https://docs.neuronpedia.org/
-  - Use for sparse autoencoder features, activations, attention heads and attribution/circuit exploration. Boundary: feature labels and attribution graphs are not automatic causal proof.
-- **Apple — Embedding Atlas**: https://apple.github.io/embedding-atlas/ ; research: https://machinelearning.apple.com/research/embedding-atlas
-  - Use for embedding projections, clustering, nearest-neighbour search and metadata-linked exploration. Boundary: projection and clustering choices can distort apparent structure.
 
 ## Remote GPU training and managed execution
 

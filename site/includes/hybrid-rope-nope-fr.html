@@ -1,0 +1,17 @@
+<section class="hybrid-rope-nope" data-lang="fr" aria-labelledby="hybrid-rope-nope-title-fr">
+  <h3 id="hybrid-rope-nope-title-fr">Expérience : mélanger RoPE et NoPE entre les couches</h3>
+  <p>Choisissez les couches qui font tourner Q et K. Chaque couche reçoit toujours les états cachés de la couche précédente et conserve le masque causal dans cet exemple autorégressif.</p>
+  <div class="hybrid-presets" role="group" aria-label="Motifs prédéfinis">
+    <button type="button" data-preset="all-rope">Tout RoPE</button>
+    <button type="button" data-preset="all-nope">Tout NoPE</button>
+    <button type="button" data-preset="alternating">Alternance</button>
+    <button type="button" data-preset="early-rope">RoPE au début, NoPE ensuite</button>
+  </div>
+  <div class="hybrid-layer-grid" data-layers></div>
+  <div class="hybrid-summary" aria-live="polite">
+    <p data-summary></p>
+    <p data-inheritance></p>
+  </div>
+  <p class="hybrid-caveat"><strong>Limite d'interprétation :</strong> ce schéma décrit le routage entre couches, pas une simulation numérique d'un Transformer. Une couche reçoit les représentations contextualisées de la couche précédente ; celles-ci peuvent transporter des distinctions positionnelles ou contextuelles. Le schéma ne mesure pas si un modèle entraîné conserve, utilise ou perd cette information.</p>
+  <noscript>Chaque couche peut appliquer RoPE à Q/K ou l'omettre (NoPE). Le masque causal est indépendant de ce choix.</noscript>
+</section>

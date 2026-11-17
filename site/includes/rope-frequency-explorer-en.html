@@ -1,0 +1,29 @@
+<section class="rope-frequency-explorer" data-lang="en" aria-labelledby="rope-frequency-title-en">
+  <h3 id="rope-frequency-title-en">Explore the RoPE frequency scale</h3>
+  <p class="rope-frequency-intro">A head spreads its coordinate pairs across a geometric range of frequencies. Before moving the controls, predict: which pair rotates fastest, and which keeps a phase near zero for the longest?</p>
+  <div class="rope-frequency-controls">
+    <label>Head dimension d <output data-out="dim">128</output>
+      <select data-control="dim"><option value="64">64</option><option value="128" selected>128</option><option value="256">256</option></select>
+    </label>
+    <label>Base θ <output data-out="base">10,000</output>
+      <input data-control="base" type="range" min="1000" max="1000000" step="1000" value="10000">
+    </label>
+    <label>Position p <output data-out="position">128</output>
+      <input data-control="position" type="range" min="0" max="4096" step="1" value="128">
+    </label>
+  </div>
+  <div class="rope-frequency-summary" aria-live="polite">
+    <p><strong>Fastest pair (i = 0):</strong> <output data-out="fast"></output></p>
+    <p><strong>Slowest pair (i = d/2 − 1):</strong> <output data-out="slow"></output></p>
+    <p><strong>Extreme frequency ratio:</strong> <output data-out="ratio"></output></p>
+  </div>
+  <div class="rope-frequency-table-wrap">
+    <table class="rope-frequency-table">
+      <caption>Sample of pairs across the head dimension</caption>
+      <thead><tr><th scope="col">Pair i</th><th scope="col">ωᵢ (rad/position)</th><th scope="col">Wavelength 2π/ωᵢ</th><th scope="col">Angle p·ωᵢ (rad)</th></tr></thead>
+      <tbody data-frequency-rows><tr><td colspan="4">Enable JavaScript to calculate frequencies.</td></tr></tbody>
+    </table>
+  </div>
+  <p class="rope-frequency-note">Convention: ωᵢ = θ<sup>−2i/d</sup>, for i = 0,…,d/2−1. The base θ is a model configuration parameter, not a universal constant. Angles are periodic modulo 2π; wavelength tells how many positions it takes a pair to return to the same phase.</p>
+  <noscript>This explorer requires JavaScript. The formula and convention are provided above.</noscript>
+</section>
