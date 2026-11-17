@@ -148,3 +148,9 @@ Les valeurs de croissance de 360 % des paramètres et 36 % de la puissance des i
 **Décision :** conserver Alliancy comme cas de contexte de déploiement et renforcer les qualifications existantes ; ne créer ni concept, ni leçon, ni expérience supplémentaire. La distinction entre compression du modèle, compression prédictive et mémoire d'exécution reste inchangée.
 
 Revue : [Alliancy — analyse critique](../source-reviews/alliancy-la-compression-strategie-avenir-llm-2026-11.md) · Extraction : [claims et dispositions](../../data/extractions/alliancy-la-compression-strategie-avenir-llm-2026.yml).
+
+### Vérification complémentaire du Résilient AI Challenge
+
+Les sources officielles consultées après l’article confirment que le challenge a été lancé le 20 février 2026 par la France, l’Inde et l’UNESCO, en coopération avec la Sustainable AI Coalition. Les trois catégories portaient sur Voxtral Realtime (audio-texte), Gemma 4 (image-texte) et Sarvam-30b (texte-texte). Les organisateurs ont annoncé les équipes gagnantes le 8 juillet 2026 : MCTE, LiteMind et Wavestone Wavelets. L’évaluation combinait précision et efficacité énergétique. Cette confirmation transforme le challenge en cas documenté, mais les conclusions restent bornées aux trois modèles, tâches et conditions d’évaluation ; le règlement exclut explicitement toute certification générale de qualité ou de sûreté. Sources : [UNESCO](https://www.unesco.org/fr/articles/le-sommet-mondial-de-lia-au-service-du-bien-met-le-projecteur-sur-une-ia-resiliente-par-une), [Coalition pour une IA durable](https://www.sustainableaicoalition.org/resilient-ai-challenge/), [règlement](https://www.sustainableaicoalition.org/terms-resilient-ai-challenge/).
+
+La source primaire Epoch.AI derrière la comparaison 360 % / 36 % n’a pas été identifiée avec certitude : ces chiffres restent non vérifiés et ne doivent pas être utilisés comme données établies.
