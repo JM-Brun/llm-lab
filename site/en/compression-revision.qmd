@@ -184,7 +184,7 @@ In [“Compression Is Intelligence”](https://www.linkedin.com/pulse/compressio
 | Objective | Ranking / classification | Exact reconstruction | Plausible continuation conditioned on context |
 | Typical failure | A rare but decisive term is discarded | Encoder/decoder disagreement | An implicit constraint is omitted or invented |
 
-**Takeaway:** every compression claim is relative to a task, representation, and distortion criterion. Bits per byte, ranking quality, and generation fidelity are not interchangeable metrics. The [critical source review](../source-reviews/david-chen-compression-is-intelligence-2025.md) details the limits of the references and analogy.
+**Takeaway:** every compression claim is relative to a task, representation, and distortion criterion. Bits per byte, ranking quality, and generation fidelity are not interchangeable metrics. The [critical source review](https://github.com/JM-Brun/llm-lab/blob/ingest-david-chen-compression-intelligence/docs/source-reviews/david-chen-compression-is-intelligence-2025.md) details the limits of the references and analogy.
 
 ## Reconstruct the reasoning, step by step
 
