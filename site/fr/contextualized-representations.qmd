@@ -103,11 +103,11 @@ Une précision : un mot visible ne correspond pas nécessairement à un seul tok
 
 Le lookup initial ne suffit pas à décrire l'entrée du réseau : l'architecture doit aussi traiter la position, puis les blocs Transformer construisent des états dépendant du contexte accessible. Le mécanisme positionnel varie selon les modèles ; un vecteur de position n'est donc pas toujours ajouté directement à l'embedding.
 
-### Une autre dépendance : la référence pronominale
+### Une autre dépendance : la référence pronominale dans la tirade
 
-Considérons maintenant : *« Le chien était épuisé parce qu’il avait couru toute la journée. »* Le pronom `il` renvoie ici à `le chien`. Ce cas ne porte pas sur les deux sens possibles d'un même mot : il illustre une dépendance entre des positions différentes de la séquence. Pour construire une représentation contextuelle de `il`, le modèle peut exploiter des informations provenant d'autres tokens du contexte.
+Dans la formule d'Otis « moi je ne crois pas… », `moi` et `je` désignent le même locuteur : Otis. Les deux formes n'ont pas le même ID lexical, mais leur interprétation dépend de la situation d'énonciation et du contexte du dialogue. Cet exemple permet d'aborder la référence sans quitter le fil rouge.
 
-Cette distinction permet de séparer deux phénomènes complémentaires : lever une ambiguïté lexicale (*avocat*) et exploiter une relation entre tokens (*il* / *le chien*). Pour approfondir les rôles de Q, K et V, voir le [tutoriel de Nishanthan K sur Q, K et V](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers). Cet exemple ne démontre pas qu'une tête d'attention particulière identifie nécessairement l'antécédent, ni que l'attention seule réalise toute la résolution de coréférence.
+Il ne démontre pas qu'une tête d'attention particulière identifie nécessairement un référent, ni que l'attention seule réalise toute la résolution de coréférence. Pour approfondir les rôles de Q, K et V, voir le [tutoriel de Nishanthan K sur Q, K et V](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers).
 
 Dans le fil rouge, le préfixe « C'est une bonne situation, ça, scribe ? » est déjà présent. À mesure que « Être scribe, c'est relier des histoires. » est généré, chaque nouveau token est traité avec le contexte désormais disponible, qui s'allonge au fil de la boucle.
 
