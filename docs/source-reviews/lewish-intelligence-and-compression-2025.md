@@ -110,3 +110,21 @@ No code or data artifact was independently inspected or executed. The forward/re
 ## Conclusion
 
 The article adds a useful **model-plus-data** view of compression and a broader bridge from prediction to adaptation and action. Its most valuable use is to enrich the existing compression synthesis and motivate controlled experiments. The stronger thesis that intelligence is fundamentally compression, the generalization argument, the enwik8 causal interpretation and the FEP unification all require explicit qualifications. The ingestion remains partially scanned until figures, outbound resources, code/data, creator attribution and rights are checked.
+
+## 6. Primary-source anchors for the next verification pass
+
+The following primary or author-level references anchor the technical distinctions above. Their inclusion is not a claim that every theorem or interpretation in the Lewis article has been fully audited.
+
+- J. Rissanen (1978), [“Modeling by shortest data description”](https://doi.org/10.1016/0005-1098(78)90005-5), *Automatica* 14(5), 465–471. Foundational shortest-description model-selection framing. The practical MDL expression still depends on the model family and coding conventions.
+- R. J. Solomonoff (1964), [“A Formal Theory of Inductive Inference, Part I”](https://doi.org/10.1016/S0019-9958(64)90223-2), *Information and Control* 7(1), 1–22. Algorithmic-probability approach to induction; not synonymous with finite, practical MDL.
+- M. Hutter (2005), [*Universal Artificial Intelligence: Sequential Decisions Based on Algorithmic Probability*](https://doi.org/10.1007/b138233). Formal source for the AIXI framework; its idealized optimality does not make the agent computationally tractable.
+- F. Chollet (2019), [“On the Measure of Intelligence”](https://arxiv.org/abs/1911.01547). Explicitly defines intelligence in terms of skill-acquisition efficiency and discusses priors, experience, scope and generalization difficulty.
+- K. Friston (2010), [“The free-energy principle: a unified brain theory?”](https://doi.org/10.1038/nrn2787), *Nature Reviews Neuroscience* 11, 127–138; and Friston et al. (2010), [“Action and behavior: a free-energy formulation”](https://doi.org/10.1007/s00422-010-0364-z), *Biological Cybernetics* 102, 227–260. These are primary theoretical formulations, not independent consensus validation of the framework.
+- I. H. Witten, R. M. Neal & J. G. Cleary (1987), [“Arithmetic coding for data compression”](https://doi.org/10.1145/214762.214771), *Communications of the ACM* 30(6), 520–540. Supports the separation between a probabilistic model and the arithmetic channel coder, including adaptive models.
+
+### Remaining primary-source checks
+
+- Read the exact passages and formal definitions used by the Lewis article, especially its AIXI/FEP descriptions, before deciding whether the review should quote or correct particular formulations.
+- Locate the exact enwik8 source, preprocessing and command lines, or classify the benchmark as permanently non-reproducible from the available article.
+- Inspect the original musical-score figure and all linked media as separate assets; retain link-only status unless a reuse licence is found.
+- Compare the paper's exact MDL objective with prequential MDL and Bayesian marginal likelihood rather than treating them as interchangeable.
