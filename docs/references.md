@@ -295,6 +295,12 @@ These resources are curated for teaching design and guided experimentation. Incl
   - **Critical qualifications:** the quantity is relative to an explicitly specified predictive family and loss; it is asymmetric and is not a synonym for Shannon mutual information. The paper's estimation guarantees depend on bounded log-probabilities and complexity assumptions; an overly expressive class can overfit and an overly restrictive class can miss useful structure.
   - **LLM Lab integration:** use the finite-family exact example in the bilingual information-theory experiment guide as a first operational illustration, not as evidence comparing Transformer attention with bag-of-words. See [the source review](source-reviews/predictive-v-information-xu-2020.md).
 
+
+- **Grant Sanderson / 3Blue1Brown — [But what is cross-entropy? | Compression is Intelligence Part 2](https://www.youtube.com/watch?v=GlYgs6v2YfU)** (16 July 2026; approximately 34 minutes).
+  - **Official lesson:** [3Blue1Brown lesson page](https://www.3blue1brown.com/?lesson=cross-entropy&topic=neural-networks); [creator's Substack article](https://3blue1brown.substack.com/p/but-what-is-cross-entropy).
+  - **Review status:** creator-published captions reviewed through a third-party transcript mirror; relevant upstream Manim source scripts inspected statically, not executed. No frame-by-frame audiovisual audit. See the [critical synthesis](source-syntheses/cross-entropy-compression-distillation-2026-11.md) and [structured extraction](../data/extractions/3blue1brown-cross-entropy-compression-intelligence-part-2-2026.yml).
+  - **Use for:** the operational meaning of cross-entropy as the average cost of a code optimized for a different distribution; the link to next-token pretraining, the assumptions behind the logarithmic loss, soft-target distillation, and KL divergence.
+
 ## Remote GPU training and managed execution
 
 - **YouTube — “GPU-POOR? NO PROBLEM!... thanks to 🤗 Jobs”**: https://www.youtube.com/watch?v=7Yx_7byZiFU
