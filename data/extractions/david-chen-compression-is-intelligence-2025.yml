@@ -1,0 +1,146 @@
+schema_version: 1
+source_id: david-chen-compression-is-intelligence-2025
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Complete public LinkedIn article text and visible metadata inspected on 2026-11-17."
+      - "Rau et al. (2024) publication metadata and related special-section overview checked."
+      - "Yoo et al. (2007) reference metadata checked; full paper not inspected."
+      - "Bellard NNCP 2019 and NNCP v2 2021 papers inspected directly."
+    inferred_elements:
+      - "Learning outcomes and the five-step route are reconstructed from the article's section order; the author does not declare a formal lesson plan."
+      - "The distinctions between compression types and the qualification of generation-as-decompression are editorial analysis."
+  source_graph:
+    nodes:
+      - {id: src-feature-selection, kind: method, description: "Select a subset of terms/features considered informative for a defined text classification or ranking task.", locator: "From Information Theory to Semantic Cores"}
+      - {id: src-compact-document-representation, kind: representation, description: "Represent a document with a compact set of salient terms for efficient Transformer ranking.", locator: "From Information Theory to Semantic Cores"}
+      - {id: src-prompt-as-compact-intent, kind: analogy, description: "Treat a prompt as a compact expression of user intent that conditions a longer generated continuation.", locator: "Generation can be seen as Decompression"}
+      - {id: src-neural-compression-methods, kind: method-family, description: "Group vector quantization, sparse representations, autoencoders, token-efficient training and distillation as forms of controlled compression.", locator: "Compression in Deep Learning"}
+      - {id: src-neural-lossless-coding, kind: mechanism, description: "Use a neural next-symbol probability model with arithmetic coding to create a lossless bitstream.", locator: "Neural Compression in the Real World: Fabrice Bellard's NNCP"}
+      - {id: src-compressed-prompt-interface, kind: proposal, description: "Predict increasingly abstract user directives expanded by AI systems into detailed workflows and outputs.", locator: "The Future Interface: Compressed Prompts"}
+    edges:
+      - {from: src-feature-selection, type: motivates, to: src-compact-document-representation}
+      - {from: src-prompt-as-compact-intent, type: analogy-for, to: src-compressed-prompt-interface}
+      - {from: src-neural-compression-methods, type: includes, to: src-neural-lossless-coding}
+      - {from: src-neural-lossless-coding, type: illustrates, to: src-compressed-prompt-interface}
+    interpretation: "The article links multiple compression ideas rhetorically. The graph preserves that argument while the review distinguishes their formal mechanisms and evidence."
+  learning_outcomes:
+    - {status: inferred, outcome: "Explain why feature selection can retain task-relevant information while discarding redundant terms.", basis: "Feature-selection and compact BoW sections."}
+    - {status: inferred, outcome: "Describe how next-symbol probabilities can be converted into a lossless code using arithmetic coding.", basis: "NNCP discussion and primary papers."}
+    - {status: inferred, outcome: "Distinguish predictive coding, feature selection, latent compression and model compression.", basis: "Critical comparison of the article's grouped techniques."}
+    - {status: inferred, outcome: "Explain why prompt-conditioned generation resembles expansion but is not literal reversible decompression.", basis: "Critical qualification of the generation analogy."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Basic probability and conditional probability.", basis: "The article invokes information theory and predictive compression."}
+    - {status: inferred, topic: "Basic familiarity with text classification, Transformers and LLM prompting.", basis: "These topics are assumed in the article."}
+  teaching_route:
+    - {order: 1, section: "From Information Theory to Semantic Cores", function: motivate-task-relevant-selection, moves: ["Introduce feature selection", "Explain compact salient-term representations", "Keep the claim bounded to the evaluated task"]}
+    - {order: 2, section: "Generation can be seen as Decompression", function: introduce-interface-analogy, moves: ["Interpret prompts as compact intent cues", "Qualify generation as conditional expansion rather than reversible decoding"]}
+    - {order: 3, section: "Compression in Deep Learning", function: survey-compression-families, moves: ["Name vector quantization, sparsity, autoencoders and distillation", "Separate their objectives and metrics"]}
+    - {order: 4, section: "Neural Compression in the Real World", function: ground-predictive-coding, moves: ["Explain next-symbol prediction", "Connect negative log probability to ideal code length", "Explain arithmetic coding and symmetric decoding"]}
+    - {order: 5, section: "The Future Interface: Compressed Prompts", function: revisit-interface-implications, moves: ["Discuss increasingly abstract prompts", "Identify omitted constraints and ambiguity risks"]}
+  pedagogical_strengths:
+    - "Connects feature selection, neural coding and prompting through a memorable compression intuition."
+    - "Points to a concrete, inspectable neural lossless-compression implementation."
+    - "Creates a useful opportunity to distinguish task-specific representations from universal semantic claims."
+  pedagogical_limits:
+    - "The slogan that compression is intelligence is a thesis or metaphor, not a result proved by the cited studies."
+    - "The article groups distinct forms of compression without fully distinguishing their objectives or metrics."
+    - "The prompt/decompression analogy can imply reversibility and information preservation that ordinary LLM generation does not guarantee."
+    - "The full Yoo et al. paper and full Rau et al. experimental analysis were not audited."
+    - "The LinkedIn cover image was not retrieved as image bytes or visually inspected."
+  comparison:
+    dossier: docs/source-syntheses/compression-intelligence-and-inference-efficiency-2026-11.md
+    canonical_graph: "data/concepts.yml and generated JSON-LD projection"
+    decision: "Reuse existing predictive-compression, entropy, cross-entropy, conditional-distribution, surprisal, entropy-coding and arithmetic-coding concepts. Do not create a new canonical compression/intelligence concept."
+    structures_kept_separate: [source-semantic-graph, source-pedagogical-route, canonical-concept-graph, canonical-learning-routes, site-navigation]
+items:
+  - id: david-chen-compression-is-intelligence-2025:feature-selection
+    kind: mechanism
+    summary: "Feature selection retains terms or features considered informative for a defined classification task. The relevance of a feature is task- and distribution-dependent; this does not imply that a small set of words preserves every aspect of a document's meaning."
+    locator: {type: section, value: "From Information Theory to Semantic Cores"}
+    evidence:
+      kind: cited-research-summary
+      confidence: context-dependent
+      scope: "The article's summary of Yoo et al. (2007) and its feature-selection motivation."
+      assumptions: ["The downstream classification or ranking objective is specified."]
+      limitations: ["The cited 2007 paper's full text and experimental details were not audited."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [scale-research]
+      tags: [topic:feature-selection, method:bag-of-words]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [en/entropy, fr/entropy, en/compression-revision, fr/compression-revision]
+    disposition: integrate
+  - id: david-chen-compression-is-intelligence-2025:compact-ranking
+    kind: result
+    summary: "Rau, Dehghani and Kamps (2024) study compact bag-of-words document representations for efficient Transformer ranking. This supports a bounded claim about ranking efficiency in the evaluated information-retrieval setting, not universal preservation of document semantics."
+    locator: {type: section, value: "From Information Theory to Semantic Cores"}
+    evidence:
+      kind: paper-description
+      confidence: context-dependent
+      scope: "Bibliographic record and related special-section overview."
+      assumptions: ["The representation and ranking objective are those defined by the cited paper."]
+      limitations: ["Full experimental tables, ablations and exact performance trade-offs were not audited."]
+    classification:
+      primary_theme: inference-efficiency
+      secondary_themes: [probabilistic-foundations-training]
+      tags: [topic:document-ranking, method:bag-of-words, topic:feature-selection]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [en/compression-revision, fr/compression-revision]
+    disposition: integrate
+  - id: david-chen-compression-is-intelligence-2025:nncp-predictive-coding
+    kind: mechanism
+    summary: "NNCP predicts the next symbol from preceding symbols and uses arithmetic coding to encode the observed symbol at approximately its negative log probability. A matching decoder repeats the model updates to reconstruct the original sequence losslessly."
+    locator: {type: section, value: "Neural Compression in the Real World: Fabrice Bellard's NNCP"}
+    evidence:
+      kind: primary-paper-method
+      confidence: well-supported
+      scope: "Bellard's 2019 NNCP paper and 2021 NNCP v2 paper."
+      assumptions: ["Encoder and decoder use compatible model parameters, preprocessing, arithmetic coding and deterministic update behavior."]
+      limitations: ["Lossless coding performance demonstrates predictive coding under the benchmark setup, not semantic understanding or general intelligence."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [inference-efficiency, architectures-mechanisms]
+      tags: [topic:predictive-compression, topic:entropy-coding, method:arithmetic-coding]
+      concept_ids: [predictive-compression, conditional-distribution, surprisal, entropy-coding, arithmetic-coding]
+    candidate_destinations:
+      pages: [en/compression-revision, fr/compression-revision, en/entropy, fr/entropy]
+    disposition: integrate
+  - id: david-chen-compression-is-intelligence-2025:generation-as-decompression
+    kind: limitation
+    summary: "Treating prompting as compression and generation as decompression is a useful analogy for conditional expansion, but ordinary LLM generation is not the inverse of a known lossless encoder and does not guarantee recovery of omitted intent or a unique original output."
+    locator: {type: section, value: "Generation can be seen as Decompression"}
+    evidence:
+      kind: critical-assessment
+      confidence: well-supported
+      scope: "Conceptual boundary of the article's generation/decompression analogy."
+      assumptions: ["LLM generation is modeled as decoding from a conditional distribution under a decoding policy."]
+      limitations: ["This is a conceptual qualification, not an empirical measurement of all prompting workflows."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:conditional-generation, topic:representation]
+      concept_ids: [conditional-distribution, predictive-compression, contextualized-representation]
+    candidate_destinations:
+      pages: [en/llm-limits, fr/llm-limits, en/compression-revision, fr/compression-revision]
+    disposition: clarify
+  - id: david-chen-compression-is-intelligence-2025:compression-taxonomy
+    kind: limitation
+    summary: "Feature selection, predictive lossless coding, learned latent representations and model compression preserve different objects and use different metrics. Their rates and quality measures cannot be compared as if they were one universal compression scale."
+    locator: {type: section, value: "Compression in Deep Learning"}
+    evidence:
+      kind: critical-assessment
+      confidence: well-supported
+      scope: "Editorial taxonomy used to qualify the article's grouping of compression techniques."
+      assumptions: []
+      limitations: ["The taxonomy is an explanatory synthesis rather than a new formal classification."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [inference-efficiency, scale-research]
+      concept_ids: [predictive-compression, entropy, contextualized-representation]
+    candidate_destinations:
+      pages: [en/compression-revision, fr/compression-revision]
+    disposition: integrate
