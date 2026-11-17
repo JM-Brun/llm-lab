@@ -784,6 +784,64 @@ concepts:
     domains: [probabilistic-foundations-training, architectures-mechanisms]
     resources: [fr/entropy, en/entropy, fr/llm-limits, en/llm-limits]
 
+
+  - id: kolmogorov-complexity
+    importance: specialized
+    labels: {fr: "Complexité de Kolmogorov", en: "Kolmogorov complexity"}
+    definitions:
+      fr: "Longueur du plus court programme, sur une machine universelle de référence, qui produit un objet donné ; elle est définie à une constante additive près selon la machine, mais n'est pas calculable en général."
+      en: "Length of the shortest program, on a reference universal machine, that produces a given object; it is defined up to an additive machine-dependent constant but is not computable in general."
+    domains: [mathematical-tools-geometry, probabilistic-foundations-training]
+    resources: [fr/universal-artificial-intelligence, en/universal-artificial-intelligence]
+  - id: algorithmic-probability
+    importance: specialized
+    labels: {fr: "Probabilité algorithmique", en: "Algorithmic probability"}
+    definitions:
+      fr: "Pondération d'une sortie par la somme des poids 2^{-longueur(programme)} des programmes universels qui la produisent ; elle favorise les explications courtes, mais la mesure universelle correspondante n'est pas calculable exactement."
+      en: "Weight assigned to an output by summing the 2^{-program-length} weights of universal programs that produce it; it favours short explanations, but the corresponding universal measure is not exactly computable."
+    domains: [mathematical-tools-geometry, probabilistic-foundations-training]
+    resources: [fr/universal-artificial-intelligence, en/universal-artificial-intelligence]
+  - id: solomonoff-induction
+    importance: specialized
+    labels: {fr: "Induction de Solomonoff", en: "Solomonoff induction"}
+    definitions:
+      fr: "Prédiction séquentielle fondée sur un mélange universel de programmes générateurs, pondérés selon leur longueur descriptive ; elle converge sous des hypothèses formelles, mais sa distribution universelle est incalculable."
+      en: "Sequential prediction based on a universal mixture of generating programs weighted by descriptive length; it has formal convergence guarantees under stated assumptions, but its universal distribution is incomputable."
+    domains: [probabilistic-foundations-training, mathematical-tools-geometry]
+    resources: [fr/universal-artificial-intelligence, en/universal-artificial-intelligence]
+  - id: sequential-decision-theory
+    importance: specialized
+    labels: {fr: "Théorie de la décision séquentielle", en: "Sequential decision theory"}
+    definitions:
+      fr: "Cadre dans lequel un agent choisit des actions successives afin de maximiser une récompense future espérée, compte tenu de ses observations et d'un modèle de l'environnement."
+      en: "Framework in which an agent chooses successive actions to maximize expected future reward given its observations and a model of the environment."
+    domains: [architectures-mechanisms, probabilistic-foundations-training]
+    resources: [fr/universal-artificial-intelligence, en/universal-artificial-intelligence]
+  - id: aixi
+    importance: specialized
+    labels: {fr: "AIXI", en: "AIXI"}
+    definitions:
+      fr: "Agent universel théorique qui combine le mélange probabiliste universel de Solomonoff avec la maximisation de récompense en décision séquentielle ; il est optimal dans un sens formel donné, mais incalculable."
+      en: "Theoretical universal agent combining Solomonoff's universal probabilistic mixture with reward maximization in sequential decision-making; it is optimal in a specified formal sense but incomputable."
+    domains: [architectures-mechanisms, probabilistic-foundations-training]
+    resources: [fr/universal-artificial-intelligence, en/universal-artificial-intelligence]
+  - id: aixi-tl
+    importance: specialized
+    labels: {fr: "AIXI(t,l)", en: "AIXI(t,l)"}
+    definitions:
+      fr: "Construction calculable sous contraintes qui compare des politiques candidates bornées en temps par cycle et en longueur de programme ; son coût reste exponentiel en la borne de longueur et son optimalité est relative à la classe et aux conditions de preuve retenues."
+      en: "Computable resource-bounded construction comparing candidate policies bounded in per-cycle time and program length; its cost remains exponential in the length bound and its optimality is relative to the selected class and proof conditions."
+    domains: [architectures-mechanisms, mathematical-tools-geometry]
+    resources: [fr/universal-artificial-intelligence, en/universal-artificial-intelligence]
+  - id: resource-bounded-computation
+    importance: supporting
+    labels: {fr: "Calcul sous contraintes de ressources", en: "Resource-bounded computation"}
+    definitions:
+      fr: "Analyse ou construction d'algorithmes en imposant des bornes explicites sur le temps d'exécution, la mémoire ou la longueur des programmes."
+      en: "Analysis or construction of algorithms under explicit bounds on execution time, memory, or program length."
+    domains: [mathematical-tools-geometry, architectures-mechanisms]
+    resources: [fr/universal-artificial-intelligence, en/universal-artificial-intelligence, fr/llm-computational-complexity, en/llm-computational-complexity]
+
 relation_types:
   represented-by:
     direction: directed
@@ -908,6 +966,19 @@ relation_types:
       en: "The source is evaluated using the target."
 
 
+
+
+  approximates:
+    direction: directed
+    family: computational
+    transitive: false
+    acyclic: false
+    learning_dependency: false
+    inverse: null
+    labels: {fr: "approxime", en: "approximates"}
+    descriptions:
+      fr: "La source fournit une construction calculable ou bornée qui vise à reproduire certains comportements de la cible sans être identique à celle-ci."
+      en: "The source provides a computable or bounded construction intended to reproduce some behaviour of the target without being identical to it."
 
 relations:
 
@@ -1085,3 +1156,10 @@ relations:
       en: "Soft-target distillation compares the student's distribution with the teacher's using a cross-entropy or KL objective."
   - {from: attention-weight, type: contrasts-with, to: mutual-information}
   - {from: mutual-information, type: contrasts-with, to: v-information}
+
+  - {from: kolmogorov-complexity, type: contributes-to, to: algorithmic-probability}
+  - {from: algorithmic-probability, type: contributes-to, to: solomonoff-induction}
+  - {from: solomonoff-induction, type: contributes-to, to: aixi}
+  - {from: sequential-decision-theory, type: contributes-to, to: aixi}
+  - {from: aixi-tl, type: approximates, to: aixi}
+  - {from: resource-bounded-computation, type: constrains, to: aixi-tl}
