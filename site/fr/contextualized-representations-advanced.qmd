@@ -94,6 +94,26 @@ Le vecteur n'est pas remplacé par une étiquette de sens. Il est transformé pa
 
 **À retenir :** le lookup fixe l'identité du vecteur token initial ; l'architecture positionnelle et les blocs déterminent ensuite comment l'état à chaque position dépend des autres états accessibles.
 
+
+
+## Explorer une feature sans la prendre pour une explication complète
+
+[Neuronpedia](https://www.neuronpedia.org/) permet d'explorer des features, activations, neurones, têtes d'attention et graphes d'attribution. Pour une première inspection, la documentation présente [Gemma 2 2B · Gemma Scope · couche 20 · résiduel · 16k · feature 10956](https://www.neuronpedia.org/gemma-2-2b/20-gemmascope-res-16k/10956).
+
+Une feature de sparse autoencoder (SAE) est une direction/variable latente dans une décomposition apprise des activations. Elle n'est pas automatiquement un concept humain unique, un neurone natif ou une explication exhaustive. Le tableau de bord réunit plusieurs indices à lire séparément : exemples d'activations, tokens mis en évidence, logits associés, densité d'activation et explications textuelles. Les explications automatiques sont produites par des modèles et peuvent être fausses ou trop générales.
+
+**Protocole d'enquête :**
+1. Notez modèle, release/source, couche, hook et index. Un même index dans deux sources différentes ne désigne pas la même feature.
+2. Lisez les activations positives les plus fortes et plusieurs exemples moins typiques. Cherchez des contre-exemples où la feature s'active sans correspondre à l'étiquette proposée.
+3. Comparez l'explication automatique aux exemples justificatifs. Relevez le modèle et la méthode qui l'ont produite, ainsi que son score éventuel ; un score automatique n'est pas un étalon indépendant.
+4. Examinez densité d'activation et logits positifs/négatifs. Distinguez contextes d'activation, tokens dont le logit change et rôle causal dans le comportement global.
+5. Si l'inférence sur texte personnalisé est disponible pour cette source, testez des exemples positifs, négatifs et adversariaux rédigés avant le test.
+6. Formulez une conclusion calibrée : « les exemples inspectés sont compatibles avec l'hypothèse X dans cette couche/source » est défendable ; « le modèle comprend X grâce à cette feature » ne l'est pas sur cette seule base.
+
+Les graphes d'attribution et outils de steering enrichissent l'enquête, mais leur interprétation dépend des approximations, interventions et contrôles. Une activation corrélée à un motif, une étiquette générée ou une réponse modifiée par steering ne suffit pas à établir un mécanisme causal complet. Il faut des interventions contrôlées, des ablations/contrôles pertinents et des cas susceptibles de réfuter l'hypothèse.
+
+Pour pratiquer, utilisez la [fiche d'enquête](exercises/contextualized-representations.qmd). Références : [SAE overview](https://docs.neuronpedia.org/sparse-autoencoders/overview), [feature dashboards](https://docs.neuronpedia.org/sparse-autoencoders/feature-dashboards), [auto-interp](https://docs.neuronpedia.org/sparse-autoencoders/auto-interp), [key concepts](https://docs.neuronpedia.org/getting-started/key-concepts).
+
 ## Pour continuer
 
 - [Revenir à la leçon sur les représentations contextualisées](contextualized-representations.qmd) — le modèle mental essentiel.
