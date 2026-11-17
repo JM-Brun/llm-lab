@@ -6,12 +6,13 @@
   };
   function init(root) {
     if (root.dataset.initialised === "true") return;
-    root.dataset.initialised = "true";
     const lang = document.documentElement.lang.toLowerCase().startsWith("fr") ? "fr" : "en";
     const t = copy[lang], controls = root.querySelector("[data-explorer-controls]");
     const prefix = root.querySelector("[data-prefix]"), list = root.querySelector("[data-distribution]");
     const select = root.querySelector("[data-token-choice]"), status = root.querySelector("[data-next-distribution]");
-    const appendButton = root.querySelector("[data-append]");
+    const appendButton = root.querySelector("[data-append]"), resetButton = root.querySelector("[data-reset]");
+    if (!controls || !prefix || !list || !select || !status || !appendButton || !resetButton) return;
+    root.dataset.initialised = "true";
     let current = "", stage = 0;
     function options(tokens) {
       select.replaceChildren();
@@ -26,7 +27,7 @@
       prefix.textContent = current; rows(t.tokens,t.probs); options(t.tokens);
       select.disabled = false; appendButton.disabled = false; status.textContent = "";
     }
-    root.querySelector("[data-append]").addEventListener("click", () => {
+    appendButton.addEventListener("click", () => {
       const index = Number(select.value), token = select.options[select.selectedIndex].textContent;
       current += " " + token; prefix.textContent = current;
       if (stage === 0 && index === 0) {
@@ -38,7 +39,7 @@
         stage = 2; select.disabled = true; appendButton.disabled = true; status.textContent = t.unknown;
       }
     });
-    root.querySelector("[data-reset]").addEventListener("click",reset);
+    resetButton.addEventListener("click",reset);
     reset(); controls.hidden=false; root.querySelector(".next-token-explorer__fallback").hidden=true;
   }
   function labelTables() {
