@@ -121,7 +121,7 @@ Attribuer un score à un texte ne suffit pas à évaluer un modèle. Le scoring 
 | **Encodeur-décodeur** | Produit une sortie conditionnée par une entrée ; adapté notamment aux tâches séquence-à-séquence | [Transformer original](https://arxiv.org/abs/1706.03762), [T5](https://jmlr.org/papers/v21/20-074.html) |
 | **Décodeur seul** | Traite un contexte causal et prédit les tokens suivants | [GPT-3](https://arxiv.org/abs/2005.14165) |
 
-**GPT** (*Generative Pre-trained Transformer*) désigne une famille de Transformers **décodeur seul**, pré-entraînés à prédire le prochain token. C'est le type de modèle qui prolonge la question d'Amonbofis : il lit ce qui précède et prédit ce qui suit. Ce que chaque famille peut lire, et pour quelle tâche, fait l'objet de la [comparaison des architectures Transformer](transformer-architectures.qmd).
+**GPT** (*Generative Pre-trained Transformer*) désigne une famille de Transformers **décodeur seul**, pré-entraînés à prédire le prochain token. C'est le type de modèle qui prolonge la question de Panoramix : il lit ce qui précède et prédit ce qui suit. Ce que chaque famille peut lire, et pour quelle tâche, fait l'objet de la [comparaison des architectures Transformer](transformer-architectures.qmd).
 
 LLM Lab étudie un petit GPT décodeur seul, parce que son calcul peut être suivi et programmé de bout en bout ; le [parcours Build](build-path.qmd) le construit pas à pas. C'est un choix pédagogique : ses dimensions ne reproduisent pas un système de production, et tous les LLM ne sont pas des GPT.
 
