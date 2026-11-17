@@ -96,12 +96,10 @@ def test_overview_preserves_cross_cutting_coverage_and_explicit_next_page(
 
     source = (ROOT / "site" / language / "llm-overview.qmd").read_text(encoding="utf-8")
     coverage_include = (
-        "{{< include ../includes/generated-guided-coverage-"
-        f"{language}-llm-overview.qmd >}}"
+        f"{{{{< include ../includes/generated-guided-coverage-{language}-llm-overview.qmd >}}}}"
     )
     suggested_route_include = (
-        "{{< include ../includes/generated-suggested-route-"
-        f"{language}-llm-overview.qmd >}}"
+        f"{{{{< include ../includes/generated-suggested-route-{language}-llm-overview.qmd >}}}}"
     )
     assert source.count(coverage_include) == 1
     assert source.count(suggested_route_include) == 1
