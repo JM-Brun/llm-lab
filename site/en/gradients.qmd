@@ -28,6 +28,10 @@ tags: ["type:concept-lesson", "destination:understand", "topic:gradients", "leve
 The gradient $\nabla_\theta\mathcal{L}$ collects partial derivatives of the loss with respect to learned parameters. It describes local objective variation; by itself, it does not guarantee global improvement.
 :::
 
+::: {.callout-note title="Gradient descent is not Newton's method"}
+Both methods use derivatives, but they use different information. **Gradient descent** uses the first derivative (the gradient) to choose a direction; **Newton's method** also uses curvature, represented by the Hessian in several dimensions, to scale and orient its step. Neural-network training commonly uses stochastic or minibatch gradients with optimizers such as Adam or AdamW—not a simplified Newton update. The methods are related, but one is not simply the other with a term removed.
+:::
+
 ::: {.callout-tip title="The one-minute mental model"}
 The loss tells us **what should improve**; the gradient tells us **how the loss changes when parameters change**. Backpropagation applies the chain rule to carry this information from the output back to the parameters.
 
