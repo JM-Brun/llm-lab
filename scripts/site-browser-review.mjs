@@ -1305,21 +1305,21 @@ async function runCase(testCase, caseIndex) {
           initialised: root.dataset.initialised || null,
           initialisationError: root.dataset.initialisationError || null,
           selectors: {
-            controls: Boolean(root.querySelector("[data-explorer-controls]")),
-            prefix: Boolean(root.querySelector("[data-prefix]")),
-            distribution: Boolean(root.querySelector("[data-distribution]")),
-            tokenChoice: Boolean(root.querySelector("[data-token-choice]")),
-            nextDistribution: Boolean(root.querySelector("[data-next-distribution]")),
+            controls: Boolean(root.querySelector(".next-token-explorer__interactive")),
+            prefix: Boolean(root.querySelector(".next-token-explorer__prefix")),
+            distribution: Boolean(root.querySelector(".next-token-explorer__distribution")),
+            tokenChoice: Boolean(root.querySelector(".next-token-explorer__choice")),
+            nextDistribution: Boolean(root.querySelector(".next-token-explorer__next")),
             append: Boolean(root.querySelector(".next-token-explorer__append")),
             reset: Boolean(root.querySelector(".next-token-explorer__reset")),
           },
         }));
-        const controls = explorer.locator("[data-explorer-controls]");
-        const prefix = explorer.locator("[data-prefix]");
-        const distribution = explorer.locator("[data-distribution]");
+        const controls = explorer.locator(".next-token-explorer__interactive");
+        const prefix = explorer.locator(".next-token-explorer__prefix");
+        const distribution = explorer.locator(".next-token-explorer__distribution");
         await controls.waitFor({ state: "visible", timeout: 5000 });
         const initialPrefix = (await prefix.textContent()).trim();
-        await explorer.locator("[data-token-choice]").selectOption("0");
+        await explorer.locator(".next-token-explorer__choice").selectOption("0");
         await explorer.locator(".next-token-explorer__append").click();
         const extendedPrefix = (await prefix.textContent()).trim();
         const expectedToken = lang === "fr" ? "Vous" : "They";
