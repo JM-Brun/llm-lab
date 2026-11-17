@@ -81,14 +81,14 @@ Une suite probable n'est pas une suite vraie. Que « Vous » soit probable aprè
 
 La figure présente le parcours complet d’un GPT autorégressif, de gauche à droite, puis la boucle de génération.
 
-1. [**Le texte d’entrée**](#guided-stage-orientation) constitue le préfixe : le prompt et, le cas échéant, les tokens déjà produits.
-2. [**Le tokenizer découpe le texte en tokens**](#guided-stage-text-input) et associe à chacun un identifiant entier ([Du texte aux tokens](text-data.qmd)).
-3. [**Les identifiants deviennent des représentations numériques**](#guided-stage-representations) grâce aux embeddings et à l’information de position ([Embeddings](embedding-space.qmd)).
-4. [**Les blocs Transformer transforment ces représentations**](#guided-stage-computation) : attention causale, MLP, connexions résiduelles et normalisation. Cette pile produit des représentations contextualisées ([Le Transformer dans un GPT](transformer.qmd)).
-5. [**La tête de sortie produit les logits**](#guided-stage-prediction), puis la softmax les convertit en une distribution de probabilités sur le vocabulaire ([Logits et probabilités](probabilites.qmd)).
-6. [**La règle de décodage sélectionne un token**](#guided-stage-inference). Ce choix est extérieur au calcul du Transformer ; le token est ajouté au préfixe, puis une nouvelle passe calcule la distribution suivante ([Générer du texte](generation.qmd)).
+1. [**Le texte d’entrée**](learning-map.qmd#guided-stage-orientation) constitue le préfixe : le prompt et, le cas échéant, les tokens déjà produits.
+2. [**Le tokenizer découpe le texte en tokens**](learning-map.qmd#guided-stage-text-input) et associe à chacun un identifiant entier ([Du texte aux tokens](text-data.qmd)).
+3. [**Les identifiants deviennent des représentations numériques**](learning-map.qmd#guided-stage-representations) grâce aux embeddings et à l’information de position ([Embeddings](embedding-space.qmd)).
+4. [**Les blocs Transformer transforment ces représentations**](learning-map.qmd#guided-stage-computation) : attention causale, MLP, connexions résiduelles et normalisation. Cette pile produit des représentations contextualisées ([Le Transformer dans un GPT](transformer.qmd)).
+5. [**La tête de sortie produit les logits**](learning-map.qmd#guided-stage-prediction), puis la softmax les convertit en une distribution de probabilités sur le vocabulaire ([Logits et probabilités](probabilites.qmd)).
+6. [**La règle de décodage sélectionne un token**](learning-map.qmd#guided-stage-inference). Ce choix est extérieur au calcul du Transformer ; le token est ajouté au préfixe, puis une nouvelle passe calcule la distribution suivante ([Générer du texte](generation.qmd)).
 
-Cette vue générale est le repère commun du parcours. Les numéros de la figure correspondent aux étapes du rail : [01 · Situer le système](#guided-stage-orientation), [02 · Du texte aux tokens](#guided-stage-text-input), [03 · Des identifiants aux représentations](#guided-stage-representations), [04 · Comprendre le calcul du Transformer](#guided-stage-computation), [05 · Des états à la distribution prédictive](#guided-stage-prediction) et [06 · Exécuter l'inférence](#guided-stage-inference). Les pages liées approfondissent chaque étape sans refaire le schéma complet. La tokenisation réelle peut produire des unités plus petites ou plus grandes qu’un mot ; les architectures et les méthodes d’encodage de position varient selon les modèles.
+Cette vue générale est le repère commun du parcours. Les numéros de la figure correspondent aux étapes du rail : [01 · Situer le système](learning-map.qmd#guided-stage-orientation), [02 · Du texte aux tokens](learning-map.qmd#guided-stage-text-input), [03 · Des identifiants aux représentations](learning-map.qmd#guided-stage-representations), [04 · Comprendre le calcul du Transformer](learning-map.qmd#guided-stage-computation), [05 · Des états à la distribution prédictive](learning-map.qmd#guided-stage-prediction) et [06 · Exécuter l'inférence](learning-map.qmd#guided-stage-inference). Les pages liées approfondissent chaque étape sans refaire le schéma complet. La tokenisation réelle peut produire des unités plus petites ou plus grandes qu’un mot ; les architectures et les méthodes d’encodage de position varient selon les modèles.
 
 ## Un calcul, trois usages {#one-computation-three-uses}
 
