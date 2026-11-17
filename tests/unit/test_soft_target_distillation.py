@@ -14,7 +14,7 @@ def test_soft_target_student_recovers_teacher_distribution() -> None:
     teacher = module["TEACHER"]
     student = module["fit_student"](teacher)
 
-    assert max(abs(a - b) for a, b in zip(student, teacher)) < 0.002
+    assert max(abs(a - b) for a, b in zip(student, teacher, strict=True)) < 0.002
 
 
 def test_soft_targets_retain_more_teacher_information_than_one_hot_label() -> None:
