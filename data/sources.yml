@@ -4736,3 +4736,83 @@ sources:
       pages: [fr/rag-memory-boundaries, en/rag-memory-boundaries]
       concepts: [retrieval-augmented-generation]
       audit_records: [docs/source-reviews/dailydose-main-path-2026-11.md]
+
+
+  - id: dailydose-visual-guide-bi-cross-colbert-2025
+    title: "Visual Guide to Bi-encoders, Cross-encoders and ColBERT"
+    creators: ["Avi Chawla"]
+    source_type: tutorial
+    identifiers: {}
+    canonical_url: "https://blog.dailydoseofds.com/p/visual-guide-to-bi-encoders-cross"
+    publisher: "Daily Dose of Data Science"
+    publication_date: "2025-06-12"
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: inference-efficiency
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:information-retrieval, method:bi-encoder, method:cross-encoder, method:late-interaction]
+      concept_ids: [retrieval-augmented-generation, contextualized-representation]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [architecture, pedagogy, visualization]
+      audiences: [learner, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "Canonical article text and architecture descriptions for cross-encoders, bi-encoders and ColBERT."
+          - "Links to Part 1, AugSBERT and the ColBERT/ColBERTv2 RAG implementation article."
+        limitations:
+          - "The article's embedded hero/architecture image was not retrieved as an asset; image contents and reuse rights remain unverified."
+          - "The article is a visual explainer, not a primary research source; technical claims are corroborated against ColBERT papers."
+          - "The claim that a cross-encoder must score every corpus document describes exhaustive brute-force scoring, not a required deployment pattern; candidate generation can limit the reranking set."
+    related:
+      pages: [fr/cosine-similarity, en/cosine-similarity, fr/rag-memory-boundaries, en/rag-memory-boundaries]
+      concepts: [retrieval-augmented-generation, contextualized-representation]
+      audit_records: [docs/source-reviews/dailydose-main-path-2026-11.md]
+  - id: faysse-etal-2025-colpali
+    title: "ColPali: Efficient Document Retrieval with Vision Language Models"
+    creators: ["Manuel Faysse", "Hugues Sibille", "Tony Wu", "Bilel Omrani", "Gautier Viaud", "Céline Hudelot", "Pierre Colombo"]
+    source_type: paper
+    identifiers: {arxiv: "2407.01449"}
+    canonical_url: "https://proceedings.iclr.cc/paper_files/paper/2025/hash/99e9e141aafc314f76b0ca3dd66898b3-Abstract-Conference.html"
+    publisher: "International Conference on Learning Representations"
+    publication_date: "2025"
+    updated_date: null
+    language: en
+    version: "ICLR 2025"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: link-only}
+    classification:
+      primary_theme: inference-efficiency
+      secondary_themes: [architectures-mechanisms, scale-research]
+      tags: [topic:visual-document-retrieval, topic:multimodal-rag, method:late-interaction, method:multi-vector]
+      concept_ids: [retrieval-augmented-generation, contextualized-representation]
+    metadata:
+      technical_level: advanced
+      contribution_types: [architecture, experiment, benchmark, visualization]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "ICLR 2025 abstract, Figure 1 architecture comparison, Figure 3 token-pooling/interpretability visual, retrieval method, ViDoRe benchmark scope, key results and memory/latency discussion."
+        limitations:
+          - "Complete appendices, all benchmark splits, implementation code and all model checkpoints were not audited."
+          - "Reported nDCG@5 and latency values are tied to ViDoRe, the paper's hardware and protocol; not generalized."
+          - "Original paper figures are linked, not reproduced; reuse rights were not independently established."
+          - "The paper's ViDoRe training/evaluation overlap differs by task; interpret its zero-shot and in-domain claims per dataset."
+    related:
+      pages: [fr/rag-memory-boundaries, en/rag-memory-boundaries]
+      concepts: [retrieval-augmented-generation, contextualized-representation]
+      audit_records: [docs/source-reviews/dailydose-main-path-2026-11.md]
