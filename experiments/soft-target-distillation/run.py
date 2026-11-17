@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import math
+import sys
 
 TEACHER = (0.7, 0.2, 0.1)
 HARD_TARGET = (1.0, 0.0, 0.0)
@@ -33,7 +34,7 @@ def cross_entropy(target: tuple[float, ...], predicted: tuple[float, ...]) -> fl
         raise ValueError("Target must be a probability distribution")
     if any(value <= 0 for value in predicted) or not math.isclose(sum(predicted), 1.0):
         raise ValueError("Prediction must be a strictly positive probability distribution")
-    return -sum(q * math.log(p) for q, p in zip(target, predicted) if q > 0)
+    return -sum(q * math.log(p) for q, p in zip(target, predicted, strict=True) if q > 0)
 
 
 def kl_divergence(target: tuple[float, ...], predicted: tuple[float, ...]) -> float:
@@ -59,7 +60,7 @@ def fit_student(
         predicted = softmax(logits)
         logits = [
             value - learning_rate * (probability - desired)
-            for value, probability, desired in zip(logits, predicted, target)
+            for value, probability, desired in zip(logits, predicted, target, strict=True)
         ]
     return softmax(logits)
 
@@ -106,7 +107,7 @@ def main() -> None:
             "No compression bitstream is constructed in this experiment.",
         ],
     }
-    print(json.dumps(report, indent=2))
+    sys.stdout.write(json.dumps(report, indent=2) + "\\n")
     if not report["identity_check"]:
         raise AssertionError("Cross-entropy/KL identity failed")
     if report["soft_target_student"]["teacher_kl"] >= report["one_hot_student"]["teacher_kl"]:
