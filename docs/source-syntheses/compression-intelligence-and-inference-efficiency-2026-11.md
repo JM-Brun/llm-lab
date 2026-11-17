@@ -125,3 +125,8 @@ Finally, the article's FEP section is explicitly a lay interpretation. Surprisal
 Integrate the two-part MDL framing and the model-update/agent comparison into this dossier. Keep the musician analogy as optional complementary pedagogy. Defer any canonical page or graph changes until primary references and learner benefit are verified. Do not create a duplicate entropy, compression or intelligence concept solely to mirror this source's vocabulary.
 
 Source review: [Lewis, “Intelligence and compression”](../source-reviews/lewish-intelligence-and-compression-2025.md). Structured provenance and atomic dispositions: [source extraction](../../data/extractions/lewish-intelligence-and-compression-2025.yml).
+
+
+## 10. Précision complémentaire — AIXI et dépendance au langage de référence
+
+La formulation d'AIXI comme agent universellement optimal doit toujours être rapportée à son cadre formel. La distribution universelle dépend du choix de la machine de Turing universelle (UTM) qui définit les descriptions des environnements. Le travail ultérieur de Leike et Hutter, [“On the Computability of AIXI” / analyse des universal priors](https://www.hutter1.net/publ/saixicplex.pdf), documente des cas où un choix malheureux ou adversarial de l'UTM peut modifier fortement le comportement ; il invite donc à ne pas lire les garanties comme une mesure absolue et indépendante de toute représentation. AIXI reste en outre incomputable dans sa forme idéale. Cette dépendance ne réfute pas le cadre, mais précise la portée de ses garanties : elles sont relatives à la classe d'environnements, à la distribution universelle et à la machine de référence choisies.
