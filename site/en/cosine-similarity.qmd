@@ -61,6 +61,26 @@ Two texts can be lexically or topically close while expressing opposite facts (â
 
 Sentence Transformers models do not all target the same scoring function: some are trained or recommended for dot product, others for cosine. Sentence Transformers documentation explains that dot product between normalized vectors is equivalent to cosine, while dot product on unnormalized vectors retains magnitude information. Respect the assumptions of the chosen model instead of replacing its default metric without evaluation.
 
+
+## Encoding a text pair: bi-encoder or cross-encoder?
+
+Sentence-pair similarity also depends on **how the model encodes the texts**. Two common architectures serve different constraints:
+
+| | Bi-encoder | Cross-encoder |
+|---|---|---|
+| Encoding | Each text is encoded independently by the same model. | The two texts are combined and processed jointly. |
+| Typical output | Two reusable vectors, compared afterwards with an appropriate metric. | A pair-specific score computed after the texts interact. |
+| Strength | Documents can be encoded and indexed in advance; large-corpus retrieval is efficient. | The model can account for interactions between both texts while scoring the pair. |
+| Limitation | The texts cannot interact directly during encoding; quality depends strongly on the training objective and data. | Every candidate pair must be processed again; scoring a query against an entire corpus is expensive. |
+
+A common pipeline combines them: a **bi-encoder** quickly retrieves candidate passages, then a **cross-encoder** re-ranks that shortlist by scoring each queryâ€“passage pair. A cross-encoder is therefore not necessarily a replacement for vector retrieval; it can be a more discriminating second stage applied to a small candidate set.
+
+This distinction also explains why a contextualized state from a pretrained BERT model is not automatically a good sentence embedding: pooling, training objective, pair examples, and target task all matter. Choose a sentence or retrieval encoder evaluated for the intended use, then measure ranking quality on representative queries. A high similarity score is neither proof of logical equivalence nor a guarantee of relevance.
+
+**AugSBERT** illustrates another trade-off: use a cross-encoder to produce pair scores or labels, then train a faster bi-encoder to reproduce those judgments. The article's detailed account and implementation are only partially accessible; see [Part 2](https://www.dailydoseofds.com/augsbert-bi-encoders-cross-encoders-for-sentence-pair-similarity-scoring-part-2/) as optional further reading, not as independent performance validation.
+
+For how this combination fits into an information-retrieval system, see [RAG, memory, and document retrieval](rag-memory-boundaries.qmd).
+
 ## 3. When cosine is a reasonable choice
 
 Cosine is a reasonable baseline when:
