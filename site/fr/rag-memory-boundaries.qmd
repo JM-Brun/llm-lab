@@ -181,6 +181,12 @@ Pour chaque information réutilisée, conserver si possible sa source, son ident
 
 **Règle à retenir :** une information externe n'influence pas la prédiction du modèle simplement parce qu'elle existe ou a été retrouvée. Elle doit franchir le mécanisme de transmission — dans le contexte ou via un outil effectivement utilisé — puis être correctement exploitée.
 
+### Exemple d'implémentation : recherche vectorielle
+
+Le [tutoriel Hugging Face sur la recherche sémantique avec FAISS](https://huggingface.co/learn/llm-course/en/chapter5/6) construit un petit moteur de recherche à partir d'embeddings de commentaires GitHub, d'un index de voisins proches et d'une requête. Il illustre une implémentation possible du bloc « indexation → recherche → sélection » du schéma RAG, pas un système RAG complet.
+
+La similarité vectorielle ne garantit ni la pertinence factuelle ni la qualité de la réponse. Le modèle d'embedding, le pooling, la normalisation, la métrique, le découpage documentaire, les filtres et le protocole d'évaluation doivent être adaptés à la tâche. Évaluez au minimum la qualité de récupération séparément de la qualité de génération.
+
 ## Limites
 
 Cette page décrit des principes d'architecture, pas une implémentation RAG unique ni une taxonomie universelle de la mémoire. Les garanties doivent être établies par des tests de bout en bout, pas déduites de la seule présence d'un index ou d'un prompt.
