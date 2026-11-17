@@ -38,7 +38,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-re
   <span class="epistemic-badge badge-status">Architecture : Blocs Transformer</span>
 </div>
 
-Deux phrases peuvent contenir le même token sans lui donner le même rôle : *avocat* désigne une personne qui défend ses clients dans l'une, un fruit dans l'autre. Pourtant, le tokenizer peut attribuer le même ID aux deux occurrences. **Le lookup ne change pas ; c'est le traitement de la séquence par le Transformer qui construit des états cachés dépendant du contexte.**
+Dans la tirade d'Otis, le mot *situation* apparaît dans « de bonne ou de mauvaise situation ». On peut le reprendre dans une paraphrase pédagogique — « la situation d'Otis comme scribe » — sans prétendre citer le film. En supposant un ID commun pour isoler le mécanisme, le lookup initial est identique ; la position et le contexte diffèrent. **Le Transformer construit ensuite des états cachés contextualisés.**
 :::
 
 ::: {.callout-tip title="L'idée à retenir en une minute"}
@@ -86,14 +86,14 @@ Ce schéma est une illustration originale et simplifiée, et non une reproductio
 
 ## Ce qui reste identique
 
-Supposons que le token visible `avocat` soit représenté par le même ID dans deux phrases :
+Reprenons le mot `situation` dans deux formulations liées à la scène d'Otis :
 
-- « Il consulte son avocat. »
-- « Elle mange un avocat. »
+- Extrait de la tirade : « de bonne ou de mauvaise situation » ;
+- Paraphrase explicative, qui n'est pas une réplique du film : « la situation d'Otis comme scribe ».
 
-Sous cette hypothèse explicite, les deux occurrences récupèrent le même **vecteur de plongement initial** (embedding) :
+Pour isoler le mécanisme, supposons que le tokenizer attribue le même ID au mot dans les deux occurrences. Elles récupèrent alors le même **vecteur de plongement initial** :
 
-$e_{\text{avocat}} = E[\text{ID}_{\text{avocat}}]$
+$e_{\text{situation}} = E[\text{ID}_{\text{situation}}]$
 
 Le lookup est un accès à une table. Il n'examine pas les mots voisins, ne déduit pas le sens visé et ne produit pas un vecteur propre à chaque phrase.
 
