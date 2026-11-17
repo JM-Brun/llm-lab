@@ -15,6 +15,7 @@ GENERATOR: dict[str, Any] = runpy.run_path(
 )
 
 
+@pytest.mark.parametrize("language", ["fr", "en"])
 def test_guided_route_stage_anchors_are_stable(language: str) -> None:
     pages = [page for page in GENERATOR["load_pages"]() if page["language"] in {language, "shared"}]
     stages = GENERATOR["load_guided_route"](language, pages)
@@ -321,5 +322,3 @@ def test_rail_and_page_context_use_identical_stage_ids(language: str) -> None:
     assert 'href="#guided-stage-' + stages[0].id + '"' in rail
     assert 'data-stage-id="' + stages[0].id + '"' in context
 
-
-@pytest.mark.parametrize("language", ["fr", "en"])
