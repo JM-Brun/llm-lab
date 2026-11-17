@@ -53,6 +53,23 @@ Un pipeline typique comprend :
 6. **Classement** : fusion, *reranking*, dédoublonnage et sélection des passages.
 7. **Restitution** : retour des extraits, identifiants, scores et métadonnées à l'application.
 
+
+### Familles de retrievers : des alternatives, pas une échelle unique
+
+Le retriever de première étape et le classeur de seconde étape sont deux choix distincts. La génération des candidats peut être lexicale, dense, sparse apprise, hybride ou structurée ; le reranking est facultatif et ne fait que réordonner les candidats déjà retrouvés.
+
+| Famille | Représentation et recherche | Utile lorsque | Principal compromis |
+|---|---|---|---|
+| Lexicale (ex. BM25) | Termes et index inversé | Noms exacts, identifiants, termes rares, correspondances auditables | Vocabulaire différent et paraphrases |
+| Bi-encoder dense | Un vecteur par requête/document ; recherche de voisins proches | Paraphrases sémantiques et indexation documentaire réutilisable | Les indices fins entre tokens sont comprimés dans un vecteur |
+| Sparse appris (ex. SPLADE) | Poids appris et creux par terme ; index inversé | Besoin de correspondance lexicale et d'expansion apprise | Postings sparse pondérés plus volumineux et coûts propres au modèle |
+| Interaction tardive (ex. ColBERT) | Plusieurs vecteurs contextualisés par token ; MaxSim | Correspondances fines avec encodage documentaire hors ligne | Index multi-vecteurs plus lourd et service plus complexe |
+| Cross-encoder reranker | Traitement conjoint requête–candidat | Réordonner une courte liste avec des indices de paire plus riches | Coût proportionnel au nombre et à la longueur des paires candidates |
+
+Un système hybride peut combiner des retrievers de première étape complémentaires avant un reranker, mais la fusion est un choix empirique, pas une amélioration garantie. L'évaluation hétérogène BEIR identifie BM25 comme une baseline robuste et rapporte une forte efficacité moyenne du reranking et de l'interaction tardive, avec des coûts de calcul plus élevés. Voir [BEIR (Thakur et al., 2021)](https://arxiv.org/abs/2104.08663), [SPLADE (Formal et al., 2021)](https://arxiv.org/abs/2107.05720) et [ColBERT (Khattab et Zaharia, 2020)](https://arxiv.org/abs/2004.12832).
+
+**Il faut distinguer le rappel des candidats de la qualité de leur classement.** Un reranker ne peut pas récupérer des passages pertinents absents de sa liste d'entrée. Rapporter Recall@k pour la génération des candidats et des métriques de classement comme MRR@k ou nDCG@k après reranking, avec latence, taille d'index et coût. Évaluer sur plusieurs domaines lorsque l'usage hors domaine est important.
+
 La recherche n'est **pas nécessairement vectorielle**. BM25 et les index inversés sont lexicaux ; les embeddings denses permettent une recherche par proximité ; SQL et les filtres de métadonnées apportent des contraintes exactes. Le RAG ne requiert donc pas systématiquement une base vectorielle ni des embeddings.
 
 Un embedding de document est une représentation numérique utile à la recherche, pas le texte source. Le moteur l'utilise pour localiser des candidats ; le système doit ensuite restituer le contenu pertinent ou le rendre accessible au modèle. Le découpage compte : des segments trop courts perdent leur contexte, des segments trop longs diluent l'information et consomment davantage de tokens, et des frontières arbitraires peuvent séparer une affirmation de ses réserves.
