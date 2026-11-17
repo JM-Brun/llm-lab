@@ -5253,3 +5253,47 @@ sources:
       audit_records:
         - docs/source-reviews/hesam-sheikh-llm-study-roadmap-2026-11.md
         - data/extractions/hesam-sheikh-llm-study-roadmap-2024.yml
+- id: notion-intelligence-compression-summary
+    title: "Intelligence = Compression"
+    creators: ["Notion page author not identified"]
+    source_type: notes
+    identifiers: {}
+    canonical_url: "https://jealous-speedwell-b32.notion.site/Intelligence-Compression-4c8d01d16ebf4dc98c5c5cb85ea825c8"
+    publisher: "Notion"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:compression, topic:algorithmic-information-theory, topic:intelligence]
+      concept_ids: [entropy, cross-entropy, next-token-prediction, kolmogorov-complexity]
+    metadata:
+      technical_level: introductory
+      contribution_types: [theory, pedagogy, historical-context]
+      audiences: [beginner, learner]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "All 29 lines exposed by the public Notion page reader, including the Hutter Prize, AIXI, compression, cognition and cognitive-architecture sections"
+          - "Hutter Prize claims checked against the official prize website"
+          - "Compared with existing LLM Lab entropy, cross-entropy, predictive-compression and algorithmic-information-theory sources"
+        limitations:
+          - "The Notion page exposes no identifiable author, publication date, revision history or references for its claims about Wolpert and Sharov."
+          - "The page is a short overview, not a primary research source; cited claims about AIXI and Kolmogorov complexity are not demonstrated in the page."
+          - "No embedded figures, comments, linked references beyond the visible links, or reuse permissions were audited."
+          - "The page contains a malformed enwik9 size expression ('first 109 bytes'); the official benchmark defines enwik9 as 10^9 bytes."
+          - "The prize description is simplified and partly stale; use the official Hutter Prize rules and current records for factual details."
+    related:
+      pages: [en/entropy, fr/entropy, en/cross-entropy, fr/cross-entropy]
+      concepts: [entropy, cross-entropy, next-token-prediction, kolmogorov-complexity]
+      audit_records:
+        - docs/source-reviews/notion-intelligence-compression-2026-11.md
+        - data/extractions/notion-intelligence-compression-summary.yml
