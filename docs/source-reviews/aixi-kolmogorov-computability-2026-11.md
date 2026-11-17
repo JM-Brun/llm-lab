@@ -20,13 +20,13 @@ The chain must be taught as four distinct objects:
 
 For a reference universal prefix machine (U),
 
-$
+$$
 K_U(x)=\min_{p:U(p)=x}|p|.
-$
+$$
 
-The invariance theorem means that changing the reference universal machine changes the value by at most an additive constant independent of (x). That constant matters for finite objects, so K is not an absolute machine-free number.
+The invariance theorem means that changing the reference universal machine changes the value by at most an additive constant independent of $x$. That constant matters for finite objects, so K is not an absolute machine-free number.
 
-K is **upper semicomputable**: enumerate candidate programs, simulate them, and update the best known description whenever a shorter program outputs (x). This process can improve an upper bound, but there is no general stopping test proving that no shorter program will ever halt and output (x). K is therefore not computable in general.
+K is **upper semicomputable**: enumerate candidate programs, simulate them, and update the best known description whenever a shorter program outputs $x$. This process can improve an upper bound, but there is no general stopping test proving that no shorter program will ever halt and output (x). K is therefore not computable in general.
 
 A practical compressor produces a computable code length under its own representation and protocol. It gives a usable description, hence an upper bound in a compatible coding setup; it does not calculate exact Kolmogorov complexity.
 
@@ -36,17 +36,17 @@ Primary source: Hutter (2007), Section 3.2; see also the background treatment in
 
 A universal algorithmic mixture assigns weight to outputs through the programs that generate them. In a prefix-free formulation:
 
-$
+$$
 M_U(x)=\sum_{p:U(p)=x*}2^{-|p|}.
-$
+$$
 
-where the sum is over minimal programs that output a string beginning with (x).
+where the sum is over minimal programs that output a string beginning with $x$.
 
 The shortest-program contribution gives a lower bound of the form
 
-$
+$$
 M_U(x)\geq 2^{-K_U(x)}.
-$
+$$
 
 under the corresponding universal-machine conventions. The universal mixture is a semimeasure and is lower semicomputable, but not computable exactly. It is not a normalized probability distribution in the ordinary sense without qualification.
 
@@ -70,9 +70,9 @@ Leike & Hutter (2015) sharpen the statement: in the standard/iterative formulati
 
 The notation is easy to misread. In the Hutter construction:
 
-- (t) bounds the computation time available to each candidate policy per interaction cycle;
-- (l) bounds the length of candidate programs/policies;
-- in the later proof-validated formulation, (l_P) bounds the length of proofs certifying that a candidate's value estimate is a valid lower approximation.
+- $t$ bounds the computation time available to each candidate policy per interaction cycle;
+- $l$ bounds the length of candidate programs/policies;
+- in the later proof-validated formulation, $l_P$ bounds the length of proofs certifying that a candidate's value estimate is a valid lower approximation.
 
 It is not simply “the environment has at most (t) time and (l) space”. Hutter also studies time- and length-bounded environment models, but the AIXI(t,l) agent construction is based on a restricted class of candidate policies/programs.
 
@@ -90,19 +90,19 @@ The 2024 textbook makes the proof condition explicit: candidate policies return 
 
 The detailed construction gives the per-cycle bound
 
-$
+$$
 T_{\mathrm{cycle}}=O(t\,2^l).
-$
+$$
 
 The exponential factor counts the candidate-program space. In the later formalization, the proof-enumeration setup cost is separately bounded by
 
-$
+$$
 T_{\mathrm{setup}}=O(l_P^2\,2^{l_P}).
-$
+$$
 
 These are asymptotic statements with very large hidden constants. The algorithm is computable in principle, but this does not make it practically tractable. The exponential dependence on (l) is the central obstacle; the proof machinery adds another substantial cost.
 
-**Notation guardrail:** the detailed construction in Hutter's introduction and Section 6, and the later 2024 textbook theorem, support $O(t\,2^l)$ per cycle. Do not flatten superscripts into ambiguous (O(t2l)), and do not silently replace the bound by (O(t^2l)).
+**Notation guardrail:** the detailed construction in Hutter's introduction and Section 6, and the later 2024 textbook theorem, support $O(t\,2^l)$ per cycle. Do not flatten superscripts into ambiguous $O(t\,2^l)$, and do not silently replace the bound by $O(t^2l)$.
 
 ### What the optimality statement means
 
@@ -114,7 +114,7 @@ AIXI(t,l) is compared with candidate policies in a restricted resource-bounded c
 |---|---|
 | “No general solution because K is not computable” | Exact K is uncomputable; AIXI's noncomputability concerns the universal mixture and optimal sequential decision calculation. Leike & Hutter show that the standard/iterative exact policy is not limit computable, while a recursive ε-optimal variant is limit computable. |
 | “Hutter proved the restricted case AIXI(t,l)” | Hutter constructed a computable resource-bounded agent and established a relative optimality result over a restricted class of bounded candidates. |
-| “The environment is restricted to time t and space l” | (t) and (l) bound candidate computation time per cycle and candidate program length in the AIXI(t,l) construction; later formalization adds proof-length (l_P). |
+| “The environment is restricted to time t and space l” | $t$ and $l$ bound candidate computation time per cycle and candidate program length in the AIXI(t,l) construction; later formalization adds proof-length $l_P$. |
 | “Runs in O(t2l)” | Per-cycle $O(t\,2^l)$; later proof-validation setup has a separate $O(l_P^2\,2^{l_P})$ bound. |
 
 ## 7. Relationship to LLMs and compression
