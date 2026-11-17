@@ -4949,3 +4949,49 @@ sources:
       pages: [en/training-loop, fr/training-loop, en/gradients, fr/gradients, en/loss, fr/loss, en/likelihood, fr/vraisemblance, en/probabilities, fr/probabilites]
       concepts: [training-objective, cross-entropy, negative-log-likelihood, sequence-likelihood, gradient, parameter-update, training-loop, logits, decoding-policy, next-token-prediction, entropy-coding]
       audit_records: []
+  - id: maor-farid-large-mechanical-model-brep-geometry-2026
+    title: "AI and mechanical design: a Large Mechanical Model for B-rep geometry"
+    creators: ["Maor Farid"]
+    source_type: blog
+    identifiers: {linkedin_post_id: "7469852823074111490"}
+    canonical_url: "https://www.linkedin.com/posts/maorfaridphd_ai-mechanicaldesign-mehcanicalengineers-ugcPost-7469852823074111490-ZO-w/"
+    publisher: "LinkedIn"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: "Public post, visible comments and embedded transcript accessed 2026-11-17"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [architectures-mechanisms, probabilistic-foundations-training]
+      tags: [topic:predictive-compression, topic:mechanical-design, topic:geometric-representation, application:computer-aided-design, modality:video]
+      concept_ids: [predictive-compression, entropy, cross-entropy, contextualized-representation]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [theory, architecture, pedagogy]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "Public post text and visible comments."
+          - "Accessible transcript of the embedded 3Blue1Brown video on prefix-free coding, information, entropy and language prediction."
+          - "Commentary on preserving design intent and selecting CAD-native input representations."
+        limitations:
+          - "The LinkedIn media asset was not independently retrieved; visual frames were not inspected."
+          - "The transcript is text-only; the video is separately catalogued as 3blue1brown-reinventing-entropy-compression-intelligence-part-1-2026."
+          - "No LMM paper, model card, implementation, CAD dataset or independent benchmark was inspected."
+          - "B-rep information-density and generic-LLM limitation claims are author assertions, not established comparative results."
+          - "Visible comments are attributed separately and are not treated as verified evidence."
+          - "The publication date is not reliably exposed; no date is inferred from the relative-age label."
+    related:
+      pages: [fr/entropy, en/entropy, fr/compression-revision, en/compression-revision, fr/llm-limits, en/llm-limits]
+      concepts: [predictive-compression, entropy, cross-entropy, contextualized-representation]
+      audit_records:
+        - docs/source-reviews/maor-farid-large-mechanical-model-brep-geometry-2026.md
+        - data/extractions/maor-farid-large-mechanical-model-brep-geometry-2026.yml
+        - docs/source-syntheses/compression-intelligence-and-inference-efficiency-2026-11.md
