@@ -34,6 +34,10 @@ Un **pas d'entraînement** prend un batch de préfixes observés et de cibles, e
 Une seconde mesure accompagne l'entraînement : la même loss calculée sur des données de **validation** qui ne produisent jamais de mise à jour. La loss d'entraînement dit dans quelle mesure le modèle s'ajuste à ce sur quoi il est ajusté ; la loss de validation estime si cet ajustement se transfère.
 :::
 
+::: {.callout-note title="Et si vous n'avez pas de GPU local ?"}
+La boucle d'entraînement ne dépend pas intrinsèquement de la machine qui l'exécute. Une fois le programme testable localement, vous pouvez le lancer sur un GPU managé avec Hugging Face Jobs : le code Python reste séparé du launcher, qui choisit l'image, le GPU, le timeout et le stockage persistant. Consultez la [recette distante bilingue](https://github.com/JM-Brun/llm-lab/tree/main/experiments/huggingface-jobs) pour le flux complet, les commandes et les limites. Cette option est facultative ; elle ne remplace pas une loss de validation indépendante.
+:::
+
 <div class="pipeline-stepper" role="group" aria-label="Opérations d'un pas d'entraînement">
   <span class="step-item">1. Batch</span>
   <span class="step-arrow" aria-hidden="true">→</span>
