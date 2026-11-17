@@ -48,7 +48,7 @@ Pour des paramètres fixés, la vraisemblance indique la probabilité que le mod
 </div>
 
 
-Dans le fil rouge, la vraisemblance de la continuation se construit à partir des probabilités conditionnelles de ses tokens successifs : chaque probabilité est évaluée avec le préfixe disponible à cette étape, enrichi des tokens précédemment observés.
+Pour une continuation observée, la vraisemblance se construit à partir des probabilités conditionnelles de ses tokens successifs : chaque probabilité est évaluée avec le préfixe disponible à cette étape, enrichi des tokens précédemment observés.
 
 ## Factorisation autorégressive
 
