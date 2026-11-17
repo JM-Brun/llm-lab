@@ -76,6 +76,10 @@ Les lois d'échelle sont des modèles empiriques, pas des lois physiques. Leur e
 
 Pour comparer des résultats, il faut donc vérifier la métrique, la distribution d'évaluation, le budget de calcul, le nombre de tokens, la taille du modèle et les conditions expérimentales. Une courbe de perte ne remplace pas une évaluation ciblée.
 
+### Un signal complémentaire : l'efficacité de compression prédictive
+
+Huang et al. (COLM 2024) rapportent, sur 31 modèles de base et 12 benchmarks, une corrélation de Pearson d'environ **-0,93** entre le BPC mesuré sur des corpus externes et les scores agrégés ; les corrélations par domaine vont d'environ -0,935 à -0,953. Ce résultat est lié à l'échelle des modèles, mais **ce n'est pas une loi d'échelle** : l'étude ne démontre pas une loi de puissance entre ressources d'entraînement et perte, ni un effet causal de la compression sur les capacités. Le BPC dépend du domaine et du corpus, et taille, données et architecture peuvent influencer les deux mesures. Il s'agit d'un signal empirique complémentaire, à confronter aux variables d'échelle et aux évaluations par tâche. Voir la [fiche de révision sur la compression prédictive](compression-revision.qmd) et la [revue critique de l'étude](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-reviews/huang-zhang-shan-he-compression-intelligence-linearly-2024.md).
+
 ## Références
 
 - Kaplan et al. (2020), [*Scaling Laws for Neural Language Models*](https://arxiv.org/abs/2001.08361).
