@@ -15,6 +15,7 @@ GENERATOR: dict[str, Any] = runpy.run_path(
 )
 
 
+@pytest.mark.parametrize("language", ["fr", "en"])
 def test_membership_projection_preserves_core_optional_and_multiple_contexts(
     language: str,
 ) -> None:
@@ -108,5 +109,3 @@ def test_membership_projection_keeps_empty_membership_absent() -> None:
     assert memberships["en/optional"][0].role == "optional"
     assert "en/unassigned" not in memberships
 
-
-@pytest.mark.parametrize("language", ["fr", "en"])
