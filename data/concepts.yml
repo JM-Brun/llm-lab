@@ -821,8 +821,8 @@ concepts:
     importance: specialized
     labels: {fr: "AIXI", en: "AIXI"}
     definitions:
-      fr: "Agent universel théorique qui combine le mélange probabiliste universel de Solomonoff avec la maximisation de récompense en décision séquentielle ; il est optimal dans un sens formel donné, mais incalculable."
-      en: "Theoretical universal agent combining Solomonoff's universal probabilistic mixture with reward maximization in sequential decision-making; it is optimal in a specified formal sense but incomputable."
+      fr: "Agent universel théorique qui combine le mélange universel sur les semi-mesures chronologiques énumérables avec la maximisation de récompense en décision séquentielle ; il est optimal dans un sens formel donné, mais incalculable."
+      en: "Theoretical universal agent combining the universal mixture over enumerable chronological semimeasures with reward maximization in sequential decision-making; it is optimal in a specified formal sense but incomputable."
     domains: [architectures-mechanisms, probabilistic-foundations-training]
     resources: [fr/universal-artificial-intelligence, en/universal-artificial-intelligence]
   - id: aixi-tl
