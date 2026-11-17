@@ -10,7 +10,7 @@ LLM-LAB-PAGE-MAP v1
 id: "fr/transformer-block-walkthrough-exercises"
 summary: "Exercices associés à la visite guidée Bloc Transformer."
 scope: "Regroupe les exercices et corrigés de la visite guidée sans dupliquer l'explication du code."
-purpose: "Vérifier la compréhension des invariants, des formes et des choix d'implémentation présentés dans la visite guidée."
+purpose: "Vérifier les invariants, les formes et les choix d'implémentation du bloc, ainsi que la comparaison des variantes d'attention."
 suggested_route:
   previous: null
   next: null
@@ -38,6 +38,16 @@ tags: ["type:exercise-hub", "destination:practice", "topic:reference-transformer
 
 
 3. Q et K déterminent les scores de compatibilité entre positions ; le softmax de ces scores pondère V, qui transporte l'information agrégée. Les projections Q, K et V partent du même flux normalisé. La projection O mélange les sorties des têtes ; son résultat est ajouté au flux résiduel d'origine. La normalisation reste dans la branche, pas sur le chemin résiduel direct.
+</details>
+
+
+3. Un bloc possède 32 têtes Q. Comparez le nombre de têtes KV en MHA, MQA et GQA avec 8 groupes. À dimensions identiques, quel est le rapport entre leurs tailles de cache KV ?
+4. Une fenêtre glissante de 256 tokens et GQA avec 8 têtes KV optimisent-ils le même facteur ? Expliquez ce qui change dans chaque cas.
+<details>
+<summary>Afficher les réponses et le raisonnement</summary>
+
+3. MHA : 32 têtes KV ; MQA : 1 ; GQA : 8. À longueur de contexte, nombre de couches, dimension de tête et précision identiques, le cache K/V est proportionnel au nombre de têtes KV : GQA utilise donc 1/4 du cache MHA, MQA 1/32.
+4. Non. GQA partage les états K/V entre plusieurs têtes Q et réduit le nombre de têtes KV stockées. La fenêtre limite les positions historiques consultées et modifie le motif de connexions. Les deux mécanismes peuvent être combinés ; leurs effets ne s'additionnent pas en un unique facteur universel.
 </details>
 
 ::: {.language-switch}
