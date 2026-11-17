@@ -5376,11 +5376,15 @@ sources:
         inspected_scope:
           - "arXiv v2 abstract, introduction, formal compression background, experimental protocol, main results and selected discussion (PDF pages 0–9)"
           - "Repository README, reported BPC leaderboard, corpus descriptions, evaluation entry point, OpenCompass integration and data-collection pipeline links"
+          - "Evaluation implementation: evaluation/main.py and evaluation/packed_dataset.py, inspected statically"
+          - "Hugging Face dataset metadata and README licence statements"
           - "Mapped claims and methods to existing predictive-compression, cross-entropy, entropy-coding and evaluation concepts"
         limitations:
           - "The complete 22-page paper and appendices were not audited; only selected main-text pages and the repository README were inspected."
-          - "No evaluation script, corpus-processing pipeline or OpenCompass integration was executed."
-          - "Released datasets, split construction and licensing were not independently inspected; the repository states a primary CC BY-NC-SA 4.0 dataset licence subject to stricter source terms."
+          - "No evaluation script, corpus-processing pipeline or OpenCompass integration was executed; no independent reproduction was performed."
+          - "The packed-dataset mutable-offset concern is based on static inspection; no runtime failure was reproduced."
+          - "The full dataset was not downloaded; dataset split construction, per-source provenance and source-corpus licences were not independently audited."
+          - "The repository reports MIT for code and CC BY-NC-SA 4.0 for the dataset, subject to underlying source terms; no wholesale redistribution right is inferred."
           - "The reported correlations concern selected pretrained base models and three domain-aligned corpora; they establish neither causation nor a universal definition of intelligence."
           - "No reuse permission for paper figures, repository assets or dataset content was established; retain link-only treatment."
     related:
