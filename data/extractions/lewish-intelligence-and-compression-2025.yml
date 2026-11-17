@@ -130,7 +130,7 @@ items:
     disposition: integrate-by-reference
     disposition_rationale: "Retain as an optional analogy; do not copy the article's score image."
   - id: lewish-intelligence-and-compression-2025:forward-reverse-enwik8
-    kind: empirical-claim
+    kind: result
     summary: "The article reports lower compressed size for forward than reversed enwik8 with gzip, ppmd and zpaq."
     locator: {type: section, value: "Good compressors will leverage causal dependencies"}
     evidence: {kind: source-reported-result, confidence: unverified, scope: "One reported corpus and three named compressors.", assumptions: ["Same data bytes and compressor configuration are used in both directions.", "Reverse preprocessing and output accounting are comparable."], limitations: ["Exact versions, settings, checksums and scripts are not supplied in the inspected article text.", "Differences are modest and cannot establish a universal causal law."]}
