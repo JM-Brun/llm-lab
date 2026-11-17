@@ -72,6 +72,39 @@ Un système hybride peut combiner des retrievers de première étape complément
 
 La recherche n'est **pas nécessairement vectorielle**. BM25 et les index inversés sont lexicaux ; les embeddings denses permettent une recherche par proximité ; SQL et les filtres de métadonnées apportent des contraintes exactes. Le RAG ne requiert donc pas systématiquement une base vectorielle ni des embeddings.
 
+
+### Quand le document est visuel : ColPali et la recherche à l'échelle de la page
+
+L'extraction de texte n'est pas toujours la meilleure représentation initiale. Les articles scientifiques, PDF numérisés, formulaires, tableaux et infographies peuvent contenir des éléments essentiels dans leur mise en page, leurs schémas, graphiques et relations spatiales. Un pipeline classique peut nécessiter OCR, détection de mise en page, extraction de tableaux, légendes et découpage en segments avant la recherche textuelle.
+
+**ColPali** suit une autre voie : un modèle vision-langage encode chaque image de page en plusieurs vecteurs de patchs contextualisés. Une requête textuelle est encodée en vecteurs de tokens, puis un score d'interaction tardive de type ColBERT rapproche les tokens de la requête des patchs de la page. Cela peut préserver des indices visuels que l'OCR et le découpage risquent de perdre, tout en évitant une longue chaîne de prétraitement.
+
+```{mermaid}
+flowchart TD
+  A[Image de page PDF] --> B[OCR + mise en page + extraction tableaux / figures]
+  B --> C[Segments textuels et légendes]
+  C --> D[Index lexical / dense textuel]
+  D --> E[Récupérer et classer les pages]
+  Q[Requête textuelle] --> E
+  A2[Image de page PDF] --> V[Encodeur de page vision-langage]
+  V --> M[Index multi-vecteurs de patchs]
+  Q --> QE[Encodeur de tokens de requête]
+  M --> LI[Interaction tardive / MaxSim]
+  QE --> LI
+  LI --> R[Classer les pages pertinentes]
+  E --> H[Éléments de preuve sélectionnés]
+  R --> H
+  H --> G[Réponse fondée sur les pages]
+```
+
+La [figure 1 de l'article ColPali](https://proceedings.iclr.cc/paper_files/paper/2025/file/99e9e141aafc314f76b0ca3dd66898b3-Paper-Conference.pdf) compare visuellement le parcours classique OCR/mise en page/légendes avec l'encodage direct des images de pages ; la figure 3 montre aussi des cartes de chaleur reliant les tokens de requête aux patchs d'image. Ce sont des références visuelles externes, pas des figures reproduites ici.
+
+**Cela ne signifie pas que « la vision gagne toujours ».** Sur le benchmark ViDoRe de l'article, ColPali rapporte un nDCG@5 moyen de 81,3 contre 66,1 pour le meilleur pipeline textuel listé dans cette comparaison ; ce résultat dépend du benchmark et ne constitue pas un classement universel. Le même article rapporte environ 257,5 Ko de vecteurs par page, environ 30 ms pour encoder une requête, et discute les compromis de mémoire/latence ainsi que le *token pooling*. Ses résultats montrent aussi que des encodeurs vision contrastifs génériques ne deviennent pas automatiquement de bons retrievers documentaires : l'entraînement spécifique à la tâche et l'alignement multi-vecteurs comptent.
+
+Cette famille est pertinente lorsque la structure visuelle fait partie des preuves et qu'une recherche à l'échelle de la page suffit. Conserver l'extraction textuelle ou structurée lorsque les étapes suivantes exigent des extraits exacts, du texte accessible, des citations précises, des valeurs de tableaux ou des filtres déterministes. Un système hybride peut retrouver visuellement des pages, puis extraire ou vérifier la zone pertinente avant la génération.
+
+Référence primaire : [Faysse et al. (ICLR 2025), ColPali: Efficient Document Retrieval with Vision Language Models](https://proceedings.iclr.cc/paper_files/paper/2025/hash/99e9e141aafc314f76b0ca3dd66898b3-Abstract-Conference.html). Pour une courte présentation visuelle, voir le [guide illustré Daily Dose sur les bi-encodeurs, cross-encodeurs et ColBERT](https://blog.dailydoseofds.com/p/visual-guide-to-bi-encoders-cross).
+
 Un embedding de document est une représentation numérique utile à la recherche, pas le texte source. Le moteur l'utilise pour localiser des candidats ; le système doit ensuite restituer le contenu pertinent ou le rendre accessible au modèle. Le découpage compte : des segments trop courts perdent leur contexte, des segments trop longs diluent l'information et consomment davantage de tokens, et des frontières arbitraires peuvent séparer une affirmation de ses réserves.
 
 ## 3. RAG : récupérer puis construire le contexte
