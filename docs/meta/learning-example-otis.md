@@ -1,4 +1,4 @@
-# Référence pédagogique transversale — le fil rouge du scribe
+# Référence éditoriale — exemple partagé dans les pages françaises
 
 **Statut :** référence éditoriale interne ; ne pas reproduire ses explications dans les pages publiques  
 **Langues :** français et anglais  
@@ -9,9 +9,9 @@
 
 ## 1. Intention
 
-Utiliser comme fil rouge la scène du scribe Otis dans *Astérix et Obélix : Mission Cléopâtre* (Alain Chabat, 2002), interprété par Édouard Baer. Le **contexte fourni au modèle (prompt / préfixe)** est la question de Panoramix : « C'est une bonne situation, ça, scribe ? ». La **continuation** commence par : « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... ». C'est cette inversion qui porte la démonstration : le prompt est déjà présent dans le contexte ; la boucle autoregressive produit ensuite la suite, token après token.
+Les pages françaises peuvent réutiliser naturellement quelques formulations courtes de la scène du scribe dans *Astérix et Obélix : Mission Cléopâtre* (Alain Chabat, 2002). Le préfixe est la question « C'est une bonne situation, ça, scribe ? » ; la continuation commence par « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... ». Cette référence culturelle est un easter egg, pas un sujet à annoncer dans chaque leçon ni une source scientifique. Elle doit rester discrète : employer les formulations quand elles éclairent réellement le concept, sans répéter « tirade d'Otis », « fil rouge » ou l'explication de la référence. Les fragments cités restent courts ; ne pas reproduire la tirade entière.
 
-La scène est une accroche culturelle, pas une source scientifique. L'exemple pédagogique ci-dessous est une **adaptation originale** : ne pas recopier la tirade du film. La référence IMDb identifie le rôle d'Otis : <https://www.imdb.com/fr/title/tt0250223/characters/nm0046347/>. Une présentation de la scène et de son contexte est également disponible dans [Le Parisien](https://www.leparisien.fr/culture-loisirs/cinema/ressortie-d-asterix-et-obelix-mission-cleopatre-le-monologue-dotis-encore-plus-interminable-04-07-2023-NA6P2W7M2JE6RA5WYVXEND4B4Q.php).
+La référence IMDb identifie le rôle d'Otis : <https://www.imdb.com/fr/title/tt0250223/characters/nm0046347/>. Une présentation de la scène et de son contexte est également disponible dans [Le Parisien](https://www.leparisien.fr/culture-loisirs/cinema/ressortie-d-asterix-et-obelix-mission-cleopatre-le-monologue-dotis-encore-plus-interminable-04-07-2023-NA6P2W7M2JE6RA5WYVXEND4B4Q.php).
 
 ### Pourquoi cet exemple fonctionne
 
@@ -122,7 +122,7 @@ Le Build path est une voie distincte du parcours Understand. Le même exemple se
 
 ### 4.3 Practice, Deepen et évaluation
 
-- **Exercises par page :** reprendre le même prompt ou une variante contrôlée pour demander au lecteur de prédire une étape, lire une forme tensorielle, interpréter une distribution ou repérer une confusion conceptuelle. Une variante doit annoncer ce qui change.
+- **Exercises par page :** reprendre un fragment ou une variante seulement lorsqu'il sert la notion travaillée. Les exercices peuvent aussi rester abstraits ou utiliser une autre séquence contrôlée lorsque c'est plus rigoureux ; préserver les exercices génériques utiles.
 - **Tokenization / Unicode Deepen :** conserver le texte avec accents et ponctuation ; comparer normalisation et segmentation sans laisser entendre que UTF-8 et tokenisation sont la même opération.
 - **Attention / math Deepen :** utiliser des matrices minuscules, valeurs calculées ou explicitement synthétiques, et préciser les dimensions.
 - **Decoding Deepen :** repartir des mêmes logits pour isoler température, top-k, top-p et arrêt ; une seule variable change à la fois.
