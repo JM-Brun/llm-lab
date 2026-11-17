@@ -1294,6 +1294,71 @@ async function runCase(testCase, caseIndex) {
       item.axe = { skipped: true, reason: "Axe runs once per page/language on desktop/light" };
     }
 
+    if (kind === "spine-overview") {
+      if (pageErrors.length) {
+        report.failures.push(pagePath + "/" + lang + "/" + label + "/" + theme + ": uncaught page errors: " + pageErrors.map(error => error.message).join(" | "));
+      }
+      const explorer = page.locator("[data-next-token-explorer]").first();
+      try {
+        if (await explorer.count() !== 1) throw new Error("expected exactly one next-token explorer");
+        item.nextTokenExplorerDiagnostics = await explorer.evaluate(root => ({
+          initialised: root.dataset.initialised || null,
+          initialisationError: root.dataset.initialisationError || null,
+          selectors: {
+            controls: Boolean(root.querySelector(".next-token-explorer__interactive")),
+            prefix: Boolean(root.querySelector(".next-token-explorer__interactive output")),
+            distribution: Boolean(root.querySelector(".next-token-explorer__interactive ul")),
+            tokenChoice: Boolean(root.querySelector(".next-token-explorer__interactive select")),
+            nextDistribution: Boolean(root.querySelectorAll(".next-token-explorer__interactive p")[1]),
+            append: Boolean(root.querySelectorAll(".next-token-explorer__interactive button")[0]),
+            reset: Boolean(root.querySelectorAll(".next-token-explorer__interactive button")[1]),
+          },
+        }));
+        const controls = explorer.locator(".next-token-explorer__interactive");
+        const prefix = explorer.locator(".next-token-explorer__interactive output");
+        const distribution = explorer.locator(".next-token-explorer__interactive ul");
+        await controls.waitFor({ state: "visible", timeout: 5000 });
+        const initialPrefix = (await prefix.textContent()).trim();
+        await explorer.locator(".next-token-explorer__interactive select").selectOption("0");
+        await explorer.locator(".next-token-explorer__interactive button").nth(0).click();
+        const extendedPrefix = (await prefix.textContent()).trim();
+        const expectedToken = lang === "fr" ? "Vous" : "They";
+        const expectedNext = lang === "fr" ? "savez" : "built";
+        if (extendedPrefix === initialPrefix || !extendedPrefix.includes(expectedToken)) {
+          throw new Error("selecting the first token did not extend the prefix");
+        }
+        if (!(await distribution.textContent()).includes(expectedNext)) {
+          throw new Error("the next conditional distribution was not displayed");
+        }
+        await explorer.locator(".next-token-explorer__interactive button").nth(1).click();
+        const resetPrefix = (await prefix.textContent()).trim();
+        if (resetPrefix !== initialPrefix) throw new Error("reset did not restore the original prefix");
+        item.nextTokenExplorer = { initialized: true, prefixExtended: true, nextDistributionShown: true, resetWorks: true };
+      } catch (error) {
+        item.nextTokenExplorer = { error: error.message };
+        report.failures.push(pagePath + "/" + lang + "/" + label + "/" + theme + ": next-token explorer failed: " + error.message);
+      }
+
+      const responsiveTables = page.locator(".responsive-card-table table");
+      const responsiveTableCount = await responsiveTables.count();
+      if (responsiveTableCount !== 2) {
+        report.failures.push(pagePath + "/" + lang + "/" + label + "/" + theme + ": expected two dense descriptive tables, found " + responsiveTableCount);
+      }
+      const enhancedTableCount = await page.locator(".responsive-card-table table.responsive-card-table__enhanced").count();
+      if (responsiveTableCount && enhancedTableCount !== responsiveTableCount) {
+        report.failures.push(pagePath + "/" + lang + "/" + label + "/" + theme + ": only " + enhancedTableCount + "/" + responsiveTableCount + " responsive tables were enhanced");
+      }
+      if (responsiveTableCount && viewport.width <= 700) {
+        const mobileCells = await page.locator(".responsive-card-table table.responsive-card-table__enhanced tbody td").evaluateAll(cells =>
+          cells.map(cell => ({ display: getComputedStyle(cell).display, label: cell.dataset.label || "" }))
+        );
+        if (mobileCells.some(cell => cell.display !== "grid" || !cell.label)) {
+          report.failures.push(pagePath + "/" + lang + "/" + label + "/" + theme + ": responsive table cells are not rendered as labelled mobile cards");
+        }
+      }
+      item.responsiveTables = { count: responsiveTableCount, enhanced: enhancedTableCount };
+    }
+
     if (kind === "homepage" && pageErrors.length) {
       report.failures.push(`${pagePath}/${lang}/${label}/${theme}: uncaught page errors: ${pageErrors.join(" | ")}`);
     }
@@ -1304,8 +1369,13 @@ async function runCase(testCase, caseIndex) {
     const blockingAxe = (item.axe.violations || []).filter(v => ["aria-allowed-attr", "color-contrast", "nested-interactive"].includes(v.id));
     item.axe.blockingViolationCount = blockingAxe.length;
     if (blockingAxe.length) {
+      const details = blockingAxe.flatMap(violation =>
+        violation.nodes.slice(0, 8).map(node =>
+          `${violation.id} ${node.target.join(" ")}: ${(node.failureSummary || node.html || "no node details").replace(/\\s+/g, " ").slice(0, 700)}`
+        )
+      );
       report.failures.push(
-        `${pagePath}/${lang}/${label}/${theme}: Axe blocking violations: ${blockingAxe.map(v => v.id).join(", ")}`
+        `${pagePath}/${lang}/${label}/${theme}: Axe blocking violations: ${blockingAxe.map(v => v.id).join(", ")}. ${details.join(" | ")}`
       );
     }
     // Quarto renders each equation inside its pandoc math span client-side.
