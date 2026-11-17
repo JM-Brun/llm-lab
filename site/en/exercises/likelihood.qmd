@@ -26,6 +26,17 @@ tags: ["type:exercise-hub", "destination:practice", "topic:vraisemblance-exercis
 
 ## Check your understanding
 
+### Calculate likelihood for the running example {#ex-overview-likelihood-transfer}
+
+In the overview example, the model assigns $P(\\text{They}\\mid q)=0.6$, then $P(\\text{built}\\mid q,\\text{They})=0.5$. Calculate the likelihood and log-likelihood of the observed continuation “They built”, then its NLL.
+
+<details>
+<summary>Show the worked answer</summary>
+
+By the chain rule, $P(\\text{They},\\text{built}\\mid q)=0.6\\times0.5=0.3$. The log-likelihood is $\\ln(0.3)\\approx-1.204$ nats and the NLL is $-\\ln(0.3)\\approx1.204$ nats. Token independence is not assumed: the second term is conditioned on the first.
+
+</details>
+
 [Practice with the mathematical foundations collection](../exercises.qmd#foundations), including worked exercises on negative log-likelihood and perplexity.
 
 1. Why use log-likelihood rather than the direct product?
