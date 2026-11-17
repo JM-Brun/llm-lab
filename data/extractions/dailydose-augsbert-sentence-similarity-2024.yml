@@ -1,0 +1,74 @@
+schema_version: 1
+source_id: dailydose-augsbert-sentence-similarity-2024
+scan:
+  accessed_at: "2026-11-17"
+  retrieval_method: direct-canonical-html
+  author_text:
+    status: partial
+    coverage: "Recap; visible definitions and comparison of cross-encoders and bi-encoders; AugSBERT motivation and high-level method; labelled-pair data scenario through the beginning of augmentation."
+    notes: ["The article becomes paywalled in the detailed augmentation discussion."]
+  figures_media:
+    status: partial
+    coverage: "Image placeholders and placements identified."
+    notes: ["Image bytes and reuse rights not inspected."]
+  code_data: {status: not-inspected, coverage: null, notes: ["No implementation or dataset inspected or executed."]}
+  comments: {status: not-inspected, coverage: null, notes: []}
+  linked_resources: {status: partial, coverage: "Part 1 article and one cited NER paper link identified.", notes: ["No exhaustive outbound-link audit."]}
+  metadata: {status: complete, coverage: "Author, title, date and canonical URL.", notes: []}
+  rights: {status: partial, coverage: "No reuse licence established.", notes: ["Text and figures remain link-only."]}
+  unresolved_questions:
+    - "AugSBERT training details, implementation and dataset-regime variants need the original paper and code for complete verification."
+items:
+  - id: dailydose-augsbert-sentence-similarity-2024:cross-encoder
+    kind: mechanism
+    summary: "A cross-encoder concatenates the two texts and processes them jointly, allowing token-level interactions between the pair; it returns a pair-specific score and must process each candidate pair separately."
+    locator: {type: section, value: "Cross-encoders, lines 123–130", label: "Joint pair encoding"}
+    evidence: {kind: secondary-technical-explanation, confidence: well-supported, scope: "Cross-encoder architecture for pair scoring.", assumptions: [], limitations: ["Accuracy advantage is task- and training-dependent, not a universal guarantee."]}
+    technical_assessment: {status: qualified, rationale: "The architectural distinction is correct; performance claims require task-specific evaluation.", corroborating_sources: []}
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "The current LLM Lab page explains retrieval and reranking but not this encoder-level distinction explicitly."}
+      complementarity: {level: high, rationale: "Makes the computational reason for reranking-after-retrieval concrete."}
+      pedagogical_value: {level: high, rationale: "Explains why the expensive pair model is applied to a shortlist rather than every corpus item."}
+      applicability: {level: high, rationale: "Fits a bounded optional explanation on the existing cosine/retrieval deep dive."}
+      redundancy: {level: low, rationale: "The current page describes reranking as a stage but does not explain the encoder architecture."}
+      evidence_quality: {level: moderate, rationale: "Directly visible secondary explanation; primary architecture references should be added in a future technical verification pass."}
+    candidate_destinations: {pages: [fr/cosine-similarity, en/cosine-similarity, fr/rag-memory-boundaries, en/rag-memory-boundaries], concepts: [contextualized-representation, retrieval-augmented-generation]}
+    disposition: integrate
+    disposition_rationale: "Add a concise, explicitly optional explanation of pairwise joint encoding and its role in reranking."
+  - id: dailydose-augsbert-sentence-similarity-2024:bi-encoder
+    kind: mechanism
+    summary: "A bi-encoder applies a shared encoder independently to each text and produces reusable sentence embeddings; precomputed document vectors support scalable candidate retrieval, while the texts do not interact during encoding."
+    locator: {type: section, value: "Bi-encoders, lines 131–143", label: "Independent encoding"}
+    evidence: {kind: secondary-technical-explanation, confidence: well-supported, scope: "Bi-encoder architecture for sentence-pair similarity and retrieval.", assumptions: [], limitations: ["The quality of the vector space depends on pooling, training objective, data and domain; not every BERT checkpoint is a suitable sentence encoder."]}
+    technical_assessment: {status: qualified, rationale: "The architecture is sound; efficiency and quality depend on model, indexing and task.", corroborating_sources: []}
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "Makes reusable sentence-level representations distinct from token-level contextual states."}
+      complementarity: {level: high, rationale: "Connects embeddings and cosine geometry to a practical retrieval architecture."}
+      pedagogical_value: {level: high, rationale: "Explains why a corpus can be encoded once and queried repeatedly."}
+      applicability: {level: high, rationale: "Fits the current cosine-similarity and RAG lessons."}
+      redundancy: {level: low, rationale: "No equivalent architecture comparison is currently explicit."}
+      evidence_quality: {level: moderate, rationale: "Directly visible secondary explanation; task-specific model claims need primary validation."}
+    candidate_destinations: {pages: [fr/cosine-similarity, en/cosine-similarity, fr/rag-memory-boundaries, en/rag-memory-boundaries], concepts: [contextualized-representation, retrieval-augmented-generation]}
+    disposition: integrate
+    disposition_rationale: "Integrate as a concise contrast with cross-encoders, not as a new mandatory route stage."
+  - id: dailydose-augsbert-sentence-similarity-2024:augsbert
+    kind: mechanism
+    summary: "AugSBERT uses a cross-encoder to produce additional pair labels or similarity targets and trains a bi-encoder to approximate those richer pairwise judgments at lower inference cost."
+    locator: {type: section, value: "AugSBERT, lines 145–163", label: "Hybrid training strategy"}
+    evidence: {kind: secondary-technical-explanation, confidence: well-supported, scope: "High-level description visible before the paywall.", assumptions: [], limitations: ["Detailed training recipes and reported results are not available in the inspected public portion."]}
+    technical_assessment: {status: qualified, rationale: "The high-level teacher/labeler-to-student-encoder pattern is visible; exact recipe and performance require the primary paper.", corroborating_sources: []}
+    pedagogical_assessment:
+      novelty: {level: high, rationale: "Adds a concrete example of trading expensive pairwise labels for cheap reusable embeddings."}
+      complementarity: {level: high, rationale: "Connects model architecture to training-data generation and deployment trade-offs."}
+      pedagogical_value: {level: moderate, rationale: "Useful enrichment for experienced readers but not necessary to understand the main LLM mechanism."}
+      applicability: {level: moderate, rationale: "A short advanced note or linked reading is sufficient."}
+      redundancy: {level: low, rationale: "The current route does not discuss this retrieval-model training strategy."}
+      evidence_quality: {level: moderate, rationale: "High-level secondary account; implementation is paywalled."}
+    candidate_destinations: {pages: [fr/cosine-similarity, en/cosine-similarity], concepts: [contextualized-representation]}
+    disposition: integrate-by-reference
+    disposition_rationale: "Retain as optional advanced reading; do not add AugSBERT as a core concept or new stage."
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "The Part 2 article supplies the accessible architectural distinction missing from Part 1. Integrate bi-/cross-encoder roles in existing retrieval material; keep AugSBERT as an optional extension because its implementation is paywalled."
