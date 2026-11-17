@@ -53,6 +53,23 @@ A typical pipeline includes:
 6. **Ranking:** fusion, reranking, deduplication, and passage selection.
 7. **Return:** provide excerpts, identifiers, scores, and metadata to the application.
 
+
+### Retriever families: alternatives, not a single ladder
+
+The first-stage retriever and the second-stage ranker are separate design choices. Candidate generation may be lexical, dense, learned sparse, hybrid or structured; reranking is optional and only reorders candidates already found.
+
+| Family | Representation and retrieval | Useful when | Main trade-off |
+|---|---|---|---|
+| Lexical (e.g. BM25) | Terms and inverted index | Exact names, identifiers, rare terms, auditable matches | Vocabulary mismatch and paraphrases |
+| Dense bi-encoder | One vector per query/document; nearest-neighbour search | Semantic paraphrases and fast reusable document indexing | Fine-grained token evidence can be compressed into one vector |
+| Learned sparse (e.g. SPLADE) | Sparse learned term weights; inverted-index retrieval | Need lexical matching plus learned expansion | Larger/weighted sparse postings and model-specific costs |
+| Late interaction (e.g. ColBERT) | Multiple contextual token vectors; MaxSim | Fine-grained matching with offline document encoding | Larger multi-vector index and more complex serving |
+| Cross-encoder reranker | Joint query–candidate processing | Reordering a small shortlist with richer pairwise evidence | Cost grows with number and length of candidate pairs |
+
+A hybrid system can combine complementary first-stage retrievers before a reranker, but fusion is an empirical choice, not a guaranteed improvement. BEIR's heterogeneous evaluation finds BM25 to be a robust baseline and reports strong average effectiveness for reranking and late interaction alongside higher computational costs. See [BEIR (Thakur et al., 2021)](https://arxiv.org/abs/2104.08663), [SPLADE (Formal et al., 2021)](https://arxiv.org/abs/2107.05720), and [ColBERT (Khattab & Zaharia, 2020)](https://arxiv.org/abs/2004.12832).
+
+**Evaluation must separate candidate recall from ordering quality.** A reranker cannot recover relevant passages absent from its input shortlist. Report Recall@k for candidate generation and ranking measures such as MRR@k or nDCG@k after reranking, alongside latency, index size and cost. Evaluate on more than one domain when out-of-domain use matters.
+
 Search is **not necessarily vector-based**. BM25 and inverted indexes are lexical; dense embeddings support similarity search; SQL and metadata filters provide exact constraints. RAG therefore does not always require a vector database or embeddings.
 
 A document embedding is a numerical representation useful for search, not the source text. The search engine uses it to locate candidates; the system must then return relevant content or make it accessible to the model. Chunking matters: short chunks lose context, long chunks dilute information and consume more tokens, and arbitrary boundaries may separate a claim from its caveats.
