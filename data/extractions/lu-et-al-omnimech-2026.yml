@@ -1,0 +1,55 @@
+schema_version: 1
+source_id: lu-et-al-omnimech-2026
+items:
+  - id: lu-et-al-omnimech-2026:dataset-and-tasks
+    kind: dataset
+    summary: "OmniMech describes 251,000 paired industrial mechanical drawings and native editable CAD models with B-rep, mesh, multi-view renderings and feature-graph representations. Its four task families cover parametric CAD program synthesis, drawing-to-3D consistency, annotation-grounded constraint reasoning and tool-augmented reconstruction."
+    locator: {type: section, value: "Abstract and Sections 1–2"}
+    evidence:
+      kind: dataset-description
+      confidence: well-supported
+      scope: "Dataset size, modalities and task taxonomy claimed in the paper."
+      assumptions: []
+      limitations: ["Dataset licensing, access conditions, splits, deduplication and leakage controls have not been audited."]
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [scale-research, architectures-mechanisms]
+      tags: [topic:mechanical-reasoning, topic:benchmark, application:computer-aided-design, modality:multimodal]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [en/llm-limits, fr/llm-limits]
+    disposition: integrate
+  - id: lu-et-al-omnimech-2026:engineering-fidelity
+    kind: result
+    summary: "The paper reports that current general-purpose VLMs and CAD-specialized models still struggle with executable CAD synthesis, fine-grained 3D reconstruction and reliable enforcement of dimensions and tolerances. It emphasizes that visually plausible geometry is not sufficient for engineering-grade CAD."
+    locator: {type: section, value: "Abstract and Introduction"}
+    evidence:
+      kind: paper-reported-result
+      confidence: context-dependent
+      scope: "The benchmark authors' reported evaluation and motivation."
+      assumptions: []
+      limitations: ["The full quantitative tables, evaluation splits and baseline configurations must be audited before comparing individual models."]
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [scale-research]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [en/llm-limits, fr/llm-limits]
+    disposition: integrate
+  - id: lu-et-al-omnimech-2026:design-intent-as-data
+    kind: mechanism
+    summary: "The benchmark operationalizes parts of design intent through explicit dimensions, symbols, feature callouts and manufacturing constraints, paired with native CAD ground truth. This makes it possible to test whether a system preserves more than visual shape similarity."
+    locator: {type: section, value: "Sections 1–2"}
+    evidence:
+      kind: methodological-interpretation
+      confidence: well-supported
+      scope: "The evaluation dimensions described by the benchmark."
+      assumptions: ["The annotations and paired CAD ground truth adequately represent the intended task constraints."]
+      limitations: ["A benchmark annotation set cannot capture every tacit engineering judgment or downstream safety requirement."]
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [architectures-mechanisms]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [en/llm-limits, fr/llm-limits]
+    disposition: integrate
