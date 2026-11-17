@@ -34,6 +34,10 @@ A **training step** takes a batch of observed prefixes and targets, runs the for
 A second measurement runs alongside: the same loss computed on **validation** data that never produces an update. Training loss tells you how well the model fits what it is fitted to; validation loss estimates how well that fit carries over.
 :::
 
+::: {.callout-note title="What if you do not have a local GPU?"}
+The training loop does not inherently depend on the machine that runs it. Once the program has been smoke-tested locally, you can run it on a managed GPU with Hugging Face Jobs: Python training code stays separate from the launcher, which selects the image, GPU, timeout and persistent storage. See the [bilingual remote-training recipe](https://github.com/JM-Brun/llm-lab/tree/main/experiments/huggingface-jobs) for the workflow, commands and limitations. This is optional and does not replace an independent validation loss.
+:::
+
 <div class="pipeline-stepper" role="group" aria-label="Operations in one training step">
   <span class="step-item">1. Batch</span>
   <span class="step-arrow" aria-hidden="true">→</span>

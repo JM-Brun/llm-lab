@@ -4351,19 +4351,35 @@ sources:
           - "Official Hugging Face Jobs documentation: execution model, configuration, hardware flavors, timeout and pricing."
           - "Public post by David Louapre introducing the video and describing its NanoGPT/A100/Hugging Face Jobs demonstration."
           - "Third-party page reproducing a transcript attributed to the Hugging Face video: model size/configuration, TinyStories, uv runtime, Storage Bucket lifecycle and reported duration/cost."
-          - "Supplied GitHub URL was truncated and could not be identified or inspected."
+          - "Supplied GitHub URL was truncated at the time of the first review; the full repository was later supplied and inspected in a subsequent scan entry."
         limitations:
           - "The audiovisual video was not independently inspected; transcript details come from a third-party rendering, not a first-party transcript or code review. Publication date remains unknown."
-          - "Training code, shell script, exact hyperparameters, dependencies and logs remain uninspected; the transcript provides only a high-level account of data and artifact flow."
+          - "At the time of this first scan, the full repository had not yet been recovered; its later static code inspection is documented in the 2026-11-17 scan entry below."
           - "The approximate $1 A100 cost was not reproduced; current documented A100-large price is $2.50/hour."
           - "No remote job was launched and no training run was reproduced."
           - "No reuse licence was established; link-only treatment."
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "Full public repository scienceetonnante/nanogpt-jobs: README.md, train.py, run_on_hf.sh, requirements.txt and sample.py on master tree 781d0e4fe0513de8ec74654e75a39e4aa1809853."
+          - "Static code review of model architecture, tokenizer/data path, random-window sampling, optimizer/scheduler, mixed precision/compilation, checkpoint writes and output loading."
+          - "Static review of shell orchestration: private bucket creation, code sync exclusions, detached Jobs launch, container image, mounted persistent output directory, timeout and log/retrieval commands."
+          - "Created bilingual operational recipes and updated the source review and structured extraction."
+        limitations:
+          - "The audiovisual video was not independently watched; the original video remains transcript-assisted."
+          - "The code and shell launcher were inspected statically but not executed; no Hugging Face job was launched and no account logs or billed cost were inspected."
+          - "The repository does not implement held-out validation/test evaluation; the LLM Lab recipe proposes an additional controlled experiment."
+          - "The repository's requirements are not version-pinned and no random seed is fixed; exact reproducibility is not established."
+          - "No licence or reuse permission was established; code and text remain link-only."
     related:
       pages: [fr/training-loop, en/training-loop, fr/build-path, en/build-path, fr/evaluation-experimentale, en/experimental-evaluation]
       concepts: []
       audit_records:
         - docs/source-reviews/huggingface-jobs-nanogpt-video-2026-11.md
         - data/extractions/huggingface-jobs-nanogpt-video-2026.yml
+        - experiments/huggingface-jobs/README.fr.md
+        - experiments/huggingface-jobs/README.md
+
 
   - id: 3blue1brown-cross-entropy-compression-intelligence-part-2-2026
     title: "But what is cross-entropy? | Compression is Intelligence Part 2"

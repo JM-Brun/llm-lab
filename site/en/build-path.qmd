@@ -97,6 +97,10 @@ The same predictive computation maps a context to a conditional distribution ove
 
 The path explores generation first. A **randomly initialized** GPT has no learned language behavior to rely on: its shapes, causal mask and generation loop can be checked without demonstrating useful text. The example above returns IDs from a synthetic vocabulary; interpreting them as text would require a compatible tokenizer. This separation motivates the learning milestones: preparing [training examples](training-examples.qmd), optimizing a [loss](loss.qmd) with [gradients](gradients.qmd) — of which only the loss computations exist today (`losses.py`). The generation loop itself is detailed in [Generating text: inference step by step](generation.qmd).
 
+::: {.callout-note title="An optional route: run training on a remote GPU"}
+The Build path separates model implementation from the infrastructure that executes it. Once a training loop works locally, a managed GPU can be used as an on-demand accelerator: [Hugging Face Jobs recipe (EN/FR)](https://github.com/JM-Brun/llm-lab/tree/main/experiments/huggingface-jobs). The external repository illustrates this method; it is not an integrated LLM Lab training implementation and does not verify the project's G8/G9 milestones.
+:::
+
 ## Build milestones
 
 Before moving to the next step, produce or verify the indicated result; concept pages supply the mechanism, not proof that the code exists. The **G0–G9** identifiers are those of the [versioned build plan](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md); **G2** (training data) is a parallel branch: required before training, not for generation.
