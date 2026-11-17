@@ -254,3 +254,63 @@ No chapter order is imported into the canonical learning route. No source code, 
 ### Updated remaining scope
 
 Chapters 2–9 now have selected lesson-body review; Chapters 10–12 have deep lesson-text review. Chapters 0–1 were inspected at overview/introduction level. Remaining work, if a deeper audit is warranted, is to inspect selected Chapters 2–5 implementation details and notebooks, compare the French and English course variants systematically, pin an upstream revision, and execute any API example before turning it into maintained project code.
+
+
+## Follow-up review — implementation depth in Chapters 2–5 (2026-11-17)
+
+### Scope
+
+This pass deepens the earlier selected review of Chapters 2–5 by inspecting the current lesson bodies for batching/padding, Trainer evaluation, learning curves, model cards, Datasets transformations, memory mapping, streaming, dataset creation and FAISS semantic search. It is still a bounded documentation audit: no upstream revision was pinned; no course notebook or training job was executed; no dataset, embedding model or index was benchmarked. The public course is living documentation and some code/API examples may change.
+
+### Chapter 2 — Transformers in practice
+
+The chapter's pipeline walkthrough makes explicit the hand-off from raw text to tokenizer IDs and model tensors, then from logits to task-specific post-processing. Its multiple-sequence lesson demonstrates padding to a batch rectangle, attention masks for PAD positions and truncation for model length limits. These are useful operational details, but LLM Lab already covers tokenization, attention, text-to-token flow, autoregressive inference, context budgets and the distinctions between inference computation and token selection.
+
+**Decision:** no new chapter or duplicate pipeline diagram. The missing practical batching detail is handled once in the training-example page below, where variable-length sequences meet the batch. The chapter's optimized-inference deployment overview remains an optional library/serving reference; LLM Lab's inference page focuses on the underlying mechanics and serving concepts, not a Transformers deployment tutorial.
+
+**Caveat:** padding, truncation, attention masks and loss masks are different decisions. An attention mask that hides PAD inputs does not, by itself, prove that PAD targets are excluded from the loss. The correct policy depends on the model, objective and collator.
+
+### Chapter 3 — Fine-tuning and training loop
+
+The chapter's data-processing lesson demonstrates batched Dataset.map tokenization and dynamic padding with DataCollatorWithPadding; the Trainer lesson shows that successful train() calls do not imply useful evaluation, which requires a held-out eval_dataset, an evaluation schedule and a compute_metrics function when task metrics are wanted. The custom loop introduces AdamW, learning-rate scheduling and Accelerate's prepare()/backward() path for distributed/device handling. The learning-curves lesson contrasts train and validation loss/accuracy, overfitting and underfitting, and suggests early stopping and tracking tools.
+
+**What is already covered:** LLM Lab explains the mathematical training step, gradient/optimizer separation, train/validation/test roles, overfitting, and a tested tiny example. It intentionally does not implement a full Transformer Trainer stack or distributed training.
+
+**Decision:** keep the current training-loop explanation conceptual and link the official Trainer and custom-loop examples as optional implementation routes. The dynamic-padding detail belongs with construction of batches and training examples, not in the mathematical training-step page. No default optimizer, learning-rate schedule or precision mode is prescribed: those choices are task-, model-, hardware- and version-dependent.
+
+**Evaluation qualification:** loss and accuracy are not interchangeable. Accuracy can be stepwise and task-specific; lower training loss alone is not evidence of generalization. Use a validation protocol aligned with the intended deployment claim, retain a final test set for final reporting, and inspect error categories and data leakage as well as scalar curves. Early stopping is a model-selection decision on validation data, not a guarantee against overfitting.
+
+### Chapter 4 — Hub and model cards
+
+The course presents the Hub as a versioned Git-backed artifact-sharing platform and treats the model card as a central description of architecture/version, author and attribution, intended uses, limitations/bias, training data/procedure and evaluation results. LLM Lab already has a provenance-oriented Build path and now links to the model-card lesson.
+
+**Decision:** no duplicate model-card template in this increment. Keep the optional reference, and preserve the distinction between a repository's file history, internal experiment records, and the public model card. A model card documents claims and limitations; it does not independently verify them, establish rights, or guarantee reproducibility.
+
+### Chapter 5 — Datasets library
+
+The chapter covers loading local/remote datasets, transformations such as map, filter, shuffle, select, Pandas conversion, dataset creation and Hub publication, then scale strategies and a FAISS semantic-search example.
+
+**New distinctions integrated:**
+- Memory-mapped Arrow-backed datasets can access local cached files without loading the entire dataset into RAM; they still require storage and disk I/O.
+- Streaming yields examples as an IterableDataset without necessarily downloading the full corpus. It changes which operations are available and how order-dependent transforms work.
+- shuffle(buffer_size=...) on a stream is buffer-local, not a global random permutation. take() and skip() therefore depend on stream order and the shuffle protocol. A seed alone is not a complete leakage-safe split design.
+- Interleaving source streams changes the mixture distribution; sampling proportions should be explicit and justified.
+- Dataset cards document the shared artifact's purpose, source/data versions, methods, splits, fields, licensing/access information and known limitations, but do not replace internal provenance, rights review or leakage audits.
+
+**Decisions:** the bilingual corpus-preparation page now distinguishes memory mapping from streaming, explains buffer-based shuffle and source mixtures, and adds a dataset-card handoff checklist. This extends rather than duplicates the existing corpus curation, provenance and split-hygiene content.
+
+The course's FAISS example shows an end-to-end embedding retrieval workflow: create text embeddings, index vectors, retrieve nearest examples. LLM Lab already distinguishes retrieval, context supply and RAG, but does not prescribe a vector-search library. A short optional link is added to the bilingual RAG page, with a warning that vector similarity is not a guarantee of relevance and that retrieval and generation must be evaluated separately.
+
+**Caveats:** memory mapping is not streaming; neither is a data-quality filter. Streaming shuffle is approximate within its buffer. The course's example uses a particular embedding checkpoint and CLS pooling; neither is universally optimal. The example's semantic retrieval result is not an independent benchmark or proof of answer faithfulness.
+
+### Concrete bilingual integrations in this pass
+
+1. training-examples.qmd: dynamic padding at batch time, collator responsibilities, and the distinct roles of padding, attention masks and loss masks; explicitly warns against reusing a classification collator blindly for causal LM.
+2. corpus-preparation.qmd: memory mapping vs streaming, bounded-buffer shuffle, order-dependent take/skip, source-mixture proportions, and dataset-card documentation.
+3. rag-memory-boundaries.qmd: optional FAISS semantic-search implementation reference, with retrieval-vs-generation evaluation caveat.
+
+No API example from these lessons has been promoted to maintained executable project code. No training, Hub upload, FAISS index build or large-corpus benchmark was run.
+
+### Revised remaining work
+
+The selected lesson-body review now covers Chapters 2–12 at varying depth; Chapters 0–1 remain overview/introduction-level. Remaining work is not to import the whole course, but to decide whether any implementation example merits a small, pinned, reproducible optional notebook; compare the French and English lesson versions on the newly added details; and pin a course revision before making stronger claims about current API stability. Any runnable example should be tested in an isolated environment with explicit dependency versions and a small, license-clear dataset.
