@@ -15,7 +15,7 @@ purpose: "Choose the correct meaning of compression, calculate an ideal predicti
 domain: "probabilistic-foundations-training"
 suggested_route:
   previous: null
-  next: null
+  next: "en/universal-artificial-intelligence"
 hierarchy:
   parents: []
   children: ["en/universal-artificial-intelligence"]
