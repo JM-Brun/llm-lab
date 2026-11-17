@@ -216,6 +216,8 @@ Ces distinctions sont utiles pour passer des fondamentaux du modèle aux systèm
 - **Retrouver une définition courte :** [glossaire des LLM et des Transformers](glossary.qmd).
 :::
 
+{{< include ../includes/generated-guided-coverage-fr-llm-overview.qmd >}}
+
 ::: {.self-check}
 ## Vérifier sa compréhension
 
@@ -248,8 +250,6 @@ Pas nécessairement. Un système RAG récupère les documents récents à l'inf�
 
 </details>
 :::
-
-{{< include ../includes/generated-guided-coverage-fr-llm-overview.qmd >}}
 
 {{< include ../includes/generated-suggested-route-fr-llm-overview.qmd >}}
 
