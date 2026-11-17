@@ -8,10 +8,6 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[2]
 
-CANONICAL_CONTINUATIONS = {
-    "fr": "Être scribe, c'est relier des histoires.",
-    "en": "They built roads between distant towns.",
-}
 CORE_EXAMPLE_PAGES = (
     "llm-overview",
     "generation",
@@ -21,33 +17,44 @@ CORE_EXAMPLE_PAGES = (
     "contextualized-representations",
 )
 
+FRENCH_EXAMPLE_FRAGMENTS = {
+    "llm-overview": (
+        "C'est une bonne situation, ça, scribe ?",
+        "Vous savez, moi je ne crois pas",
+    ),
+    "generation": (
+        "C'est une bonne situation, ça, scribe ?",
+        "Vous savez, moi je ne crois pas",
+    ),
+    "text-data": (
+        "C'est une bonne situation, ça, scribe ?",
+        "Vous savez, moi je ne crois pas",
+    ),
+    "embedding-space": (
+        "C'est une bonne situation, ça, scribe ?",
+        "Vous savez, moi je ne crois pas",
+    ),
+    "positional-encoding": (
+        "C'est une bonne situation, ça, scribe ?",
+        "Vous savez, moi",
+    ),
+    "contextualized-representations": (
+        "de bonne ou de mauvaise situation",
+        "moi je ne crois pas",
+    ),
+}
 
-@pytest.mark.parametrize(
-    ("language", "continuation"),
-    [
-        ("fr", CANONICAL_CONTINUATIONS["fr"]),
-        ("en", CANONICAL_CONTINUATIONS["en"]),
-    ],
-)
-def test_understand_pages_reuse_one_canonical_continuation(
-    language: str, continuation: str
-) -> None:
-    for page_id in CORE_EXAMPLE_PAGES:
-        source = (ROOT / "site" / language / f"{page_id}.qmd").read_text(encoding="utf-8")
-        assert continuation in source, f"{language}/{page_id} diverges from the running example"
+ENGLISH_CONTINUATION = "They built roads between distant towns."
 
 
-@pytest.mark.parametrize(
-    "page_id",
-    [
-        "text-data",
-        "embedding-space",
-        "positional-encoding",
-        "contextualized-representations",
-    ],
-)
-def test_french_mechanism_pages_do_not_use_the_film_quote_as_the_target(
-    page_id: str,
-) -> None:
+@pytest.mark.parametrize("page_id", CORE_EXAMPLE_PAGES)
+def test_french_understand_pages_reuse_the_example_naturally(page_id: str) -> None:
     source = (ROOT / "site" / "fr" / f"{page_id}.qmd").read_text(encoding="utf-8")
-    assert "Vous savez, moi je ne crois pas" not in source
+    for fragment in FRENCH_EXAMPLE_FRAGMENTS[page_id]:
+        assert fragment in source, f"fr/{page_id} is missing {fragment!r}"
+
+
+@pytest.mark.parametrize("page_id", CORE_EXAMPLE_PAGES)
+def test_english_understand_pages_keep_their_own_running_example(page_id: str) -> None:
+    source = (ROOT / "site" / "en" / f"{page_id}.qmd").read_text(encoding="utf-8")
+    assert ENGLISH_CONTINUATION in source, f"en/{page_id} diverges from its running example"
