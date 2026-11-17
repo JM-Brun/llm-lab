@@ -169,7 +169,7 @@ The canonical concept graph adds `rope-inverse-frequency` and `causal-prefix-vis
 - Merged the current `main` commit `bd144f94d6d77418657aa305019976f0b2bc9ef8` into the positional-embeddings branch with merge commit `850c101122c910e9ab4db821d291feb71e18015e`. The merge preserves the RoPE work and the concurrent Hugging Face course / visual-learning-resource integrations.
 - Resolved the overlapping edits in `data/concepts.yml`, `data/sources.yml` and `docs/references.md` by retaining both branches' additions: three main-branch concepts and five relations, eight main-branch source records, and the visual-learning bibliography section.
 - The earlier red CI run was attached to commit `8602fa79b9f52f9819239cc44adfa7fe58c1d403`. Its source-catalogue failure was caused by the then-missing `pedagogical_model` field in this extraction. The field is present in the current extraction, and a later run on `afbdd6dc9cfab7872f39d3e55e15ce385d2e5d94` passed both CI and Quarto.
-- Those successful runs predate the merge commit and therefore do not validate the final merged tree. A fresh CI and Quarto run on the post-merge head remains required; do not treat the historical green checks as current-head validation.
+- At the time this section was first written, validation of the merged tree was still pending. The final PR-head Python CI and Quarto/browser audit subsequently completed successfully; see §10 for the final validation record.
 
 
 ## 9. P1 interactive experiences added (2026-11-17)
@@ -177,4 +177,17 @@ The canonical concept graph adds `rope-inverse-frequency` and `causal-prefix-vis
 - Added a six-layer hybrid RoPE/NoPE strip in French and English. Each layer can independently toggle local Q/K rotation; the causal mask remains explicitly present in every layer. The explanation distinguishes local operation from inherited hidden states and does not claim that positional information is always preserved or used.
 - Added a relative-bias score decomposition in French and English. The toy exposes the content score, relative offset, query-state feature and bias strength, and compares (i) an explicitly illustrative query-conditioned function, (ii) an explicitly illustrative T5-style bucket lookup, and (iii) no relative bias. It displays the pre-softmax score and does not pretend to recover trained Inkling/T5 parameters.
 - Registered both shared scripts and styles in Quarto, embedded both experiences in both language pages, and added canonical concepts and graph edges for hybrid RoPE/NoPE layers and query-conditioned relative bias.
-- The new experiences remain marked pending browser validation until the current CI/Quarto browser audit completes.
+- At the time this section was first written, the new experiences were pending browser validation. The PR-head Quarto/browser audit subsequently completed successfully; this did not replace manual keyboard and screen-reader testing, which remains a follow-up.
+
+
+## 10. Follow-up work after integration (2026-11-17)
+
+The implementation and automated site validation are complete for the scope of PR #1152. The remaining validation tasks are specified as an actionable plan in [Positional embeddings follow-up](../raschka-positional-embeddings-follow-up.md). The three core work packages are:
+
+1. Execute the statically inspected Qwen3 RoPE notebook path in a pinned, reproducible environment and compare numerical outputs with an independent reference.
+2. Test explicit position IDs and incremental KV-cache decoding, including non-zero offsets and negative regression cases for position resets or double rotation.
+3. Manually review all eight interactive experiences in French and English for keyboard operation, screen-reader semantics, responsive reflow, reduced motion and static fallback.
+
+A pixel-level inspection of the article's 38 original figures is conditional on legitimate access to the image assets; the existing review is explicitly a caption-and-context audit, not a visual inspection of those files. This conditional task is not a blocker for the three core packages.
+
+Do not interpret the successful PR CI/browser workflow as completion of these follow-ups. Record execution, automated tests and manual accessibility review as separate evidence.
