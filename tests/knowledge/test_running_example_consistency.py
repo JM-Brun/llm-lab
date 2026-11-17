@@ -39,6 +39,7 @@ FRENCH_EXAMPLE_FRAGMENTS = {
         "Vous savez, moi",
     ),
     "contextualized-representations": (
+        "une bonne situation, ça, scribe ?",
         "de bonne ou de mauvaise situation",
         "moi je ne crois pas",
     ),
