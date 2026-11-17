@@ -1,0 +1,37 @@
+schema_version: 1
+source_id: leo-ai-large-mechanical-model-overview-2025
+items:
+  - id: leo-ai-large-mechanical-model-overview-2025:parts-as-tokens
+    kind: claim
+    summary: "Leo AI's first-party page describes its LMM as using mechanical parts as tokens and being designed to work with CAD geometry and part relationships, rather than relying only on word tokens and textual descriptions."
+    locator: {type: section, value: "From Words to Parts: Introducing the Large Mechanical Model"}
+    evidence:
+      kind: first-party-product-description
+      confidence: unverified
+      scope: "Company description of its proprietary model and product direction."
+      assumptions: []
+      limitations: ["No architecture specification, tokenizer, training corpus details, model card or reproducible technical evaluation is provided."]
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:mechanical-reasoning, topic:geometric-representation, application:computer-aided-design]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [en/llm-limits, fr/llm-limits]
+    disposition: cite
+  - id: leo-ai-large-mechanical-model-overview-2025:performance-claims
+    kind: limitation
+    summary: "The page advertises quantified time savings, design-error reduction and time-to-market improvements reported by Leo customers. These are vendor-reported marketing claims and must not be presented as independently established causal effects."
+    locator: {type: section, value: "Bottom Line"}
+    evidence:
+      kind: vendor-claim
+      confidence: unverified
+      scope: "Commercial performance claims on the company website."
+      assumptions: []
+      limitations: ["No sample size, control group, baseline, measurement protocol or independent audit is provided on the page."]
+    classification:
+      primary_theme: scale-research
+      secondary_themes: [mathematical-tools-geometry]
+    candidate_destinations:
+      pages: [en/llm-limits, fr/llm-limits]
+    disposition: clarify
