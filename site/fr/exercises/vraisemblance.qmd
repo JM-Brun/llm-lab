@@ -28,12 +28,12 @@ tags: ["type:exercise-hub", "destination:practice", "topic:vraisemblance-exercis
 
 ### Calculer la vraisemblance du fil rouge {#ex-overview-likelihood-transfer}
 
-Dans l'exemple du panorama, le modèle attribue $P(\\text{Vous}\\mid q)=0,6$, puis $P(\\text{savez}\\mid q,\\text{Vous})=0,5$. Calculez la vraisemblance et la log-vraisemblance de la continuation observée « Vous savez », puis sa NLL.
+Dans l'exemple du panorama, le modèle attribue $P(\text{Vous}\mid q)=0,6$, puis $P(\text{savez}\mid q,\text{Vous})=0,5$. Calculez la vraisemblance et la log-vraisemblance de la continuation observée « Vous savez », puis sa NLL.
 
 <details>
 <summary>Afficher le corrigé</summary>
 
-Par la règle de chaîne, $P(\\text{Vous},\\text{savez}\\mid q)=0,6\\times0,5=0,3$. La log-vraisemblance vaut $\\ln(0,3)\\approx-1,204$ nat et la NLL vaut $-\\ln(0,3)\\approx1,204$ nat. On ne suppose pas les tokens indépendants : le second terme est conditionné par le premier.
+Par la règle de chaîne, $P(\text{Vous},\text{savez}\mid q)=0,6\times0,5=0,3$. La log-vraisemblance vaut $\ln(0,3)\approx-1,204$ nat et la NLL vaut $-\ln(0,3)\approx1,204$ nat. On ne suppose pas les tokens indépendants : le second terme est conditionné par le premier.
 
 </details>
 
