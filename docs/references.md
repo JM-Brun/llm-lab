@@ -309,3 +309,11 @@ These resources are curated for teaching design and guided experimentation. Incl
   - **Relationship to LLM Lab:** optional remote-execution recipe after a working training loop, not a core prerequisite or evidence that the project currently trains NanoGPT.
 - **Hugging Face — [Run and manage Jobs](https://huggingface.co/docs/huggingface_hub/en/guides/jobs), [configuration](https://huggingface.co/docs/hub/en/jobs-configuration), and [pricing](https://huggingface.co/docs/hub/en/jobs-pricing)**
   - **Use for:** current CLI/Python job execution, hardware flavors, timeouts, secrets and billing. Check the living documentation before launching paid compute.
+
+## Sentence embeddings and information retrieval
+
+- **Reimers & Gurevych (2019).** [Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks](https://aclanthology.org/D19-1410/). Primary source for the Siamese sentence-embedding architecture; weight tying is a property of this design, not a universal requirement for bi-encoders.
+- **Khattab & Zaharia (2020).** [ColBERT: Efficient and Effective Passage Search via Contextualized Late Interaction over BERT](https://arxiv.org/abs/2004.12832). Introduces contextualized late interaction and MaxSim.
+- **Santhanam et al. (2022).** [ColBERTv2: Effective and Efficient Retrieval via Lightweight Late Interaction](https://aclanthology.org/2022.naacl-main.272/). Residual compression and denoised supervision for late-interaction retrieval.
+- **Formal, Piwowarski & Clinchant (2021).** [SPLADE: Sparse Lexical and Expansion Model for First Stage Ranking](https://arxiv.org/abs/2107.05720). Learned sparse term-weight retrieval.
+- **Thakur et al. (2021).** [BEIR: A Heterogeneous Benchmark for Zero-shot Evaluation of Information Retrieval Models](https://arxiv.org/abs/2104.08663). Heterogeneous comparison of lexical, sparse, dense, late-interaction and reranking systems.
