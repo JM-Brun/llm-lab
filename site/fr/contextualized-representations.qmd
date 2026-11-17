@@ -116,11 +116,11 @@ Pour comprendre les dépendances entre positions, les masques causaux et les rô
 <details class="spot-the-fallacy">
 <summary>Piège fréquent : « Pour que deux occurrences du mot "situation" soient comprises, le tokenizer doit leur attribuer des IDs distincts »</summary>
 <div class="fallacy-content">
-<p><strong>Contre-exemple :</strong> Dans cet exemple, on suppose explicitement que les deux occurrences de « situation » reçoivent le même ID. Le tokenizer segmente le texte selon son vocabulaire et ses règles ; il ne réalise pas de désambiguïsation sémantique à l'échelle de la phrase. Les couches du modèle peuvent ensuite construire des états cachés différents à partir des contextes accessibles. Exiger des IDs distincts confondrait segmentation des tokens et contextualisation.</p>
+<p><strong>Contre-exemple :</strong> Dans cet exemple, on suppose explicitement que les deux occurrences de « situation » reçoivent le même ID. Le tokenizer segmente le texte selon son vocabulaire et ses règles ; il ne réalise pas d'interprétation contextuelle à l'échelle de la phrase. Les couches du modèle peuvent ensuite construire des états cachés différents à partir des contextes accessibles. Exiger des IDs distincts confondrait segmentation des tokens et contextualisation.</p>
 </div>
 </details>
 
-![Un même token peut recevoir des représentations contextualisées différentes selon la phrase.](../images/contextualized-embeddings-fr.svg){fig-alt="Deux séquences placent avocat à la même position simplifiée. Les deux occurrences partagent le même lookup initial, tandis que chaque bloc Transformer combine cet état avec le contexte accessible propre à la séquence avant de produire un état caché qui peut différer." fig-cap="Même ID supposé : le lookup initial est identique. Les positions et contextes accessibles diffèrent ; les états cachés peuvent donc différer." width=100%}
+![Un même token peut recevoir des représentations contextualisées différentes selon la phrase.](../images/contextualized-embeddings-fr.svg){fig-alt="Un extrait de la tirade d’Otis et une paraphrase pédagogique contiennent le mot situation à des positions différentes. Sous l’hypothèse d’un ID commun, le lookup initial est identique ; les contextes accessibles et les états cachés peuvent différer." fig-cap="Même ID supposé : le lookup initial est identique. Les positions et contextes accessibles diffèrent ; les états cachés peuvent donc différer." width=100%}
 
 Cette illustration originale s'inspire de [Ethayarajh (2019), *How Contextual are Contextualized Word Representations?*](https://arxiv.org/abs/1909.00512). Elle illustre le principe, pas des vecteurs mesurés. Selon le tokenizer, un mot visible peut être constitué de plusieurs tokens.
 
