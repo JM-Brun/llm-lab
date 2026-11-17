@@ -38,7 +38,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-re
   <span class="epistemic-badge badge-status">Architecture : Blocs Transformer</span>
 </div>
 
-Deux phrases peuvent contenir le même token sans lui donner le même rôle : *bank* désigne une rive dans l'une, un établissement financier dans l'autre. Pourtant, le tokenizer peut attribuer le même ID aux deux occurrences. **Le lookup ne change pas ; c'est le traitement de la séquence par le Transformer qui construit des états cachés dépendant du contexte.**
+Deux phrases peuvent contenir le même token sans lui donner le même rôle : *avocat* désigne un fruit dans l'une, une personne qui plaide dans l'autre. Pourtant, le tokenizer peut attribuer le même ID aux deux occurrences. **Le lookup ne change pas ; c'est le traitement de la séquence par le Transformer qui construit des états cachés dépendant du contexte.**
 :::
 
 ::: {.callout-tip title="L'idée à retenir en une minute"}
@@ -86,14 +86,14 @@ Ce schéma est une illustration originale et simplifiée, et non une reproductio
 
 ## Ce qui reste identique
 
-Supposons que le token visible `bank` soit représenté par le même ID dans deux phrases :
+Supposons que le token visible `avocat` soit représenté par le même ID dans deux phrases françaises :
 
-- “The river bank eroded.”
-- “The financial bank collapsed.”
+- « Sur l'arbre, l'avocat mûrit. »
+- « Au tribunal, l'avocat plaide. »
 
 Sous cette hypothèse explicite, les deux occurrences récupèrent le même **vecteur de plongement initial** (embedding) :
 
-$e_{\text{bank}} = E[\text{ID}_{\text{bank}}]$
+$e_{\text{avocat}} = E[\text{ID}_{\text{avocat}}]$
 
 Le lookup est un accès à une table. Il n'examine pas les mots voisins, ne déduit pas le sens visé et ne produit pas un vecteur propre à chaque phrase.
 
@@ -105,22 +105,22 @@ Le lookup initial ne suffit pas à décrire l'entrée du réseau : l'architectur
 
 ### Une autre dépendance : la référence pronominale
 
-Considérons maintenant : *“The animal was tired because it had been running.”* Le pronom `it` renvoie ici à `the animal`. Ce cas ne porte pas sur les deux sens possibles d'un même mot : il illustre une dépendance entre des positions différentes de la séquence. Pour construire une représentation contextuelle de `it`, le modèle peut exploiter des informations provenant d'autres tokens du contexte.
+Considérons maintenant : *« Le chien était fatigué parce qu'il avait couru. »* Le pronom `il` renvoie ici à `le chien`. Ce cas ne porte pas sur les deux sens possibles d'un même mot : il illustre une dépendance entre des positions différentes de la séquence. Pour construire une représentation contextuelle de `it`, le modèle peut exploiter des informations provenant d'autres tokens du contexte.
 
-Cet exemple est repris comme motivation pédagogique dans le tutoriel de [Nishanthan K sur Q, K et V](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers). Il ne démontre pas qu'une tête d'attention particulière identifie nécessairement l'antécédent, ni que l'attention seule réalise toute la résolution de coréférence. Il sert à distinguer deux motivations complémentaires : lever une ambiguïté lexicale (*bank*) et exploiter une relation entre tokens (*it* / *the animal*).
+Cet exemple est repris comme motivation pédagogique dans le tutoriel de [Nishanthan K sur Q, K et V](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers). Il ne démontre pas qu'une tête d'attention particulière identifie nécessairement l'antécédent, ni que l'attention seule réalise toute la résolution de coréférence. Il sert à distinguer deux motivations complémentaires : lever une ambiguïté lexicale (*avocat*) et exploiter une relation entre tokens (*il* / *le chien*).
 
 Dans le fil rouge, le préfixe « C'est une bonne situation, ça, scribe ? » est déjà présent. À mesure que « Être scribe, c'est relier des histoires. » est généré, chaque nouveau token est traité avec le contexte désormais disponible, qui s'allonge au fil de la boucle.
 
 Pour comprendre les dépendances entre positions, les masques causaux et les rôles distincts de l'auto-attention et du MLP, consultez l'[approfondissement sur les représentations contextualisées](contextualized-representations-advanced.qmd). La formalisation détaillée est volontairement séparée de cette première explication.
 
 <details class="spot-the-fallacy">
-<summary>Piège fréquent : « Pour que deux sens d'un mot comme "bank" soient reconnus, le tokenizer doit leur attribuer des IDs distincts »</summary>
+<summary>Piège fréquent : « Pour que les deux sens du mot "avocat" soient reconnus, le tokenizer doit leur attribuer des IDs distincts »</summary>
 <div class="fallacy-content">
-<p><strong>Contre-exemple :</strong> Dans cet exemple, on suppose explicitement que les deux occurrences de « bank » reçoivent le même ID. Le tokenizer segmente le texte selon son vocabulaire et ses règles ; il ne réalise pas de désambiguïsation sémantique à l'échelle de la phrase. Les couches du modèle peuvent ensuite construire des états cachés différents à partir des contextes accessibles. Exiger des IDs distincts pour chaque sens confondrait segmentation des tokens et désambiguïsation contextuelle.</p>
+<p><strong>Contre-exemple :</strong> Dans cet exemple, on suppose explicitement que les deux occurrences de « avocat » reçoivent le même ID. Le tokenizer segmente le texte selon son vocabulaire et ses règles ; il ne réalise pas de désambiguïsation sémantique à l'échelle de la phrase. Les couches du modèle peuvent ensuite construire des états cachés différents à partir des contextes accessibles. Exiger des IDs distincts pour chaque sens confondrait segmentation des tokens et désambiguïsation contextuelle.</p>
 </div>
 </details>
 
-![Un même token peut recevoir des représentations contextualisées différentes selon la phrase.](../images/contextualized-embeddings-fr.svg){fig-alt="Deux séquences placent bank à la même position simplifiée. Les deux occurrences partagent le même lookup initial, tandis que chaque bloc Transformer combine cet état avec le contexte accessible propre à la séquence avant de produire un état caché qui peut différer." fig-cap="Même ID et même position simplifiée : le lookup est identique. Les préfixes accessibles diffèrent ; les états cachés peuvent donc différer." width=100%}
+![Un même token peut recevoir des représentations contextualisées différentes selon la phrase.](../images/contextualized-embeddings-fr.svg){fig-alt="Deux séquences placent avocat à la même position simplifiée. Les deux occurrences partagent le même lookup initial, tandis que chaque bloc Transformer combine cet état avec le contexte accessible propre à la séquence avant de produire un état caché qui peut différer." fig-cap="Même ID et même position simplifiée : le lookup est identique. Les préfixes accessibles diffèrent ; les états cachés peuvent donc différer." width=100%}
 
 Cette illustration originale s'inspire de [Ethayarajh (2019), *How Contextual are Contextualized Word Representations?*](https://arxiv.org/abs/1909.00512). Elle illustre le principe, pas des vecteurs mesurés. Selon le tokenizer, un mot visible peut être constitué de plusieurs tokens.
 
