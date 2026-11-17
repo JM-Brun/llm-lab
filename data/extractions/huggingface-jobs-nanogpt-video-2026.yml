@@ -9,8 +9,8 @@ pedagogical_model:
       - "Current official Hugging Face Jobs, configuration and pricing documentation checked."
     inferred_elements:
       - "Learning outcomes and workflow are inferred from the supplied description; the video itself was not independently inspected."
-      - "The supplied GitHub URL is truncated, so the code-level sequence cannot be reconstructed."
-      - "Transcript-level details: ~50M-parameter GPT-2-style model, 8 layers, embedding size 512, GPT-2 tokenizer, TinyStories, cosine schedule with warm-up, uv/requirements.txt, Storage Bucket sync and mounted output directory."
+      - "The full repository https://github.com/scienceetonnante/nanogpt-jobs was inspected statically on master (tree 781d0e4fe0513de8ec74654e75a39e4aa1809853); code was not executed."
+      - "Repository-verified details: ~51M parameters, 8 Transformer blocks, width 512, 8 heads, context 512, GPT-2 tokenizer, learned absolute position embeddings, tied input/output embeddings, TinyStories, AdamW, 6e-4 peak LR, 1000-step warm-up/cosine decay, batch 16, gradient clipping, CUDA compile/bfloat16, uv/requirements.txt, private Storage Bucket sync and persistent out/ mount."
   source_graph:
     nodes:
       - {id: src-local-training-program, kind: artifact, description: "A NanoGPT-like model and training program independent of the remote execution provider.", locator: "01:21 (supplied chapter label)"}
@@ -18,10 +18,10 @@ pedagogical_model:
       - {id: src-shell-launcher, kind: implementation-pattern, description: "A generic shell script creates/syncs a Storage Bucket, requests a GPU job, mounts the bucket, and runs the training command.", locator: "04:15 (supplied chapter label; details from third-party transcript)"}
       - {id: src-remote-run, kind: process, description: "The training command runs remotely; checkpoints and outputs persist in the mounted bucket and can be synced back locally.", locator: "05:35 (supplied chapter label; details from third-party transcript)"}
       - {id: src-local-gpu-constraint, kind: constraint, description: "Limited local GPU capacity motivates managed remote execution.", locator: "00:00 (supplied chapter label)"}
-      - {id: src-storage-bucket, kind: persistent-storage, description: "A Hub Storage Bucket transfers project files into the job and retains the output directory/checkpoints after compute shuts down.", locator: "04:15–05:35 (third-party transcript rendering)"}
+      - {id: src-storage-bucket, kind: persistent-storage, description: "A private Hub Storage Bucket receives the synced code, is mounted into the job, and retains the out/ directory/checkpoints after compute shuts down.", locator: "run_on_hf.sh and README.md, repository master"}\n      - {id: src-training-implementation, kind: implementation, description: "A ~51M-parameter GPT with learned positional embeddings, tied token/output weights, causal SDPA, TinyStories random windows, AdamW and a warm-up/cosine learning-rate schedule.", locator: "train.py, repository master"}\n      - {id: src-evaluation-limit, kind: limitation, description: "The script reports training-batch loss and qualitative samples but implements no held-out validation or test metric.", locator: "train.py, repository master"}
     edges:
       - {from: src-local-gpu-constraint, type: motivates, to: src-managed-job}
-      - {from: src-local-training-program, type: executed-by, to: src-managed-job}
+      - {from: src-local-training-program, type: executed-by, to: src-managed-job}\n      - {from: src-training-implementation, type: implemented-by, to: src-local-training-program}\n      - {from: src-evaluation-limit, type: qualifies, to: src-remote-run}
       - {from: src-shell-launcher, type: creates-and-syncs, to: src-storage-bucket}
       - {from: src-storage-bucket, type: mounted-into, to: src-managed-job}
       - {from: src-shell-launcher, type: submits, to: src-managed-job}
@@ -34,7 +34,7 @@ pedagogical_model:
     - {status: inferred, outcome: "Describe the role of a managed GPU job and launch script.", basis: "Supplied chapter labels for Jobs and shell script."}
     - {status: inferred, outcome: "Identify data, output and cost checks needed after remote execution.", basis: "Inferred from the run/results stage and official Jobs documentation."}
     - {status: declared, outcome: "Explain the Storage Bucket as the transfer and persistence boundary between local project, remote job and returned artifacts.", basis: "Third-party transcript rendering describes create/sync, mount, output persistence and post-job sync."}
-    - {status: declared, outcome: "Identify the example model/data/runtime stack: ~50M GPT-2-style model, 8 layers, 512 embedding dimension, GPT-2 tokenizer, TinyStories, uv and requirements.txt.", basis: "Third-party transcript rendering; exact code and hyperparameters remain uninspected."}
+    - {status: declared, outcome: "Identify the example model/data/runtime stack: ~51M-parameter GPT with 8 blocks, width 512, 8 heads, context 512, GPT-2 tokenizer, TinyStories, uv and requirements.txt.", basis: "Direct static inspection of train.py, README.md and requirements.txt on repository master."}\n    - {status: declared, outcome: "Explain the code-staging and artifact-persistence lifecycle implemented by run_on_hf.sh.", basis: "Direct static inspection of run_on_hf.sh and README.md."}\n    - {status: declared, outcome: "Distinguish training-batch loss and generated samples from held-out validation evidence.", basis: "Direct inspection: train.py contains no validation/test split or held-out metric."}
   assumed_prerequisites:
     - {status: inferred, topic: "A working Python/PyTorch training program and basic shell familiarity.", basis: "The described workflow launches existing training code."}
     - {status: inferred, topic: "Basic understanding of GPU memory and training runtime.", basis: "The stated motivation is insufficient local GPU capacity."}
@@ -105,3 +105,37 @@ items:
       assumptions: ["Job storage may be ephemeral and external resources may require authentication."]
       limitations: ["The video's exact persistence mechanism is unknown."]
     disposition: integrate
+
+  - id: huggingface-jobs-nanogpt-video-2026:source-code-training-details
+    kind: implementation
+    summary: "The repository implements a ~51M-parameter GPT with 8 blocks, width 512, 8 heads, learned absolute positions, tied embeddings, causal SDPA, TinyStories random windows and AdamW training."
+    locator: {type: file, value: "train.py", label: "Training implementation on repository master"}
+    evidence:
+      kind: direct-source-code-inspection
+      confidence: established
+      scope: "Static inspection of train.py at repository tree 781d0e4fe0513de8ec74654e75a39e4aa1809853."
+      assumptions: ["The inspected master tree is the intended demonstration version."]
+      limitations: ["Code was not executed; runtime behavior, measured throughput and reported run were not reproduced."]
+    disposition: integrate-by-reference
+  - id: huggingface-jobs-nanogpt-video-2026:validation-gap
+    kind: limitation
+    summary: "The training script logs the current training batch loss but has no held-out validation or test evaluation."
+    locator: {type: file, value: "train.py", label: "Training loop"}
+    evidence:
+      kind: direct-source-code-inspection
+      confidence: established
+      scope: "Static inspection of the complete train.py file."
+      assumptions: []
+      limitations: ["Qualitative generated samples do not substitute for held-out metrics."]
+    disposition: clarify
+  - id: huggingface-jobs-nanogpt-video-2026:host-memory-and-checkpointing
+    kind: limitation
+    summary: "The full tokenized corpus is materialized in host RAM; checkpoints are saved every 2000 steps and at completion, so interruption can lose progress since the previous save."
+    locator: {type: file, value: "train.py", label: "Dataset preparation and checkpoint writes"}
+    evidence:
+      kind: direct-source-code-inspection
+      confidence: established
+      scope: "Static inspection of data materialization and torch.save locations."
+      assumptions: []
+      limitations: ["Actual RAM peak and interruption recovery were not measured."]
+    disposition: clarify
