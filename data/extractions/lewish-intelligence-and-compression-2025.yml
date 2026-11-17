@@ -140,6 +140,16 @@ items:
     candidate_destinations: {pages: [], concepts: [predictive-compression]}
     disposition: experiment
     disposition_rationale: "Design a controlled synthetic experiment; do not claim to reproduce the article's enwik8 figures."
+  - id: lewish-intelligence-and-compression-2025:hutter-prize-dataset-naming
+    kind: limitation
+    summary: "The article conflates enwik8 (100 MB) and enwik9 (1 GB) when describing the Hutter Prize corpus."
+    locator: {type: section, value: "Good compressors will leverage causal dependencies; note [2]"}
+    evidence: {kind: technical-assessment, confidence: well-supported, scope: "Official Hutter Prize page and FAQ distinguish historical 100 MB enwik8 from the current 1 GB enwik9 task.", assumptions: ["The article's 1 GB label refers to the Hutter Prize's large corpus."], limitations: ["This naming correction does not verify the article's separate forward/reverse enwik8 measurements."]}
+    pedagogical_assessment: {novelty: {level: low, rationale: "A factual correction, not a new conceptual contribution."}, complementarity: {level: high, rationale: "Keeps corpus identity and benchmark scope precise."}, pedagogical_value: {level: high, rationale: "Prevents accidental comparison of 100 MB and 1 GB results."}, applicability: {level: high, rationale: "Required for accurate discussion of Hutter Prize and enwik8 results."}, redundancy: {level: low, rationale: "The exact correction is specific to this source."}, evidence_quality: {level: high, rationale: "Verified against the official Hutter Prize page and FAQ."}}
+    classification: {primary_theme: probabilistic-foundations-training, tags: [topic:predictive-compression], concept_ids: [predictive-compression]}
+    candidate_destinations: {pages: [], concepts: [predictive-compression]}
+    disposition: clarify
+    disposition_rationale: "Correct the enwik8/enwik9 naming in the source review; do not alter the author's separate enwik8 comparison table."
   - id: lewish-intelligence-and-compression-2025:mdl-generalization
     kind: limitation
     summary: "MDL balances model complexity against residual data cost, but short descriptions do not automatically identify truth or guarantee generalization."
