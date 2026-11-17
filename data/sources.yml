@@ -4548,3 +4548,49 @@ sources:
       pages: [fr/rag-memory-boundaries, en/rag-memory-boundaries, fr/cosine-similarity, en/cosine-similarity]
       concepts: [retrieval-augmented-generation, contextualized-representation]
       audit_records: [docs/source-reviews/dailydose-main-path-2026-11.md]
+
+  - id: lewish-intelligence-and-compression-2025
+    title: "Intelligence and compression"
+    creators: []
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://lewish.io/posts/intelligence-and-compression"
+    publisher: "lewish.io"
+    publication_date: "2025-05-28"
+    updated_date: null
+    language: en
+    version: "Article page accessed 2026-11-17"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [mathematical-tools-geometry, architectures-mechanisms]
+      tags: [topic:predictive-compression, topic:minimum-description-length, topic:generalization, topic:active-inference, topic:universal-intelligence]
+      concept_ids: [predictive-compression, entropy, surprisal, cross-entropy, generalization, bayesian-inference]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [theory, mathematical-derivation, pedagogy, research-perspective]
+      audiences: [learner, practitioner, educator, researcher]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "Canonical HTML article text, title, publication date and nine section headings."
+          - "Author-authored discussion of musical chunking, conditional prediction/coding, temporal order, forward/reverse enwik8 results, MDL, Chollet's skill-acquisition efficiency, AIXI, the Free Energy Principle and active inference."
+          - "Visible footnotes qualifying incompressible data, prefix-code illustration, Hutter Prize context, MDL and Solomonoff induction."
+        limitations:
+          - "The page's creator identity beyond the lewish.io byline/site identity has not been independently established; creators intentionally left empty pending verification."
+          - "Figure placements and linked assets were not retrieved as image bytes or visually inspected; figures status remains not-inspected."
+          - "Code, benchmark scripts/data, comments, outbound links and any article revision history were not exhaustively inspected."
+          - "The forward/reverse enwik8 measurements are reported by the author; exact compressor versions, settings and reproduction protocol were not established."
+          - "No reuse licence or permission for article text or figures was established; link-only treatment."
+    related:
+      pages: [fr/entropy, en/entropy, fr/cross-entropy, en/cross-entropy, fr/compression-revision, en/compression-revision, fr/generalization, en/generalization]
+      concepts: [predictive-compression, entropy, surprisal, cross-entropy, generalization, bayesian-inference]
+      audit_records:
+        - docs/source-reviews/lewish-intelligence-and-compression-2025.md
+        - data/extractions/lewish-intelligence-and-compression-2025.yml
+        - docs/source-syntheses/compression-intelligence-and-inference-efficiency-2026-11.md
