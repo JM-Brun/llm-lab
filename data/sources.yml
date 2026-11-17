@@ -4995,3 +4995,158 @@ sources:
         - docs/source-reviews/maor-farid-large-mechanical-model-brep-geometry-2026.md
         - data/extractions/maor-farid-large-mechanical-model-brep-geometry-2026.yml
         - docs/source-syntheses/compression-intelligence-and-inference-efficiency-2026-11.md
+
+  - id: kim-et-al-brepcoder-2026
+    title: "BrepCoder: A Unified Multimodal Large Language Model for Multi-task B-rep Reasoning"
+    creators: ["Mingi Kim","Yongjun Kim","Jungwoo Kang","Hyungki Kim"]
+    source_type: paper
+    identifiers: {arxiv: "2602.22284"}
+    canonical_url: "https://arxiv.org/abs/2602.22284"
+    publisher: "arXiv"
+    publication_date: "2026-02-25"
+    updated_date: null
+    language: en
+    version: "arXiv preprint"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:geometric-representation, topic:computer-aided-design, modality:multimodal, method:contrastive-learning]
+      concept_ids: [contextualized-representation, cross-entropy, training-objective]
+    metadata:
+      technical_level: advanced
+      contribution_types: [architecture, experiment]
+      audiences: [practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "arXiv abstract, introduction, representation encoding and multimodal alignment method"
+          - "B-rep face-adjacency graph, UV-Net encoder, Python-like CAD Code alignment, contrastive and autoregressive captioning objectives"
+        limitations:
+          - "Full experimental tables, ablations, dataset provenance and limitations were not audited line by line."
+          - "Reported generalization and performance claims remain paper-reported and require reproduction or independent evaluation."
+    related:
+      pages: [en/llm-limits, fr/llm-limits]
+      concepts: [contextualized-representation, training-objective]
+      audit_records:
+        - data/extractions/kim-et-al-brepcoder-2026.yml
+  - id: gerstmayr-et-al-meceng-benchmark-2026
+    title: "Large Language Models and their Awareness of Mechanics and Spatial Geometry"
+    creators: ["Johannes Gerstmayr","Sebastian Weyrer","Tobias Möltner","Peter Manzl","Michael Pieber"]
+    source_type: benchmark
+    identifiers: {arxiv: "2608.14615"}
+    canonical_url: "https://arxiv.org/abs/2608.14615"
+    publisher: "arXiv"
+    publication_date: "2026-07-10"
+    updated_date: null
+    language: en
+    version: "arXiv preprint"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: scale-research
+      secondary_themes: [mathematical-tools-geometry, architectures-mechanisms]
+      tags: [topic:mechanical-reasoning, topic:spatial-geometry, topic:benchmark, application:multibody-simulation]
+      concept_ids: [contextualized-representation]
+    metadata:
+      technical_level: advanced
+      contribution_types: [benchmark, experiment]
+      audiences: [practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "arXiv abstract and benchmark design"
+          - "84 tasks, three difficulty levels, simulation pipeline, verification dimensions and headline results"
+        limitations:
+          - "Full task definitions, model versions, evaluation protocol, confidence intervals and supplementary materials were not audited."
+          - "The headline success rates apply to the reported rigid-body task subset; flexible multibody tasks are described as substantially harder."
+    related:
+      pages: [en/llm-limits, fr/llm-limits]
+      concepts: [contextualized-representation]
+      audit_records:
+        - data/extractions/gerstmayr-et-al-meceng-benchmark-2026.yml
+  - id: lu-et-al-omnimech-2026
+    title: "OmniMech: All-in-one Multimodal Mechanical Benchmark for 3D Reconstruction"
+    creators: ["Taiting Lu","Runze Liu","Ziwei Dong","Sisong Bei","Jingying Zeng","Mingjia Wang","Zhenghao Li","Kaiyuan Lin","Yi-Shan Wu","Yangshoudu Zheng","Hongxing Pan","Kai Zhang","Guoliang Shi","Ling Ma","Yifan Yang","Jiaying Lu","Qi He","Sung-Liang Chen","Yi-Chao Chen","Yincheng Jin","Mahanth Gowda"]
+    source_type: benchmark
+    identifiers: {arxiv: "2608.05539"}
+    canonical_url: "https://arxiv.org/abs/2608.05539"
+    publisher: "arXiv"
+    publication_date: "2026-08-06"
+    updated_date: null
+    language: en
+    version: "arXiv preprint"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [scale-research, architectures-mechanisms]
+      tags: [topic:mechanical-reasoning, topic:geometric-representation, topic:benchmark, application:computer-aided-design, modality:multimodal]
+      concept_ids: [contextualized-representation]
+    metadata:
+      technical_level: advanced
+      contribution_types: [benchmark, dataset, experiment]
+      audiences: [practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "arXiv abstract, introduction and benchmark task/data description"
+          - "251K paired mechanical drawings and editable CAD representations, four task families, evaluation objectives and reported limitations"
+        limitations:
+          - "Full experimental tables, benchmark splits, licensing, leakage analysis and dataset access conditions were not audited."
+          - "The reported benchmark scale and findings are source-reported and not independently reproduced."
+    related:
+      pages: [en/llm-limits, fr/llm-limits]
+      concepts: [contextualized-representation]
+      audit_records:
+        - data/extractions/lu-et-al-omnimech-2026.yml
+  - id: leo-ai-large-mechanical-model-overview-2025
+    title: "Why GPT Will Never Match a Freshman Mechanical Engineer"
+    creators: ["Maor Farid"]
+    source_type: blog
+    canonical_url: "https://www.getleo.ai/blog/why-gpt-will-never-match-a-freshman-mechanical-engineer"
+    publisher: "Leo AI"
+    publication_date: "2025-08-15"
+    updated_date: null
+    language: en
+    version: "Public company blog page accessed 2026-11-17"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:mechanical-reasoning, topic:geometric-representation, application:computer-aided-design]
+      concept_ids: [contextualized-representation]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [architecture, other]
+      audiences: [learner, practitioner, researcher]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    scan_history:
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "Full public company blog page, including LMM description, stated use cases and performance claims"
+        limitations:
+          - "First-party marketing material; claims about capabilities, user adoption and quantified impact are not independently verified."
+          - "The page does not disclose a reproducible architecture, training corpus, evaluation protocol or model card."
+    related:
+      pages: [en/llm-limits, fr/llm-limits]
+      concepts: [contextualized-representation]
+      audit_records:
+        - data/extractions/leo-ai-large-mechanical-model-overview-2025.yml
