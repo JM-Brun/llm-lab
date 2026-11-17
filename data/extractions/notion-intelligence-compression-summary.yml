@@ -75,7 +75,8 @@ pedagogical_model:
 integration_decision:
   status: "integrated-as-critical-context"
   rationale:
-    - "The source adds no sufficiently developed concept or method to justify a new lesson."
+    - "The Notion note alone adds no sufficiently developed concept or method to justify a new lesson."
+    - "Its AIXI passage is used as a prompt for a separate advanced lesson grounded in primary sources; the formal claims are not adopted from the note itself."
     - "Its useful framing is already covered more rigorously by the project's entropy, cross-entropy, predictive compression and algorithmic information theory material."
     - "Keep the source as a short critical cross-reference; do not promote the slogan 'intelligence = compression' as a project principle."
 
