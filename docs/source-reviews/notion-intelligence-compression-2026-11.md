@@ -14,7 +14,7 @@ The useful kernel is the relationship between **prediction and coding**. A proba
 
 The title's equation is too strong. Compression is one useful perspective on learning and representation, not a sufficient definition of intelligence. A benchmark score on a fixed corpus cannot, by itself, establish reasoning, planning, grounded understanding, robustness or general intelligence.
 
-**Integration decision:** register and retain as a critical cross-reference; do not create a new lesson or canonical concept page. The extraction contains only a small source-local graph and maps its terms to existing concepts.
+**Integration decision:** register and retain as a critical cross-reference; do not derive a lesson from the Notion note alone. Its AIXI passage motivates a separate advanced lesson grounded in primary sources. The extraction maps its terms to existing concepts and keeps the source's own claims distinct from the deeper formal treatment.
 
 ## 2. Claim-by-claim assessment
 
@@ -33,23 +33,23 @@ The title's equation is too strong. Compression is one useful perspective on lea
 
 For an ideal code, an event assigned probability (p(x)) has ideal code length approximately
 
-[
-ell(x)=-log_2 p(x)
-]
+$
+\\ell(x)=-\\log_2 p(x)
+$
 
 bits. The expected code length under a true distribution (q) is related to cross-entropy:
 
-[
-H(q,p)=-sum_x q(x)log_2 p(x).
-]
+$
+H(q,p)=-\\sum_x q(x)\\log_2 p(x).
+$
 
 A better predictive distribution can therefore reduce expected coding cost, subject to coding overhead, model-description cost and the chosen evaluation protocol. This is a concrete mathematical connection; it does not imply that every form of intelligence is reducible to file compression.
 
 ### 3.2 What the Hutter Prize does—and does not—show
 
-The official [Hutter Prize](https://prize.hutter1.net/) asks entrants to losslessly compress the 1 GB ((10^9)-byte) `enwik9` corpus, including the executable/decompressor size and under resource constraints. The prize organizers explicitly motivate the task as a way to encourage intelligent compressors.
+The official [Hutter Prize](https://prize.hutter1.net/) asks entrants to losslessly compress the 1 GB (one-billion-byte) `enwik9` corpus, including the executable/decompressor size and under resource constraints. The prize organizers explicitly motivate the task as a way to encourage intelligent compressors.
 
-That is a research programme and benchmark design choice. It does not prove that the best compressor is the best reasoner, that a Wikipedia snapshot represents all relevant knowledge, or that compression performance is a universal intelligence metric. The Notion page's “first 109 bytes” is a malformed rendering of (10^9) bytes. Prize amounts and records are mutable and should be read from the official page, not copied as timeless facts.
+That is a research programme and benchmark design choice. It does not prove that the best compressor is the best reasoner, that a Wikipedia snapshot represents all relevant knowledge, or that compression performance is a universal intelligence metric. The Notion page's “first 109 bytes” is a malformed rendering of one billion bytes. Prize amounts and records are mutable and should be read from the official page, not copied as timeless facts.
 
 ### 3.3 Kolmogorov complexity and AIXI
 
