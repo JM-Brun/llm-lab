@@ -105,7 +105,7 @@ Le lookup initial ne suffit pas à décrire l'entrée du réseau : l'architectur
 
 ### Une autre dépendance : la référence pronominale
 
-Considérons maintenant : *« Le chien était fatigué parce qu'il avait couru. »* Le pronom `il` renvoie ici à `le chien`. Ce cas ne porte pas sur les deux sens possibles d'un même mot : il illustre une dépendance entre des positions différentes de la séquence. Pour construire une représentation contextuelle de `it`, le modèle peut exploiter des informations provenant d'autres tokens du contexte.
+Considérons maintenant : *« Le chien était fatigué parce qu'il avait couru. »* Le pronom `il` renvoie ici à `le chien`. Ce cas ne porte pas sur les deux sens possibles d'un même mot : il illustre une dépendance entre des positions différentes de la séquence. Pour construire une représentation contextuelle de `il`, le modèle peut exploiter des informations provenant d'autres tokens du contexte.
 
 Cet exemple est repris comme motivation pédagogique dans le tutoriel de [Nishanthan K sur Q, K et V](https://dev.to/nishanthan-k/how-query-key-and-value-qkv-work-in-transformers). Il ne démontre pas qu'une tête d'attention particulière identifie nécessairement l'antécédent, ni que l'attention seule réalise toute la résolution de coréférence. Il sert à distinguer deux motivations complémentaires : lever une ambiguïté lexicale (*avocat*) et exploiter une relation entre tokens (*il* / *le chien*).
 
