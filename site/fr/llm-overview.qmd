@@ -64,16 +64,18 @@ Une suite probable n'est pas une suite vraie. Que « Être » soit probable apr�
 
 ## Du texte à la distribution
 
-![Le processus autorégressif de génération : le contexte est préparé et tokenisé, traité par un modèle à paramètres fixes, puis enrichi du token sélectionné.](../images/llm-generation-process-fr.svg){#fig-gpt-generation-process fig-alt="Le préfixe « C'est une bonne situation, ça, scribe ? » est tokenisé, traité par un modèle à paramètres fixes, puis converti en distribution : Être 0,6, Vous 0,2, Oui 0,1, Non 0,1, affichés en pourcentages. Une règle de décodage sélectionne « Être », qui est ajouté au contexte. Les probabilités sont fictives."}
+![Schéma de référence en six étapes : texte d’entrée, tokenisation, représentations numériques, calcul dans les blocs Transformer, distribution du prochain token et sélection avec boucle de génération.](../images/llm-generation-process-fr.svg){#fig-gpt-generation-process fig-alt="Un GPT autorégressif traite le préfixe en six étapes : texte, tokens et identifiants, embeddings et information de position, blocs Transformer répétés, logits transformés en probabilités, puis sélection d’un token ajouté au préfixe. Le calcul recommence avec le contexte enrichi. Les probabilités sont fictives."}
 
-La figure se lit de gauche à droite.
+La figure présente le parcours complet d’un GPT autorégressif, de gauche à droite, puis la boucle de génération.
 
-1. **Le texte devient une suite de tokens**, puis une suite de nombres.
-2. **Le réseau transforme ces nombres**, à paramètres fixes, en un score par token du vocabulaire. Ces scores bruts, qui ne sont pas encore des probabilités, sont les **logits**.
-3. **La fonction softmax convertit les logits en probabilités** : elle rend les scores comparables sous forme de valeurs positives dont la somme vaut 1. On obtient ainsi la distribution du tableau ci-dessus.
-4. **Une règle de décodage choisit un token**, ici « Être ». Il rejoint le contexte et le calcul recommence.
+1. **Le texte d’entrée** constitue le préfixe : le prompt et, le cas échéant, les tokens déjà produits.
+2. **Le tokenizer découpe le texte en tokens** et associe à chacun un identifiant entier ([Du texte aux tokens](text-data.qmd)).
+3. **Les identifiants deviennent des représentations numériques** grâce aux embeddings et à l’information de position ([Embeddings](embedding-space.qmd)).
+4. **Les blocs Transformer transforment ces représentations** : attention causale, MLP, connexions résiduelles et normalisation. Cette pile produit des représentations contextualisées ([Le Transformer dans un GPT](transformer.qmd)).
+5. **La tête de sortie produit les logits**, puis la softmax les convertit en une distribution de probabilités sur le vocabulaire ([Logits et probabilités](probabilites.qmd)).
+6. **La règle de décodage sélectionne un token**. Ce choix est extérieur au calcul du Transformer ; le token est ajouté au préfixe, puis une nouvelle passe calcule la distribution suivante ([Générer du texte](generation.qmd)).
 
-Les étapes 1 à 3 forment le calcul du modèle ; le parcours les ouvre une à une, de [l'entrée](text-data.qmd) au [réseau](transformer.qmd) puis à la [distribution](probabilites.qmd). L'étape 4 n'appartient pas au réseau : c'est une décision prise à partir de sa sortie. La page suivante, [Générer du texte](generation.qmd), suit cette boucle sur notre exemple.
+Cette vue générale est le repère commun du parcours. Les pages liées approfondissent chaque étape sans refaire le schéma complet. La tokenisation réelle peut produire des unités plus petites ou plus grandes qu’un mot ; les architectures et les méthodes d’encodage de position varient selon les modèles.
 
 ## Un calcul, trois usages
 
