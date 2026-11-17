@@ -103,6 +103,24 @@ Dans une tête d'attention, les rotations sont appliquées à $Q$ et $K$ **aprè
 <link rel="stylesheet" href="../styles/nope-prefix-experiment.css">
 <script src="../scripts/nope-prefix-experiment.js" defer></script>
 
+## Couches hybrides RoPE/NoPE : opération locale et états hérités
+
+Une couche qui omet RoPE ne reçoit pas une représentation vide ou réinitialisée : elle reçoit les états cachés contextualisés de la couche précédente. Des couches antérieures peuvent avoir rendu disponibles des distinctions positionnelles et contextuelles, sans qu'un schéma d'architecture puisse garantir qu'elles seront conservées ou utilisées.
+
+{{< include ../includes/hybrid-rope-nope-fr.html >}}
+
+<link rel="stylesheet" href="../styles/hybrid-rope-nope.css">
+<script src="../scripts/hybrid-rope-nope.js" defer></script>
+
+## Biais relatif : ajouter un terme positionnel avant softmax
+
+Un score d'attention peut être décomposé en un terme de contenu et un terme de position relative, par exemple \(s_{ij}=q_i^\top k_j/\sqrt{d_k}+b(h_i,j-i)\). La fonction exacte dépend de l'architecture. Un biais conditionné par la requête, comme le mécanisme Inkling décrit par Raschka, n'est pas équivalent à la table apprise par buckets et par tête de T5.
+
+{{< include ../includes/relative-bias-decomposition-fr.html >}}
+
+<link rel="stylesheet" href="../styles/relative-bias-decomposition.css">
+<script src="../scripts/relative-bias-decomposition.js" defer></script>
+
 ## Ce que RoPE apporte — et ce qu'il ne garantit pas
 
 RoPE fournit une manière structurée d'introduire la position dans l'attention. Sa présence ne garantit pas, à elle seule, une extrapolation fiable vers des séquences beaucoup plus longues que celles vues pendant l'entraînement.
