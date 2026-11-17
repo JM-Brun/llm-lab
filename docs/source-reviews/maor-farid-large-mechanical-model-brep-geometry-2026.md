@@ -58,3 +58,47 @@ The LinkedIn page exposed a media asset link, but the underlying image/video fra
 ## Integration decision
 
 Integrate as a qualified case study and research question. Do not add a new canonical concept or claim the proposed LMM works as described. Reuse existing concepts and pages; extend public lessons only when independent evidence and a clear pedagogical gap justify it.
+
+## 7. Independent research context added after the initial review
+
+The initial post review is now cross-checked against three primary research sources and Leo AI's own product description. These sources support the relevance of CAD-native representations, but they do **not** independently validate Leo AI's proprietary LMM.
+
+### BrepCoder — a concrete B-rep + language-model architecture
+
+Kim et al., [BrepCoder (arXiv:2602.22284)](https://arxiv.org/abs/2602.22284), provide a public research example of a multimodal LLM using B-rep as a core input. The paper describes:
+- a face-adjacency graph representation of B-rep, encoded with UV-Net-derived geometric features;
+- alignment between B-rep features and Python-like CAD construction code;
+- a contrastive alignment objective combined with autoregressive CAD-code generation;
+- a two-stage training strategy, beginning with reverse engineering and then extending to completion, error correction and CAD question answering.
+
+This makes the broad idea of a geometry-native model technically concrete. It also corrects a false dichotomy: the approach is not simply “geometry instead of language”. It combines structured geometric input, CAD program representations and a language-model decoder. Its claims of generalization remain paper-reported; full experimental tables and reproduction still need review.
+
+### MecEng — measurable mechanical reasoning, with task boundaries
+
+Gerstmayr et al., [MecEng (arXiv:2608.14615)](https://arxiv.org/abs/2608.14615), define 84 tasks over rigid and flexible multibody systems. Generated models are evaluated against expert ground truth using graph structure, numerical solutions and part-specific properties such as mass, geometry and eigenfrequencies. The abstract reports 86.0% success for the best open-weight model and 91.4% for the strongest proprietary model on rigid-body tasks; flexible multibody tasks remain harder.
+
+This benchmark shows that general LLMs can already solve a measurable subset of mechanics tasks, so claims that they categorically cannot reason about mechanics are too strong. It does not establish reliable autonomous CAD design: benchmark task success is not equivalent to production engineering validity, safety or manufacturability.
+
+### OmniMech — design intent becomes testable
+
+Lu et al., [OmniMech (arXiv:2608.05539)](https://arxiv.org/abs/2608.05539), describe 251,000 paired mechanical drawings and native CAD models, with B-rep, mesh, multi-view and feature-graph representations. Its four task families cover parametric CAD program synthesis, drawing-to-3D consistency, annotation-grounded reasoning over dimensions and manufacturing constraints, and tool-augmented iterative reconstruction.
+
+The abstract and introduction report continuing difficulty with executable CAD synthesis, fine-grained reconstruction and reliable enforcement of dimensions and tolerances. This directly supports the earlier design-intent concern: a benchmark should evaluate annotations, constraints, topology and executable/editable CAD—not visual similarity alone. Dataset scale and results remain author-reported until splits, access conditions, leakage controls and full quantitative tables are audited.
+
+### Leo AI first-party description — useful, not independent validation
+
+Leo AI's [August 2025 LMM description](https://www.getleo.ai/blog/why-gpt-will-never-match-a-freshman-mechanical-engineer) says the model uses “mechanical parts as tokens”, works with CAD and part relationships, and supports CAD search and assembly workflows. It does not disclose a reproducible architecture, tokenizer, training corpus, model card or independent evaluation. Its quantified customer-impact claims are vendor claims and should not be cited as independently established effects.
+
+A later first-party commentary by Farid, [“Why Text-to-Geometry AI Keeps Failing on Simple Parts” (Machine Design, 13 August 2026)](https://www.machinedesign.com/cad-cam-software/article/55397711/leo-ai-why-text-to-geometry-ai-keeps-failing-on-simple-parts), sharpens the design-intent argument with the lock-washer example: geometry that looks right may fail functionally if spring height, material temper or load behavior are wrong. This is a valuable engineering case, but remains an author's argument rather than an independent controlled evaluation.
+
+## 8. Updated conclusion
+
+The research landscape supports a continuum rather than a binary opposition:
+- text-only models can solve some parameterized mechanics and geometry tasks;
+- multimodal models can combine language with B-rep, CAD code, drawings and visual evidence;
+- CAD-specialized systems can improve access to procedural geometry and task-specific operations;
+- engineering-grade trust still requires explicit constraints, executable CAD, simulation, standards, traceability and independent validation.
+
+The central research question is therefore not “Can an LLM understand geometry?” in the abstract. It is: **which representations, training objectives, tools and verification loops are sufficient for a specified engineering task, at a stated tolerance and risk level?**
+
+The initial source remains partially scanned. BrepCoder, MecEng and OmniMech are separately catalogued and extracted; their complete experimental protocols, data governance and reproducibility remain open review tasks.
