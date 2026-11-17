@@ -3,14 +3,14 @@ source_id: leike-hutter-computability-aixi-2015
 items:
   - id: leike-hutter-computability-aixi-2015:not-limit-computable
     kind: result
-    summary: "Leike and Hutter classify AIXI as not limit computable, strengthening the informal statement that exact AIXI is merely too expensive to compute."
-    locator: {type: abstract, value: "Publisher and arXiv abstracts", label: "Main result"}
+    summary: "Leike and Hutter show that the standard/iterative exact AIXI policy is not limit computable, while a recursive value-function formulation admits a limit-computable ε-optimal AIXI policy."
+    locator: {type: section, value: "Abstract; Sections 1, 4–5; Corollary 22", label: "Computability results and recursive ε-optimal variant"}
     evidence:
-      kind: author-abstract
+      kind: theorem-result
       confidence: well-supported
-      scope: "The paper's stated computability-hierarchy result for AIXI."
+      scope: "The distinction between standard/iterative AIXI, recursive AIXI and limit-computable ε-optimal recursive policies."
       assumptions: ["The formal AIXI model and computability framework defined in the paper."]
-      limitations: ["Only publisher and arXiv abstracts were inspected in this pass; the full proof was not audited."]
+      limitations: ["Relevant sections and stated corollaries were inspected, but the technical proofs were not audited line by line.", "The non-limit-computability result must be scoped to the paper's formal agent/value-function variants; the paper also constructs a limit-computable ε-optimal recursive AIXI policy."]
     disposition: cite
     mapped_concepts: [aixi, resource-bounded-computation]
     target_resources: [fr/universal-artificial-intelligence, en/universal-artificial-intelligence]
