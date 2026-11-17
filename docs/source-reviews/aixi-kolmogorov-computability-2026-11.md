@@ -13,7 +13,7 @@ The chain must be taught as four distinct objects:
 
 1. **Kolmogorov complexity (K_U(x)):** shortest program length for an object on a fixed universal machine. It is not computable in general, although it is approximable from above.
 2. **Solomonoff's universal mixture:** a lower-semicomputable semimeasure that weights generating programs by $2^{-|p|}$. It is related to $K_U(x)$, but is not simply an algorithm that calculates $K_U(x)$.
-3. **AIXI:** an idealized active agent that uses a universal mixture over computable environments and chooses actions to maximize expected future reward. It is not merely a compressor or a next-token predictor.
+3. **AIXI:** an idealized active agent that uses a universal mixture over enumerable chronological semimeasures (formal models of environment interaction) and chooses actions to maximize expected future reward. It is not merely a compressor or a next-token predictor.
 4. **AIXI(t,l):** a computable resource-bounded construction. It compares a restricted class of candidate policies/programs under explicit bounds; it does not make exact Kolmogorov complexity computable.
 
 ## 2. Kolmogorov complexity: what is and is not computable
@@ -56,7 +56,7 @@ Solomonoff induction uses this universal mixture to predict sequential observati
 
 AIXI combines:
 
-- a universal prior over computable environment models (algorithmic probability / Solomonoff induction);
+- a universal mixture over enumerable chronological semimeasures (algorithmic probability / Solomonoff induction);
 - a sequential decision problem with actions, observations and rewards;
 - a policy that maximizes expected future reward under that universal mixture.
 
@@ -123,7 +123,7 @@ The connection to LLMs is conceptual, not an identity:
 
 - Next-token prediction estimates a conditional distribution over tokens.
 - Predictive coding can turn those probabilities into code lengths.
-- Solomonoff induction replaces a hand-designed model class with a universal mixture over computable generators.
+- Solomonoff induction replaces a hand-designed model class with a universal mixture over enumerable generators; convergence guarantees require assumptions such as a computable true data-generating measure.
 - AIXI adds actions and reward-maximizing planning.
 - AIXI(t,l) makes a restricted universal-agent construction computable by bounding candidate policies and computation.
 
