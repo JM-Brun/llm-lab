@@ -114,22 +114,23 @@ pedagogical_limits:
   - "It focuses on pruning and does not compare quantization, distillation, low-rank methods or architecture-level efficiency."
   - "The 360% versus 36% figures are attributed to Epoch.AI but the underlying study and measurement definitions were not checked."
   - "Compression does not automatically yield faster inference, lower total energy, privacy or security; outcomes depend on implementation and deployment."
-comparison:
-  dossier: "docs/source-syntheses/model-compression-2026-11.md"
-  canonical_graph: "data/concepts.yml"
-  canonical_routes:
-    - "site/fr/llm-computational-complexity.qmd"
-    - "site/en/llm-computational-complexity.qmd"
-    - "site/fr/compression-revision.qmd"
-    - "site/en/compression-revision.qmd"
-  decision: "Use as a concise deployment-motivation case study and source citation in the existing model-compression material. Do not create a new concept, page or experiment from this article alone."
-  structures_kept_separate:
-    - "Model compression (pruning/quantization/distillation) is distinct from predictive compression and entropy coding."
-    - "Persistent checkpoint size is distinct from runtime KV-cache memory."
-    - "The challenge's public-policy framing is not empirical proof of energy savings."
+  comparison:
+    dossier: "docs/source-syntheses/model-compression-2026-11.md"
+    canonical_graph: "data/concepts.yml"
+    canonical_routes:
+      - "site/fr/llm-computational-complexity.qmd"
+      - "site/en/llm-computational-complexity.qmd"
+      - "site/fr/compression-revision.qmd"
+      - "site/en/compression-revision.qmd"
+    decision: "Use as a concise deployment-motivation case study and source citation in the existing model-compression material. Do not create a new concept, page or experiment from this article alone."
+    structures_kept_separate:
+      - "Model compression (pruning/quantization/distillation) is distinct from predictive compression and entropy coding."
+      - "Persistent checkpoint size is distinct from runtime KV-cache memory."
+      - "The challenge's public-policy framing is not empirical proof of energy savings."
+
 items:
   - id: alliancy-la-compression-strategie-avenir-llm-2026:challenge-and-deployment-motivation
-    kind: author-synthesis
+    kind: claim
     summary: "The Résilient AI Challenge is presented as a collaborative effort to reduce model size and complexity for more energy-efficient deployment."
     locator: {type: section, value: "Opening paragraphs", label: "Résilient AI Challenge"}
     evidence:
