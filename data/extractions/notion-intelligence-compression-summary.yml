@@ -66,6 +66,12 @@ pedagogical_model:
     - claim: "Intelligence is compression."
       status: "overstated"
       assessment: "Compression and prediction can reveal regularities and support useful representations, but they do not exhaust reasoning, planning, grounded interaction, social cognition or value-sensitive action."
+    - claim: "Compression necessarily reduces the computation required by an AI system."
+      status: "context-dependent"
+      assessment: "Compression can reduce storage or bandwidth, but end-to-end compute depends on encoding/decoding overhead, distortion, access patterns and downstream operations."
+    - claim: "Natural-language compression is equivalent to passing the Turing test."
+      status: "unsupported-equivalence"
+      assessment: "The page repeats a strong organizer analogy; the compression benchmark and Turing test have different operational definitions, and no equivalence theorem or validation is supplied."
     - claim: "The Hutter Prize treats text compression as an AI-relevant challenge."
       status: "supported-with-qualification"
       assessment: "The official competition frames lossless compression of enwik9 as a route toward intelligent compressors. This is the organizers' research motivation, not a proof that compression and intelligence are equivalent."
@@ -75,6 +81,9 @@ pedagogical_model:
     - claim: "Kolmogorov complexity gives a shortest-program account of structure."
       status: "established-with-limits"
       assessment: "Kolmogorov complexity is defined relative to a universal description language up to an additive constant and is uncomputable in general; it is not a practical computable universal intelligence score."
+    - claim: "Soar, ACT-R and CLARION illustrate cognitive architectures."
+      status: "named-but-unverified"
+      assessment: "These are named in the source as examples, but the page provides no citations or comparison; retain as source mentions only."
     - claim: "Compression could be a component of a cognitive architecture."
       status: "plausible-design-hypothesis"
       assessment: "The page offers no architecture, implementation or evidence; treat this as a design possibility, not an established result."
@@ -112,6 +121,32 @@ items:
       limitations: ["A benchmark motivation is not a theorem establishing equivalence between compression and intelligence."]
     disposition: clarify
     mapped_concepts: [predictive-compression, entropy-coding]
+    target_resources: [fr/compression-revision, en/compression-revision]
+  - id: notion-intelligence-compression-summary:compression-efficiency
+    kind: claim
+    summary: "The page claims compression reduces the amount of data an AI system needs to process and thereby improves efficiency; this is conditional rather than universally true."
+    locator: {type: heading, value: "AI and Compression", label: "AI and Compression"}
+    evidence:
+      kind: source-claim
+      confidence: context-dependent
+      scope: "The asserted efficiency benefit of compressed representations."
+      assumptions: ["The type of efficiency (storage, bandwidth, memory traffic or computation) is not specified."]
+      limitations: ["Encoding and decoding costs, distortion, random-access needs and downstream operations can offset savings."]
+    disposition: qualify
+    mapped_concepts: [predictive-compression, entropy]
+    target_resources: [fr/compression-revision, en/compression-revision]
+  - id: notion-intelligence-compression-summary:turing-test-analogy
+    kind: claim
+    summary: "The page repeats the claim that natural-language compression is equivalent to passing the Turing test; this is an analogy, not an established equivalence."
+    locator: {type: heading, value: "Hutter Prize", label: "Hutter Prize"}
+    evidence:
+      kind: source-claim
+      confidence: speculative
+      scope: "The claimed equivalence between a compression challenge and conversational imitation."
+      assumptions: ["The source adopts the competition organizers' broad research hypothesis."]
+      limitations: ["The benchmark and Turing test operationalize different tasks; no theorem or empirical equivalence is supplied."]
+    disposition: clarify
+    mapped_concepts: [predictive-compression, next-token-prediction]
     target_resources: [fr/compression-revision, en/compression-revision]
   - id: notion-intelligence-compression-summary:aixi-kolmogorov-passage
     kind: claim
