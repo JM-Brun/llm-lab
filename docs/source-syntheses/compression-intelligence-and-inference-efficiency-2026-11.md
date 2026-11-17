@@ -252,7 +252,7 @@ Source review: [David Chen, Compression Is Intelligence](../source-reviews/david
 
 ## 16. Compression as a deployment strategy — Alliancy (Aude Brès, 2026)
 
-[Alliancy's “La compression, stratégie d’avenir des LLM”](https://alliancy.fr/la-compression-strategie-davenir-des-llm-19908527-e6dd-4097-b5e5-0d9a2ab2c7e0) adds a current deployment and policy perspective to the technical sources above. It reports the launch of the Résilient AI Challenge on 20 February 2026, involving France, India, UNESCO and the Sustainable AI Coalition, and names Google, Mistral AI and Sarvam models as partners. These details are reported by the article; organizer documentation and challenge results were not independently inspected.
+[Alliancy's “La compression, stratégie d’avenir des LLM”](https://alliancy.fr/la-compression-strategie-davenir-des-llm-19908527-e6dd-4097-b5e5-0d9a2ab2c7e0) adds a current deployment and policy perspective to the technical sources above. It reports the launch of the Résilient AI Challenge on 20 February 2026, involving France, India, UNESCO and the Sustainable AI Coalition, and names Google, Mistral AI and Sarvam models as partners. The official UNESCO and Sustainable AI Coalition documentation was subsequently checked: it confirms the challenge launch, organizers, three model/task categories and the winning teams announced on 8 July 2026. The results remain bounded to that challenge's models, tasks and evaluation protocol; they are not a general benchmark of all LLMs.
 
 ### 16.1 What this source adds
 
