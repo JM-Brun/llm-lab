@@ -23,7 +23,7 @@ pedagogical_model:
       - {from: src-regularity-extraction, type: supports, to: src-predictive-coding}
       - {from: src-predictive-coding, type: evaluated-by, to: src-compression-benchmark}
       - {from: src-compression-benchmark, type: motivates, to: src-algorithmic-intelligence-hypothesis}
-      - {from: src-noise-redundancy-claim, type: qualifies, to: src-compression-as-intelligence}
+      - {from: src-noise-redundancy-claim, type: qualifies, to: src-algorithmic-intelligence-hypothesis}
       - {from: src-compression-efficiency-claim, type: qualifies, to: src-predictive-coding}
       - {from: src-text-compression-turing-test-analogy, type: motivates, to: src-compression-benchmark}
       - {from: src-cognitive-architecture-examples, type: contextualizes, to: src-cognitive-architecture-boundary}
