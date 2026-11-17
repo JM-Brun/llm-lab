@@ -193,6 +193,7 @@ Pour changer de fil rouge sans perdre la cohérence du parcours :
 - Les fragments de la scène restent courts et discrets ; les calculs simplifiés signalent explicitement toute hypothèse sur les unités traitées comme tokens.
 - La continuation jouet est identifiée comme texte pédagogique original, jamais comme sortie de modèle ; les pages françaises peuvent utiliser de courts fragments du scénario sans expliquer la référence.
 - Tout calcul qui assimile des unités visibles à des tokens explicite cette hypothèse et ne prétend pas reproduire un tokenizer réel.
+- La trace exécutable de `exercises-text-data.qmd` (`hello world`, `tiktoken==0.14.0`, IDs GPT-2 `[31373, 995]`) est une démonstration technique déjà vérifiée. La conserver comme telle tant qu'une sortie réelle du tokenizer n'a pas été calculée pour le fragment français ; ne jamais lui substituer des IDs supposés.
 - Les pages FR/EN sont alignées sur le même objectif et le même niveau de détail.
 - Les identifiants de tokens proviennent du tokenizer montré ; les « adresses de ligne » restent distinctes des coordonnées des vecteurs.
 - Les valeurs numériques sont reproductibles ou explicitement synthétiques.
