@@ -79,6 +79,6 @@ Only the public text exposed by the Notion page reader was inspected. No author,
 
 ## 6. Operational conclusion
 
-Retain the page in the source inventory as **partially scanned** and **integrated as critical context**. Do not create a new lesson, diagram or canonical concept from it. Future teaching should use primary sources for Shannon coding, algorithmic information theory and AIXI, and preserve the distinction:
+Retain the page in the source inventory as **partially scanned** and **integrated as critical context**. Do not derive a new lesson or canonical concept from the Notion note alone. Its AIXI passage does, however, motivate a separate advanced deep dive grounded in Hutter (2007), Leike & Hutter (2015), and Hutter, Quarel & Catt (2024), rather than repeating the note's compressed claims. Future teaching should use primary sources for Shannon coding, algorithmic information theory and AIXI, and preserve the distinction:
 
 > Predictive compression is a powerful connection between learning and information theory; it is not, on its own, a definition or complete theory of intelligence.
