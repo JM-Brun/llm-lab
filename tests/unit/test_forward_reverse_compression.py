@@ -13,7 +13,7 @@ def test_synthetic_sources_are_deterministic_and_reversible() -> None:
     module = _module()
     sources = module["generate_sources"](128, 20261117)
     assert sources == module["generate_sources"](128, 20261117)
-    assert all(payload == payload[::-1][::-1] for payload in sources.values())
+    assert all(len(payload) == 128 and set(payload) <= {0, 1, 2, 3} for payload in sources.values())
 
 
 def test_directional_rows_are_paired_and_cover_each_codec() -> None:
