@@ -114,7 +114,7 @@ pedagogical_limits:
   - "It focuses on pruning and does not compare quantization, distillation, low-rank methods or architecture-level efficiency."
   - "The 360% versus 36% figures are attributed to Epoch.AI but the underlying study and measurement definitions were not checked."
   - "Compression does not automatically yield faster inference, lower total energy, privacy or security; outcomes depend on implementation and deployment."
-  comparison:
+comparison:
     dossier: "docs/source-syntheses/model-compression-2026-11.md"
     canonical_graph: "data/concepts.yml"
     canonical_routes:
