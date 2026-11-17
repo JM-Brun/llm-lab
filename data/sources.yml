@@ -5299,7 +5299,7 @@ sources:
         - docs/source-reviews/alliancy-la-compression-strategie-avenir-llm-2026-11.md
         - data/extractions/alliancy-la-compression-strategie-avenir-llm-2026
 
-- id: notion-intelligence-compression-summary
+  - id: notion-intelligence-compression-summary
     title: "Intelligence = Compression"
     creators: ["Notion page author not identified"]
     source_type: other
