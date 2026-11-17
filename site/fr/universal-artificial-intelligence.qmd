@@ -114,9 +114,9 @@ AIXI n'est ni un compresseur sans perte, ni un modèle de langage classique, ni 
 
 Le mélange universel idéal n'est pas calculable exactement, et le calcul de décision séquentielle optimale qui s'appuie dessus est lui aussi incalculable.
 
-Leike et Hutter (2015) établissent une classification plus forte : AIXI n'est **pas calculable à la limite** (*not limit computable*). Cela signifie qu'il ne peut pas être obtenu, dans ce sens formel, comme limite d'une suite calculable d'approximations à calcul fini.
+Leike et Hutter (2015) montrent que la politique AIXI exacte, dans la formulation standard/itérative étudiée, n'est **pas calculable à la limite** (*not limit computable*). Ce résultat dépend de la définition formelle de la fonction de valeur et du cadre à horizon infini ; ce n'est pas un théorème d'impossibilité portant sur toute approximation.
 
-Cela ne signifie pas qu'aucune approximation utile de certains aspects ou de cas restreints d'AIXI n'est possible. Cela signifie qu'elles ne constituent pas le calcul exact de l'agent AIXI idéal.
+Point essentiel : le même article démontre qu'une formulation récursive de la fonction de valeur admet une **politique AIXI ε-optimale calculable à la limite**. La tolérance ε(t) peut même décroître vers zéro à un rythme calculable. Il faut donc distinguer trois dimensions : optimalité exacte ou ε-optimale, fonction de valeur itérative ou récursive, et horizon fini ou infini. Dire simplement qu'« AIXI ne peut pas être approché » serait trop fort.
 
 Source primaire : [Leike & Hutter (2015), On the Computability of AIXI](https://arxiv.org/abs/1510.05572).
 
@@ -150,7 +150,7 @@ $$
 \boxed{T_{\mathrm{cycle}}=O(t\,2^l)}
 $$
 
-Le facteur $2^l$ reflète le nombre exponentiel de programmes binaires candidats jusqu'à la longueur \\(l\\), à des facteurs constants près.
+Le facteur $2^l$ reflète le nombre exponentiel de programmes binaires candidats jusqu'à la longueur $l$, à des facteurs constants près.
 
 Dans la formulation ultérieure avec validation par preuve, le coût d'initialisation est borné séparément par
 
