@@ -5303,129 +5303,130 @@ sources:
         - data/extractions/leike-hutter-computability-aixi-2015.yml
         - data/extractions/hutter-quarel-catt-universal-ai-2024.yml
 
-- id: hutter-universal-algorithmic-intelligence-2007
-  title: "Universal Algorithmic Intelligence: A Mathematical Top-Down Approach"
-  creators: ["Marcus Hutter"]
-  source_type: paper
-  identifiers: {arxiv: "cs/0701125", doi: "10.1007/978-3-540-68677-4_8"}
-  canonical_url: "https://arxiv.org/abs/cs/0701125"
-  publisher: "Springer / IDSIA"
-  publication_date: "2007"
-  updated_date: null
-  language: en
-  version: null
-  revision: null
-  licence: {identifier: null, url: null, status: unknown}
-  reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
-  classification:
-    primary_theme: mathematical-tools-geometry
-    secondary_themes: [probabilistic-foundations-training, architectures-mechanisms]
-    tags: [topic:kolmogorov-complexity, topic:solomonoff-induction, topic:aixi, topic:computability]
-    concept_ids: [kolmogorov-complexity, algorithmic-probability, solomonoff-induction, sequential-decision-theory, aixi, aixi-tl, resource-bounded-computation]
-  metadata:
-    technical_level: advanced
-    contribution_types: [theory, mathematical-derivation, pedagogy]
-    audiences: [learner, researcher]
-  scan_status: partially-scanned
-  integration_status: integrated
-  scan_history:
-    - accessed_at: "2026-11-17"
-      status: partially-scanned
-      inspected_scope:
-        - "Hutter's accessible 2007 technical-report PDF, with targeted inspection of the Kolmogorov-complexity definition and Section 6 construction of AIXI(t,l)"
-        - "Checked the detailed time-bound statements in the introduction and Section 6 against the paper abstract"
-        - "Compared the construction with the 2024 Universal AI textbook treatment"
-      limitations:
-        - "The paper is a theoretical construction, not an implementation benchmark; asymptotic bounds hide enormous constants."
-        - "The report abstract's extracted complexity typography is ambiguous/inconsistent with the explicit O(t 2^l) statements in the introduction and detailed construction; the latter are used and cross-checked against the 2024 textbook."
-        - "The model's optimality claims depend on the formal environment class, reward criterion, resource bounds and intelligence ordering."
-  related:
-    pages: [en/universal-artificial-intelligence, fr/universal-artificial-intelligence]
-    concepts: [kolmogorov-complexity, algorithmic-probability, solomonoff-induction, aixi, aixi-tl]
-    audit_records:
-      - docs/source-reviews/aixi-kolmogorov-computability-2026-11.md
-      - docs/source-syntheses/kolmogorov-aixi-computability-2026-11.md
-      - data/extractions/hutter-universal-algorithmic-intelligence-2007.yml
-
-- id: leike-hutter-computability-aixi-2015
-  title: "On the Computability of AIXI"
-  creators: ["Jan Leike", "Marcus Hutter"]
-  source_type: paper
-  identifiers: {arxiv: "1510.05572", doi: null}
-  canonical_url: "https://arxiv.org/abs/1510.05572"
-  publisher: "Proceedings of Machine Learning Research, UAI"
-  publication_date: "2015"
-  updated_date: null
-  language: en
-  version: null
-  revision: null
-  licence: {identifier: null, url: null, status: unknown}
-  reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
-  classification:
-    primary_theme: mathematical-tools-geometry
-    secondary_themes: [probabilistic-foundations-training, architectures-mechanisms]
-    tags: [topic:aixi, topic:computability, topic:universal-agents]
-    concept_ids: [aixi, algorithmic-probability, resource-bounded-computation]
-  metadata:
-    technical_level: advanced
-    contribution_types: [theory, mathematical-derivation]
-    audiences: [learner, researcher]
-  scan_status: partially-scanned
-  integration_status: integrated
-  scan_history:
-    - accessed_at: "2026-11-17"
-      status: partially-scanned
-      inspected_scope:
-        - "Publisher abstract and arXiv abstract"
-      limitations:
-        - "The full proof text was not audited in this pass; use the paper for exact hierarchy results."
-        - "The paper proves AIXI is not limit computable, so it cannot be approximated by a computable sequence of finite-computation agents in that sense; do not reduce this result to a generic claim that all approximation is impossible."
-  related:
-    pages: [en/universal-artificial-intelligence, fr/universal-artificial-intelligence]
-    concepts: [aixi, algorithmic-probability, resource-bounded-computation]
-    audit_records:
-      - docs/source-reviews/aixi-kolmogorov-computability-2026-11.md
-      - docs/source-syntheses/kolmogorov-aixi-computability-2026-11.md
-      - data/extractions/leike-hutter-computability-aixi-2015.yml
-
-- id: hutter-quarel-catt-universal-ai-2024
-  title: "An Introduction to Universal Artificial Intelligence"
-  creators: ["Marcus Hutter", "David Quarel", "Elliot Catt"]
-  source_type: book
-  identifiers: {}
-  canonical_url: "https://hutter1.net/publ/uaibook2.pdf"
-  publisher: "Open-access textbook"
-  publication_date: "2024"
-  updated_date: null
-  language: en
-  version: "24 December 2024"
-  revision: null
-  licence: {identifier: null, url: null, status: unknown}
-  reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
-  classification:
-    primary_theme: mathematical-tools-geometry
-    secondary_themes: [probabilistic-foundations-training, architectures-mechanisms]
-    tags: [topic:aixi, topic:computability, topic:resource-bounds]
-    concept_ids: [kolmogorov-complexity, algorithmic-probability, solomonoff-induction, sequential-decision-theory, aixi, aixi-tl, resource-bounded-computation]
-  metadata:
-    technical_level: advanced
-    contribution_types: [theory, pedagogy, mathematical-derivation]
-    audiences: [learner, researcher]
-  scan_status: partially-scanned
-  integration_status: integrated
-  scan_history:
-    - accessed_at: "2026-11-17"
-      status: partially-scanned
-      inspected_scope:
-        - "Preface, table of contents, Kolmogorov-complexity background, and Section 13.2 AIXI(t,l) algorithm and optimality theorem"
-        - "Per-cycle complexity and setup-time statements, including the proof-length parameter"
-      limitations:
-        - "Only sections directly relevant to this integration were inspected; the rest of the textbook was not audited."
-        - "No algorithms were executed; asymptotic bounds do not establish practical feasibility."
-  related:
-    pages: [en/universal-artificial-intelligence, fr/universal-artificial-intelligence]
-    concepts: [kolmogorov-complexity, algorithmic-probability, solomonoff-induction, aixi, aixi-tl]
-    audit_records:
-      - docs/source-reviews/aixi-kolmogorov-computability-2026-11.md
-      - docs/source-syntheses/kolmogorov-aixi-computability-2026-11.md
-      - data/extractions/hutter-quarel-catt-universal-ai-2024.yml
+  - id: hutter-universal-algorithmic-intelligence-2007
+    title: "Universal Algorithmic Intelligence: A Mathematical Top-Down Approach"
+    creators: ["Marcus Hutter"]
+    source_type: paper
+    identifiers: {arxiv: "cs/0701125", doi: "10.1007/978-3-540-68677-4_8"}
+    canonical_url: "https://arxiv.org/abs/cs/0701125"
+    publisher: "Springer / IDSIA"
+    publication_date: "2007"
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [probabilistic-foundations-training, architectures-mechanisms]
+      tags: [topic:kolmogorov-complexity, topic:solomonoff-induction, topic:aixi, topic:computability]
+      concept_ids: [kolmogorov-complexity, algorithmic-probability, solomonoff-induction, sequential-decision-theory, aixi, aixi-tl, resource-bounded-computation]
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, mathematical-derivation, pedagogy]
+      audiences: [learner, researcher]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "Hutter's accessible 2007 technical-report PDF, with targeted inspection of the Kolmogorov-complexity definition and Section 6 construction of AIXI(t,l)"
+          - "Checked the detailed time-bound statements in the introduction and Section 6 against the paper abstract"
+          - "Compared the construction with the 2024 Universal AI textbook treatment"
+        limitations:
+          - "The paper is a theoretical construction, not an implementation benchmark; asymptotic bounds hide enormous constants."
+          - "The report abstract's extracted complexity typography is ambiguous/inconsistent with the explicit O(t 2^l) statements in the introduction and detailed construction; the latter are used and cross-checked against the 2024 textbook."
+          - "The model's optimality claims depend on the formal environment class, reward criterion, resource bounds and intelligence ordering."
+    related:
+      pages: [en/universal-artificial-intelligence, fr/universal-artificial-intelligence]
+      concepts: [kolmogorov-complexity, algorithmic-probability, solomonoff-induction, aixi, aixi-tl]
+      audit_records:
+        - docs/source-reviews/aixi-kolmogorov-computability-2026-11.md
+        - docs/source-syntheses/kolmogorov-aixi-computability-2026-11.md
+        - data/extractions/hutter-universal-algorithmic-intelligence-2007.yml
+  
+  - id: leike-hutter-computability-aixi-2015
+    title: "On the Computability of AIXI"
+    creators: ["Jan Leike", "Marcus Hutter"]
+    source_type: paper
+    identifiers: {arxiv: "1510.05572", doi: null}
+    canonical_url: "https://arxiv.org/abs/1510.05572"
+    publisher: "Proceedings of Machine Learning Research, UAI"
+    publication_date: "2015"
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [probabilistic-foundations-training, architectures-mechanisms]
+      tags: [topic:aixi, topic:computability, topic:universal-agents]
+      concept_ids: [aixi, algorithmic-probability, resource-bounded-computation]
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, mathematical-derivation]
+      audiences: [learner, researcher]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "Publisher abstract and arXiv abstract"
+        limitations:
+          - "The full proof text was not audited in this pass; use the paper for exact hierarchy results."
+          - "The paper proves AIXI is not limit computable, so it cannot be approximated by a computable sequence of finite-computation agents in that sense; do not reduce this result to a generic claim that all approximation is impossible."
+    related:
+      pages: [en/universal-artificial-intelligence, fr/universal-artificial-intelligence]
+      concepts: [aixi, algorithmic-probability, resource-bounded-computation]
+      audit_records:
+        - docs/source-reviews/aixi-kolmogorov-computability-2026-11.md
+        - docs/source-syntheses/kolmogorov-aixi-computability-2026-11.md
+        - data/extractions/leike-hutter-computability-aixi-2015.yml
+  
+  - id: hutter-quarel-catt-universal-ai-2024
+    title: "An Introduction to Universal Artificial Intelligence"
+    creators: ["Marcus Hutter", "David Quarel", "Elliot Catt"]
+    source_type: book
+    identifiers: {}
+    canonical_url: "https://hutter1.net/publ/uaibook2.pdf"
+    publisher: "Open-access textbook"
+    publication_date: "2024"
+    updated_date: null
+    language: en
+    version: "24 December 2024"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [probabilistic-foundations-training, architectures-mechanisms]
+      tags: [topic:aixi, topic:computability, topic:resource-bounds]
+      concept_ids: [kolmogorov-complexity, algorithmic-probability, solomonoff-induction, sequential-decision-theory, aixi, aixi-tl, resource-bounded-computation]
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, pedagogy, mathematical-derivation]
+      audiences: [learner, researcher]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "Preface, table of contents, Kolmogorov-complexity background, and Section 13.2 AIXI(t,l) algorithm and optimality theorem"
+          - "Per-cycle complexity and setup-time statements, including the proof-length parameter"
+        limitations:
+          - "Only sections directly relevant to this integration were inspected; the rest of the textbook was not audited."
+          - "No algorithms were executed; asymptotic bounds do not establish practical feasibility."
+    related:
+      pages: [en/universal-artificial-intelligence, fr/universal-artificial-intelligence]
+      concepts: [kolmogorov-complexity, algorithmic-probability, solomonoff-induction, aixi, aixi-tl]
+      audit_records:
+        - docs/source-reviews/aixi-kolmogorov-computability-2026-11.md
+        - docs/source-syntheses/kolmogorov-aixi-computability-2026-11.md
+        - data/extractions/hutter-quarel-catt-universal-ai-2024.yml
+  
