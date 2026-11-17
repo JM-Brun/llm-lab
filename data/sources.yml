@@ -5200,3 +5200,56 @@ sources:
         - docs/source-reviews/david-chen-compression-is-intelligence-2025.md
         - data/extractions/david-chen-compression-is-intelligence-2025.yml
         - docs/source-syntheses/compression-intelligence-and-inference-efficiency-2026-11.md
+
+
+  - id: hesam-sheikh-llm-study-roadmap-2024
+    title: "How I Studied LLMs in Two Weeks: A Comprehensive Roadmap"
+    creators: ["Hesam Sheikh"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://towardsdatascience.com/how-i-studied-llms-in-two-weeks-a-comprehensive-roadmap-e8ac19667a31/"
+    publisher: "Towards Data Science"
+    publication_date: "2024-10-18"
+    updated_date: null
+    language: en
+    version: "Accessible article mirrors and linked ML Retreat repository inspected 2026-11-17"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [text-tokenization, inference-efficiency, probabilistic-foundations-training]
+      tags: [topic:llm-learning-roadmap, topic:transformer, topic:hallucination, topic:knowledge-distillation, topic:multimodal-llm, topic:learning-strategy]
+      concept_ids: [token, token-embedding, self-attention, transformer]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [pedagogy, architecture, theory]
+      audiences: [learner, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "Full article body reconstructed from accessible TDS Archive/Medium and Indie Hackers mirrors after canonical Towards Data Science retrieval was blocked."
+          - "Author's ML Retreat repository README and daily study-note READMEs for Days 003–016."
+          - "Day 003 notes: token and positional embeddings, linked resources, and stated estimated duration."
+          - "Days 004–007: attention, GPT/fine-tuning, classification and instruction fine-tuning."
+          - "Days 008–010: language modelling, hallucination, knowledge distillation, locality bias and exposure bias."
+          - "Days 011–013: pause tokens, Infini-attention, bidirectional LMs, RoPE, KV cache, MoE and Llama."
+          - "Days 014–016: Vision Transformers, natural-language understanding and multimodal LMs."
+        limitations:
+          - "Canonical TDS page HTML could not be retrieved; article text was reconstructed from accessible mirrors."
+          - "Daily READMEs were inspected, but embedded image bytes, page scans and the three overview PDFs were not retrieved or visually/textually audited."
+          - "Day 003 explicitly states that most note images are from Raschka's book; other daily notes also attribute most images to the book. No assets are copied."
+          - "The linked day sequence includes estimates supplied by the author, not independently measured study times; Day 004 has no usable duration."
+          - "The three-stage article outline is not itself a 14-day calendar; daily sequence details come from the linked repository."
+          - "The article's two-week duration is a personal report and is not generalizable to learners without the author's prior ML/LLM background."
+          - "Technical claims are not independently reproduced; source-specific simplifications are qualified in the review."
+          - "No licence or permission to reuse article text, diagrams, book-derived notes or repository images was established."
+    related:
+      pages: [en/llm-overview, fr/llm-overview, en/transformer, fr/transformer, en/generation, fr/generation, en/post-training, fr/post-training, en/transformer-architectures, fr/transformer-architectures]
+      concepts: [token, token-embedding, self-attention, transformer]
+      audit_records:
+        - docs/source-reviews/hesam-sheikh-llm-study-roadmap-2026-11.md
+        - data/extractions/hesam-sheikh-llm-study-roadmap-2024.yml
