@@ -5429,4 +5429,49 @@ sources:
         - docs/source-reviews/aixi-kolmogorov-computability-2026-11.md
         - docs/source-syntheses/kolmogorov-aixi-computability-2026-11.md
         - data/extractions/hutter-quarel-catt-universal-ai-2024.yml
-  
+
+  - id: jose-parreno-garcia-how-llms-work-three-layers-2025
+    title: "LLMs explained (Part 1): The 3-layer framework behind chatGPT & friends"
+    creators: ["Jose Parreño Garcia"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://joseparreogarcia.substack.com/p/how-llms-work-part-1-the-3-essential-layers"
+    publisher: "Senior Data Science Lead (Substack)"
+    publication_date: "2025-04-05"
+    updated_date: null
+    language: en
+    version: "Article body and two embedded images inspected 2026-11-17"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [architectures-mechanisms, text-tokenization, inference-efficiency]
+      tags: [topic:llm-overview, topic:pretraining, topic:post-training, topic:hallucination, method:next-token-prediction]
+      concept_ids: [token, next-token-prediction, training-objective, dataset-curation, pretraining, fine-tuning, instruction-tuning, post-training, reinforcement-learning-from-human-feedback, tool-calling]
+    metadata:
+      technical_level: introductory
+      contribution_types: [pedagogy, architecture, theory]
+      audiences: [beginner, learner, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "Complete visible author-authored article body, including three-stage framework, classical house-price analogy, data collection, base-model training, fine-tuning example, takeaways and announced six-part series."
+          - "Both embedded article images: Churchill continuation comparison and short assistant-dialogue example."
+          - "Article metadata and visible discussion area."
+        limitations:
+          - "Embedded Karpathy video was not watched; its content is not treated as independently inspected evidence."
+          - "Outbound links to Common Crawl, FineWeb, nanoGPT architecture and other resources were identified but not systematically audited."
+          - "Llama 3 8B base versus DeepSeek R1 14B is an anecdotal, uncontrolled comparison; prompts, decoding, checkpoints and evaluation conditions are unspecified."
+          - "Visible ATLAS/ACDQ reader comment is community content, not author-authored technical evidence; it is excluded from the extraction."
+          - "Later parts on data preparation, training, tools and reinforcement learning are announced but not present; their contents were not inferred."
+          - "No licence or permission to reuse article text or embedded images was established; all assets remain link-only."
+    related:
+      pages: [fr/llm-overview, en/llm-overview, fr/text-data, en/text-data, fr/post-training, en/post-training, fr/llm-limits, en/llm-limits, fr/generation, en/generation, fr/context-engineering, en/context-engineering]
+      concepts: [token, next-token-prediction, training-objective, dataset-curation, pretraining, fine-tuning, instruction-tuning, post-training, reinforcement-learning-from-human-feedback, tool-calling]
+      audit_records:
+        - docs/source-reviews/jose-parreno-garcia-how-llms-work-three-layers-2026-11.md
+        - data/extractions/jose-parreno-garcia-how-llms-work-three-layers-2025.yml

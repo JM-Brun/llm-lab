@@ -34,6 +34,7 @@ A collection dossier is not a replacement for the canonical concept graph, bilin
 
 | Review | Scope | Entry point | Current state |
 |---|---|---|---|
+| Jose Parreño Garcia — “The 3-layer framework behind chatGPT & friends” | Classical ML analogy for corpus collection, base-model training and fine-tuning; critical assessment of truthfulness, reasoning and the confounded model comparison | [Source review](jose-parreno-garcia-how-llms-work-three-layers-2026-11.md) · [Structured extraction](../../data/extractions/jose-parreno-garcia-how-llms-work-three-layers-2025.yml) | Full article and both embedded images inspected; retained by reference only because the bilingual overview and post-training lessons already cover the technical content |
 | Jothi Moorthy — “When you type a prompt, the LLM sees numbers, not words” | Five-stage prompt → token IDs → embeddings → Transformer → next-token overview | [Source review](jothi-moorthy-llm-processing-linkedin-2026-11.md) | Author text inspected; infographic and comments not inspected; redundant with the bilingual Understand path, so no canonical integration |
 
 ## How to navigate the evidence
