@@ -54,9 +54,9 @@
 <rect x="1000" y="426" width="220" height="12" rx="6" fill="#ead9b2"/><rect x="1000" y="426" width="132" height="12" rx="6" fill="#bd9344"/>
 <text x="1000" y="475" class="body">« Je »</text><text x="1228" y="475" text-anchor="end" class="body" font-weight="700">20 %</text>
 <rect x="1000" y="486" width="220" height="12" rx="6" fill="#ead9b2"/><rect x="1000" y="486" width="44" height="12" rx="6" fill="#bd9344"/>
-<text x="1000" y="535" class="body">« Oui »</text><text x="1228" y="535" text-anchor="end" class="body" font-weight="700">10 %</text>
+<text x="1000" y="535" class="body">« Moi »</text><text x="1228" y="535" text-anchor="end" class="body" font-weight="700">10 %</text>
 <rect x="1000" y="546" width="220" height="12" rx="6" fill="#ead9b2"/><rect x="1000" y="546" width="22" height="12" rx="6" fill="#bd9344"/>
-<text x="1000" y="590" class="small">« Non » : 10 %</text>
+<text x="1000" y="590" class="small">« Oui » : 10 %</text>
 <!-- select -->
 <rect x="1290" y="175" width="280" height="505" rx="22" fill="#fff4ed" stroke="#efbd9a" class="panel"/>
 <circle cx="1330" cy="220" r="24" fill="#d9782a"/><text x="1330" y="228" text-anchor="middle" font-size="23" font-weight="750" fill="#fff">5</text>
