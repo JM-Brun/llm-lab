@@ -106,9 +106,9 @@ Un checkpoint plus petit n'est pas automatiquement plus rapide : le format, les 
 
 La compression prédictive précédente suppose que le modèle est déjà disponible. Si l'on doit aussi le décrire ou le transmettre, le coût total devient :
 
-$
+$$
 L_{\mathrm{total}}(M,D)=L(M)+L(D\mid M).
-$
+$$
 
 - $L(D\mid M)$ : longueur du code des données quand le décodeur connaît le modèle $M$ ; avec un modèle probabiliste, elle est liée à $-\sum_t \log_2 p(x_t\mid x_{<t},M)$.
 - $L(M)$ : coût nécessaire pour décrire le modèle dans un langage de description et une classe de modèles choisis : paramètres, structure et informations auxiliaires requises.
