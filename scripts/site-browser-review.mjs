@@ -1301,6 +1301,19 @@ async function runCase(testCase, caseIndex) {
       const explorer = page.locator("[data-next-token-explorer]").first();
       try {
         if (await explorer.count() !== 1) throw new Error("expected exactly one next-token explorer");
+        item.nextTokenExplorerDiagnostics = await explorer.evaluate(root => ({
+          initialised: root.dataset.initialised || null,
+          initialisationError: root.dataset.initialisationError || null,
+          selectors: {
+            controls: Boolean(root.querySelector("[data-explorer-controls]")),
+            prefix: Boolean(root.querySelector("[data-prefix]")),
+            distribution: Boolean(root.querySelector("[data-distribution]")),
+            tokenChoice: Boolean(root.querySelector("[data-token-choice]")),
+            nextDistribution: Boolean(root.querySelector("[data-next-distribution]")),
+            append: Boolean(root.querySelector("[data-append]")),
+            reset: Boolean(root.querySelector("[data-reset]")),
+          },
+        }));
         const controls = explorer.locator("[data-explorer-controls]");
         const prefix = explorer.locator("[data-prefix]");
         const distribution = explorer.locator("[data-distribution]");
