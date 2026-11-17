@@ -58,6 +58,20 @@ Un score unique ne résume pas la qualité d'un assistant. Il faut d'abord préc
 
 Ces dimensions ne forment pas une liste universelle ni un score à additionner mécaniquement. Leur priorité dépend de l'usage et du risque. Les résultats doivent être ventilés par type de tâche et de cas d'échec ; une moyenne globale peut masquer une faiblesse importante. Enfin, un test hors ligne ne garantit pas le comportement en production : surveiller les changements de données, d'usage et de système après déploiement.
 
+## 2.1 Étude de cas : géométrie ne signifie pas validité mécanique
+
+La conception mécanique rend particulièrement concrète la différence entre une sortie plausible et un résultat validé. Une pièce générée peut sembler correcte tout en violant une tolérance, une contrainte d’assemblage ou la fonction physique qui motive sa forme.
+
+Des travaux récents illustrent plusieurs approches complémentaires :
+
+- [BrepCoder (Kim et al., 2026)](https://arxiv.org/abs/2602.22284) associe la géométrie B-rep à du code de construction CAD de type Python. Son architecture aligne les caractéristiques géométriques et les séquences de conception, puis entraîne le modèle à la rétro-ingénierie, à la complétion, à la correction d’erreurs et au question-réponse sur des modèles CAD. Il s’agit d’une architecture de recherche, pas d’une preuve que chaque modèle généré est prêt pour la production.
+- [MecEng (Gerstmayr et al., 2026)](https://arxiv.org/abs/2608.14615) évalue 84 tâches paramétrées de mécanique. Son résumé rapporte un taux de réussite de 86,0 % pour le meilleur modèle à poids ouverts et de 91,4 % pour le meilleur modèle propriétaire sur les tâches de corps rigides ; les systèmes multicorps flexibles restent plus difficiles. Ces résultats montrent que les LLM peuvent résoudre un sous-ensemble mesurable de problèmes de mécanique, pas qu’ils peuvent concevoir seuls n’importe quelle machine.
+- [OmniMech (Lu et al., 2026)](https://arxiv.org/abs/2608.05539) décrit 251 000 paires de dessins mécaniques et de modèles CAD natifs. Ses tâches évaluent explicitement les dimensions, annotations, topologie, contraintes, programmes CAD exécutables et vérification assistée par outils. Les auteurs signalent que la reconstruction fine et le respect des tolérances restent difficiles.
+
+La leçon est méthodologique : **évaluer les propriétés réellement exigées par la tâche**. Selon l’application, il peut s’agir de la validité dans le noyau CAD, des dimensions et tolérances, de l’éditabilité de l’arbre de construction, de l’ajustement d’un assemblage, des résultats de simulation et de la fabricabilité. La similarité visuelle ou une explication fluide ne remplacent pas ces contrôles.
+
+L’[étude de cas Maor Farid](../source-reviews/maor-farid-large-mechanical-model-brep-geometry-2026.md) et la [synthèse sur compression et intelligence](../source-syntheses/compression-intelligence-and-inference-efficiency-2026-11.md) approfondissent la distinction entre représentation, compression prédictive et préservation de l’intention de conception.
+
 ## 2. Que veut dire « comprendre » ?
 
 Le mot « compréhension » doit être précisé. Il peut désigner :
