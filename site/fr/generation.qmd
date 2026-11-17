@@ -30,10 +30,12 @@ Le panorama s'est arrêté sur un tableau : après « C'est une bonne situation,
 En répétant quatre gestes : prédire, sélectionner, réinjecter, puis continuer ou s'arrêter. Cette boucle est la **génération autorégressive**. Pendant qu'elle tourne, les paramètres du modèle ne changent pas : produire une réponse n'est pas apprendre.
 :::
 
-::: {.callout-note title="Fil rouge : le préfixe et la continuation"}
-**Préfixe fourni :** « C'est une bonne situation, ça, scribe ? » La question de Panoramix est déjà dans le contexte quand la génération commence.
+::: {.callout-note title="Préfixe et continuation"}
+**Préfixe fourni :** « C'est une bonne situation, ça, scribe ? »
 
-**Continuation suivie ici :** le début de la tirade d'Otis : « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation… ». Les probabilités présentées ci-dessous sont fictives et ne prétendent pas reproduire la sortie d'un modèle.
+**Continuation :** « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation… »
+
+Les probabilités présentées ci-dessous sont fictives et ne prétendent pas reproduire la sortie d'un modèle.
 :::
 
 ::: {.callout-tip title="L'idée à retenir en une minute"}
@@ -130,7 +132,7 @@ Le calcul de la distribution lui-même occupe les étapes intermédiaires du par
 
 Un système d'inférence ne traite pas le prompt comme il traite les tokens qu'il génère.
 
-- **Prefill.** La question de Panoramix est connue d'avance. Une seule passe avant traite toutes ses positions ensemble, sous la contrainte du masque causal ; la distribution obtenue à la dernière position sert à choisir le premier token généré.
+- **Prefill.** Le préfixe est connu d'avance. Une seule passe avant traite toutes ses positions ensemble, sous la contrainte du masque causal ; la distribution obtenue à la dernière position sert à choisir le premier token généré.
 - **Decode incrémental.** Ensuite, les tokens arrivent un par un. À chaque étape, le modèle calcule la distribution suivante à partir du contexte augmenté du dernier token choisi.
 - **Cache KV.** L'attention calcule, pour chaque position, des vecteurs appelés clés et valeurs ([requêtes, clés et valeurs](queries-keys-values.qmd)). Ceux du préfixe ne changent plus une fois calculés ; une implémentation optimisée les conserve au lieu de tout recalculer à chaque tour. C'est un gain de temps, pas une condition de correction : sans cache, le résultat est le même, aux effets numériques près.
 
