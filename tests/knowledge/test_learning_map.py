@@ -235,7 +235,10 @@ def test_page_href_is_relative_to_language_map() -> None:
 def test_clean_heading_removes_lightweight_markdown() -> None:
     assert clean_heading("**Query**, _Key_ and `Value`") == "Query, Key and `Value`"
     assert clean_heading("  Attention mechanisms:  ") == "Attention mechanisms"
-    assert clean_heading("What the model predicts {#what-model-predicts}") == "What the model predicts"
+    assert (
+        clean_heading("What the model predicts {#what-model-predicts}")
+        == "What the model predicts"
+    )
 
 
 def test_load_pages_extracts_published_pages_and_section_headings(
