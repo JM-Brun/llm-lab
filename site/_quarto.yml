@@ -19,6 +19,7 @@ project:
     - styles/hybrid-rope-nope.css
     - scripts/relative-bias-decomposition.js
     - styles/relative-bias-decomposition.css
+    - scripts/next-token-explorer.js
     - learning-map-data-fr.json
     - learning-map-data-en.json
     - knowledge-graph.jsonld
