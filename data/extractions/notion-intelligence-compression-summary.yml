@@ -132,7 +132,7 @@ items:
       scope: "The asserted efficiency benefit of compressed representations."
       assumptions: ["The type of efficiency (storage, bandwidth, memory traffic or computation) is not specified."]
       limitations: ["Encoding and decoding costs, distortion, random-access needs and downstream operations can offset savings."]
-    disposition: qualify
+    disposition: clarify
     mapped_concepts: [predictive-compression, entropy]
     target_resources: [fr/compression-revision, en/compression-revision]
   - id: notion-intelligence-compression-summary:turing-test-analogy
