@@ -118,11 +118,9 @@ Décrire un modèle, c'est répondre à trois questions indépendantes.
 | **Apprentissage** | Comment les paramètres sont-ils obtenus ou adaptés ? | Pré-entraînement, fine-tuning, SFT, optimisation par préférences |
 | **Utilisation** | Que fait-on du modèle, paramètres fixés ? | Génération, classification, scoring, [apprentissage en contexte](in-context-learning.qmd), [ingénierie du contexte](context-engineering.qmd), recherche documentaire (RAG) |
 
-**Apprentissage.** Le **pré-entraînement** d'un GPT lui apprend à prédire le prochain token sur un grand corpus. Il est auto-supervisé : les réponses attendues sont les tokens du texte lui-même, sans annotation. Ce que le modèle peut apprendre dépend donc de la qualité et de la diversité de ce corpus. Le résultat est souvent appelé *base model*. Une **adaptation** peut suivre, sans être obligatoire : fine-tuning pour une tâche, *supervised fine-tuning* (SFT) sur des paires instruction-réponse, optimisation par préférences.
+**Apprentissage.** Le **pré-entraînement** apprend au modèle à prédire le prochain token à partir de grands corpus. Cette étape, généralement auto-supervisée, produit un *base model*. Un **post-entraînement** peut ensuite adapter ses paramètres à des consignes, des tâches ou des préférences ; il n'est pas obligatoire.
 
-Un **modèle de fondation** (*foundation model*) est une catégorie plus large que le *base model* : un modèle entraîné sur des données générales à grande échelle et adaptable à de nombreuses tâches, y compris hors du langage ([Bommasani et al., 2021](https://crfm.stanford.edu/report)).
-
-**Utilisation.** À l'inférence, les paramètres ne bougent pas. Le contexte est le principal levier pour orienter la réponse : le **prompt** (le texte fourni), les exemples qu'on y place, ou les documents qu'un système de **génération augmentée par récupération** (*retrieval-augmented generation*, RAG) va chercher et y insère. Le réglage du décodage (par exemple la température ou *top-p*) peut aussi modifier le token sélectionné, sans changer le contexte ni les paramètres.
+Un **modèle de fondation** (*foundation model*) est un modèle entraîné à grande échelle et conçu pour être adapté à de nombreuses tâches, parfois au-delà du langage ([Bommasani et al., 2021](https://crfm.stanford.edu/report)).
 
 ## Où se trouve l'information ?
 
@@ -147,44 +145,15 @@ L'**apprentissage en contexte (ICL)** concerne ce que le modèle fait avec certa
 
 ## Pourquoi les Transformers et les LLM pré-entraînés ont changé la donne
 
-La rupture s'est construite par étapes. Elle ne vient ni du seul mécanisme d'attention, ni de la seule taille des modèles : plusieurs avancées ont rendu possible un apprentissage plus réutilisable et un calcul plus facilement extensible.
+Cette évolution repose sur deux changements complémentaires : une architecture qui facilite le traitement des relations entre les éléments du texte, puis un pré-entraînement qui rend les modèles réutilisables pour des tâches variées.
 
-### Les grandes étapes, en quelques repères
+- **L'attention** permet à chaque position de prendre en compte d'autres positions accessibles dans le contexte. Le Transformer en fait le cœur de son architecture et facilite le parallélisme pendant l'entraînement. La génération, elle, reste séquentielle : le modèle produit les tokens les uns après les autres.
+- **Les représentations contextualisées** donnent à un même élément du texte un rôle qui dépend de son contexte. Le modèle ne traite donc pas chaque mot comme s'il avait toujours le même sens.
+- **Le pré-entraînement** apprend des régularités à partir de grands corpus. Ce socle peut ensuite être mobilisé pour des tâches qui n'étaient pas explicitement l'objectif initial de l'entraînement : c'est le **transfert d'apprentissage**.
 
-- **Avant les Transformers :** les RNN, LSTM et modèles séquence-à-séquence traitaient l'information au fil des positions. Ils ont permis des progrès importants, mais leur calcul récurrent limitait le parallélisme et les résumés de séquence pouvaient devenir un goulot d'étranglement.
-- **L'attention avant 2017 :** en traduction neuronale, elle a permis au décodeur de consulter différentes positions de la séquence source plutôt que de dépendre d'un résumé unique.
-- **2017 — le Transformer :** l'attention devient le mécanisme central d'une architecture qui permet de traiter en parallèle les positions d'une séquence pendant l'entraînement. La génération autorégressive, elle, reste séquentielle : les tokens sont produits les uns après les autres.
-- **À partir de la fin des années 2010 :** le pré-entraînement à grande échelle rend les paramètres réutilisables sur de nombreuses tâches. Les modèles GPT illustrent le passage d'un modèle de langage pré-entraîné à un modèle que l'on peut solliciter directement par des consignes et des exemples.
+Ce transfert n'est ni automatique ni universel. Il dépend des données, de la tâche et de la manière dont le modèle est utilisé ou adapté. On peut notamment agir sur les paramètres par le [post-entraînement](post-training.qmd), sur les consignes et les exemples par l'[apprentissage en contexte](in-context-learning.qmd), ou sur les informations disponibles par le [RAG et l'ingénierie du contexte](context-engineering.qmd).
 
-Pour les précurseurs, les jalons documentés et les compromis techniques, voir l'[histoire des Transformers](transformer-history.qmd).
-
-### Ce qui a changé — conceptuellement
-
-| Changement | Idée essentielle | Ce que cela rend possible — sans le garantir |
-|---|---|---|
-| **Du calcul récurrent à l'attention** | Les positions peuvent interagir directement, selon le masque, au lieu de transmettre l'information uniquement par une chaîne d'états. | Mieux exploiter les relations entre positions et paralléliser le calcul d'entraînement ; les relations à longue distance deviennent plus faciles à apprendre, sans être garanties. L'attention dense reste coûteuse lorsque le contexte s'allonge, et la génération demeure séquentielle. |
-| **Des représentations contextualisées** | La représentation d'un token dépend des autres tokens auxquels il peut accéder. | Un même token peut jouer un rôle différent selon son contexte ; cela ne crée pas une mémoire persistante ou illimitée. |
-| **Du modèle spécialisé au modèle pré-entraîné réutilisable** | Un objectif général — prédire le prochain token — apprend des régularités linguistiques et des représentations réutilisables. | Un même socle peut contribuer à la traduction, au résumé, à la classification ou à la réponse à des questions, sans reconstruire un modèle propre à chaque tâche. |
-
-### Pourquoi la prédiction du prochain token peut-elle servir à d'autres tâches ?
-
-Le pré-entraînement n'enseigne pas explicitement chaque tâche aval. Il apprend sur de grands corpus des régularités de langue, des relations entre éléments et des connaissances présentes dans les données. Ces acquis peuvent être réutilisés lorsque la tâche est formulée dans l'entrée, lorsque des exemples sont fournis, ou lorsque les paramètres sont ensuite adaptés.
-
-C'est le **transfert d'apprentissage** : un modèle entraîné sur un objectif général devient une base réutilisable pour des tâches qui n'étaient pas nécessairement ses objectifs d'entraînement explicites. « Pas entraîné spécifiquement pour cette tâche » ne signifie donc pas « sans apprentissage pertinent pour cette tâche ».
-
-Le parcours de base introduit les différentes façons de mobiliser ce socle. Il faut distinguer trois voies complémentaires :
-
-- **Adapter les paramètres** : le fine-tuning et les autres méthodes de post-entraînement modifient les poids à partir de nouvelles données et de nouveaux signaux d'entraînement ([post-entraînement](post-training.qmd)).
-- **Agir sur le contexte** : le prompting et l'[apprentissage en contexte (ICL)](in-context-learning.qmd) utilisent des consignes ou des exemples (*zero-shot*, *one-shot*, *few-shot*) sans mise à jour des poids.
-- **Apporter des informations externes** : le [RAG et l'ingénierie du contexte](context-engineering.qmd) organisent la récupération et l'injection de documents dans l'entrée du modèle. Le RAG complète ces voies ; il ne constitue pas un transfert des connaissances dans les paramètres.
-
-Les mécanismes et limites propres à l'ICL, les [lois d'échelle](scaling-laws.qmd), l'[émergence](emergence.qmd) et le [post-entraînement](post-training.qmd) sont étudiés dans leurs pages dédiées : ils complètent cette explication, sans être nécessaires pour retenir l'idée générale de la rupture. Le transfert dépend des données, de la tâche et de l'évaluation ; il n'est ni universel ni automatique.
-
-**La carte mentale à retenir :** le Transformer change le chemin du calcul ; le pré-entraînement construit un socle réutilisable ; le transfert explique pourquoi ce socle sert à des tâches variées. L'échelle et les méthodes d'adaptation ont ensuite élargi les capacités et les usages, sans se substituer à ces trois idées fondamentales.
-
-::: {.callout-note title="Trois pages, trois angles complémentaires"}
-Le panorama répond à **ce qu'est un LLM et comment il fonctionne**. [L'histoire des Transformers](transformer-history.qmd) explique **quels problèmes historiques ont conduit à cette architecture**. [L'évolution des LLM](llm-evolution.qmd) compare **les dimensions qui ont changé depuis GPT-2** — échelle, post-entraînement, ICL, multimodalité, calcul à l'inférence et systèmes à outils. Ces pages se complètent : elles ne constituent pas trois versions successives du même récit.
-:::
+Pour comprendre les étapes historiques, les précurseurs et les compromis techniques, voir l'[histoire des Transformers](transformer-history.qmd). Les évolutions plus récentes — échelle, multimodalité, calcul à l'inférence et systèmes à outils — sont examinées dans [l'évolution des LLM](llm-evolution.qmd).
 
 ## Choisir une approche
 
