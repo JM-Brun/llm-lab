@@ -30,7 +30,7 @@ tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "
 
 Il ne rédige pas sa réponse d'un seul bloc. À partir du texte déjà écrit, il estime ce qui pourrait venir ensuite, choisit un élément, puis recommence. Un programme qui prolonge ainsi un texte est un **modèle de langage**. Entraîné à grande échelle, c'est un **grand modèle de langage** (*large language model*, LLM).
 
-Dans le film, Otis commence par « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... ». Pour les calculs qui suivent, nous utiliserons toutefois une continuation inventée pour LLM Lab : « Être scribe, c'est relier des histoires. » Ce n'est pas la réplique du film. Nous la retrouvons dans plusieurs pages afin de suivre le même exemple d'un calcul à l'autre. Otis est le personnage, l'assistant est l'application qui dialogue avec l'utilisateur, et le LLM est le modèle interrogé par cette application : c'est ce dernier que nous étudions ici.
+Pour les calculs, le parcours utilise une continuation inventée : « Être scribe, c'est relier des histoires. » Elle sert de fil conducteur dans plusieurs pages. Otis est le personnage, l'assistant l'application qui dialogue avec l'utilisateur, et le LLM le modèle interrogé par cette application : c'est ce dernier que nous étudions ici.
 :::
 
 ::: {.callout-tip title="L'idée à retenir"}
