@@ -85,7 +85,7 @@ These markers describe the evidence available; they do not make all evidence equ
 
 ## Three operational uses and cross-cutting evaluation
 
-The same predictive computation produces a conditional distribution. This distribution supports three distinct operational uses: generate a token, score an observed target, or learn by updating parameters. Evaluation is cross-cutting: it aggregates measurements on data under a defined protocol. The diagram details the generation and learning loops; scoring is distinguished immediately below.
+The same predictive computation produces a conditional distribution. This distribution supports three distinct operational uses: generate a token, score an observed target, or learn by updating parameters. Evaluation is cross-cutting: it aggregates measurements on data under a defined protocol. The diagram details the generation and learning loops; scoring is distinguished immediately below. To watch a token extend the prefix and trigger the next distribution, [explore the next-token loop in the overview](llm-overview.qmd#text-to-distribution).
 
 ```{=html}
 <figure class="llm-flow-figure">
