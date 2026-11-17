@@ -43,6 +43,10 @@ def test_overview_self_checks_cover_every_major_section_in_both_languages() -> N
         assert "<!-- self-check-coverage: enforced -->" in source
         check_start = source.index("::: {.self-check}")
         sections = set(heading.findall(source[:check_start]))
-        covered = {item for group in marker.findall(source[check_start:]) for item in group.split()}
+        covered = {
+            item
+            for group in marker.findall(source[check_start:])
+            for item in group.split()
+        }
         assert sections
         assert sections == covered
