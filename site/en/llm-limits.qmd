@@ -58,6 +58,20 @@ A single score cannot summarize an assistant's quality. First specify **what is 
 
 These dimensions are neither a universal checklist nor a score to be mechanically summed. Their priority depends on the use and its risks. Results should be broken down by task and failure type; an overall average can hide an important weakness. Finally, an offline test does not guarantee production behavior: monitor changes in data, usage, and the system after deployment.
 
+## 2.1 Case study: geometry is not yet engineering validity
+
+Mechanical design makes the distinction between a plausible output and a validated result unusually concrete. A generated part can look right while violating a tolerance, an assembly constraint, or the physical function that motivated its shape.
+
+Recent research illustrates several complementary approaches:
+
+- [BrepCoder (Kim et al., 2026)](https://arxiv.org/abs/2602.22284) combines B-rep geometry with Python-like CAD construction code. Its architecture aligns geometric features and design sequences, then trains for reverse engineering, completion, error correction, and CAD question answering. This is a research architecture, not evidence that every generated model is production-ready.
+- [MecEng (Gerstmayr et al., 2026)](https://arxiv.org/abs/2608.14615) evaluates 84 parameterized mechanics tasks. Its abstract reports 86.0% success for the best open-weight model and 91.4% for the strongest proprietary model on rigid-body tasks; flexible multibody tasks remain harder. These results show that LLMs can solve a measurable subset of mechanics problems, not that they can autonomously engineer arbitrary machines.
+- [OmniMech (Lu et al., 2026)](https://arxiv.org/abs/2608.05539) describes 251,000 paired mechanical drawings and native CAD models. Its tasks explicitly test dimensions, annotations, topology, constraints, executable CAD, and tool-assisted verification. The authors report that fine-grained reconstruction and tolerance enforcement remain difficult.
+
+The lesson is methodological: **evaluate the properties the task actually requires**. Depending on the application, these may include CAD-kernel validity, dimensions and tolerances, feature editability, assembly fit, simulation results, and manufacturability. Visual similarity or a fluent explanation is not a substitute for these checks.
+
+The [Maor Farid case study](../source-reviews/maor-farid-large-mechanical-model-brep-geometry-2026.md) and the [compression and intelligence synthesis](../source-syntheses/compression-intelligence-and-inference-efficiency-2026-11.md) examine the distinction between representation, predictive compression, and preserved design intent in more detail.
+
 ## 2. What does "understand" mean?
 
 The word "understanding" must be made precise. It can denote:
