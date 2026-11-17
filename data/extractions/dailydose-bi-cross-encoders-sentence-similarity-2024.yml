@@ -32,6 +32,7 @@ pedagogical_model:
   pedagogical_strengths: ["Connects representation learning to concrete retrieval tasks.", "Uses lexical ambiguity to introduce contextualization."]
   pedagogical_limits: ["Central technical comparison is inaccessible.", "Some BERT pretraining claims need qualification against primary literature."]
   comparison:
+    canonical_graph: "Existing canonical concepts contextualized-representation and retrieval-augmented-generation already cover the relevant nodes; no new concept or relation is justified by the accessible Part 1 material."
     canonical_pages: [fr/embedding-space, en/embedding-space, fr/contextualized-representations, en/contextualized-representations, fr/cosine-similarity, en/cosine-similarity]
     decision: "Use motivation as optional context; do not duplicate existing lessons or claim to extract paywalled material."
     dossier: docs/source-reviews/dailydose-main-path-2026-11.md
