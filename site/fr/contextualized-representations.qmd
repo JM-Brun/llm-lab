@@ -38,7 +38,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-re
   <span class="epistemic-badge badge-status">Architecture : Blocs Transformer</span>
 </div>
 
-Le mot *situation* apparaît dans « de bonne ou de mauvaise situation ». On peut le retrouver dans une autre formulation — « la situation du scribe » — où la position et le contexte diffèrent. En supposant un ID commun pour isoler le mécanisme, le lookup initial est identique. **Le Transformer construit ensuite des états cachés contextualisés.**
+Le mot *situation* apparaît dans « une bonne situation, ça, scribe ? », puis dans « de bonne ou de mauvaise situation ». Le premier emploi désigne un poste ; le second, les circonstances. En supposant un ID commun et une position simplifiée identique, le lookup initial est le même. **Le Transformer construit ensuite des états cachés contextualisés à partir du contexte.**
 :::
 
 ::: {.callout-tip title="L'idée à retenir en une minute"}
@@ -86,10 +86,10 @@ Ce schéma est une illustration originale et simplifiée, et non une reproductio
 
 ## Ce qui reste identique
 
-Considérons deux occurrences du mot `situation` :
+Considérons deux emplois du mot `situation` :
 
-- Première formulation : « de bonne ou de mauvaise situation » ;
-- Dans une autre formulation : « la situation du scribe ».
+- Dans la question : « une bonne situation, ça, scribe ? » — un poste, une profession ;
+- Dans la réponse : « de bonne ou de mauvaise situation » — les circonstances, les conditions.
 
 Pour isoler le mécanisme, supposons que le tokenizer attribue le même ID au mot dans les deux occurrences. Elles récupèrent alors le même **vecteur de plongement initial** :
 
@@ -118,7 +118,7 @@ Pour comprendre les dépendances entre positions, les masques causaux et les rô
 </div>
 </details>
 
-![Un même token peut recevoir des représentations contextualisées différentes selon la phrase.](../images/contextualized-embeddings-fr.svg){fig-alt="Deux formulations contiennent le mot situation à des positions différentes. Sous l’hypothèse d’un ID commun, le lookup initial est identique ; les contextes accessibles et les états cachés peuvent différer." fig-cap="Même ID supposé : le lookup initial est identique. Les positions et contextes accessibles diffèrent ; les états cachés peuvent donc différer." width=100%}
+![Un même token peut recevoir des représentations contextualisées différentes selon la phrase.](../images/contextualized-embeddings-fr.svg){fig-alt="Deux emplois de situation, l'un au sens de poste et l'autre au sens de circonstances, sont alignés à une même position simplifiée. Sous l'hypothèse d'un ID commun, le lookup initial est identique ; les contextes diffèrent et les états cachés peuvent différer." fig-cap="Même ID et position simplifiée identique : le lookup initial est le même. Les contextes accessibles diffèrent ; les états cachés peuvent donc différer." width=100%}
 
 Cette illustration originale s'inspire de [Ethayarajh (2019), *How Contextual are Contextualized Word Representations?*](https://arxiv.org/abs/1909.00512). Elle illustre le principe, pas des vecteurs mesurés. Selon le tokenizer, un mot visible peut être constitué de plusieurs tokens.
 
