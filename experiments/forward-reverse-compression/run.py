@@ -26,8 +26,13 @@ CODECS: dict[str, Callable[[bytes], bytes]] = {
 }
 
 
-def _markov(length: int, rng: random.Random, p_stay: float) -> bytes:
-    values = [rng.randrange(ALPHABET)]
+def _markov(
+    length: int,
+    rng: random.Random,
+    p_stay: float,
+    initial_state: int | None = None,
+) -> bytes:
+    values = [rng.randrange(ALPHABET) if initial_state is None else initial_state]
     for _ in range(length - 1):
         previous = values[-1]
         if rng.random() < p_stay:
@@ -48,7 +53,8 @@ def generate_sources(length: int, seed: int) -> dict[str, bytes]:
     split = length // 2
     regime_rng = random.Random(seed + 1_000_003)
     first = _markov(split, regime_rng, 0.98)
-    second = _markov(length - split, regime_rng, 0.55)
+    # Carry the boundary state forward: only the transition regime changes.
+    second = _markov(length - split, regime_rng, 0.55, initial_state=first[-1])
     regime = first + second
     return {
         "iid_uniform": iid,
