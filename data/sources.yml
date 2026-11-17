@@ -4000,7 +4000,7 @@ sources:
       contribution_types: [theory, architecture, implementation, pedagogy, experiment]
       audiences: [learner, practitioner, educator]
     scan_status: partially-scanned
-    integration_status: partially-integrated
+    integration_status: integrated
     scan_history:
       - accessed_at: "2026-11-17"
         status: partially-scanned
@@ -4900,12 +4900,13 @@ sources:
           - "The forward/reverse enwik8 measurements are reported by the author; exact compressor versions, settings and reproduction protocol were not established."
           - "No reuse licence or permission for article text or figures was established; link-only treatment."
     related:
-      pages: [fr/entropy, en/entropy, fr/cross-entropy, en/cross-entropy, fr/compression-revision, en/compression-revision]
-      concepts: [predictive-compression, entropy, surprisal, cross-entropy, conditional-distribution, sequence-likelihood, next-token-prediction]
+      pages: [fr/entropy, en/entropy, fr/cross-entropy, en/cross-entropy, fr/compression-revision, en/compression-revision, fr/universal-artificial-intelligence, en/universal-artificial-intelligence]
+      concepts: [predictive-compression, minimum-description-length, entropy, surprisal, cross-entropy, conditional-distribution, sequence-likelihood, next-token-prediction, aixi]
       audit_records:
         - docs/source-reviews/lewish-intelligence-and-compression-2025.md
         - data/extractions/lewish-intelligence-and-compression-2025.yml
         - docs/source-syntheses/compression-intelligence-and-inference-efficiency-2026-11.md
+        - docs/source-syntheses/compression-intelligence-cross-source-2026-11.md
 
   - id: deliriumm-llms-do-not-guess-they-optimize-2026
     title: "LLMs do not guess. They optimize. Here is the difference and the math behind it"
