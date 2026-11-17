@@ -145,3 +145,21 @@ Le second volet rend visible le compromis entre ajustement prédictif et coût d
 ## 12. Corpus naming guardrail — enwik8 vs enwik9
 
 The Lewis article's Hutter Prize paragraph and note [2] call a 1 GB corpus `enwik8`. The official Hutter Prize FAQ says the contest began with the 100 MB `enwik8` corpus and moved to the 1 GB `enwik9` corpus in 2020; the current official page is for `enwik9` and lists historical `enwik8` results separately ([official prize page](https://prize.hutter1.net/), [FAQ](https://prize.hutter1.net/hfaq.htm)). Preserve the article's forward/reverse measurements as its reported `enwik8` experiment, but do not describe that file as the 1 GB Hutter Prize corpus or mix its results with the `enwik9` competition.
+
+## 13. Mechanical design as a test of representation-aware compression (Maor Farid, 2026)
+
+[Maor Farid's post on AI and mechanical design](https://www.linkedin.com/posts/maorfaridphd_ai-mechanicaldesign-mehcanicalengineers-ugcPost-7469852823074111490-ZO-w/) connects predictive compression to CAD-native geometry and proposes a Large Mechanical Model trained on B-rep representations.
+
+The post's strongest contribution to this synthesis is a **task-sensitive limit of compression**: a representation can be compact and reconstruct the dominant geometry while losing rare details that determine whether a part is functional, manufacturable or assemblable. A commenter makes this explicit by distinguishing geometric fidelity from preservation of design intent, including interfaces, tolerances and constraints.
+
+Keep three claims separate:
+
+1. **Established information-theoretic connection:** probabilistic prediction and expected ideal code length are linked through log loss and coding. This does not prove that compression is intelligence.
+2. **Plausible engineering motivation:** B-rep is a structured, CAD-native representation of boundary geometry and topology. Its usefulness for CAD does not establish a universal information-density advantage over language; that comparison requires a specified encoding, precision, task and fidelity criterion.
+3. **Unverified model proposal:** the post describes an LMM, but supplies no paper, model card, implementation or benchmark sufficient to assess its architecture or performance.
+
+The practical lesson is that compression objectives should be evaluated against the downstream invariants that matter. For mechanical design, candidate evaluation dimensions include kernel validity, topology, dimensions and tolerances, mating interfaces, parametric editability, function and manufacturability. Average reconstruction loss alone may underweight rare but critical constraints. Constraint-aware objectives, symbolic side information, CAD-kernel checks and task-based evaluation are promising questions, not confirmed features of the proposed model.
+
+This case study complements the existing discussion of predictive compression without creating a new generic “geometry compression” concept. CAD B-rep must remain distinct from neural embedding spaces, and the 3Blue1Brown entropy transcript embedded in the post is already independently catalogued; link to it rather than duplicate its extraction or pedagogical graph.
+
+Source review: [Maor Farid, AI and mechanical design](../source-reviews/maor-farid-large-mechanical-model-brep-geometry-2026.md). Structured extraction: [atomic claims and comment provenance](../../data/extractions/maor-farid-large-mechanical-model-brep-geometry-2026.yml). The source remains partially scanned because the media asset and any LMM technical documentation were not inspected.
