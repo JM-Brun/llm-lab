@@ -224,7 +224,7 @@ The negative sign means that, in this sample, **lower BPC is associated with hig
 
 The paper provides a **case study connecting cross-entropy, predictive compression, and evaluation**: better probabilistic modeling of a relevant corpus can be a useful signal of capabilities measured in a related domain. It motivates studying BPC as a complementary signal, provided the corpus and protocol are documented and the result is checked against task-specific evaluations. It does not justify a single domain-independent score, replacing benchmarks, or conflating predictive compression with quantization, pruning, or distillation.
 
-Sources: [COLM 2024 paper](https://arxiv.org/abs/2404.09937) · [official repository and protocol](https://github.com/hkust-nlp/llm-compression-intelligence) · [LLM Lab critical review](../../docs/source-reviews/huang-zhang-shan-he-compression-intelligence-linearly-2024.md) · [structured extraction](../../data/extractions/huang-zhang-shan-he-compression-intelligence-linearly-2024.yml).
+Sources: [COLM 2024 paper](https://arxiv.org/abs/2404.09937) · [official repository and protocol](https://github.com/hkust-nlp/llm-compression-intelligence) · [LLM Lab critical review](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-reviews/huang-zhang-shan-he-compression-intelligence-linearly-2024.md) · [structured extraction](https://github.com/JM-Brun/llm-lab/blob/main/data/extractions/huang-zhang-shan-he-compression-intelligence-linearly-2024.yml).
 
 ## Reconstruct the reasoning, step by step
 
