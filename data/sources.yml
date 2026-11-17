@@ -4567,7 +4567,7 @@ sources:
       primary_theme: probabilistic-foundations-training
       secondary_themes: [mathematical-tools-geometry, architectures-mechanisms]
       tags: [topic:predictive-compression, topic:minimum-description-length, topic:generalization, topic:active-inference, topic:universal-intelligence]
-      concept_ids: [predictive-compression, entropy, surprisal, cross-entropy, generalization, bayesian-inference]
+      concept_ids: [predictive-compression, entropy, surprisal, cross-entropy, conditional-distribution, sequence-likelihood, next-token-prediction]
     metadata:
       technical_level: intermediate
       contribution_types: [theory, mathematical-derivation, pedagogy, research-perspective]
@@ -4588,8 +4588,8 @@ sources:
           - "The forward/reverse enwik8 measurements are reported by the author; exact compressor versions, settings and reproduction protocol were not established."
           - "No reuse licence or permission for article text or figures was established; link-only treatment."
     related:
-      pages: [fr/entropy, en/entropy, fr/cross-entropy, en/cross-entropy, fr/compression-revision, en/compression-revision, fr/generalization, en/generalization]
-      concepts: [predictive-compression, entropy, surprisal, cross-entropy, generalization, bayesian-inference]
+      pages: [fr/entropy, en/entropy, fr/cross-entropy, en/cross-entropy, fr/compression-revision, en/compression-revision]
+      concepts: [predictive-compression, entropy, surprisal, cross-entropy, conditional-distribution, sequence-likelihood, next-token-prediction]
       audit_records:
         - docs/source-reviews/lewish-intelligence-and-compression-2025.md
         - data/extractions/lewish-intelligence-and-compression-2025.yml
