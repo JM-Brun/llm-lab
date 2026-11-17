@@ -970,7 +970,7 @@ relation_types:
 
   approximates:
     direction: directed
-    family: computational
+    family: functional
     transitive: false
     acyclic: false
     learning_dependency: false
