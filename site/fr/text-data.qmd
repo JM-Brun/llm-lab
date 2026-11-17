@@ -31,7 +31,7 @@ La **tokenisation** découpe le texte en unités appelées *tokens* et associe c
 :::
 
 ::: {.callout-note title="Fil rouge : le texte à encoder"}
-Le préfixe à encoder est : **« C'est une bonne situation, ça, scribe ? »** Pour la trace suivie dans le parcours, la continuation est le texte original de LLM Lab : **« Être scribe, c'est relier des histoires. »** La réplique d'Otis reste une accroche culturelle ; elle n'est pas la continuation tokenisée puis générée dans les démonstrations.
+Le préfixe à encoder est : **« C'est une bonne situation, ça, scribe ? »** Pour la trace suivie dans le parcours, la continuation est le début de la tirade d'Otis : **« Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation… »** La séquence est un extrait du film *Astérix et Obélix : Mission Cléopâtre* ; les démonstrations n'en reproduisent qu'un court fragment.
 
 Tokenisez d'abord le préfixe, puis la continuation, avec le tokenizer effectivement étudié. Ne supposez pas que les frontières de tokens correspondent aux mots. Les IDs obtenus dépendent du tokenizer ; ils ne sont pas universels.
 :::
