@@ -4427,3 +4427,124 @@ sources:
       audit_records:
         - docs/source-reviews/3blue1brown-cross-entropy-part2-2026-11.md
         - data/extractions/3blue1brown-cross-entropy-compression-intelligence-part-2-2026.yml
+
+
+  - id: dailydose-bi-cross-encoders-sentence-similarity-2024
+    title: "Bi-encoders and Cross-encoders for Sentence Pair Similarity Scoring (Part 1)"
+    creators: ["Avi Chawla"]
+    source_type: tutorial
+    identifiers: {}
+    canonical_url: "https://www.dailydoseofds.com/bi-encoders-and-cross-encoders-for-sentence-pair-similarity-scoring-part-1/"
+    publisher: "Daily Dose of Data Science"
+    publication_date: "2024-10-13"
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [inference-efficiency]
+      tags: [topic:sentence-embeddings, topic:similarity-search, method:contextual-embeddings, application:information-retrieval]
+      concept_ids: [contextualized-representation, retrieval-augmented-generation]
+    metadata:
+      technical_level: introductory
+      contribution_types: [theory, architecture, pedagogy]
+      audiences: [beginner, learner, practitioner]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "Direct canonical HTML: introduction, background on static embeddings, BERT, MLM, NSP, contextualized representations, and the beginning of the section 'The problem with BERT' through the paywall boundary."
+          - "Metadata: author, publication date, title and reading-time estimate."
+        limitations:
+          - "The article becomes paywalled immediately after posing the problem with using raw BERT sentence embeddings and cosine similarity; the core subsequent comparison in Part 1 was not accessible."
+          - "Embedded figures were identified as placements but their exact bytes, visual content and reuse rights were not inspected."
+          - "Code, comments and linked resources were not exhaustively inspected."
+          - "Do not attribute the bi-encoder/cross-encoder technical details to inaccessible Part 1 sections; use the separately inspected Part 2 and primary technical references."
+    related:
+      pages: [fr/embedding-space, en/embedding-space, fr/cosine-similarity, en/cosine-similarity, fr/rag-memory-boundaries, en/rag-memory-boundaries]
+      concepts: [contextualized-representation, retrieval-augmented-generation]
+      audit_records: [docs/source-reviews/dailydose-main-path-2026-11.md]
+  - id: dailydose-augsbert-sentence-similarity-2024
+    title: "AugSBERT: Bi-encoders + Cross-encoders for Sentence Pair Similarity Scoring – Part 2"
+    creators: ["Avi Chawla"]
+    source_type: tutorial
+    identifiers: {}
+    canonical_url: "https://www.dailydoseofds.com/augsbert-bi-encoders-cross-encoders-for-sentence-pair-similarity-scoring-part-2/"
+    publisher: "Daily Dose of Data Science"
+    publication_date: "2024-10-20"
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [inference-efficiency]
+      tags: [topic:sentence-embeddings, topic:similarity-search, method:contrastive-learning, application:information-retrieval]
+      concept_ids: [contextualized-representation, retrieval-augmented-generation]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [architecture, implementation, pedagogy]
+      audiences: [learner, practitioner]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "Direct canonical HTML: recap, cross-encoder and bi-encoder comparison, AugSBERT motivation and method overview, labelled-data scenario and the beginning of augmentation details through the paywall boundary."
+          - "Metadata: author, publication date, title and reading-time estimate."
+        limitations:
+          - "The remainder of the implementation and further data-regime details are behind a paywall."
+          - "Embedded figures, code, comments and all linked resources were not independently inspected."
+          - "Performance claims are not treated as universal; model/task-specific evaluation is required."
+    related:
+      pages: [fr/cosine-similarity, en/cosine-similarity, fr/rag-memory-boundaries, en/rag-memory-boundaries]
+      concepts: [contextualized-representation, retrieval-augmented-generation]
+      audit_records: [docs/source-reviews/dailydose-main-path-2026-11.md]
+  - id: dailydose-foundations-rag-2024
+    title: "Foundations of RAG systems"
+    creators: ["Avi Chawla"]
+    source_type: tutorial
+    identifiers: {}
+    canonical_url: "https://www.dailydoseofds.com/a-crash-course-on-building-rag-systems-part-1-with-implementations/"
+    publisher: "Daily Dose of Data Science"
+    publication_date: "2024-11-03"
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: inference-efficiency
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:retrieval-augmented-generation, topic:vector-search, topic:chunking, method:reranking]
+      concept_ids: [retrieval-augmented-generation, contextualized-representation]
+    metadata:
+      technical_level: introductory
+      contribution_types: [architecture, implementation, pedagogy]
+      audiences: [beginner, learner, practitioner]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "Direct canonical HTML: introduction, vector database recap, motivation for external knowledge, RAG pipeline, chunking, embedding, vector storage, query embedding, approximate retrieval and cross-encoder reranking through the paywall boundary."
+          - "Metadata: author, publication date, title and reading-time estimate."
+        limitations:
+          - "The final response-generation implementation and later sections are behind a paywall."
+          - "Embedded figures and code were not retrieved as independent assets or executed; comments and all linked resources were not exhaustively inspected."
+          - "The article's simplified description of vector databases is not a universal requirement: RAG can use lexical, structured, hybrid or other retrieval systems."
+          - "Retrieval does not guarantee factual grounding or eliminate hallucinations; the project retains this qualification."
+    related:
+      pages: [fr/rag-memory-boundaries, en/rag-memory-boundaries, fr/cosine-similarity, en/cosine-similarity]
+      concepts: [retrieval-augmented-generation, contextualized-representation]
+      audit_records: [docs/source-reviews/dailydose-main-path-2026-11.md]
