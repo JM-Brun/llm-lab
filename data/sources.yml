@@ -5323,7 +5323,7 @@ sources:
       contribution_types: [theory, experiment, benchmark]
       audiences: [researcher, practitioner, educator]
     scan_status: partially-scanned
-    integration_status: partially-integrated
+    integration_status: integrated
     scan_history:
       - accessed_at: "2026-11-17"
         status: partially-scanned
