@@ -317,3 +317,6 @@ These resources are curated for teaching design and guided experimentation. Incl
 - **Santhanam et al. (2022).** [ColBERTv2: Effective and Efficient Retrieval via Lightweight Late Interaction](https://aclanthology.org/2022.naacl-main.272/). Residual compression and denoised supervision for late-interaction retrieval.
 - **Formal, Piwowarski & Clinchant (2021).** [SPLADE: Sparse Lexical and Expansion Model for First Stage Ranking](https://arxiv.org/abs/2107.05720). Learned sparse term-weight retrieval.
 - **Thakur et al. (2021).** [BEIR: A Heterogeneous Benchmark for Zero-shot Evaluation of Information Retrieval Models](https://arxiv.org/abs/2104.08663). Heterogeneous comparison of lexical, sparse, dense, late-interaction and reranking systems.
+
+- **Chawla (2025).** [Visual Guide to Bi-encoders, Cross-encoders and ColBERT](https://blog.dailydoseofds.com/p/visual-guide-to-bi-encoders-cross). A compact visual overview; consult primary ColBERT papers for the formal architecture and performance claims.
+- **Faysse et al. (2025).** [ColPali: Efficient Document Retrieval with Vision Language Models](https://proceedings.iclr.cc/paper_files/paper/2025/hash/99e9e141aafc314f76b0ca3dd66898b3-Abstract-Conference.html). Extends late interaction to visual page retrieval; includes ViDoRe, architecture comparisons and query-to-patch visualizations.
