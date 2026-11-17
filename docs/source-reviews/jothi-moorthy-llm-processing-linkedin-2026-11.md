@@ -3,7 +3,7 @@
 **Source ID:** jothi-moorthy-llm-processing-linkedin  
 **Author:** Jothi Moorthy  
 **Publisher:** LinkedIn  
-**Canonical URL:** https://www.linkedin.com/posts/jothi-moorthy_%F0%9D%97%AA%F0%9D%97%B5%F0%9D%97%B2%F0%9D%97%BB-%F0%9D%98%86%F0%9D%97%BC%F0%9D%97%82%F0%9D%97%81%F0%9D%97%86%F0%9D%97%BD%F0%9D%97%BF%F0%9D%97%BC%F0%9D%97%BA%F0%9D%97%BD%F0%9D%98%81-share-7528445050129764353-hs6w/  
+**Canonical URL:** https://www.linkedin.com/posts/jothi-moorthy_%F0%9D%97%AA%F0%9D%97%B5%F0%9D%97%B2%F0%9D%97%BB-%F0%9D%98%86%F0%9D%97%BC%F0%9D%98%82-%F0%9D%98%81%F0%9D%97%BD%F0%9D%97%BF%F0%9D%97%BC%F0%9D%97%BA%F0%9D%97%BD%F0%9D%98%81-share-7528445050129764353-hs6w/  
 **Review date:** 2026-11-17  
 **Source type:** introductory educational social-media post  
 **Language:** English
