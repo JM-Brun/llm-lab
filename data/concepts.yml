@@ -797,16 +797,16 @@ concepts:
     importance: specialized
     labels: {fr: "Probabilité algorithmique", en: "Algorithmic probability"}
     definitions:
-      fr: "Pondération d'une sortie par la somme des poids 2^{-longueur(programme)} des programmes universels qui la produisent ; elle favorise les explications courtes, mais la mesure universelle correspondante n'est pas calculable exactement."
-      en: "Weight assigned to an output by summing the 2^{-program-length} weights of universal programs that produce it; it favours short explanations, but the corresponding universal measure is not exactly computable."
+      fr: "Somme des poids 2^{-longueur(programme)} des programmes préfixes d'une machine universelle qui produisent un préfixe donné ; elle définit une semi-mesure universelle, semi-calculable par le bas mais pas calculable exactement."
+      en: "Sum of the 2^{-program-length} weights of prefix-free programs on a universal machine that produce an output beginning with a given string; it defines a universal semimeasure that is lower semicomputable but not exactly computable."
     domains: [mathematical-tools-geometry, probabilistic-foundations-training]
     resources: [fr/universal-artificial-intelligence, en/universal-artificial-intelligence]
   - id: solomonoff-induction
     importance: specialized
     labels: {fr: "Induction de Solomonoff", en: "Solomonoff induction"}
     definitions:
-      fr: "Prédiction séquentielle fondée sur un mélange universel de programmes générateurs, pondérés selon leur longueur descriptive ; elle converge sous des hypothèses formelles, mais sa distribution universelle est incalculable."
-      en: "Sequential prediction based on a universal mixture of generating programs weighted by descriptive length; it has formal convergence guarantees under stated assumptions, but its universal distribution is incomputable."
+      fr: "Prédiction séquentielle fondée sur la semi-mesure algorithmique universelle ; elle bénéficie de garanties de convergence sous des hypothèses formelles, mais la semi-mesure ne peut pas être calculée exactement."
+      en: "Sequential prediction based on the universal algorithmic semimeasure; it has formal convergence guarantees under stated assumptions, but the semimeasure cannot be computed exactly."
     domains: [probabilistic-foundations-training, mathematical-tools-geometry]
     resources: [fr/universal-artificial-intelligence, en/universal-artificial-intelligence]
   - id: sequential-decision-theory
