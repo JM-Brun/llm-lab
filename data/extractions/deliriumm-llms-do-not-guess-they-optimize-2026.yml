@@ -1,0 +1,204 @@
+schema_version: 1
+source_id: deliriumm-llms-do-not-guess-they-optimize-2026
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Full article body retrieved through a third-party mirror/index of the X Article on 2026-11-17."
+      - "The article's sequence was reconstructed from its section headings and complete available prose."
+      - "The linked video and its visual assets were not independently inspected; this reconstruction is article-based, not an audiovisual transcript."
+    inferred_elements:
+      - "Learning outcomes and prerequisites are inferred from the explanatory sequence rather than formally declared."
+      - "The article presents a broad survey of optimization methods as a conceptual bridge to LLM training; it is not a technical specification of a contemporary training stack."
+  source_graph:
+    nodes:
+      - {id: src-objective-function, kind: mathematical-object, description: "A scalar objective to minimize or maximize over a set of candidate inputs.", locator: "What optimization actually means"}
+      - {id: src-derivative-stationarity, kind: condition, description: "For a differentiable unconstrained interior optimum, a zero first derivative is a necessary candidate condition; second-order or other analysis is needed to classify it.", locator: "What optimization actually means"}
+      - {id: src-newton-method, kind: algorithm, description: "An iterative root-finding method using local first-order approximations and derivative information; optimization variants apply it to stationarity equations.", locator: "The oldest trick: Newton's method"}
+      - {id: src-gradient-descent, kind: algorithm, description: "A first-order iterative method that updates parameters in the negative gradient direction, often with stochastic or minibatch estimates in neural-network training.", locator: "The oldest trick: Newton's method"}
+      - {id: src-golden-section, kind: algorithm, description: "A derivative-free interval reduction method for a unimodal one-dimensional objective.", locator: "Finding the best without a formula: golden section search"}
+      - {id: src-linear-program, kind: problem, description: "Optimization of a linear objective over a polyhedral feasible region defined by linear constraints.", locator: "When the answer lives at a corner: the simplex method"}
+      - {id: src-simplex, kind: algorithm, description: "A pivoting method that traverses vertices of a feasible polytope while improving a linear objective.", locator: "When the answer lives at a corner: the simplex method"}
+      - {id: src-interior-point, kind: algorithm, description: "A family of methods that approach linear-program solutions through the feasible region's interior and has polynomial-time guarantees for standard formulations.", locator: "When the answer lives at a corner: the simplex method"}
+      - {id: src-kkt, kind: condition, description: "First-order necessary conditions for constrained nonlinear optimization under suitable constraint qualifications; sufficiency requires additional structure such as convexity.", locator: "When constraints complicate everything: KKT conditions"}
+      - {id: src-minimax-approximation, kind: problem, description: "Approximation that minimizes the maximum absolute error over a specified domain.", locator: "The hardest problem: approximating optimally"}
+      - {id: src-chebyshev, kind: method, description: "Chebyshev approximation/equioscillation gives a characteristic optimality condition for best uniform polynomial approximation.", locator: "The hardest problem: approximating optimally"}
+      - {id: src-language-model-objective, kind: objective, description: "A language-model training objective based on predictive likelihood or an equivalent token-level loss over training sequences.", locator: "What all of this has to do with LLMs"}
+      - {id: src-decoding-distribution, kind: probabilistic-object, description: "At inference, model scores are converted to a next-token distribution and a decoding policy selects or samples a token.", locator: "What guessing would look like"}
+    edges:
+      - {from: src-objective-function, type: optimized-by, to: src-newton-method}
+      - {from: src-objective-function, type: optimized-by, to: src-gradient-descent}
+      - {from: src-objective-function, type: optimized-by, to: src-golden-section}
+      - {from: src-linear-program, type: solved-by, to: src-simplex}
+      - {from: src-linear-program, type: alternatively-solved-by, to: src-interior-point}
+      - {from: src-kkt, type: characterizes-candidates-for, to: src-objective-function}
+      - {from: src-minimax-approximation, type: illustrated-by, to: src-chebyshev}
+      - {from: src-language-model-objective, type: optimized-during-training-by, to: src-gradient-descent}
+      - {from: src-decoding-distribution, type: produced-by, to: src-language-model-objective}
+    interpretation: "The source graph captures the article's pedagogical argument. Some edges simplify distinct algorithmic families; in particular, gradient descent should not be described as a stripped-down Newton method."
+  learning_outcomes:
+    - {status: inferred, outcome: "Define optimization as minimizing or maximizing an objective over a specified feasible set.", basis: "Opening section."}
+    - {status: inferred, outcome: "Distinguish first-order gradient methods from second-order Newton methods.", basis: "Newton section; corrected terminology required."}
+    - {status: inferred, outcome: "Recognize when derivative-free one-dimensional search, linear programming, constrained optimization and minimax approximation are different problem classes.", basis: "Golden-section, simplex, KKT and Chebyshev sections."}
+    - {status: inferred, outcome: "Explain that training adjusts model parameters to reduce a predictive objective, whereas inference uses the trained model to produce a probability distribution and decode tokens.", basis: "LLM application and closing sections; distinction needs strengthening."}
+    - {status: inferred, outcome: "Critically assess broad claims connecting classical optimization algorithms to practical LLM training and inference.", basis: "LLM application section."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Functions, derivatives and basic calculus.", basis: "Newton and stationarity discussion assumes derivatives."}
+    - {status: inferred, topic: "Vectors, gradients and multivariable functions.", basis: "Neural-network parameter optimization is described over high-dimensional parameter spaces."}
+    - {status: inferred, topic: "Basic probability and likelihood.", basis: "The final LLM discussion uses probability distributions over next tokens."}
+  teaching_route:
+    - {order: 1, section: "What optimization actually means", function: establish-core-problem, moves: ["Define objective and optimum", "Use one-dimensional valley/hill intuition", "Introduce complexity of high-dimensional nonsmooth constrained objectives"]}
+    - {order: 2, section: "Newton's method", function: introduce-derivative-based-iteration, moves: ["Explain tangent-line root finding", "Relate optimization to stationarity", "Connect neural-network training to gradient-based methods"]}
+    - {order: 3, section: "Golden-section search", function: introduce-derivative-free-search, moves: ["Use two probes in a unimodal interval", "Explain interval reduction and golden ratio", "Suggest hyperparameter tuning application"]}
+    - {order: 4, section: "Simplex and interior-point methods", function: distinguish-linear-programming, moves: ["Introduce feasible polytope", "Explain vertex traversal", "Contrast practical simplex behavior and polynomial-time interior-point guarantees"]}
+    - {order: 5, section: "KKT conditions", function: introduce-nonlinear-constraints, moves: ["Extend Lagrange multipliers to inequalities", "Explain active/inactive constraints", "State necessary versus sufficient conditions"]}
+    - {order: 6, section: "Minimax and Chebyshev approximation", function: introduce-worst-case-objective, moves: ["Contrast average and maximum error", "Introduce equioscillation", "Connect approximation to numerical computing and robust criteria"]}
+    - {order: 7, section: "LLM applications and guessing misconception", function: synthesize-in-llm-context, moves: ["Map parameter training to objective minimization", "Mention architecture/hyperparameter search and constraints", "Contrast structured model probabilities with uniform random output"]}
+  pedagogical_strengths:
+    - "Provides a broad map of optimization problem families rather than presenting gradient descent in isolation."
+    - "The valley/hill intuition offers a low-barrier entry point to objective functions."
+    - "Contrasts derivative-based and derivative-free search, linear and nonlinear constraints, and average versus worst-case approximation."
+    - "Historical references to Dantzig, Karush, Kuhn, Tucker and Chebyshev can motivate the longevity of mathematical ideas."
+    - "The final training-versus-randomness framing can prompt a useful discussion about structured probability distributions."
+  pedagogical_limits:
+    - "The article's central slogan 'LLMs do not guess; they optimize' conflates training-time parameter optimization with inference-time probabilistic decoding. A model can sample at inference; sampling is not generally optimization of its weights."
+    - "Gradient descent is not a 'stripped-down Newton' in the strict algorithmic sense. Gradient descent uses first-order gradient information; Newton's method uses curvature/Hessian information. They are related optimization methods, not a simple parent/child reduction."
+    - "The claim that gradient descent is the version used to train LLMs is overgeneralized: practical training commonly uses stochastic/minibatch gradient methods and adaptive optimizers such as Adam/AdamW, distributed training, schedules, clipping and other engineering choices."
+    - "The text's reference to trillions of optimization steps is not a reliable general description of training runs. Parameter count, token count, optimizer steps and FLOPs are distinct quantities."
+    - "The golden-section method requires a suitable unimodal one-dimensional interval. It is not a general method for high-dimensional hyperparameter tuning; random search, Bayesian optimization, successive halving and other methods are common alternatives."
+    - "The article overstates the role of KKT conditions in LLM training. Regularization is often implemented as a penalty term (for example weight decay), and general fairness constraints are not automatically enforced by KKT conditions."
+    - "The claim that inference approximations such as 4-bit quantization are evaluated using minimax criteria is not generally true. Common calibration objectives include reconstruction error, MSE, KL divergence and downstream task metrics; worst-case criteria are one possible design choice."
+    - "The description of Chebyshev polynomials is imprecise: best uniform approximation is characterized by equioscillation under the relevant approximation conditions; the monic-polynomial extremal property is a related but distinct theorem."
+    - "A non-uniform next-token distribution is structured, but that alone does not make the generated token an optimized choice. Sampling, greedy decoding, beam search and other decoding policies have different decision rules."
+    - "The article's 'uniform random output' comparison is a straw-man contrast. In ordinary language, guessing can be informed and probabilistic; a more precise contrast is learned conditional distribution versus unstructured random choice."
+    - "No source code, training configuration, dataset, reproducible experiment or direct primary-source citations are supplied in the inspected article."
+    - "No figures or video frames were inspected, so no visual claims or asset reuse are recorded."
+  comparison:
+    dossier: "The source's core optimization vocabulary overlaps the existing training-loop, gradients, loss, likelihood and output-probabilities lessons. Its most useful contribution is a compact cross-family map of classical optimization methods; its LLM-specific slogan needs correction. Integrate only the training-versus-decoding distinction as a clarification in the existing lessons, while retaining golden-section, linear programming, KKT and minimax material as optional mathematical context rather than expanding the core route."
+    canonical_pages: [en/training-loop, fr/training-loop, en/gradients, fr/gradients, en/loss, fr/loss, en/likelihood, fr/vraisemblance, en/probabilities, fr/probabilites]
+    canonical_graph: "Existing concepts include training-objective, cross-entropy, negative-log-likelihood, sequence-likelihood, gradient, parameter-update, training-loop, logits and decoding-policy."
+    decision: "Partially integrated. The corrected first-order versus second-order distinction is now a short bilingual clarification in the existing gradient lessons. The training-versus-decoding distinction is already covered by the training-loop, likelihood and output-probabilities lessons. The remaining classical optimization families are retained as optional context and deferred from the core route; no new lesson is justified by this source alone."
+    structures_kept_separate: [source-semantic-graph, source-pedagogical-route, canonical-concept-graph, canonical-learning-routes, site-navigation]
+items:
+  - id: deliriumm-llms-do-not-guess-they-optimize-2026:optimization-as-objective-search
+    kind: definition
+    summary: "Optimization formalizes the choice of inputs or parameters that minimize or maximize a specified objective over a feasible set. The objective, domain and constraints are part of the problem definition."
+    locator: {type: section, value: "What optimization actually means", label: "Definition and one-dimensional intuition"}
+    evidence: {kind: source-explanation, confidence: well-supported, scope: "General mathematical definition of optimization.", assumptions: ["An objective and feasible domain are specified."], limitations: ["The valley picture is only a one-dimensional intuition and does not represent non-convex high-dimensional geometry."]}
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "The basic notion is standard and already implicit in the project's optimization/training material."}
+      complementarity: {level: moderate, rationale: "The simple objective/feasible-set framing can bridge optimization methods to model training."}
+      pedagogical_value: {level: moderate, rationale: "Useful as a compact orientation before distinguishing algorithms."}
+      applicability: {level: moderate, rationale: "Could improve a short introductory sidebar in the gradient or training-loop lesson."}
+      redundancy: {level: moderate, rationale: "Core idea overlaps existing mathematical foundations."}
+      evidence_quality: {level: high, rationale: "Standard mathematical definition, though presented informally."}
+    pedagogical_profile: {learner_question: "What exactly is being optimized?", explanatory_lens: "Objective-function and feasible-set framing", teaching_form: "Everyday examples plus one-dimensional curve", abstraction_level: "introductory", prerequisites: ["functions"], distinctive_value: "Makes the objective and admissible domain explicit", limitations: "One-dimensional geometry can mislead about high-dimensional non-convex objectives."}
+    disposition: already-covered
+    mapped_concepts: [training-objective]
+    target_resources: [en/gradients, fr/gradients, en/training-loop, fr/training-loop]
+  - id: deliriumm-llms-do-not-guess-they-optimize-2026:newton-versus-gradient
+    kind: mechanism
+    summary: "Newton optimization uses gradient and curvature information (a Hessian in multivariable settings) to choose an update, whereas gradient descent follows the negative gradient using first-order information. They are related optimization methods, but gradient descent is not simply Newton's method with the second derivative removed in a way that preserves Newton's update rule."
+    locator: {type: section, value: "The oldest trick: Newton's method", label: "Newton and gradient descent"}
+    evidence: {kind: source-claim-corrected, confidence: well-supported, scope: "Distinction between first- and second-order optimization methods.", assumptions: ["Smooth objective in the classical derivation."], limitations: ["Modern optimizers and stochastic variants require additional treatment."]}
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "The explicit first-order/second-order contrast is a useful precision improvement."}
+      complementarity: {level: high, rationale: "Correcting the article's oversimplified genealogy prevents a common misconception."}
+      pedagogical_value: {level: high, rationale: "Directly supports understanding what gradient information does and what curvature adds."}
+      applicability: {level: high, rationale: "Can be used in the existing gradient lesson and optimizer comparison."}
+      redundancy: {level: low, rationale: "The correction is not redundant with a generic gradient definition."}
+      evidence_quality: {level: high, rationale: "Standard numerical optimization distinction."}
+    pedagogical_profile: {learner_question: "How is gradient descent related to Newton's method?", explanatory_lens: "Compare derivative order and update geometry", teaching_form: "Side-by-side algorithm comparison", abstraction_level: "intermediate", prerequisites: ["derivative", "gradient", "Hessian"], distinctive_value: "Separates first-order and second-order methods precisely", limitations: "Do not imply all neural training uses plain batch gradient descent."}
+    disposition: clarify
+    mapped_concepts: [gradient, parameter-update, training-loop]
+    target_resources: [en/gradients, fr/gradients, en/training-loop, fr/training-loop]
+  - id: deliriumm-llms-do-not-guess-they-optimize-2026:golden-section-conditions
+    kind: limitation
+    summary: "Golden-section search reduces a bracketed interval for a unimodal one-dimensional objective without derivatives. Its assumptions matter: it is not a general-purpose high-dimensional hyperparameter optimizer."
+    locator: {type: section, value: "Finding the best without a formula: golden section search", label: "Golden-section search and hyperparameter claim"}
+    evidence: {kind: source-claim-corrected, confidence: well-supported, scope: "Classical golden-section search and its domain of applicability.", assumptions: ["A suitable unimodal objective on a bounded interval."], limitations: ["Does not directly scale to many hyperparameters; practical tuning uses other methods as well."]}
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "A clear scope boundary for a classical algorithm is useful, even if the algorithm itself is not core to LLM training."}
+      complementarity: {level: moderate, rationale: "Adds a derivative-free optimization family to a gradient-focused learning path."}
+      pedagogical_value: {level: moderate, rationale: "Helps learners avoid treating all optimization algorithms as interchangeable."}
+      applicability: {level: moderate, rationale: "Best as optional mathematical context rather than a core LLM lesson."}
+      redundancy: {level: low, rationale: "Likely distinct from current neural training pages."}
+      evidence_quality: {level: high, rationale: "Established one-dimensional optimization method; the article's hyperparameter generalization is overbroad."}
+    pedagogical_profile: {learner_question: "Can optimization work without gradients?", explanatory_lens: "Interval narrowing by function evaluations", teaching_form: "Two-probe geometric construction", abstraction_level: "intermediate", prerequisites: ["unimodal function", "interval"], distinctive_value: "Shows derivative-free optimization under restrictive assumptions", limitations: "Not representative of high-dimensional neural hyperparameter search."}
+    disposition: defer
+    mapped_concepts: []
+    target_resources: [en/gradients, fr/gradients]
+  - id: deliriumm-llms-do-not-guess-they-optimize-2026:linear-programming-simplex
+    kind: mechanism
+    summary: "For a linear objective over a polyhedral feasible region, an optimum (when attained and finite) exists at a vertex; simplex exploits this by moving between vertices. Interior-point methods offer a different algorithmic family with polynomial-time guarantees for standard linear programming."
+    locator: {type: section, value: "When the answer lives at a corner: the simplex method", label: "Simplex and interior-point methods"}
+    evidence: {kind: source-explanation, confidence: well-supported, scope: "Classical linear programming geometry and algorithm families.", assumptions: ["A feasible bounded optimum is attained for the vertex statement as used pedagogically."], limitations: ["Worst-case and practical performance depend on algorithm variants and problem structure."]}
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "Linear programming is a different optimization problem class from neural-network training."}
+      complementarity: {level: moderate, rationale: "Broadens mathematical context but does not directly explain the LLM training loop."}
+      pedagogical_value: {level: moderate, rationale: "Useful for learners interested in optimization as a wider discipline."}
+      applicability: {level: low, rationale: "Optional reference or enrichment only."}
+      redundancy: {level: low, rationale: "Not a central existing LLM Lab topic."}
+      evidence_quality: {level: high, rationale: "Classical optimization theory, although the article compresses technical qualifications."}
+    pedagogical_profile: {learner_question: "How does optimization differ for linear constrained problems?", explanatory_lens: "Geometry of a feasible polytope", teaching_form: "Vertex and edge traversal", abstraction_level: "intermediate", prerequisites: ["linear algebra", "linear inequalities"], distinctive_value: "Contrasts LP with non-convex neural objectives", limitations: "Not an algorithm used to train standard LLM weights."}
+    disposition: defer
+    mapped_concepts: []
+    target_resources: []
+  - id: deliriumm-llms-do-not-guess-they-optimize-2026:kkt-conditions
+    kind: limitation
+    summary: "KKT conditions characterize candidate optima for constrained nonlinear problems under constraint qualifications; they are sufficient under additional convexity conditions. They are not a generic mechanism automatically applied to fairness or regularization in every LLM training run."
+    locator: {type: section, value: "When constraints complicate everything: KKT conditions", label: "Lagrange multipliers and KKT"}
+    evidence: {kind: source-claim-corrected, confidence: well-supported, scope: "First-order constrained optimization theory.", assumptions: ["Appropriate differentiability and constraint qualification."], limitations: ["Necessary/sufficient distinction depends on problem structure; practical training constraints vary."]}
+    pedagogical_assessment:
+      novelty: {level: moderate, rationale: "Adds a boundary around a classical constrained optimization concept."}
+      complementarity: {level: moderate, rationale: "Shows that constraints are a separate modeling choice, not a synonym for regularization."}
+      pedagogical_value: {level: high, rationale: "Prevents learners from inferring that KKT conditions are a standard LLM training component."}
+      applicability: {level: moderate, rationale: "Could be included as a caution in an optional optimizer/regularization comparison."}
+      redundancy: {level: low, rationale: "No direct equivalent in the current core training explanation."}
+      evidence_quality: {level: high, rationale: "Standard constrained optimization theory; article's application claims need qualification."}
+    pedagogical_profile: {learner_question: "What changes when optimization has constraints?", explanatory_lens: "Active and inactive constraints with multipliers", teaching_form: "Conceptual case distinction", abstraction_level: "advanced", prerequisites: ["gradient", "Lagrange multipliers"], distinctive_value: "Clarifies when constrained-optimum conditions apply", limitations: "Not a universal account of regularization or fairness in ML."}
+    disposition: defer
+    mapped_concepts: [training-objective]
+    target_resources: [en/loss, fr/loss]
+  - id: deliriumm-llms-do-not-guess-they-optimize-2026:minimax-and-chebyshev
+    kind: mechanism
+    summary: "Minimax approximation minimizes maximum absolute error over a domain; Chebyshev's equioscillation theorem characterizes best uniform approximation under its hypotheses. This is related to, but not synonymous with, the monic Chebyshev-polynomial extremal property."
+    locator: {type: section, value: "The hardest problem: approximating optimally", label: "Minimax approximation and Chebyshev polynomials"}
+    evidence: {kind: source-claim-corrected, confidence: well-supported, scope: "Uniform approximation theory.", assumptions: ["Specified compact interval and approximation class."], limitations: ["The article conflates related Chebyshev results and overgeneralizes their role in quantization and inference."]}
+    pedagogical_assessment:
+      novelty: {level: high, rationale: "Worst-case approximation is a distinct mathematical perspective from the average predictive losses emphasized in core training lessons."}
+      complementarity: {level: high, rationale: "Provides a possible bridge to quantization and numerical approximation if connected to primary engineering sources."}
+      pedagogical_value: {level: moderate, rationale: "Useful for advanced learners comparing average and worst-case error."}
+      applicability: {level: moderate, rationale: "Potential optional cross-link to quantization, but not ready for publication from this source alone."}
+      redundancy: {level: low, rationale: "The specific minimax/equioscillation perspective is not central in current core pages."}
+      evidence_quality: {level: moderate, rationale: "Classical theory is sound, but the article's specific Chebyshev and quantization mapping is imprecise."}
+    pedagogical_profile: {learner_question: "What if worst-case error matters more than average error?", explanatory_lens: "Uniform approximation and equioscillation", teaching_form: "Contrast average loss with maximum error", abstraction_level: "advanced", prerequisites: ["polynomial approximation", "supremum norm"], distinctive_value: "Introduces worst-case objective geometry", limitations: "Do not infer that LLM quantization generally uses minimax optimization."}
+    disposition: defer
+    mapped_concepts: []
+    target_resources: [en/training-loop, fr/training-loop]
+  - id: deliriumm-llms-do-not-guess-they-optimize-2026:training-versus-decoding
+    kind: misconception
+    summary: "Training-time parameter optimization and inference-time decoding are distinct processes. Training adjusts parameters to reduce an objective such as token-level negative log-likelihood; inference computes conditional token scores/probabilities and applies a decoding policy such as sampling or greedy selection. Sampling can be stochastic without being uniform random guessing."
+    locator: {type: section, value: "What all of this has to do with LLMs; What guessing would look like", label: "LLM application and closing contrast"}
+    evidence: {kind: source-claim-corrected, confidence: well-supported, scope: "Conceptual distinction between training and autoregressive inference.", assumptions: ["Autoregressive language-model formulation."], limitations: ["Some decoding algorithms optimize sequence-level scores approximately; this does not mean inference re-optimizes model parameters."]}
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "The project already separates training objectives, logits and decoding policies."}
+      complementarity: {level: high, rationale: "The source's slogan creates a useful teachable moment for making the separation explicit."}
+      pedagogical_value: {level: high, rationale: "Addresses the misconception that probability, randomness and optimization are interchangeable."}
+      applicability: {level: high, rationale: "Strong candidate for a short clarification or cross-link between training-loop and decoding lessons."}
+      redundancy: {level: moderate, rationale: "Concepts exist, but the explicit misconception framing may improve the transition."}
+      evidence_quality: {level: high, rationale: "The distinction follows directly from standard training and decoding definitions; the article itself blurs it."}
+    pedagogical_profile: {learner_question: "If an LLM is optimized during training, why does it sample at inference?", explanatory_lens: "Separate lifecycle stages and mathematical objects", teaching_form: "Contrast training update with inference decoding", abstraction_level: "introductory-to-intermediate", prerequisites: ["conditional probability", "training objective", "logits"], distinctive_value: "Turns a provocative but imprecise slogan into a clear two-stage mental model", limitations: "Avoid saying all decoding is random or that all decoding is an optimization algorithm."}
+    disposition: already-covered
+    mapped_concepts: [training-objective, cross-entropy, negative-log-likelihood, sequence-likelihood, gradient, parameter-update, training-loop, logits, decoding-policy, next-token-prediction]
+    target_resources: [en/training-loop, fr/training-loop, en/likelihood, fr/vraisemblance, en/probabilities, fr/probabilites]
+  - id: deliriumm-llms-do-not-guess-they-optimize-2026:comment-sampling-not-guessing
+    kind: counterexample
+    summary: "A visible reader comment argues that probabilistic sampling can be a form of informed guessing rather than uniform randomness. This challenges the article's narrow definition of guessing; it is a semantic counterpoint, not independent technical evidence."
+    locator: {type: comment, value: "Visible reply by @X_differentials on the mirrored post", label: "Comment challenging the definition of guessing"}
+    provenance: {voice: reader-comment, parent_source_id: deliriumm-llms-do-not-guess-they-optimize-2026, locator: {type: comment, value: "Reply by @X_differentials"}, captured_at: "2026-11-17"}
+    verification: {status: not-assessed, sources: [], assessment: "Preserved as a distinct reader interpretation; no independent verification needed for the fact that the comment was made, and its conceptual argument is not treated as a factual result."}
+    evidence: {kind: reader-interpretation, confidence: unverified, scope: "A visible comment's semantic distinction between random guessing and probabilistic inference.", assumptions: [], limitations: ["One comment is not representative of community consensus.", "The word 'guess' has ordinary-language meanings broader than uniform random selection."]}
+    disposition: defer
+    mapped_concepts: [decoding-policy, next-token-prediction]
+    target_resources: [en/probabilities, fr/probabilites]
