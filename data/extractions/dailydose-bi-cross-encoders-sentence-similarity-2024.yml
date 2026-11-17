@@ -1,5 +1,40 @@
 schema_version: 1
 source_id: dailydose-bi-cross-encoders-sentence-similarity-2024
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis: ["Direct HTML through the start of 'The problem with BERT'; remaining Part 1 is paywalled."]
+    inferred_elements: ["Source graph and outcomes are reconstructed from visible section order, not supplied by the author."]
+  source_graph:
+    nodes:
+      - {id: src-pairwise-scoring, kind: task, description: "Score text pairs for retrieval, QA or duplicate detection.", locator: "Introduction"}
+      - {id: src-static-embeddings, kind: representation, description: "Fixed word-type vectors.", locator: "How to generate embeddings?"}
+      - {id: src-contextualized-states, kind: representation, description: "Context-dependent Transformer states.", locator: "BERT"}
+      - {id: src-bert-pretraining, kind: objective, description: "BERT pretraining through MLM and NSP.", locator: "BERT"}
+      - {id: src-unresolved-bert-question, kind: open-question, description: "Whether raw BERT sentence vectors plus cosine suffice.", locator: "Paywall boundary"}
+    edges:
+      - {from: src-static-embeddings, type: contrasted-with, to: src-contextualized-states}
+      - {from: src-bert-pretraining, type: produces, to: src-contextualized-states}
+      - {from: src-contextualized-states, type: raises-question-about, to: src-unresolved-bert-question}
+    interpretation: "Editorial reconstruction of visible material; the inaccessible answer is deliberately not inferred."
+  learning_outcomes:
+    - {status: inferred, outcome: "Explain why pairwise text scoring matters in retrieval, QA and duplicate detection.", basis: "Introduction"}
+    - {status: inferred, outcome: "Distinguish static word vectors from contextualized token states.", basis: "Background"}
+    - {status: inferred, outcome: "Describe the MLM and NSP objectives in the original BERT setup.", basis: "BERT section"}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Basic familiarity with vectors, word embeddings and Transformer encoders.", basis: "Visible article terminology"}
+  teaching_route:
+    - {order: 1, section: "Introduction", function: motivate-pairwise-scoring, moves: ["Connect retrieval, QA and deduplication", "Introduce accuracy/efficiency trade-off"]}
+    - {order: 2, section: "Background", function: motivate-vector-retrieval, moves: ["Contrast exact keyword matching with varied wording", "Introduce vector comparison"]}
+    - {order: 3, section: "How to generate embeddings?", function: historical-contrast, moves: ["Present static word vectors", "Use polysemy to expose lack of contextual adaptation"]}
+    - {order: 4, section: "BERT", function: explain-contextualization, moves: ["Introduce MLM and NSP", "Connect context to occurrence-specific states"]}
+    - {order: 5, section: "The problem with BERT", function: raise-unresolved-question, moves: ["Pose raw BERT sentence vectors plus cosine", "Stop at the verified paywall boundary"]}
+  pedagogical_strengths: ["Connects representation learning to concrete retrieval tasks.", "Uses lexical ambiguity to introduce contextualization."]
+  pedagogical_limits: ["Central technical comparison is inaccessible.", "Some BERT pretraining claims need qualification against primary literature."]
+  comparison:
+    canonical_pages: [fr/embedding-space, en/embedding-space, fr/contextualized-representations, en/contextualized-representations, fr/cosine-similarity, en/cosine-similarity]
+    decision: "Use motivation as optional context; do not duplicate existing lessons or claim to extract paywalled material."
+    dossier: docs/source-reviews/dailydose-main-path-2026-11.md
 scan:
   accessed_at: "2026-11-17"
   retrieval_method: direct-canonical-html
