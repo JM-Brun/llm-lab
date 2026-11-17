@@ -1,22 +1,22 @@
-<section class="next-token-explorer" data-next-token-explorer data-prefix-fr="C'est une bonne situation, ça, scribe ?" data-prefix-en="What have the Romans ever done for us?">
+<section class="next-token-explorer" data-next-token-explorer="true" data-prefix="true"-fr="C'est une bonne situation, ça, scribe ?" data-prefix="true"-en="What have the Romans ever done for us?">
   <h3><span lang="fr">Explorer la boucle du prochain token</span><span lang="en">Explore the next-token loop</span></h3>
   <p><span lang="fr">Choisissez un token dans la distribution fictive. Il est ajouté au préfixe et le modèle recalcule la distribution suivante, sans modifier ses paramètres.</span><span lang="en">Choose a token from the illustrative distribution. It is appended to the prefix and the model recomputes the next distribution without changing its parameters.</span></p>
-  <div class="next-token-explorer__interactive" data-explorer-controls hidden>
-    <p><strong><span lang="fr">Préfixe actuel :</span><span lang="en">Current prefix:</span></strong> <output data-prefix></output></p>
+  <div class="next-token-explorer__interactive" data-explorer-controls="true" hidden>
+    <p><strong><span lang="fr">Préfixe actuel :</span><span lang="en">Current prefix:</span></strong> <output data-prefix="true"></output></p>
     <p class="next-token-explorer__caption"><span lang="fr">Distribution conditionnelle actuelle</span><span lang="en">Current conditional distribution</span></p>
-    <ul data-distribution aria-live="polite"></ul>
+    <ul data-distribution="true" aria-live="polite"></ul>
     <label for="next-token-choice"><span lang="fr">Token à ajouter</span><span lang="en">Token to append</span></label>
-    <select id="next-token-choice" data-token-choice>
+    <select id="next-token-choice" data-token-choice="true">
       <option value="0" data-fr="Vous" data-en="They">Vous</option>
       <option value="1" data-fr="Je" data-en="Aqueducts">Je</option>
       <option value="2" data-fr="Moi" data-en="Nothing">Moi</option>
       <option value="3" data-fr="Oui" data-en="Well">Oui</option>
     </select>
     <div class="next-token-explorer__actions">
-      <button type="button" data-append><span lang="fr">Ajouter au contexte</span><span lang="en">Append to context</span></button>
-      <button type="button" class="secondary" data-reset><span lang="fr">Recommencer</span><span lang="en">Reset</span></button>
+      <button type="button" data-append="true"><span lang="fr">Ajouter au contexte</span><span lang="en">Append to context</span></button>
+      <button type="button" class="secondary" data-reset="true"><span lang="fr">Recommencer</span><span lang="en">Reset</span></button>
     </div>
-    <p data-next-distribution class="next-token-explorer__next" role="status" aria-live="polite"></p>
+    <p data-next-distribution="true" class="next-token-explorer__next" role="status" aria-live="polite"></p>
   </div>
   <p class="next-token-explorer__fallback"><span lang="fr">Sans JavaScript, retenez la règle : le token choisi allonge le préfixe ; la distribution suivante dépend de ce nouveau contexte. Dans l'exemple, après « Vous », « savez » reçoit 0,5.</span><span lang="en">Without JavaScript, the selected token extends the prefix; the next distribution depends on this new context. In the example, “built” receives 0.5 after “They”.</span></p>
   <noscript><p><span lang="fr">L'explorateur interactif nécessite JavaScript ; le mécanisme reste décrit ci-dessus.</span><span lang="en">The interactive explorer requires JavaScript; the mechanism is described above.</span></p></noscript>
