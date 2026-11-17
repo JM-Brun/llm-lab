@@ -10,8 +10,8 @@ lang: fr
 LLM-LAB-PAGE-MAP v1
 id: "fr/generation"
 summary: "Présente la génération comme une boucle autorégressive : contexte, prédiction du prochain token, sélection, réinjection et arrêt. Situe le prefill, le decode incrémental et les stratégies de sélection, puis distingue l’inférence du scoring et de l’apprentissage."
-scope: "Décrit l’inférence autorégressive d’un modèle déjà entraîné : contexte, passe avant, distribution du prochain token, sélection, réinjection et arrêt ; distingue les phases de prefill et de decode des règles de décodage. Les détails internes du Transformer, les stratégies avancées et l’apprentissage des paramètres sont hors périmètre."
-purpose: "Le lecteur doit pouvoir dérouler une génération token par token, distinguer le calcul du modèle, la sélection du token et la boucle complète, expliquer prefill et decode incrémental, et prévoir comment une règle de décodage modifie la sortie sans mettre à jour les paramètres."
+scope: "Décrit l’inférence autorégressive et ses principaux mécanismes de serving : prefill/decode, cache KV, latence, ordonnancement multi-requêtes, continuous batching, prefix caching et chunked prefill. Les détails internes du Transformer et l’apprentissage des paramètres restent hors périmètre."
+purpose: "Le lecteur doit pouvoir dérouler une génération token par token, distinguer le calcul du modèle de la sélection, expliquer les phases prefill/decode et relier les métriques de latence aux mécanismes de serving sans confondre ordonnancement et prédiction."
 suggested_route:
   previous: "fr/llm-overview"
   next: "fr/text-data"
@@ -156,6 +156,21 @@ $$
 où $L$ est le nombre de couches, $B$ le batch size, $T$ le nombre de positions mises en cache, $n_{KV}$ le nombre de têtes K/V, $d_{head}$ leur dimension et $s$ le nombre d'octets par élément. Cette approximation ignore les surcoûts d'allocation et les détails propres aux implémentations. Le *Grouped-Query Attention* réduit notamment le nombre de têtes K/V par rapport au nombre de têtes de requête.
 
 Le *prefill* est souvent limité par la capacité de calcul, tandis que le *decode* peut devenir limité par la bande passante mémoire, car chaque étape lit le cache accumulé pour produire peu de nouveaux tokens. Ce diagnostic dépend toutefois du matériel, du batch, de la longueur du contexte et des kernels : il faut mesurer plutôt que supposer.
+
+### Servir plusieurs requêtes : ordonnancement et réutilisation du cache
+
+La boucle autorégressive décrit **une séquence**. Un serveur doit en gérer plusieurs, avec des prompts et des longueurs de sortie différents.
+
+- **TPOT (*time per output token*)** : moyenne du délai entre les tokens de sortie, hors premier token. Pour une requête qui produit $N_{out}>1$ tokens, on peut l'estimer par
+  On l'estime par $\operatorname{TPOT}=\frac{\operatorname{E2E}-\operatorname{TTFT}}{N_{out}-1}$.
+  L'**ITL** est l'intervalle individuel entre deux tokens successifs. Pour une requête, la moyenne de ses ITL correspond au TPOT ; les agrégations sur plusieurs requêtes peuvent différer selon leur pondération.
+- **Continuous batching** (*in-flight batching*) : le serveur ajuste le groupe de séquences à chaque itération de decode. Lorsqu'une séquence termine, elle libère sa place ; une nouvelle requête peut entrer sans attendre la fin des autres. Chaque séquence reste autorégressive : c'est l'ordonnancement du lot qui change, pas la règle de prédiction.
+- **Prefix caching** : deux requêtes peuvent réutiliser le cache KV d'un préfixe commun si leur préfixe de tokens est exactement identique et si l'entrée de cache est encore disponible sur un worker compatible. Une ressemblance sémantique ou des mots communs ne suffisent pas ; une différence de sérialisation ou de tokenisation peut casser le partage. Ce n'est pas un cache de réponses.
+- **Chunked prefill** : un long prompt est traité par morceaux, entre lesquels le serveur peut faire avancer des séquences déjà en decode. Cela limite les blocages imposés aux requêtes actives, mais peut augmenter le TTFT et ajouter du surcoût d'ordonnancement.
+
+Ces techniques répondent à des problèmes différents : le continuous batching améliore l'occupation et le partage du GPU entre requêtes ; le prefix caching évite de recalculer un préfixe strictement commun ; le chunked prefill arbitre entre l'arrivée d'un long prompt et la fluidité du decode déjà en cours. Elles ne changent pas, à elles seules, les probabilités conditionnelles du modèle.
+
+Pour les détails de mise en œuvre et les compromis de déploiement, voir le [guide sur le batching statique, dynamique et continu](https://handbook.modular.com/inference-optimization/static-dynamic-continuous-batching/), le [prefix caching](https://handbook.modular.com/inference-optimization/prefix-caching/) et les [métriques d'inférence](https://handbook.modular.com/llm-inference-basics/llm-inference-metrics/).
 
 Une optimisation avancée, le **speculative decoding**, fait proposer plusieurs tokens par un modèle brouillon, puis les fait vérifier par le modèle cible. Un préfixe proposé peut être accepté en bloc ; à la première divergence, la procédure reprend selon une règle conçue pour préserver la distribution du modèle cible. Le gain dépend du coût de vérification et du taux d'acceptation : ce n'est pas automatiquement plus rapide. Cette technique est un approfondissement, pas une étape nécessaire pour comprendre la boucle de base.
 

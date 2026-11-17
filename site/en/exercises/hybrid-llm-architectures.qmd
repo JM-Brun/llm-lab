@@ -10,7 +10,7 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/hybrid-llm-architectures-exercises"
 summary: "Self-check questions and exercises associated with the Hybrid LLM architectures lesson."
-scope: "Collects the questions, exercises, and worked answers for the corresponding lesson without duplicating its conceptual explanation."
+scope: "Collects questions and worked exercises on hybrid architectures, top-k routing, and expert-capacity trade-offs."
 purpose: "Check understanding, apply the concepts, and make the reasoning explicit through this lesson’s questions and exercises."
 suggested_route:
   previous: null
@@ -31,6 +31,36 @@ tags: ["type:exercise-hub", "destination:practice", "topic:hybrid-llm-architectu
 3. **Do GQA and Mamba reduce the same cost?** No: GQA reduces K/V heads and attention cache; Mamba maintains bounded recurrent state.
 4. **Does MTP make generation non-autoregressive?** No: proposals are verified by the target model.
 5. **Is a published throughput gain a general law?** No: it depends on hardware and protocol.
+
+
+## Exercise: deterministic top-k routing
+
+A router assigns each token a score distribution over three experts. For this exercise, the values are already normalized and the router selects the **two highest-scoring experts** for each token.
+
+| Token | Expert E1 | Expert E2 | Expert E3 |
+|---|---:|---:|---:|
+| $t_1$ | 0.70 | 0.20 | 0.10 |
+| $t_2$ | 0.60 | 0.30 | 0.10 |
+| $t_3$ | 0.10 | 0.80 | 0.10 |
+| $t_4$ | 0.20 | 0.20 | 0.60 |
+
+1. Which experts are selected for each token?
+2. How many assignments does each expert receive? Check that the total is $4\times 2=8$.
+3. If each expert has capacity 2 assignments for this mini-batch, which experts are overloaded?
+4. Can this table alone tell us which tokens will be dropped or rerouted in a real system? Why?
+
+<details>
+<summary>Show the worked solution</summary>
+
+1. $t_1\to(E1,E2)$; $t_2\to(E1,E2)$; $t_3\to(E2,E1)$; $t_4\to(E3,E1)$.
+2. E1 receives 4 assignments, E2 receives 3, and E3 receives 1. The total is $4+3+1=8$.
+3. With capacity 2, E1 exceeds its capacity by 2 assignments and E2 by 1; E3 remains below capacity.
+4. No. Capacity and overflow policies vary: dropping, rerouting, shared processing, or other mechanisms may be used. The table measures routing pressure, not a universal dispatch policy. An auxiliary load-balancing loss encourages less concentrated load during training; it does not guarantee identical counts in every batch.
+
+**Keep separate:** router scores describe per-token preferences; assignment counts describe discrete expert load. An expert can receive many tokens even when the sum of its selected scores is moderate.
+
+</details>
+
 
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/hybrid-llm-architectures.qmd) · [English](hybrid-llm-architectures.qmd)

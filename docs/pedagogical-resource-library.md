@@ -147,3 +147,37 @@ When adding or revising a concept page, consider and record the relevant items i
 - [ ] Avoided presenting illustrative visualizations as proof of a scientific claim.
 
 This checklist is intended to encourage useful research, not impose a fixed number of sources or figures on every page.
+
+## Visual learning tools: architecture, inference, representations, and interpretability
+
+This collection was prompted by a ten-resource visual-learning shortlist reviewed on 2026-11-16. It is a curated discovery set, not a claim that every tool has been fully audited or adopted in the course. Canonical destinations are preferred over social short links.
+
+| Resource | Best learning question | Recommended use in LLM Lab | Critical boundary |
+|---|---|---|---|
+| [Transformer Explainer](https://poloclub.github.io/transformer-explainer/) and [its CHI 2026 paper](https://research.ibm.com/publications/transformer-explainer-learning-llm-transformers-with-interactive-visual-explanation-and-experimentation) | How does a GPT-2 forward pass transform an input into next-token probabilities? | Guided observation in the Transformer practice page; vary text and sampling controls, then trace operations to equations and code. | The live model is GPT-2 and the tool's abstractions are implementation-specific; do not generalize its exact architecture to all LLMs. |
+| [LLM Visualization — Brendan Bycroft](https://bbycroft.net/llm) | Where do tensors, weights, attention heads, and MLP operations sit in a decoder stack? | Optional 3D architecture walkthrough after the learner understands the 2D data-flow diagram. | Selected GPT-style models; 3D scale and layout are explanatory, not a universal physical representation. |
+| [3Blue1Brown — GPT / Transformers](https://www.3blue1brown.com/lessons/gpt/) and [Attention](https://www.3blue1brown.com/lessons/attention/) | Why are embeddings, attention, and learned transformations useful? | First-pass intuition before formal definitions and numerical examples. | Animations simplify notation and implementation details; pair with the project's equations and tests. |
+| [The Illustrated Transformer — Jay Alammar](https://jalammar.github.io/illustrated-transformer/) | What are Q, K, and V, and how does attention combine information? | Complementary visual explanation alongside Q/K/V and scaled-dot-product-attention pages. | Original focus is encoder-decoder Transformer; do not treat every figure as a decoder-only GPT specification. |
+| [TensorFlow Playground](https://playground.tensorflow.org/) | How do architecture, features, activation, learning rate, and regularization affect a small neural network? | Optional prerequisite experiment for gradients, optimization, overfitting, and decision boundaries. | A small feed-forward network playground, not a Transformer or language-model simulator. |
+| [A Visual Guide to Attention Variants — Sebastian Raschka](https://magazine.sebastianraschka.com/p/visual-attention-variants) | How do MHA, MQA, GQA, MLA, sliding-window and sparse attention differ? | Comparative gallery linked from attention and inference pages; compare KV-cache, compute, quality and implementation complexity. | An evolving architecture survey, not a controlled benchmark. Verify model-specific claims against papers/configurations. |
+| [A Visual Guide to Mixture of Experts — Maarten Grootendorst](https://www.maartengrootendorst.com/blog/moe/) | How do routers select experts, and why do capacity and load balancing matter? | Introductory visual case study for sparse feed-forward layers; follow with top-k routing and load-balancing experiments. | Distinguish total parameters from active parameters; token-level routing, capacity, auxiliary losses and expert parallelism are not interchangeable. |
+| [LLM Inference Handbook — Modular](https://handbook.modular.com/) | What happens from request arrival through prefill, decode, caching, scheduling and serving? | Practical reference for an inference systems module and exercises on TTFT, TPOT, KV cache, batching and memory. | A living engineering handbook; benchmark and hardware claims are version- and workload-dependent. |
+| [Neuronpedia](https://www.neuronpedia.org/) and [documentation](https://docs.neuronpedia.org/) | What can feature dashboards, sparse autoencoders, activation examples and attribution graphs reveal? | Advanced exploration after representations and Transformer internals; inspect evidence rather than treating labels as ground truth. | Feature explanations may be model-generated or researcher hypotheses. A feature label or attention pattern is not, by itself, a causal explanation. |
+| [Apple Embedding Atlas](https://apple.github.io/embedding-atlas/) and [paper](https://machinelearning.apple.com/research/embedding-atlas) | How can large embedding datasets be explored through projections, clusters, metadata and nearest neighbours? | Hands-on extension to embedding-space pages, ideally using a small reproducible dataset with metadata. | A 2D projection distorts geometry; visible clusters depend on embedding model, dataset, projection and clustering choices. |
+
+### Suggested learning sequence
+
+1. Intuition and data flow: 3Blue1Brown → Illustrated Transformer → Transformer Explainer.
+2. Inspect a concrete model: Bycroft's 3D walkthrough, with model family and tensor shapes stated explicitly.
+3. Learn by perturbing: TensorFlow Playground for general optimization intuitions; do not conflate its network with a Transformer.
+4. Compare modern mechanisms: attention variants → MoE → inference systems.
+5. Investigate internal representations: Embedding Atlas → Neuronpedia, with projection and interpretability caveats made explicit.
+
+### Integration rules
+
+- Link external tools from the relevant concept/practice page; do not embed every tool or turn the course into a link directory.
+- Every activity must state a learner question, a short observation task, a prediction to make before interacting, and a debrief connecting observations to equations/code.
+- Preserve an accessible static explanation and a direct external link when an interactive embed is unavailable.
+- External visualizations are not evidence for a technical claim. Check papers, official documentation, model configurations and reproducible tests.
+- Do not copy screenshots, diagrams or text without checking exact licence and attribution terms.
+- Revisit living resources before making version-specific claims; record inspected date and scope in the source catalogue.
