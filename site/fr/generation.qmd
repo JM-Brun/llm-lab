@@ -81,6 +81,8 @@ Suivons trois tours de boucle. Les probabilités sont fictives, comme dans le pa
 | 2 | C'est une bonne situation, ça, scribe ? Vous | « savez » 0,6 · « êtes » 0,2 · « voyez » 0,2 | « savez » |
 | 3 | C'est une bonne situation, ça, scribe ? Vous savez | « , » 0,8 · « que » 0,1 · « : » 0,1 | « , » |
 
+Dans cette trace simplifiée, les unités affichées sont traitées comme des tokens. Une segmentation réelle dépend du tokenizer choisi ; le tableau ne prétend pas reproduire celle d'un tokenizer particulier.
+
 Chaque ligne enchaîne les mêmes gestes.
 
 1. **Prédire.** Le modèle lit tout le contexte et calcule une distribution sur le prochain token.
