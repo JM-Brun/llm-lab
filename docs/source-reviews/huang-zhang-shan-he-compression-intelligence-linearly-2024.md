@@ -68,6 +68,21 @@ The paper's “intelligence” variable is not a direct measurement of a general
 - Treat the headline as a correlation within a defined experimental design, not a universal law or causal explanation.
 - Do not copy figures or datasets; rights and source-specific dataset terms have not been audited.
 
+## Repository implementation and reproducibility
+
+The public repository provides an evaluation entry point, packed-dataset implementation, corpus/data instructions and an OpenCompass integration. Static inspection of the evaluation path shows that it accumulates causal-model token cross-entropy and normalizes by the character count and \\(\\ln 2\\), matching the BPC definition. The packed dataset constructs sliding token windows over concatenated text.
+
+One portability concern deserves explicit treatment: `evaluation/packed_dataset.py` advances mutable begin/previous-end offsets as samples are requested. This is compatible with the inspected sequential, non-shuffled DataLoader path, but is fragile under random access, shuffling or multiple workers. This is a static code-review observation, not a demonstrated failure in the authors' intended configuration.
+
+A controlled reproduction should therefore:
+- use stateless index-based window access, or test and document the exact sampler/worker assumptions;
+- document document boundaries, separators, truncation and sliding-window stride;
+- pin model and tokenizer revisions, dependencies and evaluation code;
+- record precision, device, context length and stride;
+- verify that text normalization and character counting are identical across models.
+
+The dataset metadata and README report a CC BY-NC-SA 4.0 dataset licence subject to underlying source-corpus terms; code is reported as MIT. The complete dataset was not downloaded, source-corpus provenance was not audited per item, and no redistribution permission is inferred. Keep paper figures and dataset contents link-only unless rights are separately established.
+
 ## Open questions for a future reproduction
 
 1. Does the correlation persist on current base models and independently curated, demonstrably post-cutoff corpora?
