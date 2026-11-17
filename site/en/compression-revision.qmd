@@ -106,9 +106,9 @@ A smaller checkpoint is not automatically faster: format, kernels, hardware, bat
 
 The predictive-compression discussion above assumes that the model is already available. If the model must also be described or transmitted, the total cost becomes:
 
-$
+$$
 L_{\mathrm{total}}(M,D)=L(M)+L(D\mid M).
-$
+$$
 
 - $L(D\mid M)$: the code length of the data when the decoder knows model $M$; for a probabilistic model, it is related to $-\sum_t \log_2 p(x_t\mid x_{<t},M)$.
 - $L(M)$: the cost of describing the model in a chosen description language and model class: parameters, structure, and required side information.
