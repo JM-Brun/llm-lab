@@ -25,6 +25,12 @@ A collection dossier is not a replacement for the canonical concept graph, bilin
 | Q/K/V and attention | Query, Key, Value, self-attention, scaled dot-product attention and related teaching perspectives | [Q/K/V source collection](qkv-source-collection.md) · [Learning-graph comparison](qkv-learning-graph-comparison-2026-11.md) | Initial source records and structured extractions integrated |
 | Visual learning tools: Embedding Atlas and Neuronpedia | Interactive embedding-data exploration versus evidence-led inspection of SAE features and model internals | [Focused review and bilingual integration](embedding-atlas-neuronpedia-integration-2026-11.md) · [Initial ten-resource triage](visual-learning-resources-2026-11.md) | Bilingual guided labs integrated; sources remain partially scanned; no benchmark or model-internals experiment reproduced |
 
+## Introductory overviews and social-media explainers
+
+| Review | Scope | Entry point | Current state |
+|---|---|---|---|
+| Jothi Moorthy — “When you type a prompt, the LLM sees numbers, not words” | Five-stage prompt → token IDs → embeddings → Transformer → next-token overview | [Source review](jothi-moorthy-llm-processing-linkedin-2026-11.md) | Author text inspected; infographic and comments not inspected; redundant with the bilingual Understand path, so no canonical integration |
+
 ## How to navigate the evidence
 
 1. **Catalogue** — source identity, version, scan history, rights and links to related artifacts.
