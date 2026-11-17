@@ -4119,7 +4119,7 @@ sources:
     publication_date: null
     updated_date: null
     language: en
-    version: "Live platform and documentation; accessed 2026-11-16"
+    version: "Live platform and documentation; accessed 2026-11-17"
     revision: null
     licence: {identifier: null, url: null, status: unknown}
     reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
@@ -4133,16 +4133,30 @@ sources:
       contribution_types: [visualization, experiment, pedagogy]
       audiences: [learner, practitioner, researcher, educator]
     scan_status: partially-scanned
-    integration_status: partially-integrated
+    integration_status: integrated
     scan_history:
       - accessed_at: "2026-11-16"
         status: partially-scanned
         inspected_scope: ["Official platform landing page and documentation introduction/tool catalogue", "Documentation overview of auto-interpretability explanations"]
         limitations: ["Specific models, feature datasets and attribution methods not audited.", "Model-generated feature explanations are hypotheses, not ground truth.", "No reuse licence for screenshots or datasets established."]
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "Official SAE overview, feature dashboards, activation evidence, logits and density views"
+          - "Official auto-interpretability documentation: explanation provenance, methods and scoring workflow"
+          - "Official search/key-concepts documentation: feature, source and release identifiers"
+          - "Official API documentation: feature data and conditional availability of inference endpoints"
+          - "Integrated bilingual investigation protocol and exercise using a documented Gemma Scope feature example"
+        limitations:
+          - "Documentation-level review only; feature activations were not independently recomputed and model weights were not run."
+          - "The example feature and inference availability are tied to the named model/source release and may change."
+          - "AI-generated explanations and scores are fallible and method-dependent; inspect the underlying activations."
+          - "An activation association, dashboard, attribution graph or steering response alone does not establish a complete causal mechanism."
+          - "No screenshot, dataset or figure reuse rights were established."
     related:
-      pages: [fr/contextualized-representations, en/contextualized-representations, fr/llm-limits, en/llm-limits]
+      pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced, fr/exercises/contextualized-representations, en/exercises/contextualized-representations, fr/llm-limits, en/llm-limits]
       concepts: []
-      audit_records: [docs/source-reviews/visual-learning-resources-2026-11.md]
+      audit_records: [docs/source-reviews/visual-learning-resources-2026-11.md, docs/source-reviews/embedding-atlas-neuronpedia-integration-2026-11.md]
 
   - id: apple-embedding-atlas
     title: "Embedding Atlas: Low-Friction, Interactive Embedding Visualization"
@@ -4151,10 +4165,10 @@ sources:
     identifiers: {arxiv: "2505.06386", repository: "apple/embedding-atlas"}
     canonical_url: "https://apple.github.io/embedding-atlas/"
     publisher: "Apple Machine Learning Research"
-    publication_date: null
+    publication_date: "2025-11"
     updated_date: null
     language: en
-    version: "Paper and live tool; accessed 2026-11-16"
+    version: "Paper and live tool; accessed 2026-11-17"
     revision: null
     licence: {identifier: "MIT", url: "https://github.com/apple/embedding-atlas/blob/main/LICENSE", status: known}
     reuse: {text: link-only, figures: unknown, code: link-only, data: unknown}
@@ -4168,17 +4182,28 @@ sources:
       contribution_types: [visualization, implementation, experiment, pedagogy]
       audiences: [learner, practitioner, researcher, educator]
     scan_status: partially-scanned
-    integration_status: partially-integrated
+    integration_status: integrated
     scan_history:
       - accessed_at: "2026-11-16"
         status: partially-scanned
         inspected_scope: ["Apple research abstract and demo description", "Official repository README feature list and stated MIT software licence"]
         limitations: ["Full paper methodology and benchmarks not audited.", "MIT licence applies to repository software; figure, paper and example-data rights are separate.", "Projection and clustering artifacts require explicit teaching caveats."]
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "Official Apple research paper abstract and publication metadata"
+          - "Official overview: projections, density-based clusters and labels, nearest-neighbour search, metadata cross-filtering and linked charts"
+          - "Official CLI documentation: precomputed coordinates/neighbours, UMAP parameters and reproducibility controls"
+          - "Integrated bilingual exploratory activity with prediction, metadata filtering, neighbour inspection and projection caveats"
+        limitations:
+          - "Full paper methodology, benchmark protocol and implementation were not independently reproduced."
+          - "Learners must record model, dataset, preprocessing, metric and projection settings; no universal dataset/model is prescribed."
+          - "A 2D projection and automatic cluster labels are exploratory views, not proof of high-dimensional separation or semantic categories."
+          - "The MIT licence applies to repository software; paper figures and example-data rights are separate."
     related:
-      pages: [fr/embedding-space, en/embedding-space, fr/contextualized-representations, en/contextualized-representations]
+      pages: [fr/embedding-space, en/embedding-space, fr/embeddings-deep-dive, en/embeddings-deep-dive, fr/exercises/embedding-space, en/exercises/embedding-space]
       concepts: [token-embedding, contextualized-representation]
-      audit_records: [docs/source-reviews/visual-learning-resources-2026-11.md]
-
+      audit_records: [docs/source-reviews/visual-learning-resources-2026-11.md, docs/source-reviews/embedding-atlas-neuronpedia-integration-2026-11.md]
   - id: huggingface-jobs-nanogpt-video-2026
     title: "GPU-POOR? NO PROBLEM!... thanks to Hugging Face Jobs"
     creators: ["David Louapre"]
