@@ -43,13 +43,23 @@ FRENCH_EXAMPLE_FRAGMENTS = {
         "de bonne ou de mauvaise situation",
         "moi je ne crois pas",
     ),
+    "vraisemblance": (
+        "C'est une bonne situation, ça, scribe ?",
+        "Vous savez",
+    ),
+    "loss": ("Vous savez",),
+    "exercises/contextualized-representations": (
+        "une bonne situation, ça, scribe ?",
+        "de bonne ou de mauvaise situation",
+        "moi je ne crois pas",
+    ),
 }
 
 ENGLISH_CONTINUATION = "They built roads between distant towns."
 
 
-@pytest.mark.parametrize("page_id", CORE_EXAMPLE_PAGES)
-def test_french_understand_pages_reuse_the_example_naturally(page_id: str) -> None:
+@pytest.mark.parametrize("page_id", tuple(FRENCH_EXAMPLE_FRAGMENTS))
+def test_french_pages_reuse_relevant_fragments_naturally(page_id: str) -> None:
     source = (ROOT / "site" / "fr" / f"{page_id}.qmd").read_text(encoding="utf-8")
     for fragment in FRENCH_EXAMPLE_FRAGMENTS[page_id]:
         assert fragment in source, f"fr/{page_id} is missing {fragment!r}"
