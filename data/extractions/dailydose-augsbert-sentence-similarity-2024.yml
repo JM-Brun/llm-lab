@@ -1,5 +1,38 @@
 schema_version: 1
 source_id: dailydose-augsbert-sentence-similarity-2024
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis: ["Direct HTML through the visible cross-/bi-encoder comparison and AugSBERT overview; details are paywalled."]
+    inferred_elements: ["Source graph and outcomes are reconstructed from visible material."]
+  source_graph:
+    nodes:
+      - {id: src-cross-encoder, kind: architecture, description: "Jointly process a pair to produce a pair-specific score.", locator: "Cross-encoders"}
+      - {id: src-bi-encoder, kind: architecture, description: "Encode each text independently with a shared model.", locator: "Bi-encoders"}
+      - {id: src-candidate-retrieval, kind: process, description: "Use reusable vectors to retrieve candidates.", locator: "Bi-encoders"}
+      - {id: src-augsbert, kind: training-method, description: "Use cross-encoder pair judgements to augment or supervise bi-encoder training.", locator: "AugSBERT"}
+    edges:
+      - {from: src-bi-encoder, type: supports, to: src-candidate-retrieval}
+      - {from: src-cross-encoder, type: provides-training-signals-for, to: src-augsbert}
+      - {from: src-augsbert, type: improves-training-of, to: src-bi-encoder}
+    interpretation: "Editorial reconstruction of the visible architecture; accuracy superiority is not universal."
+  learning_outcomes:
+    - {status: inferred, outcome: "Distinguish joint pair scoring from independent reusable sentence encoding.", basis: "Visible architecture sections"}
+    - {status: inferred, outcome: "Explain why a cross-encoder is suited to reranking a shortlist rather than exhaustive corpus scoring.", basis: "Efficiency trade-off"}
+    - {status: inferred, outcome: "Describe the high-level AugSBERT teacher/labeler-to-bi-encoder pattern.", basis: "AugSBERT overview"}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Sentence representations, similarity scoring and Transformer encoders.", basis: "Article recap and terminology"}
+  teaching_route:
+    - {order: 1, section: "Recap", function: reconnect-to-use-cases, moves: ["Recall retrieval, QA and duplicate detection"]}
+    - {order: 2, section: "Cross-encoders", function: explain-joint-pair-computation, moves: ["Concatenate both texts", "Explain pair interaction and per-pair cost"]}
+    - {order: 3, section: "Bi-encoders", function: explain-reusable-representations, moves: ["Encode independently", "Store reusable vectors", "Expose absence of direct pair interaction"]}
+    - {order: 4, section: "AugSBERT", function: combine-quality-and-throughput, moves: ["Use cross-encoder pair scores as training signals", "Train a faster bi-encoder"]}
+  pedagogical_strengths: ["Makes the quality/latency trade-off visible through where pair interaction occurs.", "Connects architecture choice to two-stage retrieval."]
+  pedagogical_limits: ["Detailed augmentation and implementation are paywalled.", "Performance depends on task, data and training objective."]
+  comparison:
+    canonical_pages: [fr/cosine-similarity, en/cosine-similarity, fr/rag-memory-boundaries, en/rag-memory-boundaries]
+    decision: "Integrate the architecture contrast in existing deep dives; keep AugSBERT optional."
+    dossier: docs/source-reviews/dailydose-main-path-2026-11.md
 scan:
   accessed_at: "2026-11-17"
   retrieval_method: direct-canonical-html
