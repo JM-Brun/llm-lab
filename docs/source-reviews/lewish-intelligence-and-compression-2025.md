@@ -139,7 +139,15 @@ It separates two questions that the article's compact enwik8 comparison can othe
 1. **Finite codec asymmetry:** paired forward/reversed payloads are passed to zlib-9, bzip2-9 and XZ-6 for IID, stationary first-order Markov and non-stationary regime-shift sources, across eight fixed seeds. Raw paired sizes are available as CSV; summaries report mean/median reverse-minus-forward bytes and the fraction of seeds where forward is smaller.
 2. **Model-description cost:** a held-out continuation of a synthetic Markov sequence is scored under IID and first-order Markov predictors. The experiment reports ideal test-data code length alone and after adding an explicit, fixed-width parameter-table charge. Parameters are smoothed and quantized to 8-bit integer frequencies summing to 255.
 
-A pilot calculation of the specified generators/codecs shows why the comparison must remain paired and codec-specific: across eight seeds, mean reverse-minus-forward byte differences vary in sign and magnitude by source and codec (for example, the stationary Markov control is slightly negative for zlib but positive for bzip2 and XZ). The regime-shift control also varies by codec. These small synthetic results are not a causal test and should not be generalized to natural language or enwik8.
+A pilot calculation of the specified generators/codecs shows why the comparison must remain paired and codec-specific. Mean `reverse_bytes - forward_bytes` over the eight fixed seeds (positive means forward compressed smaller):
+
+| Synthetic source | zlib-9 | bzip2-9 | XZ-6 |
+|---|---:|---:|---:|
+| IID uniform | +9.25 B | +3.50 B | +1.50 B |
+| Stationary Markov, P(stay)=0.9 | −3.88 B | +4.13 B | +6.50 B |
+| Regime shift, 0.98 → 0.55 | +26.13 B | +0.88 B | +8.00 B |
+
+The forward-smaller fractions also vary (for example, on stationary Markov: 0.375 for zlib, 0.625 for bzip2, 0.750 for XZ). These small synthetic results are not a causal test and should not be generalized to natural language or enwik8. The pilot calculation mirrors the documented generators and codec settings; the committed repository script and tests still require execution in the project environment.
 
 For the separate two-part score, the pilot Markov sequence yields a substantially lower held-out ideal data cost for the bigram predictor than IID, but the bigram model also incurs a larger explicit parameter charge (129 vs 33 bits). This illustrates the accounting distinction; it is not evidence that this particular fixed-width parameter code is optimal.
 
