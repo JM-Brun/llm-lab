@@ -286,6 +286,8 @@ These resources are curated for teaching design and guided experimentation. Incl
 
 ## Algorithmic information and universal agents
 
+**Synthesis:** [Kolmogorov complexity, universal prediction and AIXI](source-syntheses/kolmogorov-aixi-computability-2026-11.md) connects the formal layers and their computability limits.
+
 - **Marcus Hutter — [Universal Algorithmic Intelligence: A Mathematical Top-Down Approach](https://arxiv.org/abs/cs/0701125)** (2007; based on the IDSIA technical report).
   - **Use for:** the primary theoretical construction connecting Kolmogorov complexity, the universal Solomonoff mixture, sequential decision theory, AIXI and the resource-bounded AIXI(t,l) agent. Sections 3.2–3.4 and 6 are the key route.
   - **Critical qualifications:** K is upper semicomputable but not computable; the universal mixture is a semimeasure, not a normalized computable probability; AIXI's optimality is relative to formal assumptions. The detailed AIXI(t,l) construction gives (O(t,2^l)) per cycle, with large hidden constants. Do not flatten superscripts or confuse candidate-program bounds with environment-only bounds.
