@@ -29,7 +29,7 @@ Each arrow adds a new object and new assumptions. In particular, a shortest-desc
 
 Kolmogorov complexity is upper semicomputable: one can find progressively shorter programs and improve a known upper bound, but cannot generally certify that the shortest program has been found.
 
-The Solomonoff universal mixture is lower semicomputable. These are different approximation directions and should not be collapsed into the generic phrase “can be approximated”. Leike and Hutter's 2015 result goes further for AIXI: it is not limit computable. This is a classification of the ideal agent, not a statement that every practical approximation to a restricted problem is useless.
+The Solomonoff universal mixture is lower semicomputable. These are different approximation directions and should not be collapsed into the generic phrase “can be approximated”. Leike and Hutter's 2015 result is formulation-sensitive: the standard/iterative exact AIXI policy is not limit computable, while their recursive value-function formulation admits a limit-computable ε-optimal AIXI policy (with ε even allowed to decrease at a computable rate). Exact optimality, ε-optimality and the value-function definition must therefore be kept distinct.
 
 ## 4. What AIXI(t,l) bounds
 
@@ -41,15 +41,15 @@ The resource parameters refer to the candidate policies/programs:
 
 The detailed per-cycle complexity is
 
-[
-O(t,2^l).
-]
+$
+O(t\,2^l).
+$
 
 The later proof-validation setup has a separate bound
 
-[
-O(l_P^2,2^{l_P}).
-]
+$
+O(l_P^2\,2^{l_P}).
+$
 
 This is computable in principle, but the exponential dependence on (l), together with proof machinery and large hidden constants, makes the construction impractical for substantial bounds. The guarantee is relative to a restricted candidate class and the validity/proof assumptions; it is not global optimality over all possible agents.
 
@@ -64,7 +64,7 @@ Thus predictive compression is a powerful lens on learning, but not a sufficient
 ## 6. Evidence and limits
 
 - Hutter (2007), [Universal Algorithmic Intelligence](https://arxiv.org/abs/cs/0701125): primary construction and detailed AIXI(t,l) discussion.
-- Leike & Hutter (2015), [On the Computability of AIXI](https://arxiv.org/abs/1510.05572): non-limit-computability result; abstract reviewed, full proof not audited here.
+- Leike & Hutter (2015), [On the Computability of AIXI](https://arxiv.org/abs/1510.05572): formulation-sensitive non-limit-computability result and limit-computable ε-optimal recursive variant; relevant sections inspected, proofs not audited line by line.
 - Hutter, Quarel & Catt (2024), [An Introduction to Universal Artificial Intelligence](https://hutter1.net/publ/uaibook2.pdf): textbook formulation and explicit proof-length parameter; relevant sections inspected, no algorithm executed.
 
 No practical implementation or empirical benchmark of AIXI(t,l) was run. The complexity statements are theoretical asymptotic bounds, not measured runtime.
