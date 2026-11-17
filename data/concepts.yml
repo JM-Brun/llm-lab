@@ -694,6 +694,14 @@ concepts:
       en: "Coding a sequence using a model's conditional probabilities to assign code lengths according to how predictable events are."
     domains: [probabilistic-foundations-training]
     resources: [fr/entropy, en/entropy, fr/cross-entropy, en/cross-entropy, fr/compression-revision, en/compression-revision]
+  - id: minimum-description-length
+    importance: supporting
+    labels: {fr: "Longueur minimale de description (MDL)", en: "Minimum description length (MDL)"}
+    definitions:
+      fr: "Principe de sélection et d'évaluation qui considère le coût total de description d'un modèle et des données conditionnellement à ce modèle : L(M) + L(D|M), relativement à un langage de description et à un protocole de codage."
+      en: "Model-selection and evaluation principle that considers the total description cost of a model and the data conditional on that model: L(M) + L(D|M), relative to a description language and coding protocol."
+    domains: [probabilistic-foundations-training, mathematical-tools-geometry]
+    resources: [fr/compression-revision, en/compression-revision]
   - id: entropy-coding
     importance: supporting
     labels: {fr: "Codage entropique", en: "Entropy coding"}
