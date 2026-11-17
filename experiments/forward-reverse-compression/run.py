@@ -12,8 +12,9 @@ import statistics
 import sys
 import zlib
 from collections import Counter, defaultdict
+from collections.abc import Callable
+from itertools import pairwise
 from math import floor, log2
-from typing import Callable
 
 ALPHABET = 4
 DEFAULT_LENGTH = 16_384
@@ -127,7 +128,7 @@ def _fit_iid(training: bytes) -> list[int]:
 
 def _fit_bigram(training: bytes) -> dict[int, list[int]]:
     transitions: dict[int, Counter[int]] = defaultdict(Counter)
-    for previous, current in zip(training, training[1:]):
+    for previous, current in pairwise(training):
         transitions[previous][current] += 1
     return {
         previous: _quantize_probabilities(transitions[previous]) for previous in range(ALPHABET)
