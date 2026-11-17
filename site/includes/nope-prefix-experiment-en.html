@@ -1,0 +1,21 @@
+<section class="nope-prefix-experiment" data-lang="en" aria-labelledby="nope-prefix-title-en">
+  <h3 id="nope-prefix-title-en">Experiment: what can a causal prefix reveal without RoPE?</h3>
+  <p>In this NoPE layer, no rotation or explicit positional coordinate is added. The causal mask still restricts each query to its preceding prefix. Explore what this nested visibility can—and cannot—reveal.</p>
+  <div class="nope-controls">
+    <label>Query position <output data-out="position">4</output><input data-control="position" type="range" min="0" max="7" step="1" value="4"></label>
+    <label>Content pattern <select data-control="pattern"><option value="ramp" selected>Distinct progression</option><option value="alternating">Alternating −1 / +1</option><option value="constant">Identical content</option></select></label>
+    <label>Attention distribution <select data-control="attention"><option value="uniform" selected>Uniform over prefix</option><option value="content">Content-dependent (softmax)</option></select></label>
+    <label>Softmax temperature <output data-out="temperature">1.0</output><input data-control="temperature" type="range" min="0.2" max="3" step="0.1" value="1"></label>
+  </div>
+  <div class="nope-prefix-results" aria-live="polite">
+    <div><strong>Visible keys</strong><output data-out="visible">5 / 8</output></div>
+    <div><strong>Weighted value sum</strong><output data-out="aggregate"></output></div>
+    <div><strong>Weight entropy</strong><output data-out="entropy"></output></div>
+  </div>
+  <h4>Accessible prefix and attention weights</h4>
+  <div class="nope-token-strip" data-token-strip aria-label="Tokens and visible positions"></div>
+  <div class="nope-weight-list" data-weight-list></div>
+  <p class="nope-prefix-explanation" data-explanation></p>
+  <p class="nope-caveat"><strong>Important limitation:</strong> the number of visible keys depends on position, but the aggregated output does not always reveal that position. With identical content, the mean stays identical regardless of prefix length. A real Transformer can use multiple layers, heads, rich representations and nonlinear interactions; this toy is neither a general proof nor a measurement of length generalization.</p>
+  <noscript>This experiment requires JavaScript. The causal mask allows keys j ≤ i: visible prefixes are nested even without explicit positional encoding.</noscript>
+</section>

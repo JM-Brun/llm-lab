@@ -1,0 +1,20 @@
+<section class="rope-attention-pipeline" data-lang="en" aria-labelledby="rope-pipeline-title-en">
+  <h3 id="rope-pipeline-title-en">From vectors to output: one attention head, step by step</h3>
+  <p>A deterministic toy example with three tokens and one 2D head. Q, K and V projections are given; we isolate the effects of RoPE, causal masking and softmax.</p>
+  <div class="rope-pipeline-controls">
+    <label>Query position <output data-pipe-out="query">2</output><input data-pipe-control="query" type="range" min="0" max="2" step="1" value="2"></label>
+    <label class="rope-pipeline-check"><input data-pipe-control="rope" type="checkbox" checked> Apply RoPE to Q and K</label>
+    <label class="rope-pipeline-check"><input data-pipe-control="causal" type="checkbox" checked> Apply causal mask</label>
+  </div>
+  <div class="rope-pipeline-stages">
+    <div class="rope-pipeline-stage"><h4>1 · Projections</h4><p>Q, K and V come from the same hidden-state stream through three distinct projections.</p><div data-pipe-out="projections" class="rope-pipeline-data"></div></div>
+    <div class="rope-pipeline-stage"><h4>2 · Position</h4><p>RoPE rotates Qᵢ and each Kⱼ according to position; V remains unchanged.</p><div data-pipe-out="rotations" class="rope-pipeline-data"></div></div>
+    <div class="rope-pipeline-stage"><h4>3 · Scores QKᵀ / √d</h4><p>The dot product is computed for each candidate key.</p><div data-pipe-out="scores" class="rope-pipeline-data"></div></div>
+    <div class="rope-pipeline-stage"><h4>4 · Causal mask</h4><p>Future positions are excluded before softmax.</p><div data-pipe-out="mask" class="rope-pipeline-data"></div></div>
+    <div class="rope-pipeline-stage"><h4>5 · Softmax</h4><p>Allowed scores become weights that sum to 1.</p><div data-pipe-out="weights" class="rope-pipeline-data"></div></div>
+    <div class="rope-pipeline-stage"><h4>6 · Aggregate V</h4><p>The output is the weighted sum of accessible value vectors.</p><div data-pipe-out="output" class="rope-pipeline-data"></div></div>
+  </div>
+  <p class="rope-pipeline-insight" data-pipe-out="insight" aria-live="polite"></p>
+  <p class="rope-explorer-note">These numbers are a pedagogical toy example, not activations measured from a trained model. Turning off the causal mask intentionally demonstrates non-causal attention.</p>
+  <noscript>This experiment requires JavaScript; the mathematical stages are described in the text.</noscript>
+</section>

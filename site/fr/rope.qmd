@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: ["fr/positional-encoding"]
   children: []
-related: ["fr/queries-keys-values", "fr/scaled-dot-product-attention"]
+related: ["fr/queries-keys-values", "fr/scaled-dot-product-attention", "fr/causal-masking"]
 tags: ["type:deep-dive", "destination:deepen", "topic:rope", "level:advanced", "language:fr", "status:published"]
 -->
 
@@ -26,6 +26,18 @@ tags: ["type:deep-dive", "destination:deepen", "topic:rope", "level:advanced", "
 ::: {.chapter-lead}
 Cette page est un **approfondissement avancé**. Elle suppose compris le rôle de l'information positionnelle et le calcul général de l'attention. Elle étudie la géométrie de **RoPE** (*Rotary Position Embedding*), qui applique des rotations dépendant de la position aux requêtes et aux clés avant le calcul des scores d'attention.
 :::
+
+## Trois points d'injection de l'information positionnelle
+
+Le contraste le plus utile à garder en tête n'est pas seulement « absolu contre relatif » : les mécanismes interviennent à des endroits différents du calcul.
+
+![Comparaison des trois points d'injection : addition à l'entrée, rotations RoPE sur Q et K, biais relatif ajouté aux scores.](../images/positional-entry-points-fr.svg){fig-alt="Trois voies : le vecteur de position est additionné à l'embedding token avant les blocs ; RoPE transforme Q et K après projection tandis que V reste inchangé ; un biais relatif est ajouté au score QK avant softmax." width=100%}
+
+- **Addition à l'entrée :** le signal positionnel modifie la représentation avant le premier bloc.
+- **RoPE :** le signal agit dans l'attention, sur les requêtes et les clés avant le produit scalaire.
+- **Biais relatif :** le signal modifie les scores d'attention avant softmax.
+
+Ces voies sont des familles de mécanismes, pas trois opérations nécessairement exclusives dans toute architecture.
 
 ## Principe géométrique
 
@@ -61,6 +73,54 @@ Le score dépend donc du décalage $n-m$ pour cette paire et cette fréquence, p
 
 Dans une tête d'attention, les rotations sont appliquées à $Q$ et $K$ **après leurs projections et avant le calcul de $QK^\top$**. Les valeurs $V$ ne sont pas directement tournées par la version standard de RoPE. Voir [requêtes, clés et valeurs](queries-keys-values.qmd) et [attention à produit scalaire](scaled-dot-product-attention.qmd).
 
+{{< include ../includes/rope-pair-explorer-fr.html >}}
+
+<link rel="stylesheet" href="../styles/rope-pair-explorer.css">
+<script src="../scripts/rope-pair-explorer.js" defer></script>
+
+{{< include ../includes/rope-attention-pipeline-fr.html >}}
+
+<link rel="stylesheet" href="../styles/rope-attention-pipeline.css">
+<script src="../scripts/rope-attention-pipeline.js" defer></script>
+
+{{< include ../includes/rope-pair-layout-fr.html >}}
+
+<link rel="stylesheet" href="../styles/rope-pair-layout.css">
+<script src="../scripts/rope-pair-layout.js" defer></script>
+
+{{< include ../includes/rope-frequency-explorer-fr.html >}}
+
+<link rel="stylesheet" href="../styles/rope-frequency-explorer.css">
+<script src="../scripts/rope-frequency-explorer.js" defer></script>
+
+{{< include ../includes/rope-memory-ledger-fr.html >}}
+
+<link rel="stylesheet" href="../styles/rope-memory-ledger.css">
+<script src="../scripts/rope-memory-ledger.js" defer></script>
+
+{{< include ../includes/nope-prefix-experiment-fr.html >}}
+
+<link rel="stylesheet" href="../styles/nope-prefix-experiment.css">
+<script src="../scripts/nope-prefix-experiment.js" defer></script>
+
+## Couches hybrides RoPE/NoPE : opération locale et états hérités
+
+Une couche qui omet RoPE ne reçoit pas une représentation vide ou réinitialisée : elle reçoit les états cachés contextualisés de la couche précédente. Des couches antérieures peuvent avoir rendu disponibles des distinctions positionnelles et contextuelles, sans qu'un schéma d'architecture puisse garantir qu'elles seront conservées ou utilisées.
+
+{{< include ../includes/hybrid-rope-nope-fr.html >}}
+
+<link rel="stylesheet" href="../styles/hybrid-rope-nope.css">
+<script src="../scripts/hybrid-rope-nope.js" defer></script>
+
+## Biais relatif : ajouter un terme positionnel avant softmax
+
+Un score d'attention peut être décomposé en un terme de contenu et un terme de position relative, par exemple \(s_{ij}=q_i^\top k_j/\sqrt{d_k}+b(h_i,j-i)\). La fonction exacte dépend de l'architecture. Un biais conditionné par la requête, comme le mécanisme Inkling décrit par Raschka, n'est pas équivalent à la table apprise par buckets et par tête de T5.
+
+{{< include ../includes/relative-bias-decomposition-fr.html >}}
+
+<link rel="stylesheet" href="../styles/relative-bias-decomposition.css">
+<script src="../scripts/relative-bias-decomposition.js" defer></script>
+
 ## Ce que RoPE apporte — et ce qu'il ne garantit pas
 
 RoPE fournit une manière structurée d'introduire la position dans l'attention. Sa présence ne garantit pas, à elle seule, une extrapolation fiable vers des séquences beaucoup plus longues que celles vues pendant l'entraînement.
@@ -76,6 +136,43 @@ Le comportement à grande longueur dépend aussi de la base de fréquences, de l
 ## Vérifications d'implémentation
 
 Vérifier les dimensions, l'ordre des paires de coordonnées, les positions utilisées, la précision numérique et le comportement sur plusieurs longueurs. Une erreur d'indexation peut produire des tenseurs de forme correcte tout en encodant les mauvaises positions. Les tests doivent comparer les résultats à une référence connue et contrôler les scores d'attention.
+
+## Au-delà de RoPE complet : variantes architecturales
+
+RoPE complet fait tourner toutes les paires de coordonnées de Q et K. Les architectures récentes peuvent modifier la fraction de dimensions tournée, les couches qui appliquent RoPE ou la façon d'ajouter un signal relatif aux scores.
+
+- **Partial RoPE** ne fait tourner qu'un sous-ensemble des dimensions de chaque tête. Cela réduit la largeur des tables sinus/cosinus, mais pas la dimension des clés et valeurs du cache KV. L'exemple MiniMax-M3 discuté par Raschka utilise 64 dimensions rotatives sur 128.
+- **NoPE** omet toute transformation positionnelle explicite dans une couche, tout en conservant le masque causal. Les préfixes visibles emboîtés peuvent fournir un signal d'ordre implicite, mais pas une coordonnée absolue ou une distance relative explicite. Les résultats de généralisation en longueur dépendent des tâches et du régime d'entraînement.
+- **Couches hybrides RoPE/NoPE** appliquent RoPE dans certaines couches et l'omettent dans d'autres. SmolLM3 est un exemple décrit dans l'article ; vérifier le motif exact dans la configuration de la version étudiée.
+- **Biais positionnel relatif appris** ajoute un terme au score QK avant softmax. Dans l'exemple Inkling, ce terme dépend de l'état caché de la requête et de l'écart entre positions. Il diffère du biais par buckets de T5.
+
+Ces mécanismes ne sont pas interchangeables. Les exemples sont des instantanés datés, pas une taxonomie exhaustive.
+
+## Fréquences et conventions d'implémentation
+
+Pour une tête de dimension paire d, la fréquence inverse standard de la paire i est omega_i = b^(-2i/d), et l'angle à la position m vaut m * omega_i. Les tables cosinus/sinus sont généralement pré-calculées puis diffusées sur batch et têtes. Attention à la base : l'exemple classique utilise souvent 10 000, tandis que la configuration Qwen3 du notebook Raschka utilise theta = 1 000 000.
+
+~~~python
+def rope_params(head_dim, positions, base=10_000):
+    assert head_dim % 2 == 0
+    indices = torch.arange(0, head_dim, 2, device=positions.device)
+    inv_freq = base ** (-indices.float() / head_dim)
+    angles = positions.float()[:, None] * inv_freq[None, :]
+    return angles.cos(), angles.sin()
+~~~
+
+**Interleaved** associe les coordonnées adjacentes ; **split-half** associe les deux moitiés du vecteur. Les deux conventions sont équivalentes après permutation cohérente des caractéristiques, mais ne doivent pas être mélangées. RoPE standard s'applique à Q et K après projection, pas à V.
+
+### Tests utiles
+
+- Vérifier les formes des tables cosinus/sinus et leur diffusion.
+- Vérifier que seules les dimensions rotatives changent en Partial RoPE.
+- Comparer les conventions après permutation explicite.
+- Décaler toutes les positions de la même constante et vérifier l'invariance des scores QK pour des Q/K fixes.
+- Tester les positions de préremplissage et de décodage incrémental avec cache KV.
+
+Pour une implémentation complète de Qwen3 en PyTorch, voir le [tutoriel et dépôt de Raschka](https://github.com/rasbt/LLMs-from-scratch) ; le code externe n'est pas recopié ici.
+
 
 ## Références
 

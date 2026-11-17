@@ -3886,6 +3886,96 @@ sources:
         - docs/source-syntheses/fan-compression-intelligence-2026-11.md
         - data/extractions/fan-compression-intelligence-2026.yml
 
+  - id: sebastian-raschka-understanding-positional-embeddings-2026
+    title: "Understanding Positional Embeddings in Modern LLMs"
+    creators: ["Sebastian Raschka"]
+    source_type: tutorial
+    identifiers: {}
+    canonical_url: "https://magazine.sebastianraschka.com/p/understanding-positional-embeddings"
+    publisher: "Ahead of AI / Sebastian Raschka"
+    publication_date: "2026-11-15"
+    updated_date: null
+    language: en
+    version: "Article published 15 November 2026"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:positional-information, method:rotary-position-embedding, method:partial-rope, method:nope, method:relative-position-bias, ecosystem:pytorch]
+      concept_ids: [positional-encoding, causal-mask, query, key, attention-score, self-attention]
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, mathematical-derivation, architecture, implementation, visualization, pedagogy]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-16"
+        status: partially-scanned
+        inspected_scope:
+          - "Complete article body, sections 1–7, equations, PyTorch snippets, all 38 numbered figure captions and their surrounding explanations, and conclusion"
+          - "Figure-by-figure pedagogical audit: instructional role, sequencing, redundancy, caveats, and original LLM Lab visual priorities"
+          - "Compared with existing bilingual positional-encoding and RoPE pages, RoFormer source record, concept registry and bibliography"
+          - "Reviewed feature-pairing conventions, Q/K-only rotation, frequency tables, broadcasting, partial RoPE, NoPE, learned relative bias and hybrid architectures"
+          - "Statically inspected the linked standalone Qwen3 notebook: RoPE utility, GQA module, model-level cosine/sine buffers and model configuration"
+        limitations:
+          - "All 38 numbered figures received a caption-and-context pedagogical audit, but original image pixels were not individually downloaded or inspected. No assets are copied."
+          - "The linked Qwen3 notebook was statically inspected but not executed; numerical outputs, runtime compatibility and generation behaviour remain unverified."
+          - "Architecture-frequency comparisons use the author's gallery snapshot, not a systematic census."
+          - "No independent training, benchmark reproduction or long-context evaluation was performed."
+          - "NoPE length-generalization results are task- and training-regime-dependent."
+          - "Partial RoPE reduces positional cosine/sine table width, not the full KV cache; savings are configuration- and dtype-specific."
+          - "No reuse licence was established; text, figures and code remain link-only."
+    related:
+      pages: [fr/positional-encoding, en/positional-encoding, fr/rope, en/rope, fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+      concepts: [positional-encoding, causal-mask, query, key, attention-score, self-attention]
+      audit_records: [docs/source-reviews/raschka-positional-embeddings-2026-11.md, data/extractions/sebastian-raschka-understanding-positional-embeddings-2026.yml]
+
+  - id: khan-et-al-fractional-rotation-partial-rope-2026
+    title: "Fractional Rotation, Full Potential? Investigating Performance and Convergence of Partial RoPE"
+    creators: ["Mohammad Aflah Khan", "Krishna P. Gummadi", "Manish Gupta", "Abhilasha Ravichander"]
+    source_type: paper
+    identifiers: {arxiv: "2603.11611"}
+    canonical_url: "https://arxiv.org/abs/2603.11611"
+    publisher: "arXiv / EMNLP 2026"
+    publication_date: "2026-03-12"
+    updated_date: "2026-10-15"
+    language: en
+    version: "arXiv v2; accepted as an EMNLP 2026 short paper"
+    revision: "2603.11611v2"
+    licence: {identifier: "CC-BY-4.0", url: "https://creativecommons.org/licenses/by/4.0/", status: verified}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry, scale-research]
+      tags: [topic:positional-information, method:partial-rope, method:nope, method:qk-norm, ecosystem:pytorch]
+      concept_ids: [positional-encoding, causal-mask, query, key, attention-score]
+    metadata:
+      technical_level: advanced
+      contribution_types: [experiment, benchmark, architecture, implementation]
+      audiences: [practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-16"
+        status: partially-scanned
+        inspected_scope:
+          - "arXiv v2 HTML: abstract, introduction, related work, experimental setup, main partial-RoPE analysis, conclusion and stated limitations"
+          - "Appendix C RoPE-cache size calculation and tables reporting rotated dimensions, model configurations and evaluation results"
+          - "Cross-check against Raschka's article statements on partial-RoPE convergence, memory savings and NoPE"
+        limitations:
+          - "Appendices A, B, D and E were not exhaustively inspected; training artifacts, released checkpoints and experiment code were not run."
+          - "Results are bounded to the studied 1B/8B model configurations, selected FineWeb/FineWeb-Edu data, training budgets and sequence lengths."
+          - "The reported up-to-10x saving concerns the precomputed RoPE sine/cosine cache, not the model's KV cache."
+          - "Benchmark coverage is limited; broad MCQ similarity does not establish equivalence on all downstream tasks."
+          - "No independent reproduction was performed."
+    related:
+      pages: [fr/rope, en/rope, fr/positional-encoding, en/positional-encoding]
+      concepts: [positional-encoding, causal-mask, query, key, attention-score]
+      audit_records: [docs/source-reviews/partial-rope-fractional-rotation-2026-11.md, data/extractions/khan-et-al-fractional-rotation-partial-rope-2026.yml]
+
   - id: huggingface-llm-course
     title: "Hugging Face LLM Course"
     creators: ["Hugging Face contributors"]
@@ -4250,3 +4340,50 @@ sources:
       audit_records:
         - docs/source-reviews/huggingface-jobs-nanogpt-video-2026-11.md
         - data/extractions/huggingface-jobs-nanogpt-video-2026.yml
+
+  - id: 3blue1brown-cross-entropy-compression-intelligence-part-2-2026
+    title: "But what is cross-entropy? | Compression is Intelligence Part 2"
+    creators: ["Grant Sanderson (3Blue1Brown)"]
+    source_type: video
+    identifiers: {youtube_video_id: "GlYgs6v2YfU"}
+    canonical_url: "https://www.youtube.com/watch?v=GlYgs6v2YfU"
+    publisher: "3Blue1Brown"
+    publication_date: "2026-07-16"
+    updated_date: null
+    language: en
+    version: "Part 2 of the Compression is Intelligence trilogy"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [inference-efficiency, mathematical-tools-geometry]
+      tags: [topic:cross-entropy, topic:kl-divergence, topic:predictive-compression, application:knowledge-distillation, modality:video]
+      concept_ids: [cross-entropy, kl-divergence, conditional-distribution, predictive-compression, knowledge-distillation, model-compression, negative-log-likelihood]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [mathematical-derivation, theory, visualization, pedagogy, application]
+      audiences: [learner, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-11-16"
+        status: partially-scanned
+        inspected_scope:
+          - "Official 3Blue1Brown lesson metadata, YouTube identity, publication date and chapter timestamps checked."
+          - "Creator-published caption transcript reviewed through a third-party transcript mirror, including cross-entropy from mismatched codebooks, language-tree compression analogy, pretraining loss, constrained-optimization motivation, distillation and KL divergence."
+          - "Upstream 3b1b/videos source scripts inspected statically: part2_supplements.py and relevant scenes in language_models.py."
+          - "Compared against LLM Lab's bilingual cross-entropy, language-modeling-math, loss, LLM evolution, concept graph and prior cross-entropy source audit."
+        limitations:
+          - "The original audiovisual lesson was not independently watched frame by frame; visual descriptions and scene interpretation are based on captions and source scripts."
+          - "The transcript was accessed through a third-party mirror that identifies the captions as creator-published; caption fidelity was not independently checked against the original YouTube caption track."
+          - "The source code was inspected statically and not executed; no Manim scenes or model checkpoints were run."
+          - "The gzip language-tree example is an analogy to cross-compression, not an exact cross-entropy calculation or an ideal Shannon coder."
+          - "The Lagrange-multiplier argument is valid under its separability, normalization, differentiability and matching-minimizer assumptions; it is not a universal uniqueness theorem for all ML objectives."
+          - "No 3Blue1Brown transcript, figure, animation, music or code is reproduced; reuse remains link-only."
+    related:
+      pages: [fr/cross-entropy, en/cross-entropy, fr/language-modeling-math, en/language-modeling-math, fr/llm-evolution, en/llm-evolution, fr/compression-revision, en/compression-revision]
+      concepts: [cross-entropy, kl-divergence, predictive-compression, knowledge-distillation, model-compression]
+      audit_records:
+        - docs/source-reviews/3blue1brown-cross-entropy-part2-2026-11.md
+        - data/extractions/3blue1brown-cross-entropy-compression-intelligence-part-2-2026.yml

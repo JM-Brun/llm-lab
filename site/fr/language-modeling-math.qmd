@@ -127,6 +127,65 @@ La seconde quantité est infinie parce que $p$ attribue une masse positive à un
 
 La page [Entropie croisée](cross-entropy.qmd) reste la référence pour la perte par token, le cas one-hot, les masques et les conventions de réduction. Cette page avancée se concentre sur la dérivation et sur le cas général des cibles souples.
 
+## 4. Pourquoi le logarithme ? Une justification sous hypothèses explicites
+
+La perte $-\log p(y)$ n'est pas choisie seulement parce qu'elle pénalise fortement les faibles probabilités. On peut retrouver sa forme en demandant une propriété plus exigeante : **la perte moyenne doit être minimisée lorsque la distribution prédite correspond à la distribution des données**.
+
+Considérons un alphabet fini. Les données suivent une distribution $q=(q_i)$, tandis que le modèle prédit $p=(p_i)$. Supposons que la contribution d'un événement $i$ soit une fonction séparable $F(p_i)$ et que la perte moyenne soit :
+
+$$
+\mathcal L(p;q)=\sum_i q_i F(p_i),
+\qquad \sum_i p_i=1.
+$$
+
+On cherche un minimum intérieur en $p=q$, pour toute distribution $q$ strictement positive. Avec un multiplicateur de Lagrange $\lambda$ pour la contrainte de normalisation :
+
+$$
+\frac{\partial}{\partial p_i}
+\left[\sum_j q_jF(p_j)+\lambda(\sum_jp_j-1)\right]
+=q_iF'(p_i)+\lambda=0.
+$$
+
+Au point $p=q$, cela impose $q_iF'(q_i)=-\lambda$, la même constante pour chaque catégorie. Comme cette condition doit valoir pour toute distribution intérieure, $xF'(x)$ est constant : $F'(x)=c/x$. L'intégration donne $F(x)=c\log x+d$. Pour que le point stationnaire soit un minimum, il faut $c<0$ ; à un facteur positif et une constante additive près, on retrouve donc :
+
+$$
+F(x)=-\log x.
+$$
+
+**Portée de l'argument.** Ce résultat suppose une perte additive et séparable par événement, une distribution normalisée, une différentiabilité et l'exigence que la distribution de données soit le minimiseur pour toute distribution intérieure. Il ne démontre pas que la log-loss est l'unique objectif utile pour toutes les tâches de machine learning : des objectifs différents peuvent viser d'autres propriétés (calibration, robustesse, décision sous coûts asymétriques, etc.). La vidéo présente cette justification comme un approfondissement par multiplicateurs de Lagrange, pas comme un théorème universel sur toutes les pertes.
+
+## 5. Du code probabiliste à la distillation
+
+La cross-entropy a une interprétation opérationnelle : **les données suivent $q$, mais le codeur utilise les longueurs idéales dérivées de $p$**. Chaque événement $i$ coûte alors $-\log_2 p_i$ bits idéaux, et son poids dans la moyenne est sa fréquence sous $q$ :
+
+$$
+H(q,p)=-\sum_i q_i\log_2 p_i.
+$$
+
+Par exemple, le codeur est initialement réglé sur $p=(1/2,1/4,1/8,1/8)$, mais les données suivent désormais $q=(1/8,1/8,1/4,1/2)$. Avec les longueurs $(1,2,3,3)$ du code initial, le coût moyen devient :
+
+$$
+H(q,p)=\tfrac18(1)+\tfrac18(2)+\tfrac14(3)+\tfrac12(3)
+=2.625\text{ bits}.
+$$
+
+L'entropie de la nouvelle source vaut $H(q)=1.75$ bits ; l'excès de coût est donc $D_{\mathrm{KL}}(q\Vert p)=0.875$ bit par symbole. Le sens des arguments compte : inverser les distributions change généralement le résultat.
+
+**Attention aux lettres.** Dans la vidéo, $P$ désigne la distribution réellement observée et $Q$ le modèle qui a servi à construire le code ; la somme est donc pondérée par $P$ et contient $-\log Q$. Dans cette page, nous utilisons la convention du projet : $q$ désigne la cible / les données et $p$ la distribution prédite. La quantité est la même, mais les lettres sont inversées par rapport à celles de la vidéo. Toujours lire le rôle des distributions, pas seulement leur nom.
+
+### De la cible observée à la cible enseignante
+
+En pré-entraînement standard, chaque position fournit un token observé : la cible est one-hot et la cross-entropy se réduit à la NLL de ce token. En *knowledge distillation*, un modèle enseignant fournit plutôt une distribution cible $q_{T}(\cdot\mid x_{<t})$ sur le vocabulaire ; le modèle étudiant produit $p_{S}(\cdot\mid x_{<t})$. La perte peut alors comparer les deux distributions :
+
+$$
+\mathcal L_{\mathrm{KD}}
+=H\!\left(q_T(\cdot\mid x_{<t}),p_S(\cdot\mid x_{<t})\right).
+$$
+
+La cible souple transmet plus d'information que le seul token effectivement observé : plusieurs continuations possibles reçoivent des poids, pas seulement une classe gagnante. Cela peut fournir un signal d'apprentissage plus riche par exemple, mais **la distribution de l'enseignant n'est pas une vérité terrain** : elle peut transmettre ses erreurs, ses biais et ses incertitudes. La distillation est une forme de compression du modèle (étudiant plus compact), distincte de la compression prédictive d'un texte à l'aide d'un codeur.
+
+Pour les détails de l'identité cross-entropy/KL et les conventions de calcul, voir la section précédente et la leçon [Entropie croisée](cross-entropy.qmd). Pour la distinction entre compression du modèle et compression prédictive, voir [Évolution des LLM](llm-evolution.qmd).
+
 ## Ce que cette formalisation ne détermine pas
 
 - **Le tokenizer** : le découpage du texte et le vocabulaire sont traités dans [Texte et données](text-data.qmd) et [Stratégies de tokenisation](tokenization-strategies.qmd).

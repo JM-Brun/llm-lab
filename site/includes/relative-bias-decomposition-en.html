@@ -1,0 +1,20 @@
+<section class="relative-bias-decomposition" data-lang="en" aria-labelledby="relative-bias-title-en">
+  <h3 id="relative-bias-title-en">Experiment: decompose an attention score with relative bias</h3>
+  <p>Start with a content score, then add a position-dependent term before softmax. Compare a query-conditioned bias with a T5-style bucket lookup.</p>
+  <div class="relative-bias-controls">
+    <label>Content score <output data-out="content">1.2</output><input data-control="content" type="range" min="-4" max="4" step="0.1" value="1.2"></label>
+    <label>Relative offset (key − query) <output data-out="distance">−3</output><input data-control="distance" type="range" min="-16" max="16" step="1" value="-3"></label>
+    <label>Query-state feature <output data-out="state">0.8</output><input data-control="state" type="range" min="-2" max="2" step="0.1" value="0.8"></label>
+    <label>Bias strength <output data-out="strength">1.0</output><input data-control="strength" type="range" min="0" max="2" step="0.1" value="1"></label>
+    <label>Bias family<select data-control="mode"><option value="conditioned" selected>Query-conditioned relative bias (illustrative)</option><option value="bucketed">T5-style bucketed bias (illustrative)</option><option value="none">No relative bias</option></select></label>
+  </div>
+  <div class="relative-bias-equation" aria-live="polite">
+    <p><strong>Score decomposition</strong></p>
+    <div><span>Content term</span><output data-out="content-term">1.200</output></div>
+    <div><span>Relative-position term</span><output data-out="bias">−0.145</output></div>
+    <div class="relative-bias-total"><span>Pre-softmax score</span><output data-out="total">1.055</output></div>
+  </div>
+  <p data-explanation></p>
+  <p class="relative-bias-caveat"><strong>Important:</strong> this is a transparent toy parameterization, not Inkling's recovered learned function or trained T5 weights. T5 uses learned per-head values indexed by relative-position buckets; the query-conditioned example makes the bias depend on a query-state feature and distance. The score shown is before softmax and before any causal mask is applied.</p>
+  <noscript>A relative bias is added to the content-based attention score before softmax.</noscript>
+</section>

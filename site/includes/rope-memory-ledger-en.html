@@ -1,0 +1,20 @@
+<section class="rope-memory-ledger" data-lang="en" aria-labelledby="rope-memory-title-en">
+  <h3 id="rope-memory-title-en">Separate RoPE-table memory from KV-cache memory</h3>
+  <p>Set the parameters for one layer. Reducing the rotary fraction shrinks the cosine/sine tables, but does not automatically shrink the K and V tensors stored in the KV cache.</p>
+  <div class="rope-memory-controls">
+    <label>Sequence length <output data-out="seq">8192</output><input data-control="seq" type="range" min="512" max="32768" step="512" value="8192"></label>
+    <label>Rotary fraction <output data-out="fraction">100%</output><input data-control="fraction" type="range" min="10" max="100" step="10" value="100"></label>
+    <label>Batch <output data-out="batch">1</output><input data-control="batch" type="range" min="1" max="16" step="1" value="1"></label>
+    <label>KV heads <output data-out="heads">8</output><input data-control="heads" type="range" min="1" max="32" step="1" value="8"></label>
+    <label>Head dimension <output data-out="dim">128</output><select data-control="dim"><option>64</option><option selected>128</option><option>256</option></select></label>
+    <label>Precision <output data-out="bytes">2 bytes</output><select data-control="bytes"><option value="2" selected>BF16 / FP16</option><option value="4">FP32</option><option value="1">8-bit (assumption)</option></select></label>
+  </div>
+  <div class="rope-memory-results" aria-live="polite">
+    <div><strong>RoPE cos/sin tables</strong><output data-out="rope"></output></div>
+    <div><strong>KV cache (K + V)</strong><output data-out="kv"></output></div>
+    <div><strong>KV cache / tables ratio</strong><output data-out="ratio"></output></div>
+    <div><strong>Rotary dimensions</strong><output data-out="rotary"></output></div>
+  </div>
+  <p class="rope-memory-note">One-layer estimate: cos/sin tables = 2 × sequence × (rotary dimensions / 2) elements; KV cache = 2 × batch × sequence × KV heads × full head dimension. This assumes K and V remain full-width in the cache. It excludes allocator overhead, alignment, replication and other buffers. Cache quantization is represented only as an assumed bytes-per-element size, not as a specific format.</p>
+  <noscript>This interactive estimate requires JavaScript. The conceptual distinction remains: trigonometric tables and the KV cache are separate memory terms.</noscript>
+</section>

@@ -1,0 +1,42 @@
+schema_version: 1
+source_id: khan-et-al-fractional-rotation-partial-rope-2026
+items:
+  - id: khan-et-al-fractional-rotation-partial-rope-2026:convergence
+    kind: result
+    summary: "In the studied 1B and 8B configurations, roughly 10% or more rotary dimensions generally produced convergence and final-loss behaviour close to full RoPE."
+    locator: {type: section, value: "§4; Figures 2–5; Tables 3–4"}
+    evidence:
+      kind: controlled-pretraining-experiments
+      confidence: context-dependent
+      scope: "Sequential and parallel attention; FineWeb/FineWeb-Edu; sequence lengths 1,024–8,192; models at 1B and 8B scale."
+      assumptions: ["The reported training and evaluation protocol is followed."]
+      limitations: ["No universal 10% threshold or downstream-task equivalence is established."]
+    disposition: integrate
+    classification: {primary_theme: architectures-mechanisms, concept_ids: [positional-encoding, query, key]}
+    candidate_destinations: {pages: [fr/rope, en/rope]}
+  - id: khan-et-al-fractional-rotation-partial-rope-2026:rope-cache
+    kind: result
+    summary: "Reducing rotary dimensions reduces the precomputed RoPE sine/cosine cache; the reported up-to-10x saving does not concern the KV cache."
+    locator: {type: section, value: "§1; Appendix C"}
+    evidence:
+      kind: analytical-memory-estimate
+      confidence: established
+      scope: "RoPE cache estimate based on maximum sequence length, head dimension and storage precision."
+      assumptions: ["The implementation precomputes and stores sine/cosine tables as described."]
+      limitations: ["The estimate excludes memory fragmentation and does not measure end-to-end serving memory or KV-cache size."]
+    disposition: clarify
+    classification: {primary_theme: architectures-mechanisms, concept_ids: [positional-encoding]}
+    candidate_destinations: {pages: [fr/rope, en/rope]}
+  - id: khan-et-al-fractional-rotation-partial-rope-2026:nope-instability
+    kind: result
+    summary: "NoPE configurations showed loss spikes or higher loss in some larger-scale training settings; QK-Norm mitigated observed instability in the tested configurations."
+    locator: {type: section, value: "§4, Analyzing Loss Spikes with NoPE"}
+    evidence:
+      kind: controlled-ablation
+      confidence: context-dependent
+      scope: "Selected sequential/parallel models, long-context settings and training budgets."
+      assumptions: ["The reported loss trajectories represent the stated experiments."]
+      limitations: ["This does not directly contradict smaller synthetic-task length-generalization results; the studies answer different empirical questions."]
+    disposition: integrate
+    classification: {primary_theme: architectures-mechanisms, concept_ids: [positional-encoding, causal-mask, attention-score]}
+    candidate_destinations: {pages: [fr/rope, en/rope]}
