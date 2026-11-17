@@ -141,7 +141,7 @@ A Transformer trained with cross-entropy does not implement Solomonoff induction
 
 ## 9. Source scope and limits
 
-- Hutter (2007): full accessible report inspected for the K definition and detailed AIXI(t,l) construction.
+- Hutter (2007): targeted sections of the accessible report inspected for the K definition and detailed AIXI(t,l) construction.
 - Hutter, Quarel & Catt (2024): relevant background and Section 13.2 algorithm/theorem inspected; no code was executed.
 - Leike & Hutter (2015): publisher and arXiv abstracts inspected; full proof not audited.
 - No practical AIXI(t,l) implementation or benchmark was run. The bounds must not be presented as measured runtime.
