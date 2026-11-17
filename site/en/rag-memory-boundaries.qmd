@@ -181,6 +181,12 @@ For each reused item, retain where possible its source, identifier, dates, origi
 
 **Rule to remember:** external information does not influence the model's prediction merely because it exists or has been found. It must cross the transmission mechanism — in context or through a tool that is actually used — and then be correctly exploited.
 
+### Implementation example: vector search
+
+The [Hugging Face semantic-search tutorial with FAISS](https://huggingface.co/learn/llm-course/en/chapter5/6) builds a small search engine from embeddings of GitHub issue comments, a nearest-neighbour index, and a query. It illustrates one implementation of the “index → search → select” part of the RAG diagram, not a complete RAG system.
+
+Vector similarity does not guarantee factual relevance or answer quality. The embedding model, pooling, normalization, metric, document chunking, filters, and evaluation protocol must fit the task. At minimum, evaluate retrieval quality separately from generation quality.
+
 ## Limitations
 
 This page describes architectural principles, not one RAG implementation or a universal memory taxonomy. Guarantees must be established through end-to-end tests, not inferred from the presence of an index or prompt.

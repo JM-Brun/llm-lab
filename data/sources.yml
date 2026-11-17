@@ -3986,7 +3986,7 @@ sources:
     publication_date: null
     updated_date: null
     language: en
-    version: "Living course; chapter index and French Chapter 1 checked 2026-11-16"
+    version: "Living course; selected lesson bodies and chapter index checked 2026-11-17"
     revision: null
     licence: {identifier: null, url: null, status: unknown}
     reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
@@ -4002,6 +4002,30 @@ sources:
     scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "Deeper Chapter 2-5 lesson-body review: multiple-sequence padding/truncation, batched tokenization, dynamic padding/collators, Trainer evaluation, custom loop/Accelerate and learning-curve interpretation"
+          - "Chapter 4 model-card lesson and Hub artifact-sharing workflow"
+          - "Chapter 5 dataset transformations, memory-mapped Arrow access, IterableDataset streaming, bounded-buffer shuffle, take/skip, source interleaving, dataset creation/cards and FAISS semantic retrieval"
+          - "Crosswalk against training-examples, corpus-preparation and RAG pages; added bilingual dynamic-padding, streaming, dataset-card and FAISS references"
+        limitations:
+          - "Selected lesson bodies only; course notebooks, quizzes, videos and code examples were not executed."
+          - "No Hub upload, large-corpus benchmark, embedding computation or FAISS index was reproduced."
+          - "No immutable upstream course revision was pinned; APIs remain version-sensitive."
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "Selected Chapter 6 lesson bodies: fast-tokenizer BatchEncoding, word IDs, offsets, token-classification alignment, QA span mapping and overflow windows"
+          - "Chapter 7 task-family overview and causal-LM-from-scratch CodeParrot lesson"
+          - "Chapter 8 overview, forum-question guidance and stage-by-stage training-pipeline debugging"
+          - "Chapter 9 overview and Gradio Blocks lesson, including Interface/Blocks distinction and event-driven UI"
+          - "Crosswalk against bilingual tokenizer-strategies and training-loop pages; added offsets/alignment explanation and optional causal-LM/debugging references"
+        limitations:
+          - "Selected lesson text only; notebooks, quizzes, videos, live Spaces and all task-specific recipes were not exhaustively reviewed."
+          - "Course code and current library APIs were not executed; no learner-outcome claims are made."
+          - "No immutable upstream course revision was pinned; living documentation and locale differences remain."
+          - "Gradio integration deferred because the current Build path does not yet expose a trained end-to-end artifact."
       - accessed_at: "2026-11-16"
         status: partially-scanned
         inspected_scope:
@@ -4012,8 +4036,8 @@ sources:
           - "French Chapter 1 introduction: NLP/LLM distinction, course expectations, prerequisites and chapter outline"
           - "Existing LLM Lab source records, project audit issue #765, canonical learning paths, selected page and implementation inventories"
         limitations:
-          - "Architecture scan plus bounded Chapter 1 inspection and deep text-level review of Chapters 10–12; Chapters 2–9 remain uninspected at lesson-body level."
-          - "Chapters 6–9 lesson bodies, exercises, notebooks, videos, Hub examples and live demonstrations remain uninspected; selected code examples from Chapters 2–5 and 10–12 were read but not executed."
+          - "Architecture scan plus bounded Chapter 1 inspection and selected lesson-body reviews across Chapters 2–12; review depth varies by chapter."
+          - "Chapters 2–12 have selected lesson-body review at varying depth; exercises, notebooks, videos, Hub examples and live demonstrations were not exhaustively inspected or executed."
           - "Living documentation; no immutable upstream commit or release was pinned in this first pass."
           - "Current English index and supplied French Chapter 1 do not expose identical chapter outlines; preserve locale/version differences rather than assuming parity."
           - "Course text, figures and code remain link-only; no reuse permission was established."

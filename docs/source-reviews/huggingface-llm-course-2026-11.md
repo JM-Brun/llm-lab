@@ -188,3 +188,129 @@ No new learner-facing page, top-level curriculum stage or Build dependency was a
 ## Summary
 
 The course is valuable less as a replacement curriculum than as a **bridge from conceptual understanding to modern Hugging Face practice**. LLM Lab already has strong foundations in Transformer mechanics, tokenization, generation and training fundamentals. The most valuable validated additions are human annotation protocol, chat-template serialization and a first-class GRPO concept. Chapters 2–5 add contextual implementation references for pipelines, fine-tuning loops, learning curves, model cards and large-dataset handling. A practical GRPO experiment remains optional; Chapters 6–9 still require inspection.
+
+
+## Follow-up review — Chapters 6–9 (2026-11-17)
+
+### Scope and evidence boundary
+
+This increment inspects the current English chapter index and selected lesson bodies from Chapters 6–9. The course remains living documentation; no immutable upstream revision was pinned. Selected code examples were read but not executed, and no learner outcomes were measured. The audit is about pedagogical transfer to LLM Lab, not a full review of every notebook, quiz, video, linked Space or current library API.
+
+Inspected lesson bodies and outcomes:
+- Chapter 6: introduction, fast-tokenizer capabilities, QA pipeline and BPE/tokenizer construction material; the chapter index also lists WordPiece and Unigram.
+- Chapter 7: chapter introduction and the causal-language-model-from-scratch lesson (CodeParrot); task families include token classification, masked LM, translation, summarization, causal LM and QA.
+- Chapter 8: introduction, forum-question guidance and training-pipeline debugging.
+- Chapter 9: introduction and Gradio Blocks lesson; the chapter index includes Interface, sharing, Hub integration and advanced features.
+
+### Chapter 6 — Tokenizers library
+
+The chapter's distinct practical contribution is not the BPE/WordPiece/Unigram theory: LLM Lab already has substantial bilingual coverage of segmentation strategies, tokenizer components, Unicode, special tokens, training/evaluation trade-offs and reproducibility. The useful additional bridge is **fast-tokenizer alignment**:
+- BatchEncoding exposes token strings, word_ids(), sentence_ids() and character/token conversion helpers for compatible fast tokenizers;
+- offset_mapping maps token positions back to spans in the original input, enabling entity reconstruction and highlighting;
+- token-level labels need explicit alignment when one word becomes several subtokens;
+- extractive QA uses offsets to map predicted start/end positions to context text, and long contexts require overflow windows plus stride and careful handling of window-local versus source-global positions.
+
+**Gap and integration:** existing tokenizer lessons did not explain offsets and their role in downstream task alignment. Added a bilingual section to tokenization-strategies.qmd with a small inspection example, a conceptual distinction between token IDs and character offsets, and caveats around special tokens, normalization, Unicode and slow-tokenizer support. The lesson links to the official fast-tokenizer and QA examples. This is an additive implementation bridge, not a new canonical algorithm lesson.
+
+**Qualification:** offsets are implementation-provided alignment metadata, not a universal property of every tokenizer API. Do not assume the same methods or semantics for all slow tokenizers, normalizers, paired inputs or library versions. The course's speed comparison is workload-specific and is not generalized into a universal fast/slow speed claim.
+
+### Chapter 7 — Classical NLP tasks
+
+The chapter connects the preceding Datasets, Tokenizers, Trainer/Accelerate and Hub chapters through concrete task recipes: token classification, masked language modeling, translation, summarization, causal language modeling and question answering. Its causal-LM lesson demonstrates a from-scratch code-completion model using a filtered/streamed CodeParrot corpus and a previously trained tokenizer, then a Trainer/Accelerate workflow.
+
+**What LLM Lab already covers:** causal next-token prediction, GPT architecture, shifted targets, loss, training loop, data preparation and evaluation foundations. It is not trying to be a broad catalogue of NLP application recipes or to reproduce a task-specific BERT/translation/summarization training cookbook.
+
+**Disposition:** link the CodeParrot lesson as an optional applied case study from the bilingual training-loop pages. It is a useful example of how a domain-specific corpus, tokenizer, streaming and causal objective fit together, but not a replacement for LLM Lab's minimal GPT Build path. The other task recipes remain reference-only: they are useful transfer examples but do not justify adding several new task-specific curriculum pages at this stage.
+
+**Limitations:** the course's code-generation corpus and filtering heuristics are illustrative, not a general data-quality standard. A source repository dump does not automatically imply a representative, licensed, deduplicated or contamination-free training corpus. No CodeParrot code or benchmark was executed or reproduced in this audit.
+
+### Chapter 8 — How to ask for help
+
+The chapter teaches transferable open-source engineering practices: read the full traceback, write a descriptive title, include environment/version details and a minimal reproducible example, format code, and avoid asking others to infer missing context. Its training-debugging lesson decomposes a high-level Trainer.train() failure into inspectable stages: dataset records, preprocessing/tokenization, dataloader/batching, model inputs/forward pass, gradients/optimizer, then evaluation/metrics. It also shows that a run can complete while producing a poor model, so debugging must include qualitative/quantitative output checks rather than only runtime errors.
+
+**What LLM Lab already covers:** executable examples, tests, assertions, explicit expected evidence, validation and reproducibility practices are already embedded in the Build path and experiment pages. The course adds a useful checklist for diagnosing failures hidden behind high-level training abstractions.
+
+**Disposition:** link the debugging-pipeline lesson from the bilingual training-loop pages. Do not create a separate learner stage: debugging is a cross-cutting scientific and engineering practice. The broader advice on issue writing can inform future contributor templates, but no repository-wide template change is made in this increment.
+
+### Chapter 9 — Building and sharing demos
+
+The chapter introduces Gradio's high-level Interface for simple input/output applications and the lower-level Blocks API for custom layout, event-driven functions, stateful or multi-step data flow and conditional UI behavior. It frames demos as communication and testing surfaces: they can help non-specialists inspect model behavior, reproduce examples, surface failure modes and discover potential biases. It also connects demos to Hub Spaces and sharing.
+
+**What LLM Lab already covers:** the project has interactive conceptual visualizations and a small GPT reference implementation, but its Build path explicitly distinguishes working inference mechanics from the still-incomplete end-to-end data/training/evaluation pipeline. A public-facing demo could falsely suggest a trained or production-ready model where none exists.
+
+**Disposition:** defer a direct Gradio integration. No Gradio app or Space is added, and no mandatory route milestone is proposed. Revisit once there is a clearly scoped, trained artifact or a deliberately pedagogical toy app, with visible model status, limitations, reproducibility information and user-input safeguards. The official course is kept as an optional reference in this review.
+
+### Cross-chapter synthesis and decisions
+
+| Chapter | Actual incremental value for LLM Lab | Decision |
+|---|---|---|
+| 6 — Tokenizers | Offsets, word/token alignment and overflow-to-source mapping | Integrate bilingual explanation; keep library APIs optional |
+| 7 — NLP tasks | End-to-end CodeParrot causal-LM case study; task transfer examples | Link CodeParrot from training-loop; no new task catalogue |
+| 8 — Help/debugging | Stage-by-stage diagnosis of hidden pipeline failures and better reproductions | Link debugging workflow; no new route stage |
+| 9 — Demos | Interface/Blocks/Spaces patterns and demos as inspection surfaces | Defer until LLM Lab has an artifact whose status can be represented honestly |
+
+No chapter order is imported into the canonical learning route. No source code, figures or prose from the course are copied. Hugging Face API claims remain version-sensitive and links are references, not executed implementation guidance.
+
+### Updated remaining scope
+
+Chapters 2–9 now have selected lesson-body review; Chapters 10–12 have deep lesson-text review. Chapters 0–1 were inspected at overview/introduction level. Remaining work, if a deeper audit is warranted, is to inspect selected Chapters 2–5 implementation details and notebooks, compare the French and English course variants systematically, pin an upstream revision, and execute any API example before turning it into maintained project code.
+
+
+## Follow-up review — implementation depth in Chapters 2–5 (2026-11-17)
+
+### Scope
+
+This pass deepens the earlier selected review of Chapters 2–5 by inspecting the current lesson bodies for batching/padding, Trainer evaluation, learning curves, model cards, Datasets transformations, memory mapping, streaming, dataset creation and FAISS semantic search. It is still a bounded documentation audit: no upstream revision was pinned; no course notebook or training job was executed; no dataset, embedding model or index was benchmarked. The public course is living documentation and some code/API examples may change.
+
+### Chapter 2 — Transformers in practice
+
+The chapter's pipeline walkthrough makes explicit the hand-off from raw text to tokenizer IDs and model tensors, then from logits to task-specific post-processing. Its multiple-sequence lesson demonstrates padding to a batch rectangle, attention masks for PAD positions and truncation for model length limits. These are useful operational details, but LLM Lab already covers tokenization, attention, text-to-token flow, autoregressive inference, context budgets and the distinctions between inference computation and token selection.
+
+**Decision:** no new chapter or duplicate pipeline diagram. The missing practical batching detail is handled once in the training-example page below, where variable-length sequences meet the batch. The chapter's optimized-inference deployment overview remains an optional library/serving reference; LLM Lab's inference page focuses on the underlying mechanics and serving concepts, not a Transformers deployment tutorial.
+
+**Caveat:** padding, truncation, attention masks and loss masks are different decisions. An attention mask that hides PAD inputs does not, by itself, prove that PAD targets are excluded from the loss. The correct policy depends on the model, objective and collator.
+
+### Chapter 3 — Fine-tuning and training loop
+
+The chapter's data-processing lesson demonstrates batched Dataset.map tokenization and dynamic padding with DataCollatorWithPadding; the Trainer lesson shows that successful train() calls do not imply useful evaluation, which requires a held-out eval_dataset, an evaluation schedule and a compute_metrics function when task metrics are wanted. The custom loop introduces AdamW, learning-rate scheduling and Accelerate's prepare()/backward() path for distributed/device handling. The learning-curves lesson contrasts train and validation loss/accuracy, overfitting and underfitting, and suggests early stopping and tracking tools.
+
+**What is already covered:** LLM Lab explains the mathematical training step, gradient/optimizer separation, train/validation/test roles, overfitting, and a tested tiny example. It intentionally does not implement a full Transformer Trainer stack or distributed training.
+
+**Decision:** keep the current training-loop explanation conceptual and link the official Trainer and custom-loop examples as optional implementation routes. The dynamic-padding detail belongs with construction of batches and training examples, not in the mathematical training-step page. No default optimizer, learning-rate schedule or precision mode is prescribed: those choices are task-, model-, hardware- and version-dependent.
+
+**Evaluation qualification:** loss and accuracy are not interchangeable. Accuracy can be stepwise and task-specific; lower training loss alone is not evidence of generalization. Use a validation protocol aligned with the intended deployment claim, retain a final test set for final reporting, and inspect error categories and data leakage as well as scalar curves. Early stopping is a model-selection decision on validation data, not a guarantee against overfitting.
+
+### Chapter 4 — Hub and model cards
+
+The course presents the Hub as a versioned Git-backed artifact-sharing platform and treats the model card as a central description of architecture/version, author and attribution, intended uses, limitations/bias, training data/procedure and evaluation results. LLM Lab already has a provenance-oriented Build path and now links to the model-card lesson.
+
+**Decision:** no duplicate model-card template in this increment. Keep the optional reference, and preserve the distinction between a repository's file history, internal experiment records, and the public model card. A model card documents claims and limitations; it does not independently verify them, establish rights, or guarantee reproducibility.
+
+### Chapter 5 — Datasets library
+
+The chapter covers loading local/remote datasets, transformations such as map, filter, shuffle, select, Pandas conversion, dataset creation and Hub publication, then scale strategies and a FAISS semantic-search example.
+
+**New distinctions integrated:**
+- Memory-mapped Arrow-backed datasets can access local cached files without loading the entire dataset into RAM; they still require storage and disk I/O.
+- Streaming yields examples as an IterableDataset without necessarily downloading the full corpus. It changes which operations are available and how order-dependent transforms work.
+- shuffle(buffer_size=...) on a stream is buffer-local, not a global random permutation. take() and skip() therefore depend on stream order and the shuffle protocol. A seed alone is not a complete leakage-safe split design.
+- Interleaving source streams changes the mixture distribution; sampling proportions should be explicit and justified.
+- Dataset cards document the shared artifact's purpose, source/data versions, methods, splits, fields, licensing/access information and known limitations, but do not replace internal provenance, rights review or leakage audits.
+
+**Decisions:** the bilingual corpus-preparation page now distinguishes memory mapping from streaming, explains buffer-based shuffle and source mixtures, and adds a dataset-card handoff checklist. This extends rather than duplicates the existing corpus curation, provenance and split-hygiene content.
+
+The course's FAISS example shows an end-to-end embedding retrieval workflow: create text embeddings, index vectors, retrieve nearest examples. LLM Lab already distinguishes retrieval, context supply and RAG, but does not prescribe a vector-search library. A short optional link is added to the bilingual RAG page, with a warning that vector similarity is not a guarantee of relevance and that retrieval and generation must be evaluated separately.
+
+**Caveats:** memory mapping is not streaming; neither is a data-quality filter. Streaming shuffle is approximate within its buffer. The course's example uses a particular embedding checkpoint and CLS pooling; neither is universally optimal. The example's semantic retrieval result is not an independent benchmark or proof of answer faithfulness.
+
+### Concrete bilingual integrations in this pass
+
+1. training-examples.qmd: dynamic padding at batch time, collator responsibilities, and the distinct roles of padding, attention masks and loss masks; explicitly warns against reusing a classification collator blindly for causal LM.
+2. corpus-preparation.qmd: memory mapping vs streaming, bounded-buffer shuffle, order-dependent take/skip, source-mixture proportions, and dataset-card documentation.
+3. rag-memory-boundaries.qmd: optional FAISS semantic-search implementation reference, with retrieval-vs-generation evaluation caveat.
+
+No API example from these lessons has been promoted to maintained executable project code. No training, Hub upload, FAISS index build or large-corpus benchmark was run.
+
+### Revised remaining work
+
+The selected lesson-body review now covers Chapters 2–12 at varying depth; Chapters 0–1 remain overview/introduction-level. Remaining work is not to import the whole course, but to decide whether any implementation example merits a small, pinned, reproducible optional notebook; compare the French and English lesson versions on the newly added details; and pin a course revision before making stronger claims about current API stability. Any runnable example should be tested in an isolated environment with explicit dependency versions and a small, license-clear dataset.

@@ -90,6 +90,29 @@ Inter-annotator agreement is a diagnostic of the protocol, not automatic proof o
 
 ## 5. Handoff contract to the next stages
 
+### Scaling access: memory mapping or streaming?
+
+Corpus size requires separating **data access mode** from **data quality**. The two strategies presented by 🤗 Datasets are not interchangeable:
+
+- **Memory mapping / Apache Arrow:** a local dataset can be read and traversed from mapped files without loading all its columns into RAM. Local storage is still required, and disk access and caching still matter.
+- **Streaming:** an `IterableDataset` yields examples on demand without necessarily downloading the entire corpus. Some random-access operations are unavailable; transformations and splitting must respect iteration order.
+- **Mixing sources:** interleaving streams changes the observed distribution. Mixing probabilities or proportions should be explicit, versioned, and justified.
+
+A subtle point: `shuffle(buffer_size=N)` on a stream does not produce a global random permutation. It shuffles the elements in a bounded buffer and replenishes it as iteration proceeds. `take()` and `skip()` depend on that order. A fixed seed helps reproducibility, but does not replace a stable, verifiable, leakage-safe split protocol. Define train/validation/test units before turning the stream into training examples, and retain enough provenance to audit the partitions.
+
+**Takeaway:** memory mapping and streaming solve access and memory constraints; they do not filter data, check rights, deduplicate the corpus, or guarantee representativeness.
+
+See [Hugging Face — Big data, memory, and streaming](https://huggingface.co/learn/llm-course/en/chapter5/4), especially the distinction between mapped files and `IterableDataset`, buffer-based shuffling, and source interleaving.
+
+### Dataset cards: documenting the shared artifact
+
+An internal provenance register and a public *dataset card* have complementary roles. The latter helps users understand and reuse a published dataset. At minimum, it should describe the objective and intended uses, sources and versions, known licence or access conditions, collection and transformation methods, splits, fields, languages, filtering criteria, known limitations and biases, and privacy precautions.
+
+A dataset card does not prove that data may legally be reused and does not replace provenance logs, leakage checks, or risk analysis. It makes decisions and limitations visible; it does not validate them.
+
+The [Creating your own dataset](https://huggingface.co/learn/llm-course/en/chapter5/5) lesson connects corpus construction, Hub publication, and writing a dataset card.
+
+
 At the end of this stage, it should be possible to recover:
 
 - sources, licences/rights, dates, and collection rules;

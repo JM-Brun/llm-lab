@@ -120,6 +120,33 @@ Cette comparaison montre pourquoi le seul nom d'un algorithme comme BPE ne suffi
 
 Une distinction connexe est importante pour la couverture : un tokenizer fondé sur les caractères dont l'alphabet initial omet un caractère peut devoir recourir à un token inconnu. Un BPE au niveau des octets dont le vocabulaire de base contient les 256 valeurs d'octet peut, lui, représenter des octets d'entrée arbitraires. C'est une propriété de cette conception byte-level, pas une garantie de tout tokenizer appelé BPE.
 
+## 3 bis. Relier les tokens au texte d'origine : offsets et alignement
+
+Les tokens sont des unités internes au modèle ; une interface doit souvent retrouver le segment de texte qui leur correspond. Les *offsets* d'un tokenizer rapide associent chaque token à un intervalle de la chaîne source. Ils permettent notamment de reconstruire une entité nommée à partir de plusieurs sous-tokens, d'afficher une surbrillance ou de rattacher une prédiction à son contexte.
+
+Avec un tokenizer rapide compatible, l'API Transformers expose ces informations dans l'objet `BatchEncoding` :
+
+```python
+from transformers import AutoTokenizer
+
+tokenizer = AutoTokenizer.from_pretrained("bert-base-cased")
+text = "My name is Sylvain."
+encoding = tokenizer(text, return_offsets_mapping=True)
+
+for token, (start, end) in zip(
+    encoding.tokens(), encoding["offset_mapping"]
+):
+    print(token, repr(text[start:end]))
+```
+
+Les offsets sont des positions dans la chaîne d'origine, utilisables pour en extraire une tranche. Les tokens spéciaux peuvent avoir un intervalle nul, par exemple `(0, 0)`. Les méthodes `word_ids()`, `token_to_chars()` et `char_to_token()` exposent d'autres directions de cet alignement ; elles ne sont pas disponibles de la même manière pour tous les tokenizers lents.
+
+**Pourquoi c'est important :** en classification de tokens, une étiquette fournie au niveau du mot doit être alignée avec un ou plusieurs sous-tokens. En question-réponse extractive, les positions prédites doivent être reconverties en caractères du contexte. Lorsque le contexte dépasse la longueur maximale, le découpage en fenêtres avec chevauchement (*overflow* / *stride*) exige de suivre les offsets et l'identité de la fenêtre : une position locale dans une fenêtre n'est pas directement une position globale dans le document.
+
+Ne confondez pas offset et ID de token : l'ID indexe le vocabulaire ; l'offset pointe vers une tranche du texte d'entrée. Les transformations de normalisation et les conventions de l'implémentation doivent être prises en compte, en particulier pour les textes Unicode et les entrées par paires.
+
+Voir les leçons Hugging Face sur les [capacités des tokenizers rapides](https://huggingface.co/learn/llm-course/en/chapter6/3) et leur [usage dans le pipeline de question-réponse](https://huggingface.co/learn/llm-course/en/chapter6/3b). Les noms d'API et leur disponibilité doivent être vérifiés avec la version de Transformers utilisée.
+
 ## 4. BPE, WordPiece et unigramme
 
 | Famille | Idée centrale | Limite à retenir |
