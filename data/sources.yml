@@ -4715,7 +4715,7 @@ sources:
     reuse: {text: link-only, figures: link-only, code: link-only, data: link-only}
     classification:
       primary_theme: inference-efficiency
-      secondary_themes: [inference-efficiency]
+      secondary_themes: [scale-research]
       tags: [topic:information-retrieval, topic:benchmark, method:zero-shot-evaluation]
       concept_ids: [retrieval-augmented-generation]
     metadata:
