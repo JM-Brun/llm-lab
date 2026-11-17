@@ -5253,7 +5253,7 @@ sources:
       audit_records:
         - docs/source-reviews/hesam-sheikh-llm-study-roadmap-2026-11.md
         - data/extractions/hesam-sheikh-llm-study-roadmap-2024.yml
-- id: notion-intelligence-compression-summary
+  - id: notion-intelligence-compression-summary
     title: "Intelligence = Compression"
     creators: ["Notion page author not identified"]
     source_type: other
