@@ -4,7 +4,7 @@
 - Karthik Shashidhar, [LLMs and compression algorithms](https://artofdatascience.substack.com/p/llms-and-compression-algorithms), 27 août 2024.
 - Wayland Zhang, [Information Theory Is All You Need (to Understand LLMs)](https://waylandz.com/blog/information-theory-and-llm/), rewrite dated 17 février 2026.
 - Sourav Mukherjee, [Compression Is Intelligence: The Information Theory Behind LLMs](https://medium.com/bongquisitive-tech/compression-is-intelligence-the-information-theory-behind-llms-70022356dad8), 20 juillet 2026.
-- Lewis (lewish.io), [Intelligence and compression](https://lewish.io/posts/intelligence-and-compression), 28 mai 2025 (identité complète du créateur non vérifiée).
+- Lewis Hemens, [Intelligence and compression](https://lewish.io/posts/intelligence-and-compression), 28 mai 2025.
 
 ## 1. Conclusion exécutive
 
