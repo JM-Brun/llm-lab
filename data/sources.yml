@@ -5570,3 +5570,66 @@ sources:
         - docs/source-reviews/huang-zhang-shan-he-compression-intelligence-linearly-2024.md
         - data/extractions/huang-zhang-shan-he-compression-intelligence-linearly-2024.yml
         - docs/source-syntheses/compression-intelligence-and-inference-efficiency-2026-11.md
+
+  - id: andrej-karpathy-deep-dive-llms-chatgpt
+    title: "Deep Dive into LLMs like ChatGPT"
+    creators: ["Andrej Karpathy"]
+    source_type: video
+    identifiers: {youtube: "7xTGNNLPyMI"}
+    canonical_url: "https://www.youtube.com/watch?v=7xTGNNLPyMI"
+    publisher: "YouTube"
+    publication_date: "2025-02-05"
+    updated_date: null
+    language: en
+    version: "Public video, approximately 3 h 31 min"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [probabilistic-foundations-training, inference-efficiency, scale-research]
+      tags: [topic:large-language-models, topic:pretraining, topic:post-training, topic:inference, topic:hallucination, topic:reasoning, method:supervised-fine-tuning, method:reinforcement-learning, method:rlhf, modality:video]
+      concept_ids: [token, transformer, self-attention, autoregressive-generation, language-modeling, logits, softmax, cross-entropy, gradient-descent, pretraining, fine-tuning, in-context-learning, reinforcement-learning]
+    metadata:
+      technical_level: mixed
+      contribution_types: [theory, architecture, implementation, pedagogy, historical-context]
+      audiences: [beginner, learner, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "YouTube metadata, description and all 24 public chapter markers"
+          - "Timestamped transcript made available through third-party transcript indexes; broad coverage of the full 3 h 31 min recording"
+          - "Transcript excerpts covering the introduction and chapter-level explanations of pretraining, tokenization, Transformer computation, inference, post-training, hallucinations, context, reasoning and reinforcement learning"
+        limitations:
+          - "The audiovisual recording was not watched end-to-end in this ingestion pass; gestures, slides, live demonstrations, diagrams and visual details were not independently inspected."
+          - "Transcript text is third-party rendered and may contain recognition errors; exact wording and completeness against the audio are not guaranteed."
+          - "Linked papers, datasets, repositories and external tools were not exhaustively audited or reproduced."
+          - "No code, benchmark, training run or result from the video was independently reproduced."
+          - "The video description states educational-use terms; this record does not treat that statement as permission to redistribute the video, transcript, slides, figures or code."
+    related:
+      pages:
+        - fr/llm-overview
+        - en/llm-overview
+        - fr/text-data
+        - en/text-data
+        - fr/tokenization-strategies
+        - en/tokenization-strategies
+        - fr/transformer
+        - en/transformer
+        - fr/generation
+        - en/generation
+        - fr/llm-limits
+        - en/llm-limits
+        - fr/post-training
+        - en/post-training
+        - fr/in-context-learning
+        - en/in-context-learning
+        - fr/scaling-laws
+        - en/scaling-laws
+      concepts: [token, transformer, self-attention, autoregressive-generation, language-modeling, logits, softmax, cross-entropy, gradient-descent, pretraining, fine-tuning, in-context-learning, reinforcement-learning]
+      audit_records:
+        - docs/source-reviews/karpathy-deep-dive-llms-2026-11.md
+        - docs/source-reviews/karpathy-deep-dive-learning-graph-2026-11.md
