@@ -101,6 +101,7 @@ pedagogical_model:
     - "MDL, Kolmogorov complexity and Solomonoff induction are related but not interchangeable."
     - "The generalization argument is heuristic without a specified model class, prior, data-generating distribution and capacity assumptions."
     - "AIXI is an idealized theoretical construction and is not computationally tractable in general."
+    - "AIXI guarantees are relative to the chosen universal Turing machine; later analyses show sensitivity to the reference machine, so they are not representation-independent measures of intelligence."
     - "The FEP/active-inference section is explicitly a lay interpretation and does not establish that intelligence is fundamentally compression."
   comparison:
     dossier: "docs/source-syntheses/compression-intelligence-and-inference-efficiency-2026-11.md"
