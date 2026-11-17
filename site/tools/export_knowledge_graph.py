@@ -40,6 +40,7 @@ RELATION_TYPES = {
     "represented-by",
     "contributes-to",
     "mapped-by",
+    "approximates",
 }
 
 
