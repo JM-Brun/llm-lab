@@ -58,6 +58,8 @@ pedagogical_model:
     - {source_term: "AIXI(t,l)", concept_id: aixi-tl, relation: "resource-bounded computable construction; not exact AIXI"}
     - {source_term: "Solomonoff induction", concept_id: solomonoff-induction, relation: "universal algorithmic prediction"}
     - {source_term: "resource bounds", concept_id: resource-bounded-computation, relation: "explicit candidate-policy time and length constraints"}
+    - {source_term: "probability-based predictive coding", concept_id: predictive-compression, relation: "uses conditional probabilities to assign expected code lengths"}
+    - {source_term: "lossless text compression benchmark", concept_id: entropy-coding, relation: "turns probability assignments into a decodable code"}
     - {source_term: "information compression", concept_id: entropy, relation: "information-theoretic foundation; not synonymous"}
     - {source_term: "predicting likely continuations", concept_id: next-token-prediction, relation: "predictive coding connection"}
     - {source_term: "shortest program / Kolmogorov complexity", concept_id: kolmogorov-complexity, relation: "algorithmic information theory"}
