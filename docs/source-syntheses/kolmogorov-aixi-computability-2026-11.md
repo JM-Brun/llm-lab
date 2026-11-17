@@ -35,23 +35,23 @@ The Solomonoff universal mixture is lower semicomputable. These are different ap
 
 The resource parameters refer to the candidate policies/programs:
 
-- (t): maximum computation time per interaction cycle for a candidate;
-- (l): maximum candidate program length;
-- (l_P): in the later proof-validated construction, maximum proof length for a certificate that a candidate's value estimate is a valid lower approximation.
+- $t$: maximum computation time per interaction cycle for a candidate;
+- $l$: maximum candidate program length;
+- $l_P$: in the later proof-validated construction, maximum proof length for a certificate that a candidate's value estimate is a valid lower approximation.
 
 The detailed per-cycle complexity is
 
-$
+$$
 O(t\,2^l).
-$
+$$
 
 The later proof-validation setup has a separate bound
 
-$
+$$
 O(l_P^2\,2^{l_P}).
-$
+$$
 
-This is computable in principle, but the exponential dependence on (l), together with proof machinery and large hidden constants, makes the construction impractical for substantial bounds. The guarantee is relative to a restricted candidate class and the validity/proof assumptions; it is not global optimality over all possible agents.
+This is computable in principle, but the exponential dependence on $l$, together with proof machinery and large hidden constants, makes the construction impractical for substantial bounds. The guarantee is relative to a restricted candidate class and the validity/proof assumptions; it is not global optimality over all possible agents.
 
 ## 5. Consequence for interpreting LLMs
 
