@@ -260,7 +260,7 @@ redirect mechanism is added.
 3. Badge on `generation`: restore in compact form or keep the exception (C1).
 4. "Concept vérifié" chips: explain, extend or remove (C5).
 5. Sidebar group names: align with stage titles or keep distinct (E1).
-6. `generation`: restructure in place or split (E2).
+6. `generation`: **resolved 2026-11-17 — keep one canonical page; no split or new `generation-overview` page**, per `docs/superpowers/specs/2026-11-10-understand-path-readability-design.md`.
 
 ## 5. Suggested batches for the repair session
 
@@ -315,3 +315,25 @@ French core pages in route order. `x` present, `.` absent.
 
 Word counts exclude code blocks and inline figures, and include markup words; treat them as
 relative sizes.
+
+
+## 8. Reconciliation with the learner simulation — 2026-11-17
+
+A later simulated walkthrough of the 17-page Understand route (recorded during the audit in [#1157](https://github.com/JM-Brun/llm-lab/pull/1157)) produced findings F-L1–F-L7. This was a **source-level simulation**, not a session with an independent learner. The findings were checked against the current `main`, existing issues and the canonical design decisions. They do not all imply new content.
+
+| Finding | Reconciliation against current `main` | Disposition |
+|---|---|---|
+| **F-L1 — generation is dense on its first visit** | The page already provides a visible “First reading / Première lecture” cue: follow the autoregressive loop first, and return to notation, prefill/decode and selection after the probability lesson. The same canonical page is revisited at different points in the route. The approved readability specification explicitly excludes a split or a new page. | Keep one canonical `generation` page. Do not create `generation-overview`. Any further change requires concrete evidence of a remaining reading problem, not the concept count alone. |
+| **F-L2 — no final synthesis page** | A synthesis-sheet design and pilot are already owned by [#1109](https://github.com/JM-Brun/llm-lab/issues/1109); the learning map and overview have separate orientation roles. | Do not create a competing end-of-route page here. Coordinate any synthesis requirement with #1109. |
+| **F-L3 — no concrete tokenizer output in `text-data`** | A reproducible technical trace already exists in the bilingual Practice collection: `hello world`, `tiktoken==0.14.0`, GPT-2 encoding, real IDs `[31373, 995]`, then lookup with explicitly synthetic embedding and position values. It is deliberately separate from the French/English running example. | Link to the existing trace rather than duplicating it or inventing IDs for the running example. The targeted link and stable bilingual anchor are proposed in [PR #1167](https://github.com/JM-Brun/llm-lab/pull/1167). |
+| **F-L4 — no numerical attention example in the lesson body** | Q/K/V and scaled-dot-product attention pages link to the existing AT-A/AT-B/AT-C practice collection; causal masking links to CA-A. The numerical work is intentionally owned by Practice. | No duplicate numerical example or exercise. Keep the contextual links and use [#329](https://github.com/JM-Brun/llm-lab/issues/329) for the remaining manual exercise-hub review. |
+| **F-L5 — English examples in the French contextualization lesson** | Addressed by merged [PR #1163](https://github.com/JM-Brun/llm-lab/pull/1163): the French page and SVG now use the lexical ambiguity of *situation* and the “moi / je” coreference example, consistent with the canonical French running example. | Resolved on `main`. The separate *avocat* alternative in PR #1166 was closed without merge as superseded. |
+| **F-L6 — no glossary entry point from early pages** | The overview already links to the bilingual glossary following [PR #997](https://github.com/JM-Brun/llm-lab/pull/997). | The original blanket claim is outdated. Do not add repetitive glossary links to every page unless a specific learner friction remains. |
+| **F-L7 — no figures for logits and loss** | The logits page already contains an original figure explaining invariance of softmax to a common shift. The loss page has no equivalent figure, but absence alone is not evidence of a teaching defect. | No figure is added by default. Reconsider only if #1109 or learner evidence identifies a specific visual explanation gap. |
+
+### Evidence boundary
+
+- The simulation is useful for finding source-level friction and checking route continuity; it is not an empirical learner study.
+- A source link to the tokenizer trace is not evidence that the running French/English prompt has been tokenized. Only publish a trace for a particular prompt when the tokenizer/version and exact output have been executed and recorded.
+- Existing exercises, glossary, diagrams and synthesis work are reused by reference. No parallel page, exercise series, glossary, or figure catalogue is created.
+- The earlier split proposal and its hypothetical “zero content deletion” checklist are not adopted specifications and must not be cited as proof that the source diff in #1157 preserves content.
