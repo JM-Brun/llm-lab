@@ -36,7 +36,7 @@ Il ne rédige pas sa réponse d'un seul bloc. Il estime, pour chaque suite possi
 ::: {.callout-note title="Fil rouge : le scribe"}
 **Le préfixe** est la question de Panoramix : « C'est une bonne situation, ça, scribe ? » C'est le texte fourni au modèle. **La continuation** est ce qui vient ensuite. Dans le film, Otis commence par « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... ».
 
-La réplique du film sert d'accroche. Pour les calculs, le parcours utilise une continuation originale, écrite pour LLM Lab : « Être scribe, c'est relier des histoires. » Otis est un personnage, l'assistant une application, et le LLM le modèle que cette application interroge : seul ce dernier est étudié ici.
+Le fil rouge utilise la tirade d'Otis comme continuation du préfixe de Panoramix. Les valeurs numériques des tableaux sont fictives et servent uniquement à refaire les calculs à la main. Otis est un personnage, l'assistant une application, et le LLM le modèle que cette application interroge : seul ce dernier est étudié ici.
 :::
 
 ::: {.callout-tip title="L'idée à retenir en une minute"}
@@ -55,14 +55,14 @@ Donnons au modèle le préfixe « C'est une bonne situation, ça, scribe ? ». I
 
 | Prochain token possible | Probabilité |
 |---|---|
-| « Être » | 0,6 |
-| « Vous » | 0,2 |
+| « Vous » | 0,6 |
+| « Je » | 0,2 |
 | « Oui » | 0,1 |
 | « Non » | 0,1 |
 
 Ces valeurs sont fictives : elles ne proviennent pas d'un modèle entraîné, et un vocabulaire réel compte des dizaines de milliers d'entrées, pas quatre. Dans cet exemple simplifié, chaque ligne représente un token unique ; les formes affichées ne garantissent pas qu'un tokenizer réel les traiterait chacune comme un seul token. Le parcours réutilise ces valeurs d'une page à l'autre pour que chaque calcul puisse être refait à la main.
 
-Ce tableau est une **distribution conditionnelle** : elle dépend du contexte. Les quatre probabilités se partagent un total de 1 (soit 100 %). Ajoutez « Être » à la suite de la question et recalculez : les candidats ne sont plus les mêmes, et « scribe » passe en tête.
+Ce tableau est une **distribution conditionnelle** : elle dépend du contexte. Les quatre probabilités se partagent un total de 1 (soit 100 %). Ajoutez « Vous » à la suite de la question et recalculez : les candidats ne sont plus les mêmes.
 
 Trois termes suffisent pour lire la suite du parcours.
 
@@ -72,18 +72,18 @@ Trois termes suffisent pour lire la suite du parcours.
 
 Le modèle prédit un token à la fois. La probabilité d'une phrase entière s'obtient en multipliant les probabilités de ses tokens successifs, chacune étant conditionnée par ce qui précède ; la [formalisation mathématique du langage](language-modeling-math.qmd) établit ce résultat.
 
-Une suite probable n'est pas une suite vraie. Que « Être » soit probable après la question ne dit rien de la situation réelle d'un scribe, et bien prédire n'établit pas une compréhension humaine du monde. [Objectif d'entraînement : garanties et limites](llm-limits.qmd) précise ce que la prédiction du prochain token garantit et ce qu'il faut mesurer séparément.
+Une suite probable n'est pas une suite vraie. Que « Vous » soit probable après la question ne dit rien de la situation réelle d'un scribe, et bien prédire n'établit pas une compréhension humaine du monde. [Objectif d'entraînement : garanties et limites](llm-limits.qmd) précise ce que la prédiction du prochain token garantit et ce qu'il faut mesurer séparément.
 
 ## Du texte à la distribution
 
-![Le processus autorégressif de génération : le contexte est préparé et tokenisé, traité par un modèle à paramètres fixes, puis enrichi du token sélectionné.](../images/llm-generation-process-fr.svg){#fig-gpt-generation-process fig-alt="Le préfixe « C'est une bonne situation, ça, scribe ? » est tokenisé, traité par un modèle à paramètres fixes, puis converti en distribution : Être 0,6, Vous 0,2, Oui 0,1, Non 0,1, affichés en pourcentages. Une règle de décodage sélectionne « Être », qui est ajouté au contexte. Les probabilités sont fictives."}
+![Le processus autorégressif de génération : le contexte est préparé et tokenisé, traité par un modèle à paramètres fixes, puis enrichi du token sélectionné.](../images/llm-generation-process-fr.svg){#fig-gpt-generation-process fig-alt="Le préfixe « C'est une bonne situation, ça, scribe ? » est tokenisé, traité par un modèle à paramètres fixes, puis converti en distribution : Vous 0,6, Je 0,2, Moi 0,1, Oui 0,1, affichés en pourcentages. Une règle de décodage sélectionne « Être », qui est ajouté au contexte. Les probabilités sont fictives."}
 
 La figure se lit de gauche à droite.
 
 1. **Le texte devient une suite de tokens**, puis une suite de nombres.
 2. **Le réseau transforme ces nombres**, à paramètres fixes, en un score par token du vocabulaire. Ces scores sont les **logits**.
 3. **La fonction softmax convertit les logits en probabilités** : c'est la distribution du tableau ci-dessus.
-4. **Une règle de décodage choisit un token**, ici « Être ». Il rejoint le contexte et le calcul recommence.
+4. **Une règle de décodage choisit un token**, ici « Vous ». Il rejoint le contexte et le calcul recommence.
 
 Les étapes 1 à 3 forment le calcul du modèle ; le parcours les ouvre une à une, de [l'entrée](text-data.qmd) au [réseau](transformer.qmd) puis à la [distribution](probabilites.qmd). L'étape 4 n'appartient pas au réseau : c'est une décision prise à partir de sa sortie. La page suivante, [Générer du texte](generation.qmd), suit cette boucle sur notre exemple.
 
@@ -97,7 +97,7 @@ Une fois la distribution calculée, tout dépend de la question posée. **Pour u
 ![Du contexte aux trois usages de la distribution prédictive : génération, scoring et apprentissage, présentés verticalement pour faciliter la lecture sur petit écran.](../images/llm-shared-prediction-uses-fr-mobile.svg){.d-md-none fig-alt="Version mobile du schéma : le contexte traverse le modèle, produit des logits puis des probabilités. Trois blocs présentent ensuite la génération, le scoring et l’apprentissage."}
 
 - **Générer.** On ne connaît pas la suite. Une règle choisit un token dans la distribution, l'ajoute au contexte, et le calcul recommence. Le traitement initial du prompt s'appelle le *prefill* ; la production des tokens un par un, le *decode*.
-- **Scorer.** On connaît la suite : notre continuation commence par « Être ». On lit la probabilité que le modèle lui donnait, 0,6. Répétée sur chaque token d'un texte, cette lecture mesure à quel point le modèle s'attendait à ce texte ; c'est la [vraisemblance](vraisemblance.qmd).
+- **Scorer.** On connaît la suite : la tirade d'Otis commence par « Vous ». On lit la probabilité illustrative que le modèle lui donnerait, 0,6. Répétée sur chaque token d'un texte, cette lecture mesure à quel point le modèle s'attendait à ce texte ; c'est la [vraisemblance](vraisemblance.qmd).
 - **Apprendre.** On connaît aussi la suite, et l'on veut que le modèle s'y attende davantage la prochaine fois. L'écart entre la prédiction et le token attendu est résumé par un nombre, la [perte](loss.qmd) (*loss*) ; les [gradients](gradients.qmd) indiquent comment modifier chaque paramètre pour la réduire. Pendant cet apprentissage, le contexte est toujours construit avec les tokens réels du texte, jamais avec ceux que le modèle aurait produits : c'est le *teacher forcing*, détaillé dans les [exemples d'entraînement](training-examples.qmd).
 
 Dans notre exemple, attribuer 0,6 au token observé correspond à un **surprisal** de $-\ln(0,6)\approx0,51$ nat : moins un token est probable, plus il est surprenant. L'[entropie](entropy.qmd) est le surprisal moyen, pondéré par leurs probabilités, sur tous les tokens possibles ; additionner les surprisals des tokens observés relie cette idée à la [vraisemblance](vraisemblance.qmd).
