@@ -13,6 +13,7 @@ Suivre la [méthode de synthèse des sources](../source-synthesis-method.md). Co
 - [Deux sens de la compression appliqués aux LLM](compression-two-meanings-2026-11.md) — comparaison de la compression prédictive/statistique et de la compression du modèle, avec métriques distinctes et protocole expérimental commun.
 - [Cross-entropy, compression et distillation](cross-entropy-compression-distillation-2026-11.md) — coût d'un code mal adapté, entraînement des LLM, justification de la log-loss, distillation et divergence KL.
 - [Théorie de l'information et LLM](information-theory-and-llms-2026-11.md) — entropie, cross-entropy, attention/MI, Landauer, compression et V-information.
+- [Compression, information et efficacité de l'inférence](compression-intelligence-and-inference-efficiency-2026-11.md) — MDL en deux parties, prédiction séquentielle, coût de mise à jour du modèle et cadres agentifs (AIXI/active inference), avec expérience contrôlée forward/reverse.
 
 ## Structure suggérée
 
