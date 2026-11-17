@@ -23,7 +23,7 @@
 <text x="246" y="361" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" fill="#475569">extrait de la tirade d'Otis</text>
 <rect x="504" y="292" width="420" height="82" rx="12" fill="#fff" stroke="#b45309" stroke-width="2"/>
 <text x="714" y="318" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#92400e">Bloc(s) Transformer — occurrence B</text>
-<text x="714" y="342" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#334155">embedding d’avocat + contexte accessible</text>
+<text x="714" y="342" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#334155">embedding de situation + contexte accessible</text>
 <text x="714" y="361" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" fill="#475569">paraphrase pédagogique, pas une citation</text>
 <path d="M246 374 L246 407 M714 374 L714 407" fill="none" stroke="#64748b" stroke-width="2.3" marker-end="url(#arrow)"/>
 <rect x="36" y="407" width="420" height="58" rx="12" fill="#ccfbf1" stroke="#2dd4bf" stroke-width="2"/>
