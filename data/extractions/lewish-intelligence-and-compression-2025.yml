@@ -1,0 +1,161 @@
+schema_version: 1
+source_id: lewish-intelligence-and-compression-2025
+scan:
+  accessed_at: "2026-11-17"
+  retrieval_method: canonical-html
+  author_text:
+    status: complete
+    coverage: "Full article text and visible footnotes across nine sections retrieved from the canonical page."
+    notes:
+      - "The article's displayed publication date is 2025-05-28."
+      - "The page identifies the site/byline as lewish; a fuller author identity was not independently verified."
+  figures_media:
+    status: not-inspected
+    coverage: null
+    notes:
+      - "Image/figure placements are visible in the HTML, but their actual bytes have not been retrieved or visually inspected."
+      - "No figure reuse rights established."
+  code_data:
+    status: not-inspected
+    coverage: null
+    notes:
+      - "No linked implementation, benchmark script or enwik8 reproduction was inspected or executed."
+  comments:
+    status: not-inspected
+    coverage: null
+    notes: ["Comments/community responses were not inspected."]
+  linked_resources:
+    status: partial
+    coverage: "Visible citations and footnotes identified, including MDL, AIXI, Chollet, Solomonoff, Friston, Hutter Prize and coding references."
+    notes:
+      - "Primary references have not all been independently audited in this ingestion pass."
+      - "The forward/reverse benchmark configuration and compressor versions remain unverified."
+  metadata:
+    status: partial
+    coverage: "Title, canonical URL, displayed date and publisher/site identity."
+    notes: ["Full creator identity and revision history remain unverified."]
+  rights:
+    status: unknown
+    coverage: null
+    notes: ["Text and figures remain link-only; no licence or permission established."]
+  unresolved_questions:
+    - "What exact compressor versions, options, preprocessing and data checksum produced the reported enwik8 forward/reverse sizes?"
+    - "Does the reported forward-order advantage persist across datasets, compressors, model classes and controlled causal versus non-causal sources?"
+    - "How should model update/adaptation cost be included in a sequential MDL account?"
+    - "Which formulations of the Free Energy Principle and active inference are intended, and which claims are formal versus interpretive?"
+pedagogical_model:
+  reconstruction:
+    status: complete
+    basis: ["Canonical article body and visible footnotes retrieved directly."]
+    inferred_elements: ["Learning outcomes, prerequisites, and mappings to LLM Lab are reviewer-inferred."]
+  source_graph:
+    nodes:
+      - {id: src-musical-chunking, kind: analogy, description: "Expertise allows a listener to group note sequences into learned musical structures using prior knowledge.", locator: "A musical analogy", inferred: false}
+      - {id: src-conditional-data-cost, kind: quantity, description: "New observations can be encoded conditionally on an existing model or prior knowledge.", locator: "The two parts to compression", inferred: false}
+      - {id: src-model-description-cost, kind: quantity, description: "The model or prior knowledge also has a description cost.", locator: "The two parts to compression; Compressing the model", inferred: false}
+      - {id: src-predictive-coding, kind: mechanism, description: "A sequential predictor supplies probabilities that can be converted into variable-length codes.", locator: "Prediction leads to compression", inferred: false}
+      - {id: src-causal-order, kind: mechanism, description: "For temporally generated data, past observations constrain predictions of future observations.", locator: "Causally dependent environments and time ordering", inferred: false}
+      - {id: src-forward-reverse-results, kind: empirical-claim, description: "The article reports better forward than reversed enwik8 compression for gzip, ppmd and zpaq.", locator: "Good compressors will leverage causal dependencies", inferred: false}
+      - {id: src-mdl-tradeoff, kind: principle, description: "Model description length plus residual data description length balances fit and model complexity.", locator: "Compressing the model", inferred: false}
+      - {id: src-model-adaptation, kind: mechanism, description: "An agent must update its model as its environment and experience change.", locator: "Updating the model", inferred: false}
+      - {id: src-aixi, kind: framework, description: "AIXI combines universal Bayesian prediction over computable environments with reward-oriented action selection.", locator: "The AIXI formulation of universal intelligence", inferred: false}
+      - {id: src-active-inference, kind: framework, description: "Active inference is presented as reducing expected surprise through both model updates and actions.", locator: "The Free Energy Principle and active inference", inferred: false}
+      - {id: src-compression-intelligence-thesis, kind: claim, description: "The author proposes compression as a unifying lens on intelligence.", locator: "Conclusion", inferred: false}
+    edges:
+      - {from: src-predictive-coding, type: reduces-conditional-code-length, to: src-conditional-data-cost, inferred: true}
+      - {from: src-model-description-cost, type: traded-off-against, to: src-conditional-data-cost, inferred: true}
+      - {from: src-causal-order, type: motivates, to: src-predictive-coding, inferred: true}
+      - {from: src-mdl-tradeoff, type: formalizes, to: src-model-description-cost, inferred: true}
+      - {from: src-model-adaptation, type: extends, to: src-mdl-tradeoff, inferred: true}
+      - {from: src-aixi, type: combines-modeling-with, to: src-active-inference, inferred: true}
+      - {from: src-compression-intelligence-thesis, type: interpreted-through, to: src-mdl-tradeoff, inferred: true}
+    interpretation: "The graph reconstructs the author's argument; edges marked inferred are editorial relations, not claims that the author supplied a formal graph."
+  learning_outcomes:
+    - {status: inferred, outcome: "Explain why a predictor can be converted into a probabilistic code and why model/data costs must be counted together.", basis: "Sections 2, 3 and 6."}
+    - {status: inferred, outcome: "Distinguish batch compression from causal, online prediction on sequentially generated data.", basis: "Sections 4 and 5."}
+    - {status: inferred, outcome: "State the MDL fit-complexity trade-off without equating short models with truth.", basis: "Section 6 and footnote [3]."}
+    - {status: inferred, outcome: "Compare static model quality with the efficiency of updating or acquiring skills.", basis: "Section 7 and Chollet quotation."}
+    - {status: inferred, outcome: "Contrast AIXI's reward-oriented universal model with active-inference accounts of perception and action.", basis: "Sections 8 and 9."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Conditional probability, logarithms, entropy and cross-entropy.", basis: "Sections 2 and 3."}
+    - {status: inferred, topic: "Sequential prediction and causal dependence.", basis: "Sections 4 and 5."}
+    - {status: inferred, topic: "Model complexity, generalization and Bayesian reasoning.", basis: "Sections 6 to 8."}
+  teaching_route:
+    - {order: 1, section: "A musical analogy", function: motivate-prior-knowledge, moves: ["Contrast novice note-by-note perception with expert chunking.", "Introduce prior knowledge as a source of compression."]}
+    - {order: 2, section: "The two parts to compression", function: establish-objective, moves: ["Separate conditional data cost from model description cost.", "Motivate total description length."]}
+    - {order: 3, section: "Prediction leads to compression", function: formalize-coding, moves: ["Connect predictive probabilities to variable-length coding.", "Mention prefix codes, Huffman and arithmetic coding."]}
+    - {order: 4, section: "Causally dependent environments and time ordering", function: introduce-online-constraint, moves: ["Distinguish past-to-future prediction from acausal batch fitting.", "Use chess as a counterexample to order-free compression."]}
+    - {order: 5, section: "Good compressors will leverage causal dependencies", function: empirical-motivation, moves: ["Present forward/reverse enwik8 results.", "Qualify the limited evidence and protocol."]}
+    - {order: 6, section: "Compressing the model", function: introduce-mdl, moves: ["Penalize memorization by counting model cost.", "Connect model complexity to generalization with assumptions."]}
+    - {order: 7, section: "Updating the model", function: extend-to-learning, moves: ["Introduce adaptation cost and skill acquisition efficiency.", "Connect to Chollet's operational definition."]}
+    - {order: 8, section: "The AIXI formulation of universal intelligence", function: connect-model-and-action, moves: ["Add reward maximization to universal prediction.", "State computational intractability."]}
+    - {order: 9, section: "The Free Energy Principle and active inference", function: alternative-agent-framework, moves: ["Contrast perceptual inference with action.", "Qualify the proposed unification with compression."]}
+  pedagogical_strengths:
+    - "The musical-expertise analogy makes prior knowledge and chunking intuitive."
+    - "The two-part compression framing provides a clean bridge to MDL."
+    - "The article moves beyond static compression to sequential prediction, adaptation and action."
+    - "AIXI and active inference offer contrasting agent-level perspectives."
+  pedagogical_limits:
+    - "The variable-length code illustration is pedagogical, not an efficient practical code; model side-information and decoder costs matter."
+    - "The forward/reverse benchmark lacks enough protocol detail in the article to support independent reproduction."
+    - "MDL, Kolmogorov complexity and Solomonoff induction are related but not interchangeable."
+    - "The generalization argument is heuristic without a specified model class, prior, data-generating distribution and capacity assumptions."
+    - "AIXI is an idealized theoretical construction and is not computationally tractable in general."
+    - "The FEP/active-inference section is explicitly a lay interpretation and does not establish that intelligence is fundamentally compression."
+  comparison:
+    dossier: "docs/source-syntheses/compression-intelligence-and-inference-efficiency-2026-11.md"
+    canonical_graph: "data/concepts.yml"
+    canonical_routes: ["data/guided-route.yml", "docs/learning-path.md"]
+    decision: "Integrate the model-plus-data MDL framing and agent-level comparison into the existing source synthesis; reuse canonical entropy and predictive-compression concepts. Do not add a mandatory lesson or duplicate concept IDs."
+    structures_kept_separate: ["source-semantic-graph", "source-pedagogical-route", "canonical-concept-graph", "canonical-learning-routes"]
+items:
+  - id: lewish-intelligence-and-compression-2025:two-part-description-length
+    kind: definition
+    summary: "A useful compression objective counts both the code length of observations given a model and the description length of the model itself."
+    locator: {type: section, value: "The two parts to compression"}
+    evidence: {kind: source-explanation, confidence: well-supported, scope: "Two-part MDL description for a specified model and coding scheme.", assumptions: ["The model is encoded or otherwise its description cost is charged.", "The data code is valid under the model."], limitations: ["The exact MDL formulation depends on the model class and coding convention.", "Computational cost and adaptation cost are not automatically included."]}
+    pedagogical_assessment: {novelty: {level: moderate, rationale: "The two-cost framing is a useful bridge into MDL and is not the central structure of the existing LLM compression pages."}, complementarity: {level: high, rationale: "It connects predictive coding to model selection and prevents free-model assumptions."}, pedagogical_value: {level: high, rationale: "Makes the model/data trade-off concrete."}, applicability: {level: high, rationale: "Best added as a bounded perspective in the existing compression synthesis."}, redundancy: {level: moderate, rationale: "MDL exists in the broader learning theory, but the paired costs are a distinct teaching bridge."}, evidence_quality: {level: high, rationale: "Standard two-part description-length formulation."}}
+    classification: {primary_theme: probabilistic-foundations-training, tags: [topic:minimum-description-length], concept_ids: [predictive-compression, generalization]}
+    candidate_destinations: {pages: [], concepts: [predictive-compression, generalization]}
+    disposition: integrate
+    disposition_rationale: "Add to the living comparative synthesis; do not create a new mandatory lesson."
+  - id: lewish-intelligence-and-compression-2025:musical-chunking
+    kind: analogy
+    summary: "An expert musician recognizes learned scales, chords and progressions as chunks rather than treating every note as an independent event."
+    locator: {type: section, value: "A musical analogy"}
+    evidence: {kind: source-analogy, confidence: context-dependent, scope: "Illustration of expertise and prior knowledge in pattern recognition.", assumptions: ["Musical expertise supplies reusable schemas.", "The score contains recognizable structure."], limitations: ["An analogy, not a quantitative measurement of human memory or intelligence.", "Expertise is domain-specific and can encode mistaken expectations."]}
+    pedagogical_assessment: {novelty: {level: moderate, rationale: "Adds a concrete perceptual chunking example to the existing compression analogies."}, complementarity: {level: high, rationale: "Shows how priors change what is perceived as a unit."}, pedagogical_value: {level: high, rationale: "Useful for explaining abstraction without implying literal lossless storage."}, applicability: {level: high, rationale: "Can enrich an optional perspective in the synthesis."}, redundancy: {level: low, rationale: "Distinct from code-tree and JPEG analogies."}, evidence_quality: {level: moderate, rationale: "Plausible cognitive analogy, not a controlled experiment."}}
+    classification: {primary_theme: mathematical-tools-geometry, concept_ids: [predictive-compression, generalization]}
+    candidate_destinations: {pages: [], concepts: [predictive-compression]}
+    disposition: integrate-by-reference
+    disposition_rationale: "Retain as an optional analogy; do not copy the article's score image."
+  - id: lewish-intelligence-and-compression-2025:forward-reverse-enwik8
+    kind: empirical-claim
+    summary: "The article reports lower compressed size for forward than reversed enwik8 with gzip, ppmd and zpaq."
+    locator: {type: section, value: "Good compressors will leverage causal dependencies"}
+    evidence: {kind: source-reported-result, confidence: unverified, scope: "One reported corpus and three named compressors.", assumptions: ["Same data bytes and compressor configuration are used in both directions.", "Reverse preprocessing and output accounting are comparable."], limitations: ["Exact versions, settings, checksums and scripts are not supplied in the inspected article text.", "Differences are modest and cannot establish a universal causal law."]}
+    pedagogical_assessment: {novelty: {level: high, rationale: "A concrete forward/reverse comparison motivates the role of sequence order."}, complementarity: {level: high, rationale: "Adds a testable empirical question beyond conceptual prediction/coding explanations."}, pedagogical_value: {level: high, rationale: "Can motivate a controlled experiment with known causal and non-causal generators."}, applicability: {level: high, rationale: "Suitable for an optional experiment, not a reproduced result."}, redundancy: {level: low, rationale: "No equivalent forward/reverse test is currently claimed."}, evidence_quality: {level: low, rationale: "Source-reported measurements lack a complete reproducibility protocol."}}
+    classification: {primary_theme: probabilistic-foundations-training, tags: [topic:predictive-compression], concept_ids: [predictive-compression, entropy]}
+    candidate_destinations: {pages: [], concepts: [predictive-compression]}
+    disposition: experiment
+    disposition_rationale: "Design a controlled synthetic experiment; do not claim to reproduce the article's enwik8 figures."
+  - id: lewish-intelligence-and-compression-2025:mdl-generalization
+    kind: qualification
+    summary: "MDL balances model complexity against residual data cost, but short descriptions do not automatically identify truth or guarantee generalization."
+    locator: {type: section, value: "Compressing the model"}
+    evidence: {kind: technical-assessment, confidence: well-supported, scope: "Two-part MDL and model selection under a specified coding/model class.", assumptions: ["A model class and coding scheme are specified.", "Generalization claims are evaluated under a data-generating distribution."], limitations: ["Kolmogorov complexity is uncomputable in general.", "Practical MDL depends on representation, code and model class.", "Generalization depends on assumptions beyond raw description length."]}
+    pedagogical_assessment: {novelty: {level: moderate, rationale: "The source gives an explicit bridge from compression to model complexity."}, complementarity: {level: high, rationale: "Adds a clear counterweight to simplistic 'smaller is smarter' claims."}, pedagogical_value: {level: high, rationale: "Prevents conflating simplicity, truth and generalization."}, applicability: {level: high, rationale: "Belongs in the existing compression comparison."}, redundancy: {level: moderate, rationale: "Occam/MDL already appear elsewhere, but the qualifications are valuable."}, evidence_quality: {level: high, rationale: "Standard MDL caveats."}}
+    classification: {primary_theme: probabilistic-foundations-training, concept_ids: [predictive-compression, generalization]}
+    candidate_destinations: {pages: [], concepts: [generalization]}
+    disposition: clarify
+    disposition_rationale: "Keep MDL as a model-selection principle with explicit assumptions; no new concept node."
+  - id: lewish-intelligence-and-compression-2025:aixi-active-inference
+    kind: comparison
+    summary: "The article contrasts AIXI's reward-oriented universal prediction with active inference's account of perception and action under a generative model."
+    locator: {type: section, value: "The AIXI formulation of universal intelligence; The Free Energy Principle and active inference"}
+    evidence: {kind: source-interpretation, confidence: context-dependent, scope: "High-level comparison of theoretical agent frameworks.", assumptions: ["The cited AIXI and FEP formulations are specified.", "Surprise, variational free energy and reward are not treated as synonyms."], limitations: ["The article explicitly calls its FEP account a lay interpretation.", "FEP formulations and interpretations are contested; this article does not provide a formal derivation.", "AIXI is an idealized, generally intractable theoretical model."]}
+    pedagogical_assessment: {novelty: {level: high, rationale: "Introduces agent-level theories beyond predictive compression."}, complementarity: {level: high, rationale: "Provides a useful contrast between reward optimization and active inference."}, pedagogical_value: {level: moderate, rationale: "Advanced optional context; too broad for the core compression lesson."}, applicability: {level: high, rationale: "Keep in comparative synthesis with primary-source follow-up."}, redundancy: {level: low, rationale: "Not covered by the inference-efficiency articles."}, evidence_quality: {level: moderate, rationale: "The source is explicitly non-technical on FEP and requires primary-source checking."}}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:active-inference, topic:universal-intelligence], concept_ids: [bayesian-inference, generalization]}
+    candidate_destinations: {pages: [], concepts: [bayesian-inference]}
+    disposition: integrate-by-reference
+    disposition_rationale: "Preserve as an advanced comparison; no new mandatory route or unverified canonical graph edges."
