@@ -18,7 +18,7 @@ suggested_route:
   next: null
 hierarchy:
   parents: []
-  children: []
+  children: ["fr/universal-artificial-intelligence"]
 related: ["fr/cross-entropy", "fr/vraisemblance", "fr/llm-evolution", "fr/llm-computational-complexity"]
 tags: ["type:concept-bridge", "destination:deepen", "topic:compression", "level:core", "language:fr", "status:published"]
 -->
@@ -231,5 +231,6 @@ Cette séquence distingue trois niveaux : **intuition de codage** (arbre et mots
 
 - [Entropie](entropy.qmd) · [Entropie croisée](cross-entropy.qmd) · [Vraisemblance](vraisemblance.qmd)
 - [Complexité et parallélisme](llm-computational-complexity.qmd) · [Évolution des LLM](llm-evolution.qmd)
+- [Complexité de Kolmogorov et AIXI](universal-artificial-intelligence.qmd)
 - [Synthèse critique de l'article de Karthik Shashidhar](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/llms-and-compression-algorithms-2026-11.md)
 - [Comparaison des deux sens de la compression](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/compression-two-meanings-2026-11.md)
