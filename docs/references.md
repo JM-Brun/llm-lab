@@ -320,3 +320,10 @@ These resources are curated for teaching design and guided experimentation. Incl
 
 - **Chawla (2025).** [Visual Guide to Bi-encoders, Cross-encoders and ColBERT](https://blog.dailydoseofds.com/p/visual-guide-to-bi-encoders-cross). A compact visual overview; consult primary ColBERT papers for the formal architecture and performance claims.
 - **Faysse et al. (2025).** [ColPali: Efficient Document Retrieval with Vision Language Models](https://proceedings.iclr.cc/paper_files/paper/2025/hash/99e9e141aafc314f76b0ca3dd66898b3-Abstract-Conference.html). Extends late interaction to visual page retrieval; includes ViDoRe, architecture comparisons and query-to-patch visualizations.
+
+## Learning-roadmap case studies
+
+- **Hesam Sheikh — How I Studied LLMs in Two Weeks: A Comprehensive Roadmap** (Towards Data Science, 18 October 2024): https://towardsdatascience.com/how-i-studied-llms-in-two-weeks-a-comprehensive-roadmap-e8ac19667a31/
+  - **Companion study journal:** https://github.com/hesamsheikh/ml-retreat (Days 003–016 cover tokenization, attention, GPT/fine-tuning, hallucination, knowledge distillation, pause tokens, Infini-attention, RoPE, KV cache, MoE, ViT, natural-language understanding and multimodal LMs).
+  - **Use for:** a practitioner case study of question-led learning, selective resource use and a broad progression from core Transformers to advanced and multimodal topics. Treat the two-week duration and daily time estimates as one learner's report, not a general workload promise.
+  - **Review status:** article and daily README text inspected; linked PDF notes and embedded images not inspected. Day notes repeatedly attribute many images to Sebastian Raschka's book; no images are reproduced. See [source review](source-reviews/hesam-sheikh-llm-study-roadmap-2026-11.md) and [structured extraction](../data/extractions/hesam-sheikh-llm-study-roadmap-2024.yml).
