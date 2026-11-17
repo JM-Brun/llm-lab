@@ -19,7 +19,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["en/cross-entropy", "en/likelihood", "en/llm-evolution", "en/llm-computational-complexity"]
+related: ["en/cross-entropy", "en/likelihood", "en/llm-evolution", "en/llm-computational-complexity", "en/entropy", "en/scaling-laws"]
 tags: ["type:concept-bridge", "destination:deepen", "topic:compression", "level:core", "language:en", "status:published"]
 -->
 
@@ -185,6 +185,46 @@ In [“Compression Is Intelligence”](https://www.linkedin.com/pulse/compressio
 | Typical failure | A rare but decisive term is discarded | Encoder/decoder disagreement | An implicit constraint is omitted or invented |
 
 **Takeaway:** every compression claim is relative to a task, representation, and distortion criterion. Bits per byte, ranking quality, and generation fidelity are not interchangeable metrics. The [critical source review](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-reviews/david-chen-compression-is-intelligence-2025.md) details the limits of the references and analogy.
+
+## 7. Empirical study: predictive compression as a capability signal
+
+Huang, Zhang, Shan, and He (COLM 2024) test whether a model's predictive coding cost is associated with downstream task performance. Their study covers **31 public pretrained LLMs**, **12 benchmarks**, and three external corpora aligned with the evaluated domains: Common Crawl for knowledge and commonsense, GitHub Python repositories for coding, and arXiv mathematics papers for mathematical reasoning.
+
+To compare models with different tokenizers, the authors measure *bits per character* (BPC), rather than bits per token:
+
+$
+\mathrm{BPC}(M,C)=
+\frac{\sum_t -\log_2 p_M(x_t\mid x_{<t})}
+{\text{number of characters in }C}.
+$
+
+The numerator is the ideal code length in bits assigned to the text by the model; the denominator normalizes by the corpus character count. The protocol fixes a context window of 1,900 tokens. **BPC therefore depends on the corpus, its normalization, and the evaluation protocol; it is not an intrinsic constant of a model.**
+
+The authors report the following Pearson correlations between BPC and aggregated benchmark scores:
+
+| Evaluated domain | BPC / score correlation |
+|---|---:|
+| All tasks | -0.93 |
+| Knowledge and commonsense | -0.935 |
+| Coding | -0.937 |
+| Mathematical reasoning | -0.953 |
+
+The negative sign means that, in this sample, **lower BPC is associated with higher scores**. This is a strong empirical result within the studied protocol, not evidence that compression causes intelligence or that the two are identical.
+
+### Conditions and limitations to preserve
+
+- **Domain alignment matters:** the reported cross-domain controls weaken the relationship when the compression corpus does not match the benchmark domain. BPC measured on code is not a universal capability score.
+- **Benchmark scores are proxies:** the 12 benchmarks cover selected knowledge, coding, and mathematics tasks; they do not define intelligence, robustness, or real-world competence as a whole.
+- **Contamination is hard to establish:** the authors use MIN-K% PROB as a signal of possible benchmark exposure and exclude Qwen outliers from the mathematical fit. This indirect diagnostic is not proof of contamination.
+- **The scope is base models:** the results do not automatically transfer to instruction-tuned or reasoning models, whose learned distributions and behavior differ.
+- **Correlation does not identify a causal mechanism:** scale, data, architecture, and training may influence BPC and benchmark scores simultaneously.
+- **The result is historical and bounded:** it describes the models and benchmarks in the 2024 study, under a controlled context window; it is not a current model leaderboard.
+
+### How should LLM Lab use this result?
+
+The paper provides a **case study connecting cross-entropy, predictive compression, and evaluation**: better probabilistic modeling of a relevant corpus can be a useful signal of capabilities measured in a related domain. It motivates studying BPC as a complementary signal, provided the corpus and protocol are documented and the result is checked against task-specific evaluations. It does not justify a single domain-independent score, replacing benchmarks, or conflating predictive compression with quantization, pruning, or distillation.
+
+Sources: [COLM 2024 paper](https://arxiv.org/abs/2404.09937) · [official repository and protocol](https://github.com/hkust-nlp/llm-compression-intelligence) · [LLM Lab critical review](../../docs/source-reviews/huang-zhang-shan-he-compression-intelligence-linearly-2024.md) · [structured extraction](../../data/extractions/huang-zhang-shan-he-compression-intelligence-linearly-2024.yml).
 
 ## Reconstruct the reasoning, step by step
 
