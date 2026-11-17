@@ -5312,7 +5312,7 @@ sources:
     language: en
     version: "COLM 2024 paper and public evaluation repository; accessed 2026-11-17"
     revision: null
-    licence: {identifier: null, url: null, status: partially-identified}
+    licence: {identifier: null, url: null, status: unknown}
     reuse: {text: link-only, figures: link-only, code: link-only, data: conditional}
     classification:
       primary_theme: probabilistic-foundations-training
