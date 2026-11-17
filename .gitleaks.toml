@@ -1,0 +1,8 @@
+title = "LLM Lab Gitleaks configuration"
+
+[[allowlists]]
+description = "Known false positive: internal Quarto page identifiers in the training examples navigation metadata"
+paths = ['''^site/fr/training-examples\.qmd$''']
+regexTarget = "line"
+regexes = ['''^related: \["fr/tokenization-strategies", "fr/vraisemblance", "fr/training-examples-exercises"\]$''']
+ruleIDs = ["generic-api-key"]
