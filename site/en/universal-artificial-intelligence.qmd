@@ -191,7 +191,7 @@ flowchart TD
 |---|---|---|
 | Kolmogorov complexity | What is the shortest program for $x$? | Not computable; upper semicomputable |
 | Solomonoff mixture | How much universal program weight supports $x$? | Lower semicomputable; not computable exactly |
-| AIXI | Which action maximizes expected future reward under the universal mixture? | Incomputable; not limit computable |
+| AIXI | Which action maximizes expected future reward under the universal mixture? | Exact standard/iterative policy: not limit computable; recursive ε-optimal policy: limit computable |
 | AIXI(t,l) | What can a restricted candidate class achieve under resource bounds? | Computable in principle; exponential cost and proof overhead |
 
 ## 7. What this does—and does not—tell us about LLMs
