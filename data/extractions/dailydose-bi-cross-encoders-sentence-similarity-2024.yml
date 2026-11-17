@@ -166,6 +166,27 @@ supplementary_audit:
     - "Original Daily Dose image assets and reuse rights remain unverified."
     - "No manual visual QA at multiple viewport widths has yet been completed."
 
+
+  visual_retrieval_extension:
+    source_ids:
+      - dailydose-visual-guide-bi-cross-colbert-2025
+      - faysse-etal-2025-colpali
+    inspected_visuals:
+      - "Daily Dose Visual Guide: article text describes a three-way bi-encoder/cross-encoder/ColBERT visual, but its embedded image bytes and reuse rights were not verified."
+      - "ColPali ICLR 2025 Figure 1 inspected from the paper PDF: compares the standard OCR/layout/caption/chunk pipeline with direct page-image VLM encoding and late interaction."
+      - "ColPali ICLR 2025 Figure 3 inspected from the paper PDF: token-pooling curve and query-token-to-page-patch heatmap, useful for showing both storage reduction and interpretability."
+    findings:
+      - "Visual retrieval can be important when tables, charts, layout and page structure carry evidence not preserved by plain text extraction."
+      - "ColPali encodes page images into multi-vector patch representations and uses ColBERT-style late interaction with text query tokens."
+      - "On ViDoRe, the paper reports mean nDCG@5 81.3 for ColPali versus 66.1 for the strongest listed text pipeline; these are paper-specific benchmark results."
+      - "The paper reports 257.5 KB/page storage, approximately 30 ms query encoding and 0.39 s/page indexing in its stated setup; compare against its own baselines, not as universal costs."
+      - "The paper also finds that generic contrastive vision encoders do not automatically perform well for document retrieval; task-specific training and multi-vector alignment matter."
+      - "The paper's negative results and discussion of token pooling prevent the simplistic conclusion that late interaction or vision is automatically superior."
+    pedagogical_decision:
+      - "Add ColPali as an optional visual-document retrieval branch, not a required part of the text retrieval core."
+      - "Link to original Figure 1 and Figure 3 rather than copying them; reuse rights were not independently verified."
+      - "Keep OCR/text extraction when exact text spans, structured values, accessibility or precise citations are required; visual page retrieval may be followed by extraction/verification."
+
 canonical_mapping:
   proposed_concepts: []
   proposed_relations: []
