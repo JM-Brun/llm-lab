@@ -4579,6 +4579,7 @@ sources:
         status: partially-scanned
         inspected_scope:
           - "Canonical HTML article text, title, publication date and nine section headings."
+          - "The linked musical-score image asset was retrieved and visually inspected; the article itself labels it AI-generated."
           - "Author-authored discussion of musical chunking, conditional prediction/coding, temporal order, forward/reverse enwik8 results, MDL, Chollet's skill-acquisition efficiency, AIXI, the Free Energy Principle and active inference."
           - "Visible footnotes qualifying incompressible data, prefix-code illustration, Hutter Prize context, MDL and Solomonoff induction."
         limitations:
