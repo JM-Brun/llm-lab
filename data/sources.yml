@@ -4548,3 +4548,191 @@ sources:
       pages: [fr/rag-memory-boundaries, en/rag-memory-boundaries, fr/cosine-similarity, en/cosine-similarity]
       concepts: [retrieval-augmented-generation, contextualized-representation]
       audit_records: [docs/source-reviews/dailydose-main-path-2026-11.md]
+
+  - id: reimers-gurevych-2019-sentence-bert
+    title: "Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks"
+    creators: ["Nils Reimers", "Iryna Gurevych"]
+    source_type: research-paper
+    identifiers: {doi: "10.18653/v1/D19-1410", arxiv: "1908.10084"}
+    canonical_url: "https://aclanthology.org/D19-1410/"
+    publisher: "Association for Computational Linguistics"
+    publication_date: "2019-11-08"
+    updated_date: null
+    language: en
+    version: "EMNLP 2019"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [inference-efficiency]
+      tags: [topic:sentence-embeddings, method:bi-encoder, method:siamese-network]
+      concept_ids: [contextualized-representation]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [architecture, empirical-evaluation]
+      audiences: [learner, practitioner, researcher]
+    scan_status: partially-scanned
+    integration_status: integrated-by-reference
+    scan_history:
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "Abstract, bibliographic metadata and architecture figure description."
+        limitations:
+          - "Full paper experiments, implementation and all ablations were not re-audited in this pass."
+          - "The Siamese tied-weight design is one bi-encoder design, not a definition requiring all dual encoders to share weights."
+          - "Original figure is linked, not reproduced; reuse rights were not independently established."
+    related:
+      pages: [fr/cosine-similarity, en/cosine-similarity]
+      concepts: [contextualized-representation]
+      audit_records: [docs/source-reviews/dailydose-main-path-2026-11.md]
+  - id: khattab-zaharia-2020-colbert
+    title: "ColBERT: Efficient and Effective Passage Search via Contextualized Late Interaction over BERT"
+    creators: ["Omar Khattab", "Matei Zaharia"]
+    source_type: research-paper
+    identifiers: {arxiv: "2004.12832"}
+    canonical_url: "https://arxiv.org/abs/2004.12832"
+    publisher: "SIGIR 2020 / arXiv"
+    publication_date: "2020-04-27"
+    updated_date: null
+    language: en
+    version: "SIGIR 2020"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: inference-efficiency
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:information-retrieval, method:late-interaction, method:multi-vector]
+      concept_ids: [retrieval-augmented-generation, contextualized-representation]
+    metadata:
+      technical_level: advanced
+      contribution_types: [architecture, empirical-evaluation, visualization]
+      audiences: [learner, practitioner, researcher]
+    scan_status: partially-scanned
+    integration_status: integrated-by-reference
+    scan_history:
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "Abstract, architecture description, late-interaction/MaxSim explanation and Figure 2 description."
+        limitations:
+          - "Full benchmark tables, implementation details and current index-engine behaviour were not exhaustively audited."
+          - "Reported latency and speedups are tied to the paper's hardware, corpus and protocol; not generalized."
+          - "Original paper figures are linked, not reproduced; reuse rights were not independently established."
+    related:
+      pages: [fr/cosine-similarity, en/cosine-similarity, fr/rag-memory-boundaries, en/rag-memory-boundaries]
+      concepts: [retrieval-augmented-generation, contextualized-representation]
+      audit_records: [docs/source-reviews/dailydose-main-path-2026-11.md]
+  - id: santhanam-etal-2022-colbertv2
+    title: "ColBERTv2: Effective and Efficient Retrieval via Lightweight Late Interaction"
+    creators: ["Keshav Santhanam", "Omar Khattab", "Jon Saad-Falcon", "Christopher Potts", "Matei Zaharia"]
+    source_type: research-paper
+    identifiers: {doi: "10.18653/v1/2022.naacl-main.272"}
+    canonical_url: "https://aclanthology.org/2022.naacl-main.272/"
+    publisher: "Association for Computational Linguistics"
+    publication_date: "2022-07"
+    updated_date: null
+    language: en
+    version: "NAACL-HLT 2022"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: inference-efficiency
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:information-retrieval, method:late-interaction, method:residual-compression]
+      concept_ids: [retrieval-augmented-generation, contextualized-representation]
+    metadata:
+      technical_level: advanced
+      contribution_types: [architecture, empirical-evaluation]
+      audiences: [learner, practitioner, researcher]
+    scan_status: partially-scanned
+    integration_status: integrated-by-reference
+    scan_history:
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "Abstract and bibliographic metadata; residual compression and denoised supervision contributions."
+        limitations:
+          - "Full experimental tables and ablations were not re-audited in this pass."
+          - "The reported 6–10x footprint reduction is paper-specific and must not be presented as a universal index-size guarantee."
+    related:
+      pages: [fr/cosine-similarity, en/cosine-similarity, fr/rag-memory-boundaries, en/rag-memory-boundaries]
+      concepts: [retrieval-augmented-generation, contextualized-representation]
+      audit_records: [docs/source-reviews/dailydose-main-path-2026-11.md]
+  - id: formal-piwowarski-clinchant-2021-splade
+    title: "SPLADE: Sparse Lexical and Expansion Model for First Stage Ranking"
+    creators: ["Thibault Formal", "Benjamin Piwowarski", "Stéphane Clinchant"]
+    source_type: research-paper
+    identifiers: {doi: "10.48550/arXiv.2107.05720", arxiv: "2107.05720"}
+    canonical_url: "https://arxiv.org/abs/2107.05720"
+    publisher: "SIGIR 2021 / arXiv"
+    publication_date: "2021-07-12"
+    updated_date: null
+    language: en
+    version: "SIGIR 2021"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: inference-efficiency
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:information-retrieval, method:learned-sparse, method:term-expansion]
+      concept_ids: [retrieval-augmented-generation]
+    metadata:
+      technical_level: advanced
+      contribution_types: [architecture, empirical-evaluation]
+      audiences: [learner, practitioner, researcher]
+    scan_status: partially-scanned
+    integration_status: integrated-by-reference
+    scan_history:
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "Abstract, learned sparse representation and inverted-index motivation."
+        limitations:
+          - "Full paper experiments and implementation details were not exhaustively reviewed."
+          - "The sparse effectiveness/efficiency trade-off depends on model, index and serving configuration."
+    related:
+      pages: [fr/rag-memory-boundaries, en/rag-memory-boundaries]
+      concepts: [retrieval-augmented-generation]
+      audit_records: [docs/source-reviews/dailydose-main-path-2026-11.md]
+  - id: thakur-etal-2021-beir
+    title: "BEIR: A Heterogeneous Benchmark for Zero-shot Evaluation of Information Retrieval Models"
+    creators: ["Nandan Thakur", "Nils Reimers", "Andreas Rücklé", "Abhishek Srivastava", "Iryna Gurevych"]
+    source_type: research-paper
+    identifiers: {arxiv: "2104.08663"}
+    canonical_url: "https://arxiv.org/abs/2104.08663"
+    publisher: "NeurIPS Datasets and Benchmarks 2021 / arXiv"
+    publication_date: "2021-04-17"
+    updated_date: null
+    language: en
+    version: "NeurIPS Datasets and Benchmarks 2021"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: link-only}
+    classification:
+      primary_theme: inference-efficiency
+      secondary_themes: [evaluation-methodology]
+      tags: [topic:information-retrieval, topic:benchmark, method:zero-shot-evaluation]
+      concept_ids: [retrieval-augmented-generation]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [empirical-evaluation, methodology]
+      audiences: [learner, practitioner, researcher]
+    scan_status: partially-scanned
+    integration_status: integrated-by-reference
+    scan_history:
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "Abstract and benchmark scope: heterogeneous domains and lexical, sparse, dense, late-interaction and reranking systems."
+        limitations:
+          - "Per-dataset result tables and all benchmark settings were not re-audited in this pass."
+          - "Aggregate findings are not universal rankings for every domain or production system."
+    related:
+      pages: [fr/rag-memory-boundaries, en/rag-memory-boundaries]
+      concepts: [retrieval-augmented-generation]
+      audit_records: [docs/source-reviews/dailydose-main-path-2026-11.md]
