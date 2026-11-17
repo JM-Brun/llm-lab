@@ -301,6 +301,11 @@ These resources are curated for teaching design and guided experimentation. Incl
   - **Review status:** creator-published captions reviewed through a third-party transcript mirror; relevant upstream Manim source scripts inspected statically, not executed. No frame-by-frame audiovisual audit. See the [critical synthesis](source-syntheses/cross-entropy-compression-distillation-2026-11.md) and [structured extraction](../data/extractions/3blue1brown-cross-entropy-compression-intelligence-part-2-2026.yml).
   - **Use for:** the operational meaning of cross-entropy as the average cost of a code optimized for a different distribution; the link to next-token pretraining, the assumptions behind the logarithmic loss, soft-target distillation, and KL divergence.
 
+- **Notion — [Intelligence = Compression](https://jealous-speedwell-b32.notion.site/Intelligence-Compression-4c8d01d16ebf4dc98c5c5cb85ea825c8)** (author and date not identified).
+  - **Use for:** a compact cross-cutting prompt to connect predictive coding, the Hutter Prize, algorithmic information theory and cognitive architectures.
+  - **Critical qualification:** “intelligence = compression” is a hypothesis/slogan, not an established equivalence. The page is unsourced and contains a malformed enwik9 size expression; the official benchmark defines enwik9 as 10^9 bytes. Existing entropy, cross-entropy and predictive-compression lessons remain the authoritative teaching destinations.
+  - **Review status:** all public page text inspected on 17 November 2026; Hutter Prize details checked against the official competition page. Author, date, revision, figures and reuse rights remain unknown. See [critical source review](source-reviews/notion-intelligence-compression-2026-11.md) and [structured extraction](../data/extractions/notion-intelligence-compression-summary.yml). Text and figures are link-only.
+
 ## Remote GPU training and managed execution
 
 - **YouTube — “GPU-POOR? NO PROBLEM!... thanks to 🤗 Jobs”**: https://www.youtube.com/watch?v=7Yx_7byZiFU
