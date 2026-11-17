@@ -41,7 +41,7 @@ def test_overview_self_checks_cover_every_major_section_in_both_languages() -> N
         source = (SITE / language / "llm-overview.qmd").read_text(encoding="utf-8")
         assert "<!-- self-check-coverage: enforced -->" in source
         check_start = source.index("::: {.self-check}")
-        major_headings = re.findall(r"^## (.+?)\\s*$", source[:check_start], re.MULTILINE)
+        major_headings = re.findall(r"^## (.+?)\s*$", source[:check_start], re.MULTILINE)
         sections = set(heading.findall(source[:check_start]))
         covered = {item for group in marker.findall(source[check_start:]) for item in group.split()}
         assert major_headings
