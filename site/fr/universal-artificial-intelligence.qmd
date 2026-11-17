@@ -1,0 +1,232 @@
+---
+title: "Complexité de Kolmogorov, AIXI et limites du calcul"
+subtitle: "Des descriptions minimales aux agents universels — et pourquoi l'idéal reste incalculable"
+description-meta: "Approfondissement sur la complexité de Kolmogorov, l'induction de Solomonoff, AIXI et la construction AIXI(t,l) sous contraintes de ressources."
+keywords: ["type:concept", "destination:deepen", "topic:algorithmic-information-theory", "topic:aixi", "level:advanced", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/universal-artificial-intelligence"
+summary: "Dérivation avancée de la complexité de Kolmogorov vers la probabilité algorithmique, l'induction de Solomonoff, AIXI et AIXI(t,l) sous contraintes de ressources."
+scope: "Explique ce qui est incalculable, ce qu'optimise AIXI, ce que bornent t et l et pourquoi AIXI(t,l) reste impraticable."
+purpose: "Distinguer complexité descriptive, prédiction universelle et décision active, puis interpréter correctement la borne de calcul."
+domain: "mathematical-tools-geometry"
+suggested_route:
+  previous: "fr/compression-revision"
+  next: null
+hierarchy:
+  parents: ["fr/compression-revision"]
+  children: []
+related: ["fr/entropy", "fr/cross-entropy", "fr/llm-computational-complexity"]
+tags: ["type:concept", "destination:deepen", "topic:algorithmic-information-theory", "topic:aixi", "level:advanced", "language:fr", "status:published"]
+-->
+
+::: {.chapter-lead}
+**La question centrale :** si le programme le plus court qui explique une observation constitue un guide puissant pour prédire, peut-on construire un agent qui utilise ce principe pour agir de façon optimale dans un monde inconnu ? AIXI est une réponse formelle sous des hypothèses idéales. Son obstacle n'est pas seulement la lenteur : l'agent idéal est incalculable.
+:::
+
+## 1. Complexité de Kolmogorov : le programme le plus court
+
+Fixons une machine de Turing universelle préfixe $U$. La complexité de Kolmogorov d'un objet $x$ est
+
+$$
+K_U(x)=\min_{p:U(p)=x}|p|.
+$$
+
+C'est la longueur du plus court programme qui produit $x$.
+
+- Une chaîne régulière, comme une longue suite de bits identiques, peut avoir une description courte.
+- Une chaîne incompressible peut nécessiter une description presque aussi longue qu'elle-même.
+- Changer de machine universelle de référence modifie $K_U(x)$ d'au plus une constante additive. Pour des objets finis, cette constante peut néanmoins compter.
+
+### Pourquoi K n'est pas calculable
+
+On peut énumérer des programmes et les simuler. Chaque fois qu'un programme plus court produit $x$, on améliore la meilleure borne supérieure connue de $K_U(x)$.
+
+Mais on ne peut pas savoir en général qu'aucun programme plus court ne terminera plus tard en produisant $x$. Il n'existe pas d'algorithme qui retourne toujours le minimum exact.
+
+Ainsi, $K_U$ est **semi-calculable par le haut** (approximable par valeurs décroissantes), mais n'est pas calculable en général. C'est une limite de calculabilité, pas simplement un temps d'exécution élevé.
+
+::: {.callout-note title="Ce que fournit un compresseur pratique"}
+Un compresseur produit une longueur de code calculable selon une représentation et un protocole précis. C'est une borne supérieure utile dans un cadre de codage compatible, pas la complexité de Kolmogorov exacte. La compression pratique dépend du modèle et du protocole.
+:::
+
+Source primaire : Hutter, [Universal Algorithmic Intelligence](https://arxiv.org/abs/cs/0701125), section 3.2.
+
+## 2. Des programmes minimaux à la probabilité algorithmique
+
+Au lieu de ne retenir que le programme le plus court, on attribue un poids à chaque programme minimal qui produit un préfixe de sortie :
+
+$$
+M_U(x)=\sum_{p:U(p)=x*}2^{-|p|}.
+$$
+
+C'est un mélange algorithmique universel (une semi-mesure). Les programmes courts reçoivent un poids plus important, mais plusieurs programmes différents peuvent soutenir la même observation.
+
+La contribution du programme le plus court donne, avec les conventions correspondantes de machine universelle,
+
+$$
+M_U(x)\geq 2^{-K_U(x)}.
+$$
+
+Le lien est important, mais les deux objets ne sont pas interchangeables :
+
+- $K_U(x)$ est une longueur de description minimale.
+- $M_U(x)$ agrège les poids des programmes qui génèrent l'observation.
+
+Le mélange universel est semi-calculable par le bas, mais n'est pas calculable exactement. Ce n'est pas, sans précaution, une distribution de probabilité normalisée : la qualification de semi-mesure compte.
+
+## 3. L'induction de Solomonoff : prédire une source inconnue
+
+L'induction de Solomonoff utilise le mélange universel pour prédire l'observation suivante à partir de l'historique.
+
+L'intuition est une forme algorithmique du rasoir d'Occam : les hypothèses générées par des programmes courts reçoivent un poids a priori plus élevé, tandis que le mélange conserve les contributions de nombreuses explications calculables alternatives.
+
+Sous des hypothèses formelles — notamment le caractère calculable du processus générateur réel — l'induction de Solomonoff bénéficie de garanties fortes de convergence et de perte prédictive.
+
+C'est un prédicteur universel théorique, pas une instruction pratique consistant à énumérer tous les programmes. Son mélange universel ne peut pas être calculé exactement.
+
+## 4. AIXI : transformer la prédiction en action
+
+L'induction de Solomonoff est une prédiction passive. AIXI ajoute des actions et des récompenses.
+
+Il combine :
+
+1. Un mélange universel sur les environnements calculables.
+2. La théorie de la décision séquentielle.
+3. Une politique qui choisit les actions maximisant la récompense future espérée.
+
+À un niveau général :
+
+$$
+\pi^* = \arg\max_{\pi} V^\pi_\xi(h),
+$$
+
+où $h$ est l'historique d'interaction, $\xi$ le mélange universel sur les environnements et $V^\pi_\xi$ la valeur future espérée de la politique $\pi$ sous ce mélange.
+
+**Le passage conceptuel :** l'induction de Solomonoff prédit ce que pourrait faire l'environnement ; AIXI utilise ces prédictions pour décider quoi faire.
+
+AIXI n'est ni un compresseur sans perte, ni un modèle de langage classique, ni une architecture neuronale pratique. Son optimalité est relative à une classe formelle d'environnements, une définition de la récompense, des hypothèses d'horizon/actualisation et une machine universelle de référence.
+
+### Pourquoi AIXI est incalculable
+
+Le mélange universel idéal n'est pas calculable exactement, et le calcul de décision séquentielle optimale qui s'appuie dessus est lui aussi incalculable.
+
+Leike et Hutter (2015) établissent une classification plus forte : AIXI n'est **pas calculable à la limite** (*not limit computable*). Cela signifie qu'il ne peut pas être obtenu, dans ce sens formel, comme limite d'une suite calculable d'approximations à calcul fini.
+
+Cela ne signifie pas qu'aucune approximation utile de certains aspects ou de cas restreints d'AIXI n'est possible. Cela signifie qu'elles ne constituent pas le calcul exact de l'agent AIXI idéal.
+
+Source primaire : [Leike & Hutter (2015), On the Computability of AIXI](https://arxiv.org/abs/1510.05572).
+
+## 5. AIXI(t,l) : rendre calculable une construction restreinte
+
+La construction de Hutter change la question. Au lieu de calculer l'agent idéal, elle construit un agent qui compare des politiques/programmes candidats sous des limites explicites de ressources.
+
+| Symbole | Signification |
+|---|---|
+| $t$ | Temps de calcul maximal par cycle d'interaction pour chaque politique candidate |
+| $l$ | Longueur maximale des programmes/politiques candidats |
+| $l_P$ | Dans la formulation ultérieure avec preuves, longueur maximale des preuves certifiant la validité des bornes inférieures de valeur |
+
+Il est donc trompeur de dire simplement que « l'environnement est limité à un temps $t$ et un espace $l$ ». Dans la construction AIXI(t,l), $t$ et $l$ bornent les politiques/programmes candidats. Hutter étudie aussi des modèles d'environnement bornés, mais il s'agit d'une restriction connexe et distincte.
+
+### Construction, à haut niveau
+
+1. Énumérer les programmes/politiques candidats dans la limite de longueur.
+2. Imposer la limite de temps d'exécution par cycle.
+3. Dans la formalisation ultérieure, ne conserver que les politiques dont les estimations de valeur sont accompagnées de preuves de validité comme approximations inférieures.
+4. À chaque cycle d'interaction, exécuter les candidats sur l'historique observé.
+5. Choisir l'action associée à la meilleure estimation de valeur certifiée.
+
+La politique sélectionnée peut changer d'un cycle d'interaction au suivant. La condition de preuve est importante : l'algorithme ne fait pas confiance à des estimations de valeur arbitraires annoncées par les programmes candidats.
+
+### Le coût de calcul
+
+La construction détaillée donne la borne par cycle :
+
+$$
+\boxed{T_{\mathrm{cycle}}=O(t\,2^l)}
+$$
+
+Le facteur $2^l$ reflète le nombre exponentiel de programmes binaires candidats jusqu'à la longueur $l (à des facteurs constants près).
+
+Dans la formulation ultérieure avec validation par preuve, le coût d'initialisation est borné séparément par
+
+$$
+T_{\mathrm{initialisation}}=O(l_P^2\,2^{l_P}).
+$$
+
+Ce sont des bornes asymptotiques avec des constantes cachées très élevées.
+
+::: {.callout-note}
+**Pourquoi cela reste impraticable :** même si la construction est calculable, doubler la borne de longueur des programmes peut approximativement mettre au carré l'espace des candidats. La limite de ressources supprime l'obstacle de calculabilité en restreignant la recherche, mais la recherche obtenue reste exponentielle.
+:::
+
+### Ce que dit — et ne dit pas — le théorème d'optimalité
+
+La garantie compare AIXI(t,l) à une classe restreinte de politiques candidates bornées, sous les hypothèses de validité et de preuve. Elle ne démontre pas une optimalité globale parmi tous les agents et ne récupère pas AIXI exact à un coût pratique.
+
+Le manuel de 2024 rend explicites le paramètre de longueur des preuves et la procédure de sélection des candidats. Voir Hutter, Quarel & Catt, [An Introduction to Universal Artificial Intelligence](https://hutter1.net/publ/uaibook2.pdf), section 13.2, algorithme 13.1 et théorème 13.2.3.
+
+::: {.callout-warning title="Lire attentivement l'exposant"}
+La construction détaillée et le théorème de 2024 donnent $O(t\,2^l)$ **par cycle d'interaction**. Ne pas aplatir les exposants en un ambigu $O(t2l), ni réécrire silencieusement la borne en $O(t^2l)$. Le coût d'initialisation lié à la validation des preuves est une borne distincte.
+:::
+
+## 6. Distinguer les quatre niveaux
+
+```{mermaid}
+flowchart TD
+  K["Complexité de Kolmogorov K(x)\nLongueur du programme minimal"] --> M["Probabilité algorithmique M(x)\nMélange universel sur les programmes"]
+  M --> S["Induction de Solomonoff\nPrédire une source calculable inconnue"]
+  S --> A["AIXI\nPrédire + choisir des actions pour maximiser la récompense"]
+  A --> B["AIXI(t,l)\nConstruction calculable sous contraintes de ressources"]
+  B --> C["O(t · 2^l) par cycle\nExponentiel en longueur de programme"]
+```
+
+| Objet | Question principale | Statut calculatoire |
+|---|---|---|
+| Complexité de Kolmogorov | Quel est le programme le plus court pour $x$ ? | Non calculable ; semi-calculable par le haut |
+| Mélange de Solomonoff | Quel poids universel de programmes soutient $x$ ? | Semi-calculable par le bas ; pas calculable exactement |
+| AIXI | Quelle action maximise la récompense future espérée sous le mélange universel ? | Incalculable ; pas calculable à la limite |
+| AIXI(t,l) | Que peut obtenir une classe restreinte de candidats bornés en ressources ? | Calculable en principe ; coût exponentiel et surcoût des preuves |
+
+## 7. Ce que cela nous apprend — et ne nous apprend pas — sur les LLM
+
+Le lien avec les modèles de langage est réel, mais indirect :
+
+- La prédiction du prochain token estime des probabilités conditionnelles.
+- Le codage prédictif peut transformer ces probabilités en longueurs de code.
+- L'induction de Solomonoff remplace une classe de modèles conçue à la main par un mélange universel de générateurs calculables.
+- AIXI ajoute les actions et la planification visant à maximiser une récompense.
+- AIXI(t,l) étudie une construction d'agent universel calculable sous des bornes de ressources.
+
+Un Transformer entraîné par cross-entropy **n'implémente pas** l'induction de Solomonoff ou AIXI simplement parce que prédiction et compression sont mathématiquement liées. Son architecture finie, sa distribution d'entraînement, son objectif et sa procédure d'inférence définissent un système différent.
+
+## Auto-évaluation
+
+1. Pourquoi l'énumération de programmes fournit-elle une borne supérieure de $K(x)$, mais pas un algorithme exact pour $K(x)$ ?
+2. Quelle différence entre $K(x)$ et le mélange universel $M(x)$ ?
+3. Qu'ajoute AIXI à l'induction de Solomonoff ?
+4. Dans AIXI(t,l), que bornent $t$ et $l$ ?
+5. Pourquoi un AIXI(t,l) calculable ne rend-il pas AIXI idéal calculable ?
+6. Que signifie le facteur exponentiel $2^l$ pour une utilisation pratique ?
+
+::: {.callout-tip title="Raisonnement attendu"}
+1. Chaque programme trouvé est une description candidate, mais on ne peut pas savoir qu'un programme plus court ne terminera jamais plus tard.
+2. $K$ retient la description la plus courte ; $M$ somme les poids des programmes minimaux qui génèrent le préfixe.
+3. Les actions, les récompenses et la planification séquentielle.
+4. Le temps d'exécution par cycle des politiques candidates et la longueur de leurs programmes — pas seulement le temps et l'espace de l'environnement.
+5. Il résout un problème restreint et borné avec une garantie différente.
+6. Augmenter la longueur maximale des programmes rend rapidement la recherche exhaustive impraticable.
+:::
+
+## Pour approfondir
+
+- [Compression et LLM](compression-revision.qmd)
+- [Entropie](entropy.qmd) · [Entropie croisée](cross-entropy.qmd)
+- [Complexité de calcul et parallélisme](llm-computational-complexity.qmd)
+- [Hutter (2007) : Universal Algorithmic Intelligence](https://arxiv.org/abs/cs/0701125)
+- [Leike & Hutter (2015) : On the Computability of AIXI](https://arxiv.org/abs/1510.05572)
+- [Hutter, Quarel & Catt (2024) : An Introduction to Universal Artificial Intelligence](https://hutter1.net/publ/uaibook2.pdf)
