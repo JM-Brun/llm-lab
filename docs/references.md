@@ -327,3 +327,10 @@ These resources are curated for teaching design and guided experimentation. Incl
   - **Companion study journal:** https://github.com/hesamsheikh/ml-retreat (Days 003–016 cover tokenization, attention, GPT/fine-tuning, hallucination, knowledge distillation, pause tokens, Infini-attention, RoPE, KV cache, MoE, ViT, natural-language understanding and multimodal LMs).
   - **Use for:** a practitioner case study of question-led learning, selective resource use and a broad progression from core Transformers to advanced and multimodal topics. Treat the two-week duration and daily time estimates as one learner's report, not a general workload promise.
   - **Review status:** article and daily README text inspected; linked PDF notes and embedded images not inspected. Day notes repeatedly attribute many images to Sebastian Raschka's book; no images are reproduced. See [source review](source-reviews/hesam-sheikh-llm-study-roadmap-2026-11.md) and [structured extraction](../data/extractions/hesam-sheikh-llm-study-roadmap-2024.yml).
+
+## Introductory LLM explainers
+
+- **Jose Parreño Garcia — [LLMs explained (Part 1): The 3-layer framework behind chatGPT & friends](https://joseparreogarcia.substack.com/p/how-llms-work-part-1-the-3-essential-layers)** (5 April 2025).
+  - **Use for:** an accessible analogy between classical predictive modelling and three broad stages of LLM construction: corpus collection, base-model training and fine-tuning.
+  - **Critical caveat:** next-token training is not a truth objective; fine-tuning does not guarantee factuality; the article's categorical claims about reasoning and understanding are not established by its explanation. The Llama 3 8B / DeepSeek R1 14B comparison is anecdotal and confounded.
+  - **Review status:** full visible article body and both embedded images inspected; video and outbound resources not systematically audited. Images and text remain link-only. See [source review](source-reviews/jose-parreno-garcia-how-llms-work-three-layers-2026-11.md) and [structured extraction](../data/extractions/jose-parreno-garcia-how-llms-work-three-layers-2025.yml).
