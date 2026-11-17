@@ -1310,8 +1310,8 @@ async function runCase(testCase, caseIndex) {
             distribution: Boolean(root.querySelector("[data-distribution]")),
             tokenChoice: Boolean(root.querySelector("[data-token-choice]")),
             nextDistribution: Boolean(root.querySelector("[data-next-distribution]")),
-            append: Boolean(root.querySelector("[data-append]")),
-            reset: Boolean(root.querySelector("[data-reset]")),
+            append: Boolean(root.querySelector(".next-token-explorer__append")),
+            reset: Boolean(root.querySelector(".next-token-explorer__reset")),
           },
         }));
         const controls = explorer.locator("[data-explorer-controls]");
@@ -1320,7 +1320,7 @@ async function runCase(testCase, caseIndex) {
         await controls.waitFor({ state: "visible", timeout: 5000 });
         const initialPrefix = (await prefix.textContent()).trim();
         await explorer.locator("[data-token-choice]").selectOption("0");
-        await explorer.locator("[data-append]").click();
+        await explorer.locator(".next-token-explorer__append").click();
         const extendedPrefix = (await prefix.textContent()).trim();
         const expectedToken = lang === "fr" ? "Vous" : "They";
         const expectedNext = lang === "fr" ? "savez" : "built";
@@ -1330,7 +1330,7 @@ async function runCase(testCase, caseIndex) {
         if (!(await distribution.textContent()).includes(expectedNext)) {
           throw new Error("the next conditional distribution was not displayed");
         }
-        await explorer.locator("[data-reset]").click();
+        await explorer.locator(".next-token-explorer__reset").click();
         const resetPrefix = (await prefix.textContent()).trim();
         if (resetPrefix !== initialPrefix) throw new Error("reset did not restore the original prefix");
         item.nextTokenExplorer = { initialized: true, prefixExtended: true, nextDistributionShown: true, resetWorks: true };
