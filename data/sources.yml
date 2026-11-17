@@ -5220,7 +5220,7 @@ sources:
       primary_theme: architectures-mechanisms
       secondary_themes: [text-tokenization, inference-efficiency, probabilistic-foundations-training]
       tags: [topic:llm-learning-roadmap, topic:transformer, topic:hallucination, topic:knowledge-distillation, topic:multimodal-llm, topic:learning-strategy]
-      concept_ids: [token, token-embedding, self-attention, transformer]
+      concept_ids: [token, token-embedding, self-attention]
     metadata:
       technical_level: intermediate
       contribution_types: [pedagogy, architecture, theory]
@@ -5249,7 +5249,7 @@ sources:
           - "No licence or permission to reuse article text, diagrams, book-derived notes or repository images was established."
     related:
       pages: [en/llm-overview, fr/llm-overview, en/transformer, fr/transformer, en/generation, fr/generation, en/post-training, fr/post-training, en/transformer-architectures, fr/transformer-architectures]
-      concepts: [token, token-embedding, self-attention, transformer]
+      concepts: [token, token-embedding, self-attention]
       audit_records:
         - docs/source-reviews/hesam-sheikh-llm-study-roadmap-2026-11.md
         - data/extractions/hesam-sheikh-llm-study-roadmap-2024.yml
