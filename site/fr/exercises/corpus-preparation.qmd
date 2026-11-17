@@ -62,6 +62,15 @@ Au minimum, la provenance du corpus, la révision exacte du tokenizer, les param
 
 </details>
 
+5. Pourquoi un accord élevé entre annotateurs ne prouve-t-il pas à lui seul que les labels sont corrects ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Les annotateurs peuvent partager le même biais, appliquer une consigne ambiguë de façon cohérente ou être d'accord sur une tâche qui ne mesure pas réellement la cible visée. L'accord renseigne sur la reproductibilité du protocole ; il faut aussi examiner la validité de la tâche, les cas limites, la provenance et les erreurs d'adjudication.
+
+</details>
+
 ::: {.language-switch}
 **Langue :** [Français](corpus-preparation.qmd) · [English](../../en/exercises/corpus-preparation.qmd)
 :::

@@ -125,6 +125,7 @@ These criteria are learning objectives: an available page, a hand-checkable exam
 ## To continue
 
 - [Exercises and practice](exercises.qmd): apply the milestones to exercises, separately from conceptual questions.
+- [Hugging Face — Building a model card](https://huggingface.co/learn/llm-course/en/chapter4/4): document intended uses, limitations, data, training procedure, and evaluation results for a shared model.
 - [Versioned build plan](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md): prerequisites, expected evidence, dependencies and validation criteria for each milestone.
 
 [^exec]: Install Python 3.12+ and [uv](https://docs.astral.sh/uv/), clone the repository (`git clone https://github.com/JM-Brun/llm-lab.git` then `cd llm-lab`), and sync with `uv sync --locked --dev`. For the full test suite, also install the site-test dependencies with `uv pip install --python .venv/bin/python -r docs/requirements-tokenizer-example.txt` and `uv pip install --python .venv/bin/python -r docs/requirements-history-validation.txt`, then run `uv run --locked pytest`. Reinstall those requirements after a fresh sync, as explained in the [contributor guide](https://github.com/JM-Brun/llm-lab/blob/main/CONTRIBUTING.md). Save the example in a file named `example.py` at the repository root. The five tour test files are `test_gpt_config.py`, `test_gpt_ops.py`, `test_transformer_block.py`, `test_gpt.py` and `test_generate.py`; `test_attention.py`, `test_training_examples.py` and `test_losses.py` cover additional primitives.

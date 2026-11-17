@@ -8,7 +8,7 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/corpus-preparation"
-scope: "Décrit les décisions d'ingénierie des données en amont du préentraînement : admissibilité et provenance des sources, parsing et filtrage, déduplication, partitions d'évaluation, ajustement/fixation du tokenizer et transfert vers les flux de tokens."
+scope: "Décrit les décisions d'ingénierie des données en amont du préentraînement : admissibilité et provenance des sources, parsing et filtrage, déduplication, partitions d'évaluation, ajustement/fixation du tokenizer, annotation humaine et traçabilité des labels, puis transfert vers les flux de tokens."
 purpose: "Construire un protocole de préparation de corpus traçable et adapté à l'objectif d'entraînement ou d'évaluation, en évitant les fuites entre partitions et en séparant les décisions de corpus des opérations internes au tokenizer et de la construction des exemples."
 suggested_route:
   previous: null
@@ -30,6 +30,7 @@ Un modèle ne s'entraîne pas directement sur « Internet » ou sur un ensemble 
 - distinguer parsing, filtrage, déduplication et normalisation du tokenizer ;
 - choisir des partitions cohérentes avec la généralisation que l'évaluation doit mesurer ;
 - entraîner puis figer un tokenizer sans contaminer une évaluation tenue à l'écart ;
+- concevoir un protocole d'annotation traçable et interpréter les désaccords entre annotateurs ;
 - transmettre un corpus préparé à l'encodage et à la construction des exemples d'entraînement.
 :::
 
@@ -71,7 +72,23 @@ Il faut distinguer quatre opérations :
 
 La normalisation et la pré-tokenisation ne remplacent pas le filtrage documentaire. Réciproquement, nettoyer un corpus ne définit pas à lui seul le comportement d'un tokenizer.
 
-## 4. Contrat de sortie vers les étapes suivantes
+## 4. Annotation humaine et qualité des labels
+
+Un corpus destiné à l'entraînement ou à l'évaluation peut nécessiter des annotations humaines. Cette étape n'est pas un simple ajout de colonnes : elle transforme une question métier en une tâche observable, avec des unités, des catégories et des règles de décision explicites.
+
+Un protocole défendable devrait préciser :
+
+- **L'unité annotée et la question posée** : document, passage, réponse complète, segment ou paire de réponses ; une tâche ambiguë produit des labels ambigus.
+- **Le guide d'annotation** : définitions opérationnelles, exemples positifs et négatifs, cas limites, règles de priorité et procédure pour les cas impossibles à trancher.
+- **La calibration** : faire annoter un petit lot par plusieurs personnes, discuter les désaccords et réviser le guide avant la production à grande échelle.
+- **Le contrôle des désaccords** : annoter indépendamment un sous-ensemble par plusieurs personnes, mesurer l'accord avec une statistique adaptée à la tâche et conserver les désaccords avant adjudication.
+- **La traçabilité** : conserver la version du guide, les réponses individuelles, les décisions d'adjudication et les versions du jeu de données.
+
+L'accord inter-annotateurs est un diagnostic du protocole, pas une preuve automatique de vérité. Un accord élevé peut refléter des consignes trop simples ou des biais partagés ; un désaccord peut révéler une ambiguïté réelle de la tâche. Le choix de la statistique (par exemple, accord brut, kappa ou alpha) dépend du type de labels, du nombre d'annotateurs et du plan d'échantillonnage.
+
+[Le chapitre 10 du cours Hugging Face](https://huggingface.co/learn/llm-course/en/chapter10/1) illustre ce workflow avec Argilla : configuration des champs et questions, consignes, annotation collaborative, réponses multiples et export. Argilla est ici un outil de workflow ; il ne remplace ni la définition scientifique de la tâche ni l'analyse de la qualité des annotations.
+
+## 5. Contrat de sortie vers les étapes suivantes
 
 À la fin de cette étape, on devrait pouvoir retrouver :
 
@@ -110,6 +127,12 @@ Cette page définit un cadre de traçabilité et de séparation des responsabili
   <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
 </summary>
 <div class="learning-resources__content" markdown="1">
+
+### Ressources d'implémentation complémentaires
+
+- [Hugging Face — Datasets, traitement et manipulation](https://huggingface.co/learn/llm-course/en/chapter5/3) : charger, inspecter, filtrer et transformer des données.
+- [Hugging Face — Grands datasets, mémoire et streaming](https://huggingface.co/learn/llm-course/en/chapter5/4) : comprendre les fichiers memory-mapped et le traitement de corpus volumineux.
+- [Hugging Face — Annotation et curation avec Argilla](https://huggingface.co/learn/llm-course/en/chapter10/1) : exemple d'outillage pour le protocole décrit plus haut.
 
 ### Exercices
 

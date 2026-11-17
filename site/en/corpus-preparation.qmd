@@ -8,7 +8,7 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/corpus-preparation"
-scope: "Covers data-engineering decisions upstream of pretraining: source eligibility and provenance, parsing and filtering, deduplication, evaluation splits, tokenizer fitting/freezing, and hand-off to token streams."
+scope: "Covers data-engineering decisions upstream of pretraining: source eligibility and provenance, parsing and filtering, deduplication, evaluation splits, tokenizer fitting/freezing, human annotation and label traceability, and hand-off to token streams."
 purpose: "Build a traceable corpus-preparation protocol suited to a training or evaluation objective, avoid split leakage, and distinguish corpus-level decisions from tokenizer internals and training-example construction."
 suggested_route:
   previous: null
@@ -30,6 +30,7 @@ By the end of this page, you will be able to:
 - distinguish parsing, filtering, deduplication, and tokenizer normalization;
 - choose splits that match the generalization claim an evaluation is intended to test;
 - fit and freeze a tokenizer without contaminating a held-out evaluation;
+- design a traceable annotation protocol and interpret annotator disagreement;
 - hand a prepared corpus off to encoding and training-example construction.
 :::
 
@@ -71,7 +72,23 @@ Keep four operations distinct:
 
 Normalization and pre-tokenization do not replace document filtering. Conversely, cleaning a corpus does not by itself define tokenizer behaviour.
 
-## 4. Handoff contract to the next stages
+## 4. Human annotation and label quality
+
+A corpus intended for training or evaluation may require human annotations. This is not merely adding columns: it turns an application question into an observable task with explicit units, categories, and decision rules.
+
+A defensible protocol should specify:
+
+- **The annotation unit and question:** document, passage, complete answer, span, or response pair. An ambiguous task produces ambiguous labels.
+- **The annotation guidelines:** operational definitions, positive and negative examples, edge cases, priority rules, and a procedure for cases that cannot be resolved.
+- **Calibration:** have several people annotate a small pilot batch, discuss disagreements, and revise the guidelines before scaling up.
+- **Disagreement controls:** independently annotate a subset with multiple people, measure agreement using a statistic appropriate to the task, and preserve disagreements before adjudication.
+- **Traceability:** retain the guideline version, individual responses, adjudication decisions, and dataset versions.
+
+Inter-annotator agreement is a diagnostic of the protocol, not automatic proof of truth. High agreement can reflect overly simple instructions or shared biases; disagreement can reveal genuine task ambiguity. The choice of statistic (for example, raw agreement, kappa, or alpha) depends on the label type, number of annotators, and sampling design.
+
+[Chapter 10 of the Hugging Face course](https://huggingface.co/learn/llm-course/en/chapter10/1) illustrates this workflow with Argilla: configuring fields and questions, writing guidelines, collaborative annotation, multiple responses, and export. Argilla is a workflow tool here; it does not replace the scientific definition of the task or analysis of annotation quality.
+
+## 5. Handoff contract to the next stages
 
 At the end of this stage, it should be possible to recover:
 
@@ -110,6 +127,12 @@ This page defines a traceability framework and separation of responsibilities, n
   <span class="learning-resources__description">Experiment, explore further, and practise the ideas from this lesson.</span>
 </summary>
 <div class="learning-resources__content" markdown="1">
+
+### Additional implementation resources
+
+- [Hugging Face — Datasets: processing and manipulation](https://huggingface.co/learn/llm-course/en/chapter5/3): load, inspect, filter, and transform data.
+- [Hugging Face — Large datasets, memory, and streaming](https://huggingface.co/learn/llm-course/en/chapter5/4): understand memory-mapped files and large-corpus processing.
+- [Hugging Face — Annotation and curation with Argilla](https://huggingface.co/learn/llm-course/en/chapter10/1): a tooling example for the protocol described above.
 
 ### Practice
 

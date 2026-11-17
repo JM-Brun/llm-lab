@@ -8,8 +8,8 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/transformer-block-walkthrough"
-scope: "Explique ligne par ligne le fichier transformer_block.py : l'ordre pré-LN et ses chemins résiduels, l'initialisation mise à l'échelle des poids résiduels, le découpage en têtes par tranches de colonnes et le MLP position par position. Exclut les embeddings, la tête de sortie et la boucle de génération."
-purpose: "Le lecteur doit pouvoir tracer une forme à travers le bloc, expliquer pourquoi la normalisation est dans la branche et non sur le tronc, et décrire le rôle de chaque projection Q, K, V et O."
+scope: "Explique ligne par ligne le bloc de référence transformer_block.py, puis compare séparément les variantes MHA/MQA/GQA, MLA et les motifs locaux/sparse sans prétendre qu'elles sont implémentées dans le code de référence."
+purpose: "Le lecteur doit pouvoir tracer une forme à travers le bloc, expliquer les projections Q/K/V/O et les résidus, puis distinguer partage K/V, compression latente et restriction des positions consultées."
 suggested_route:
   previous: "fr/gpt-ops-walkthrough"
   next: "fr/gpt-model-walkthrough"
@@ -171,6 +171,48 @@ Sources maintenues : [primitive NumPy](https://github.com/JM-Brun/llm-lab/blob/m
 
 - [État actuel de l'implémentation et de sa validation](https://github.com/JM-Brun/llm-lab/blob/main/docs/project-status.md)
 - [Critères de vérification prévus](https://github.com/JM-Brun/llm-lab/blob/main/docs/roadmap.md#deferred--causal-attention-implementation)
+
+## Variantes d'attention : ce qui change vraiment {#attention-variants}
+
+Le bloc de référence ci-dessus implémente une **attention multi-têtes classique (MHA)** : chaque tête possède ses propres projections Q, K et V. Les variantes modernes ne changent pas toutes la même chose. Certaines partagent les têtes K/V pour réduire le cache ; d'autres compressent ce qui est stocké ou limitent les positions consultées.
+
+### 1. MHA, MQA et GQA : partager les têtes K/V
+
+On note $H_q$ le nombre de têtes de requête et $H_{KV}$ le nombre de têtes clé/valeur.
+
+| Variante | Requêtes Q | Clés/valeurs K/V | Idée |
+|---|---:|---:|---|
+| **MHA** | $H_q$ | $H_{KV}=H_q$ | Chaque tête Q possède ses propres K et V. |
+| **MQA** | $H_q$ | $H_{KV}=1$ | Toutes les têtes Q partagent une seule tête K/V. |
+| **GQA** | $H_q$ | $1 < H_{KV} < H_q$ | Les têtes Q sont réparties en groupes ; chaque groupe partage K/V. |
+
+Q reste propre à chaque tête. C'est le partage des projections et des états K/V — pas la suppression des têtes Q — qui distingue MQA et GQA. GQA interpole entre MHA et MQA ; le nombre de têtes K/V est un choix d'architecture, pas un réglage gratuit appliqué à un modèle déjà entraîné.
+
+Pour une attention dense avec cache KV, une approximation de la mémoire d'un modèle est :
+ On peut l'estimer par $M_{KV}\approx 2 L B T H_{KV} d_h b$.
+où $L$ est le nombre de couches d'attention, $B$ le batch, $T$ le contexte conservé, $d_h$ la dimension d'une tête KV et $b$ le nombre d'octets par élément. Le facteur 2 stocke K et V. À dimensions et précision égales, passer de 32 têtes KV (MHA) à 8 (GQA) divise donc ce cache par 4 ; passer à une tête (MQA) le divise par 32. Ce ratio concerne le cache K/V, pas la mémoire totale du modèle ni nécessairement la latence mesurée.
+
+### 2. MLA : compresser conjointement K et V dans un espace latent
+
+**Multi-head Latent Attention (MLA)** ne se contente pas de choisir moins de têtes KV. Dans DeepSeek-V2, les informations K/V sont projetées vers une représentation latente de rang réduit, stockée pendant le décodage ; les composantes nécessaires sont reconstruites par projection. Le traitement positionnel RoPE utilise en outre un chemin découplé dans la conception décrite par l'article.
+
+L'objectif est de réduire la quantité d'état KV conservée sans simplement remplacer toutes les têtes par une seule tête partagée. Le coût dépend des dimensions latentes, des projections, des noyaux et de la manière dont le runtime absorbe certaines projections. **Ne comparez donc pas MLA à GQA par le seul nombre de têtes KV** : la représentation mise en cache n'est pas la même.
+
+### 3. Fenêtre locale et attention sparse : limiter les positions consultées
+
+Ces méthodes changent le **motif des connexions** :
+
+- **Sliding-window attention** : chaque position ne consulte qu'une fenêtre locale de taille définie. Le coût attentionnel par position est alors lié à cette fenêtre plutôt qu'à tout le contexte, mais une information éloignée n'est pas directement accessible dans une couche locale.
+- **Attention sparse ou par blocs** : seules certaines positions ou certains blocs sont autorisés. Selon le motif, certaines connexions à longue distance peuvent être conservées ; « sparse » ne signifie donc pas nécessairement « strictement local ».
+- **Attention globale dense** : toutes les positions autorisées par le masque causal restent accessibles. FlashAttention peut accélérer cette opération dense en réduisant les transferts mémoire, sans changer son motif mathématique.
+
+Limiter les positions consultées ne revient pas à partager les têtes K/V : on peut combiner GQA et fenêtre locale, comme l'illustre Mistral 7B. Il faut donc séparer trois axes : **taille de l'état KV**, **nombre de paires de positions calculées** et **coût des transferts mémoire**.
+
+### Ce que cette implémentation fait — et ne fait pas
+
+Le code NumPy présenté dans cette visite est un exemple pédagogique MHA : $H_{KV}=H_q$, projections K/V propres à chaque tête, attention causale dense. Il ne contient ni partage GQA/MQA, ni cache KV d'inférence, ni compression latente MLA, ni motif sparse. Les tableaux ci-dessus décrivent des choix architecturaux distincts ; ils ne prétendent pas que le code de référence les exécute.
+
+**Sources primaires et comparaison visuelle :** [MHA — Vaswani et al. (2017)](https://arxiv.org/abs/1706.03762) · [MQA — Shazeer (2019)](https://arxiv.org/abs/1911.02150) · [GQA — Ainslie et al. (2023)](https://arxiv.org/abs/2305.13245) · [MLA — DeepSeek-V2 (2024)](https://arxiv.org/abs/2405.04434) · [Sliding window — Mistral 7B (2023)](https://arxiv.org/abs/2310.06825) · [Sparse/local — Longformer (2020)](https://arxiv.org/abs/2004.05150) · [Guide visuel des variantes — Sebastian Raschka](https://magazine.sebastianraschka.com/p/visual-attention-variants).
 
 ## Le MLP : élargir, activer, projeter
 

@@ -10,7 +10,7 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/post-training"
 summary: "Explains post-training as the same training loop applied to a pretrained model with different data and targets, and separates it from prompting and retrieval, which change the context but not the parameters."
-scope: "Distinguish pretraining, supervised fine-tuning on instruction-response pairs, preference-based methods (reward-model RLHF and direct preference optimization), and parameter-efficient adaptation at the level of what data, targets and parameters change; contrast them with in-context learning and retrieval-augmented generation. Algorithms (PPO, DPO objective derivations), recipes of particular models and evaluation of assistant behaviour are out of scope."
+scope: "Distinguish pretraining, supervised fine-tuning on instruction-response pairs, preference-based methods (reward-model RLHF and direct preference optimization), and parameter-efficient adaptation at the level of what data, targets and parameters change; explain model-specific conversation serialization through chat templates; contrast these with in-context learning and retrieval-augmented generation. Algorithms (PPO, DPO objective derivations), recipes of particular models and evaluation of assistant behaviour are out of scope."
 purpose: "State, for each adaptation method, what data it uses, which tokens contribute to the loss, which parameters change, and what stays fixed; choose between changing the context and changing the parameters."
 suggested_route:
   previous: null
@@ -57,6 +57,18 @@ An instruction–response pair is concatenated into one token sequence, for exam
 This is why the loss mask matters: it selects which targets contribute to the objective; it does not decide which positions the attention can read. Nothing else in the forward pass changes. SFT shifts the model's distribution toward the demonstrated answers: it makes continuations resembling the training responses more likely, without guaranteeing that a given answer will be correct, useful, or even consistently produced.
 
 SFT teaches by imitation of the demonstrations. It does not by itself tell the model which of two acceptable answers a person would prefer, and its quality depends on the quality and coverage of the demonstrations.
+
+## Conversation format: chat templates
+
+Before training an assistant, messages must be serialized into a token sequence. A *chat template* defines this representation: role markers (system, user, assistant), content, message boundaries, and control markers indicating, for example, whether the assistant turn has ended or control is being handed to a tool.
+
+This format is a **model-specific input/output convention**, not a universal structure. Two models can represent the same conversation with different special tokens and rules. Use the template expected by the model and preserve it with the dataset provenance and tokenizer revision.
+
+During SFT, a mismatched template can teach the model role boundaries or end markers that are incompatible with those used at inference. The template prepares the sequence; the loss mask separately determines which positions contribute to the objective. Do not confuse the two.
+
+Templates can also encode tool calls. They represent control structure in the sequence, but do not execute the tool themselves: the host application interprets and executes the call.
+
+See the [Hugging Face documentation on chat templates](https://huggingface.co/docs/transformers/main/en/chat_templating) and [Chapter 11 of the course](https://huggingface.co/learn/llm-course/en/chapter11/2).
 
 ## Preference-based methods
 

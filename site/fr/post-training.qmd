@@ -10,7 +10,7 @@ lang: fr
 LLM-LAB-PAGE-MAP v1
 id: "fr/post-training"
 summary: "Explique le post-entraînement comme la même boucle d'entraînement appliquée à un modèle pré-entraîné avec d'autres données et d'autres cibles, et le distingue du prompting et de la récupération, qui modifient le contexte mais pas les paramètres."
-scope: "Distinguer pré-entraînement, fine-tuning supervisé sur des paires instruction-réponse, méthodes à préférences (RLHF avec modèle de récompense et optimisation directe des préférences) et adaptation économe en paramètres, au niveau des données, des cibles et des paramètres modifiés ; les opposer à l'apprentissage en contexte et à la génération augmentée par récupération. Les algorithmes (PPO, dérivation de l'objectif DPO), les recettes de modèles particuliers et l'évaluation du comportement d'un assistant sont hors périmètre."
+scope: "Distinguer pré-entraînement, fine-tuning supervisé sur des paires instruction-réponse, méthodes à préférences (RLHF avec modèle de récompense et optimisation directe des préférences) et adaptation économe en paramètres, au niveau des données, des cibles et des paramètres modifiés ; expliquer la sérialisation des conversations par des chat templates propres au modèle ; les opposer à l'apprentissage en contexte et à la génération augmentée par récupération. Les algorithmes (PPO, dérivation de l'objectif DPO), les recettes de modèles particuliers et l'évaluation du comportement d'un assistant sont hors périmètre."
 purpose: "Indiquer, pour chaque méthode d'adaptation, quelles données elle utilise, quels tokens contribuent à la loss, quels paramètres changent et ce qui reste fixe ; choisir entre modifier le contexte et modifier les paramètres."
 suggested_route:
   previous: null
@@ -57,6 +57,18 @@ Une paire instruction–réponse est concaténée en une seule séquence de toke
 C'est pourquoi le masque de loss compte : il sélectionne les cibles qui contribuent à l'objectif ; il ne décide pas quelles positions l'attention peut lire. Rien d'autre ne change dans la passe avant. Le SFT déplace la distribution du modèle vers les réponses démontrées : il rend plus probables les continuations qui ressemblent aux réponses d'entraînement, sans garantir qu'une réponse donnée sera correcte, utile ou même toujours produite.
 
 Le SFT enseigne par imitation des démonstrations. Il n'indique pas à lui seul laquelle de deux réponses acceptables une personne préférerait, et sa qualité dépend de celle et de la couverture des démonstrations.
+
+## Le format des conversations : les chat templates
+
+Avant d'entraîner un assistant, les messages doivent être sérialisés en une séquence de tokens. Un *chat template* définit cette représentation : marqueurs de rôle (système, utilisateur, assistant), contenu, frontières de message et marqueurs de contrôle indiquant notamment si le tour de l'assistant est terminé ou si le contrôle est transmis à un outil.
+
+Ce format est une **convention d'entrée et de sortie propre au modèle**, pas une structure universelle. Deux modèles peuvent représenter la même conversation avec des tokens spéciaux et des règles différentes. Il faut donc utiliser le template attendu par le modèle et le conserver avec la provenance du dataset et la révision du tokenizer.
+
+Pendant le SFT, un mauvais template peut apprendre au modèle des frontières de rôle ou des marqueurs de fin incompatibles avec ceux utilisés à l'inférence. Le template prépare la séquence ; le masque de loss détermine séparément quelles positions contribuent à l'objectif. Les deux ne doivent pas être confondus.
+
+Les templates peuvent aussi encoder des appels d'outils. Ils représentent alors une structure de contrôle dans la séquence, mais n'exécutent pas eux-mêmes l'outil : c'est l'application hôte qui interprète et exécute l'appel.
+
+Voir la [documentation Hugging Face sur les chat templates](https://huggingface.co/docs/transformers/main/en/chat_templating) et le [chapitre 11 du cours](https://huggingface.co/learn/llm-course/en/chapter11/2).
 
 ## Les méthodes à préférences
 

@@ -149,6 +149,31 @@ L'expérience [structure séquentielle et compression prédictive](https://githu
 
 Voir la [synthèse critique de Mingdi Fan](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/fan-compression-intelligence-2026-11.md) et la [revue détaillée](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-reviews/fan-compression-intelligence-2026-11.md).
 
+## Reconstituer le raisonnement, étape par étape
+
+La progression pédagogique de 3Blue1Brown peut être rejouée comme une chaîne de six questions. Elle complète les leçons canoniques ; elle ne les remplace pas.
+
+1. **Quels événements sont fréquents ?** Partir d'un petit alphabet et d'une distribution de fréquences. Demander quels symboles méritent les mots de code les plus courts.
+2. **Comment garantir un décodage non ambigu ?** Construire un arbre binaire et s'arrêter aux feuilles : aucun mot de code ne doit être le préfixe d'un autre. Vérifier la somme de Kraft. L'expérience ci-dessous fournit un code de Huffman testable.
+3. **Combien coûte un événement ?** Faire émerger le surprisal $I(x)=-\log_2 p(x)$. Un événement rare coûte davantage. Cette longueur idéale peut être fractionnaire, contrairement à la longueur entière d'un mot de code binaire.
+4. **Combien coûte une source en moyenne ?** Moyenner le surprisal sous la distribution : on obtient l'entropie. Ne pas confondre cette espérance avec le surprisal d'un symbole effectivement observé.
+5. **Et si les événements dépendent du contexte ?** Remplacer $p(x_t)$ par $p(x_t\mid x_{<t})$. La règle de chaîne transforme le produit des probabilités conditionnelles en somme de coûts : c'est le pont vers la prédiction autorégressive.
+6. **Comment évaluer un modèle imparfait ?** Comparer la distribution réelle cible $q$ à la distribution prédite $p$. La cross-entropy $H(q,p)$ mesure le coût moyen sous $q$ quand on code avec $p$ ; pour une cible one-hot, elle devient la NLL du token observé. La leçon [Entropie croisée](cross-entropy.qmd) formalise cette dernière étape.
+
+```{mermaid}
+flowchart TD
+  A["Fréquences des symboles"] --> B["Arbre de code préfixe"]
+  B --> C["Longueur idéale : -log₂ p(x)"]
+  C --> D["Moyenne : entropie H(X)"]
+  D --> E["Contexte : p(xₜ | contexte précédent)"]
+  E --> F["Coût de séquence : somme des surprisals"]
+  F --> G["Modèle p évalué sous les cibles q : H(q,p)"]
+```
+
+**Mini-vérification.** Pour $p=(1/2,1/4,1/8,1/8)$, retrouvez les longueurs idéales $(1,2,3,3)$ bits, puis l'entropie $1,75$ bit. Avec le code de Huffman $0,10,110,111$, vérifiez que la longueur moyenne vaut aussi $1,75$ bit et que la somme de Kraft vaut 1. Enfin, expliquez pourquoi cette égalité exacte dépend ici des probabilités dyadiques et n'est pas garantie pour toute distribution.
+
+Cette séquence distingue trois niveaux : **intuition de codage** (arbre et mots de code), **identités informationnelles** (surprisal et entropie), puis **évaluation d'un modèle de langage** (coût conditionnel et cross-entropy). Elle évite de sauter directement d'une formule à une affirmation sur « l'intelligence ».
+
 ## Auto-évaluation
 
 1. Pourquoi un LLM n'est-il pas un décompresseur LZW ?
