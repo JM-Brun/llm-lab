@@ -68,3 +68,43 @@ Do not add Hugging Face Jobs as a mandatory dependency or imply that LLM Lab cur
 ## Validation still required
 
 Recover the complete repository URL; inspect the script, training code, dependencies, data-loading path and output handling; compare the transcript with the actual video; verify the run duration and cost from logs; then execute only under an explicit spending limit. A third-party transcript is now available, but it is not a substitute for audiovisual inspection or code review. The creator attribution is corroborated, but the linked code repository remains unidentified. No independent reproduction is claimed.
+
+
+## Code review update — repository recovered (2026-11-17)
+
+The full URL was subsequently supplied: https://github.com/scienceetonnante/nanogpt-jobs. The repository was inspected statically on its `master` branch (tree SHA `781d0e4fe0513de8ec74654e75a39e4aa1809853`). Files inspected: README, `train.py`, `run_on_hf.sh`, `requirements.txt`, and `sample.py`. This supersedes the earlier statement that the repository could not be identified. It does not supersede the limitations about not executing the code or launching a paid job.
+
+### Confirmed implementation details
+
+- `train.py`: 8 Transformer blocks, embedding width 512, 8 heads, context length 512, GPT-2 tokenizer/vocabulary (50,257), learned absolute positional embeddings, tied token embedding/output weights, causal attention via PyTorch scaled dot-product attention; approximately 51M parameters.
+- Dataset: `roneneldan/TinyStories`, loaded with `datasets`; each story is encoded with the GPT-2 tokenizer and an end-of-text token, concatenated into a single `uint16` NumPy array, then random windows of 513 tokens are sampled for next-token training.
+- Training: batch size 16 × 512 context tokens = 8,192 tokens per update; AdamW; peak learning rate 6e-4; 1,000-step linear warm-up then cosine decay to 10% of peak; gradient norm clipping at 1.0. CUDA path uses `torch.compile` and bfloat16 autocast.
+- Progress prints every 100 steps. Samples and checkpoints are written every 2,000 steps; a final checkpoint is written after the loop.
+- `run_on_hf.sh`: creates a private Hub bucket named from the current directory, syncs the code into `code/` (excluding hidden files, Python caches and local `out/`), launches a detached Jobs container using `ghcr.io/astral-sh/uv:python3.12-bookworm`, mounts the bucket, links `out/` to the persistent bucket output directory, installs `requirements.txt` with uv and runs the selected Python file. Default timeout is two hours; flavor is mandatory. It prints the job ID and commands to follow logs and retrieve outputs.
+- `sample.py`: loads `out/model.pt` on CPU and generates three samples from a supplied prompt or a default prompt.
+
+### Corrections and important nuance
+
+1. The earlier transcript-derived details are now corroborated by source code where noted. The repository is a direct code source, not merely a transcript rendering.
+2. The README says the training data is about two million short stories; the implementation downloads and tokenizes the full training split and materializes the concatenated token array in host RAM. This creates a host-memory requirement in addition to GPU VRAM.
+3. The number of training steps is derived from total token count divided by batch tokens, but each batch consists of independently sampled random windows. Calling this “one pass” is a step-budget heuristic, not a sequential traversal of every unique window.
+4. The script reports the current training-batch loss only. It defines no validation/test split and computes no held-out metric. Generated samples are qualitative illustrations, not a generalization evaluation.
+5. Checkpoints are periodic (every 2,000 steps) and final. If a job is interrupted between checkpoints, progress since the last save may be lost.
+6. No explicit random seeds or pinned dependency versions are provided in the repository's `requirements.txt`; exact bitwise reproducibility is not established.
+7. The launcher uses a two-hour default timeout and a required explicit hardware flavor. The README requires a Hugging Face PRO subscription or credits. The bucket is the code-staging and artifact-persistence boundary; TinyStories is fetched separately from the Hub by the training process.
+
+### Pedagogical integration decision
+
+Integrate as an optional remote-execution recipe that can be applied after a learner has a working training loop. It should not be presented as a new training algorithm or as a replacement for local CPU smoke tests. Preserve three separable concerns:
+- model/training implementation (portable Python);
+- execution adapter (image, hardware flavor, timeout, job submission);
+- data/artifact plane (Hub dataset download, mounted bucket, checkpoints and retrieval).
+
+A controlled LLM Lab comparison should use a fixed commit, dataset and number of steps across CPU/local GPU/managed GPU, record startup and data-loading time separately from training time, report tokens/second and held-out validation loss, and record actual billed cost. The source repository itself does not implement this complete comparison.
+
+### Evidence status
+
+- Repository contents: inspected statically.
+- Shell launcher and training code: inspected, not executed.
+- Hugging Face account, job logs and reported A100 run: not independently inspected.
+- LLM Lab reproduction: not performed; no paid job launched.
