@@ -4570,7 +4570,7 @@ sources:
       concept_ids: [predictive-compression, entropy, surprisal, cross-entropy, conditional-distribution, sequence-likelihood, next-token-prediction]
     metadata:
       technical_level: intermediate
-      contribution_types: [theory, mathematical-derivation, pedagogy, research-perspective]
+      contribution_types: [theory, mathematical-derivation, pedagogy]
       audiences: [learner, practitioner, educator, researcher]
     scan_status: partially-scanned
     integration_status: partially-integrated
