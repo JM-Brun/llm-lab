@@ -120,7 +120,7 @@ Le mélange universel idéal n'est pas calculable exactement, et le calcul de d�
 
 Leike et Hutter (2015) montrent que la politique AIXI exacte, dans la formulation standard/itérative, n'est **pas calculable à la limite** (*not limit computable*). Ils identifient deux obstacles : décider entre des actions dont les valeurs sont exactement égales, et la définition itérative de la fonction de valeur à horizon infini actualisé, qui conditionne sur la survie indéfinie.
 
-L'article sépare les remèdes. Accepter une **ε-optimalité** évite d'avoir à résoudre les égalités exactes ; utiliser une fonction de valeur **récursive** plutôt qu'itérative traite le problème de l'horizon infini. Ensemble, ces choix donnent une **politique AIXI ε-optimale calculable à la limite** à horizon infini. La tolérance ε(t) peut décroître vers zéro à un rythme calculable. Ce n'est pas un théorème interdisant toute approximation utile : il faut distinguer optimalité exacte, départage des actions, définition de la fonction de valeur et horizon.
+L'article sépare les remèdes. Accepter une **ε-optimalité** évite d'avoir à résoudre les égalités exactes ; utiliser une fonction de valeur **récursive** plutôt qu'itérative traite le problème de l'horizon infini. Ensemble, ces choix donnent une **politique AIXI ε-optimale calculable à la limite** à horizon infini. La tolérance ε(t) peut décroître vers zéro à un rythme calculable. Ce n'est pas un théorème interdisant toute approximation utile : il faut distinguer optimalité exacte, départage des actions, définition de la fonction de valeur et horizon. Cette variante récursive ε-optimale n'est **pas AIXI(t,l)** : la première modifie la définition de la fonction de valeur et accepte un écart ε ; le second borne la longueur et le temps de calcul des politiques candidates.
 
 Source primaire : [Leike & Hutter (2015), On the Computability of AIXI](https://arxiv.org/abs/1510.05572).
 
@@ -216,6 +216,7 @@ Un Transformer entraîné par cross-entropy **n'implémente pas** l'induction de
 4. Dans AIXI(t,l), que bornent $t$ et $l$ ?
 5. Pourquoi un AIXI(t,l) calculable ne rend-il pas AIXI idéal calculable ?
 6. Que signifie le facteur exponentiel $2^l$ pour une utilisation pratique ?
+7. Quels sont les deux obstacles à la calculabilité à la limite d'AIXI, et comment les deux remèdes les traitent-ils ?
 
 ::: {.callout-tip title="Raisonnement attendu"}
 1. Chaque programme trouvé est une description candidate, mais on ne peut pas savoir qu'un programme plus court ne terminera jamais plus tard.
@@ -224,6 +225,7 @@ Un Transformer entraîné par cross-entropy **n'implémente pas** l'induction de
 4. Le temps d'exécution par cycle des politiques candidates et la longueur de leurs programmes — pas seulement le temps et l'espace de l'environnement.
 5. Il résout un problème restreint et borné avec une garantie différente.
 6. Augmenter la longueur maximale des programmes rend rapidement la recherche exhaustive impraticable.
+7. Les égalités exactes entre valeurs d'actions et la définition itérative de la valeur à horizon infini actualisé ; ε-optimalité évite de départager exactement les égalités, tandis qu'une fonction de valeur récursive traite l'obstacle de l'horizon infini.
 :::
 
 ## Pour approfondir
