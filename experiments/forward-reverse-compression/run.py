@@ -130,8 +130,7 @@ def _fit_bigram(training: bytes) -> dict[int, list[int]]:
     for previous, current in zip(training, training[1:]):
         transitions[previous][current] += 1
     return {
-        previous: _quantize_probabilities(transitions[previous])
-        for previous in range(ALPHABET)
+        previous: _quantize_probabilities(transitions[previous]) for previous in range(ALPHABET)
     }
 
 
