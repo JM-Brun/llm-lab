@@ -1306,21 +1306,21 @@ async function runCase(testCase, caseIndex) {
           initialisationError: root.dataset.initialisationError || null,
           selectors: {
             controls: Boolean(root.querySelector(".next-token-explorer__interactive")),
-            prefix: Boolean(root.querySelector(".next-token-explorer__prefix")),
-            distribution: Boolean(root.querySelector(".next-token-explorer__distribution")),
-            tokenChoice: Boolean(root.querySelector(".next-token-explorer__choice")),
-            nextDistribution: Boolean(root.querySelector(".next-token-explorer__next")),
-            append: Boolean(root.querySelector(".next-token-explorer__append")),
-            reset: Boolean(root.querySelector(".next-token-explorer__reset")),
+            prefix: Boolean(root.querySelector(".next-token-explorer__interactive output")),
+            distribution: Boolean(root.querySelector(".next-token-explorer__interactive ul")),
+            tokenChoice: Boolean(root.querySelector(".next-token-explorer__interactive select")),
+            nextDistribution: Boolean(root.querySelectorAll(".next-token-explorer__interactive p")[1]),
+            append: Boolean(root.querySelectorAll(".next-token-explorer__interactive button")[0]),
+            reset: Boolean(root.querySelectorAll(".next-token-explorer__interactive button")[1]),
           },
         }));
         const controls = explorer.locator(".next-token-explorer__interactive");
-        const prefix = explorer.locator(".next-token-explorer__prefix");
-        const distribution = explorer.locator(".next-token-explorer__distribution");
+        const prefix = explorer.locator(".next-token-explorer__interactive output");
+        const distribution = explorer.locator(".next-token-explorer__interactive ul");
         await controls.waitFor({ state: "visible", timeout: 5000 });
         const initialPrefix = (await prefix.textContent()).trim();
-        await explorer.locator(".next-token-explorer__choice").selectOption("0");
-        await explorer.locator(".next-token-explorer__append").click();
+        await explorer.locator(".next-token-explorer__interactive select").selectOption("0");
+        await explorer.locator(".next-token-explorer__interactive button").nth(0).click();
         const extendedPrefix = (await prefix.textContent()).trim();
         const expectedToken = lang === "fr" ? "Vous" : "They";
         const expectedNext = lang === "fr" ? "savez" : "built";
@@ -1330,7 +1330,7 @@ async function runCase(testCase, caseIndex) {
         if (!(await distribution.textContent()).includes(expectedNext)) {
           throw new Error("the next conditional distribution was not displayed");
         }
-        await explorer.locator(".next-token-explorer__reset").click();
+        await explorer.locator(".next-token-explorer__interactive button").nth(1).click();
         const resetPrefix = (await prefix.textContent()).trim();
         if (resetPrefix !== initialPrefix) throw new Error("reset did not restore the original prefix");
         item.nextTokenExplorer = { initialized: true, prefixExtended: true, nextDistributionShown: true, resetWorks: true };
