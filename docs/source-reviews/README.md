@@ -10,7 +10,6 @@ A collection dossier is not a replacement for the canonical concept graph, bilin
 |---|---|---|---|
 | Karthik Shashidhar — LLMs and compression algorithms | Critical assessment of the LZW analogy, predictive coding, domain-frequency claims and evidence limits | [Source review](karthik-shashidhar-llms-compression-algorithms-2024.md) · [Comparative synthesis](../source-syntheses/compression-two-meanings-2026-11.md) | Full article text reviewed; anecdotal claims are not treated as empirical evidence |
 | Wayland Zhang — Information Theory Is All You Need | Entropy, cross-entropy/KL, attention/MI, Landauer, predictive compression and V-information; includes an audit of the linked notebook | [Source review](wayland-zhang-information-theory-llm-2026-11.md) · [Comparative synthesis](../source-syntheses/information-theory-and-llms-2026-11.md) | Full article and 18 English-notebook cells inspected statically; notebook not executed; invalid attention/MI visualization rejected |
-
 | Lewis — Intelligence and compression | Two-part MDL, causal sequence prediction, model updating, AIXI and active inference | [Source review](lewish-intelligence-and-compression-2025.md) · [Structured extraction](../../data/extractions/lewish-intelligence-and-compression-2025.yml) · [Compression synthesis](../source-syntheses/compression-intelligence-and-inference-efficiency-2026-11.md) | Article text reviewed; creator attribution, figures, code/data, outbound resources and rights remain partially scanned |
 
 ## Curriculum and learning-path comparisons
