@@ -30,3 +30,20 @@ def test_page_classification_tags_are_preserved_in_source_metadata() -> None:
     assert '"level:overview"' in page
     assert '"language:fr"' in page
     assert '"status:published"' in page
+
+
+def test_overview_self_checks_cover_every_major_section_in_both_languages() -> None:
+    import re
+
+    heading = re.compile(r"^## .+?\s+\{#([a-z0-9-]+)\}\s*$", re.MULTILINE)
+    marker = re.compile(r"<!-- self-check-covers: ([^>]+) -->")
+    for language in ("fr", "en"):
+        source = (SITE / language / "llm-overview.qmd").read_text(encoding="utf-8")
+        assert "<!-- self-check-coverage: enforced -->" in source
+        check_start = source.index("::: {.self-check}")
+        major_headings = re.findall(r"^## (.+?)\s*$", source[:check_start], re.MULTILINE)
+        sections = set(heading.findall(source[:check_start]))
+        covered = {item for group in marker.findall(source[check_start:]) for item in group.split()}
+        assert major_headings
+        assert len(sections) == len(major_headings), f"{language}: every major section needs an ID"
+        assert sections == covered
