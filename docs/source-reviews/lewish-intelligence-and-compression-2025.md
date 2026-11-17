@@ -128,3 +128,21 @@ The following primary or author-level references anchor the technical distinctio
 - Locate the exact enwik8 source, preprocessing and command lines, or classify the benchmark as permanently non-reproducible from the available article.
 - Inspect the original musical-score figure and all linked media as separate assets; retain link-only status unless a reuse licence is found.
 - Compare the paper's exact MDL objective with prequential MDL and Bayesian marginal likelihood rather than treating them as interchangeable.
+
+
+## 7. Controlled follow-up experiment added to LLM Lab
+
+A reproducible standard-library experiment now lives in [experiments/forward-reverse-compression](../../experiments/forward-reverse-compression/README.md), with a unit test in `tests/unit/test_forward_reverse_compression.py`.
+
+It separates two questions that the article's compact enwik8 comparison can otherwise blur:
+
+1. **Finite codec asymmetry:** paired forward/reversed payloads are passed to zlib-9, bzip2-9 and XZ-6 for IID, stationary first-order Markov and non-stationary regime-shift sources, across eight fixed seeds. Raw paired sizes are available as CSV; summaries report mean/median reverse-minus-forward bytes and the fraction of seeds where forward is smaller.
+2. **Model-description cost:** a held-out continuation of a synthetic Markov sequence is scored under IID and first-order Markov predictors. The experiment reports ideal test-data code length alone and after adding an explicit, fixed-width parameter-table charge. Parameters are smoothed and quantized to 8-bit integer frequencies summing to 255.
+
+A pilot calculation of the specified generators/codecs shows why the comparison must remain paired and codec-specific: across eight seeds, mean reverse-minus-forward byte differences vary in sign and magnitude by source and codec (for example, the stationary Markov control is slightly negative for zlib but positive for bzip2 and XZ). The regime-shift control also varies by codec. These small synthetic results are not a causal test and should not be generalized to natural language or enwik8.
+
+For the separate two-part score, the pilot Markov sequence yields a substantially lower held-out ideal data cost for the bigram predictor than IID, but the bigram model also incurs a larger explicit parameter charge (129 vs 33 bits). This illustrates the accounting distinction; it is not evidence that this particular fixed-width parameter code is optimal.
+
+**Interpretation guardrail:** a stationary source's entropy rate is invariant under time reversal. Any finite byte-count asymmetry here is therefore about finite samples, non-stationarity, compressor context/matching heuristics, initialization and format overhead—not proof of causal direction. The regime-shift source is deliberately time-inhomogeneous and is labelled as such, not as a causal generator.
+
+The script and tests have been committed, but their execution in the repository environment and fresh CI/Quarto validation remain pending. The pilot calculations are exploratory and are not a reproduction of the enwik8 figures in the article.
