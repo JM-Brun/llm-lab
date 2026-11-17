@@ -236,8 +236,7 @@ def test_clean_heading_removes_lightweight_markdown() -> None:
     assert clean_heading("**Query**, _Key_ and `Value`") == "Query, Key and `Value`"
     assert clean_heading("  Attention mechanisms:  ") == "Attention mechanisms"
     assert (
-        clean_heading("What the model predicts {#what-model-predicts}")
-        == "What the model predicts"
+        clean_heading("What the model predicts {#what-model-predicts}") == "What the model predicts"
     )
 
 
