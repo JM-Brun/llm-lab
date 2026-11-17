@@ -72,6 +72,39 @@ A hybrid system can combine complementary first-stage retrievers before a rerank
 
 Search is **not necessarily vector-based**. BM25 and inverted indexes are lexical; dense embeddings support similarity search; SQL and metadata filters provide exact constraints. RAG therefore does not always require a vector database or embeddings.
 
+
+### When the document is visual: ColPali and page-level retrieval
+
+Text extraction is not always the best first representation. Scientific papers, scanned PDFs, forms, tables and infographics can carry important evidence in layout, diagrams, charts and spatial relationships. A conventional pipeline may require OCR, layout detection, table extraction, captioning and chunking before text retrieval.
+
+**ColPali** takes a different route: a vision-language model encodes each document page image into multiple contextual patch vectors. A textual query is encoded into token vectors, then a ColBERT-style late-interaction score matches query tokens to page patches. This can preserve visual evidence that OCR/chunking may miss, while avoiding a long preprocessing chain.
+
+```{mermaid}
+flowchart TD
+  A[PDF page image] --> B[OCR + layout + table / figure extraction]
+  B --> C[Text chunks and captions]
+  C --> D[Lexical / dense text index]
+  D --> E[Retrieve and rank pages]
+  Q[Text query] --> E
+  A2[PDF page image] --> V[Vision-language page encoder]
+  V --> M[Multi-vector patch index]
+  Q --> QE[Query token encoder]
+  M --> LI[Late interaction / MaxSim]
+  QE --> LI
+  LI --> R[Rank relevant pages]
+  E --> H[Selected evidence]
+  R --> H
+  H --> G[Answer from page evidence]
+```
+
+The [ColPali paper's Figure 1](https://proceedings.iclr.cc/paper_files/paper/2025/file/99e9e141aafc314f76b0ca3dd66898b3-Paper-Conference.pdf) visually compares the standard OCR/layout/captioning route with page-image encoding; Figure 3 also shows query-token-to-image-patch relevance heatmaps. These are useful external visual references, not figures reproduced here.
+
+**The result is not “vision always wins”.** On the paper's ViDoRe benchmark, ColPali reports a mean nDCG@5 of 81.3 versus 66.1 for the strongest listed text pipeline in its comparison; this is a benchmark-specific result, not a universal ranking. The same paper reports approximately 257.5 KB of vectors per page, around 30 ms query encoding, and discusses memory/latency trade-offs and token pooling. Its results also show that generic contrastive vision encoders do not automatically become good document retrievers: task-specific training and multi-vector alignment matter.
+
+Use this family when visual structure is part of the evidence and page-level retrieval is acceptable. Keep text extraction or structured parsing when downstream systems need exact text spans, accessible text, precise citations, table values or deterministic filtering. A hybrid system can retrieve pages visually and then extract or verify the relevant region before generation.
+
+Primary reference: [Faysse et al. (ICLR 2025), ColPali: Efficient Document Retrieval with Vision Language Models](https://proceedings.iclr.cc/paper_files/paper/2025/hash/99e9e141aafc314f76b0ca3dd66898b3-Abstract-Conference.html). For the short visual overview, see Daily Dose's [Visual Guide to Bi-encoders, Cross-encoders and ColBERT](https://blog.dailydoseofds.com/p/visual-guide-to-bi-encoders-cross).
+
 A document embedding is a numerical representation useful for search, not the source text. The search engine uses it to locate candidates; the system must then return relevant content or make it accessible to the model. Chunking matters: short chunks lose context, long chunks dilute information and consume more tokens, and arbitrary boundaries may separate a claim from its caveats.
 
 ## 3. RAG: retrieve, then construct context
