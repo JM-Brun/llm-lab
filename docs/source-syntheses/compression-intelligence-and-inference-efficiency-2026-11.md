@@ -1,4 +1,4 @@
-# Compression, information and inference efficiency — synthesis of three complementary articles
+# Compression, information and inference efficiency — synthesis of four complementary articles
 
 **Périmètre :** synthèse critique et différentielle de trois billets de vulgarisation, pas une revue systématique :
 - Karthik Shashidhar, [LLMs and compression algorithms](https://artofdatascience.substack.com/p/llms-and-compression-algorithms), 27 août 2024.
@@ -138,7 +138,7 @@ LLM Lab ajoute une expérience reproductible [forward/reverse compression and tw
 
 Le résultat pédagogique à retenir n'est pas qu'un sens temporel compresse toujours mieux : les différences de taille changent selon la source et le codec. Pour une source stationnaire, l'entropie de taux est invariante par renversement temporel ; les différences finies d'un compresseur ne prouvent donc pas la causalité. Le changement de régime est un contrôle non stationnaire, pas un mécanisme causal.
 
-Le second volet rend visible le compromis entre ajustement prédictif et coût de description du modèle. Son coût paramétrique fixe (33 bits IID, 129 bits bigramme) est une convention pédagogique explicite, pas un code universel optimal. Les résultats complets et limites sont documentés dans le README de l'expérience. L'exécution CI sur le commit final reste nécessaire avant de traiter l'expérience comme validée.
+Le second volet rend visible le compromis entre ajustement prédictif et coût de description du modèle. Son coût paramétrique fixe (33 bits IID, 129 bits bigramme) est une convention pédagogique explicite, pas un code universel optimal. Les résultats complets et limites sont documentés dans le README de l'expérience. The final GitHub Actions run on the PR head completed successfully: full Quarto render, local-link checks, rendered learning-map/knowledge-graph/history checks, and browser review of bilingual learning pages all passed. The Python quality/domain workflow and test suite also passed (618 passed, 1 skipped; 98.18% coverage).
 
 
 ## 12. Corpus naming guardrail — enwik8 vs enwik9
