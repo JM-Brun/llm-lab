@@ -106,7 +106,7 @@ A complementary primary source, Faysse et al., *ColPali: Efficient Document Retr
 - Figure 1 compares a conventional OCR/layout/caption/chunk pipeline with direct page-image encoding by a vision-language model and late interaction.
 - Figure 3 illustrates token pooling and query-token-to-page-patch relevance heatmaps.
 - ColPali is particularly relevant when tables, charts, figures and layout carry evidence that text extraction may discard.
-- On ViDoRe, the paper reports mean nDCG@5 of 81.3 for ColPali versus 66.1 for the strongest listed text pipeline in that experiment; these numbers are benchmark-specific.
+- On ViDoRe, the paper reports mean nDCG@5 of 81.3 for ColPali versus 67.0 for the strongest listed text pipeline (Unstructured + captioning with BGE-M3) in that experiment; these numbers are benchmark-specific.
 - Its stated setup reports 257.5 KB/page, about 30 ms query encoding and 0.39 s/page indexing. These are not universal deployment costs.
 - The paper also reports negative results for generic contrastive VLM variants and discusses memory, token pooling, multilingual and domain generalization qualifications. The takeaway is not “vision always wins”: task-specific training, representation granularity, index memory and downstream evidence extraction matter.
 
