@@ -14,11 +14,17 @@ pedagogical_model:
       - {id: src-predictive-coding, kind: process, description: "Use a probability model to assign shorter expected codes to more likely continuations.", locator: "Hutter Prize"}
       - {id: src-compression-benchmark, kind: benchmark, description: "Evaluate lossless compression of the enwik9 10^9-byte Wikipedia extract under explicit resource and reproducibility constraints.", locator: "Hutter Prize"}
       - {id: src-algorithmic-intelligence-hypothesis, kind: hypothesis, description: "Treat effective compression as evidence of discovering regularities and building compact predictive models; not an identity or complete theory of intelligence.", locator: "Introduction"}
+      - {id: src-compression-efficiency-claim, kind: claim, description: "Compression is said to reduce the amount of data an AI system processes and thereby improve efficiency; the claim is context-dependent because coding overhead and downstream costs are not assessed.", locator: "AI and Compression"}
+      - {id: src-text-compression-turing-test-analogy, kind: hypothesis, description: "The page repeats the organizers' strong analogy between natural-language compression and passing the Turing test; no operational equivalence is established.", locator: "Hutter Prize"}
       - {id: src-cognitive-architecture-boundary, kind: qualification, description: "Compression may be a component in a cognitive architecture, but does not itself specify perception, memory, planning, reasoning or action.", locator: "Compression as a Mechanic or Component to a Cognitive Architecture"}
+      - {id: src-cognitive-architecture-examples, kind: illustrative-list, description: "The page names Soar, ACT-R and CLARION as examples but supplies no references or comparative account.", locator: "Compression as a Mechanic or Component to a Cognitive Architecture"}
     edges:
       - {from: src-regularity-extraction, type: supports, to: src-predictive-coding}
       - {from: src-predictive-coding, type: evaluated-by, to: src-compression-benchmark}
       - {from: src-compression-benchmark, type: motivates, to: src-algorithmic-intelligence-hypothesis}
+      - {from: src-compression-efficiency-claim, type: qualifies, to: src-predictive-coding}
+      - {from: src-text-compression-turing-test-analogy, type: motivates, to: src-compression-benchmark}
+      - {from: src-cognitive-architecture-examples, type: contextualizes, to: src-cognitive-architecture-boundary}
       - {from: src-cognitive-architecture-boundary, type: qualifies, to: src-algorithmic-intelligence-hypothesis}
     interpretation: "This is a minimal source-local reconstruction, not a canonical cognitive or AI architecture. The source's equation-like slogan is treated as a hypothesis/metaphor, not a scientific equivalence."
   learning_outcomes:
