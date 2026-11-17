@@ -1,0 +1,96 @@
+schema_version: 1
+source_id: maor-farid-large-mechanical-model-brep-geometry-2026
+items:
+  - id: maor-farid-large-mechanical-model-brep-geometry-2026:predictive-compression
+    kind: claim
+    summary: "Next-token prediction can be interpreted as predictive compression: better conditional probabilities imply lower expected ideal code length under a suitable coding scheme. This is an information-theoretic interpretation of the training objective, not a definition or sufficient test of intelligence."
+    locator: {type: paragraph, value: "Post body, paragraph 1"}
+    evidence:
+      kind: author-assertion
+      confidence: well-supported
+      scope: "Conceptual link between probabilistic prediction and expected code length."
+      assumptions: ["A probabilistic predictor is paired with a suitable entropy coder or ideal code-length interpretation."]
+      limitations: ["Predictive compression alone does not establish general intelligence, causal understanding or task competence."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [mathematical-tools-geometry]
+      concept_ids: [predictive-compression, entropy, cross-entropy]
+    candidate_destinations:
+      pages: [fr/entropy, en/entropy, fr/compression-revision, en/compression-revision]
+    disposition: clarify
+  - id: maor-farid-large-mechanical-model-brep-geometry-2026:brep-model
+    kind: claim
+    summary: "The author argues that boundary-representation (B-rep) CAD models encode mechanical geometry and topology in a structured form that natural-language descriptions cannot faithfully specify, motivating models trained directly on CAD-native representations."
+    locator: {type: paragraph, value: "Post body, paragraphs 2–3"}
+    evidence:
+      kind: author-assertion
+      confidence: context-dependent
+      scope: "Motivation for a geometry-native Large Mechanical Model."
+      assumptions: ["B-rep preserves the geometric and topological information needed for the target CAD task."]
+      limitations: ["No encoding, precision, benchmark or measured bit-density comparison is supplied. File size is not a universal measure of semantic information; comparisons depend on task, precision, metadata, constraints and representation."]
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:geometric-representation, application:computer-aided-design]
+    candidate_destinations:
+      pages: [fr/llm-limits, en/llm-limits]
+    disposition: clarify
+  - id: maor-farid-large-mechanical-model-brep-geometry-2026:text-to-cad
+    kind: limitation
+    summary: "Free-form prose alone is often underspecified for exact, editable, constraint-consistent CAD. This does not rule out text as a high-level interface combined with structured parameters, sketches, constraints, tools and iterative validation."
+    locator: {type: paragraph, value: "Post body, paragraph 2"}
+    evidence:
+      kind: critical-assessment
+      confidence: context-dependent
+      scope: "Qualification of the post's categorical criticism of text-to-CAD."
+      assumptions: ["The task requires exact geometry, topology, dimensions or engineering constraints."]
+      limitations: ["The source provides no comparative evaluation; text can express intent and constraints while CAD systems validate the resulting model."]
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [architectures-mechanisms]
+      tags: [application:computer-aided-design, topic:geometric-representation]
+    candidate_destinations:
+      pages: [fr/llm-limits, en/llm-limits]
+    disposition: clarify
+  - id: maor-farid-large-mechanical-model-brep-geometry-2026:design-intent
+    kind: open-question
+    summary: "A commenter distinguishes geometric reconstruction fidelity from preservation of design intent: a latent representation might discard statistically rare but functionally critical interfaces, tolerances or constraints. The comment asks whether symbolic/constraint layers should anchor the latent space or whether end-to-end learning can preserve function."
+    locator: {type: comment, value: "Tatiana Stetsenko comment"}
+    provenance:
+      voice: reader-comment
+      speaker: "Tatiana Stetsenko"
+      parent_source_id: maor-farid-large-mechanical-model-brep-geometry-2026
+      locator: {type: comment, value: "Visible comment below the post"}
+      captured_at: "2026-11-17"
+    verification:
+      status: not-assessed
+      sources: []
+      assessment: "A valuable research question, not evidence about the proposed LMM architecture or performance."
+    evidence:
+      kind: community-question
+      confidence: unverified
+      scope: "Potential mismatch between geometric reconstruction losses and downstream engineering validity."
+      assumptions: ["Rare geometric details may carry disproportionate functional or manufacturing importance."]
+      limitations: ["No empirical example or model-specific evidence is provided."]
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:geometric-representation, application:computer-aided-design]
+    disposition: integrate
+  - id: maor-farid-large-mechanical-model-brep-geometry-2026:shannon-attribution
+    kind: limitation
+    summary: "The post attributes to Shannon the claim that model intelligence is fundamentally compression. Shannon formalized entropy and coding limits; prediction and expected code length are linked under probabilistic coding assumptions. 'Compression is intelligence' is a hypothesis or metaphor, not a theorem established by information theory."
+    locator: {type: paragraph, value: "Post body, paragraph 1"}
+    evidence:
+      kind: critical-assessment
+      confidence: well-supported
+      scope: "Historical attribution and interpretation of compression/intelligence."
+      assumptions: ["Shannon's formal results are distinguished from later interpretations of intelligence."]
+      limitations: ["A fuller historical discussion belongs in the existing compression synthesis."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [scale-research]
+      concept_ids: [predictive-compression, entropy]
+    candidate_destinations:
+      pages: [fr/entropy, en/entropy, fr/llm-limits, en/llm-limits]
+    disposition: clarify
