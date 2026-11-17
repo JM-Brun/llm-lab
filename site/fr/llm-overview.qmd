@@ -28,15 +28,15 @@ tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "
 {{< include ../includes/generated-guided-context-fr-llm-overview.qmd >}}
 
 ::: {.chapter-lead}
-« C'est une bonne situation, ça, scribe ? » Dans *Astérix et Obélix : Mission Cléopâtre*, la question de Panoramix lance le scribe Otis dans une longue tirade. Posez la même question à un assistant conversationnel : lui aussi enchaîne. Comment un programme produit-il une suite à partir d'une question ?
+« C'est une bonne situation, ça, scribe ? » Une question courte peut appeler une réponse beaucoup plus longue. Posez-la à un assistant conversationnel : lui aussi enchaîne. Comment un programme produit-il une suite à partir d'une question ?
 
 Il ne rédige pas sa réponse d'un seul bloc. Il estime, pour chaque suite possible, la probabilité qu'elle vienne après le texte déjà écrit, en retient une, puis recommence. Un programme qui attribue ainsi des probabilités aux suites d'un texte est un **modèle de langage**. Entraîné à grande échelle, c'est un **grand modèle de langage** (*large language model*, LLM).
 :::
 
-::: {.callout-note title="Fil rouge : le scribe"}
-**Le préfixe** est la question de Panoramix : « C'est une bonne situation, ça, scribe ? » C'est le texte fourni au modèle. **La continuation** est ce qui vient ensuite. Dans le film, Otis commence par « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... ».
+::: {.callout-note title="Exemple : préfixe et continuation"}
+**Le préfixe** est : « C'est une bonne situation, ça, scribe ? ». **La continuation** commence par : « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... ».
 
-Le fil rouge utilise la tirade d'Otis comme continuation du préfixe de Panoramix. Les valeurs numériques des tableaux sont fictives et servent uniquement à refaire les calculs à la main. Otis est un personnage, l'assistant une application, et le LLM le modèle que cette application interroge : seul ce dernier est étudié ici.
+Les valeurs numériques des tableaux sont fictives et servent uniquement à refaire les calculs à la main. L'assistant est une application ; le LLM est le modèle qu'elle interroge : seul ce dernier est étudié ici.
 :::
 
 ::: {.callout-tip title="L'idée à retenir en une minute"}
@@ -97,7 +97,7 @@ Une fois la distribution calculée, tout dépend de la question posée. **Pour u
 ![Du contexte aux trois usages de la distribution prédictive : génération, scoring et apprentissage, présentés verticalement pour faciliter la lecture sur petit écran.](../images/llm-shared-prediction-uses-fr-mobile.svg){.d-md-none fig-alt="Version mobile du schéma : le contexte traverse le modèle, produit des logits puis des probabilités. Trois blocs présentent ensuite la génération, le scoring et l’apprentissage."}
 
 - **Générer.** On ne connaît pas la suite. Une règle choisit un token dans la distribution, l'ajoute au contexte, et le calcul recommence. Le traitement initial du prompt s'appelle le *prefill* ; la production des tokens un par un, le *decode*.
-- **Scorer.** On connaît la suite : la tirade d'Otis commence par « Vous ». On lit la probabilité illustrative que le modèle lui donnerait, 0,6. Répétée sur chaque token d'un texte, cette lecture mesure à quel point le modèle s'attendait à ce texte ; c'est la [vraisemblance](vraisemblance.qmd).
+- **Scorer.** On connaît la suite : la suite commence par « Vous ». On lit la probabilité illustrative que le modèle lui donnerait, 0,6. Répétée sur chaque token d'un texte, cette lecture mesure à quel point le modèle s'attendait à ce texte ; c'est la [vraisemblance](vraisemblance.qmd).
 - **Apprendre.** On connaît aussi la suite, et l'on veut que le modèle s'y attende davantage la prochaine fois. L'écart entre la prédiction et le token attendu est résumé par un nombre, la [perte](loss.qmd) (*loss*) ; les [gradients](gradients.qmd) indiquent comment modifier chaque paramètre pour la réduire. Pendant cet apprentissage, le contexte est toujours construit avec les tokens réels du texte, jamais avec ceux que le modèle aurait produits : c'est le *teacher forcing*, détaillé dans les [exemples d'entraînement](training-examples.qmd).
 
 Dans notre exemple, attribuer 0,6 au token observé correspond à un **surprisal** de $-\ln(0,6)\approx0,51$ nat : moins un token est probable, plus il est surprenant. L'[entropie](entropy.qmd) est le surprisal moyen, pondéré par leurs probabilités, sur tous les tokens possibles ; additionner les surprisals des tokens observés relie cette idée à la [vraisemblance](vraisemblance.qmd).
@@ -118,7 +118,7 @@ Scorer n'est pas encore évaluer. Le scoring donne des probabilités pour un tex
 | **Encodeur-décodeur** | Produit une sortie conditionnée par une entrée ; adapté notamment aux tâches séquence-à-séquence | [Transformer original](https://arxiv.org/abs/1706.03762), [T5](https://jmlr.org/papers/v21/20-074.html) |
 | **Décodeur seul** | Traite un contexte causal et prédit les tokens suivants | [GPT-3](https://arxiv.org/abs/2005.14165) |
 
-**GPT** (*Generative Pre-trained Transformer*) désigne une famille de Transformers **décodeur seul**, pré-entraînés à prédire le prochain token. C'est le type de modèle qui prolonge la question de Panoramix : il lit ce qui précède et prédit ce qui suit. Ce que chaque famille peut lire, et pour quelle tâche, fait l'objet de la [comparaison des architectures Transformer](transformer-architectures.qmd).
+**GPT** (*Generative Pre-trained Transformer*) désigne une famille de Transformers **décodeur seul**, pré-entraînés à prédire le prochain token. C'est le type de modèle qui lit le contexte et prédit ce qui suit. Ce que chaque famille peut lire, et pour quelle tâche, fait l'objet de la [comparaison des architectures Transformer](transformer-architectures.qmd).
 
 LLM Lab étudie un petit GPT décodeur seul, parce que son calcul peut être suivi et programmé de bout en bout ; le [parcours Build](build-path.qmd) le construit pas à pas. C'est un choix pédagogique : ses dimensions ne reproduisent pas un système de production, et tous les LLM ne sont pas des GPT.
 
@@ -231,7 +231,7 @@ Ces distinctions sont utiles pour passer des fondamentaux du modèle aux systèm
 
 Exercices associés : [page d'exercices du panorama](exercises/llm-overview.qmd).
 
-1. Après la question de Panoramix, le modèle donne 0,6 à « Vous ». Une fois « Vous » ajouté au contexte, il donne à ce même token une probabilité bien plus faible. Les paramètres ont-ils changé entre les deux calculs ?
+1. Après cette question, le modèle donne 0,6 à « Vous ». Une fois « Vous » ajouté au contexte, il donne à ce même token une probabilité bien plus faible. Les paramètres ont-ils changé entre les deux calculs ?
 
 <details>
 <summary>Afficher la réponse</summary>
