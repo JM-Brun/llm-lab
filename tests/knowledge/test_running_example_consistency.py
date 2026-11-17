@@ -58,6 +58,19 @@ FRENCH_EXAMPLE_FRAGMENTS = {
 ENGLISH_CONTINUATION = "They built roads between distant towns."
 
 
+@pytest.mark.parametrize("page_id", ("generation", "vraisemblance", "loss"))
+def test_french_running_example_uses_consistent_conditional_probabilities(page_id: str) -> None:
+    source = (ROOT / "site" / "fr" / f"{page_id}.qmd").read_text(encoding="utf-8")
+    assert "0,5" in source or "0{,}5" in source
+    assert "0,8" in source or "0{,}8" in source
+
+
+def test_generation_candidate_probabilities_form_a_distribution() -> None:
+    source = (ROOT / "site" / "fr" / "generation.qmd").read_text(encoding="utf-8")
+    assert "« savez » 0,5 · « êtes » 0,3 · « voyez » 0,2" in source
+    assert "« savez » 0,6 · « êtes » 0,2 · « voyez » 0,2" not in source
+
+
 @pytest.mark.parametrize("page_id", tuple(FRENCH_EXAMPLE_FRAGMENTS))
 def test_french_pages_reuse_relevant_fragments_naturally(page_id: str) -> None:
     source = (ROOT / "site" / "fr" / f"{page_id}.qmd").read_text(encoding="utf-8")
