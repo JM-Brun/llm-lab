@@ -97,6 +97,10 @@ Le même calcul prédictif transforme un contexte en distribution conditionnelle
 
 Le parcours explore d'abord la génération. Un GPT **initialisé aléatoirement** n'a pas de comportement linguistique appris sur lequel s'appuyer : on peut vérifier les formes, le masque causal et la boucle de génération sans démontrer la production d'un texte utile. L'exemple ci-dessus renvoie des IDs d'un vocabulaire synthétique ; les interpréter comme du texte demanderait un tokenizer compatible. Cette séparation motive les jalons d'apprentissage : préparer des [exemples d'entraînement](training-examples.qmd), optimiser une [loss](loss.qmd) par [gradients](gradients.qmd) — dont seuls les calculs de loss existent aujourd'hui (`losses.py`). Le déroulé de la boucle de génération est détaillé sur la page [Générer du texte : l'inférence pas à pas](generation.qmd).
 
+::: {.callout-note title="Une voie facultative : exécuter l'entraînement sur un GPU distant"}
+Le parcours Build distingue l'implémentation du modèle et l'infrastructure qui l'exécute. Quand une boucle d'entraînement fonctionne localement, un GPU managé peut servir d'accélérateur ponctuel : [recette Hugging Face Jobs (FR/EN)](https://github.com/JM-Brun/llm-lab/tree/main/experiments/huggingface-jobs). Le dépôt externe illustre cette méthode ; il ne constitue pas une implémentation d'entraînement intégrée à LLM Lab et ne valide pas les jalons G8/G9 du projet.
+:::
+
 ## Jalons de construction
 
 Avant de passer à l'étape suivante, produisez ou vérifiez le résultat indiqué ; les pages conceptuelles fournissent le mécanisme, pas la preuve que le code existe. Les identifiants **G0–G9** sont ceux du [plan de construction versionné](https://github.com/JM-Brun/llm-lab/blob/main/docs/learning-path.md) ; **G2** (données d'entraînement) est une branche parallèle : requise avant l'entraînement, pas pour la génération.
