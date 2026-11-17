@@ -178,6 +178,29 @@ The illustrative losses at PAD positions do not contribute. A naive mean over al
 
 The **attention mask** determines which positions may be attended to. The **loss mask** determines which targets contribute to the optimization objective. They have distinct roles and are not interchangeable.
 
+## 4 bis. Dynamic padding at batch time
+
+Padding does not have to be applied once at the maximum length of the entire corpus. For variable-length examples, a *collator* can pad each batch to the length of its longest example. This is **dynamic padding**: it avoids computing over unnecessary PAD positions in shorter batches.
+
+| Strategy | Padding length | Trade-off |
+|---|---|---|
+| Global padding | A fixed length chosen for the dataset or model | Simple shapes, but potentially many unnecessary positions |
+| Dynamic padding | Maximum length observed in each batch | Less wasted computation, but batch shapes vary |
+
+In Transformers, `DataCollatorWithPadding` illustrates this mechanism for tasks where inputs alone are padded. The collator receives already-tokenized examples and builds batch tensors. It does not replace the tokenizer, causal mask, or target construction.
+
+**Do not confuse three roles:**
+
+- **Padding** makes tensor dimensions rectangular.
+- The **attention mask** indicates which positions are real context or padding, according to the model's convention.
+- The **loss mask** indicates which targets actually contribute to the objective; it may exclude PAD positions.
+
+An attention-mask value of zero does not by itself guarantee that the corresponding target is ignored by the loss: the collator and loss computation must agree. In causal training, how PAD labels are handled depends on the collator and model in use; do not automatically reuse a classification collator for a causal language-model objective.
+
+Left versus right padding also depends on the model and use case. Check the checkpoint's conventions and test label positions after collation.
+
+See [Hugging Face — Processing the data](https://huggingface.co/learn/llm-course/en/chapter3/2), which demonstrates dynamic padding with `DataCollatorWithPadding`. This API is an implementation example, not a universal rule for every objective.
+
 ## 5. Tensor shapes
 
 Let `B` be batch size, `L` sequence length, and `V` vocabulary size.
