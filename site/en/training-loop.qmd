@@ -213,6 +213,11 @@ The gradient is $L'(\theta)=2(\theta-5)$, so $L'(2)=-6$. SGD applies $\theta_{ne
 - [Hugging Face — A full training loop](https://huggingface.co/learn/llm-course/en/chapter3/4): a PyTorch example that makes visible the steps handled by a high-level API.
 - [Hugging Face — Understanding Learning Curves](https://huggingface.co/learn/llm-course/en/chapter3/5): interpreting loss and metric curves during fine-tuning.
 
+### Additional workflow examples
+
+- [Hugging Face — Training a causal language model from scratch](https://huggingface.co/learn/llm-course/en/chapter7/6): a CodeParrot example connecting a code corpus, tokenizer, streaming, and causal pretraining. It is an applied case study, not a replacement for LLM Lab's minimal GPT path.
+- [Hugging Face — Debugging the training pipeline](https://huggingface.co/learn/llm-course/en/chapter8/4): a diagnostic approach that inspects data, batching, model, optimizer, and evaluation in sequence.
+
 ### Further reading
 
 - [Kingma and Ba — Adam: A Method for Stochastic Optimization](https://arxiv.org/abs/1412.6980): the adaptive optimizer introduced in the original paper.
