@@ -114,9 +114,9 @@ AIXI n'est ni un compresseur sans perte, ni un modèle de langage classique, ni 
 
 Le mélange universel idéal n'est pas calculable exactement, et le calcul de décision séquentielle optimale qui s'appuie dessus est lui aussi incalculable.
 
-Leike et Hutter (2015) montrent que la politique AIXI exacte, dans la formulation standard/itérative étudiée, n'est **pas calculable à la limite** (*not limit computable*). Ce résultat dépend de la définition formelle de la fonction de valeur et du cadre à horizon infini ; ce n'est pas un théorème d'impossibilité portant sur toute approximation.
+Leike et Hutter (2015) montrent que la politique AIXI exacte, dans la formulation standard/itérative, n'est **pas calculable à la limite** (*not limit computable*). Ils identifient deux obstacles : décider entre des actions dont les valeurs sont exactement égales, et la définition itérative de la fonction de valeur à horizon infini actualisé, qui conditionne sur la survie indéfinie.
 
-Point essentiel : le même article démontre qu'une formulation récursive de la fonction de valeur admet une **politique AIXI ε-optimale calculable à la limite**. La tolérance ε(t) peut même décroître vers zéro à un rythme calculable. Il faut donc distinguer trois dimensions : optimalité exacte ou ε-optimale, fonction de valeur itérative ou récursive, et horizon fini ou infini. Dire simplement qu'« AIXI ne peut pas être approché » serait trop fort.
+L'article sépare les remèdes. Accepter une **ε-optimalité** évite d'avoir à résoudre les égalités exactes ; utiliser une fonction de valeur **récursive** plutôt qu'itérative traite le problème de l'horizon infini. Ensemble, ces choix donnent une **politique AIXI ε-optimale calculable à la limite** à horizon infini. La tolérance ε(t) peut décroître vers zéro à un rythme calculable. Ce n'est pas un théorème interdisant toute approximation utile : il faut distinguer optimalité exacte, départage des actions, définition de la fonction de valeur et horizon.
 
 Source primaire : [Leike & Hutter (2015), On the Computability of AIXI](https://arxiv.org/abs/1510.05572).
 
