@@ -198,6 +198,7 @@ Le lookup conserve les axes batch et position, et ajoute l'axe des caractéristi
 
 </details>
 
+<a id="tokenizer-embedding-trace"></a>
 #### Trace pratique facultative — du texte aux vecteurs
 
 Cette trace complète l'exercice sur le lookup avec un tokenizer réel et une table d'embeddings synthétique. Elle permet de suivre les objets successifs sans prétendre reproduire les poids internes d'un GPT-2 préentraîné.

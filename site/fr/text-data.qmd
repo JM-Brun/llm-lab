@@ -34,6 +34,8 @@ La **tokenisation** découpe le texte en unités appelées *tokens* et associe c
 Le préfixe à encoder est : **« C'est une bonne situation, ça, scribe ? »** La continuation commence par : **« Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation… »**
 
 Tokenisez d'abord le préfixe, puis la continuation, avec le tokenizer effectivement étudié. Ne supposez pas que les frontières de tokens correspondent aux mots. Les IDs obtenus dépendent du tokenizer ; ils ne sont pas universels.
+
+Pour voir une sortie reproductible avec des IDs réels, la collection d'exercices propose une trace technique séparée sur `hello world` et le tokenizer GPT-2 ; les vecteurs d'embedding y restent synthétiques. [Consulter la trace facultative](exercises-text-data.qmd#tokenizer-embedding-trace).
 :::
 
 

@@ -34,6 +34,8 @@ Generation starts with a prompt written in ordinary language. Yet the neural net
 For the recurring example, the prompt is **“What have the Romans ever done for us?”**, from *Monty Python's Life of Brian*. The film's replies are a cultural analogy, not the target continuation used in the worked trace. That continuation is an original LLM Lab sentence: **“They built roads between distant towns.”**
 
 Encode the prompt and this continuation separately with the tokenizer being studied. Token boundaries depend on the tokenizer; token IDs are not universal.
+
+For a reproducible output with real IDs, the exercise collection provides a separate technical trace using `hello world` and the GPT-2 tokenizer; the embedding vectors remain synthetic. [Open the optional trace](exercises-text-data.qmd#tokenizer-embedding-trace).
 :::
 
 
