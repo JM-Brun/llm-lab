@@ -22,6 +22,8 @@ The title's equation is too strong. Compression is one useful perspective on lea
 |---|---|---|
 | Intelligence = compression | Overstated slogan / research hypothesis, not an established identity | Explicitly distinguish predictive compression from general intelligence |
 | Compression discovers regularities | Useful but incomplete: performance depends on representation, model class, data, objective and compute | Connect to predictive modeling and coding |
+| Compression makes AI more efficient by reducing the data to process | Context-dependent: smaller representations can reduce storage or transmission, but encoding/decoding cost, distortion, access patterns and downstream compute can offset the gain | Separate compression ratio, storage/bandwidth savings and end-to-end computational efficiency |
+| Natural-language compression is equivalent to passing the Turing test | Rhetorical research hypothesis, not an established equivalence or operational result | Treat as the Hutter Prize organizers' motivation/analogy, not a theorem or validated benchmark equivalence |
 | The Hutter Prize links compression and AI | Correct as the organizers' motivation; not proof of equivalence | Cite the official competition page for task and rules |
 | enwik9 is the first “109 bytes” of Wikipedia | Malformed expression | Correct to 10^9 bytes, as specified by the official benchmark |
 | Kolmogorov complexity underlies shortest-program descriptions | Broadly correct, with crucial computability and reference-machine qualifications | Use formal algorithmic-information-theory sources for teaching |
@@ -39,11 +41,11 @@ bits. The expected code length under a true distribution \(q\) is related to cro
 
 \(H(q,p)=-\sum_x q(x)\log_2 p(x)\)
 
-A better predictive distribution can therefore reduce expected coding cost, subject to coding overhead, model-description cost and the chosen evaluation protocol. This is a concrete mathematical connection; it does not imply that every form of intelligence is reducible to file compression.
+A better predictive distribution can therefore reduce expected coding cost, subject to coding overhead, model-description cost and the chosen evaluation protocol. This is a concrete mathematical connection; it does not imply that every form of intelligence is reducible to file compression. Nor does a shorter representation automatically reduce end-to-end compute: compression/decompression, random access, distortion and downstream model costs must be measured separately.
 
 ### 3.2 What the Hutter Prize does—and does not—show
 
-The official [Hutter Prize](https://prize.hutter1.net/) asks entrants to losslessly compress the 1 GB (one-billion-byte) `enwik9` corpus, including the executable/decompressor size and under resource constraints. The prize organizers explicitly motivate the task as a way to encourage intelligent compressors.
+The official [Hutter Prize](https://prize.hutter1.net/) asks entrants to losslessly compress the 1 GB (one-billion-byte) `enwik9` corpus, including the executable/decompressor size and under resource constraints. The prize organizers explicitly motivate the task as a way to encourage intelligent compressors. The Notion page goes further by equating natural-language compression with passing the Turing test; that is a strong analogy, not a demonstrated equivalence. A compression benchmark and a conversational imitation test measure different operational tasks.
 
 That is a research programme and benchmark design choice. It does not prove that the best compressor is the best reasoner, that a Wikipedia snapshot represents all relevant knowledge, or that compression performance is a universal intelligence metric. The Notion page's “first 109 bytes” is a malformed rendering of one billion bytes. Prize amounts and records are mutable and should be read from the official page, not copied as timeless facts.
 
@@ -57,7 +59,7 @@ AIXI is a formal idealization of a goal-directed agent using a universal mixture
 
 A cognitive architecture must specify how capabilities such as perception, memory, attention, learning, planning, reasoning and action interact. Compression may contribute to representation learning, abstraction or memory efficiency, but the page gives no implementation or evidence that it supplies the other mechanisms.
 
-The claims attributed to David H. Wolpert and Alexei A. Sharov are not accompanied by references in the Notion page. They are therefore not reproduced as sourced positions in LLM Lab.
+The claims attributed to David H. Wolpert and Alexei A. Sharov are not accompanied by references in the Notion page. The page also names Soar, ACT-R and CLARION as cognitive-architecture examples without citations or comparison. These are recorded as source mentions, not reproduced as sourced positions or adopted as a project taxonomy.
 
 ## 4. Relationship to existing LLM Lab material
 
