@@ -2,7 +2,7 @@
 
 **Date:** 2026-11-13  
 **Origin:** external learner simulation — reading the 17-page Understand path in route order, in French, from `llm-overview` to `gradients`/`llm-limits`.  
-**Status:** proposal only. No source file has been modified. Decisions marked **Decision** need the maintainer's choice.  
+**Status:** historical audit and proposal; the branch also contains experimental source edits, which are not approved for merge. Decisions marked **Decision** need the maintainer's choice. The source diff was re-audited against current `main` on 2026-11-17; see §6.  
 **Relation to existing audits:** this document extends the findings of:
 - `docs/reviews/understand-path-reader-review-2026-11-10.md` (E2 — generation asks too much as the second page)
 - `docs/understand-llms-route-audit-2026-11-09.md` (§4 — generation belongs to "Question 3: What can be done with the prediction?")
@@ -161,7 +161,7 @@ AFTER:
 | Pipeline-stepper (simple) | — | `generation-overview.qmd` (new) | N/A |
 | Fil rouge callout | `generation.qmd` L32–36 | Both (duplicated) | No |
 
-**Total deleted lines: 0. Total new lines: ~30 (lead + forward-reference + simplified stepper).**
+**Proposal-only accounting:** this checklist describes the proposed two-page split, not the later source diff currently attached to this branch. It is not evidence that the branch preserves all current `main` content; see §6 for the actual comparison.
 
 ---
 
@@ -226,3 +226,43 @@ These do not require the generation split and can be addressed independently.
 2. **Route position of Page B:** after `entropy` or after `probabilites`? The route audit suggests after the full "scores to probabilities" section (after `entropy`). The existing `guided-route.yml` stage 06 places it after stage 05.
 3. **Synthesis page (F-L2):** worth creating, or is the learning map sufficient as a closing view?
 4. **Glossary early link (F-L6):** a footnote from `llm-overview` or a sidebar callout?
+
+
+---
+
+## 6. Actual source-diff audit against current `main` (2026-11-17)
+
+This section supersedes any earlier claim that the current branch has no source edits or that its source changes delete no information. The PR branch is 13 files wide, including four edited lesson pages (`fr/en/llm-overview`, `fr/en/generation`) and two generation SVGs. The comparison below is based on section headings and source content in the branch versus current `main`; it is not a rendered-page or learner validation.
+
+### 6.1 Sections present on current `main` but absent from the branch
+
+| Page | Content absent from branch | Existing canonical destination / required action | Decision |
+|---|---|---|---|
+| `fr/llm-overview.qmd` | **Où se trouve l'information ?** — distinctions among information in parameters, context, retrieval and external adaptation | The details belong to `fr/context-engineering.qmd` and `fr/rag-memory-boundaries.qmd`, but the panorama's compact conceptual distinction is not demonstrably reproduced there as a single overview. Restore a concise overview and link to those pages. | Restore or explicitly map each paragraph before accepting deletion. |
+| `fr/llm-overview.qmd` | **Pourquoi les Transformers et les LLM pré-entraînés ont changé la donne** — historical landmarks, conceptual changes and why next-token prediction supports other tasks | `fr/transformer-history.qmd`, `fr/llm-evolution.qmd`, `fr/in-context-learning.qmd` and `fr/post-training.qmd` cover parts of this material, but the branch does not provide a paragraph-level destination map. | Restore the overview bridge; link to canonical deep dives. |
+| `fr/llm-overview.qmd` | **Du modèle au système conversationnel** — distinction between a language model and the application/system around it | `fr/context-engineering.qmd`, `fr/rag-memory-boundaries.qmd` and `fr/llm-evolution.qmd#tool-using-systems` cover related material. The high-level system boundary should remain visible in the overview. | Restore a short distinction and links. |
+| `en/llm-overview.qmd` | **Where does information reside?**, **Why Transformers and pretrained LLMs changed the game**, **From a language model to an application** | Same English canonical destinations should be linked after a paragraph-level check; do not assume French destinations prove English parity. | Restore/map in English too. |
+| `fr/generation.qmd` | **Servir plusieurs requêtes : ordonnancement et réutilisation du cache** — continuous batching, prefix caching and chunked prefill, including distinct purposes and limits | The current `fr/generation.qmd` is the canonical owner: its scope explicitly includes all three mechanisms. No destination in the branch replaces the deleted section. | Restore the full section, not just a link. |
+| `en/generation.qmd` | **Serving multiple requests: scheduling and cache reuse** — same three serving mechanisms | The current English `generation.qmd` is the canonical owner. | Restore the full section and maintain parity. |
+| `fr/generation.qmd` | **Ressources d'implémentation complémentaires** — guided implementation resources | `fr/gpt-generation-walkthrough.qmd` and `fr/build-path.qmd` are canonical destinations, but the branch's replacement must preserve the explicit distinction between conceptual generation and implementation. | Restore a concise resource link block. |
+| `en/generation.qmd` | **Additional implementation resources** | `en/gpt-generation-walkthrough.qmd` and `en/build-path.qmd`. | Restore the equivalent block. |
+
+### 6.2 What is not lost, and what remains unproven
+
+- The branch retains the core generation loop, notation, prefill/decode, temperature, greedy/sampling and the basic misconceptions sections. This does **not** compensate for the missing serving section.
+- The proposed split's information-preservation table in §2.4 describes a different hypothetical change. It cannot be used to certify the current branch's actual diff.
+- The overview's shorter prose may improve first-readability, but the reduction is not safe while the three overview sections above disappear without explicit destinations.
+- The English pages have the same missing section families. A French-only repair would leave bilingual parity incomplete.
+- The generated include files and SVGs must be compared as rendered assets too; heading comparison does not establish visual or accessibility preservation.
+
+### 6.3 Required repair before any source from this branch is reusable
+
+1. Rebuild on current `main`; do not merge or mechanically rebase this stale branch.
+2. Restore the three overview bridges in FR and EN, keeping concise summaries and links rather than duplicating the deep-dive pages.
+3. Restore the multi-request serving section in both generation pages, including continuous batching, prefix caching and chunked prefill, with their distinct guarantees and trade-offs.
+4. Restore the implementation-resource links in both languages.
+5. Compare every remaining deleted paragraph and figure against a named destination; mark it as restored, linked, intentionally removed with rationale, or unresolved.
+6. Recheck generated includes, SVG alt text, Quarto output, responsive rendering, links and accessibility.
+7. Keep the PR in draft until the complete preservation map and validations are reviewed.
+
+**Conclusion:** this branch does contain useful editorial proposals, but the actual page rewrite is not information-preserving yet. The split itself remains undecided; the missing content must be restored or explicitly mapped even if the final decision is to keep a single generation page.
