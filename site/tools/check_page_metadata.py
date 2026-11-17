@@ -132,6 +132,7 @@ def _check_self_check_coverage(source: str, relative: str, errors: list[str]) ->
     if unknown:
         errors.append(f"{relative}: self-check coverage references unknown sections: {unknown}")
 
+
 def _load_page(path: Path, site_dir: Path, errors: list[str]) -> dict[str, Any] | None:
     relative = path.relative_to(site_dir).as_posix()
     source = path.read_text(encoding="utf-8")
