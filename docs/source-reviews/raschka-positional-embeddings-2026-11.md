@@ -146,7 +146,7 @@ For each P0/P1 component: **predict → manipulate one variable → observe tens
 - Added the annotated bibliography entry.
 - Linked both RoPE deep dives from the canonical positional-encoding concept.
 
-No new concept IDs, introductory pages, copied figures or external code were added.
+The canonical concept graph adds `rope-inverse-frequency` and `causal-prefix-visibility`; the source-local pedagogical graph remains separately namespaced. No duplicate introductory page, copied figures or external code were added.
 
 ## 6. Remaining work
 
@@ -162,3 +162,11 @@ No new concept IDs, introductory pages, copied figures or external code were add
 - [Vaswani et al. (2017), Attention Is All You Need](https://arxiv.org/abs/1706.03762)
 - [The Impact of Positional Encoding on Length Generalization in Transformers](https://arxiv.org/abs/2305.19466)
 - [Raschka, Qwen3 from scratch](https://github.com/rasbt/LLMs-from-scratch) — the linked standalone notebook was statically inspected for RoPE, QK normalization, GQA and buffers; it was not executed.
+
+
+## 8. Integration and CI provenance (2026-11-17)
+
+- Merged the current `main` commit `bd144f94d6d77418657aa305019976f0b2bc9ef8` into the positional-embeddings branch with merge commit `850c101122c910e9ab4db821d291feb71e18015e`. The merge preserves the RoPE work and the concurrent Hugging Face course / visual-learning-resource integrations.
+- Resolved the overlapping edits in `data/concepts.yml`, `data/sources.yml` and `docs/references.md` by retaining both branches' additions: three main-branch concepts and five relations, eight main-branch source records, and the visual-learning bibliography section.
+- The earlier red CI run was attached to commit `8602fa79b9f52f9819239cc44adfa7fe58c1d403`. Its source-catalogue failure was caused by the then-missing `pedagogical_model` field in this extraction. The field is present in the current extraction, and a later run on `afbdd6dc9cfab7872f39d3e55e15ce385d2e5d94` passed both CI and Quarto.
+- Those successful runs predate the merge commit and therefore do not validate the final merged tree. A fresh CI and Quarto run on the post-merge head remains required; do not treat the historical green checks as current-head validation.
