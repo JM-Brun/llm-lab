@@ -113,9 +113,9 @@ items:
     disposition: integrate
 
   - id: huggingface-jobs-nanogpt-video-2026:source-code-training-details
-    kind: implementation
+    kind: implementation-pattern
     summary: "The repository implements a ~51M-parameter GPT with 8 blocks, width 512, 8 heads, learned absolute positions, tied embeddings, causal SDPA, TinyStories random windows and AdamW training."
-    locator: {type: file, value: "train.py", label: "Training implementation on repository master"}
+    locator: {type: section, value: "train.py", label: "Training implementation on repository master"}
     evidence:
       kind: direct-source-code-inspection
       confidence: established
@@ -126,7 +126,7 @@ items:
   - id: huggingface-jobs-nanogpt-video-2026:validation-gap
     kind: limitation
     summary: "The training script logs the current training batch loss but has no held-out validation or test evaluation."
-    locator: {type: file, value: "train.py", label: "Training loop"}
+    locator: {type: section, value: "train.py", label: "Training loop"}
     evidence:
       kind: direct-source-code-inspection
       confidence: established
@@ -137,7 +137,7 @@ items:
   - id: huggingface-jobs-nanogpt-video-2026:host-memory-and-checkpointing
     kind: limitation
     summary: "The full tokenized corpus is materialized in host RAM; checkpoints are saved every 2000 steps and at completion, so interruption can lose progress since the previous save."
-    locator: {type: file, value: "train.py", label: "Dataset preparation and checkpoint writes"}
+    locator: {type: section, value: "train.py", label: "Dataset preparation and checkpoint writes"}
     evidence:
       kind: direct-source-code-inspection
       confidence: established
