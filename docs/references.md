@@ -284,6 +284,22 @@ These resources are curated for teaching design and guided experimentation. Incl
 
 ## Information theory and language models
 
+## Algorithmic information and universal agents
+
+- **Marcus Hutter — [Universal Algorithmic Intelligence: A Mathematical Top-Down Approach](https://arxiv.org/abs/cs/0701125)** (2007; based on the IDSIA technical report).
+  - **Use for:** the primary theoretical construction connecting Kolmogorov complexity, the universal Solomonoff mixture, sequential decision theory, AIXI and the resource-bounded AIXI(t,l) agent. Sections 3.2–3.4 and 6 are the key route.
+  - **Critical qualifications:** K is upper semicomputable but not computable; the universal mixture is a semimeasure, not a normalized computable probability; AIXI's optimality is relative to formal assumptions. The detailed AIXI(t,l) construction gives (O(t,2^l)) per cycle, with large hidden constants. Do not flatten superscripts or confuse candidate-program bounds with environment-only bounds.
+  - **Review status:** complete targeted inspection of the accessible report on 17 November 2026. See [advanced source review](source-reviews/aixi-kolmogorov-computability-2026-11.md) and [structured extraction](../data/extractions/aixi-kolmogorov-computability-2026.yml).
+
+- **Jan Leike & Marcus Hutter — [On the Computability of AIXI](https://arxiv.org/abs/1510.05572)** (UAI 2015).
+  - **Use for:** formal classification of AIXI's noncomputability; the paper proves that AIXI is not limit computable, a stronger statement than saying it is too expensive to run.
+  - **Scope:** publisher and arXiv abstracts reviewed; the full proof was not audited in this integration. Do not paraphrase the result as ruling out every useful approximation to restricted aspects of AIXI.
+
+- **Marcus Hutter, David Quarel & Elliot Catt — [An Introduction to Universal Artificial Intelligence](https://hutter1.net/publ/uaibook2.pdf)** (24 December 2024).
+  - **Use for:** a current textbook-level treatment of Kolmogorov complexity and universal prediction, plus the explicit AIXI(t,l) algorithm, proof-length parameter (l_P), setup complexity and per-cycle theorem. See Section 13.2, Algorithm 13.1 and Theorem 13.2.3.
+  - **Review status:** targeted inspection of the relevant background and AIXI(t,l) section; no code or algorithm was executed. Asymptotic complexity is not a practical runtime benchmark.
+
+
 - **Wayland Zhang — Information Theory Is All You Need (to Understand LLMs)** (17 February 2026): https://waylandz.com/blog/information-theory-and-llm/
   - **Use for:** a unifying introductory thread connecting Shannon information, entropy, next-token prediction, cross-entropy, KL divergence, attention, compression and model capacity.
   - **Critical qualifications:** attention weights are not mutual information; Landauer's erasure bound does not establish a general information ceiling for learning from a dataset; compression performance is not equivalent to intelligence; V-information depends on a specified predictive/model class and operational setup.
