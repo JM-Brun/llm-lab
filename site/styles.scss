@@ -2624,5 +2624,5 @@ details.learning-resources[open] > summary { border-bottom: 0; }
 .next-token-explorer__actions button:focus-visible,.next-token-explorer select:focus-visible{outline:2px solid var(--bs-primary,#166534);outline-offset:3px}
 .next-token-explorer__next{margin:.75rem 0 0}
 .next-token-explorer [hidden]{display:none!important}
-html[lang^="fr"] [lang="en"],html[lang^="en"] [lang="fr"]{display:none}
+html[lang^="fr"] .next-token-explorer [lang="en"],html[lang^="en"] .next-token-explorer [lang="fr"]{display:none}
 @media(max-width:700px){.next-token-explorer [data-distribution]{grid-template-columns:1fr}.next-token-explorer{padding:1rem}}
