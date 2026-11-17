@@ -98,13 +98,17 @@ Il combine :
 2. La théorie de la décision séquentielle.
 3. Une politique qui choisit les actions maximisant la récompense future espérée.
 
+::: {.callout-note title="Précision sur la classe d'environnements"}
+La terminologie varie légèrement selon les sources primaires. Hutter (2007) décrit un mélange de semi-mesures chronologiques énumérables ; Leike et Hutter (2015) formalisent les environnements comme des **semi-mesures conditionnelles chronologiques semi-calculables par le bas (LSCCCS)**. Ce sont des classes précises de calculabilité, pas simplement « tous les environnements calculables ».
+:::
+
 À un niveau général :
 
 $$
 \pi^* = \arg\max_{\pi} V^\pi_\xi(h),
 $$
 
-où $h$ est l'historique d'interaction, $\xi$ le mélange universel sur les environnements et $V^\pi_\xi$ la valeur future espérée de la politique $\pi$ sous ce mélange.
+où $h$ est l'historique d'interaction, $\xi$ le mélange universel sur les semi-mesures d'environnement et $V^\pi_\xi$ la valeur future espérée de la politique $\pi$ sous ce mélange.
 
 **Le passage conceptuel :** l'induction de Solomonoff prédit ce que pourrait faire l'environnement ; AIXI utilise ces prédictions pour décider quoi faire.
 
