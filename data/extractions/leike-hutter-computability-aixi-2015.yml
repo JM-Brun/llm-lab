@@ -1,0 +1,16 @@
+schema_version: 1
+source_id: leike-hutter-computability-aixi-2015
+items:
+  - id: leike-hutter-computability-aixi-2015:not-limit-computable
+    kind: result
+    summary: "Leike and Hutter classify AIXI as not limit computable, strengthening the informal statement that exact AIXI is merely too expensive to compute."
+    locator: {type: abstract, value: "Publisher and arXiv abstracts", label: "Main result"}
+    evidence:
+      kind: author-abstract
+      confidence: well-supported
+      scope: "The paper's stated computability-hierarchy result for AIXI."
+      assumptions: ["The formal AIXI model and computability framework defined in the paper."]
+      limitations: ["Only publisher and arXiv abstracts were inspected in this pass; the full proof was not audited."]
+    disposition: cite
+    mapped_concepts: [aixi, resource-bounded-computation]
+    target_resources: [fr/universal-artificial-intelligence, en/universal-artificial-intelligence]
