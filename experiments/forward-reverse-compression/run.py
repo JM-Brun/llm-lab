@@ -199,24 +199,32 @@ def main() -> None:
         writer.writerows(rows)
         return
 
-    print("Forward/reverse compression — paired synthetic controls")
-    print("Positive delta = reverse output larger, hence forward compressed smaller.")
-    print("source | codec | seeds | mean delta B | median delta B | forward-win fraction")
+    output = [
+        "Forward/reverse compression — paired synthetic controls",
+        "Positive delta = reverse output larger, hence forward compressed smaller.",
+        "source | codec | seeds | mean delta B | median delta B | forward-win fraction",
+    ]
     for row in directional_summary(rows):
-        print(
+        output.append(
             f"{row['source']} | {row['codec']} | {row['n_seeds']} | "
             f"{row['mean_reverse_minus_forward_bytes']:.2f} | "
             f"{row['median_reverse_minus_forward_bytes']:.2f} | "
             f"{row['forward_smaller_fraction']:.2f}"
         )
 
-    print("\nConditional two-part MDL illustration (stationary Markov source)")
-    print("direction | model | ideal test bits | model-description bits | total score bits")
+    output.extend(
+        [
+            "",
+            "Conditional two-part MDL illustration (stationary Markov source)",
+            "direction | model | ideal test bits | model-description bits | total score bits",
+        ]
+    )
     for row in mdl_rows(args.length, seeds[0]):
-        print(
+        output.append(
             f"{row['direction']} | {row['model']} | {row['ideal_test_data_bits']:.1f} | "
             f"{row['fixed_width_model_description_bits']} | {row['two_part_score_bits']:.1f}"
         )
+    sys.stdout.write("\n".join(output) + "\n")
 
 
 if __name__ == "__main__":
