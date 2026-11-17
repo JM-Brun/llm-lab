@@ -5321,13 +5321,13 @@ sources:
     technical_level: advanced
     contribution_types: [theory, formal-method, mathematical-result]
     audiences: [advanced-learner, researcher]
-  scan_status: complete
+  scan_status: partial
   integration_status: integrated
   scan_history:
     - accessed_at: "2026-11-17"
-      status: complete
+      status: partial
       inspected_scope:
-        - "Hutter's complete accessible 2007 technical-report PDF, including the Kolmogorov-complexity definition and Section 6 construction of AIXI(t,l)"
+        - "Hutter's accessible 2007 technical-report PDF, with targeted inspection of the Kolmogorov-complexity definition and Section 6 construction of AIXI(t,l)"
         - "Checked the detailed time-bound statements in the introduction and Section 6 against the paper abstract"
         - "Compared the construction with the 2024 Universal AI textbook treatment"
       limitations:
