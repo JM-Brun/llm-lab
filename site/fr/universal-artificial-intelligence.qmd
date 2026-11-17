@@ -150,7 +150,7 @@ $$
 \boxed{T_{\mathrm{cycle}}=O(t\,2^l)}
 $$
 
-Le facteur $2^l$ reflète le nombre exponentiel de programmes binaires candidats jusqu'à la longueur $l (à des facteurs constants près).
+Le facteur $2^l$ reflète le nombre exponentiel de programmes binaires candidats jusqu'à la longueur \\(l\\), à des facteurs constants près.
 
 Dans la formulation ultérieure avec validation par preuve, le coût d'initialisation est borné séparément par
 
@@ -171,7 +171,7 @@ La garantie compare AIXI(t,l) à une classe restreinte de politiques candidates 
 Le manuel de 2024 rend explicites le paramètre de longueur des preuves et la procédure de sélection des candidats. Voir Hutter, Quarel & Catt, [An Introduction to Universal Artificial Intelligence](https://hutter1.net/publ/uaibook2.pdf), section 13.2, algorithme 13.1 et théorème 13.2.3.
 
 ::: {.callout-warning title="Lire attentivement l'exposant"}
-La construction détaillée et le théorème de 2024 donnent $O(t\,2^l)$ **par cycle d'interaction**. Ne pas aplatir les exposants en un ambigu $O(t2l), ni réécrire silencieusement la borne en $O(t^2l)$. Le coût d'initialisation lié à la validation des preuves est une borne distincte.
+La construction détaillée et le théorème de 2024 donnent $O(t\,2^l)$ **par cycle d'interaction**. Ne pas aplatir les exposants en un ambigu $O(t2l)$, ni réécrire silencieusement la borne en $O(t^2l)$. Le coût d'initialisation lié à la validation des preuves est une borne distincte.
 :::
 
 ## 6. Distinguer les quatre niveaux
