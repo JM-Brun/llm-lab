@@ -285,3 +285,80 @@ items:
       pages: [fr/corpus-preparation, en/corpus-preparation]
       concepts: [dataset-curation]
     disposition: integrate-by-reference
+
+  - id: huggingface-llm-course:chapter6-fast-tokenizer-alignment
+    kind: mechanism
+    summary: "Chapter 6's fast-tokenizer workflow exposes word IDs and offset mappings to align subword predictions with source-text spans. Offsets support token classification and extractive QA, including mapping predictions back from overflow windows; this fills a small implementation gap in LLM Lab's existing tokenizer theory."
+    locator: {type: page, value: "https://huggingface.co/learn/llm-course/en/chapter6/3", label: "Chapter 6 — Fast tokenizers' special powers"}
+    evidence:
+      kind: course-lesson
+      confidence: well-supported
+      scope: "Fast-tokenizer capabilities, BatchEncoding, word_ids, offset mapping, token-classification reconstruction and QA follow-up."
+      assumptions: []
+      limitations: ["No code was executed; offsets and alignment helpers are not uniformly available across all tokenizer implementations and versions."]
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:tokenization, topic:offset-mapping, topic:token-alignment, ecosystem:transformers]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [fr/tokenization-strategies, en/tokenization-strategies]
+      concepts: [token]
+    disposition: integrate
+  - id: huggingface-llm-course:chapter7-causal-lm-task-recipe
+    kind: implementation-pattern
+    summary: "Chapter 7 connects a domain-specific code corpus, streaming/filtering, a tokenizer and causal language-model pretraining through the CodeParrot example. It is a useful applied case study alongside LLM Lab's minimal GPT path, but does not justify a broad catalogue of NLP task recipes."
+    locator: {type: page, value: "https://huggingface.co/learn/llm-course/en/chapter7/6", label: "Chapter 7 — Training a causal language model from scratch"}
+    evidence:
+      kind: course-lesson
+      confidence: well-supported
+      scope: "Chapter task-family overview and CodeParrot causal-LM lesson, including data gathering and streaming outline."
+      assumptions: []
+      limitations: ["No code or dataset was executed; corpus selection, licensing, representativeness and contamination were not independently audited."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [text-tokenization]
+      tags: [topic:causal-language-modeling, topic:dataset-engineering, ecosystem:transformers, ecosystem:datasets]
+      concept_ids: [token, dataset-curation]
+    candidate_destinations:
+      pages: [fr/training-loop, en/training-loop, fr/build-path, en/build-path]
+      concepts: [token, dataset-curation]
+    disposition: integrate-by-reference
+  - id: huggingface-llm-course:chapter8-debugging-practice
+    kind: practice
+    summary: "Chapter 8 decomposes high-level training failures into data, preprocessing, batching, model, optimizer and evaluation stages, and teaches full tracebacks and minimal reproducible issue reports. It reinforces LLM Lab's existing testing and reproducibility practices without requiring a separate learning-route stage."
+    locator: {type: page, value: "https://huggingface.co/learn/llm-course/en/chapter8/4", label: "Chapter 8 — Debugging the training pipeline"}
+    evidence:
+      kind: course-lesson
+      confidence: well-supported
+      scope: "Chapter overview, forum-question guidance and stage-by-stage Trainer pipeline debugging."
+      assumptions: []
+      limitations: ["No course code was executed; the example uses version-sensitive Trainer APIs."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [inference-efficiency]
+      tags: [topic:debugging, topic:reproducibility, ecosystem:transformers]
+      concept_ids: []
+    candidate_destinations:
+      pages: [fr/training-loop, en/training-loop]
+      concepts: []
+    disposition: integrate-by-reference
+  - id: huggingface-llm-course:chapter9-gradio-demos
+    kind: implementation-pattern
+    summary: "Chapter 9 teaches Gradio Interface and Blocks patterns for interactive model demos and sharing through Spaces. Demos can support communication and exploratory failure/bias discovery, but a direct integration is deferred until LLM Lab has a trained or deliberately pedagogical artifact whose status and limitations can be represented honestly."
+    locator: {type: page, value: "https://huggingface.co/learn/llm-course/en/chapter9/7", label: "Chapter 9 — Introduction to Gradio Blocks"}
+    evidence:
+      kind: course-lesson
+      confidence: well-supported
+      scope: "Chapter overview and Gradio Blocks lesson, with Interface/Blocks distinction and event-driven examples."
+      assumptions: []
+      limitations: ["No demo was built or deployed; chapter APIs and Spaces workflows were not executed."]
+    classification:
+      primary_theme: inference-efficiency
+      secondary_themes: [probabilistic-foundations-training]
+      tags: [topic:interactive-demo, topic:model-sharing, ecosystem:gradio, ecosystem:huggingface]
+      concept_ids: []
+    candidate_destinations:
+      pages: [fr/build-path, en/build-path]
+      concepts: []
+    disposition: defer
