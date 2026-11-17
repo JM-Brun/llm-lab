@@ -36,7 +36,7 @@ def test_page_classification_tags_are_preserved_in_source_metadata() -> None:
 def test_overview_self_checks_cover_every_major_section_in_both_languages() -> None:
     import re
 
-    heading = re.compile(r"^## .+?\\s+\\{#([a-z0-9-]+)\\}\\s*$", re.MULTILINE)
+    heading = re.compile(r"^## .+?\s+\{#([a-z0-9-]+)\}\s*$", re.MULTILINE)
     marker = re.compile(r"<!-- self-check-covers: ([^>]+) -->")
     for language in ("fr", "en"):
         source = (SITE / language / "llm-overview.qmd").read_text(encoding="utf-8")
