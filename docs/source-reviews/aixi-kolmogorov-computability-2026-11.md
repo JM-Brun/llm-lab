@@ -12,7 +12,7 @@ The passage points to a substantial theoretical programme: use algorithmic infor
 The chain must be taught as four distinct objects:
 
 1. **Kolmogorov complexity (K_U(x)):** shortest program length for an object on a fixed universal machine. It is not computable in general, although it is approximable from above.
-2. **Solomonoff's universal mixture:** a lower-semicomputable semimeasure that weights generating programs by (2^{-|p|}). It is related to (K), but is not simply an algorithm that calculates (K).
+2. **Solomonoff's universal mixture:** a lower-semicomputable semimeasure that weights generating programs by $2^{-|p|}$. It is related to $K_U(x)$, but is not simply an algorithm that calculates $K_U(x)$.
 3. **AIXI:** an idealized active agent that uses a universal mixture over computable environments and chooses actions to maximize expected future reward. It is not merely a compressor or a next-token predictor.
 4. **AIXI(t,l):** a computable resource-bounded construction. It compares a restricted class of candidate policies/programs under explicit bounds; it does not make exact Kolmogorov complexity computable.
 
@@ -20,9 +20,9 @@ The chain must be taught as four distinct objects:
 
 For a reference universal prefix machine (U),
 
-[
-K_U(x)=min_{p:U(p)=x}|p|.
-]
+$
+K_U(x)=\min_{p:U(p)=x}|p|.
+$
 
 The invariance theorem means that changing the reference universal machine changes the value by at most an additive constant independent of (x). That constant matters for finite objects, so K is not an absolute machine-free number.
 
@@ -36,17 +36,17 @@ Primary source: Hutter (2007), Section 3.2; see also the background treatment in
 
 A universal algorithmic mixture assigns weight to outputs through the programs that generate them. In a prefix-free formulation:
 
-[
-M_U(x)=sum_{p:U(p)=x*}2^{-|p|},
-]
+$
+M_U(x)=\sum_{p:U(p)=x*}2^{-|p|}.
+$
 
 where the sum is over minimal programs that output a string beginning with (x).
 
 The shortest-program contribution gives a lower bound of the form
 
-[
-M_U(x)geq 2^{-K_U(x)}
-]
+$
+M_U(x)\geq 2^{-K_U(x)}.
+$
 
 under the corresponding universal-machine conventions. The universal mixture is a semimeasure and is lower semicomputable, but not computable exactly. It is not a normalized probability distribution in the ordinary sense without qualification.
 
@@ -64,7 +64,7 @@ This is the key conceptual transition: **Solomonoff induction predicts what the 
 
 AIXI is not a lossless compressor, a conventional language model, or a practical neural architecture. Its optimality statements are relative to a formal environment class, reward definition, horizon/discounting assumptions and reference universal machine. Its ideal construction is incomputable.
 
-Leike & Hutter (2015) sharpen the statement: AIXI is not merely expensive to compute; it is **not limit computable**. In that precise sense, it cannot be obtained as the limit of a computable sequence of finite-computation approximations. This result should not be paraphrased as “no approximation of AIXI is ever useful”: practical agents can approximate selected aspects or restricted settings, but they do not thereby compute exact AIXI.
+Leike & Hutter (2015) sharpen the statement: in the standard/iterative formulation they study, the exact AIXI policy is **not limit computable**. The result depends on the formal value-function definition and infinite-horizon setting; it is not a blanket impossibility theorem for all approximations. The same paper shows that a recursive value-function formulation admits a limit-computable ε-optimal AIXI policy, including an ε(t) that can decrease to zero at a computable rate. Thus one must distinguish exact optimality, ε-optimality, and the chosen value-function formulation.
 
 ## 5. What AIXI(t,l) actually bounds
 
@@ -90,19 +90,19 @@ The 2024 textbook makes the proof condition explicit: candidate policies return 
 
 The detailed construction gives the per-cycle bound
 
-[
-T_{mathrm{cycle}}=O(t,2^l).
-]
+$
+T_{\mathrm{cycle}}=O(t\,2^l).
+$
 
 The exponential factor counts the candidate-program space. In the later formalization, the proof-enumeration setup cost is separately bounded by
 
-[
-T_{mathrm{setup}}=O(l_P^2,2^{l_P}).
-]
+$
+T_{\mathrm{setup}}=O(l_P^2\,2^{l_P}).
+$
 
 These are asymptotic statements with very large hidden constants. The algorithm is computable in principle, but this does not make it practically tractable. The exponential dependence on (l) is the central obstacle; the proof machinery adds another substantial cost.
 
-**Notation guardrail:** the detailed construction in Hutter's introduction and Section 6, and the later 2024 textbook theorem, support (O(t,2^l)) per cycle. Do not flatten superscripts into ambiguous (O(t2l)), and do not silently replace the bound by (O(t^2l)).
+**Notation guardrail:** the detailed construction in Hutter's introduction and Section 6, and the later 2024 textbook theorem, support $O(t\,2^l)$ per cycle. Do not flatten superscripts into ambiguous (O(t2l)), and do not silently replace the bound by (O(t^2l)).
 
 ### What the optimality statement means
 
@@ -115,7 +115,7 @@ AIXI(t,l) is compared with candidate policies in a restricted resource-bounded c
 | “No general solution because K is not computable” | Exact K is uncomputable; AIXI's noncomputability concerns the universal mixture and optimal sequential decision calculation. Leike & Hutter establish the stronger “not limit computable” result. |
 | “Hutter proved the restricted case AIXI(t,l)” | Hutter constructed a computable resource-bounded agent and established a relative optimality result over a restricted class of bounded candidates. |
 | “The environment is restricted to time t and space l” | (t) and (l) bound candidate computation time per cycle and candidate program length in the AIXI(t,l) construction; later formalization adds proof-length (l_P). |
-| “Runs in O(t2l)” | Per-cycle (O(t,2^l)); later proof-validation setup has a separate (O(l_P^2,2^{l_P})) bound. |
+| “Runs in O(t2l)” | Per-cycle $O(t\,2^l)$; later proof-validation setup has a separate $O(l_P^2\,2^{l_P})$ bound. |
 
 ## 7. Relationship to LLMs and compression
 
@@ -143,7 +143,7 @@ A Transformer trained with cross-entropy does not implement Solomonoff induction
 
 - Hutter (2007): targeted sections of the accessible report inspected for the K definition and detailed AIXI(t,l) construction.
 - Hutter, Quarel & Catt (2024): relevant background and Section 13.2 algorithm/theorem inspected; no code was executed.
-- Leike & Hutter (2015): publisher and arXiv abstracts inspected; full proof not audited.
+- Leike & Hutter (2015): abstract, introduction, relevant computability results and discussion (including Corollary 22) inspected; proofs were not audited line by line.
 - No practical AIXI(t,l) implementation or benchmark was run. The bounds must not be presented as measured runtime.
 
 The Notion page remains a secondary, unsourced entry point. These primary and textbook sources carry the technical claims.
