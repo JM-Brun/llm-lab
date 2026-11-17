@@ -5256,7 +5256,7 @@ sources:
 - id: notion-intelligence-compression-summary
     title: "Intelligence = Compression"
     creators: ["Notion page author not identified"]
-    source_type: notes
+    source_type: other
     identifiers: {}
     canonical_url: "https://jealous-speedwell-b32.notion.site/Intelligence-Compression-4c8d01d16ebf4dc98c5c5cb85ea825c8"
     publisher: "Notion"
