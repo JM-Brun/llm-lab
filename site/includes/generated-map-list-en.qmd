@@ -81,6 +81,7 @@
   - Probabilistic formalization and the training chain
     - [The mathematics of language modeling](language-modeling-math.html)
     - [The mathematical chain of LLM training](mathematical-foundations.html)
+    - [Kolmogorov Complexity, AIXI, and the Limits of Computation](universal-artificial-intelligence.html)
     - [Score centering in off-policy LLM reinforcement learning](score-centering.html)
   - Inference and efficiency
     - [Advanced decoding strategies](decoding-strategies.html)
