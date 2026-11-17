@@ -103,6 +103,24 @@ In an attention head, rotations are applied to $Q$ and $K$ **after their project
 <link rel="stylesheet" href="../styles/nope-prefix-experiment.css">
 <script src="../scripts/nope-prefix-experiment.js" defer></script>
 
+## Hybrid RoPE/NoPE layers: local operations, inherited states
+
+A layer that omits RoPE does not receive a blank or reset representation: it receives the previous layer's contextualized hidden states. Earlier layers may have made positional and contextual distinctions available to later layers, although no architecture diagram can guarantee that those distinctions survive or are used.
+
+{{< include ../includes/hybrid-rope-nope-en.html >}}
+
+<link rel="stylesheet" href="../styles/hybrid-rope-nope.css">
+<script src="../scripts/hybrid-rope-nope.js" defer></script>
+
+## Relative bias: add a position term before softmax
+
+An attention score can be decomposed into a content term and a relative-position term, for example \(s_{ij}=q_i^\top k_j/\sqrt{d_k}+b(h_i,j-i)\). The exact function is architecture-specific. A query-conditioned bias such as the Inkling mechanism described by Raschka is not the same as T5's learned per-head bucket lookup.
+
+{{< include ../includes/relative-bias-decomposition-en.html >}}
+
+<link rel="stylesheet" href="../styles/relative-bias-decomposition.css">
+<script src="../scripts/relative-bias-decomposition.js" defer></script>
+
 ## What RoPE provides — and what it does not guarantee
 
 RoPE provides a structured way to introduce position into attention. Its presence alone does not guarantee reliable extrapolation to sequences much longer than those seen during training.
