@@ -1,0 +1,110 @@
+schema_version: 1
+source_id: jothi-moorthy-llm-processing-linkedin
+pedagogical_model:
+  reconstruction:
+    status: complete
+    basis:
+      - "The complete author-authored text exposed in the directly readable LinkedIn post was inspected on 2026-11-17: title, five numbered stages, practical implications and closing question."
+      - "The supplied infographic URL could not be retrieved as image bytes; visual layout and image-only content are outside the reconstruction scope."
+    inferred_elements:
+      - "The five-stage teaching route is explicit; learning outcomes and assumed prerequisites are inferred."
+      - "The post describes a GPT-like causal decoder, not every LLM architecture."
+  source_graph:
+    nodes:
+      - {id: src-prompt-text, kind: input, description: "User-authored text supplied to a language model.", locator: "Opening and stage 1"}
+      - {id: src-tokenizer, kind: operation, description: "Maps text into a sequence of tokenizer-specific token IDs.", locator: "Stage 2"}
+      - {id: src-token-ids, kind: representation, description: "Discrete vocabulary indices consumed by the model's embedding lookup.", locator: "Stages 2–3"}
+      - {id: src-embeddings, kind: representation, description: "Learned vectors retrieved for token IDs; initial embeddings are not yet context-dependent hidden states.", locator: "Stage 3"}
+      - {id: src-transformer-layers, kind: architecture, description: "Repeated attention and feed-forward computations transform representations.", locator: "Stage 4"}
+      - {id: src-next-token-distribution, kind: output, description: "Conditional probability distribution over vocabulary tokens for the next position.", locator: "Stage 5"}
+      - {id: src-autoregressive-loop, kind: process, description: "A selected token is appended to the context and the next prediction step is repeated.", locator: "Stage 5"}
+    edges:
+      - {from: src-prompt-text, type: tokenized-into, to: src-tokenizer}
+      - {from: src-tokenizer, type: produces, to: src-token-ids}
+      - {from: src-token-ids, type: indexes, to: src-embeddings}
+      - {from: src-embeddings, type: transformed-by, to: src-transformer-layers}
+      - {from: src-transformer-layers, type: produces, to: src-next-token-distribution}
+      - {from: src-next-token-distribution, type: drives, to: src-autoregressive-loop}
+      - {from: src-autoregressive-loop, type: extends, to: src-prompt-text}
+    interpretation: "Source-local reconstruction from prose; not an author-specified formal graph."
+  learning_outcomes:
+    - {status: inferred, outcome: "Trace a prompt from text through token IDs and embeddings to Transformer computation and a next-token distribution.", basis: "The five numbered stages."}
+    - {status: inferred, outcome: "Explain why token counts, rather than word counts, determine context and many pricing limits.", basis: "The practical implications section."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Basic familiarity with written prompts and chat-based language models.", basis: "Used as the starting point without definition."}
+  teaching_route:
+    - {order: 1, section: "Your prompt: the input text", function: orient-input, moves: ["Start from ordinary text", "Introduce the need for tokenization"]}
+    - {order: 2, section: "Tokenizer: text becomes tokens", function: explain-discretization, moves: ["Subword intuition", "Vocabulary-size motivation", "Token IDs"]}
+    - {order: 3, section: "Embeddings: tokens become vectors", function: introduce-representations, moves: ["Embedding lookup", "Learned vector representation"]}
+    - {order: 4, section: "Attention and transformer layers", function: explain-contextual-computation, moves: ["Self-attention intuition", "Feed-forward computation", "Repeated layers"]}
+    - {order: 5, section: "Next-token prediction: from context to next token", function: connect-computation-to-generation, moves: ["Vocabulary probability distribution", "Select and append a token", "Repeat autoregressively"]}
+  pedagogical_strengths:
+    - "Compact end-to-end overview makes the broad text-to-generation data flow approachable for beginners."
+    - "Connects token-based context/pricing limits with practical model use."
+  pedagogical_limits:
+    - "The post is an orientation summary, not a technical explanation, derivation, implementation or experiment."
+    - "Tokens are not necessarily whole words or word fragments; units depend on tokenizer design and may include bytes or byte sequences."
+    - "Token IDs are categorical lookup indices; their numeric magnitudes do not encode semantic distance."
+    - "Initial token embeddings are learned lookup vectors, not complete context-dependent meanings; contextualization emerges through subsequent network computation."
+    - "Attention does not involve conscious decisions; it computes input-dependent weighted combinations under an architecture-specific mask."
+    - "The 'earlier tokens' description is specific to a simplified causal-decoder view, not all Transformer architectures."
+    - "The pronoun example does not establish that attention weights alone identify semantic references."
+    - "The example next-token percentages are illustrative, not measurements from a named model, tokenizer or prompt."
+    - "The overview omits positional information, Q/K/V, causal-mask details, residual paths, normalization, logits and decoding policies."
+    - "The supplied image could not be inspected, so no claim is made about additional visual content."
+  comparison:
+    canonical_pages: [fr/llm-overview, en/llm-overview, fr/text-data, en/text-data, fr/tokenization-strategies, en/tokenization-strategies, fr/embedding-space, en/embedding-space, fr/transformer, en/transformer, fr/generation, en/generation]
+    canonical_concepts: [token, token-embedding, contextualized-representation, self-attention, causal-mask]
+    decision: "No canonical page, concept, route or implementation change. This is a redundant high-level recap of material already covered more precisely in the bilingual Understand path."
+    structures_kept_separate:
+      - "The five-stage source teaching route is not copied into the canonical learning route."
+      - "The source-local graph is not merged into data/concepts.yml; only existing concept IDs are referenced."
+      - "The supplied image is not copied or recreated; rights and visual inspection remain unresolved."
+items:
+  - id: five-stage-overview
+    kind: teaching-sequence
+    summary: "The post presents a five-stage overview from prompt text through tokenization, embeddings, Transformer computation and next-token prediction."
+    locator: {type: section, value: "Stages 1–5"}
+    evidence: {kind: direct-text, confidence: well-supported, scope: "Visible author-authored post text", limitations: ["The infographic itself was not inspected."]}
+    classification: {concept_ids: [token, token-embedding, contextualized-representation, self-attention]}
+    disposition: already-covered
+    rationale: "The same conceptual sequence is already taught across the bilingual Understand pages; adding another route or repeated explanation would create duplication."
+  - id: tokenizer-units-and-token-ids
+    kind: misconception
+    summary: "The wording can suggest that tokens are usually whole words or word fragments. Token boundaries are tokenizer-specific and may correspond to bytes, byte sequences, characters or subword/word-like units; token IDs are categorical indices, not quantities."
+    locator: {type: section, value: "Stage 2: Tokenizer: text becomes tokens"}
+    evidence: {kind: direct-text, confidence: well-supported, scope: "Visible wording and token-ID example", limitations: ["No tokenizer or reproducible encoding example is named."]}
+    classification: {concept_ids: [token]}
+    disposition: clarify
+    rationale: "The project's tokenization pages already explain tokenizer-specific units and ID spaces; no page edit is warranted."
+  - id: embedding-and-context-distinction
+    kind: misconception
+    summary: "The post says embeddings capture token meaning and relations. This needs the distinction between an initial learned lookup vector and later context-dependent hidden states."
+    locator: {type: section, value: "Stage 3: Embeddings: tokens become vectors"}
+    evidence: {kind: direct-text, confidence: well-supported, scope: "Visible author-authored post text", limitations: ["No model, embedding table or activation trace is supplied."]}
+    classification: {concept_ids: [token-embedding, contextualized-representation]}
+    disposition: clarify
+    rationale: "The distinction is already explicit in the project's embedding and contextualized-representation lessons."
+  - id: attention-intuition
+    kind: claim
+    summary: "The post describes attention as each token deciding which earlier tokens matter. Treat this as anthropomorphic shorthand for learned, input-dependent weighted aggregation under an applicable mask."
+    locator: {type: section, value: "Stage 4: Attention and transformer layers"}
+    evidence: {kind: direct-text, confidence: context-dependent, scope: "Visible author-authored post text", limitations: ["No equations, architecture specification or attention matrices are supplied."]}
+    classification: {concept_ids: [self-attention, causal-mask]}
+    disposition: clarify
+    rationale: "Canonical Q/K/V, attention and causal-masking lessons already provide the precise account."
+  - id: next-token-probabilities
+    kind: claim
+    summary: "The post correctly frames prediction as a conditional distribution over vocabulary tokens followed by iterative selection and autoregressive repetition. Its example percentages are illustrative, not empirical."
+    locator: {type: section, value: "Stage 5: Next-token prediction"}
+    evidence: {kind: direct-text, confidence: well-supported, scope: "Visible author-authored post text", limitations: ["No model, tokenizer, logits or decoding configuration supports the example percentages."]}
+    classification: {concept_ids: [contextualized-representation]}
+    disposition: already-covered
+    rationale: "The project's logits, probabilities and generation lessons already provide the full treatment."
+  - id: supplied-infographic
+    kind: figure
+    summary: "The supplied high-resolution LinkedIn media URL could not be retrieved as image bytes in this inspection."
+    locator: {type: external-url, value: "https://media.licdn.com/dms/image/v2/D5622AQEc939zno-l_Q/feedshare-image-high-res/B56aHpoz_uJoAQ-/0/1794921169258?e=1796256000&v=beta&t=btEPvyw-b8QhRGWYCPWGaM_m6IHJMmmHKTvMm2FChhU"}
+    evidence: {kind: metadata, confidence: unverified, scope: "User-supplied media URL only", limitations: ["Image bytes and visual composition were not inspected.", "Creator-specific image rights and licence remain unknown."]}
+    disposition: defer
+    rationale: "Do not reuse, recreate or describe an uninspected asset; link-only pending successful retrieval and rights review."
