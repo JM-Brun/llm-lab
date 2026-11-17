@@ -4570,7 +4570,7 @@ sources:
       concept_ids: [contextualized-representation]
     metadata:
       technical_level: intermediate
-      contribution_types: [architecture, empirical-evaluation]
+      contribution_types: [architecture, experiment, benchmark]
       audiences: [learner, practitioner, researcher]
     scan_status: partially-scanned
     integration_status: partially-integrated
@@ -4608,7 +4608,7 @@ sources:
       concept_ids: [retrieval-augmented-generation, contextualized-representation]
     metadata:
       technical_level: advanced
-      contribution_types: [architecture, empirical-evaluation, visualization]
+      contribution_types: [architecture, experiment, benchmark, visualization]
       audiences: [learner, practitioner, researcher]
     scan_status: partially-scanned
     integration_status: partially-integrated
@@ -4646,7 +4646,7 @@ sources:
       concept_ids: [retrieval-augmented-generation, contextualized-representation]
     metadata:
       technical_level: advanced
-      contribution_types: [architecture, empirical-evaluation]
+      contribution_types: [architecture, experiment, benchmark]
       audiences: [learner, practitioner, researcher]
     scan_status: partially-scanned
     integration_status: partially-integrated
@@ -4683,7 +4683,7 @@ sources:
       concept_ids: [retrieval-augmented-generation]
     metadata:
       technical_level: advanced
-      contribution_types: [architecture, empirical-evaluation]
+      contribution_types: [architecture, experiment, benchmark]
       audiences: [learner, practitioner, researcher]
     scan_status: partially-scanned
     integration_status: partially-integrated
@@ -4715,12 +4715,12 @@ sources:
     reuse: {text: link-only, figures: link-only, code: link-only, data: link-only}
     classification:
       primary_theme: inference-efficiency
-      secondary_themes: [evaluation-methodology]
+      secondary_themes: [inference-efficiency]
       tags: [topic:information-retrieval, topic:benchmark, method:zero-shot-evaluation]
       concept_ids: [retrieval-augmented-generation]
     metadata:
       technical_level: intermediate
-      contribution_types: [empirical-evaluation, methodology]
+      contribution_types: [experiment, benchmark, theory]
       audiences: [learner, practitioner, researcher]
     scan_status: partially-scanned
     integration_status: partially-integrated
