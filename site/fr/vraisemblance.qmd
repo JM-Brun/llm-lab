@@ -89,12 +89,12 @@ Pour une NLL moyenne calculée avec le logarithme naturel, la **perplexité** va
 
 La page suivante décompose cette NLL au niveau d'une position et généralise le cas d'une cible one-hot à une distribution cible : [Entropie croisée](cross-entropy.qmd).
 
-## Exemple : la continuation du scribe
+## Exemple : trois unités observées
 
-Reprenons les trois premiers choix de la génération : après le préfixe « C'est une bonne situation, ça, scribe ? », le modèle attribue $0{,}6$ à « Être » ; après ce token, il attribue $0{,}5$ à « scribe » ; après « Être scribe », il attribue $0{,}8$ à la virgule. Ces probabilités sont conditionnelles à des préfixes successifs différents :
+Reprenons les trois premiers choix de la génération : après le préfixe « C'est une bonne situation, ça, scribe ? », le modèle attribue $0{,}6$ à « Vous » ; après ce token, il attribue $0{,}5$ à « savez » ; après « Vous savez », il attribue $0{,}8$ à la virgule. Ces probabilités sont conditionnelles à des préfixes successifs différents. Pour ce calcul simplifié, les unités affichées sont traitées comme des tokens ; il ne s'agit pas d'une segmentation mesurée avec un tokenizer particulier :
 
 $$
-P_\theta(\text{« Être scribe , »}\mid c)
+P_\theta(\text{« Vous savez , »}\mid c)
 =0{,}6\times0{,}5\times0{,}8=0{,}24.
 $$
 
