@@ -76,7 +76,7 @@ Une suite probable n'est pas une suite vraie. Que « Vous » soit probable aprè
 
 ## Du texte à la distribution
 
-![Le processus autorégressif de génération : le contexte est préparé et tokenisé, traité par un modèle à paramètres fixes, puis enrichi du token sélectionné.](../images/llm-generation-process-fr.svg){#fig-gpt-generation-process fig-alt="Le préfixe « C'est une bonne situation, ça, scribe ? » est tokenisé, traité par un modèle à paramètres fixes, puis converti en distribution : Vous 0,6, Je 0,2, Moi 0,1, Oui 0,1, affichés en pourcentages. Une règle de décodage sélectionne « Être », qui est ajouté au contexte. Les probabilités sont fictives."}
+![Le processus autorégressif de génération : le contexte est préparé et tokenisé, traité par un modèle à paramètres fixes, puis enrichi du token sélectionné.](../images/llm-generation-process-fr.svg){#fig-gpt-generation-process fig-alt="Le préfixe « C'est une bonne situation, ça, scribe ? » est tokenisé, traité par un modèle à paramètres fixes, puis converti en distribution : Vous 0,6, Je 0,2, Moi 0,1, Oui 0,1, affichés en pourcentages. Une règle de décodage sélectionne « Vous », qui est ajouté au contexte. Les probabilités sont fictives."}
 
 La figure se lit de gauche à droite.
 
@@ -231,7 +231,7 @@ Ces distinctions sont utiles pour passer des fondamentaux du modèle aux systèm
 
 Exercices associés : [page d'exercices du panorama](exercises/llm-overview.qmd).
 
-1. Après la question de Panoramix, le modèle donne 0,6 à « Être ». Une fois « Être » ajouté au contexte, il donne à ce même token une probabilité bien plus faible. Les paramètres ont-ils changé entre les deux calculs ?
+1. Après la question de Panoramix, le modèle donne 0,6 à « Vous ». Une fois « Vous » ajouté au contexte, il donne à ce même token une probabilité bien plus faible. Les paramètres ont-ils changé entre les deux calculs ?
 
 <details>
 <summary>Afficher la réponse</summary>
