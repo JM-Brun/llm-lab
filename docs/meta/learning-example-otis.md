@@ -1,6 +1,6 @@
 # Référence pédagogique transversale — le fil rouge du scribe
 
-**Statut :** référence éditoriale interne, proposition de fil rouge  
+**Statut :** référence éditoriale interne ; ne pas reproduire ses explications dans les pages publiques  
 **Langues :** français et anglais  
 **Périmètre :** parcours Understand, Build, Deepen et Practice lorsqu'un exemple de bout en bout est utile  
 **Dernière revue :** 2026-11-10
@@ -134,7 +134,7 @@ Le Build path est une voie distincte du parcours Understand. Le même exemple se
 1. **Une source canonique :** modifier ce document lorsque le scénario, le prompt, la continuation jouet ou la couverture des pages change.
 2. **Pas de copier-coller de la tirade :** garder la citation d'ouverture courte et référencée ; employer le texte original de LLM Lab pour les démonstrations.
 3. **Bilinguisme :** chaque ajout dans une page FR doit avoir son équivalent EN dans la même PR. Dans les pages françaises, conserver le préfixe Astérix et la continuation d'Otis. Dans les pages anglaises, privilégier le parallèle Monty Python de *Life of Brian* (question sur les Romains puis réponses successives) plutôt qu'une traduction artificielle des répliques françaises ; utiliser *Holy Grail* en complément pour le contexte conversationnel et les contraintes successives.
-4. **Répétition utile, pas duplication :** chaque page réutilise le même scénario pour enseigner son concept propre. Elle ne répète pas l'explication des pages précédentes.
+4. **Référence discrète :** dans les pages publiques, réutiliser les formulations naturellement, sans annoncer le « fil rouge », nommer systématiquement le film ou expliquer l'easter egg. La référence doit rester reconnaissable pour qui la connaît, sans détourner l'attention du concept enseigné. Chaque page n'en conserve que les éléments utiles à sa démonstration.
 5. **Véracité numérique :** aucun ID, vecteur, score, logit, poids ou gradient inventé présenté comme résultat réel. Les chiffres illustratifs sont marqués « jouet », « fictifs » ou calculés.
 6. **Respect des frontières de parcours :** Understand expose la chaîne conceptuelle ; Build suit les dépendances d'implémentation. Deepen ajoute des détails facultatifs ; Practice vérifie le transfert.
 7. **Accessibilité et sobriété :** l'humour doit rester dans l'accroche ou le texte d'exemple ; les termes techniques, les limites et les légendes restent explicites.
