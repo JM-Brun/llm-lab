@@ -67,7 +67,7 @@ Give the model the prefix “What have the Romans ever done for us?”. It does 
 | “Nothing” | 0.1 |
 | “Well” | 0.1 |
 
-[Practise calculating the likelihood of an observed continuation](exercises/likelihood.qmd).
+[Practise calculating the likelihood of an observed continuation](exercises/likelihood.qmd#ex-overview-likelihood-transfer).
 
 These values are made up: they do not come from a trained model, and a real vocabulary has tens of thousands of entries, not four. In this simplified example, each row represents one token; the displayed strings are not a claim that a real tokenizer would treat each one as a single token. The path reuses these values from page to page so that every calculation can be redone by hand.
 
