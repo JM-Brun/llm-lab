@@ -61,6 +61,26 @@ Deux textes peuvent être très proches lexicalement ou thématiquement mais exp
 
 Les modèles Sentence Transformers ne partagent pas tous la même fonction de score cible : certains sont entraînés ou recommandés pour le produit scalaire, d'autres pour le cosinus. La documentation Sentence Transformers précise que le produit scalaire de vecteurs normalisés équivaut au cosinus, tandis que le produit scalaire de vecteurs non normalisés conserve l'information de norme. Il faut respecter les hypothèses du modèle choisi plutôt que remplacer la métrique par défaut sans évaluation.
 
+
+## Encoder une paire de textes : bi-encoder ou cross-encoder ?
+
+La similarité entre deux textes dépend aussi de **la manière dont le modèle les encode**. Deux architectures courantes répondent à des contraintes différentes :
+
+| | Bi-encoder | Cross-encoder |
+|---|---|---|
+| Encodage | Chaque texte est encodé séparément par le même modèle. | Les deux textes sont assemblés et traités conjointement. |
+| Sortie typique | Deux vecteurs réutilisables, comparés ensuite par une métrique adaptée. | Un score propre à la paire, calculé après interaction entre les textes. |
+| Atout | Les documents peuvent être encodés et indexés à l'avance ; la recherche sur un grand corpus est efficace. | Le modèle peut prendre en compte les interactions entre les deux textes pendant le calcul du score. |
+| Limite | Les deux textes ne peuvent pas interagir directement pendant leur encodage ; la qualité dépend fortement de l'objectif d'entraînement et des données. | Chaque paire candidate doit être recalculée ; comparer une requête à tout un corpus devient coûteux. |
+
+Un pipeline fréquent combine les deux : un **bi-encoder** récupère rapidement un ensemble de candidats, puis un **cross-encoder** réordonne (*rerank*) ce sous-ensemble en évaluant chaque paire requête–passage. Le cross-encoder n'est donc pas nécessairement un remplacement de la recherche vectorielle : il peut être une seconde étape plus précise, appliquée à une liste courte.
+
+Cette distinction explique aussi pourquoi un état contextualisé produit par un BERT pré-entraîné n'est pas automatiquement un bon embedding de phrase : le *pooling*, l'objectif d'entraînement, les exemples de paires et la tâche visée comptent. Il faut choisir un encodeur de phrases ou de recherche évalué pour l'usage prévu, puis mesurer la qualité du classement sur des requêtes représentatives. Une similarité élevée n'est ni une preuve d'équivalence logique ni une garantie de pertinence.
+
+**AugSBERT** illustre un compromis supplémentaire : utiliser un cross-encoder pour produire des scores ou des étiquettes de paires, puis entraîner un bi-encoder plus rapide à reproduire ces jugements. La description détaillée et l'implémentation de l'article sont partiellement inaccessibles ; voir la [partie 2](https://www.dailydoseofds.com/augsbert-bi-encoders-cross-encoders-for-sentence-pair-similarity-scoring-part-2/), à lire comme une piste d'approfondissement et non comme une validation indépendante des performances.
+
+Pour voir comment cette combinaison s'insère dans un système de récupération, consulter [RAG, mémoire et récupération documentaire](rag-memory-boundaries.qmd).
+
 ## 3. Quand le cosinus est un bon choix
 
 Le cosinus est une baseline raisonnable lorsque :
