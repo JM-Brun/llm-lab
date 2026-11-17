@@ -139,3 +139,8 @@ LLM Lab ajoute une expérience reproductible [forward/reverse compression and tw
 Le résultat pédagogique à retenir n'est pas qu'un sens temporel compresse toujours mieux : les différences de taille changent selon la source et le codec. Pour une source stationnaire, l'entropie de taux est invariante par renversement temporel ; les différences finies d'un compresseur ne prouvent donc pas la causalité. Le changement de régime est un contrôle non stationnaire, pas un mécanisme causal.
 
 Le second volet rend visible le compromis entre ajustement prédictif et coût de description du modèle. Son coût paramétrique fixe (33 bits IID, 129 bits bigramme) est une convention pédagogique explicite, pas un code universel optimal. Les résultats complets et limites sont documentés dans le README de l'expérience. L'exécution CI sur le commit final reste nécessaire avant de traiter l'expérience comme validée.
+
+
+## 12. Corpus naming guardrail — enwik8 vs enwik9
+
+The Lewis article's Hutter Prize paragraph and note [2] call a 1 GB corpus `enwik8`. The official Hutter Prize FAQ says the contest began with the 100 MB `enwik8` corpus and moved to the 1 GB `enwik9` corpus in 2020; the current official page is for `enwik9` and lists historical `enwik8` results separately ([official prize page](https://prize.hutter1.net/), [FAQ](https://prize.hutter1.net/hfaq.htm)). Preserve the article's forward/reverse measurements as its reported `enwik8` experiment, but do not describe that file as the 1 GB Hutter Prize corpus or mix its results with the `enwik9` competition.
