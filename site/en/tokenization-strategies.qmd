@@ -121,6 +121,33 @@ This comparison illustrates why an algorithm label such as BPE is insufficient t
 
 A related coverage distinction is important: a character-based tokenizer whose initial alphabet omits a character may need an unknown-token fallback. A byte-level BPE with all 256 byte values in its base vocabulary can instead represent arbitrary input bytes. This is a property of that byte-level design, not a guarantee about every tokenizer called BPE.
 
+## 3 bis. Mapping tokens back to source text: offsets and alignment
+
+Tokens are model-internal units; an application often needs to recover the source text span they correspond to. A fast tokenizer's *offsets* associate each token with an interval in the original input string. They can help reconstruct a named entity from several subtokens, highlight a prediction, or attach a model output to its context.
+
+With a compatible fast tokenizer, the Transformers API exposes this information through the `BatchEncoding` object:
+
+```python
+from transformers import AutoTokenizer
+
+tokenizer = AutoTokenizer.from_pretrained("bert-base-cased")
+text = "My name is Sylvain."
+encoding = tokenizer(text, return_offsets_mapping=True)
+
+for token, (start, end) in zip(
+    encoding.tokens(), encoding["offset_mapping"]
+):
+    print(token, repr(text[start:end]))
+```
+
+Offsets are positions in the original string and can be used to extract a slice. Special tokens may have a zero-length interval such as `(0, 0)`. The `word_ids()`, `token_to_chars()`, and `char_to_token()` methods expose other directions of this alignment; they are not available in the same way for every slow tokenizer.
+
+**Why this matters:** in token classification, a label supplied for a word must be aligned with one or more subtokens. In extractive question answering, predicted positions must be mapped back to character spans in the context. When a context exceeds the model's maximum length, splitting it into overlapping windows (*overflow* / *stride*) requires tracking offsets and window identity: a position local to one window is not automatically a global document position.
+
+Do not confuse an offset with a token ID: the ID indexes the vocabulary; the offset points to a slice of the input text. Normalization transformations and implementation conventions matter, especially for Unicode text and paired inputs.
+
+See the Hugging Face lessons on [fast-tokenizer capabilities](https://huggingface.co/learn/llm-course/en/chapter6/3) and their [use in the question-answering pipeline](https://huggingface.co/learn/llm-course/en/chapter6/3b). API names and availability should be checked against the Transformers version in use.
+
 ## 4. BPE, WordPiece, and unigram
 
 | Family | Core idea | Limitation to remember |
