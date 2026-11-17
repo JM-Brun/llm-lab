@@ -15,6 +15,7 @@ pedagogical_model:
       - {id: src-compression-benchmark, kind: benchmark, description: "Evaluate lossless compression of the enwik9 10^9-byte Wikipedia extract under explicit resource and reproducibility constraints.", locator: "Hutter Prize"}
       - {id: src-algorithmic-intelligence-hypothesis, kind: hypothesis, description: "Treat effective compression as evidence of discovering regularities and building compact predictive models; not an identity or complete theory of intelligence.", locator: "Introduction"}
       - {id: src-compression-efficiency-claim, kind: claim, description: "Compression is said to reduce the amount of data an AI system processes and thereby improve efficiency; the claim is context-dependent because coding overhead and downstream costs are not assessed.", locator: "AI and Compression"}
+      - {id: src-noise-redundancy-claim, kind: claim, description: "The page argues that compression reduces noise and redundancy so meaningful patterns become easier to identify; this depends on the task's definition of signal and relevance.", locator: "And its connection to cognition"}
       - {id: src-text-compression-turing-test-analogy, kind: hypothesis, description: "The page repeats the organizers' strong analogy between natural-language compression and passing the Turing test; no operational equivalence is established.", locator: "Hutter Prize"}
       - {id: src-cognitive-architecture-boundary, kind: qualification, description: "Compression may be a component in a cognitive architecture, but does not itself specify perception, memory, planning, reasoning or action.", locator: "Compression as a Mechanic or Component to a Cognitive Architecture"}
       - {id: src-cognitive-architecture-examples, kind: illustrative-list, description: "The page names Soar, ACT-R and CLARION as examples but supplies no references or comparative account.", locator: "Compression as a Mechanic or Component to a Cognitive Architecture"}
@@ -22,6 +23,7 @@ pedagogical_model:
       - {from: src-regularity-extraction, type: supports, to: src-predictive-coding}
       - {from: src-predictive-coding, type: evaluated-by, to: src-compression-benchmark}
       - {from: src-compression-benchmark, type: motivates, to: src-algorithmic-intelligence-hypothesis}
+      - {from: src-noise-redundancy-claim, type: qualifies, to: src-compression-as-intelligence}
       - {from: src-compression-efficiency-claim, type: qualifies, to: src-predictive-coding}
       - {from: src-text-compression-turing-test-analogy, type: motivates, to: src-compression-benchmark}
       - {from: src-cognitive-architecture-examples, type: contextualizes, to: src-cognitive-architecture-boundary}
@@ -68,6 +70,9 @@ pedagogical_model:
     - claim: "Intelligence is compression."
       status: "overstated"
       assessment: "Compression and prediction can reveal regularities and support useful representations, but they do not exhaust reasoning, planning, grounded interaction, social cognition or value-sensitive action."
+    - claim: "Compression removes noise and redundancy, making meaningful patterns easier to identify."
+      status: "context-dependent"
+      assessment: "Redundancy and nuisance variation are task-relative; lossy compression can discard rare but decision-relevant information, so shorter representations do not automatically improve understanding."
     - claim: "Compression necessarily reduces the computation required by an AI system."
       status: "context-dependent"
       assessment: "Compression can reduce storage or bandwidth, but end-to-end compute depends on encoding/decoding overhead, distortion, access patterns and downstream operations."
@@ -124,6 +129,19 @@ items:
     disposition: clarify
     mapped_concepts: [predictive-compression, entropy-coding]
     target_resources: [fr/compression-revision, en/compression-revision]
+  - id: notion-intelligence-compression-summary:noise-and-redundancy
+    kind: claim
+    summary: "The page claims that compression reduces noise and redundancy so meaningful patterns are easier to identify; this depends on the task's definition of signal and relevance."
+    locator: {type: heading, value: "And its connection to cognition", label: "Cognition"}
+    evidence:
+      kind: source-claim
+      confidence: context-dependent
+      scope: "The proposed role of compression in reducing noise and redundancy."
+      assumptions: ["The task distinguishes relevant structure from nuisance variation."]
+      limitations: ["Lossy compression can discard rare but important features; lossless compression does not remove information."]
+    disposition: clarify
+    mapped_concepts: [predictive-compression, entropy, model-compression]
+    target_resources: [fr/compression-revision, en/compression-revision, fr/entropy, en/entropy]
   - id: notion-intelligence-compression-summary:compression-efficiency
     kind: claim
     summary: "The page claims compression reduces the amount of data an AI system needs to process and thereby improves efficiency; this is conditional rather than universally true."
