@@ -70,8 +70,6 @@ Des travaux récents illustrent plusieurs approches complémentaires :
 
 La leçon est méthodologique : **évaluer les propriétés réellement exigées par la tâche**. Selon l’application, il peut s’agir de la validité dans le noyau CAD, des dimensions et tolérances, de l’éditabilité de l’arbre de construction, de l’ajustement d’un assemblage, des résultats de simulation et de la fabricabilité. La similarité visuelle ou une explication fluide ne remplacent pas ces contrôles.
 
-L’[étude de cas Maor Farid](../source-reviews/maor-farid-large-mechanical-model-brep-geometry-2026.md) et la [synthèse sur compression et intelligence](../source-syntheses/compression-intelligence-and-inference-efficiency-2026-11.md) approfondissent la distinction entre représentation, compression prédictive et préservation de l’intention de conception.
-
 ## 2. Que veut dire « comprendre » ?
 
 Le mot « compréhension » doit être précisé. Il peut désigner :
