@@ -319,6 +319,5 @@ def test_rail_and_page_context_use_identical_stage_ids(language: str) -> None:
         language,
     )
 
-    assert 'href="#guided-stage-' + stages[0].id + '"' in rail
-    assert 'data-stage-id="' + stages[0].id + '"' in context
-
+    assert f'href="#guided-stage-{stages[0].id}"' in rail
+    assert f'data-stage-id="{stages[0].id}"' in context
