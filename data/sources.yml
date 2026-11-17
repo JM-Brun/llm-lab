@@ -4858,3 +4858,50 @@ sources:
       pages: [fr/llm-overview, en/llm-overview, fr/text-data, en/text-data, fr/tokenization-strategies, en/tokenization-strategies, fr/embedding-space, en/embedding-space, fr/transformer, en/transformer, fr/generation, en/generation]
       concepts: [token, token-embedding, contextualized-representation, self-attention, causal-mask]
       audit_records: [docs/source-reviews/jothi-moorthy-llm-processing-linkedin-2026-11.md]
+
+  - id: lewish-intelligence-and-compression-2025
+    title: "Intelligence and compression"
+    creators: []
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://lewish.io/posts/intelligence-and-compression"
+    publisher: "lewish.io"
+    publication_date: "2025-05-28"
+    updated_date: null
+    language: en
+    version: "Article page accessed 2026-11-17"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [mathematical-tools-geometry, architectures-mechanisms]
+      tags: [topic:predictive-compression, topic:minimum-description-length, topic:generalization, topic:active-inference, topic:universal-intelligence]
+      concept_ids: [predictive-compression, entropy, surprisal, cross-entropy, conditional-distribution, sequence-likelihood, next-token-prediction]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [theory, mathematical-derivation, pedagogy]
+      audiences: [learner, practitioner, educator, researcher]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "Canonical HTML article text, title, publication date and nine section headings."
+          - "The linked musical-score image asset was retrieved and visually inspected; the article itself labels it AI-generated."
+          - "Author-authored discussion of musical chunking, conditional prediction/coding, temporal order, forward/reverse enwik8 results, MDL, Chollet's skill-acquisition efficiency, AIXI, the Free Energy Principle and active inference."
+          - "Visible footnotes qualifying incompressible data, prefix-code illustration, Hutter Prize context, MDL and Solomonoff induction."
+        limitations:
+          - "The page's creator identity beyond the lewish.io byline/site identity has not been independently established; creators intentionally left empty pending verification."
+          - "Figure placements and linked assets were not retrieved as image bytes or visually inspected; figures status remains not-inspected."
+          - "Code, benchmark scripts/data, comments, outbound links and any article revision history were not exhaustively inspected."
+          - "The forward/reverse enwik8 measurements are reported by the author; exact compressor versions, settings and reproduction protocol were not established."
+          - "No reuse licence or permission for article text or figures was established; link-only treatment."
+    related:
+      pages: [fr/entropy, en/entropy, fr/cross-entropy, en/cross-entropy, fr/compression-revision, en/compression-revision]
+      concepts: [predictive-compression, entropy, surprisal, cross-entropy, conditional-distribution, sequence-likelihood, next-token-prediction]
+      audit_records:
+        - docs/source-reviews/lewish-intelligence-and-compression-2025.md
+        - data/extractions/lewish-intelligence-and-compression-2025.yml
+        - docs/source-syntheses/compression-intelligence-and-inference-efficiency-2026-11.md

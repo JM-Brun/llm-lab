@@ -96,3 +96,46 @@ L'entropie mesure une incertitude de distribution, le surprisal une observation,
 - Kim & Jung (2025), [Entropy-Guided KV Caching for Efficient LLM Inference](https://www.mdpi.com/2227-7390/13/15/2366).
 - Cheong et al. (2026), [EntropyCache](https://arxiv.org/abs/2603.18489).
 - Wang et al. (2025), [SAGE-KV: LLMs Know What to Drop](https://arxiv.org/abs/2503.08879).
+
+
+## 9. Lewis — model cost, causal order and agent-level theories (2025)
+
+[“Intelligence and compression”](https://lewish.io/posts/intelligence-and-compression) adds a distinct perspective to the collection. It should not be conflated with the similarly titled articles by Sourav Mukherjee, David Chen or Mingdi Fan.
+
+### 9.1 What this source adds
+
+- **Two-part description length:** the data cost conditional on a model and the description cost of the model itself, a direct bridge to MDL. This is a more complete framing than treating a predictor's parameters as free.
+- **Expertise as chunking:** the musician analogy illustrates how prior knowledge changes the units and patterns an observer can recognize. Keep it as an analogy about domain-specific schemas, not a quantitative account of human memory.
+- **Causal/temporal order:** the article distinguishes sequential prediction from order-free batch compression and reports a forward/reverse enwik8 comparison. This is a useful experimental prompt, not a verified general law: compressor versions, options and preprocessing are not fully specified.
+- **Adaptation cost:** the Chollet connection broadens the discussion from static model fit to the efficiency of acquiring skills and updating a model.
+- **Agent frameworks:** AIXI places reward maximization on top of universal prediction; active inference offers a different perception/action perspective. These are advanced theoretical connections, not evidence that compression alone defines intelligence.
+
+### 9.2 Qualifications to preserve
+
+The total MDL objective is commonly represented as \\(L(M)+L(D\\mid M)\\), relative to a chosen model class and coding scheme. It is not simply “choose the smallest model”; nor does it guarantee truth or generalization. Practical MDL, Kolmogorov complexity and Solomonoff induction must remain distinct.
+
+Predictive probabilities can be converted into code lengths, but a practical compressor must account for the coding protocol, shared model/side information and decoder. The article's short variable-length example is illustrative, not an optimal coding construction. The logarithm base determines bits versus nats.
+
+The reported forward/reverse differences are small and source-reported. They do not by themselves establish causality or a universal forward-order advantage. A controlled experiment should compare known causal and non-causal synthetic generators, with fixed compressor versions/options and reproducible preprocessing.
+
+Finally, the article's FEP section is explicitly a lay interpretation. Surprisal, variational free energy, prediction error, reward and preferred outcomes are not synonyms. The proposed compression-based unification of intelligence remains a hypothesis/perspective.
+
+### 9.3 Collection-level decision
+
+Integrate the two-part MDL framing and the model-update/agent comparison into this dossier. Keep the musician analogy as optional complementary pedagogy. Defer any canonical page or graph changes until primary references and learner benefit are verified. Do not create a duplicate entropy, compression or intelligence concept solely to mirror this source's vocabulary.
+
+Source review: [Lewis, “Intelligence and compression”](../source-reviews/lewish-intelligence-and-compression-2025.md). Structured provenance and atomic dispositions: [source extraction](../../data/extractions/lewish-intelligence-and-compression-2025.yml).
+
+
+## 10. Précision complémentaire — AIXI et dépendance au langage de référence
+
+La formulation d'AIXI comme agent universellement optimal doit toujours être rapportée à son cadre formel. La distribution universelle dépend du choix de la machine de Turing universelle (UTM) qui définit les descriptions des environnements. Le travail ultérieur de Leike et Hutter, [“Bad Universal Priors and Notions of Optimality”](https://proceedings.mlr.press/v40/Leike15.html), documente des cas où un choix malheureux ou adversarial de l'UTM peut modifier fortement le comportement ; il invite donc à ne pas lire les garanties comme une mesure absolue et indépendante de toute représentation. AIXI reste en outre incomputable dans sa forme idéale. Cette dépendance ne réfute pas le cadre, mais précise la portée de ses garanties : elles sont relatives à la classe d'environnements, à la distribution universelle et à la machine de référence choisies.
+
+
+## 11. Expérience contrôlée — asymétrie forward/reverse et coût du modèle
+
+LLM Lab ajoute une expérience reproductible [forward/reverse compression and two-part MDL](../../experiments/forward-reverse-compression/README.md). Elle compare trois codecs (zlib, bzip2, XZ) sur trois contrôles synthétiques (IID, Markov stationnaire, changement de régime non stationnaire), avec huit graines appariées. Elle ajoute un second volet comparant le coût de données d'un modèle IID et d'un modèle bigramme, puis le score après ajout d'un coût explicite de description des paramètres.
+
+Le résultat pédagogique à retenir n'est pas qu'un sens temporel compresse toujours mieux : les différences de taille changent selon la source et le codec. Pour une source stationnaire, l'entropie de taux est invariante par renversement temporel ; les différences finies d'un compresseur ne prouvent donc pas la causalité. Le changement de régime est un contrôle non stationnaire, pas un mécanisme causal.
+
+Le second volet rend visible le compromis entre ajustement prédictif et coût de description du modèle. Son coût paramétrique fixe (33 bits IID, 129 bits bigramme) est une convention pédagogique explicite, pas un code universel optimal. Les résultats complets et limites sont documentés dans le README de l'expérience. L'exécution CI sur le commit final reste nécessaire avant de traiter l'expérience comme validée.
