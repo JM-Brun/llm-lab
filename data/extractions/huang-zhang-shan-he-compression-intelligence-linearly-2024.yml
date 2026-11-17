@@ -103,3 +103,22 @@ items:
     candidate_destinations:
       pages: [en/compression-revision, fr/compression-revision]
     disposition: integrate
+
+  - id: huang-zhang-shan-he-compression-intelligence-linearly-2024:loader-indexing-caveat
+    kind: implementation-pattern
+    summary: "The inspected packed-dataset implementation advances mutable window offsets as samples are requested. This matches the repository's sequential, non-shuffled evaluation path, but creates a fragile indexing contract for random access, shuffling or multiple workers."
+    locator: {type: code, value: "evaluation/packed_dataset.py"}
+    evidence:
+      kind: static-code-review
+      confidence: well-supported
+      scope: "Inspection of the packed dataset and its evaluation DataLoader usage in the public repository."
+      assumptions: ["The intended execution path is sequential and non-shuffled, as configured by the inspected entry point."]
+      limitations: ["No runtime failure was reproduced; this is a portability concern, not evidence that the authors' intended run is incorrect."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      tags: [topic:reproducibility, topic:dataset-implementation]
+      concept_ids: [predictive-compression]
+    candidate_destinations:
+      pages: [fr/evaluation-experimentale, en/experimental-evaluation]
+    disposition: link
+    disposition_rationale: "Retain as a reproducibility/code-review note; do not import the upstream loader unchanged."
