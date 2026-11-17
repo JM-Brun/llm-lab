@@ -11,7 +11,16 @@
     const prefix = root.querySelector("[data-prefix]"), list = root.querySelector("[data-distribution]");
     const select = root.querySelector("[data-token-choice]"), status = root.querySelector("[data-next-distribution]");
     const appendButton = root.querySelector("[data-append]"), resetButton = root.querySelector("[data-reset]");
-    if (!controls || !prefix || !list || !select || !status || !appendButton || !resetButton) return;
+    const missing = [
+      ["controls", controls], ["prefix", prefix], ["distribution", list],
+      ["token-choice", select], ["next-distribution", status],
+      ["append", appendButton], ["reset", resetButton],
+    ].filter(([, element]) => !element).map(([name]) => name);
+    if (missing.length) {
+      root.dataset.initialisationError = missing.join(",");
+      console.error("Next-token explorer missing required elements: " + missing.join(", "));
+      return;
+    }
     root.dataset.initialised = "true";
     let current = "", stage = 0;
     function options(tokens) {
