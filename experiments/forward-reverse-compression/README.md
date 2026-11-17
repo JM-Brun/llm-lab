@@ -27,7 +27,7 @@ Only the Python standard library is required. Defaults are eight paired seeds, 1
 
 - **IID uniform:** independent equiprobable symbols.
 - **Stationary first-order Markov:** probability 0.9 of repeating the previous symbol, otherwise uniformly choose one of the other three.
-- **Non-stationary regime shift:** the stay probability changes from 0.98 in the first half to 0.55 in the second half. This is an explicit time-inhomogeneous control, not a model of causality.
+- **Non-stationary regime shift:** the stay probability changes from 0.98 in the first half to 0.55 in the second half. The final state of the first half initializes the second, so the transition regime changes without an artificial state reset at the boundary. This is an explicit time-inhomogeneous control, not a model of causality.
 
 Each generated sequence is reversed at the byte/symbol level. Every codec receives the same payload bytes and fixed settings in both directions. Compression headers and format overhead are included in the measured output size.
 
