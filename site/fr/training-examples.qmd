@@ -178,6 +178,29 @@ Les pertes illustratives des positions PAD ne contribuent pas. Une moyenne naïv
 
 Le **masque d’attention** détermine quelles positions peuvent être consultées. Le **masque de perte** détermine quelles cibles contribuent à l’objectif d’optimisation. Ils ont des rôles distincts et ne doivent pas être confondus.
 
+## 4 bis. Padding dynamique au niveau du batch
+
+Le padding ne doit pas nécessairement être effectué une fois pour toutes à la longueur maximale du corpus. Pour des exemples de longueurs variables, un *collator* peut compléter chaque batch jusqu'à la longueur de son exemple le plus long. C'est le **padding dynamique** : il évite de calculer sur des positions PAD inutiles dans les batchs courts.
+
+| Stratégie | Longueur de padding | Compromis |
+|---|---|---|
+| Padding global | Longueur fixe choisie pour tout le jeu ou le modèle | Formes simples, mais beaucoup de positions inutiles possibles |
+| Padding dynamique | Maximum observé dans chaque batch | Moins de calcul gaspillé, mais la forme varie d'un batch à l'autre |
+
+Dans l'écosystème Transformers, `DataCollatorWithPadding` illustre ce mécanisme pour les tâches où les entrées seules sont à compléter. Le collator reçoit les exemples déjà encodés et construit les tenseurs du batch. Il ne remplace ni le tokenizer, ni le masque causal, ni la construction des cibles.
+
+**Trois rôles à ne pas confondre :**
+
+- Le **padding** rend les dimensions rectangulaires.
+- Le **masque d'attention** indique quelles positions sont du contexte réel ou du padding, selon la convention du modèle.
+- Le **masque de perte** indique quelles cibles contribuent effectivement à l'objectif ; il peut notamment exclure les positions PAD.
+
+Un masque d'attention à zéro ne garantit pas à lui seul que la fonction de perte ignore la cible correspondante : le collator et le calcul de loss doivent être cohérents. Dans un entraînement causal, le traitement des labels PAD dépend du collator et du modèle utilisés ; ne transposez pas automatiquement le collator de classification à un objectif de langage causal.
+
+Le choix du padding à gauche ou à droite dépend aussi du modèle et de l'usage. Vérifiez les conventions du checkpoint et testez les positions des labels après collation.
+
+Voir [Hugging Face — Préparer les données](https://huggingface.co/learn/llm-course/en/chapter3/2), qui montre le padding dynamique avec `DataCollatorWithPadding`. Cette API est un exemple d'implémentation, pas une règle universelle pour tous les objectifs.
+
 ## 5. Formes des tenseurs
 
 Notons `B` la taille du lot, `L` la longueur de séquence et `V` la taille du vocabulaire.
