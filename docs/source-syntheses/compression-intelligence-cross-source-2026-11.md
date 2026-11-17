@@ -130,7 +130,7 @@ Le choix d'un signal doit être validé sur une tâche et un budget donnés. L'e
 
 Le graphe ci-dessous représente les dépendances conceptuelles et les garde-fous de la synthèse. Il ne prétend pas démontrer une identité entre ses nœuds.
 
-\`\`\`mermaid
+```mermaid
 flowchart TD
   A["Données et distribution source"] --> B["Modèle probabiliste q"]
   B --> C["Probabilités conditionnelles"]
@@ -154,7 +154,7 @@ flowchart TD
   S --> T["Latence / mémoire / qualité"]
   U["AIXI / active inference / épiplexité"] -. "cadres théoriques distincts" .-> Q
   U -. "ne découlent pas de MDL seul" .-> J
-\`\`\`
+```
 
 Relations à conserver :
 - prédiction probabiliste → surprisal → longueur de code idéale ;
