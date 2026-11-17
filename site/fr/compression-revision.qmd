@@ -15,7 +15,7 @@ purpose: "Choisir la bonne notion de compression, calculer un coût prédictif i
 domain: "probabilistic-foundations-training"
 suggested_route:
   previous: null
-  next: null
+  next: "fr/universal-artificial-intelligence"
 hierarchy:
   parents: []
   children: ["fr/universal-artificial-intelligence"]
