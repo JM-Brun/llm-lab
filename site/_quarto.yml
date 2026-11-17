@@ -18,8 +18,8 @@ project:
     - scripts/hybrid-rope-nope.js
     - styles/hybrid-rope-nope.css
     - scripts/relative-bias-decomposition.js
-    - styles/relative-bias-decomposition.css
     - scripts/next-token-explorer.js
+    - styles/relative-bias-decomposition.css
     - learning-map-data-fr.json
     - learning-map-data-en.json
     - knowledge-graph.jsonld
@@ -31,6 +31,8 @@ project:
     - images/attention-matrices-mobile.svg
     - images/training-loop-visual-en-mobile.svg
     - images/training-loop-visual-fr-mobile.svg
+    - images/optimizer-comparison-en-mobile.svg
+    - images/optimizer-comparison-fr-mobile.svg
     - images/generation-prefill-decode-en-mobile.svg
     - images/generation-prefill-decode-fr-mobile.svg
   render:
