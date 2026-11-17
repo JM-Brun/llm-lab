@@ -102,6 +102,26 @@ L'expérience [entropie contre surprisal](https://github.com/JM-Brun/llm-lab/blo
 
 Un checkpoint plus petit n'est pas automatiquement plus rapide : le format, les kernels, le matériel, le batch et la longueur de contexte comptent.
 
+### MDL : compter le modèle autant que les données
+
+La compression prédictive précédente suppose que le modèle est déjà disponible. Si l'on doit aussi le décrire ou le transmettre, le coût total devient :
+
+$
+L_{\mathrm{total}}(M,D)=L(M)+L(D\mid M).
+$
+
+- $L(D\mid M)$ : longueur du code des données quand le décodeur connaît le modèle $M$ ; avec un modèle probabiliste, elle est liée à $-\sum_t \log_2 p(x_t\mid x_{<t},M)$.
+- $L(M)$ : coût nécessaire pour décrire le modèle dans un langage de description et une classe de modèles choisis : paramètres, structure et informations auxiliaires requises.
+
+Le principe de **longueur minimale de description (MDL)** cherche un compromis entre ces deux coûts. Un modèle qui mémorise les exemples peut réduire fortement le coût résiduel $L(D\mid M)$, mais son propre coût $L(M)$ peut annuler le gain. À l'inverse, un modèle trop simple coûte peu à décrire mais laisse davantage de régularités non expliquées.
+
+**Ne pas confondre :** $L(M)$ n'est pas automatiquement la taille du seul fichier de poids. Il faut préciser ce qui est partagé à l'avance (architecture, tokenizer, décodeur), ce qui doit être transmis, la précision numérique et la classe de modèles comparée. MDL pratique dépend donc d'un protocole ; ce n'est ni la complexité de Kolmogorov calculable en général, ni une garantie que le modèle retenu est « vrai » ou généralisera toujours.
+
+L'expérience [forward/reverse et coût de description du modèle](https://github.com/JM-Brun/llm-lab/blob/main/experiments/forward-reverse-compression/README.md) illustre ce compromis sur des données synthétiques. Son coût paramétrique fixe est une convention pédagogique explicite, pas un code universel optimal.
+
+**Question de contrôle :** pourquoi un modèle qui prédit presque parfaitement les données d'entraînement peut-il perdre face à un modèle moins précis, une fois le coût de description du modèle inclus ?
+
+
 ## 3. Ne pas confondre les budgets
 
 - **Stockage persistant :** poids du checkpoint et fichiers associés.
