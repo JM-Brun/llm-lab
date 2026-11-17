@@ -5299,3 +5299,50 @@ sources:
       audit_records:
         - docs/source-reviews/jose-parreno-garcia-how-llms-work-three-layers-2026-11.md
         - data/extractions/jose-parreno-garcia-how-llms-work-three-layers-2025.yml
+
+  - id: hkust-nlp-llm-compression-intelligence-2024
+    title: "Compression Represents Intelligence Linearly — paper and evaluation repository"
+    creators: ["Yuzhen Huang", "Jinghan Zhang", "Zifei Shan", "Junxian He"]
+    source_type: paper
+    identifiers: {arxiv: "2404.09937"}
+    canonical_url: "https://github.com/hkust-nlp/llm-compression-intelligence"
+    publisher: "HKUST-NLP / COLM 2024"
+    publication_date: "2024"
+    updated_date: null
+    language: en
+    version: "COLM 2024 paper and public evaluation repository; accessed 2026-11-17"
+    revision: null
+    licence: {identifier: null, url: null, status: partially-identified}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: conditional}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [scale-research, inference-efficiency]
+      tags: [topic:predictive-compression, topic:bits-per-character, topic:benchmark-correlation, topic:domain-shift]
+      concept_ids: [predictive-compression, cross-entropy, conditional-distribution, surprisal]
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, experiment, benchmark, implementation]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    scan_history:
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "Repository README, structure and public metadata"
+          - "COLM 2024 paper abstract and full paper PDF"
+          - "Evaluation code: main.py and packed_dataset.py"
+          - "Hugging Face dataset metadata and licence statements"
+          - "BPC definition, corpus/benchmark mapping, reported correlations, ablations, contamination discussion and limitations"
+        limitations:
+          - "Repository inspected statically; environment not installed and experiment not rerun."
+          - "Full dataset not downloaded or redistributed."
+          - "No independent reproduction of model scores or correlations."
+          - "Dataset-indexing concern is static review, not a reproduced runtime failure."
+          - "Dataset reuse remains subject to source-corpus licences and restrictions."
+    related:
+      pages: [fr/compression-revision, en/compression-revision, fr/cross-entropy, en/cross-entropy, fr/evaluation-experimentale, en/experimental-evaluation, fr/tokenizer-design-evaluation, en/tokenizer-design-evaluation]
+      concepts: [predictive-compression, cross-entropy, conditional-distribution, surprisal]
+      audit_records:
+        - docs/source-reviews/hkust-nlp-compression-represents-intelligence-linearly-2024.md
+        - data/extractions/hkust-nlp-llm-compression-intelligence-2024.yml
