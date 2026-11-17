@@ -23,7 +23,21 @@ Current documented A100-large hardware is one A100 with 80 GB GPU memory at **$2
 
 Managed execution avoids administering a remote machine or setting up SSH for this workflow; it does not eliminate data access, authentication or artifact persistence. In the demonstrated design, the Storage Bucket is the explicit bridge: local project sync → mounted bucket in the job → output/checkpoint writes → local sync after completion. Training data is fetched from the Hub through `datasets`, while code and outputs travel through the bucket. The bucket is described in the transcript as persistent after the compute job ends. This is a transcript-level account, not an inspection of the script or an independent test of bucket semantics. Private resources still require safe authentication, and outputs must be written to the mounted persistent location.
 
-## Reconstructed example (transcript-level, not code-verified)\n\n| Element | Reported configuration |\n|---|---|\n| Model | GPT-2-style, approximately 50M parameters; 8 layers; embedding dimension 512 |\n| Tokenizer | GPT-2 tokenizer |\n| Dataset | TinyStories, loaded from the Hugging Face Hub with `datasets` |\n| Training | PyTorch-style loop; cosine learning-rate schedule with warm-up; periodic progress and checkpointing |\n| Runtime | `uv` plus `requirements.txt`; same Python training command locally and remotely |\n| Outputs | `out/` directory linked to the mounted Storage Bucket; sync back after the job |\n| Remote hardware | A100-large; transcript reports about 30 minutes and a little over $1 |\n\nThe transcript reports progress every 100 steps and saves/checkpoints every 2,000 steps and at the end. Exact hyperparameters, training-step count, validation protocol, script contents and logs are not exposed in the retrieved transcript, so they remain unknown.\n\n## Pedagogical value
+## Reconstructed example (transcript-level, not code-verified)
+
+| Element | Reported configuration |
+|---|---|
+| Model | GPT-2-style, approximately 50M parameters; 8 layers; embedding dimension 512 |
+| Tokenizer | GPT-2 tokenizer |
+| Dataset | TinyStories, loaded from the Hugging Face Hub with `datasets` |
+| Training | PyTorch-style loop; cosine learning-rate schedule with warm-up; periodic progress and checkpointing |
+| Runtime | `uv` plus `requirements.txt`; same Python training command locally and remotely |
+| Outputs | `out/` directory linked to the mounted Storage Bucket; sync back after the job |
+| Remote hardware | A100-large; transcript reports about 30 minutes and a little over $1 |
+
+The transcript reports progress every 100 steps and saves/checkpoints every 2,000 steps and at the end. Exact hyperparameters, training-step count, validation protocol, script contents and logs are not exposed in the retrieved transcript, so they remain unknown.
+
+## Pedagogical value
 
 The key idea is the separation of **training logic** from **execution infrastructure**:
 
