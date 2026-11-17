@@ -1369,8 +1369,13 @@ async function runCase(testCase, caseIndex) {
     const blockingAxe = (item.axe.violations || []).filter(v => ["aria-allowed-attr", "color-contrast", "nested-interactive"].includes(v.id));
     item.axe.blockingViolationCount = blockingAxe.length;
     if (blockingAxe.length) {
+      const details = blockingAxe.flatMap(violation =>
+        violation.nodes.slice(0, 8).map(node =>
+          `${violation.id} ${node.target.join(" ")}: ${(node.failureSummary || node.html || "no node details").replace(/\\s+/g, " ").slice(0, 700)}`
+        )
+      );
       report.failures.push(
-        `${pagePath}/${lang}/${label}/${theme}: Axe blocking violations: ${blockingAxe.map(v => v.id).join(", ")}`
+        `${pagePath}/${lang}/${label}/${theme}: Axe blocking violations: ${blockingAxe.map(v => v.id).join(", ")}. ${details.join(" | ")}`
       );
     }
     // Quarto renders each equation inside its pandoc math span client-side.
