@@ -39,7 +39,6 @@ scan:
     notes: ["No text or figure reuse permission was established; link and paraphrase only."]
   unresolved_questions:
     - "What is the primary Epoch.AI source and exactly which parameter and infrastructure series support the 360% versus 36% comparison?"
-    - "What is the primary Epoch.AI source and exactly which parameter and infrastructure series support the 360% versus 36% comparison?"
     - "Which pruning methods, sparsity structures, kernels and hardware are evaluated by the challenge partners?"
     - "How are energy, latency, throughput, quality and memory measured under comparable deployment workloads?"
     - "Which confidentiality benefits arise from local deployment, and what residual risks remain in model supply chains, telemetry and updates?"
