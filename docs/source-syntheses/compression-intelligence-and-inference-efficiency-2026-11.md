@@ -248,3 +248,30 @@ For LLM Lab, the practical distinction is:
 This source reinforces the existing predictive-compression and information-theory lessons. It does not warrant a new canonical concept: the existing concepts for predictive compression, entropy, conditional distributions, entropy coding and contextualized representations are sufficient. The article's cover image was not retrieved or reused.
 
 Source review: [David Chen, Compression Is Intelligence](../source-reviews/david-chen-compression-is-intelligence-2025.md). Structured extraction: [atomic claims and pedagogical reconstruction](../../data/extractions/david-chen-compression-is-intelligence-2025.yml).
+
+
+## 16. Compression as a deployment strategy — Alliancy (Aude Brès, 2026)
+
+[Alliancy's “La compression, stratégie d’avenir des LLM”](https://alliancy.fr/la-compression-strategie-davenir-des-llm-19908527-e6dd-4097-b5e5-0d9a2ab2c7e0) adds a current deployment and policy perspective to the technical sources above. It reports the launch of the Résilient AI Challenge on 20 February 2026, involving France, India, UNESCO and the Sustainable AI Coalition, and names Google, Mistral AI and Sarvam models as partners. These details are reported by the article; organizer documentation and challenge results were not independently inspected.
+
+### 16.1 What this source adds
+
+- **Deployment motivation:** smaller models may reduce infrastructure requirements and make local/on-premises inference feasible for organizations with limited compute resources.
+- **Operational context:** energy use, operating cost, accessibility and regulated-sector deployment become explicit reasons to investigate compression, not merely model-size optimization.
+- **Public challenge case study:** the article connects these objectives to a concrete international initiative, while providing no measured outcome or reproducible benchmark.
+
+### 16.2 Technical qualifications
+
+The article describes pruning as an inference-phase operation. Classical pruning generally modifies weights or structured components before deployment, potentially followed by fine-tuning or retraining. Dynamic inference-time sparsification is a distinct implementation choice.
+
+Most importantly, **sparsity is not the same as realized acceleration**. Unstructured zero weights help only when the representation, sparse kernels, hardware and workload can exploit them efficiently. Structured pruning may map more directly to smaller dense operations, but its effect also requires measurement. Quality improvements after pruning are method- and evaluation-specific, not guaranteed.
+
+The article also reports a 360% increase in parameter counts versus 36% growth in infrastructure power over fifteen years, attributed to Epoch.AI. The underlying study, series definitions and comparison period have not been independently verified in this ingestion; do not reuse these figures as established project facts.
+
+Local deployment can reduce transfers to an external cloud provider, but compression alone does not guarantee confidentiality, security or regulatory compliance. Access control, telemetry, software supply chain, model updates, backups and operational governance remain relevant.
+
+### 16.3 Collection-level decision
+
+Use the article as a **deployment-motivation case study** alongside the existing model-compression taxonomy. It reinforces the existing concepts `model-compression` and `pruning`; it does not justify a new concept, standalone lesson or experiment. Keep checkpoint compression distinct from predictive compression and entropy coding, and keep checkpoint size distinct from runtime KV-cache memory.
+
+Source review: [Alliancy, Aude Brès (2026)](../source-reviews/alliancy-la-compression-strategie-avenir-llm-2026-11.md). Structured extraction: [atomic claims and dispositions](../../data/extractions/alliancy-la-compression-strategie-avenir-llm-2026.yml).
