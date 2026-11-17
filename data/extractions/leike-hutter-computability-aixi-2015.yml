@@ -14,3 +14,16 @@ items:
     disposition: cite
     mapped_concepts: [aixi, resource-bounded-computation]
     target_resources: [fr/universal-artificial-intelligence, en/universal-artificial-intelligence]
+  - id: leike-hutter-computability-aixi-2015:epsilon-optimal-recursive-aixi
+    kind: result
+    summary: "A recursive value-function formulation admits a limit-computable ε-optimal AIXI policy for an infinite horizon; the tolerance ε(t) can decrease toward zero at a computable rate."
+    locator: {type: section, value: "Abstract; Sections 1, 4–5; Corollary 22", label: "Limit-computable ε-optimal recursive AIXI"}
+    evidence:
+      kind: theorem-result
+      confidence: well-supported
+      scope: "Existence and computability status of the ε-optimal recursive infinite-horizon agent."
+      assumptions: ["The recursive value-function formulation, discounted infinite-horizon setup and computable ε schedule defined in the paper."]
+      limitations: ["This is not exact optimal AIXI and is distinct from the resource-bounded AIXI(t,l) construction.", "Relevant sections and stated corollaries were inspected, but the technical proofs were not audited line by line."]
+    disposition: cite
+    mapped_concepts: [aixi, resource-bounded-computation]
+    target_resources: [fr/universal-artificial-intelligence, en/universal-artificial-intelligence]
