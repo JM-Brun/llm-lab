@@ -192,11 +192,11 @@ Huang, Zhang, Shan et He (COLM 2024) testent si le coût de codage prédictif d'
 
 Pour comparer des modèles qui n'utilisent pas les mêmes tokenizers, les auteurs mesurent les *bits per character* (BPC), et non les bits par token :
 
-$
+$$
 \mathrm{BPC}(M,C)=
 \frac{\sum_t -\log_2 p_M(x_t\mid x_{<t})}
 {\text{nombre de caractères de }C}.
-$
+$$
 
 Le numérateur est la longueur idéale en bits attribuée au texte par le modèle ; le dénominateur normalise par le nombre de caractères du corpus. Le protocole fixe une fenêtre de contexte de 1 900 tokens. **Le BPC dépend donc du corpus, de sa normalisation et du protocole : ce n'est pas une constante intrinsèque du modèle.**
 
