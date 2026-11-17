@@ -5376,10 +5376,10 @@ sources:
       - accessed_at: "2026-11-17"
         status: partially-scanned
         inspected_scope:
-          - "Publisher abstract and arXiv abstract"
+          - "Abstract, introduction, relevant computability results and discussion, including Corollary 22 on the recursive ε-optimal AIXI variant"
         limitations:
-          - "The full proof text was not audited in this pass; use the paper for exact hierarchy results."
-          - "The paper proves AIXI is not limit computable, so it cannot be approximated by a computable sequence of finite-computation agents in that sense; do not reduce this result to a generic claim that all approximation is impossible."
+          - "The relevant sections and stated corollaries were inspected, but the technical proofs were not audited line by line."
+          - "The non-limit-computability result must be scoped to the paper's formal agent/value-function variants; the paper also constructs a limit-computable ε-optimal recursive AIXI policy."
     related:
       pages: [en/universal-artificial-intelligence, fr/universal-artificial-intelligence]
       concepts: [aixi, algorithmic-probability, resource-bounded-computation]
