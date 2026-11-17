@@ -275,3 +275,9 @@ Local deployment can reduce transfers to an external cloud provider, but compres
 Use the article as a **deployment-motivation case study** alongside the existing model-compression taxonomy. It reinforces the existing concepts `model-compression` and `pruning`; it does not justify a new concept, standalone lesson or experiment. Keep checkpoint compression distinct from predictive compression and entropy coding, and keep checkpoint size distinct from runtime KV-cache memory.
 
 Source review: [Alliancy, Aude Brès (2026)](../source-reviews/alliancy-la-compression-strategie-avenir-llm-2026-11.md). Structured extraction: [atomic claims and dispositions](../../data/extractions/alliancy-la-compression-strategie-avenir-llm-2026.yml).
+
+### Vérification primaire du cas de déploiement
+
+La page officielle du [Résilient AI Challenge](https://www.sustainableaicoalition.org/resilient-ai-challenge/) et la [synthèse UNESCO](https://www.unesco.org/fr/articles/le-sommet-mondial-de-lia-au-service-du-bien-met-le-projecteur-sur-une-ia-resiliente-par-une) confirment que l’initiative a été menée et que les équipes gagnantes ont été annoncées le 8 juillet 2026. Les modèles de référence étaient Voxtral Realtime, Gemma 4 et Sarvam-30b, dans trois tâches distinctes. L’évaluation comparait précision et efficacité énergétique sous un protocole défini par les organisateurs. Le [règlement](https://www.sustainableaicoalition.org/terms-resilient-ai-challenge/) limite explicitement la portée de l’évaluation : elle ne certifie pas la qualité ou la sûreté générales des modèles. Il s’agit donc d’un cas empirique utile, mais non d’une preuve universelle que toute compression produit les mêmes gains.
+
+La comparaison 360 % / 36 % attribuée à Epoch.AI par Alliancy reste non vérifiée : source primaire non identifiée.
