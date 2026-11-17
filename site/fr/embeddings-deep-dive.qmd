@@ -233,6 +233,23 @@ Le projet reprend cette progression comme **étude de cas**, mais qualifie plusi
 
 LLM Lab propose un outil NumPy sans téléchargement de modèle : [inspecter une petite table d'embeddings dans l'exercice bilingue](exercises/embedding-space.qmd). Il permet de retrouver des lignes directement par ID et de calculer un top-k cosinus déterministe. Il ne prétend pas reproduire le checkpoint ni l'atlas interactif de la source.
 
+
+### Explorer un jeu d'embeddings avec Embedding Atlas
+
+[Embedding Atlas](https://apple.github.io/embedding-atlas/) permet d'explorer des projections de grands jeux de vecteurs, de rechercher des voisins, d'inspecter des regroupements et de relier la vue géométrique à des métadonnées par filtrage croisé. L'outil peut aussi servir de tableau de bord tabulaire ; il ne crée pas à lui seul la pertinence sémantique des vecteurs.
+
+**Question :** les voisinages et groupes visibles dans une projection racontent-ils la même histoire que les vecteurs d'origine et les métadonnées ?
+
+1. Choisissez un jeu de données dont les objets, métadonnées et vecteurs sont documentés. Notez le modèle d'embedding, sa version, le prétraitement, la métrique et la provenance. Ne mélangez pas des vecteurs issus de modèles ou de couches différents sans le signaler.
+2. Avant d'ouvrir l'atlas, prédisez quelle métadonnée devrait être associée aux voisinages ou groupes attendus ; indiquez ce qui pourrait réfuter cette prédiction.
+3. Chargez vecteurs et métadonnées. Repérez projection, regroupements/étiquettes automatiques et recherche de voisins. Filtrez une catégorie et observez les points retirés, les groupes qui changent et les outliers.
+4. Sélectionnez plusieurs points, lisez leur contenu original et comparez les voisins affichés avec une recherche dans l'espace vectoriel d'origine si votre pipeline le permet.
+5. Modifiez un paramètre de projection ou de clustering et consignez ce qui change. Ne choisissez pas les paramètres après coup uniquement pour obtenir une image convaincante.
+
+**Débrief :** séparez (a) distance dans l'espace vectoriel d'origine, (b) proximité visuelle dans la projection, (c) appartenance à un cluster calculé et (d) catégorie fournie par les métadonnées. Ces notions ne sont pas équivalentes. Une projection 2D peut déformer distances, densités et formes ; un label automatique est une hypothèse descriptive, pas une vérité sémantique. Pour reproduire l'analyse, archivez dataset, modèle, prétraitement, métrique, paramètres et graine lorsque disponible.
+
+Voir aussi [les exercices sur l'espace des embeddings](exercises/embedding-space.qmd), la [documentation](https://apple.github.io/embedding-atlas/overview.html), le [guide CLI](https://apple.github.io/embedding-atlas/tool.html) et l'[article de recherche](https://machinelearning.apple.com/research/embedding-atlas).
+
 ### À propos des figures de la source
 
 Les figures originales les plus intéressantes sont le panorama des familles, les visualisations TF-IDF/Word2Vec, le schéma de lookup et l'atlas de voisins. Le Space indique une licence Apache-2.0, mais certaines illustrations intégrées sont créditées à des tiers (notamment Manning). Pour éviter de réattribuer à l'auteur des droits qu'il ne détient peut-être pas, LLM Lab conserve un lien vers la ressource et construit ses propres schémas pédagogiques plutôt que de recopier ces fichiers. Les figures du dossier LLM Lab sont originales ou déjà présentes dans le projet ; les sources externes restent attribuées.
