@@ -357,3 +357,11 @@ These resources are curated for teaching design and guided experimentation. Incl
   - **Use for:** an accessible analogy between classical predictive modelling and three broad stages of LLM construction: corpus collection, base-model training and fine-tuning.
   - **Critical caveat:** next-token training is not a truth objective; fine-tuning does not guarantee factuality; the article's categorical claims about reasoning and understanding are not established by its explanation. The Llama 3 8B / DeepSeek R1 14B comparison is anecdotal and confounded.
   - **Review status:** full visible article body and both embedded images inspected; video and outbound resources not systematically audited. Images and text remain link-only. See [source review](source-reviews/jose-parreno-garcia-how-llms-work-three-layers-2026-11.md) and [structured extraction](../data/extractions/jose-parreno-garcia-how-llms-work-three-layers-2025.yml).
+
+
+## End-to-end LLM lifecycle and mental models
+
+- **Andrej Karpathy — Deep Dive into LLMs like ChatGPT** (5 February 2025): https://www.youtube.com/watch?v=7xTGNNLPyMI
+  - **Use for:** an accessible, end-to-end overview of pretraining data, tokenization, Transformer computation, inference, base models, post-training, hallucinations, tool use, context, reasoning and reinforcement learning. Particularly useful as a lifecycle-level companion to the canonical lessons rather than a replacement for them.
+  - **How this lab uses it:** optional overview linked to the LLM panorama, post-training, in-context learning and limits material. The source's teaching route is reconstructed separately from the canonical concept graph and learning paths. See [the source review](source-reviews/karpathy-deep-dive-llms-2026-11.md) and [learning-graph comparison](source-reviews/karpathy-deep-dive-learning-graph-2026-11.md).
+  - **Review status:** partially scanned on 18 November 2026 using the YouTube description, 24 public chapter markers and a third-party timestamped transcript index. The audiovisual recording was not watched end-to-end; transcript accuracy, demonstrations, slides and visual assets remain unverified. Figures, transcript and code are not copied. The video description's educational-use statement is not treated as blanket redistribution permission.
