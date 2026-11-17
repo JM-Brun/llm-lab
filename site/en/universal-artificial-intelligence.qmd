@@ -98,6 +98,10 @@ It combines:
 2. Sequential decision theory.
 3. A policy that chooses actions to maximize expected future reward.
 
+::: {.callout-note title="A note on the environment class"}
+The terminology varies across the primary sources. Hutter (2007) describes the prior as a mixture over enumerable chronological semimeasures; Leike and Hutter (2015) formalize environments as **lower semicomputable chronological conditional semimeasures (LSCCCSs)**. These are precise computability classes, not simply “all computable environments”.
+:::
+
 At a high level:
 
 $$
