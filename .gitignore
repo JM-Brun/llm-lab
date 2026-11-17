@@ -40,6 +40,19 @@ htmlcov/
 *.pem
 *.key
 .streamlit/secrets.toml
+.claude/settings.local.json
+.claude/*.local.json
+secrets/
+*.p12
+*.pfx
+*.jks
+*.keystore
+.aws/credentials
+.ssh/
+.netrc
+.npmrc
+.pypirc
+.docker/config.json
 
 # Model checkpoints, datasets, and experiment outputs (store externally)
 checkpoints/
