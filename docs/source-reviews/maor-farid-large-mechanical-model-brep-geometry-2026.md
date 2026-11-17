@@ -1,0 +1,60 @@
+# Source review: Maor Farid on AI and mechanical design
+
+**Source:** [LinkedIn post](https://www.linkedin.com/posts/maorfaridphd_ai-mechanicaldesign-mehcanicalengineers-ugcPost-7469852823074111490-ZO-w/)  
+**Inspected:** 2026-11-17  
+**Status:** Partial review; post text, accessible embedded transcript and visible comments inspected.
+
+## Executive assessment
+
+The post contributes an application-level challenge: language-model representations and objectives should not be assumed sufficient for exact geometric, topological and engineering reasoning. Training a model on B-rep geometry is a plausible specialization direction, but the post supplies no technical evidence establishing the proposed Large Mechanical Model's capabilities or the claim that B-rep is intrinsically more information-dense than language.
+
+The most useful contribution is the distinction between **compressing a representation** and **preserving task-relevant structure**. A feature can be statistically rare yet essential to assembly, tolerance, strength or manufacturability. Average reconstruction loss may therefore be an inadequate objective.
+
+## Claims and qualifications
+
+### Predictive compression is not a theorem of intelligence
+
+Shannon's information theory establishes entropy and coding limits. For probabilistic sequence models, cross-entropy / negative log-likelihood relates to expected ideal code length. This makes compression a powerful interpretation of language-model training. It does **not** prove that compression is equivalent to intelligence or that lower loss guarantees reasoning, grounding or engineering competence. Do not repeat the post's attribution of that stronger claim to Shannon as historical fact.
+
+### B-rep is structured, but not automatically a denser code
+
+B-rep represents solids through boundary entities (faces, edges, vertices) and their geometry/topology. It is explicit and machine-actionable for CAD operations. But “orders of magnitude denser in information” is not a well-defined comparison without a specified encoding, precision, fidelity criterion, target task, and treatment of constraints, feature history, tolerances and metadata. Byte length is not a universal measure of semantic information.
+
+### Generic LLM limitations are about reliability and representation mismatch
+
+A text-trained model is not guaranteed to produce geometrically valid CAD. This does not imply that LLMs cannot contribute to geometry: they can use mathematical descriptions, code, CAD tools, solvers, structured multimodal inputs and verification loops. State the limitation as a mismatch between interface/training distribution and exact task requirements, not an absolute impossibility.
+
+### Design intent is a critical objective
+
+The visible comment by Tatiana Stetsenko identifies the gap between shape reconstruction and engineering intent. Candidate requirements include:
+- geometric and topological validity;
+- dimensions, tolerances and datum relationships;
+- assembly interfaces and mating constraints;
+- parametric dependencies or feature history where relevant;
+- functional and manufacturing constraints.
+
+Rare details must not be discarded merely because they contribute little to average reconstruction loss. Symbolic/constraint representations, task-aware losses, constraint checking and CAD-kernel validation are research directions, not features known to exist in the proposed LMM.
+
+## Relationship to LLM Lab
+
+- Link predictive compression, entropy and cross-entropy to existing bilingual lessons; the embedded 3Blue1Brown transcript is already separately catalogued and must not be duplicated.
+- Connect representation geometry to the mathematical-tools-and-geometry domain, but keep CAD-native B-rep distinct from neural embedding spaces.
+- Use the post as a qualified case study for the difference between language prediction and externally validated task competence.
+- Treat LMM as a proposed specialized model family, not a validated architecture or capability claim until a paper, model card, implementation and benchmark are inspected.
+
+## Visual and media inspection
+
+The LinkedIn page exposed a media asset link, but the underlying image/video frames were not independently retrieved. The embedded transcript was reviewed as text only. No figure is copied. Link to the separately catalogued 3Blue1Brown video rather than duplicating it.
+
+## Evidence gaps
+
+1. Obtain the LMM paper, model card, code or official project page.
+2. Establish the actual input representation: B-rep serialization, boundary entities, feature trees, parametric constraints, meshes, point clouds or a mixture.
+3. Inspect training objectives for geometry, topology, constraints, functional semantics and downstream tasks.
+4. Compare against CAD-native and multimodal/tool-augmented LLM baselines.
+5. Evaluate kernel validity, editability, tolerance preservation, assembly fit and manufacturability—not visual similarity alone.
+6. Inspect the original LinkedIn media asset if its visuals become relevant.
+
+## Integration decision
+
+Integrate as a qualified case study and research question. Do not add a new canonical concept or claim the proposed LMM works as described. Reuse existing concepts and pages; extend public lessons only when independent evidence and a clear pedagogical gap justify it.
