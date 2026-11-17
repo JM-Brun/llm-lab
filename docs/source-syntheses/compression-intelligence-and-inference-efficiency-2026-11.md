@@ -248,3 +248,12 @@ For LLM Lab, the practical distinction is:
 This source reinforces the existing predictive-compression and information-theory lessons. It does not warrant a new canonical concept: the existing concepts for predictive compression, entropy, conditional distributions, entropy coding and contextualized representations are sufficient. The article's cover image was not retrieved or reused.
 
 Source review: [David Chen, Compression Is Intelligence](../source-reviews/david-chen-compression-is-intelligence-2025.md). Structured extraction: [atomic claims and pedagogical reconstruction](../../data/extractions/david-chen-compression-is-intelligence-2025.yml).
+
+
+## 12. Notion — “Intelligence = Compression”: a useful bridge, not evidence
+
+The short Notion note juxtaposes predictive compression, the Hutter Prize, Kolmogorov complexity, AIXI and cognitive architectures. Its value is the cross-disciplinary framing, not a new formal result. The slogan “intelligence = compression” remains a hypothesis; the claim that text compression is equivalent to passing the Turing test is not established; and compression can reduce storage or bandwidth without necessarily reducing end-to-end computation.
+
+The AIXI passage is a pointer to a separate theoretical line, not a derivation. The project therefore keeps its formal treatment in the [bilingual AIXI and computability deep dive](../../site/en/universal-artificial-intelligence.qmd), grounded in Hutter (2007), Leike & Hutter (2015), and Hutter, Quarel & Catt (2024). In particular, do not collapse Kolmogorov complexity, the universal semimeasure, Solomonoff prediction, active reward maximization and the resource-bounded AIXI(t,l) construction into a single notion of “compression”.
+
+Source-level assessment: [Notion review](../source-reviews/notion-intelligence-compression-2026-11.md) · [structured extraction](../../data/extractions/notion-intelligence-compression-summary.yml) · [AIXI technical review](../source-reviews/aixi-kolmogorov-computability-2026-11.md).
