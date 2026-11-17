@@ -71,7 +71,7 @@ Give the model the prefix “What have the Romans ever done for us?”. It does 
 
 These values are made up: they do not come from a trained model, and a real vocabulary has tens of thousands of entries, not four. In this simplified example, each row represents one token; the displayed strings are not a claim that a real tokenizer would treat each one as a single token. The path reuses these values from page to page so that every calculation can be redone by hand.
 
-This table is a **conditional distribution**: it depends on the context. The four probabilities share a total of 1 (or 100%). Append “They” to the question and recompute: the candidates are no longer the same, and “built” comes first.
+This table is a **conditional distribution**: it depends on the context. The four probabilities share a total of 1 (or 100%). Append “They” to the question and recompute: the candidates are no longer the same, and “built” receives 0.5 in this illustrative example.
 
 Three terms are enough to read the rest of the path.
 
