@@ -98,14 +98,15 @@ def _tag_map(tags: Any, where: str, errors: list[str]) -> dict[str, str]:
     return dimensions
 
 
-
 def _check_self_check_coverage(source: str, relative: str, errors: list[str]) -> None:
     """Validate section-to-question coverage when a page opts into the contract."""
     if "<!-- self-check-coverage: enforced -->" not in source:
         return
     check_start = source.find("::: {.self-check}")
     if check_start < 0:
-        errors.append(f"{relative}: self-check coverage is enforced but no self-check block exists")
+        errors.append(
+            f"{relative}: self-check coverage is enforced but no self-check block exists"
+        )
         return
     lesson_source = source[:check_start]
     section_ids = set(re.findall(r"^## .+?\s+\{#([a-z0-9-]+)\}\s*$", lesson_source, re.MULTILINE))
@@ -115,14 +116,18 @@ def _check_self_check_coverage(source: str, relative: str, errors: list[str]) ->
         for section_id in marker.split()
     }
     if not section_ids:
-        errors.append(f"{relative}: enforced self-check coverage requires explicit IDs on major sections")
+        errors.append(
+            f"{relative}: enforced self-check coverage requires explicit IDs on major sections"
+        )
         return
     missing = sorted(section_ids - covered_ids)
     unknown = sorted(covered_ids - section_ids)
     if missing:
         errors.append(f"{relative}: major sections lack self-check coverage: {missing}")
     if unknown:
-        errors.append(f"{relative}: self-check coverage references unknown sections: {unknown}")
+        errors.append(
+            f"{relative}: self-check coverage references unknown sections: {unknown}"
+        )
 
 
 def _load_page(path: Path, site_dir: Path, errors: list[str]) -> dict[str, Any] | None:
