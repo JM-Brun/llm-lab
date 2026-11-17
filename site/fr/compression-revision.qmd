@@ -227,6 +227,87 @@ Cette séquence distingue trois niveaux : **intuition de codage** (arbre et mots
 5. À la mémoire temporaire d'exécution.
 :::
 
+## 7. Étude empirique : la compression prédictive comme signal de capacité
+
+Huang, Zhang, Shan et He (COLM 2024) testent si le coût de codage prédictif d'un modèle est associé à ses performances sur des tâches en aval. Leur étude porte sur **31 LLM publics pré-entraînés**, **12 benchmarks** et trois corpus externes alignés sur les domaines évalués : Common Crawl pour les connaissances et le sens commun, des dépôts Python de GitHub pour le code, et des articles mathématiques d'arXiv pour le raisonnement mathématique.
+
+Pour comparer des modèles qui n'utilisent pas les mêmes tokenizers, les auteurs mesurent les *bits per character* (BPC), et non les bits par token :
+
+$$
+\mathrm{BPC}(M,C)=
+\frac{\sum_t -\log_2 p_M(x_t\mid x_{<t})}
+{\text{nombre de caractères de }C}.
+$$
+
+Le numérateur est la longueur idéale en bits attribuée au texte par le modèle ; le dénominateur normalise par le nombre de caractères du corpus. Le protocole fixe une fenêtre de contexte de 1 900 tokens. **Le BPC dépend donc du corpus, de sa normalisation et du protocole : ce n'est pas une constante intrinsèque du modèle.**
+
+Les auteurs rapportent une corrélation de Pearson entre BPC et scores agrégés de benchmarks de :
+
+| Domaine évalué | Corrélation BPC / score |
+|---|---:|
+| Ensemble des tâches | -0,93 |
+| Connaissances et sens commun | -0,935 |
+| Programmation | -0,937 |
+| Raisonnement mathématique | -0,953 |
+
+Le signe négatif signifie que, dans cet échantillon, **un BPC plus faible est associé à de meilleurs scores**. C'est un résultat empirique fort dans le protocole étudié, pas la preuve que compresser cause l'intelligence, ni que les deux notions sont identiques.
+
+### Conditions et limites à garder visibles
+
+- **L'alignement du domaine compte :** les contrôles croisés rapportés affaiblissent la relation quand le corpus de compression ne correspond pas au domaine du benchmark. Un BPC calculé sur du code n'est pas un score universel de capacité.
+- **Les scores sont des proxys :** les 12 benchmarks couvrent certaines tâches de connaissance, de programmation et de mathématiques ; ils ne définissent pas toute l'intelligence, la robustesse ou la compétence dans le monde réel.
+- **La contamination est difficile à établir :** les auteurs utilisent MIN-K% PROB comme signal de possible exposition aux benchmarks et écartent des valeurs atypiques de modèles Qwen de l'ajustement mathématique. Ce diagnostic indirect n'est pas une preuve de contamination.
+- **Le périmètre est celui des modèles de base :** les résultats ne se transposent pas automatiquement aux modèles instruction-tuned ou de raisonnement, dont la distribution apprise et le comportement diffèrent.
+- **La corrélation n'identifie pas le mécanisme causal :** taille, données, architecture et entraînement peuvent influencer simultanément BPC et scores.
+- **Le résultat est historique et borné :** il décrit les modèles et benchmarks de l'étude de 2024, avec une fenêtre de contexte contrôlée ; il ne constitue pas un classement actuel des modèles.
+
+### Comment utiliser ce résultat dans LLM Lab ?
+
+Le papier donne un **cas d'étude pour relier cross-entropy, compression prédictive et évaluation** : une meilleure modélisation probabiliste d'un corpus pertinent peut être un indicateur utile de capacités évaluées dans un domaine proche. Il justifie d'étudier le BPC comme signal complémentaire, à condition de documenter le corpus et le protocole et de le confronter à des évaluations ciblées. Il ne justifie ni un score unique indépendant du domaine, ni le remplacement des benchmarks, ni l'assimilation de la compression prédictive à la quantification, au pruning ou à la distillation.
+
+Sources : [papier COLM 2024](https://arxiv.org/abs/2404.09937) · [dépôt officiel et protocole](https://github.com/hkust-nlp/llm-compression-intelligence) · [revue critique LLM Lab](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-reviews/huang-zhang-shan-he-compression-intelligence-linearly-2024.md) · [extraction structurée](https://github.com/JM-Brun/llm-lab/blob/main/data/extractions/huang-zhang-shan-he-compression-intelligence-linearly-2024.yml).
+
+## Reconstituer le raisonnement, étape par étape
+
+La progression pédagogique de 3Blue1Brown peut être rejouée comme une chaîne de six questions. Elle complète les leçons canoniques ; elle ne les remplace pas.
+
+1. **Quels événements sont fréquents ?** Partir d'un petit alphabet et d'une distribution de fréquences. Demander quels symboles méritent les mots de code les plus courts.
+2. **Comment garantir un décodage non ambigu ?** Construire un arbre binaire et s'arrêter aux feuilles : aucun mot de code ne doit être le préfixe d'un autre. Vérifier la somme de Kraft. L'expérience ci-dessous fournit un code de Huffman testable.
+3. **Combien coûte un événement ?** Faire émerger le surprisal $I(x)=-\log_2 p(x)$. Un événement rare coûte davantage. Cette longueur idéale peut être fractionnaire, contrairement à la longueur entière d'un mot de code binaire.
+4. **Combien coûte une source en moyenne ?** Moyenner le surprisal sous la distribution : on obtient l'entropie. Ne pas confondre cette espérance avec le surprisal d'un symbole effectivement observé.
+5. **Et si les événements dépendent du contexte ?** Remplacer $p(x_t)$ par $p(x_t\mid x_{<t})$. La règle de chaîne transforme le produit des probabilités conditionnelles en somme de coûts : c'est le pont vers la prédiction autorégressive.
+6. **Comment évaluer un modèle imparfait ?** Comparer la distribution réelle cible $q$ à la distribution prédite $p$. La cross-entropy $H(q,p)$ mesure le coût moyen sous $q$ quand on code avec $p$ ; pour une cible one-hot, elle devient la NLL du token observé. La leçon [Entropie croisée](cross-entropy.qmd) formalise cette dernière étape.
+
+```{mermaid}
+flowchart TD
+  A["Fréquences des symboles"] --> B["Arbre de code préfixe"]
+  B --> C["Longueur idéale : -log₂ p(x)"]
+  C --> D["Moyenne : entropie H(X)"]
+  D --> E["Contexte : p(xₜ | contexte précédent)"]
+  E --> F["Coût de séquence : somme des surprisals"]
+  F --> G["Modèle p évalué sous les cibles q : H(q,p)"]
+```
+
+**Mini-vérification.** Pour $p=(1/2,1/4,1/8,1/8)$, retrouvez les longueurs idéales $(1,2,3,3)$ bits, puis l'entropie $1,75$ bit. Avec le code de Huffman $0,10,110,111$, vérifiez que la longueur moyenne vaut aussi $1,75$ bit et que la somme de Kraft vaut 1. Enfin, expliquez pourquoi cette égalité exacte dépend ici des probabilités dyadiques et n'est pas garantie pour toute distribution.
+
+Cette séquence distingue trois niveaux : **intuition de codage** (arbre et mots de code), **identités informationnelles** (surprisal et entropie), puis **évaluation d'un modèle de langage** (coût conditionnel et cross-entropy). Elle évite de sauter directement d'une formule à une affirmation sur « l'intelligence ».
+
+## Auto-évaluation
+
+1. Pourquoi un LLM n'est-il pas un décompresseur LZW ?
+2. Quelle différence entre surprisal et entropie ?
+3. Pourquoi faut-il un décodeur partagé pour garantir une reconstruction sans perte ?
+4. Pourquoi un modèle quantifié peut-il être plus petit sans être plus rapide ?
+5. Le cache KV appartient-il au checkpoint ou à la mémoire d'exécution ?
+
+::: {.callout-tip title="Réponses attendues"}
+1. Il apprend une distribution paramétrique et ne stocke pas un dictionnaire réversible du corpus.
+2. Le surprisal porte sur un événement observé ; l'entropie est la moyenne du surprisal sous une distribution.
+3. L'encodeur et le décodeur doivent reconstruire les mêmes intervalles/symboles avec des conventions identiques.
+4. Le gain dépend des kernels, du matériel, du format et du workload.
+5. À la mémoire temporaire d'exécution.
+:::
+
 ## Pour approfondir
 
 - [Entropie](entropy.qmd) · [Entropie croisée](cross-entropy.qmd) · [Vraisemblance](vraisemblance.qmd)

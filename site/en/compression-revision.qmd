@@ -227,6 +227,87 @@ This sequence separates three levels: **coding intuition** (tree and codewords),
 5. It belongs to temporary runtime memory.
 :::
 
+## 7. Empirical study: predictive compression as a capability signal
+
+Huang, Zhang, Shan, and He (COLM 2024) test whether a model's predictive coding cost is associated with downstream task performance. Their study covers **31 public pretrained LLMs**, **12 benchmarks**, and three external corpora aligned with the evaluated domains: Common Crawl for knowledge and commonsense, GitHub Python repositories for coding, and arXiv mathematics papers for mathematical reasoning.
+
+To compare models with different tokenizers, the authors measure *bits per character* (BPC), rather than bits per token:
+
+$$
+\mathrm{BPC}(M,C)=
+\frac{\sum_t -\log_2 p_M(x_t\mid x_{<t})}
+{\text{number of characters in }C}.
+$$
+
+The numerator is the ideal code length in bits assigned to the text by the model; the denominator normalizes by the corpus character count. The protocol fixes a context window of 1,900 tokens. **BPC therefore depends on the corpus, its normalization, and the evaluation protocol; it is not an intrinsic constant of a model.**
+
+The authors report the following Pearson correlations between BPC and aggregated benchmark scores:
+
+| Evaluated domain | BPC / score correlation |
+|---|---:|
+| All tasks | -0.93 |
+| Knowledge and commonsense | -0.935 |
+| Coding | -0.937 |
+| Mathematical reasoning | -0.953 |
+
+The negative sign means that, in this sample, **lower BPC is associated with higher scores**. This is a strong empirical result within the studied protocol, not evidence that compression causes intelligence or that the two are identical.
+
+### Conditions and limitations to preserve
+
+- **Domain alignment matters:** the reported cross-domain controls weaken the relationship when the compression corpus does not match the benchmark domain. BPC measured on code is not a universal capability score.
+- **Benchmark scores are proxies:** the 12 benchmarks cover selected knowledge, coding, and mathematics tasks; they do not define intelligence, robustness, or real-world competence as a whole.
+- **Contamination is hard to establish:** the authors use MIN-K% PROB as a signal of possible benchmark exposure and exclude Qwen outliers from the mathematical fit. This indirect diagnostic is not proof of contamination.
+- **The scope is base models:** the results do not automatically transfer to instruction-tuned or reasoning models, whose learned distributions and behavior differ.
+- **Correlation does not identify a causal mechanism:** scale, data, architecture, and training may influence BPC and benchmark scores simultaneously.
+- **The result is historical and bounded:** it describes the models and benchmarks in the 2024 study, under a controlled context window; it is not a current model leaderboard.
+
+### How should LLM Lab use this result?
+
+The paper provides a **case study connecting cross-entropy, predictive compression, and evaluation**: better probabilistic modeling of a relevant corpus can be a useful signal of capabilities measured in a related domain. It motivates studying BPC as a complementary signal, provided the corpus and protocol are documented and the result is checked against task-specific evaluations. It does not justify a single domain-independent score, replacing benchmarks, or conflating predictive compression with quantization, pruning, or distillation.
+
+Sources: [COLM 2024 paper](https://arxiv.org/abs/2404.09937) · [official repository and protocol](https://github.com/hkust-nlp/llm-compression-intelligence) · [LLM Lab critical review](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-reviews/huang-zhang-shan-he-compression-intelligence-linearly-2024.md) · [structured extraction](https://github.com/JM-Brun/llm-lab/blob/main/data/extractions/huang-zhang-shan-he-compression-intelligence-linearly-2024.yml).
+
+## Reconstruct the reasoning, step by step
+
+The pedagogical progression in 3Blue1Brown can be replayed as a chain of six questions. It complements the canonical lessons; it does not replace them.
+
+1. **Which events are frequent?** Start with a small alphabet and a frequency distribution. Ask which symbols deserve the shortest codewords.
+2. **How can decoding be unambiguous?** Build a binary tree and stop at leaves: no codeword may be a prefix of another. Check Kraft's sum. The experiment below provides a testable Huffman code.
+3. **What does an event cost?** Derive surprisal, $I(x)=-\log_2 p(x)$. A rarer event costs more. This ideal length can be fractional, unlike the integer length of a binary codeword.
+4. **What does a source cost on average?** Average surprisal under the distribution to obtain entropy. Do not confuse this expectation with the surprisal of one observed symbol.
+5. **What if events depend on context?** Replace $p(x_t)$ with $p(x_t\mid x_{<t})$. The chain rule turns the product of conditional probabilities into a sum of costs: the bridge to autoregressive prediction.
+6. **How do we evaluate an imperfect model?** Compare the target distribution $q$ with the predicted distribution $p$. Cross-entropy $H(q,p)$ is the average coding cost under $q$ when coding with $p$; for a one-hot target, it becomes the observed token's NLL. The [Cross-entropy lesson](cross-entropy.qmd) formalizes this final step.
+
+```{mermaid}
+flowchart TD
+  A["Symbol frequencies"] --> B["Prefix-code tree"]
+  B --> C["Ideal length: -log₂ p(x)"]
+  C --> D["Average: entropy H(X)"]
+  D --> E["Context: p(xₜ | contexte précédent)"]
+  E --> F["Sequence cost: sum of surprisals"]
+  F --> G["Model p evaluated on targets q: H(q,p)"]
+```
+
+**Quick check.** For $p=(1/2,1/4,1/8,1/8)$, recover the ideal lengths $(1,2,3,3)$ bits and entropy $1.75$ bits. With the Huffman codewords $0,10,110,111$, verify that average length is also $1.75$ bits and Kraft's sum is 1. Finally, explain why exact equality holds here because the probabilities are dyadic, and is not guaranteed for every distribution.
+
+This sequence separates three levels: **coding intuition** (tree and codewords), **information-theoretic identities** (surprisal and entropy), and **language-model evaluation** (conditional cost and cross-entropy). It avoids jumping from a formula straight to a claim about “intelligence”.
+
+## Self-check
+
+1. Why is an LLM not an LZW decompressor?
+2. How does surprisal differ from entropy?
+3. Why is a shared decoder needed for lossless reconstruction?
+4. Why can a quantized model be smaller without being faster?
+5. Does the KV cache belong to the checkpoint or to runtime memory?
+
+::: {.callout-tip title="Expected answers"}
+1. It learns a parametric distribution; it does not store a reversible dictionary of the corpus.
+2. Surprisal concerns an observed event; entropy is expected surprisal under a distribution.
+3. Encoder and decoder must reconstruct the same intervals/symbols using identical conventions.
+4. Gains depend on kernels, hardware, format, and workload.
+5. It belongs to temporary runtime memory.
+:::
+
 ## Go deeper
 
 - [Entropy](entropy.qmd) · [Cross-entropy](cross-entropy.qmd) · [Likelihood](likelihood.qmd)
