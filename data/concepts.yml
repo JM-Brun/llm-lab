@@ -969,6 +969,18 @@ relation_types:
 
 
 
+  approximates:
+    direction: directed
+    family: functional
+    transitive: false
+    acyclic: false
+    learning_dependency: false
+    inverse: null
+    labels: {fr: "approxime", en: "approximates"}
+    descriptions:
+      fr: "La source fournit une construction calculable ou bornée qui vise à reproduire certains comportements de la cible sans être identique à celle-ci."
+      en: "The source provides a computable or bounded construction intended to reproduce some behaviour of the target without being identical to it."
+
 relations:
 
   - {from: predictive-compression, type: applies-to, to: conditional-distribution}
@@ -1150,5 +1162,5 @@ relations:
   - {from: algorithmic-probability, type: contributes-to, to: solomonoff-induction}
   - {from: solomonoff-induction, type: contributes-to, to: aixi}
   - {from: sequential-decision-theory, type: contributes-to, to: aixi}
-  - {from: aixi-tl, type: constrains, to: aixi}
+  - {from: aixi-tl, type: approximates, to: aixi}
   - {from: resource-bounded-computation, type: constrains, to: aixi-tl}
