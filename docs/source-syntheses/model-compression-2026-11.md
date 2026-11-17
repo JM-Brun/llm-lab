@@ -131,3 +131,26 @@ Contrôler le modèle, le tokenizer, le matériel, le backend, le batch, la long
 - Xiao et al. (2023), [SmoothQuant: Accurate and Efficient Post-Training Quantization for Large Language Models](https://proceedings.mlr.press/v202/xiao23c.html), ICML / PMLR. PTQ W8A8 et traitement des outliers d'activations.
 - Sanh et al. (2019), [DistilBERT, a distilled version of BERT](https://arxiv.org/abs/1910.01108). Exemple de distillation avec résultats bornés à ses évaluations.
 - Sasirekha Cota (2023), [Understanding Compression of Large Language Models (LLMs)](https://medium.com/@sasirekharameshkumar/understanding-compression-of-large-language-models-2ee3b8a350a2), Medium. Consulté le 16 novembre 2026.
+
+
+## Complément — Compression comme stratégie de déploiement (Alliancy, 2026)
+
+Aude Brès, [« La compression, stratégie d’avenir des LLM »](https://alliancy.fr/la-compression-strategie-davenir-des-llm-19908527-e6dd-4097-b5e5-0d9a2ab2c7e0), Alliancy, 4 mars 2026, apporte un cadrage opérationnel : réduction des coûts et besoins de calcul, sobriété énergétique, déploiement local et accès à l'IA dans les organisations disposant de ressources limitées. L'article présente le Résilient AI Challenge, annoncé le 20 février 2026, et met en avant le pruning. Les documents officiels de l'UNESCO et de la Sustainable AI Coalition consultés le 17 novembre 2026 confirment le lancement, les organisateurs, les trois catégories et modèles évalués, ainsi que les équipes gagnantes annoncées le 8 juillet 2026. Ce contrôle indépendant documente le cas, sans autoriser de généralisation au-delà des modèles, tâches et conditions du challenge ; le règlement exclut explicitement toute certification générale de qualité ou de sûreté.
+
+Trois précisions doivent accompagner cette perspective :
+
+1. **Pruning et inférence :** l'élagage classique modifie les poids ou structures du modèle avant le déploiement, parfois avec réentraînement. Il ne faut pas le présenter comme une opération d'inférence par défaut ; la sparsification dynamique à l'exécution est une autre approche.
+2. **Sparsité et accélération :** mettre des poids à zéro ne réduit pas automatiquement latence ou énergie. Le bénéfice dépend de la structure, des kernels, du matériel et du workload. Toute amélioration doit être mesurée sur la cible réelle.
+3. **Local et confidentialité :** une exécution locale peut réduire les transferts de données vers un cloud externe, mais ne garantit ni sécurité ni conformité sans contrôles d'accès, de télémétrie, de chaîne logicielle, de mises à jour et de gouvernance.
+
+Les valeurs de croissance de 360 % des paramètres et 36 % de la puissance des infrastructures, attribuées à Epoch.AI par l'article, restent non vérifiées : la source primaire et les définitions des séries ne sont pas établies dans cette revue. Ne pas les réutiliser comme chiffres de référence.
+
+**Décision :** conserver Alliancy comme cas de contexte de déploiement et renforcer les qualifications existantes ; ne créer ni concept, ni leçon, ni expérience supplémentaire. La distinction entre compression du modèle, compression prédictive et mémoire d'exécution reste inchangée.
+
+Revue : [Alliancy — analyse critique](../source-reviews/alliancy-la-compression-strategie-avenir-llm-2026-11.md) · Extraction : [claims et dispositions](../../data/extractions/alliancy-la-compression-strategie-avenir-llm-2026.yml).
+
+### Vérification complémentaire du Résilient AI Challenge
+
+Les sources officielles consultées après l’article confirment que le challenge a été lancé le 20 février 2026 par la France, l’Inde et l’UNESCO, en coopération avec la Sustainable AI Coalition. Les trois catégories portaient sur Voxtral Realtime (audio-texte), Gemma 4 (image-texte) et Sarvam-30b (texte-texte). Les organisateurs ont annoncé les équipes gagnantes le 8 juillet 2026 : MCTE, LiteMind et Wavestone Wavelets. L’évaluation combinait précision et efficacité énergétique. Cette confirmation transforme le challenge en cas documenté, mais les conclusions restent bornées aux trois modèles, tâches et conditions d’évaluation ; le règlement exclut explicitement toute certification générale de qualité ou de sûreté. Sources : [UNESCO](https://www.unesco.org/fr/articles/le-sommet-mondial-de-lia-au-service-du-bien-met-le-projecteur-sur-une-ia-resiliente-par-une), [Coalition pour une IA durable](https://www.sustainableaicoalition.org/resilient-ai-challenge/), [règlement](https://www.sustainableaicoalition.org/terms-resilient-ai-challenge/).
+
+La source primaire Epoch.AI derrière la comparaison 360 % / 36 % n’a pas été identifiée avec certitude : ces chiffres restent non vérifiés et ne doivent pas être utilisés comme données établies.

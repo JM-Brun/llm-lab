@@ -5254,6 +5254,51 @@ sources:
         - docs/source-reviews/hesam-sheikh-llm-study-roadmap-2026-11.md
         - data/extractions/hesam-sheikh-llm-study-roadmap-2024.yml
 
+  - id: alliancy-la-compression-strategie-avenir-llm-2026
+    title: "La compression, stratégie d’avenir des LLM"
+    creators: ["Aude Brès"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://alliancy.fr/la-compression-strategie-davenir-des-llm-19908527-e6dd-4097-b5e5-0d9a2ab2c7e0"
+    publisher: "Alliancy"
+    publication_date: "2026-03-04"
+    updated_date: "2026-03-04"
+    language: fr
+    version: "Article web consulté le 17 novembre 2026"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: inference-efficiency
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:model-compression, method:pruning, application:edge-deployment, application:privacy-sensitive-deployment, ecosystem:resilient-ai-challenge]
+      concept_ids: [model-compression, pruning]
+    metadata:
+      technical_level: introductory
+      contribution_types: [historical-context, pedagogy]
+      audiences: [beginner, learner, practitioner]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "Article body: introduction, Résilient AI Challenge, pruning, confidentiality/local deployment, accessibility and conclusion"
+          - "Pruning explanatory inset"
+          - "Article metadata and publication date"
+        limitations:
+          - "The cover image is credited to Freepik but its underlying asset, creator metadata and reuse rights were not inspected; no reuse."
+          - "The article's linked Epoch.AI study was not independently retrieved or checked; the quoted 360% parameter-growth and 36% infrastructure-growth figures remain attributed, unverified secondary reporting."
+          - "Official organizer and UNESCO pages were subsequently checked; launch, partners, model categories, evaluation principle and winners were corroborated. Detailed technical submissions and raw energy measurements were not independently reproduced."
+          - "No code, benchmark protocol or empirical measurements are supplied by the article."
+          - "The article's short format does not establish that all compression techniques or deployment constraints are covered."
+    related:
+      pages: [fr/llm-computational-complexity, en/llm-computational-complexity, fr/compression-revision, en/compression-revision]
+      concepts: [model-compression, pruning]
+      audit_records:
+        - docs/source-reviews/alliancy-la-compression-strategie-avenir-llm-2026-11.md
+        - data/extractions/alliancy-la-compression-strategie-avenir-llm-2026.yml
+
   - id: jose-parreno-garcia-how-llms-work-three-layers-2025
     title: "LLMs explained (Part 1): The 3-layer framework behind chatGPT & friends"
     creators: ["Jose Parreño Garcia"]
