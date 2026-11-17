@@ -37,6 +37,7 @@ pedagogical_model:
   pedagogical_strengths: ["Explains external retrieval without retraining.", "Shows where cross-encoder reranking fits."]
   pedagogical_limits: ["Vector-centric implementation must not be generalized to all RAG.", "Retrieval does not guarantee truth or eliminate hallucinations.", "Later implementation sections were not inspected."]
   comparison:
+    canonical_graph: "Existing retrieval-augmented-generation and contextualized-representation concepts cover the pipeline; no new concept node is needed because retrieval, ranking and context assembly are already represented in the graph."
     canonical_pages: [fr/rag-memory-boundaries, en/rag-memory-boundaries]
     decision: "Use the stage-level explanation to clarify the existing RAG page while retaining broader retrieval alternatives and failure analysis."
     dossier: docs/source-reviews/dailydose-main-path-2026-11.md
