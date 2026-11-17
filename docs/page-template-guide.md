@@ -51,6 +51,10 @@ These files offer focused prompts for recurring page jobs. They complement the c
 
 Use `::: {.responsive-card-table}` around a descriptive comparison table when long cells and multiple columns make it difficult to scan on a narrow screen. The shared enhancement derives each card label from the table's own column headers; do not duplicate labels in page-specific CSS. Preserve the semantic table structure and verify narrow and wide layouts, keyboard use, and screen-reader behavior. Do not convert every table: compact numerical data and comparisons that rely on column scanning may remain scrollable tables.
 
+## Purposeful interactivity
+
+An interactive element is justified when a learner action changes a meaningful state and makes a central mechanism easier to understand than prose or a static diagram alone. The shared bilingual next-token explorer on the LLM overview is a deliberate exception under the guardrails of #368: selecting a token extends the prefix and exposes the next conditional distribution, making the autoregressive feedback loop tangible. It reuses the running example's illustrative values, does not invent unspecified branch probabilities, and lives in one shared include. This is not a precedent for adding decorative interactions or one-off widgets without a concrete learning question and a reuse rationale.
+
 ## Review aid—not a gate
 
 Ask only the questions that apply:
