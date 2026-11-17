@@ -56,7 +56,7 @@ items:
     kind: definition
     summary: "BPC measures the ideal predictive code length assigned by a causal language model to external text, in bits per character."
     locator: {type: section, value: "Paper §2; evaluation/main.py"}
-    evidence: {kind: formal-definition, confidence: high, scope: "Paper equation and matching implementation.", assumptions: ["Ideal coding interpretation abstracts from model transmission and practical coder overhead."], limitations: ["BPC is distribution-dependent and not a universal intelligence score."]}
+    evidence: {kind: formal-definition, confidence: well-supported, scope: "Paper equation and matching implementation.", assumptions: ["Ideal coding interpretation abstracts from model transmission and practical coder overhead."], limitations: ["BPC is distribution-dependent and not a universal intelligence score."]}
     pedagogical_assessment:
       learner_question: "How can next-token prediction be interpreted as compression?"
       explanatory_lens: "Conditional probabilities determine ideal code lengths."
@@ -72,10 +72,10 @@ items:
     disposition: case-study
     disposition_rationale: "Add a bounded empirical case study; do not repeat the cross-entropy derivation."
   - id: hkust-nlp-llm-compression-intelligence-2024:domain-corpora
-    kind: method
+    kind: experiment
     summary: "The study scores models on Common Crawl, GitHub Python and ArXiv mathematics corpora aligned with knowledge, coding and math task families."
     locator: {type: section, value: "Paper §3; repository dataset documentation"}
-    evidence: {kind: experimental-design, confidence: high, scope: "Three corpus domains and corresponding task groups.", assumptions: ["Corpora approximate the intended domains."], limitations: ["Corpus composition and time period affect scores."]}
+    evidence: {kind: experimental-design, confidence: well-supported, scope: "Three corpus domains and corresponding task groups.", assumptions: ["Corpora approximate the intended domains."], limitations: ["Corpus composition and time period affect scores."]}
     pedagogical_assessment:
       learner_question: "Why is compression evaluation domain-dependent?"
       explanatory_lens: "Predictive performance depends on the evaluated text distribution."
@@ -94,7 +94,7 @@ items:
     kind: result
     summary: "Across 31 public LLMs, reported Pearson correlations between BPC and benchmark averages are -0.935 for knowledge/commonsense, -0.937 for coding, -0.953 for mathematics and -0.931 overall."
     locator: {type: section, value: "Paper §4, main results"}
-    evidence: {kind: reported-experimental-result, confidence: high, scope: "Evaluated models, corpora, benchmarks and scoring protocol.", assumptions: ["Scores are comparable within the authors' setup."], limitations: ["Association is not causation; benchmark averages cover only selected capabilities; no independent reproduction."]}
+    evidence: {kind: reported-experimental-result, confidence: well-supported, scope: "Evaluated models, corpora, benchmarks and scoring protocol.", assumptions: ["Scores are comparable within the authors' setup."], limitations: ["Association is not causation; benchmark averages cover only selected capabilities; no independent reproduction."]}
     pedagogical_assessment:
       learner_question: "How strong is the empirical relationship between BPC and task scores?"
       explanatory_lens: "Compare domain-matched compression scores and benchmark averages across models."
@@ -110,10 +110,10 @@ items:
     disposition: case-study
     disposition_rationale: "Show headline values with study scope and explicit non-causal caveat."
   - id: hkust-nlp-llm-compression-intelligence-2024:tokenizer-neutral-normalization
-    kind: method
+    kind: experiment
     summary: "The evaluation converts summed token cross-entropy from nats to bits and divides by character count, enabling a common unit across models with different tokenizers."
     locator: {type: code, value: "code/evaluation/main.py"}
-    evidence: {kind: implementation, confidence: high, scope: "BPC calculation in inspected code.", assumptions: ["Character counting and text normalization are consistent."], limitations: ["Character normalization does not eliminate all preprocessing differences."]}
+    evidence: {kind: implementation-pattern, confidence: well-supported, scope: "BPC calculation in inspected code.", assumptions: ["Character counting and text normalization are consistent."], limitations: ["Character normalization does not eliminate all preprocessing differences."]}
     pedagogical_assessment:
       learner_question: "How can models with different tokenizers be compared?"
       explanatory_lens: "Normalize negative log likelihood by a shared external unit."
@@ -132,7 +132,7 @@ items:
     kind: result
     summary: "Ablations report weaker alignment when corpus and target capability are mismatched; combining Python and mathematics corpora helps in the program-aided math setting."
     locator: {type: section, value: "Paper §4, domain/corpus ablations"}
-    evidence: {kind: reported-experimental-result, confidence: high, scope: "Specific ablation settings.", assumptions: ["Reported comparisons follow the authors' protocol."], limitations: ["No universally optimal corpus-selection rule follows."]}
+    evidence: {kind: reported-experimental-result, confidence: well-supported, scope: "Specific ablation settings.", assumptions: ["Reported comparisons follow the authors' protocol."], limitations: ["No universally optimal corpus-selection rule follows."]}
     pedagogical_assessment:
       learner_question: "Does any text corpus provide an equally useful compression score?"
       explanatory_lens: "The score is conditional on the evaluated distribution."
@@ -148,10 +148,10 @@ items:
     disposition: experiment
     disposition_rationale: "Retain as a core design constraint for a multi-domain BPC experiment."
   - id: hkust-nlp-llm-compression-intelligence-2024:contamination-diagnostic
-    kind: method
+    kind: experiment
     summary: "MIN-K% PROB is used as a contamination diagnostic and suspicious Qwen math results are treated as outliers; screening is not proof of zero contamination."
     locator: {type: section, value: "Paper §4, contamination analysis"}
-    evidence: {kind: experimental-method, confidence: high, scope: "Reported diagnostic and outlier treatment.", assumptions: ["Diagnostic is applied as described."], limitations: ["A detector cannot establish absence of contamination; exclusions affect the fitted relationship."]}
+    evidence: {kind: experimental-method, confidence: well-supported, scope: "Reported diagnostic and outlier treatment.", assumptions: ["Diagnostic is applied as described."], limitations: ["A detector cannot establish absence of contamination; exclusions affect the fitted relationship."]}
     pedagogical_assessment:
       learner_question: "How can benchmark contamination affect a correlation study?"
       explanatory_lens: "Screen unusually high scores for possible exposure to evaluation examples."
@@ -167,10 +167,10 @@ items:
     disposition: link
     disposition_rationale: "Cross-link to evaluation methodology rather than expand core compression lesson."
   - id: hkust-nlp-llm-compression-intelligence-2024:loader-indexing-caveat
-    kind: implementation
+    kind: implementation-pattern
     summary: "The packed dataset advances mutable window offsets as items are requested; this matches the default sequential non-shuffled loader but is fragile for random access, shuffling or multiple workers."
     locator: {type: code, value: "code/evaluation/packed_dataset.py"}
-    evidence: {kind: code-inspection, confidence: high, scope: "Static inspection of dataset and loader usage.", assumptions: ["Intended path is sequential and non-shuffled."], limitations: ["No runtime failure was reproduced; concern is about portability of the indexing contract."]}
+    evidence: {kind: code-inspection, confidence: well-supported, scope: "Static inspection of dataset and loader usage.", assumptions: ["Intended path is sequential and non-shuffled."], limitations: ["No runtime failure was reproduced; concern is about portability of the indexing contract."]}
     pedagogical_assessment:
       learner_question: "What should be checked before adapting a research evaluation script?"
       explanatory_lens: "Dataset indexing semantics must match the DataLoader access pattern."
