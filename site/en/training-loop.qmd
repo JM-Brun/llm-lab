@@ -83,7 +83,19 @@ These three are often conflated.
 - The **optimizer** is a rule that maps gradients (and sometimes its own memory of earlier gradients) to an update. Plain SGD uses $\theta_{k+1}=\theta_k-\eta\,\nabla_\theta\mathcal{L}(\theta_k)$, as shown in [Gradients](gradients.qmd#gradient-descent-update).
 - The **learning rate** $\eta$ sets the size of the step. Too small, and training is slow; too large, and the loss can oscillate or diverge, because the gradient is only a *local* description.
 
-Language-model training commonly uses *adaptive* optimizers such as Adam and its decoupled-weight-decay variant AdamW. Intuitively, they keep running averages of recent gradients and of their magnitudes, so that each parameter receives a step scaled to its own recent history, not one global step size. The gradient is the same; the update rule differs. Adam's running second moment is an estimate of gradient magnitude, **not** the Hessian used by Newton's method: Adam and AdamW are adaptive first-order optimizers, not second-order Newton methods. Their exact formulas, learning-rate schedules (warmup, decay) and gradient clipping are implementation choices that change training dynamics without changing the objective; they are outside this lesson's scope; the sources under *Further reading* define them.
+Language-model training commonly uses *adaptive* optimizers such as Adam and its decoupled-weight-decay variant AdamW. Intuitively, they keep running averages of recent gradients and squared gradients (their uncentred second moment), so that each parameter receives a step scaled to its own recent history, not one global step size. The gradient is the same; the update rule differs. Adam's running second moment is an estimate of gradient magnitude, **not** the Hessian used by Newton's method: Adam and AdamW are adaptive first-order optimizers, not second-order Newton methods. Their exact formulas, learning-rate schedules (warmup, decay) and gradient clipping are implementation choices that change training dynamics without changing the objective; they are outside this lesson's scope; the sources under *Further reading* define them.
+
+<figure id="fig-optimizer-comparison">
+  <picture>
+    <source media="(max-width: 600px)" srcset="../images/optimizer-comparison-en-mobile.svg">
+    <img src="../images/optimizer-comparison-en.svg" alt="Comparison of three parameter-update rules: SGD uses the current first-order gradient; Newton uses the gradient and Hessian curvature; Adam and AdamW use running first and second moments of gradients. Adam's second moment is not the Hessian." style="width:100%;height:auto">
+  </picture>
+  <figcaption>SGD, Newton and Adam can optimize the same objective while using different information to choose an update. Adam's second moment tracks squared gradients; it does not calculate curvature.</figcaption>
+</figure>
+
+::: {.callout-note collapse="true" title="Why not use exact Newton updates for every LLM parameter? (advanced)"}
+A full Newton step solves $H_k d_k = \nabla_\theta\mathcal{L}(\theta_k)$ and updates $\theta_{k+1}=\theta_k-d_k$. For a model with millions or billions of parameters, storing and factorizing the dense Hessian is generally prohibitive. The Hessian can also be singular or indefinite, so an undamped Newton direction is not automatically a descent direction; practical second-order methods need safeguards such as damping, trust regions, or structured approximations. Quasi-Newton methods (for example L-BFGS) and structured preconditioners explore ways to capture curvature more cheaply, but they are not the same algorithm as Adam. This is why large-scale language-model training commonly favours first-order adaptive methods.
+:::
 
 ::: {.callout-warning title="Misconceptions"}
 - **“The optimizer computes the gradient.”** Backpropagation computes it; the optimizer only consumes it.

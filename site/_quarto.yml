@@ -30,6 +30,8 @@ project:
     - images/attention-matrices-mobile.svg
     - images/training-loop-visual-en-mobile.svg
     - images/training-loop-visual-fr-mobile.svg
+    - images/optimizer-comparison-en-mobile.svg
+    - images/optimizer-comparison-fr-mobile.svg
     - images/generation-prefill-decode-en-mobile.svg
     - images/generation-prefill-decode-fr-mobile.svg
   render:
