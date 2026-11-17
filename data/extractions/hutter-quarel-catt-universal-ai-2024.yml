@@ -1,0 +1,29 @@
+schema_version: 1
+source_id: hutter-quarel-catt-universal-ai-2024
+items:
+  - id: hutter-quarel-catt-universal-ai-2024:aixi-tl-proof-validation
+    kind: mechanism
+    summary: "The later AIXI(t,l) formulation enumerates bounded candidate policies, retains those with proofs that their value estimates are valid lower approximations, and selects the action associated with the highest certified estimate at each interaction cycle."
+    locator: {type: section, value: "13.2, Algorithm 13.1", label: "The AIXI(t,l) algorithm"}
+    evidence:
+      kind: textbook-formalization
+      confidence: established
+      scope: "Proof-validated candidate-policy construction in the 2024 textbook."
+      assumptions: ["A formal proof system and the valid-approximation predicate specified in the chapter."]
+      limitations: ["The algorithm is theoretical; no implementation or empirical runtime was tested."]
+    disposition: integrate
+    mapped_concepts: [aixi-tl, aixi, resource-bounded-computation]
+    target_resources: [fr/universal-artificial-intelligence, en/universal-artificial-intelligence]
+  - id: hutter-quarel-catt-universal-ai-2024:aixi-tl-complexity
+    kind: result
+    summary: "The theorem gives O(t times 2^l) computation per interaction cycle; the proof-enumeration setup is separately bounded by O(l_P squared times 2^l_P), where l_P is the maximum proof length."
+    locator: {type: section, value: "13.2, Theorem 13.2.3", label: "Optimality and complexity"}
+    evidence:
+      kind: theorem-result
+      confidence: established
+      scope: "Asymptotic setup and per-cycle bounds for the later proof-validated AIXI(t,l) formulation."
+      assumptions: ["The candidate program, time and proof-length bounds and valid-approximation assumptions of the theorem."]
+      limitations: ["Asymptotic notation hides large constants; this is not a practical runtime benchmark."]
+    disposition: integrate
+    mapped_concepts: [aixi-tl, resource-bounded-computation]
+    target_resources: [fr/universal-artificial-intelligence, en/universal-artificial-intelligence]

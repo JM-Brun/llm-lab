@@ -73,6 +73,7 @@ def test_relation_mapping_preserves_non_taxonomic_semantics() -> None:
     assert relation_predicate("prerequisite") == "llmlab:prerequisite"
     assert relation_predicate("part-of") == "llmlab:partOf"
     assert relation_predicate("contrasts-with") == "llmlab:contrastsWith"
+    assert relation_predicate("approximates") == "llmlab:approximates"
 
 
 def test_export_provenance_names_canonical_sources(graph_payload: dict[str, Any]) -> None:

@@ -102,6 +102,7 @@ pedagogical_model:
     - "MDL, Kolmogorov complexity and Solomonoff induction are related but not interchangeable."
     - "The generalization argument is heuristic without a specified model class, prior, data-generating distribution and capacity assumptions."
     - "AIXI is an idealized theoretical construction and is not computationally tractable in general."
+    - "The article's broad phrase 'computable environments' compresses a more specific formal class: lower semicomputable chronological conditional semimeasures (LSCCCSs) in Leike & Hutter (2015); consult the AIXI technical review for exact scope."
     - "AIXI guarantees are relative to the chosen universal Turing machine; later analyses show sensitivity to the reference machine, so they are not representation-independent measures of intelligence."
     - "The FEP/active-inference section is explicitly a lay interpretation and does not establish that intelligence is fundamentally compression."
   comparison:
@@ -117,7 +118,7 @@ items:
     locator: {type: section, value: "The two parts to compression"}
     evidence: {kind: source-explanation, confidence: well-supported, scope: "Two-part MDL description for a specified model and coding scheme.", assumptions: ["The model is encoded or otherwise its description cost is charged.", "The data code is valid under the model."], limitations: ["The exact MDL formulation depends on the model class and coding convention.", "Computational cost and adaptation cost are not automatically included."]}
     pedagogical_assessment: {novelty: {level: moderate, rationale: "The two-cost framing is a useful bridge into MDL and is not the central structure of the existing LLM compression pages."}, complementarity: {level: high, rationale: "It connects predictive coding to model selection and prevents free-model assumptions."}, pedagogical_value: {level: high, rationale: "Makes the model/data trade-off concrete."}, applicability: {level: high, rationale: "Best added as a bounded perspective in the existing compression synthesis."}, redundancy: {level: moderate, rationale: "MDL exists in the broader learning theory, but the paired costs are a distinct teaching bridge."}, evidence_quality: {level: high, rationale: "Standard two-part description-length formulation."}}
-    classification: {primary_theme: probabilistic-foundations-training, tags: [topic:minimum-description-length], concept_ids: [predictive-compression, sequence-likelihood]}
+    classification: {primary_theme: probabilistic-foundations-training, tags: [topic:minimum-description-length], concept_ids: [predictive-compression, minimum-description-length, sequence-likelihood]}
     candidate_destinations: {pages: [], concepts: [predictive-compression, sequence-likelihood]}
     disposition: integrate
     disposition_rationale: "Add to the living comparative synthesis; do not create a new mandatory lesson."

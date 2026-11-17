@@ -72,6 +72,7 @@ The source relation vocabulary remains authoritative. Only a genuine generalizat
 | `represented-by` | `llmlab:representedBy` | Representation relation |
 | `contributes-to` | `llmlab:contributesTo` | Contribution, not sufficiency |
 | `mapped-by` | `llmlab:mappedBy` | Mapping relation |
+| `approximates` | `llmlab:approximates` | A bounded or computable construction approximates an idealized target without being equivalent to it |
 
 The export deliberately does not map every relation to `skos:related`: doing so would erase distinctions needed by the learning map and future queries. It also does not infer inverse edges unless a standard explicitly defines the inverse and the consumer needs it.
 

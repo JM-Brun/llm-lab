@@ -18,7 +18,6 @@ project:
     - scripts/hybrid-rope-nope.js
     - styles/hybrid-rope-nope.css
     - scripts/relative-bias-decomposition.js
-    - scripts/next-token-explorer.js
     - styles/relative-bias-decomposition.css
     - learning-map-data-fr.json
     - learning-map-data-en.json
@@ -78,6 +77,8 @@ project:
     - en/entropy.qmd
     - fr/compression-revision.qmd
     - en/compression-revision.qmd
+    - fr/universal-artificial-intelligence.qmd
+    - en/universal-artificial-intelligence.qmd
     - fr/cross-entropy.qmd
     - en/cross-entropy.qmd
     - fr/revision-information-theory.qmd
@@ -458,6 +459,7 @@ website:
               contents:
                 - fr/language-modeling-math.qmd
                 - fr/mathematical-foundations.qmd
+                - fr/universal-artificial-intelligence.qmd
                 - fr/score-centering.qmd
             - section: "Inférence et efficacité"
               contents:
@@ -658,6 +660,7 @@ website:
               contents:
                 - en/language-modeling-math.qmd
                 - en/mathematical-foundations.qmd
+                - en/universal-artificial-intelligence.qmd
                 - en/score-centering.qmd
             - section: "Inference and efficiency"
               contents:

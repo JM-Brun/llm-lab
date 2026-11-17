@@ -284,6 +284,24 @@ These resources are curated for teaching design and guided experimentation. Incl
 
 ## Information theory and language models
 
+## Algorithmic information and universal agents
+
+**Synthesis:** [Kolmogorov complexity, universal prediction and AIXI](source-syntheses/kolmogorov-aixi-computability-2026-11.md) connects the formal layers and their computability limits.
+
+- **Marcus Hutter — [Universal Algorithmic Intelligence: A Mathematical Top-Down Approach](https://arxiv.org/abs/cs/0701125)** (2007; based on the IDSIA technical report).
+  - **Use for:** the primary theoretical construction connecting Kolmogorov complexity, the universal Solomonoff mixture, sequential decision theory, AIXI and the resource-bounded AIXI(t,l) agent. Sections 3.2–3.4 and 6 are the key route.
+  - **Critical qualifications:** K is upper semicomputable but not computable; the universal mixture is a semimeasure, not a normalized computable probability; AIXI's optimality is relative to formal assumptions. The detailed AIXI(t,l) construction gives $O(t\,2^l)$ per cycle, with large hidden constants. Do not flatten superscripts or confuse candidate-program bounds with environment-only bounds.
+  - **Review status:** complete targeted inspection of the accessible report on 17 November 2026. See [advanced source review](source-reviews/aixi-kolmogorov-computability-2026-11.md) and [Hutter extraction](../data/extractions/hutter-universal-algorithmic-intelligence-2007.yml), [Leike & Hutter extraction](../data/extractions/leike-hutter-computability-aixi-2015.yml), and [2024 textbook extraction](../data/extractions/hutter-quarel-catt-universal-ai-2024.yml).
+
+- **Jan Leike & Marcus Hutter — [On the Computability of AIXI](https://arxiv.org/abs/1510.05572)** (UAI 2015).
+  - **Use for:** formulation-sensitive computability results. Standard/iterative exact AIXI is not limit computable because of exact action ties and the iterative discounted infinite-horizon value definition; ε-optimality plus a recursive value function yields a limit-computable infinite-horizon policy, with a computable tolerance that can decrease toward zero. The paper models environments as lower semicomputable chronological conditional semimeasures (LSCCCSs).
+  - **Scope:** abstract, introduction, relevant computability results and discussion (including Corollary 22) inspected; technical proofs were not audited line by line. Do not paraphrase the result as ruling out every useful approximation to restricted aspects of AIXI.
+
+- **Marcus Hutter, David Quarel & Elliot Catt — [An Introduction to Universal Artificial Intelligence](https://hutter1.net/publ/uaibook2.pdf)** (24 December 2024).
+  - **Use for:** a current textbook-level treatment of Kolmogorov complexity and universal prediction, plus the explicit AIXI(t,l) algorithm, proof-length parameter (l_P), setup complexity and per-cycle theorem. See Section 13.2, Algorithm 13.1 and Theorem 13.2.3.
+  - **Review status:** targeted inspection of the relevant background and AIXI(t,l) section; no code or algorithm was executed. Asymptotic complexity is not a practical runtime benchmark.
+
+
 - **Wayland Zhang — Information Theory Is All You Need (to Understand LLMs)** (17 February 2026): https://waylandz.com/blog/information-theory-and-llm/
   - **Use for:** a unifying introductory thread connecting Shannon information, entropy, next-token prediction, cross-entropy, KL divergence, attention, compression and model capacity.
   - **Critical qualifications:** attention weights are not mutual information; Landauer's erasure bound does not establish a general information ceiling for learning from a dataset; compression performance is not equivalent to intelligence; V-information depends on a specified predictive/model class and operational setup.
@@ -300,6 +318,11 @@ These resources are curated for teaching design and guided experimentation. Incl
   - **Official lesson:** [3Blue1Brown lesson page](https://www.3blue1brown.com/?lesson=cross-entropy&topic=neural-networks); [creator's Substack article](https://3blue1brown.substack.com/p/but-what-is-cross-entropy).
   - **Review status:** creator-published captions reviewed through a third-party transcript mirror; relevant upstream Manim source scripts inspected statically, not executed. No frame-by-frame audiovisual audit. See the [critical synthesis](source-syntheses/cross-entropy-compression-distillation-2026-11.md) and [structured extraction](../data/extractions/3blue1brown-cross-entropy-compression-intelligence-part-2-2026.yml).
   - **Use for:** the operational meaning of cross-entropy as the average cost of a code optimized for a different distribution; the link to next-token pretraining, the assumptions behind the logarithmic loss, soft-target distillation, and KL divergence.
+
+- **Notion — [Intelligence = Compression](https://jealous-speedwell-b32.notion.site/Intelligence-Compression-4c8d01d16ebf4dc98c5c5cb85ea825c8)** (author and date not identified).
+  - **Use for:** a compact cross-cutting prompt to connect predictive coding, the Hutter Prize, algorithmic information theory and cognitive architectures.
+  - **Critical qualification:** “intelligence = compression” is a hypothesis/slogan, not an established equivalence. The claimed equivalence between text compression and passing the Turing test is not demonstrated; compression does not automatically reduce end-to-end compute because coding/decoding overhead and downstream costs matter. The page is unsourced and contains a malformed enwik9 size expression; the official benchmark defines enwik9 as 10^9 bytes. Existing entropy, cross-entropy and predictive-compression lessons remain the authoritative teaching destinations.
+  - **Review status:** all public page text inspected on 17 November 2026; Hutter Prize details checked against the official competition page. Author, date, revision, figures and reuse rights remain unknown. See [critical source review](source-reviews/notion-intelligence-compression-2026-11.md) and [structured extraction](../data/extractions/notion-intelligence-compression-summary.yml). Text and figures are link-only.
 
 ## Remote GPU training and managed execution
 

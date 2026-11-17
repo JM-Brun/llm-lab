@@ -280,4 +280,12 @@ Source review: [Alliancy, Aude Brès (2026)](../source-reviews/alliancy-la-compr
 
 La page officielle du [Résilient AI Challenge](https://www.sustainableaicoalition.org/resilient-ai-challenge/) et la [synthèse UNESCO](https://www.unesco.org/fr/articles/le-sommet-mondial-de-lia-au-service-du-bien-met-le-projecteur-sur-une-ia-resiliente-par-une) confirment que l’initiative a été menée et que les équipes gagnantes ont été annoncées le 8 juillet 2026. Les modèles de référence étaient Voxtral Realtime, Gemma 4 et Sarvam-30b, dans trois tâches distinctes. L’évaluation comparait précision et efficacité énergétique sous un protocole défini par les organisateurs. Le [règlement](https://www.sustainableaicoalition.org/terms-resilient-ai-challenge/) limite explicitement la portée de l’évaluation : elle ne certifie pas la qualité ou la sûreté générales des modèles. Il s’agit donc d’un cas empirique utile, mais non d’une preuve universelle que toute compression produit les mêmes gains.
 
-La comparaison 360 % / 36 % attribuée à Epoch.AI par Alliancy reste non vérifiée : source primaire non identifiée.
+La comparaison 360 % / 36 % attribuée à Epoch.AI par Alliancy reste non vérifiée : source primaire non identifiée
+
+## 17. Notion — “Intelligence = Compression”: a useful bridge, not evidence
+
+The short Notion note juxtaposes predictive compression, the Hutter Prize, Kolmogorov complexity, AIXI and cognitive architectures. Its value is the cross-disciplinary framing, not a new formal result. The slogan “intelligence = compression” remains a hypothesis; the claim that text compression is equivalent to passing the Turing test is not established; and compression can reduce storage or bandwidth without necessarily reducing end-to-end computation.
+
+The AIXI passage is a pointer to a separate theoretical line, not a derivation. The project therefore keeps its formal treatment in the [bilingual AIXI and computability deep dive](../../site/en/universal-artificial-intelligence.qmd), grounded in Hutter (2007), Leike & Hutter (2015), and Hutter, Quarel & Catt (2024). In particular, do not collapse Kolmogorov complexity, the universal semimeasure, Solomonoff prediction, active reward maximization and the resource-bounded AIXI(t,l) construction into a single notion of “compression”.
+
+Source-level assessment: [Notion review](../source-reviews/notion-intelligence-compression-2026-11.md) · [structured extraction](../../data/extractions/notion-intelligence-compression-summary.yml) · [AIXI technical review](../source-reviews/aixi-kolmogorov-computability-2026-11.md).

@@ -1,0 +1,29 @@
+schema_version: 1
+source_id: leike-hutter-computability-aixi-2015
+items:
+  - id: leike-hutter-computability-aixi-2015:not-limit-computable
+    kind: result
+    summary: "Leike and Hutter show that standard/iterative exact AIXI is not limit computable because of exact action ties and the iterative infinite-horizon value definition; ε-optimality plus a recursive value function yields a limit-computable infinite-horizon policy."
+    locator: {type: section, value: "Abstract; Sections 1, 4–5; Corollary 22", label: "Computability results and recursive ε-optimal variant"}
+    evidence:
+      kind: theorem-result
+      confidence: well-supported
+      scope: "The two non-limit-computability obstacles (exact action ties and the iterative discounted infinite-horizon value function) and the ε-optimal recursive infinite-horizon construction."
+      assumptions: ["The formal AIXI model and computability framework defined in the paper."]
+      limitations: ["Relevant sections and stated corollaries were inspected, but the technical proofs were not audited line by line.", "The non-limit-computability result must be scoped to the paper's formal agent/value-function variants; the paper also constructs a limit-computable ε-optimal recursive AIXI policy."]
+    disposition: cite
+    mapped_concepts: [aixi, resource-bounded-computation]
+    target_resources: [fr/universal-artificial-intelligence, en/universal-artificial-intelligence]
+  - id: leike-hutter-computability-aixi-2015:epsilon-optimal-recursive-aixi
+    kind: result
+    summary: "A recursive value-function formulation admits a limit-computable ε-optimal AIXI policy for an infinite horizon; the tolerance ε(t) can decrease toward zero at a computable rate."
+    locator: {type: section, value: "Abstract; Sections 1, 4–5; Corollary 22", label: "Limit-computable ε-optimal recursive AIXI"}
+    evidence:
+      kind: theorem-result
+      confidence: well-supported
+      scope: "Existence and computability status of the ε-optimal recursive infinite-horizon agent."
+      assumptions: ["The recursive value-function formulation, discounted infinite-horizon setup and computable ε schedule defined in the paper."]
+      limitations: ["This is not exact optimal AIXI and is distinct from the resource-bounded AIXI(t,l) construction.", "Relevant sections and stated corollaries were inspected, but the technical proofs were not audited line by line."]
+    disposition: cite
+    mapped_concepts: [aixi, resource-bounded-computation]
+    target_resources: [fr/universal-artificial-intelligence, en/universal-artificial-intelligence]

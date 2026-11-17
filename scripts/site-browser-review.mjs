@@ -126,7 +126,7 @@ const cases = [
     }))
   ),
   ...visualCases.flatMap(testCase =>
-    ["entropy.html", "attention-score-scaling.html", "cross-attention.html", "rope.html", "unicode-text.html", "tensors.html", "cosine-similarity.html", testCase.lang === "fr" ? "linearite-embeddings.html" : "embedding-linearity.html", "language-modeling-math.html", "mathematical-foundations.html", "llm-computational-complexity.html"].map(page => ({
+    ["entropy.html", "attention-score-scaling.html", "cross-attention.html", "rope.html", "unicode-text.html", "tensors.html", "cosine-similarity.html", testCase.lang === "fr" ? "linearite-embeddings.html" : "embedding-linearity.html", "language-modeling-math.html", "mathematical-foundations.html", "llm-computational-complexity.html", "universal-artificial-intelligence.html"].map(page => ({
       ...testCase, page, kind: "deep-dive-parent",
     }))
   ),

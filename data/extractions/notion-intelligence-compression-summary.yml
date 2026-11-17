@@ -1,0 +1,196 @@
+schema_version: 1
+source_id: notion-intelligence-compression-summary
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "All text exposed by the public Notion page was reviewed on 2026-11-17."
+      - "The page presents compression as a lens on intelligence, connects it to the Hutter Prize and AIXI, and briefly discusses cognitive architecture."
+    limitations:
+      - "The page is an unsourced overview; it does not provide a derivation, formal model, experiment or bibliography for most claims."
+  source_graph:
+    nodes:
+      - {id: src-regularity-extraction, kind: process, description: "Identify repeated structure or statistical regularities in observations.", locator: "AI and Compression"}
+      - {id: src-predictive-coding, kind: process, description: "Use a probability model to assign shorter expected codes to more likely continuations.", locator: "Hutter Prize"}
+      - {id: src-compression-benchmark, kind: benchmark, description: "Evaluate lossless compression of the enwik9 10^9-byte Wikipedia extract under explicit resource and reproducibility constraints.", locator: "Hutter Prize"}
+      - {id: src-algorithmic-intelligence-hypothesis, kind: hypothesis, description: "Treat effective compression as evidence of discovering regularities and building compact predictive models; not an identity or complete theory of intelligence.", locator: "Introduction"}
+      - {id: src-compression-efficiency-claim, kind: claim, description: "Compression is said to reduce the amount of data an AI system processes and thereby improve efficiency; the claim is context-dependent because coding overhead and downstream costs are not assessed.", locator: "AI and Compression"}
+      - {id: src-noise-redundancy-claim, kind: claim, description: "The page argues that compression reduces noise and redundancy so meaningful patterns become easier to identify; this depends on the task's definition of signal and relevance.", locator: "And its connection to cognition"}
+      - {id: src-text-compression-turing-test-analogy, kind: hypothesis, description: "The page repeats the organizers' strong analogy between natural-language compression and passing the Turing test; no operational equivalence is established.", locator: "Hutter Prize"}
+      - {id: src-cognitive-architecture-boundary, kind: qualification, description: "Compression may be a component in a cognitive architecture, but does not itself specify perception, memory, planning, reasoning or action.", locator: "Compression as a Mechanic or Component to a Cognitive Architecture"}
+      - {id: src-cognitive-architecture-examples, kind: illustrative-list, description: "The page names Soar, ACT-R and CLARION as examples but supplies no references or comparative account.", locator: "Compression as a Mechanic or Component to a Cognitive Architecture"}
+    edges:
+      - {from: src-regularity-extraction, type: supports, to: src-predictive-coding}
+      - {from: src-predictive-coding, type: evaluated-by, to: src-compression-benchmark}
+      - {from: src-compression-benchmark, type: motivates, to: src-algorithmic-intelligence-hypothesis}
+      - {from: src-noise-redundancy-claim, type: qualifies, to: src-algorithmic-intelligence-hypothesis}
+      - {from: src-compression-efficiency-claim, type: qualifies, to: src-predictive-coding}
+      - {from: src-text-compression-turing-test-analogy, type: motivates, to: src-compression-benchmark}
+      - {from: src-cognitive-architecture-examples, type: contextualizes, to: src-cognitive-architecture-boundary}
+      - {from: src-cognitive-architecture-boundary, type: qualifies, to: src-algorithmic-intelligence-hypothesis}
+    interpretation: "This is a minimal source-local reconstruction, not a canonical cognitive or AI architecture. The source's equation-like slogan is treated as a hypothesis/metaphor, not a scientific equivalence."
+  learning_outcomes:
+    - {status: inferred, outcome: "Explain why predictive probability models can enable efficient coding.", basis: "Introduction and Hutter Prize sections."}
+    - {status: inferred, outcome: "Distinguish a compression benchmark from a general measure of intelligence.", basis: "Hutter Prize and cognition sections."}
+    - {status: inferred, outcome: "Explain why a compression mechanism alone does not constitute a complete cognitive architecture.", basis: "Final section."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Basic idea of probability and prediction.", basis: "The page refers to predictive compression without deriving probability theory."}
+    - {status: inferred, topic: "Basic understanding of AI agents and cognitive architectures.", basis: "The page uses these terms without formal definitions."}
+  teaching_route:
+    - {order: 1, section: "AI and Compression", function: motivate-regularity-discovery, moves: ["Connect repeated structure with compact descriptions", "Introduce prediction as a route to coding"]}
+    - {order: 2, section: "Hutter Prize", function: illustrate-compression-benchmark, moves: ["Introduce a lossless text-compression challenge", "Distinguish benchmark motivation from a universal intelligence measure"]}
+    - {order: 3, section: "Kolmogorov complexity and AIXI", function: introduce-universal-agent-limits, moves: ["Point to shortest-program descriptions", "Introduce the uncomputability obstacle", "Mention resource-bounded AIXI(t,l)"]}
+    - {order: 4, section: "Compression as a component of cognitive architecture", function: qualify-scope, moves: ["Treat compression as one possible mechanism", "Keep the remaining cognitive capabilities as open design questions"]}
+  pedagogical_strengths:
+    - "Provides a compact cross-disciplinary map connecting compression, algorithmic information and cognitive architecture."
+    - "Raises the computability obstacle as a natural next question after shortest-description ideas."
+  pedagogical_limits:
+    - "The page is unsourced and does not derive the formal results it mentions."
+    - "It does not specify an implemented cognitive architecture or provide experimental evidence for the compression-intelligence slogan."
+    - "The AIXI(t,l) parameters and complexity bound are too compressed to interpret without primary sources."
+  comparison:
+    dossier: docs/source-syntheses/kolmogorov-aixi-computability-2026-11.md
+    canonical_graph: "data/concepts.yml and generated JSON-LD projection"
+    canonical_routes: [data/guided-route.yml, docs/learning-path.md, "Page-level suggested_route metadata"]
+    decision: "Keep this note as a critical cross-reference; use the primary-source-backed bilingual AIXI deepen page for the formal explanation."
+    structures_kept_separate: [source-semantic-graph, source-pedagogical-route, canonical-concept-graph, canonical-learning-routes, site-navigation]
+  canonical_mapping:
+    - {source_term: "Kolmogorov complexity is uncomputable", concept_id: kolmogorov-complexity, relation: "shortest-program measure; upper semicomputable but not computable"}
+    - {source_term: "AIXI", concept_id: aixi, relation: "universal mixture plus sequential reward maximization"}
+    - {source_term: "AIXI(t,l)", concept_id: aixi-tl, relation: "resource-bounded computable construction; not exact AIXI"}
+    - {source_term: "Solomonoff induction", concept_id: solomonoff-induction, relation: "universal algorithmic prediction"}
+    - {source_term: "resource bounds", concept_id: resource-bounded-computation, relation: "explicit candidate-policy time and length constraints"}
+    - {source_term: "probability-based predictive coding", concept_id: predictive-compression, relation: "uses conditional probabilities to assign expected code lengths"}
+    - {source_term: "lossless text compression benchmark", concept_id: entropy-coding, relation: "turns probability assignments into a decodable code"}
+    - {source_term: "information compression", concept_id: entropy, relation: "information-theoretic foundation; not synonymous"}
+    - {source_term: "predicting likely continuations", concept_id: next-token-prediction, relation: "predictive coding connection"}
+    - {source_term: "shortest program / Kolmogorov complexity", concept_id: kolmogorov-complexity, relation: "algorithmic information theory"}
+    - {source_term: "compression as intelligence", concept_id: predictive-compression, relation: "predictive-coding connection; not an equivalence"}
+  claim_assessment:
+    - claim: "Intelligence is compression."
+      status: "overstated"
+      assessment: "Compression and prediction can reveal regularities and support useful representations, but they do not exhaust reasoning, planning, grounded interaction, social cognition or value-sensitive action."
+    - claim: "Compression removes noise and redundancy, making meaningful patterns easier to identify."
+      status: "context-dependent"
+      assessment: "Redundancy and nuisance variation are task-relative; lossy compression can discard rare but decision-relevant information, so shorter representations do not automatically improve understanding."
+    - claim: "Compression necessarily reduces the computation required by an AI system."
+      status: "context-dependent"
+      assessment: "Compression can reduce storage or bandwidth, but end-to-end compute depends on encoding/decoding overhead, distortion, access patterns and downstream operations."
+    - claim: "Natural-language compression is equivalent to passing the Turing test."
+      status: "unsupported-equivalence"
+      assessment: "The page repeats a strong organizer analogy; the compression benchmark and Turing test have different operational definitions, and no equivalence theorem or validation is supplied."
+    - claim: "The Hutter Prize treats text compression as an AI-relevant challenge."
+      status: "supported-with-qualification"
+      assessment: "The official competition frames lossless compression of enwik9 as a route toward intelligent compressors. This is the organizers' research motivation, not a proof that compression and intelligence are equivalent."
+    - claim: "enwik9 is the first 109 bytes of Wikipedia."
+      status: "incorrect-as-written"
+      assessment: "The official benchmark defines enwik9 as a 10^9-byte (one-billion-byte) extract."
+    - claim: "Kolmogorov complexity gives a shortest-program account of structure."
+      status: "established-with-limits"
+      assessment: "Kolmogorov complexity is defined relative to a universal description language up to an additive constant and is uncomputable in general; it is not a practical computable universal intelligence score."
+    - claim: "Soar, ACT-R and CLARION illustrate cognitive architectures."
+      status: "named-but-unverified"
+      assessment: "These are named in the source as examples, but the page provides no citations or comparison; retain as source mentions only."
+    - claim: "Compression could be a component of a cognitive architecture."
+      status: "plausible-design-hypothesis"
+      assessment: "The page offers no architecture, implementation or evidence; treat this as a design possibility, not an established result."
+integration_decision:
+  status: "integrated-as-critical-context"
+  rationale:
+    - "The Notion note alone adds no sufficiently developed concept or method to justify a new lesson."
+    - "Its AIXI passage is used as a prompt for a separate advanced lesson grounded in primary sources; the formal claims are not adopted from the note itself."
+    - "Its useful framing is already covered more rigorously by the project's entropy, cross-entropy, predictive compression and algorithmic information theory material."
+    - "Keep the source as a short critical cross-reference; do not promote the slogan 'intelligence = compression' as a project principle."
+
+items:
+  - id: notion-intelligence-compression-summary:compression-as-intelligence
+    kind: claim
+    summary: "The page presents compression as a central lens on intelligence, but does not establish that compression is either necessary or sufficient for intelligence."
+    locator: {type: heading, value: "AI and Compression", label: "AI and Compression"}
+    evidence:
+      kind: source-claim
+      confidence: speculative
+      scope: "The page's broad framing of intelligence through compression."
+      assumptions: ["Compression is interpreted broadly as discovery and encoding of regularities."]
+      limitations: ["No formal definition of intelligence, theorem, experiment or supporting bibliography is supplied."]
+    disposition: clarify
+    mapped_concepts: [predictive-compression, kolmogorov-complexity]
+    target_resources: [fr/compression-revision, en/compression-revision, fr/universal-artificial-intelligence, en/universal-artificial-intelligence]
+  - id: notion-intelligence-compression-summary:hutter-prize
+    kind: claim
+    summary: "The page uses the Hutter Prize as an example of a compression-oriented research challenge motivated by links between compression and intelligent prediction; this motivation is not evidence that compression scores universally measure intelligence."
+    locator: {type: heading, value: "Hutter Prize", label: "Hutter Prize"}
+    evidence:
+      kind: source-claim
+      confidence: well-supported
+      scope: "The stated motivation and lossless-compression task of the Hutter Prize."
+      assumptions: ["The official competition description is used to verify the benchmark framing."]
+      limitations: ["A benchmark motivation is not a theorem establishing equivalence between compression and intelligence."]
+    disposition: clarify
+    mapped_concepts: [predictive-compression, entropy-coding]
+    target_resources: [fr/compression-revision, en/compression-revision]
+  - id: notion-intelligence-compression-summary:noise-and-redundancy
+    kind: claim
+    summary: "The page claims that compression reduces noise and redundancy so meaningful patterns are easier to identify; this depends on the task's definition of signal and relevance."
+    locator: {type: heading, value: "And its connection to cognition", label: "Cognition"}
+    evidence:
+      kind: source-claim
+      confidence: context-dependent
+      scope: "The proposed role of compression in reducing noise and redundancy."
+      assumptions: ["The task distinguishes relevant structure from nuisance variation."]
+      limitations: ["Lossy compression can discard rare but important features; lossless compression does not remove information."]
+    disposition: clarify
+    mapped_concepts: [predictive-compression, entropy, model-compression]
+    target_resources: [fr/compression-revision, en/compression-revision, fr/entropy, en/entropy]
+  - id: notion-intelligence-compression-summary:compression-efficiency
+    kind: claim
+    summary: "The page claims compression reduces the amount of data an AI system needs to process and thereby improves efficiency; this is conditional rather than universally true."
+    locator: {type: heading, value: "AI and Compression", label: "AI and Compression"}
+    evidence:
+      kind: source-claim
+      confidence: context-dependent
+      scope: "The asserted efficiency benefit of compressed representations."
+      assumptions: ["The type of efficiency (storage, bandwidth, memory traffic or computation) is not specified."]
+      limitations: ["Encoding and decoding costs, distortion, random-access needs and downstream operations can offset savings."]
+    disposition: clarify
+    mapped_concepts: [predictive-compression, entropy]
+    target_resources: [fr/compression-revision, en/compression-revision]
+  - id: notion-intelligence-compression-summary:turing-test-analogy
+    kind: claim
+    summary: "The page repeats the claim that natural-language compression is equivalent to passing the Turing test; this is an analogy, not an established equivalence."
+    locator: {type: heading, value: "Hutter Prize", label: "Hutter Prize"}
+    evidence:
+      kind: source-claim
+      confidence: speculative
+      scope: "The claimed equivalence between a compression challenge and conversational imitation."
+      assumptions: ["The source adopts the competition organizers' broad research hypothesis."]
+      limitations: ["The benchmark and Turing test operationalize different tasks; no theorem or empirical equivalence is supplied."]
+    disposition: clarify
+    mapped_concepts: [predictive-compression, next-token-prediction]
+    target_resources: [fr/compression-revision, en/compression-revision]
+  - id: notion-intelligence-compression-summary:aixi-kolmogorov-passage
+    kind: claim
+    summary: "The page links the uncomputability of Kolmogorov complexity to AIXI and mentions a time/length-bounded AIXI(t,l) construction; the formal relationship and resource parameters require qualification from Hutter's primary work."
+    locator: {type: heading, value: "Kolmogorov complexity and AIXI", label: "Kolmogorov complexity and AIXI"}
+    evidence:
+      kind: source-claim
+      confidence: context-dependent
+      scope: "The short passage on the uncomputability of K and the bounded AIXI(t,l) construction."
+      assumptions: ["The passage is treated as a secondary summary, not as a formal proof."]
+      limitations: ["It conflates K, the universal mixture and AIXI's decision calculation; it also describes t and l imprecisely. See the source-specific Hutter, Leike-Hutter and 2024 textbook extractions."]
+    disposition: correct
+    mapped_concepts: [kolmogorov-complexity, algorithmic-probability, solomonoff-induction, aixi, aixi-tl, resource-bounded-computation]
+    target_resources: [fr/universal-artificial-intelligence, en/universal-artificial-intelligence]
+  - id: notion-intelligence-compression-summary:cognitive-architecture
+    kind: open-question
+    summary: "The page proposes that compression could be a component of a cognitive architecture and names Soar, ACT-R and CLARION as examples, but does not specify mechanisms or provide comparative references."
+    locator: {type: heading, value: "Compression as a Mechanic or Component to a Cognitive Architecture", label: "Cognitive architecture"}
+    evidence:
+      kind: source-claim
+      confidence: speculative
+      scope: "The source's proposal that compression may contribute to a cognitive architecture."
+      assumptions: ["Compression is considered as one possible computational mechanism."]
+      limitations: ["No architecture, implementation, evaluation or primary reference is supplied."]
+    disposition: defer
+    mapped_concepts: [aixi, sequential-decision-theory]
+    target_resources: [fr/universal-artificial-intelligence, en/universal-artificial-intelligence]
