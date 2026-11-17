@@ -294,3 +294,12 @@ These resources are curated for teaching design and guided experimentation. Incl
   - **Use for:** primary formal source for predictive \\(\\mathcal V\\)-information, predictive families, optional ignorance, predictive conditional \\(\\mathcal V\\)-entropy and the relation to Shannon mutual information.
   - **Critical qualifications:** the quantity is relative to an explicitly specified predictive family and loss; it is asymmetric and is not a synonym for Shannon mutual information. The paper's estimation guarantees depend on bounded log-probabilities and complexity assumptions; an overly expressive class can overfit and an overly restrictive class can miss useful structure.
   - **LLM Lab integration:** use the finite-family exact example in the bilingual information-theory experiment guide as a first operational illustration, not as evidence comparing Transformer attention with bag-of-words. See [the source review](source-reviews/predictive-v-information-xu-2020.md).
+
+## Remote GPU training and managed execution
+
+- **YouTube — “GPU-POOR? NO PROBLEM!... thanks to 🤗 Jobs”**: https://www.youtube.com/watch?v=7Yx_7byZiFU
+  - **Use for:** an operational illustration of moving a NanoGPT-like training command from constrained local hardware to managed Hugging Face Jobs through a shell launcher.
+  - **Review status:** partial, transcript-assisted; a third-party page reproducing a transcript attributed to the Hugging Face video was inspected, but the audiovisual video, code repository and training logs were not. The transcript reports a ~50M-parameter GPT-2-style model trained on TinyStories, with a Storage Bucket used to stage code and persist outputs. Current A100-large documentation lists $2.50/hour; the reported ~30-minute run is broadly consistent with a little over $1, but this was not independently reproduced. See the [source review](source-reviews/huggingface-jobs-nanogpt-video-2026-11.md).
+  - **Relationship to LLM Lab:** optional operational case study for a future working training loop, not a core prerequisite or evidence that the project currently trains NanoGPT.
+- **Hugging Face — [Run and manage Jobs](https://huggingface.co/docs/huggingface_hub/en/guides/jobs), [configuration](https://huggingface.co/docs/hub/en/jobs-configuration), and [pricing](https://huggingface.co/docs/hub/en/jobs-pricing)**
+  - **Use for:** current CLI/Python job execution, hardware flavors, timeouts, secrets and billing. Check the living documentation before launching paid compute.

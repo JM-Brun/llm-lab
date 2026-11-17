@@ -4268,3 +4268,50 @@ sources:
       pages: [fr/embedding-space, en/embedding-space, fr/contextualized-representations, en/contextualized-representations]
       concepts: [token-embedding, contextualized-representation]
       audit_records: [docs/source-reviews/visual-learning-resources-2026-11.md]
+
+  - id: huggingface-jobs-nanogpt-video-2026
+    title: "GPU-POOR? NO PROBLEM!... thanks to Hugging Face Jobs"
+    creators: ["David Louapre"]
+    source_type: video
+    identifiers: {youtube: "7Yx_7byZiFU"}
+    canonical_url: "https://www.youtube.com/watch?v=7Yx_7byZiFU"
+    publisher: "YouTube"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: []
+      tags: [topic:training-loop, topic:remote-training, topic:gpu-compute, ecosystem:huggingface, modality:video]
+      concept_ids: []
+    metadata:
+      technical_level: intermediate
+      contribution_types: [implementation, pedagogy]
+      audiences: [learner, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-16"
+        status: partially-scanned
+        inspected_scope:
+          - "User-supplied video description and chapter timestamps: introduction, training code, Jobs invocation, shell script, run/results."
+          - "Official Hugging Face Jobs documentation: execution model, configuration, hardware flavors, timeout and pricing."
+          - "Public post by David Louapre introducing the video and describing its NanoGPT/A100/Hugging Face Jobs demonstration."
+          - "Third-party page reproducing a transcript attributed to the Hugging Face video: model size/configuration, TinyStories, uv runtime, Storage Bucket lifecycle and reported duration/cost."
+          - "Supplied GitHub URL was truncated and could not be identified or inspected."
+        limitations:
+          - "The audiovisual video was not independently inspected; transcript details come from a third-party rendering, not a first-party transcript or code review. Publication date remains unknown."
+          - "Training code, shell script, exact hyperparameters, dependencies and logs remain uninspected; the transcript provides only a high-level account of data and artifact flow."
+          - "The approximate $1 A100 cost was not reproduced; current documented A100-large price is $2.50/hour."
+          - "No remote job was launched and no training run was reproduced."
+          - "No reuse licence was established; link-only treatment."
+    related:
+      pages: [fr/training-loop, en/training-loop, fr/build-path, en/build-path, fr/evaluation-experimentale, en/experimental-evaluation]
+      concepts: []
+      audit_records:
+        - docs/source-reviews/huggingface-jobs-nanogpt-video-2026-11.md
+        - data/extractions/huggingface-jobs-nanogpt-video-2026.yml
