@@ -169,6 +169,23 @@ L'expérience [structure séquentielle et compression prédictive](https://githu
 
 Voir la [synthèse critique de Mingdi Fan](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/fan-compression-intelligence-2026-11.md) et la [revue détaillée](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-reviews/fan-compression-intelligence-2026-11.md).
 
+
+## 6. Sélectionner l'information utile n'est pas tout décompresser
+
+David Chen, dans [« Compression Is Intelligence »](https://www.linkedin.com/pulse/compression-intelligence-david-chen-uqtmc/), rapproche la sélection de caractéristiques, les représentations compactes de documents, le codage neuronal sans perte et les prompts courts. Ce rapprochement est stimulant, à condition de ne pas confondre les mécanismes.
+
+- **Sélection de caractéristiques :** une poignée de termes peut suffire à une tâche de classement donnée. Le résultat de [Rau, Dehghani et Kamps (2024)](https://doi.org/10.1145/3640460) concerne le classement documentaire ; il ne démontre pas qu'une poignée de mots préserve tout le sens d'un texte.
+- **Codage prédictif sans perte :** [NNCP de Fabrice Bellard](https://bellard.org/nncp/nncp.pdf) prédit le symbole suivant puis utilise le codage arithmétique pour produire un flux décodable exactement. C'est une démonstration concrète du lien entre probabilité conditionnelle, longueur idéale du code et reconstruction sans perte.
+- **Génération conditionnelle :** un prompt court peut guider une sortie longue, mais le LLM n'inverse pas un codeur sans perte connu. Il ne retrouve pas un message original unique et ne garantit pas que les contraintes omises soient préservées. « Décompression » est ici une analogie ; **expansion conditionnelle** est plus précis.
+
+| Question | Sélection de termes | NNCP | Prompt vers LLM |
+|---|---|---|---|
+| Objet compact | Termes saillants | Modèle probabiliste partagé + flux codé | Instruction partielle |
+| Objectif | Classement / classification | Reconstruction exacte | Continuation plausible selon le contexte |
+| Échec typique | Terme rare mais décisif supprimé | Désaccord encodeur-décodeur | Contrainte implicite oubliée ou inventée |
+
+**À retenir :** toute compression est relative à une tâche, une représentation et un critère de perte. Les bits par octet, la qualité du classement et la fidélité d'une génération ne sont pas des mesures interchangeables. La [revue critique de l'article](../source-reviews/david-chen-compression-is-intelligence-2025.md) détaille les limites des références et de l'analogie.
+
 ## Reconstituer le raisonnement, étape par étape
 
 La progression pédagogique de 3Blue1Brown peut être rejouée comme une chaîne de six questions. Elle complète les leçons canoniques ; elle ne les remplace pas.
