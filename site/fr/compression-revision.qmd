@@ -224,7 +224,7 @@ Le signe négatif signifie que, dans cet échantillon, **un BPC plus faible est 
 
 Le papier donne un **cas d'étude pour relier cross-entropy, compression prédictive et évaluation** : une meilleure modélisation probabiliste d'un corpus pertinent peut être un indicateur utile de capacités évaluées dans un domaine proche. Il justifie d'étudier le BPC comme signal complémentaire, à condition de documenter le corpus et le protocole et de le confronter à des évaluations ciblées. Il ne justifie ni un score unique indépendant du domaine, ni le remplacement des benchmarks, ni l'assimilation de la compression prédictive à la quantification, au pruning ou à la distillation.
 
-Sources : [papier COLM 2024](https://arxiv.org/abs/2404.09937) · [dépôt officiel et protocole](https://github.com/hkust-nlp/llm-compression-intelligence) · [revue critique LLM Lab](../../docs/source-reviews/huang-zhang-shan-he-compression-intelligence-linearly-2024.md) · [extraction structurée](../../data/extractions/huang-zhang-shan-he-compression-intelligence-linearly-2024.yml).
+Sources : [papier COLM 2024](https://arxiv.org/abs/2404.09937) · [dépôt officiel et protocole](https://github.com/hkust-nlp/llm-compression-intelligence) · [revue critique LLM Lab](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-reviews/huang-zhang-shan-he-compression-intelligence-linearly-2024.md) · [extraction structurée](https://github.com/JM-Brun/llm-lab/blob/main/data/extractions/huang-zhang-shan-he-compression-intelligence-linearly-2024.yml).
 
 ## Reconstituer le raisonnement, étape par étape
 
