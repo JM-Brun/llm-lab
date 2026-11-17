@@ -57,7 +57,7 @@ This is computable in principle, but the exponential dependence on $l$, together
 
 Autoregressive language models share one important piece of the chain: they estimate conditional probabilities, and those probabilities can be interpreted as predictive code lengths under a compatible coding scheme.
 
-That does not make a Transformer a Solomonoff predictor or an AIXI agent. A Transformer has a finite parameterized model class, a selected training corpus and objective, and a concrete inference procedure. AIXI additionally formalizes interaction, rewards and sequential planning under a universal mixture over enumerable chronological semimeasures.
+That does not make a Transformer a Solomonoff predictor or an AIXI agent. A Transformer has a finite parameterized model class, a selected training corpus and objective, and a concrete inference procedure. AIXI additionally formalizes interaction, rewards and sequential planning under a universal mixture over enumerable chronological semimeasures (Hutter, 2007); Leike & Hutter (2015) express the environment class as lower semicomputable chronological conditional semimeasures (LSCCCSs).
 
 Thus predictive compression is a powerful lens on learning, but not a sufficient definition of intelligence.
 
