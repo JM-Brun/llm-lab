@@ -57,7 +57,7 @@ Le texte « C'est une bonne situation, ça, scribe ? » est ici le **préfixe** 
 | « Moi » | 0,1 |
 | « Oui » | 0,1 |
 
-[Refaire un calcul de vraisemblance sur une continuation observée](exercises/vraisemblance.qmd).
+[Refaire un calcul de vraisemblance sur une continuation observée](exercises/vraisemblance.qmd#ex-overview-likelihood-transfer).
 
 Ces valeurs sont fictives : elles ne proviennent pas d'un modèle entraîné. Le vocabulaire réel d'un modèle contient bien plus que quatre unités — souvent des dizaines de milliers. Pour rendre l'exemple lisible, nous affichons des mots à la place des tokens. Les valeurs fictives de ce tableau sont reprises dans plusieurs pages afin que chaque calcul puisse être refait à la main. Dans un vrai modèle, le texte est découpé en unités qui peuvent être plus petites ou plus grandes qu'un mot ; une ligne du tableau ne correspond donc pas nécessairement à un mot entier.
 
