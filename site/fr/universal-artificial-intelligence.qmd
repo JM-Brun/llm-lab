@@ -94,7 +94,7 @@ L'induction de Solomonoff est une prédiction passive. AIXI ajoute des actions e
 
 Il combine :
 
-1. Un mélange universel sur les environnements calculables.
+1. Un mélange universel sur les semi-mesures chronologiques énumérables, qui modélisent formellement les interactions possibles avec l'environnement.
 2. La théorie de la décision séquentielle.
 3. Une politique qui choisit les actions maximisant la récompense future espérée.
 
@@ -198,7 +198,7 @@ Le lien avec les modèles de langage est réel, mais indirect :
 
 - La prédiction du prochain token estime des probabilités conditionnelles.
 - Le codage prédictif peut transformer ces probabilités en longueurs de code.
-- L'induction de Solomonoff remplace une classe de modèles conçue à la main par un mélange universel de générateurs calculables.
+- L'induction de Solomonoff remplace une classe de modèles conçue à la main par un mélange universel de générateurs énumérables ; ses garanties de convergence reposent sur des hypothèses telles que la calculabilité de la vraie mesure génératrice.
 - AIXI ajoute les actions et la planification visant à maximiser une récompense.
 - AIXI(t,l) étudie une construction d'agent universel calculable sous des bornes de ressources.
 
