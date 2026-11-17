@@ -99,6 +99,73 @@ items:
     candidate_destinations: {pages: [fr/cosine-similarity, en/cosine-similarity], concepts: [contextualized-representation]}
     disposition: defer
     disposition_rationale: "The question is useful, but the source's answer is inaccessible. The project already covers anisotropy and task-specific embedding objectives with independent sources."
+
+supplementary_audit:
+  accessed_at: "2026-11-17"
+  purpose: "Verify the bi-encoder/cross-encoder distinction against primary literature and map complementary retrieval architectures and visual teaching assets."
+  primary_and_complementary_sources:
+    - source_id: reimers-gurevych-2019-sentence-bert
+      contribution: "Sentence-level embeddings trained with Siamese/triplet structures; the canonical SBERT architecture uses tied weights."
+      qualification: "Tied weights characterize this Siamese design, not every bi-encoder or dual-encoder."
+    - source_id: khattab-zaharia-2020-colbert
+      contribution: "Late interaction over independently encoded contextual token vectors; MaxSim aggregates per-query-token maximum similarities."
+      qualification: "Multi-vector index and serving costs differ from single-vector dense retrieval; paper-specific latency is not universal."
+    - source_id: santhanam-etal-2022-colbertv2
+      contribution: "Residual compression and denoised supervision reduce the storage footprint of late-interaction retrieval."
+      qualification: "Reported 6–10x reduction is specific to the paper's experiments and baseline."
+    - source_id: formal-piwowarski-clinchant-2021-splade
+      contribution: "Learned sparse representations support term-weighted retrieval using inverted-index-style infrastructure."
+      qualification: "Sparse is not synonymous with classic BM25; learned expansion and serving costs are model-dependent."
+    - source_id: thakur-etal-2021-beir
+      contribution: "Heterogeneous zero-shot benchmark compares lexical, sparse, dense, late-interaction and reranking approaches."
+      qualification: "Aggregate rankings do not imply a universal best retriever; domain, latency and compute constraints matter."
+  architecture_comparison:
+    bi_encoder:
+      interaction: "None between query and document during encoding; vectors compared after encoding."
+      weight_sharing: "May be shared (Siamese) or separate; sharing is not part of the general definition."
+      strengths: ["Precompute document vectors", "Efficient candidate retrieval at corpus scale"]
+      limitations: ["Single-vector compression can lose token-level matching detail", "Quality depends on task-specific training"]
+    cross_encoder:
+      interaction: "Joint query-document processing before scoring."
+      output: "Task-specific pair score; not automatically a calibrated probability."
+      strengths: ["Rich pairwise interaction", "Effective shortlist reranking"]
+      limitations: ["Must process each candidate pair", "Cannot recover candidates omitted by first-stage retrieval"]
+    late_interaction:
+      example: "ColBERT/ColBERTv2"
+      interaction: "Independent contextual token encoding followed by MaxSim-style token-level comparison."
+      strengths: ["Fine-grained matching", "Document representations can be computed offline"]
+      limitations: ["Multi-vector index storage", "More complex indexing and serving"]
+    learned_sparse:
+      example: "SPLADE"
+      interaction: "Sparse learned term weights and inverted-index retrieval."
+      strengths: ["Term-level matching and learned expansion", "Sparse retrieval infrastructure"]
+      limitations: ["Index and latency costs depend on sparsity and serving implementation"]
+    hybrid:
+      interaction: "Fusion of candidate rankings from complementary retrievers."
+      qualification: "Fusion is empirical; it can improve recall but can also hurt individual queries or domains."
+  visual_asset_audit:
+    article_figures:
+      status: "not-inspected-at-asset-level"
+      note: "Canonical HTML exposes image placements but the underlying image bytes, full visual content and reuse rights were not verified. No source figure is reproduced."
+    project_figures:
+      status: "original-bilingual-diagrams-added"
+      assets:
+        - site/images/retrieval-architectures-en.svg
+        - site/images/retrieval-architectures-fr.svg
+      depicts: ["Single-vector bi-encoder", "Joint cross-encoder", "ColBERT-style late interaction and MaxSim"]
+      rights: "Original LLM Lab SVGs; no third-party figure copied."
+  integration_decisions:
+    - {topic: "Weight sharing", decision: "Correct both bilingual definitions; explicitly distinguish Siamese from general dual encoders."}
+    - {topic: "Cross-encoder score semantics", decision: "Clarify that pair scores are task-specific and not automatically calibrated probabilities."}
+    - {topic: "ColBERT/late interaction", decision: "Add as an advanced complementary architecture, not as a mandatory stage."}
+    - {topic: "BM25/SPLADE/hybrid", decision: "Add a retrieval-family comparison to the RAG deep dive; preserve lexical and sparse alternatives."}
+    - {topic: "Evaluation", decision: "Separate candidate Recall@k from reranked MRR/nDCG; measure latency, index size and cost."}
+  remaining_limits:
+    - "Full texts and complete experimental tables for the newly registered papers were not exhaustively reviewed."
+    - "No model was run and no local benchmark was produced."
+    - "Original Daily Dose image assets and reuse rights remain unverified."
+    - "No manual visual QA at multiple viewport widths has yet been completed."
+
 canonical_mapping:
   proposed_concepts: []
   proposed_relations: []
