@@ -10,7 +10,7 @@
     const t = copy[lang], controls = root.querySelector("[data-explorer-controls]");
     const prefix = root.querySelector("[data-prefix]"), list = root.querySelector("[data-distribution]");
     const select = root.querySelector("[data-token-choice]"), status = root.querySelector("[data-next-distribution]");
-    const appendButton = root.querySelector("[data-append]"), resetButton = root.querySelector("[data-reset]");
+    const appendButton = root.querySelector(".next-token-explorer__append"), resetButton = root.querySelector(".next-token-explorer__reset");
     const missing = [
       ["controls", controls], ["prefix", prefix], ["distribution", list],
       ["token-choice", select], ["next-distribution", status],
