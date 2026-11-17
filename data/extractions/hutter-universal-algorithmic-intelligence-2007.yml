@@ -15,7 +15,7 @@ pedagogical_model:
       - {id: src-universal-semimeasure, kind: probability-model, description: "Universal mixture assigning weight 2^-length(program) to minimal programs generating an output prefix.", locator: "Section 3.4"}
       - {id: src-solomonoff-induction, kind: method, description: "Sequential prediction using the universal algorithmic mixture.", locator: "Section 3"}
       - {id: src-sequential-decision, kind: framework, description: "Choose actions to maximize expected future reward under a probabilistic environment model.", locator: "Sections 2 and 4"}
-      - {id: src-aixi, kind: theoretical-agent, description: "Combines the universal Solomonoff mixture with sequential reward maximization.", locator: "Section 4"}
+      - {id: src-aixi, kind: theoretical-agent, description: "Combines the universal mixture over enumerable chronological semimeasures with sequential reward maximization.", locator: "Section 4"}
       - {id: src-aixi-tl, kind: bounded-agent, description: "Computable resource-bounded construction comparing candidate programs/policies under time and length bounds.", locator: "Section 6"}
     edges:
       - {from: src-kolmogorov-complexity, type: contributes-to, to: src-universal-semimeasure}
@@ -101,7 +101,7 @@ items:
       kind: formal-construction
       confidence: established
       scope: "Construction of the idealized universal algorithmic agent."
-      assumptions: ["Computable environment class, specified reward criterion and formal horizon/discount setup."]
+      assumptions: ["Universal prior over enumerable chronological semimeasures, with the reward criterion and horizon/discount setup specified as in the report."]
       limitations: ["The ideal AIXI agent is uncomputable and its optimality is relative to the formal setup."]
     disposition: integrate
     mapped_concepts: [aixi, solomonoff-induction, sequential-decision-theory]
