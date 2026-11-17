@@ -178,7 +178,7 @@ Les pertes illustratives des positions PAD ne contribuent pas. Une moyenne naïv
 
 Le **masque d’attention** détermine quelles positions peuvent être consultées. Le **masque de perte** détermine quelles cibles contribuent à l’objectif d’optimisation. Ils ont des rôles distincts et ne doivent pas être confondus.
 
-## 4 bis. Padding dynamique au niveau du batch
+### Padding dynamique au niveau du batch
 
 Le padding ne doit pas nécessairement être effectué une fois pour toutes à la longueur maximale du corpus. Pour des exemples de longueurs variables, un *collator* peut compléter chaque batch jusqu'à la longueur de son exemple le plus long. C'est le **padding dynamique** : il évite de calculer sur des positions PAD inutiles dans les batchs courts.
 
