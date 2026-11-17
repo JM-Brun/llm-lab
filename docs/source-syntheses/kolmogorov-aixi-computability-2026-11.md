@@ -5,7 +5,7 @@
 **Related source:** [Notion — Intelligence = Compression](https://jealous-speedwell-b32.notion.site/Intelligence-Compression-4c8d01d16ebf4dc98c5c5cb85ea825c8)  
 **Advanced lesson:** [English](../../site/en/universal-artificial-intelligence.qmd) · [Français](../../site/fr/universal-artificial-intelligence.qmd)  
 **Technical review:** [AIXI and computability source review](../source-reviews/aixi-kolmogorov-computability-2026-11.md)  
-**Structured graph:** [AIXI extraction](../../data/extractions/aixi-kolmogorov-computability-2026.yml)
+**Structured graph:** [Hutter extraction](../../data/extractions/hutter-universal-algorithmic-intelligence-2007.yml), [Leike & Hutter extraction](../../data/extractions/leike-hutter-computability-aixi-2015.yml), and [2024 textbook extraction](../../data/extractions/hutter-quarel-catt-universal-ai-2024.yml)
 
 ## 1. Main conclusion
 
