@@ -112,7 +112,7 @@ AIXI(t,l) is compared with candidate policies in a restricted resource-bounded c
 
 | Short formulation | More precise formulation |
 |---|---|
-| “No general solution because K is not computable” | Exact K is uncomputable; AIXI's noncomputability concerns the universal mixture and optimal sequential decision calculation. Leike & Hutter establish the stronger “not limit computable” result. |
+| “No general solution because K is not computable” | Exact K is uncomputable; AIXI's noncomputability concerns the universal mixture and optimal sequential decision calculation. Leike & Hutter show that the standard/iterative exact policy is not limit computable, while a recursive ε-optimal variant is limit computable. |
 | “Hutter proved the restricted case AIXI(t,l)” | Hutter constructed a computable resource-bounded agent and established a relative optimality result over a restricted class of bounded candidates. |
 | “The environment is restricted to time t and space l” | (t) and (l) bound candidate computation time per cycle and candidate program length in the AIXI(t,l) construction; later formalization adds proof-length (l_P). |
 | “Runs in O(t2l)” | Per-cycle $O(t\,2^l)$; later proof-validation setup has a separate $O(l_P^2\,2^{l_P})$ bound. |
