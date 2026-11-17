@@ -70,7 +70,7 @@ The counting argument is an intuition about model capacity and overfitting, not 
 
 Chollet's definition concerns skill-acquisition efficiency relative to priors, experience and generalization difficulty. It adds data and computational efficiency of learning to the discussion; it is not reducible to model size or compression ratio.
 
-AIXI combines a Solomonoff-style universal mixture over computable environment models with reward maximization. It is a theoretical idealization and is generally computationally intractable; do not present it as an implementable recipe.
+AIXI combines a Solomonoff-style universal mixture over computable environment models with reward maximization. It is a theoretical idealization and is generally computationally intractable; do not present it as an implementable recipe. A further qualification is important: AIXI's universal prior depends on the chosen universal Turing machine. Leike and Hutter's later analysis, “Bad Universal Priors and Solutions to the Inverse Problem of Solomonoff Induction” (2015), gives negative results showing that adversarial or unlucky machine choices can substantially alter behavior and undermine overly strong, machine-independent readings of its optimality. Therefore describe AIXI's guarantees relative to its formal setup and reference machine, not as an absolute, representation-free measure of intelligence ([paper/preprint](https://www.hutter1.net/publ/saixicplex.pdf); see also [Hutter's publication record](https://www.hutter1.net/official/bib.htm)).
 
 The article explicitly labels its Free Energy Principle discussion as a lay interpretation. Distinguish:
 - surprisal: negative log probability of an observation;
