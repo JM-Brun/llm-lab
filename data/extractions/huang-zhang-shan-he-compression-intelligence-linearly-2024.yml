@@ -1,0 +1,105 @@
+schema_version: 1
+source_id: huang-zhang-shan-he-compression-intelligence-linearly-2024
+items:
+  - id: huang-zhang-shan-he-compression-intelligence-linearly-2024:predictive-coding-equivalence
+    kind: mechanism
+    summary: "A sequential probabilistic model assigns each observed token a conditional probability given its preceding context. An arithmetic coder can use these probabilities to encode the sequence losslessly, with ideal expected code length equal to the sum of negative log probabilities. This connects language-model cross-entropy on a specified data distribution to expected coding cost, provided encoder and decoder share the model and coding protocol."
+    locator: {type: section, value: "2 Background: Language Modeling is Compression", label: "Equations (1) and surrounding discussion"}
+    evidence:
+      kind: formal-derivation
+      confidence: established
+      scope: "The paper's presentation of source coding, arithmetic coding and autoregressive conditional probabilities."
+      assumptions: ["Encoder and decoder share model parameters, tokenizer and compatible coding conventions.", "Model-description cost is amortized only for sufficiently large compressed corpora."]
+      limitations: ["The equivalence concerns probabilistic language modelling and coding cost, not equivalence between intelligence and compression.", "Finite implementations may incur overhead beyond ideal cross-entropy."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      tags: [topic:predictive-compression, method:arithmetic-coding]
+      concept_ids: [predictive-compression, cross-entropy, conditional-distribution, entropy-coding, arithmetic-coding]
+    candidate_destinations:
+      pages: [en/entropy, fr/entropy, en/compression-revision, fr/compression-revision]
+    disposition: integrate
+  - id: huang-zhang-shan-he-compression-intelligence-linearly-2024:bpc-metric
+    kind: definition
+    summary: "The study measures compression efficiency as average negative log probability per character (bits per character, BPC), rather than bits per token, because models use different tokenizers. BPC divides the token-sequence negative log probability, expressed in bits, by the number of characters in the corpus."
+    locator: {type: section, value: "3.2 Evaluating Compression of LLMs", label: "Equation (2)"}
+    evidence:
+      kind: metric-definition
+      confidence: established
+      scope: "The metric definition and rationale in the paper."
+      assumptions: ["Text normalization and character counting are held fixed across models."]
+      limitations: ["BPC depends on corpus, normalization and evaluation protocol; it is not an intrinsic scalar property of a model."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      tags: [topic:predictive-compression, topic:benchmark-evaluation]
+      concept_ids: [predictive-compression, cross-entropy, conditional-distribution]
+    candidate_destinations:
+      pages: [en/compression-revision, fr/compression-revision, en/entropy, fr/entropy]
+    disposition: integrate
+  - id: huang-zhang-shan-he-compression-intelligence-linearly-2024:correlation-results
+    kind: result
+    summary: "Across the selected pretrained models and three domain-aligned external corpora, the authors report a strong negative Pearson correlation between BPC and average benchmark scores: about -0.93 overall, and approximately -0.935 for knowledge/commonsense, -0.937 for coding and -0.953 for mathematical reasoning. Lower BPC means lower predictive coding cost on that corpus; higher benchmark scores indicate better performance on the selected tasks."
+    locator: {type: section, value: "4.1 Main Results – Compression Represents Intelligence Linearly", label: "Figure 1 and domain-specific results"}
+    evidence:
+      kind: empirical-result
+      confidence: well-supported
+      scope: "The paper's reported analysis of 31 public LLMs, 12 benchmarks and three external corpora."
+      assumptions: ["The model selection, benchmark aggregation and corpus construction are as described by the authors."]
+      limitations: ["A cross-model correlation does not establish that improved compression causes improved reasoning or knowledge.", "The benchmark aggregate is an operational proxy for selected capabilities, not a complete measure of intelligence.", "The result is conditioned on model selection, corpus alignment, model family, pretraining and evaluation choices."]
+    classification:
+      primary_theme: scale-research
+      tags: [topic:predictive-compression, topic:benchmark-evaluation, topic:generalization]
+      concept_ids: [predictive-compression, held-out-evaluation, operational-competence]
+    candidate_destinations:
+      pages: [en/compression-revision, fr/compression-revision, en/scaling-laws, fr/scaling-laws]
+    disposition: integrate
+  - id: huang-zhang-shan-he-compression-intelligence-linearly-2024:corpus-domain-alignment
+    kind: result
+    summary: "The paper's cross-domain controls show that the correlation weakens when the compression corpus does not match the capability domain: mathematical benchmarks paired with Common Crawl and knowledge/commonsense benchmarks paired with GitHub code yield weaker relationships than domain-aligned comparisons. Corpus selection and task-domain alignment are therefore material conditions of the metric."
+    locator: {type: section, value: "4.2 Remaining Questions", label: "Figure 6 and discussion"}
+    evidence:
+      kind: empirical-result
+      confidence: well-supported
+      scope: "Two reported cross-domain comparisons and the discussion of corpus selection."
+      assumptions: ["The reported corpus and benchmark pairings represent the intended domain mismatch."]
+      limitations: ["Only selected cross-domain combinations are tested; no general procedure for choosing the best corpus for every task is supplied."]
+    classification:
+      primary_theme: scale-research
+      tags: [topic:predictive-compression, topic:benchmark-evaluation, topic:generalization]
+      concept_ids: [predictive-compression, held-out-evaluation]
+    candidate_destinations:
+      pages: [en/compression-revision, fr/compression-revision, en/scaling-laws, fr/scaling-laws]
+    disposition: integrate
+  - id: huang-zhang-shan-he-compression-intelligence-linearly-2024:benchmark-contamination
+    kind: limitation
+    summary: "The authors discuss benchmark over-optimization and possible test contamination. They use MIN-K% PROB as a diagnostic for unusually high likelihood of benchmark examples, identify Qwen-series outliers in GSM8K and MATH, and exclude those models from the corresponding linear fit. This warns that benchmark-derived capability scores can be distorted by exposure to evaluation data."
+    locator: {type: section, value: "3.3 Overfitting Benchmarks and 4.1 Mathematical Reasoning", label: "MIN-K% PROB analysis and Qwen outlier handling"}
+    evidence:
+      kind: methodological-limitation
+      confidence: well-supported
+      scope: "The paper's stated contamination diagnostic and treatment of mathematical benchmark outliers."
+      assumptions: ["MIN-K% PROB is a warning signal, not definitive proof of contamination."]
+      limitations: ["The diagnostic is indirect and does not establish the exact source or extent of training-data exposure.", "Removing flagged outliers changes the fitted relationship and must be considered when interpreting it."]
+    classification:
+      primary_theme: scale-research
+      tags: [topic:benchmark-evaluation, topic:generalization]
+      concept_ids: [held-out-evaluation, pretraining]
+    candidate_destinations:
+      pages: [en/compression-revision, fr/compression-revision, en/scaling-laws, fr/scaling-laws]
+    disposition: integrate
+  - id: huang-zhang-shan-he-compression-intelligence-linearly-2024:base-model-scope
+    kind: limitation
+    summary: "The empirical study focuses on pretrained base models. The authors note that instruction- or preference-tuned models no longer model arbitrary text in the same way and may instead model structured prompt-response distributions, so the proposed general-purpose corpus-compression metric cannot be transferred unchanged to aligned chat models."
+    locator: {type: section, value: "3.2 Evaluating Compression of LLMs", label: "Focusing on Base Models"}
+    evidence:
+      kind: methodological-limitation
+      confidence: context-dependent
+      scope: "The paper's model-selection rationale and discussion of fine-tuned models."
+      assumptions: ["The distinction concerns the evaluated training objective and distribution, not a claim that tuned models cannot be evaluated by any coding setup."]
+      limitations: ["The paper does not provide a comprehensive empirical study of post-trained models or a standardized chat-model compression protocol."]
+    classification:
+      primary_theme: scale-research
+      tags: [topic:predictive-compression, topic:benchmark-evaluation]
+      concept_ids: [predictive-compression, pretraining, post-training]
+    candidate_destinations:
+      pages: [en/compression-revision, fr/compression-revision]
+    disposition: integrate
