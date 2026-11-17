@@ -68,10 +68,31 @@ La similarité entre deux textes dépend aussi de **la manière dont le modèle 
 
 | | Bi-encoder | Cross-encoder |
 |---|---|---|
-| Encodage | Chaque texte est encodé séparément par le même modèle. | Les deux textes sont assemblés et traités conjointement. |
+| Encodage | Chaque entrée est encodée indépendamment par sa branche. Les branches peuvent partager leurs poids (architecture siamoise) ou avoir des poids distincts. | Les deux textes sont assemblés et traités conjointement, ce qui permet des interactions entre tokens pendant le calcul du score. |
 | Sortie typique | Deux vecteurs réutilisables, comparés ensuite par une métrique adaptée. | Un score propre à la paire, calculé après interaction entre les textes. |
 | Atout | Les documents peuvent être encodés et indexés à l'avance ; la recherche sur un grand corpus est efficace. | Le modèle peut prendre en compte les interactions entre les deux textes pendant le calcul du score. |
 | Limite | Les deux textes ne peuvent pas interagir directement pendant leur encodage ; la qualité dépend fortement de l'objectif d'entraînement et des données. | Chaque paire candidate doit être recalculée ; comparer une requête à tout un corpus devient coûteux. |
+
+
+![Comparaison des architectures bi-encoder, cross-encoder et à interaction tardive.](../images/retrieval-architectures-fr.svg){fig-alt="Trois architectures de recherche : le bi-encoder encode séparément requête et document en un vecteur chacun ; le cross-encoder traite conjointement la requête et chaque document candidat ; l'interaction tardive de type ColBERT encode séparément des vecteurs contextualisés par token, puis compare chaque token de la requête aux tokens du document par MaxSim et somme les maxima." fig-cap="La différence principale tient au moment de l'interaction requête–document : absente pendant l'encodage bi-encoder, présente pendant le calcul du cross-encoder, ou différée après deux encodages contextualisés indépendants." width=100%}
+
+Un bi-encoder se définit par **l'encodage indépendant**, pas par le partage obligatoire des poids. Un bi-encoder *siamois* lie les poids de ses deux branches, comme dans l'architecture originale de Sentence-BERT ; d'autres architectures à double encodeur peuvent utiliser des encodeurs de requête et de document distincts. Voir Reimers et Gurevych (2019), [Sentence-BERT](https://aclanthology.org/D19-1410/).
+
+La sortie d'un cross-encoder est un **score de paire propre à une tâche**. Ce n'est pas automatiquement une probabilité calibrée, une mesure universelle de similarité sémantique ni un score comparable entre modèles différents. Sa valeur pour le classement doit être mesurée sur la tâche cible.
+
+### Un compromis utile : l'interaction tardive
+
+**ColBERT** encode indépendamment la requête et chaque document en *ensembles* de vecteurs contextualisés par token, puis les compare au moment de la recherche. Dans sa formulation MaxSim, chaque vecteur de token de la requête prend sa similarité maximale avec les vecteurs des tokens du document ; ces maxima sont agrégés en un score documentaire. Les documents peuvent être encodés hors ligne, tandis que le rapprochement token par token préserve des interactions plus fines qu'un bi-encoder à vecteur unique. Ce n'est ni un bi-encoder standard à vecteur unique, ni un cross-encoder qui fait passer conjointement chaque paire dans le Transformer.
+
+Le compromis est un index multi-vecteurs plus volumineux, une infrastructure de recherche plus complexe et des contraintes supplémentaires de stockage et de service. [Khattab et Zaharia (2020), ColBERT](https://arxiv.org/abs/2004.12832) et [Santhanam et al. (2022), ColBERTv2](https://aclanthology.org/2022.naacl-main.272/) décrivent l'architecture et ses améliorations de compression. ColBERTv2 réduit le coût mémoire, sans faire disparaître le compromis lié aux représentations multiples.
+
+**D'autres solutions utiles ne sont pas toutes des bi-encodeurs denses :**
+- **La recherche lexicale (BM25)** constitue une baseline solide et peu coûteuse lorsque les termes exacts, noms, identifiants ou vocabulaires techniques rares comptent.
+- **La recherche sparse apprise (SPLADE)** apprend des représentations creuses pondérées par terme et s'appuie sur une recherche de type index inversé ; elle peut étendre le vocabulaire au-delà de la correspondance littérale tout en conservant une infrastructure sparse efficace et interprétable. Voir [Formal et al. (2021)](https://arxiv.org/abs/2107.05720).
+- **La recherche hybride** combine des listes de candidats lexicales et denses (ou sparse neuronales). Elle peut améliorer le rappel, mais la fusion n'aide pas nécessairement chaque requête ou corpus : il faut la mesurer plutôt que la considérer comme une règle.
+- **Le reranking** peut suivre n'importe quel générateur de candidats — BM25, recherche dense, sparse, hybride ou structurée. Il ne peut pas récupérer un document pertinent que la première étape n'a jamais proposé.
+
+Le [benchmark BEIR](https://arxiv.org/abs/2104.08663) apporte un contrepoint utile aux conclusions tirées d'un seul jeu de données : il compare des systèmes lexicaux, sparse, denses, à interaction tardive et de reranking sur des domaines hétérogènes, et met en évidence des compromis réels entre efficacité et coût. Aucune architecture n'est universellement meilleure.
 
 Un pipeline fréquent combine les deux : un **bi-encoder** récupère rapidement un ensemble de candidats, puis un **cross-encoder** réordonne (*rerank*) ce sous-ensemble en évaluant chaque paire requête–passage. Le cross-encoder n'est donc pas nécessairement un remplacement de la recherche vectorielle : il peut être une seconde étape plus précise, appliquée à une liste courte.
 
