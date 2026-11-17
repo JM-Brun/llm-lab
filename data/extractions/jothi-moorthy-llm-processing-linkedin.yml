@@ -76,7 +76,7 @@ pedagogical_model:
       - "The source-local graph is not merged into data/concepts.yml; only existing concept IDs are referenced."
       - "The supplied image is not copied or recreated; rights and visual inspection remain unresolved."
 items:
-  - id: jothi-moorthy-llm-processing-linkedin-five-stage-overview
+  - id: jothi-moorthy-llm-processing-linkedin:five-stage-overview
     kind: teaching-sequence
     summary: "The post presents a five-stage overview from prompt text through tokenization, embeddings, Transformer computation and next-token prediction."
     locator: {type: section, value: "Stages 1–5", label: "Five numbered stages"}
@@ -96,7 +96,7 @@ items:
     candidate_destinations: {pages: [], concepts: [], route_ids: []}
     disposition: already-covered
     disposition_rationale: "Do not add another route or repeated explanation."
-  - id: jothi-moorthy-llm-processing-linkedin-tokenizer-units-and-token-ids
+  - id: jothi-moorthy-llm-processing-linkedin:tokenizer-units-and-token-ids
     kind: misconception
     summary: "The wording can suggest that tokens are usually whole words or word fragments. Token boundaries are tokenizer-specific and may correspond to bytes, byte sequences, characters or subword/word-like units; token IDs are categorical indices, not quantities."
     locator: {type: section, value: "Stage 2: Tokenizer: text becomes tokens", label: "Stage 2"}
@@ -116,7 +116,7 @@ items:
     candidate_destinations: {pages: [], concepts: [], route_ids: []}
     disposition: clarify
     disposition_rationale: "No canonical edit: the project's tokenization pages already explain tokenizer-specific units and ID spaces."
-  - id: jothi-moorthy-llm-processing-linkedin-embedding-and-context-distinction
+  - id: jothi-moorthy-llm-processing-linkedin:embedding-and-context-distinction
     kind: misconception
     summary: "The post says embeddings capture token meaning and relations. This needs the distinction between an initial learned lookup vector and later context-dependent hidden states."
     locator: {type: section, value: "Stage 3: Embeddings: tokens become vectors", label: "Stage 3"}
@@ -136,7 +136,7 @@ items:
     candidate_destinations: {pages: [], concepts: [], route_ids: []}
     disposition: clarify
     disposition_rationale: "The distinction is already explicit in the project's embedding and contextualized-representation lessons."
-  - id: jothi-moorthy-llm-processing-linkedin-attention-intuition
+  - id: jothi-moorthy-llm-processing-linkedin:attention-intuition
     kind: claim
     summary: "The post describes attention as each token deciding which earlier tokens matter. Treat this as anthropomorphic shorthand for learned, input-dependent weighted aggregation under an applicable mask."
     locator: {type: section, value: "Stage 4: Attention and transformer layers", label: "Stage 4"}
@@ -156,7 +156,7 @@ items:
     candidate_destinations: {pages: [], concepts: [], route_ids: []}
     disposition: clarify
     disposition_rationale: "Canonical Q/K/V, attention and causal-masking lessons already provide the precise account."
-  - id: jothi-moorthy-llm-processing-linkedin-next-token-probabilities
+  - id: jothi-moorthy-llm-processing-linkedin:next-token-probabilities
     kind: claim
     summary: "The post correctly frames prediction as a conditional distribution over vocabulary tokens followed by iterative selection and autoregressive repetition. Its example percentages are illustrative, not empirical."
     locator: {type: section, value: "Stage 5: Next-token prediction", label: "Stage 5"}
@@ -176,7 +176,7 @@ items:
     candidate_destinations: {pages: [], concepts: [], route_ids: []}
     disposition: already-covered
     disposition_rationale: "The project's logits, probabilities and generation lessons already provide the full treatment."
-  - id: jothi-moorthy-llm-processing-linkedin-supplied-infographic
+  - id: jothi-moorthy-llm-processing-linkedin:supplied-infographic
     kind: figure
     summary: "The supplied high-resolution LinkedIn media URL could not be retrieved as image bytes in this inspection."
     locator: {type: section, value: "User-supplied media URL", label: "External image"}
