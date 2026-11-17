@@ -22,7 +22,9 @@ pedagogical_model:
       - {from: src-cognitive-architecture-boundary, type: qualifies, to: src-algorithmic-intelligence-hypothesis}
     interpretation: "This is a minimal source-local reconstruction, not a canonical cognitive or AI architecture. The source's equation-like slogan is treated as a hypothesis/metaphor, not a scientific equivalence."
   related_extractions:
-    - data/extractions/aixi-kolmogorov-computability-2026.yml
+    - data/extractions/hutter-universal-algorithmic-intelligence-2007.yml
+    - data/extractions/leike-hutter-computability-aixi-2015.yml
+    - data/extractions/hutter-quarel-catt-universal-ai-2024.yml
   learning_outcomes:
     - {status: inferred, outcome: "Explain why predictive probability models can enable efficient coding.", basis: "Introduction and Hutter Prize sections."}
     - {status: inferred, outcome: "Distinguish a compression benchmark from a general measure of intelligence.", basis: "Hutter Prize and cognition sections."}
