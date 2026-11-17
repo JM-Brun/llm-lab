@@ -10,11 +10,11 @@ scan:
       - "The article's displayed publication date is 2025-05-28."
       - "The page identifies the site/byline as lewish; a fuller author identity was not independently verified."
   figures_media:
-    status: not-inspected
-    coverage: null
+    status: inspected
+    coverage: "The linked musical-score image asset was retrieved and visually inspected."
     notes:
-      - "Image/figure placements are visible in the HTML, but their actual bytes have not been retrieved or visually inspected."
-      - "No figure reuse rights established."
+      - "The article explicitly labels the score AI-generated and cautions readers not to scrutinize it closely; it is illustrative rather than reliable notation evidence."
+      - "No reuse licence or permission was established; do not reuse the image."
   code_data:
     status: not-inspected
     coverage: null
