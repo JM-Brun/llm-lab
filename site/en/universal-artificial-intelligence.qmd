@@ -218,6 +218,7 @@ A Transformer trained with cross-entropy does **not** implement Solomonoff induc
 4. In AIXI(t,l), what do $t$ and $l$ bound?
 5. Why does a computable AIXI(t,l) not make the ideal AIXI computable?
 6. What does the exponential $2^l$ factor imply for practical use?
+7. What are the two obstacles behind AIXI's non-limit-computability result, and how do the two remedies address them?
 
 ::: {.callout-tip title="Expected reasoning"}
 1. Every found program is a candidate description, but we cannot know that a shorter one will never halt later.
@@ -226,6 +227,7 @@ A Transformer trained with cross-entropy does **not** implement Solomonoff induc
 4. Candidate-policy runtime per cycle and candidate-program length—not merely the environment's space and time.
 5. It solves a restricted bounded problem with a different guarantee.
 6. Increasing the program-length bound rapidly makes exhaustive candidate search infeasible.
+7. Exact ties between actions and the iterative discounted infinite-horizon value definition; ε-optimality avoids exact tie resolution, while a recursive value function addresses the infinite-horizon obstacle.
 :::
 
 ## Go deeper
