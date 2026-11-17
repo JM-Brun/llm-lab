@@ -15,6 +15,10 @@ project:
     - styles/rope-memory-ledger.css
     - scripts/nope-prefix-experiment.js
     - styles/nope-prefix-experiment.css
+    - scripts/hybrid-rope-nope.js
+    - styles/hybrid-rope-nope.css
+    - scripts/relative-bias-decomposition.js
+    - styles/relative-bias-decomposition.css
     - learning-map-data-fr.json
     - learning-map-data-en.json
     - knowledge-graph.jsonld
