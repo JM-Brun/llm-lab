@@ -281,3 +281,30 @@ Source review: [Alliancy, Aude Brès (2026)](../source-reviews/alliancy-la-compr
 La page officielle du [Résilient AI Challenge](https://www.sustainableaicoalition.org/resilient-ai-challenge/) et la [synthèse UNESCO](https://www.unesco.org/fr/articles/le-sommet-mondial-de-lia-au-service-du-bien-met-le-projecteur-sur-une-ia-resiliente-par-une) confirment que l’initiative a été menée et que les équipes gagnantes ont été annoncées le 8 juillet 2026. Les modèles de référence étaient Voxtral Realtime, Gemma 4 et Sarvam-30b, dans trois tâches distinctes. L’évaluation comparait précision et efficacité énergétique sous un protocole défini par les organisateurs. Le [règlement](https://www.sustainableaicoalition.org/terms-resilient-ai-challenge/) limite explicitement la portée de l’évaluation : elle ne certifie pas la qualité ou la sûreté générales des modèles. Il s’agit donc d’un cas empirique utile, mais non d’une preuve universelle que toute compression produit les mêmes gains.
 
 La comparaison 360 % / 36 % attribuée à Epoch.AI par Alliancy reste non vérifiée : source primaire non identifiée.
+
+## 17. Huang et al. — compression efficiency as a cross-model capability proxy (COLM 2024)
+
+[Huang, Zhang, Shan and He, “Compression Represents Intelligence Linearly”](https://arxiv.org/abs/2404.09937) adds a substantial empirical component to this collection. It compares 31 public pretrained LLMs using 12 downstream benchmarks and three external corpora: Common Crawl, GitHub Python and ArXiv mathematics.
+
+### 14.1 Method and result
+
+The authors measure compression with bits per character (BPC), rather than bits per token, to account for different tokenizers. BPC is the model's token-sequence negative log probability, expressed in bits, divided by the number of characters in the evaluated corpus. They report Pearson correlations of approximately -0.93 overall, -0.935 for knowledge/commonsense, -0.937 for coding and -0.953 for mathematical reasoning. Lower BPC corresponds to higher benchmark scores.
+
+The mathematical connection remains the existing one: a conditional probability model can drive arithmetic coding, and expected ideal code length is given by negative log probability. This is the predictive-compression/cross-entropy link; it does not make compression and intelligence synonymous.
+
+### 14.2 Conditions and qualifications
+
+- **Domain alignment matters:** reported cross-domain controls weaken the correlation when mathematics is paired with Common Crawl or knowledge/commonsense with GitHub code. BPC is therefore corpus-dependent, not a universal model constant.
+- **Benchmark scores are proxies:** the authors aggregate selected task scores; this does not measure all dimensions of intelligence, generalization or real-world competence.
+- **Contamination is a real threat:** the paper uses MIN-K% PROB to flag possible benchmark exposure and excludes Qwen-series outliers from the mathematical fit. The diagnostic is not definitive proof of contamination.
+- **The model scope is base models:** the paper argues that post-training changes the distribution being modeled. The proposed metric needs a distinct protocol before being applied to instruction-tuned or reasoning models.
+- **Context scope is limited:** the main comparison unifies the context window at 1,900 tokens; long-context behavior is left open.
+- **No causal inference:** cross-model correlation does not show that compression improvements cause capability improvements. Model scale, data, architecture and training may influence both.
+
+### 14.3 Integration decision
+
+Use this paper as an empirical case study in existing predictive-compression and evaluation material. Reuse existing concepts: predictive compression, cross-entropy, conditional distribution, entropy coding, arithmetic coding and held-out evaluation. Do not create a new canonical “compression-intelligence” concept. Keep predictive compression distinct from model compression (quantization, pruning and distillation).
+
+The official [repository](https://github.com/hkust-nlp/llm-compression-intelligence) provides evaluation code and corpus pipelines. This ingestion inspected the README and paper sections through the main results, but did not execute the code or independently audit the datasets. The 2024 leaderboard must not be presented as a current model ranking.
+
+Source review: [Huang et al. (2024)](../source-reviews/huang-zhang-shan-he-compression-intelligence-linearly-2024.md). Structured claims and limitations: [extraction record](../../data/extractions/huang-zhang-shan-he-compression-intelligence-linearly-2024.yml).
