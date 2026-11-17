@@ -198,8 +198,8 @@ La distribution du tour 1 ne désigne pas une sortie unique. C'est la règle de 
 |---|---|---|---|
 | « Vous » | 0,86 | 0,60 | 0,42 |
 | « Je » | 0,10 | 0,20 | 0,24 |
+| « Moi » | 0,02 | 0,10 | 0,17 |
 | « Oui » | 0,02 | 0,10 | 0,17 |
-| « Non » | 0,02 | 0,10 | 0,17 |
 
 Une température basse concentre la probabilité sur le token de tête ; une température élevée laisse plus de place aux autres. L'ordre des candidats ne change pas. Quand $\tau$ tend vers zéro, l'échantillonnage rejoint la sélection gloutonne, hors égalités et effets numériques. La température agit sur la distribution utilisée pour le tirage, pas sur les paramètres du modèle, et ne rend une réponse ni plus vraie ni meilleure. Son calcul est détaillé dans [Probabilités de sortie](probabilites.qmd).
 
