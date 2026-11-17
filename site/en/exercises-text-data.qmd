@@ -198,6 +198,7 @@ Lookup preserves the batch and sequence-position axes and adds the feature axis.
 
 </details>
 
+<a id="tokenizer-embedding-trace"></a>
 #### Optional practical trace — from text to vectors
 
 This trace complements the lookup exercise with a real tokenizer and a synthetic embedding table. It follows the successive objects without claiming to reproduce the internal weights of a pretrained GPT-2.
