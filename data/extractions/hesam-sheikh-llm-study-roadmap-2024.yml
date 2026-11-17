@@ -123,86 +123,86 @@ pedagogical_model:
     - {status: declared, topic: "Python, NumPy/Pandas and familiarity with TensorFlow or PyTorch.", basis: "Article prerequisites: Programming and frameworks."}
     - {status: declared, topic: "Neural-network layers, activations, backpropagation and loss functions.", basis: "Article prerequisites: Deep learning concepts."}
     - {status: declared, topic: "CNNs are optional and helpful, not required.", basis: "Article prerequisites: Deep learning concepts."}
-  items:
-    - id: hesam-sheikh-llm-study-roadmap-2024:three-stage-learning-structure
-      kind: teaching-sequence
-      summary: "The author organizes study into building an LLM from scratch, investigating hallucination, and studying advanced techniques beyond basic attention."
-      locator: {type: section, value: "I studied LLMs majorly in three steps"}
-      evidence: {kind: source-description, confidence: well-supported, scope: "The author's personal learning structure.", assumptions: ["The three headings represent the major stages."], limitations: ["The linked repository maps daily notes from Day 003 to Day 016; all daily README files in that range were inspected.", "Not validated as an optimal or sufficient curriculum."]}
-      pedagogical_assessment: {novelty: {level: low, rationale: "Topics are broadly present in existing roadmaps."}, complementarity: {level: high, rationale: "Useful comparative roadmap and topic-discovery checklist."}, pedagogical_value: {level: moderate, rationale: "Compact thematic structure for learners with ML background."}, applicability: {level: high, rationale: "Keep as an optional external route."}, redundancy: {level: high, rationale: "Most concepts already have canonical LLM Lab ownership."}, evidence_quality: {level: moderate, rationale: "Personal study account, not comparative curriculum research."}}
-      classification: {primary_theme: architectures-mechanisms, tags: [topic:llm-learning-roadmap, topic:transformer, topic:hallucination, topic:inference-efficiency], concept_ids: [token, token-embedding, self-attention, transformer]}
-      candidate_destinations: {pages: [], concepts: [token, token-embedding, self-attention, transformer]}
-      disposition: integrate-by-reference
-      disposition_rationale: "Link as a comparative roadmap; do not duplicate its curriculum or create another route."
-    - id: hesam-sheikh-llm-study-roadmap-2024:self-attention-question
-      kind: question
-      summary: "The main conceptual challenge is understanding how Q/K/V projections and self-attention relate tokens to context and aggregate value information."
-      locator: {type: section, value: "Build an LLM from scratch"}
-      evidence: {kind: source-observation, confidence: well-supported, scope: "The author's reflection on the first-stage difficulty.", assumptions: ["This is personal, not measured learner difficulty."], limitations: ["Does not establish a universal hardest topic."]}
-      pedagogical_assessment: {novelty: {level: low, rationale: "Q/K/V is already canonical."}, complementarity: {level: high, rationale: "Confirms the importance of mechanism-level explanation and numerical examples."}, pedagogical_value: {level: high, rationale: "Useful learner question for existing attention lessons."}, applicability: {level: high, rationale: "Use as a review prompt."}, redundancy: {level: high, rationale: "Canonical lessons already cover it."}, evidence_quality: {level: moderate, rationale: "Personal account."}}
-      classification: {primary_theme: architectures-mechanisms, concept_ids: [self-attention, query, key, value]}
-      candidate_destinations: {pages: [en/queries-keys-values, fr/queries-keys-values, en/scaled-dot-product-attention, fr/scaled-dot-product-attention], concepts: [self-attention, query, key, value]}
-      disposition: already-covered
-      disposition_rationale: "Existing bilingual lessons own the concept; retain the motivating question only."
-    - id: hesam-sheikh-llm-study-roadmap-2024:hallucination-causality-qualification
-      kind: limitation
-      summary: "Positional and exposure bias are useful perspectives on generation failures, but neither alone explains factual hallucination."
-      locator: {type: section, value: "LLM hallucination"}
-      evidence: {kind: reviewer-assessment, confidence: context-dependent, scope: "Terminology and causal interpretation in the article's summary.", assumptions: ["Positional effects and train/inference prefix mismatch are distinct mechanisms."], limitations: ["A full hallucination taxonomy requires primary literature and controlled evaluation."]}
-      pedagogical_assessment: {novelty: {level: moderate, rationale: "The named mechanisms are easy to overgeneralize."}, complementarity: {level: high, rationale: "Adds a caution to generation and context-failure explanations."}, pedagogical_value: {level: high, rationale: "Prevents simplistic single-cause accounts."}, applicability: {level: high, rationale: "Use when reviewing hallucination explanations."}, redundancy: {level: moderate, rationale: "Hallucination already appears in the project."}, evidence_quality: {level: moderate, rationale: "Mechanism-specific primary-source verification remains needed."}}
-      classification: {primary_theme: inference-efficiency, tags: [topic:hallucination, topic:exposure-bias], concept_ids: []}
-      candidate_destinations: {pages: [en/generation, fr/generation, en/context-engineering, fr/context-engineering], concepts: [autoregressive-generation, context-window]}
-      disposition: clarify
-      disposition_rationale: "Preserve multi-causal framing; do not assert positional or exposure bias as universal explanations."
-    - id: hesam-sheikh-llm-study-roadmap-2024:adaptive-question-led-reading
-      kind: mental-model
-      summary: "Choose a route based on prior knowledge and goals, formulate a question before reading, and consult only the material needed to answer it."
-      locator: {type: section, value: "Don't follow my roadmap; Don't finish everything"}
-      evidence: {kind: source-advice, confidence: context-dependent, scope: "Author's personal study advice.", assumptions: ["Learners can formulate useful questions with guidance."], limitations: ["Selective reading still needs enough context to preserve assumptions and qualifications."]}
-      pedagogical_assessment: {novelty: {level: moderate, rationale: "A practical study method complementing non-linear navigation."}, complementarity: {level: high, rationale: "Supports progressive disclosure and question-led use of canonical pages."}, pedagogical_value: {level: high, rationale: "Avoids treating completion as a proxy for learning."}, applicability: {level: high, rationale: "Useful learner-guidance pointer."}, redundancy: {level: moderate, rationale: "The project supports non-linear exploration; explicit question-first advice adds value."}, evidence_quality: {level: moderate, rationale: "Practical advice, not controlled learning-science evidence."}}
-      classification: {primary_theme: mathematical-tools-geometry, tags: [topic:learning-strategy, topic:question-led-reading], concept_ids: []}
-      candidate_destinations: {pages: [], concepts: []}
-      disposition: integrate-by-reference
-      disposition_rationale: "Retain as a study-method pointer; do not change the canonical route based on one personal account."
+items:
+  - id: hesam-sheikh-llm-study-roadmap-2024:three-stage-learning-structure
+    kind: teaching-sequence
+    summary: "The author organizes study into building an LLM from scratch, investigating hallucination, and studying advanced techniques beyond basic attention."
+    locator: {type: section, value: "I studied LLMs majorly in three steps"}
+    evidence: {kind: source-description, confidence: well-supported, scope: "The author's personal learning structure.", assumptions: ["The three headings represent the major stages."], limitations: ["The linked repository maps daily notes from Day 003 to Day 016; all daily README files in that range were inspected.", "Not validated as an optimal or sufficient curriculum."]}
+    pedagogical_assessment: {novelty: {level: low, rationale: "Topics are broadly present in existing roadmaps."}, complementarity: {level: high, rationale: "Useful comparative roadmap and topic-discovery checklist."}, pedagogical_value: {level: moderate, rationale: "Compact thematic structure for learners with ML background."}, applicability: {level: high, rationale: "Keep as an optional external route."}, redundancy: {level: high, rationale: "Most concepts already have canonical LLM Lab ownership."}, evidence_quality: {level: moderate, rationale: "Personal study account, not comparative curriculum research."}}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:llm-learning-roadmap, topic:transformer, topic:hallucination, topic:inference-efficiency], concept_ids: [token, token-embedding, self-attention]}
+    candidate_destinations: {pages: [], concepts: [token, token-embedding, self-attention]}
+    disposition: integrate-by-reference
+    disposition_rationale: "Link as a comparative roadmap; do not duplicate its curriculum or create another route."
+  - id: hesam-sheikh-llm-study-roadmap-2024:self-attention-question
+    kind: question
+    summary: "The main conceptual challenge is understanding how Q/K/V projections and self-attention relate tokens to context and aggregate value information."
+    locator: {type: section, value: "Build an LLM from scratch"}
+    evidence: {kind: source-observation, confidence: well-supported, scope: "The author's reflection on the first-stage difficulty.", assumptions: ["This is personal, not measured learner difficulty."], limitations: ["Does not establish a universal hardest topic."]}
+    pedagogical_assessment: {novelty: {level: low, rationale: "Q/K/V is already canonical."}, complementarity: {level: high, rationale: "Confirms the importance of mechanism-level explanation and numerical examples."}, pedagogical_value: {level: high, rationale: "Useful learner question for existing attention lessons."}, applicability: {level: high, rationale: "Use as a review prompt."}, redundancy: {level: high, rationale: "Canonical lessons already cover it."}, evidence_quality: {level: moderate, rationale: "Personal account."}}
+    classification: {primary_theme: architectures-mechanisms, concept_ids: [self-attention, query, key, value]}
+    candidate_destinations: {pages: [en/queries-keys-values, fr/queries-keys-values, en/scaled-dot-product-attention, fr/scaled-dot-product-attention], concepts: [self-attention, query, key, value]}
+    disposition: already-covered
+    disposition_rationale: "Existing bilingual lessons own the concept; retain the motivating question only."
+  - id: hesam-sheikh-llm-study-roadmap-2024:hallucination-causality-qualification
+    kind: limitation
+    summary: "Positional and exposure bias are useful perspectives on generation failures, but neither alone explains factual hallucination."
+    locator: {type: section, value: "LLM hallucination"}
+    evidence: {kind: reviewer-assessment, confidence: context-dependent, scope: "Terminology and causal interpretation in the article's summary.", assumptions: ["Positional effects and train/inference prefix mismatch are distinct mechanisms."], limitations: ["A full hallucination taxonomy requires primary literature and controlled evaluation."]}
+    pedagogical_assessment: {novelty: {level: moderate, rationale: "The named mechanisms are easy to overgeneralize."}, complementarity: {level: high, rationale: "Adds a caution to generation and context-failure explanations."}, pedagogical_value: {level: high, rationale: "Prevents simplistic single-cause accounts."}, applicability: {level: high, rationale: "Use when reviewing hallucination explanations."}, redundancy: {level: moderate, rationale: "Hallucination already appears in the project."}, evidence_quality: {level: moderate, rationale: "Mechanism-specific primary-source verification remains needed."}}
+    classification: {primary_theme: inference-efficiency, tags: [topic:hallucination, topic:exposure-bias], concept_ids: []}
+    candidate_destinations: {pages: [en/generation, fr/generation, en/context-engineering, fr/context-engineering], concepts: [autoregressive-generation, context-window]}
+    disposition: clarify
+    disposition_rationale: "Preserve multi-causal framing; do not assert positional or exposure bias as universal explanations."
+  - id: hesam-sheikh-llm-study-roadmap-2024:adaptive-question-led-reading
+    kind: mental-model
+    summary: "Choose a route based on prior knowledge and goals, formulate a question before reading, and consult only the material needed to answer it."
+    locator: {type: section, value: "Don't follow my roadmap; Don't finish everything"}
+    evidence: {kind: source-advice, confidence: context-dependent, scope: "Author's personal study advice.", assumptions: ["Learners can formulate useful questions with guidance."], limitations: ["Selective reading still needs enough context to preserve assumptions and qualifications."]}
+    pedagogical_assessment: {novelty: {level: moderate, rationale: "A practical study method complementing non-linear navigation."}, complementarity: {level: high, rationale: "Supports progressive disclosure and question-led use of canonical pages."}, pedagogical_value: {level: high, rationale: "Avoids treating completion as a proxy for learning."}, applicability: {level: high, rationale: "Useful learner-guidance pointer."}, redundancy: {level: moderate, rationale: "The project supports non-linear exploration; explicit question-first advice adds value."}, evidence_quality: {level: moderate, rationale: "Practical advice, not controlled learning-science evidence."}}
+    classification: {primary_theme: mathematical-tools-geometry, tags: [topic:learning-strategy, topic:question-led-reading], concept_ids: []}
+    candidate_destinations: {pages: [], concepts: []}
+    disposition: integrate-by-reference
+    disposition_rationale: "Retain as a study-method pointer; do not change the canonical route based on one personal account."
 
 
-    - id: hesam-sheikh-llm-study-roadmap-2024:daily-route-003-016
-      kind: teaching-sequence
-      summary: "The linked study journal gives a 14-day thematic sequence from tokenization and attention through fine-tuning, hallucination, distillation, advanced inference mechanisms, ViT, language understanding and multimodality."
-      locator: {type: section, value: "ML Retreat README and Days/003–016"}
-      evidence: {kind: source-description, confidence: well-supported, scope: "The author-maintained README files for all daily folders 003 through 016.", assumptions: ["The README ordering is the author's intended study order."], limitations: ["Day 004 has no stated duration.", "Durations are self-reported estimates, not validated workload measurements.", "The daily sequence is not evidence that every learner can reproduce the same outcome in two weeks."]}
-      pedagogical_assessment: {novelty: {level: moderate, rationale: "The daily sequence adds several topics absent from the article's three-stage summary."}, complementarity: {level: high, rationale: "Adds an inspectable example of a learner-maintained route spanning core, advanced and multimodal topics."}, pedagogical_value: {level: high, rationale: "Useful for comparing sequence, breadth and time estimates, provided the personal nature of the journal is explicit."}, applicability: {level: moderate, rationale: "Use as optional route comparison rather than a project-wide schedule."}, redundancy: {level: moderate, rationale: "Most technical topics already exist in LLM Lab; distillation and NLU/grounding links add cross-topic prompts."}, evidence_quality: {level: moderate, rationale: "The README records what the author says they studied, not independent evidence of mastery or learning efficacy."}}
-      classification: {primary_theme: architectures-mechanisms, tags: [topic:llm-learning-roadmap, topic:knowledge-distillation, topic:vision-transformer, topic:multimodal-llm], concept_ids: [token, token-embedding, self-attention, transformer]}
-      candidate_destinations: {pages: [en/llm-overview, fr/llm-overview], concepts: [token, token-embedding, self-attention, transformer]}
-      disposition: integrate-by-reference
-      disposition_rationale: "Retain the sequence as a source-local route for comparison; do not replace the Understand or Build pathways or present the author's time estimates as normative."
-    - id: hesam-sheikh-llm-study-roadmap-2024:knowledge-distillation
-      kind: claim
-      summary: "Day 009 treats knowledge distillation as a distinct LLM study topic and points to a survey of knowledge distillation for large language models."
-      locator: {type: section, value: "ml-retreat/Days/009 (distillation)/README.md"}
-      evidence: {kind: source-description, confidence: well-supported, scope: "Daily README title and linked survey reference.", assumptions: ["The README accurately records the author's study activity."], limitations: ["The survey itself was not inspected in this ingestion; no technical conclusion about distillation methods is extracted."]}
-      pedagogical_assessment: {novelty: {level: moderate, rationale: "The roadmap summary omits distillation although the detailed journal includes it."}, complementarity: {level: high, rationale: "A useful bridge between compression, post-training and model transfer."}, pedagogical_value: {level: moderate, rationale: "Highlights a topic for existing compression and post-training lessons."}, applicability: {level: moderate, rationale: "Add cross-links only after checking existing coverage."}, redundancy: {level: moderate, rationale: "Adjacent topics already exist, but this route makes distillation visible."}, evidence_quality: {level: moderate, rationale: "Only the author's reading record was inspected."}}
-      classification: {primary_theme: probabilistic-foundations-training, tags: [topic:knowledge-distillation], concept_ids: []}
-      candidate_destinations: {pages: [], concepts: []}
-      disposition: integrate-by-reference
-      disposition_rationale: "Use as a further-reading pointer; inspect the survey before making technical additions."
-    - id: hesam-sheikh-llm-study-roadmap-2024:nlu-meaning-grounding
-      kind: open-question
-      summary: "Day 015 juxtaposes empirical probing of synthetic world representations with critical and philosophical arguments about whether language models acquire meaning from linguistic form alone."
-      locator: {type: section, value: "ml-retreat/Days/015 (LLM and NL Understanding)/README.md"}
-      evidence: {kind: source-description, confidence: well-supported, scope: "The daily README and its four linked resources.", assumptions: ["The resource list is evidence of the author's intended study question, not an endorsement of every source conclusion."], limitations: ["The linked papers and philosophical argument were not fully audited here.", "The form/meaning debate is contested and depends on operational definitions of understanding and grounding."]}
-      pedagogical_assessment: {novelty: {level: moderate, rationale: "The journal explicitly brings philosophical and empirical perspectives together."}, complementarity: {level: high, rationale: "Connects model representations, grounding, semantics and evaluation."}, pedagogical_value: {level: high, rationale: "Encourages learners to define what they mean by understanding before evaluating claims."}, applicability: {level: moderate, rationale: "Use as a debate and research question, not a canonical answer."}, redundancy: {level: low, rationale: "This cross-disciplinary question is not equivalent to a basic Transformer explanation."}, evidence_quality: {level: moderate, rationale: "The resource list is inspected; source arguments and empirical evidence require separate reviews."}}
-      classification: {primary_theme: architectures-mechanisms, tags: [topic:natural-language-understanding, topic:grounding], concept_ids: []}
-      candidate_destinations: {pages: [en/llm-overview, fr/llm-overview], concepts: []}
-      disposition: defer
-      disposition_rationale: "Retain as an open research question; do not encode a definitive position on LLM understanding."
-    - id: hesam-sheikh-llm-study-roadmap-2024:vision-and-multimodality
-      kind: teaching-sequence
-      summary: "Days 014–016 extend the route from text-only Transformers to Vision Transformers and multimodal language models."
-      locator: {type: section, value: "ml-retreat/Days/014–016"}
-      evidence: {kind: source-description, confidence: well-supported, scope: "Daily README titles and linked ViT/multimodality resources.", assumptions: ["The day titles represent the author's intended topic boundaries."], limitations: ["The linked papers, implementations and multimodal systems were not independently evaluated.", "No single architecture should be inferred for all multimodal models."]}
-      pedagogical_assessment: {novelty: {level: moderate, rationale: "The article's summary omits this explicit progression into vision and multimodality."}, complementarity: {level: high, rationale: "Extends the roadmap beyond text-only LLMs."}, pedagogical_value: {level: moderate, rationale: "Useful as an optional branch after core Transformer understanding."}, applicability: {level: moderate, rationale: "Cross-link to architecture and multimodal resources without creating a new core route."}, redundancy: {level: moderate, rationale: "The project already discusses architectures, but the sequence offers a useful transition."}, evidence_quality: {level: moderate, rationale: "The daily reading list is inspectable; technical details require separate source reviews."}}
-      classification: {primary_theme: architectures-mechanisms, tags: [topic:vision-transformer, topic:multimodal-llm], concept_ids: [transformer]}
-      candidate_destinations: {pages: [en/transformer-architectures, fr/transformer-architectures, en/llm-overview, fr/llm-overview], concepts: [transformer]}
-      disposition: integrate-by-reference
-      disposition_rationale: "Keep as an optional extension of the source-local route; avoid claiming that ViT and multimodal LMs share one architecture."
+  - id: hesam-sheikh-llm-study-roadmap-2024:daily-route-003-016
+    kind: teaching-sequence
+    summary: "The linked study journal gives a 14-day thematic sequence from tokenization and attention through fine-tuning, hallucination, distillation, advanced inference mechanisms, ViT, language understanding and multimodality."
+    locator: {type: section, value: "ML Retreat README and Days/003–016"}
+    evidence: {kind: source-description, confidence: well-supported, scope: "The author-maintained README files for all daily folders 003 through 016.", assumptions: ["The README ordering is the author's intended study order."], limitations: ["Day 004 has no stated duration.", "Durations are self-reported estimates, not validated workload measurements.", "The daily sequence is not evidence that every learner can reproduce the same outcome in two weeks."]}
+    pedagogical_assessment: {novelty: {level: moderate, rationale: "The daily sequence adds several topics absent from the article's three-stage summary."}, complementarity: {level: high, rationale: "Adds an inspectable example of a learner-maintained route spanning core, advanced and multimodal topics."}, pedagogical_value: {level: high, rationale: "Useful for comparing sequence, breadth and time estimates, provided the personal nature of the journal is explicit."}, applicability: {level: moderate, rationale: "Use as optional route comparison rather than a project-wide schedule."}, redundancy: {level: moderate, rationale: "Most technical topics already exist in LLM Lab; distillation and NLU/grounding links add cross-topic prompts."}, evidence_quality: {level: moderate, rationale: "The README records what the author says they studied, not independent evidence of mastery or learning efficacy."}}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:llm-learning-roadmap, topic:knowledge-distillation, topic:vision-transformer, topic:multimodal-llm], concept_ids: [token, token-embedding, self-attention]}
+    candidate_destinations: {pages: [en/llm-overview, fr/llm-overview], concepts: [token, token-embedding, self-attention]}
+    disposition: integrate-by-reference
+    disposition_rationale: "Retain the sequence as a source-local route for comparison; do not replace the Understand or Build pathways or present the author's time estimates as normative."
+  - id: hesam-sheikh-llm-study-roadmap-2024:knowledge-distillation
+    kind: claim
+    summary: "Day 009 treats knowledge distillation as a distinct LLM study topic and points to a survey of knowledge distillation for large language models."
+    locator: {type: section, value: "ml-retreat/Days/009 (distillation)/README.md"}
+    evidence: {kind: source-description, confidence: well-supported, scope: "Daily README title and linked survey reference.", assumptions: ["The README accurately records the author's study activity."], limitations: ["The survey itself was not inspected in this ingestion; no technical conclusion about distillation methods is extracted."]}
+    pedagogical_assessment: {novelty: {level: moderate, rationale: "The roadmap summary omits distillation although the detailed journal includes it."}, complementarity: {level: high, rationale: "A useful bridge between compression, post-training and model transfer."}, pedagogical_value: {level: moderate, rationale: "Highlights a topic for existing compression and post-training lessons."}, applicability: {level: moderate, rationale: "Add cross-links only after checking existing coverage."}, redundancy: {level: moderate, rationale: "Adjacent topics already exist, but this route makes distillation visible."}, evidence_quality: {level: moderate, rationale: "Only the author's reading record was inspected."}}
+    classification: {primary_theme: probabilistic-foundations-training, tags: [topic:knowledge-distillation], concept_ids: []}
+    candidate_destinations: {pages: [], concepts: []}
+    disposition: integrate-by-reference
+    disposition_rationale: "Use as a further-reading pointer; inspect the survey before making technical additions."
+  - id: hesam-sheikh-llm-study-roadmap-2024:nlu-meaning-grounding
+    kind: open-question
+    summary: "Day 015 juxtaposes empirical probing of synthetic world representations with critical and philosophical arguments about whether language models acquire meaning from linguistic form alone."
+    locator: {type: section, value: "ml-retreat/Days/015 (LLM and NL Understanding)/README.md"}
+    evidence: {kind: source-description, confidence: well-supported, scope: "The daily README and its four linked resources.", assumptions: ["The resource list is evidence of the author's intended study question, not an endorsement of every source conclusion."], limitations: ["The linked papers and philosophical argument were not fully audited here.", "The form/meaning debate is contested and depends on operational definitions of understanding and grounding."]}
+    pedagogical_assessment: {novelty: {level: moderate, rationale: "The journal explicitly brings philosophical and empirical perspectives together."}, complementarity: {level: high, rationale: "Connects model representations, grounding, semantics and evaluation."}, pedagogical_value: {level: high, rationale: "Encourages learners to define what they mean by understanding before evaluating claims."}, applicability: {level: moderate, rationale: "Use as a debate and research question, not a canonical answer."}, redundancy: {level: low, rationale: "This cross-disciplinary question is not equivalent to a basic Transformer explanation."}, evidence_quality: {level: moderate, rationale: "The resource list is inspected; source arguments and empirical evidence require separate reviews."}}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:natural-language-understanding, topic:grounding], concept_ids: []}
+    candidate_destinations: {pages: [en/llm-overview, fr/llm-overview], concepts: []}
+    disposition: defer
+    disposition_rationale: "Retain as an open research question; do not encode a definitive position on LLM understanding."
+  - id: hesam-sheikh-llm-study-roadmap-2024:vision-and-multimodality
+    kind: teaching-sequence
+    summary: "Days 014–016 extend the route from text-only Transformers to Vision Transformers and multimodal language models."
+    locator: {type: section, value: "ml-retreat/Days/014–016"}
+    evidence: {kind: source-description, confidence: well-supported, scope: "Daily README titles and linked ViT/multimodality resources.", assumptions: ["The day titles represent the author's intended topic boundaries."], limitations: ["The linked papers, implementations and multimodal systems were not independently evaluated.", "No single architecture should be inferred for all multimodal models."]}
+    pedagogical_assessment: {novelty: {level: moderate, rationale: "The article's summary omits this explicit progression into vision and multimodality."}, complementarity: {level: high, rationale: "Extends the roadmap beyond text-only LLMs."}, pedagogical_value: {level: moderate, rationale: "Useful as an optional branch after core Transformer understanding."}, applicability: {level: moderate, rationale: "Cross-link to architecture and multimodal resources without creating a new core route."}, redundancy: {level: moderate, rationale: "The project already discusses architectures, but the sequence offers a useful transition."}, evidence_quality: {level: moderate, rationale: "The daily reading list is inspectable; technical details require separate source reviews."}}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:vision-transformer, topic:multimodal-llm], concept_ids: []}
+    candidate_destinations: {pages: [en/transformer-architectures, fr/transformer-architectures, en/llm-overview, fr/llm-overview], concepts: []}
+    disposition: integrate-by-reference
+    disposition_rationale: "Keep as an optional extension of the source-local route; avoid claiming that ViT and multimodal LMs share one architecture."
