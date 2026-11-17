@@ -8,9 +8,12 @@
     if (root.dataset.initialised === "true") return;
     const lang = document.documentElement.lang.toLowerCase().startsWith("fr") ? "fr" : "en";
     const t = copy[lang], controls = root.querySelector(".next-token-explorer__interactive");
-    const prefix = root.querySelector(".next-token-explorer__prefix"), list = root.querySelector(".next-token-explorer__distribution");
-    const select = root.querySelector(".next-token-explorer__choice"), status = root.querySelector(".next-token-explorer__next");
-    const appendButton = root.querySelector(".next-token-explorer__append"), resetButton = root.querySelector(".next-token-explorer__reset");
+    const prefix = controls && controls.querySelector("output"), list = controls && controls.querySelector("ul");
+    const select = controls && controls.querySelector("select");
+    const paragraphs = controls ? controls.querySelectorAll("p") : [];
+    const status = paragraphs.length > 1 ? paragraphs[1] : null;
+    const buttons = controls ? controls.querySelectorAll("button") : [];
+    const appendButton = buttons[0] || null, resetButton = buttons[1] || null;
     const missing = [
       ["controls", controls], ["prefix", prefix], ["distribution", list],
       ["token-choice", select], ["next-distribution", status],
