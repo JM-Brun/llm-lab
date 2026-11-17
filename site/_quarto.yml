@@ -18,6 +18,7 @@ project:
     - scripts/hybrid-rope-nope.js
     - styles/hybrid-rope-nope.css
     - scripts/relative-bias-decomposition.js
+    - scripts/next-token-explorer.js
     - styles/relative-bias-decomposition.css
     - learning-map-data-fr.json
     - learning-map-data-en.json

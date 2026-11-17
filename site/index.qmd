@@ -86,7 +86,7 @@ Ces repères décrivent les preuves disponibles ; ils ne rendent pas toutes les 
 
 ## Trois usages opérationnels et une évaluation transversale
 
-Le même calcul prédictif produit une distribution conditionnelle. Cette distribution sert à trois usages opérationnels distincts : générer un token, scorer une cible observée ou apprendre en ajustant les paramètres. L'évaluation est transversale : elle agrège des mesures sur des données et selon un protocole définis. Le schéma détaille les boucles de génération et d'apprentissage ; le scoring est distingué juste après.
+Le même calcul prédictif produit une distribution conditionnelle. Cette distribution sert à trois usages opérationnels distincts : générer un token, scorer une cible observée ou apprendre en ajustant les paramètres. L'évaluation est transversale : elle agrège des mesures sur des données et selon un protocole définis. Le schéma détaille les boucles de génération et d'apprentissage ; le scoring est distingué juste après. Pour voir un token allonger le préfixe et déclencher la distribution suivante, [explorer la boucle du prochain token dans le panorama](fr/llm-overview.qmd#text-to-distribution).
 
 ```{=html}
 <figure class="llm-flow-figure">

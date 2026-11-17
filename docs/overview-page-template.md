@@ -17,7 +17,7 @@ A diagram is useful when it exposes structure, flow, or relationships that are d
 
 ## Possible composition
 
-An overview often combines a concise opening, a system-level model, a few essential distinctions, and contextual links placed where the concepts appear. A compact self-check can help when there is a meaningful system-level inference to test. None of these needs to become a separate heading.
+An overview often combines a concise opening, a system-level model, a few essential distinctions, and contextual links placed where the concepts appear. A compact block of observable learning outcomes can help readers decide whether the page matches their needs; an estimated reading time is useful only when credible and when its scope (reading alone versus optional practice) is clear. A self-check should cover the overview's major sections when it tests meaningful system-level inferences. None of these needs to become a separate heading.
 
 ~~~markdown
 <!-- State the system, central question, and scope concisely. -->
