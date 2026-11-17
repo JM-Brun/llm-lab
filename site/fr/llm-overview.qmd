@@ -50,7 +50,7 @@ Le texte « C'est une bonne situation, ça, scribe ? » est ici le **préfixe** 
 
 Ces valeurs sont fictives : elles ne proviennent pas d'un modèle entraîné. Le vocabulaire réel d'un modèle contient bien plus que quatre unités — souvent des dizaines de milliers. Pour rendre l'exemple lisible, nous affichons des mots à la place des tokens. Les valeurs fictives de ce tableau sont reprises dans plusieurs pages afin que chaque calcul puisse être refait à la main. Dans un vrai modèle, le texte est découpé en unités qui peuvent être plus petites ou plus grandes qu'un mot ; une ligne du tableau ne correspond donc pas nécessairement à un mot entier.
 
-Ce tableau est une **distribution conditionnelle** : autrement dit, les probabilités sont calculées *en tenant compte du préfixe*. Les quatre valeurs se partagent un total de 1 (soit 100 %). Si la règle de décodage choisit « Être », ce token est ajouté au préfixe. Le nouveau préfixe devient « C'est une bonne situation, ça, scribe ? Être » ; le modèle recalcule alors une distribution, dans laquelle « scribe » devient le candidat le plus probable.
+Ce tableau est une **distribution conditionnelle** : autrement dit, les probabilités sont calculées *en tenant compte du préfixe*. Les quatre valeurs se partagent un total de 1 (soit 100 %). Si la règle de décodage choisit « Être », ce token est ajouté au préfixe. Le nouveau préfixe devient « C'est une bonne situation, ça, scribe ? Être ». Dans notre exemple fictif, supposons que le modèle attribue alors la probabilité la plus élevée à « scribe » : c'est une nouvelle distribution, calculée à partir du préfixe enrichi.
 
 Trois termes suffisent pour lire la suite du parcours.
 
