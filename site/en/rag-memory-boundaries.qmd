@@ -187,6 +187,15 @@ The [Hugging Face semantic-search tutorial with FAISS](https://huggingface.co/le
 
 Vector similarity does not guarantee factual relevance or answer quality. The embedding model, pooling, normalization, metric, document chunking, filters, and evaluation protocol must fit the task. At minimum, evaluate retrieval quality separately from generation quality.
 
+
+### Further reading: choosing a ranking model
+
+The bi-encoder / cross-encoder pattern gives a concrete example of two-stage ranking: reusable embeddings generate candidates, then a joint score for each pair reorders a short list. This is an option, not a requirement: lexical, hybrid, or structured retrieval can also generate candidates, and a cross-encoder is useful only when its relevance gain justifies its cost.
+
+- Avi Chawla, [Bi-encoders and Cross-encoders — Part 1](https://www.dailydoseofds.com/bi-encoders-and-cross-encoders-for-sentence-pair-similarity-scoring-part-1/) — background and motivation; the central technical section is paywalled.
+- Avi Chawla, [AugSBERT — Part 2](https://www.dailydoseofds.com/augsbert-bi-encoders-cross-encoders-for-sentence-pair-similarity-scoring-part-2/) — architectural distinction and overview of hybrid training; later details are partially paywalled.
+- Avi Chawla, [Foundations of RAG systems](https://www.dailydoseofds.com/a-crash-course-on-building-rag-systems-part-1-with-implementations/) — pedagogical example of a dense pipeline with chunking, embeddings, approximate retrieval, and reranking; later sections are partially inaccessible.
+
 ## Limitations
 
 This page describes architectural principles, not one RAG implementation or a universal memory taxonomy. Guarantees must be established through end-to-end tests, not inferred from the presence of an index or prompt.

@@ -187,6 +187,15 @@ Le [tutoriel Hugging Face sur la recherche sémantique avec FAISS](https://huggi
 
 La similarité vectorielle ne garantit ni la pertinence factuelle ni la qualité de la réponse. Le modèle d'embedding, le pooling, la normalisation, la métrique, le découpage documentaire, les filtres et le protocole d'évaluation doivent être adaptés à la tâche. Évaluez au minimum la qualité de récupération séparément de la qualité de génération.
 
+
+### Pour approfondir le choix du modèle de classement
+
+Le schéma bi-encoder / cross-encoder donne un exemple concret de classement en deux temps : embeddings réutilisables pour générer les candidats, puis score conjoint de chaque paire pour réordonner une liste courte. Ce montage est une option, pas une obligation : une recherche lexicale, hybride ou structurée peut aussi produire les candidats, et un cross-encoder n'est utile que si le gain de pertinence justifie son coût.
+
+- Avi Chawla, [Bi-encoders and Cross-encoders — Part 1](https://www.dailydoseofds.com/bi-encoders-and-cross-encoders-for-sentence-pair-similarity-scoring-part-1/) — contexte historique et motivation ; la partie technique centrale est derrière un paywall.
+- Avi Chawla, [AugSBERT — Part 2](https://www.dailydoseofds.com/augsbert-bi-encoders-cross-encoders-for-sentence-pair-similarity-scoring-part-2/) — distinction architecturale et aperçu de l'entraînement hybride ; détails ultérieurs partiellement payants.
+- Avi Chawla, [Foundations of RAG systems](https://www.dailydoseofds.com/a-crash-course-on-building-rag-systems-part-1-with-implementations/) — exemple pédagogique d'un pipeline dense avec découpage, embeddings, recherche approchée et reranking ; la partie aval est partiellement inaccessible.
+
 ## Limites
 
 Cette page décrit des principes d'architecture, pas une implémentation RAG unique ni une taxonomie universelle de la mémoire. Les garanties doivent être établies par des tests de bout en bout, pas déduites de la seule présence d'un index ou d'un prompt.

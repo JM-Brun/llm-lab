@@ -1,0 +1,106 @@
+schema_version: 1
+source_id: dailydose-bi-cross-encoders-sentence-similarity-2024
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis: ["Direct HTML through the start of 'The problem with BERT'; remaining Part 1 is paywalled."]
+    inferred_elements: ["Source graph and outcomes are reconstructed from visible section order, not supplied by the author."]
+  source_graph:
+    nodes:
+      - {id: src-pairwise-scoring, kind: task, description: "Score text pairs for retrieval, QA or duplicate detection.", locator: "Introduction"}
+      - {id: src-static-embeddings, kind: representation, description: "Fixed word-type vectors.", locator: "How to generate embeddings?"}
+      - {id: src-contextualized-states, kind: representation, description: "Context-dependent Transformer states.", locator: "BERT"}
+      - {id: src-bert-pretraining, kind: objective, description: "BERT pretraining through MLM and NSP.", locator: "BERT"}
+      - {id: src-unresolved-bert-question, kind: open-question, description: "Whether raw BERT sentence vectors plus cosine suffice.", locator: "Paywall boundary"}
+    edges:
+      - {from: src-static-embeddings, type: contrasted-with, to: src-contextualized-states}
+      - {from: src-bert-pretraining, type: produces, to: src-contextualized-states}
+      - {from: src-contextualized-states, type: raises-question-about, to: src-unresolved-bert-question}
+    interpretation: "Editorial reconstruction of visible material; the inaccessible answer is deliberately not inferred."
+  learning_outcomes:
+    - {status: inferred, outcome: "Explain why pairwise text scoring matters in retrieval, QA and duplicate detection.", basis: "Introduction"}
+    - {status: inferred, outcome: "Distinguish static word vectors from contextualized token states.", basis: "Background"}
+    - {status: inferred, outcome: "Describe the MLM and NSP objectives in the original BERT setup.", basis: "BERT section"}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Basic familiarity with vectors, word embeddings and Transformer encoders.", basis: "Visible article terminology"}
+  teaching_route:
+    - {order: 1, section: "Introduction", function: motivate-pairwise-scoring, moves: ["Connect retrieval, QA and deduplication", "Introduce accuracy/efficiency trade-off"]}
+    - {order: 2, section: "Background", function: motivate-vector-retrieval, moves: ["Contrast exact keyword matching with varied wording", "Introduce vector comparison"]}
+    - {order: 3, section: "How to generate embeddings?", function: historical-contrast, moves: ["Present static word vectors", "Use polysemy to expose lack of contextual adaptation"]}
+    - {order: 4, section: "BERT", function: explain-contextualization, moves: ["Introduce MLM and NSP", "Connect context to occurrence-specific states"]}
+    - {order: 5, section: "The problem with BERT", function: raise-unresolved-question, moves: ["Pose raw BERT sentence vectors plus cosine", "Stop at the verified paywall boundary"]}
+  pedagogical_strengths: ["Connects representation learning to concrete retrieval tasks.", "Uses lexical ambiguity to introduce contextualization."]
+  pedagogical_limits: ["Central technical comparison is inaccessible.", "Some BERT pretraining claims need qualification against primary literature."]
+  comparison:
+    canonical_graph: "Existing canonical concepts contextualized-representation and retrieval-augmented-generation already cover the relevant nodes; no new concept or relation is justified by the accessible Part 1 material."
+    canonical_pages: [fr/embedding-space, en/embedding-space, fr/contextualized-representations, en/contextualized-representations, fr/cosine-similarity, en/cosine-similarity]
+    decision: "Use motivation as optional context; do not duplicate existing lessons or claim to extract paywalled material."
+    dossier: docs/source-reviews/dailydose-main-path-2026-11.md
+scan:
+  accessed_at: "2026-11-17"
+  retrieval_method: direct-canonical-html
+  author_text:
+    status: partial
+    coverage: "Introduction; applications of pairwise scoring; keyword versus semantic retrieval motivation; static embeddings; contextualized representations; BERT MLM/NSP; beginning of the raw-BERT sentence-similarity problem."
+    notes: ["Canonical page becomes paywalled after posing the raw-BERT-plus-cosine approach. No inaccessible Part 1 content is inferred."]
+  figures_media:
+    status: partial
+    coverage: "Image placeholders and their positions identified in the HTML."
+    notes: ["Image bytes and actual visual contents were not inspected; no figure is reproduced."]
+  code_data: {status: not-inspected, coverage: null, notes: ["No code or dataset was independently inspected or executed."]}
+  comments: {status: not-inspected, coverage: null, notes: []}
+  linked_resources:
+    status: partial
+    coverage: "Part 1 links to the historical static-embedding discussion and a model-compression article; Part 2 and RAG foundation links were followed separately."
+    notes: ["The full outbound reference set was not exhaustively inspected."]
+  metadata: {status: complete, coverage: "Author, title, publication date and canonical URL.", notes: []}
+  rights: {status: partial, coverage: "No reuse licence established.", notes: ["Text and figures remain link-only."]}
+  unresolved_questions:
+    - "The central Part 1 comparison of BERT, bi-encoders and cross-encoders is behind the paywall; consult Part 2 and primary literature for independently visible details."
+    - "The embedded illustrations require direct asset inspection before any visual claim or reuse."
+items:
+  - id: dailydose-bi-cross-encoders-sentence-similarity-2024:pairwise-use-cases
+    kind: claim
+    summary: "Pairwise text scoring supports retrieval, question answering and duplicate detection; the compared units may be sentences, passages or documents."
+    locator: {type: section, value: "Introduction, lines 109–127", label: "Applications of pairwise scoring"}
+    evidence: {kind: secondary-technical-and-pedagogical-explanation, confidence: well-supported, scope: "General task families; individual systems may use different retrieval/scoring mechanisms.", assumptions: [], limitations: ["The author's '75% retrieval / 25% generation' phrase is rhetorical, not a measured universal proportion."]}
+    technical_assessment: {status: qualified, rationale: "The use cases are well established, but the numeric slogan is unsupported as a general law.", corroborating_sources: []}
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "Applications are already covered by the project's RAG and retrieval page."}
+      complementarity: {level: moderate, rationale: "A common task framing connects sentence-level similarity to search, QA and deduplication."}
+      pedagogical_value: {level: moderate, rationale: "Helps explain why sentence representations matter outside language generation."}
+      applicability: {level: high, rationale: "Useful as a concise motivating example in the existing retrieval deep dive."}
+      redundancy: {level: moderate, rationale: "The applications overlap with current retrieval examples."}
+      evidence_quality: {level: moderate, rationale: "Secondary tutorial; no independent system measurements."}
+    candidate_destinations: {pages: [fr/rag-memory-boundaries, en/rag-memory-boundaries], concepts: [retrieval-augmented-generation]}
+    disposition: integrate-by-reference
+    disposition_rationale: "Retain as a cited motivating source, not a new core lesson."
+  - id: dailydose-bi-cross-encoders-sentence-similarity-2024:static-contextualized-contrast
+    kind: misconception
+    summary: "Static word embeddings assign a fixed representation to a word type, so distinct senses of a polysemous word are not separated by context at lookup; contextualized Transformer states can differ across occurrences."
+    locator: {type: section, value: "Background, lines 157–224 and 265–290", label: "Static and contextualized embeddings"}
+    evidence: {kind: explanatory-example, confidence: established, scope: "Contrast between static word embeddings and contextualized token states.", assumptions: [], limitations: ["Contextualization alone does not make a representation a well-calibrated sentence embedding or retrieval encoder."]}
+    technical_assessment: {status: correct, rationale: "The distinction is consistent with the underlying model families and existing LLM Lab coverage.", corroborating_sources: []}
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "The distinction is already taught in the representations sequence."}
+      complementarity: {level: moderate, rationale: "The 'table' example offers an accessible lexical ambiguity illustration."}
+      pedagogical_value: {level: moderate, rationale: "Useful reinforcement but not enough to justify repeating the explanation in the core path."}
+      applicability: {level: moderate, rationale: "Can be cited as optional background."}
+      redundancy: {level: high, rationale: "The current contextualized-representations page already explains contextual dependence."}
+      evidence_quality: {level: moderate, rationale: "A pedagogical example, not an empirical evaluation."}
+    candidate_destinations: {pages: [fr/contextualized-representations, en/contextualized-representations], concepts: [contextualized-representation]}
+    disposition: already-covered
+    disposition_rationale: "Do not duplicate the existing contextualization lesson; preserve the source as optional context."
+  - id: dailydose-bi-cross-encoders-sentence-similarity-2024:raw-bert-sentence-cosine-caveat
+    kind: open-question
+    summary: "The accessible article stops just as it raises the question of using pooled or otherwise constructed BERT sentence vectors with cosine similarity; the paywalled explanation of the failure is unavailable and must not be attributed to the source."
+    locator: {type: section, value: "The problem with BERT, lines 298–307", label: "Paywall boundary"}
+    evidence: {kind: access-boundary, confidence: established, scope: "Exact publicly visible boundary of the inspected article.", assumptions: [], limitations: ["The missing argument is not extracted; consult independent sentence-embedding research and documentation."]}
+    candidate_destinations: {pages: [fr/cosine-similarity, en/cosine-similarity], concepts: [contextualized-representation]}
+    disposition: defer
+    disposition_rationale: "The question is useful, but the source's answer is inaccessible. The project already covers anisotropy and task-specific embedding objectives with independent sources."
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "The accessible Part 1 material reinforces static-versus-contextualized representations and motivates pairwise scoring. Its central technical comparison is behind a paywall, so it is not used as evidence for bi-/cross-encoder details."
