@@ -1,0 +1,17 @@
+<section class="hybrid-rope-nope" data-lang="en" aria-labelledby="hybrid-rope-nope-title-en">
+  <h3 id="hybrid-rope-nope-title-en">Experiment: mix RoPE and NoPE across layers</h3>
+  <p>Choose which layers rotate Q and K. Every layer still receives the previous layer's hidden states and keeps causal masking in this autoregressive example.</p>
+  <div class="hybrid-presets" role="group" aria-label="Layer pattern presets">
+    <button type="button" data-preset="all-rope">All RoPE</button>
+    <button type="button" data-preset="all-nope">All NoPE</button>
+    <button type="button" data-preset="alternating">Alternating</button>
+    <button type="button" data-preset="early-rope">Early RoPE, later NoPE</button>
+  </div>
+  <div class="hybrid-layer-grid" data-layers></div>
+  <div class="hybrid-summary" aria-live="polite">
+    <p data-summary></p>
+    <p data-inheritance></p>
+  </div>
+  <p class="hybrid-caveat"><strong>Interpretation limit:</strong> this is a layer-routing diagram, not a numerical Transformer simulation. A layer receives contextualized representations from the previous layer; those representations may carry positional or contextual distinctions forward. The diagram cannot measure whether a trained model preserves, uses, or loses that information.</p>
+  <noscript>Each layer can use RoPE on Q/K or omit it (NoPE). The causal mask remains independent of that choice.</noscript>
+</section>
