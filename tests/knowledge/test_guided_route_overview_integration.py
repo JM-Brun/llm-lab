@@ -95,7 +95,18 @@ def test_overview_preserves_cross_cutting_coverage_and_explicit_next_page(
     assert stage_positions == sorted(stage_positions)
 
     source = (ROOT / "site" / language / "llm-overview.qmd").read_text(encoding="utf-8")
-    assert source.count("generated-suggested-route") == 1
+    coverage_include = (
+        "{{< include ../includes/generated-guided-coverage-"
+        f"{language}-llm-overview.qmd >}}"
+    )
+    suggested_route_include = (
+        "{{< include ../includes/generated-suggested-route-"
+        f"{language}-llm-overview.qmd >}}"
+    )
+    assert source.count(coverage_include) == 1
+    assert source.count(suggested_route_include) == 1
+    assert source.index(suggested_route_include) < source.index(coverage_include)
+    assert source.index(coverage_include) < source.index("::: {.language-switch}")
     assert '<div class="route-nav-cards">' not in source
 
     route_fragments = GENERATOR["prepare_suggested_route_fragments"](language, pages, stages)
