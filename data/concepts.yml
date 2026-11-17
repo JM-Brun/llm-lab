@@ -788,6 +788,31 @@ concepts:
     domains: [probabilistic-foundations-training, architectures-mechanisms]
     resources: [fr/entropy, en/entropy, fr/llm-limits, en/llm-limits]
 
+  - id: chat-template
+    importance: supporting
+    labels: {fr: "Modèle de conversation (chat template)", en: "Chat template"}
+    definitions:
+      fr: "Règle de sérialisation qui transforme des messages et leurs rôles, frontières et marqueurs de contrôle en une séquence de tokens conforme à la convention attendue par un modèle."
+      en: "Serialization rule that turns messages and their roles, boundaries, and control markers into a token sequence matching a model's expected convention."
+    domains: [text-tokenization, probabilistic-foundations-training]
+    resources: [fr/post-training, en/post-training]
+  - id: dataset-curation
+    importance: supporting
+    labels: {fr: "Curation de jeux de données", en: "Dataset curation"}
+    definitions:
+      fr: "Processus de sélection, structuration, annotation, contrôle et documentation d'un jeu de données pour un usage défini."
+      en: "Process of selecting, structuring, annotating, checking, and documenting a dataset for a defined use."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/corpus-preparation, en/corpus-preparation]
+  - id: group-relative-policy-optimization
+    importance: specialized
+    labels: {fr: "Optimisation de politique relative au groupe (GRPO)", en: "Group Relative Policy Optimization (GRPO)"}
+    definitions:
+      fr: "Algorithme d'optimisation de politique pour lequel plusieurs réponses sont échantillonnées par prompt et leurs récompenses comparées au sein du groupe pour construire un avantage relatif ; la méthode originale évite un critique séparé."
+      en: "Policy-optimization algorithm that samples multiple responses per prompt and compares their rewards within the group to form a relative advantage; the original method avoids a separate critic."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/glossary, en/glossary, fr/score-centering, en/score-centering]
+
 relation_types:
   represented-by:
     direction: directed
@@ -912,31 +937,6 @@ relation_types:
       en: "The source is evaluated using the target."
 
 
-
-  - id: chat-template
-    importance: supporting
-    labels: {fr: "Modèle de conversation (chat template)", en: "Chat template"}
-    definitions:
-      fr: "Règle de sérialisation qui transforme des messages et leurs rôles, frontières et marqueurs de contrôle en une séquence de tokens conforme à la convention attendue par un modèle."
-      en: "Serialization rule that turns messages and their roles, boundaries, and control markers into a token sequence matching a model's expected convention."
-    domains: [text-tokenization, probabilistic-foundations-training]
-    resources: [fr/post-training, en/post-training]
-  - id: dataset-curation
-    importance: supporting
-    labels: {fr: "Curation de jeux de données", en: "Dataset curation"}
-    definitions:
-      fr: "Processus de sélection, structuration, annotation, contrôle et documentation d'un jeu de données pour un usage défini."
-      en: "Process of selecting, structuring, annotating, checking, and documenting a dataset for a defined use."
-    domains: [probabilistic-foundations-training]
-    resources: [fr/corpus-preparation, en/corpus-preparation]
-  - id: group-relative-policy-optimization
-    importance: specialized
-    labels: {fr: "Optimisation de politique relative au groupe (GRPO)", en: "Group Relative Policy Optimization (GRPO)"}
-    definitions:
-      fr: "Algorithme d'optimisation de politique pour lequel plusieurs réponses sont échantillonnées par prompt et leurs récompenses comparées au sein du groupe pour construire un avantage relatif ; la méthode originale évite un critique séparé."
-      en: "Policy-optimization algorithm that samples multiple responses per prompt and compares their rewards within the group to form a relative advantage; the original method avoids a separate critic."
-    domains: [probabilistic-foundations-training]
-    resources: [fr/glossary, en/glossary, fr/score-centering, en/score-centering]
 
 relations:
 
