@@ -321,7 +321,7 @@ Non. Les positions peuvent être traitées en parallèle pendant l'entraînement
 
 <details><summary>Afficher le raisonnement</summary>
 
-Pas nécessairement. Un système RAG peut récupérer les documents récents à l'inférence sans modifier les poids, si son corpus ou son index est actualisé. Il faut encore mesurer la pertinence des documents et la fidélité de la réponse.
+Pas nécessairement. Un système RAG peut récupérer les documents récents à l'inférence sans modifier les poids, si son corpus ou son index est actualisé. Un fine-tuning quotidien serait généralement coûteux et risquerait de rester en retard sur la source. Il faut néanmoins mesurer la pertinence des documents et la fidélité de la réponse.
 
 </details>
 
