@@ -36,6 +36,22 @@ Deux occurrences du **même ID de token** apparaissent dans deux phrases différ
 
 Vous avez compris cette étape si vous pouvez expliquer la différence entre **identité du vecteur initial** et **dépendance contextuelle des états cachés**, sans attribuer au lookup lui-même une compréhension de la phrase.
 
+
+
+## Enquête guidée — une feature SAE dans Neuronpedia
+
+[Ouvrir l'exemple Gemma Scope](https://www.neuronpedia.org/gemma-2-2b/20-gemmascope-res-16k/10956) · [Documentation des tableaux de bord](https://docs.neuronpedia.org/sparse-autoencoders/feature-dashboards).
+
+Avant de lire l'étiquette, écrivez ce que vous vous attendez à trouver dans les activations. Consignez modèle, source/release, couche, hook et index.
+
+1. Comparez l'explication textuelle avec les activations positives qui la justifient. Décrit-elle tous les exemples ou seulement un sous-ensemble ?
+2. Cherchez au moins deux contre-exemples ou contextes ambigus. Notez ce qui ferait réviser l'hypothèse.
+3. Examinez densité d'activation et logits : quelles informations ces vues ajoutent-elles, et lesquelles ne donnent-elles pas ?
+4. Si l'inférence personnalisée est disponible, testez une paire minimale positive/négative et un cas adversarial. Archivez les textes exacts et la source.
+5. Rédigez une conclusion limitée aux observations et distinguez corrélation, interprétation et causalité.
+
+**Critère de réussite :** produire une hypothèse falsifiable, documenter au moins un contre-exemple et ne pas transformer une étiquette automatique en fait établi. Les activations décrivent où la feature répond ; les logits montrent des associations avec les sorties ; une explication automatique résume une hypothèse. Aucun de ces éléments ne prouve seul que la feature est un concept unique ou qu'elle cause le comportement observé. Le steering exige des contrôles avant toute conclusion causale.
+
 ::: {.language-switch}
 **Langue :** [Français](contextualized-representations.qmd) · [English](../../en/exercises/contextualized-representations.qmd)
 :::

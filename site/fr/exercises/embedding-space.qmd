@@ -87,6 +87,23 @@ Le lookup conserve l'ordre et les IDs répétés. La recherche cosinus exclut l'
 
 **Vous avez compris cet exercice si** vous pouvez retrouver l'ID de ligne de chaque vecteur renvoyé et préciser les règles appliquées aux candidats, à l'auto-voisin et aux égalités.
 
+
+
+## Exploration guidée — Embedding Atlas
+
+[Ouvrir Embedding Atlas](https://apple.github.io/embedding-atlas/) · [Documentation](https://apple.github.io/embedding-atlas/overview.html).
+
+Avant l'expérience, choisissez un jeu de données documenté et notez modèle/version, prétraitement, métrique et provenance. **Prédisez** quelle métadonnée sera associée aux voisinages visibles et indiquez un résultat qui vous ferait changer d'avis.
+
+1. Chargez vecteurs et métadonnées ; repérez projection, recherche de voisins et clusters/labels automatiques.
+2. Filtrez une catégorie. Décrivez les points retirés, les groupes qui changent et les outliers.
+3. Ouvrez plusieurs exemples et confrontez leur contenu aux voisins affichés. Si possible, calculez aussi les voisins dans l'espace vectoriel d'origine.
+4. Modifiez un paramètre de projection ou de clustering et consignez ce qui change.
+
+**Débrief :** une proximité dans la projection ne garantit pas une proximité équivalente dans l'espace d'origine ; un cluster automatique ne prouve pas une catégorie sémantique naturelle. Les distances et formes peuvent être déformées, et les groupes dépendent de la représentation, de la métrique et des paramètres. Les métadonnées aident à tester des hypothèses et à repérer des facteurs de confusion, mais ne prouvent pas une causalité.
+
+**Critère de réussite :** distinguer géométrie originale, projection, clustering et métadonnées, et pouvoir reproduire l'expérience à partir des paramètres consignés.
+
 ::: {.language-switch}
 **Langue :** [Français](embedding-space.qmd) · [English](../../en/exercises/embedding-space.qmd)
 :::

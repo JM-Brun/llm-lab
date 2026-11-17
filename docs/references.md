@@ -189,10 +189,10 @@ These resources are curated for teaching design and guided experimentation. Incl
   - Use for experts, sparse layers, router selection, capacity and load balancing. Boundary: keep active versus total parameters distinct.
 - **Modular — LLM Inference Handbook**: https://handbook.modular.com/
   - Use for request lifecycle, prefill/decode, KV cache, latency, batching, GPU memory and serving. Boundary: living engineering documentation; product/performance guidance is version-dependent.
-- **Neuronpedia**: https://www.neuronpedia.org/ ; documentation: https://docs.neuronpedia.org/
-  - Use for sparse autoencoder features, activations, attention heads and attribution/circuit exploration. Boundary: feature labels and attribution graphs are not automatic causal proof.
-- **Apple — Embedding Atlas**: https://apple.github.io/embedding-atlas/ ; research: https://machinelearning.apple.com/research/embedding-atlas
-  - Use for embedding projections, clustering, nearest-neighbour search and metadata-linked exploration. Boundary: projection and clustering choices can distort apparent structure.
+- **Neuronpedia**: https://www.neuronpedia.org/ ; [SAE overview](https://docs.neuronpedia.org/sparse-autoencoders/overview), [feature dashboards](https://docs.neuronpedia.org/sparse-autoencoders/feature-dashboards), [auto-interpretability](https://docs.neuronpedia.org/sparse-autoencoders/auto-interp), [API](https://docs.neuronpedia.org/api/)
+  - Use for inspecting feature activations, logits, density, model-generated explanations, custom-text tests and attribution tools. Boundary: explanations and scores are fallible; source/model/layer matter; activations and steering are not causal proof.
+- **Apple — Embedding Atlas**: https://apple.github.io/embedding-atlas/ ; [overview](https://apple.github.io/embedding-atlas/overview.html), [CLI guide](https://apple.github.io/embedding-atlas/tool.html), [research paper](https://machinelearning.apple.com/research/embedding-atlas)
+  - Use for large embedding projections, nearest-neighbour search, density-based clustering, labels and metadata cross-filtering. Boundary: projections and clustering can distort apparent structure; record dataset, model, metric and settings.
 
 ## Inference performance and generation systems
 

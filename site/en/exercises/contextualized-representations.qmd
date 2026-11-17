@@ -36,6 +36,22 @@ Two occurrences of the **same token ID** appear in two different sentences. Assu
 
 You have understood this step if you can explain the difference between **identity of the initial vector** and **context-dependence of hidden states**, without attributing sentence understanding to the lookup itself.
 
+
+
+## Guided investigation — an SAE feature in Neuronpedia
+
+[Open the Gemma Scope example](https://www.neuronpedia.org/gemma-2-2b/20-gemmascope-res-16k/10956) · [Feature dashboard documentation](https://docs.neuronpedia.org/sparse-autoencoders/feature-dashboards).
+
+Before reading the label, write down what you expect to find in the activations. Record model, source/release, layer, hook, and index.
+
+1. Compare the text explanation with the positive activations offered as evidence. Does it describe all examples or only a subset?
+2. Look for at least two counterexamples or ambiguous contexts. State what would make you revise the hypothesis.
+3. Inspect activation density and logits: what additional information do these views provide, and what do they not establish?
+4. If custom-text inference is available, test a positive/negative minimal pair and an adversarial case. Record the exact texts and source.
+5. Write a conclusion limited to the observations, distinguishing correlation, interpretation, and causation.
+
+**Success criterion:** produce a falsifiable hypothesis, document at least one counterexample, and avoid turning an automatic label into an established fact. Activations describe where a feature responds; logits show associations with outputs; an automatic explanation summarizes a hypothesis. None alone proves that the feature is one unique concept or causes the observed behaviour. Steering requires controls before any causal conclusion.
+
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/contextualized-representations.qmd) · [English](contextualized-representations.qmd)
 :::

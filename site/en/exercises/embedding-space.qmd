@@ -87,6 +87,23 @@ The lookup preserves order and repeated IDs. The cosine search excludes the quer
 
 **You have understood this exercise if** you can trace every returned vector back to its integer row ID and state the exact candidate, self-neighbour and tie policies.
 
+
+
+## Guided exploration — Embedding Atlas
+
+[Open Embedding Atlas](https://apple.github.io/embedding-atlas/) · [Documentation](https://apple.github.io/embedding-atlas/overview.html).
+
+Before the experiment, choose a documented dataset and record model/version, preprocessing, metric, and provenance. **Predict** which metadata field will be associated with the visible neighbourhoods, and state an observation that would change your mind.
+
+1. Load vectors and metadata; locate the projection, nearest-neighbour search, and automatic clusters/labels.
+2. Filter one category. Describe which points disappear, which groups change, and any outliers.
+3. Open several examples and compare their original content with the displayed neighbours. If possible, also compute neighbours in the original vector space.
+4. Change one projection or clustering setting and record what changes.
+
+**Debrief:** proximity in the projection does not guarantee equivalent proximity in the original space; an automatic cluster does not prove a natural semantic category. Distances and shapes can be distorted, and groups depend on the representation, metric, and settings. Metadata helps test hypotheses and identify confounders, but does not prove causality.
+
+**Success criterion:** distinguish original geometry, projection, clustering, and metadata, and make the exploration reproducible from recorded settings.
+
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/embedding-space.qmd) · [English](embedding-space.qmd)
 :::
