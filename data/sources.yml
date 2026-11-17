@@ -4892,10 +4892,11 @@ sources:
           - "The linked musical-score image asset was retrieved and visually inspected; the article itself labels it AI-generated."
           - "Author-authored discussion of musical chunking, conditional prediction/coding, temporal order, forward/reverse enwik8 results, MDL, Chollet's skill-acquisition efficiency, AIXI, the Free Energy Principle and active inference."
           - "Visible footnotes qualifying incompressible data, prefix-code illustration, Hutter Prize context, MDL and Solomonoff induction."
+          - "Visible technical outbound links, including coding, MDL, Bayesian, AIXI and active-inference references; the official Hutter Prize page and FAQ were checked for corpus naming."
         limitations:
           - "The page's creator identity beyond the lewish.io byline/site identity has not been independently established; creators intentionally left empty pending verification."
-          - "Figure placements and linked assets were not retrieved as image bytes or visually inspected; figures status remains not-inspected."
-          - "Code, benchmark scripts/data, comments, outbound links and any article revision history were not exhaustively inspected."
+          - "Only the linked musical-score asset was retrieved and visually inspected; other figure placements and any additional assets were not exhaustively inventoried."
+          - "Code, benchmark scripts/data, comments and article revision history were not inspected; social-profile, share and email links were not audited."
           - "The forward/reverse enwik8 measurements are reported by the author; exact compressor versions, settings and reproduction protocol were not established."
           - "No reuse licence or permission for article text or figures was established; link-only treatment."
     related:
