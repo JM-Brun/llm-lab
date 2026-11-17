@@ -4154,7 +4154,7 @@ sources:
           - "An activation association, dashboard, attribution graph or steering response alone does not establish a complete causal mechanism."
           - "No screenshot, dataset or figure reuse rights were established."
     related:
-      pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced, fr/exercises/contextualized-representations, en/exercises/contextualized-representations, fr/llm-limits, en/llm-limits]
+      pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced, fr/llm-limits, en/llm-limits]
       concepts: []
       audit_records: [docs/source-reviews/visual-learning-resources-2026-11.md, docs/source-reviews/embedding-atlas-neuronpedia-integration-2026-11.md]
 
@@ -4201,7 +4201,7 @@ sources:
           - "A 2D projection and automatic cluster labels are exploratory views, not proof of high-dimensional separation or semantic categories."
           - "The MIT licence applies to repository software; paper figures and example-data rights are separate."
     related:
-      pages: [fr/embedding-space, en/embedding-space, fr/embeddings-deep-dive, en/embeddings-deep-dive, fr/exercises/embedding-space, en/exercises/embedding-space]
+      pages: [fr/embedding-space, en/embedding-space, fr/embeddings-deep-dive, en/embeddings-deep-dive]
       concepts: [token-embedding, contextualized-representation]
       audit_records: [docs/source-reviews/visual-learning-resources-2026-11.md, docs/source-reviews/embedding-atlas-neuronpedia-integration-2026-11.md]
   - id: huggingface-jobs-nanogpt-video-2026
