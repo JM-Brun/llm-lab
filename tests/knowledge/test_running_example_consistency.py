@@ -69,7 +69,7 @@ def test_vraisemblance_reuses_generation_probabilities_and_product() -> None:
     assert "$0{,}6$ à « Vous »" in source
     assert "$0{,}5$ à « savez »" in source
     assert "$0{,}8$ à la virgule" in source
-    assert "=0{,}6\\\\times0{,}5\\\\times0{,}8=0{,}24." in source
+    assert "=0{,}6\\times0{,}5\\times0{,}8=0{,}24." in source
 
 
 def test_loss_reuses_generation_probabilities_and_nll_values() -> None:
@@ -77,6 +77,7 @@ def test_loss_reuses_generation_probabilities_and_nll_values() -> None:
     assert "$0{,}6$, $0{,}5$ et $0{,}8$" in source
     assert r"\\ell_2=-\\ln(0{,}5)\\approx0{,}693" in source
     assert r"\\mathcal L=\\frac{0{,}511+0{,}693+0{,}223}{3}\\approx0{,}476" in source
+
 
 @pytest.mark.parametrize("page_id", tuple(FRENCH_EXAMPLE_FRAGMENTS))
 def test_french_pages_reuse_relevant_fragments_naturally(page_id: str) -> None:
