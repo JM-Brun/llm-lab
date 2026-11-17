@@ -5522,7 +5522,7 @@ sources:
         - docs/source-reviews/jose-parreno-garcia-how-llms-work-three-layers-2026-11.md
         - data/extractions/jose-parreno-garcia-how-llms-work-three-layers-2025.yml
 
-- id: huang-zhang-shan-he-compression-intelligence-linearly-2024
+  - id: huang-zhang-shan-he-compression-intelligence-linearly-2024
     title: "Compression Represents Intelligence Linearly"
     creators: ["Yuzhen Huang", "Jinghan Zhang", "Zifei Shan", "Junxian He"]
     source_type: paper
