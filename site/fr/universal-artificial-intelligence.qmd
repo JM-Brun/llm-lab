@@ -2,7 +2,7 @@
 title: "Complexité de Kolmogorov, AIXI et limites du calcul"
 subtitle: "Des descriptions minimales aux agents universels — et pourquoi l'idéal reste incalculable"
 description-meta: "Approfondissement sur la complexité de Kolmogorov, l'induction de Solomonoff, AIXI et la construction AIXI(t,l) sous contraintes de ressources."
-keywords: ["type:concept", "destination:deepen", "topic:algorithmic-information-theory", "topic:aixi", "level:advanced", "language:fr", "status:published"]
+keywords: ["type:concept", "destination:deepen", "topic:aixi", "level:advanced", "language:fr", "status:published"]
 lang: fr
 ---
 
@@ -20,7 +20,7 @@ hierarchy:
   parents: ["fr/compression-revision"]
   children: []
 related: ["fr/entropy", "fr/cross-entropy", "fr/llm-computational-complexity"]
-tags: ["type:concept", "destination:deepen", "topic:algorithmic-information-theory", "topic:aixi", "level:advanced", "language:fr", "status:published"]
+tags: ["type:concept", "destination:deepen", "topic:aixi", "level:advanced", "language:fr", "status:published"]
 -->
 
 ::: {.chapter-lead}
