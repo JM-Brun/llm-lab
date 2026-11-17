@@ -16,6 +16,7 @@ GENERATOR: dict[str, Any] = runpy.run_path(
 )
 
 
+@pytest.mark.parametrize("language", ["fr", "en"])
 def test_every_route_member_wires_exactly_its_generated_context_include(language: str) -> None:
     pages = [page for page in GENERATOR["load_pages"]() if page["language"] in {language, "shared"}]
     stages = GENERATOR["load_guided_route"](language, pages)
