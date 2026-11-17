@@ -24,10 +24,11 @@ scan:
     notes: ["No comments were inspected."]
   linked_resources:
     status: partial
-    coverage: "The article names Epoch.AI and the Résilient AI Challenge but their primary documentation was not independently inspected."
+    coverage: "The article names Epoch.AI and the Résilient AI Challenge. Official UNESCO and Sustainable AI Coalition documentation was subsequently checked on 2026-11-17."
     notes:
       - "The quoted parameter/infrastructure growth comparison remains secondary reporting pending verification."
-      - "Challenge launch date, organizers and partner-model details require confirmation from organizer sources."
+      - "Challenge launch, organizers, categories, model baselines, evaluation principle and winners were corroborated from organizer and UNESCO sources."
+      - "The official challenge page currently identifies Voxtral Realtime, Gemma 4 and Sarvam-30b; this is more precise than the article's generic partner-model wording."
   metadata:
     status: complete
     coverage: "Author, title, publisher and publication/update date visible on the article page."
@@ -37,7 +38,7 @@ scan:
     coverage: null
     notes: ["No text or figure reuse permission was established; link and paraphrase only."]
   unresolved_questions:
-    - "What are the official objectives, rules, baselines and evaluation metrics of the Résilient AI Challenge?"
+    - "What is the primary Epoch.AI source and exactly which parameter and infrastructure series support the 360% versus 36% comparison?"
     - "What is the primary Epoch.AI source and exactly which parameter and infrastructure series support the 360% versus 36% comparison?"
     - "Which pruning methods, sparsity structures, kernels and hardware are evaluated by the challenge partners?"
     - "How are energy, latency, throughput, quality and memory measured under comparable deployment workloads?"
@@ -135,11 +136,11 @@ items:
     evidence:
       kind: reported-announcement
       confidence: context-dependent
-      scope: "The article reports a launch on 20 February 2026 involving France, India, UNESCO and the Sustainable AI Coalition, with models from Google, Mistral AI and Sarvam."
+      scope: "The article reports a launch on 20 February 2026 involving France, India, UNESCO and the Sustainable AI Coalition, with models from Google, Mistral AI and Sarvam. The organizers’ current challenge page specifies Voxtral Realtime (Mistral), Gemma 4 (Google) and Sarvam-30b, an accuracy/energy-efficiency evaluation, and winners announced on 8 July 2026."
       assumptions: []
       limitations:
-        - "Organizer documentation, challenge rules, partner participation and model baselines were not independently checked."
-        - "The article does not provide measured energy or quality results."
+        - "Official organizer documentation now corroborates the launch and model categories; the original article itself did not provide the evaluation details or results."
+        - "The organizer page reports winners, but independent replication and detailed per-model energy measurements were not assessed here."
     classification:
       primary_theme: inference-efficiency
       tags: [topic:model-compression, application:energy-efficiency, ecosystem:resilient-ai-challenge]
@@ -149,7 +150,7 @@ items:
       concepts: [model-compression]
       route_ids: []
     disposition: cite
-    disposition_rationale: "Retain as a dated real-world case study illustrating the policy and deployment motivation; do not present the announced challenge as proof of achieved efficiency."
+    disposition_rationale: "Retain as a dated real-world case study. The official follow-up confirms that the challenge ran and winners were announced; do not generalize the results beyond the specified models, tasks and evaluation conditions."
   - id: alliancy-la-compression-strategie-avenir-llm-2026:pruning-mechanism-and-caveat
     kind: mechanism
     summary: "Pruning removes or suppresses parameters judged less important; excessive removal can degrade performance because parameters may be interdependent."
