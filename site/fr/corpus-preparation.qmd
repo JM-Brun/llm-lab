@@ -90,6 +90,29 @@ L'accord inter-annotateurs est un diagnostic du protocole, pas une preuve automa
 
 ## 5. Contrat de sortie vers les étapes suivantes
 
+### Exécution à grande échelle : memory mapping ou streaming ?
+
+La taille d'un corpus oblige à distinguer le **mode d'accès** de la **qualité des données**. Les deux stratégies présentées par 🤗 Datasets ne sont pas interchangeables :
+
+- **Memory mapping / Apache Arrow :** un jeu de données local peut être lu et parcouru depuis des fichiers mappés, sans charger toutes ses colonnes en RAM. Il faut néanmoins disposer du stockage local et tenir compte des accès disque et du cache.
+- **Streaming :** un `IterableDataset` expose les exemples au fil de l'eau, sans télécharger nécessairement l'ensemble du corpus. On perd certaines opérations d'accès aléatoire ; les transformations et le découpage doivent respecter l'ordre et le caractère itérable.
+- **Mélange de sources :** l'intercalage de flux modifie la distribution observée. Les probabilités ou proportions de mélange doivent être explicites, versionnées et justifiées.
+
+Point subtil : `shuffle(buffer_size=N)` sur un flux ne réalise pas une permutation aléatoire globale. Il mélange les éléments présents dans un tampon de taille limitée, puis le renouvelle au fil de l'itération. `take()` et `skip()` dépendent de cet ordre. Une graine fixe aide à la reproductibilité, mais ne remplace pas un protocole de partitionnement sans fuite, stable et vérifiable. Il faut définir les unités train/validation/test avant de transformer le flux en exemples d'entraînement et conserver la provenance permettant d'auditer les partitions.
+
+**À retenir :** memory mapping et streaming résolvent des contraintes d'accès et de mémoire ; ils ne filtrent pas les données, ne vérifient pas les droits, ne dédupliquent pas le corpus et ne garantissent pas la représentativité.
+
+Voir [Hugging Face — Grands datasets, mémoire et streaming](https://huggingface.co/learn/llm-course/en/chapter5/4), notamment les différences entre fichiers mappés et `IterableDataset`, le mélange par tampon et l'intercalage de sources.
+
+### Dataset card : documenter l'artefact partagé
+
+Le registre interne de provenance et le *dataset card* public ont des rôles complémentaires. Le second permet aux utilisateurs de comprendre et de réutiliser un jeu de données publié. Il devrait au minimum préciser l'objectif et les usages prévus, les sources et versions, la licence ou les conditions d'accès connues, la méthode de collecte et de transformation, les partitions, les champs, les langues, les critères de filtrage, les limites et biais connus, ainsi que les précautions de confidentialité.
+
+Une dataset card ne prouve pas que les données sont légalement réutilisables et ne remplace pas les journaux de provenance, les contrôles de fuite ou l'analyse des risques. Elle rend les décisions et limites visibles ; elle ne les valide pas.
+
+Le chapitre [Créer son propre jeu de données](https://huggingface.co/learn/llm-course/en/chapter5/5) relie la construction d'un corpus, son partage sur le Hub et la rédaction d'une dataset card.
+
+
 À la fin de cette étape, on devrait pouvoir retrouver :
 
 - les sources, licences/droits, dates et règles de collecte ;
