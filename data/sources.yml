@@ -4330,3 +4330,51 @@ sources:
         - data/extractions/huggingface-jobs-nanogpt-video-2026.yml
         - experiments/huggingface-jobs/README.fr.md
         - experiments/huggingface-jobs/README.md
+
+
+  - id: 3blue1brown-cross-entropy-compression-intelligence-part-2-2026
+    title: "But what is cross-entropy? | Compression is Intelligence Part 2"
+    creators: ["Grant Sanderson (3Blue1Brown)"]
+    source_type: video
+    identifiers: {youtube_video_id: "GlYgs6v2YfU"}
+    canonical_url: "https://www.youtube.com/watch?v=GlYgs6v2YfU"
+    publisher: "3Blue1Brown"
+    publication_date: "2026-07-16"
+    updated_date: null
+    language: en
+    version: "Part 2 of the Compression is Intelligence trilogy"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [inference-efficiency, mathematical-tools-geometry]
+      tags: [topic:cross-entropy, topic:kl-divergence, topic:predictive-compression, application:knowledge-distillation, modality:video]
+      concept_ids: [cross-entropy, kl-divergence, conditional-distribution, predictive-compression, knowledge-distillation, model-compression, negative-log-likelihood]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [mathematical-derivation, theory, visualization, pedagogy, application]
+      audiences: [learner, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-11-16"
+        status: partially-scanned
+        inspected_scope:
+          - "Official 3Blue1Brown lesson metadata, YouTube identity, publication date and chapter timestamps checked."
+          - "Creator-published caption transcript reviewed through a third-party transcript mirror, including cross-entropy from mismatched codebooks, language-tree compression analogy, pretraining loss, constrained-optimization motivation, distillation and KL divergence."
+          - "Upstream 3b1b/videos source scripts inspected statically: part2_supplements.py and relevant scenes in language_models.py."
+          - "Compared against LLM Lab's bilingual cross-entropy, language-modeling-math, loss, LLM evolution, concept graph and prior cross-entropy source audit."
+        limitations:
+          - "The original audiovisual lesson was not independently watched frame by frame; visual descriptions and scene interpretation are based on captions and source scripts."
+          - "The transcript was accessed through a third-party mirror that identifies the captions as creator-published; caption fidelity was not independently checked against the original YouTube caption track."
+          - "The source code was inspected statically and not executed; no Manim scenes or model checkpoints were run."
+          - "The gzip language-tree example is an analogy to cross-compression, not an exact cross-entropy calculation or an ideal Shannon coder."
+          - "The Lagrange-multiplier argument is valid under its separability, normalization, differentiability and matching-minimizer assumptions; it is not a universal uniqueness theorem for all ML objectives."
+          - "No 3Blue1Brown transcript, figure, animation, music or code is reproduced; reuse remains link-only."
+    related:
+      pages: [fr/cross-entropy, en/cross-entropy, fr/language-modeling-math, en/language-modeling-math, fr/llm-evolution, en/llm-evolution, fr/compression-revision, en/compression-revision]
+      concepts: [cross-entropy, kl-divergence, predictive-compression, knowledge-distillation, model-compression]
+      audit_records:
+        - docs/source-reviews/3blue1brown-cross-entropy-part2-2026-11.md
+        - data/extractions/3blue1brown-cross-entropy-compression-intelligence-part-2-2026.yml
