@@ -22,6 +22,7 @@ The title's equation is too strong. Compression is one useful perspective on lea
 |---|---|---|
 | Intelligence = compression | Overstated slogan / research hypothesis, not an established identity | Explicitly distinguish predictive compression from general intelligence |
 | Compression discovers regularities | Useful but incomplete: performance depends on representation, model class, data, objective and compute | Connect to predictive modeling and coding |
+| Compression reduces noise and redundancy to expose patterns | Context-dependent: redundancy can be exploited or removed relative to a code; “noise” is task-dependent, and lossy compression may discard rare but important information | Distinguish statistical redundancy, nuisance variation and task-relevant signal; do not equate shorter data with better understanding |
 | Compression makes AI more efficient by reducing the data to process | Context-dependent: smaller representations can reduce storage or transmission, but encoding/decoding cost, distortion, access patterns and downstream compute can offset the gain | Separate compression ratio, storage/bandwidth savings and end-to-end computational efficiency |
 | Natural-language compression is equivalent to passing the Turing test | Rhetorical research hypothesis, not an established equivalence or operational result | Treat as the Hutter Prize organizers' motivation/analogy, not a theorem or validated benchmark equivalence |
 | The Hutter Prize links compression and AI | Correct as the organizers' motivation; not proof of equivalence | Cite the official competition page for task and rules |
@@ -57,7 +58,7 @@ AIXI is a formal idealization of a goal-directed agent using a universal mixture
 
 ### 3.4 Compression is not a complete cognitive architecture
 
-A cognitive architecture must specify how capabilities such as perception, memory, attention, learning, planning, reasoning and action interact. Compression may contribute to representation learning, abstraction or memory efficiency, but the page gives no implementation or evidence that it supplies the other mechanisms.
+A cognitive architecture must specify how capabilities such as perception, memory, attention, learning, planning, reasoning and action interact. Compression may contribute to representation learning, abstraction or memory efficiency, but the page gives no implementation or evidence that it supplies the other mechanisms. The claim that compression removes “noise” is also task-relative: a feature that is redundant for one objective may be essential for another, and lossy compression can remove rare but decision-relevant details.
 
 The claims attributed to David H. Wolpert and Alexei A. Sharov are not accompanied by references in the Notion page. The page also names Soar, ACT-R and CLARION as cognitive-architecture examples without citations or comparison. These are recorded as source mentions, not reproduced as sourced positions or adopted as a project taxonomy.
 
