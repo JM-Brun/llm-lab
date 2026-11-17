@@ -31,17 +31,13 @@ The title's equation is too strong. Compression is one useful perspective on lea
 
 ### 3.1 Prediction and coding
 
-For an ideal code, an event assigned probability (p(x)) has ideal code length approximately
+For an ideal code, an event assigned probability \(p(x)\) has ideal code length approximately
 
-$
-\\ell(x)=-\\log_2 p(x)
-$
+\(\ell(x)=-\log_2 p(x)\)
 
-bits. The expected code length under a true distribution (q) is related to cross-entropy:
+bits. The expected code length under a true distribution \(q\) is related to cross-entropy:
 
-$
-H(q,p)=-\\sum_x q(x)\\log_2 p(x).
-$
+\(H(q,p)=-\sum_x q(x)\log_2 p(x)\)
 
 A better predictive distribution can therefore reduce expected coding cost, subject to coding overhead, model-description cost and the chosen evaluation protocol. This is a concrete mathematical connection; it does not imply that every form of intelligence is reducible to file compression.
 
