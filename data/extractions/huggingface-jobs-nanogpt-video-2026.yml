@@ -5,7 +5,7 @@ pedagogical_model:
     status: partial
     basis:
       - "User-supplied description and chapter timestamps inspected 2026-11-16."
-      - "Third-party page reproducing a transcript attributed to the Hugging Face video inspected 2026-11-16; audiovisual content and code URL remain unverified."
+      - "Third-party transcript rendering inspected 2026-11-16; full repository statically inspected 2026-11-17; audiovisual video remains uninspected."
       - "Current official Hugging Face Jobs, configuration and pricing documentation checked."
     inferred_elements:
       - "Learning outcomes and workflow are inferred from the supplied description; the video itself was not independently inspected."
@@ -18,23 +18,29 @@ pedagogical_model:
       - {id: src-shell-launcher, kind: implementation-pattern, description: "A generic shell script creates/syncs a Storage Bucket, requests a GPU job, mounts the bucket, and runs the training command.", locator: "04:15 (supplied chapter label; details from third-party transcript)"}
       - {id: src-remote-run, kind: process, description: "The training command runs remotely; checkpoints and outputs persist in the mounted bucket and can be synced back locally.", locator: "05:35 (supplied chapter label; details from third-party transcript)"}
       - {id: src-local-gpu-constraint, kind: constraint, description: "Limited local GPU capacity motivates managed remote execution.", locator: "00:00 (supplied chapter label)"}
-      - {id: src-storage-bucket, kind: persistent-storage, description: "A private Hub Storage Bucket receives the synced code, is mounted into the job, and retains the out/ directory/checkpoints after compute shuts down.", locator: "run_on_hf.sh and README.md, repository master"}\n      - {id: src-training-implementation, kind: implementation, description: "A ~51M-parameter GPT with learned positional embeddings, tied token/output weights, causal SDPA, TinyStories random windows, AdamW and a warm-up/cosine learning-rate schedule.", locator: "train.py, repository master"}\n      - {id: src-evaluation-limit, kind: limitation, description: "The script reports training-batch loss and qualitative samples but implements no held-out validation or test metric.", locator: "train.py, repository master"}
+      - {id: src-storage-bucket, kind: persistent-storage, description: "A private Hub Storage Bucket receives the synced code, is mounted into the job, and retains the out/ directory/checkpoints after compute shuts down.", locator: "run_on_hf.sh and README.md, repository master"}
+      - {id: src-training-implementation, kind: implementation, description: "A ~51M-parameter GPT with learned positional embeddings, tied token/output weights, causal SDPA, TinyStories random windows, AdamW and a warm-up/cosine learning-rate schedule.", locator: "train.py, repository master"}
+      - {id: src-evaluation-limit, kind: limitation, description: "The script reports training-batch loss and qualitative samples but implements no held-out validation or test metric.", locator: "train.py, repository master"}
     edges:
       - {from: src-local-gpu-constraint, type: motivates, to: src-managed-job}
-      - {from: src-local-training-program, type: executed-by, to: src-managed-job}\n      - {from: src-training-implementation, type: implemented-by, to: src-local-training-program}\n      - {from: src-evaluation-limit, type: qualifies, to: src-remote-run}
+      - {from: src-local-training-program, type: executed-by, to: src-managed-job}
+      - {from: src-training-implementation, type: implemented-by, to: src-local-training-program}
+      - {from: src-evaluation-limit, type: qualifies, to: src-remote-run}
       - {from: src-shell-launcher, type: creates-and-syncs, to: src-storage-bucket}
       - {from: src-storage-bucket, type: mounted-into, to: src-managed-job}
       - {from: src-shell-launcher, type: submits, to: src-managed-job}
       - {from: src-managed-job, type: runs, to: src-remote-run}
       - {from: src-remote-run, type: persists-artifacts-to, to: src-storage-bucket}
       - {from: src-storage-bucket, type: syncs-results-back-to, to: src-local-training-program}
-    interpretation: "Partial editorial reconstruction from user-supplied summary, chapter labels, third-party transcript rendering and official documentation; inferred relations are not a formal graph published by the creator."
+    interpretation: "Partial editorial reconstruction from user-supplied summary, chapter labels, third-party transcript rendering, direct static repository inspection and official documentation; inferred relations are not a formal graph published by the creator."
   learning_outcomes:
     - {status: inferred, outcome: "Distinguish training code from its execution infrastructure.", basis: "Supplied description emphasizes unchanged training code and a generic launcher."}
     - {status: inferred, outcome: "Describe the role of a managed GPU job and launch script.", basis: "Supplied chapter labels for Jobs and shell script."}
     - {status: inferred, outcome: "Identify data, output and cost checks needed after remote execution.", basis: "Inferred from the run/results stage and official Jobs documentation."}
     - {status: declared, outcome: "Explain the Storage Bucket as the transfer and persistence boundary between local project, remote job and returned artifacts.", basis: "Third-party transcript rendering describes create/sync, mount, output persistence and post-job sync."}
-    - {status: declared, outcome: "Identify the example model/data/runtime stack: ~51M-parameter GPT with 8 blocks, width 512, 8 heads, context 512, GPT-2 tokenizer, TinyStories, uv and requirements.txt.", basis: "Direct static inspection of train.py, README.md and requirements.txt on repository master."}\n    - {status: declared, outcome: "Explain the code-staging and artifact-persistence lifecycle implemented by run_on_hf.sh.", basis: "Direct static inspection of run_on_hf.sh and README.md."}\n    - {status: declared, outcome: "Distinguish training-batch loss and generated samples from held-out validation evidence.", basis: "Direct inspection: train.py contains no validation/test split or held-out metric."}
+    - {status: declared, outcome: "Identify the example model/data/runtime stack: ~51M-parameter GPT with 8 blocks, width 512, 8 heads, context 512, GPT-2 tokenizer, TinyStories, uv and requirements.txt.", basis: "Direct static inspection of train.py, README.md and requirements.txt on repository master."}
+    - {status: declared, outcome: "Explain the code-staging and artifact-persistence lifecycle implemented by run_on_hf.sh.", basis: "Direct static inspection of run_on_hf.sh and README.md."}
+    - {status: declared, outcome: "Distinguish training-batch loss and generated samples from held-out validation evidence.", basis: "Direct inspection: train.py contains no validation/test split or held-out metric."}
   assumed_prerequisites:
     - {status: inferred, topic: "A working Python/PyTorch training program and basic shell familiarity.", basis: "The described workflow launches existing training code."}
     - {status: inferred, topic: "Basic understanding of GPU memory and training runtime.", basis: "The stated motivation is insufficient local GPU capacity."}
@@ -50,9 +56,9 @@ pedagogical_model:
     - "A thin shell launcher can make runs repeatable and parameterizable."
     - "The persistent bucket makes the lifecycle concrete: stage code, mount storage, write checkpoints, then retrieve outputs after compute termination."
   pedagogical_limits:
-    - "The audiovisual video and code were not independently inspected; technical detail comes from a third-party transcript rendering."
+    - "The audiovisual video was not independently inspected; code-level details are now grounded in a static review of the supplied repository."
     - "The approximate $1 cost is run-specific, not a current general A100 price."
-    - "The transcript describes Hub dataset access and persistent bucket outputs, but exact permissions, bucket semantics, secret handling and failure recovery were not verified from code or execution."
+    - "The launcher and training code were inspected but not executed; account permissions, billed runtime, job logs, secret configuration and actual bucket behavior were not independently tested."
     - "A successful remote run does not establish scientific validity or generalization."
   comparison:
     dossier: docs/source-reviews/huggingface-jobs-nanogpt-video-2026-11.md
