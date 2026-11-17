@@ -29,7 +29,7 @@ Each arrow adds a new object and new assumptions. In particular, a shortest-desc
 
 Kolmogorov complexity is upper semicomputable: one can find progressively shorter programs and improve a known upper bound, but cannot generally certify that the shortest program has been found.
 
-The Solomonoff universal mixture is lower semicomputable. These are different approximation directions and should not be collapsed into the generic phrase “can be approximated”. Leike and Hutter's 2015 result is formulation-sensitive: the standard/iterative exact AIXI policy is not limit computable, while their recursive value-function formulation admits a limit-computable ε-optimal AIXI policy (with ε even allowed to decrease at a computable rate). Exact optimality, ε-optimality and the value-function definition must therefore be kept distinct.
+The Solomonoff universal mixture is lower semicomputable. These are different approximation directions and should not be collapsed into the generic phrase “can be approximated”. Leike and Hutter's 2015 result is formulation-sensitive: standard/iterative exact AIXI is not limit computable because of exact action ties and the iterative infinite-horizon value definition. ε-optimality avoids exact tie resolution; a recursive value function addresses the infinite-horizon obstacle. Together they yield a limit-computable ε-optimal infinite-horizon policy, with a computable tolerance that can decrease toward zero.
 
 ## 4. What AIXI(t,l) bounds
 
