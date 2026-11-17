@@ -2,7 +2,7 @@ schema_version: 1
 source_id: kim-et-al-brepcoder-2026
 items:
   - id: kim-et-al-brepcoder-2026:brep-code-alignment
-    kind: architecture
+    kind: mechanism
     summary: "BrepCoder encodes B-rep as a face-adjacency graph using UV-Net-derived local and global geometric features, then aligns the representation with Python-like CAD Code. The paper uses contrastive alignment and autoregressive code-generation loss rather than treating the CAD solid as ordinary prose."
     locator: {type: section, value: "3.1 Multimodal Alignment"}
     evidence:
@@ -20,7 +20,7 @@ items:
       pages: [en/llm-limits, fr/llm-limits]
     disposition: integrate
   - id: kim-et-al-brepcoder-2026:two-stage-training
-    kind: architecture
+    kind: implementation-pattern
     summary: "The proposed two-stage strategy first learns reverse-engineering correspondences between B-rep geometry and CAD construction code, then fine-tunes for downstream tasks including completion, error correction and CAD question answering."
     locator: {type: section, value: "1 Introduction and 3 Method"}
     evidence:
