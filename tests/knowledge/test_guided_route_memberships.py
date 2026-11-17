@@ -474,13 +474,13 @@ def test_context_use_pages_include_their_generated_suggested_route(language: str
         (
             "fr",
             "Étapes du parcours abordées dans ce panorama",
-            "Continuer Situer le système →",
+            "Continuer Voir comment fonctionne un LLM →",
             "Générer du texte : l'inférence pas à pas",
         ),
         (
             "en",
             "Learning stages covered by this overview",
-            "Continue Place the system in context →",
+            "Continue See how an LLM works →",
             "Generating text: inference step by step",
         ),
     ],
