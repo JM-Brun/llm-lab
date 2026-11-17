@@ -11,6 +11,7 @@
     const t = copy[lang], controls = root.querySelector("[data-explorer-controls]");
     const prefix = root.querySelector("[data-prefix]"), list = root.querySelector("[data-distribution]");
     const select = root.querySelector("[data-token-choice]"), status = root.querySelector("[data-next-distribution]");
+    const appendButton = root.querySelector("[data-append]");
     let current = "", stage = 0;
     function options(tokens) {
       select.replaceChildren();
@@ -23,7 +24,7 @@
     function reset() {
       current = (lang === "fr" ? root.dataset.prefixFr : root.dataset.prefixEn); stage = 0;
       prefix.textContent = current; rows(t.tokens,t.probs); options(t.tokens);
-      select.disabled = false; status.textContent = "";
+      select.disabled = false; appendButton.disabled = false; status.textContent = "";
     }
     root.querySelector("[data-append]").addEventListener("click", () => {
       const index = Number(select.value), token = select.options[select.selectedIndex].textContent;
@@ -31,9 +32,10 @@
       if (stage === 0 && index === 0) {
         stage = 1; rows([t.next,t.other],["0.5","0.5"].map(x => lang==="fr" ? x.replace(".",",") : x));
         options([t.next,t.other]);
+        select.disabled = true; appendButton.disabled = true;
         status.textContent = lang==="fr" ? "Le préfixe a grandi : la distribution est maintenant conditionnée par le contexte enrichi." : "The prefix has grown: the distribution is now conditioned on the extended context.";
       } else {
-        stage = 2; select.disabled = true; status.textContent = t.unknown;
+        stage = 2; select.disabled = true; appendButton.disabled = true; status.textContent = t.unknown;
       }
     });
     root.querySelector("[data-reset]").addEventListener("click",reset);
