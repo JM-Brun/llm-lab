@@ -132,7 +132,7 @@ Le Build path est une voie distincte du parcours Understand. Le même exemple se
 ## 5. Règles d'usage éditorial
 
 1. **Une source canonique :** modifier ce document lorsque le scénario, le prompt, la continuation jouet ou la couverture des pages change.
-2. **Pas de copier-coller de la tirade :** garder la citation d'ouverture courte et référencée ; employer le texte original de LLM Lab pour les démonstrations.
+2. **Citation mesurée :** réutiliser seulement de courts fragments lorsque cela sert l’explication ; ne pas reproduire la tirade intégrale. La continuation originale de LLM Lab reste disponible comme texte jouet pour les calculs ou tests qui nécessitent une cible contrôlée.
 3. **Bilinguisme :** chaque ajout dans une page FR doit avoir son équivalent EN dans la même PR. Dans les pages françaises, conserver le préfixe Astérix et la continuation d'Otis. Dans les pages anglaises, privilégier le parallèle Monty Python de *Life of Brian* (question sur les Romains puis réponses successives) plutôt qu'une traduction artificielle des répliques françaises ; utiliser *Holy Grail* en complément pour le contexte conversationnel et les contraintes successives.
 4. **Référence discrète :** dans les pages publiques, réutiliser les formulations naturellement, sans annoncer le « fil rouge », nommer systématiquement le film ou expliquer l'easter egg. La référence doit rester reconnaissable pour qui la connaît, sans détourner l'attention du concept enseigné. Chaque page n'en conserve que les éléments utiles à sa démonstration.
 5. **Véracité numérique :** aucun ID, vecteur, score, logit, poids ou gradient inventé présenté comme résultat réel. Les chiffres illustratifs sont marqués « jouet », « fictifs » ou calculés.
