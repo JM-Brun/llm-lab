@@ -151,8 +151,8 @@ The canonical concept graph adds `rope-inverse-frequency` and `causal-prefix-vis
 ## 6. Remaining work
 
 - If access to the original image assets becomes available, perform a pixel-level visual audit; the complete caption-and-context audit is already recorded in §4.
-- The P0 position-entry-point map, RoPE pair explorer, six-stage QK attention pipeline and split-half/interleaved pair-layout explorer are implemented bilingually. The P1 frequency explorer, Partial RoPE memory ledger and NoPE causal-prefix experiment are implemented bilingually. Remaining P1 work: hybrid-layer and relative-bias experiments.
-- Browser-test all six interactive components in the rendered French and English pages, including keyboard and screen-reader behaviour; no browser rendering has yet been run in this branch.
+- The P0 position-entry-point map, RoPE pair explorer, six-stage QK attention pipeline and split-half/interleaved pair-layout explorer are implemented bilingually. The P1 frequency explorer, Partial RoPE memory ledger and NoPE causal-prefix experiment are implemented bilingually. Both P1 experiences are now implemented bilingually: the hybrid RoPE/NoPE layer strip and relative-bias score decomposition.
+- Browser-test all eight interactive experiences in the rendered French and English pages, including keyboard and screen-reader behaviour.
 - Execute the statically inspected Qwen3 notebook and compare its numerical outputs; separately add tests for explicit position IDs and incremental KV-cache decoding, which are not covered by the inspected forward path.
 - Validate bilingual Quarto rendering, source/extraction schemas, concept graph and navigation in CI.
 
@@ -170,3 +170,11 @@ The canonical concept graph adds `rope-inverse-frequency` and `causal-prefix-vis
 - Resolved the overlapping edits in `data/concepts.yml`, `data/sources.yml` and `docs/references.md` by retaining both branches' additions: three main-branch concepts and five relations, eight main-branch source records, and the visual-learning bibliography section.
 - The earlier red CI run was attached to commit `8602fa79b9f52f9819239cc44adfa7fe58c1d403`. Its source-catalogue failure was caused by the then-missing `pedagogical_model` field in this extraction. The field is present in the current extraction, and a later run on `afbdd6dc9cfab7872f39d3e55e15ce385d2e5d94` passed both CI and Quarto.
 - Those successful runs predate the merge commit and therefore do not validate the final merged tree. A fresh CI and Quarto run on the post-merge head remains required; do not treat the historical green checks as current-head validation.
+
+
+## 9. P1 interactive experiences added (2026-11-17)
+
+- Added a six-layer hybrid RoPE/NoPE strip in French and English. Each layer can independently toggle local Q/K rotation; the causal mask remains explicitly present in every layer. The explanation distinguishes local operation from inherited hidden states and does not claim that positional information is always preserved or used.
+- Added a relative-bias score decomposition in French and English. The toy exposes the content score, relative offset, query-state feature and bias strength, and compares (i) an explicitly illustrative query-conditioned function, (ii) an explicitly illustrative T5-style bucket lookup, and (iii) no relative bias. It displays the pre-softmax score and does not pretend to recover trained Inkling/T5 parameters.
+- Registered both shared scripts and styles in Quarto, embedded both experiences in both language pages, and added canonical concepts and graph edges for hybrid RoPE/NoPE layers and query-conditioned relative bias.
+- The new experiences remain marked pending browser validation until the current CI/Quarto browser audit completes.
