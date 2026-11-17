@@ -215,6 +215,11 @@ Le gradient vaut $L'(\theta)=2(\theta-5)$, donc $L'(2)=-6$. SGD applique la règ
 - [Hugging Face — Boucle d'entraînement personnalisée](https://huggingface.co/learn/llm-course/en/chapter3/4) : exemple PyTorch qui rend visibles les étapes prises en charge par une API de haut niveau.
 - [Hugging Face — Comprendre les courbes d'apprentissage](https://huggingface.co/learn/llm-course/en/chapter3/5) : lecture des courbes de perte et de métriques pendant le fine-tuning.
 
+### Exemples de workflow complémentaires
+
+- [Hugging Face — Entraîner un modèle de langage causal depuis zéro](https://huggingface.co/learn/llm-course/en/chapter7/6) : exemple CodeParrot qui relie corpus de code, tokenizer, streaming et pré-entraînement causal. C'est un cas d'étude applicatif, pas un substitut au parcours GPT minimal de LLM Lab.
+- [Hugging Face — Déboguer le pipeline d'entraînement](https://huggingface.co/learn/llm-course/en/chapter8/4) : méthode de diagnostic par inspection successive des données, du batching, du modèle, de l'optimiseur et de l'évaluation.
+
 ### Pour approfondir
 
 - [Kingma et Ba — Adam: A Method for Stochastic Optimization](https://arxiv.org/abs/1412.6980) : l'optimiseur adaptatif présenté dans l'article d'origine.
