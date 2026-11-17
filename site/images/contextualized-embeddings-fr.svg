@@ -6,7 +6,7 @@
 <text x="36" y="40" font-family="Arial,sans-serif" font-size="23" font-weight="700" fill="#172554">Même mot, deux sens selon le contexte</text>
 <rect x="36" y="60" width="420" height="66" rx="12" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
 <text x="56" y="85" font-family="Arial,sans-serif" font-size="14" fill="#475569">Contexte A</text>
-<text x="56" y="111" font-family="Arial,sans-serif" font-size="21" font-weight="700" fill="#0f766e">… une bonne <tspan fill="#1d4ed8">situation</tspan>, ça, scribe ?</text>
+<text x="56" y="111" font-family="Arial,sans-serif" font-size="21" font-weight="700" fill="#0f766e">… bonne <tspan fill="#1d4ed8">situation</tspan>, ça, scribe ?</text>
 <rect x="504" y="60" width="420" height="66" rx="12" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
 <text x="524" y="85" font-family="Arial,sans-serif" font-size="14" fill="#475569">Contexte B</text>
 <text x="524" y="111" font-family="Arial,sans-serif" font-size="21" font-weight="700" fill="#0f766e">… de bonne ou de mauvaise <tspan fill="#1d4ed8">situation</tspan> …</text>
