@@ -130,3 +130,12 @@ Source review: [Lewis, “Intelligence and compression”](../source-reviews/lew
 ## 10. Précision complémentaire — AIXI et dépendance au langage de référence
 
 La formulation d'AIXI comme agent universellement optimal doit toujours être rapportée à son cadre formel. La distribution universelle dépend du choix de la machine de Turing universelle (UTM) qui définit les descriptions des environnements. Le travail ultérieur de Leike et Hutter, [“Bad Universal Priors and Notions of Optimality”](https://proceedings.mlr.press/v40/Leike15.html), documente des cas où un choix malheureux ou adversarial de l'UTM peut modifier fortement le comportement ; il invite donc à ne pas lire les garanties comme une mesure absolue et indépendante de toute représentation. AIXI reste en outre incomputable dans sa forme idéale. Cette dépendance ne réfute pas le cadre, mais précise la portée de ses garanties : elles sont relatives à la classe d'environnements, à la distribution universelle et à la machine de référence choisies.
+
+
+## 11. Expérience contrôlée — asymétrie forward/reverse et coût du modèle
+
+LLM Lab ajoute une expérience reproductible [forward/reverse compression and two-part MDL](../../experiments/forward-reverse-compression/README.md). Elle compare trois codecs (zlib, bzip2, XZ) sur trois contrôles synthétiques (IID, Markov stationnaire, changement de régime non stationnaire), avec huit graines appariées. Elle ajoute un second volet comparant le coût de données d'un modèle IID et d'un modèle bigramme, puis le score après ajout d'un coût explicite de description des paramètres.
+
+Le résultat pédagogique à retenir n'est pas qu'un sens temporel compresse toujours mieux : les différences de taille changent selon la source et le codec. Pour une source stationnaire, l'entropie de taux est invariante par renversement temporel ; les différences finies d'un compresseur ne prouvent donc pas la causalité. Le changement de régime est un contrôle non stationnaire, pas un mécanisme causal.
+
+Le second volet rend visible le compromis entre ajustement prédictif et coût de description du modèle. Son coût paramétrique fixe (33 bits IID, 129 bits bigramme) est une convention pédagogique explicite, pas un code universel optimal. Les résultats complets et limites sont documentés dans le README de l'expérience. L'exécution CI sur le commit final reste nécessaire avant de traiter l'expérience comme validée.
