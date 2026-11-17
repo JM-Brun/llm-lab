@@ -73,7 +73,7 @@ The source is redundant as a teaching destination. Its value is the explicit jux
 
 ## 5. Provenance and reuse
 
-Only the public text exposed by the Notion page reader was inspected. No author, date, revision history, embedded figure bytes, comments, or licence was established. Treat text and figures as link-only; no source wording or visual assets are republished. The official Hutter Prize page was consulted only to verify the benchmark definition and current framing.
+Only the public text exposed by the Notion page reader was inspected. No author, date, revision history, embedded figure bytes, comments, or licence was established. Treat text and figures as link-only; only short claim labels are quoted for assessment, with no extended source wording or visual assets republished. The official Hutter Prize page was consulted only to verify the benchmark definition and current framing.
 
 ## 6. Operational conclusion
 
