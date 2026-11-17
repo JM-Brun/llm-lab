@@ -29,7 +29,7 @@ sources:
       technical_level: introductory
       contribution_types: [architecture, pedagogy]
       audiences: [beginner, learner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-11-04"
@@ -127,7 +127,7 @@ sources:
       technical_level: introductory
       contribution_types: [architecture, pedagogy, visualization]
       audiences: [beginner, learner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-11-04"
@@ -187,7 +187,7 @@ sources:
       technical_level: intermediate
       contribution_types: [architecture, implementation]
       audiences: [learner, practitioner, maintainer]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: deferred
     scan_history:
       - accessed_at: "2026-11-04"
@@ -228,7 +228,7 @@ sources:
       technical_level: intermediate
       contribution_types: [theory, implementation, pedagogy, historical-context]
       audiences: [learner, practitioner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-10-30"
@@ -268,7 +268,7 @@ sources:
       technical_level: intermediate
       contribution_types: [theory, implementation, pedagogy]
       audiences: [learner, practitioner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-10-30"
@@ -308,7 +308,7 @@ sources:
       technical_level: intermediate
       contribution_types: [theory, implementation, pedagogy, visualization]
       audiences: [learner, practitioner, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-10-30"
@@ -348,7 +348,7 @@ sources:
       technical_level: intermediate
       contribution_types: [theory, historical-context]
       audiences: [learner, practitioner, researcher]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-11-04"
@@ -387,7 +387,7 @@ sources:
       technical_level: advanced
       contribution_types: [experiment, benchmark, theory]
       audiences: [researcher, practitioner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-10-30"
@@ -435,7 +435,7 @@ sources:
       technical_level: advanced
       contribution_types: [experiment, benchmark, theory]
       audiences: [researcher, practitioner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-11-02"
@@ -484,7 +484,7 @@ sources:
       technical_level: advanced
       contribution_types: [experiment, benchmark]
       audiences: [researcher, practitioner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-10-30"
@@ -532,7 +532,7 @@ sources:
       technical_level: advanced
       contribution_types: [experiment, benchmark, theory]
       audiences: [researcher, practitioner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-11-02"
@@ -581,7 +581,7 @@ sources:
       technical_level: advanced
       contribution_types: [experiment, benchmark]
       audiences: [researcher, practitioner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-11-02"
@@ -630,7 +630,7 @@ sources:
       technical_level: intermediate
       contribution_types: [experiment, pedagogy, visualization]
       audiences: [learner, practitioner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-10-30"
@@ -669,7 +669,7 @@ sources:
       technical_level: intermediate
       contribution_types: [theory, experiment, historical-context]
       audiences: [learner, researcher]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-10-30"
@@ -715,7 +715,7 @@ sources:
       technical_level: advanced
       contribution_types: [theory, experiment, benchmark]
       audiences: [researcher, practitioner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-11-02"
@@ -762,7 +762,7 @@ sources:
       technical_level: advanced
       contribution_types: [theory, experiment, benchmark]
       audiences: [researcher, practitioner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-11-02"
@@ -810,7 +810,7 @@ sources:
       technical_level: advanced
       contribution_types: [theory, experiment, limitation]
       audiences: [researcher, practitioner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-11-02"
@@ -858,7 +858,7 @@ sources:
       technical_level: intermediate
       contribution_types: [implementation]
       audiences: [practitioner, maintainer]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-11-02"
@@ -897,7 +897,7 @@ sources:
       technical_level: intermediate
       contribution_types: [implementation, pedagogy]
       audiences: [learner, practitioner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-10-30"
@@ -936,7 +936,7 @@ sources:
       technical_level: intermediate
       contribution_types: [implementation, pedagogy]
       audiences: [learner, practitioner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-10-30"
@@ -976,7 +976,7 @@ sources:
       technical_level: intermediate
       contribution_types: [implementation]
       audiences: [practitioner, maintainer]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-10-30"
@@ -1015,7 +1015,7 @@ sources:
       technical_level: intermediate
       contribution_types: [implementation]
       audiences: [practitioner, maintainer]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-10-30"
@@ -1054,7 +1054,7 @@ sources:
       technical_level: intermediate
       contribution_types: [theory, pedagogy]
       audiences: [learner, practitioner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-10-30"
@@ -1092,7 +1092,7 @@ sources:
       technical_level: advanced
       contribution_types: [theory, historical-context]
       audiences: [researcher, learner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-10-30"
@@ -1129,7 +1129,7 @@ sources:
       technical_level: intermediate
       contribution_types: [implementation]
       audiences: [practitioner, maintainer]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-10-30"
@@ -1167,7 +1167,7 @@ sources:
       technical_level: advanced
       contribution_types: [theory, mathematical-derivation]
       audiences: [researcher, practitioner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-10-30"
@@ -1204,7 +1204,7 @@ sources:
       technical_level: intermediate
       contribution_types: [implementation, pedagogy]
       audiences: [practitioner, maintainer]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-10-30"
@@ -1243,7 +1243,7 @@ sources:
       technical_level: intermediate
       contribution_types: [implementation]
       audiences: [practitioner, maintainer]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-10-30"
@@ -1281,7 +1281,7 @@ sources:
       technical_level: intermediate
       contribution_types: [implementation]
       audiences: [practitioner, maintainer]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-10-30"
@@ -1319,7 +1319,7 @@ sources:
       technical_level: intermediate
       contribution_types: [implementation, visualization, pedagogy]
       audiences: [learner, practitioner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-10-30"
@@ -1357,7 +1357,7 @@ sources:
       technical_level: intermediate
       contribution_types: [implementation, visualization]
       audiences: [practitioner, maintainer]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-10-30"
@@ -1397,7 +1397,7 @@ sources:
       technical_level: introductory
       contribution_types: [pedagogy, visualization]
       audiences: [beginner, learner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-10-30"
@@ -1437,7 +1437,7 @@ sources:
       technical_level: intermediate
       contribution_types: [experiment, visualization, pedagogy]
       audiences: [learner, educator, researcher]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-11-02"
@@ -1486,7 +1486,7 @@ sources:
       technical_level: advanced
       contribution_types: [implementation, experiment, visualization]
       audiences: [practitioner, researcher, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-11-02"
@@ -1534,7 +1534,7 @@ sources:
       technical_level: intermediate
       contribution_types: [implementation, pedagogy]
       audiences: [learner, practitioner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: reviewed
     scan_history:
       - accessed_at: "2026-10-30"
@@ -1572,7 +1572,7 @@ sources:
       technical_level: introductory
       contribution_types: [pedagogy, visualization]
       audiences: [beginner, learner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-10-30"
@@ -1611,7 +1611,7 @@ sources:
       technical_level: introductory
       contribution_types: [pedagogy, visualization]
       audiences: [beginner, learner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: deferred
     scan_history:
       - accessed_at: "2026-10-30"
@@ -1650,7 +1650,7 @@ sources:
       technical_level: introductory
       contribution_types: [pedagogy]
       audiences: [beginner, learner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-10-30"
@@ -1689,7 +1689,7 @@ sources:
       technical_level: introductory
       contribution_types: [pedagogy, visualization]
       audiences: [beginner, learner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-10-30"
@@ -1729,7 +1729,7 @@ sources:
       technical_level: intermediate
       contribution_types: [pedagogy, implementation, visualization]
       audiences: [learner, practitioner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: reviewed
     scan_history:
       - accessed_at: "2026-10-30"
@@ -1768,7 +1768,7 @@ sources:
       technical_level: introductory
       contribution_types: [pedagogy]
       audiences: [beginner, learner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: reviewed
     scan_history:
       - accessed_at: "2026-10-30"
@@ -1807,7 +1807,7 @@ sources:
       technical_level: advanced
       contribution_types: [experiment, benchmark]
       audiences: [researcher, practitioner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-10-29"
@@ -1846,7 +1846,7 @@ sources:
       technical_level: advanced
       contribution_types: [theory, experiment, benchmark]
       audiences: [researcher, practitioner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-10-29"
@@ -1885,7 +1885,7 @@ sources:
       technical_level: introductory
       contribution_types: [pedagogy, implementation]
       audiences: [learner, practitioner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: reviewed
     scan_history:
       - accessed_at: "2026-10-29"
@@ -1924,7 +1924,7 @@ sources:
       technical_level: intermediate
       contribution_types: [pedagogy, theory]
       audiences: [learner, practitioner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: reviewed
     scan_history:
       - accessed_at: "2026-10-29"
@@ -1964,7 +1964,7 @@ sources:
       technical_level: introductory
       contribution_types: [pedagogy]
       audiences: [beginner, learner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: reviewed
     scan_history:
       - accessed_at: "2026-10-29"
@@ -2008,7 +2008,7 @@ sources:
       technical_level: mixed
       contribution_types: [architecture, pedagogy, visualization]
       audiences: [beginner, learner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-11-05"
@@ -2069,7 +2069,7 @@ sources:
       technical_level: advanced
       contribution_types: [implementation, benchmark, visualization, experiment]
       audiences: [researcher, practitioner, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: reviewed
     scan_history:
       - accessed_at: "2026-11-05"
@@ -2113,7 +2113,7 @@ sources:
       technical_level: intermediate
       contribution_types: [pedagogy, mathematical-derivation, implementation, visualization]
       audiences: [learner, practitioner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: reviewed
     scan_history:
       - accessed_at: "2026-11-05"
@@ -2214,7 +2214,7 @@ sources:
       technical_level: intermediate
       contribution_types: [theory, architecture, pedagogy]
       audiences: [learner, practitioner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: reviewed
     scan_history:
       - accessed_at: "2026-11-06"
@@ -2267,7 +2267,7 @@ sources:
       technical_level: intermediate
       contribution_types: [architecture, pedagogy, visualization]
       audiences: [learner, practitioner, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-06"
@@ -2353,7 +2353,7 @@ sources:
       technical_level: introductory
       contribution_types: [mathematical-derivation, visualization, pedagogy, implementation]
       audiences: [beginner, learner, practitioner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-07"
@@ -2417,7 +2417,7 @@ sources:
       technical_level: introductory
       contribution_types: [mathematical-derivation, architecture, implementation, visualization, pedagogy]
       audiences: [beginner, learner, practitioner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: reviewed
     scan_history:
       - accessed_at: "2026-11-07"
@@ -2562,7 +2562,7 @@ sources:
       technical_level: unspecified
       contribution_types: [other]
       audiences: [learner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: deferred
     scan_history:
       - accessed_at: "2026-11-09"
@@ -2613,7 +2613,7 @@ sources:
       technical_level: advanced
       contribution_types: [theory, mathematical-derivation, experiment, implementation]
       audiences: [practitioner, researcher, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-09"
@@ -2658,7 +2658,7 @@ sources:
       technical_level: introductory
       contribution_types: [architecture, visualization, pedagogy, historical-context, implementation]
       audiences: [beginner, learner, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-09"
@@ -2707,7 +2707,7 @@ sources:
       technical_level: intermediate
       contribution_types: [architecture, visualization, pedagogy, historical-context]
       audiences: [learner, practitioner, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: deferred
     scan_history:
       - accessed_at: "2026-11-09"
@@ -2748,7 +2748,7 @@ sources:
       technical_level: mixed
       contribution_types: [architecture, implementation, visualization, pedagogy]
       audiences: [learner, practitioner, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: deferred
     scan_history:
       - accessed_at: "2026-11-09"
@@ -2789,7 +2789,7 @@ sources:
       technical_level: intermediate
       contribution_types: [theory, mathematical-derivation, visualization, pedagogy]
       audiences: [learner, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: deferred
     scan_history:
       - accessed_at: "2026-11-09"
@@ -2832,7 +2832,7 @@ sources:
       technical_level: introductory
       contribution_types: [architecture, theory, visualization, pedagogy]
       audiences: [beginner, learner, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: deferred
     scan_history:
       - accessed_at: "2026-11-09"
@@ -2877,7 +2877,7 @@ sources:
       technical_level: intermediate
       contribution_types: [architecture, experiment, benchmark, pedagogy]
       audiences: [learner, practitioner, researcher, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-09"
@@ -2965,7 +2965,7 @@ sources:
       technical_level: advanced
       contribution_types: ["theory","mathematical-derivation","experiment","benchmark"]
       audiences: ["practitioner","researcher","educator"]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-10"
@@ -3114,7 +3114,7 @@ sources:
       technical_level: intermediate
       contribution_types: [pedagogy, visualization]
       audiences: [learner, practitioner, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-10"
@@ -3149,7 +3149,7 @@ sources:
       technical_level: advanced
       contribution_types: ["theory","mathematical-derivation"]
       audiences: ["researcher","practitioner","educator"]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-10"
@@ -3200,7 +3200,7 @@ sources:
       technical_level: introductory
       contribution_types: [pedagogy, visualization, implementation, historical-context]
       audiences: [beginner, learner, practitioner, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-10"
@@ -3264,7 +3264,7 @@ sources:
       technical_level: advanced
       contribution_types: [theory, mathematical-derivation, architecture]
       audiences: [learner, practitioner, researcher, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-10"
@@ -3302,7 +3302,7 @@ sources:
       technical_level: intermediate
       contribution_types: [pedagogy, implementation, mathematical-derivation]
       audiences: [learner, practitioner, educator, researcher]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-10"
@@ -3340,7 +3340,7 @@ sources:
       technical_level: intermediate
       contribution_types: [pedagogy, mathematical-derivation]
       audiences: [learner, practitioner, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-10"
@@ -3384,7 +3384,7 @@ sources:
       technical_level: advanced
       contribution_types: [architecture, critical-comparison, research-trend]
       audiences: [learner, practitioner, researcher]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-11-12"
@@ -3434,7 +3434,7 @@ sources:
       technical_level: advanced
       contribution_types: [architecture, critical-comparison, research-trend]
       audiences: [learner, practitioner, researcher]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-11-12"
@@ -3481,7 +3481,7 @@ sources:
       technical_level: mixed
       contribution_types: [pedagogy, historical-context, architecture, critical-comparison]
       audiences: [beginner, learner, practitioner, educator, researcher]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: reviewed
     scan_history:
       - accessed_at: "2026-11-12"
@@ -3529,7 +3529,7 @@ sources:
       technical_level: intermediate
       contribution_types: [architecture, mathematical-derivation, pedagogy]
       audiences: [learner, practitioner, researcher, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-13"
@@ -3570,7 +3570,7 @@ sources:
       technical_level: introductory
       contribution_types: [pedagogy, theory]
       audiences: [beginner, learner, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: reviewed
     scan_history:
       - accessed_at: "2026-11-16"
@@ -3618,7 +3618,7 @@ sources:
       technical_level: introductory
       contribution_types: [theory, pedagogy]
       audiences: [beginner, learner, practitioner, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: reviewed
     scan_history:
       - accessed_at: "2026-11-16"
@@ -3669,7 +3669,7 @@ sources:
       technical_level: mixed
       contribution_types: [theory, pedagogy, visualization, experiment]
       audiences: [learner, practitioner, researcher, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-11-16"
@@ -3724,7 +3724,7 @@ sources:
       technical_level: advanced
       contribution_types: [theory, mathematical-derivation, experiment]
       audiences: [practitioner, researcher, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-11-16"
@@ -3768,7 +3768,7 @@ sources:
       technical_level: introductory
       contribution_types: [theory, pedagogy]
       audiences: [learner, practitioner, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: reviewed
     scan_history:
       - accessed_at: "2026-11-16"
@@ -3814,7 +3814,7 @@ sources:
       technical_level: introductory
       contribution_types: [mathematical-derivation, theory, visualization, pedagogy, historical-context]
       audiences: [beginner, learner, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-11-16"
@@ -3861,7 +3861,7 @@ sources:
       technical_level: advanced
       contribution_types: [theory, mathematical-argument, research-hypothesis]
       audiences: [learner, researcher, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: reviewed
     scan_history:
       - accessed_at: "2026-11-16"
@@ -3909,7 +3909,7 @@ sources:
       technical_level: advanced
       contribution_types: [theory, mathematical-derivation, architecture, implementation, visualization, pedagogy]
       audiences: [learner, practitioner, researcher, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-16"
@@ -3956,7 +3956,7 @@ sources:
       technical_level: advanced
       contribution_types: [experiment, benchmark, architecture, implementation]
       audiences: [practitioner, researcher, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-16"
@@ -3999,7 +3999,7 @@ sources:
       technical_level: mixed
       contribution_types: [theory, architecture, implementation, pedagogy, experiment]
       audiences: [learner, practitioner, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-17"
@@ -4071,7 +4071,7 @@ sources:
       technical_level: intermediate
       contribution_types: [visualization, pedagogy, architecture]
       audiences: [learner, educator, practitioner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-16"
@@ -4106,7 +4106,7 @@ sources:
       technical_level: introductory
       contribution_types: [visualization, experiment, pedagogy]
       audiences: [beginner, learner, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-16"
@@ -4141,7 +4141,7 @@ sources:
       technical_level: advanced
       contribution_types: [architecture, visualization, pedagogy]
       audiences: [learner, practitioner, researcher, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-16"
@@ -4176,7 +4176,7 @@ sources:
       technical_level: intermediate
       contribution_types: [architecture, visualization, pedagogy]
       audiences: [learner, practitioner, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-16"
@@ -4211,7 +4211,7 @@ sources:
       technical_level: intermediate
       contribution_types: [implementation, visualization, pedagogy]
       audiences: [learner, practitioner, researcher]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-16"
@@ -4246,7 +4246,7 @@ sources:
       technical_level: advanced
       contribution_types: [visualization, experiment, pedagogy]
       audiences: [learner, practitioner, researcher, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-11-16"
@@ -4295,7 +4295,7 @@ sources:
       technical_level: intermediate
       contribution_types: [visualization, implementation, experiment, pedagogy]
       audiences: [learner, practitioner, researcher, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-11-16"
@@ -4341,7 +4341,7 @@ sources:
       technical_level: intermediate
       contribution_types: [implementation, pedagogy]
       audiences: [learner, practitioner, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-16"
@@ -4404,7 +4404,7 @@ sources:
       technical_level: intermediate
       contribution_types: [mathematical-derivation, theory, visualization, pedagogy, application]
       audiences: [learner, practitioner, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-11-16"
@@ -4452,7 +4452,7 @@ sources:
       technical_level: introductory
       contribution_types: [theory, architecture, pedagogy]
       audiences: [beginner, learner, practitioner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-17"
@@ -4492,7 +4492,7 @@ sources:
       technical_level: intermediate
       contribution_types: [architecture, implementation, pedagogy]
       audiences: [learner, practitioner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-17"
@@ -4531,7 +4531,7 @@ sources:
       technical_level: introductory
       contribution_types: [architecture, implementation, pedagogy]
       audiences: [beginner, learner, practitioner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-17"
@@ -4572,7 +4572,7 @@ sources:
       technical_level: intermediate
       contribution_types: [architecture, experiment, benchmark]
       audiences: [learner, practitioner, researcher]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-17"
@@ -4610,7 +4610,7 @@ sources:
       technical_level: advanced
       contribution_types: [architecture, experiment, benchmark, visualization]
       audiences: [learner, practitioner, researcher]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-17"
@@ -4648,7 +4648,7 @@ sources:
       technical_level: advanced
       contribution_types: [architecture, experiment, benchmark]
       audiences: [learner, practitioner, researcher]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-17"
@@ -4685,7 +4685,7 @@ sources:
       technical_level: advanced
       contribution_types: [architecture, experiment, benchmark]
       audiences: [learner, practitioner, researcher]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-17"
@@ -4722,7 +4722,7 @@ sources:
       technical_level: intermediate
       contribution_types: [experiment, benchmark, theory]
       audiences: [learner, practitioner, researcher]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-17"
@@ -4761,7 +4761,7 @@ sources:
       technical_level: intermediate
       contribution_types: [architecture, pedagogy, visualization]
       audiences: [learner, practitioner, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-17"
@@ -4800,7 +4800,7 @@ sources:
       technical_level: advanced
       contribution_types: [architecture, experiment, benchmark, visualization]
       audiences: [learner, practitioner, researcher, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-17"
@@ -4840,7 +4840,7 @@ sources:
       technical_level: introductory
       contribution_types: [pedagogy, visualization]
       audiences: [beginner, learner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: rejected
     scan_history:
       - accessed_at: "2026-11-17"
@@ -4882,7 +4882,7 @@ sources:
       technical_level: intermediate
       contribution_types: [theory, mathematical-derivation, pedagogy]
       audiences: [learner, practitioner, educator, researcher]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-17"
@@ -4930,7 +4930,7 @@ sources:
       technical_level: intermediate
       contribution_types: [theory, mathematical-derivation, pedagogy, historical-context]
       audiences: [learner, practitioner, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-17"
@@ -4972,7 +4972,7 @@ sources:
       technical_level: intermediate
       contribution_types: [theory, architecture, pedagogy]
       audiences: [learner, practitioner, researcher, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-17"
@@ -5019,7 +5019,7 @@ sources:
       technical_level: advanced
       contribution_types: [architecture, experiment]
       audiences: [practitioner, researcher, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-17"
@@ -5058,7 +5058,7 @@ sources:
       technical_level: advanced
       contribution_types: [benchmark, experiment]
       audiences: [practitioner, researcher, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-17"
@@ -5097,7 +5097,7 @@ sources:
       technical_level: advanced
       contribution_types: [benchmark, dataset, experiment]
       audiences: [practitioner, researcher, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-17"
@@ -5135,7 +5135,7 @@ sources:
       technical_level: intermediate
       contribution_types: [architecture]
       audiences: [learner, practitioner, researcher]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: reviewed
     scan_history:
       - accessed_at: "2026-11-17"
@@ -5174,7 +5174,7 @@ sources:
       technical_level: introductory
       contribution_types: [theory, pedagogy, historical-context]
       audiences: [beginner, learner, practitioner, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-11-17"
@@ -5225,7 +5225,7 @@ sources:
       technical_level: intermediate
       contribution_types: [pedagogy, architecture, theory]
       audiences: [learner, practitioner, educator]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-17"
@@ -5276,7 +5276,7 @@ sources:
       technical_level: introductory
       contribution_types: [theory, pedagogy, historical-context]
       audiences: [beginner, learner]
-    scan_status: partially-scannedly-scanned
+    scan_status: partially-scanned
     integration_status: integrated
     scan_history:
       - accessed_at: "2026-11-17"
@@ -5370,7 +5370,7 @@ sources:
     technical_level: advanced
     contribution_types: [theory, mathematical-derivation]
     audiences: [learner, researcher]
-  scan_status: partially-scannedly-scanned
+  scan_status: partially-scanned
   integration_status: integrated
   scan_history:
     - accessed_at: "2026-11-17"
