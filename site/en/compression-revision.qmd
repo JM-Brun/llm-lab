@@ -102,6 +102,26 @@ The [entropy-versus-surprisal experiment](https://github.com/JM-Brun/llm-lab/blo
 
 A smaller checkpoint is not automatically faster: format, kernels, hardware, batch size, and context length matter.
 
+### MDL: count the model as well as the data
+
+The predictive-compression discussion above assumes that the model is already available. If the model must also be described or transmitted, the total cost becomes:
+
+$
+L_{\mathrm{total}}(M,D)=L(M)+L(D\mid M).
+$
+
+- $L(D\mid M)$: the code length of the data when the decoder knows model $M$; for a probabilistic model, it is related to $-\sum_t \log_2 p(x_t\mid x_{<t},M)$.
+- $L(M)$: the cost of describing the model in a chosen description language and model class: parameters, structure, and required side information.
+
+The **Minimum Description Length (MDL)** principle seeks a trade-off between these two costs. A model that memorizes the examples may sharply reduce the residual cost $L(D\mid M)$, but its own description cost $L(M)$ can cancel that gain. Conversely, a very simple model is cheap to describe but leaves more regularities unexplained.
+
+**Do not conflate:** $L(M)$ is not automatically the size of the weights file alone. Specify what is shared in advance (architecture, tokenizer, decoder), what must be transmitted, numerical precision, and the model class being compared. Practical MDL therefore depends on a protocol; it is neither the generally uncomputable Kolmogorov complexity nor a guarantee that the selected model is “true” or will always generalize.
+
+The [forward/reverse and model-description-cost experiment](https://github.com/JM-Brun/llm-lab/blob/main/experiments/forward-reverse-compression/README.md) illustrates this trade-off on synthetic data. Its fixed parameter cost is an explicit pedagogical convention, not a universally optimal code.
+
+**Self-check:** why might a model that predicts the training data almost perfectly lose to a less accurate model once the model's description cost is included?
+
+
 ## 3. Keep the budgets separate
 
 - **Persistent storage:** checkpoint weights and related files.
