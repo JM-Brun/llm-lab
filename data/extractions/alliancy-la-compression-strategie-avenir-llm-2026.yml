@@ -1,0 +1,198 @@
+schema_version: 1
+source_id: alliancy-la-compression-strategie-avenir-llm-2026
+scan:
+  accessed_at: "2026-11-17"
+  retrieval_method: direct-web
+  author_text:
+    status: complete
+    coverage: "Full visible article body, headings, pruning inset and publication metadata."
+    notes:
+      - "Short, three-minute journalistic overview; not a technical survey."
+  figures_media:
+    status: not-inspected
+    coverage: null
+    notes:
+      - "Cover image is credited to Freepik; the underlying asset and reuse rights were not inspected."
+  code_data:
+    status: not-inspected
+    coverage: null
+    notes:
+      - "No implementation, dataset or benchmark protocol is supplied."
+  comments:
+    status: not-inspected
+    coverage: null
+    notes: ["No comments were inspected."]
+  linked_resources:
+    status: partial
+    coverage: "The article names Epoch.AI and the Résilient AI Challenge but their primary documentation was not independently inspected."
+    notes:
+      - "The quoted parameter/infrastructure growth comparison remains secondary reporting pending verification."
+      - "Challenge launch date, organizers and partner-model details require confirmation from organizer sources."
+  metadata:
+    status: complete
+    coverage: "Author, title, publisher and publication/update date visible on the article page."
+    notes: []
+  rights:
+    status: unknown
+    coverage: null
+    notes: ["No text or figure reuse permission was established; link and paraphrase only."]
+  unresolved_questions:
+    - "What are the official objectives, rules, baselines and evaluation metrics of the Résilient AI Challenge?"
+    - "What is the primary Epoch.AI source and exactly which parameter and infrastructure series support the 360% versus 36% comparison?"
+    - "Which pruning methods, sparsity structures, kernels and hardware are evaluated by the challenge partners?"
+    - "How are energy, latency, throughput, quality and memory measured under comparable deployment workloads?"
+    - "Which confidentiality benefits arise from local deployment, and what residual risks remain in model supply chains, telemetry and updates?"
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "The article's sequence from international challenge to pruning, local deployment, accessibility and adoption barriers."
+      - "The pruning inset explains parameter suppression and warns about excessive removal and parameter interdependence."
+    inferred_elements:
+      - "The learner outcomes and deployment trade-off framing are reviewer-inferred."
+      - "The article does not provide an experimental protocol or a complete taxonomy of compression."
+  source_graph:
+    nodes:
+      - id: src-challenge
+        kind: initiative
+        description: "International challenge presented as an effort to reduce the size and complexity of partner models."
+        locator: "Opening paragraphs"
+        inferred: false
+      - id: src-pruning
+        kind: mechanism
+        description: "Remove or zero parameters judged less important, potentially followed by retraining."
+        locator: "Pruning inset"
+        inferred: false
+      - id: src-local-deployment
+        kind: application
+        description: "Deploy smaller models on local or internal infrastructure rather than relying exclusively on cloud services."
+        locator: "Garantir la confidentialité des données"
+        inferred: false
+      - id: src-hardware-realization
+        kind: constraint
+        description: "Realized speed and energy gains depend on sparsity structure, kernels, hardware and workload."
+        locator: "Reviewer qualification; not detailed by the article"
+        inferred: true
+    edges:
+      - {from: src-challenge, type: targets, to: src-pruning, inferred: false}
+      - {from: src-pruning, type: may-enable, to: src-local-deployment, inferred: true}
+      - {from: src-pruning, type: performance-depends-on, to: src-hardware-realization, inferred: true}
+    interpretation: "The article's central story is the policy and deployment motivation for model compression. The hardware-performance dependency is an essential reviewer qualification."
+  learning_outcomes:
+    - status: inferred
+      outcome: "Explain why smaller models may improve deployment cost, energy use and local deployability."
+      basis: "The article's motivation and deployment sections."
+    - status: inferred
+      outcome: "Describe pruning at a high level while distinguishing parameter removal from guaranteed runtime acceleration."
+      basis: "The pruning inset, qualified by implementation constraints."
+    - status: inferred
+      outcome: "Evaluate confidentiality and accessibility claims as conditional deployment benefits rather than automatic properties of compression."
+      basis: "The article's local-deployment argument, critically scoped."
+  assumed_prerequisites:
+    - status: inferred
+      topic: "Basic understanding of neural-network parameters, inference and deployment."
+      basis: "Needed to interpret pruning and local inference."
+  teaching_route:
+    - order: 1
+      section: "Why compress deployed models?"
+      function: motivation
+      moves: ["Connect model size and compute requirements to cost, energy and deployment constraints."]
+    - order: 2
+      section: "Pruning as one compression method"
+      function: mechanism
+      moves: ["Explain parameter suppression and the risk of excessive pruning.", "Distinguish sparsity from measured acceleration."]
+    - order: 3
+      section: "Local deployment and its limits"
+      function: application-and-qualification
+      moves: ["Explain why local inference can reduce external data transfers.", "Avoid treating compression alone as a complete privacy or security guarantee."]
+pedagogical_strengths:
+  - "Connects model compression to concrete organizational constraints: energy, operating cost, local deployment and regulated environments."
+  - "The pruning inset acknowledges parameter interdependence and the possibility of quality degradation."
+  - "The challenge framing supplies a timely real-world case study rather than another abstract explanation of compression."
+pedagogical_limits:
+  - "The article is short journalism, not a technical review or independently reproducible study."
+  - "It focuses on pruning and does not compare quantization, distillation, low-rank methods or architecture-level efficiency."
+  - "The 360% versus 36% figures are attributed to Epoch.AI but the underlying study and measurement definitions were not checked."
+  - "Compression does not automatically yield faster inference, lower total energy, privacy or security; outcomes depend on implementation and deployment."
+comparison:
+  dossier: "docs/source-syntheses/model-compression-2026-11.md"
+  canonical_graph: "data/concepts.yml"
+  canonical_routes:
+    - "site/fr/llm-computational-complexity.qmd"
+    - "site/en/llm-computational-complexity.qmd"
+    - "site/fr/compression-revision.qmd"
+    - "site/en/compression-revision.qmd"
+  decision: "Use as a concise deployment-motivation case study and source citation in the existing model-compression material. Do not create a new concept, page or experiment from this article alone."
+  structures_kept_separate:
+    - "Model compression (pruning/quantization/distillation) is distinct from predictive compression and entropy coding."
+    - "Persistent checkpoint size is distinct from runtime KV-cache memory."
+    - "The challenge's public-policy framing is not empirical proof of energy savings."
+items:
+  - id: alliancy-la-compression-strategie-avenir-llm-2026:challenge-and-deployment-motivation
+    kind: case-study
+    summary: "The Résilient AI Challenge is presented as a collaborative effort to reduce model size and complexity for more energy-efficient deployment."
+    locator: {type: section, value: "Opening paragraphs", label: "Résilient AI Challenge"}
+    evidence:
+      kind: reported-announcement
+      confidence: context-dependent
+      scope: "The article reports a launch on 20 February 2026 involving France, India, UNESCO and the Sustainable AI Coalition, with models from Google, Mistral AI and Sarvam."
+      assumptions: []
+      limitations:
+        - "Organizer documentation, challenge rules, partner participation and model baselines were not independently checked."
+        - "The article does not provide measured energy or quality results."
+    classification:
+      primary_theme: inference-efficiency
+      tags: [topic:model-compression, application:energy-efficiency, ecosystem:resilient-ai-challenge]
+      concept_ids: [model-compression]
+    candidate_destinations:
+      pages: [fr/llm-computational-complexity, en/llm-computational-complexity, fr/compression-revision, en/compression-revision]
+      concepts: [model-compression]
+      route_ids: []
+    disposition: cite
+    disposition_rationale: "Retain as a dated real-world case study illustrating the policy and deployment motivation; do not present the announced challenge as proof of achieved efficiency."
+  - id: alliancy-la-compression-strategie-avenir-llm-2026:pruning-mechanism-and-caveat
+    kind: mechanism
+    summary: "Pruning removes or suppresses parameters judged less important; excessive removal can degrade performance because parameters may be interdependent."
+    locator: {type: section, value: "Technique de l'élagage / pruning", label: "Pruning inset"}
+    evidence:
+      kind: technical-explanation
+      confidence: established
+      scope: "High-level description of parameter suppression and possible retraining."
+      assumptions: []
+      limitations:
+        - "The article's phrasing places pruning at inference, but pruning is generally a model-modification/compression procedure performed before deployment or as part of a defined adaptation workflow; dynamic inference-time sparsification is a distinct design."
+        - "Unstructured zeros do not automatically reduce latency or energy; sparse formats, kernels, hardware and workload determine whether they are exploited."
+        - "A claim that pruning can increase quality is method- and evaluation-specific, not a general consequence."
+    classification:
+      primary_theme: inference-efficiency
+      secondary_themes: [architectures-mechanisms]
+      tags: [method:pruning, topic:sparsity]
+      concept_ids: [pruning, model-compression]
+    candidate_destinations:
+      pages: [fr/llm-computational-complexity, en/llm-computational-complexity, fr/compression-revision, en/compression-revision]
+      concepts: [pruning, model-compression]
+      route_ids: []
+    disposition: clarify
+    disposition_rationale: "Use the concise explanation as reinforcement in existing pruning coverage, while correcting the inference-phase ambiguity and making hardware realization explicit."
+  - id: alliancy-la-compression-strategie-avenir-llm-2026:local-deployment-and-confidentiality
+    kind: claim
+    summary: "Smaller models can make local or on-premises deployment more feasible, which may reduce the need to send sensitive prompts and data to an external cloud service."
+    locator: {type: section, value: "Garantir la confidentialité des données", label: "Local deployment"}
+    evidence:
+      kind: author-interpretation
+      confidence: context-dependent
+      scope: "The article links reduced infrastructure requirements to deployment in internal servers and regulated sectors."
+      assumptions: ["The organization controls the local infrastructure and its access, logging, update and retention policies."]
+      limitations:
+        - "Local deployment can reduce external data transfer but does not by itself guarantee confidentiality, security or regulatory compliance."
+        - "Model weights, dependencies, telemetry, operators and update channels remain part of the threat model."
+    classification:
+      primary_theme: inference-efficiency
+      tags: [application:edge-deployment, application:privacy-sensitive-deployment]
+      concept_ids: [model-compression]
+    candidate_destinations:
+      pages: [fr/llm-computational-complexity, en/llm-computational-complexity]
+      concepts: [model-compression]
+      route_ids: []
+    disposition: clarify
+    disposition_rationale: "Retain the deployment motivation, but frame privacy as a possible architectural benefit requiring separate security and governance controls."
