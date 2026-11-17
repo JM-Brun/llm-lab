@@ -39,8 +39,8 @@ stages:
       fr: [fr/embedding-space, fr/positional-encoding, fr/contextualized-representations]
       en: [en/embedding-space, en/positional-encoding, en/contextualized-representations]
     optional_pages:
-      fr: [fr/tensors, fr/rope, fr/cosine-similarity]
-      en: [en/tensors, en/rope, en/cosine-similarity]
+      fr: [fr/tensors, fr/rope]
+      en: [en/tensors, en/rope]
 
   - id: computation
     title:
