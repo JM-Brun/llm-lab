@@ -1,0 +1,192 @@
+schema_version: 1
+source_id: hkust-nlp-llm-compression-intelligence-2024
+scan:
+  accessed_at: "2026-11-17"
+  retrieval_method: repository
+  author_text: {status: inspected, coverage: "README, COLM 2024 paper and evaluation code", notes: ["Paper: Huang et al., Compression Represents Intelligence Linearly, arXiv:2404.09937."]}
+  figures_media: {status: not-inspected, coverage: null, notes: ["No assets inspected for reuse."]}
+  code_data: {status: partially-inspected, coverage: "evaluation/main.py, evaluation/packed_dataset.py and dataset metadata", notes: ["No full environment setup, data download or runtime reproduction."]}
+  comments: {status: not-inspected, coverage: null, notes: []}
+  linked_resources: {status: partially-inspected, coverage: "Paper, COLM/OpenReview record and Hugging Face dataset metadata", notes: ["Upstream data collection pipeline not fully audited."]}
+  metadata: {status: inspected, coverage: "Repository, paper, dataset and licence metadata", notes: []}
+  rights: {status: partially-inspected, coverage: "README licence statements", notes: ["Code reported MIT; dataset reported CC BY-NC-SA 4.0 subject to underlying source licences; paper/figures link-only."]}
+  unresolved_questions: ["No independent reproduction.", "Dataset provenance and redistribution constraints need per-source verification.", "Stateful dataset indexing should be tested under alternate DataLoader configurations."]
+pedagogical_model:
+  reconstruction:
+    status: complete
+    basis: ["README, paper PDF, evaluation entry point and packed dataset implementation."]
+    inferred_elements: ["Teaching route reconstructed editorially; not declared by the authors."]
+  source_graph:
+    nodes:
+      - {id: autoregressive-model, kind: concept, description: "Assigns conditional probabilities to successive text tokens.", locator: "Paper §§2–3"}
+      - {id: domain-corpus, kind: representation, description: "External text corpus representing a target domain.", locator: "Paper §3"}
+      - {id: token-cross-entropy, kind: parameter, description: "Summed negative log probability of observed tokens.", locator: "Paper §2; evaluation/main.py"}
+      - {id: bits-per-character, kind: intermediate, description: "Cross-entropy converted to bits and divided by character count.", locator: "Paper §2; evaluation/main.py"}
+      - {id: benchmark-score, kind: representation, description: "Aggregate score on selected downstream tasks.", locator: "Paper §3"}
+      - {id: domain-alignment, kind: constraint, description: "Corpus/task alignment conditions interpretation of BPC.", locator: "Paper ablations"}
+    edges:
+      - {from: autoregressive-model, type: scores, to: domain-corpus, inferred: false}
+      - {from: domain-corpus, type: produces, to: token-cross-entropy, inferred: false}
+      - {from: token-cross-entropy, type: normalized-into, to: bits-per-character, inferred: false}
+      - {from: bits-per-character, type: associated-with, to: benchmark-score, inferred: false}
+      - {from: domain-alignment, type: conditions-interpretation-of, to: bits-per-character, inferred: false}
+  learning_outcomes:
+    - {status: inferred, outcome: "Derive BPC from autoregressive negative log likelihood.", basis: "Paper metric and implementation."}
+    - {status: inferred, outcome: "Explain why character normalization helps compare different tokenizers.", basis: "BPC denominator."}
+    - {status: inferred, outcome: "Interpret a strong correlation without claiming causality or universal intelligence measurement.", basis: "Study design and limitations."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Conditional probability, cross-entropy and logarithms", basis: "Required for BPC derivation."}
+    - {status: inferred, topic: "Correlation and benchmark evaluation", basis: "Required to interpret results."}
+  teaching_route:
+    - {order: 1, section: "Operational definition", function: define-measurement, moves: ["Distinguish the title's philosophical slogan from measured variables."]}
+    - {order: 2, section: "BPC metric", function: derive-metric, moves: ["Connect likelihood to ideal code length and character normalization."]}
+    - {order: 3, section: "Corpora and benchmarks", function: inspect-design, moves: ["Map three domains to their external corpora and task suites."]}
+    - {order: 4, section: "Correlations and ablations", function: interpret-evidence, moves: ["Read negative correlations, domain mismatch and contamination checks."]}
+    - {order: 5, section: "Reproduction", function: implement-and-critique, moves: ["Inspect data loading and design a controlled replication."]}
+  pedagogical_strengths: ["Connects information theory to measured model behaviour.", "Uses BPC to reduce dependence on tokenizer vocabulary.", "Includes domain-specific corpora, ablations and contamination analysis.", "Provides code and dataset metadata for inspection."]
+  pedagogical_limits: ["Benchmark averages are proxies for selected capabilities, not general intelligence.", "Correlation does not establish causation.", "Scope is base models, short/medium contexts and a 2024-era benchmark/model snapshot.", "Repository loader has stateful indexing that is fragile outside sequential non-shuffled use."]
+  comparison:
+    dossier: "docs/source-reviews/hkust-nlp-compression-represents-intelligence-linearly-2024.md"
+    canonical_graph: "data/concepts.yml"
+    canonical_routes: ["fr/compression-revision", "en/compression-revision", "fr/cross-entropy", "en/cross-entropy", "fr/evaluation-experimentale", "en/experimental-evaluation"]
+    decision: "High empirical complementarity: integrate as a bounded case study and experiment design, not as a new definition of intelligence."
+    structures_kept_separate: ["Source-local measurement pipeline", "Canonical concepts", "Project learning route"]
+items:
+  - id: hkust-nlp-llm-compression-intelligence-2024:bpc-metric
+    kind: definition
+    summary: "BPC measures the ideal predictive code length assigned by a causal language model to external text, in bits per character."
+    locator: {type: section, value: "Paper §2; evaluation/main.py"}
+    evidence: {kind: formal-definition, confidence: high, scope: "Paper equation and matching implementation.", assumptions: ["Ideal coding interpretation abstracts from model transmission and practical coder overhead."], limitations: ["BPC is distribution-dependent and not a universal intelligence score."]}
+    pedagogical_assessment:
+      learner_question: "How can next-token prediction be interpreted as compression?"
+      explanatory_lens: "Conditional probabilities determine ideal code lengths."
+      teaching_form: [equation, worked-example, research-case]
+      novelty: {level: moderate, rationale: "Theory exists in project; the paper operationalizes it across LLMs."}
+      complementarity: {level: high, rationale: "Adds empirical evidence beyond the existing toy arithmetic coder."}
+      pedagogical_value: {level: high, rationale: "Makes the abstract link measurable."}
+      applicability: {level: high, rationale: "Supports a multi-domain experiment."}
+      redundancy: {level: low, rationale: "Existing toy experiment does not compare LLMs."}
+      evidence_quality: {level: high, rationale: "Peer-reviewed paper and inspected implementation; no reproduction."}
+    classification: {primary_theme: probabilistic-foundations-training, tags: [topic:predictive-compression, topic:bits-per-character], concept_ids: [predictive-compression, cross-entropy, conditional-distribution, surprisal]}
+    candidate_destinations: {pages: [fr/compression-revision, en/compression-revision], concepts: []}
+    disposition: case-study
+    disposition_rationale: "Add a bounded empirical case study; do not repeat the cross-entropy derivation."
+  - id: hkust-nlp-llm-compression-intelligence-2024:domain-corpora
+    kind: method
+    summary: "The study scores models on Common Crawl, GitHub Python and ArXiv mathematics corpora aligned with knowledge, coding and math task families."
+    locator: {type: section, value: "Paper §3; repository dataset documentation"}
+    evidence: {kind: experimental-design, confidence: high, scope: "Three corpus domains and corresponding task groups.", assumptions: ["Corpora approximate the intended domains."], limitations: ["Corpus composition and time period affect scores."]}
+    pedagogical_assessment:
+      learner_question: "Why is compression evaluation domain-dependent?"
+      explanatory_lens: "Predictive performance depends on the evaluated text distribution."
+      teaching_form: [contrast-table, experiment-design]
+      novelty: {level: moderate, rationale: "Extends the project's synthetic domain-shift toy."}
+      complementarity: {level: high, rationale: "Provides real research corpora and domain/task mapping."}
+      pedagogical_value: {level: high, rationale: "Prevents treating one BPC as domain-neutral."}
+      applicability: {level: high, rationale: "Directly informs experiment design."}
+      redundancy: {level: low, rationale: "Existing example is synthetic."}
+      evidence_quality: {level: high, rationale: "Explicitly documented by the paper."}
+    classification: {primary_theme: probabilistic-foundations-training, tags: [topic:domain-shift, topic:corpus-design], concept_ids: [predictive-compression, conditional-distribution]}
+    candidate_destinations: {pages: [fr/compression-revision, en/compression-revision], concepts: []}
+    disposition: experiment
+    disposition_rationale: "Use to extend the existing domain-shift experiment with a real-corpus protocol."
+  - id: hkust-nlp-llm-compression-intelligence-2024:benchmark-correlation
+    kind: result
+    summary: "Across 31 public LLMs, reported Pearson correlations between BPC and benchmark averages are -0.935 for knowledge/commonsense, -0.937 for coding, -0.953 for mathematics and -0.931 overall."
+    locator: {type: section, value: "Paper §4, main results"}
+    evidence: {kind: reported-experimental-result, confidence: high, scope: "Evaluated models, corpora, benchmarks and scoring protocol.", assumptions: ["Scores are comparable within the authors' setup."], limitations: ["Association is not causation; benchmark averages cover only selected capabilities; no independent reproduction."]}
+    pedagogical_assessment:
+      learner_question: "How strong is the empirical relationship between BPC and task scores?"
+      explanatory_lens: "Compare domain-matched compression scores and benchmark averages across models."
+      teaching_form: [result-table, scatterplot, critical-reading]
+      novelty: {level: high, rationale: "No equivalent multi-model result in the toy experiment."}
+      complementarity: {level: high, rationale: "Adds a quantitative research case and statistical interpretation lesson."}
+      pedagogical_value: {level: high, rationale: "Makes non-causal interpretation concrete."}
+      applicability: {level: moderate, rationale: "Historical case study, not current leaderboard."}
+      redundancy: {level: low, rationale: "No equivalent result already exists."}
+      evidence_quality: {level: high, rationale: "Peer-reviewed reported statistics, not reproduced."}
+    classification: {primary_theme: scale-research, tags: [topic:benchmark, topic:correlation, topic:predictive-compression], concept_ids: [predictive-compression, cross-entropy]}
+    candidate_destinations: {pages: [fr/compression-revision, en/compression-revision], concepts: []}
+    disposition: case-study
+    disposition_rationale: "Show headline values with study scope and explicit non-causal caveat."
+  - id: hkust-nlp-llm-compression-intelligence-2024:tokenizer-neutral-normalization
+    kind: method
+    summary: "The evaluation converts summed token cross-entropy from nats to bits and divides by character count, enabling a common unit across models with different tokenizers."
+    locator: {type: code, value: "code/evaluation/main.py"}
+    evidence: {kind: implementation, confidence: high, scope: "BPC calculation in inspected code.", assumptions: ["Character counting and text normalization are consistent."], limitations: ["Character normalization does not eliminate all preprocessing differences."]}
+    pedagogical_assessment:
+      learner_question: "How can models with different tokenizers be compared?"
+      explanatory_lens: "Normalize negative log likelihood by a shared external unit."
+      teaching_form: [equation, implementation-note]
+      novelty: {level: moderate, rationale: "A practical extension of existing tokenizer evaluation."}
+      complementarity: {level: high, rationale: "Links tokenizer choice and fair model evaluation."}
+      pedagogical_value: {level: high, rationale: "Makes units and denominator choices explicit."}
+      applicability: {level: high, rationale: "Useful for project evaluation scripts."}
+      redundancy: {level: moderate, rationale: "Character normalization is discussed elsewhere."}
+      evidence_quality: {level: high, rationale: "Equation and code agree."}
+    classification: {primary_theme: probabilistic-foundations-training, tags: [topic:bits-per-character, topic:tokenizer-comparison], concept_ids: [cross-entropy, surprisal]}
+    candidate_destinations: {pages: [fr/compression-revision, en/compression-revision, fr/tokenizer-design-evaluation, en/tokenizer-design-evaluation], concepts: []}
+    disposition: clarify
+    disposition_rationale: "Add a concise BPC note and link to tokenizer evaluation; no standalone concept needed."
+  - id: hkust-nlp-llm-compression-intelligence-2024:domain-mismatch
+    kind: result
+    summary: "Ablations report weaker alignment when corpus and target capability are mismatched; combining Python and mathematics corpora helps in the program-aided math setting."
+    locator: {type: section, value: "Paper §4, domain/corpus ablations"}
+    evidence: {kind: reported-experimental-result, confidence: high, scope: "Specific ablation settings.", assumptions: ["Reported comparisons follow the authors' protocol."], limitations: ["No universally optimal corpus-selection rule follows."]}
+    pedagogical_assessment:
+      learner_question: "Does any text corpus provide an equally useful compression score?"
+      explanatory_lens: "The score is conditional on the evaluated distribution."
+      teaching_form: [counterexample, ablation, domain-shift-experiment]
+      novelty: {level: moderate, rationale: "Adds real empirical evidence to the synthetic shift lesson."}
+      complementarity: {level: high, rationale: "Shows practical impact of corpus mismatch."}
+      pedagogical_value: {level: high, rationale: "Prevents overgeneralizing BPC."}
+      applicability: {level: high, rationale: "Guides corpus selection."}
+      redundancy: {level: low, rationale: "No real LLM corpus ablation in current experiment."}
+      evidence_quality: {level: high, rationale: "Paper-reported ablation, not reproduced."}
+    classification: {primary_theme: probabilistic-foundations-training, tags: [topic:domain-shift, topic:corpus-design], concept_ids: [predictive-compression, conditional-distribution]}
+    candidate_destinations: {pages: [fr/compression-revision, en/compression-revision], concepts: []}
+    disposition: experiment
+    disposition_rationale: "Retain as a core design constraint for a multi-domain BPC experiment."
+  - id: hkust-nlp-llm-compression-intelligence-2024:contamination-diagnostic
+    kind: method
+    summary: "MIN-K% PROB is used as a contamination diagnostic and suspicious Qwen math results are treated as outliers; screening is not proof of zero contamination."
+    locator: {type: section, value: "Paper §4, contamination analysis"}
+    evidence: {kind: experimental-method, confidence: high, scope: "Reported diagnostic and outlier treatment.", assumptions: ["Diagnostic is applied as described."], limitations: ["A detector cannot establish absence of contamination; exclusions affect the fitted relationship."]}
+    pedagogical_assessment:
+      learner_question: "How can benchmark contamination affect a correlation study?"
+      explanatory_lens: "Screen unusually high scores for possible exposure to evaluation examples."
+      teaching_form: [method-note, limitation]
+      novelty: {level: moderate, rationale: "Concrete case of a familiar evaluation issue."}
+      complementarity: {level: moderate, rationale: "Adds a specific example, not a new concept."}
+      pedagogical_value: {level: moderate, rationale: "Separates screening from proof."}
+      applicability: {level: moderate, rationale: "Relevant to benchmark design."}
+      redundancy: {level: moderate, rationale: "Contamination is covered in evaluation guidance."}
+      evidence_quality: {level: high, rationale: "Explicitly reported in paper."}
+    classification: {primary_theme: scale-research, tags: [topic:benchmark-contamination, method:min-k-prob], concept_ids: []}
+    candidate_destinations: {pages: [fr/evaluation-experimentale, en/experimental-evaluation], concepts: []}
+    disposition: link
+    disposition_rationale: "Cross-link to evaluation methodology rather than expand core compression lesson."
+  - id: hkust-nlp-llm-compression-intelligence-2024:loader-indexing-caveat
+    kind: implementation
+    summary: "The packed dataset advances mutable window offsets as items are requested; this matches the default sequential non-shuffled loader but is fragile for random access, shuffling or multiple workers."
+    locator: {type: code, value: "code/evaluation/packed_dataset.py"}
+    evidence: {kind: code-inspection, confidence: high, scope: "Static inspection of dataset and loader usage.", assumptions: ["Intended path is sequential and non-shuffled."], limitations: ["No runtime failure was reproduced; concern is about portability of the indexing contract."]}
+    pedagogical_assessment:
+      learner_question: "What should be checked before adapting a research evaluation script?"
+      explanatory_lens: "Dataset indexing semantics must match the DataLoader access pattern."
+      teaching_form: [code-review, reproducibility-checklist]
+      novelty: {level: moderate, rationale: "Concrete code-review lesson."}
+      complementarity: {level: high, rationale: "Adds implementation reproducibility detail."}
+      pedagogical_value: {level: moderate, rationale: "Useful for advanced readers."}
+      applicability: {level: moderate, rationale: "Relevant if project adapts upstream code."}
+      redundancy: {level: low, rationale: "No equivalent project note."}
+      evidence_quality: {level: moderate, rationale: "Static inspection only."}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:reproducibility, topic:dataset-implementation], concept_ids: []}
+    candidate_destinations: {pages: [fr/evaluation-experimentale, en/experimental-evaluation], concepts: []}
+    disposition: defer
+    disposition_rationale: "Keep as a review note; do not import the loader unchanged."
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: ["Connect the case study to predictive compression, cross-entropy, corpus distribution and benchmark evaluation.", "Keep BPC as a derived metric, not a standalone concept unless future graph review justifies it."]
+  decision_summary: "No new canonical concept proposed. The contribution is an empirical case study, domain-alignment constraint and reproducible evaluation design."
