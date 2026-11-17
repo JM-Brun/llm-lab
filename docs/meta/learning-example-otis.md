@@ -37,7 +37,7 @@ La continuation de la scène commence par la réplique d'Otis :
 
 > **Début de continuation :** « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... »
 
-Pour les démonstrations reproductibles, utiliser aussi une continuation pédagogique originale, indépendante du dialogue du film :
+Les pages françaises peuvent reprendre de courts fragments de cette continuation lorsque cela sert naturellement la notion étudiée. Pour les démonstrations longues ou les tests qui exigent un texte entièrement contrôlé, conserver aussi une continuation pédagogique originale, indépendante du dialogue du film :
 
 > **Continuation jouet :** « Être scribe, c'est relier des histoires. Les rencontres apportent de nouveaux récits ; le contexte aide à choisir les mots justes. Chaque phrase prépare la suivante. »
 
@@ -91,7 +91,7 @@ Les pages ci-dessous sont les destinations canoniques identifiées dans le parco
 | `fr/text-data.qmd` | `en/text-data.qmd` | Afficher le préfixe « C'est une bonne situation, ça, scribe ? » avant tokenisation, puis distinguer les tokens de continuation ; dans la page anglaise, prendre la scène des Romains comme parallèle culturel. | Conserver ponctuation, espaces et accents ; distinguer prompt et cible. |
 | `fr/tokenization-strategies.qmd` | `en/tokenization-strategies.qmd` | Comparer la segmentation effective du prompt avec deux tokenizers si les outils sont disponibles. | Les tokens ne sont pas forcément des mots ; ne pas figer une segmentation universelle. |
 | `fr/embedding-space.qmd` | `en/embedding-space.qmd` | Relier chaque ID obtenu à une ligne de la matrice d'embedding. | Employer « adresse de ligne » pour l'index de la table ; la coordonnée vectorielle est une autre notion. |
-| `fr/positional-encoding.qmd` | `en/positional-encoding.qmd` | Montrer que l'ordre des mots du prompt compte, même si les IDs de tokens sont identiques. | Décrire la méthode positionnelle effectivement étudiée, sans généraliser à toutes les architectures. |
+| `fr/positional-encoding.qmd` | `en/positional-encoding.qmd` | Montrer que l'ordre du préfixe et des premiers éléments de continuation compte, même si les IDs de tokens sont identiques. | Décrire la méthode positionnelle effectivement étudiée, sans généraliser à toutes les architectures. |
 | `fr/contextualized-representations.qmd` | `en/contextualized-representations.qmd` | Suivre un token du prompt dans deux contextes légèrement différents. | Ne pas appeler « embedding » tout état caché ; distinguer vecteur initial et représentation contextualisée. |
 | `fr/transformer.qmd` | `en/transformer.qmd` | Vue d'ensemble du passage du prompt aux logits dans les blocs Transformer. | Garder le niveau système ; renvoyer les détails à leurs pages canoniques. |
 | `fr/queries-keys-values.qmd` | `en/queries-keys-values.qmd` | Isoler une position du prompt et visualiser ses Q/K/V. | Ne pas personnifier Q/K/V comme des questions, réponses ou mots. |
@@ -99,10 +99,10 @@ Les pages ci-dessous sont les destinations canoniques identifiées dans le parco
 | `fr/causal-masking.qmd` | `en/causal-masking.qmd` | Montrer qu'une position ne peut pas voir les tokens futurs de la réponse. | Distinguer masque causal et masque de padding. |
 | `fr/logits.qmd` | `en/logits.qmd` | Lire les scores de candidats au premier token de continuation. | Un logit n'est ni une probabilité ni un degré de vérité. |
 | `fr/probabilites.qmd` | `en/probabilities.qmd` | Normaliser les scores et comparer quelques tokens candidats. | Indiquer modèle, contexte, tokenizer et valeurs synthétiques si elles ne sont pas calculées. |
-| `fr/vraisemblance.qmd` | `en/likelihood.qmd` | Scorer la continuation jouet comme séquence observée. | Ne pas confondre score de séquence et qualité littéraire. |
+| `fr/vraisemblance.qmd` | `en/likelihood.qmd` | Scorer un court fragment observé (« Vous savez, ») avec des probabilités fictives ; conserver la continuation jouet pour les traces plus longues et contrôlées. | Ne pas confondre score de séquence et qualité littéraire. |
 | `fr/entropy.qmd` | `en/entropy.qmd` | Comparer une distribution concentrée et une distribution diffuse pour le token suivant. | L'entropie caractérise une distribution, pas la difficulté subjective du scribe. |
 | `fr/cross-entropy.qmd` | `en/cross-entropy.qmd` | Calculer la pénalité associée au token cible réellement observé. | Préciser la cible et la convention de réduction. |
-| `fr/loss.qmd` | `en/loss.qmd` | Agréger les pertes des tokens de la continuation jouet. | Ne pas présenter la loss comme un jugement humain de la réponse. |
+| `fr/loss.qmd` | `en/loss.qmd` | Agréger les pertes de trois unités observées du fragment (« Vous savez, »), en signalant l'hypothèse simplificatrice sur les tokens. | Ne pas présenter la loss comme un jugement humain de la réponse. |
 | `fr/gradients.qmd` | `en/gradients.qmd` | Illustrer la rétropropagation depuis la loss du prochain token. | Ne pas inventer de gradients ou de mise à jour sans calcul. |
 
 ### 4.2 Build — dépendances de construction
@@ -190,6 +190,7 @@ Pour changer de fil rouge sans perdre la cohérence du parcours :
 ## 7. Critères d'acceptation pour les intégrations futures
 
 - Le préfixe canonique est identique partout où l'on compare des résultats.
+- Les fragments de la scène restent courts et discrets ; les calculs simplifiés signalent explicitement toute hypothèse sur les unités traitées comme tokens.
 - La continuation jouet est identifiée comme texte pédagogique original, jamais comme sortie de modèle.
 - Les pages FR/EN sont alignées sur le même objectif et le même niveau de détail.
 - Les identifiants de tokens proviennent du tokenizer montré ; les « adresses de ligne » restent distinctes des coordonnées des vecteurs.
