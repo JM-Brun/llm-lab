@@ -1,0 +1,20 @@
+<section class="rope-attention-pipeline" data-lang="fr" aria-labelledby="rope-pipeline-title-fr">
+  <h3 id="rope-pipeline-title-fr">Du vecteur à la sortie : une tête d'attention pas à pas</h3>
+  <p>Mini-exemple déterministe à trois tokens et une tête de dimension 2. Les projections Q, K et V sont déjà calculées ; on isole l'effet de RoPE, du masque causal et du softmax.</p>
+  <div class="rope-pipeline-controls">
+    <label>Position de la requête <output data-pipe-out="query">2</output><input data-pipe-control="query" type="range" min="0" max="2" step="1" value="2"></label>
+    <label class="rope-pipeline-check"><input data-pipe-control="rope" type="checkbox" checked> Appliquer RoPE à Q et K</label>
+    <label class="rope-pipeline-check"><input data-pipe-control="causal" type="checkbox" checked> Appliquer le masque causal</label>
+  </div>
+  <div class="rope-pipeline-stages">
+    <div class="rope-pipeline-stage"><h4>1 · Projections</h4><p>Q, K et V proviennent du même flux caché, via trois projections distinctes.</p><div data-pipe-out="projections" class="rope-pipeline-data"></div></div>
+    <div class="rope-pipeline-stage"><h4>2 · Position</h4><p>RoPE tourne Qᵢ et chaque Kⱼ selon leur position ; V reste inchangé.</p><div data-pipe-out="rotations" class="rope-pipeline-data"></div></div>
+    <div class="rope-pipeline-stage"><h4>3 · Scores QKᵀ / √d</h4><p>Le produit scalaire est calculé pour chaque clé candidate.</p><div data-pipe-out="scores" class="rope-pipeline-data"></div></div>
+    <div class="rope-pipeline-stage"><h4>4 · Masque causal</h4><p>Les positions futures sont exclues avant softmax.</p><div data-pipe-out="mask" class="rope-pipeline-data"></div></div>
+    <div class="rope-pipeline-stage"><h4>5 · Softmax</h4><p>Les scores autorisés deviennent des poids qui somment à 1.</p><div data-pipe-out="weights" class="rope-pipeline-data"></div></div>
+    <div class="rope-pipeline-stage"><h4>6 · Agrégation des V</h4><p>La sortie est la somme pondérée des vecteurs V accessibles.</p><div data-pipe-out="output" class="rope-pipeline-data"></div></div>
+  </div>
+  <p class="rope-pipeline-insight" data-pipe-out="insight" aria-live="polite"></p>
+  <p class="rope-explorer-note">Les nombres sont un exemple pédagogique construit pour cette expérience, pas des activations mesurées sur un modèle entraîné. Désactiver le masque causal montre volontairement une attention non causale.</p>
+  <noscript>Cette expérience nécessite JavaScript ; les étapes mathématiques sont décrites dans le texte.</noscript>
+</section>

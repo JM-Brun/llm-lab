@@ -1,0 +1,15 @@
+<section class="rope-pair-layout" data-lang="en" aria-labelledby="rope-layout-title-en">
+  <h3 id="rope-layout-title-en">Why pairing conventions matter</h3>
+  <p>The two layouts below describe the same two rotations when coordinate order and frequency assignment stay consistent.</p>
+  <div class="rope-layout-controls">
+    <label>Pair 0 angle <output data-layout-out="a0">0.40</output><input data-layout-control="a0" type="range" min="-1.5" max="1.5" step="0.05" value="0.4"></label>
+    <label>Pair 1 angle <output data-layout-out="a1">0.90</output><input data-layout-control="a1" type="range" min="-1.5" max="1.5" step="0.05" value="0.9"></label>
+    <label class="rope-pipeline-check"><input data-layout-control="mismatch" type="checkbox"> Deliberately mix conventions</label>
+  </div>
+  <div class="rope-layout-grid">
+    <div><h4>Interleaved: [x₀, y₀, x₁, y₁]</h4><p>Pairs: (0, 1) at θ₀; (2, 3) at θ₁</p><output data-layout-out="interleaved"></output></div>
+    <div><h4>Split-half: [x₀, x₁, y₀, y₁]</h4><p>Pairs: (0, 2) at θ₀; (1, 3) at θ₁</p><output data-layout-out="split"></output></div>
+  </div>
+  <p class="rope-layout-result" data-layout-out="result" aria-live="polite"></p>
+  <p class="rope-explorer-note">The starting vector is [1, 2, 3, 4] in interleaved layout. The permutation to split-half is [1, 3, 2, 4]. The split-half result is converted back to interleaved order before comparison.</p>
+</section>

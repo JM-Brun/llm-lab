@@ -303,6 +303,8 @@ These resources are curated for teaching design and guided experimentation. Incl
 
 ## Remote GPU training and managed execution
 
+## Remote GPU training and managed execution
+
 - **YouTube — “GPU-POOR? NO PROBLEM!... thanks to 🤗 Jobs”**: https://www.youtube.com/watch?v=7Yx_7byZiFU
   - **Use for:** an operational illustration of moving a NanoGPT-like training command from constrained local hardware to managed Hugging Face Jobs through a shell launcher.
   - **Review status:** partial, transcript-assisted; a third-party page reproducing a transcript attributed to the Hugging Face video was inspected, but the audiovisual video, code repository and training logs were not. The transcript reports a ~50M-parameter GPT-2-style model trained on TinyStories, with a Storage Bucket used to stage code and persist outputs. Current A100-large documentation lists $2.50/hour; the reported ~30-minute run is broadly consistent with a little over $1, but this was not independently reproduced. See the [source review](source-reviews/huggingface-jobs-nanogpt-video-2026-11.md).

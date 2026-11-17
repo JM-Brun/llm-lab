@@ -1,0 +1,20 @@
+<section class="relative-bias-decomposition" data-lang="fr" aria-labelledby="relative-bias-title-fr">
+  <h3 id="relative-bias-title-fr">Expérience : décomposer un score d'attention avec biais relatif</h3>
+  <p>On part d'un score de contenu, puis on ajoute un terme dépendant de la position avant softmax. Comparez un biais conditionné par la requête à une table par buckets de type T5.</p>
+  <div class="relative-bias-controls">
+    <label>Score de contenu <output data-out="content">1,2</output><input data-control="content" type="range" min="-4" max="4" step="0.1" value="1.2"></label>
+    <label>Décalage relatif (clé − requête) <output data-out="distance">−3</output><input data-control="distance" type="range" min="-16" max="16" step="1" value="-3"></label>
+    <label>Caractéristique de l'état de requête <output data-out="state">0,8</output><input data-control="state" type="range" min="-2" max="2" step="0.1" value="0.8"></label>
+    <label>Intensité du biais <output data-out="strength">1,0</output><input data-control="strength" type="range" min="0" max="2" step="0.1" value="1"></label>
+    <label>Famille de biais<select data-control="mode"><option value="conditioned" selected>Biais relatif conditionné par la requête (illustratif)</option><option value="bucketed">Biais par buckets de type T5 (illustratif)</option><option value="none">Sans biais relatif</option></select></label>
+  </div>
+  <div class="relative-bias-equation" aria-live="polite">
+    <p><strong>Décomposition du score</strong></p>
+    <div><span>Terme de contenu</span><output data-out="content-term">1,200</output></div>
+    <div><span>Terme positionnel relatif</span><output data-out="bias">−0,145</output></div>
+    <div class="relative-bias-total"><span>Score avant softmax</span><output data-out="total">1,055</output></div>
+  </div>
+  <p data-explanation></p>
+  <p class="relative-bias-caveat"><strong>Important :</strong> cette paramétrisation jouet et transparente n'est ni la fonction apprise exacte d'Inkling ni les poids T5 entraînés. T5 utilise des valeurs apprises par tête indexées par buckets de positions relatives ; l'exemple conditionné par la requête fait dépendre le biais d'une caractéristique de l'état de requête et de la distance. Le score affiché est calculé avant softmax et avant l'application éventuelle du masque causal.</p>
+  <noscript>Un biais relatif est ajouté au score d'attention fondé sur le contenu avant softmax.</noscript>
+</section>

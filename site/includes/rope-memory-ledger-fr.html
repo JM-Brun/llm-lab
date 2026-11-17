@@ -1,0 +1,20 @@
+<section class="rope-memory-ledger" data-lang="fr" aria-labelledby="rope-memory-title-fr">
+  <h3 id="rope-memory-title-fr">Distinguer mémoire des tables RoPE et cache KV</h3>
+  <p>Réglez les paramètres d’une couche. Réduire la fraction rotative diminue les tables cosinus/sinus, mais ne réduit pas automatiquement les tenseurs K et V stockés dans le cache KV.</p>
+  <div class="rope-memory-controls">
+    <label>Longueur de séquence <output data-out="seq">8192</output><input data-control="seq" type="range" min="512" max="32768" step="512" value="8192"></label>
+    <label>Fraction rotative <output data-out="fraction">100 %</output><input data-control="fraction" type="range" min="10" max="100" step="10" value="100"></label>
+    <label>Batch <output data-out="batch">1</output><input data-control="batch" type="range" min="1" max="16" step="1" value="1"></label>
+    <label>Têtes KV <output data-out="heads">8</output><input data-control="heads" type="range" min="1" max="32" step="1" value="8"></label>
+    <label>Dimension de tête <output data-out="dim">128</output><select data-control="dim"><option>64</option><option selected>128</option><option>256</option></select></label>
+    <label>Précision <output data-out="bytes">2 octets</output><select data-control="bytes"><option value="2" selected>BF16 / FP16</option><option value="4">FP32</option><option value="1">8-bit (hypothèse)</option></select></label>
+  </div>
+  <div class="rope-memory-results" aria-live="polite">
+    <div><strong>Tables cos/sin RoPE</strong><output data-out="rope"></output></div>
+    <div><strong>Cache KV (K + V)</strong><output data-out="kv"></output></div>
+    <div><strong>Rapport cache KV / tables</strong><output data-out="ratio"></output></div>
+    <div><strong>Dimensions rotatives</strong><output data-out="rotary"></output></div>
+  </div>
+  <p class="rope-memory-note">Estimation pour une couche : tables cos/sin = 2 × séquence × (dimensions rotatives / 2) éléments ; cache KV = 2 × batch × séquence × têtes KV × dimension complète de tête. Le calcul suppose que K et V restent de pleine largeur dans le cache. Il exclut surcoûts d’allocation, alignement, réplication et autres buffers. La quantification du cache KV est une hypothèse de taille par élément, pas une description d’un format précis.</p>
+  <noscript>Cette estimation interactive nécessite JavaScript. La distinction conceptuelle reste valable : tables trigonométriques et cache KV sont deux postes mémoire distincts.</noscript>
+</section>

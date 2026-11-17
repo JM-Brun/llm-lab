@@ -3,6 +3,22 @@ project:
   output-dir: _site
   resources:
     - 404.html
+    - scripts/rope-pair-explorer.js
+    - styles/rope-pair-explorer.css
+    - scripts/rope-attention-pipeline.js
+    - styles/rope-attention-pipeline.css
+    - scripts/rope-pair-layout.js
+    - styles/rope-pair-layout.css
+    - scripts/rope-frequency-explorer.js
+    - styles/rope-frequency-explorer.css
+    - scripts/rope-memory-ledger.js
+    - styles/rope-memory-ledger.css
+    - scripts/nope-prefix-experiment.js
+    - styles/nope-prefix-experiment.css
+    - scripts/hybrid-rope-nope.js
+    - styles/hybrid-rope-nope.css
+    - scripts/relative-bias-decomposition.js
+    - styles/relative-bias-decomposition.css
     - learning-map-data-fr.json
     - learning-map-data-en.json
     - knowledge-graph.jsonld

@@ -1,0 +1,242 @@
+schema_version: 1
+source_id: sebastian-raschka-understanding-positional-embeddings-2026
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Complete article body and figure captions inspected on 2026-11-16; sections 1–7 and the article's equations and PyTorch snippets were reviewed."
+      - "The article explicitly presents a progression from absolute and sinusoidal position vectors to RoPE mechanics, implementation, and architecture comparisons."
+    inferred_elements:
+      - "The exact prerequisite structure is reconstructed from the mathematical and implementation steps; the article does not publish a formal prerequisite graph."
+      - "The pedagogical role of each figure is inferred from its caption and placement; the 38 visual assets were not inspected directly."
+    limitations:
+      - "The 38 figure assets were not individually downloaded or visually inspected; the graph reflects figure captions and their placement."
+      - "The linked Qwen3 notebook was not independently audited or executed."
+      - "Some architecture comparisons and model examples are author-curated snapshots and may change with model revisions."
+  source_graph:
+    nodes:
+      - {id: src-token-order, kind: problem, description: "Token sequences have order that content embeddings alone do not explicitly identify.", locator: "Introduction"}
+      - {id: src-token-embedding, kind: representation, description: "Vector representation of token identity before positional information is added.", locator: "§§1–2"}
+      - {id: src-absolute-position, kind: representation, description: "Learned absolute position vector added to token embeddings in early GPT models.", locator: "§2"}
+      - {id: src-sinusoidal-position, kind: representation, description: "Fixed sinusoidal vector added at the input in the original Transformer.", locator: "§2"}
+      - {id: src-query-key, kind: representation, description: "Projected query and key vectors whose dot product determines attention scores.", locator: "§3"}
+      - {id: src-attention-scores, kind: intermediate, description: "Scaled dot-product scores before softmax normalization.", locator: "§§3, 6.3"}
+      - {id: src-full-rope, kind: mechanism, description: "Standard RoPE rotates all paired dimensions of query and key vectors.", locator: "§3"}
+      - {id: src-rotary-pair, kind: operation, description: "Two-dimensional rotation applied to paired query/key features at a position.", locator: "§3"}
+      - {id: src-frequency-schedule, kind: parameterization, description: "Geometrically spaced inverse frequencies define the rotation angle of each feature pair.", locator: "§4"}
+      - {id: src-relative-offset, kind: property, description: "The rotated QK contribution depends on the relative position offset for fixed content vectors and frequency.", locator: "§3"}
+      - {id: src-rope-cache, kind: implementation, description: "Precomputed cosine and sine values indexed by position and rotary feature pair.", locator: "§5"}
+      - {id: src-pairing-layout, kind: implementation-choice, description: "Interleaved and split-half layouts assign coordinates to rotation pairs.", locator: "§5"}
+      - {id: src-partial-rope, kind: architectural-variant, description: "Only a subset of each attention head's dimensions undergoes rotary transformation.", locator: "§6.1"}
+      - {id: src-nope-layer, kind: architectural-variant, description: "A layer omits explicit positional transformations while retaining the causal attention structure.", locator: "§6.2"}
+      - {id: src-causal-prefix, kind: mechanism, description: "Nested causal prefixes can expose implicit order information without an explicit position vector.", locator: "§6.2"}
+      - {id: src-relative-bias, kind: mechanism, description: "A learned relative-position term is added to attention scores before softmax.", locator: "§6.3"}
+      - {id: src-hybrid-layers, kind: architecture, description: "A model mixes layers that use RoPE with layers that omit it.", locator: "§6.4"}
+      - {id: src-qwen3-implementation, kind: worked-implementation, description: "A from-scratch PyTorch Qwen3 implementation uses split-half pairing, a model-configured theta base of 1,000,000, precomputed non-persistent cosine/sine buffers, grouped-query attention and QK normalization before RoPE.", locator: "§5; linked standalone-qwen3.ipynb, code cells 10–15"}
+    edges:
+      - {from: src-token-embedding, type: combined-with, to: src-absolute-position}
+      - {from: src-token-embedding, type: combined-with, to: src-sinusoidal-position}
+      - {from: src-query-key, type: contributes-to, to: src-attention-scores}
+      - {from: src-full-rope, type: applies-to, to: src-query-key}
+      - {from: src-query-key, type: transformed-by, to: src-rotary-pair}
+      - {from: src-frequency-schedule, type: parameterizes, to: src-rotary-pair}
+      - {from: src-rotary-pair, type: yields, to: src-relative-offset}
+      - {from: src-rope-cache, type: supplies-trigonometric-values-to, to: src-rotary-pair}
+      - {from: src-pairing-layout, type: determines-feature-pairs-for, to: src-rotary-pair}
+      - {from: src-partial-rope, type: restricts-dimensions-of, to: src-rotary-pair}
+      - {from: src-nope-layer, type: omits, to: src-rotary-pair}
+      - {from: src-causal-prefix, type: provides-implicit-order-signal-to, to: src-nope-layer}
+      - {from: src-relative-bias, type: modifies, to: src-attention-scores}
+      - {from: src-hybrid-layers, type: combines, to: src-full-rope}
+      - {from: src-hybrid-layers, type: combines, to: src-nope-layer}
+      - {from: src-qwen3-implementation, type: implements, to: src-rotary-pair}
+    interpretation: "Editorial reconstruction of the article's explanatory and architectural model, not a formal ontology authored by the source. The edges summarize the article's technical account; they do not assert that its architecture examples are exhaustive."
+  visual_analysis:
+    inspection_scope: "All 38 numbered figure captions and surrounding HTML explanations inspected; original image pixels not individually inspected."
+    completeness: complete-caption-audit
+    limitation: "Subscriber-only bulk gallery image export and metadata were not accessed; assessment is based on public captions, equations and context."
+    implemented_components:
+      - {id: positional-entry-points, status: implemented-bilingual, files: [site/images/positional-entry-points-fr.svg, site/images/positional-entry-points-en.svg], covers: "Input addition, Q/K RoPE, score-level relative bias."}
+      - {id: rope-pair-explorer, status: implemented-bilingual-pending-browser-validation, files: [site/includes/rope-pair-explorer-fr.html, site/includes/rope-pair-explorer-en.html, site/scripts/rope-pair-explorer.js, site/styles/rope-pair-explorer.css], covers: "Pairwise Q/K rotations, positions, frequency, shared-shift invariance and one-pair dot-product contribution."}
+      - {id: qk-attention-pipeline, status: implemented-bilingual-pending-browser-validation, files: [site/includes/rope-attention-pipeline-fr.html, site/includes/rope-attention-pipeline-en.html, site/scripts/rope-attention-pipeline.js, site/styles/rope-attention-pipeline.css], covers: "Q/K/V projections, optional RoPE, scaled dot-product scores, causal masking, softmax and weighted value aggregation."}
+      - {id: rope-pair-layout-explorer, status: implemented-bilingual-pending-browser-validation, files: [site/includes/rope-pair-layout-fr.html, site/includes/rope-pair-layout-en.html, site/scripts/rope-pair-layout.js, site/styles/rope-pair-layout.css], covers: "Interleaved and split-half coordinate pairing, consistent permutation, frequency assignment and deliberate mismatch counterexample."}
+      - {id: rope-frequency-explorer, status: implemented-bilingual-pending-browser-validation, files: [site/includes/rope-frequency-explorer-fr.html, site/includes/rope-frequency-explorer-en.html, site/scripts/rope-frequency-explorer.js, site/styles/rope-frequency-explorer.css], covers: "Geometric inverse-frequency schedule, head dimension, model base, position-dependent phase and wavelength."}
+      - {id: partial-rope-memory-ledger, status: implemented-bilingual-pending-browser-validation, files: [site/includes/rope-memory-ledger-fr.html, site/includes/rope-memory-ledger-en.html, site/scripts/rope-memory-ledger.js, site/styles/rope-memory-ledger.css], covers: "Separate estimated cosine/sine table memory from full-width K/V cache memory; explicitly state one-layer and dtype assumptions."}
+      - {id: nope-prefix-experiment, status: implemented-bilingual-pending-browser-validation, files: [site/includes/nope-prefix-experiment-fr.html, site/includes/nope-prefix-experiment-en.html, site/scripts/nope-prefix-experiment.js, site/styles/nope-prefix-experiment.css], covers: "Nested causal visibility, uniform/content-dependent toy attention, aggregate outputs and constant-content counterexample; not a theorem or length-generalization result."}
+      - {id: hybrid-rope-nope-layer-strip, status: implemented-bilingual-pending-browser-validation, files: [site/includes/hybrid-rope-nope-fr.html, site/includes/hybrid-rope-nope-en.html, site/scripts/hybrid-rope-nope.js, site/styles/hybrid-rope-nope.css], covers: "Six editable layer-local RoPE/NoPE choices, persistent causal masking, and qualified explanation of contextualized-state inheritance; conceptual routing diagram, not trained activations."}
+      - {id: relative-bias-score-decomposition, status: implemented-bilingual-pending-browser-validation, files: [site/includes/relative-bias-decomposition-fr.html, site/includes/relative-bias-decomposition-en.html, site/scripts/relative-bias-decomposition.js, site/styles/relative-bias-decomposition.css], covers: "Content score plus relative bias before softmax; contrasts query-conditioned illustrative bias with T5-style bucket lookup and no-bias baseline."}
+    implementation_caveats:
+      - "The interactive explorer fixes the unrotated q and k vectors; it demonstrates the positional rotation identity, not changes to hidden states caused by adding a real prefix."
+      - "The displayed dot product is one 2D feature-pair contribution, not the full multi-pair attention-head score."
+      - "JavaScript and CSS are registered as Quarto resources; browser rendering and keyboard/screen-reader behaviour still require validation."
+      - "The six-stage attention pipeline uses a synthetic three-token, two-dimensional example; it is an explanatory calculation, not a trace from a trained model."
+      - "The causal-mask toggle intentionally exposes future positions when disabled; this is a didactic counterfactual, not a recommended autoregressive configuration."
+      - "The pipeline rotates Q and K only; V vectors remain unchanged and are aggregated using softmax weights."
+    figure_groups:
+      - {figures: [1, 35, 36, 37, 38], role: architecture-orientation-and-evidence, decision: "Use dated and caveated context panels; do not teach core mechanisms through static gallery snapshots."}
+      - {figures: [2, 5, 7, 14], role: architectural-placement, decision: "Recreate insertion points of absolute addition, sinusoidal addition and Q/K rotation."}
+      - {figures: [3, 4, 6, 8, 9, 10, 11, 12, 13], role: motivation-and-absolute-position-baselines, decision: "Preserve progression from word order to vectors, frequencies and fixed-offset structure."}
+      - {figures: [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25], role: rope-geometry-and-attention, decision: "Prioritize pair rotation, dot-product contribution, shared-shift invariance, causal mask and full-head composition."}
+      - {figures: [26, 27, 28], role: implementation-and-tensor-layout, decision: "Teach cosine/sine tables, broadcasting, split-half/interleaved mapping and permutation equivalence."}
+      - {figures: [29], role: partial-rope, decision: "Separate rotary dimensions and RoPE table memory from full-width KV-cache memory."}
+      - {figures: [30, 31, 32], role: causal-mask-nope-and-hybrid-layers, decision: "Use the NoPE example as a toy constructive mechanism, not a universal guarantee; show inherited positional signals in later layers."}
+      - {figures: [33, 34], role: learned-relative-bias, decision: "Separate score-level bias mechanism from a particular architecture example; contrast T5 buckets and input-conditioned bias."}
+    high_value_sequences:
+      - {figures: [3, 4, 6], learning_move: "Meaning/order → token identity and position → vector addition."}
+      - {figures: [8, 9, 10, 11, 12, 13], learning_move: "Feature pairs → frequencies → sampled sinusoidal coordinates → fixed-offset property."}
+      - {figures: [15, 16, 17, 18, 19, 20, 21, 22, 23], learning_move: "Projection/head layout → pair rotation → score effect → invariance → attention matrix and comparison."}
+      - {figures: [24, 25, 26, 27, 28], learning_move: "Single pair → full head → matrix form → code/tables → implementation layout."}
+      - {figures: [29, 30, 31, 32, 33, 34], learning_move: "Modern alternatives: partial rotation, causal-only signals, hybrid layers and score bias."}
+    editorial_findings:
+      - "Figure 15 is called Figure 12 in the preceding paragraph introducing Q/K projection and head reshaping; Figure 12 is already the absolute-vs-sinusoidal comparison."
+      - "RoPE shared-shift invariance holds for the positional QK transformation when pre-rotation Q/K are fixed; adding a real prefix can change hidden states and therefore Q/K."
+      - "The NoPE uniform-attention averaging figure is a constructive toy signal, not a universal proof of robust length generalization."
+      - "Architecture gallery charts require dates, denominators, duplicate/variant rules and sample sizes."
+      - "Partial RoPE reduces the precomputed cosine/sine table, not the full-width KV cache."
+    build_priorities:
+      P0: [position-entry-point-map, rope-pair-explorer, qk-attention-pipeline, feature-pair-layout-explorer]
+      P1: [hybrid-layer-strip, relative-bias-score-decomposition]
+      P2: [dated-architecture-evidence-dashboard]
+    interaction_pattern: "predict → manipulate one variable → observe tensor/geometry → explain invariant or failure → run a small test"
+    accessibility: "Every interactive diagram must have a static annotated fallback and accompanying text explanation."
+
+  learning_outcomes:
+    - {status: inferred, outcome: "Distinguish learned absolute, fixed sinusoidal and rotary positional mechanisms by where they enter the Transformer computation.", basis: "Historical comparison in §§1–3."}
+    - {status: inferred, outcome: "Explain how pairwise rotations of Q and K create a relative-offset effect in attention scores.", basis: "RoPE derivation in §3."}
+    - {status: inferred, outcome: "Implement the RoPE frequency schedule and cosine/sine tables while respecting tensor shapes and feature-pair conventions.", basis: "PyTorch walkthrough in §5."}
+    - {status: inferred, outcome: "Compare partial RoPE, NoPE, learned relative bias and hybrid layer designs without treating them as equivalent.", basis: "Architecture comparison in §6."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Vectors, dot products, sine/cosine and 2D rotations.", basis: "RoPE is derived through paired coordinate rotations."}
+    - {status: inferred, topic: "Transformer self-attention and query/key/value projections.", basis: "The article places RoPE inside the Q/K attention path."}
+    - {status: inferred, topic: "Basic PyTorch tensors, broadcasting and indexing.", basis: "The implementation section constructs and applies frequency tables."}
+  teaching_route:
+    - {order: 1, section: "Introduction and positional motivation", function: motivate-order-information, moves: ["Explain why token order matters", "Separate content identity from position"]}
+    - {order: 2, section: "Absolute and sinusoidal positional vectors", function: establish-historical-baselines, moves: ["Compare learned GPT position vectors", "Explain fixed sinusoidal vectors"]}
+    - {order: 3, section: "RoPE geometry", function: derive-relative-position-mechanism, moves: ["Rotate one feature pair", "Extend to multiple frequencies", "Connect rotations to relative offsets in QK scores"]}
+    - {order: 4, section: "Frequency schedule", function: connect-math-to-parameterization, moves: ["Derive inverse frequencies", "Relate position to rotation angle"]}
+    - {order: 5, section: "PyTorch and Qwen3 implementation", function: operationalize-equations, moves: ["Build cosine/sine tables", "Handle feature-pair conventions", "Apply RoPE to Q and K"]}
+    - {order: 6, section: "Modern architecture variants", function: compare-design-alternatives, moves: ["Introduce partial RoPE", "Explain NoPE and implicit causal order", "Compare learned relative bias and hybrid layers"]}
+    - {order: 7, section: "Conclusion and architecture comparison", function: consolidate-and-qualify, moves: ["Summarize trade-offs", "Separate observed model examples from universal claims"]}
+  pedagogical_strengths:
+    - "Moves from intuitive token order to geometric derivation, tensor implementation and architecture-level design."
+    - "Uses diagrams and a from-scratch PyTorch implementation to connect equations with operational code."
+    - "Explains implementation details such as feature-pairing layouts and Q/K placement that are easy to overlook."
+    - "Compares modern alternatives instead of treating full RoPE as the only positional design."
+  pedagogical_limits:
+    - "The architecture gallery is curated and time-sensitive; it is not a representative census."
+    - "Some claims about NoPE length generalization depend on specific experiments and should be checked against primary studies."
+    - "The article's visual assets were not individually inspected in this source audit."
+    - "The linked end-to-end Qwen3 implementation was not executed as part of this ingestion."
+  comparison:
+    dossier: docs/source-reviews/raschka-positional-embeddings-2026-11.md
+    canonical_graph: data/concepts.yml
+    canonical_routes: [data/guided-route.yml, docs/learning-path.md]
+    decision: "Extend the existing bilingual RoPE deep dives rather than create a second positional-encoding introduction. Reuse the source's technical progression as a comparison lens, but keep its source-local teaching graph separate from the canonical concept graph."
+    structures_kept_separate: [source-semantic-graph, source-pedagogical-route, canonical-concept-graph, canonical-learning-routes, site-navigation]
+
+items:
+  - id: sebastian-raschka-understanding-positional-embeddings-2026:rope-relative-offset
+    kind: derivation
+    summary: "For each feature pair and frequency, rotating Q and K makes their dot-product contribution depend on relative offset; a common shift of both positions preserves it."
+    locator: {type: section, value: "§§3.4–3.5"}
+    evidence:
+      kind: mathematical-derivation
+      confidence: established
+      scope: "Rotation identities and common-position-shift invariance."
+      assumptions: ["Unrotated Q/K components and frequency are fixed for the comparison."]
+      limitations: ["The full score does not depend on distance alone; content-derived Q/K also matter."]
+    disposition: already-covered
+    classification: {primary_theme: architectures-mechanisms, concept_ids: [positional-encoding, query, key, attention-score]}
+    candidate_destinations: {pages: [fr/rope, en/rope]}
+  - id: sebastian-raschka-understanding-positional-embeddings-2026:frequencies-pytorch
+    kind: implementation-pattern
+    summary: "Standard RoPE uses geometrically spaced inverse frequencies; position-scaled angles generate cosine/sine tables broadcast across batch and heads."
+    locator: {type: section, value: "§§4–5.2"}
+    evidence:
+      kind: directly-inspected-code-and-equations
+      confidence: established
+      scope: "Frequency formula, table shapes, broadcasting and PyTorch snippets."
+      assumptions: ["Base 10,000 is illustrative; model configurations may differ."]
+      limitations: ["Snippets are not production implementations for every RoPE variant."]
+    disposition: integrate
+    classification: {primary_theme: mathematical-tools-geometry, concept_ids: [positional-encoding, query, key]}
+    candidate_destinations: {pages: [fr/rope, en/rope]}
+  - id: sebastian-raschka-understanding-positional-embeddings-2026:pairing-conventions
+    kind: implementation-pattern
+    summary: "Split-half and interleaved feature pairing are equivalent after a consistent feature permutation; mismatched conventions change the computation."
+    locator: {type: section, value: "§§3.3, 5.3"}
+    evidence:
+      kind: implementation-comparison
+      confidence: established
+      scope: "Mathematical equivalence and PyTorch examples."
+      assumptions: ["The same permutation is applied consistently to Q, K and model parameters."]
+      limitations: ["Code alone does not establish checkpoint compatibility."]
+    disposition: integrate
+    classification: {primary_theme: architectures-mechanisms, concept_ids: [positional-encoding, query, key]}
+    candidate_destinations: {pages: [fr/rope, en/rope]}
+  - id: sebastian-raschka-understanding-positional-embeddings-2026:partial-rope
+    kind: mechanism
+    summary: "Partial RoPE rotates only a subset of each Q/K head's dimensions and leaves the rest unchanged."
+    locator: {type: section, value: "§6.1"}
+    evidence:
+      kind: architecture-configuration-and-author-analysis
+      confidence: context-dependent
+      scope: "MiniMax-M3 configuration and cosine/sine table memory discussion."
+      assumptions: ["Rotary dimension is interpreted relative to full head dimension."]
+      limitations: ["This reduces positional table width, not the full KV cache; savings depend on context length and dtype."]
+    disposition: integrate
+    classification: {primary_theme: architectures-mechanisms, concept_ids: [positional-encoding, query, key]}
+    candidate_destinations: {pages: [fr/rope, en/rope]}
+  - id: sebastian-raschka-understanding-positional-embeddings-2026:nope
+    kind: mechanism
+    summary: "NoPE omits explicit positional transformations in a layer while retaining causal masking, whose nested prefix visibility can provide an implicit order signal."
+    locator: {type: section, value: "§6.2"}
+    evidence:
+      kind: cited-research-and-toy-explanation
+      confidence: context-dependent
+      scope: "Prefix-average illustration and summary of length-generalization experiments."
+      assumptions: ["The model is autoregressive and retains its causal mask."]
+      limitations: ["Implicit order is not an explicit distance coordinate; results are task- and training-dependent."]
+    disposition: integrate
+    classification: {primary_theme: architectures-mechanisms, concept_ids: [positional-encoding, causal-mask, self-attention]}
+    candidate_destinations: {pages: [fr/rope, en/rope, fr/positional-encoding, en/positional-encoding]}
+  - id: sebastian-raschka-understanding-positional-embeddings-2026:relative-bias
+    kind: mechanism
+    summary: "A learned relative-position term can be added to scaled QK scores before softmax; the Inkling example conditions it on query hidden state and relative distance."
+    locator: {type: section, value: "§6.3"}
+    evidence:
+      kind: architecture-description
+      confidence: context-dependent
+      scope: "Article description of Inkling and comparison with T5."
+      assumptions: ["Exact bias function must be checked against model configuration."]
+      limitations: ["Inkling's described mechanism is not identical to T5's bucketed relative bias."]
+    disposition: integrate
+    classification: {primary_theme: architectures-mechanisms, concept_ids: [positional-encoding, attention-score, query]}
+    candidate_destinations: {pages: [fr/rope, en/rope]}
+  - id: sebastian-raschka-understanding-positional-embeddings-2026:gallery-snapshot
+    kind: claim
+    summary: "The author reports more partial-RoPE and mixed RoPE/NoPE entries in the 2026 gallery snapshot than in the 2025 grouping."
+    locator: {type: section, value: "§6.4; Figures 35–37"}
+    evidence:
+      kind: author-curated-gallery-count
+      confidence: context-dependent
+      scope: "Each gallery card is counted once."
+      assumptions: ["Gallery labels are consistent across release groups."]
+      limitations: ["Not a systematic census; small groups and multiple variants limit generalization."]
+    disposition: clarify
+    classification: {primary_theme: architectures-mechanisms, concept_ids: [positional-encoding]}
+    candidate_destinations: {pages: [fr/rope, en/rope]}
+
+  - id: sebastian-raschka-understanding-positional-embeddings-2026:qwen3-notebook-implementation
+    kind: implementation-pattern
+    summary: "The linked standalone Qwen3 notebook constructs RoPE cosine/sine tables from the configured theta base, applies split-half rotations to queries and keys after QK normalization, and registers the tables as non-persistent model buffers."
+    locator: {type: external-code, value: "rasbt/LLMs-from-scratch/ch05/11_qwen3/standalone-qwen3.ipynb; code cells 10, 11, 13 and 15"}
+    evidence:
+      kind: static-code-inspection
+      confidence: well-supported
+      scope: "Notebook JSON and relevant code cells inspected through the linked GitHub repository; no execution was performed."
+      assumptions: ["The inspected notebook revision is the one linked by the article at review time."]
+      limitations: ["The shown forward path precomputes a fixed context-length table and slices it by sequence length; no incremental KV-cache or explicit position-ID path was found in the inspected model forward cell.", "No numerical outputs or runtime compatibility were independently verified."]
+    disposition: integrate
+    classification: {primary_theme: architectures-mechanisms, concept_ids: [positional-encoding, query, key, attention-score]}
+    candidate_destinations: {pages: [fr/rope, en/rope]}

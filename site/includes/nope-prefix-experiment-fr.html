@@ -1,0 +1,21 @@
+<section class="nope-prefix-experiment" data-lang="fr" aria-labelledby="nope-prefix-title-fr">
+  <h3 id="nope-prefix-title-fr">Expérience : que révèle un préfixe causal sans RoPE ?</h3>
+  <p>Dans une couche NoPE, aucune rotation ni coordonnée positionnelle explicite n’est ajoutée ici. Le masque causal limite néanmoins chaque requête au préfixe qui la précède. Explorez ce que cette visibilité emboîtée peut — et ne peut pas — révéler.</p>
+  <div class="nope-controls">
+    <label>Position de la requête <output data-out="position">4</output><input data-control="position" type="range" min="0" max="7" step="1" value="4"></label>
+    <label>Motif des contenus <select data-control="pattern"><option value="ramp" selected>Progression distincte</option><option value="alternating">Alternance −1 / +1</option><option value="constant">Contenus identiques</option></select></label>
+    <label>Distribution d’attention <select data-control="attention"><option value="uniform" selected>Uniforme sur le préfixe</option><option value="content">Dépendante du contenu (softmax)</option></select></label>
+    <label>Température softmax <output data-out="temperature">1,0</output><input data-control="temperature" type="range" min="0.2" max="3" step="0.1" value="1"></label>
+  </div>
+  <div class="nope-prefix-results" aria-live="polite">
+    <div><strong>Clés visibles</strong><output data-out="visible">5 / 8</output></div>
+    <div><strong>Somme pondérée des valeurs</strong><output data-out="aggregate"></output></div>
+    <div><strong>Entropie des poids</strong><output data-out="entropy"></output></div>
+  </div>
+  <h4>Préfixe accessible et poids d’attention</h4>
+  <div class="nope-token-strip" data-token-strip aria-label="Tokens et positions visibles"></div>
+  <div class="nope-weight-list" data-weight-list></div>
+  <p class="nope-prefix-explanation" data-explanation></p>
+  <p class="nope-caveat"><strong>Limite essentielle :</strong> le nombre de clés visibles dépend de la position, mais la sortie agrégée ne permet pas toujours de retrouver cette position. Avec des contenus identiques, la moyenne reste identique quelle que soit la longueur du préfixe. Un vrai Transformer peut exploiter plusieurs couches, plusieurs têtes, des représentations riches et des interactions non linéaires ; ce jouet n’est ni une preuve générale ni une mesure de généralisation en longueur.</p>
+  <noscript>Cette expérience nécessite JavaScript. Le masque causal autorise les clés j ≤ i : les préfixes visibles sont emboîtés, même sans encodage positionnel explicite.</noscript>
+</section>

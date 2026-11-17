@@ -1,0 +1,15 @@
+<section class="rope-pair-layout" data-lang="fr" aria-labelledby="rope-layout-title-fr">
+  <h3 id="rope-layout-title-fr">Pourquoi les conventions de paires comptent</h3>
+  <p>Les deux dispositions ci-dessous décrivent les mêmes deux rotations si l'ordre des coordonnées et l'affectation des fréquences restent cohérents.</p>
+  <div class="rope-layout-controls">
+    <label>Angle de la paire 0 <output data-layout-out="a0">0,40</output><input data-layout-control="a0" type="range" min="-1.5" max="1.5" step="0.05" value="0.4"></label>
+    <label>Angle de la paire 1 <output data-layout-out="a1">0,90</output><input data-layout-control="a1" type="range" min="-1.5" max="1.5" step="0.05" value="0.9"></label>
+    <label class="rope-pipeline-check"><input data-layout-control="mismatch" type="checkbox"> Mélanger volontairement les conventions</label>
+  </div>
+  <div class="rope-layout-grid">
+    <div><h4>Interleaved : [x₀, y₀, x₁, y₁]</h4><p>Paires : (0, 1) à θ₀ ; (2, 3) à θ₁</p><output data-layout-out="interleaved"></output></div>
+    <div><h4>Split-half : [x₀, x₁, y₀, y₁]</h4><p>Paires : (0, 2) à θ₀ ; (1, 3) à θ₁</p><output data-layout-out="split"></output></div>
+  </div>
+  <p class="rope-layout-result" data-layout-out="result" aria-live="polite"></p>
+  <p class="rope-explorer-note">Le vecteur de départ est [1, 2, 3, 4] en disposition interleaved. La permutation vers split-half est [1, 3, 2, 4]. Le résultat split-half est reconverti dans l'ordre interleaved avant comparaison.</p>
+</section>
