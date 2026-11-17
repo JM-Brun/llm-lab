@@ -1,0 +1,121 @@
+schema_version: 1
+source_id: hutter-universal-algorithmic-intelligence-2007
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Hutter's 2007 report was inspected in the sections defining Kolmogorov complexity, the universal mixture, AIXI and the detailed AIXI(t,l) construction."
+      - "The teaching route below is an editorial reconstruction of those sections, not a route formally declared by the author."
+    inferred_elements:
+      - "Learning outcomes and prerequisites are inferred from the mathematical exposition."
+      - "The distinction between K, the universal semimeasure, Solomonoff induction and active decision-making is made explicit for learners."
+  source_graph:
+    nodes:
+      - {id: src-kolmogorov-complexity, kind: mathematical-object, description: "Length of the shortest program producing an object on a fixed universal machine, up to an additive machine-dependent constant.", locator: "Section 3.2"}
+      - {id: src-universal-semimeasure, kind: probability-model, description: "Universal mixture assigning weight 2^-length(program) to minimal programs generating an output prefix.", locator: "Section 3.4"}
+      - {id: src-solomonoff-induction, kind: method, description: "Sequential prediction using the universal algorithmic mixture.", locator: "Section 3"}
+      - {id: src-sequential-decision, kind: framework, description: "Choose actions to maximize expected future reward under a probabilistic environment model.", locator: "Sections 2 and 4"}
+      - {id: src-aixi, kind: theoretical-agent, description: "Combines the universal Solomonoff mixture with sequential reward maximization.", locator: "Section 4"}
+      - {id: src-aixi-tl, kind: bounded-agent, description: "Computable resource-bounded construction comparing candidate programs/policies under time and length bounds.", locator: "Section 6"}
+    edges:
+      - {from: src-kolmogorov-complexity, type: contributes-to, to: src-universal-semimeasure}
+      - {from: src-universal-semimeasure, type: contributes-to, to: src-solomonoff-induction}
+      - {from: src-solomonoff-induction, type: contributes-to, to: src-aixi}
+      - {from: src-sequential-decision, type: contributes-to, to: src-aixi}
+      - {from: src-aixi-tl, type: approximates, to: src-aixi}
+    interpretation: "This graph separates shortest descriptions, universal prediction and active decision-making. The edges are editorially reconstructed from the report's formal development."
+  learning_outcomes:
+    - {status: inferred, outcome: "Define prefix Kolmogorov complexity relative to a universal machine and explain the additive-constant qualification.", basis: "Section 3.2."}
+    - {status: inferred, outcome: "Explain why K is upper semicomputable but not computable.", basis: "Section 3.2."}
+    - {status: inferred, outcome: "Distinguish the universal algorithmic mixture from shortest-program complexity.", basis: "Section 3.4."}
+    - {status: inferred, outcome: "Explain how a universal predictor becomes an active reward-maximizing agent in AIXI.", basis: "Sections 3–4."}
+    - {status: inferred, outcome: "Interpret the time and program-length bounds in AIXI(t,l).", basis: "Section 6."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Binary strings, programs and universal Turing machines.", basis: "The definition of K is expressed in terms of programs on a universal machine."}
+    - {status: inferred, topic: "Basic probability and Bayesian mixtures.", basis: "The universal semimeasure and environment prior are central to the construction."}
+    - {status: inferred, topic: "Sequential decision theory and expected reward.", basis: "The AIXI agent maximizes expected future reward."}
+  teaching_route:
+    - {order: 1, section: "Algorithmic information theory", function: define-description-complexity, moves: ["Define shortest program length", "Explain reference-machine invariance", "Establish noncomputability"]}
+    - {order: 2, section: "Universal sequence prediction", function: build-universal-prior, moves: ["Introduce program-weighted mixture", "Relate the mixture to K", "Explain Solomonoff induction"]}
+    - {order: 3, section: "The universal algorithmic agent", function: add-active-decision, moves: ["Introduce actions and percepts", "Define expected reward", "Replace the unknown environment prior with the universal mixture"]}
+    - {order: 4, section: "Time-bounded AIXI", function: bound-computation, moves: ["Enumerate bounded candidate programs", "Introduce time and length limits", "Derive the exponential candidate factor"]}
+  pedagogical_strengths:
+    - "Builds AIXI from identifiable mathematical components rather than treating it as a standalone intelligence slogan."
+    - "Makes the transition from passive sequence prediction to active decision-making explicit."
+    - "Introduces a resource-bounded construction to address the gap between ideal theory and computability."
+  pedagogical_limits:
+    - "The report is mathematically dense and is not a self-contained beginner course in computability or sequential decision theory."
+    - "The AIXI(t,l) construction is theoretical; its asymptotic bounds hide large constants and proof overhead."
+    - "The ideal AIXI optimality claims depend on the formal environment class, reward criterion, horizon and reference machine."
+  comparison:
+    dossier: docs/source-syntheses/kolmogorov-aixi-computability-2026-11.md
+    canonical_graph: "data/concepts.yml and generated JSON-LD projection"
+    canonical_routes: [data/guided-route.yml, docs/learning-path.md, "Page-level suggested_route metadata"]
+    decision: "Use as the primary theoretical source for the bilingual advanced AIXI lesson; keep the introductory compression page separate."
+    structures_kept_separate: [source-semantic-graph, source-pedagogical-route, canonical-concept-graph, canonical-learning-routes, site-navigation]
+items:
+  - id: hutter-universal-algorithmic-intelligence-2007:kolmogorov-complexity
+    kind: definition
+    summary: "Prefix Kolmogorov complexity K_U(x) is the length of the shortest program that makes a fixed universal prefix machine U output x."
+    locator: {type: section, value: "3.2", label: "Algorithmic Information Theory"}
+    evidence:
+      kind: formal-definition
+      confidence: established
+      scope: "Definition of prefix Kolmogorov complexity relative to a universal prefix machine."
+      assumptions: ["A reference universal prefix machine is fixed."]
+      limitations: ["Values depend on the reference machine up to an additive constant."]
+    disposition: integrate
+    mapped_concepts: [kolmogorov-complexity]
+    target_resources: [fr/universal-artificial-intelligence, en/universal-artificial-intelligence]
+  - id: hutter-universal-algorithmic-intelligence-2007:kolmogorov-uncomputability
+    kind: result
+    summary: "K is not finitely computable; it is co-enumerable/upper semicomputable, so enumerating candidate programs can improve an upper bound without certifying that the minimum has been reached."
+    locator: {type: section, value: "3.2", label: "Algorithmic Information Theory"}
+    evidence:
+      kind: theorem-result
+      confidence: established
+      scope: "Computability status of Kolmogorov complexity."
+      assumptions: ["Standard universal-machine formulation of Kolmogorov complexity."]
+      limitations: ["The report's exposition is introductory; proofs rely on computability theory."]
+    disposition: integrate
+    mapped_concepts: [kolmogorov-complexity, resource-bounded-computation]
+    target_resources: [fr/universal-artificial-intelligence, en/universal-artificial-intelligence]
+  - id: hutter-universal-algorithmic-intelligence-2007:solomonoff-mixture
+    kind: mechanism
+    summary: "The universal mixture weights minimal programs by 2 to the negative program length and aggregates their support for an output prefix; it is a semimeasure closely related to K."
+    locator: {type: section, value: "3.4", label: "Algorithmic Probability and Universal Induction"}
+    evidence:
+      kind: formal-construction
+      confidence: established
+      scope: "Universal algorithmic probability and its relation to shortest descriptions."
+      assumptions: ["A universal monotone/prefix machine and corresponding minimal-program convention."]
+      limitations: ["The universal mixture is not computable exactly and is not generally a normalized probability measure."]
+    disposition: integrate
+    mapped_concepts: [algorithmic-probability, solomonoff-induction, kolmogorov-complexity]
+    target_resources: [fr/universal-artificial-intelligence, en/universal-artificial-intelligence]
+  - id: hutter-universal-algorithmic-intelligence-2007:aixi-agent
+    kind: mechanism
+    summary: "AIXI replaces the unknown environment prior in sequential decision theory with a universal Solomonoff mixture and chooses actions to maximize expected future reward."
+    locator: {type: section, value: "4", label: "The Universal Algorithmic Agent AIXI"}
+    evidence:
+      kind: formal-construction
+      confidence: established
+      scope: "Construction of the idealized universal algorithmic agent."
+      assumptions: ["Computable environment class, specified reward criterion and formal horizon/discount setup."]
+      limitations: ["The ideal AIXI agent is uncomputable and its optimality is relative to the formal setup."]
+    disposition: integrate
+    mapped_concepts: [aixi, solomonoff-induction, sequential-decision-theory]
+    target_resources: [fr/universal-artificial-intelligence, en/universal-artificial-intelligence]
+  - id: hutter-universal-algorithmic-intelligence-2007:aixi-tl-bound
+    kind: result
+    summary: "The detailed AIXI(t,l) construction is computable under candidate time and program-length bounds, with per-cycle computation of order t times 2^l; the exponential program-count factor prevents practical use at substantial l."
+    locator: {type: section, value: "6", label: "Time-Bounded AIXI Model"}
+    evidence:
+      kind: theorem-result
+      confidence: established
+      scope: "Asymptotic per-interaction-cycle complexity of the resource-bounded construction."
+      assumptions: ["The candidate program length and per-cycle time are bounded as specified by Hutter."]
+      limitations: ["Very large hidden constants; this report's later proof-validated formulation adds a separate proof-length setup cost."]
+    disposition: integrate
+    mapped_concepts: [aixi-tl, aixi, resource-bounded-computation]
+    target_resources: [fr/universal-artificial-intelligence, en/universal-artificial-intelligence]
