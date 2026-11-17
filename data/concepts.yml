@@ -813,6 +813,23 @@ concepts:
     domains: [probabilistic-foundations-training]
     resources: [fr/glossary, en/glossary, fr/score-centering, en/score-centering]
 
+  - id: hybrid-rope-nope-layers
+    importance: specialized
+    labels: {fr: "Couches hybrides RoPE/NoPE", en: "Hybrid RoPE/NoPE layers"}
+    definitions:
+      fr: "Architecture qui applique une rotation RoPE aux requêtes et clés dans certaines couches d'attention et l'omet dans d'autres, tout en transmettant les représentations contextualisées d'une couche à la suivante."
+      en: "Architecture that applies RoPE rotations to queries and keys in some attention layers and omits them in others, while passing contextualized representations from one layer to the next."
+    domains: [architectures-mechanisms]
+    resources: [fr/rope, en/rope]
+  - id: query-conditioned-relative-position-bias
+    importance: specialized
+    labels: {fr: "Biais relatif conditionné par la requête", en: "Query-conditioned relative position bias"}
+    definitions:
+      fr: "Terme ajouté au score d'attention avant softmax et dépendant à la fois d'une représentation de la requête et du décalage entre positions ; sa fonction exacte dépend de l'architecture."
+      en: "Term added to the attention score before softmax that depends on both a query representation and the offset between positions; its exact function is architecture-specific."
+    domains: [architectures-mechanisms, mathematical-tools-geometry]
+    resources: [fr/rope, en/rope]
+
 relation_types:
   represented-by:
     direction: directed
@@ -1110,3 +1127,8 @@ relations:
   - {from: dataset-curation, type: contributes-to, to: post-training}
   - {from: group-relative-policy-optimization, type: part-of, to: post-training}
   - {from: policy-gradient, type: part-of, to: group-relative-policy-optimization}
+  - {from: hybrid-rope-nope-layers, type: applies-to, to: self-attention}
+  - {from: hybrid-rope-nope-layers, type: contributes-to, to: contextualized-representation}
+  - {from: query-conditioned-relative-position-bias, type: contributes-to, to: attention-score}
+  - {from: query-conditioned-relative-position-bias, type: part-of, to: positional-encoding}
+
