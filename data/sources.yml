@@ -4816,3 +4816,45 @@ sources:
       pages: [fr/rag-memory-boundaries, en/rag-memory-boundaries]
       concepts: [retrieval-augmented-generation, contextualized-representation]
       audit_records: [docs/source-reviews/dailydose-main-path-2026-11.md]
+
+  - id: jothi-moorthy-llm-processing-linkedin
+    title: "When you type a prompt, the LLM sees numbers, not words"
+    creators: ["Jothi Moorthy"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://www.linkedin.com/posts/jothi-moorthy_%F0%9D%97%AA%F0%9D%97%B5%F0%9D%97%B2%F0%9D%97%BB-%F0%9D%98%86%F0%9D%97%BC%F0%9D%98%82-%F0%9D%98%81%F0%9D%97%BD%F0%9D%97%BF%F0%9D%97%BC%F0%9D%97%BA%F0%9D%97%BD%F0%9D%98%81-share-7528445050129764353-hs6w/"
+    publisher: "LinkedIn"
+    publication_date: null
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [text-tokenization]
+      tags: [topic:tokenization, topic:embeddings, topic:self-attention, topic:autoregressive-generation]
+      concept_ids: [token, token-embedding, contextualized-representation, self-attention, causal-mask]
+    metadata:
+      technical_level: introductory
+      contribution_types: [pedagogy, visualization]
+      audiences: [beginner, learner]
+    scan_status: partially-scanned
+    integration_status: rejected
+    scan_history:
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "Directly readable LinkedIn post text: title, five numbered stages, practical implications and closing question."
+          - "Visible post metadata identifying Jothi Moorthy as author."
+          - "The supplied media.licdn.com image URL was attempted but the image bytes could not be retrieved or visually inspected."
+        limitations:
+          - "LinkedIn exposed a relative publication time rather than a verifiable publication date; publication_date remains null."
+          - "The supplied infographic image was not visually inspected; its exact content, layout, accessibility and asset provenance remain unverified."
+          - "The complete comment thread and linked newsletter were not inspected; visible comments are not treated as author-authored claims."
+          - "No licence or permission to reuse the text or image was established; link-only handling."
+    related:
+      pages: [fr/llm-overview, en/llm-overview, fr/text-data, en/text-data, fr/tokenization-strategies, en/tokenization-strategies, fr/embedding-space, en/embedding-space, fr/transformer, en/transformer, fr/generation, en/generation]
+      concepts: [token, token-embedding, contextualized-representation, self-attention, causal-mask]
+      audit_records: [docs/source-reviews/jothi-moorthy-llm-processing-linkedin-2026-11.md]

@@ -1,0 +1,203 @@
+schema_version: 1
+source_id: jothi-moorthy-llm-processing-linkedin
+scan:
+  accessed_at: "2026-11-17"
+  retrieval_method: direct-page
+  author_text: {status: inspected, coverage: "Title, five numbered stages, practical implications and closing question", notes: ["Directly readable LinkedIn page text."]}
+  figures_media: {status: unavailable, coverage: null, notes: ["Supplied media URL could not be retrieved as image bytes; no visual claims made."]}
+  code_data: {status: not-inspected, coverage: null, notes: []}
+  comments: {status: partially-inspected, coverage: "Some comments visible in the page snapshot only", notes: ["Complete thread not inspected; comments excluded from author-authored extraction."]}
+  linked_resources: {status: not-inspected, coverage: null, notes: ["Linked newsletter not followed."]}
+  metadata: {status: partially-inspected, coverage: "Author identity and relative publication time", notes: ["Exact publication date could not be verified."]}
+  rights: {status: unknown, coverage: null, notes: ["No text or image reuse licence/permission established; link-only."]}
+  unresolved_questions:
+    - "Can the supplied infographic be retrieved and visually inspected?"
+    - "What is the exact publication date?"
+    - "What are the image creator and reuse terms?"
+pedagogical_model:
+  reconstruction:
+    status: complete
+    basis:
+      - "The complete author-authored text exposed in the directly readable LinkedIn post was inspected on 2026-11-17."
+      - "The supplied infographic URL could not be retrieved as image bytes; visual layout and image-only content are outside the reconstruction scope."
+    inferred_elements:
+      - "The five-stage teaching route is explicit; learning outcomes and assumed prerequisites are inferred."
+      - "The post describes a GPT-like causal decoder, not every LLM architecture."
+  source_graph:
+    nodes:
+      - {id: src-prompt-text, kind: concept, description: "User-authored text supplied to a language model.", locator: "Opening and stage 1"}
+      - {id: src-tokenizer, kind: operation, description: "Maps text into a sequence of tokenizer-specific token IDs.", locator: "Stage 2"}
+      - {id: src-token-ids, kind: representation, description: "Discrete vocabulary indices consumed by the model's embedding lookup.", locator: "Stages 2–3"}
+      - {id: src-embeddings, kind: representation, description: "Learned vectors retrieved for token IDs; initial embeddings are not yet context-dependent hidden states.", locator: "Stage 3"}
+      - {id: src-transformer-layers, kind: concept, description: "Repeated attention and feed-forward computations transform representations.", locator: "Stage 4"}
+      - {id: src-next-token-distribution, kind: intermediate, description: "Conditional probability distribution over vocabulary tokens for the next position.", locator: "Stage 5"}
+      - {id: src-autoregressive-loop, kind: operation, description: "A selected token is appended to the context and the next prediction step is repeated.", locator: "Stage 5"}
+    edges:
+      - {from: src-prompt-text, type: tokenized-into, to: src-tokenizer}
+      - {from: src-tokenizer, type: produces, to: src-token-ids}
+      - {from: src-token-ids, type: indexes, to: src-embeddings}
+      - {from: src-embeddings, type: transformed-by, to: src-transformer-layers}
+      - {from: src-transformer-layers, type: produces, to: src-next-token-distribution}
+      - {from: src-next-token-distribution, type: drives, to: src-autoregressive-loop}
+      - {from: src-autoregressive-loop, type: extends, to: src-prompt-text}
+    interpretation: "Source-local reconstruction from prose; not an author-specified formal graph."
+  learning_outcomes:
+    - {status: inferred, outcome: "Trace a prompt from text through token IDs and embeddings to Transformer computation and a next-token distribution.", basis: "The five numbered stages."}
+    - {status: inferred, outcome: "Explain why token counts, rather than word counts, determine context and many pricing limits.", basis: "The practical implications section."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Basic familiarity with written prompts and chat-based language models.", basis: "Used as the starting point without definition."}
+  teaching_route:
+    - {order: 1, section: "Your prompt: the input text", function: orient-input, moves: ["Start from ordinary text", "Introduce the need for tokenization"]}
+    - {order: 2, section: "Tokenizer: text becomes tokens", function: explain-discretization, moves: ["Subword intuition", "Vocabulary-size motivation", "Token IDs"]}
+    - {order: 3, section: "Embeddings: tokens become vectors", function: introduce-representations, moves: ["Embedding lookup", "Learned vector representation"]}
+    - {order: 4, section: "Attention and transformer layers", function: explain-contextual-computation, moves: ["Self-attention intuition", "Feed-forward computation", "Repeated layers"]}
+    - {order: 5, section: "Next-token prediction: from context to next token", function: connect-computation-to-generation, moves: ["Vocabulary probability distribution", "Select and append a token", "Repeat autoregressively"]}
+  pedagogical_strengths:
+    - "Compact end-to-end overview makes the broad text-to-generation data flow approachable for beginners."
+    - "Connects token-based context/pricing limits with practical model use."
+  pedagogical_limits:
+    - "The post is an orientation summary, not a technical explanation, derivation, implementation or experiment."
+    - "Tokens are not necessarily words or word fragments; units depend on tokenizer design and may include bytes or byte sequences."
+    - "Token IDs are categorical lookup indices; their numeric magnitudes do not encode semantic distance."
+    - "Initial token embeddings are learned lookup vectors, not complete context-dependent meanings; contextualization emerges through subsequent network computation."
+    - "Attention does not involve conscious decisions; it computes input-dependent weighted combinations under an architecture-specific mask."
+    - "The 'earlier tokens' description is specific to a simplified causal-decoder view, not all Transformer architectures."
+    - "The pronoun example does not establish that attention weights alone identify semantic references."
+    - "The example next-token percentages are illustrative, not measurements from a named model, tokenizer or prompt."
+    - "The overview omits positional information, Q/K/V, causal-mask details, residual paths, normalization, logits and decoding policies."
+    - "The supplied image could not be inspected, so no claim is made about additional visual content."
+  comparison:
+    dossier: "docs/source-reviews/README.md"
+    canonical_graph: "data/concepts.yml"
+    canonical_routes: ["docs/learning-path.md", "data/guided-route.yml"]
+    decision: "No canonical page, concept, route or implementation change. This is a redundant high-level recap of material already covered more precisely in the bilingual Understand path."
+    structures_kept_separate:
+      - "The five-stage source teaching route is not copied into the canonical learning route."
+      - "The source-local graph is not merged into data/concepts.yml; only existing concept IDs are referenced."
+      - "The supplied image is not copied or recreated; rights and visual inspection remain unresolved."
+items:
+  - id: jothi-moorthy-llm-processing-linkedin:five-stage-overview
+    kind: teaching-sequence
+    summary: "The post presents a five-stage overview from prompt text through tokenization, embeddings, Transformer computation and next-token prediction."
+    locator: {type: section, value: "Stages 1–5", label: "Five numbered stages"}
+    evidence: {kind: direct-statement, confidence: well-supported, scope: "Visible author-authored post text.", assumptions: [], limitations: ["The infographic itself was not inspected."]}
+    technical_assessment: {status: reviewed, rationale: "The sequence is a valid high-level orientation but is not a complete account of inference.", corroborating_sources: []}
+    pedagogical_assessment:
+      learner_question: "What happens to a prompt before and while an LLM generates a response?"
+      explanatory_lens: "A five-stage data-flow overview."
+      teaching_form: [sequence, overview]
+      novelty: {level: low, rationale: "The same flow is already central to LLM Lab's core route."}
+      complementarity: {level: low, rationale: "No distinct explanatory lens or example beyond the existing pages was established."}
+      pedagogical_value: {level: moderate, rationale: "Compact and accessible as an external recap."}
+      applicability: {level: moderate, rationale: "Could orient a beginner, but the canonical panorama already serves this purpose."}
+      redundancy: {level: high, rationale: "Duplicates the existing bilingual Understand sequence."}
+      evidence_quality: {level: moderate, rationale: "Full visible text inspected; image and linked material not inspected."}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:tokenization, topic:embeddings, topic:self-attention], concept_ids: [token, token-embedding, contextualized-representation, self-attention]}
+    candidate_destinations: {pages: [], concepts: [], route_ids: []}
+    disposition: already-covered
+    disposition_rationale: "Do not add another route or repeated explanation."
+  - id: jothi-moorthy-llm-processing-linkedin:tokenizer-units-and-token-ids
+    kind: misconception
+    summary: "The wording can suggest that tokens are usually whole words or word fragments. Token boundaries are tokenizer-specific and may correspond to bytes, byte sequences, characters or subword/word-like units; token IDs are categorical indices, not quantities."
+    locator: {type: section, value: "Stage 2: Tokenizer: text becomes tokens", label: "Stage 2"}
+    evidence: {kind: direct-statement, confidence: well-supported, scope: "Visible wording and token-ID example.", assumptions: [], limitations: ["No tokenizer or reproducible encoding example is named."]}
+    technical_assessment: {status: reviewed, rationale: "The wording is an oversimplification; tokenization units and ID spaces are tokenizer-specific.", corroborating_sources: []}
+    pedagogical_assessment:
+      learner_question: "What exactly is a token, and what does its ID represent?"
+      explanatory_lens: "Subword segmentation and vocabulary lookup."
+      teaching_form: [definition, example]
+      novelty: {level: low, rationale: "The project already distinguishes tokens from words and IDs."}
+      complementarity: {level: low, rationale: "No additional tokenizer example is supplied."}
+      pedagogical_value: {level: moderate, rationale: "The oversimplification is worth flagging for critical reading."}
+      applicability: {level: high, rationale: "Avoids a common misconception about token boundaries and IDs."}
+      redundancy: {level: high, rationale: "Canonical tokenization pages already cover this qualification."}
+      evidence_quality: {level: moderate, rationale: "Direct wording inspected; no tokenizer is identified."}
+    classification: {primary_theme: text-tokenization, tags: [topic:tokenization], concept_ids: [token]}
+    candidate_destinations: {pages: [], concepts: [], route_ids: []}
+    disposition: clarify
+    disposition_rationale: "No canonical edit: the project's tokenization pages already explain tokenizer-specific units and ID spaces."
+  - id: jothi-moorthy-llm-processing-linkedin:embedding-and-context-distinction
+    kind: misconception
+    summary: "The post says embeddings capture token meaning and relations. This needs the distinction between an initial learned lookup vector and later context-dependent hidden states."
+    locator: {type: section, value: "Stage 3: Embeddings: tokens become vectors", label: "Stage 3"}
+    evidence: {kind: direct-statement, confidence: well-supported, scope: "Visible author-authored post text.", assumptions: [], limitations: ["No model, embedding table or activation trace is supplied."]}
+    technical_assessment: {status: reviewed, rationale: "The post compresses initial embeddings and contextualized representations into one description.", corroborating_sources: []}
+    pedagogical_assessment:
+      learner_question: "Do token embeddings already contain the meaning used in context?"
+      explanatory_lens: "Initial lookup vectors versus contextual hidden states."
+      teaching_form: [distinction, conceptual-correction]
+      novelty: {level: low, rationale: "This distinction is already explicit in the canonical lessons."}
+      complementarity: {level: low, rationale: "No new worked example or visual evidence was inspected."}
+      pedagogical_value: {level: moderate, rationale: "Important correction to an overly compressed overview."}
+      applicability: {level: high, rationale: "Prevents conflating embedding lookup with contextualization."}
+      redundancy: {level: high, rationale: "Existing bilingual pages already make this distinction."}
+      evidence_quality: {level: moderate, rationale: "Direct wording inspected; no activation evidence supplied."}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:embeddings], concept_ids: [token-embedding, contextualized-representation]}
+    candidate_destinations: {pages: [], concepts: [], route_ids: []}
+    disposition: clarify
+    disposition_rationale: "The distinction is already explicit in the project's embedding and contextualized-representation lessons."
+  - id: jothi-moorthy-llm-processing-linkedin:attention-intuition
+    kind: claim
+    summary: "The post describes attention as each token deciding which earlier tokens matter. Treat this as anthropomorphic shorthand for learned, input-dependent weighted aggregation under an applicable mask."
+    locator: {type: section, value: "Stage 4: Attention and transformer layers", label: "Stage 4"}
+    evidence: {kind: direct-statement, confidence: context-dependent, scope: "Visible author-authored post text.", assumptions: [], limitations: ["No equations, architecture specification or attention matrices are supplied."]}
+    technical_assessment: {status: reviewed, rationale: "Useful intuition only; causal visibility is architecture-specific and attention is a computation, not an intentional decision.", corroborating_sources: []}
+    pedagogical_assessment:
+      learner_question: "How does a representation incorporate information from other positions?"
+      explanatory_lens: "Attention as contextual weighted aggregation."
+      teaching_form: [analogy, overview]
+      novelty: {level: low, rationale: "The project already explains attention and its limits."}
+      complementarity: {level: low, rationale: "No independent example or demonstration was inspected."}
+      pedagogical_value: {level: moderate, rationale: "Accessible shorthand, but easy to overinterpret."}
+      applicability: {level: high, rationale: "The causal-decoder qualification is important."}
+      redundancy: {level: high, rationale: "Canonical Q/K/V, attention and masking pages are more precise."}
+      evidence_quality: {level: moderate, rationale: "Direct wording inspected; no technical derivation."}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:self-attention], concept_ids: [self-attention, causal-mask]}
+    candidate_destinations: {pages: [], concepts: [], route_ids: []}
+    disposition: clarify
+    disposition_rationale: "Canonical Q/K/V, attention and causal-masking lessons already provide the precise account."
+  - id: jothi-moorthy-llm-processing-linkedin:next-token-probabilities
+    kind: claim
+    summary: "The post correctly frames prediction as a conditional distribution over vocabulary tokens followed by iterative selection and autoregressive repetition. Its example percentages are illustrative, not empirical."
+    locator: {type: section, value: "Stage 5: Next-token prediction", label: "Stage 5"}
+    evidence: {kind: direct-statement, confidence: well-supported, scope: "Visible author-authored post text.", assumptions: [], limitations: ["No model, tokenizer, logits or decoding configuration supports the example percentages."]}
+    technical_assessment: {status: reviewed, rationale: "The conceptual sequence is correct; the numerical example is ungrounded as a measurement.", corroborating_sources: []}
+    pedagogical_assessment:
+      learner_question: "How does the model turn its current context into the next generated token?"
+      explanatory_lens: "Conditional distribution followed by autoregressive decoding."
+      teaching_form: [sequence, numerical-illustration]
+      novelty: {level: low, rationale: "This is already covered by the logits, probabilities and generation lessons."}
+      complementarity: {level: low, rationale: "The percentages are illustrative and add no reproducible example."}
+      pedagogical_value: {level: moderate, rationale: "The short explanation is approachable."}
+      applicability: {level: high, rationale: "The warning about plausibility versus truth is useful."}
+      redundancy: {level: high, rationale: "The canonical lessons give a more complete treatment."}
+      evidence_quality: {level: moderate, rationale: "Direct wording inspected; no model output is supplied."}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:autoregressive-generation], concept_ids: [contextualized-representation]}
+    candidate_destinations: {pages: [], concepts: [], route_ids: []}
+    disposition: already-covered
+    disposition_rationale: "The project's logits, probabilities and generation lessons already provide the full treatment."
+  - id: jothi-moorthy-llm-processing-linkedin:supplied-infographic
+    kind: figure
+    summary: "The supplied high-resolution LinkedIn media URL could not be retrieved as image bytes in this inspection."
+    locator: {type: section, value: "User-supplied media URL", label: "External image"}
+    evidence: {kind: metadata, confidence: unverified, scope: "User-supplied media URL only.", assumptions: [], limitations: ["Image bytes and visual composition were not inspected.", "Creator-specific image rights and licence remain unknown."]}
+    technical_assessment: {status: not-reviewed, rationale: "Asset could not be inspected.", corroborating_sources: []}
+    pedagogical_assessment:
+      learner_question: "Does the infographic add a distinct visual explanation?"
+      explanatory_lens: "Unknown until the image is retrieved."
+      teaching_form: [visualization]
+      novelty: {level: uncertain, rationale: "The asset was not inspected."}
+      complementarity: {level: uncertain, rationale: "The asset was not inspected."}
+      pedagogical_value: {level: uncertain, rationale: "The asset was not inspected."}
+      applicability: {level: uncertain, rationale: "The asset was not inspected."}
+      redundancy: {level: uncertain, rationale: "The asset was not inspected."}
+      evidence_quality: {level: low, rationale: "Only the URL was available."}
+    classification: {primary_theme: architectures-mechanisms, tags: [], concept_ids: []}
+    candidate_destinations: {pages: [], concepts: [], route_ids: []}
+    disposition: defer
+    disposition_rationale: "Do not reuse, recreate or describe an uninspected asset; link-only pending successful retrieval and rights review."
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "No canonical knowledge-graph or route changes. The source provides a redundant introductory overview; retain provenance and technical caveats only."
