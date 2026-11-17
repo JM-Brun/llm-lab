@@ -64,7 +64,7 @@ This is the key conceptual transition: **Solomonoff induction predicts what the 
 
 AIXI is not a lossless compressor, a conventional language model, or a practical neural architecture. Its optimality statements are relative to a formal environment class, reward definition, horizon/discounting assumptions and reference universal machine. Its ideal construction is incomputable.
 
-Leike & Hutter (2015) sharpen the statement: in the standard/iterative formulation they study, the exact AIXI policy is **not limit computable**. The result depends on the formal value-function definition and infinite-horizon setting; it is not a blanket impossibility theorem for all approximations. The same paper shows that a recursive value-function formulation admits a limit-computable ε-optimal AIXI policy, including an ε(t) that can decrease to zero at a computable rate. Thus one must distinguish exact optimality, ε-optimality, and the chosen value-function formulation.
+Leike & Hutter (2015) show that standard/iterative exact AIXI is **not limit computable** for two reasons: deciding between exactly tied actions, and the iterative definition of the discounted infinite-horizon value function, which conditions on surviving forever. Settling for ε-optimality avoids exact tie resolution; replacing the iterative value function with a recursive one addresses the infinite-horizon obstacle. Together these yield a limit-computable ε-optimal infinite-horizon AIXI policy, with ε(t) allowed to decrease at a computable rate. This is not a blanket impossibility theorem for useful approximations.
 
 ## 5. What AIXI(t,l) actually bounds
 
