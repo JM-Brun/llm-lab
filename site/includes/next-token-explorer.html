@@ -2,11 +2,11 @@
   <h3><span lang="fr">Explorer la boucle du prochain token</span><span lang="en">Explore the next-token loop</span></h3>
   <p><span lang="fr">Choisissez un token dans la distribution fictive. Il est ajouté au préfixe et le modèle recalcule la distribution suivante, sans modifier ses paramètres.</span><span lang="en">Choose a token from the illustrative distribution. It is appended to the prefix and the model recomputes the next distribution without changing its parameters.</span></p>
   <div class="next-token-explorer__interactive" data-explorer-controls="true" hidden>
-    <p><strong><span lang="fr">Préfixe actuel :</span><span lang="en">Current prefix:</span></strong> <output data-prefix="true"></output></p>
+    <p><strong><span lang="fr">Préfixe actuel :</span><span lang="en">Current prefix:</span></strong> <output class="next-token-explorer__prefix" data-prefix="true"></output></p>
     <p class="next-token-explorer__caption"><span lang="fr">Distribution conditionnelle actuelle</span><span lang="en">Current conditional distribution</span></p>
-    <ul data-distribution="true" aria-live="polite"></ul>
+    <ul class="next-token-explorer__distribution" data-distribution="true" aria-live="polite"></ul>
     <label for="next-token-choice"><span lang="fr">Token à ajouter</span><span lang="en">Token to append</span></label>
-    <select id="next-token-choice" data-token-choice="true">
+    <select id="next-token-choice" class="next-token-explorer__choice" data-token-choice="true">
       <option value="0" data-fr="Vous" data-en="They">Vous</option>
       <option value="1" data-fr="Je" data-en="Aqueducts">Je</option>
       <option value="2" data-fr="Moi" data-en="Nothing">Moi</option>
