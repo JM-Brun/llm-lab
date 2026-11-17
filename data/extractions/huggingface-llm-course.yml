@@ -362,3 +362,80 @@ items:
       pages: [fr/build-path, en/build-path]
       concepts: []
     disposition: defer
+
+  - id: huggingface-llm-course:chapter3-dynamic-padding-and-collation
+    kind: implementation-pattern
+    summary: "Chapter 3 combines batched dataset mapping with per-batch dynamic padding through DataCollatorWithPadding. This bridges variable-length encoded examples and rectangular tensors; attention masks and causal loss masks remain distinct contracts."
+    locator: {type: page, value: "https://huggingface.co/learn/llm-course/en/chapter3/2", label: "Chapter 3 — Processing the data"}
+    evidence:
+      kind: course-lesson
+      confidence: well-supported
+      scope: "Batched dataset mapping, dynamic padding, DataCollatorWithPadding and Trainer integration."
+      assumptions: []
+      limitations: ["The example is a sequence-classification workflow; it must not be generalized to causal-LM label masking or every model padding convention. No code was executed."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [text-tokenization]
+      tags: [topic:dynamic-padding, topic:batching, topic:collation, ecosystem:datasets, ecosystem:transformers]
+      concept_ids: [fine-tuning, token]
+    candidate_destinations:
+      pages: [fr/training-examples, en/training-examples]
+      concepts: [fine-tuning, token]
+    disposition: integrate
+  - id: huggingface-llm-course:chapter5-streaming-semantics
+    kind: mechanism
+    summary: "Chapter 5 distinguishes local memory-mapped Arrow-backed datasets from IterableDataset streaming. Streaming shuffle uses a bounded buffer rather than a global permutation; take/skip depend on stream order, and interleaving sources changes the sampling mixture."
+    locator: {type: page, value: "https://huggingface.co/learn/llm-course/en/chapter5/4", label: "Chapter 5 — Big data, memory mapping and streaming"}
+    evidence:
+      kind: course-lesson
+      confidence: well-supported
+      scope: "Memory-mapped dataset access, streaming IterableDataset, batched transforms, buffer shuffle, take/skip and interleaving."
+      assumptions: []
+      limitations: ["No dataset was loaded or benchmarked; current Datasets APIs may evolve. A bounded-buffer shuffle is not a globally uniform shuffle."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [inference-efficiency]
+      tags: [topic:streaming, topic:memory-mapping, topic:reproducibility, ecosystem:datasets]
+      concept_ids: [dataset-curation]
+    candidate_destinations:
+      pages: [fr/corpus-preparation, en/corpus-preparation]
+      concepts: [dataset-curation]
+    disposition: integrate
+  - id: huggingface-llm-course:chapter5-dataset-cards
+    kind: implementation-pattern
+    summary: "Chapter 5's dataset-creation workflow ends with a dataset card describing the shared artifact, data sources, transformations, intended uses and known limitations. LLM Lab integrates a compact handoff checklist while preserving the distinction between public documentation and internal provenance or rights validation."
+    locator: {type: page, value: "https://huggingface.co/learn/llm-course/en/chapter5/5", label: "Chapter 5 — Creating your own dataset"}
+    evidence:
+      kind: course-lesson
+      confidence: well-supported
+      scope: "Dataset creation, Hub publication and dataset-card rationale and contents."
+      assumptions: []
+      limitations: ["No dataset was published; a dataset card does not prove licensing or data rights."]
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:dataset-card, topic:provenance, topic:reproducibility, ecosystem:huggingface, ecosystem:datasets]
+      concept_ids: [dataset-curation]
+    candidate_destinations:
+      pages: [fr/corpus-preparation, en/corpus-preparation]
+      concepts: [dataset-curation]
+    disposition: integrate
+  - id: huggingface-llm-course:chapter5-faiss-semantic-search
+    kind: implementation-pattern
+    summary: "Chapter 5's FAISS example turns issue comments into text embeddings, indexes them and retrieves nearest examples for a query. It is an optional implementation of the retrieval stage, not a complete RAG system; embedding choice, pooling, similarity metric, chunking and retrieval quality require task-specific evaluation."
+    locator: {type: page, value: "https://huggingface.co/learn/llm-course/en/chapter5/6", label: "Chapter 5 — Semantic search with FAISS"}
+    evidence:
+      kind: course-lesson
+      confidence: well-supported
+      scope: "Dataset preparation, embedding model use, CLS pooling, vector indexing and nearest-neighbour retrieval."
+      assumptions: []
+      limitations: ["The selected embedding checkpoint and CLS pooling are task-specific; no index or retrieval benchmark was reproduced."]
+    classification:
+      primary_theme: inference-efficiency
+      secondary_themes: [probabilistic-foundations-training]
+      tags: [topic:semantic-search, topic:vector-index, topic:retrieval, ecosystem:faiss, ecosystem:datasets]
+      concept_ids: []
+    candidate_destinations:
+      pages: [fr/rag-memory-boundaries, en/rag-memory-boundaries]
+      concepts: []
+    disposition: integrate-by-reference
