@@ -94,7 +94,7 @@ Distinctive contribution here: model cost plus data cost, causal ordering, adapt
 
 ## 4. Visuals, code and provenance
 
-The article contains a musical-score visual placement, but its actual image bytes have not been retrieved or inspected. No description, recreation or reuse is claimed. A new LLM Lab diagram may later be justified to show the two-part MDL objective or the contrast between batch compression, prequential prediction and model update, but it should be original and should not imitate or copy the article's visual.
+The linked musical-score image was retrieved and visually inspected. The article explicitly says it is AI-generated and advises readers not to scrutinize it closely; it is therefore only an illustrative visual, not a reliable score or evidence for music cognition. No reuse licence or permission was established, so the image remains link-only. A new LLM Lab diagram may later be justified to show the two-part MDL objective or the contrast between batch compression, prequential prediction and model update, but it should be original.
 
 No code or data artifact was independently inspected or executed. The forward/reverse table remains an unverified reported result. Rights are unknown.
 
