@@ -8,10 +8,6 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[2]
 
-CANONICAL_CONTINUATIONS = {
-    "fr": "Être scribe, c'est relier des histoires.",
-    "en": "They built roads between distant towns.",
-}
 CORE_EXAMPLE_PAGES = (
     "llm-overview",
     "generation",
@@ -21,33 +17,76 @@ CORE_EXAMPLE_PAGES = (
     "contextualized-representations",
 )
 
+FRENCH_EXAMPLE_FRAGMENTS = {
+    "llm-overview": (
+        "C'est une bonne situation, ça, scribe ?",
+        "Vous savez, moi je ne crois pas",
+    ),
+    "generation": (
+        "C'est une bonne situation, ça, scribe ?",
+        "Vous savez, moi je ne crois pas",
+    ),
+    "text-data": (
+        "C'est une bonne situation, ça, scribe ?",
+        "Vous savez, moi je ne crois pas",
+    ),
+    "embedding-space": (
+        "C'est une bonne situation, ça, scribe ?",
+        "Vous savez, moi je ne crois pas",
+    ),
+    "positional-encoding": (
+        "C'est une bonne situation, ça, scribe ?",
+        "Vous savez, moi",
+    ),
+    "contextualized-representations": (
+        "une bonne situation, ça, scribe ?",
+        "de bonne ou de mauvaise situation",
+        "moi je ne crois pas",
+    ),
+    "vraisemblance": (
+        "C'est une bonne situation, ça, scribe ?",
+        "Vous savez",
+    ),
+    "loss": ("Vous savez",),
+    "exercises/contextualized-representations": (
+        "une bonne situation, ça, scribe ?",
+        "de bonne ou de mauvaise situation",
+        "moi je ne crois pas",
+    ),
+}
 
-@pytest.mark.parametrize(
-    ("language", "continuation"),
-    [
-        ("fr", CANONICAL_CONTINUATIONS["fr"]),
-        ("en", CANONICAL_CONTINUATIONS["en"]),
-    ],
-)
-def test_understand_pages_reuse_one_canonical_continuation(
-    language: str, continuation: str
-) -> None:
-    for page_id in CORE_EXAMPLE_PAGES:
-        source = (ROOT / "site" / language / f"{page_id}.qmd").read_text(encoding="utf-8")
-        assert continuation in source, f"{language}/{page_id} diverges from the running example"
+ENGLISH_CONTINUATION = "They built roads between distant towns."
 
 
-@pytest.mark.parametrize(
-    "page_id",
-    [
-        "text-data",
-        "embedding-space",
-        "positional-encoding",
-        "contextualized-representations",
-    ],
-)
-def test_french_mechanism_pages_do_not_use_the_film_quote_as_the_target(
-    page_id: str,
-) -> None:
+def test_generation_candidate_probabilities_form_a_distribution() -> None:
+    source = (ROOT / "site" / "fr" / "generation.qmd").read_text(encoding="utf-8")
+    assert "« savez » 0,5 · « êtes » 0,3 · « voyez » 0,2" in source
+    assert "« savez » 0,6 · « êtes » 0,2 · « voyez » 0,2" not in source
+
+
+def test_vraisemblance_reuses_generation_probabilities_and_product() -> None:
+    source = (ROOT / "site" / "fr" / "vraisemblance.qmd").read_text(encoding="utf-8")
+    assert "$0{,}6$ à « Vous »" in source
+    assert "$0{,}5$ à « savez »" in source
+    assert "$0{,}8$ à la virgule" in source
+    assert "=0{,}6\\times0{,}5\\times0{,}8=0{,}24." in source
+
+
+def test_loss_reuses_generation_probabilities_and_nll_values() -> None:
+    source = (ROOT / "site" / "fr" / "loss.qmd").read_text(encoding="utf-8")
+    assert "$0{,}6$, $0{,}5$ et $0{,}8$" in source
+    assert r"\ell_2=-\ln(0{,}5)\approx0{,}693" in source
+    assert r"\mathcal L=\frac{0{,}511+0{,}693+0{,}223}{3}\approx0{,}476" in source
+
+
+@pytest.mark.parametrize("page_id", tuple(FRENCH_EXAMPLE_FRAGMENTS))
+def test_french_pages_reuse_relevant_fragments_naturally(page_id: str) -> None:
     source = (ROOT / "site" / "fr" / f"{page_id}.qmd").read_text(encoding="utf-8")
-    assert "Vous savez, moi je ne crois pas" not in source
+    for fragment in FRENCH_EXAMPLE_FRAGMENTS[page_id]:
+        assert fragment in source, f"fr/{page_id} is missing {fragment!r}"
+
+
+@pytest.mark.parametrize("page_id", CORE_EXAMPLE_PAGES)
+def test_english_understand_pages_keep_their_own_running_example(page_id: str) -> None:
+    source = (ROOT / "site" / "en" / f"{page_id}.qmd").read_text(encoding="utf-8")
+    assert ENGLISH_CONTINUATION in source, f"en/{page_id} diverges from its running example"

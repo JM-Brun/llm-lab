@@ -1,17 +1,17 @@
-# Référence pédagogique transversale — le fil rouge du scribe
+# Référence éditoriale — exemple partagé dans les pages françaises
 
-**Statut :** référence éditoriale interne, proposition de fil rouge  
+**Statut :** référence éditoriale interne ; ne pas reproduire ses explications dans les pages publiques  
 **Langues :** français et anglais  
 **Périmètre :** parcours Understand, Build, Deepen et Practice lorsqu'un exemple de bout en bout est utile  
-**Dernière revue :** 2026-11-10
+**Dernière revue :** 2026-11-17
 
 > Ce document est la source de vérité pour l'exemple fil rouge. Il décrit le scénario, les formulations réutilisables, les déclinaisons pédagogiques par page et les garde-fous scientifiques. Il ne remplace ni les explications canoniques des pages ni les sources de vérité du curriculum.
 
 ## 1. Intention
 
-Utiliser comme fil rouge la scène du scribe Otis dans *Astérix et Obélix : Mission Cléopâtre* (Alain Chabat, 2002), interprété par Édouard Baer. Le **contexte fourni au modèle (prompt / préfixe)** est la question de Panoramix : « C'est une bonne situation, ça, scribe ? ». La **continuation** commence par : « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... ». C'est cette inversion qui porte la démonstration : le prompt est déjà présent dans le contexte ; la boucle autoregressive produit ensuite la suite, token après token.
+Les pages françaises peuvent réutiliser naturellement quelques formulations courtes de la scène du scribe dans *Astérix et Obélix : Mission Cléopâtre* (Alain Chabat, 2002). Le préfixe est la question « C'est une bonne situation, ça, scribe ? » ; la continuation commence par « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... ». Cette référence culturelle est un easter egg, pas un sujet à annoncer dans chaque leçon ni une source scientifique. Elle doit rester discrète : employer les formulations quand elles éclairent réellement le concept, sans répéter « tirade d'Otis », « fil rouge » ou l'explication de la référence. Les fragments cités restent courts ; ne pas reproduire la tirade entière.
 
-La scène est une accroche culturelle, pas une source scientifique. L'exemple pédagogique ci-dessous est une **adaptation originale** : ne pas recopier la tirade du film. La référence IMDb identifie le rôle d'Otis : <https://www.imdb.com/fr/title/tt0250223/characters/nm0046347/>. Une présentation de la scène et de son contexte est également disponible dans [Le Parisien](https://www.leparisien.fr/culture-loisirs/cinema/ressortie-d-asterix-et-obelix-mission-cleopatre-le-monologue-dotis-encore-plus-interminable-04-07-2023-NA6P2W7M2JE6RA5WYVXEND4B4Q.php).
+La référence IMDb identifie le rôle d'Otis : <https://www.imdb.com/fr/title/tt0250223/characters/nm0046347/>. Une présentation de la scène et de son contexte est également disponible dans [Le Parisien](https://www.leparisien.fr/culture-loisirs/cinema/ressortie-d-asterix-et-obelix-mission-cleopatre-le-monologue-dotis-encore-plus-interminable-04-07-2023-NA6P2W7M2JE6RA5WYVXEND4B4Q.php).
 
 ### Pourquoi cet exemple fonctionne
 
@@ -37,11 +37,11 @@ La continuation de la scène commence par la réplique d'Otis :
 
 > **Début de continuation :** « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... »
 
-Pour les démonstrations reproductibles, utiliser aussi une continuation pédagogique originale, indépendante du dialogue du film :
+Les pages françaises peuvent reprendre de courts fragments de cette continuation lorsque cela sert naturellement la notion étudiée. Pour les démonstrations longues ou les tests qui exigent un texte entièrement contrôlé, conserver aussi une continuation pédagogique originale, indépendante du dialogue du film :
 
 > **Continuation jouet :** « Être scribe, c'est relier des histoires. Les rencontres apportent de nouveaux récits ; le contexte aide à choisir les mots justes. Chaque phrase prépare la suivante. »
 
-La réplique du film sert d'illustration culturelle du couple préfixe/continuation ; la continuation jouet sert aux calculs et aux tests. Ni l'une ni l'autre ne doit être présentée comme la sortie effective d'un modèle entraîné. Lorsqu'une page étudie la génération, montrer explicitement la boucle : prédire un token, l'ajouter au contexte, puis recalculer le token suivant.
+Les courts fragments de la scène peuvent aussi servir à des calculs illustratifs lorsque les valeurs sont explicitement fictives et que l'hypothèse sur les unités traitées comme tokens est annoncée. La continuation jouet reste utile pour les traces longues, les tests et les démonstrations qui exigent une cible entièrement contrôlée. Aucun de ces textes ne doit être présenté comme la sortie effective d'un modèle entraîné. Lorsqu'une page étudie la génération, montrer explicitement la boucle : prédire un token, l'ajouter au contexte, puis recalculer le token suivant.
 
 ### 2.3 Unités et conventions
 
@@ -71,9 +71,9 @@ La réplique du film sert d'illustration culturelle du couple préfixe/continuat
 | Probabilités | Quelles suites sont plausibles ? | Appliquer softmax aux logits et examiner quelques candidats pour le token suivant. | La distribution est conditionnelle au préfixe et au modèle ; elle ne donne pas une réponse entière d'un seul coup. |
 | Décodage | Comment choisit-on le token suivant ? | Comparer argmax, échantillonnage et température sur la même distribution. | Le choix dépend de la stratégie ; la température transforme la distribution avant l'échantillonnage. |
 | Génération | Comment la tirade se construit-elle ? | Ajouter un token, le réinjecter dans le contexte, recalculer et répéter jusqu'au critère d'arrêt. | La génération est autoregressive ; le modèle ne rédige pas nécessairement toute la phrase en une seule opération. |
-| Vraisemblance | Comment évaluer une suite déjà écrite ? | Donner la continuation jouet comme cible observée et calculer la probabilité conditionnelle de ses tokens successifs. | Scorer une séquence observée n'est pas la même opération que choisir une continuation. |
-| Entropie / cross-entropy | À quel point la prédiction est-elle incertaine ou surprenante ? | Comparer des distributions de prochain token, puis mesurer la pénalité sur la cible jouet. | Entropie d'une distribution et cross-entropie entre prédiction et cible ne sont pas interchangeables. |
-| Loss | Quel signal résume l'erreur ? | Agréger les pertes des tokens cibles du mini-exemple. | La loss dépend des cibles, du masque et de la réduction choisie. |
+| Vraisemblance | Comment évaluer une suite déjà écrite ? | Scorer un court fragment observé (« Vous savez, ») avec des probabilités fictives ; garder la continuation jouet pour les traces longues et contrôlées. | Scorer une séquence observée n'est pas la même opération que choisir une continuation. |
+| Entropie / cross-entropy | À quel point la prédiction est-elle incertaine ou surprenante ? | Comparer des distributions de prochain token, puis mesurer la pénalité sur un fragment observé ou sur la cible jouet contrôlée. | Entropie d'une distribution et cross-entropie entre prédiction et cible ne sont pas interchangeables. |
+| Loss | Quel signal résume l'erreur ? | Agréger les pertes des trois unités observées du fragment (« Vous savez, »), sous l'hypothèse simplificatrice annoncée dans la page. | La loss dépend des cibles, du masque et de la réduction choisie. |
 | Gradients | Comment les paramètres sont-ils informés ? | Rétropropager la loss à travers le calcul du prochain token. | Les gradients indiquent comment les paramètres influencent la loss ; ils ne sont pas des explications textuelles. |
 | Build / entraînement | Comment les exemples sont-ils préparés et appris ? | Construire des fenêtres de contexte et des cibles décalées à partir du texte jouet, puis entraîner sur un corpus autorisé et documenté. | Le texte du film ne doit pas devenir un corpus d'entraînement par défaut ; un exemple minuscule ne suffit pas à entraîner un modèle utile. |
 | Évaluation | Le modèle a-t-il appris à répondre ? | Évaluer sur des exemples séparés et des baselines ; comparer les continuations sans réutiliser le test pour ajuster le modèle. | Une démonstration, un test logiciel et une évaluation de qualité sont trois preuves différentes. |
@@ -91,18 +91,18 @@ Les pages ci-dessous sont les destinations canoniques identifiées dans le parco
 | `fr/text-data.qmd` | `en/text-data.qmd` | Afficher le préfixe « C'est une bonne situation, ça, scribe ? » avant tokenisation, puis distinguer les tokens de continuation ; dans la page anglaise, prendre la scène des Romains comme parallèle culturel. | Conserver ponctuation, espaces et accents ; distinguer prompt et cible. |
 | `fr/tokenization-strategies.qmd` | `en/tokenization-strategies.qmd` | Comparer la segmentation effective du prompt avec deux tokenizers si les outils sont disponibles. | Les tokens ne sont pas forcément des mots ; ne pas figer une segmentation universelle. |
 | `fr/embedding-space.qmd` | `en/embedding-space.qmd` | Relier chaque ID obtenu à une ligne de la matrice d'embedding. | Employer « adresse de ligne » pour l'index de la table ; la coordonnée vectorielle est une autre notion. |
-| `fr/positional-encoding.qmd` | `en/positional-encoding.qmd` | Montrer que l'ordre des mots du prompt compte, même si les IDs de tokens sont identiques. | Décrire la méthode positionnelle effectivement étudiée, sans généraliser à toutes les architectures. |
-| `fr/contextualized-representations.qmd` | `en/contextualized-representations.qmd` | Suivre un token du prompt dans deux contextes légèrement différents. | Ne pas appeler « embedding » tout état caché ; distinguer vecteur initial et représentation contextualisée. |
+| `fr/positional-encoding.qmd` | `en/positional-encoding.qmd` | Montrer que l'ordre du préfixe et des premiers éléments de continuation compte, même si les IDs de tokens sont identiques. | Décrire la méthode positionnelle effectivement étudiée, sans généraliser à toutes les architectures. |
+| `fr/contextualized-representations.qmd` | `en/contextualized-representations.qmd` | Suivre *situation* entre le sens de poste et celui de circonstances, puis observer la référence commune de « moi / je ». | Ne pas appeler « embedding » tout état caché ; distinguer vecteur initial et représentation contextualisée. |
 | `fr/transformer.qmd` | `en/transformer.qmd` | Vue d'ensemble du passage du prompt aux logits dans les blocs Transformer. | Garder le niveau système ; renvoyer les détails à leurs pages canoniques. |
 | `fr/queries-keys-values.qmd` | `en/queries-keys-values.qmd` | Isoler une position du prompt et visualiser ses Q/K/V. | Ne pas personnifier Q/K/V comme des questions, réponses ou mots. |
 | `fr/scaled-dot-product-attention.qmd` | `en/scaled-dot-product-attention.qmd` | Calculer les scores et l'agrégation sur une séquence très courte dérivée du prompt. | Toute matrice numérique doit être explicitement jouet ou issue d'un calcul reproductible. |
 | `fr/causal-masking.qmd` | `en/causal-masking.qmd` | Montrer qu'une position ne peut pas voir les tokens futurs de la réponse. | Distinguer masque causal et masque de padding. |
 | `fr/logits.qmd` | `en/logits.qmd` | Lire les scores de candidats au premier token de continuation. | Un logit n'est ni une probabilité ni un degré de vérité. |
 | `fr/probabilites.qmd` | `en/probabilities.qmd` | Normaliser les scores et comparer quelques tokens candidats. | Indiquer modèle, contexte, tokenizer et valeurs synthétiques si elles ne sont pas calculées. |
-| `fr/vraisemblance.qmd` | `en/likelihood.qmd` | Scorer la continuation jouet comme séquence observée. | Ne pas confondre score de séquence et qualité littéraire. |
+| `fr/vraisemblance.qmd` | `en/likelihood.qmd` | Scorer un court fragment observé (« Vous savez, ») avec des probabilités fictives ; conserver la continuation jouet pour les traces plus longues et contrôlées. | Ne pas confondre score de séquence et qualité littéraire. |
 | `fr/entropy.qmd` | `en/entropy.qmd` | Comparer une distribution concentrée et une distribution diffuse pour le token suivant. | L'entropie caractérise une distribution, pas la difficulté subjective du scribe. |
 | `fr/cross-entropy.qmd` | `en/cross-entropy.qmd` | Calculer la pénalité associée au token cible réellement observé. | Préciser la cible et la convention de réduction. |
-| `fr/loss.qmd` | `en/loss.qmd` | Agréger les pertes des tokens de la continuation jouet. | Ne pas présenter la loss comme un jugement humain de la réponse. |
+| `fr/loss.qmd` | `en/loss.qmd` | Agréger les pertes de trois unités observées du fragment (« Vous savez, »), en signalant l'hypothèse simplificatrice sur les tokens. | Ne pas présenter la loss comme un jugement humain de la réponse. |
 | `fr/gradients.qmd` | `en/gradients.qmd` | Illustrer la rétropropagation depuis la loss du prochain token. | Ne pas inventer de gradients ou de mise à jour sans calcul. |
 
 ### 4.2 Build — dépendances de construction
@@ -122,7 +122,7 @@ Le Build path est une voie distincte du parcours Understand. Le même exemple se
 
 ### 4.3 Practice, Deepen et évaluation
 
-- **Exercises par page :** reprendre le même prompt ou une variante contrôlée pour demander au lecteur de prédire une étape, lire une forme tensorielle, interpréter une distribution ou repérer une confusion conceptuelle. Une variante doit annoncer ce qui change.
+- **Exercises par page :** reprendre un fragment ou une variante seulement lorsqu'il sert la notion travaillée. Les exercices peuvent aussi rester abstraits ou utiliser une autre séquence contrôlée lorsque c'est plus rigoureux ; préserver les exercices génériques utiles.
 - **Tokenization / Unicode Deepen :** conserver le texte avec accents et ponctuation ; comparer normalisation et segmentation sans laisser entendre que UTF-8 et tokenisation sont la même opération.
 - **Attention / math Deepen :** utiliser des matrices minuscules, valeurs calculées ou explicitement synthétiques, et préciser les dimensions.
 - **Decoding Deepen :** repartir des mêmes logits pour isoler température, top-k, top-p et arrêt ; une seule variable change à la fois.
@@ -132,9 +132,9 @@ Le Build path est une voie distincte du parcours Understand. Le même exemple se
 ## 5. Règles d'usage éditorial
 
 1. **Une source canonique :** modifier ce document lorsque le scénario, le prompt, la continuation jouet ou la couverture des pages change.
-2. **Pas de copier-coller de la tirade :** garder la citation d'ouverture courte et référencée ; employer le texte original de LLM Lab pour les démonstrations.
-3. **Bilinguisme :** chaque ajout dans une page FR doit avoir son équivalent EN dans la même PR. Dans les pages françaises, conserver le préfixe Astérix et la continuation d'Otis. Dans les pages anglaises, privilégier le parallèle Monty Python de *Life of Brian* (question sur les Romains puis réponses successives) plutôt qu'une traduction artificielle des répliques françaises ; utiliser *Holy Grail* en complément pour le contexte conversationnel et les contraintes successives.
-4. **Répétition utile, pas duplication :** chaque page réutilise le même scénario pour enseigner son concept propre. Elle ne répète pas l'explication des pages précédentes.
+2. **Citation mesurée :** réutiliser seulement de courts fragments lorsque cela sert l’explication ; ne pas reproduire la tirade intégrale. La continuation originale de LLM Lab reste disponible comme texte jouet pour les calculs ou tests qui nécessitent une cible contrôlée.
+3. **Bilinguisme :** préserver la parité des objectifs et des notions enseignées, sans imposer la même référence culturelle. Dans les pages françaises, conserver les formulations du scénario du scribe ; dans les pages anglaises, privilégier le parallèle Monty Python de *Life of Brian* (question sur les Romains puis réponses successives) plutôt qu'une traduction artificielle des répliques françaises ; utiliser *Holy Grail* en complément pour le contexte conversationnel et les contraintes successives.
+4. **Référence discrète :** dans les pages publiques, réutiliser les formulations naturellement, sans annoncer le « fil rouge », nommer systématiquement le film ou expliquer l'easter egg. La référence doit rester reconnaissable pour qui la connaît, sans détourner l'attention du concept enseigné. Chaque page n'en conserve que les éléments utiles à sa démonstration.
 5. **Véracité numérique :** aucun ID, vecteur, score, logit, poids ou gradient inventé présenté comme résultat réel. Les chiffres illustratifs sont marqués « jouet », « fictifs » ou calculés.
 6. **Respect des frontières de parcours :** Understand expose la chaîne conceptuelle ; Build suit les dépendances d'implémentation. Deepen ajoute des détails facultatifs ; Practice vérifie le transfert.
 7. **Accessibilité et sobriété :** l'humour doit rester dans l'accroche ou le texte d'exemple ; les termes techniques, les limites et les légendes restent explicites.
@@ -190,7 +190,10 @@ Pour changer de fil rouge sans perdre la cohérence du parcours :
 ## 7. Critères d'acceptation pour les intégrations futures
 
 - Le préfixe canonique est identique partout où l'on compare des résultats.
-- La continuation jouet est identifiée comme texte pédagogique original, jamais comme sortie de modèle.
+- Les fragments de la scène restent courts et discrets ; les calculs simplifiés signalent explicitement toute hypothèse sur les unités traitées comme tokens.
+- La continuation jouet est identifiée comme texte pédagogique original, jamais comme sortie de modèle ; les pages françaises peuvent utiliser de courts fragments du scénario sans expliquer la référence.
+- Tout calcul qui assimile des unités visibles à des tokens explicite cette hypothèse et ne prétend pas reproduire un tokenizer réel.
+- La trace exécutable de `exercises-text-data.qmd` (`hello world`, `tiktoken==0.14.0`, IDs GPT-2 `[31373, 995]`) est une démonstration technique déjà vérifiée. La conserver comme telle tant qu'une sortie réelle du tokenizer n'a pas été calculée pour le fragment français ; ne jamais lui substituer des IDs supposés.
 - Les pages FR/EN sont alignées sur le même objectif et le même niveau de détail.
 - Les identifiants de tokens proviennent du tokenizer montré ; les « adresses de ligne » restent distinctes des coordonnées des vecteurs.
 - Les valeurs numériques sont reproductibles ou explicitement synthétiques.

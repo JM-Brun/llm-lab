@@ -26,11 +26,11 @@ tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "
 {{< include ../includes/generated-guided-context-fr-llm-overview.qmd >}}
 
 ::: {.chapter-lead}
-« C'est une bonne situation, ça, scribe ? » Dans *Astérix et Obélix : Mission Cléopâtre*, la question de Panoramix lance le scribe Otis dans une longue tirade. Posez la même question à un assistant conversationnel : lui aussi enchaîne. Comment un programme produit-il une suite à partir d'une question ?
+« C'est une bonne situation, ça, scribe ? » Une question courte peut appeler une réponse beaucoup plus longue. Posez-la à un assistant conversationnel : lui aussi enchaîne. Comment un programme produit-il une suite à partir d'une question ?
 
 Il ne rédige pas sa réponse d'un seul bloc. À partir du texte déjà écrit, il estime ce qui pourrait venir ensuite, choisit un élément, puis recommence. Un programme qui prolonge ainsi un texte est un **modèle de langage**. Entraîné à grande échelle, c'est un **grand modèle de langage** (*large language model*, LLM).
 
-Pour les calculs, le parcours utilise une continuation inventée : « Être scribe, c'est relier des histoires. » Elle sert de fil conducteur dans plusieurs pages. Otis est le personnage, l'assistant l'application qui dialogue avec l'utilisateur, et le LLM le modèle interrogé par cette application : c'est ce dernier que nous étudions ici.
+Le préfixe est « C'est une bonne situation, ça, scribe ? » ; la continuation commence par « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation… ». Les valeurs numériques qui suivent sont fictives et servent uniquement à illustrer les calculs. L'assistant est une application ; le LLM est le modèle qu'elle interroge : seul ce dernier est étudié ici.
 :::
 
 ::: {.callout-tip title="L'idée à retenir"}
@@ -43,14 +43,14 @@ Le texte « C'est une bonne situation, ça, scribe ? » est ici le **préfixe** 
 
 | Suite possible (un mot pour simplifier) | Probabilité |
 |---|---|
-| « Être » | 0,6 |
-| « Vous » | 0,2 |
+| « Vous » | 0,6 |
+| « Je » | 0,2 |
+| « Moi » | 0,1 |
 | « Oui » | 0,1 |
-| « Non » | 0,1 |
 
 Ces valeurs sont fictives : elles ne proviennent pas d'un modèle entraîné. Le vocabulaire réel d'un modèle contient bien plus que quatre unités — souvent des dizaines de milliers. Pour rendre l'exemple lisible, nous affichons des mots à la place des tokens. Les valeurs fictives de ce tableau sont reprises dans plusieurs pages afin que chaque calcul puisse être refait à la main. Dans un vrai modèle, le texte est découpé en unités qui peuvent être plus petites ou plus grandes qu'un mot ; une ligne du tableau ne correspond donc pas nécessairement à un mot entier.
 
-Ce tableau est une **distribution conditionnelle** : autrement dit, les probabilités sont calculées *en tenant compte du préfixe*. Les quatre valeurs se partagent un total de 1 (soit 100 %). Si la règle de décodage choisit « Être », ce token est ajouté au préfixe. Le nouveau préfixe devient « C'est une bonne situation, ça, scribe ? Être ». Dans notre exemple fictif, supposons que le modèle attribue alors la probabilité la plus élevée à « scribe » : c'est une nouvelle distribution, calculée à partir du préfixe enrichi.
+Ce tableau est une **distribution conditionnelle** : autrement dit, les probabilités sont calculées *en tenant compte du préfixe*. Les quatre valeurs se partagent un total de 1 (soit 100 %). Si la règle de décodage choisit « Vous », ce token est ajouté au préfixe. Le nouveau préfixe devient « C'est une bonne situation, ça, scribe ? Vous ». La distribution suivante est alors calculée à partir de ce contexte enrichi ; dans notre exemple, elle attribue 0,5 à « savez ».
 
 Trois termes suffisent pour lire la suite du parcours.
 
@@ -60,7 +60,7 @@ Trois termes suffisent pour lire la suite du parcours.
 
 Le modèle prédit un token à la fois. Pour obtenir la probabilité d'une phrase entière, on multiplie les probabilités de ses tokens successifs : à chaque étape, la probabilité est calculée en tenant compte de tous les tokens précédents. C'est la règle qui permet de passer d'une suite de prédictions à la [formalisation mathématique du langage](language-modeling-math.qmd).
 
-Une suite probable n'est pas une suite vraie. Que « Être » soit probable après la question ne dit rien de la situation réelle d'un scribe, et bien prédire n'établit pas une compréhension humaine du monde. [Objectif d'entraînement : garanties et limites](llm-limits.qmd) précise ce que la prédiction du prochain token garantit et ce qu'il faut mesurer séparément.
+Une suite probable n'est pas une suite vraie. Que « Vous » soit probable après la question ne dit rien de la situation réelle d'un scribe, et bien prédire n'établit pas une compréhension humaine du monde. [Objectif d'entraînement : garanties et limites](llm-limits.qmd) précise ce que la prédiction du prochain token garantit et ce qu'il faut mesurer séparément.
 
 ## Du texte à la distribution
 
@@ -87,7 +87,7 @@ Une fois la distribution calculée, trois questions différentes peuvent se pose
 ![Du contexte aux trois usages de la distribution prédictive : génération, scoring et apprentissage, présentés verticalement pour faciliter la lecture sur petit écran.](../images/llm-shared-prediction-uses-fr-mobile.svg){.d-md-none fig-alt="Version mobile du schéma : le contexte traverse le modèle, produit des logits puis des probabilités. Trois blocs présentent ensuite la génération, le scoring et l’apprentissage."}
 
 - **Générer.** On ne connaît pas la suite. Une règle choisit un token dans la distribution, l'ajoute au contexte, et le calcul recommence. Le traitement initial du prompt s'appelle le *prefill* ; la production des tokens un par un, le *decode*.
-- **Attribuer un score (*scoring*).** On connaît la suite : notre continuation commence par « Être ». On lit la probabilité que le modèle attribuait à ce token, ici 0,6. On répète cette opération pour chaque token du texte. La probabilité de la séquence ainsi obtenue est sa **vraisemblance** : elle indique dans quelle mesure le modèle juge cette suite compatible avec ce qui la précède ([voir la vraisemblance](vraisemblance.qmd)).
+- **Attribuer un score (*scoring*).** On connaît la suite : la continuation commence par « Vous ». On lit la probabilité que le modèle attribuait à ce token, ici 0,6. On répète cette opération pour chaque token du texte. La probabilité de la séquence ainsi obtenue est sa **vraisemblance** : elle indique dans quelle mesure le modèle juge cette suite compatible avec ce qui la précède ([voir la vraisemblance](vraisemblance.qmd)).
 - **Apprendre.** On connaît aussi la suite, et l'on veut que le modèle s'y attende davantage la prochaine fois. L'écart entre la prédiction et le token attendu est résumé par un nombre, la [perte](loss.qmd) (*loss*) ; les [gradients](gradients.qmd) indiquent comment modifier chaque paramètre pour la réduire. Pendant cet apprentissage, le contexte est toujours construit avec les tokens réels du texte, jamais avec ceux que le modèle aurait produits : c'est le *teacher forcing*, détaillé dans les [exemples d'entraînement](training-examples.qmd).
 
 Dans notre exemple, le modèle attribue 0,6 au token observé. Sa **surprise informationnelle** (*surprisal*) — la quantité d'information associée à cette observation — vaut $-\ln(0,6)\approx0,51$ nat. Plus une observation était improbable, plus elle apporte de surprise. L'[entropie](entropy.qmd) est la surprise moyenne que l'on peut attendre avant de connaître le token, en pondérant chaque possibilité par sa probabilité. Pour une séquence observée, additionner les surprisals revient à prendre l'opposé du logarithme de sa vraisemblance ([voir le lien avec la vraisemblance](vraisemblance.qmd)).
@@ -223,7 +223,7 @@ Pour aller plus loin sur l'usage des outils et l'orchestration, voir [l'évoluti
 
 Exercices associés : [page d'exercices du panorama](exercises/llm-overview.qmd).
 
-1. Après la question de Panoramix, le modèle donne 0,6 à « Être ». Une fois « Être » ajouté au contexte, il donne à ce même token une probabilité bien plus faible. Les paramètres ont-ils changé entre les deux calculs ?
+1. Après cette question, le modèle donne 0,6 à « Vous ». Une fois « Vous » ajouté au contexte, il donne à ce même token une probabilité bien plus faible. Les paramètres ont-ils changé entre les deux calculs ?
 
 <details>
 <summary>Afficher la réponse</summary>
