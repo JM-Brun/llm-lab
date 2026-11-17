@@ -4,7 +4,7 @@
 
 ::: {.guided-route-stage #guided-stage-orientation}
 
-### 01 · Place the system in context
+### 01 · How an LLM works
 
 Understand what an LLM is and follow a complete generation loop as a black box with fixed parameters before studying its internal mechanisms.
 

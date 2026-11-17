@@ -2,8 +2,8 @@ schema_version: 1
 stages:
   - id: orientation
     title:
-      fr: "Situer le système"
-      en: "Place the system in context"
+      fr: "Fonctionnement d’un LLM"
+      en: "How an LLM works"
     objective:
       fr: "Comprendre ce qu'est un LLM et suivre une génération complète comme une boîte noire, avec des paramètres fixes, avant d'en étudier les mécanismes internes."
       en: "Understand what an LLM is and follow a complete generation loop as a black box with fixed parameters before studying its internal mechanisms."

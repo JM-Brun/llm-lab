@@ -23,46 +23,34 @@ related: ["fr/transformer-history", "fr/scaling-laws", "fr/in-context-learning",
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:fr", "status:published"]
 -->
 
-{{< include ../includes/generated-guided-coverage-fr-llm-overview.qmd >}}
-
 {{< include ../includes/generated-guided-context-fr-llm-overview.qmd >}}
 
 ::: {.chapter-lead}
 « C'est une bonne situation, ça, scribe ? » Dans *Astérix et Obélix : Mission Cléopâtre*, la question de Panoramix lance le scribe Otis dans une longue tirade. Posez la même question à un assistant conversationnel : lui aussi enchaîne. Comment un programme produit-il une suite à partir d'une question ?
 
-Il ne rédige pas sa réponse d'un seul bloc. Il estime, pour chaque suite possible, la probabilité qu'elle vienne après le texte déjà écrit, en retient une, puis recommence. Un programme qui attribue ainsi des probabilités aux suites d'un texte est un **modèle de langage**. Entraîné à grande échelle, c'est un **grand modèle de langage** (*large language model*, LLM).
+Il ne rédige pas sa réponse d'un seul bloc. À partir du texte déjà écrit, il estime ce qui pourrait venir ensuite, choisit un élément, puis recommence. Un programme qui prolonge ainsi un texte est un **modèle de langage**. Entraîné à grande échelle, c'est un **grand modèle de langage** (*large language model*, LLM).
+
+Pour les calculs, le parcours utilise une continuation inventée : « Être scribe, c'est relier des histoires. » Elle sert de fil conducteur dans plusieurs pages. Otis est le personnage, l'assistant l'application qui dialogue avec l'utilisateur, et le LLM le modèle interrogé par cette application : c'est ce dernier que nous étudions ici.
 :::
 
-::: {.callout-note title="Fil rouge : le scribe"}
-**Le préfixe** est la question de Panoramix : « C'est une bonne situation, ça, scribe ? » C'est le texte fourni au modèle. **La continuation** est ce qui vient ensuite. Dans le film, Otis commence par « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... ».
-
-La réplique du film sert d'accroche. Pour les calculs, le parcours utilise une continuation originale, écrite pour LLM Lab : « Être scribe, c'est relier des histoires. » Otis est un personnage, l'assistant une application, et le LLM le modèle que cette application interroge : seul ce dernier est étudié ici.
-:::
-
-::: {.callout-tip title="L'idée à retenir en une minute"}
-- **Ce que le modèle calcule :** à partir d'un contexte, une probabilité pour chaque token qui pourrait suivre. Un token après l'autre, avec des paramètres qui ne changent pas pendant l'utilisation.
-- **Un calcul, trois usages :** générer (choisir un token et l'ajouter au contexte), mesurer la vraisemblance (lire la probabilité donnée à un token déjà connu), apprendre (comparer la prédiction au token attendu et corriger les paramètres).
-- **Trois mots à distinguer :** un **LLM** est un modèle de langage entraîné à grande échelle ; le **Transformer** est une famille d'architectures ; un **GPT** est un Transformer d'un type précis, pré-entraîné à prédire le prochain token.
-:::
-
-::: {.callout-note title="Une page transversale"}
-Ce panorama présente plusieurs dimensions complémentaires d’un LLM, et non une étape unique du parcours. Il donne des repères sur **l’entrée et les représentations** ([texte et tokens](text-data.qmd), [embeddings](embedding-space.qmd)), **le calcul et la prédiction** ([Transformer](transformer.qmd), [distribution de probabilités](probabilites.qmd)), puis **les usages de cette prédiction** ([génération](generation.qmd), [scoring](vraisemblance.qmd) et [apprentissage](loss.qmd)). Aucun de ces thèmes n’est donc désigné ici comme l’étape courante.
+::: {.callout-tip title="L'idée à retenir"}
+Un modèle de langage prolonge un texte en estimant ce qui pourrait venir ensuite. Ce même calcul sert aussi à **mesurer si une suite donnée était attendue** et à **entraîner le modèle**, en comparant ses prédictions au texte observé.
 :::
 
 ## Ce que le modèle prédit
 
-Donnons au modèle le préfixe « C'est une bonne situation, ça, scribe ? ». Il ne produit pas directement un mot : il attribue un score à chaque unité de son vocabulaire, puis convertit ces scores en probabilités. Pour ce contexte, on peut imaginer le résultat suivant.
+Le texte « C'est une bonne situation, ça, scribe ? » est ici le **préfixe** : la partie de la séquence déjà fournie au modèle. La **continuation** est la suite qui vient après ce préfixe. À partir du préfixe, le modèle calcule une distribution de probabilités pour le token suivant. Il ne choisit pas immédiatement un mot : il commence par attribuer un score à chacune des unités de son vocabulaire, puis transforme ces scores en probabilités. Imaginons le résultat suivant :
 
-| Prochain token possible | Probabilité |
+| Suite possible (un mot pour simplifier) | Probabilité |
 |---|---|
 | « Être » | 0,6 |
 | « Vous » | 0,2 |
 | « Oui » | 0,1 |
 | « Non » | 0,1 |
 
-Ces valeurs sont fictives : elles ne proviennent pas d'un modèle entraîné, et un vocabulaire réel compte des dizaines de milliers d'entrées, pas quatre. Dans cet exemple simplifié, chaque ligne représente un token unique ; les formes affichées ne garantissent pas qu'un tokenizer réel les traiterait chacune comme un seul token. Le parcours réutilise ces valeurs d'une page à l'autre pour que chaque calcul puisse être refait à la main.
+Ces valeurs sont fictives : elles ne proviennent pas d'un modèle entraîné. Le vocabulaire réel d'un modèle contient bien plus que quatre unités — souvent des dizaines de milliers. Pour rendre l'exemple lisible, nous affichons des mots à la place des tokens. Les valeurs fictives de ce tableau sont reprises dans plusieurs pages afin que chaque calcul puisse être refait à la main. Dans un vrai modèle, le texte est découpé en unités qui peuvent être plus petites ou plus grandes qu'un mot ; une ligne du tableau ne correspond donc pas nécessairement à un mot entier.
 
-Ce tableau est une **distribution conditionnelle** : elle dépend du contexte. Les quatre probabilités se partagent un total de 1 (soit 100 %). Ajoutez « Être » à la suite de la question et recalculez : les candidats ne sont plus les mêmes, et « scribe » passe en tête.
+Ce tableau est une **distribution conditionnelle** : autrement dit, les probabilités sont calculées *en tenant compte du préfixe*. Les quatre valeurs se partagent un total de 1 (soit 100 %). Si la règle de décodage choisit « Être », ce token est ajouté au préfixe. Le nouveau préfixe devient « C'est une bonne situation, ça, scribe ? Être ». Dans notre exemple fictif, supposons que le modèle attribue alors la probabilité la plus élevée à « scribe » : c'est une nouvelle distribution, calculée à partir du préfixe enrichi.
 
 Trois termes suffisent pour lire la suite du parcours.
 
@@ -70,26 +58,28 @@ Trois termes suffisent pour lire la suite du parcours.
 - **Contexte.** Les tokens dont le modèle dispose pour prédire le suivant : le texte fourni, puis, pendant une génération, les tokens déjà produits.
 - **Paramètres.** Les nombres appris pendant l'entraînement, poids et biais notamment, qui déterminent le calcul. Ils sont fixes pendant l'inférence ordinaire, c'est-à-dire quand on utilise le modèle.
 
-Le modèle prédit un token à la fois. La probabilité d'une phrase entière s'obtient en multipliant les probabilités de ses tokens successifs, chacune étant conditionnée par ce qui précède ; la [formalisation mathématique du langage](language-modeling-math.qmd) établit ce résultat.
+Le modèle prédit un token à la fois. Pour obtenir la probabilité d'une phrase entière, on multiplie les probabilités de ses tokens successifs : à chaque étape, la probabilité est calculée en tenant compte de tous les tokens précédents. C'est la règle qui permet de passer d'une suite de prédictions à la [formalisation mathématique du langage](language-modeling-math.qmd).
 
 Une suite probable n'est pas une suite vraie. Que « Être » soit probable après la question ne dit rien de la situation réelle d'un scribe, et bien prédire n'établit pas une compréhension humaine du monde. [Objectif d'entraînement : garanties et limites](llm-limits.qmd) précise ce que la prédiction du prochain token garantit et ce qu'il faut mesurer séparément.
 
 ## Du texte à la distribution
 
-![Le processus autorégressif de génération : le contexte est préparé et tokenisé, traité par un modèle à paramètres fixes, puis enrichi du token sélectionné.](../images/llm-generation-process-fr.svg){#fig-gpt-generation-process fig-alt="Le préfixe « C'est une bonne situation, ça, scribe ? » est tokenisé, traité par un modèle à paramètres fixes, puis converti en distribution : Être 0,6, Vous 0,2, Oui 0,1, Non 0,1, affichés en pourcentages. Une règle de décodage sélectionne « Être », qui est ajouté au contexte. Les probabilités sont fictives."}
+![Schéma de référence en six étapes : texte d’entrée, tokenisation, représentations numériques, calcul dans les blocs Transformer, distribution du prochain token et sélection avec boucle de génération.](../images/llm-generation-process-fr.svg){#fig-gpt-generation-process fig-alt="Un GPT autorégressif traite le préfixe en six étapes : texte, tokens et identifiants, embeddings et information de position, blocs Transformer répétés, logits transformés en probabilités, puis sélection d’un token ajouté au préfixe. Le calcul recommence avec le contexte enrichi. Les probabilités sont fictives."}
 
-La figure se lit de gauche à droite.
+La figure présente le parcours complet d’un GPT autorégressif, de gauche à droite, puis la boucle de génération.
 
-1. **Le texte devient une suite de tokens**, puis une suite de nombres.
-2. **Le réseau transforme ces nombres**, à paramètres fixes, en un score par token du vocabulaire. Ces scores sont les **logits**.
-3. **La fonction softmax convertit les logits en probabilités** : c'est la distribution du tableau ci-dessus.
-4. **Une règle de décodage choisit un token**, ici « Être ». Il rejoint le contexte et le calcul recommence.
+1. **Le texte d’entrée** constitue le préfixe : le prompt et, le cas échéant, les tokens déjà produits.
+2. **Le tokenizer découpe le texte en tokens** et associe à chacun un identifiant entier ([Du texte aux tokens](text-data.qmd)).
+3. **Les identifiants deviennent des représentations numériques** grâce aux embeddings et à l’information de position ([Embeddings](embedding-space.qmd)).
+4. **Les blocs Transformer transforment ces représentations** : attention causale, MLP, connexions résiduelles et normalisation. Cette pile produit des représentations contextualisées ([Le Transformer dans un GPT](transformer.qmd)).
+5. **La tête de sortie produit les logits**, puis la softmax les convertit en une distribution de probabilités sur le vocabulaire ([Logits et probabilités](probabilites.qmd)).
+6. **La règle de décodage sélectionne un token**. Ce choix est extérieur au calcul du Transformer ; le token est ajouté au préfixe, puis une nouvelle passe calcule la distribution suivante ([Générer du texte](generation.qmd)).
 
-Les étapes 1 à 3 forment le calcul du modèle ; le parcours les ouvre une à une, de [l'entrée](text-data.qmd) au [réseau](transformer.qmd) puis à la [distribution](probabilites.qmd). L'étape 4 n'appartient pas au réseau : c'est une décision prise à partir de sa sortie. La page suivante, [Générer du texte](generation.qmd), suit cette boucle sur notre exemple.
+Cette vue générale est le repère commun du parcours. Les pages liées approfondissent chaque étape sans refaire le schéma complet. La tokenisation réelle peut produire des unités plus petites ou plus grandes qu’un mot ; les architectures et les méthodes d’encodage de position varient selon les modèles.
 
 ## Un calcul, trois usages
 
-Une fois la distribution calculée, tout dépend de la question posée. **Pour une première lecture, retenez seulement les trois usages** : produire une suite, mesurer la vraisemblance d'une suite connue ou apprendre à partir d'une suite attendue. Les termes *prefill*, *decode*, *loss*, *gradients* et *teacher forcing* précisent les mécanismes ; vous pourrez les approfondir dans les pages liées sans devoir tous les mémoriser maintenant.
+Une fois la distribution calculée, trois questions différentes peuvent se poser. **Veut-on produire une suite, mesurer à quel point une suite connue était attendue, ou améliorer le modèle à partir d'une suite attendue ?** Ces trois objectifs réutilisent le même calcul, mais ne lui demandent pas la même chose. Les termes *prefill*, *decode*, *loss*, *gradients* et *teacher forcing* désignent les mécanismes qui interviennent dans ces usages ; les pages liées les expliquent pas à pas.
 
 <!-- Desktop: three-column view; mobile: stacked view for readable labels. -->
 ![Du contexte à trois usages de la distribution prédictive : génération, scoring d'une cible observée et apprentissage.](../images/llm-shared-prediction-uses-fr.svg){.d-none .d-md-block #fig-llm-shared-prediction-uses fig-alt="Le contexte passe dans le modèle, qui produit des logits puis une distribution de probabilités sur le prochain token. Cette distribution sert à choisir un token en génération, à mesurer la probabilité d'un token observé en scoring, ou à calculer une loss et mettre à jour les paramètres pendant l'apprentissage."}
@@ -97,20 +87,20 @@ Une fois la distribution calculée, tout dépend de la question posée. **Pour u
 ![Du contexte aux trois usages de la distribution prédictive : génération, scoring et apprentissage, présentés verticalement pour faciliter la lecture sur petit écran.](../images/llm-shared-prediction-uses-fr-mobile.svg){.d-md-none fig-alt="Version mobile du schéma : le contexte traverse le modèle, produit des logits puis des probabilités. Trois blocs présentent ensuite la génération, le scoring et l’apprentissage."}
 
 - **Générer.** On ne connaît pas la suite. Une règle choisit un token dans la distribution, l'ajoute au contexte, et le calcul recommence. Le traitement initial du prompt s'appelle le *prefill* ; la production des tokens un par un, le *decode*.
-- **Scorer.** On connaît la suite : notre continuation commence par « Être ». On lit la probabilité que le modèle lui donnait, 0,6. Répétée sur chaque token d'un texte, cette lecture mesure à quel point le modèle s'attendait à ce texte ; c'est la [vraisemblance](vraisemblance.qmd).
+- **Attribuer un score (*scoring*).** On connaît la suite : notre continuation commence par « Être ». On lit la probabilité que le modèle attribuait à ce token, ici 0,6. On répète cette opération pour chaque token du texte. La probabilité de la séquence ainsi obtenue est sa **vraisemblance** : elle indique dans quelle mesure le modèle juge cette suite compatible avec ce qui la précède ([voir la vraisemblance](vraisemblance.qmd)).
 - **Apprendre.** On connaît aussi la suite, et l'on veut que le modèle s'y attende davantage la prochaine fois. L'écart entre la prédiction et le token attendu est résumé par un nombre, la [perte](loss.qmd) (*loss*) ; les [gradients](gradients.qmd) indiquent comment modifier chaque paramètre pour la réduire. Pendant cet apprentissage, le contexte est toujours construit avec les tokens réels du texte, jamais avec ceux que le modèle aurait produits : c'est le *teacher forcing*, détaillé dans les [exemples d'entraînement](training-examples.qmd).
 
-Dans notre exemple, attribuer 0,6 au token observé correspond à un **surprisal** de $-\ln(0,6)\approx0,51$ nat : moins un token est probable, plus il est surprenant. L'[entropie](entropy.qmd) est le surprisal moyen, pondéré par leurs probabilités, sur tous les tokens possibles ; additionner les surprisals des tokens observés relie cette idée à la [vraisemblance](vraisemblance.qmd).
+Dans notre exemple, le modèle attribue 0,6 au token observé. Sa **surprise informationnelle** (*surprisal*) — la quantité d'information associée à cette observation — vaut $-\ln(0,6)\approx0,51$ nat. Plus une observation était improbable, plus elle apporte de surprise. L'[entropie](entropy.qmd) est la surprise moyenne que l'on peut attendre avant de connaître le token, en pondérant chaque possibilité par sa probabilité. Pour une séquence observée, additionner les surprisals revient à prendre l'opposé du logarithme de sa vraisemblance ([voir le lien avec la vraisemblance](vraisemblance.qmd)).
 
 Générer et scorer laissent les paramètres intacts ; seul l'apprentissage les modifie. Les trois usages partagent le même calcul, mais ne s'enchaînent pas dans une même exécution.
 
-Scorer n'est pas encore évaluer. Le scoring donne des probabilités pour un texte. Une évaluation compare ces résultats, ou d'autres mesures, sur un ensemble d'exemples défini à l'avance et tenu à l'écart de l'entraînement jusqu'au bilan final.
+Attribuer un score à un texte ne suffit pas à évaluer un modèle. Le scoring donne des probabilités pour une suite donnée. Une évaluation compare ces résultats, ou d'autres mesures, sur un ensemble d'exemples défini à l'avance et tenu à l'écart de l'entraînement jusqu'au bilan final.
 
 ## LLM, Transformer, GPT : trois mots, trois notions
 
-**LLM** décrit une échelle, pas une construction. Aucun seuil de paramètres ne définit à lui seul la catégorie : la taille des corpus et le budget de calcul comptent autant ([lois d'échelle](scaling-laws.qmd) ; [Zhao et al., 2023](https://arxiv.org/abs/2303.18223) ; [Hoffmann et al., 2022](https://proceedings.neurips.cc/paper_files/paper/2022/hash/c1e2faff6f588870935f114ebe04a3e5-Abstract.html)). Le terme ne dit rien de l'architecture ni de l'objectif d'entraînement.
+**LLM** désigne un modèle de langage entraîné à grande échelle ; le terme ne décrit pas une architecture particulière. Il n'existe pas de seuil universel de paramètres qui suffirait à définir un LLM : la quantité et la qualité des données, ainsi que le calcul consacré à l'entraînement, comptent également. Les [lois d'échelle](scaling-laws.qmd) étudient précisément les relations entre ces facteurs. Le terme ne précise pas non plus l'objectif d'entraînement : deux LLM peuvent apprendre avec des objectifs ou des méthodes différents.
 
-**Transformer** désigne une famille d'architectures de réseaux de neurones. L'article fondateur décrit un modèle encodeur-décodeur ([Vaswani et al., 2017](https://arxiv.org/abs/1706.03762)) ; deux autres configurations en dérivent.
+**Transformer** désigne une famille d'architectures de réseaux de neurones, qui comprend plusieurs configurations. L'article fondateur présente un modèle encodeur-décodeur ; les configurations encodeur seul et décodeur seul ont ensuite été développées.
 
 | Famille | Fonctionnement général | Exemple |
 |---|---|---|
@@ -124,7 +114,7 @@ LLM Lab étudie un petit GPT décodeur seul, parce que son calcul peut être sui
 
 ## Architecture, apprentissage, utilisation
 
-Décrire un modèle, c'est répondre à trois questions indépendantes.
+Pour décrire un modèle, il est utile de séparer trois questions. Elles sont liées dans la pratique, mais ne désignent pas la même chose : la structure du réseau, la façon dont ses paramètres ont été appris, et ce que l'on fait du modèle une fois entraîné.
 
 | Dimension | Question | Exemples |
 |---|---|---|
@@ -132,11 +122,13 @@ Décrire un modèle, c'est répondre à trois questions indépendantes.
 | **Apprentissage** | Comment les paramètres sont-ils obtenus ou adaptés ? | Pré-entraînement, fine-tuning, SFT, optimisation par préférences |
 | **Utilisation** | Que fait-on du modèle, paramètres fixés ? | Génération, classification, scoring, [apprentissage en contexte](in-context-learning.qmd), [ingénierie du contexte](context-engineering.qmd), recherche documentaire (RAG) |
 
-**Apprentissage.** Le **pré-entraînement** d'un GPT lui apprend à prédire le prochain token sur un grand corpus. Il est auto-supervisé : les réponses attendues sont les tokens du texte lui-même, sans annotation. Ce que le modèle peut apprendre dépend donc de la qualité et de la diversité de ce corpus. Le résultat est souvent appelé *base model*. Une **adaptation** peut suivre, sans être obligatoire : fine-tuning pour une tâche, *supervised fine-tuning* (SFT) sur des paires instruction-réponse, optimisation par préférences.
+**Apprentissage.** Le **pré-entraînement** apprend au modèle à prédire le prochain token à partir de grands corpus. Dans le cas d'un GPT, les réponses attendues sont déjà présentes dans le texte : le modèle apprend à prédire les tokens suivants sans qu'il soit nécessaire d'annoter chaque exemple. C'est un apprentissage généralement dit *auto-supervisé*. Le modèle obtenu avant adaptation est souvent appelé *base model* (modèle de base). La qualité et la diversité du corpus influencent ce qu'il peut apprendre.
 
-Un **modèle de fondation** (*foundation model*) est une catégorie plus large que le *base model* : un modèle entraîné sur des données générales à grande échelle et adaptable à de nombreuses tâches, y compris hors du langage ([Bommasani et al., 2021](https://crfm.stanford.edu/report)).
+Un **post-entraînement** peut ensuite adapter le modèle, mais cette étape n'est pas obligatoire. Elle peut prendre plusieurs formes : un *fine-tuning* sur les données d'une tâche, un *supervised fine-tuning* (SFT) à partir de paires instruction-réponse, ou une optimisation à partir de préférences humaines ou synthétiques.
 
-**Utilisation.** À l'inférence, les paramètres ne bougent pas. Le contexte est le principal levier pour orienter la réponse : le **prompt** (le texte fourni), les exemples qu'on y place, ou les documents qu'un système de **génération augmentée par récupération** (*retrieval-augmented generation*, RAG) va chercher et y insère. Le réglage du décodage (par exemple la température ou *top-p*) peut aussi modifier le token sélectionné, sans changer le contexte ni les paramètres.
+Un **modèle de fondation** (*foundation model*) est une notion plus large que *base model*. Elle désigne un modèle entraîné à grande échelle sur des données générales et conçu pour être adapté à de nombreuses tâches, parfois au-delà du langage ([Bommasani et al., 2021](https://crfm.stanford.edu/report)). Le *base model* décrit plutôt l'état du modèle après le pré-entraînement, avant un éventuel post-entraînement : les deux expressions ne sont donc pas synonymes.
+
+**Utilisation.** À l'inférence, les paramètres restent fixes. Le principal moyen d'orienter le modèle est alors de modifier ce qu'il reçoit : le **prompt** (le texte fourni), les exemples qui l'accompagnent, ou les documents qu'un système de **génération augmentée par récupération** (*retrieval-augmented generation*, RAG) recherche et ajoute au contexte. Les réglages du décodage, comme la température ou *top-p*, peuvent aussi changer le token sélectionné, sans modifier les paramètres ni le contenu du contexte.
 
 ## Où se trouve l'information ?
 
@@ -161,44 +153,44 @@ L'**apprentissage en contexte (ICL)** concerne ce que le modèle fait avec certa
 
 ## Pourquoi les Transformers et les LLM pré-entraînés ont changé la donne
 
-La rupture s'est construite par étapes. Elle ne vient ni du seul mécanisme d'attention, ni de la seule taille des modèles : plusieurs avancées ont rendu possible un apprentissage plus réutilisable et un calcul plus facilement extensible.
+La rupture s'est construite progressivement. Elle ne vient ni du seul mécanisme d'attention, ni de la seule taille des modèles : plusieurs avancées ont rendu le calcul plus facile à paralléliser pendant l'entraînement et les modèles plus réutilisables d'une tâche à l'autre.
 
-### Les grandes étapes, en quelques repères
+### Quelques repères historiques
 
-- **Avant les Transformers :** les RNN, LSTM et modèles séquence-à-séquence traitaient l'information au fil des positions. Ils ont permis des progrès importants, mais leur calcul récurrent limitait le parallélisme et les résumés de séquence pouvaient devenir un goulot d'étranglement.
-- **L'attention avant 2017 :** en traduction neuronale, elle a permis au décodeur de consulter différentes positions de la séquence source plutôt que de dépendre d'un résumé unique.
-- **2017 — le Transformer :** l'attention devient le mécanisme central d'une architecture qui permet de traiter en parallèle les positions d'une séquence pendant l'entraînement. La génération autorégressive, elle, reste séquentielle : les tokens sont produits les uns après les autres.
-- **À partir de la fin des années 2010 :** le pré-entraînement à grande échelle rend les paramètres réutilisables sur de nombreuses tâches. Les modèles GPT illustrent le passage d'un modèle de langage pré-entraîné à un modèle que l'on peut solliciter directement par des consignes et des exemples.
+- **Avant les Transformers :** les réseaux récurrents (RNN), leurs variantes LSTM et les modèles séquence-à-séquence traitaient l'information au fil des positions. Ils ont permis des progrès importants, mais leur calcul récurrent limitait le parallélisme ; les représentations condensées d'une séquence pouvaient aussi devenir un goulot d'étranglement.
+- **L'attention avant 2017 :** notamment en traduction neuronale, elle a permis au décodeur de consulter différentes positions de la séquence source, plutôt que de dépendre uniquement d'un résumé unique de cette séquence.
+- **2017 — le Transformer :** l'attention devient le mécanisme central d'une architecture qui permet de traiter en parallèle les positions d'une séquence pendant l'entraînement. Cela ne rend pas pour autant la génération parallèle : dans une génération autorégressive, les tokens sont toujours produits les uns après les autres.
+- **À partir de la fin des années 2010 :** le pré-entraînement à grande échelle rend les paramètres réutilisables pour de nombreuses tâches. Les modèles GPT illustrent le passage d'un modèle de langage pré-entraîné à un modèle que l'on peut solliciter directement avec des consignes et des exemples.
 
-Pour les précurseurs, les jalons documentés et les compromis techniques, voir l'[histoire des Transformers](transformer-history.qmd).
+Pour retrouver les précurseurs, les jalons documentés et les compromis techniques, consultez l'[histoire des Transformers](transformer-history.qmd).
 
-### Ce qui a changé — conceptuellement
+### Ce qui a changé, concrètement
 
 | Changement | Idée essentielle | Ce que cela rend possible — sans le garantir |
 |---|---|---|
-| **Du calcul récurrent à l'attention** | Les positions peuvent interagir directement, selon le masque, au lieu de transmettre l'information uniquement par une chaîne d'états. | Mieux exploiter les relations entre positions et paralléliser le calcul d'entraînement ; les relations à longue distance deviennent plus faciles à apprendre, sans être garanties. L'attention dense reste coûteuse lorsque le contexte s'allonge, et la génération demeure séquentielle. |
-| **Des représentations contextualisées** | La représentation d'un token dépend des autres tokens auxquels il peut accéder. | Un même token peut jouer un rôle différent selon son contexte ; cela ne crée pas une mémoire persistante ou illimitée. |
-| **Du modèle spécialisé au modèle pré-entraîné réutilisable** | Un objectif général — prédire le prochain token — apprend des régularités linguistiques et des représentations réutilisables. | Un même socle peut contribuer à la traduction, au résumé, à la classification ou à la réponse à des questions, sans reconstruire un modèle propre à chaque tâche. |
+| **Du calcul récurrent à l'attention** | Selon le masque utilisé, une position peut prendre en compte directement d'autres positions, au lieu de faire circuler l'information uniquement le long d'une chaîne d'états. | Les relations entre positions sont plus faciles à exploiter et le calcul d'entraînement peut être parallélisé. Les relations à longue distance deviennent plus accessibles à l'apprentissage, sans être garanties. L'attention dense reste coûteuse lorsque le contexte s'allonge, et la génération demeure séquentielle. |
+| **Des représentations contextualisées** | La représentation d'un token dépend des autres tokens auxquels il peut accéder. | Un même token peut jouer un rôle différent selon son contexte. Cela ne crée toutefois ni mémoire persistante ni accès illimité à l'ensemble des textes. |
+| **Du modèle spécialisé au modèle pré-entraîné réutilisable** | Un objectif général — prédire le prochain token — permet d'apprendre des régularités linguistiques et des représentations réutilisables. | Un même socle peut contribuer à la traduction, au résumé, à la classification ou à la réponse à des questions, sans reconstruire un modèle propre à chaque tâche. |
 
-### Pourquoi la prédiction du prochain token peut-elle servir à d'autres tâches ?
+### Pourquoi prédire le prochain token aide-t-il pour d'autres tâches ?
 
-Le pré-entraînement n'enseigne pas explicitement chaque tâche aval. Il apprend sur de grands corpus des régularités de langue, des relations entre éléments et des connaissances présentes dans les données. Ces acquis peuvent être réutilisés lorsque la tâche est formulée dans l'entrée, lorsque des exemples sont fournis, ou lorsque les paramètres sont ensuite adaptés.
+Le pré-entraînement n'enseigne pas explicitement chaque tâche que le modèle pourra ensuite réaliser. En parcourant de grands corpus, il apprend des régularités de langue, des relations entre éléments et des connaissances présentes dans les données. Ces acquis peuvent être réutilisés lorsque la tâche est formulée dans l'entrée, lorsque des exemples sont fournis, ou lorsque les paramètres sont ensuite adaptés.
 
-C'est le **transfert d'apprentissage** : un modèle entraîné sur un objectif général devient une base réutilisable pour des tâches qui n'étaient pas nécessairement ses objectifs d'entraînement explicites. « Pas entraîné spécifiquement pour cette tâche » ne signifie donc pas « sans apprentissage pertinent pour cette tâche ».
+C'est le **transfert d'apprentissage** : un modèle entraîné sur un objectif général devient une base réutilisable pour des tâches qui n'étaient pas nécessairement ses objectifs d'entraînement explicites. Autrement dit, « ne pas avoir été entraîné spécifiquement pour cette tâche » ne signifie pas « ne rien avoir appris qui puisse aider à la réaliser ».
 
-Le parcours de base introduit les différentes façons de mobiliser ce socle. Il faut distinguer trois voies complémentaires :
+Trois voies permettent de mobiliser ce socle, et elles peuvent se combiner :
 
-- **Adapter les paramètres** : le fine-tuning et les autres méthodes de post-entraînement modifient les poids à partir de nouvelles données et de nouveaux signaux d'entraînement ([post-entraînement](post-training.qmd)).
-- **Agir sur le contexte** : le prompting et l'[apprentissage en contexte (ICL)](in-context-learning.qmd) utilisent des consignes ou des exemples (*zero-shot*, *one-shot*, *few-shot*) sans mise à jour des poids.
-- **Apporter des informations externes** : le [RAG et l'ingénierie du contexte](context-engineering.qmd) organisent la récupération et l'injection de documents dans l'entrée du modèle. Le RAG complète ces voies ; il ne constitue pas un transfert des connaissances dans les paramètres.
+- **Adapter les paramètres :** le fine-tuning et les autres méthodes de post-entraînement modifient les poids à partir de nouvelles données ou de nouveaux signaux d'entraînement ([post-entraînement](post-training.qmd)).
+- **Agir sur le contexte :** le prompting et l'[apprentissage en contexte (ICL)](in-context-learning.qmd) utilisent des consignes ou des exemples (*zero-shot*, *one-shot*, *few-shot*) sans mettre à jour les poids.
+- **Apporter des informations externes :** le [RAG et l'ingénierie du contexte](context-engineering.qmd) organisent la recherche, la sélection et l'injection de documents dans l'entrée du modèle. Le RAG complète les deux autres voies ; il ne transfère pas les connaissances récupérées dans les paramètres.
 
-Les mécanismes et limites propres à l'ICL, les [lois d'échelle](scaling-laws.qmd), l'[émergence](emergence.qmd) et le [post-entraînement](post-training.qmd) sont étudiés dans leurs pages dédiées : ils complètent cette explication, sans être nécessaires pour retenir l'idée générale de la rupture. Le transfert dépend des données, de la tâche et de l'évaluation ; il n'est ni universel ni automatique.
+Les mécanismes et les limites propres à l'ICL, les [lois d'échelle](scaling-laws.qmd), l'[émergence](emergence.qmd) et le [post-entraînement](post-training.qmd) sont étudiés dans leurs pages dédiées. Ils complètent cette première explication, sans être nécessaires pour en retenir l'idée générale. Le transfert dépend des données, de la tâche et de l'évaluation : il n'est ni universel ni automatique.
 
-**La carte mentale à retenir :** le Transformer change le chemin du calcul ; le pré-entraînement construit un socle réutilisable ; le transfert explique pourquoi ce socle sert à des tâches variées. L'échelle et les méthodes d'adaptation ont ensuite élargi les capacités et les usages, sans se substituer à ces trois idées fondamentales.
+**La carte mentale à retenir :** le Transformer change le chemin du calcul ; le pré-entraînement construit un socle réutilisable ; le transfert explique pourquoi ce socle peut servir à des tâches variées. L'échelle et les méthodes d'adaptation ont ensuite élargi les capacités et les usages, sans remplacer ces trois idées fondamentales.
 
-::: {.callout-note title="Trois pages, trois angles complémentaires"}
-Le panorama répond à **ce qu'est un LLM et comment il fonctionne**. [L'histoire des Transformers](transformer-history.qmd) explique **quels problèmes historiques ont conduit à cette architecture**. [L'évolution des LLM](llm-evolution.qmd) compare **les dimensions qui ont changé depuis GPT-2** — échelle, post-entraînement, ICL, multimodalité, calcul à l'inférence et systèmes à outils. Ces pages se complètent : elles ne constituent pas trois versions successives du même récit.
-:::
+Le panorama répond à **ce qu'est un LLM et comment il fonctionne**. [L'histoire des Transformers](transformer-history.qmd) explique **quels problèmes historiques ont conduit à cette architecture**. [L'évolution des LLM](llm-evolution.qmd) compare **les dimensions qui ont changé depuis GPT-2** — échelle, post-entraînement, ICL, multimodalité, calcul à l'inférence et systèmes à outils. Ces pages se complètent et proposent des angles différents sur un même domaine.
+
+Les notions d'échelle et de transfert se répondent, mais ne se confondent pas : augmenter les ressources d'entraînement peut améliorer un modèle, tandis que le transfert décrit la réutilisation de ce qu'il a appris. Les deux phénomènes dépendent des données, des objectifs et des évaluations.
 
 ## Choisir une approche
 
@@ -214,9 +206,9 @@ Le choix se fait sur des critères mesurés : qualité, erreurs, robustesse, co�
 
 ## Du modèle au système conversationnel
 
-Un assistant conversationnel est un **système construit autour d'un modèle** : une application formate les messages, conçoit et gère le contexte ([context engineering](context-engineering.qmd)) et peut coordonner des outils externes. Les rôles system, user et assistant sont des conventions de format des messages, pas des couches du Transformer. De même, un appel d'outil est une demande structurée ; l'application reste responsable de son autorisation et de son exécution. Une mémoire persistante exige aussi un stockage côté application : elle n'est pas garantie par la fenêtre de contexte du modèle.
+Un assistant conversationnel est un **système construit autour d'un modèle** : une application formate les messages, conçoit et gère le contexte ([context engineering](context-engineering.qmd)) et peut coordonner des outils externes. Les rôles system, user et assistant sont des conventions de format des messages, pas des couches du Transformer. De même, un appel d'outil est une demande structurée ; l'application reste responsable de son autorisation et de son exécution. Une mémoire persistante exige aussi un stockage côté application : elle n'est pas garantie par la fenêtre de contexte du modèle. Ces distinctions prolongent le panorama vers les systèmes déployés, sans ajouter une nouvelle étape au fonctionnement interne du modèle.
 
-Ces distinctions sont utiles pour passer des fondamentaux du modèle aux systèmes déployés, mais elles ne constituent pas une nouvelle étape du parcours théorique principal. L'[approfondissement sur l'évolution des LLM](llm-evolution.qmd#tool-using-systems) examine l'usage des outils, l'orchestration et les frontières du système ; le [parcours Microsoft Learn sur les fondamentaux des LLM](https://learn.microsoft.com/en-us/agent-framework/journey/llm-fundamentals) apporte un éclairage complémentaire orienté développeur.
+Pour aller plus loin sur l'usage des outils et l'orchestration, voir [l'évolution des LLM](llm-evolution.qmd#tool-using-systems) et le [parcours Microsoft Learn sur les fondamentaux des LLM](https://learn.microsoft.com/en-us/agent-framework/journey/llm-fundamentals), orienté développeur.
 
 ::: {.callout-tip title="Pour approfondir"}
 - **Voir le modèle en configuration :** [visite guidée de la configuration d'un GPT](gpt-config-walkthrough.qmd).
@@ -260,6 +252,8 @@ Pas nécessairement. Un système RAG récupère les documents récents à l'inf�
 :::
 
 {{< include ../includes/generated-suggested-route-fr-llm-overview.qmd >}}
+
+{{< include ../includes/generated-guided-coverage-fr-llm-overview.qmd >}}
 
 ::: {.language-switch}
 **Langue :** [Français](llm-overview.qmd) · [English](../en/llm-overview.qmd)
