@@ -1,5 +1,61 @@
 schema_version: 1
 source_id: maor-farid-large-mechanical-model-brep-geometry-2026
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Public LinkedIn post text and visible comments inspected on 2026-11-17."
+      - "Accessible transcript of the embedded 3Blue1Brown entropy/compression video inspected as text; its audiovisual sequence was not independently reviewed here."
+      - "The source's transition from predictive compression to CAD-native geometry and design intent is reconstructed from the post text and attributed comments."
+    inferred_elements:
+      - "Learning outcomes and the teaching route below are editorial inferences, not a declared lesson plan by the author."
+      - "The embedded video is a separate source record; its detailed source graph is not copied or duplicated here."
+  source_graph:
+    nodes:
+      - {id: src-predictive-compression, kind: principle, description: "Interpret probabilistic next-token prediction through expected ideal code length.", locator: "Post body, paragraph 1"}
+      - {id: src-language-representation, kind: representation, description: "Natural language provides a flexible interface but does not by itself guarantee exact CAD geometry, topology or engineering constraints.", locator: "Post body, paragraph 2"}
+      - {id: src-brep-representation, kind: representation, description: "B-rep is presented as a CAD-native representation of boundary geometry and topology.", locator: "Post body, paragraphs 2–3"}
+      - {id: src-large-mechanical-model, kind: model, description: "The author proposes a Large Mechanical Model trained to represent and reason over mechanical geometry.", locator: "Post body, paragraph 3"}
+      - {id: src-design-intent, kind: requirement, description: "Engineering relevance may depend on preserving constraints, interfaces and functional intent beyond surface reconstruction.", locator: "Visible reader comment by Tatiana Stetsenko"}
+      - {id: src-task-aware-validation, kind: question, description: "Whether learned representations preserve task-critical geometry and design intent requires explicit evaluation.", locator: "Editorial synthesis of post and visible comments"}
+    edges:
+      - {from: src-predictive-compression, type: motivates, to: src-brep-representation}
+      - {from: src-language-representation, type: contrasted-with, to: src-brep-representation}
+      - {from: src-brep-representation, type: proposed-input-for, to: src-large-mechanical-model}
+      - {from: src-design-intent, type: constrains, to: src-task-aware-validation}
+      - {from: src-large-mechanical-model, type: requires-evaluation-by, to: src-task-aware-validation}
+    interpretation: "This is an editorial reconstruction of the post's argument, not a verified architecture diagram. The proposed LMM's actual inputs, objectives and capabilities remain unverified."
+  learning_outcomes:
+    - {status: inferred, outcome: "Explain why next-token prediction can be interpreted as predictive compression without equating compression with intelligence.", basis: "Post body, paragraph 1; embedded entropy video transcript."}
+    - {status: inferred, outcome: "Distinguish natural-language interfaces from CAD-native geometric and topological representations.", basis: "Post body, paragraphs 2–3."}
+    - {status: inferred, outcome: "Explain why B-rep usefulness for CAD does not establish universal information-density superiority over language.", basis: "Critical qualification of the post's comparison."}
+    - {status: inferred, outcome: "Distinguish geometric reconstruction fidelity from preservation of design intent and engineering constraints.", basis: "Visible comment by Tatiana Stetsenko."}
+    - {status: inferred, outcome: "Propose task-aware validation criteria for a geometry-specialized model.", basis: "Editorial synthesis; not a claim made or demonstrated by the source."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Basic probability, entropy and cross-entropy.", basis: "The post invokes predictive compression and the embedded video develops information theory."}
+    - {status: inferred, topic: "Basic understanding of CAD geometry and mechanical design.", basis: "B-rep, topology and design intent are assumed rather than introduced."}
+    - {status: inferred, topic: "Distinction between a data representation and the task evaluated over it.", basis: "Needed to assess the post's language-versus-B-rep comparison."}
+  teaching_route:
+    - {order: 1, section: "Prediction as compression", function: connect-objective-to-information-theory, moves: ["Relate conditional probability to ideal code length", "Separate formal coding results from the slogan that compression is intelligence"]}
+    - {order: 2, section: "Why representation matters in mechanical design", function: motivate-domain-specific-representation, moves: ["Identify precision, topology and constraint requirements", "Contrast free-form prose with CAD-native structures"]}
+    - {order: 3, section: "B-rep and the proposed Large Mechanical Model", function: introduce-specialized-model-proposal, moves: ["Describe boundary geometry and topology at a high level", "Mark the LMM architecture and performance as unverified"]}
+    - {order: 4, section: "From shape reconstruction to design intent", function: surface-hidden-task-requirements, moves: ["Identify rare but functionally critical features", "Distinguish geometric fidelity from functional and constraint preservation"]}
+    - {order: 5, section: "What evidence would validate the proposal?", function: formulate-evaluation, moves: ["Specify representation, precision and task", "Evaluate kernel validity, tolerances, interfaces, editability and manufacturability", "Compare with CAD-native and tool-augmented baselines"]}
+  pedagogical_strengths:
+    - "Connects information-theoretic ideas to a concrete engineering domain."
+    - "Provides a case study for representation/task mismatch rather than discussing LLM limitations only abstractly."
+    - "The visible design-intent comment exposes a meaningful evaluation gap beyond visual reconstruction."
+  pedagogical_limits:
+    - "The original post's media frames were not independently inspected; reconstruction relies on text and an accessible embedded transcript."
+    - "The post does not provide an LMM paper, model card, implementation, dataset or benchmark."
+    - "The B-rep information-density comparison is not operationally defined."
+    - "The source does not demonstrate that the proposed model preserves design intent or performs valid CAD operations."
+    - "The embedded 3Blue1Brown lesson is separately catalogued and must not be duplicated."
+  comparison:
+    dossier: docs/source-syntheses/compression-intelligence-and-inference-efficiency-2026-11.md
+    canonical_graph: "data/concepts.yml and generated JSON-LD projection"
+    decision: "Use as a qualified application case study linked to predictive compression, entropy and representation geometry. Do not create duplicate concepts or infer an LMM architecture from the post."
+    structures_kept_separate: [source-semantic-graph, source-pedagogical-route, canonical-concept-graph, canonical-learning-routes, site-navigation]
 items:
   - id: maor-farid-large-mechanical-model-brep-geometry-2026:predictive-compression
     kind: claim
