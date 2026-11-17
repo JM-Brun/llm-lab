@@ -4,7 +4,7 @@
 
 ::: {.guided-route-stage #guided-stage-orientation}
 
-### 01 · Voir comment fonctionne un LLM
+### 01 · Fonctionnement d’un LLM
 
 Comprendre ce qu'est un LLM et suivre une génération complète comme une boîte noire, avec des paramètres fixes, avant d'en étudier les mécanismes internes.
 
