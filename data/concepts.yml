@@ -833,6 +833,22 @@ concepts:
       en: "Theoretical universal agent combining the universal mixture over enumerable chronological semimeasures with reward maximization in sequential decision-making; it is optimal in a specified formal sense but incomputable."
     domains: [architectures-mechanisms, probabilistic-foundations-training]
     resources: [fr/universal-artificial-intelligence, en/universal-artificial-intelligence]
+  - id: free-energy-principle
+    importance: specialized
+    labels: {fr: "Principe de l'énergie libre (FEP)", en: "Free Energy Principle (FEP)"}
+    definitions:
+      fr: "Cadre théorique selon lequel les systèmes auto-organisés peuvent être décrits comme limitant une quantité de surprise à long terme via une borne variationnelle appelée énergie libre ; cette formulation dépend d'un modèle génératif et ne signifie pas que surprise, erreur de prédiction et énergie libre sont identiques."
+      en: "Theoretical framework in which self-organizing systems can be described as limiting long-run surprise through a variational bound called free energy; the formulation depends on a generative model and does not make surprise, prediction error, and free energy identical."
+    domains: [architectures-mechanisms, probabilistic-foundations-training]
+    resources: [fr/universal-artificial-intelligence, en/universal-artificial-intelligence, fr/compression-revision, en/compression-revision]
+  - id: active-inference
+    importance: specialized
+    labels: {fr: "Inférence active", en: "Active inference"}
+    definitions:
+      fr: "Cadre de perception-action dans lequel un agent ajuste ses croyances et peut agir sur son environnement selon un modèle génératif et des états préférés, en minimisant une énergie libre attendue ; ce cadre ne se réduit ni à la maximisation d'une récompense au sens d'AIXI, ni à une simple compression de données."
+      en: "Perception-action framework in which an agent updates its beliefs and may act on its environment according to a generative model and preferred states, minimizing expected free energy; it is neither equivalent to AIXI-style reward maximization nor reducible to ordinary data compression."
+    domains: [architectures-mechanisms, probabilistic-foundations-training]
+    resources: [fr/universal-artificial-intelligence, en/universal-artificial-intelligence, fr/compression-revision, en/compression-revision]
   - id: aixi-tl
     importance: specialized
     labels: {fr: "AIXI(t,l)", en: "AIXI(t,l)"}
@@ -991,6 +1007,9 @@ relation_types:
 
 relations:
 
+  - {from: active-inference, type: framed-by, to: free-energy-principle}
+  - {from: free-energy-principle, type: relates-to, to: surprisal}
+  - {from: active-inference, type: contrasts-with, to: aixi}
   - {from: predictive-compression, type: applies-to, to: conditional-distribution}
   - {from: predictive-compression, type: contributes-to, to: entropy-coding}
   - {from: arithmetic-coding, type: part-of, to: entropy-coding}
