@@ -145,3 +145,57 @@ Le second volet rend visible le compromis entre ajustement prédictif et coût d
 ## 12. Corpus naming guardrail — enwik8 vs enwik9
 
 The Lewis article's Hutter Prize paragraph and note [2] call a 1 GB corpus `enwik8`. The official Hutter Prize FAQ says the contest began with the 100 MB `enwik8` corpus and moved to the 1 GB `enwik9` corpus in 2020; the current official page is for `enwik9` and lists historical `enwik8` results separately ([official prize page](https://prize.hutter1.net/), [FAQ](https://prize.hutter1.net/hfaq.htm)). Preserve the article's forward/reverse measurements as its reported `enwik8` experiment, but do not describe that file as the 1 GB Hutter Prize corpus or mix its results with the `enwik9` competition.
+
+## 13. Mechanical design as a test of representation-aware compression (Maor Farid, 2026)
+
+[Maor Farid's post on AI and mechanical design](https://www.linkedin.com/posts/maorfaridphd_ai-mechanicaldesign-mehcanicalengineers-ugcPost-7469852823074111490-ZO-w/) connects predictive compression to CAD-native geometry and proposes a Large Mechanical Model trained on B-rep representations.
+
+The post's strongest contribution to this synthesis is a **task-sensitive limit of compression**: a representation can be compact and reconstruct the dominant geometry while losing rare details that determine whether a part is functional, manufacturable or assemblable. A commenter makes this explicit by distinguishing geometric fidelity from preservation of design intent, including interfaces, tolerances and constraints.
+
+Keep three claims separate:
+
+1. **Established information-theoretic connection:** probabilistic prediction and expected ideal code length are linked through log loss and coding. This does not prove that compression is intelligence.
+2. **Plausible engineering motivation:** B-rep is a structured, CAD-native representation of boundary geometry and topology. Its usefulness for CAD does not establish a universal information-density advantage over language; that comparison requires a specified encoding, precision, task and fidelity criterion.
+3. **Unverified model proposal:** the post describes an LMM, but supplies no paper, model card, implementation or benchmark sufficient to assess its architecture or performance.
+
+The practical lesson is that compression objectives should be evaluated against the downstream invariants that matter. For mechanical design, candidate evaluation dimensions include kernel validity, topology, dimensions and tolerances, mating interfaces, parametric editability, function and manufacturability. Average reconstruction loss alone may underweight rare but critical constraints. Constraint-aware objectives, symbolic side information, CAD-kernel checks and task-based evaluation are promising questions, not confirmed features of the proposed model.
+
+This case study complements the existing discussion of predictive compression without creating a new generic “geometry compression” concept. CAD B-rep must remain distinct from neural embedding spaces, and the 3Blue1Brown entropy transcript embedded in the post is already independently catalogued; link to it rather than duplicate its extraction or pedagogical graph.
+
+Source review: [Maor Farid, AI and mechanical design](../source-reviews/maor-farid-large-mechanical-model-brep-geometry-2026.md). Structured extraction: [atomic claims and comment provenance](../../data/extractions/maor-farid-large-mechanical-model-brep-geometry-2026.yml). The source remains partially scanned because the media asset and any LMM technical documentation were not inspected.
+
+## 14. Geometry-native models and the engineering limits of predictive compression
+
+The Maor Farid case study has now been triangulated with independent research on CAD-native multimodal models and mechanical-reasoning benchmarks. This strengthens the application connection while narrowing the claims.
+
+### 14.1 B-rep can be aligned with language-model machinery
+
+Kim et al., [BrepCoder (2026)](https://arxiv.org/abs/2602.22284), describe a multimodal LLM that encodes B-rep through a face-adjacency graph, aligns geometric features with Python-like CAD construction code, and combines contrastive alignment with autoregressive code generation. A two-stage training strategy first learns reverse-engineering correspondences and then addresses tasks such as completion, error correction and CAD question answering.
+
+This demonstrates a concrete research architecture for combining geometric structure and language-model capabilities. It does not validate the proprietary Leo AI LMM, nor does B-rep/code alignment alone guarantee preservation of physical or functional design intent.
+
+### 14.2 Mechanical reasoning is measurable, not binary
+
+Gerstmayr et al., [MecEng (2026)](https://arxiv.org/abs/2608.14615), evaluate 84 parameterized multibody tasks. Their abstract reports 86.0% success for the best open-weight model and 91.4% for the strongest proprietary model on rigid-body tasks, while flexible multibody tasks remain harder. This is evidence against categorical statements that language models cannot reason about mechanics. It is not evidence of general autonomous engineering competence: task success on a benchmark is not production validation, safety assurance or manufacturability.
+
+### 14.3 Design intent can be represented and tested explicitly
+
+Lu et al., [OmniMech (2026)](https://arxiv.org/abs/2608.05539), describe a 251K-pair mechanical drawing/CAD benchmark with native parametric models, B-rep, meshes, multi-view images and feature graphs. Its task families include executable CAD synthesis, geometric consistency, reasoning over dimensions and manufacturing constraints, and iterative tool-assisted verification. The authors report that fine-grained reconstruction and dimension/tolerance enforcement remain difficult.
+
+This gives the earlier design-intent question an operational form. Evaluate not only shape similarity or compression ratio, but also:
+- topology and CAD-kernel validity;
+- dimensional and tolerance consistency;
+- feature history, editability and assembly interfaces;
+- constraint and annotation compliance;
+- simulation-derived physical properties;
+- manufacturing and safety requirements where the task demands them.
+
+### 14.4 Updated synthesis
+
+The evidence supports a continuum, not a binary “language versus geometry” choice. Text-only LLMs can solve some parameterized mechanics tasks; multimodal models can align language, B-rep, CAD code and drawings; specialized systems can connect those representations to CAD operations. Reliable engineering outputs still require explicit task constraints, executable artifacts, tools, traceability and independent verification.
+
+The key question becomes: **which representations, objectives, tools and verification loops are sufficient for a specified engineering task at a stated tolerance and risk level?**
+
+BrepCoder, MecEng and OmniMech are separately catalogued and extracted. Their full experimental protocols, data governance, reproducibility and limitations remain under review. Leo AI's first-party LMM description is retained as vendor evidence, not independent validation.
+
+Source reviews: [Maor Farid / LMM](../source-reviews/maor-farid-large-mechanical-model-brep-geometry-2026.md). Extractions: [BrepCoder](../../data/extractions/kim-et-al-brepcoder-2026.yml), [MecEng](../../data/extractions/gerstmayr-et-al-meceng-benchmark-2026.yml), [OmniMech](../../data/extractions/lu-et-al-omnimech-2026.yml), [Leo AI LMM overview](../../data/extractions/leo-ai-large-mechanical-model-overview-2025.yml).

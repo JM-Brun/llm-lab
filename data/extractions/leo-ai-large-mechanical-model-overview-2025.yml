@@ -1,0 +1,79 @@
+schema_version: 1
+source_id: leo-ai-large-mechanical-model-overview-2025
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Full public company blog page inspected on 2026-11-17, including its section headings, product description and FAQ."
+    inferred_elements:
+      - "The learning outcomes and teaching route are inferred from a short first-party product explainer, not declared by the author."
+      - "Product capabilities and quantified outcomes are treated as vendor claims rather than independent evidence."
+  source_graph:
+    nodes:
+      - {id: src-language-model-interface, kind: representation, description: "The page contrasts word-token language models with a proposed geometry- and part-oriented interface.", locator: "Why LLMs Can't Think Like Engineers"}
+      - {id: src-mechanical-parts, kind: representation, description: "The company describes mechanical parts and their relationships as the LMM's native representational units.", locator: "From Words to Parts"}
+      - {id: src-cad-plm-workflow, kind: application, description: "The described product connects part search and engineering workflows with CAD and PLM systems.", locator: "From Words to Parts"}
+      - {id: src-lmm-product-claims, kind: claim, description: "The page makes first-party claims about geometric understanding and future assembly-generation capabilities.", locator: "Bottom Line and From Words to Parts"}
+      - {id: src-independent-validation, kind: question, description: "The page does not provide a reproducible architecture or independent evidence sufficient to validate the product claims.", locator: "Editorial evidence assessment"}
+    edges:
+      - {from: src-language-model-interface, type: contrasted-with, to: src-mechanical-parts}
+      - {from: src-mechanical-parts, type: intended-to-support, to: src-cad-plm-workflow}
+      - {from: src-lmm-product-claims, type: requires, to: src-independent-validation}
+    interpretation: "This graph reconstructs the vendor's product narrative and separates it from the independent validation needed to establish capability."
+  learning_outcomes:
+    - {status: inferred, outcome: "Summarize how Leo AI positions its LMM relative to general-purpose language models.", basis: "Sections 'Why LLMs Can't Think Like Engineers' and 'From Words to Parts'."}
+    - {status: inferred, outcome: "Distinguish first-party product claims from independently verified architecture and performance evidence.", basis: "Editorial assessment of the page's disclosure level."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Basic familiarity with language models and mechanical CAD workflows.", basis: "The page assumes readers know LLMs, CAD and part search."}
+  teaching_route:
+    - {order: 1, section: "Why LLMs Can't Think Like Engineers", function: motivate-representation-gap, moves: ["Contrast language descriptions with geometric relationships", "Introduce the bolt-to-hole matching example"]}
+    - {order: 2, section: "From Words to Parts", function: introduce-product-proposal, moves: ["Describe the company's parts-as-tokens framing", "List the stated CAD and PLM use cases"]}
+    - {order: 3, section: "Bottom Line and FAQ", function: qualify-product-claims, moves: ["Separate current stated use cases from future capabilities", "Identify missing technical disclosures and independent evaluation"]}
+  pedagogical_strengths:
+    - "Uses a concrete mechanical-part retrieval example to motivate representation mismatch."
+    - "Clearly communicates the company's intended product positioning and use cases."
+  pedagogical_limits:
+    - "Short marketing article rather than a technical tutorial or scientific paper."
+    - "Architecture, tokenization, training data and evaluation methods are not disclosed."
+    - "Quantified customer-impact claims lack a visible methodology or independent audit."
+  comparison:
+    dossier: docs/source-syntheses/compression-intelligence-and-inference-efficiency-2026-11.md
+    canonical_graph: "data/concepts.yml and generated JSON-LD projection"
+    decision: "Use as first-party evidence for how Leo AI describes its LMM, never as independent validation of its capabilities or performance."
+    canonical_routes: []
+    structures_kept_separate: [vendor-product-narrative, source-semantic-graph, canonical-concept-graph, canonical-learning-routes]
+items:
+  - id: leo-ai-large-mechanical-model-overview-2025:parts-as-tokens
+    kind: claim
+    summary: "Leo AI's first-party page describes its LMM as using mechanical parts as tokens and being designed to work with CAD geometry and part relationships, rather than relying only on word tokens and textual descriptions."
+    locator: {type: section, value: "From Words to Parts: Introducing the Large Mechanical Model"}
+    evidence:
+      kind: first-party-product-description
+      confidence: unverified
+      scope: "Company description of its proprietary model and product direction."
+      assumptions: []
+      limitations: ["No architecture specification, tokenizer, training corpus details, model card or reproducible technical evaluation is provided."]
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:mechanical-reasoning, topic:geometric-representation, application:computer-aided-design]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [en/llm-limits, fr/llm-limits]
+    disposition: cite
+  - id: leo-ai-large-mechanical-model-overview-2025:performance-claims
+    kind: limitation
+    summary: "The page advertises quantified time savings, design-error reduction and time-to-market improvements reported by Leo customers. These are vendor-reported marketing claims and must not be presented as independently established causal effects."
+    locator: {type: section, value: "Bottom Line"}
+    evidence:
+      kind: vendor-claim
+      confidence: unverified
+      scope: "Commercial performance claims on the company website."
+      assumptions: []
+      limitations: ["No sample size, control group, baseline, measurement protocol or independent audit is provided on the page."]
+    classification:
+      primary_theme: scale-research
+      secondary_themes: [mathematical-tools-geometry]
+    candidate_destinations:
+      pages: [en/llm-limits, fr/llm-limits]
+    disposition: clarify

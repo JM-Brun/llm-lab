@@ -1,0 +1,38 @@
+schema_version: 1
+source_id: gerstmayr-et-al-meceng-benchmark-2026
+items:
+  - id: gerstmayr-et-al-meceng-benchmark-2026:benchmark-design
+    kind: benchmark
+    summary: "MecEng evaluates mechanical-engineering awareness through 84 parameterized tasks spanning rigid and flexible multibody systems. Generated models are checked against expert ground truth using system-graph structure, numerical solutions and part-specific properties such as mass, geometry and eigenfrequencies."
+    locator: {type: abstract, value: "Benchmark description"}
+    evidence:
+      kind: benchmark-description
+      confidence: well-supported
+      scope: "Benchmark design as stated in the paper abstract."
+      assumptions: []
+      limitations: ["Full task definitions, scoring rules, model versions and uncertainty estimates have not yet been audited."]
+    classification:
+      primary_theme: scale-research
+      secondary_themes: [mathematical-tools-geometry, architectures-mechanisms]
+      tags: [topic:mechanical-reasoning, topic:benchmark, application:multibody-simulation]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [en/llm-limits, fr/llm-limits]
+    disposition: integrate
+  - id: gerstmayr-et-al-meceng-benchmark-2026:rigid-vs-flexible-gap
+    kind: result
+    summary: "The abstract reports 86.0% overall success for the best open-weight model and 91.4% for the strongest proprietary model on rigid-body tasks, while flexible multibody tasks remain considerably harder. These percentages must not be generalized to all mechanical engineering tasks."
+    locator: {type: abstract, value: "Headline results"}
+    evidence:
+      kind: paper-reported-result
+      confidence: context-dependent
+      scope: "Reported rigid-body task results and qualitative flexible-task difficulty."
+      assumptions: ["The success metric and task subset are as defined in the paper."]
+      limitations: ["No extrapolation to full CAD design, physical safety, manufacturability or autonomous engineering is warranted."]
+    classification:
+      primary_theme: scale-research
+      secondary_themes: [mathematical-tools-geometry]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [en/llm-limits, fr/llm-limits]
+    disposition: integrate
