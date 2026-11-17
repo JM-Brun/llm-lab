@@ -1,0 +1,54 @@
+schema_version: 1
+source_id: notion-intelligence-compression-summary
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "All text exposed by the public Notion page was reviewed on 2026-11-17."
+      - "The page presents compression as a lens on intelligence, connects it to the Hutter Prize and AIXI, and briefly discusses cognitive architecture."
+    limitations:
+      - "The page is an unsourced overview; it does not provide a derivation, formal model, experiment or bibliography for most claims."
+  source_graph:
+    nodes:
+      - {id: src-regularity-extraction, kind: process, description: "Identify repeated structure or statistical regularities in observations.", locator: "AI and Compression"}
+      - {id: src-predictive-coding, kind: process, description: "Use a probability model to assign shorter expected codes to more likely continuations.", locator: "Hutter Prize"}
+      - {id: src-compression-benchmark, kind: benchmark, description: "Evaluate lossless compression of the enwik9 10^9-byte Wikipedia extract under explicit resource and reproducibility constraints.", locator: "Hutter Prize"}
+      - {id: src-algorithmic-intelligence-hypothesis, kind: hypothesis, description: "Treat effective compression as evidence of discovering regularities and building compact predictive models; not an identity or complete theory of intelligence.", locator: "Introduction"}
+      - {id: src-cognitive-architecture-boundary, kind: qualification, description: "Compression may be a component in a cognitive architecture, but does not itself specify perception, memory, planning, reasoning or action.", locator: "Compression as a Mechanic or Component to a Cognitive Architecture"}
+    edges:
+      - {from: src-regularity-extraction, type: supports, to: src-predictive-coding}
+      - {from: src-predictive-coding, type: evaluated-by, to: src-compression-benchmark}
+      - {from: src-compression-benchmark, type: motivates, to: src-algorithmic-intelligence-hypothesis}
+      - {from: src-cognitive-architecture-boundary, type: qualifies, to: src-algorithmic-intelligence-hypothesis}
+    interpretation: "This is a minimal source-local reconstruction, not a canonical cognitive or AI architecture. The source's equation-like slogan is treated as a hypothesis/metaphor, not a scientific equivalence."
+  learning_outcomes:
+    - {status: inferred, outcome: "Explain why predictive probability models can enable efficient coding.", basis: "Introduction and Hutter Prize sections."}
+    - {status: inferred, outcome: "Distinguish a compression benchmark from a general measure of intelligence.", basis: "Hutter Prize and cognition sections."}
+    - {status: inferred, outcome: "Explain why a compression mechanism alone does not constitute a complete cognitive architecture.", basis: "Final section."}
+  canonical_mapping:
+    - {source_term: "information compression", concept_id: entropy, relation: "information-theoretic foundation; not synonymous"}
+    - {source_term: "predicting likely continuations", concept_id: next-token-prediction, relation: "predictive coding connection"}
+    - {source_term: "shortest program / Kolmogorov complexity", concept_id: kolmogorov-complexity, relation: "algorithmic information theory"}
+    - {source_term: "compression as intelligence", concept_id: cross-entropy, relation: "related predictive objective; not an equivalence"}
+  claim_assessment:
+    - claim: "Intelligence is compression."
+      status: "overstated"
+      assessment: "Compression and prediction can reveal regularities and support useful representations, but they do not exhaust reasoning, planning, grounded interaction, social cognition or value-sensitive action."
+    - claim: "The Hutter Prize treats text compression as an AI-relevant challenge."
+      status: "supported-with-qualification"
+      assessment: "The official competition frames lossless compression of enwik9 as a route toward intelligent compressors. This is the organizers' research motivation, not a proof that compression and intelligence are equivalent."
+    - claim: "enwik9 is the first 109 bytes of Wikipedia."
+      status: "incorrect-as-written"
+      assessment: "The official benchmark defines enwik9 as a 10^9-byte (one-billion-byte) extract."
+    - claim: "Kolmogorov complexity gives a shortest-program account of structure."
+      status: "established-with-limits"
+      assessment: "Kolmogorov complexity is defined relative to a universal description language up to an additive constant and is uncomputable in general; it is not a practical computable universal intelligence score."
+    - claim: "Compression could be a component of a cognitive architecture."
+      status: "plausible-design-hypothesis"
+      assessment: "The page offers no architecture, implementation or evidence; treat this as a design possibility, not an established result."
+integration_decision:
+  status: "integrated-as-critical-context"
+  rationale:
+    - "The source adds no sufficiently developed concept or method to justify a new lesson."
+    - "Its useful framing is already covered more rigorously by the project's entropy, cross-entropy, predictive compression and algorithmic information theory material."
+    - "Keep the source as a short critical cross-reference; do not promote the slogan 'intelligence = compression' as a project principle."
