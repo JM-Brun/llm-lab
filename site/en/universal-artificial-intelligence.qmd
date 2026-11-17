@@ -94,7 +94,7 @@ Solomonoff induction is passive prediction. AIXI adds actions and rewards.
 
 It combines:
 
-1. A universal mixture over computable environments.
+1. A universal mixture over enumerable chronological semimeasures, which formally represent possible environment interactions.
 2. Sequential decision theory.
 3. A policy that chooses actions to maximize expected future reward.
 
@@ -200,7 +200,7 @@ The connection to language models is real but indirect:
 
 - Next-token prediction estimates conditional token probabilities.
 - Predictive coding can turn those probabilities into code lengths.
-- Solomonoff induction replaces a hand-designed model class with a universal mixture over computable generators.
+- Solomonoff induction replaces a hand-designed model class with a universal mixture over enumerable generators; convergence guarantees are stated under assumptions such as a computable true data-generating measure.
 - AIXI adds actions and reward-maximizing planning.
 - AIXI(t,l) studies a computable, resource-bounded universal-agent construction.
 
