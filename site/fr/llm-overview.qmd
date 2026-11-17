@@ -39,7 +39,7 @@ Un modèle de langage prolonge un texte en estimant ce qui pourrait venir ensuit
 
 ## Ce que le modèle prédit
 
-Le texte « C'est une bonne situation, ça, scribe ? » est ici le **préfixe** : la partie de la séquence déjà fournie au modèle. À partir de ce préfixe, le modèle calcule une distribution de probabilités pour le token suivant. Il ne choisit pas immédiatement un mot : il commence par attribuer un score à chacune des unités de son vocabulaire, puis transforme ces scores en probabilités. Imaginons le résultat suivant :
+Le texte « C'est une bonne situation, ça, scribe ? » est ici le **préfixe** : la partie de la séquence déjà fournie au modèle. La **continuation** est la suite qui vient après ce préfixe. À partir du préfixe, le modèle calcule une distribution de probabilités pour le token suivant. Il ne choisit pas immédiatement un mot : il commence par attribuer un score à chacune des unités de son vocabulaire, puis transforme ces scores en probabilités. Imaginons le résultat suivant :
 
 | Suite possible (un mot pour simplifier) | Probabilité |
 |---|---|
