@@ -100,7 +100,7 @@ Cette distinction explique aussi pourquoi un état contextualisé produit par un
 
 **AugSBERT** illustre un compromis supplémentaire : utiliser un cross-encoder pour produire des scores ou des étiquettes de paires, puis entraîner un bi-encoder plus rapide à reproduire ces jugements. La description détaillée et l'implémentation de l'article sont partiellement inaccessibles ; voir la [partie 2](https://www.dailydoseofds.com/augsbert-bi-encoders-cross-encoders-for-sentence-pair-similarity-scoring-part-2/), à lire comme une piste d'approfondissement et non comme une validation indépendante des performances.
 
-Pour voir comment cette combinaison s'insère dans un système de récupération, consulter [RAG, mémoire et récupération documentaire](rag-memory-boundaries.qmd).
+Pour voir comment ces architectures s'insèrent dans la recherche textuelle et visuelle, consulter [RAG, mémoire et récupération documentaire](rag-memory-boundaries.qmd), notamment l'exemple ColPali. Le [guide illustré Daily Dose sur les bi-encodeurs, cross-encodeurs et ColBERT](https://blog.dailydoseofds.com/p/visual-guide-to-bi-encoders-cross) propose une vue d'ensemble concise.
 
 ## 3. Quand le cosinus est un bon choix
 
