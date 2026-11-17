@@ -105,16 +105,7 @@ pedagogical_model:
       section: "Local deployment and its limits"
       function: application-and-qualification
       moves: ["Explain why local inference can reduce external data transfers.", "Avoid treating compression alone as a complete privacy or security guarantee."]
-pedagogical_strengths:
-  - "Connects model compression to concrete organizational constraints: energy, operating cost, local deployment and regulated environments."
-  - "The pruning inset acknowledges parameter interdependence and the possibility of quality degradation."
-  - "The challenge framing supplies a timely real-world case study rather than another abstract explanation of compression."
-pedagogical_limits:
-  - "The article is short journalism, not a technical review or independently reproducible study."
-  - "It focuses on pruning and does not compare quantization, distillation, low-rank methods or architecture-level efficiency."
-  - "The 360% versus 36% figures are attributed to Epoch.AI but the underlying study and measurement definitions were not checked."
-  - "Compression does not automatically yield faster inference, lower total energy, privacy or security; outcomes depend on implementation and deployment."
-comparison:
+  comparison:
     dossier: "docs/source-syntheses/model-compression-2026-11.md"
     canonical_graph: "data/concepts.yml"
     canonical_routes:
@@ -127,6 +118,15 @@ comparison:
       - "Model compression (pruning/quantization/distillation) is distinct from predictive compression and entropy coding."
       - "Persistent checkpoint size is distinct from runtime KV-cache memory."
       - "The challenge's public-policy framing is not empirical proof of energy savings."
+pedagogical_strengths:
+  - "Connects model compression to concrete organizational constraints: energy, operating cost, local deployment and regulated environments."
+  - "The pruning inset acknowledges parameter interdependence and the possibility of quality degradation."
+  - "The challenge framing supplies a timely real-world case study rather than another abstract explanation of compression."
+pedagogical_limits:
+  - "The article is short journalism, not a technical review or independently reproducible study."
+  - "It focuses on pruning and does not compare quantization, distillation, low-rank methods or architecture-level efficiency."
+  - "The 360% versus 36% figures are attributed to Epoch.AI but the underlying study and measurement definitions were not checked."
+  - "Compression does not automatically yield faster inference, lower total energy, privacy or security; outcomes depend on implementation and deployment."
 
 items:
   - id: alliancy-la-compression-strategie-avenir-llm-2026:challenge-and-deployment-motivation
