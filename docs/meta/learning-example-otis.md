@@ -41,7 +41,7 @@ Les pages françaises peuvent reprendre de courts fragments de cette continuatio
 
 > **Continuation jouet :** « Être scribe, c'est relier des histoires. Les rencontres apportent de nouveaux récits ; le contexte aide à choisir les mots justes. Chaque phrase prépare la suivante. »
 
-La réplique du film sert d'illustration culturelle du couple préfixe/continuation ; la continuation jouet sert aux calculs et aux tests. Ni l'une ni l'autre ne doit être présentée comme la sortie effective d'un modèle entraîné. Lorsqu'une page étudie la génération, montrer explicitement la boucle : prédire un token, l'ajouter au contexte, puis recalculer le token suivant.
+Les courts fragments de la scène peuvent aussi servir à des calculs illustratifs lorsque les valeurs sont explicitement fictives et que l'hypothèse sur les unités traitées comme tokens est annoncée. La continuation jouet reste utile pour les traces longues, les tests et les démonstrations qui exigent une cible entièrement contrôlée. Aucun de ces textes ne doit être présenté comme la sortie effective d'un modèle entraîné. Lorsqu'une page étudie la génération, montrer explicitement la boucle : prédire un token, l'ajouter au contexte, puis recalculer le token suivant.
 
 ### 2.3 Unités et conventions
 
