@@ -47,7 +47,16 @@ The scene is a hook, not a literal single-speaker generation. For calculations, 
 This page introduces several complementary dimensions of an LLM rather than a single stage in the learning path. It gives an overview of **input and representations** ([text and tokens](text-data.qmd), [embeddings](embedding-space.qmd)), **computation and prediction** ([the Transformer](transformer.qmd), [the probability distribution](probabilities.qmd)), and **uses of that prediction** ([generation](generation.qmd), [scoring](likelihood.qmd), and [training](loss.qmd)). None of these topics is marked as the current stage.
 :::
 
-## What the model predicts
+::: {.callout-note .learning-outcomes}
+**Estimated reading time: 20–30 minutes.**
+
+**By the end of this page, you should be able to:**
+- explain how a model estimates the next token from its context;
+- distinguish generating, scoring likelihood, and learning;
+- locate where information enters the process: learned parameters, retrieved documents, and inference-time context.
+:::
+
+## What the model predicts {#what-model-predicts}
 
 Give the model the prefix “What have the Romans ever done for us?”. It does not output a word directly: it assigns a score to every unit of its vocabulary, then converts those scores into probabilities. For this context, imagine the following result.
 
@@ -57,6 +66,8 @@ Give the model the prefix “What have the Romans ever done for us?”. It does 
 | “Aqueducts” | 0.2 |
 | “Nothing” | 0.1 |
 | “Well” | 0.1 |
+
+[Practise calculating the likelihood of an observed continuation](exercises/likelihood.qmd).
 
 These values are made up: they do not come from a trained model, and a real vocabulary has tens of thousands of entries, not four. In this simplified example, each row represents one token; the displayed strings are not a claim that a real tokenizer would treat each one as a single token. The path reuses these values from page to page so that every calculation can be redone by hand.
 
@@ -72,22 +83,24 @@ The model predicts one token at a time. The probability of a whole sentence is o
 
 A probable continuation is not a true one. That “They” is probable after the question says nothing about what the Romans actually did, and predicting well does not establish a human-like understanding of the world. [The training objective: guarantees and limits](llm-limits.qmd) states what next-token prediction guarantees and what has to be measured separately.
 
-## From text to a distribution
+## From text to a distribution {#text-to-distribution}
+
+{{< include ../includes/next-token-explorer.html >}}
 
 ![Six-stage reference diagram: input text, tokenization, numeric representations, computation in Transformer blocks, next-token distribution, and selection in the generation loop.](../images/llm-generation-process-en.svg){#fig-gpt-generation-process fig-alt="An autoregressive GPT processes the prefix in six stages: text, tokens and IDs, embeddings and positional information, repeated Transformer blocks, logits converted into probabilities, then selection of a token appended to the prefix. Computation repeats with the extended context. Probabilities are illustrative."}
 
-The diagram shows the complete path through an autoregressive GPT, from left to right, followed by the generation loop.
+The diagram shows the complete path through an autoregressive GPT, from left to right, followed by the generation loop. Its six numbered steps connect to the route: [01 · Situate the system](#guided-stage-orientation), [02 · From text to tokens](#guided-stage-text-input), [03 · From IDs to representations](#guided-stage-representations), [04 · Understand Transformer computation](#guided-stage-computation), [05 · From hidden states to predictive distribution](#guided-stage-prediction), and [06 · Run inference](#guided-stage-inference).
 
-1. **Input text** forms the prefix: the prompt and, when generating, the tokens already produced.
-2. **The tokenizer splits text into tokens** and assigns an integer ID to each one ([Text and tokens](text-data.qmd)).
-3. **IDs become numeric representations** through embeddings and positional information ([Embeddings](embedding-space.qmd)).
-4. **Transformer blocks transform these representations** through causal attention, an MLP, residual connections, and normalization. The stack produces contextualized representations ([The Transformer in a GPT](transformer.qmd)).
-5. **The output head produces logits**, then softmax converts them into a probability distribution over the vocabulary ([Logits and probabilities](probabilities.qmd)).
-6. **A decoding rule selects a token**. This choice is outside the Transformer's computation; the token is appended to the prefix, and another forward pass computes the next distribution ([Generating text](generation.qmd)).
+1. [**Input text**](#guided-stage-orientation) forms the prefix: the prompt and, when generating, the tokens already produced.
+2. [**The tokenizer splits text into tokens**](#guided-stage-text-input) and assigns an integer ID to each one ([Text and tokens](text-data.qmd)).
+3. [**IDs become numeric representations**](#guided-stage-representations) through embeddings and positional information ([Embeddings](embedding-space.qmd)).
+4. [**Transformer blocks transform these representations**](#guided-stage-computation) through causal attention, an MLP, residual connections, and normalization. The stack produces contextualized representations ([The Transformer in a GPT](transformer.qmd)).
+5. [**The output head produces logits**](#guided-stage-prediction), then softmax converts them into a probability distribution over the vocabulary ([Logits and probabilities](probabilities.qmd)).
+6. [**A decoding rule selects a token**](#guided-stage-inference). This choice is outside the Transformer's computation; the token is appended to the prefix, and another forward pass computes the next distribution ([Generating text](generation.qmd)).
 
 This overview is the shared reference point for the learning path. The linked pages deepen each stage without repeating the complete diagram. Real tokenization may produce units smaller or larger than a word; architectures and positional methods vary across models.
 
-## One computation, three uses
+## One computation, three uses {#one-computation-three-uses}
 
 Once the distribution is computed, everything depends on the question being asked. **For a first pass, keep only the three uses in mind**: produce a continuation, measure the likelihood of a known continuation, or learn from an expected continuation. Terms such as *prefill*, *decode*, *loss*, *gradients*, and *teacher forcing* describe the mechanisms; you can explore them in the linked pages without having to memorize them all now.
 
@@ -100,13 +113,13 @@ Once the distribution is computed, everything depends on the question being aske
 - **Score.** The continuation is known: ours begins with “They”. We read the probability the model gave it, 0.6. Repeated over every token of a text, this reading measures how much the model expected that text; this is the [likelihood](likelihood.qmd).
 - **Learn.** The continuation is also known, and we want the model to expect it more next time. The gap between the prediction and the expected token is summarized by one number, the [loss](loss.qmd); the [gradients](gradients.qmd) indicate how to change each parameter to reduce it. During this learning, the context is always built from the actual tokens of the text, never from tokens the model would have produced: this is *teacher forcing*, explained in [training examples](training-examples.qmd).
 
-In our example, assigning 0.6 to the observed token corresponds to a **surprisal** of $-\ln(0.6)\approx0.51$ nats: the less probable a token is, the more surprising it is. [Entropy](entropy.qmd) is the expected surprisal over all possible next tokens; summing the surprisals of observed tokens connects this idea to [likelihood](likelihood.qmd).
+In our example, assigning 0.6 to the observed token corresponds to a **surprisal** of $-\ln(0.6)\approx0.51$ nats. The natural logarithm $\ln$ converts the probability into an information quantity; a *nat* is the unit defined by the natural logarithm. If logarithms or this unit are unfamiliar, see [mathematical foundations](mathematical-foundations.qmd#logarithms). The less probable a token is, the more surprising it is. [Entropy](entropy.qmd) is the expected surprisal over all possible next tokens; summing the surprisals of observed tokens connects this idea to [likelihood](likelihood.qmd).
 
 Generating and scoring leave the parameters untouched; only learning changes them. The three uses share the same computation, but they do not follow one another within a single run.
 
 Scoring is not yet evaluating. Scoring gives probabilities for one text. An evaluation compares these results, or other measures, over a set of examples defined in advance and held out from training until the final assessment.
 
-## LLM, Transformer, GPT: three words, three notions
+## LLM, Transformer, GPT: three words, three notions {#llm-transformer-gpt}
 
 **LLM** describes a scale, not a construction. No parameter-count threshold defines the category on its own: corpus size and compute budget matter as much ([scaling laws](scaling-laws.qmd); [Zhao et al., 2023](https://arxiv.org/abs/2303.18223); [Hoffmann et al., 2022](https://proceedings.neurips.cc/paper_files/paper/2022/hash/c1e2faff6f588870935f114ebe04a3e5-Abstract.html)). The term says nothing about the architecture or the training objective.
 
@@ -122,7 +135,7 @@ Scoring is not yet evaluating. Scoring gives probabilities for one text. An eval
 
 LLM Lab studies a small decoder-only GPT because its computation can be followed and programmed end to end; the [Build path](build-path.qmd) constructs it step by step. This is a teaching choice: its dimensions do not reproduce a production system, and not all LLMs are GPTs.
 
-## Architecture, learning, use
+## Architecture, learning, use {#architecture-learning-use}
 
 Describing a model means answering three independent questions.
 
@@ -138,16 +151,22 @@ A **foundation model** is a broader category than a *base model*: a model traine
 
 **Use.** At inference time, the parameters do not move. Context is the main way to steer the answer: the **prompt** (the text supplied), the examples placed in it, or the documents that a **retrieval-augmented generation** (RAG) system fetches and inserts into it. Decoding settings (for example, temperature or *top-p*) can also change the selected token without changing the context or the parameters.
 
-## Where does information reside?
+## Where does information reside? {#information-residence}
+
+::: {.section-depth-marker}
+Optional depth · second pass
+:::
 
 A model can answer from several sources that do not reside in the same place. Distinguish **where information is stored**, **how it becomes accessible**, and **how the model uses it**. A correct answer alone does not reveal which mechanism was involved.
 
+::: {.responsive-card-table}
 | Mechanism | Where information is stored | How it can influence the answer | What changes |
 |---|---|---|---|
 | **Pretraining** | In learned parameters, as distributed representations and regularities shaped by the training corpus | Parameters participate in every prediction, even when a specific fact cannot be recalled faithfully | Weights are learned during training |
 | **Post-training (including fine-tuning)** | In adapted parameters or additional parameters (for example, an adapter) | Adaptation shifts likely continuations: style, instruction following, behaviours, and sometimes factual associations | Parameters or adapters are optimized |
 | **RAG** | In external sources and indexes: documents, databases, search systems | The system retrieves relevant material and supplies it to the model, usually in context | External sources can be updated without retraining the model |
 | **Context supplied at inference** | In messages, instructions, examples, documents, and tool results supplied for a call | The model conditions its computation on information actually accessible in that input | Content can change from request to request without updating weights |
+:::
 
 Pretraining and fine-tuning change parameters; RAG and ordinary context change the information available at inference time. These are not four equivalent memories. Parameters are not a queryable document database: they encode learned regularities in a distributed form, and factual recall may be uncertain. Fine-tuning can change associations or teach facts, but it does not guarantee exact recall or reliable freshness. See [Post-training](post-training.qmd).
 
@@ -159,7 +178,7 @@ A useful chain is: **source available → information prepared or indexed → in
 
 **In-context learning (ICL)** concerns what the model does with certain information and demonstrations in context, without updating its parameters. Not every use of context is necessarily ICL in the strict sense: an instruction, a documentary fact, and a sequence of examples do not play the same role. See [In-context learning](in-context-learning.qmd).
 
-## Why Transformers and pretrained LLMs changed the game
+## Why Transformers and pretrained LLMs changed the game {#transformers-changed}
 
 The breakthrough happened in stages. It did not come from attention alone or from model size alone: several advances made learning more reusable and computation easier to scale.
 
@@ -174,11 +193,13 @@ For the precursors, documented milestones, and technical trade-offs, see [A hist
 
 ### What changed conceptually
 
+::: {.responsive-card-table}
 | Change | Core idea | What it makes possible — without guaranteeing it |
 |---|---|---|
 | **From recurrent computation to attention** | Positions can interact directly, subject to the mask, rather than passing information only through a chain of states. | Better use of relationships between positions and parallel training computation; long-range relations become easier to learn, but are not guaranteed. Dense attention remains costly as context grows, and generation remains sequential. |
 | **Contextualized representations** | A token's representation depends on the other tokens it can access. | The same token can play a different role in different contexts; this does not create persistent or unlimited memory. |
 | **From task-specific models to reusable pretrained models** | A general objective—predicting the next token—learns linguistic patterns and reusable representations. | One foundation can contribute to translation, summarization, classification, or question answering, without rebuilding a model for every task. |
+:::
 
 ### Why can next-token prediction support other tasks?
 
@@ -200,7 +221,11 @@ The mechanisms and limitations of ICL, [scaling laws](scaling-laws.qmd), [emerge
 The overview answers **what an LLM is and how it works**. [The history of Transformers](transformer-history.qmd) explains **which historical problems led to this architecture**. [LLM evolution](llm-evolution.qmd) compares **the dimensions that have changed since GPT-2**—scale, post-training, ICL, multimodality, inference-time compute, and tool-using systems. These pages complement one another; they are not three versions of the same story.
 :::
 
-## Choosing an approach
+## Choosing an approach {#choosing-an-approach}
+
+::: {.section-depth-marker}
+Optional depth · second pass
+:::
 
 LLMs are commonly used to generate or rewrite text, summarize, translate, extract information, classify, assist with programming, and answer questions.
 
@@ -212,7 +237,11 @@ For a given task, three approaches can be combined: use a general-purpose model 
 
 The choice is made on measured criteria: quality, errors, robustness, cost, latency, confidentiality, data provenance, maintenance. A few successful prompts are not an evaluation.
 
-## From a language model to an application
+## From a language model to an application {#model-to-conversational-system}
+
+::: {.section-depth-marker}
+Optional depth · second pass
+:::
 
 A conversational assistant is a **system built around a model**: an application formats messages, designs and manages context ([context engineering](context-engineering.qmd)), and may coordinate external tools. Roles such as system, user, and assistant are message-format conventions—not Transformer layers. Likewise, a tool call is a structured request; the application remains responsible for authorization and execution. Persistent memory also requires application-side storage: it is not guaranteed by the model's context window.
 
@@ -231,30 +260,85 @@ These distinctions are useful when moving from model fundamentals to deployed sy
 
 Related exercises: [overview practice page](exercises/llm-overview.qmd).
 
-1. After the question about the Romans, the model gives 0.6 to “They”. Once “They” is appended to the context, it gives that same token a much lower probability. Did the parameters change between the two computations?
+<!-- self-check-coverage: enforced -->
+<!-- self-check-covers: what-model-predicts -->
+1. **Does a probable continuation have to be true?** The model assigns 0.6 to “They”. What does this probability tell us?
 
-<details>
-<summary>Show the answer</summary>
+<details><summary>Show the answer</summary>
 
-No. Parameters are fixed during inference. The distribution is conditional: the context changed, and so did the result of the computation.
-
-</details>
-
-2. Does fine-tuning necessarily change the architecture?
-
-<details>
-<summary>Show the answer</summary>
-
-No: it primarily updates parameters. Some methods also add modules; the model family must then be distinguished from the full structure of the adapted system.
+It tells us the probability assigned to “They” in the distribution conditioned on the prefix. It does not prove that the continuation is true or factually correct.
 
 </details>
 
-3. Documentation changes every day. Must the model be retrained?
+<!-- self-check-covers: text-to-distribution -->
+2. **What happens after a token is selected?** Why can the next distribution change even though the parameters remain fixed?
 
-<details>
-<summary>Show the reasoning</summary>
+<details><summary>Show the answer</summary>
 
-Not necessarily. A RAG system retrieves recent documents at inference time without changing the weights; daily fine-tuning would be costly and always one version behind. RAG does not, however, guarantee that the retrieved documents are relevant or that the answer is faithful to them: both have to be measured.
+The selected token is appended to the prefix. The context changes, so the model recomputes a distribution conditioned on the extended context. Parameters remain fixed during inference.
+
+</details>
+
+<!-- self-check-covers: one-computation-three-uses -->
+3. **Are generating, scoring likelihood, and learning the same operation?**
+
+<details><summary>Show the answer</summary>
+
+No. Generation selects a token without changing parameters; likelihood scoring assigns a score to an observed sequence; learning compares predictions with targets, computes a loss, and updates parameters.
+
+</details>
+
+<!-- self-check-covers: llm-transformer-gpt -->
+4. **Is every LLM a GPT?**
+
+<details><summary>Show the answer</summary>
+
+No. LLM describes a language model trained at scale; Transformer names a family of architectures; GPT names a family of decoder-only Transformers pretrained to predict the next token.
+
+</details>
+
+<!-- self-check-covers: architecture-learning-use -->
+5. **Does fine-tuning necessarily change the architecture?**
+
+<details><summary>Show the answer</summary>
+
+No. It primarily updates parameters. Some methods add modules, but the model's architectural family is distinct from the full structure of the adapted model.
+
+</details>
+
+<!-- self-check-covers: information-residence -->
+6. **Does information in a RAG document become part of the model parameters?**
+
+<details><summary>Show the answer</summary>
+
+No. RAG keeps information in an external source and may supply it to the model as inference-time context. Pretraining and fine-tuning change parameters. Indexing or retrieving a document does not guarantee that it was supplied or used correctly.
+
+</details>
+
+<!-- self-check-covers: transformers-changed -->
+7. **Did the Transformer make autoregressive generation parallel?**
+
+<details><summary>Show the answer</summary>
+
+No. Sequence positions can be processed in parallel during training, but autoregressive generation depends on the previous token, so new tokens are produced successively.
+
+</details>
+
+<!-- self-check-covers: choosing-an-approach -->
+8. **Documentation changes every day. Must the model be retrained?**
+
+<details><summary>Show the reasoning</summary>
+
+Not necessarily. A RAG system can retrieve recent documents at inference time without changing weights, provided its corpus or index is updated. The relevance of retrieved documents and the faithfulness of the answer still need to be measured.
+
+</details>
+
+<!-- self-check-covers: model-to-conversational-system -->
+9. **A message has the `assistant` role and contains a tool request. Has the tool already run?**
+
+<details><summary>Show the answer</summary>
+
+No. The role belongs to the message format, and the tool request is structured model output. The application must validate arguments and permissions, execute the tool, and return its result. Persistent memory also requires application-side storage and orchestration.
 
 </details>
 :::
