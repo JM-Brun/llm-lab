@@ -189,7 +189,7 @@ flowchart TD
 |---|---|---|
 | Complexité de Kolmogorov | Quel est le programme le plus court pour $x$ ? | Non calculable ; semi-calculable par le haut |
 | Mélange de Solomonoff | Quel poids universel de programmes soutient $x$ ? | Semi-calculable par le bas ; pas calculable exactement |
-| AIXI | Quelle action maximise la récompense future espérée sous le mélange universel ? | Incalculable ; pas calculable à la limite |
+| AIXI | Quelle action maximise la récompense future espérée sous le mélange universel ? | Politique exacte standard/itérative : pas calculable à la limite ; politique récursive ε-optimale : calculable à la limite |
 | AIXI(t,l) | Que peut obtenir une classe restreinte de candidats bornés en ressources ? | Calculable en principe ; coût exponentiel et surcoût des preuves |
 
 ## 7. Ce que cela nous apprend — et ne nous apprend pas — sur les LLM
