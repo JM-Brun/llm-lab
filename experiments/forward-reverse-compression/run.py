@@ -110,7 +110,11 @@ def _quantize_probabilities(counts: Counter[int], alphabet: int = ALPHABET) -> l
     scaled = [probability * remaining for probability in probabilities]
     frequencies = [1 + floor(value) for value in scaled]
     extras = 255 - sum(frequencies)
-    order = sorted(range(alphabet), key=lambda index: scaled[index] - floor(scaled[index]), reverse=True)
+    order = sorted(
+        range(alphabet),
+        key=lambda index: scaled[index] - floor(scaled[index]),
+        reverse=True,
+    )
     for index in order[:extras]:
         frequencies[index] += 1
     assert sum(frequencies) == 255 and min(frequencies) >= 1
@@ -144,7 +148,9 @@ def _ideal_bits_bigram(test: bytes, training_last: int, tables: dict[int, list[i
     return total
 
 
-def mdl_rows(length: int = DEFAULT_LENGTH, seed: int = 20261117) -> list[dict[str, int | float | str]]:
+def mdl_rows(
+    length: int = DEFAULT_LENGTH, seed: int = 20261117
+) -> list[dict[str, int | float | str]]:
     """Compare test-data code cost alone with a fixed-width model-description charge."""
     source = generate_sources(length, seed)["stationary_markov_p_stay_0.9"]
     split = length // 2
@@ -179,7 +185,9 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--length", type=int, default=DEFAULT_LENGTH)
     parser.add_argument("--seeds", type=int, default=len(DEFAULT_SEEDS))
-    parser.add_argument("--csv", action="store_true", help="print paired per-seed codec results as CSV")
+    parser.add_argument(
+        "--csv", action="store_true", help="print paired per-seed codec results as CSV"
+    )
     args = parser.parse_args()
     if args.seeds < 1:
         parser.error("--seeds must be positive")
