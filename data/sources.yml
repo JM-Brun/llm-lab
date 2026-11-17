@@ -4305,7 +4305,7 @@ sources:
           - "Supplied GitHub URL was truncated at the time of the first review; the full repository was later supplied and inspected in a subsequent scan entry."
         limitations:
           - "The audiovisual video was not independently inspected; transcript details come from a third-party rendering, not a first-party transcript or code review. Publication date remains unknown."
-          - "Training code, shell script, exact hyperparameters, dependencies and logs remain uninspected; the transcript provides only a high-level account of data and artifact flow."
+          - "At the time of this first scan, the full repository had not yet been recovered; its later static code inspection is documented in the 2026-11-17 scan entry below."
           - "The approximate $1 A100 cost was not reproduced; current documented A100-large price is $2.50/hour."
           - "No remote job was launched and no training run was reproduced."
           - "No reuse licence was established; link-only treatment."
