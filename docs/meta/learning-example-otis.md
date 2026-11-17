@@ -71,9 +71,9 @@ La réplique du film sert d'illustration culturelle du couple préfixe/continuat
 | Probabilités | Quelles suites sont plausibles ? | Appliquer softmax aux logits et examiner quelques candidats pour le token suivant. | La distribution est conditionnelle au préfixe et au modèle ; elle ne donne pas une réponse entière d'un seul coup. |
 | Décodage | Comment choisit-on le token suivant ? | Comparer argmax, échantillonnage et température sur la même distribution. | Le choix dépend de la stratégie ; la température transforme la distribution avant l'échantillonnage. |
 | Génération | Comment la tirade se construit-elle ? | Ajouter un token, le réinjecter dans le contexte, recalculer et répéter jusqu'au critère d'arrêt. | La génération est autoregressive ; le modèle ne rédige pas nécessairement toute la phrase en une seule opération. |
-| Vraisemblance | Comment évaluer une suite déjà écrite ? | Donner la continuation jouet comme cible observée et calculer la probabilité conditionnelle de ses tokens successifs. | Scorer une séquence observée n'est pas la même opération que choisir une continuation. |
-| Entropie / cross-entropy | À quel point la prédiction est-elle incertaine ou surprenante ? | Comparer des distributions de prochain token, puis mesurer la pénalité sur la cible jouet. | Entropie d'une distribution et cross-entropie entre prédiction et cible ne sont pas interchangeables. |
-| Loss | Quel signal résume l'erreur ? | Agréger les pertes des tokens cibles du mini-exemple. | La loss dépend des cibles, du masque et de la réduction choisie. |
+| Vraisemblance | Comment évaluer une suite déjà écrite ? | Scorer un court fragment observé (« Vous savez, ») avec des probabilités fictives ; garder la continuation jouet pour les traces longues et contrôlées. | Scorer une séquence observée n'est pas la même opération que choisir une continuation. |
+| Entropie / cross-entropy | À quel point la prédiction est-elle incertaine ou surprenante ? | Comparer des distributions de prochain token, puis mesurer la pénalité sur un fragment observé ou sur la cible jouet contrôlée. | Entropie d'une distribution et cross-entropie entre prédiction et cible ne sont pas interchangeables. |
+| Loss | Quel signal résume l'erreur ? | Agréger les pertes des trois unités observées du fragment (« Vous savez, »), sous l'hypothèse simplificatrice annoncée dans la page. | La loss dépend des cibles, du masque et de la réduction choisie. |
 | Gradients | Comment les paramètres sont-ils informés ? | Rétropropager la loss à travers le calcul du prochain token. | Les gradients indiquent comment les paramètres influencent la loss ; ils ne sont pas des explications textuelles. |
 | Build / entraînement | Comment les exemples sont-ils préparés et appris ? | Construire des fenêtres de contexte et des cibles décalées à partir du texte jouet, puis entraîner sur un corpus autorisé et documenté. | Le texte du film ne doit pas devenir un corpus d'entraînement par défaut ; un exemple minuscule ne suffit pas à entraîner un modèle utile. |
 | Évaluation | Le modèle a-t-il appris à répondre ? | Évaluer sur des exemples séparés et des baselines ; comparer les continuations sans réutiliser le test pour ajuster le modèle. | Une démonstration, un test logiciel et une évaluation de qualité sont trois preuves différentes. |
@@ -191,7 +191,8 @@ Pour changer de fil rouge sans perdre la cohérence du parcours :
 
 - Le préfixe canonique est identique partout où l'on compare des résultats.
 - Les fragments de la scène restent courts et discrets ; les calculs simplifiés signalent explicitement toute hypothèse sur les unités traitées comme tokens.
-- La continuation jouet est identifiée comme texte pédagogique original, jamais comme sortie de modèle.
+- La continuation jouet est identifiée comme texte pédagogique original, jamais comme sortie de modèle ; les pages françaises peuvent utiliser de courts fragments du scénario sans expliquer la référence.
+- Tout calcul qui assimile des unités visibles à des tokens explicite cette hypothèse et ne prétend pas reproduire un tokenizer réel.
 - Les pages FR/EN sont alignées sur le même objectif et le même niveau de détail.
 - Les identifiants de tokens proviennent du tokenizer montré ; les « adresses de ligne » restent distinctes des coordonnées des vecteurs.
 - Les valeurs numériques sont reproductibles ou explicitement synthétiques.
