@@ -70,8 +70,6 @@ Recent research illustrates several complementary approaches:
 
 The lesson is methodological: **evaluate the properties the task actually requires**. Depending on the application, these may include CAD-kernel validity, dimensions and tolerances, feature editability, assembly fit, simulation results, and manufacturability. Visual similarity or a fluent explanation is not a substitute for these checks.
 
-The [Maor Farid case study](../source-reviews/maor-farid-large-mechanical-model-brep-geometry-2026.md) and the [compression and intelligence synthesis](../source-syntheses/compression-intelligence-and-inference-efficiency-2026-11.md) examine the distinction between representation, predictive compression, and preserved design intent in more detail.
-
 ## 2. What does "understand" mean?
 
 The word "understanding" must be made precise. It can denote:
