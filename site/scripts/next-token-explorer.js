@@ -21,7 +21,7 @@
       tokens.forEach((token, i) => { const li=document.createElement("li"), name=document.createElement("span"), p=document.createElement("strong");name.textContent=token;p.textContent=probs[i];li.append(name,p);list.append(li); });
     }
     function reset() {
-      current = root.dataset["prefix"+lang.toUpperCase()]; stage = 0;
+      current = (lang === "fr" ? root.dataset.prefixFr : root.dataset.prefixEn); stage = 0;
       prefix.textContent = current; rows(t.tokens,t.probs); options(t.tokens);
       select.disabled = false; status.textContent = "";
     }
