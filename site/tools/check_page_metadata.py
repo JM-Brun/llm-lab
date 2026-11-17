@@ -125,9 +125,7 @@ def _check_self_check_coverage(source: str, relative: str, errors: list[str]) ->
     if missing:
         errors.append(f"{relative}: major sections lack self-check coverage: {missing}")
     if unknown:
-        errors.append(
-            f"{relative}: self-check coverage references unknown sections: {unknown}"
-        )
+        errors.append(f"{relative}: self-check coverage references unknown sections: {unknown}")
 
 
 def _load_page(path: Path, site_dir: Path, errors: list[str]) -> dict[str, Any] | None:
