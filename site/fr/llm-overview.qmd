@@ -39,7 +39,7 @@ Un modèle de langage prolonge un texte en estimant ce qui pourrait venir ensuit
 
 ## Ce que le modèle prédit
 
-Donnons au modèle le préfixe « C'est une bonne situation, ça, scribe ? ». Il ne choisit pas immédiatement un mot. Il commence par attribuer un score à chacune des unités de son vocabulaire, puis transforme ces scores en probabilités. Pour ce contexte précis, imaginons le résultat suivant :
+Le texte « C'est une bonne situation, ça, scribe ? » est ici le **préfixe** : la partie de la séquence déjà fournie au modèle. À partir de ce préfixe, le modèle calcule une distribution de probabilités pour le token suivant. Il ne choisit pas immédiatement un mot : il commence par attribuer un score à chacune des unités de son vocabulaire, puis transforme ces scores en probabilités. Imaginons le résultat suivant :
 
 | Suite possible (un mot pour simplifier) | Probabilité |
 |---|---|
@@ -50,7 +50,7 @@ Donnons au modèle le préfixe « C'est une bonne situation, ça, scribe ? ». I
 
 Ces valeurs sont fictives : elles ne proviennent pas d'un modèle entraîné. Le vocabulaire réel d'un modèle contient bien plus que quatre unités — souvent des dizaines de milliers. Pour rendre l'exemple lisible, nous affichons des mots à la place des tokens. Les valeurs fictives de ce tableau sont reprises dans plusieurs pages afin que chaque calcul puisse être refait à la main. Dans un vrai modèle, le texte est découpé en unités qui peuvent être plus petites ou plus grandes qu'un mot ; une ligne du tableau ne correspond donc pas nécessairement à un mot entier.
 
-Ce tableau est une **distribution conditionnelle** : autrement dit, les probabilités sont calculées *en tenant compte du texte déjà fourni*. Les quatre valeurs se partagent un total de 1 (soit 100 %). Si l'on ajoute « Être » à la question et que l'on refait le calcul, le contexte n'est plus le même : les probabilités changent, et « scribe » devient alors le candidat le plus probable.
+Ce tableau est une **distribution conditionnelle** : autrement dit, les probabilités sont calculées *en tenant compte du préfixe*. Les quatre valeurs se partagent un total de 1 (soit 100 %). Si la règle de décodage choisit « Être », ce token est ajouté au préfixe. Le nouveau préfixe devient « C'est une bonne situation, ça, scribe ? Être » ; le modèle recalcule alors une distribution, dans laquelle « scribe » devient le candidat le plus probable.
 
 Trois termes suffisent pour lire la suite du parcours.
 
