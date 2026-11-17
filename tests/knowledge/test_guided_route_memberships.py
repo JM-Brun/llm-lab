@@ -462,22 +462,14 @@ def test_context_use_pages_include_their_generated_suggested_route(language: str
 
 
 @pytest.mark.parametrize(
-    ("language", "expected_label", "next_title"),
+    ("language", "expected_label"),
     [
-        (
-            "fr",
-            "Étapes du parcours abordées dans ce panorama",
-                        "Générer du texte : l'inférence pas à pas",
-        ),
-        (
-            "en",
-            "Learning stages covered by this overview",
-                        "Generating text: inference step by step",
-        ),
+        ("fr", "Étapes du parcours abordées dans ce panorama"),
+        ("en", "Learning stages covered by this overview"),
     ],
 )
 def test_overview_preserves_cross_cutting_coverage_and_explicit_next_page(
-    language: str, expected_label: str, next_label: str, next_title: str
+    language: str, expected_label: str
 ) -> None:
     """Coverage is a set; Orientation membership and preferred continuation remain distinct."""
     pages = [page for page in GENERATOR["load_pages"]() if page["language"] in {language, "shared"}]
@@ -521,8 +513,10 @@ def test_overview_preserves_cross_cutting_coverage_and_explicit_next_page(
         else f"Continue {orientation.title} →"
     )
     assert suggested_route.count(expected_next_label) == 1
-    assert suggested_route.count(escape(next_title)) == 1
-    assert suggested_route.count('href="generation.qmd"') == 1
+    generation_page = next(page for page in pages if page["id"] == f"{language}/generation")
+    assert suggested_route.count(escape(generation_page["title"])) == 1
+    generation_href = generation_page["href"].removesuffix(".html") + ".qmd"
+    assert suggested_route.count(f'href="{generation_href}"') == 1
 
 
 @pytest.mark.parametrize(
