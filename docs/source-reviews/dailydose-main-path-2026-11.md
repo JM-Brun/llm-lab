@@ -97,3 +97,19 @@ All are registered in `data/sources.yml`; extraction notes distinguish inspected
 - Inspect both new SVGs in rendered desktop and mobile layouts; check text overflow and alt text.
 - Confirm no generated navigation or graph metadata requires regeneration.
 - No retrieval model benchmark or learner study was performed in this documentation change.
+
+### Visual-document retrieval follow-up: ColPali (2026-11-17)
+
+The Daily Dose Visual Guide is now inspected at text level. It explains the three-way distinction and links to a ColBERT/ColBERTv2 RAG tutorial. Its embedded hero image was not retrievable as an asset, so the original image is not reproduced. The article also simplifies cross-encoder scaling as one pass per corpus document; this describes exhaustive scoring, not a necessary architecture choice, because a candidate retriever can bound the reranking set.
+
+A complementary primary source, Faysse et al., *ColPali: Efficient Document Retrieval with Vision Language Models* (ICLR 2025), was inspected beyond the abstract:
+- Figure 1 compares a conventional OCR/layout/caption/chunk pipeline with direct page-image encoding by a vision-language model and late interaction.
+- Figure 3 illustrates token pooling and query-token-to-page-patch relevance heatmaps.
+- ColPali is particularly relevant when tables, charts, figures and layout carry evidence that text extraction may discard.
+- On ViDoRe, the paper reports mean nDCG@5 of 81.3 for ColPali versus 66.1 for the strongest listed text pipeline in that experiment; these numbers are benchmark-specific.
+- Its stated setup reports 257.5 KB/page, about 30 ms query encoding and 0.39 s/page indexing. These are not universal deployment costs.
+- The paper also reports negative results for generic contrastive VLM variants and discusses memory, token pooling, multilingual and domain generalization qualifications. The takeaway is not “vision always wins”: task-specific training, representation granularity, index memory and downstream evidence extraction matter.
+
+The RAG lesson now includes an optional ColPali branch and a bilingual Mermaid schema comparing OCR/text retrieval with visual page retrieval. It links to the original paper figures instead of copying them. Exact text spans, structured values, accessibility and precise citations may still require OCR or extraction after page retrieval.
+
+The new ColPali paper and Daily Dose Visual Guide are registered in `data/sources.yml` and the extraction record. See [ColPali ICLR 2025](https://proceedings.iclr.cc/paper_files/paper/2025/hash/99e9e141aafc314f76b0ca3dd66898b3-Abstract-Conference.html) and [the Visual Guide](https://blog.dailydoseofds.com/p/visual-guide-to-bi-encoders-cross).
