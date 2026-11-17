@@ -282,7 +282,7 @@ La page officielle du [Résilient AI Challenge](https://www.sustainableaicoaliti
 
 La comparaison 360 % / 36 % attribuée à Epoch.AI par Alliancy reste non vérifiée : source primaire non identifiée
 
-7. Notion — “Intelligence = Compression”: a useful bridge, not evidence
+## 17. Notion — “Intelligence = Compression”: a useful bridge, not evidence
 
 The short Notion note juxtaposes predictive compression, the Hutter Prize, Kolmogorov complexity, AIXI and cognitive architectures. Its value is the cross-disciplinary framing, not a new formal result. The slogan “intelligence = compression” remains a hypothesis; the claim that text compression is equivalent to passing the Turing test is not established; and compression can reduce storage or bandwidth without necessarily reducing end-to-end computation.
 
