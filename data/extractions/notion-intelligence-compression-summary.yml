@@ -21,11 +21,18 @@ pedagogical_model:
       - {from: src-compression-benchmark, type: motivates, to: src-algorithmic-intelligence-hypothesis}
       - {from: src-cognitive-architecture-boundary, type: qualifies, to: src-algorithmic-intelligence-hypothesis}
     interpretation: "This is a minimal source-local reconstruction, not a canonical cognitive or AI architecture. The source's equation-like slogan is treated as a hypothesis/metaphor, not a scientific equivalence."
+  related_extractions:
+    - data/extractions/aixi-kolmogorov-computability-2026.yml
   learning_outcomes:
     - {status: inferred, outcome: "Explain why predictive probability models can enable efficient coding.", basis: "Introduction and Hutter Prize sections."}
     - {status: inferred, outcome: "Distinguish a compression benchmark from a general measure of intelligence.", basis: "Hutter Prize and cognition sections."}
     - {status: inferred, outcome: "Explain why a compression mechanism alone does not constitute a complete cognitive architecture.", basis: "Final section."}
   canonical_mapping:
+    - {source_term: "Kolmogorov complexity is uncomputable", concept_id: kolmogorov-complexity, relation: "shortest-program measure; upper semicomputable but not computable"}
+    - {source_term: "AIXI", concept_id: aixi, relation: "universal mixture plus sequential reward maximization"}
+    - {source_term: "AIXI(t,l)", concept_id: aixi-tl, relation: "resource-bounded computable construction; not exact AIXI"}
+    - {source_term: "Solomonoff induction", concept_id: solomonoff-induction, relation: "universal algorithmic prediction"}
+    - {source_term: "resource bounds", concept_id: resource-bounded-computation, relation: "explicit candidate-policy time and length constraints"}
     - {source_term: "information compression", concept_id: entropy, relation: "information-theoretic foundation; not synonymous"}
     - {source_term: "predicting likely continuations", concept_id: next-token-prediction, relation: "predictive coding connection"}
     - {source_term: "shortest program / Kolmogorov complexity", concept_id: kolmogorov-complexity, relation: "algorithmic information theory"}
