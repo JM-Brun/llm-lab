@@ -75,8 +75,8 @@ def test_vraisemblance_reuses_generation_probabilities_and_product() -> None:
 def test_loss_reuses_generation_probabilities_and_nll_values() -> None:
     source = (ROOT / "site" / "fr" / "loss.qmd").read_text(encoding="utf-8")
     assert "$0{,}6$, $0{,}5$ et $0{,}8$" in source
-    assert r"\\ell_2=-\\ln(0{,}5)\\approx0{,}693" in source
-    assert r"\\mathcal L=\\frac{0{,}511+0{,}693+0{,}223}{3}\\approx0{,}476" in source
+    assert r"\ell_2=-\ln(0{,}5)\approx0{,}693" in source
+    assert r"\mathcal L=\frac{0{,}511+0{,}693+0{,}223}{3}\approx0{,}476" in source
 
 
 @pytest.mark.parametrize("page_id", tuple(FRENCH_EXAMPLE_FRAGMENTS))
