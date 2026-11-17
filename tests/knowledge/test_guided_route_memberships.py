@@ -108,4 +108,3 @@ def test_membership_projection_keeps_empty_membership_absent() -> None:
     assert memberships["en/core"][0].role == "core"
     assert memberships["en/optional"][0].role == "optional"
     assert "en/unassigned" not in memberships
-
