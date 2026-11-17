@@ -30,6 +30,7 @@ RELATION_TYPES = {
     "represented-by",
     "contributes-to",
     "mapped-by",
+    "approximates",
 }
 PAGE_ID = re.compile(r"(?:fr|en)/[a-z0-9]+(?:-[a-z0-9]+)*")
 RELATION_FAMILIES = {
