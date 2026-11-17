@@ -325,7 +325,7 @@ items:
       concepts: [token, dataset-curation]
     disposition: integrate-by-reference
   - id: huggingface-llm-course:chapter8-debugging-practice
-    kind: practice
+    kind: implementation-pattern
     summary: "Chapter 8 decomposes high-level training failures into data, preprocessing, batching, model, optimizer and evaluation stages, and teaches full tracebacks and minimal reproducible issue reports. It reinforces LLM Lab's existing testing and reproducibility practices without requiring a separate learning-route stage."
     locator: {type: page, value: "https://huggingface.co/learn/llm-course/en/chapter8/4", label: "Chapter 8 — Debugging the training pipeline"}
     evidence:
