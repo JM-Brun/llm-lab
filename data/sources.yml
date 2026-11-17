@@ -5271,7 +5271,7 @@ sources:
       primary_theme: mathematical-tools-geometry
       secondary_themes: [architectures-mechanisms]
       tags: [topic:compression, topic:algorithmic-information-theory, topic:intelligence]
-      concept_ids: [entropy, cross-entropy, next-token-prediction, kolmogorov-complexity]
+      concept_ids: [entropy, cross-entropy, next-token-prediction, kolmogorov-complexity, algorithmic-probability, solomonoff-induction, sequential-decision-theory, aixi, aixi-tl, resource-bounded-computation]
     metadata:
       technical_level: introductory
       contribution_types: [theory, pedagogy, historical-context]
@@ -5292,8 +5292,8 @@ sources:
           - "The page contains a malformed enwik9 size expression ('first 109 bytes'); the official benchmark defines enwik9 as 10^9 bytes."
           - "The prize description is simplified and partly stale; use the official Hutter Prize rules and current records for factual details."
     related:
-      pages: [en/entropy, fr/entropy, en/cross-entropy, fr/cross-entropy]
-      concepts: [entropy, cross-entropy, next-token-prediction, kolmogorov-complexity]
+      pages: [en/entropy, fr/entropy, en/cross-entropy, fr/cross-entropy, en/universal-artificial-intelligence, fr/universal-artificial-intelligence]
+      concepts: [entropy, cross-entropy, next-token-prediction, kolmogorov-complexity, algorithmic-probability, solomonoff-induction, sequential-decision-theory, aixi, aixi-tl, resource-bounded-computation]
       audit_records:
         - docs/source-reviews/notion-intelligence-compression-2026-11.md
         - data/extractions/notion-intelligence-compression-summary.yml
