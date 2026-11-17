@@ -8,13 +8,13 @@ scan:
     coverage: "Full article text and visible footnotes across nine sections retrieved from the canonical page."
     notes:
       - "The article's displayed publication date is 2025-05-28."
-      - "The page identifies the site/byline as lewish; a fuller author identity was not independently verified."
+      - "The article author link leads to the site homepage, which explicitly identifies lewish.io as Lewis Hemens's website; the linked GitHub profile also names Lewis Hemens."
   figures_media:
     status: inspected
-    coverage: "The linked musical-score image asset was retrieved and visually inspected."
+    coverage: "The only explicit inline image link in the article body (the musical-score asset) was retrieved and visually inspected."
     notes:
       - "The article explicitly labels the score AI-generated and cautions readers not to scrutinize it closely; it is illustrative rather than reliable notation evidence."
-      - "No reuse licence or permission was established; do not reuse the image."
+      - "No reuse licence or permission was established; do not reuse the image. No other inline media links appear in the rendered article body; CSS/theme assets were not inventoried."
   code_data:
     status: not-inspected
     coverage: null
@@ -29,11 +29,12 @@ scan:
     coverage: "Visible citations and footnotes identified, including MDL, AIXI, Chollet, Solomonoff, Friston, Hutter Prize and coding references."
     notes:
       - "Primary references have not all been independently audited in this ingestion pass."
+      - "The author link and site homepage establish Lewis Hemens as creator. GitHub profile corroborates the name; Twitter (403), LinkedIn (429) and the protected email endpoint (404) could not be inspected."
       - "The forward/reverse benchmark configuration and compressor versions remain unverified."
   metadata:
     status: partial
-    coverage: "Title, canonical URL, displayed date and publisher/site identity."
-    notes: ["Full creator identity and revision history remain unverified."]
+    coverage: "Title, canonical URL, displayed date, publisher/site identity and creator attribution."
+    notes: ["Additional biographical details and article revision history remain unverified."]
   rights:
     status: unknown
     coverage: null

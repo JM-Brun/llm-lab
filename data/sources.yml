@@ -4861,7 +4861,7 @@ sources:
 
   - id: lewish-intelligence-and-compression-2025
     title: "Intelligence and compression"
-    creators: []
+    creators: [Lewis Hemens]
     source_type: blog
     identifiers: {}
     canonical_url: "https://lewish.io/posts/intelligence-and-compression"
@@ -4872,7 +4872,7 @@ sources:
     version: "Article page accessed 2026-11-17"
     revision: null
     licence: {identifier: null, url: null, status: unknown}
-    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
     classification:
       primary_theme: probabilistic-foundations-training
       secondary_themes: [mathematical-tools-geometry, architectures-mechanisms]
@@ -4894,9 +4894,9 @@ sources:
           - "Visible footnotes qualifying incompressible data, prefix-code illustration, Hutter Prize context, MDL and Solomonoff induction."
           - "Visible technical outbound links, including coding, MDL, Bayesian, AIXI and active-inference references; the official Hutter Prize page and FAQ were checked for corpus naming."
         limitations:
-          - "The page's creator identity beyond the lewish.io byline/site identity has not been independently established; creators intentionally left empty pending verification."
-          - "Only the linked musical-score asset was retrieved and visually inspected; other figure placements and any additional assets were not exhaustively inventoried."
-          - "Code, benchmark scripts/data, comments and article revision history were not inspected; social-profile, share and email links were not audited."
+          - "The article author link leads to the site homepage, which explicitly identifies lewish.io as Lewis Hemens's website; the linked GitHub profile also names Lewis Hemens. Attribution is now supported."
+          - "The article body exposes one explicit inline image, the musical-score asset; it was retrieved and visually inspected. No other inline media links appear in the rendered article. CSS/theme assets were not inventoried."
+          - "Code, benchmark scripts/data, comments and article revision history were not inspected. The GitHub author profile and personal-site attribution were checked; the linked Twitter page returned 403, LinkedIn returned 429, and the Cloudflare-protected email endpoint returned 404."
           - "The forward/reverse enwik8 measurements are reported by the author; exact compressor versions, settings and reproduction protocol were not established."
           - "No reuse licence or permission for article text or figures was established; link-only treatment."
     related:
