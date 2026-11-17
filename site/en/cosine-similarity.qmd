@@ -68,10 +68,31 @@ Sentence-pair similarity also depends on **how the model encodes the texts**. Tw
 
 | | Bi-encoder | Cross-encoder |
 |---|---|---|
-| Encoding | Each text is encoded independently by the same model. | The two texts are combined and processed jointly. |
+| Encoding | Each input is encoded independently by its own branch. The branches may share weights (Siamese) or use different weights. | The two texts are combined and processed jointly, allowing token-level interaction during scoring. |
 | Typical output | Two reusable vectors, compared afterwards with an appropriate metric. | A pair-specific score computed after the texts interact. |
 | Strength | Documents can be encoded and indexed in advance; large-corpus retrieval is efficient. | The model can account for interactions between both texts while scoring the pair. |
 | Limitation | The texts cannot interact directly during encoding; quality depends strongly on the training objective and data. | Every candidate pair must be processed again; scoring a query against an entire corpus is expensive. |
+
+
+![Comparison of bi-encoder, cross-encoder and late-interaction retrieval architectures.](../images/retrieval-architectures-en.svg){fig-alt="Three retrieval architectures: a bi-encoder independently encodes query and document into one vector each, a cross-encoder jointly processes the query and each candidate document, and ColBERT-style late interaction independently encodes contextual token vectors then compares each query token with document tokens using MaxSim and sums the maxima." fig-cap="The main difference is when query–document interaction occurs: not during bi-encoder encoding, throughout cross-encoder processing, or after independent contextual encoding in late interaction." width=100%}
+
+A bi-encoder is defined by **independent encoding**, not by mandatory weight sharing. A *Siamese* bi-encoder ties the weights of its two branches, as in the original Sentence-BERT architecture; other dual-encoder designs may use separate query and document encoders. See Reimers and Gurevych (2019), [Sentence-BERT](https://aclanthology.org/D19-1410/).
+
+A cross-encoder's output is a **task-specific pair score**. It is not automatically a calibrated probability, a universal measure of semantic similarity, or a score comparable across unrelated models. Its ranking value must be measured on the target task.
+
+### A useful middle ground: late interaction
+
+**ColBERT** independently encodes a query and each document into *sets* of contextualized token vectors, then compares them at query time. In its MaxSim formulation, each query-token vector takes its maximum similarity with document-token vectors; those maxima are aggregated into a document score. Documents can be encoded offline, while token-level matching preserves finer interactions than a single-vector bi-encoder. This is neither a standard single-vector bi-encoder nor a cross-encoder that jointly runs the Transformer over each pair.
+
+The trade-off is a larger multi-vector index, more involved retrieval infrastructure and additional storage/serving considerations. [Khattab and Zaharia (2020), ColBERT](https://arxiv.org/abs/2004.12832) and [Santhanam et al. (2022), ColBERTv2](https://aclanthology.org/2022.naacl-main.272/) describe the architecture and compression improvements. ColBERTv2 reduces, but does not erase, the representation-footprint trade-off.
+
+**Other useful alternatives are not all dense bi-encoders:**
+- **Lexical retrieval (BM25)** is a strong, inexpensive baseline when exact terms, names, identifiers or rare technical vocabulary matter.
+- **Learned sparse retrieval (SPLADE)** learns sparse term-weight representations and uses inverted-index-style retrieval; it can expand beyond literal matching while retaining lexical interpretability and efficient sparse infrastructure. See [Formal et al. (2021)](https://arxiv.org/abs/2107.05720).
+- **Hybrid retrieval** combines complementary lexical and dense (or sparse neural) candidate lists. It can improve recall, but fusion is not guaranteed to help every query or corpus; evaluate it rather than treating it as a default law.
+- **Reranking** can follow any candidate generator—BM25, dense, sparse, hybrid or structured search. It cannot recover a relevant document that the candidate stage never retrieved.
+
+The [BEIR benchmark](https://arxiv.org/abs/2104.08663) is a useful counterweight to single-dataset claims: it compares lexical, sparse, dense, late-interaction and reranking systems across heterogeneous domains, and reports meaningful effectiveness/efficiency trade-offs. There is no universally best architecture.
 
 A common pipeline combines them: a **bi-encoder** quickly retrieves candidate passages, then a **cross-encoder** re-ranks that shortlist by scoring each query–passage pair. A cross-encoder is therefore not necessarily a replacement for vector retrieval; it can be a more discriminating second stage applied to a small candidate set.
 
@@ -79,7 +100,7 @@ This distinction also explains why a contextualized state from a pretrained BERT
 
 **AugSBERT** illustrates another trade-off: use a cross-encoder to produce pair scores or labels, then train a faster bi-encoder to reproduce those judgments. The article's detailed account and implementation are only partially accessible; see [Part 2](https://www.dailydoseofds.com/augsbert-bi-encoders-cross-encoders-for-sentence-pair-similarity-scoring-part-2/) as optional further reading, not as independent performance validation.
 
-For how this combination fits into an information-retrieval system, see [RAG, memory, and document retrieval](rag-memory-boundaries.qmd).
+For how these architectures fit into text and visual document retrieval, see [RAG, memory, and document retrieval](rag-memory-boundaries.qmd), including the ColPali example. A concise visual overview is available in Daily Dose's [Visual Guide to Bi-encoders, Cross-encoders and ColBERT](https://blog.dailydoseofds.com/p/visual-guide-to-bi-encoders-cross).
 
 ## 3. When cosine is a reasonable choice
 

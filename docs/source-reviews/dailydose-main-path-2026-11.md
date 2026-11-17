@@ -54,3 +54,62 @@ No embedded images were reused; image placeholders were not treated as inspected
 - Verify new source records against current schemas and ensure the generated guided route includes the optional page.
 - Technical comparison with original SBERT/AugSBERT papers and current Sentence Transformers documentation remains a separate corroboration task; the tutorial is pedagogical evidence, not primary evidence.
 - No learner study has been run; build/CI success must not be presented as learner validation.
+
+## Follow-up audit — architecture alternatives and visual material (2026-11-17)
+
+### Technical correction
+
+- Corrected both language versions: a bi-encoder independently encodes each input through its own branch; weight sharing is optional. Sentence-BERT's original Siamese design ties weights, but this is a specific architecture choice.
+- Clarified that cross-encoder output is a task-specific pair score, not necessarily a calibrated probability.
+- Added the distinction between a single-vector bi-encoder, a joint cross-encoder and late interaction.
+
+### Complementary points of view now integrated
+
+- **ColBERT / late interaction:** multi-vector contextual token representations and MaxSim, positioned between single-vector retrieval and full cross-encoding. Explicitly note the larger index and serving complexity.
+- **ColBERTv2:** residual compression and denoised supervision as an answer to late interaction's storage burden; do not universalize the paper's reported compression factor.
+- **BM25:** retained as a strong lexical baseline, especially for exact names, rare terms and identifiers.
+- **SPLADE:** learned sparse term-weight representations, distinct from both classic BM25 and dense single-vector retrieval.
+- **Hybrid retrieval:** complementary candidate sources may improve recall, but fusion is empirical and can harm some queries.
+- **BEIR:** use heterogeneous evaluation to counter single-benchmark generalizations. Keep candidate recall distinct from ranking metrics and track latency/index size.
+- **Reranking boundary:** a reranker cannot recover a relevant passage missing from the candidate shortlist.
+
+### Visual audit and new assets
+
+The Daily Dose article's visible HTML contains image placements, but this pass did not verify the underlying image bytes, full image contents or reuse rights. No original article image is reproduced. Instead, two original LLM Lab SVGs were created:
+- `site/images/retrieval-architectures-en.svg`
+- `site/images/retrieval-architectures-fr.svg`
+
+They compare single-vector bi-encoding, joint cross-encoding and ColBERT-style late interaction, including the MaxSim aggregation. The cosine deep dive embeds the bilingual diagram. The RAG page adds a retrieval-family comparison table alongside its existing pipeline diagram.
+
+### New primary and benchmark references
+
+- Reimers & Gurevych (2019), Sentence-BERT, ACL Anthology.
+- Khattab & Zaharia (2020), ColBERT, arXiv/SIGIR.
+- Santhanam et al. (2022), ColBERTv2, ACL Anthology.
+- Formal et al. (2021), SPLADE, arXiv/SIGIR.
+- Thakur et al. (2021), BEIR, arXiv/NeurIPS Datasets and Benchmarks.
+
+All are registered in `data/sources.yml`; extraction notes distinguish inspected abstracts/architecture descriptions from unreviewed experimental tables. References are link-only; original figures are not copied.
+
+### Validation still required
+
+- Run YAML/source-catalogue schema checks, bilingual parity, link checks and the full Quarto build.
+- Inspect both new SVGs in rendered desktop and mobile layouts; check text overflow and alt text.
+- Confirm no generated navigation or graph metadata requires regeneration.
+- No retrieval model benchmark or learner study was performed in this documentation change.
+
+### Visual-document retrieval follow-up: ColPali (2026-11-17)
+
+The Daily Dose Visual Guide is now inspected at text level. It explains the three-way distinction and links to a ColBERT/ColBERTv2 RAG tutorial. Its embedded hero image was not retrievable as an asset, so the original image is not reproduced. The article also simplifies cross-encoder scaling as one pass per corpus document; this describes exhaustive scoring, not a necessary architecture choice, because a candidate retriever can bound the reranking set.
+
+A complementary primary source, Faysse et al., *ColPali: Efficient Document Retrieval with Vision Language Models* (ICLR 2025), was inspected beyond the abstract:
+- Figure 1 compares a conventional OCR/layout/caption/chunk pipeline with direct page-image encoding by a vision-language model and late interaction.
+- Figure 3 illustrates token pooling and query-token-to-page-patch relevance heatmaps.
+- ColPali is particularly relevant when tables, charts, figures and layout carry evidence that text extraction may discard.
+- On ViDoRe, the paper reports mean nDCG@5 of 81.3 for ColPali versus 67.0 for the strongest listed text pipeline (Unstructured + captioning with BGE-M3) in that experiment; these numbers are benchmark-specific.
+- Its stated setup reports 257.5 KB/page, about 30 ms query encoding and 0.39 s/page indexing. These are not universal deployment costs.
+- The paper also reports negative results for generic contrastive VLM variants and discusses memory, token pooling, multilingual and domain generalization qualifications. The takeaway is not “vision always wins”: task-specific training, representation granularity, index memory and downstream evidence extraction matter.
+
+The RAG lesson now includes an optional ColPali branch and a bilingual Mermaid schema comparing OCR/text retrieval with visual page retrieval. It links to the original paper figures instead of copying them. Exact text spans, structured values, accessibility and precise citations may still require OCR or extraction after page retrieval.
+
+The new ColPali paper and Daily Dose Visual Guide are registered in `data/sources.yml` and the extraction record. See [ColPali ICLR 2025](https://proceedings.iclr.cc/paper_files/paper/2025/hash/99e9e141aafc314f76b0ca3dd66898b3-Abstract-Conference.html) and [the Visual Guide](https://blog.dailydoseofds.com/p/visual-guide-to-bi-encoders-cross).

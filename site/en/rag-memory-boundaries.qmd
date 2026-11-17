@@ -53,7 +53,57 @@ A typical pipeline includes:
 6. **Ranking:** fusion, reranking, deduplication, and passage selection.
 7. **Return:** provide excerpts, identifiers, scores, and metadata to the application.
 
+
+### Retriever families: alternatives, not a single ladder
+
+The first-stage retriever and the second-stage ranker are separate design choices. Candidate generation may be lexical, dense, learned sparse, hybrid or structured; reranking is optional and only reorders candidates already found.
+
+| Family | Representation and retrieval | Useful when | Main trade-off |
+|---|---|---|---|
+| Lexical (e.g. BM25) | Terms and inverted index | Exact names, identifiers, rare terms, auditable matches | Vocabulary mismatch and paraphrases |
+| Dense bi-encoder | One vector per query/document; nearest-neighbour search | Semantic paraphrases and fast reusable document indexing | Fine-grained token evidence can be compressed into one vector |
+| Learned sparse (e.g. SPLADE) | Sparse learned term weights; inverted-index retrieval | Need lexical matching plus learned expansion | Larger/weighted sparse postings and model-specific costs |
+| Late interaction (e.g. ColBERT) | Multiple contextual token vectors; MaxSim | Fine-grained matching with offline document encoding | Larger multi-vector index and more complex serving |
+| Cross-encoder reranker | Joint query–candidate processing | Reordering a small shortlist with richer pairwise evidence | Cost grows with number and length of candidate pairs |
+
+A hybrid system can combine complementary first-stage retrievers before a reranker, but fusion is an empirical choice, not a guaranteed improvement. BEIR's heterogeneous evaluation finds BM25 to be a robust baseline and reports strong average effectiveness for reranking and late interaction alongside higher computational costs. See [BEIR (Thakur et al., 2021)](https://arxiv.org/abs/2104.08663), [SPLADE (Formal et al., 2021)](https://arxiv.org/abs/2107.05720), and [ColBERT (Khattab & Zaharia, 2020)](https://arxiv.org/abs/2004.12832).
+
+**Evaluation must separate candidate recall from ordering quality.** A reranker cannot recover relevant passages absent from its input shortlist. Report Recall@k for candidate generation and ranking measures such as MRR@k or nDCG@k after reranking, alongside latency, index size and cost. Evaluate on more than one domain when out-of-domain use matters.
+
 Search is **not necessarily vector-based**. BM25 and inverted indexes are lexical; dense embeddings support similarity search; SQL and metadata filters provide exact constraints. RAG therefore does not always require a vector database or embeddings.
+
+
+### When the document is visual: ColPali and page-level retrieval
+
+Text extraction is not always the best first representation. Scientific papers, scanned PDFs, forms, tables and infographics can carry important evidence in layout, diagrams, charts and spatial relationships. A conventional pipeline may require OCR, layout detection, table extraction, captioning and chunking before text retrieval.
+
+**ColPali** takes a different route: a vision-language model encodes each document page image into multiple contextual patch vectors. A textual query is encoded into token vectors, then a ColBERT-style late-interaction score matches query tokens to page patches. This can preserve visual evidence that OCR/chunking may miss, while avoiding a long preprocessing chain.
+
+```{mermaid}
+flowchart TD
+  A[PDF page image] --> B[OCR + layout + table / figure extraction]
+  B --> C[Text chunks and captions]
+  C --> D[Lexical / dense text index]
+  D --> E[Retrieve and rank pages]
+  Q[Text query] --> E
+  A2[PDF page image] --> V[Vision-language page encoder]
+  V --> M[Multi-vector patch index]
+  Q --> QE[Query token encoder]
+  M --> LI[Late interaction / MaxSim]
+  QE --> LI
+  LI --> R[Rank relevant pages]
+  E --> H[Selected evidence]
+  R --> H
+  H --> G[Answer from page evidence]
+```
+
+The [ColPali paper's Figure 1](https://proceedings.iclr.cc/paper_files/paper/2025/file/99e9e141aafc314f76b0ca3dd66898b3-Paper-Conference.pdf) visually compares the standard OCR/layout/captioning route with page-image encoding; Figure 3 also shows query-token-to-image-patch relevance heatmaps. These are useful external visual references, not figures reproduced here.
+
+**The result is not “vision always wins”.** On the paper's ViDoRe benchmark, ColPali reports a mean nDCG@5 of 81.3 versus 67.0 for the strongest listed text pipeline (Unstructured + captioning with BGE-M3) in its comparison; this is a benchmark-specific result, not a universal ranking. The same paper reports approximately 257.5 KB of vectors per page, around 30 ms query encoding, and discusses memory/latency trade-offs and token pooling. Its results also show that generic contrastive vision encoders do not automatically become good document retrievers: task-specific training and multi-vector alignment matter.
+
+Use this family when visual structure is part of the evidence and page-level retrieval is acceptable. Keep text extraction or structured parsing when downstream systems need exact text spans, accessible text, precise citations, table values or deterministic filtering. A hybrid system can retrieve pages visually and then extract or verify the relevant region before generation.
+
+Primary reference: [Faysse et al. (ICLR 2025), ColPali: Efficient Document Retrieval with Vision Language Models](https://proceedings.iclr.cc/paper_files/paper/2025/hash/99e9e141aafc314f76b0ca3dd66898b3-Abstract-Conference.html). For the short visual overview, see Daily Dose's [Visual Guide to Bi-encoders, Cross-encoders and ColBERT](https://blog.dailydoseofds.com/p/visual-guide-to-bi-encoders-cross).
 
 A document embedding is a numerical representation useful for search, not the source text. The search engine uses it to locate candidates; the system must then return relevant content or make it accessible to the model. Chunking matters: short chunks lose context, long chunks dilute information and consume more tokens, and arbitrary boundaries may separate a claim from its caveats.
 
