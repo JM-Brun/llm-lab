@@ -14,6 +14,10 @@ A collection dossier is not a replacement for the canonical concept graph, bilin
 
 ## Curriculum and learning-path comparisons
 
+| Review | Scope | Entry point | Current state |
+|---|---|---|---|
+| Hesam Sheikh — How I Studied LLMs in Two Weeks | Article roadmap plus the author's Days 003–016 journal; attention, fine-tuning, hallucination, distillation, advanced inference, ViT, NLU and multimodality | [Source review](hesam-sheikh-llm-study-roadmap-2026-11.md) · [Structured extraction](../../data/extractions/hesam-sheikh-llm-study-roadmap-2024.yml) · [Author's study journal](https://github.com/hesamsheikh/ml-retreat) | Article and daily README text inspected; image assets and three overview PDFs remain unaudited; route retained by reference, not adopted as canonical curriculum |
+
 | Comparison | Scope | Entry point | Current state |
 |---|---|---|---|
 | Raschka and Hugging Face learning paths | From-scratch GPT implementation versus ecosystem/task-oriented LLM curriculum; transferable design principles and implications for LLM Lab | [Comparative audit](learning-path-comparison-2026-11-05.md) | Dated structural comparison (2026-11-05); not a learner-outcome evaluation |
