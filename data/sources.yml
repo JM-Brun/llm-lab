@@ -4858,3 +4858,46 @@ sources:
       pages: [fr/llm-overview, en/llm-overview, fr/text-data, en/text-data, fr/tokenization-strategies, en/tokenization-strategies, fr/embedding-space, en/embedding-space, fr/transformer, en/transformer, fr/generation, en/generation]
       concepts: [token, token-embedding, contextualized-representation, self-attention, causal-mask]
       audit_records: [docs/source-reviews/jothi-moorthy-llm-processing-linkedin-2026-11.md]
+
+  - id: deliriumm-llms-do-not-guess-they-optimize-2026
+    title: "LLMs do not guess. They optimize. Here is the difference and the math behind it"
+    creators: ["Deliriumm (@0xDeliriumm)"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://x.com/i/article/2091560754122014781"
+    publisher: "X Articles"
+    publication_date: "2026-08-23"
+    updated_date: null
+    language: en
+    version: "Article as indexed and mirrored on 2026-11-17"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [mathematical-tools-geometry, inference-efficiency]
+      tags: [topic:optimization, topic:llm-training, method:gradient-descent, method:newton-method, method:golden-section-search, method:simplex-method, method:kkt-conditions, method:minimax-approximation]
+      concept_ids: [training-objective, cross-entropy, negative-log-likelihood, sequence-likelihood, gradient, parameter-update, training-loop, logits, decoding-policy, next-token-prediction, entropy-coding]
+    metadata:
+      technical_level: intermediate
+      contribution_types: [theory, mathematical-derivation, pedagogy, historical-context]
+      audiences: [learner, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "Full article text as exposed by the indexed X-article mirror, including optimization overview, Newton's method, golden-section search, simplex, KKT, minimax/Chebyshev approximation, and LLM application sections"
+          - "Visible replies/comments on the mirrored X post, sampled for alternative interpretations and criticism"
+          - "Kirk Borne's repost linking to the article"
+        limitations:
+          - "Canonical X article and original video media were not directly retrievable; article text was inspected through a third-party X mirror/index."
+          - "The video itself, its frames, diagrams and narration were not independently inspected; this record covers the linked article text, not a verified audiovisual transcript."
+          - "The article's publication date is taken from the mirrored post metadata and has not been independently verified."
+          - "No licence or reuse permission for text, diagrams, video or other media was established; link-only handling."
+          - "The visible comments are a non-exhaustive snapshot and are retained only as leads, not independent technical evidence."
+    related:
+      pages: [en/training-loop, fr/training-loop, en/gradients, fr/gradients, en/loss, fr/loss, en/likelihood, fr/vraisemblance, en/probabilities, fr/probabilites]
+      concepts: [training-objective, cross-entropy, negative-log-likelihood, sequence-likelihood, gradient, parameter-update, training-loop, logits, decoding-policy, next-token-prediction, entropy-coding]
+      audit_records: []
