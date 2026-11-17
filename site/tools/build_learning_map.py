@@ -196,7 +196,8 @@ def page_href(page_id: str, language: str, source_path: Path | None = None) -> s
 
 
 def clean_heading(value: str) -> str:
-    """Remove lightweight Markdown markup from a section heading."""
+    """Remove Quarto heading IDs and lightweight Markdown markup."""
+    value = re.sub(r"\s+\{#[^}]+\}\s*$", "", value)
     return re.sub(r"\s+", " ", INLINE_MARKUP.sub("", value)).strip(" :-")
 
 

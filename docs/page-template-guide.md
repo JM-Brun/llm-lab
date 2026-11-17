@@ -43,6 +43,17 @@ These files offer focused prompts for recurring page jobs. They complement the c
 - Use diagrams, code, and interactive elements only when they answer a concrete reader question better than prose alone.
 - Reuse the [visual design system](design-system.md); a new content pattern does not justify a new visual component by itself.
 - Preserve substantive French/English parity, while allowing natural differences in wording and sectioning.
+- For substantial lessons and overviews, add observable learning outcomes when they help readers decide what to learn or verify. Estimate reading time only when credible; distinguish reading from optional practice or experimentation. Neither is a mandatory field for every page archetype.
+- When a page has several major explanatory sections and a self-check, cover each major section with at least one question testing a meaningful distinction, inference, calculation, or transfer. Keep coverage metadata beside the questions and extend an existing `check_*` validator rather than adding a one-off checker.
+- For dense descriptive tables, use the shared `.responsive-card-table` wrapper when stacked mobile cards improve scanning. Derive card labels from table headers, preserve table semantics, and retain a horizontal-scroll fallback without JavaScript.
+
+## Responsive treatment of dense tables
+
+Use `::: {.responsive-card-table}` around a descriptive comparison table when long cells and multiple columns make it difficult to scan on a narrow screen. The shared enhancement derives each card label from the table's own column headers; do not duplicate labels in page-specific CSS. Preserve the semantic table structure and verify narrow and wide layouts, keyboard use, and screen-reader behavior. Do not convert every table: compact numerical data and comparisons that rely on column scanning may remain scrollable tables.
+
+## Purposeful interactivity
+
+An interactive element is justified when a learner action changes a meaningful state and makes a central mechanism easier to understand than prose or a static diagram alone. The shared bilingual next-token explorer on the LLM overview is a deliberate exception under the guardrails of #368: selecting a token extends the prefix and exposes the next conditional distribution, making the autoregressive feedback loop tangible. It reuses the running example's illustrative values, does not invent unspecified branch probabilities, and lives in one shared include. This is not a precedent for adding decorative interactions or one-off widgets without a concrete learning question and a reuse rationale.
 
 ## Review aid—not a gate
 
