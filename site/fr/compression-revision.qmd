@@ -184,7 +184,7 @@ David Chen, dans [« Compression Is Intelligence »](https://www.linkedin.com/pu
 | Objectif | Classement / classification | Reconstruction exacte | Continuation plausible selon le contexte |
 | Échec typique | Terme rare mais décisif supprimé | Désaccord encodeur-décodeur | Contrainte implicite oubliée ou inventée |
 
-**À retenir :** toute compression est relative à une tâche, une représentation et un critère de perte. Les bits par octet, la qualité du classement et la fidélité d'une génération ne sont pas des mesures interchangeables. La [revue critique de l'article](https://github.com/JM-Brun/llm-lab/blob/ingest-david-chen-compression-intelligence/docs/source-reviews/david-chen-compression-is-intelligence-2025.md) détaille les limites des références et de l'analogie.
+**À retenir :** toute compression est relative à une tâche, une représentation et un critère de perte. Les bits par octet, la qualité du classement et la fidélité d'une génération ne sont pas des mesures interchangeables. La [revue critique de l'article](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-reviews/david-chen-compression-is-intelligence-2025.md) détaille les limites des références et de l'analogie.
 
 ## Reconstituer le raisonnement, étape par étape
 
