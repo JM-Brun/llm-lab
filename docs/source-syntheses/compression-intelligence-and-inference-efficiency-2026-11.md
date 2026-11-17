@@ -286,13 +286,13 @@ La comparaison 360 % / 36 % attribuée à Epoch.AI par Alliancy reste non vérif
 
 [Huang, Zhang, Shan and He, “Compression Represents Intelligence Linearly”](https://arxiv.org/abs/2404.09937) adds a substantial empirical component to this collection. It compares 31 public pretrained LLMs using 12 downstream benchmarks and three external corpora: Common Crawl, GitHub Python and ArXiv mathematics.
 
-### 14.1 Method and result
+### 17.1 Method and result
 
 The authors measure compression with bits per character (BPC), rather than bits per token, to account for different tokenizers. BPC is the model's token-sequence negative log probability, expressed in bits, divided by the number of characters in the evaluated corpus. They report Pearson correlations of approximately -0.93 overall, -0.935 for knowledge/commonsense, -0.937 for coding and -0.953 for mathematical reasoning. Lower BPC corresponds to higher benchmark scores.
 
 The mathematical connection remains the existing one: a conditional probability model can drive arithmetic coding, and expected ideal code length is given by negative log probability. This is the predictive-compression/cross-entropy link; it does not make compression and intelligence synonymous.
 
-### 14.2 Conditions and qualifications
+### 17.2 Conditions and qualifications
 
 - **Domain alignment matters:** reported cross-domain controls weaken the correlation when mathematics is paired with Common Crawl or knowledge/commonsense with GitHub code. BPC is therefore corpus-dependent, not a universal model constant.
 - **Benchmark scores are proxies:** the authors aggregate selected task scores; this does not measure all dimensions of intelligence, generalization or real-world competence.
@@ -301,7 +301,7 @@ The mathematical connection remains the existing one: a conditional probability 
 - **Context scope is limited:** the main comparison unifies the context window at 1,900 tokens; long-context behavior is left open.
 - **No causal inference:** cross-model correlation does not show that compression improvements cause capability improvements. Model scale, data, architecture and training may influence both.
 
-### 14.3 Integration decision
+### 17.3 Integration decision
 
 Use this paper as an empirical case study in existing predictive-compression and evaluation material. Reuse existing concepts: predictive compression, cross-entropy, conditional distribution, entropy coding, arithmetic coding and held-out evaluation. Do not create a new canonical “compression-intelligence” concept. Keep predictive compression distinct from model compression (quantization, pruning and distillation).
 
