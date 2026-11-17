@@ -5297,7 +5297,7 @@ sources:
       concepts: [model-compression, pruning]
       audit_records:
         - docs/source-reviews/alliancy-la-compression-strategie-avenir-llm-2026-11.md
-        - data/extractions/alliancy-la-compression-strategie-avenir-llm-2026
+        - data/extractions/alliancy-la-compression-strategie-avenir-llm-2026.yml
 
   - id: notion-intelligence-compression-summary
     title: "Intelligence = Compression"
