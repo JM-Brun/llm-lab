@@ -34,7 +34,7 @@ scan:
   metadata:
     status: partial
     coverage: "Title, canonical URL, displayed date, publisher/site identity and creator attribution."
-    notes: ["Full creator identity and revision history remain unverified."]
+    notes: ["Additional biographical details and article revision history remain unverified."]
   rights:
     status: unknown
     coverage: null
