@@ -5,7 +5,6 @@ This is a deterministic optimization illustration, not a neural-network benchmar
 Only the standard library is required.
 """
 
-
 from __future__ import annotations
 
 import json
