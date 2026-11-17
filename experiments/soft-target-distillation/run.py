@@ -4,6 +4,8 @@
 This is a deterministic optimization illustration, not a neural-network benchmark.
 Only the standard library is required.
 """
+
+
 from __future__ import annotations
 
 import json
@@ -36,9 +38,7 @@ def cross_entropy(target: tuple[float, ...], predicted: tuple[float, ...]) -> fl
 
 
 def kl_divergence(target: tuple[float, ...], predicted: tuple[float, ...]) -> float:
-    return cross_entropy(target, predicted) + sum(
-        q * math.log(q) for q in target if q > 0
-    )
+    return cross_entropy(target, predicted) + sum(q * math.log(q) for q in target if q > 0)
 
 
 def fit_student(
