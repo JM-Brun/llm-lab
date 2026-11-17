@@ -1294,6 +1294,55 @@ async function runCase(testCase, caseIndex) {
       item.axe = { skipped: true, reason: "Axe runs once per page/language on desktop/light" };
     }
 
+    if (kind === "spine-overview") {
+      if (pageErrors.length) {
+        report.failures.push(pagePath + "/" + lang + "/" + label + "/" + theme + ": uncaught page errors: " + pageErrors.map(error => error.message).join(" | "));
+      }
+      const explorer = page.locator("[data-next-token-explorer]").first();
+      try {
+        if (await explorer.count() !== 1) throw new Error("expected exactly one next-token explorer");
+        const controls = explorer.locator("[data-explorer-controls]");
+        const prefix = explorer.locator("[data-prefix]");
+        const distribution = explorer.locator("[data-distribution]");
+        await controls.waitFor({ state: "visible", timeout: 5000 });
+        const initialPrefix = (await prefix.textContent()).trim();
+        await explorer.locator("[data-token-choice]").selectOption("0");
+        await explorer.locator("[data-append]").click();
+        const extendedPrefix = (await prefix.textContent()).trim();
+        const expectedToken = lang === "fr" ? "Vous" : "They";
+        const expectedNext = lang === "fr" ? "savez" : "built";
+        if (extendedPrefix === initialPrefix || !extendedPrefix.includes(expectedToken)) {
+          throw new Error("selecting the first token did not extend the prefix");
+        }
+        if (!(await distribution.textContent()).includes(expectedNext)) {
+          throw new Error("the next conditional distribution was not displayed");
+        }
+        await explorer.locator("[data-reset]").click();
+        const resetPrefix = (await prefix.textContent()).trim();
+        if (resetPrefix !== initialPrefix) throw new Error("reset did not restore the original prefix");
+        item.nextTokenExplorer = { initialized: true, prefixExtended: true, nextDistributionShown: true, resetWorks: true };
+      } catch (error) {
+        item.nextTokenExplorer = { error: error.message };
+        report.failures.push(pagePath + "/" + lang + "/" + label + "/" + theme + ": next-token explorer failed: " + error.message);
+      }
+
+      const responsiveTables = page.locator(".responsive-card-table table");
+      const responsiveTableCount = await responsiveTables.count();
+      const enhancedTableCount = await page.locator(".responsive-card-table table.responsive-card-table__enhanced").count();
+      if (responsiveTableCount && enhancedTableCount !== responsiveTableCount) {
+        report.failures.push(pagePath + "/" + lang + "/" + label + "/" + theme + ": only " + enhancedTableCount + "/" + responsiveTableCount + " responsive tables were enhanced");
+      }
+      if (responsiveTableCount && viewport.width <= 700) {
+        const mobileCells = await page.locator(".responsive-card-table table.responsive-card-table__enhanced tbody td").evaluateAll(cells =>
+          cells.map(cell => ({ display: getComputedStyle(cell).display, label: cell.dataset.label || "" }))
+        );
+        if (mobileCells.some(cell => cell.display !== "grid" || !cell.label)) {
+          report.failures.push(pagePath + "/" + lang + "/" + label + "/" + theme + ": responsive table cells are not rendered as labelled mobile cards");
+        }
+      }
+      item.responsiveTables = { count: responsiveTableCount, enhanced: enhancedTableCount };
+    }
+
     if (kind === "homepage" && pageErrors.length) {
       report.failures.push(`${pagePath}/${lang}/${label}/${theme}: uncaught page errors: ${pageErrors.join(" | ")}`);
     }
