@@ -1,0 +1,174 @@
+schema_version: 1
+source_id: jose-parreno-garcia-how-llms-work-three-layers-2025
+scan:
+  accessed_at: "2026-11-17"
+  retrieval_method: canonical-publisher-page
+  author_text:
+    status: complete
+    coverage: "Complete visible author-authored article body: classical ML analogy, three LLM stages, data collection, base-model training, fine-tuning example, takeaways and announced series outline."
+    notes: ["Later parts are announced but not present in this source; their contents are not inferred."]
+  figures_media:
+    status: partial
+    coverage: "Both embedded images visually inspected: Churchill continuation comparison and short human/assistant dialogue example."
+    notes: ["Screenshots/examples, not reusable explanatory diagrams; no local copy or derivative made."]
+  code_data:
+    status: not-inspected
+    coverage: null
+    notes: ["No code or dataset is supplied in the article body."]
+  comments:
+    status: partial
+    coverage: "A visible reader comment proposing ATLAS/ACDQ was noticed."
+    notes: ["Community content, not author-authored evidence; excluded from the author extraction and not independently evaluated."]
+  linked_resources:
+    status: partial
+    coverage: "Outbound links and embedded Karpathy video identified but not systematically audited."
+    notes: ["Common Crawl, FineWeb, nanoGPT architecture and crawler links are pointers only; the video was not watched."]
+  metadata:
+    status: complete
+    coverage: "Author, publisher, title and 5 April 2025 publication date visible on canonical Substack page."
+    notes: []
+  rights:
+    status: unknown
+    coverage: null
+    notes: ["Article text and images remain link-only; no reuse permission established."]
+  unresolved_questions:
+    - "Do the announced later parts add technical detail that changes this three-stage account?"
+    - "What prompts, decoding settings and evaluation conditions were used for the Llama 3 8B versus DeepSeek R1 14B comparison?"
+    - "Which primary sources and controlled evaluations support the article's absolute statements about reasoning and understanding?"
+pedagogical_model:
+  reconstruction:
+    status: complete
+    basis: ["Complete visible author-authored article body read directly on canonical Substack page.", "Both embedded images opened and visually inspected."]
+    inferred_elements: ["Learning outcomes, prerequisites and source-local graph are reviewer reconstructions."]
+  source_graph:
+    nodes:
+      - {id: src-classical-ml-data, kind: process-stage, description: "Collect examples and relevant features for a predictive task.", locator: "The classical machine-learning process"}
+      - {id: src-classical-ml-baseline, kind: process-stage, description: "Fit a baseline model to capture patterns in collected examples.", locator: "The classical machine-learning process"}
+      - {id: src-classical-ml-improvement, kind: process-stage, description: "Apply additional techniques to improve the baseline model.", locator: "The classical machine-learning process"}
+      - {id: src-llm-data-collection, kind: process-stage, description: "Collect and curate large text corpora from web and other sources.", locator: "The 3 key stages of building an LLM"}
+      - {id: src-llm-base-model, kind: process-stage, description: "Tokenize text and train a neural language model, described as next-word prediction.", locator: "A baseline LLM model is coherent, but pretty much useless"}
+      - {id: src-llm-fine-tuning, kind: process-stage, description: "Adapt the base model with conversational examples and behavioural constraints.", locator: "Fine-tuning the LLM model to make it useful"}
+      - {id: src-corpus-curation, kind: process, description: "Extract, clean and filter web text to produce a training corpus.", locator: "What does it mean collecting lots of text data?"}
+      - {id: src-tokenization, kind: process, description: "Convert text into token IDs before neural-network training.", locator: "A baseline LLM model is coherent, but pretty much useless"}
+      - {id: src-next-token-objective, kind: training-objective, description: "Train a causal language model to predict the next token from preceding context.", locator: "A baseline LLM model is coherent, but pretty much useless"}
+      - {id: src-conversational-behaviour, kind: learning-target, description: "Shape responses toward instruction-following and conversational interaction.", locator: "Fine-tuning the LLM model to make it useful"}
+      - {id: src-truthfulness-claim, kind: claim, description: "The article associates fine-tuning and guardrails with becoming knowledgeable and truthful.", locator: "The 3 key stages of building an LLM; Key takeaways"}
+      - {id: src-tools-and-rl-series, kind: announced-follow-up, description: "Later parts are announced on tools for hallucination reduction and reinforcement learning; their content is absent from Part 1.", locator: "Blog series"}
+    edges:
+      - {from: src-classical-ml-data, type: followed-by, to: src-classical-ml-baseline}
+      - {from: src-classical-ml-baseline, type: followed-by, to: src-classical-ml-improvement}
+      - {from: src-llm-data-collection, type: followed-by, to: src-llm-base-model}
+      - {from: src-llm-base-model, type: followed-by, to: src-llm-fine-tuning}
+      - {from: src-llm-data-collection, type: includes, to: src-corpus-curation}
+      - {from: src-llm-base-model, type: includes, to: src-tokenization}
+      - {from: src-llm-base-model, type: optimizes, to: src-next-token-objective}
+      - {from: src-llm-fine-tuning, type: targets, to: src-conversational-behaviour}
+      - {from: src-llm-fine-tuning, type: makes-claim-about, to: src-truthfulness-claim}
+      - {from: src-tools-and-rl-series, type: announced-after, to: src-llm-fine-tuning}
+    interpretation: "Source-local reconstruction of the article's explanatory structure. Edges represent the article's sequence or claims, not a normative or exhaustive LLM-development pipeline."
+  learning_outcomes:
+    - {status: inferred, outcome: "Describe the author's three-stage analogy between classical ML and LLM construction.", basis: "The article explicitly introduces and maps the three stages."}
+    - {status: inferred, outcome: "Identify corpus collection and curation as upstream dependencies of pretraining.", basis: "The data-collection section."}
+    - {status: inferred, outcome: "Explain why a base language model and an instruction-tuned assistant are different artefacts.", basis: "The baseline-model and fine-tuning sections."}
+    - {status: inferred, outcome: "Distinguish next-token prediction from truthfulness and user-facing assistant behaviour.", basis: "Critical comparison of the objective and fine-tuning claims."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Basic idea of supervised machine learning and training examples.", basis: "The house-price analogy assumes familiarity with predictive modelling."}
+    - {status: inferred, topic: "Basic familiarity with text, tokens and neural networks.", basis: "Tokenization and neural networks are introduced without derivation."}
+  teaching_route:
+    - {order: 1, section: "The classical machine-learning process", function: "Build an intuitive analogy before introducing LLM mechanisms.", moves: ["House-price prediction example", "Data → baseline model → improvement"]}
+    - {order: 2, section: "The 3 key stages of building an LLM", function: "Transfer the analogy to text-model development.", moves: ["Large text collection", "Base model trained for next-token prediction", "Fine-tuning and guardrails"]}
+    - {order: 3, section: "Data collection", function: "Motivate corpus extraction and curation.", moves: ["Web data volume", "Formatting and quality problems", "Common Crawl and FineWeb pointers"]}
+    - {order: 4, section: "Base model", function: "Introduce tokenization and next-token prediction intuitively.", moves: ["Text-to-token IDs", "Neural network and compute scale", "Churchill continuation example"]}
+    - {order: 5, section: "Fine-tuning", function: "Contrast raw continuation with conversational behaviour.", moves: ["Conversation-style examples", "Llama 3 8B base versus DeepSeek R1 14B anecdote", "Acknowledgement that a tuned model can still hallucinate"]}
+  pedagogical_strengths:
+    - "Uses a familiar predictive-modelling analogy to orient beginners."
+    - "Keeps corpus preparation, base-model training and adaptation visibly distinct."
+    - "The Churchill screenshot makes plausible continuation versus exact reproduction concrete."
+    - "Acknowledges that a fine-tuned model may still hallucinate."
+  pedagogical_limits:
+    - "The three stages omit evaluation, data governance, tokenizer training, compute planning and deployment."
+    - "The phrase 'next word' is imprecise: models predict tokens, not necessarily whole words."
+    - "The claim that base models are mostly useless is task-dependent and overstated."
+    - "Absolute claims that LLMs cannot reason or understand are not established by the next-token objective alone."
+    - "Fine-tuning and guardrails do not guarantee truthfulness or remove hallucinations."
+    - "The Llama 3 8B versus DeepSeek R1 14B comparison changes multiple variables and cannot isolate a fine-tuning effect."
+    - "No formal equations, reproducible training recipe, evaluation protocol or controlled experiment is supplied."
+  comparison:
+    dossier: docs/source-reviews/jose-parreno-garcia-how-llms-work-three-layers-2026-11.md
+    canonical_graph: "data/concepts.yml and generated knowledge-graph projection"
+    canonical_routes: ["Understand", "Build", "Deepen", "Practice & experiment"]
+    decision: "Retain as a compact introductory analogy and optional further-reading source. No canonical concept or page is added because the bilingual overview, text-data and post-training lessons already cover its useful distinctions more precisely."
+    structures_kept_separate: ["Article's three-stage explanatory framework", "LLM Lab canonical concept graph", "LLM Lab learner routes", "Detailed training and post-training processes"]
+items:
+  - id: jose-parreno-garcia-how-llms-work-three-layers-2025:three-stage-framework
+    kind: teaching-sequence
+    summary: "The author maps classical ML's data collection, baseline modelling and improvement onto LLM construction: text collection, base-model training and fine-tuning."
+    locator: {type: section, value: "The 3 key stages of building an LLM"}
+    evidence: {kind: pedagogical-framework, confidence: well-supported, scope: "The explicit three-stage outline.", assumptions: [], limitations: ["A high-level analogy, not a complete engineering lifecycle or universal training recipe."]}
+    classification: {primary_theme: probabilistic-foundations-training, tags: [topic:llm-overview, topic:pretraining, topic:post-training], concept_ids: [pretraining, post-training]}
+    candidate_destinations: {pages: [fr/llm-overview, en/llm-overview], concepts: [pretraining, post-training]}
+    disposition: integrate-by-reference
+    disposition_rationale: "Useful as an accessible mental model; do not replace the project's more precise separation of data, training, adaptation and use."
+  - id: jose-parreno-garcia-how-llms-work-three-layers-2025:corpus-collection-and-curation
+    kind: mechanism
+    summary: "The article identifies web-scale text as a major source and highlights extraction, formatting and low-quality material as reasons corpus collection requires processing and curation."
+    locator: {type: section, value: "What does it mean collecting lots of text data?"}
+    evidence: {kind: explanatory-claim, confidence: well-supported, scope: "Introductory description of web-corpus collection and cleaning.", assumptions: [], limitations: ["Deduplication, licensing, contamination, language balance, provenance and governance are not specified."]}
+    classification: {primary_theme: text-tokenization, tags: [topic:corpus-curation], concept_ids: [dataset-curation]}
+    candidate_destinations: {pages: [fr/text-data, en/text-data], concepts: [dataset-curation]}
+    disposition: already-covered
+    disposition_rationale: "The text-data lessons already provide a more detailed account of corpus preparation and quality dimensions."
+  - id: jose-parreno-garcia-how-llms-work-three-layers-2025:next-token-training-objective
+    kind: mechanism
+    summary: "The article describes a base model as a large neural network trained to predict the next word; the technically precise unit is a token, and the objective is conditional next-token prediction."
+    locator: {type: section, value: "A baseline LLM model is coherent, but pretty much useless"}
+    evidence: {kind: training-objective-description, confidence: well-supported, scope: "High-level description of causal language-model pretraining.", assumptions: ["The discussion concerns an autoregressive decoder language model."], limitations: ["Not all language models use causal next-token prediction."]}
+    classification: {primary_theme: probabilistic-foundations-training, tags: [topic:pretraining, method:next-token-prediction], concept_ids: [token, next-token-prediction, training-objective, pretraining]}
+    candidate_destinations: {pages: [fr/llm-overview, en/llm-overview, fr/training-loop, en/training-loop], concepts: [next-token-prediction, training-objective, pretraining]}
+    disposition: already-covered
+    disposition_rationale: "The bilingual overview and training-loop lessons already explain token-level conditional prediction more precisely."
+  - id: jose-parreno-garcia-how-llms-work-three-layers-2025:coherence-versus-truth
+    kind: misconception
+    summary: "The article usefully separates plausible continuation from guaranteed truth, but overstates the contrast by reducing pretraining to simple pattern matching and coherence."
+    locator: {type: section, value: "A baseline LLM model is coherent, but pretty much useless"}
+    evidence: {kind: critical-interpretation, confidence: well-supported, scope: "Interpretation of the next-token objective and Churchill example.", assumptions: [], limitations: ["One anecdotal example does not measure factuality, generalization or reasoning."]}
+    classification: {primary_theme: probabilistic-foundations-training, tags: [topic:pretraining, topic:hallucination], concept_ids: [training-objective, next-token-prediction]}
+    candidate_destinations: {pages: [fr/llm-limits, en/llm-limits, fr/llm-overview, en/llm-overview], concepts: [training-objective, next-token-prediction]}
+    disposition: integrate-by-reference
+    disposition_rationale: "Preserve the distinction between likelihood and truth, while rejecting the simplistic autocomplete description."
+  - id: jose-parreno-garcia-how-llms-work-three-layers-2025:fine-tuning-and-truthfulness
+    kind: limitation
+    summary: "The article suggests fine-tuning and guardrails make a base model knowledgeable and truthful. This is too strong: SFT and preference-based post-training shape behaviour but do not guarantee factual correctness or remove hallucinations."
+    locator: {type: section, value: "Fine-tuning the LLM model to make it useful"}
+    evidence: {kind: critical-interpretation, confidence: well-supported, scope: "Assessment of the fine-tuning and truthfulness claims.", assumptions: [], limitations: ["The model comparison is anecdotal and does not isolate fine-tuning from model family, scale, training data or prompting."]}
+    classification: {primary_theme: probabilistic-foundations-training, tags: [topic:post-training, topic:hallucination], concept_ids: [fine-tuning, instruction-tuning, post-training]}
+    candidate_destinations: {pages: [fr/post-training, en/post-training, fr/llm-limits, en/llm-limits], concepts: [fine-tuning, instruction-tuning, post-training]}
+    disposition: already-covered
+    disposition_rationale: "The post-training lessons already distinguish SFT, preference methods, prompting and retrieval, without treating adaptation as a truth guarantee."
+  - id: jose-parreno-garcia-how-llms-work-three-layers-2025:base-model-comparison
+    kind: limitation
+    summary: "The article contrasts an 8B Llama 3 base checkpoint with a 14B DeepSeek R1 checkpoint; model family, scale, training history, prompting and inference differ, so the example cannot identify fine-tuning as the cause."
+    locator: {type: section, value: "Fine-tuning the LLM model to make it useful"}
+    evidence: {kind: anecdotal-comparison, confidence: unverified, scope: "The two model outputs described by the author.", assumptions: [], limitations: ["No prompts, exact checkpoint identifiers, decoding settings, repeated trials or common benchmark are supplied."]}
+    classification: {primary_theme: probabilistic-foundations-training, tags: [topic:post-training], concept_ids: [fine-tuning, post-training]}
+    candidate_destinations: {pages: [fr/post-training, en/post-training], concepts: [fine-tuning, post-training]}
+    disposition: reject
+    disposition_rationale: "Retain as an anecdote in the review only; do not cite it as evidence of a causal fine-tuning effect."
+  - id: jose-parreno-garcia-how-llms-work-three-layers-2025:reasoning-and-understanding-claim
+    kind: claim
+    summary: "The article states categorically that LLMs have no reasoning, comprehension or awareness. The next-token objective alone does not settle these empirical and philosophical questions; operational capabilities, mechanisms, grounding and human-like understanding require separate definitions and evidence."
+    locator: {type: section, value: "LLMs are smarter than you think, but not in the way you expect"}
+    evidence: {kind: author-claim-assessed, confidence: disputed, scope: "The article's categorical statements about reasoning, comprehension and awareness.", assumptions: [], limitations: ["No operational definitions, capability evaluations or philosophical argument sufficient to establish the universal claim are supplied."]}
+    classification: {primary_theme: probabilistic-foundations-training, tags: [topic:reasoning, topic:llm-overview], concept_ids: [training-objective, next-token-prediction]}
+    candidate_destinations: {pages: [fr/llm-limits, en/llm-limits], concepts: []}
+    disposition: correct
+    disposition_rationale: "Use the project's distinction between objective, observable task competence, reasoning performance, grounding and philosophical claims about understanding."
+  - id: jose-parreno-garcia-how-llms-work-three-layers-2025:tools-and-reinforcement-learning-followups
+    kind: teaching-sequence
+    summary: "The series outline announces later parts on tools for hallucination reduction and reinforcement learning, but Part 1 does not technically explain them."
+    locator: {type: section, value: "Blog series"}
+    evidence: {kind: series-announcement, confidence: well-supported, scope: "Visible list of planned Parts 2–6.", assumptions: [], limitations: ["Future articles were not available in this scan; no technical claims about their contents are extracted."]}
+    classification: {primary_theme: probabilistic-foundations-training, tags: [topic:tool-use, topic:reinforcement-learning], concept_ids: [tool-calling, reinforcement-learning-from-human-feedback]}
+    candidate_destinations: {pages: [fr/generation, en/generation, fr/post-training, en/post-training], concepts: [tool-calling, reinforcement-learning-from-human-feedback]}
+    disposition: cite
+    disposition_rationale: "Record the announced scope as a pointer only; ingest the later articles separately if and when available."
