@@ -3573,19 +3573,6 @@ sources:
     scan_status: partially-scanned
     integration_status: reviewed
     scan_history:
-      - accessed_at: "2026-11-17"
-        status: partially-scanned
-        inspected_scope:
-          - "Selected Chapter 6 lesson bodies: fast-tokenizer BatchEncoding, word IDs, offsets, token-classification alignment, QA span mapping and overflow windows"
-          - "Chapter 7 task-family overview and causal-LM-from-scratch CodeParrot lesson"
-          - "Chapter 8 overview, forum-question guidance and stage-by-stage training-pipeline debugging"
-          - "Chapter 9 overview and Gradio Blocks lesson, including Interface/Blocks distinction and event-driven UI"
-          - "Crosswalk against bilingual tokenizer-strategies and training-loop pages; added offsets/alignment explanation and optional causal-LM/debugging references"
-        limitations:
-          - "Selected lesson text only; notebooks, quizzes, videos, live Spaces and all task-specific recipes were not exhaustively reviewed."
-          - "Course code and current library APIs were not executed; no learner-outcome claims are made."
-          - "No immutable upstream course revision was pinned; living documentation and locale differences remain."
-          - "Gradio integration deferred because the current Build path does not yet expose a trained end-to-end artifact."
       - accessed_at: "2026-11-16"
         status: partially-scanned
         inspected_scope:
@@ -3925,6 +3912,19 @@ sources:
     scan_status: partially-scanned
     integration_status: partially-integrated
     scan_history:
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "Selected Chapter 6 lesson bodies: fast-tokenizer BatchEncoding, word IDs, offsets, token-classification alignment, QA span mapping and overflow windows"
+          - "Chapter 7 task-family overview and causal-LM-from-scratch CodeParrot lesson"
+          - "Chapter 8 overview, forum-question guidance and stage-by-stage training-pipeline debugging"
+          - "Chapter 9 overview and Gradio Blocks lesson, including Interface/Blocks distinction and event-driven UI"
+          - "Crosswalk against bilingual tokenizer-strategies and training-loop pages; added offsets/alignment explanation and optional causal-LM/debugging references"
+        limitations:
+          - "Selected lesson text only; notebooks, quizzes, videos, live Spaces and all task-specific recipes were not exhaustively reviewed."
+          - "Course code and current library APIs were not executed; no learner-outcome claims are made."
+          - "No immutable upstream course revision was pinned; living documentation and locale differences remain."
+          - "Gradio integration deferred because the current Build path does not yet expose a trained end-to-end artifact."
       - accessed_at: "2026-11-16"
         status: partially-scanned
         inspected_scope:
