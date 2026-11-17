@@ -17,7 +17,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: []
+related: ["en/compression-revision"]
 tags: ["type:concept-lesson", "destination:deepen", "topic:scaling-laws", "level:advanced", "language:en", "status:published"]
 -->
 
@@ -75,6 +75,10 @@ It is therefore more rigorous to describe a model along several dimensions—par
 Scaling laws are empirical models, not physical laws. Extrapolation can fail outside the observed regime. Average loss can hide important differences between domains or subpopulations; it does not guarantee uniform improvement on downstream tasks. Changes in data, architecture, or training procedure can also shift the curves.
 
 When comparing results, check the metric, evaluation distribution, compute budget, token count, model size, and experimental conditions. A loss curve does not replace task-specific evaluation.
+
+### A complementary signal: predictive compression efficiency
+
+Huang et al. (COLM 2024) report, across 31 base models and 12 benchmarks, a Pearson correlation of about **-0.93** between BPC measured on external corpora and aggregated benchmark scores; domain-specific correlations range from approximately -0.935 to -0.953. This result is related to model scale, but **it is not a scaling law**: the study does not establish a power law between training resources and loss, nor a causal effect of compression on capabilities. BPC depends on the domain and corpus, and scale, data, and architecture may influence both measurements. It is a complementary empirical signal to compare with scale variables and task-specific evaluations. See the [compression revision sheet](compression-revision.qmd) and the [critical review of the study](../../docs/source-reviews/huang-zhang-shan-he-compression-intelligence-linearly-2024.md).
 
 ## References
 
