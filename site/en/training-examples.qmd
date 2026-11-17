@@ -178,7 +178,7 @@ The illustrative losses at PAD positions do not contribute. A naive mean over al
 
 The **attention mask** determines which positions may be attended to. The **loss mask** determines which targets contribute to the optimization objective. They have distinct roles and are not interchangeable.
 
-## 4 bis. Dynamic padding at batch time
+### Dynamic padding at batch time
 
 Padding does not have to be applied once at the maximum length of the entire corpus. For variable-length examples, a *collator* can pad each batch to the length of its longest example. This is **dynamic padding**: it avoids computing over unnecessary PAD positions in shorter batches.
 
