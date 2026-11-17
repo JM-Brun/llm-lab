@@ -1,0 +1,73 @@
+schema_version: 1
+source_id: dailydose-foundations-rag-2024
+scan:
+  accessed_at: "2026-11-17"
+  retrieval_method: direct-canonical-html
+  author_text:
+    status: partial
+    coverage: "Introduction; vector database motivation; RAG use case; external knowledge and context-window motivation; pipeline stages for chunking, embeddings, vector storage, query embedding, approximate retrieval and cross-encoder reranking."
+    notes: ["The page becomes paywalled after the reranking section; later implementation details are not included."]
+  figures_media:
+    status: partial
+    coverage: "HTML image placeholders and captions identified."
+    notes: ["No image assets inspected or reused."]
+  code_data: {status: not-inspected, coverage: null, notes: ["Framework code and implementation were not retrieved or executed."]}
+  comments: {status: not-inspected, coverage: null, notes: []}
+  linked_resources: {status: partial, coverage: "Part 1/Part 2 similarity articles, vector database deep dive and chunking article linked from the visible body.", notes: ["The linked articles were not all inspected in this pass."]}
+  metadata: {status: complete, coverage: "Author, title, publication date and canonical URL.", notes: []}
+  rights: {status: partial, coverage: "No reuse licence established.", notes: ["Text and figures remain link-only."]}
+  unresolved_questions:
+    - "The source presents a vector-database-centered implementation; lexical and hybrid retrieval alternatives must remain visible in the project synthesis."
+    - "RAG quality and hallucination reduction require empirical evaluation; retrieval alone does not guarantee correctness."
+items:
+  - id: dailydose-foundations-rag-2024:external-knowledge-boundary
+    kind: mental-model
+    summary: "RAG addresses the boundary between information stored outside model parameters and information made available at inference: retrieve selected source passages and place them in the model's input context."
+    locator: {type: section, value: "The purpose of vector databases in RAG, lines 208–279", label: "External knowledge and context"}
+    evidence: {kind: secondary-technical-explanation, confidence: well-supported, scope: "Common retrieval-augmented generation pattern.", assumptions: [], limitations: ["A vector database is one implementation choice, not a requirement for RAG."]}
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "The existing RAG page already makes the storage/retrieval/transmission distinction."}
+      complementarity: {level: moderate, rationale: "Provides an accessible motivation from model knowledge cutoffs and private corpora."}
+      pedagogical_value: {level: moderate, rationale: "Supports the learner question of why external retrieval is needed."}
+      applicability: {level: moderate, rationale: "Use as a link rather than duplicate the existing explanation."}
+      redundancy: {level: high, rationale: "The current page is more nuanced and already explains the same boundary."}
+      evidence_quality: {level: moderate, rationale: "Secondary tutorial; not an empirical guarantee of improved factuality."}
+    candidate_destinations: {pages: [fr/rag-memory-boundaries, en/rag-memory-boundaries], concepts: [retrieval-augmented-generation]}
+    disposition: integrate-by-reference
+    disposition_rationale: "Link as an accessible introductory companion; retain the project's stronger boundary and failure analysis."
+  - id: dailydose-foundations-rag-2024:retrieval-pipeline
+    kind: teaching-sequence
+    summary: "The visible pipeline separates document chunking, passage embedding, vector storage with metadata and payload, query embedding, approximate-neighbour retrieval, optional cross-encoder reranking, and context assembly for generation."
+    locator: {type: section, value: "Workflow of a RAG system, lines 283–361", label: "RAG pipeline"}
+    evidence: {kind: architecture-description, confidence: well-supported, scope: "One common dense-retrieval RAG architecture.", assumptions: [], limitations: ["Lexical, sparse, hybrid and structured retrieval can replace or complement vector search; reranking is optional."]}
+    technical_assessment: {status: qualified, rationale: "The described dense-retrieval pipeline is valid, but should not be presented as the only RAG architecture.", corroborating_sources: []}
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "All stages are already represented in the project's RAG deep dive."}
+      complementarity: {level: high, rationale: "Its sequential pipeline makes the relationship between bi-encoder retrieval and cross-encoder reranking explicit."}
+      pedagogical_value: {level: high, rationale: "Clarifies where candidate generation ends and expensive pairwise scoring begins."}
+      applicability: {level: high, rationale: "Supports one targeted clarification in the existing retrieval section."}
+      redundancy: {level: moderate, rationale: "The pipeline overlaps, but the model roles can be made more explicit."}
+      evidence_quality: {level: moderate, rationale: "Secondary architecture tutorial with visible stage-by-stage description."}
+    candidate_destinations: {pages: [fr/rag-memory-boundaries, en/rag-memory-boundaries], concepts: [retrieval-augmented-generation, contextualized-representation]}
+    disposition: integrate
+    disposition_rationale: "Clarify bi-encoder candidate retrieval versus optional cross-encoder reranking in the existing page."
+  - id: dailydose-foundations-rag-2024:ann-tradeoff
+    kind: limitation
+    summary: "Approximate nearest-neighbour search reduces the search space and improves runtime at the cost of some recall or exactness relative to exhaustive search."
+    locator: {type: section, value: "Recap on vector databases, lines 194–203", label: "Approximate nearest neighbours"}
+    evidence: {kind: algorithmic-tradeoff-explanation, confidence: well-supported, scope: "Approximate nearest-neighbour methods compared with exact search.", assumptions: [], limitations: ["The trade-off depends on index, configuration, dataset and recall target."]}
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "The project already covers retrieval efficiency and evaluation."}
+      complementarity: {level: moderate, rationale: "Connects retrieval latency to recall rather than treating ANN as exact."}
+      pedagogical_value: {level: moderate, rationale: "Useful in advanced engineering context, not a core conceptual prerequisite."}
+      applicability: {level: moderate, rationale: "Keep as optional reading in the RAG deep dive."}
+      redundancy: {level: moderate, rationale: "The same trade-off is already mentioned."}
+      evidence_quality: {level: moderate, rationale: "Secondary overview; exact algorithmic behaviour requires index-specific evidence."}
+    candidate_destinations: {pages: [fr/rag-memory-boundaries, en/rag-memory-boundaries], concepts: [retrieval-augmented-generation]}
+    disposition: integrate-by-reference
+    disposition_rationale: "Retain the article as an implementation companion, not as a new core section."
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "The article's introductory retrieval pipeline is useful but largely covered by the existing RAG page. Its most useful incremental contribution is the explicit placement of cross-encoder reranking after candidate retrieval."
