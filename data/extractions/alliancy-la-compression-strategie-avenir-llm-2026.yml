@@ -129,7 +129,7 @@ comparison:
     - "The challenge's public-policy framing is not empirical proof of energy savings."
 items:
   - id: alliancy-la-compression-strategie-avenir-llm-2026:challenge-and-deployment-motivation
-    kind: case-study
+    kind: author-synthesis
     summary: "The Résilient AI Challenge is presented as a collaborative effort to reduce model size and complexity for more energy-efficient deployment."
     locator: {type: section, value: "Opening paragraphs", label: "Résilient AI Challenge"}
     evidence:
