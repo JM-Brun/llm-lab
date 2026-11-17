@@ -104,9 +104,7 @@ def _check_self_check_coverage(source: str, relative: str, errors: list[str]) ->
         return
     check_start = source.find("::: {.self-check}")
     if check_start < 0:
-        errors.append(
-            f"{relative}: self-check coverage is enforced but no self-check block exists"
-        )
+        errors.append(f"{relative}: self-check coverage is enforced but no self-check block exists")
         return
     lesson_source = source[:check_start]
     section_ids = set(re.findall(r"^## .+?\s+\{#([a-z0-9-]+)\}\s*$", lesson_source, re.MULTILINE))
