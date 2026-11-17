@@ -8,7 +8,7 @@
 
 Comment la compression des modèles peut-elle rendre les LLM plus faciles à déployer avec des contraintes de calcul, d’énergie, de coût et de confidentialité ?
 
-L’article est un bref article journalistique de mise en contexte, pas une revue technique. Il présente le Résilient AI Challenge, annoncé comme lancé le 20 février 2026 par la France, l’Inde, l’UNESCO et la Sustainable AI Coalition, avec des modèles partenaires de Google, Mistral AI et Sarvam. Les participants seraient invités à réduire la taille et la complexité de modèles existants.
+L’article est un bref article journalistique de mise en contexte, pas une revue technique. Il présente le Résilient AI Challenge, lancé le 20 février 2026 par la France, l’Inde, l’UNESCO et la Sustainable AI Coalition. La documentation officielle consultée ensuite précise les trois catégories : Voxtral Realtime (audio-texte, Mistral AI), Gemma 4 (image-texte, Google) et Sarvam-30b (texte-texte). Les équipes ont été évaluées sur l’équilibre entre précision et efficacité énergétique ; les organisateurs ont annoncé les équipes gagnantes le 8 juillet 2026. [UNESCO](https://www.unesco.org/fr/articles/le-sommet-mondial-de-lia-au-service-du-bien-met-le-projecteur-sur-une-ia-resiliente-par-une) · [Sustainable AI Coalition](https://www.sustainableaicoalition.org/resilient-ai-challenge/).
 
 Son apport spécifique au corpus LLM Lab n’est pas une nouvelle technique de compression : c’est le lien explicite entre compression, sobriété opérationnelle, déploiement local, accessibilité et secteurs soumis à des contraintes de confidentialité.
 
@@ -39,9 +39,9 @@ Un modèle assez compact pour fonctionner sur une infrastructure interne peut li
 
 L’article rapporte, en citant Epoch.AI, une hausse de 360 % du nombre de paramètres contre 36 % de la puissance des infrastructures sur une période de quinze ans. Le rapport primaire, les définitions des deux séries, leur période exacte et leur comparabilité n’ont pas été consultés. Ces valeurs sont donc à conserver uniquement comme chiffres attribués à l’article, non comme faits vérifiés par LLM Lab.
 
-### 3.4 L’annonce du challenge n’est pas un résultat
+### 3.4 Le challenge est désormais documenté, mais ses résultats doivent rester bornés
 
-La date, les organisateurs et les modèles partenaires sont rapportés par Alliancy. Sans documentation des organisateurs, règles, baselines, métriques, modèles exacts et résultats, il serait incorrect de présenter le challenge comme une démonstration déjà obtenue d’économies d’énergie.
+Les pages officielles de l’UNESCO et de la Sustainable AI Coalition confirment le lancement, les organisateurs, les modèles sélectionnés, les catégories et l’évaluation combinant précision et efficacité énergétique. Elles annoncent également les équipes gagnantes le 8 juillet 2026. C’est un cas réel d’évaluation comparative, plus qu’une simple annonce. Il ne faut toutefois pas généraliser les résultats à tous les LLM : ils concernent trois modèles, trois tâches et un protocole propre au challenge. Les règles précisent que le challenge ne certifie pas la qualité, la sûreté ou les capacités globales des modèles au-delà des paramètres d’évaluation retenus. [Règlement officiel](https://www.sustainableaicoalition.org/terms-resilient-ai-challenge/).
 
 ## 4. Relation avec les contenus existants
 
@@ -56,14 +56,21 @@ Il ne justifie ni un nouveau concept canonique, ni une nouvelle leçon, ni une e
 
 | Contribution | Décision | Destination |
 |---|---|---|
-| Résilient AI Challenge comme cas réel de politique industrielle et de déploiement | cite | Dossier de synthèse et page de complexité |
+| Résilient AI Challenge, ses catégories et ses équipes gagnantes | cite | Dossier de synthèse et page de complexité ; résultats bornés au protocole |
 | Pruning et interdépendance des paramètres | clarify | Couverture existante du pruning |
 | Ambiguïté « phase d’inférence » et dépendance aux kernels/matériels | correct / clarify | Qualification technique dans le contenu existant |
 | Déploiement local et confidentialité | clarify | Présenter comme bénéfice conditionnel, avec menace et gouvernance |
 | Chiffres 360 % / 36 % | defer | Attendre la source Epoch.AI primaire |
 | Visuel Freepik | defer | Ne pas réutiliser sans inspection et droits établis |
 
-## 6. Conclusion
+## 6. Vérification des sources primaires complémentaires
+
+- [UNESCO, 10 août 2026](https://www.unesco.org/fr/articles/le-sommet-mondial-de-lia-au-service-du-bien-met-le-projecteur-sur-une-ia-resiliente-par-une) : confirme le lancement, les partenaires, les 149 participants de 30 pays et les équipes gagnantes.
+- [Coalition pour une IA durable — page du challenge](https://www.sustainableaicoalition.org/resilient-ai-challenge/) : précise les modèles, les catégories, le calendrier, les modalités d’évaluation et les résultats annoncés.
+- [Règlement](https://www.sustainableaicoalition.org/terms-resilient-ai-challenge/) : borne explicitement la portée de l’évaluation ; elle ne constitue pas une certification générale de qualité ou de sûreté.
+- La source Epoch.AI derrière les chiffres 360 % / 36 % n’a pas été identifiée avec certitude. Ces chiffres restent non vérifiés.
+
+## 7. Conclusion
 
 La valeur de cet article est principalement contextuelle et opérationnelle. Il donne un exemple actuel des raisons pour lesquelles la compression des modèles intéresse les acteurs publics et privés. Sa contribution pédagogique est de relier les mécanismes déjà enseignés aux contraintes concrètes de déploiement.
 
