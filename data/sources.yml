@@ -5133,7 +5133,7 @@ sources:
       concept_ids: [contextualized-representation]
     metadata:
       technical_level: intermediate
-      contribution_types: [architecture, other]
+      contribution_types: [architecture]
       audiences: [learner, practitioner, researcher]
     scan_status: partially-scanned
     integration_status: reviewed
