@@ -5253,3 +5253,49 @@ sources:
       audit_records:
         - docs/source-reviews/hesam-sheikh-llm-study-roadmap-2026-11.md
         - data/extractions/hesam-sheikh-llm-study-roadmap-2024.yml
+
+  - id: huang-zhang-shan-he-compression-intelligence-linearly-2024
+    title: "Compression Represents Intelligence Linearly"
+    creators: ["Yuzhen Huang", "Jinghan Zhang", "Zifei Shan", "Junxian He"]
+    source_type: paper
+    identifiers: {arxiv: "2404.09937", doi: "10.48550/arXiv.2404.09937"}
+    canonical_url: "https://arxiv.org/abs/2404.09937"
+    publisher: "Conference on Language Modeling (COLM 2024) / arXiv"
+    publication_date: "2024-04-15"
+    updated_date: "2024-08-19"
+    language: en
+    version: "arXiv v2; published at COLM 2024"
+    revision: "2404.09937v2"
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: link-only}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [scale-research]
+      tags: [topic:predictive-compression, topic:generalization, topic:benchmark-evaluation]
+      concept_ids: [predictive-compression, cross-entropy, conditional-distribution, entropy-coding, arithmetic-coding, held-out-evaluation, pretraining]
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, experiment, benchmark]
+      audiences: [researcher, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "arXiv v2 abstract, introduction, formal compression background, experimental protocol, main results and selected discussion (PDF pages 0–9)"
+          - "Repository README, reported BPC leaderboard, corpus descriptions, evaluation entry point, OpenCompass integration and data-collection pipeline links"
+          - "Mapped claims and methods to existing predictive-compression, cross-entropy, entropy-coding and evaluation concepts"
+        limitations:
+          - "The complete 22-page paper and appendices were not audited; only selected main-text pages and the repository README were inspected."
+          - "No evaluation script, corpus-processing pipeline or OpenCompass integration was executed."
+          - "Released datasets, split construction and licensing were not independently inspected; the repository states a primary CC BY-NC-SA 4.0 dataset licence subject to stricter source terms."
+          - "The reported correlations concern selected pretrained base models and three domain-aligned corpora; they establish neither causation nor a universal definition of intelligence."
+          - "No reuse permission for paper figures, repository assets or dataset content was established; retain link-only treatment."
+    related:
+      pages: [fr/entropy, en/entropy, fr/compression-revision, en/compression-revision, fr/scaling-laws, en/scaling-laws]
+      concepts: [predictive-compression, cross-entropy, conditional-distribution, entropy-coding, arithmetic-coding, held-out-evaluation, pretraining]
+      audit_records:
+        - docs/source-reviews/huang-zhang-shan-he-compression-intelligence-linearly-2024.md
+        - data/extractions/huang-zhang-shan-he-compression-intelligence-linearly-2024.yml
+        - docs/source-syntheses/compression-intelligence-and-inference-efficiency-2026-11.md
