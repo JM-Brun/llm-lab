@@ -33,8 +33,8 @@ pedagogical_model:
     - {status: inferred, outcome: "Distinguish training code from its execution infrastructure.", basis: "Supplied description emphasizes unchanged training code and a generic launcher."}
     - {status: inferred, outcome: "Describe the role of a managed GPU job and launch script.", basis: "Supplied chapter labels for Jobs and shell script."}
     - {status: inferred, outcome: "Identify data, output and cost checks needed after remote execution.", basis: "Inferred from the run/results stage and official Jobs documentation."}
-    - {status: transcript-supported, outcome: "Explain the Storage Bucket as the transfer and persistence boundary between local project, remote job and returned artifacts.", basis: "Third-party transcript rendering describes create/sync, mount, output persistence and post-job sync."}
-    - {status: transcript-supported, outcome: "Identify the example model/data/runtime stack: ~50M GPT-2-style model, 8 layers, 512 embedding dimension, GPT-2 tokenizer, TinyStories, uv and requirements.txt.", basis: "Third-party transcript rendering; exact code and hyperparameters remain uninspected."}
+    - {status: declared, outcome: "Explain the Storage Bucket as the transfer and persistence boundary between local project, remote job and returned artifacts.", basis: "Third-party transcript rendering describes create/sync, mount, output persistence and post-job sync."}
+    - {status: declared, outcome: "Identify the example model/data/runtime stack: ~50M GPT-2-style model, 8 layers, 512 embedding dimension, GPT-2 tokenizer, TinyStories, uv and requirements.txt.", basis: "Third-party transcript rendering; exact code and hyperparameters remain uninspected."}
   assumed_prerequisites:
     - {status: inferred, topic: "A working Python/PyTorch training program and basic shell familiarity.", basis: "The described workflow launches existing training code."}
     - {status: inferred, topic: "Basic understanding of GPU memory and training runtime.", basis: "The stated motivation is insufficient local GPU capacity."}
