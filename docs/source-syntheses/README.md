@@ -14,6 +14,7 @@ Suivre la [méthode de synthèse des sources](../source-synthesis-method.md). Co
 - [Cross-entropy, compression et distillation](cross-entropy-compression-distillation-2026-11.md) — coût d'un code mal adapté, entraînement des LLM, justification de la log-loss, distillation et divergence KL.
 - [Théorie de l'information et LLM](information-theory-and-llms-2026-11.md) — entropie, cross-entropy, attention/MI, Landauer, compression et V-information.
 - [Compression, information et efficacité de l'inférence](compression-intelligence-and-inference-efficiency-2026-11.md) — MDL en deux parties, prédiction séquentielle, coût de mise à jour du modèle et cadres agentifs (AIXI/active inference), avec expérience contrôlée forward/reverse.
+- [Compression et intelligence — synthèse transversale](compression-intelligence-cross-source-2026-11.md) — comparaison des sources sur compression prédictive, MDL, représentations, généralisation, adaptation et action ; distingue résultats établis, hypothèses et décisions pédagogiques.
 
 ## Structure suggérée
 
