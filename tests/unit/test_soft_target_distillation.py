@@ -34,11 +34,14 @@ def test_cross_entropy_kl_decomposition() -> None:
     predicted = module["fit_student"](teacher)
     entropy = -sum(q * __import__("math").log(q) for q in teacher)
 
-    assert abs(
-        module["cross_entropy"](teacher, predicted)
-        - entropy
-        - module["kl_divergence"](teacher, predicted)
-    ) < 1e-10
+    assert (
+        abs(
+            module["cross_entropy"](teacher, predicted)
+            - entropy
+            - module["kl_divergence"](teacher, predicted)
+        )
+        < 1e-10
+    )
 
 
 def test_softmax_is_normalized_and_stable() -> None:
