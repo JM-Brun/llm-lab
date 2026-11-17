@@ -3,7 +3,7 @@
 **Review date:** 2026-11-17  
 **Trigger:** the AIXI(t,l) passage in [Notion — Intelligence = Compression](https://jealous-speedwell-b32.notion.site/Intelligence-Compression-4c8d01d16ebf4dc98c5c5cb85ea825c8)  
 **Primary sources:** Hutter (2007), Leike & Hutter (2015), Hutter, Quarel & Catt (2024)  
-**Structured extraction:** [`data/extractions/aixi-kolmogorov-computability-2026.yml`](../../data/extractions/aixi-kolmogorov-computability-2026.yml)
+**Structured extraction:** [`data/extractions/hutter-universal-algorithmic-intelligence-2007.yml`](../../data/extractions/hutter-universal-algorithmic-intelligence-2007.yml), [Leike & Hutter extraction](../../data/extractions/leike-hutter-computability-aixi-2015.yml), and [2024 textbook extraction](../../data/extractions/hutter-quarel-catt-universal-ai-2024.yml)
 
 ## 1. Executive synthesis
 
