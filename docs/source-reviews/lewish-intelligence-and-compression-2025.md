@@ -2,8 +2,8 @@
 
 **Source:** [Canonical article](https://lewish.io/posts/intelligence-and-compression) · [structured extraction](../../data/extractions/lewish-intelligence-and-compression-2025.yml)  
 **Displayed publication date:** 2025-05-28 · **Accessed:** 2026-11-17  
-**Attribution:** the page/site identity is lewish.io; a fuller author identity was not independently verified.  
-**Scan boundary:** article text and visible footnotes were retrieved from the canonical HTML. Figures, code/data, comments, outbound links, revision history and reuse rights were not fully inspected. Text and media remain link-only.
+**Author:** Lewis Hemens. The article author link leads to the site homepage, which explicitly identifies lewish.io as his website; the linked GitHub profile corroborates the name. Twitter and LinkedIn links could not be fetched (403/429), and the protected email endpoint returned 404.  
+**Scan boundary:** full article text and visible footnotes were retrieved. The only explicit inline image link (an AI-generated musical-score illustration) was retrieved and inspected. Technical references were audited; the author homepage and GitHub profile were checked. Twitter/LinkedIn/email endpoints were attempted but inaccessible. Code/data, comments, revision history, CSS/theme assets and reuse rights remain unverified. Text and media remain link-only.
 
 ## Executive synthesis
 
