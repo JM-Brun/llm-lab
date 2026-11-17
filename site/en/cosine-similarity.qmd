@@ -100,7 +100,7 @@ This distinction also explains why a contextualized state from a pretrained BERT
 
 **AugSBERT** illustrates another trade-off: use a cross-encoder to produce pair scores or labels, then train a faster bi-encoder to reproduce those judgments. The article's detailed account and implementation are only partially accessible; see [Part 2](https://www.dailydoseofds.com/augsbert-bi-encoders-cross-encoders-for-sentence-pair-similarity-scoring-part-2/) as optional further reading, not as independent performance validation.
 
-For how this combination fits into an information-retrieval system, see [RAG, memory, and document retrieval](rag-memory-boundaries.qmd).
+For how these architectures fit into text and visual document retrieval, see [RAG, memory, and document retrieval](rag-memory-boundaries.qmd), including the ColPali example. A concise visual overview is available in Daily Dose's [Visual Guide to Bi-encoders, Cross-encoders and ColBERT](https://blog.dailydoseofds.com/p/visual-guide-to-bi-encoders-cross).
 
 ## 3. When cosine is a reasonable choice
 
