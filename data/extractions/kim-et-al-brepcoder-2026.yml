@@ -1,0 +1,55 @@
+schema_version: 1
+source_id: kim-et-al-brepcoder-2026
+items:
+  - id: kim-et-al-brepcoder-2026:brep-code-alignment
+    kind: architecture
+    summary: "BrepCoder encodes B-rep as a face-adjacency graph using UV-Net-derived local and global geometric features, then aligns the representation with Python-like CAD Code. The paper uses contrastive alignment and autoregressive code-generation loss rather than treating the CAD solid as ordinary prose."
+    locator: {type: section, value: "3.1 Multimodal Alignment"}
+    evidence:
+      kind: method-description
+      confidence: well-supported
+      scope: "The architecture and objective as described by the authors."
+      assumptions: ["The paper's reported implementation matches the described method."]
+      limitations: ["Full implementation and independent reproduction were not inspected."]
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [architectures-mechanisms, probabilistic-foundations-training]
+      tags: [topic:geometric-representation, application:computer-aided-design, modality:multimodal]
+      concept_ids: [contextualized-representation, training-objective]
+    candidate_destinations:
+      pages: [en/llm-limits, fr/llm-limits]
+    disposition: integrate
+  - id: kim-et-al-brepcoder-2026:two-stage-training
+    kind: architecture
+    summary: "The proposed two-stage strategy first learns reverse-engineering correspondences between B-rep geometry and CAD construction code, then fine-tunes for downstream tasks including completion, error correction and CAD question answering."
+    locator: {type: section, value: "1 Introduction and 3 Method"}
+    evidence:
+      kind: method-description
+      confidence: well-supported
+      scope: "Training stages and tasks claimed by the paper."
+      assumptions: []
+      limitations: ["The claimed cross-task generalization requires assessment against the full experimental setup and independent baselines."]
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [en/llm-limits, fr/llm-limits]
+    disposition: integrate
+  - id: kim-et-al-brepcoder-2026:representation-is-not-design-intent
+    kind: limitation
+    summary: "B-rep plus CAD construction code provides richer access to geometry and procedural design history than a final shape alone, but it does not by itself prove preservation of engineering intent, material behavior, tolerances, loads or manufacturing validity."
+    locator: {type: section, value: "3.1 Multimodal Alignment"}
+    evidence:
+      kind: critical-assessment
+      confidence: context-dependent
+      scope: "Boundary of what the described representation and tasks establish."
+      assumptions: ["Engineering intent can include semantic and physical constraints not recoverable from shape/code alignment alone."]
+      limitations: ["This is an assessment of scope, not a reported negative experimental result."]
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [architectures-mechanisms]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [en/llm-limits, fr/llm-limits]
+    disposition: clarify
