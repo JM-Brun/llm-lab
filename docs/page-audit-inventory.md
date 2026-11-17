@@ -1614,3 +1614,38 @@ The uncertainty guidance now makes the crossed-dependence consequence explicit: 
 - [ ] Evaluate rendering/accessibility separately from learner comprehension. Use a small prediction/transfer task before claiming a learning benefit.
 
 **Next bounded work:** browser-review the P0/P1 pages at desktop and mobile; then prototype one end-to-end shared numerical trace and one training-loop figure in FR/EN. Do not launch a site-wide illustration campaign or introduce a new visualization framework before those pilots are evaluated.
+
+
+## 2026-11-16: 3Blue1Brown — cross-entropy, Part 2
+
+**Scope.** Source-level pedagogical and mathematical audit of *But what is cross-entropy? | Compression is Intelligence Part 2* (16 July 2026), compared with the existing bilingual cross-entropy, language-modeling-math, loss and LLM-evolution lessons, the predictive-compression material, and the concept graph.
+
+| Part 2 idea | Existing coverage | Decision |
+|---|---|---|
+| Cross-entropy as the average cost of using a code optimized for another distribution | The general formula and KL decomposition existed, but the operational codebook interpretation and a numerical distribution-shift example were not prominent in the learner path. | Add the code-mismatch interpretation and the 2.625-bit example to the advanced bilingual math page. |
+| Direction and notation of target/model distributions | The project consistently uses target (q), prediction (p); the video uses (P) for observed data and (Q) for the code/model. | Add an explicit notation map to prevent a silent argument swap. |
+| Language-tree / gzip application | No dedicated case study in the core path. | Record as an optional application; explicitly state that gzip co-compression is only an empirical analogy/estimate, not exact cross-entropy or ideal Shannon coding. |
+| Why negative logarithm? | The pages derived NLL and the cross-entropy/KL identity, but did not show the optional constrained-optimization argument for the logarithmic form. | Add a bounded Lagrange-multiplier derivation with assumptions and a warning against universalizing the result. |
+| Pretraining as average information per observed token | Already covered by token-level NLL, likelihood, cross-entropy, loss reduction and perplexity. | Keep canonical pages; no duplicate derivation. |
+| Distillation with a teacher's full output distribution | Soft targets and the teacher-model example were mentioned, but not explained as a contrast with one-hot next-token supervision. | Add the teacher/student distribution interpretation and its limits; connect the existing knowledge-distillation concept to the advanced page and graph. |
+| KL as excess coding cost | The identity and directionality were already covered. | Retain the canonical derivation; add the concrete excess-bits example and coding interpretation. |
+
+### Scientific and pedagogical qualifications
+
+- The video's notation differs from the project's notation. Project (q) is the data/target distribution and (p) is the model distribution; the video labels those roles (P) and (Q), respectively.
+- In the four-symbol example, the old code lengths are ((1,2,3,3)) bits. Under the shifted data distribution ((1/8,1/8,1/4,1/2)), the average is (2.625) bits; source entropy is (1.75) bits and excess cost is (0.875) bit/symbol.
+- The gzip language-tree example is not exactly cross-entropy: gzip is a practical dictionary/repetition compressor, and the cited cross-compression distance has additional details. It is an instructive analogy, not a calibrated probability model or ideal entropy coder.
+- The log-loss derivation is conditional on an additive separable event loss, normalized predictions, differentiability, and requiring the data distribution to minimize expected loss for every interior data distribution. Other tasks can justify other objectives.
+- Teacher distributions are soft supervision, not ground truth. Distillation can transmit the teacher's errors and biases; it is model compression, not predictive data compression.
+- Lower held-out cross-entropy measures better probabilistic prediction under the chosen data/tokenizer/evaluation protocol; it does not alone establish truth, intelligence, or broad task quality.
+
+### Changes
+
+- Added bilingual advanced derivations and a worked mismatched-code example to `site/fr/language-modeling-math.qmd` and `site/en/language-modeling-math.qmd`.
+- Registered Part 2 and its provenance/scan limitations in `data/sources.yml` and a structured extraction.
+- Added a cross-source synthesis and updated the source index/references.
+- Connected the existing knowledge-distillation concept to the advanced math pages and added a prerequisite edge from cross-entropy to knowledge distillation.
+
+### Validation still required
+
+Quarto rendering, bilingual link checks, YAML/schema and graph validation, Python/domain checks, and CI must pass on the final PR head. No rendered visual audit or learner study is claimed.

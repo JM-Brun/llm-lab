@@ -127,6 +127,65 @@ The second quantity is infinite because $p$ assigns positive mass to a category 
 
 The [Cross-entropy](cross-entropy.qmd) lesson remains the canonical home for per-token loss, the one-hot case, masks, and reduction conventions. This advanced page focuses on the derivation and the general soft-target case.
 
+## 4. Why the logarithm? A justification under explicit assumptions
+
+The loss $-\log p(y)$ is not chosen only because it strongly penalizes low probabilities. Its form can be recovered by requiring a stronger property: **the average loss should be minimized when the predicted distribution matches the data distribution**.
+
+Consider a finite alphabet. Data follow a distribution $q=(q_i)$, while the model predicts $p=(p_i)$. Suppose the contribution of event $i$ is a separable function $F(p_i)$ and the average loss is:
+
+$$
+\mathcal L(p;q)=\sum_i q_i F(p_i),
+\qquad \sum_i p_i=1.
+$$
+
+We seek an interior minimum at $p=q$, for every strictly positive distribution $q$. Introduce a Lagrange multiplier $\lambda$ for the normalization constraint:
+
+$$
+\frac{\partial}{\partial p_i}
+\left[\sum_j q_jF(p_j)+\lambda(\sum_jp_j-1)\right]
+=q_iF'(p_i)+\lambda=0.
+$$
+
+At $p=q$, this requires $q_iF'(q_i)=-\lambda$, the same constant for every category. Since the condition must hold for every interior distribution, $xF'(x)$ is constant: $F'(x)=c/x$. Integrating gives $F(x)=c\log x+d$. For the stationary point to be a minimum, $c<0$; up to a positive scale and an additive constant, we therefore recover:
+
+$$
+F(x)=-\log x.
+$$
+
+**Scope of the argument.** This result assumes an additive, event-separable loss, a normalized distribution, differentiability, and the requirement that the data distribution be the minimizer for every interior distribution. It does not prove that log loss is the only useful objective for every machine-learning task: other objectives may target other properties (calibration, robustness, decisions under asymmetric costs, and so on). The video presents this as an optional Lagrange-multiplier derivation, not as a universal theorem about all losses.
+
+## 5. From probabilistic coding to distillation
+
+Cross-entropy has an operational interpretation: **data follow $q$, but the coder uses ideal lengths derived from $p$**. Each event $i$ then costs $-\log_2 p_i$ ideal bits, and its weight in the average is its frequency under $q$:
+
+$$
+H(q,p)=-\sum_i q_i\log_2 p_i.
+$$
+
+For example, a coder is initially tuned to $p=(1/2,1/4,1/8,1/8)$, but the data now follow $q=(1/8,1/8,1/4,1/2)$. Using the original code lengths $(1,2,3,3)$, the average cost becomes:
+
+$$
+H(q,p)=\tfrac18(1)+\tfrac18(2)+\tfrac14(3)+\tfrac12(3)
+=2.625\text{ bits}.
+$$
+
+The new source entropy is $H(q)=1.75$ bits, so the excess cost is $D_{\mathrm{KL}}(q\Vert p)=0.875$ bit per symbol. Argument order matters: swapping the distributions generally changes the result.
+
+**Notation warning.** In the video, $P$ denotes the distribution actually observed and $Q$ the model used to build the code; the sum is therefore weighted by $P$ and contains $-\log Q$. This project uses the convention $q$ for the target/data distribution and $p$ for the predicted distribution. The quantity is the same, but the letters are reversed relative to the video. Always identify the roles of the distributions rather than relying on their labels.
+
+### From an observed target to a teacher distribution
+
+In standard pretraining, each position supplies one observed token: the target is one-hot and cross-entropy reduces to that token's NLL. In *knowledge distillation*, a teacher model instead supplies a target distribution $q_T(\cdot\mid x_{<t})$ over the vocabulary; the student model produces $p_S(\cdot\mid x_{<t})$. The loss can compare these two distributions:
+
+$$
+\mathcal L_{\mathrm{KD}}
+=H\!\left(q_T(\cdot\mid x_{<t}),p_S(\cdot\mid x_{<t})\right).
+$$
+
+The soft target carries more information than the single observed token: several possible continuations receive weights, not just one winning class. This can provide a richer training signal per example, but **the teacher's distribution is not ground truth**: it can transfer the teacher's errors, biases, and uncertainty. Distillation is a form of model compression (a more compact student), distinct from predictive compression of text using a coder.
+
+For the cross-entropy/KL identity and computation conventions, see the previous section and the canonical [Cross-entropy](cross-entropy.qmd) lesson. For the distinction between model compression and predictive compression, see [LLM evolution](llm-evolution.qmd).
+
 ## What this formalization does not determine
 
 - **The tokenizer:** text segmentation and vocabulary are covered in [text and data](text-data.qmd) and [tokenization strategies](tokenization-strategies.qmd).

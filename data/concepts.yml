@@ -32,7 +32,7 @@ concepts:
       fr: "Projection qui encode ce qu’une position cherche à récupérer dans les autres positions."
       en: "Projection encoding what a position seeks to retrieve from other positions."
     domains: [architectures-mechanisms, mathematical-tools-geometry]
-    resources: [fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/cross-attention, en/cross-attention, fr/rope, en/rope]
+    resources: [fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/cross-attention, en/cross-attention]
   - id: key
     importance: supporting
     labels: {fr: "Key (clé)", en: "Key"}
@@ -40,7 +40,7 @@ concepts:
       fr: "Projection qui rend une position adressable par les requêtes des autres positions."
       en: "Projection that makes a position addressable by queries from other positions."
     domains: [architectures-mechanisms, mathematical-tools-geometry]
-    resources: [fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/cross-attention, en/cross-attention, fr/rope, en/rope]
+    resources: [fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/cross-attention, en/cross-attention]
   - id: value
     importance: supporting
     labels: {fr: "Value (valeur)", en: "Value"}
@@ -48,7 +48,7 @@ concepts:
       fr: "Projection porteuse de l’information agrégée selon les poids d’attention."
       en: "Projection carrying the information aggregated according to attention weights."
     domains: [architectures-mechanisms, mathematical-tools-geometry]
-    resources: [fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/cross-attention, en/cross-attention, fr/rope, en/rope]
+    resources: [fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/cross-attention, en/cross-attention]
   - id: self-attention
     importance: core
     labels: {fr: "Auto-attention", en: "Self-attention"}
@@ -68,7 +68,7 @@ concepts:
         Compatibility score computed between a query and a key before conversion into normalized
         attention weights.
     domains: [architectures-mechanisms, mathematical-tools-geometry]
-    resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/rope, en/rope]
+    resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
   - id: attention-weight
     importance: supporting
     labels: {fr: "Poids d'attention", en: "Attention weight"}
@@ -80,7 +80,7 @@ concepts:
         Normalized coefficient, after any applicable mask, that weights a value's contribution
         to an attention output.
     domains: [architectures-mechanisms, mathematical-tools-geometry]
-    resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/rope, en/rope]
+    resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
   - id: scaled-dot-product-attention
     importance: core
     labels: {fr: "Attention à produit scalaire mise à l'échelle", en: "Scaled dot-product attention"}
@@ -92,7 +92,7 @@ concepts:
         Mechanism that computes query–key dot-product scores, scales and normalizes them, and
         aggregates value vectors.
     domains: [architectures-mechanisms, mathematical-tools-geometry]
-    resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/rope, en/rope]
+    resources: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
   - id: multi-head-attention
     importance: supporting
     labels: {fr: "Attention multi-têtes", en: "Multi-head attention"}
@@ -121,8 +121,6 @@ concepts:
       - en/causal-masking
       - fr/scaled-dot-product-attention
       - en/scaled-dot-product-attention
-      - fr/rope
-      - en/rope
       - fr/transformer-architectures
       - en/transformer-architectures
   - id: attention-mask
@@ -156,31 +154,7 @@ concepts:
       fr: "Mécanisme qui injecte ou expose l’information de position dans les calculs du modèle."
       en: "Mechanism that injects or exposes positional information in model computations."
     domains: [architectures-mechanisms, mathematical-tools-geometry]
-    resources: [fr/positional-encoding, en/positional-encoding, fr/rope, en/rope]
-  - id: rope-inverse-frequency
-    importance: supporting
-    labels: {fr: "Fréquence inverse RoPE", en: "RoPE inverse frequency"}
-    definitions:
-      fr: >-
-        Fréquence angulaire associée à une paire de coordonnées RoPE ; sa progression géométrique
-        détermine l’angle accumulé selon la position et la longueur d’onde de la paire.
-      en: >-
-        Angular frequency assigned to a RoPE coordinate pair; its geometric schedule determines
-        the phase accumulated with position and the pair's wavelength.
-    domains: [architectures-mechanisms, mathematical-tools-geometry]
-    resources: [fr/rope, en/rope, fr/positional-encoding, en/positional-encoding]
-  - id: causal-prefix-visibility
-    importance: supporting
-    labels: {fr: "Visibilité du préfixe causal", en: "Causal-prefix visibility"}
-    definitions:
-      fr: >-
-        Ensemble emboîté de positions antérieures ou courantes qu'une requête peut consulter sous
-        un masque causal ; sa structure dépend de l'index de requête même sans encodage positionnel explicite.
-      en: >-
-        Nested set of preceding or current positions available to a query under a causal mask;
-        its structure depends on the query index even without explicit positional encoding.
-    domains: [architectures-mechanisms, mathematical-tools-geometry]
-    resources: [fr/rope, en/rope, fr/causal-masking, en/causal-masking]
+    resources: [fr/positional-encoding, en/positional-encoding]
   - id: output-projection
     importance: core
     labels: {fr: "Projection de sortie", en: "Output projection"}
@@ -209,8 +183,6 @@ concepts:
       - en/probabilities
       - fr/scaled-dot-product-attention
       - en/scaled-dot-product-attention
-      - fr/rope
-      - en/rope
   - id: cross-entropy
     importance: core
     labels: {fr: "Entropie croisée", en: "Cross-entropy"}
@@ -218,7 +190,7 @@ concepts:
       fr: "Quantité qui mesure le coût probabiliste d’une distribution prédite relativement à une cible."
       en: "Quantity measuring the probabilistic cost of a predicted distribution relative to a target."
     domains: [probabilistic-foundations-training]
-    resources: [fr/cross-entropy, en/cross-entropy]
+    resources: [fr/cross-entropy, en/cross-entropy, fr/language-modeling-math, en/language-modeling-math]
   - id: training-objective
     importance: core
     labels: {fr: "Objectif d'entraînement", en: "Training objective"}
@@ -483,6 +455,30 @@ concepts:
     domains: [probabilistic-foundations-training]
     importance: supporting
     resources: [fr/llm-evolution, en/llm-evolution]
+  - id: chat-template
+    importance: supporting
+    labels: {fr: "Modèle de conversation (chat template)", en: "Chat template"}
+    definitions:
+      fr: "Règle de sérialisation qui transforme des messages et leurs rôles, frontières et marqueurs de contrôle en une séquence de tokens conforme à la convention attendue par un modèle."
+      en: "Serialization rule that turns messages and their roles, boundaries, and control markers into a token sequence matching a model's expected convention."
+    domains: [text-tokenization, probabilistic-foundations-training]
+    resources: [fr/post-training, en/post-training]
+  - id: dataset-curation
+    importance: supporting
+    labels: {fr: "Curation de jeux de données", en: "Dataset curation"}
+    definitions:
+      fr: "Processus de sélection, structuration, annotation, contrôle et documentation d'un jeu de données pour un usage défini."
+      en: "Process of selecting, structuring, annotating, checking, and documenting a dataset for a defined use."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/corpus-preparation, en/corpus-preparation]
+  - id: group-relative-policy-optimization
+    importance: specialized
+    labels: {fr: "Optimisation de politique relative au groupe (GRPO)", en: "Group Relative Policy Optimization (GRPO)"}
+    definitions:
+      fr: "Algorithme d'optimisation de politique pour lequel plusieurs réponses sont échantillonnées par prompt et leurs récompenses comparées au sein du groupe pour construire un avantage relatif ; la méthode originale évite un critique séparé."
+      en: "Policy-optimization algorithm that samples multiple responses per prompt and compares their rewards within the group to form a relative advantage; the original method avoids a separate critic."
+    domains: [probabilistic-foundations-training]
+    resources: [fr/glossary, en/glossary, fr/score-centering, en/score-centering]
   - id: reinforcement-learning-from-human-feedback
     labels: {fr: "Apprentissage par renforcement à partir de retours humains", en: "Reinforcement learning from human feedback"}
     definitions:
@@ -745,7 +741,7 @@ concepts:
       fr: "Entraînement d'un modèle étudiant à reproduire certains comportements ou sorties d'un modèle enseignant."
       en: "Training a student model to reproduce selected behaviours or outputs of a teacher model."
     domains: [inference-efficiency]
-    resources: [fr/llm-evolution, en/llm-evolution, fr/compression-revision, en/compression-revision]
+    resources: [fr/llm-evolution, en/llm-evolution, fr/language-modeling-math, en/language-modeling-math, fr/compression-revision, en/compression-revision]
 
 
   - id: entropy
@@ -787,48 +783,6 @@ concepts:
         therefore depends on the model class considered.
     domains: [probabilistic-foundations-training, architectures-mechanisms]
     resources: [fr/entropy, en/entropy, fr/llm-limits, en/llm-limits]
-
-  - id: chat-template
-    importance: supporting
-    labels: {fr: "Modèle de conversation (chat template)", en: "Chat template"}
-    definitions:
-      fr: "Règle de sérialisation qui transforme des messages et leurs rôles, frontières et marqueurs de contrôle en une séquence de tokens conforme à la convention attendue par un modèle."
-      en: "Serialization rule that turns messages and their roles, boundaries, and control markers into a token sequence matching a model's expected convention."
-    domains: [text-tokenization, probabilistic-foundations-training]
-    resources: [fr/post-training, en/post-training]
-  - id: dataset-curation
-    importance: supporting
-    labels: {fr: "Curation de jeux de données", en: "Dataset curation"}
-    definitions:
-      fr: "Processus de sélection, structuration, annotation, contrôle et documentation d'un jeu de données pour un usage défini."
-      en: "Process of selecting, structuring, annotating, checking, and documenting a dataset for a defined use."
-    domains: [probabilistic-foundations-training]
-    resources: [fr/corpus-preparation, en/corpus-preparation]
-  - id: group-relative-policy-optimization
-    importance: specialized
-    labels: {fr: "Optimisation de politique relative au groupe (GRPO)", en: "Group Relative Policy Optimization (GRPO)"}
-    definitions:
-      fr: "Algorithme d'optimisation de politique pour lequel plusieurs réponses sont échantillonnées par prompt et leurs récompenses comparées au sein du groupe pour construire un avantage relatif ; la méthode originale évite un critique séparé."
-      en: "Policy-optimization algorithm that samples multiple responses per prompt and compares their rewards within the group to form a relative advantage; the original method avoids a separate critic."
-    domains: [probabilistic-foundations-training]
-    resources: [fr/glossary, en/glossary, fr/score-centering, en/score-centering]
-
-  - id: hybrid-rope-nope-layers
-    importance: specialized
-    labels: {fr: "Couches hybrides RoPE/NoPE", en: "Hybrid RoPE/NoPE layers"}
-    definitions:
-      fr: "Architecture qui applique une rotation RoPE aux requêtes et clés dans certaines couches d'attention et l'omet dans d'autres, tout en transmettant les représentations contextualisées d'une couche à la suivante."
-      en: "Architecture that applies RoPE rotations to queries and keys in some attention layers and omits them in others, while passing contextualized representations from one layer to the next."
-    domains: [architectures-mechanisms]
-    resources: [fr/rope, en/rope]
-  - id: query-conditioned-relative-position-bias
-    importance: specialized
-    labels: {fr: "Biais relatif conditionné par la requête", en: "Query-conditioned relative position bias"}
-    definitions:
-      fr: "Terme ajouté au score d'attention avant softmax et dépendant à la fois d'une représentation de la requête et du décalage entre positions ; sa fonction exacte dépend de l'architecture."
-      en: "Term added to the attention score before softmax that depends on both a query representation and the offset between positions; its exact function is architecture-specific."
-    domains: [architectures-mechanisms, mathematical-tools-geometry]
-    resources: [fr/rope, en/rope]
 
 relation_types:
   represented-by:
@@ -987,6 +941,11 @@ relations:
   - {from: importance-sampling, type: contrasts-with, to: score-centering}
   - {from: importance-sampling, type: applies-to, to: off-policy-reinforcement-learning}
   - {from: post-training, type: contrasts-with, to: pretraining}
+  - {from: chat-template, type: contributes-to, to: instruction-tuning}
+  - {from: dataset-curation, type: contributes-to, to: pretraining}
+  - {from: dataset-curation, type: contributes-to, to: post-training}
+  - {from: group-relative-policy-optimization, type: part-of, to: post-training}
+  - {from: policy-gradient, type: part-of, to: group-relative-policy-optimization}
   - {from: instruction-tuning, type: part-of, to: post-training}
   - {from: reinforcement-learning-from-human-feedback, type: part-of, to: post-training}
   - {from: direct-preference-optimization, type: part-of, to: post-training}
@@ -1023,8 +982,6 @@ relations:
   - {from: scaled-dot-product-attention, type: part-of, to: multi-head-attention}
   - {from: multi-head-attention, type: contributes-to, to: contextualized-representation}
   - {from: causal-mask, type: constrains, to: self-attention}
-  - {from: causal-mask, type: produces, to: causal-prefix-visibility}
-  - {from: causal-prefix-visibility, type: constrains, to: self-attention}
   - {from: positional-encoding, type: contributes-to, to: self-attention}
   - {from: self-attention, type: contributes-to, to: contextualized-representation}
   - {from: output-projection, type: produces, to: logits}
@@ -1120,15 +1077,11 @@ relations:
     rationale:
       fr: "La divergence KL mesure le terme d'écart entre la distribution cible et la distribution prédite."
       en: "KL divergence measures the mismatch term between the target and predicted distributions."
+  - from: cross-entropy
+    type: prerequisite
+    to: knowledge-distillation
+    rationale:
+      fr: "La distillation par cibles souples compare la distribution de l'étudiant à celle de l'enseignant au moyen d'un objectif de cross-entropie ou de KL."
+      en: "Soft-target distillation compares the student's distribution with the teacher's using a cross-entropy or KL objective."
   - {from: attention-weight, type: contrasts-with, to: mutual-information}
   - {from: mutual-information, type: contrasts-with, to: v-information}
-  - {from: chat-template, type: contributes-to, to: instruction-tuning}
-  - {from: dataset-curation, type: contributes-to, to: pretraining}
-  - {from: dataset-curation, type: contributes-to, to: post-training}
-  - {from: group-relative-policy-optimization, type: part-of, to: post-training}
-  - {from: policy-gradient, type: part-of, to: group-relative-policy-optimization}
-  - {from: hybrid-rope-nope-layers, type: applies-to, to: self-attention}
-  - {from: hybrid-rope-nope-layers, type: contributes-to, to: contextualized-representation}
-  - {from: query-conditioned-relative-position-bias, type: contributes-to, to: attention-score}
-  - {from: query-conditioned-relative-position-bias, type: part-of, to: positional-encoding}
-
