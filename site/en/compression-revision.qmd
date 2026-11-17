@@ -192,11 +192,11 @@ Huang, Zhang, Shan, and He (COLM 2024) test whether a model's predictive coding 
 
 To compare models with different tokenizers, the authors measure *bits per character* (BPC), rather than bits per token:
 
-$
+$$
 \mathrm{BPC}(M,C)=
 \frac{\sum_t -\log_2 p_M(x_t\mid x_{<t})}
 {\text{number of characters in }C}.
-$
+$$
 
 The numerator is the ideal code length in bits assigned to the text by the model; the denominator normalizes by the corpus character count. The protocol fixes a context window of 1,900 tokens. **BPC therefore depends on the corpus, its normalization, and the evaluation protocol; it is not an intrinsic constant of a model.**
 
