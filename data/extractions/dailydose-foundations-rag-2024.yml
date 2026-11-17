@@ -1,5 +1,45 @@
 schema_version: 1
 source_id: dailydose-foundations-rag-2024
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis: ["Direct HTML from introduction through the cross-encoder reranking step; later sections are paywalled."]
+    inferred_elements: ["Source graph and outcomes reconstruct the visible tutorial sequence."]
+  source_graph:
+    nodes:
+      - {id: src-external-corpus, kind: data-source, description: "Knowledge external to model parameters.", locator: "RAG motivation"}
+      - {id: src-chunking, kind: preprocessing, description: "Split documents into retrievable units.", locator: "Workflow"}
+      - {id: src-bi-encoder, kind: representation, description: "Encode chunks and queries into reusable vectors.", locator: "Generate embeddings"}
+      - {id: src-vector-index, kind: index, description: "Store vectors with metadata and source payload.", locator: "Store embeddings"}
+      - {id: src-ann-retrieval, kind: retrieval, description: "Retrieve approximate nearest-neighbour candidates.", locator: "Retrieve similar chunks"}
+      - {id: src-cross-encoder-reranking, kind: ranking, description: "Jointly score query-candidate pairs to reorder a shortlist.", locator: "Re-rank the chunks"}
+      - {id: src-context-assembly, kind: process, description: "Pass selected passages with the prompt to the generator.", locator: "RAG explanation"}
+    edges:
+      - {from: src-external-corpus, type: prepared-by, to: src-chunking}
+      - {from: src-chunking, type: encoded-by, to: src-bi-encoder}
+      - {from: src-bi-encoder, type: indexed-in, to: src-vector-index}
+      - {from: src-vector-index, type: searched-by, to: src-ann-retrieval}
+      - {from: src-ann-retrieval, type: optionally-refined-by, to: src-cross-encoder-reranking}
+      - {from: src-cross-encoder-reranking, type: contributes-to, to: src-context-assembly}
+    interpretation: "One dense-retrieval RAG pattern, not a universal pipeline; lexical, sparse, hybrid and structured retrieval may replace or complement vector search."
+  learning_outcomes:
+    - {status: inferred, outcome: "Explain why RAG retrieves external information instead of storing all knowledge in model parameters.", basis: "Motivation"}
+    - {status: inferred, outcome: "Trace a dense retrieval pipeline from chunking through reranking.", basis: "Visible workflow"}
+    - {status: inferred, outcome: "Distinguish candidate retrieval from optional pairwise reranking.", basis: "Workflow steps 6 and 7"}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Basic familiarity with embeddings, similarity and LLM inference context.", basis: "Tutorial terminology"}
+  teaching_route:
+    - {order: 1, section: "Introduction and vector databases", function: motivate-external-retrieval, moves: ["Contrast model parameters with changing/private external data", "Introduce vector search as one retrieval option"]}
+    - {order: 2, section: "Purpose of vector databases in RAG", function: explain-context-boundary, moves: ["Retrieve without retraining", "Pass selected text into the prompt"]}
+    - {order: 3, section: "Chunking and embeddings", function: prepare-retrievable-units, moves: ["Chunk documents", "Encode chunks and queries"]}
+    - {order: 4, section: "Storage and retrieval", function: retrieve-candidates, moves: ["Store vectors and payload", "Run approximate nearest-neighbour search"]}
+    - {order: 5, section: "Reranking", function: refine-candidates, moves: ["Score query-passage pairs jointly", "Reorder candidates before context assembly"]}
+  pedagogical_strengths: ["Explains external retrieval without retraining.", "Shows where cross-encoder reranking fits."]
+  pedagogical_limits: ["Vector-centric implementation must not be generalized to all RAG.", "Retrieval does not guarantee truth or eliminate hallucinations.", "Later implementation sections were not inspected."]
+  comparison:
+    canonical_pages: [fr/rag-memory-boundaries, en/rag-memory-boundaries]
+    decision: "Use the stage-level explanation to clarify the existing RAG page while retaining broader retrieval alternatives and failure analysis."
+    dossier: docs/source-reviews/dailydose-main-path-2026-11.md
 scan:
   accessed_at: "2026-11-17"
   retrieval_method: direct-canonical-html
