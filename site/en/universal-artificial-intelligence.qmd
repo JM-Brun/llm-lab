@@ -120,7 +120,7 @@ The ideal universal mixture is not computable exactly, and the optimal sequentia
 
 Leike and Hutter (2015) show that the standard/iterative exact AIXI policy is **not limit computable**. They identify two obstacles: deciding between actions with exactly tied values, and the iterative definition of the discounted infinite-horizon value function, which conditions on surviving forever.
 
-Their construction separates the remedies. Allowing **ε-optimality** avoids the need to resolve exact ties; using a **recursive** rather than iterative value function addresses the infinite-horizon problem. Together these yield a **limit-computable ε-optimal AIXI policy** for an infinite horizon. The tolerance ε(t) can decrease toward zero at a computable rate. This is not a blanket impossibility theorem for useful approximations; exact optimality, tie-breaking, value-function definition and horizon must be distinguished.
+Their construction separates the remedies. Allowing **ε-optimality** avoids the need to resolve exact ties; using a **recursive** rather than iterative value function addresses the infinite-horizon problem. Together these yield a **limit-computable ε-optimal AIXI policy** for an infinite horizon. The tolerance ε(t) can decrease toward zero at a computable rate. This is not a blanket impossibility theorem for useful approximations; exact optimality, tie-breaking, value-function definition and horizon must be distinguished. This recursive ε-optimal variant is **not AIXI(t,l)**: the former changes the value-function formulation and accepts an ε gap, while the latter bounds candidate-policy length and computation time.
 
 Primary source: [Leike & Hutter (2015), On the Computability of AIXI](https://arxiv.org/abs/1510.05572).
 
