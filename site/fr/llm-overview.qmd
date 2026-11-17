@@ -32,11 +32,7 @@ Il ne rédige pas sa réponse d'un seul bloc. Il estime, pour chaque suite possi
 :::
 
 ::: {.callout-tip title="L'idée à retenir"}
-Un modèle de langage regarde le texte déjà écrit et estime ce qui pourrait venir ensuite. Il peut s'en servir pour **continuer un texte**, pour **évaluer une suite déjà écrite**, ou pour **s'améliorer en comparant ses prédictions au texte attendu**. Lorsqu'il est entraîné à grande échelle, on parle de grand modèle de langage.
-:::
-
-::: {.callout-note title="Une page transversale"}
-Ce panorama présente plusieurs dimensions complémentaires d’un LLM, et non une étape unique du parcours. Il donne des repères sur **l’entrée et les représentations** ([texte et tokens](text-data.qmd), [embeddings](embedding-space.qmd)), **le calcul et la prédiction** ([Transformer](transformer.qmd), [distribution de probabilités](probabilites.qmd)), puis **les usages de cette prédiction** ([génération](generation.qmd), [scoring](vraisemblance.qmd) et [apprentissage](loss.qmd)). Aucun de ces thèmes n’est donc désigné ici comme l’étape courante.
+Un modèle de langage prolonge un texte en estimant ce qui pourrait venir ensuite. Ce même calcul sert aussi à **mesurer si une suite donnée était attendue** et à **entraîner le modèle**, en comparant ses prédictions au texte observé.
 :::
 
 ## Ce que le modèle prédit
