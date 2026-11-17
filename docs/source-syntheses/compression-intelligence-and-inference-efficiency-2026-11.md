@@ -199,3 +199,52 @@ The key question becomes: **which representations, objectives, tools and verific
 BrepCoder, MecEng and OmniMech are separately catalogued and extracted. Their full experimental protocols, data governance, reproducibility and limitations remain under review. Leo AI's first-party LMM description is retained as vendor evidence, not independent validation.
 
 Source reviews: [Maor Farid / LMM](../source-reviews/maor-farid-large-mechanical-model-brep-geometry-2026.md). Extractions: [BrepCoder](../../data/extractions/kim-et-al-brepcoder-2026.yml), [MecEng](../../data/extractions/gerstmayr-et-al-meceng-benchmark-2026.yml), [OmniMech](../../data/extractions/lu-et-al-omnimech-2026.yml), [Leo AI LMM overview](../../data/extractions/leo-ai-large-mechanical-model-overview-2025.yml).
+
+## 15. Compression, semantic salience and the limits of the decompression metaphor (David Chen, 2025)
+
+David Chen's [“Compression Is Intelligence”](https://www.linkedin.com/pulse/compression-intelligence-david-chen-uqtmc/) connects feature selection, compact document representations, neural lossless coding and prompt-based generation. Its useful contribution is to bring several forms of compression into one discussion. They must nevertheless remain distinct: selecting salient features, lossy representation learning, compressing model parameters, and lossless coding solve different problems and preserve different invariants.
+
+### 15.1 A compact representation is task-relative, not a universal semantic core
+
+Chen cites Yoo, Hu and Song (2007) on feature selection for text classification and Rau, Dehghani and Kamps (2024) on revisiting bag-of-words document representations for efficient ranking with Transformers. The latter is a concrete information-retrieval result: a compact set of salient terms can support document ranking in the evaluated setting. It should not be generalized into the claim that a handful of words always preserves a document's full meaning.
+
+Feature salience depends on the task, candidate set, query distribution, evaluation metric and the cost of false negatives. A term that is redundant for one ranking task may be essential for another task, a different query, or faithful reconstruction. The right question is not simply how many tokens remain, but which information is sufficient for a specified downstream objective.
+
+### 15.2 NNCP demonstrates predictive coding, not semantic understanding
+
+Bellard's [2019 NNCP paper](https://bellard.org/nncp/nncp.pdf) gives a particularly clear bridge between neural prediction and coding. At each step, a neural model estimates the probability of the next symbol given the preceding symbols; an arithmetic coder assigns a code length of approximately \\( -\\log_2 p(s_t \\mid s_{<t}) \\) bits. Encoder and decoder update the same model state symmetrically, allowing exact reconstruction without transmitting model parameters separately under the implementation's shared-model assumptions.
+
+Bellard's [2021 NNCP v2 paper](https://bellard.org/nncp/nncp_v2.1.pdf) extends this with a Transformer-XL-based model. It reports separate results for enwik8 and enwik9 and explicitly warns that compression scores are not directly comparable with ordinary held-out language-model metrics: the file-wide evaluation differs, and model parameters are not counted in the compressed file. The paper also documents hardware/software determinism assumptions for reproducing encoder and decoder behavior.
+
+These are important engineering demonstrations of predictive coding. They show how probability estimates can be converted into compact, losslessly decodable bitstreams. They do not establish that compression ratio measures semantic understanding, causal reasoning or general intelligence.
+
+### 15.3 Generation is not literal decompression
+
+The article's claim that prompting is a compressed intent and generation is decompression is a useful interface metaphor: a short prompt can condition a model to produce a much longer structured response. But ordinary LLM generation is not the inverse of a known lossless encoder. There is no guarantee that a unique original intent can be recovered from the prompt, that the prompt is a sufficient statistic for the user's unstated requirements, or that the output preserves every omitted constraint.
+
+A more precise description is **conditional expansion under a learned distribution**. The prompt constrains a distribution over continuations; decoding selects or samples one continuation according to a policy. This can resemble decompression in the sense of expanding a compact cue into a detailed sequence, but it is not reversible reconstruction. Missing requirements can be filled with plausible defaults, which is also a source of hallucination and specification drift.
+
+### 15.4 Four meanings of compression that should not be conflated
+
+| Form | What is compressed | What must be preserved | Typical failure |
+|---|---|---|---|
+| Feature selection / sparse document representation | Input features or terms | Task-relevant ranking or classification signal | Discarding a rare but decisive feature |
+| Predictive lossless coding | An observed symbol sequence | Exact symbol-by-symbol reconstruction | Encoder/decoder mismatch or poor probability estimates |
+| Learned latent / autoencoder representation | Data into a lower-dimensional or discrete code | Task-dependent reconstruction or prediction quality | Losing information not represented in the objective |
+| Model compression / distillation | Parameters, activations or computation | Chosen model behaviors and quality under constraints | Degradation on rare capabilities or distribution shifts |
+
+These methods can interact, but their rates and quality measures are not interchangeable. Bits per byte, number of selected terms, latent dimension, parameter count and task accuracy answer different questions.
+
+### 15.5 Updated synthesis
+
+Compression is a powerful lens on learning because it forces an explicit question: what regularities can a system exploit, and what information can it discard without harming the objective? Yet compression is only meaningful relative to a code, representation, distortion measure and downstream task. A strong result on one of these does not imply a universal semantic core or general intelligence.
+
+For LLM Lab, the practical distinction is:
+- predictive cross-entropy connects next-token probabilities to ideal code length;
+- entropy coding turns those probabilities into a lossless bitstream;
+- feature selection retains task-salient inputs for a defined prediction or ranking problem;
+- generative prompting expands a partial specification conditionally, without guaranteeing reversibility or completeness.
+
+This source reinforces the existing predictive-compression and information-theory lessons. It does not warrant a new canonical concept: the existing concepts for predictive compression, entropy, conditional distributions, entropy coding and contextualized representations are sufficient. The article's cover image was not retrieved or reused.
+
+Source review: [David Chen, Compression Is Intelligence](../source-reviews/david-chen-compression-is-intelligence-2025.md). Structured extraction: [atomic claims and pedagogical reconstruction](../../data/extractions/david-chen-compression-is-intelligence-2025.yml).

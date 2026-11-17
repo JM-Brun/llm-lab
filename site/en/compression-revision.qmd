@@ -169,6 +169,23 @@ The [sequential-structure and predictive-compression experiment](https://github.
 
 See the [critical synthesis of Mingdi Fan's paper](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/fan-compression-intelligence-2026-11.md) and the [detailed source review](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-reviews/fan-compression-intelligence-2026-11.md).
 
+
+## 6. Keeping useful information is not the same as decompressing everything
+
+In [“Compression Is Intelligence”](https://www.linkedin.com/pulse/compression-intelligence-david-chen-uqtmc/), David Chen connects feature selection, compact document representations, neural lossless coding, and short prompts. The connection is stimulating as long as we do not conflate their mechanisms.
+
+- **Feature selection:** a small set of terms may suffice for a particular ranking task. [Rau, Dehghani and Kamps (2024)](https://doi.org/10.1145/3640460) study document ranking; this does not demonstrate that a handful of words preserves the full meaning of a text.
+- **Predictive lossless coding:** [Fabrice Bellard's NNCP](https://bellard.org/nncp/nncp.pdf) predicts the next symbol and then uses arithmetic coding to produce an exactly decodable bitstream. It concretely demonstrates the link between conditional probability, ideal code length, and lossless reconstruction.
+- **Conditional generation:** a short prompt can guide a long output, but an LLM does not invert a known lossless encoder. It does not recover one unique original message or guarantee that omitted constraints are preserved. “Decompression” is an analogy here; **conditional expansion** is more precise.
+
+| Question | Term selection | NNCP | Prompt to LLM |
+|---|---|---|---|
+| Compact object | Salient terms | Shared probability model + coded stream | Partial instruction |
+| Objective | Ranking / classification | Exact reconstruction | Plausible continuation conditioned on context |
+| Typical failure | A rare but decisive term is discarded | Encoder/decoder disagreement | An implicit constraint is omitted or invented |
+
+**Takeaway:** every compression claim is relative to a task, representation, and distortion criterion. Bits per byte, ranking quality, and generation fidelity are not interchangeable metrics. The [critical source review](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-reviews/david-chen-compression-is-intelligence-2025.md) details the limits of the references and analogy.
+
 ## Reconstruct the reasoning, step by step
 
 The pedagogical progression in 3Blue1Brown can be replayed as a chain of six questions. It complements the canonical lessons; it does not replace them.

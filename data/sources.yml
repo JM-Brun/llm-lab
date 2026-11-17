@@ -5150,3 +5150,53 @@ sources:
       concepts: [contextualized-representation]
       audit_records:
         - data/extractions/leo-ai-large-mechanical-model-overview-2025.yml
+
+  - id: david-chen-compression-is-intelligence-2025
+    title: "Compression Is Intelligence"
+    creators: ["David Chen"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://www.linkedin.com/pulse/compression-intelligence-david-chen-uqtmc/"
+    publisher: "LinkedIn / Decoding A.I."
+    publication_date: "2025-06-04"
+    updated_date: null
+    language: en
+    version: null
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [inference-efficiency, architectures-mechanisms, scale-research]
+      tags: [topic:predictive-compression, topic:feature-selection, topic:semantic-representation, topic:lossless-compression, method:bag-of-words, method:neural-compression]
+      concept_ids: [predictive-compression, entropy, cross-entropy, conditional-distribution, surprisal, entropy-coding, arithmetic-coding, contextualized-representation]
+    metadata:
+      technical_level: introductory
+      contribution_types: [theory, pedagogy, historical-context]
+      audiences: [beginner, learner, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: integrated
+    scan_history:
+      - accessed_at: "2026-11-17"
+        status: partially-scanned
+        inspected_scope:
+          - "Complete public LinkedIn article text and visible source metadata"
+          - "Bibliographic record and abstract/description of Rau, Dehghani and Kamps (2024) on compact bag-of-words representations for transformer ranking"
+          - "Bibliographic metadata for Yoo, Hu and Song (2007); full paper not independently inspected"
+          - "Bellard's 2019 NNCP paper, including predictive coding, arithmetic coding, deterministic encoder/decoder requirements and reported benchmark scope"
+          - "Bellard's 2021 NNCP v2 paper, including Transformer-XL modifications, enwik8/enwik9 results and explicit comparison caveats"
+          - "Claims, metaphors, assumptions and evidence boundaries mapped into a source review and structured extraction"
+        limitations:
+          - "The LinkedIn article's embedded cover image was identified but not retrieved as image bytes or visually inspected; no reuse rights were established."
+          - "The 2007 feature-selection paper was identified by DOI and bibliographic metadata; its full text and exact experimental claims were not audited."
+          - "Rau et al. (2024) was checked against publication metadata and the associated special-section overview; the full article's experimental tables and ablations were not audited."
+          - "NNCP is a lossless coding system; its compression performance is not evidence that the model has human-like semantic understanding or general intelligence."
+          - "The article's description of prompting and generation as decompression is an analogy, not a reversible coding result or a demonstrated mechanism of LLM inference."
+          - "No reuse licence or permission was established; article text and figures remain link-only."
+    related:
+      pages: [fr/entropy, en/entropy, fr/compression-revision, en/compression-revision, fr/probabilites, en/probabilities, fr/llm-limits, en/llm-limits]
+      concepts: [predictive-compression, entropy, cross-entropy, conditional-distribution, surprisal, entropy-coding, arithmetic-coding, contextualized-representation]
+      audit_records:
+        - docs/source-reviews/david-chen-compression-is-intelligence-2025.md
+        - data/extractions/david-chen-compression-is-intelligence-2025.yml
+        - docs/source-syntheses/compression-intelligence-and-inference-efficiency-2026-11.md
