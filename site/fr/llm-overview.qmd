@@ -30,7 +30,7 @@ tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "
 
 Il ne rédige pas sa réponse d'un seul bloc. À partir du texte déjà écrit, il estime ce qui pourrait venir ensuite, choisit un élément, puis recommence. Un programme qui prolonge ainsi un texte est un **modèle de langage**. Entraîné à grande échelle, c'est un **grand modèle de langage** (*large language model*, LLM).
 
-Pour les calculs qui suivent, nous utiliserons une continuation inventée pour LLM Lab : « Être scribe, c'est relier des histoires. » Ce n'est pas la réplique du film. Nous la retrouvons dans plusieurs pages afin de suivre le même exemple d'un calcul à l'autre. Otis est le personnage, l'assistant est l'application qui dialogue avec l'utilisateur, et le LLM est le modèle interrogé par cette application : c'est ce dernier que nous étudions ici.
+Dans le film, Otis commence par « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... ». Pour les calculs qui suivent, nous utiliserons toutefois une continuation inventée pour LLM Lab : « Être scribe, c'est relier des histoires. » Ce n'est pas la réplique du film. Nous la retrouvons dans plusieurs pages afin de suivre le même exemple d'un calcul à l'autre. Otis est le personnage, l'assistant est l'application qui dialogue avec l'utilisateur, et le LLM est le modèle interrogé par cette application : c'est ce dernier que nous étudions ici.
 :::
 
 ::: {.callout-tip title="L'idée à retenir"}
@@ -48,7 +48,7 @@ Donnons au modèle le préfixe « C'est une bonne situation, ça, scribe ? ». I
 | « Oui » | 0,1 |
 | « Non » | 0,1 |
 
-Ces valeurs sont fictives : elles ne proviennent pas d'un modèle entraîné. Le vocabulaire réel d'un modèle contient bien plus que quatre unités. Pour rendre l'exemple lisible, nous affichons des mots à la place des tokens. Dans un vrai modèle, le texte est découpé en unités qui peuvent être plus petites ou plus grandes qu'un mot ; une ligne du tableau ne correspond donc pas nécessairement à un mot entier.
+Ces valeurs sont fictives : elles ne proviennent pas d'un modèle entraîné. Le vocabulaire réel d'un modèle contient bien plus que quatre unités — souvent des dizaines de milliers. Pour rendre l'exemple lisible, nous affichons des mots à la place des tokens. Dans un vrai modèle, le texte est découpé en unités qui peuvent être plus petites ou plus grandes qu'un mot ; une ligne du tableau ne correspond donc pas nécessairement à un mot entier.
 
 Ce tableau est une **distribution conditionnelle** : autrement dit, les probabilités sont calculées *en tenant compte du texte déjà fourni*. Les quatre valeurs se partagent un total de 1 (soit 100 %). Si l'on ajoute « Être » à la question et que l'on refait le calcul, le contexte n'est plus le même : les probabilités changent, et « scribe » devient alors le candidat le plus probable.
 
