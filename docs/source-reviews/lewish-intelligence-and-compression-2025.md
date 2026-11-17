@@ -154,3 +154,17 @@ For the separate two-part score, the pilot Markov sequence yields a substantiall
 **Interpretation guardrail:** a stationary source's entropy rate is invariant under time reversal. Any finite byte-count asymmetry here is therefore about finite samples, non-stationarity, compressor context/matching heuristics, initialization and format overhead—not proof of causal direction. The regime-shift source is deliberately time-inhomogeneous and is labelled as such, not as a causal generator.
 
 The script and tests have been committed, but their execution in the repository environment and fresh CI/Quarto validation remain pending. The pilot calculations are exploratory and are not a reproduction of the enwik8 figures in the article.
+
+
+## 8. Audit des liens sortants et correction factuelle sur Hutter Prize
+
+Les liens techniques visibles de l'article ont été suivis : codage à longueur variable, codage unaire, Huffman, codage arithmétique, Hutter Prize, MDL, rasoir d'Occam, induction de Solomonoff, article de Chollet, inférence bayésienne, AIXI, Karl Friston, Free Energy Principle et active inference. Plusieurs liens de concepts pointent vers Wikipédia : ils sont utiles comme orientation/navigation, mais ne remplacent pas les références primaires. Le lien vers le Hutter Prize a d'abord expiré lors de l'ouverture directe, puis la page officielle et sa FAQ ont été consultées via leurs pages canoniques.
+
+**Erreur factuelle corrigée dans l'interprétation de l'article :** il confond enwik8 et enwik9 lorsqu'il décrit le corpus du Hutter Prize comme un extrait de 1 GB appelé `enwik8` (section « Good compressors... » et note [2]). La FAQ officielle précise que le concours a commencé avec le corpus de 100 MB `enwik8`, puis a été étendu au corpus de 1 GB `enwik9` en 2020. La page officielle actuelle porte sur `enwik9` et présente séparément les résultats historiques d'`enwik8`. Voir [Hutter Prize — page officielle](https://prize.hutter1.net/) et [FAQ, notamment « Why did you start with 100MB enwik8? »](https://prize.hutter1.net/hfaq.htm).
+
+Il faut donc conserver trois éléments distincts :
+- le tableau forward/reverse de Lewis est explicitement présenté comme une expérience sur `enwik8` (100 MB) ;
+- le Hutter Prize historique a commencé sur `enwik8`, puis son concours courant porte sur `enwik9` (1 GB) ;
+- les records actuels de `enwik9` ne doivent pas être mélangés avec les résultats historiques `enwik8`.
+
+Cette correction ne modifie pas le statut des tailles gzip/ppmd/zpaq rapportées par l'auteur : elles restent non reproduites, faute de versions, options, sommes de contrôle et script. Les liens de partage, profils sociaux et email ne sont pas nécessaires à l'audit technique et n'ont pas été utilisés pour établir l'identité de l'auteur ; l'attribution reste donc non vérifiée.
