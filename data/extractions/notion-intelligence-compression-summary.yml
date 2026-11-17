@@ -163,7 +163,7 @@ items:
     target_resources: [fr/universal-artificial-intelligence, en/universal-artificial-intelligence]
   - id: notion-intelligence-compression-summary:cognitive-architecture
     kind: open-question
-    summary: "The page proposes that compression could be a component of a cognitive architecture, but does not specify how it would interact with perception, memory, planning, reasoning or action."
+    summary: "The page proposes that compression could be a component of a cognitive architecture and names Soar, ACT-R and CLARION as examples, but does not specify mechanisms or provide comparative references."
     locator: {type: heading, value: "Compression as a Mechanic or Component to a Cognitive Architecture", label: "Cognitive architecture"}
     evidence:
       kind: source-claim
