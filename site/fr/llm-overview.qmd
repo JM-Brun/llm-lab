@@ -23,8 +23,6 @@ related: ["fr/transformer-history", "fr/scaling-laws", "fr/in-context-learning",
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:fr", "status:published"]
 -->
 
-{{< include ../includes/generated-guided-coverage-fr-llm-overview.qmd >}}
-
 {{< include ../includes/generated-guided-context-fr-llm-overview.qmd >}}
 
 ::: {.chapter-lead}
@@ -33,16 +31,8 @@ tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "
 Il ne rédige pas sa réponse d'un seul bloc. Il estime, pour chaque suite possible, la probabilité qu'elle vienne après le texte déjà écrit, en retient une, puis recommence. Un programme qui attribue ainsi des probabilités aux suites d'un texte est un **modèle de langage**. Entraîné à grande échelle, c'est un **grand modèle de langage** (*large language model*, LLM).
 :::
 
-::: {.callout-note title="Fil rouge : le scribe"}
-**Le préfixe** est la question de Panoramix : « C'est une bonne situation, ça, scribe ? » C'est le texte fourni au modèle. **La continuation** est ce qui vient ensuite. Dans le film, Otis commence par « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... ».
-
-La réplique du film sert d'accroche. Pour les calculs, le parcours utilise une continuation originale, écrite pour LLM Lab : « Être scribe, c'est relier des histoires. » Otis est un personnage, l'assistant une application, et le LLM le modèle que cette application interroge : seul ce dernier est étudié ici.
-:::
-
-::: {.callout-tip title="L'idée à retenir en une minute"}
-- **Ce que le modèle calcule :** à partir d'un contexte, une probabilité pour chaque token qui pourrait suivre. Un token après l'autre, avec des paramètres qui ne changent pas pendant l'utilisation.
-- **Un calcul, trois usages :** générer (choisir un token et l'ajouter au contexte), mesurer la vraisemblance (lire la probabilité donnée à un token déjà connu), apprendre (comparer la prédiction au token attendu et corriger les paramètres).
-- **Trois mots à distinguer :** un **LLM** est un modèle de langage entraîné à grande échelle ; le **Transformer** est une famille d'architectures ; un **GPT** est un Transformer d'un type précis, pré-entraîné à prédire le prochain token.
+::: {.callout-tip title="L'idée à retenir"}
+Un modèle de langage regarde le texte déjà écrit et estime ce qui pourrait venir ensuite. Il peut s'en servir pour **continuer un texte**, pour **évaluer une suite déjà écrite**, ou pour **s'améliorer en comparant ses prédictions au texte attendu**. Lorsqu'il est entraîné à grande échelle, on parle de grand modèle de langage.
 :::
 
 ::: {.callout-note title="Une page transversale"}
@@ -60,7 +50,7 @@ Donnons au modèle le préfixe « C'est une bonne situation, ça, scribe ? ». I
 | « Oui » | 0,1 |
 | « Non » | 0,1 |
 
-Ces valeurs sont fictives : elles ne proviennent pas d'un modèle entraîné, et un vocabulaire réel compte des dizaines de milliers d'entrées, pas quatre. Dans cet exemple simplifié, chaque ligne représente un token unique ; les formes affichées ne garantissent pas qu'un tokenizer réel les traiterait chacune comme un seul token. Le parcours réutilise ces valeurs d'une page à l'autre pour que chaque calcul puisse être refait à la main.
+Ces valeurs sont fictives : elles ne proviennent pas d'un modèle entraîné, et un vocabulaire réel compte des dizaines de milliers d'entrées, pas quatre. Pour simplifier, nous utilisons ici des mots à la place des tokens. Dans un vrai modèle, le texte est découpé en unités qui peuvent être plus petites ou plus grandes qu'un mot.
 
 Ce tableau est une **distribution conditionnelle** : elle dépend du contexte. Les quatre probabilités se partagent un total de 1 (soit 100 %). Ajoutez « Être » à la suite de la question et recalculez : les candidats ne sont plus les mêmes, et « scribe » passe en tête.
 
@@ -108,9 +98,9 @@ Scorer n'est pas encore évaluer. Le scoring donne des probabilités pour un tex
 
 ## LLM, Transformer, GPT : trois mots, trois notions
 
-**LLM** décrit une échelle, pas une construction. Aucun seuil de paramètres ne définit à lui seul la catégorie : la taille des corpus et le budget de calcul comptent autant ([lois d'échelle](scaling-laws.qmd) ; [Zhao et al., 2023](https://arxiv.org/abs/2303.18223) ; [Hoffmann et al., 2022](https://proceedings.neurips.cc/paper_files/paper/2022/hash/c1e2faff6f588870935f114ebe04a3e5-Abstract.html)). Le terme ne dit rien de l'architecture ni de l'objectif d'entraînement.
+**LLM** décrit une échelle, pas une architecture. Aucun nombre de paramètres ne suffit à définir la catégorie : la quantité et la qualité des données, ainsi que le calcul consacré à l'entraînement, comptent aussi. Les [lois d'échelle](scaling-laws.qmd) étudient précisément ces relations.
 
-**Transformer** désigne une famille d'architectures de réseaux de neurones. L'article fondateur décrit un modèle encodeur-décodeur ([Vaswani et al., 2017](https://arxiv.org/abs/1706.03762)) ; deux autres configurations en dérivent.
+**Transformer** désigne une famille d'architectures de réseaux de neurones, qui comprend plusieurs configurations.
 
 | Famille | Fonctionnement général | Exemple |
 |---|---|---|
@@ -258,6 +248,8 @@ Pas nécessairement. Un système RAG récupère les documents récents à l'inf�
 
 </details>
 :::
+
+{{< include ../includes/generated-guided-coverage-fr-llm-overview.qmd >}}
 
 {{< include ../includes/generated-suggested-route-fr-llm-overview.qmd >}}
 
