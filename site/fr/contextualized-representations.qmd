@@ -88,8 +88,8 @@ Ce schéma est une illustration originale et simplifiée, et non une reproductio
 
 Supposons que le token visible `avocat` soit représenté par le même ID dans deux phrases :
 
-- « Un avocat défend sa cliente. »
-- « Un avocat bien mûr se mange à la cuillère. »
+- « Il consulte son avocat. »
+- « Elle mange un avocat. »
 
 Sous cette hypothèse explicite, les deux occurrences récupèrent le même **vecteur de plongement initial** (embedding) :
 
