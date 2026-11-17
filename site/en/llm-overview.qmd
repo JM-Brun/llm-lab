@@ -329,7 +329,7 @@ No. Sequence positions can be processed in parallel during training, but autoreg
 
 <details><summary>Show the reasoning</summary>
 
-Not necessarily. A RAG system can retrieve recent documents at inference time without changing weights, provided its corpus or index is updated. The relevance of retrieved documents and the faithfulness of the answer still need to be measured.
+Not necessarily. A RAG system can retrieve recent documents at inference time without changing weights, provided its corpus or index is updated. Daily fine-tuning would generally be costly and could still lag behind the source. The relevance of retrieved documents and the faithfulness of the answer still need to be measured.
 
 </details>
 
