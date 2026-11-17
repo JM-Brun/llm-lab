@@ -88,7 +88,7 @@ Ce schéma est une illustration originale et simplifiée, et non une reproductio
 
 Considérons deux occurrences du mot `situation` :
 
-- Extrait de la tirade : « de bonne ou de mauvaise situation » ;
+- Première formulation : « de bonne ou de mauvaise situation » ;
 - Dans une autre formulation : « la situation du scribe ».
 
 Pour isoler le mécanisme, supposons que le tokenizer attribue le même ID au mot dans les deux occurrences. Elles récupèrent alors le même **vecteur de plongement initial** :
@@ -103,7 +103,7 @@ Une précision : un mot visible ne correspond pas nécessairement à un seul tok
 
 Le lookup initial ne suffit pas à décrire l'entrée du réseau : l'architecture doit aussi traiter la position, puis les blocs Transformer construisent des états dépendant du contexte accessible. Le mécanisme positionnel varie selon les modèles ; un vecteur de position n'est donc pas toujours ajouté directement à l'embedding.
 
-### Une autre dépendance : la référence pronominale dans la tirade
+### Une autre dépendance : la référence pronominale
 
 Dans « moi je ne crois pas… », `moi` et `je` désignent le même locuteur. Les deux formes n'ont pas le même ID lexical, mais leur interprétation dépend de la situation d'énonciation et du contexte du dialogue.
 
