@@ -90,9 +90,10 @@ def _build_synthetic_relations(
         ):
             kind = candidates[(index + offset) % len(candidates)]
             definition = relation_types[kind]
-            if definition.get("direction") == "symmetric" and source >= target:
-                source, target = target, source
-            relations.append({"from": source, "type": kind, "to": target})
+            from_id, to_id = source, target
+            if definition.get("direction") == "symmetric" and from_id >= to_id:
+                from_id, to_id = to_id, from_id
+            relations.append({"from": from_id, "type": kind, "to": to_id})
     return relations
 
 
