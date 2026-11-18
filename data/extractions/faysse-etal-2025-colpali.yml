@@ -1,0 +1,52 @@
+schema_version: 1
+source_id: faysse-etal-2025-colpali
+scan:
+  accessed_at: "2026-11-18"
+  retrieval_method: direct-pdf
+  author_text: {status: partial, coverage: "ICLR 2025 paper: page-level retrieval, ViDoRe benchmark, ColPali architecture and late interaction, training data and reported results.", notes: ["Focused primary-source audit; no independent reproduction."]}
+  figures_media: {status: partial, coverage: "Figures 1-2 and Tables 1-2 inspected.", notes: ["No visual asset copied."]}
+  code_data: {status: not-inspected, coverage: null, notes: ["ColPali repository, checkpoints, ViDoRe data and evaluation scripts not independently executed or audited."]}
+  comments: {status: not-inspected, coverage: null, notes: []}
+  linked_resources: {status: partial, coverage: "Official ICLR proceedings record and published PDF.", notes: ["Repository, model weights and full benchmark data not audited."]}
+  metadata: {status: partial, coverage: "ICLR 2025.", notes: []}
+  rights: {status: unknown, coverage: null, notes: ["No figure reuse permission established; paraphrases and locators only."]}
+  unresolved_questions:
+    - "Verify storage and latency figures against exact appendix tables and hardware before reusing quantitative claims."
+    - "Reproduction requires pinned checkpoints, ViDoRe splits, index configuration and hardware."
+    - "Page-level retrieval does not itself return exact text spans or structured table values."
+items:
+  - id: faysse-etal-2025-colpali:vision-language-multi-vector-architecture
+    kind: architecture
+    summary: "ColPali adapts PaliGemma to encode document-page images and text queries as multi-vector representations in a shared 128-dimensional space. Page patch vectors are retained and matched to query token vectors by late interaction rather than collapsed into one document vector."
+    locator: {type: section, value: "§4.1, pp. 5-6; Eq. (1)", label: "ColPali architecture and late interaction"}
+    evidence: {kind: architecture-and-mathematical-method, confidence: established, scope: "ColPali architecture in the ICLR 2025 paper.", assumptions: [], limitations: ["Retrieval unit is the page, not an exact text span.", "Multi-vector representation increases index storage relative to a single-vector encoder."]}
+    technical_assessment: {status: correct, rationale: "The paper defines multi-vector query/page representations and late-interaction scoring.", corroborating_sources: []}
+    classification: {primary_theme: inference-efficiency, tags: [topic:visual-document-retrieval, topic:multimodal-rag, method:late-interaction, method:multi-vector], concept_ids: [retrieval-augmented-generation, contextualized-representation]}
+    candidate_destinations: {pages: [en/document-retrieval, fr/document-retrieval, en/cosine-similarity, fr/cosine-similarity], concepts: [retrieval-augmented-generation, contextualized-representation], route_ids: []}
+    disposition: integrate-by-reference
+    disposition_rationale: "Supports the existing visual-document retrieval example; no new concept is necessary."
+  - id: faysse-etal-2025-colpali:vidore-benchmark-design
+    kind: benchmark
+    summary: "ViDoRe evaluates page-level retrieval across academic and practical tasks, modalities, domains and English/French settings. Practical topic-specific sets use 1,000 pages and 100 human-filtered queries per topic; the paper describes query generation and filtering procedures."
+    locator: {type: section, value: "§3.1, Table 1, pp. 3-4", label: "ViDoRe benchmark design"}
+    evidence: {kind: benchmark-description, confidence: established, scope: "ViDoRe datasets and evaluation design in the ICLR 2025 paper.", assumptions: [], limitations: ["Finite task and domain coverage.", "Practical query generation uses a proprietary model followed by human filtering.", "Training/evaluation overlap must be interpreted per task and split."]}
+    technical_assessment: {status: qualified, rationale: "The paper documents the construction and scope; ViDoRe is not exhaustive of document retrieval.", corroborating_sources: []}
+    classification: {primary_theme: inference-efficiency, tags: [topic:visual-document-retrieval, topic:benchmark, method:zero-shot-evaluation], concept_ids: [retrieval-augmented-generation]}
+    candidate_destinations: {pages: [en/document-retrieval, fr/document-retrieval], concepts: [retrieval-augmented-generation], route_ids: []}
+    disposition: integrate-by-reference
+    disposition_rationale: "Clarifies the task denominator behind reported results."
+  - id: faysse-etal-2025-colpali:vidore-comparative-results
+    kind: result
+    summary: "Table 2 reports mean nDCG@5 of 81.3 for ColPali across the paper's ViDoRe tasks, versus 67.0 for Unstructured plus captioning with BGE-M3. These are benchmark-specific aggregate results with per-task variation."
+    locator: {type: section, value: "§5.1, Table 2, pp. 6-7", label: "ViDoRe nDCG@5 comparison"}
+    evidence: {kind: reported-benchmark-result, confidence: well-supported, scope: "ViDoRe task suite, evaluated systems and nDCG@5 protocol.", assumptions: [], limitations: ["Not a universal document-retrieval score.", "Do not conflate Table 2 aggregate values with rounded Figure 1 values or a different comparator."]}
+    technical_assessment: {status: qualified, rationale: "Values are reported in Table 2 and depend on the benchmark task composition.", corroborating_sources: []}
+    classification: {primary_theme: inference-efficiency, tags: [topic:visual-document-retrieval, topic:benchmark, method:late-interaction], concept_ids: [retrieval-augmented-generation]}
+    candidate_destinations: {pages: [en/document-retrieval, fr/document-retrieval], concepts: [], route_ids: []}
+    disposition: integrate-by-reference
+    disposition_rationale: "Retain the score only with its benchmark, metric and comparator named."
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "ColPali combines VLM-based page representations and late interaction. ViDoRe is a finite page-level benchmark; preserve the task scope and separate offline indexing from online latency."
