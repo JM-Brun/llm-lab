@@ -73,7 +73,6 @@ def test_cosine_top_k_rejects_undefined_or_invalid_requests(
         cosine_top_k(matrix, token_id, k)
 
 
-
 def test_cosine_top_k_is_stable_for_very_large_and_small_finite_rows() -> None:
     matrix = np.array(
         [
@@ -93,6 +92,7 @@ def test_cosine_top_k_accepts_numpy_integer_k() -> None:
     matrix = np.array([[1.0, 0.0], [0.0, 1.0], [-1.0, 0.0]])
     ids, _ = cosine_top_k(matrix, token_id=0, k=np.int64(1))
     np.testing.assert_array_equal(ids, [1])
+
 
 def test_cosine_top_k_excludes_zero_norm_candidates() -> None:
     matrix = np.array([[1.0, 0.0], [0.0, 0.0], [0.0, 1.0]])
