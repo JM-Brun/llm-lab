@@ -51,7 +51,7 @@ pedagogical_model:
 
 items:
   - id: kramar-atp-star-2024:atp-prefilter
-    kind: method
+    kind: claim
     summary: "AtP is proposed as an O(1)-pass gradient-based pre-filter for selecting components for more expensive activation-patching evaluation."
     locator: {type: section, value: "Abstract and method overview", label: "Source-local locator"}
     evidence:
