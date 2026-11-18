@@ -24,8 +24,8 @@ pedagogical_model:
         description: "Faithfulness measures whether ablating model edges outside a proposed circuit preserves task behavior under a specified protocol."
         locator: "Abstract and evaluation framing"
     edges:
-      - {from: src-eap, type: contributes-to, to: src-eap-ig}
-      - {from: src-eap-ig, type: produces, to: src-faithfulness}
+      - {from: src-eap-ig, type: approximates, to: src-eap}
+      - {from: src-eap-ig, type: evaluated-by, to: src-faithfulness}
     interpretation: "Source-local reconstruction only; it is not the canonical concept graph, a complete computational graph or an independent reproduction."
   learning_outcomes:
     - {status: inferred, outcome: "Distinguish the source's technical object, method, estimate, intervention and explanatory representation.", basis: "Editorial synthesis of the inspected source scope."}
