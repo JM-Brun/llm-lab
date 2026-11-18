@@ -27,7 +27,7 @@ ROOT = Path(__file__).resolve().parents[2]
 TOOLS = ROOT / "site" / "tools"
 sys.path.insert(0, str(TOOLS))
 
-from check_concept_registry import validate_registry  # noqa: E402
+from check_concept_registry import validate_registry  # noqa: E402, I001
 from page_index import load_published_pages  # noqa: E402
 
 
