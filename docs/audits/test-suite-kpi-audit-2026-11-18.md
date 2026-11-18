@@ -139,3 +139,35 @@ La CI actuelle exécute déjà la suite pytest complète avec deux workers (`pyt
 - [tests/unit/test_losses.py](../../tests/unit/test_losses.py) · [losses.py](../../src/llm_lab/foundations/losses.py)
 - [tests/unit/test_gpt_ops.py](../../tests/unit/test_gpt_ops.py) · [gpt_ops.py](../../src/llm_lab/foundations/gpt_ops.py)
 - [Contrat KPI](../project-kpis.md) · [CI](../../.github/workflows/ci.yml)
+
+
+## 10. Second review: TransformerBlock and assembled GPT
+
+The next audit pass reviewed `tests/unit/test_transformer_block.py`,
+`src/llm_lab/foundations/transformer_block.py`, `tests/unit/test_gpt.py`,
+and `src/llm_lab/foundations/gpt.py` on `main`.
+
+### Existing protections retained
+
+- TransformerBlock: forward shape and finite outputs; 3D input contract; head-count divisibility; depth-scaled initialization applied only to the two residual-output projections.
+- GPT: output shape and finite logits; invalid rank, dtype, empty inputs, context overflow and token range; same-seed reproducibility and different-seed divergence; prefix invariance; independently derived parameter-count formula.
+
+### High-value additions in the PR branch
+
+- TransformerBlock residual composition: replace the two sublayer functions with deterministic outputs and assert that both are added to the residual stream. This isolates the pre-LN residual wiring from the numerical behavior of attention and the MLP.
+- GPT batch independence: assert that an input sequence produces identical logits alone and as one item in a batch. This detects accidental cross-example mixing.
+- Loss batch-mean numerical boundary: two individually large but representable per-example losses must average to a finite value without overflowing an intermediate sum.
+
+These additions are in the branch but have not yet been confirmed by a new CI run. They are candidate invariant protections, not a measured ENG-02 score.
+
+### Remaining gaps worth considering later
+
+- TransformerBlock: test that the MLP preserves the batch/sequence dimensions and returns the configured embedding width; current full-forward coverage provides indirect protection, so a separate test is justified only if it adds a distinct failure signal.
+- GPT: test the position-embedding contribution or exact embedding-to-logit wiring only if a small deterministic test can isolate it without duplicating the end-to-end prefix and shape tests.
+- Mutation pilot: deliberately break one residual addition, introduce cross-batch mixing, remove causal masking, and alter the loss reduction. Record the exact failing assertion for each mutation. Restore the source after each mutation and do not commit intentionally broken code.
+
+### Updated validation status
+
+The first run on the earlier implementation commit `c35b7b50985946c6175ab0f848b98d0793faf7b9` passed the complete pytest job in approximately 58 seconds, Quarto and secret scanning. Ruff formatting passed, but Ruff lint failed on one `SIM117` nested-context finding. That finding was corrected in `b180b2a`.
+
+Subsequent commits add the corrected context-manager test, a batch-mean numerical boundary test, the TransformerBlock residual test and GPT batch-independence test. The GitHub Actions API did not report a new run for the latest commits at the time of this audit update. Therefore the initial pytest success does not validate these later additions, and lint/type-check on the corrected head remain unconfirmed.
