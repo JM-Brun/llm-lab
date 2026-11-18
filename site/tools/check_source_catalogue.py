@@ -332,9 +332,9 @@ def _validate_source_collections(
     for index, source in enumerate(source_entries):
         if not isinstance(source, dict):
             continue
-        memberships = source.get("collections")
-        if memberships is None:
+        if "collections" not in source:
             continue  # Transitional: human-reviewed backfill is a separate migration.
+        memberships = source["collections"]
         where = f"data/sources.yml:sources[{index}].collections"
         if not isinstance(memberships, list) or not all(
             isinstance(value, str) for value in memberships
