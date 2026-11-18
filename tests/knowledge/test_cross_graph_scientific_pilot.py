@@ -24,12 +24,7 @@ def _load_yaml(path: Path) -> dict[str, Any]:
 def test_attention_computation_resolves_to_primary_source_locator() -> None:
     concepts = _load_yaml(ROOT / "data" / "concepts.yml")
     computational = _load_yaml(ROOT / "data" / "computational-graph.yml")
-    extraction = _load_yaml(
-        ROOT
-        / "data"
-        / "extractions"
-        / "vaswani-et-al-attention-is-all-you-need-2017.yml"
-    )
+    extraction = _load_yaml(ROOT / "data" / "extractions" / "vaswani-et-al-attention-is-all-you-need-2017.yml")
 
     concept_ids = {item["id"] for item in concepts["concepts"]}
     assert {"attention-weight", "softmax", "entropy", "mutual-information"} <= concept_ids
@@ -42,18 +37,14 @@ def test_attention_computation_resolves_to_primary_source_locator() -> None:
         "value-aggregation",
     } <= nodes
 
-    edges = {
-        (item["from"], item["type"], item["to"])
-        for item in computational["edges"]
-    }
+    edges = {(item["from"], item["type"], item["to"]) for item in computational["edges"]}
     assert ("attention-softmax", "produces", "attention-weights") in edges
     assert ("attention-weights", "consumes", "value-aggregation") in edges
 
     item = next(
         item
         for item in extraction["items"]
-        if item["id"]
-        == "vaswani-et-al-attention-is-all-you-need-2017:scaled-dot-product-attention"
+        if item["id"] == "vaswani-et-al-attention-is-all-you-need-2017:scaled-dot-product-attention"
     )
     assert item["locator"]["type"] == "section"
     assert item["locator"]["value"] == "3.2.1"
@@ -74,9 +65,7 @@ def test_row_to_uniform_kl_is_not_mutual_information() -> None:
 
 
 def test_flashattention_evidence_is_an_io_implementation_not_source_coding() -> None:
-    extraction = _load_yaml(
-        ROOT / "data" / "extractions" / "dao-et-al-flashattention-2022.yml"
-    )
+    extraction = _load_yaml(ROOT / "data" / "extractions" / "dao-et-al-flashattention-2022.yml")
     item = next(
         item
         for item in extraction["items"]
