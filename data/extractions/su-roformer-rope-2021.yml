@@ -1,0 +1,123 @@
+schema_version: 1
+source_id: su-roformer-rope-2021
+items:
+  - id: su-roformer-rope-2021:rotary-qk-relative-offset
+    kind: derivation
+    summary: "RoPE applies a position-dependent rotation to each paired coordinate subspace of the projected query and key vectors. Because the rotation matrices are orthogonal and compose by adding angles, the query-key inner product for positions m and n can be rewritten using a rotation determined by the relative offset n-m; positional information therefore enters the attention score through the relative displacement."
+    locator: {type: section, value: "§§3.1–3.2, Eqs. (11)–(16)", label: "Formulation and general RoPE construction"}
+    evidence:
+      kind: mathematical-derivation
+      confidence: established
+      scope: "The paper's relative-position formulation, two-dimensional derivation, even-dimensional generalization and query-key score identity."
+      assumptions:
+        - "The rotary construction pairs coordinates into two-dimensional subspaces; the paper's general form assumes an even head dimension."
+        - "The relative-offset statement concerns the query-key inner product for fixed content vectors and the specified rotation schedule."
+      limitations:
+        - "Relative-position dependence of the score does not by itself imply that a trained model uses every offset in a useful way."
+        - "The identity does not guarantee reliable extrapolation beyond training sequence lengths."
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:positional-information, method:rotary-position-embedding]
+      concept_ids: [positional-encoding, query, key, attention-score]
+    candidate_destinations:
+      pages: [en/rope, fr/rope]
+      concepts: [positional-encoding]
+    disposition: integrate
+    disposition_rationale: "This is the paper's central mechanism and derivation, directly supporting the bilingual RoPE deep dive's pairwise rotation and relative-offset explanation."
+
+  - id: su-roformer-rope-2021:orthogonal-rotation-norm-preservation
+    kind: mechanism
+    summary: "The block-diagonal rotary matrix is orthogonal. Applying it to a query or key vector preserves that vector's Euclidean norm while changing its orientation according to position and the frequency assigned to each coordinate pair."
+    locator: {type: section, value: "§3.2, Eqs. (14)–(16)", label: "General rotary matrix"}
+    evidence:
+      kind: mathematical-claim
+      confidence: established
+      scope: "The paper explicitly identifies the rotary matrix as orthogonal and connects it to the query-key score construction."
+      assumptions:
+        - "The rotation is applied to complete two-coordinate pairs."
+      limitations:
+        - "Norm preservation for the rotation does not establish numerical stability of every implementation or of the full attention computation."
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:positional-information, method:rotary-position-embedding]
+      concept_ids: [positional-encoding]
+    candidate_destinations:
+      pages: [en/rope, fr/rope]
+      concepts: [positional-encoding]
+    disposition: integrate
+    disposition_rationale: "The orthogonality property explains a useful geometric invariant and is already used by the project explanation."
+
+  - id: su-roformer-rope-2021:frequency-schedule-long-term-decay
+    kind: claim
+    summary: "For the paper's geometrically spaced frequency schedule, the authors derive a bound involving partial sums across rotary frequencies and report that the average magnitude of those partial sums decreases as the relative position distance grows. This is an aggregate frequency-schedule property, not a claim that every individual pair contribution or every realized attention score decreases monotonically with distance."
+    locator: {type: section, value: "§§3.3–3.4.3, Eqs. (35)–(37), Fig. 2", label: "Long-term decay"}
+    evidence:
+      kind: mathematical-claim
+      confidence: established
+      scope: "The derivation by Abel transformation and the paper's stated behaviour of the average magnitude of the partial sums for its selected frequency schedule."
+      assumptions:
+        - "The frequency schedule is the one specified by the paper."
+        - "The decay statement concerns the aggregate partial-sum bound over frequencies."
+      limitations:
+        - "It is not a monotonicity guarantee for each pairwise contribution, attention logit, attention weight or learned dependency."
+        - "The authors state that they do not provide a faithful explanation for the model's superior long-text performance."
+    classification:
+      primary_theme: mathematical-tools-geometry
+      secondary_themes: [architectures-mechanisms]
+      tags: [topic:positional-information, method:rotary-position-embedding]
+      concept_ids: [positional-encoding, attention-score]
+    candidate_destinations:
+      pages: [en/rope, fr/rope]
+      concepts: [positional-encoding]
+    disposition: integrate
+    disposition_rationale: "The precise scope of the decay claim prevents an overstatement that RoPE automatically suppresses every long-distance attention score."
+
+  - id: su-roformer-rope-2021:linear-attention-adaptation
+    kind: mechanism
+    summary: "The paper adapts RoPE to a kernelized linear-attention formulation by applying the rotary matrices to the non-negative query and key feature maps. Its proposed expression leaves the denominator unchanged to avoid a zero-division risk; the numerator can contain negative terms, so the resulting coefficients are not strictly probabilistically normalized attention weights."
+    locator: {type: section, value: "§3.3, Eqs. (17)–(19)", label: "RoPE with linear attention"}
+    evidence:
+      kind: formal-derivation
+      confidence: established
+      scope: "The general similarity-based attention expression, its linear-attention factorization and the proposed rotary adaptation."
+      assumptions:
+        - "The linear-attention feature maps are those described in the paper."
+      limitations:
+        - "The paper itself notes that the resulting coefficients are not strictly probabilistic normalized weights."
+        - "This construction should not be conflated with standard softmax attention or assumed to apply unchanged to every linear-attention architecture."
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:positional-information, method:rotary-position-embedding]
+      concept_ids: [positional-encoding, self-attention]
+    candidate_destinations:
+      pages: [en/rope, fr/rope]
+      concepts: [positional-encoding]
+    disposition: integrate
+    disposition_rationale: "The bilingual deep dive discusses compatibility with linear attention; this item preserves the exact denominator and normalization caveat in the primary source."
+
+  - id: su-roformer-rope-2021:reported-benchmark-scope
+    kind: result
+    summary: "The paper reports experiments on WMT 2014 English-German translation, BERT-style masked-language-model pretraining, six GLUE tasks, Performer language modeling on Enwik8, and Chinese long-document tasks. Its reported comparisons are mixed rather than uniformly superior: the GLUE table favours RoFormer on three of six listed tasks, while the Chinese CAIL2019-SCM table reports 69.79% test accuracy for RoFormer at a 1,024-token cutoff versus 68.29% for its 512-token configuration."
+    locator: {type: section, value: "§§4.1–4.5, Tables 1–5 and §4.5.5", label: "Experiments, evaluation and stated limitations"}
+    evidence:
+      kind: experimental-result
+      confidence: well-supported
+      scope: "The paper's stated experimental settings, reported tables and explicit limitations."
+      assumptions:
+        - "Reported comparisons are interpreted within each experiment's own dataset, training setup, sequence length and metric."
+      limitations:
+        - "The paper does not provide an independent reproduction in this project."
+        - "The authors state that the faster-convergence and long-text performance advantages lack a faithful explanation."
+        - "These experiments do not establish universal superiority over alternative positional mechanisms or reliable arbitrary-length extrapolation."
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [probabilistic-foundations-training]
+      tags: [topic:positional-information, method:rotary-position-embedding]
+      concept_ids: [positional-encoding]
+    candidate_destinations:
+      pages: [en/rope, fr/rope]
+      concepts: [positional-encoding]
+    disposition: integrate
+    disposition_rationale: "The experiment scope and mixed GLUE outcomes support a calibrated account of what the original paper actually measured, rather than a blanket performance claim."
