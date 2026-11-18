@@ -11,8 +11,8 @@ stages:
       fr: [fr/llm-overview, fr/generation]
       en: [en/llm-overview, en/generation]
     optional_pages:
-      fr: [fr/transformer-architectures, fr/llm-limits]
-      en: [en/transformer-architectures, en/llm-limits]
+      fr: [fr/transformer-architectures, fr/llm-limits, fr/llm-evolution, fr/next-concept-modeling]
+      en: [en/transformer-architectures, en/llm-limits, en/llm-evolution, en/next-concept-modeling]
 
   - id: text-input
     title:
@@ -39,8 +39,8 @@ stages:
       fr: [fr/embedding-space, fr/positional-encoding, fr/contextualized-representations]
       en: [en/embedding-space, en/positional-encoding, en/contextualized-representations]
     optional_pages:
-      fr: [fr/tensors, fr/rope]
-      en: [en/tensors, en/rope]
+      fr: [fr/tensors, fr/rope, fr/sinusoidal-positional-encoding, fr/contextualized-representations-advanced, fr/embeddings-deep-dive]
+      en: [en/tensors, en/rope, en/sinusoidal-positional-encoding, en/contextualized-representations-advanced, en/embeddings-deep-dive]
 
   - id: computation
     title:
@@ -53,8 +53,8 @@ stages:
       fr: [fr/transformer, fr/queries-keys-values, fr/scaled-dot-product-attention, fr/causal-masking]
       en: [en/transformer, en/queries-keys-values, en/scaled-dot-product-attention, en/causal-masking]
     optional_pages:
-      fr: [fr/cross-attention, fr/attention-score-scaling]
-      en: [en/cross-attention, en/attention-score-scaling]
+      fr: [fr/cross-attention, fr/attention-score-scaling, fr/queries-keys-values-advanced, fr/multimodal-architectures, fr/hybrid-llm-architectures]
+      en: [en/cross-attention, en/attention-score-scaling, en/queries-keys-values-advanced, en/multimodal-architectures, en/hybrid-llm-architectures]
 
   - id: prediction
     title:
@@ -67,8 +67,8 @@ stages:
       fr: [fr/logits, fr/probabilites, fr/entropy]
       en: [en/logits, en/probabilities, en/entropy]
     optional_pages:
-      fr: []
-      en: []
+      fr: [fr/language-modeling-math, fr/mathematical-foundations]
+      en: [en/language-modeling-math, en/mathematical-foundations]
 
   - id: inference
     title:
@@ -81,8 +81,8 @@ stages:
       fr: [fr/generation]
       en: [en/generation]
     optional_pages:
-      fr: [fr/decoding-strategies]
-      en: [en/decoding-strategies]
+      fr: [fr/decoding-strategies, fr/llm-computational-complexity]
+      en: [en/decoding-strategies, en/llm-computational-complexity]
 
   - id: context-use
     title:
@@ -109,8 +109,8 @@ stages:
       fr: [fr/vraisemblance, fr/cross-entropy]
       en: [en/likelihood, en/cross-entropy]
     optional_pages:
-      fr: []
-      en: []
+      fr: [fr/language-modeling-math, fr/mathematical-foundations]
+      en: [en/language-modeling-math, en/mathematical-foundations]
 
   - id: training
     title:
@@ -123,8 +123,8 @@ stages:
       fr: [fr/loss, fr/gradients, fr/training-loop]
       en: [en/loss, en/gradients, en/training-loop]
     optional_pages:
-      fr: [fr/cross-entropy, fr/scaling-laws, fr/post-training]
-      en: [en/cross-entropy, en/scaling-laws, en/post-training]
+      fr: [fr/cross-entropy, fr/scaling-laws, fr/post-training, fr/mathematical-foundations, fr/score-centering]
+      en: [en/cross-entropy, en/scaling-laws, en/post-training, en/mathematical-foundations, en/score-centering]
 
 transitions:
   - id: predictive-distribution-to-generation
