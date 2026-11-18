@@ -26,7 +26,7 @@ def _value_shape(value: Any) -> str:
         return "http-url"
     if re.match(r"^(?:\d{1,2}:)?\d{1,2}:\d{2}(?:\.\d+)?$", text):
         return "timestamp-like"
-    if re.match(r"^(?:p(?:age)?\s*)?\d+(?:\s*[-–]\s*\d+)?$", text, re.IGNORECASE):
+    if re.match(r"^(?:p(?:age)?\s*)?\d+(?:\s*[-\\u2013]\s*\d+)?$", text, re.IGNORECASE):
         return "page-number-like"
     if re.search(r"(?:^|\b)(?:line|lines|l\.)\s*\d+", text, re.IGNORECASE):
         return "line-reference-like"
