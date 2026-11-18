@@ -133,3 +133,97 @@ Ne pas confondre codage de la source, compression du modèle (quantization/pruni
 ## 7. État de ce document
 
 Ce cahier de reprise décrit les informations vérifiées lors de la session du 18 novembre 2026. Il ne certifie pas que les PR sont fusionnables aujourd'hui, que les sources ont été relues ou que les conclusions scientifiques ont été validées. Refaire les vérifications live avant toute action.
+
+---
+
+## 8. Mise à jour de reprise — fin de session du 18 novembre 2026
+
+**Snapshot main contrôlé :** 67feb1fc528f73d253be0b4092dd64949291bd33.  
+**Branche documentaire :** docs/next-session-handoff-2026-11-18, créée depuis ce snapshot.  
+Les états GitHub ci-dessous ont été refetchés pendant cette session ; refaire les vérifications avant toute action.
+
+### 8.1 PR #1315 — workflows verts, revue humaine toujours bloquante
+
+- PR : https://github.com/JM-Brun/llm-lab/pull/1315
+- HEAD exact : 76aca6d5a4eb0c1ddb5e6a55a37d772a0d0f49e5
+- Base : main ; PR ouverte, non fusionnée, techniquement mergeable.
+- Checks sur ce HEAD exact :
+  - CI : success, run 44413627053.
+  - Secret scanning : success, run 44413627057.
+  - Quarto site : success, run 44413627164.
+- Reviews soumises : aucune. Inline review threads : aucun.
+- Un commentaire final a été ajouté à la PR pour consigner les trois succès et rappeler l'exigence de revue indépendante.
+
+**À faire :** obtenir une revue indépendante du diff et des deux tests de régression. Revoir le patch complet, pas seulement les descriptions. Ne pas fusionner tant que cette revue n'est pas présente et satisfaisante. Ne pas prétendre que les tests ont été exécutés localement dans cette session.
+
+### 8.2 #1306 — contrat livré, backfill toujours non réalisé
+
+- PR #1312 est fusionnée : contrat initial du registre et de l'appartenance explicite.
+- PR #1313 est fermée comme superseded, non fusionnée ; ne pas la réouvrir ni réutiliser ses affectations non approuvées.
+- PR #1315 complète le validateur : aucun champ collections dans une extraction ; validation du type de status avant test d'appartenance.
+- data/source-collections.yml est volontairement vide ; aucune appartenance source n'a été ajoutée.
+- Les deux dossiers de collection nommés explicitement sont :
+  - docs/source-reviews/qkv-source-collection.md
+  - docs/source-reviews/tokenization-embeddings-source-collection.md
+- Le dossier visuel docs/source-reviews/visual-learning-resources-2026-11.md ne suffit pas à décider qu'il constitue une collection autonome.
+- Les tags, thèmes, concepts, titres, chemins, citations et proximités documentaires ne sont jamais une preuve d'appartenance.
+
+**À faire après revue/fusion de #1315 :**
+1. Faire approuver les identités des collections (ID stable, titre, chemin canonique, périmètre, statut).
+2. Pour chaque source candidate, obtenir une décision explicite : collection(s) assignée(s), ou liste vide explicite. Conserver les cas ambigus non assignés.
+3. Réconcilier séparément les nombres de sources distinctes, fichiers d'extraction et items atomiques.
+4. N'ajouter les appartenances qu'après approbation, puis vérifier les comptes calculés par le validateur.
+5. Garder #1306 ouverte jusque-là.
+
+### 8.3 #1211 — couverture et prochaine source à traiter
+
+Instantané déclaré dans le corps courant de l'issue :
+- 139 sources canoniques ; 84 fichiers d'extraction ; 84 source_id déclarés uniques ; zéro ID d'extraction orphelin.
+- 55 sources sans extraction dédiée : file de revue, pas défaut automatique.
+- Parmi ces 55 : 27 dates de publication inconnues, 48 statuts de licence inconnus, 53 scans partiels et 2 sources inaccessibles.
+- Les noms de fichiers ne sont pas l'identité canonique : toutes les jointures utilisent le source_id YAML.
+
+**RoFormer / Su et al. (2021) : traité dans les artefacts existants**, pas à refaire :
+- data/extractions/su-roformer-rope-2021.yml : cinq items atomiques.
+- docs/source-reviews/roformer-rope-2021.md : revue primaire.
+- Pages RoPE et encodage positionnel FR/EN reliées.
+- La revue conserve l'absence de reproduction indépendante et les limites de généralisation.
+
+**Prochaine tranche recommandée : Goldman (2024) et Schmidt (2024)**, dans les pages tokenizer-design-evaluation FR/EN. Pour chacun : identifier précisément le claim, retrouver la version primaire, consigner protocole, échantillon, métriques, hypothèses et limites ; distinguer corrélation et preuve causale. Ensuite traiter Sentence-BERT, ColBERT/ColBERTv2, SPLADE/BEIR et ColPali selon la table de l'issue. Classer les 43 autres sources sans extraction sans en créer une par défaut.
+
+### 8.4 #156 et #163 — assets : ne pas confondre inventaire, provenance et licence
+
+- #156 reste ouverte.
+- Dernière mise à jour documentaire mentionnée dans l'issue : PR #1304 fusionnée, inventaire de 81 SVG locaux ; le diff de cette PR ne modifiait que le registre, pas les images ni les pages.
+- Les quatre SVG historiquement signalés pour confirmation de provenance sont : contextualization-pipeline-en.svg, contextualization-pipeline-fr.svg, transformer-stack-en.svg, transformer-stack-fr.svg. Vérifier le registre courant et les confirmations avant de les considérer résolus.
+- Les sources statiques identifient des images distantes et des mécanismes responsives, mais ne prouvent pas le currentSrc effectivement sélectionné, ni le succès réseau du rendu.
+- L'illustration Rushang Chauhan est documentée comme lien externe et non comme embed courant sur les pages contextualized-representations après #1308 ; ne pas la requalifier sans nouvelle preuve.
+- #163 porte la décision de licence asset-level ; aucune licence ne doit être inférée de la provenance. Les SVG restent exclus des licences MIT/CC BY-SA tant qu'aucune décision explicite n'est prise.
+
+**À faire :**
+1. Obtenir les confirmations propriétaires restantes ou les détails d'origine/adaptation.
+2. Réaliser l'inventaire DOM rendu FR/EN sur desktop et mobile : page, viewport, élément, currentSrc, src, srcset, sizes, alt, dimensions naturelles et résultat réseau.
+3. Dédupliquer sans supprimer les paramètres d'URL nécessaires à l'accès ; distinguer images intégrées et simples liens.
+4. Rattacher chaque observation au registre ; séparer disponibilité technique, provenance, droits et attribution.
+5. Préserver absolument les illustrations existantes : ne pas retirer, remplacer, masquer, désactiver ou convertir en lien dans le cadre de cet audit.
+
+### 8.5 ENG-02 — mutations non exécutées, KPI non mesuré
+
+- Inventaire candidat ATTENTION/LOSSES : docs/audits/eng-02-critical-invariants-inventory-2026-11-18.md.
+- Le décompte historique de 48 regroupements est retiré comme dénominateur ; granularité à poursuivre et approbation du dénominateur encore nécessaires.
+- ENG-02 reste **not measured**.
+- MUT-01 à MUT-05 n'ont pas été exécutées. Les tests présents et les inspections statiques ne prouvent pas leur sensibilité.
+- Protocole attendu : clone propre, SHA noté, une mutation à la fois, sentinelle ciblée, capture du résultat, restauration, git diff --exit-code, arbre propre et SHA inchangé. Pas de commit/push des mutations.
+
+**À faire :** reprendre les décompositions atomiques ATTENTION/LOSSES et concevoir le test discriminant GEN-03, puis exécuter les cinq mutations uniquement dans un véritable environnement local disponible. Ne publier aucun pourcentage avant approbation du dénominateur et exécution réelle.
+
+### 8.6 Ordre de reprise recommandé
+
+1. Refetcher #1315 et ses checks sur le HEAD actuel ; obtenir la revue indépendante ; fusion uniquement après approbation.
+2. Après fusion, reprendre #1306 avec les décisions explicites d'identité et d'appartenance ; ne pas remplir le registre par inférence.
+3. Sur #1211, traiter Goldman et Schmidt avec extraction seulement si elle ajoute une traçabilité claim-source réelle.
+4. Sur #156, obtenir les confirmations de provenance et préparer le protocole DOM rendu ; préserver tous les visuels.
+5. Reprendre ATTENTION/LOSSES et GEN-03 ; préparer l'environnement réel pour les mutations sans simuler de résultat.
+6. Après chaque lot, mettre à jour l'issue propriétaire et ce cahier de reprise avec SHA, fichiers, preuves, décisions et blocages.
+
+**Règle de session :** commencer par les états live et les SHA, ne jamais traiter un statut ancien comme actuel, et maintenir séparément les preuves statiques, les résultats CI, la revue humaine, le rendu navigateur et la sensibilité aux mutations.
