@@ -88,9 +88,7 @@ def test_report_joins_extractions_by_source_id_and_surfaces_review_queues(tmp_pa
     assert counts["extraction_source_references_unknown"] == 0
     assert counts["scan_history_status_mismatches"] == 1
     assert report["review_queues"]["integrated_sources_without_extraction"] == ["source-two"]
-    assert report["review_queues"]["sources_without_extraction_with_audit_record"] == [
-        "source-two"
-    ]
+    assert report["review_queues"]["sources_without_extraction_with_audit_record"] == ["source-two"]
     assert report["review_queues"]["sources_without_extraction_without_audit_record"] == []
 
 
