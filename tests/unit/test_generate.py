@@ -245,6 +245,8 @@ def test_generate_truncation_validation_errors() -> None:
         generate(model, prompt, 2, top_p=True)
     with pytest.raises(ValueError, match="top_p must be"):
         generate(model, prompt, 2, top_p="0.5")
+    with pytest.raises(ValueError, match="top_p must be"):
+        generate(model, prompt, 2, top_p=10**100)
 
 
 @pytest.mark.parametrize("temperature", [np.nan, np.inf, -np.inf])
