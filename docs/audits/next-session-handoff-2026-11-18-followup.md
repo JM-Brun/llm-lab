@@ -108,3 +108,47 @@ Les modifications effectuées via l'API GitHub ne constituent pas une exécution
 - [ ] Calcul des cosinus stable sur le domaine numérique retenu.
 - [ ] Cinq mutations manuelles exécutées et restaurées.
 - [ ] Inventaire atomique approuvé ; ENG-02 calculé ou laissé « not measured » avec justification.
+
+
+## Mise à jour de session — après premier retour CI et ouverture de #1292
+
+### PR #1287 — incident CI corrigé dans la branche
+
+- Le run CI `44381381047` avait échoué uniquement à l'étape `ruff format --check .`.
+- Le job `Test suite` avait réussi ; le job qualité échouait car la nouvelle ligne de paramétrage du test top-p dépassait le format attendu.
+- Formatage corrigé dans le commit `f30b5a85eca2e41ba552e0f86367f93ef9a76674`.
+- Le head a changé après ce run. Les contrôles doivent être vérifiés à nouveau sur le head actuel ; le résultat rouge précédent ne doit pas être confondu avec le statut du nouveau head.
+- Aucun pytest local n'a été exécuté.
+
+### PR #1292 — corrections GPT-2 proposées
+
+URL : https://github.com/JM-Brun/llm-lab/pull/1292
+
+Head actuel à l'ouverture : `de64becce0c0e2878526f92fdb6991e44ca93338`, base `main` au commit `7650eaa433960bf382746f19622935fcac28851c`.
+
+Changements :
+- Normalisation explicite des noms et rejet des collisions préfixées/non préfixées.
+- Validation de type réel entier/flottant, finitude avant conversion et finitude après conversion float64.
+- Test d'atomicité étendu à tous les attributs paramètres ndarray du modèle et des blocs, après suppression d'un paramètre du dernier bloc.
+- Cas invalides testés sur un biais du dernier bloc : NaN, ±inf, complexe, object et longdouble hors plage float64.
+
+**À vérifier avant de promouvoir la PR :**
+- La CI et Quarto doivent être déclenchés et réussir sur le head exact.
+- Examiner les logs si un test échoue, notamment le cas `np.longdouble("1e400")`, qui dépend de la plage de longdouble de la plateforme.
+- Vérifier que les snapshots couvrent tous les tableaux paramètres du modèle et des blocs.
+- Vérifier que les deux cas de collision (valeurs égales et différentes) sont effectivement exécutés.
+- Revoir le contrat sur les noms de clés non textuels : actuellement le type de clé est supposé être str, conformément au contrat state-dict.
+
+### PR #1290 — documentation
+
+Les contrôles CI, Quarto et secret scanning ont tous réussi sur le head `8b6b14f8b3942994eb631d95eab0bd609c5f2e1f`. La PR reste ouverte en brouillon ; elle n'est pas fusionnée.
+
+### Embedding inspection — plan technique précisé
+
+La norme euclidienne directe est remplacée conceptuellement par une normalisation ligne par ligne :
+1. calculer le maximum absolu de chaque ligne ;
+2. diviser la ligne par ce maximum (en laissant les lignes nulles à zéro) ;
+3. calculer la norme de la ligne mise à l'échelle, dont les composantes sont bornées ;
+4. normaliser les lignes non nulles, puis calculer les produits scalaires entre vecteurs normalisés.
+
+Cette approche évite le débordement de la somme des carrés pour des entrées finies float64. Accepter `np.integer` pour `k` et rejeter `bool`/`np.bool_`. Ajouter des tests avec des lignes de très grande et très petite amplitude, plus un test positif pour `np.int64`.
