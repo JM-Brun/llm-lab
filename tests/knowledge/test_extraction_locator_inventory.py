@@ -84,7 +84,7 @@ def test_yaml_error_diagnostics_do_not_disclose_source_text(tmp_path: Path) -> N
     sentinel = "PRIVATE_SOURCE_SENTINEL_7f3a91"
     extraction = tmp_path / "data" / "extractions" / "malformed.yml"
     extraction.parent.mkdir(parents=True, exist_ok=True)
-    extraction.write_text(f"items:\\n  - locator: [\\n    {sentinel}: value\\n", encoding="utf-8")
+    extraction.write_text(f"items:\n  - locator: [\n    {sentinel}: value\n", encoding="utf-8")
 
     report = MODULE.collect_inventory(tmp_path)
 
@@ -103,7 +103,7 @@ def test_invalid_structure_diagnostic_is_fixed_and_source_free(tmp_path: Path) -
     sentinel = "PRIVATE_STRUCTURE_SENTINEL_91ac"
     extraction = tmp_path / "data" / "extractions" / "structure.yml"
     extraction.parent.mkdir(parents=True, exist_ok=True)
-    extraction.write_text(f"{sentinel}: not-an-items-list\\n", encoding="utf-8")
+    extraction.write_text(f"{sentinel}: not-an-items-list\n", encoding="utf-8")
 
     report = MODULE.collect_inventory(tmp_path)
 
