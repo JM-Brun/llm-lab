@@ -318,3 +318,52 @@ No existing relation type precisely expresses “maps to ideal code length under
 - [ ] FR/EN pages preserve pedagogical parity without forcing identical examples.
 - [ ] Focused and full validation commands/results are recorded; no unrun test is marked complete.
 - [ ] Issue #1237 is closed only after the evidence path and validation criteria are met.
+
+## 11. Primary-source evidence for predictive coding / Sources primaires du codage prédictif
+
+**Review date:** 2026-11-18  
+**Status:** three primary sources catalogued and extracted; no coder implementation or test execution claimed.
+
+### 11.1 Primary sources and exact evidence locators
+
+| Source / extraction | Exact locator inspected | Supported claim | Boundary |
+|---|---|---|---|
+| Shannon (1948), `shannon-mathematical-theory-communication-1948` | §7, pp. 12–14, Theorems 3–6; §9, pp. 16–17, Theorem 9 and second proof | Finite-state source entropy is a weighted conditional entropy; lossless coding approaches the entropy-limited average rate. The finite-block construction uses integer binary code lengths bounded by ideal negative-log probability plus less than one bit per block. | Asymptotic/average source-coding theorem, not exact finite model-NLL-to-file-size identity. |
+| Rissanen & Langdon (1979), `rissanen-langdon-arithmetic-coding-1979` | pp. 149–152, Eqs. (1)–(5); “Decodability criteria,” pp. 157–159 | Arithmetic coding relates probability-derived ideal lengths to code construction and explicitly analyzes finite-precision approximations and invertibility. | A family of finite-state arithmetic codes, not a universal specification for every range coder; scanned PDF has OCR artefacts. |
+| Witten, Neal & Cleary (1987), `witten-neal-cleary-arithmetic-coding-1987` | pp. 520–521, “Data Compression”; pp. 521–523, interval example and Fig. 2; pp. 523–527, Figs. 2–3 and implementation discussion | Encoder and decoder must reproduce the same conditional model in the same context; interval narrowing, EOF termination, integer state and finalization are explicit. | Historical implementation reference; code and reported performance were not rerun. |
+
+The detailed source review is `docs/source-reviews/predictive-coding-primary-sources-2026-11.md`. Machine-readable source records and extraction items are now present in `data/sources.yml` and:
+- `data/extractions/shannon-mathematical-theory-communication-1948.yml`
+- `data/extractions/rissanen-langdon-arithmetic-coding-1979.yml`
+- `data/extractions/witten-neal-cleary-arithmetic-coding-1987.yml`
+
+### 11.2 Refined mathematical and implementation contract
+
+For an autoregressive predictor (q), the ideal sequence cost remains:
+
+`L_q(x_{1:n})=-\\sum_{i=1}^{n}\\log_2 q(x_i\\mid x_{<i})`.
+
+This is a model-assigned ideal cost, not by itself a complete lossless file format. Encoder and decoder must agree on tokenization, support/vocabulary, context initialization, model parameters, probability quantization, symbol ordering, integer-frequency construction, update rules and termination/framing.
+
+A further distinction is now explicit for the experiment: if floating-point probabilities are converted to integer cumulative frequencies, the coder operates on an **effective quantized distribution**. Report separately:
+1. floating-point NLL under the declared model (q);
+2. ideal cost under the coder's effective quantized probabilities;
+3. emitted payload bits;
+4. serialized bytes;
+5. termination, padding, header and framing overhead.
+
+This avoids treating the original model NLL as though it were automatically the exact cost of a finite integer arithmetic coder.
+
+### 11.3 Decisions and remaining work
+
+- [x] Catalogue Shannon's source-coding theorem with section, theorem and page locators.
+- [x] Catalogue Rissanen–Langdon's arithmetic-coding and finite-precision/decodability treatment.
+- [x] Catalogue Witten–Neal–Cleary's operational shared-model and encoder/decoder contract.
+- [x] Add source records and source-local extraction items without adding concepts or canonical edges.
+- [ ] Inspect the repository's extraction/source validators and run the focused validation commands against the new records.
+- [ ] Review existing claim/provenance structures for a scoped mathematical statement with assumptions and exact source locators.
+- [ ] Implement a deterministic conditional coder/decoder and exact round-trip tests; distinguish original-model NLL from effective quantized-model cost and actual file size.
+- [ ] Add positive and negative tests, then update bilingual learning pages while preserving their distinct examples.
+- [ ] Run the locked full validation suite and record actual commands/results before promoting any canonical relation.
+
+No test is marked as passed by this documentation/source-ingestion step.
