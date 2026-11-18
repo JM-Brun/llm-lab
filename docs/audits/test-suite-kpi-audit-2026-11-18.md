@@ -194,3 +194,6 @@ the full workflow complete successfully.
 The test job on the expanded head is independent evidence that the new tests
 present at that SHA passed as part of the full suite. The formatting-only failure
 does not invalidate that test result, but it does prevent declaring the PR green.
+
+
+A subsequent source review found that the first whitespace-only follow-up (`133fe83`) had removed the wrong blank line: it left only one blank line between the large-loss test and the next test definition. The formatter finding therefore remained unresolved despite the commit message. This was corrected explicitly in `8eacc07a0584a114f050bc684a14b2efe1679de9` by restoring the required separation. The current PR head is later than the last observed workflow run; no CI validation for this exact correction is available yet. This correction supersedes the earlier claim that `133fe83` had resolved formatting.
