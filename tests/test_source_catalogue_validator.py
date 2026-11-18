@@ -333,3 +333,49 @@ def test_extraction_tag_namespace_and_duplicates_are_checked(tmp_path: Path) -> 
     errors = MODULE.validate_source_catalogue(tmp_path)
 
     assert any("classification.tags: duplicate tags" in error for error in errors)
+
+def test_valid_community_provenance_and_verification_are_accepted(tmp_path: Path) -> None:
+    _corpus(tmp_path, with_extraction=True)
+    extraction_path = tmp_path / "data" / "extractions" / "example-source.yml"
+    data = yaml.safe_load(extraction_path.read_text(encoding="utf-8"))
+    item = data["items"][0]
+    item["provenance"] = {
+        "voice": "reader-comment",
+        "parent_source_id": "example-source",
+        "locator": {"type": "comment", "value": "Comment 42"},
+        "captured_at": "2026-11-18T12:00:00Z",
+    }
+    item["verification"] = {
+        "status": "corroborated",
+        "sources": ["example-source", "https://example.org/independent-note"],
+    }
+    _write_yaml(extraction_path, data)
+
+    assert MODULE.validate_source_catalogue(tmp_path) == []
+
+
+def test_invalid_community_provenance_and_verification_are_rejected(tmp_path: Path) -> None:
+    _corpus(tmp_path, with_extraction=True)
+    extraction_path = tmp_path / "data" / "extractions" / "example-source.yml"
+    data = yaml.safe_load(extraction_path.read_text(encoding="utf-8"))
+    item = data["items"][0]
+    item["provenance"] = {
+        "voice": "anonymous-crowd",
+        "parent_source_id": "missing-source",
+        "locator": "Comment 42",
+        "captured_at": "not-a-date",
+    }
+    item["verification"] = {
+        "status": "probably-true",
+        "sources": ["missing-source"],
+    }
+    _write_yaml(extraction_path, data)
+
+    errors = MODULE.validate_source_catalogue(tmp_path)
+
+    assert any("provenance.voice: unsupported voice" in error for error in errors)
+    assert any("provenance.parent_source_id: unknown source" in error for error in errors)
+    assert any("provenance.locator: expected a mapping" in error for error in errors)
+    assert any("provenance.captured_at: expected ISO 8601 date" in error for error in errors)
+    assert any("verification.status: unsupported status" in error for error in errors)
+    assert any("verification.sources: unknown source 'missing-source'" in error for error in errors)
