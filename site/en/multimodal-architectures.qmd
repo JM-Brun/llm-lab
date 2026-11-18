@@ -23,6 +23,8 @@ related: ["en/llm-overview", "en/cross-attention", "en/generation", "en/transfor
 tags: ["type:concept-lesson", "destination:deepen", "topic:multimodal-architectures", "level:advanced", "language:en", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-en-multimodal-architectures.qmd >}}
+
 ::: {.chapter-lead}
 A model that **accepts** an image cannot necessarily **produce** one. “Multimodal” may refer to understanding non-text inputs, generating non-text outputs, or both. To understand an architecture, trace the representations entering the model separately from those leaving it.
 :::
