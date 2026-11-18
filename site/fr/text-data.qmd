@@ -31,7 +31,7 @@ La **tokenisation** découpe le texte en unités appelées *tokens* et associe c
 :::
 
 ::: {.callout-note title="Texte à encoder"}
-Le préfixe à encoder est : **« C'est une bonne situation, ça, scribe ? »** La continuation commence par : **« Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation… »**
+Le préfixe à encoder est : **« Un modèle reçoit un texte écrit par une personne. »** La continuation commence par : **« Il le transforme en tokens avant de le traiter. »**
 
 Tokenisez d'abord le préfixe, puis la continuation, avec le tokenizer effectivement étudié. Ne supposez pas que les frontières de tokens correspondent aux mots. Les IDs obtenus dépendent du tokenizer ; ils ne sont pas universels.
 
