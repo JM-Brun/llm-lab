@@ -59,6 +59,7 @@ def build_report(root: Path) -> dict[str, Any]:
     orphan_extractions.extend(unknown_extraction_sources)
 
     concept_sources: dict[str, set[str]] = defaultdict(set)
+    unknown_concept_references: set[str] = set()
     source_without_concept: list[str] = []
     source_without_destination: list[str] = []
     sources_without_extraction: list[dict[str, str]] = []
@@ -116,6 +117,7 @@ def build_report(root: Path) -> dict[str, Any]:
                         if isinstance(value, str)
                     )
 
+        unknown_concept_references.update(concept_ids - known_concepts)
         valid_concepts = concept_ids & known_concepts
         for concept_id in valid_concepts:
             concept_sources[concept_id].add(source_id)
@@ -164,6 +166,7 @@ def build_report(root: Path) -> dict[str, Any]:
             "publication_dates_unknown": len(unknown_dates),
             "licence_status_unknown": len(unknown_licences),
             "extraction_source_references_unknown": len(orphan_extractions),
+            "concept_references_unknown": len(unknown_concept_references),
             "scan_history_status_mismatches": len(scan_history_mismatches),
         },
         "status_distribution": {
@@ -184,6 +187,7 @@ def build_report(root: Path) -> dict[str, Any]:
             "publication_dates_unknown": sorted(unknown_dates),
             "licence_status_unknown": sorted(unknown_licences),
             "extraction_source_references_unknown": sorted(orphan_extractions),
+            "concept_references_unknown": sorted(unknown_concept_references),
             "scan_history_status_mismatches": sorted(scan_history_mismatches),
         },
         "interpretation": {
