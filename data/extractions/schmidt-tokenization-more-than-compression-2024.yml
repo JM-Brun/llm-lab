@@ -57,7 +57,7 @@ items:
     disposition: integrate-by-reference
     disposition_rationale: "The decomposition provides a useful framework for comparing design choices in the existing advanced lesson."
   - id: schmidt-tokenization-more-than-compression-2024:pathpiece-minimum-token-segmentation
-    kind: method
+    kind: mechanism
     summary: "PathPiece finds a minimum-token segmentation for a fixed vocabulary by shortest-path dynamic programming over byte positions; its vocabulary-construction procedure then heuristically removes tokens to reduce corpus token count."
     locator: {type: section, value: "§3.1–3.2, pp. 680–681; Algorithm 1", label: "PathPiece segmentation and vocabulary construction"}
     evidence:
