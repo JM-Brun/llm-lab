@@ -41,7 +41,7 @@ pedagogical_model:
       - {from: src-data-curation, type: supplies, to: src-pretraining}
       - {from: src-tokenization, type: represents-input-for, to: src-neural-network}
       - {from: src-neural-network, type: instantiated-as, to: src-transformer}
-      - {from: src-type: optimized-for, to: src-next-token-objective}
+      - {from: src-transformer, type: optimized-for, to: src-next-token-objective}
       - {from: src-next-token-objective, type: drives, to: src-pretraining}
       - {from: src-pretraining, type: produces, to: src-base-model}
       - {from: src-base-model, type: used-by, to: src-autoregressive-inference}
