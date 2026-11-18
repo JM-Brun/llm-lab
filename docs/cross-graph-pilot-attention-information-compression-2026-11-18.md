@@ -1,7 +1,7 @@
 # Cross-graph scientific pilot: attention, information theory and compression
 
 **Date:** 2026-11-18  
-**Status:** repository-grounded inventory and manual traversal review, with a narrow deterministic regression fixture for the attention evidence path, the KL/MI counterexample and FlashAttention's IO scope; not a general cross-graph query benchmark or a fresh full experiment run.  
+**Status:** repository-grounded inventory and manual traversal review, with three deterministic regression tests for the attention evidence path, the KL/MI counterexample and FlashAttention's IO scope; not a general cross-graph query benchmark or a fresh full experiment run.  
 **Parent tracking:** [#1233](https://github.com/JM-Brun/llm-lab/issues/1233) · [scientific pilot #1237](https://github.com/JM-Brun/llm-lab/issues/1237)
 
 ## Purpose and method
@@ -114,9 +114,9 @@ The source-to-extraction path is strongest for Vaswani and Dao. The information-
 
 1. Keep the current canonical owners and graph vocabularies. No new schema or global bridge registry is justified by this pilot.
 2. If a machine-readable traversal is implemented, derive its joins from existing IDs and relationships; retain edge category, source status, locator, assumptions and limitations in the returned path.
-3. Add a small deterministic test fixture for the nine candidates above only after choosing the existing validator/test owner. Include accepted, rejected and unresolved cases.
+3. Extend `tests/knowledge/test_cross_graph_scientific_pilot.py` selectively: it currently protects three of the reviewed cases (attention-to-source locator, KL/MI negative control, FlashAttention IO scope). Add further assertions only where they test a distinct invariant; do not duplicate the existing manual candidate table or imply that all nine cases are automated.
 4. Test bilingual rendered page parity separately from metadata/resource registration.
-5. Re-run the existing experiment commands and tests in CI or a controlled local environment, recording exact commit, interpreter/dependencies and outputs.
+5. Confirm the exact CI run and head SHA that exercised `tests/knowledge/test_cross_graph_scientific_pilot.py`; separately re-run the existing experiment commands in CI or a controlled local environment, recording exact commit, interpreter/dependencies and outputs. Static inspection and a passing test are not a fresh experiment reproduction.
 6. Extend the same protocol to compression/model deployment only after checkpoint size, predictive quality, peak runtime memory, HBM traffic, latency, throughput and bits/token are separately defined.
 
 **No new canonical concepts, relations, source records or experiment claims are proposed by this report.**
