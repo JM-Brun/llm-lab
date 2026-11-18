@@ -4241,7 +4241,7 @@ sources:
       primary_theme: architectures-mechanisms
       secondary_themes: [mathematical-tools-geometry]
       tags: [topic:mechanistic-interpretability, topic:sparse-autoencoders, topic:features, topic:attribution-graphs, modality:interactive-visualization]
-      concept_ids: []
+      concept_ids: [contextualized-representation, self-attention]
     metadata:
       technical_level: advanced
       contribution_types: [visualization, experiment, pedagogy]
@@ -4269,7 +4269,7 @@ sources:
           - "No screenshot, dataset or figure reuse rights were established."
     related:
       pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced, fr/llm-limits, en/llm-limits]
-      concepts: []
+      concepts: [contextualized-representation, self-attention]
       audit_records: [docs/source-reviews/visual-learning-resources-2026-11.md, docs/source-reviews/embedding-atlas-neuronpedia-integration-2026-11.md]
 
   - id: apple-embedding-atlas
@@ -4336,7 +4336,7 @@ sources:
       primary_theme: probabilistic-foundations-training
       secondary_themes: []
       tags: [topic:training-loop, topic:remote-training, topic:gpu-compute, ecosystem:huggingface, modality:video]
-      concept_ids: []
+      concept_ids: [training-example, next-token-prediction, training-objective, cross-entropy, causal-mask, self-attention, positional-encoding]
     metadata:
       technical_level: intermediate
       contribution_types: [implementation, pedagogy]
@@ -4373,7 +4373,7 @@ sources:
           - "No licence or reuse permission was established; code and text remain link-only."
     related:
       pages: [fr/training-loop, en/training-loop, fr/build-path, en/build-path, fr/evaluation-experimentale, en/experimental-evaluation]
-      concepts: []
+      concepts: [training-example, next-token-prediction, training-objective, cross-entropy, causal-mask, self-attention, positional-encoding]
       audit_records:
         - docs/source-reviews/huggingface-jobs-nanogpt-video-2026-11.md
         - data/extractions/huggingface-jobs-nanogpt-video-2026.yml
