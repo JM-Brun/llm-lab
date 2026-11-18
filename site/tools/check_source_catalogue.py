@@ -410,7 +410,7 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
     item_ids: set[str] = set()
     extraction_files = sorted(extraction_dir.glob("*.yml"))
     for path in extraction_files:
-        where = str(path.relative_to(ROOT))
+        where = str(path.relative_to(root))
         data = _load_yaml(path, root, errors)
         if not isinstance(data, dict) or data.get("schema_version") != 1:
             errors.append(f"{where}: expected schema_version: 1")
