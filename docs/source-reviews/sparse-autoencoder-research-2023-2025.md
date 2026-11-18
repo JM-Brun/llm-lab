@@ -1,12 +1,12 @@
 # Sparse autoencoder research: source review and concept implications (2023–2025)
 
 **Review date:** 2026-11-18  
-**Review depth:** full-paper sections audited for Cunningham et al., Gao et al. and Chanin et al.; metadata/abstract-level review only for Bricken et al. and Shu et al.; full audit still pending  
+**Review depth:** full-paper sections audited for Cunningham et al., Gao et al., Chanin et al. and Shu et al.; metadata/overview-level review only for Bricken et al.; full audit still pending  
 **Purpose:** ground the proposed SAE and mechanistic-interpretability concepts in distinct primary sources and keep evidence, method and interpretation layers separate.
 
 ## 1. Scope and status
 
-Five scientific sources are registered separately in `data/sources.yml`. Their catalogue records deliberately remain `scan_status: partially-scanned` and `integration_status: partially-integrated`. Official publisher/proceedings metadata and abstracts were checked for all five; the full published papers of Cunningham et al., Gao et al. and Chanin et al. were then inspected for their main methods, evaluation protocols and limitations. Bricken et al. and Shu et al. remain overview/abstract-level. Code and checkpoints were not run, and not every appendix or cited work has been audited.
+Five scientific sources are registered separately in `data/sources.yml`. Their catalogue records deliberately remain `scan_status: partially-scanned` and `integration_status: partially-integrated`. Official publisher/proceedings metadata and abstracts were checked for all five; the full published papers of Cunningham et al., Gao et al., Chanin et al. and Shu et al. were inspected for their main methods, evaluation protocols and limitations. Bricken et al. remains overview-level because the original long-form page could not be fully retrieved in this pass. Code and checkpoints were not run, and not every appendix or cited work has been audited.
 
 No source in this review is treated as independently reproduced. The sources provide reported findings and technical framing, not direct measurements made by LLM Lab.
 
@@ -71,6 +71,21 @@ The full papers make several ontology boundaries more precise than their abstrac
 The resulting practical rule is stronger than "inspect counterexamples": test both **precision** (what else activates?) and **recall** (what expected cases fail to activate?), then use a method-specific intervention only when a causal claim is needed. Record the model, layer/hook, token position, preprocessing, SAE architecture, latent index, encoder/decoder directions, evaluation metric and intervention protocol.
 
 
+
+### 2.7 Full-survey cross-check: explanation methods and evaluation are separate taxonomies
+
+The full Shu et al. survey is useful as a field map, but its taxonomies should not be mistaken for a single agreed ontology:
+
+- **Input-based explanations:** MaxAct selects highly activating text spans; PruningMaxAct removes context while attempting to retain activation. The survey reports a precision/recall trade-off for pruning, drawing on Gao et al. These are procedures for generating evidence/examples, not the feature itself.
+- **Output-based explanations:** VocabProj projects a decoder feature direction onto output embeddings; MutInfo adds a mutual-information formulation to reduce frequency/norm-driven ambiguity. These methods depend on model architecture and embedding geometry; they are not universal feature semantics.
+- **Structural evaluation:** reconstruction MSE/cosine similarity, FVU/explained variance, KL or cross-entropy shifts, delta language-model loss, activation-magnitude preservation, L0 sparsity, latent firing frequency, feature-density statistics and sparsity/fidelity trade-offs.
+- **Functional evaluation:** feature-description/monosemanticity scoring, sparse probing, targeted probe perturbation, input/output description faithfulness, feature absorption, feature-geometry redundancy and out-of-distribution generalization.
+- **No ground-truth shortcut:** the survey explicitly notes that SAE evaluation lacks general ground-truth labels. Different metrics operationalize different questions; a high score in one family does not establish correctness across the others.
+- **Survey limitation:** the paper focuses on SAE developments in the LLM era and does not comprehensively cover the history of related ideas in distributed representations, disentangled representation learning or sparse coding. Use it to navigate and classify the literature, then follow its references to primary sources.
+
+This taxonomy reinforces a key modelling decision: **feature explanation method**, **evidence sample**, **evaluation metric**, **feature latent** and **causal intervention** should remain distinct categories. A MaxAct panel or VocabProj token list is not a concept node; it is output from a method applied to a feature under a defined model and dataset.
+
+
 ## 3. Cross-source synthesis: what the evidence supports
 
 1. **SAEs are auxiliary analysis models.** They learn a sparse representation of activations from a selected target-model site. The SAE is not itself a Transformer layer or a native component of the target model.
@@ -79,7 +94,7 @@ The resulting practical rule is stronger than "inspect counterexamples": test bo
 4. **Interpretability is not one metric.** Reconstruction fidelity, sparsity, dead-latent rate, feature recovery, explanation quality, coverage and downstream effects answer different questions.
 5. **Positive examples are insufficient.** Feature splitting and absorption make expected-positive misses and hierarchical counterexamples especially important. A feature may have a clear set of top activations yet poor recall on cases its description predicts.
 6. **Descriptions and causal claims are different.** A human-readable or model-generated label is a hypothesis; a causal claim requires a defined intervention and suitable controls. Cunningham's activation-patching result and Chanin's ablation-based absorption metric each depend on their own task, layer and metric; neither validates every feature or circuit.
-7. **Surveys are navigation aids.** The Shu et al. survey helps structure further reading, but source-level claims should point to the primary paper that establishes them.
+7. **Surveys are navigation aids.** The Shu et al. survey distinguishes input-based and output-based explanation methods, structural and functional metrics, and application areas. Its categories are useful for navigation, but source-level empirical claims must point to the primary paper that establishes them.
 
 ## 4. Implications for the canonical concept graph
 
