@@ -263,6 +263,7 @@ def test_generate_rejects_nonfinite_temperature(temperature: float, greedy: bool
             rng=np.random.default_rng(0),
         )
 
+
 def test_generate_passes_exact_sliding_windows_to_model_forward() -> None:
     class RecordingModel:
         config = type("Config", (), {"context_length": 3, "vocab_size": 11})()
