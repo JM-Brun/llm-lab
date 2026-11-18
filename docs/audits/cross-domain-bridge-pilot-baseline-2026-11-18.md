@@ -230,3 +230,91 @@ The equality in the second case is incidental: the contrasting rows induce a uni
 - [ ] Review the candidate cross-entropy/NLL → predictive-compression relation before any canonical edge change.
 - [ ] Add a machine-readable benchmark only if an existing experiment/test format cannot express these reviewed cases without creating a second graph.
 
+
+
+## 10. Follow-up review: predictive loss and coding cost / Revue complémentaire : perte prédictive et coût de codage
+
+**Review date:** 2026-11-18  
+**Status:** canonical-registry inspection and decision recorded; no graph mutation; no test execution claimed.
+
+### 10.1 What was verified in the current registry
+
+The canonical registry already contains the bilingual concepts:
+- `cross-entropy`
+- `negative-log-likelihood`
+- `surprisal`
+- `predictive-compression`
+- `entropy-coding`
+- `arithmetic-coding`
+
+The existing relation vocabulary and edges already express part of the story:
+- `predictive-compression --applies-to--> conditional-distribution`
+- `predictive-compression --contributes-to--> entropy-coding`
+- `surprisal --contributes-to--> predictive-compression`
+- `arithmetic-coding --part-of--> entropy-coding`
+- `negative-log-likelihood --contributes-to--> training-objective`
+- `cross-entropy --prerequisite--> training-objective`
+
+Therefore, the earlier gap description must be narrowed: the registry is not missing all connections between prediction and coding. It is missing an explicit, semantically precise, evidence-bearing statement of the conditional mapping from a model's token-level predictive loss to ideal code length under a compatible coding protocol.
+
+### 10.2 Mathematical boundary
+
+For a fixed conditional model (q), observed token sequence (x_1,\ldots,x_n), and logarithms base 2, the model-assigned ideal information cost is:
+
+`L_q(x_1,\ldots,x_n) = -\\sum_{i=1}^{n} \\log_2 q(x_i \\mid x_{<i})`
+bits.
+
+This is the idealized probabilistic coding cost associated with that model. To turn it into an actual lossless code, the encoder and decoder must share the model and all relevant conventions (tokenization, probability precision/quantization, context initialization, symbol support, termination/framing and protocol). A practical finite file can include overhead and implementation constraints; its byte length is not automatically equal to the summed NLL.
+
+Under a true data distribution (P), expected per-symbol log loss of (q) is cross-entropy (H(P,q)). It equals source entropy (H(P)) only when the predictive distribution matches the source in the relevant sense. Token-level NLL on one-hot observed targets equals token-level cross-entropy, but that identity alone does not create an encoder, decoder or exact file-size guarantee.
+
+### 10.3 Existing experiment boundary
+
+The current `experiments/information-theory/compression.py` experiment:
+- generates constant, IID-uniform and symmetric first-order Markov sequences with fixed seeds;
+- compares known marginal entropy and source entropy rate;
+- compresses raw uint8 bytes with zlib level 9;
+- reports finite compressed size including container overhead.
+
+It is a useful deterministic source-entropy / practical-compressor comparison. It does **not** feed an LLM's conditional probabilities into a probability coder, nor does it test a model-conditioned encode/decode round trip. It must not be cited as an empirical demonstration that LLM NLL equals realized compressed file size.
+
+### 10.4 Relation-schema decision
+
+No existing relation type precisely expresses “maps to ideal code length under a specified probabilistic model and compatible lossless coding protocol”:
+- `contributes-to` is too broad and functional;
+- `mapped-by` describes a transformation/projection and would misstate this claim;
+- `applies-to` describes applicability, not an information-length identity;
+- `equivalent-to` is not currently part of the vocabulary and would overstate the scope unless assumptions are carried with the claim.
+
+**Decision:** do not add a canonical edge or a new relation type yet. First review primary coding-theory sources and determine whether the provenance/claim schema can carry assumptions and locators. If the relation schema is extended, it must have bilingual semantics, explicit direction and family, documented transitivity/acyclicity, and validation/rendering coverage. A bare concept edge cannot carry all the conditions of this theorem-like mapping.
+
+### 10.5 Work completed in this follow-up
+
+- Re-read the canonical concept and relation registry; confirmed existing concepts and partial edges rather than duplicating them.
+- Re-read the deterministic zlib experiment and narrowed the claim it supports.
+- Wrote down the conditional mathematical statement and the encoder/decoder assumptions needed for actual lossless coding.
+- Recorded a no-mutation decision for the canonical graph.
+- Updated tracking issue #1237 with the audit, decision and validation caveat.
+
+### 10.6 Remaining work, ordered by dependency
+
+1. **Primary evidence:** catalogue and inspect primary sources for Shannon's source-coding theorem and arithmetic/range coding; create source records and extraction items with exact versions, sections/pages/equations, and scan limitations. Do not infer exact locators from secondary summaries.
+2. **Claim/provenance design:** inspect existing extraction, synthesis and claim schemas. Decide whether a scoped mathematical bridge can be represented as a provenance-bearing claim without adding a generic relation type. Document the design decision before implementation.
+3. **Conditional coder experiment:** implement a small deterministic arithmetic/range coder driven by an explicitly shared conditional probability table/model; encode and decode the same token stream; assert exact reconstruction; report ideal NLL bits, actual bitstream/file length and framing/termination overhead separately. Keep zlib as a distinct baseline.
+4. **Positive and negative tests:** accept the conditional ideal-cost statement under declared assumptions; reject claims that NLL alone predicts exact finite file size, that cross-entropy always equals source entropy, or that checkpoint quantization is source coding.
+5. **Bilingual integration:** update both language pages/syntheses only after the evidence and experiment are reviewed; preserve each page's pedagogical examples while aligning definitions, assumptions and conclusions.
+6. **Validation:** run focused experiment and unit tests, then the repository's locked full validation suite; capture environment/versions and actual outputs. Current CI status lookup for the pilot's latest commit returned no workflow runs and no commit statuses; this is absence of a reported check, not a passing result.
+7. **Graph promotion:** only after steps 1–6, decide whether a narrowly scoped canonical relation is justified. If not, keep the bridge in the evidence-bearing synthesis/claim layer and document why.
+
+### 10.7 Acceptance criteria for closure
+
+- [ ] Primary coding sources are catalogued with exact locators and source-role distinctions.
+- [ ] The bridge states model, target sequence, tokenization, logarithm base and coding protocol assumptions.
+- [ ] Encoder and decoder share the probability model and reconstruct the input exactly.
+- [ ] Ideal NLL cost, actual bitstream length and framing/termination overhead are reported separately.
+- [ ] Positive and negative bridge tests pass.
+- [ ] Existing zlib experiment remains correctly described as a separate practical baseline.
+- [ ] Any relation-schema change has bilingual definitions and validator/rendering tests.
+- [ ] FR/EN pages preserve pedagogical parity without forcing identical examples.
+- [ ] Focused and full validation commands/results are recorded; no unrun test is marked complete.
+- [ ] Issue #1237 is closed only after the evidence path and validation criteria are met.
