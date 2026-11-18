@@ -4,6 +4,8 @@ Store small, reviewable experiment definitions here—not model weights, raw dat
 
 Each experiment should include a stable identifier, hypothesis, baseline, configuration, command, data provenance, metrics, environment, results, and limitations. Follow [the experiment protocol](../docs/experiment-protocol.md).
 
+The [language-model surprisal and BPC protocol](language-model-bpc/README.md) (with a [French version](language-model-bpc/README.fr.md)) specifies a future causal-LM evaluation; it is a protocol only, not an executed benchmark.
+
 Current reproducible examples include [information theory: entropy, cross-entropy, KL and coding](information-theory/README.md), [synthetic decoding distributions](decoding-distribution/README.md), [predictive compression](predictive-compression/README.md), [sequence compression](sequence-compression/README.md), [forward/reverse compression and two-part MDL](forward-reverse-compression/README.md), and [soft-target distillation](soft-target-distillation/README.md) (with a [French guide](soft-target-distillation/README.fr.md)). The [Hugging Face Jobs remote-training recipe](huggingface-jobs/README.md) (and [French version](huggingface-jobs/README.fr.md)) documents an optional managed-GPU workflow; it is a static source-based recipe, not a reproduced experiment.
 
 Suggested layout:
