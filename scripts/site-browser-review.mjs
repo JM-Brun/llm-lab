@@ -1341,8 +1341,8 @@ async function runCase(testCase, caseIndex) {
 
       const responsiveTables = page.locator(".responsive-card-table table");
       const responsiveTableCount = await responsiveTables.count();
-      if (responsiveTableCount !== 2) {
-        report.failures.push(pagePath + "/" + lang + "/" + label + "/" + theme + ": expected two dense descriptive tables, found " + responsiveTableCount);
+      if (responsiveTableCount !== 3) {
+        report.failures.push(pagePath + "/" + lang + "/" + label + "/" + theme + ": expected three responsive comparison tables (architecture families, model dimensions, information residence), found " + responsiveTableCount);
       }
       const enhancedTableCount = await page.locator(".responsive-card-table table.responsive-card-table__enhanced").count();
       if (responsiveTableCount && enhancedTableCount !== responsiveTableCount) {
