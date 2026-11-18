@@ -182,7 +182,7 @@ sources:
       tags:
         - topic:kv-cache
         - topic:autoregressive-generation
-      concept_ids: [key, value, self-attention]
+      concept_ids: [key, value, self-attention, kv-cache]
     metadata:
       technical_level: intermediate
       contribution_types: [architecture, implementation]
@@ -201,8 +201,8 @@ sources:
           - "No code was executed."
           - "Licence and figure/code reuse conditions were not independently checked."
     related:
-      pages: []
-      concepts: [key, value, self-attention]
+      pages: [fr/generation, en/generation]
+      concepts: [key, value, self-attention, kv-cache]
       audit_records:
         - docs/source-reviews/qkv-nishanthan-devto-2026-11.md
   - id: andrej-karpathy-gpt-tokenizer-video
@@ -3259,7 +3259,7 @@ sources:
       primary_theme: architectures-mechanisms
       secondary_themes: [mathematical-tools-geometry]
       tags: [topic:positional-encoding, method:sinusoidal-encoding, topic:transformer]
-      concept_ids: []
+      concept_ids: [positional-encoding]
     metadata:
       technical_level: advanced
       contribution_types: [theory, mathematical-derivation, architecture]
@@ -3277,7 +3277,7 @@ sources:
           - "No figure, text passage, code, or dataset was copied; reuse rights were not assessed."
     related:
       pages: [fr/positional-encoding, en/positional-encoding, fr/sinusoidal-positional-encoding, en/sinusoidal-positional-encoding]
-      concepts: []
+      concepts: [positional-encoding]
       audit_records: [docs/source-reviews/sinusoidal-positional-encoding-2026-11.md]
   - id: harvardnlp-annotated-transformer
     title: "The Annotated Transformer"
@@ -3297,7 +3297,7 @@ sources:
       primary_theme: architectures-mechanisms
       secondary_themes: [mathematical-tools-geometry]
       tags: [topic:positional-encoding, method:sinusoidal-encoding, ecosystem:pytorch, topic:transformer]
-      concept_ids: []
+      concept_ids: [positional-encoding]
     metadata:
       technical_level: intermediate
       contribution_types: [pedagogy, implementation, mathematical-derivation]
@@ -3315,7 +3315,7 @@ sources:
           - "No code was copied into the project without adaptation; reuse rights were not independently assessed."
     related:
       pages: [fr/sinusoidal-positional-encoding, en/sinusoidal-positional-encoding]
-      concepts: []
+      concepts: [positional-encoding]
       audit_records: [docs/source-reviews/sinusoidal-positional-encoding-2026-11.md]
   - id: stanford-ee269-transformers-signal-prediction
     title: "Transformers for Signal Prediction"
@@ -3335,7 +3335,7 @@ sources:
       primary_theme: mathematical-tools-geometry
       secondary_themes: [architectures-mechanisms]
       tags: [topic:positional-encoding, method:sinusoidal-encoding, topic:signal-processing]
-      concept_ids: []
+      concept_ids: [positional-encoding]
     metadata:
       technical_level: intermediate
       contribution_types: [pedagogy, mathematical-derivation]
@@ -3353,7 +3353,7 @@ sources:
           - "No figures or text were copied; reuse rights were not assessed."
     related:
       pages: [fr/sinusoidal-positional-encoding, en/sinusoidal-positional-encoding]
-      concepts: []
+      concepts: [positional-encoding]
       audit_records: [docs/source-reviews/sinusoidal-positional-encoding-2026-11.md]
 
   - id: sebastian-raschka-full-to-hybrid-attention-2026
