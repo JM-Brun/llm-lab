@@ -250,7 +250,45 @@ La provenance des valeurs sensibles de métadonnées (dates, versions, droits) e
 
 **À faire évoluer :** la traçabilité champ par champ des métadonnées sensibles, la provenance des arêtes conceptuelles, les contrôles de qualité de l'extraction, l'observabilité du pipeline et la migration distribuée lorsque son bénéfice est démontré.
 
-## 8. Découverte inter-domaines et mémoire des décisions
+## 8. Inventaire des graphes et projections du projet
+
+Le dépôt ne possède pas un graphe unique. Il maintient plusieurs modèles relationnels et plusieurs projections, dont les unités, les relations et les garanties ne sont pas interchangeables. Cet inventaire est un contrat de séparation et d'interopérabilité, pas une proposition de fusion.
+
+| Graphe / structure | Propriétaire canonique | Unités et relations principales | Question à laquelle il répond | Ne permet pas d'inférer |
+|---|---|---|---|---|
+| Graphe conceptuel | `data/concepts.yml` + `data/domains.yml` | Concepts canoniques, domaines multiples, relations sémantiques typées | Quels concepts sont reliés, et de quelle manière ? | Ordre de lecture, causalité, preuve d'une relation par simple proximité |
+| Graphe computationnel | `data/computational-graph.yml` | Données, opérations, contrôles, politiques, flux et boucles | Que calcule le modèle et comment les branches opérationnelles s'articulent-elles ? | Prérequis pédagogiques, architecture universelle au-delà du périmètre modélisé |
+| Graphe de pages et navigation | Métadonnées `LLM-LAB-PAGE-MAP` dans les pages Quarto | Pages, hiérarchie, liens associés et route locale suggérée | Où se trouve une explication et comment naviguer entre pages ? | Identité de concept, hiérarchie scientifique, prérequis globaux |
+| Parcours guidé Understand | `data/guided-route.yml` | Étapes, pages obligatoires/optionnelles, transitions justifiées | Dans quel ordre aborder les notions pour atteindre les objectifs pédagogiques ? | Graphe exhaustif des concepts ou ordre d'exécution informatique |
+| Parcours Build | Leçons Build, jalons et preuves de code existants | Étapes de construction/inspection, livrables et dépendances d'implémentation | Dans quel ordre construire ou inspecter l'implémentation ? | Parcours théorique ou graphe de calcul complet |
+| Généalogie historique | `data/history-pilot.yml` et son modèle documentaire | Événements, concepts, sources, relations historiques typées | Quelles contributions se succèdent, se combinent, se prolongent ou se développent en parallèle ? | Priorité d'invention, influence directe ou causalité à partir de la seule chronologie |
+| Graphe pédagogique local à une source | `data/extractions/<source-id>.yml` | Nœuds `src-`, liens locaux, séquence et structure d'enseignement de la source | Comment cette source organise-t-elle son propre enseignement ? | Concept canonique ou ordre pédagogique du projet |
+| Relations de preuve / lineage | Catalogue, événements d'inspection, extractions et synthèses selon le contrat source-lineage | Source/version, item extrait, locator, statut épistémique, décision d'intégration | Quelle preuve soutient une affirmation ou une décision, et dans quelles limites ? | Corroboration indépendante sans analyse de dépendance |
+| Graphe de ressources et associations | `data/resources.yml`, `concepts[].resources`, métadonnées de pages | Ressources non-page, pages, concepts, associations thématiques et références | Quelles ressources et pages sont associées à quels concepts ? | Que chaque ressource enseigne, démontre ou prouve le concept |
+| Projection d'interopérabilité | Générateur `site/tools/export_knowledge_graph.py`, sortie JSON-LD | Projection SKOS/Schema.org/PROV-O des concepts, domaines, pages et ressources | Comment exposer les structures publiées à des consommateurs externes ? | Provenance scientifique claim-level complète ; l'actuel PROV-O est au niveau des artefacts du dataset |
+| Vues générées / sous-graphes | Générateurs existants (learning map, Mermaid computationnel, JSON-LD) | Sélections déterministes de nœuds/arêtes depuis leurs propriétaires | Comment présenter une partie d'un modèle pour un usage précis ? | Source canonique indépendante ou inventaire exhaustif |
+
+### Règles d'interopérabilité entre graphes
+
+1. **Relier par identifiants et assertions explicites.** Une page peut expliquer un concept, un nœud computationnel peut être représenté par une page, un événement historique peut mobiliser un concept, et une extraction peut soutenir une affirmation ; ces liens doivent garder leur type et leur propriétaire.
+2. **Ne pas homogénéiser les relations.** `prerequisite`, `part-of`, `feeds-back`, `influenced`, `related page`, `supports claim` et `belongs to domain` ont des sémantiques différentes, des contraintes différentes et des preuves différentes.
+3. **Préserver la granularité propre à chaque graphe.** Un nœud de calcul n'est pas automatiquement un concept ; un événement n'est pas un concept ; un heading n'est pas une page stable ; un nœud `src-` n'est pas un concept canonique.
+4. **Traiter les vues comme des projections.** Elles doivent être déterministes, régénérables et traçables à leur propriétaire et à leur version ; aucune édition manuelle de sortie générée.
+5. **Garder les parcours comme projections pédagogiques dédiées.** Understand, Build, Practice et les navigations locales ne sont pas des vues arbitraires du graphe conceptuel.
+6. **Autoriser les passerelles sans fusion.** Les requêtes exploratoires peuvent traverser plusieurs graphes via des correspondances explicites, mais doivent afficher le type de chaque étape et le niveau de preuve.
+7. **Ne pas confondre couverture et vérité.** Un concept relié à une page ou une source n'est pas nécessairement suffisamment expliqué ou étayé ; un graphe bien connecté peut encore contenir des affirmations faibles.
+
+### Cas de traversées transversales à tester
+
+- **Concept → calcul → implémentation → page Build :** relier un concept tel que l'attention à ses opérations computationnelles, puis aux modules et preuves de code réellement disponibles.
+- **Concept → événement historique → sources :** expliquer l'évolution d'un mécanisme sans convertir la chronologie en causalité.
+- **Page → concept → extraction → locator :** remonter d'une explication publiée à l'item précis qui soutient une affirmation, ou signaler explicitement la lacune.
+- **Concept multi-domaines → pont inter-domaines :** identifier un mécanisme ou une méthode qui éclaire plusieurs domaines, sans inventer un domaine principal.
+- **Source pédagogique → graphe local → concepts canoniques :** comparer sa progression à la structure du projet sans promouvoir automatiquement ses nœuds ou son ordre.
+
+Les contrats détaillés et les écarts de couverture sont suivis dans [#1233](https://github.com/JM-Brun/llm-lab/issues/1233), en coordination avec #512, #416 et #1211.
+
+## 9. Découverte inter-domaines et mémoire des décisions
 
 L'audit du cycle source → connaissance ne suffit pas, à lui seul, à garantir que le corpus permette de découvrir des relations entre plusieurs centaines de sujets. Le graphe conceptuel existant décrit des relations typées entre concepts ; il ne doit pas être confondu avec un graphe exhaustif de toutes les sources, pages, ressources, expériences et décisions.
 
@@ -268,7 +306,7 @@ Les exigences structurantes sont les suivantes :
 
 Les premières requêtes de référence doivent couvrir au minimum : ponts entre domaines, explications concurrentes, corroborations/contradictions indépendantes, pages ou concepts insuffisamment étayés, chemin complet vers la preuve et décisions qui affectent une page. Chaque résultat devra afficher le chemin et ses limites, pas seulement un score de similarité.
 
-## 9. Limites de cet audit
+## 10. Limites de cet audit
 
 - Audit documentaire et examen des contrats et états GitHub disponibles ; les commandes de validation n'ont pas toutes été réexécutées localement pendant cet audit.
 - Le rapport de couverture est un instantané lié à un commit de PR, pas un décompte garanti du HEAD actuel de `main`.
@@ -276,7 +314,7 @@ Les premières requêtes de référence doivent couvrir au minimum : ponts entre
 - Aucun examen exhaustif des 124 sources, des 378 items, des 102 concepts ou de toutes les arêtes n'est revendiqué.
 - Aucune validation indépendante de la vérité scientifique, de la conformité juridique ou de l'efficacité pédagogique n'est revendiquée.
 
-## 9. Sources internes
+## 11. Sources internes
 
 - [Information architecture](information-architecture.md)
 - [Source catalogue schema](source-catalogue-schema.md)
