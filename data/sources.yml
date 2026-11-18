@@ -5897,7 +5897,7 @@ sources:
     identifiers: {arxiv: "2310.10348", doi: "10.18653/v1/2024.blackboxnlp-1.25"}
     canonical_url: "https://aclanthology.org/2024.blackboxnlp-1.25/"
     publisher: "Proceedings of the 7th BlackboxNLP Workshop, Association for Computational Linguistics"
-    publication_date: "2024-11"
+    publication_date: "2024-11-15"
     updated_date: null
     language: en
     version: "Published BlackboxNLP 2024 paper, pages 407-416; preprint first posted 2023"
@@ -5980,7 +5980,7 @@ sources:
     title: "Have Faith in Faithfulness: Going Beyond Circuit Overlap When Finding Model Mechanisms"
     creators: ["Michael Hanna", "Sandro Pezzelle", "Yonatan Belinkov"]
     source_type: paper
-    identifiers: {arxiv: "2403.17806", doi: "10.57967/hf/5753"}
+    identifiers: {arxiv: "2403.17806"}
     canonical_url: "https://openreview.net/forum?id=zSf8PJyQb2"
     publisher: "Proceedings of the 2024 Conference on Language Modeling (COLM 2024)"
     publication_date: "2024"
