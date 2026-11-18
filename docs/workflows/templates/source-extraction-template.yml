@@ -1,19 +1,10 @@
 schema_version: 1
 source_id: "stable-source-id"
 
-# Extraction coverage is multidimensional. A complete author-text scan does not
-# imply inspected figures, comments, links, code, metadata or reuse rights.
-scan:
-  accessed_at: "YYYY-MM-DD"
-  retrieval_method: "direct-page | api | indexed-text | author-mirror | repository | other"
-  author_text: {status: not-inspected, coverage: null, notes: []}
-  figures_media: {status: not-inspected, coverage: null, notes: []}
-  code_data: {status: not-inspected, coverage: null, notes: []}
-  comments: {status: not-inspected, coverage: null, notes: []}
-  linked_resources: {status: not-inspected, coverage: null, notes: []}
-  metadata: {status: not-inspected, coverage: null, notes: []}
-  rights: {status: unknown, coverage: null, notes: []}
-  unresolved_questions: []
+# Inspection history and coverage belong to the canonical source record:
+# data/sources.yml.scan_history today, data/source-scans/<source-id>/ in the
+# target architecture. Do not duplicate scan events or rights metadata here.
+# Record extraction-specific scope and limitations on each item's evidence.
 
 # Required for instructional source types (blog, tutorial, course, book-chapter).
 # See docs/source-catalogue-schema.md for the exact contract.
@@ -25,15 +16,20 @@ pedagogical_model:
   source_graph:
     nodes:
       - id: "src-concept-or-operation"
-        kind: "concept | representation | parameter | operation | intermediate | constraint | example | visualization"
+        kind: representation # non-empty source-local label; see note below
         description: "Concise paraphrase of the source-local element."
         locator: "Heading, section, timestamp, page or code symbol."
         inferred: false
+    # Node kinds are descriptive source-local labels. The current validator checks
+    # that kind is non-empty, not against a closed enum. Reuse established labels
+    # where useful; explain any specialized label in interpretation.
     edges:
       - from: "src-node-a"
         type: "typed-relation"
         to: "src-node-b"
         inferred: false
+    # Relation labels are likewise source-local and currently checked for non-empty
+    # text and valid endpoints, not against a global relation taxonomy.
     interpretation: "State that this is an editorial reconstruction unless the source defines a formal graph."
   learning_outcomes:
     - status: inferred # declared | inferred
@@ -89,6 +85,8 @@ items:
     # example phenomenon, teaching move, abstraction level and hidden assumptions.
     # Test a bounded integration (optional note, contrast, example, misconception,
     # exercise or cross-link); record why it helps or why it would add cognitive load.
+    # Add this editorial assessment when the item is a pedagogical contribution
+    # or a candidate learning improvement; it is not required for every item.
     pedagogical_assessment:
       learner_question: ""
       explanatory_lens: ""
@@ -110,6 +108,10 @@ items:
     disposition: defer # exact value from item_dispositions in data/source-taxonomy.yml
     disposition_rationale: ""
 
+# Optional editorial hand-off: use only when proposing canonical concepts,
+# relations or route changes. Existing concept links remain in item/source
+# classification and related fields; this block is not a second registry and
+# is not currently validated by CI.
 # Never equate source-local graph IDs with canonical concept IDs.
 canonical_mapping:
   proposed_concepts: []
