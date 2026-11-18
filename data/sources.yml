@@ -360,7 +360,7 @@ sources:
           - "The audit is scoped to the historical algorithm and its distinction from later tokenizer designs."
           - "No figure, code or data reuse rights were established."
     related:
-      pages: [en/tokenization-strategies, fr/tokenization-strategies]
+      pages: [en/tokenization-strategies, fr/tokenization-strategies, en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: [token]
       audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
@@ -4881,7 +4881,7 @@ sources:
           - "Reported latency and speedups are tied to the paper's hardware, corpus and protocol; not generalized."
           - "Original paper figures are linked, not reproduced; reuse rights were not independently established."
     related:
-      pages: [fr/cosine-similarity, en/cosine-similarity, fr/rag-memory-boundaries, en/rag-memory-boundaries]
+      pages: [fr/cosine-similarity, en/cosine-similarity, fr/rag-memory-boundaries, en/rag-memory-boundaries, fr/document-retrieval, en/document-retrieval]
       concepts: [retrieval-augmented-generation, contextualized-representation]
       audit_records: [docs/source-reviews/dailydose-main-path-2026-11.md]
   - id: santhanam-etal-2022-colbertv2
@@ -4918,7 +4918,7 @@ sources:
           - "Full experimental tables and ablations were not re-audited in this pass."
           - "The reported 6–10x footprint reduction is paper-specific and must not be presented as a universal index-size guarantee."
     related:
-      pages: [fr/cosine-similarity, en/cosine-similarity, fr/rag-memory-boundaries, en/rag-memory-boundaries]
+      pages: [fr/cosine-similarity, en/cosine-similarity, fr/rag-memory-boundaries, en/rag-memory-boundaries, fr/document-retrieval, en/document-retrieval]
       concepts: [retrieval-augmented-generation, contextualized-representation]
       audit_records: [docs/source-reviews/dailydose-main-path-2026-11.md]
   - id: formal-piwowarski-clinchant-2021-splade
@@ -4955,7 +4955,7 @@ sources:
           - "Full paper experiments and implementation details were not exhaustively reviewed."
           - "The sparse effectiveness/efficiency trade-off depends on model, index and serving configuration."
     related:
-      pages: [fr/rag-memory-boundaries, en/rag-memory-boundaries]
+      pages: [fr/rag-memory-boundaries, en/rag-memory-boundaries, fr/cosine-similarity, en/cosine-similarity, fr/document-retrieval, en/document-retrieval]
       concepts: [retrieval-augmented-generation]
       audit_records: [docs/source-reviews/dailydose-main-path-2026-11.md]
   - id: thakur-etal-2021-beir
@@ -4992,7 +4992,7 @@ sources:
           - "Per-dataset result tables and all benchmark settings were not re-audited in this pass."
           - "Aggregate findings are not universal rankings for every domain or production system."
     related:
-      pages: [fr/rag-memory-boundaries, en/rag-memory-boundaries]
+      pages: [fr/rag-memory-boundaries, en/rag-memory-boundaries, fr/cosine-similarity, en/cosine-similarity, fr/document-retrieval, en/document-retrieval]
       concepts: [retrieval-augmented-generation]
       audit_records: [docs/source-reviews/dailydose-main-path-2026-11.md]
 
@@ -5072,7 +5072,7 @@ sources:
           - "Original paper figures are linked, not reproduced; reuse rights were not independently established."
           - "The paper's ViDoRe training/evaluation overlap differs by task; interpret its zero-shot and in-domain claims per dataset."
     related:
-      pages: [fr/rag-memory-boundaries, en/rag-memory-boundaries]
+      pages: [fr/rag-memory-boundaries, en/rag-memory-boundaries, fr/document-retrieval, en/document-retrieval]
       concepts: [retrieval-augmented-generation, contextualized-representation]
       audit_records: [docs/source-reviews/dailydose-main-path-2026-11.md]
 
