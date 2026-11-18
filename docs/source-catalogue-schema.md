@@ -254,3 +254,8 @@ Use stable URI-like identifiers and ISO 8601 dates. Use BCP 47 for language tags
 ## 9. Distributed lineage migration
 
 The v1 schema above documents the current compatibility format. It does not authorize continued growth of the monolithic catalogue. The target ownership model, event immutability, typed relation vocabulary, migration gates and contributor rules are defined in [docs/source-lineage-architecture.md](source-lineage-architecture.md). Until the migration PR changes the validator and generator, contributors must continue using the current validated format; do not create parallel per-source files manually.
+
+
+## 10. Validation matrix
+
+The implementation status, severity model, conditional requirements, required fixtures and staged rollout for validator v1 are maintained in [Source contract validation matrix](source-contract-validation-matrix.md). That matrix is deliberately explicit about the difference between implemented checks, missing checks and editorial/scientific review. Update it alongside validator and test changes; do not treat planned rules as enforced rules.
