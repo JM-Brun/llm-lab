@@ -12,6 +12,20 @@ def test_cross_entropy_matches_known_value() -> None:
     assert cross_entropy_from_logits(logits, targets) == pytest.approx(np.log1p(np.exp(-2.0)))
 
 
+def test_cross_entropy_averages_distinct_per_example_losses() -> None:
+    logits = np.array([[2.0, 0.0], [0.0, 2.0]], dtype=np.float64)
+    targets = np.array([0, 0], dtype=np.int64)
+
+    expected_losses = np.array([np.log1p(np.exp(-2.0)), np.log1p(np.exp(2.0))])
+    expected_mean = float(np.mean(expected_losses))
+    summed_losses = float(np.sum(expected_losses))
+
+    actual = cross_entropy_from_logits(logits, targets)
+
+    assert actual == pytest.approx(expected_mean)
+    assert actual != pytest.approx(summed_losses)
+
+
 def test_gradient_matches_central_finite_differences() -> None:
     logits = np.array([[0.2, -0.4, 1.1], [1.0, 0.0, -0.5]], dtype=np.float64)
     targets = np.array([2, 0], dtype=np.int64)
