@@ -1,0 +1,146 @@
+schema_version: 1
+source_id: santhanam-etal-2022-colbertv2
+scan:
+  accessed_at: "2026-11-18"
+  retrieval_method: direct-pdf
+  author_text:
+    status: partial
+    coverage: "Published NAACL-HLT 2022 PDF: late-interaction scoring, denoised supervision, residual compression, indexing/retrieval, LoTTE benchmark construction, BEIR/Open-QA/LoTTE results, storage comparison and limitations."
+    notes: ["Focused primary-source audit; no independent reproduction."]
+  figures_media:
+    status: partial
+    coverage: "Architecture diagram, LoTTE composition table and selected benchmark/storage result tables inspected."
+    notes: ["No figure or table asset was copied."]
+  code_data:
+    status: not-inspected
+    coverage: null
+    notes: ["ColBERTv2 repository, model checkpoints, LoTTE/BEIR files, quantization implementation and evaluation scripts were not independently executed or audited."]
+  comments: {status: not-inspected, coverage: null, notes: []}
+  linked_resources:
+    status: partial
+    coverage: "ACL Anthology proceedings page, author-hosted PDF and project repository link."
+    notes: ["Repository contents and all outbound references were not exhaustively inspected."]
+  metadata:
+    status: partial
+    coverage: "NAACL-HLT 2022, pp. 3715–3734; DOI 10.18653/v1/2022.naacl-main.272."
+    notes: []
+  rights:
+    status: unknown
+    coverage: null
+    notes: ["Figure 1 is credited as reproduced with permission in the paper; no further reuse rights were established. Extraction contains paraphrases only."]
+  unresolved_questions:
+    - "Independent reproduction requires the released checkpoints, exact compression parameters, index construction, training data and evaluation scripts."
+    - "All reported benchmarks are English and out-of-domain evaluations use models trained on MS MARCO."
+    - "Benchmark judgments contain false negatives and use different annotation mechanisms; no single metric fully captures retrieval quality."
+items:
+  - id: santhanam-etal-2022-colbertv2:denoised-cross-encoder-supervision
+    kind: method
+    summary: "ColBERTv2 improves late-interaction supervision by retrieving hard candidate passages with an initial ColBERT model, scoring query-passage pairs with a cross-encoder teacher, and distilling the teacher's scores into ColBERT using KL divergence over 64-way tuples, with in-batch negatives and an index refresh."
+    locator: {type: section, value: "§3.2, pp. 3717–3718", label: "Denoised supervision"}
+    evidence:
+      kind: training-protocol
+      confidence: established
+      scope: "The paper's ColBERTv2 training recipe using a 22M-parameter MiniLM cross-encoder teacher and MS MARCO supervision."
+      assumptions: []
+      limitations:
+        - "The teacher, 64-way tuple construction, negative mining and refresh schedule are specific to the reported recipe."
+        - "The paper acknowledges that large-scale hard-negative distillation increases training complexity and cost."
+    technical_assessment:
+      status: correct
+      rationale: "The paper explicitly describes candidate retrieval, teacher scoring, KL distillation, in-batch negatives and index refresh."
+      corroborating_sources: []
+    classification:
+      primary_theme: inference-efficiency
+      tags: [topic:information-retrieval, method:knowledge-distillation, method:hard-negative-mining]
+      concept_ids: [retrieval-augmented-generation]
+    candidate_destinations:
+      pages: [en/document-retrieval, fr/document-retrieval]
+      concepts: [retrieval-augmented-generation]
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Explains why ColBERTv2 is not merely a compressed ColBERT checkpoint: the supervision procedure is also changed."
+  - id: santhanam-etal-2022-colbertv2:residual-vector-compression
+    kind: mechanism
+    summary: "ColBERTv2 represents each contextual token vector by the index of its nearest centroid plus a quantized residual. With 128 dimensions, the paper reports 4 bytes for a centroid ID plus 16 or 32 bytes for a one- or two-bit-per-dimension residual, compared with 256 bytes for the stated 16-bit ColBERT vector representation."
+    locator: {type: section, value: "§3.3, pp. 3718–3719", label: "Residual representation"}
+    evidence:
+      kind: compression-method
+      confidence: established
+      scope: "The paper's residual encoding and stated 128-dimensional storage configurations."
+      assumptions: []
+      limitations:
+        - "The byte counts are for vector encodings and do not alone describe total index size or serving memory."
+        - "Compression is approximate; retrieval quality must be checked at the selected bit rate and index configuration."
+    technical_assessment:
+      status: correct
+      rationale: "The paper provides the centroid-plus-residual representation and explicit byte accounting."
+      corroborating_sources: []
+    classification:
+      primary_theme: inference-efficiency
+      tags: [topic:information-retrieval, method:residual-compression, topic:index-storage]
+      concept_ids: [retrieval-augmented-generation, contextualized-representation]
+    candidate_destinations:
+      pages: [en/document-retrieval, fr/document-retrieval]
+      concepts: [retrieval-augmented-generation]
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Supports the existing late-interaction storage trade-off and the distinction between vector payload and full index footprint."
+  - id: santhanam-etal-2022-colbertv2:lotte-benchmark-design
+    kind: benchmark
+    summary: "LoTTE contains 12 test sets across writing, recreation, science, technology and lifestyle, with search and forum queries, 500–2,000 queries and 100k–2M passages per set. Its search queries are sourced from GooAQ and linked to StackExchange answer posts; forum queries are derived from StackExchange question titles and their answer posts."
+    locator: {type: section, value: "§4, pp. 3719–3721; Table 1", label: "LoTTE benchmark composition"}
+    evidence:
+      kind: benchmark-design
+      confidence: established
+      scope: "The LoTTE evaluation resource introduced in the paper."
+      assumptions: []
+      limitations:
+        - "The benchmark's domains and query construction are specific to the selected StackExchange communities and GooAQ sources."
+        - "Search and forum query types have different naturalness and annotation characteristics."
+    technical_assessment:
+      status: correct
+      rationale: "The paper specifies the 12 test sets, five topic families, corpus sizes and query construction."
+      corroborating_sources: []
+    classification:
+      primary_theme: inference-efficiency
+      tags: [topic:information-retrieval, topic:benchmark, topic:out-of-domain-evaluation]
+      concept_ids: [retrieval-augmented-generation]
+    candidate_destinations:
+      pages: [en/document-retrieval, fr/document-retrieval]
+      concepts: [retrieval-augmented-generation]
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Adds a concrete long-tail, natural-query benchmark perspective alongside BEIR; no new benchmark concept is required."
+  - id: santhanam-etal-2022-colbertv2:storage-quality-and-domain-results
+    kind: result
+    summary: "On MS MARCO, ColBERTv2 reduces the reported index footprint from 154 GiB for ColBERT to 16 GiB or 25 GiB at one- or two-bit residual precision, including 4.5 GiB for inverted lists. Across the paper's 28 out-of-domain tests, ColBERTv2 ranks highest on 22; on BEIR, its comparison with SPLADEv2 is mixed, with ColBERTv2 ahead on six benchmarks, tied on two and behind on five."
+    locator: {type: section, value: "§5.2–5.3, pp. 3722–3723; Table 5", label: "Out-of-domain results and index footprint"}
+    evidence:
+      kind: reported-benchmark-result
+      confidence: well-supported
+      scope: "The paper's MS MARCO-trained models evaluated on BEIR, Wikipedia Open QA and LoTTE; storage measured on the MS MARCO index."
+      assumptions: []
+      limitations:
+        - "All benchmarks are English and out-of-domain models are trained on MS MARCO."
+        - "The authors note false negatives in retrieval datasets and different annotation mechanisms across benchmarks."
+        - "Comparisons across model families may not be fully apples-to-apples because each family requires different tuning."
+        - "The reported 6–10x storage reduction is specific to the stated index, quantization and representation configuration."
+    technical_assessment:
+      status: qualified
+      rationale: "The reported results are explicit, but the paper itself documents benchmark annotation and cross-family comparison limitations."
+      corroborating_sources: []
+    classification:
+      primary_theme: inference-efficiency
+      tags: [topic:information-retrieval, topic:index-storage, topic:out-of-domain-evaluation]
+      concept_ids: [retrieval-augmented-generation]
+    candidate_destinations:
+      pages: [en/document-retrieval, fr/document-retrieval]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Retain quantitative claims only beside their benchmark, training-domain, storage and annotation boundaries."
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "ColBERTv2 combines the original MaxSim late-interaction architecture with denoised cross-encoder supervision and centroid-plus-residual vector compression. It introduces LoTTE to test natural long-tail queries and reports a 6–10x MS MARCO index-footprint reduction, with strong but not uniformly dominant results across BEIR, Wikipedia Open QA and LoTTE. All results are English, models are trained on MS MARCO, benchmark judgments have known limitations, and the storage ratio is configuration-specific."

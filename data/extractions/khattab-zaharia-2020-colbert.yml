@@ -1,0 +1,145 @@
+schema_version: 1
+source_id: khattab-zaharia-2020-colbert
+scan:
+  accessed_at: "2026-11-18"
+  retrieval_method: direct-pdf
+  author_text:
+    status: partial
+    coverage: "SIGIR 2020 published PDF: late-interaction architecture, query/document encoders, MaxSim scoring, offline indexing, reranking and end-to-end retrieval, MS MARCO/TREC-CAR protocols, selected result tables and ablation rationale."
+    notes: ["Focused primary-source audit; no independent reproduction."]
+  figures_media:
+    status: partial
+    coverage: "Architecture diagrams and principal MS MARCO results tables inspected in the published PDF."
+    notes: ["No figure or table asset was copied."]
+  code_data:
+    status: not-inspected
+    coverage: null
+    notes: ["The reference repository, model checkpoints, FAISS index configuration and datasets were not independently executed or audited."]
+  comments: {status: not-inspected, coverage: null, notes: []}
+  linked_resources:
+    status: partial
+    coverage: "Author-hosted published PDF, ACM publication metadata and reference repository link."
+    notes: ["Repository contents and all outbound references were not exhaustively inspected."]
+  metadata:
+    status: partial
+    coverage: "SIGIR 2020, pp. 39–48; DOI 10.1145/3397271.3401075."
+    notes: []
+  rights:
+    status: unknown
+    coverage: null
+    notes: ["ACM publication notice restricts redistribution; no figure reuse permission was established. Extraction contains paraphrases only."]
+  unresolved_questions:
+    - "Independent reproduction requires the exact released code, BERT checkpoints, index configuration, dataset versions and hardware."
+    - "The reported latency comparisons use different system pipelines and historical hardware; compare only with the authors' stated measurement boundaries."
+items:
+  - id: khattab-zaharia-2020-colbert:late-interaction-maxsim
+    kind: mechanism
+    summary: "ColBERT independently encodes a query and a document into sets of contextualized token vectors, then scores relevance by summing, over query vectors, the maximum cosine similarity to any document vector (MaxSim). The query-document interaction is delayed until after both encoders have run."
+    locator: {type: section, value: "§§3.1 and 3.3, pp. 41–42; Eq. (3); Figure 2", label: "Late interaction and MaxSim"}
+    evidence:
+      kind: mathematical-method
+      confidence: established
+      scope: "The ColBERT architecture proposed in the SIGIR 2020 paper."
+      assumptions: []
+      limitations:
+        - "MaxSim is a token-level relevance aggregation, not a sentence-level cosine similarity between two pooled vectors."
+        - "The maximum matching and summation define the paper's scoring function; other late-interaction designs may differ."
+    technical_assessment:
+      status: correct
+      rationale: "Equation (3) defines the score as the sum over query vectors of their maximum dot product with document vectors; vectors are L2-normalized so dot product equals cosine similarity."
+      corroborating_sources: []
+    classification:
+      primary_theme: inference-efficiency
+      tags: [topic:information-retrieval, method:late-interaction, method:multi-vector]
+      concept_ids: [retrieval-augmented-generation, contextualized-representation]
+    candidate_destinations:
+      pages: [en/cosine-similarity, fr/cosine-similarity, en/document-retrieval, fr/document-retrieval]
+      concepts: [retrieval-augmented-generation, contextualized-representation]
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "This is the defining mechanism behind the project's existing ColBERT/late-interaction explanation."
+  - id: khattab-zaharia-2020-colbert:query-document-encoding-and-indexing
+    kind: architecture
+    summary: "The paper uses a shared BERT model with distinct [Q] and [D] markers for query and document inputs, projects contextual token outputs to a lower-dimensional space and L2-normalizes them. Query augmentation pads short queries with mask tokens; document embeddings corresponding to punctuation are filtered. Document vectors are precomputed and stored offline."
+    locator: {type: section, value: "§3.2 and §3.4, pp. 42–43; Eqs. (1)–(2)", label: "Encoders and offline indexing"}
+    evidence:
+      kind: architecture-description
+      confidence: established
+      scope: "The original ColBERT BERT-base/BERT-large encoder and indexing implementation."
+      assumptions: []
+      limitations:
+        - "The shared BERT weights, special markers, query augmentation and punctuation filtering are design choices in this implementation, not universal requirements for late interaction."
+        - "Index size and serving cost depend on embedding dimension, precision, token filtering and collection length."
+    technical_assessment:
+      status: correct
+      rationale: "The paper describes the query/document markers, shared BERT, projection, normalization, query augmentation and offline storage explicitly."
+      corroborating_sources: []
+    classification:
+      primary_theme: inference-efficiency
+      tags: [topic:information-retrieval, method:late-interaction, topic:offline-indexing]
+      concept_ids: [retrieval-augmented-generation, contextualized-representation]
+    candidate_destinations:
+      pages: [en/document-retrieval, fr/document-retrieval]
+      concepts: [retrieval-augmented-generation]
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Supports the existing offline-indexing explanation; keep implementation-specific details as an example rather than a required architecture."
+  - id: khattab-zaharia-2020-colbert:two-stage-end-to-end-retrieval
+    kind: method
+    summary: "For end-to-end retrieval, ColBERT indexes all document token vectors in FAISS. It first retrieves approximate nearest token vectors for each query vector, maps them back to candidate document IDs, and then recomputes the full MaxSim score on the reduced candidate set."
+    locator: {type: section, value: "§3.6, pp. 43–44", label: "FAISS candidate generation and MaxSim refinement"}
+    evidence:
+      kind: algorithm-description
+      confidence: established
+      scope: "The paper's FAISS IVFPQ-based end-to-end retrieval implementation."
+      assumptions: []
+      limitations:
+        - "The first stage is approximate and depends on index parameters, probe count and candidate depth."
+        - "The method's reported recall/latency trade-off is specific to the chosen index and dataset."
+    technical_assessment:
+      status: correct
+      rationale: "The paper explicitly describes approximate token-vector candidate generation followed by exact scoring over the retained documents."
+      corroborating_sources: []
+    classification:
+      primary_theme: inference-efficiency
+      tags: [topic:information-retrieval, method:approximate-nearest-neighbours, topic:candidate-generation]
+      concept_ids: [retrieval-augmented-generation]
+    candidate_destinations:
+      pages: [en/document-retrieval, fr/document-retrieval, en/rag-memory-boundaries, fr/rag-memory-boundaries]
+      concepts: [retrieval-augmented-generation]
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Clarifies that late interaction can support both reranking and first-stage retrieval, with approximate candidate generation and refinement."
+  - id: khattab-zaharia-2020-colbert:msmarco-quality-cost-protocol
+    kind: result
+    summary: "On MS MARCO reranking, ColBERT over BERT-base reports MRR@10 34.9 on development and evaluation, 61 ms reranking latency and 7B FLOPs/query, compared with the paper's BERT-base reference at 36.0 development MRR@10, 10,700 ms and 97T FLOPs/query. In end-to-end retrieval, ColBERT reports 36.0 development MRR@10, 36.7 local-evaluation MRR@10 and 458 ms latency over 8.8M passages."
+    locator: {type: section, value: "§4.1–4.2, pp. 44–45; Tables 1–2", label: "MS MARCO quality and cost results"}
+    evidence:
+      kind: reported-benchmark-result
+      confidence: well-supported
+      scope: "MS MARCO Ranking, the authors' BERT-base training and baseline configurations, V100 reranking server and FAISS end-to-end setup."
+      assumptions: []
+      limitations:
+        - "Reranking and end-to-end latency are different tasks and must not be compared as if they were the same pipeline."
+        - "The paper notes that baseline latency excludes CPU text preprocessing while ColBERT's reported reranking latency includes gathering/transferring precomputed vectors and query processing."
+        - "The local end-to-end evaluation set and official reranking evaluation have different query sets and metrics."
+        - "The measurements are historical and hardware/index-specific."
+    technical_assessment:
+      status: qualified
+      rationale: "The figures are directly reported in Tables 1–2, but the measurement boundaries and evaluation splits differ."
+      corroborating_sources: []
+    classification:
+      primary_theme: inference-efficiency
+      tags: [topic:information-retrieval, topic:latency, topic:benchmark]
+      concept_ids: [retrieval-augmented-generation]
+    candidate_destinations:
+      pages: [en/document-retrieval, fr/document-retrieval]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Historical quantitative evidence is useful only with the exact dataset, hardware, ranking stage and latency boundary attached."
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "ColBERT introduces contextualized multi-vector late interaction: independent query/document encoding, MaxSim token matching and summation, with document vectors precomputed offline. Its FAISS path performs approximate token-vector candidate generation followed by full MaxSim refinement. The reported speedups and quality are specific to MS MARCO/TREC-CAR, the 2020 hardware and differing reranking/end-to-end measurement boundaries."

@@ -4912,15 +4912,22 @@ sources:
       - accessed_at: "2026-11-17"
         status: partially-scanned
         inspected_scope:
-          - "Abstract, architecture description, late-interaction/MaxSim explanation and Figure 2 description."
+          - "Abstract, architecture and late-interaction explanation; no full benchmark or implementation review in that earlier pass."
         limitations:
-          - "Full benchmark tables, implementation details and current index-engine behaviour were not exhaustively audited."
+          - "Full benchmark tables, implementation details and current index-engine behaviour were not exhaustively audited in that pass."
           - "Reported latency and speedups are tied to the paper's hardware, corpus and protocol; not generalized."
-          - "Original paper figures are linked, not reproduced; reuse rights were not independently established."
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "Published primary PDF: architecture, scoring equations, indexing/retrieval procedure, selected experimental tables and stated limitations"
+          - "Created a source-scoped atomic extraction and a comparative ColBERT/ColBERTv2 primary-source dossier"
+        limitations:
+          - "Reference repository, checkpoints, index implementation and benchmark data were not independently executed or audited."
+          - "Reported quality, storage and latency values remain tied to the paper's English datasets, hardware and index configuration."
     related:
       pages: [fr/cosine-similarity, en/cosine-similarity, fr/rag-memory-boundaries, en/rag-memory-boundaries, fr/document-retrieval, en/document-retrieval]
       concepts: [retrieval-augmented-generation, contextualized-representation]
-      audit_records: [docs/source-reviews/dailydose-main-path-2026-11.md]
+      audit_records: [docs/source-reviews/dailydose-main-path-2026-11.md, docs/source-reviews/colbert-colbertv2-primary-audit-2026-11.md]
   - id: santhanam-etal-2022-colbertv2
     title: "ColBERTv2: Effective and Efficient Retrieval via Lightweight Late Interaction"
     creators: ["Keshav Santhanam", "Omar Khattab", "Jon Saad-Falcon", "Christopher Potts", "Matei Zaharia"]
@@ -4950,14 +4957,22 @@ sources:
       - accessed_at: "2026-11-17"
         status: partially-scanned
         inspected_scope:
-          - "Abstract and bibliographic metadata; residual compression and denoised supervision contributions."
+          - "Abstract and bibliographic metadata; residual compression and denoised-supervision contributions."
         limitations:
-          - "Full experimental tables and ablations were not re-audited in this pass."
+          - "Full experimental tables and ablations were not re-audited in that earlier pass."
           - "The reported 6–10x footprint reduction is paper-specific and must not be presented as a universal index-size guarantee."
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "Published primary PDF: architecture, scoring equations, indexing/retrieval procedure, selected experimental tables and stated limitations"
+          - "Created a source-scoped atomic extraction and a comparative ColBERT/ColBERTv2 primary-source dossier"
+        limitations:
+          - "Reference repository, checkpoints, index implementation and benchmark data were not independently executed or audited."
+          - "Reported quality, storage and latency values remain tied to the paper's English datasets, hardware and index configuration."
     related:
       pages: [fr/cosine-similarity, en/cosine-similarity, fr/rag-memory-boundaries, en/rag-memory-boundaries, fr/document-retrieval, en/document-retrieval]
       concepts: [retrieval-augmented-generation, contextualized-representation]
-      audit_records: [docs/source-reviews/dailydose-main-path-2026-11.md]
+      audit_records: [docs/source-reviews/dailydose-main-path-2026-11.md, docs/source-reviews/colbert-colbertv2-primary-audit-2026-11.md]
   - id: formal-piwowarski-clinchant-2021-splade
     title: "SPLADE: Sparse Lexical and Expansion Model for First Stage Ranking"
     creators: ["Thibault Formal", "Benjamin Piwowarski", "Stéphane Clinchant"]
