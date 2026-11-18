@@ -30,7 +30,7 @@ def test_inventory_separates_missing_scalar_and_mapping_locators(tmp_path: Path)
                 {"locator": {"type": "url", "value": "https://example.org/paper"}},
                 {"locator": {"type": "timestamp", "value": "01:23:45"}},
                 {"locator": {"type": "page", "value": "12-14"}},
-                {"locator": {"type": "page", "value": "12\\u201314"}},
+                {"locator": {"type": "page", "value": "12\u201314"}},
                 {"locator": {"type": "section", "value": "Section 2.1"}},
                 {"locator": {"type": "custom", "value": "opaque"}},
                 {"locator": {"type": "url", "value": ""}},
