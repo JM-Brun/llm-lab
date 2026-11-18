@@ -94,7 +94,7 @@ Les fonctions n'annoncent pas de contrat de validation des formes/paramètres : 
 | GPTOPS-03 | GELU conforme à l'approximation | Référence erf | Protégé |
 | GPTOPS-04 | Initialisation reproductible | Seed, formes, biais nul | Protégé |
 
-Lecture de travail : 8 protégés et 3 partiels sur 11 candidats. **Ce ratio 8/11 n'est pas une mesure ENG-02 publiable** : l'inventaire est partiel et la sensibilité des assertions aux défauts n'a pas été vérifiée. Un test ne compte que si son assertion peut effectivement détecter la violation.
+Lecture historique de l'audit initial : 8 protégés et 3 partiels sur 11 candidats. Les lacunes ont depuis reçu des tests dans la branche PR #1275 (voir sections 10 et 11). Ce ratio historique ne doit pas être réutilisé comme valeur courante. **Aucun score ENG-02 n'est publié** : le périmètre critique complet n'a pas été approuvé et la sensibilité des assertions aux défauts n'a pas encore été vérifiée par mutations.
 
 ## 6. Actions et ordre recommandé
 
@@ -126,11 +126,11 @@ Lecture de travail : 8 protégés et 3 partiels sur 11 candidats. **Ce ratio 8/1
 
 La CI actuelle exécute déjà la suite pytest complète avec deux workers (`pytest -n 2 --dist loadscope --durations=20`). Les nouveaux tests déterministes et minuscules doivent rejoindre les modules existants : **pas de seconde invocation pytest, pas de job dédié**. Les mutations restent manuelles/advisory au début ; un job planifié ou manuel ne sera envisagé qu'après mesure du coût et du bruit.
 
-## 8. Limites de cet audit
+## 8. Limites de l'audit initial
 
-- Les six fichiers ont été inspectés sur le commit indiqué ; le dépôt n'a pas pu être cloné dans l'environnement de travail.
-- Aucun test, lint, type-check, benchmark ou mutation n'a été exécuté dans cette session.
-- Les constats de comportement numérique sont des risques déduits du code ; les tests de caractérisation doivent confirmer le résultat et fixer le contrat.
+- Les six fichiers initiaux ont été inspectés sur le commit de référence indiqué ; le dépôt n'a pas pu être cloné dans l'environnement de travail.
+- À cette étape initiale, aucun test, lint, type-check, benchmark ou mutation n'avait été exécuté. Les résultats ultérieurs sont consignés séparément en sections 10 et 11.
+- Les constats de comportement numérique initiaux étaient des risques déduits du code ; les tests de caractérisation ajoutés fixent maintenant plusieurs contrats, sous réserve de validation sur le dernier SHA.
 - Le nombre de tests, le taux de couverture de lignes et le présent échantillon ne constituent pas le dénominateur ENG-02.
 
 ## 9. Fichiers audités
