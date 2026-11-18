@@ -20,7 +20,7 @@ def _write(path: Path, value: object) -> None:
     path.write_text(yaml.safe_dump(value, sort_keys=False), encoding="utf-8")
 
 
-def test_inventory_counts_locator_types_and_shapes_without_exposing_values(tmp_path: Path) -> None:
+def test_inventory_separates_missing_scalar_and_mapping_locators(tmp_path: Path) -> None:
     _write(
         tmp_path / "data" / "extractions" / "sample.yml",
         {
@@ -34,6 +34,8 @@ def test_inventory_counts_locator_types_and_shapes_without_exposing_values(tmp_p
                 {"locator": {"type": "section", "value": "Section 2.1"}},
                 {"locator": {"type": "custom", "value": "opaque"}},
                 {"locator": {"type": "url", "value": ""}},
+                {"locator": "Chapter 3, pages 12–14"},
+                {"locator": "https://example.org/transcript"},
                 {"summary": "No locator"},
             ],
         },
@@ -42,8 +44,13 @@ def test_inventory_counts_locator_types_and_shapes_without_exposing_values(tmp_p
     report = MODULE.collect_inventory(tmp_path)
 
     assert report["files_seen"] == 1
-    assert report["items_seen"] == 8
-    assert report["items_without_locator_mapping"] == 1
+    assert report["items_seen"] == 10
+    assert report["items_without_locator"] == 1
+    assert report["items_with_non_mapping_locator"] == 2
+    assert report["items_with_non_mapping_locator_by_shape"] == {
+        "str::http-url": 1,
+        "str::opaque-text": 1,
+    }
     assert report["locators_with_missing_or_invalid_required_fields"] == 1
     assert report["locator_types"]["url"] == 2
     assert report["value_shapes_by_type"]["url::http-url"] == 1
@@ -51,3 +58,21 @@ def test_inventory_counts_locator_types_and_shapes_without_exposing_values(tmp_p
     assert report["value_shapes_by_type"]["page::page-number-like"] == 2
     assert report["value_shapes_by_type"]["section::section-like"] == 1
     assert "https://example.org/paper" not in str(report)
+    assert "Chapter 3" not in str(report)
+
+
+def test_inventory_counts_non_mapping_records_separately(tmp_path: Path) -> None:
+    _write(
+        tmp_path / "data" / "extractions" / "sample.yml",
+        {"items": ["not-a-record", {"locator": 42}]},
+    )
+
+    report = MODULE.collect_inventory(tmp_path)
+
+    assert report["items_seen"] == 2
+    assert report["items_with_non_mapping_extraction_record"] == 1
+    assert report["items_with_non_mapping_locator"] == 1
+    assert report["items_without_locator"] == 0
+    assert report["items_with_non_mapping_locator_by_shape"] == {
+        "int::non-string:int": 1
+    }
