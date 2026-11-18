@@ -235,6 +235,7 @@ def test_unknown_source_domain_concept_and_page_references_are_rejected(
     assert any("related.pages: unknown page" in error for error in errors)
     assert any("related.concepts: unknown concept" in error for error in errors)
 
+
 def test_duplicate_source_tags_are_rejected(tmp_path: Path) -> None:
     _corpus(tmp_path)
     source_path = tmp_path / "data" / "sources.yml"
