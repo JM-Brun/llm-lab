@@ -121,7 +121,6 @@ def generate(
     if top_p is not None and (
         isinstance(top_p, (bool, np.bool_))
         or not isinstance(top_p, (int, float, np.integer, np.floating))
-        or not np.isfinite(top_p)
         or not 0.0 < top_p <= 1.0
     ):
         raise ValueError("top_p must be a finite number in the interval (0, 1] when provided")
