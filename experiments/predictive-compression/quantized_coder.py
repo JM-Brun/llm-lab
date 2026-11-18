@@ -36,8 +36,7 @@ def train_bigram_model(training: str) -> Model:
     for context, observed in counts.items():
         total = sum(observed.values()) + SMOOTHING * len(ALPHABET)
         model[context] = {
-            symbol: Fraction(observed[symbol] + SMOOTHING, total)
-            for symbol in ALPHABET
+            symbol: Fraction(observed[symbol] + SMOOTHING, total) for symbol in ALPHABET
         }
     return model
 
@@ -46,9 +45,7 @@ def probabilities_for(model: Model, context: str) -> dict[str, Fraction]:
     return model.get(context, {symbol: Fraction(1, len(ALPHABET)) for symbol in ALPHABET})
 
 
-def quantize_probabilities(
-    probabilities: dict[str, Fraction], precision: int
-) -> dict[str, int]:
+def quantize_probabilities(probabilities: dict[str, Fraction], precision: int) -> dict[str, int]:
     """Convert a distribution to positive integer frequencies summing to 2**precision.
 
     One count is reserved for every symbol; remaining counts use deterministic
@@ -81,10 +78,7 @@ def quantize_probabilities(
 
 
 def quantized_model(model: Model, precision: int) -> dict[str, dict[str, int]]:
-    return {
-        context: quantize_probabilities(row, precision)
-        for context, row in model.items()
-    }
+    return {context: quantize_probabilities(row, precision) for context, row in model.items()}
 
 
 def frequencies_for(
@@ -109,9 +103,7 @@ def sequence_nll_bits(message: str, model: Model) -> float:
     return total
 
 
-def quantized_nll_bits(
-    message: str, model: dict[str, dict[str, int]], precision: int
-) -> float:
+def quantized_nll_bits(message: str, model: dict[str, dict[str, int]], precision: int) -> float:
     total = 0.0
     previous = "^"
     denominator = 1 << precision
