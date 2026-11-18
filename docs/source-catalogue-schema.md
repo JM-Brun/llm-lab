@@ -63,6 +63,16 @@ Do not invent a generic `meta_tags` field. Typed metadata is easier to validate,
 
 ## 3. Source record
 
+### Explicit collection membership
+
+The controlled collection vocabulary is maintained in `data/source-collections.yml`. Each entry has a stable kebab-case `id`, human-readable `title`, repository-relative `dossier` path, lifecycle `status` (`active`, `paused`, or `archived`), and optional positive `owning_issue`.
+
+During the legacy catalogue phase, a canonical source record may declare `collections: [collection-id, ...]`. The field is optional for compatibility; an absent field means membership has not been declared, while an empty list explicitly declares no collection membership. Multiple memberships are allowed, but IDs must be unique within a source and resolve to the collection registry. No assignment is inferred from tags, themes, concepts, related pages, filenames, citations, titles or dossier proximity.
+
+Extraction records must not repeat collection membership. Resolve an extraction's collection membership only through `extraction.source_id -> canonical source record.collections`. The same field belongs to the distributed per-source identity record after lineage cutover; the registry remains a controlled vocabulary of dossier identities, not a second lineage graph.
+
+The first rollout validates declared memberships without requiring a backfill of all existing sources. Make the field mandatory only in a separately reviewed migration after explicit human decisions; ambiguous sources remain unassigned.
+
 Until the migration is complete, a source record in the legacy `data/sources.yml` uses this shape:
 
     schema_version: 1
@@ -230,7 +240,7 @@ Keep `docs/references.md` as a readable bibliography. It may link to source IDs,
 The consolidated initial validator is `site/tools/check_source_catalogue.py`; it runs in CI after the YAML validation dependency is installed. Its current scope is deliberately explicit:
 
 - YAML syntax and schema version for source, taxonomy, domain, concept and extraction files;
-- unique source and extraction-item IDs, and extraction-to-source referential integrity;
+- unique source and extraction-item IDs, and extraction-to-source referential integrity;\n- collection registry identity, dossier-path and lifecycle validation, plus optional source-membership resolution and duplicate detection; extraction membership is not duplicated;
 - controlled source types, scan/integration statuses, extraction kinds and item dispositions;
 - valid domain, concept and bilingual page references;
 - namespaced tag syntax and duplicate detection;
