@@ -494,9 +494,7 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
             continue
         source_id = data.get("source_id")
         if "collections" in data:
-            errors.append(
-                f"{where}.collections: membership belongs on the canonical source record"
-            )
+            errors.append(f"{where}.collections: membership belongs on the canonical source record")
         pedagogical_model = data.get("pedagogical_model")
         if source_types_by_id.get(source_id) in {"blog", "tutorial", "course", "book-chapter"}:
             if pedagogical_model is None:
