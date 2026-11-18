@@ -34,7 +34,7 @@ Le préfixe est « C'est une bonne situation, ça, scribe ? » ; la continuation
 :::
 
 ::: {.callout-tip title="L'idée à retenir"}
-Un modèle de langage estime le prochain token à partir du contexte. Cette même distribution peut servir à **générer une suite**, à **mesurer si une suite observée était attendue** ou à **entraîner le modèle**. Ces usages sont distincts : ils ne forment pas les étapes d'une même exécution.
+Un modèle estime une distribution du prochain token. Elle sert à générer, scorer ou entraîner : trois usages distincts, pas les étapes d'une même exécution.
 :::
 
 ::: {.callout-note .learning-outcomes}
@@ -61,17 +61,17 @@ Le texte « C'est une bonne situation, ça, scribe ? » est le **préfixe** : la
 
 [Refaire le calcul sur une continuation observée](exercises/vraisemblance.qmd#ex-overview-likelihood-transfer).
 
-Ces valeurs sont fictives et ne proviennent pas d'un modèle entraîné. Le vocabulaire réel contient souvent des dizaines de milliers de tokens ; une ligne du tableau ne correspond donc pas nécessairement à un mot entier. Les valeurs sont reprises dans plusieurs pages pour que les calculs puissent être refaits à la main.
+Ces valeurs sont fictives. Dans un vrai tokenizer, un token peut être un fragment de mot ; le même exemple numérique est repris dans plusieurs pages pour permettre des calculs à la main.
 
 C'est une **distribution conditionnelle** : les probabilités sont calculées en tenant compte du préfixe et leur somme vaut 1. Si la règle de décodage choisit « Vous », ce token est ajouté au contexte ; le modèle recalcule alors une nouvelle distribution, désormais conditionnée par le préfixe enrichi.
 
 Trois termes suffisent :
 
-- **Token :** l'unité manipulée par le modèle. Ce n'est pas nécessairement un mot ; le tokenizer découpe le texte et associe un identifiant à chaque unité ([du texte aux tokens](text-data.qmd)).
-- **Contexte :** les tokens disponibles pour prédire le suivant : le texte fourni, puis les tokens déjà produits.
-- **Paramètres :** les nombres appris pendant l'entraînement, notamment les poids et biais. Ils restent fixes pendant l'inférence ordinaire.
+- **Token :** unité manipulée par le modèle, pas nécessairement un mot ([tokenisation](text-data.qmd)).
+- **Contexte :** tokens fournis et tokens déjà produits.
+- **Paramètres :** nombres appris, fixes pendant l'inférence ordinaire.
 
-La probabilité d'une phrase s'obtient en multipliant les probabilités conditionnelles de ses tokens successifs ([formalisation mathématique du langage](language-modeling-math.qmd)). Mais une suite probable n'est pas nécessairement vraie : la probabilité attribuée à « Vous » ne dit rien de la situation réelle d'un scribe. Bien prédire ne prouve pas non plus une compréhension humaine du monde ([limites de l'objectif d'entraînement](llm-limits.qmd)).
+La vraisemblance d'une séquence est le produit des probabilités conditionnelles de ses tokens ([formalisation mathématique](language-modeling-math.qmd)). Une suite probable n'est pas nécessairement vraie : bien prédire ne prouve pas une compréhension humaine ([limites](llm-limits.qmd)).
 
 ## Du texte à la distribution {#text-to-distribution}
 
@@ -85,21 +85,18 @@ La figure décrit **une computation**, pas un ordre de lecture. Le parcours Unde
 
 ## Un calcul, trois usages {#one-computation-three-uses}
 
-Une fois la distribution calculée, trois questions différentes peuvent se poser : veut-on produire une suite, mesurer à quel point une suite connue était attendue, ou améliorer le modèle à partir d'une suite attendue ?
+Une distribution calculée peut servir à produire une suite, à scorer une suite connue ou à entraîner le modèle.
 
 <!-- Desktop: three-column view; mobile: stacked view for readable labels. -->
 ![Du contexte à trois usages de la distribution prédictive : génération, scoring d'une cible observée et apprentissage.](../images/llm-shared-prediction-uses-fr.svg){.d-none .d-md-block #fig-llm-shared-prediction-uses fig-alt="Le contexte passe dans le modèle, qui produit des logits puis une distribution de probabilités. Cette distribution sert à choisir un token en génération, à mesurer la probabilité d'un token observé en scoring, ou à calculer une loss et mettre à jour les paramètres pendant l'apprentissage."}
 
 ![Du contexte aux trois usages de la distribution prédictive : génération, scoring et apprentissage, présentés verticalement pour faciliter la lecture sur petit écran.](../images/llm-shared-prediction-uses-fr-mobile.svg){.d-md-none fig-alt="Version mobile du schéma : le contexte traverse le modèle, produit des logits puis des probabilités. Trois blocs présentent ensuite la génération, le scoring et l’apprentissage."}
 
-- **Générer :** la suite est inconnue. Une règle choisit un token, l'ajoute au contexte et le calcul recommence. Le traitement initial du prompt est le *prefill* ; la production token par token est le *decode* ([génération](generation.qmd)).
-- **Attribuer un score :** la suite est connue. On lit la probabilité donnée à chaque token observé ; leur produit est la **vraisemblance** de la séquence ([vraisemblance](vraisemblance.qmd)).
-- **Apprendre :** la suite attendue est connue et l'on veut modifier les paramètres. La **loss** mesure l'écart à la cible ; les **gradients** indiquent comment ajuster les paramètres ([loss](loss.qmd), [gradients](gradients.qmd)). Le *teacher forcing* construit le contexte avec les tokens réels du texte ([exemples d'entraînement](training-examples.qmd)).
+- **Générer :** choisir un token, l'ajouter au contexte et recommencer ; le *prefill* traite le prompt, le *decode* produit les tokens ([génération](generation.qmd)).
+- **Scorer :** calculer la probabilité d'une séquence observée, sa **vraisemblance** ([vraisemblance](vraisemblance.qmd)).
+- **Apprendre :** calculer une **loss** et des **gradients** pour mettre à jour les paramètres ; le *teacher forcing* utilise les tokens réels ([loss](loss.qmd), [gradients](gradients.qmd), [exemples](training-examples.qmd)).
 
-Pour le token observé de probabilité 0,6, la surprise vaut \( -\ln(0,6)\approx0,51 \) nat ; l'[entropie](entropy.qmd) mesure la surprise moyenne avant de connaître le token. Les détails mathématiques sont dans les pages liées. **Scorer n'est pas évaluer :** le scoring attribue une probabilité à une suite donnée ; l'évaluation compare des résultats sur un ensemble d'exemples défini et tenu à l'écart de l'entraînement.
-
-Générer et scorer laissent les paramètres intacts ; seul l'apprentissage les modifie. Les trois usages partagent le même calcul, mais ne s'enchaînent pas dans une même exécution.
-
+Pour une probabilité de 0,6, la surprise vaut \( -\ln(0,6)\approx0,51 \) nat ; l'[entropie](entropy.qmd) est la surprise moyenne attendue. Scorer n'est pas évaluer : l'évaluation compare des résultats sur des exemples tenus à l'écart de l'entraînement. Seul l'apprentissage modifie les paramètres.
 ## LLM, Transformer, GPT : trois notions {#llm-transformer-gpt}
 
 **LLM** désigne un modèle de langage entraîné à grande échelle, pas une architecture particulière. Aucun seuil universel de paramètres ne suffit à définir la catégorie : les données et le calcul d'entraînement comptent aussi ([lois d'échelle](scaling-laws.qmd)).
@@ -151,7 +148,7 @@ Selon la tâche, on peut utiliser un modèle généraliste tel quel, lui fournir
 
 ## Du modèle au système conversationnel {#model-to-conversational-system}
 
-Un assistant conversationnel est un **système construit autour d'un modèle**. L'application formate les messages, gère le contexte et peut coordonner des outils externes. Les rôles system, user et assistant appartiennent au format des messages, pas aux couches du Transformer. Une demande d'outil produite par le modèle n'est pas encore exécutée : l'application doit vérifier les arguments et les permissions, appeler l'outil puis transmettre son résultat. Une mémoire persistante exige également un stockage et une orchestration côté application ([évolution des LLM](llm-evolution.qmd#tool-using-systems), [parcours Build](build-path.qmd)).
+Un assistant est un **système construit autour d'un modèle**. L'application formate les messages, gère le contexte et coordonne les outils. Les rôles system, user et assistant décrivent les messages, pas les couches du Transformer. Une demande d'outil produite par le modèle n'est pas exécutée : l'application valide, appelle l'outil puis transmet le résultat. La mémoire persistante relève aussi de l'application ([évolution des LLM](llm-evolution.qmd#tool-using-systems), [Build](build-path.qmd)).
 
 ::: {.callout-tip title="Pour approfondir"}
 - **Histoire et architecture :** [histoire des Transformers](transformer-history.qmd) et [comparaison des architectures](transformer-architectures.qmd).
@@ -168,67 +165,40 @@ Exercices associés : [page d'exercices du panorama](exercises/llm-overview.qmd)
 
 <!-- self-check-coverage: enforced -->
 <!-- self-check-covers: what-model-predicts -->
-1. **Une suite probable est-elle nécessairement vraie ?** Le modèle attribue 0,6 à « Vous ». Que prouve cette probabilité ?
-
-<details><summary>Afficher la réponse</summary>
-Elle donne une probabilité conditionnelle dans cet exemple ; elle ne prouve pas que la continuation est vraie.
-</details>
+1. **Probabilité 0,6 : la suite est-elle vraie ?**
+<details><summary>Réponse</summary>Non : c'est une probabilité conditionnelle, pas une preuve de vérité.</details>
 
 <!-- self-check-covers: text-to-distribution -->
-2. **Que se passe-t-il après la sélection d'un token ?**
-
-<details><summary>Afficher la réponse</summary>
-Le token est ajouté au contexte ; le modèle recalcule une distribution avec les mêmes paramètres.
-</details>
+2. **Que fait-on après avoir choisi un token ?**
+<details><summary>Réponse</summary>On l'ajoute au contexte et on recalcule.</details>
 
 <!-- self-check-covers: one-computation-three-uses -->
-3. **Générer, scorer et apprendre sont-ils la même opération ?**
-
-<details><summary>Afficher la réponse</summary>
-Non : génération et scoring laissent les paramètres fixes ; l'apprentissage les met à jour.
-</details>
+3. **Générer, scorer et apprendre sont-ils identiques ?**
+<details><summary>Réponse</summary>Non : seul l'apprentissage modifie les paramètres.</details>
 
 <!-- self-check-covers: llm-transformer-gpt -->
 4. **Tout LLM est-il un GPT ?**
-
-<details><summary>Afficher la réponse</summary>
-Non : LLM décrit une catégorie de modèles, Transformer une famille d'architectures et GPT une famille de Transformers décodeur seul.
-</details>
+<details><summary>Réponse</summary>Non : LLM est une catégorie, GPT une famille de modèles Transformer.</details>
 
 <!-- self-check-covers: architecture-learning-use -->
-5. **Un fine-tuning change-t-il nécessairement l'architecture ?**
-
-<details><summary>Afficher la réponse</summary>
-Non : il adapte principalement les paramètres ; l'architecture et la méthode d'apprentissage sont deux dimensions distinctes.
-</details>
+5. **Le fine-tuning change-t-il l'architecture ?**
+<details><summary>Réponse</summary>Non : il adapte les paramètres.</details>
 
 <!-- self-check-covers: information-residence -->
-6. **Une information récupérée par RAG est-elle devenue une connaissance des paramètres ?**
-
-<details><summary>Afficher la réponse</summary>
-Non : elle reste externe et doit être transmise au contexte ou rendue accessible par un outil.
-</details>
+6. **Un document récupéré par RAG est-il dans les paramètres ?**
+<details><summary>Réponse</summary>Non : il reste externe et doit être transmis.</details>
 
 <!-- self-check-covers: transformers-changed -->
-7. **Le Transformer rend-il la génération autorégressive parallèle ?**
-
-<details><summary>Afficher la réponse</summary>
-Non : les positions peuvent être traitées en parallèle pendant l'entraînement, mais les nouveaux tokens sont générés successivement.
-</details>
+7. **La génération autorégressive est-elle parallèle ?**
+<details><summary>Réponse</summary>Non : les nouveaux tokens sont produits successivement.</details>
 
 <!-- self-check-covers: choosing-an-approach -->
-8. **Une documentation change chaque jour. Faut-il réentraîner le modèle ?**
-
-<details><summary>Afficher le raisonnement</summary>
-Pas nécessairement : un RAG peut récupérer une source actualisée sans modifier les paramètres, à condition de mesurer la qualité de la récupération et des réponses.
-</details>
+8. **Une documentation change souvent : faut-il réentraîner ?**
+<details><summary>Réponse</summary>Pas nécessairement : un RAG peut récupérer la source actualisée.</details>
 
 <!-- self-check-covers: model-to-conversational-system -->
-9. **Un message contient une demande d'outil. L'outil a-t-il déjà été exécuté ?**
-
-<details><summary>Afficher la réponse</summary>
-Non : l'application doit valider, exécuter l'outil et renvoyer son résultat.
-</details>
+9. **Une demande d'outil est-elle déjà exécutée ?**
+<details><summary>Réponse</summary>Non : l'application doit l'exécuter et renvoyer le résultat.</details>
 :::
 
 {{< include ../includes/generated-suggested-route-fr-llm-overview.qmd >}}
