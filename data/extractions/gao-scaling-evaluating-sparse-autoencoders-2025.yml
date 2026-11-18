@@ -56,3 +56,42 @@ items:
       limitations: ["No training code, released SAE, checkpoint or evaluation result was executed by LLM Lab."]
     disposition: integrate
     disposition_rationale: "Use only within the source's reported model, method, task and evidence scope."
+
+  - id: gao-scaling-evaluating-sparse-autoencoders-2025:quality-metric-family
+    kind: definition
+    summary: "The paper evaluates SAE quality using distinct quantities: reconstruction MSE and L0 sparsity, recovery of hypothesized features, sparse downstream effects, and explanation precision/recall."
+    locator: {type: section, value: "Sections 2-4", label: "Methods and feature evaluation"}
+    evidence:
+      kind: full-paper-method
+      confidence: established
+      scope: "Metrics and definitions used in the published ICLR 2025 paper."
+      assumptions: ["Each metric measures a different property and must be interpreted according to its operational definition."]
+      limitations: ["No single metric establishes semantic truth, full feature coverage or causal completeness."]
+    disposition: integrate
+    disposition_rationale: "Represent feature quality as a family of metrics rather than a single interpretability score."
+
+  - id: gao-scaling-evaluating-sparse-autoencoders-2025:topk-training
+    kind: mechanism
+    summary: "The paper contrasts a ReLU/L1 SAE baseline with TopK SAEs, which directly retain the k largest latent activations and therefore control L0 sparsity without the same L1 penalty."
+    locator: {type: section, value: "Sections 2.2-2.3, equations 1-2", label: "ReLU and TopK parameterizations"}
+    evidence:
+      kind: full-paper-method
+      confidence: established
+      scope: "The training variants and experiments described in the ICLR 2025 paper."
+      assumptions: ["TopK and ReLU/L1 results are not interchangeable architectures or objectives."]
+      limitations: ["Results depend on training setup, model family, layer selection, normalization and compute budget."]
+    disposition: integrate
+    disposition_rationale: "Keep SAE architecture and sparsity objective explicit in concept and source metadata."
+
+  - id: gao-scaling-evaluating-sparse-autoencoders-2025:dead-latent-mitigation
+    kind: result
+    summary: "The paper reports that tied encoder initialization and an auxiliary loss targeting dead latents reduce the number of inactive latents in its training experiments."
+    locator: {type: section, value: "Section 2.4 and Appendix B", label: "Preventing dead latents"}
+    evidence:
+      kind: full-paper-experiment
+      confidence: well-supported
+      scope: "The paper's GPT-2/GPT-4 autoencoder training experiments."
+      assumptions: ["A latent is considered dead under the paper's activation-count criterion."]
+      limitations: ["No released model or training run was executed by LLM Lab."]
+    disposition: integrate
+    disposition_rationale: "Treat dead-latent rate as a training/evaluation property, not as a semantic concept."
