@@ -2160,7 +2160,7 @@ sources:
         - topic:knowledge-distillation
         - topic:model-compression
         - method:teacher-student
-      concept_ids: []
+      concept_ids: [knowledge-distillation]
     metadata:
       technical_level: unspecified
       contribution_types: [theory, pedagogy]
@@ -2183,7 +2183,8 @@ sources:
         - en/training-examples
         - fr/llm-evolution
         - en/llm-evolution
-      concepts: []
+      concepts:
+        - knowledge-distillation
       audit_records:
         - docs/source-reviews/aiedge-llm-distillation-2026-11.md
 
