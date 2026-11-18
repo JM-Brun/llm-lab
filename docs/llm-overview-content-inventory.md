@@ -202,7 +202,7 @@ Le comptage lexical brut de la source avant réécriture était de **5 069 mots 
 
 ### Mesure après réécriture
 
-Le brouillon FR/EN réécrit contient environ **2 710 mots FR** et **2 539 mots EN** dans les fichiers source, soit une réduction brute d'environ 46,5 % et 41,7 %. Ce comptage inclut les métadonnées, le texte alternatif des figures et les marqueurs de composants ; il ne remplace pas le temps de lecture calculé sur le rendu. La cible affichée est 8–10 minutes, avec 15 minutes comme plafond : le rendu Quarto et son temps de lecture doivent confirmer que cette cible est tenue.
+La version FR/EN raccourcie contient environ **2 329 mots FR** et **2 139 mots EN** dans les fichiers source, soit une réduction brute d'environ **54,1 %** et **50,9 %**. Après retrait des métadonnées, marqueurs de composants et textes alternatifs, le contenu visible représente environ **1 772 mots FR** et **1 696 mots EN**, soit **9,8 et 9,4 minutes à 180 mots/minute**. Cette estimation est pré-rendu ; le temps de lecture et la navigation doivent encore être confirmés sur le rendu Quarto.
 
 ### Synthèse opérationnelle
 
