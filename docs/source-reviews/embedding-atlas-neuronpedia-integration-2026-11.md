@@ -117,6 +117,41 @@ These are not translations of one another and should not be made identical. Keep
 
 The Neuronpedia investigation that follows may remain structurally equivalent across languages because it concerns the same documented feature and evidence protocol; the narrative opening is where each language retains its own thread.
 
+## 3.3 Technical findings that constrain the concept model
+
+The primary literature supports a more precise starting point than the shorthand “SAEs find concepts”:
+
+1. **The object being decomposed is an activation vector, not raw text and not a neuron label.** In a common ReLU-SAE parameterization, a model activation vector (x) at a chosen layer/hook is encoded as a sparse latent vector (z = \\operatorname{ReLU}(W_{enc}(x-b_{pre})+b_{enc})), then reconstructed as \\(\\hat{x}=W_{dec}z+b_{dec}\\). This is one family of parameterizations, not a universal SAE implementation. The latent coordinate (z_i), its learned decoder direction, and the value of that coordinate on one input are related but distinct objects.
+2. **A feature is not a native neuron.** SAEs learn an overcomplete dictionary whose latent directions need not align with the model's neuron basis. The feature index is meaningful only with its exact model/checkpoint, source/release, layer/hook, SAE dictionary and version. This is why Neuronpedia provenance is part of the learner's first step.
+3. **“Interpretable” is an evaluated property, not a guarantee of semantic truth.** Research evaluates reconstruction, sparsity, recovery of hypothesized features, explanation precision/recall and downstream effects. These metrics answer different questions; no single automated score establishes that a latent is a complete, unique human concept or a faithful causal unit.
+4. **Feature dictionaries have resolution and coverage failure modes.** Feature splitting changes the granularity of a learned dictionary as SAE size changes. Feature absorption can make a seemingly coherent latent fail to activate on cases expected by its human-readable description. These results make counterexample search and coverage testing essential, not optional polish.
+5. **Description and causal validation are different stages.** Highly activating examples, density views and generated text help form hypotheses. Logit-based analysis can characterize output associations/effects, but direct contribution is not causal necessity. Interventions such as ablation or activation/feature patching can test effects under specified conditions, but require controls, baselines and attention to distribution-shift artifacts.
+6. **A circuit is a proposed computation-level explanation, not merely a graph-shaped visualization.** A graph becomes a mechanistic claim only when its nodes/edges have computational definitions and the proposed path is tested for causal relevance and, where claimed, sufficiency/necessity. A product interface's attribution view must therefore be named as a method-dependent attribution representation unless its construction and validation justify a stronger term.
+
+### Candidate concept boundaries (not yet canonical IDs)
+
+| Candidate | Technical definition to validate | Must not be merged with |
+|---|---|---|
+| Sparse autoencoder (SAE) | Learned encoder/decoder system that maps a selected model activation into a sparse latent code and reconstructs the activation | The target Transformer layer; the feature dictionary alone; an explanation label |
+| SAE latent feature | A dictionary coordinate/direction in a particular trained SAE, scoped to its model activation site and SAE version | A native neuron; an activation value on one example; a universal concept |
+| Feature activation | The scalar coefficient/value of a latent for a specified input, token position and hook | The latent direction itself; a natural-language feature description |
+| Feature explanation | A human or model-generated hypothesis summarizing observed feature behavior | The feature, ground truth, or causal mechanism |
+| Attribution | A method-specific estimate or decomposition connecting an input/component to a target quantity | A causal intervention or proof of necessity |
+| Circuit hypothesis | A proposed set of components and computational relations explaining a bounded behavior | Any graph visualization, attention map or unvalidated attribution path |
+| Causal intervention | A controlled modification of an internal quantity/component followed by measurement of a defined outcome | Passive activation inspection, logit projection or generated explanation |
+
+This table is a research scaffold for issue #1220, not an instruction to add seven nodes. Some candidates may be better represented as methods, properties or evidence types in the final ontology. The canonical registry should be updated only after checking existing IDs, technical definitions, bilingual labels, relations and page ownership.
+
+### Primary and synthesis references
+
+- Cunningham et al. (2023), [Sparse Autoencoders Find Highly Interpretable Features in Language Models](https://arxiv.org/abs/2309.08600): dictionary learning from model activations; superposition and neuron-basis distinctions; early SAE interpretability and causal case studies.
+- Bricken et al. (2023), [Towards Monosemanticity: Decomposing Language Models With Dictionary Learning](https://transformer-circuits.pub/2023/monosemantic-features/index.html): feature dictionaries, feature splitting and steering examples; claims must remain scoped to the studied model and methods.
+- Gao et al. (2024), [Scaling and Evaluating Sparse Autoencoders](https://arxiv.org/abs/2406.04093): SAE parameterization, scaling, dead latents and multiple feature-quality metrics.
+- Chanin et al. (2024), [A is for Absorption: Studying Feature Splitting and Absorption in Sparse Autoencoders](https://arxiv.org/abs/2409.14507): hierarchical feature absorption and counterexamples to naive monosemanticity assumptions.
+- Shu et al. (2025), [A Survey on Sparse Autoencoders: Interpreting the Internal Mechanisms of Large Language Models](https://aclanthology.org/2025.findings-emnlp.89/): overview of SAE architectures, explanation methods, evaluation and applications.
+
+The source review remains documentation-level. These papers inform the conceptual model; they do not mean that the linked Neuronpedia feature, its explanations or its causal effects have been independently reproduced in this project.
+
 ## 4. Synthesis and next research steps
 
 The central distinction is between **exploring the geometry of a dataset** (Embedding Atlas) and **inspecting evidence about internal model features** (Neuronpedia). Both tools make complex objects visible, but neither visualization turns an interpretation into proof.
