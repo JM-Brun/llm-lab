@@ -1,0 +1,94 @@
+schema_version: 1
+source_id: hanna-faithfulness-2024
+
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "COLM 2024 proceedings paper metadata, abstract and accessible paper text reviewed 2026-11-18."
+      - "Cross-source methodological synthesis: docs/source-reviews/circuit-attribution-faithfulness-2022-2025.md."
+    inferred_elements:
+      - "Pedagogical sequencing and cross-source interpretation are editorial synthesis, not claims made verbatim by the source."
+  source_graph:
+    nodes:
+      - id: src-eap
+        kind: intermediate
+        description: "Edge Attribution Patching estimates edge-level intervention effects with gradients."
+        locator: "Introduction and method framing"
+      - id: src-eap-ig
+        kind: operation
+        description: "EAP-IG integrates gradients along an interpolation path to improve edge attribution for circuit selection."
+        locator: "Method section: EAP-IG"
+      - id: src-faithfulness
+        kind: intermediate
+        description: "Faithfulness measures whether ablating model edges outside a proposed circuit preserves task behavior under a specified protocol."
+        locator: "Abstract and evaluation framing"
+    edges:
+      - {from: src-eap, type: contributes-to, to: src-eap-ig}
+      - {from: src-eap-ig, type: produces, to: src-faithfulness}
+    interpretation: "Source-local reconstruction only; it is not the canonical concept graph, a complete computational graph or an independent reproduction."
+  learning_outcomes:
+    - {status: inferred, outcome: "Distinguish the source's technical object, method, estimate, intervention and explanatory representation.", basis: "Editorial synthesis of the inspected source scope."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Transformer computation, activations and basic causal/intervention terminology.", basis: "The source studies internal model computations and interpretability methods."}
+  teaching_route:
+    - {order: 1, section: "Establish the target", function: establish-provenance, moves: ["Identify model, behavior, dataset, graph abstraction and target metric."]}
+    - {order: 2, section: "Classify the method", function: qualify-evidence, moves: ["Separate direct interventions from estimates, selection algorithms and validation tests."]}
+    - {order: 3, section: "Bound the claim", function: assess-limitations, moves: ["Record assumptions, failure modes, task scope and untested generalizations."]}
+  pedagogical_strengths:
+    - "Makes the method's role and evidence scope explicit for comparison with adjacent circuit methods."
+  pedagogical_limits:
+    - "Full task-level results, ablation settings and appendices remain to be audited; no EAP-IG implementation or circuit evaluation was independently reproduced."
+  comparison:
+    dossier: "docs/source-reviews/circuit-attribution-faithfulness-2022-2025.md"
+    canonical_graph: "data/concepts.yml and generated knowledge-graph projections"
+    canonical_routes: [docs/learning-path.md, data/guided-route.yml]
+    decision: "Keep source-specific claims in this extraction; canonical concept promotion and bilingual page integration require a separate ontology and resource audit."
+    structures_kept_separate:
+      - "The source's model/task-specific results remain distinct from canonical definitions."
+      - "Attribution estimates remain distinct from interventions and validation evidence."
+      - "Visualizations and human-readable labels remain distinct from model-native objects."
+
+items:
+  - id: hanna-faithfulness-2024:faithfulness-definition
+    kind: definition
+    summary: "The paper defines circuit faithfulness behaviorally: ablating all model edges outside the proposed circuit should not change task behavior."
+    locator: {type: section, value: "Abstract and evaluation definition", label: "Source-local locator"}
+    evidence:
+      kind: paper-definition
+      confidence: well-supported
+      scope: "Faithfulness is evaluated through a specified complement-ablation test."
+      assumptions:
+        - "Interpretation is restricted to the source version, model/task and protocol named by the paper."
+      limitations:
+        - "The definition is operationalized relative to task, inputs, metric and ablation procedure."
+    disposition: integrate
+    disposition_rationale: "Retain as source-scoped evidence; do not promote directly to a universal canonical concept."
+  - id: hanna-faithfulness-2024:eap-ig-method
+    kind: method
+    summary: "EAP-IG extends edge attribution patching with integrated gradients to better preserve circuit faithfulness in the evaluated settings."
+    locator: {type: section, value: "Method section: EAP-IG", label: "Source-local locator"}
+    evidence:
+      kind: paper-method
+      confidence: well-supported
+      scope: "The paper compares EAP-IG and EAP under shared evaluation conditions."
+      assumptions:
+        - "Interpretation is restricted to the source version, model/task and protocol named by the paper."
+      limitations:
+        - "Integrated-gradient attribution remains a ranking/estimation procedure, not direct causal intervention."
+    disposition: integrate
+    disposition_rationale: "Retain as source-scoped evidence; do not promote directly to a universal canonical concept."
+  - id: hanna-faithfulness-2024:overlap-not-faithfulness
+    kind: result
+    summary: "The authors report that high node overlap with intervention-derived reference circuits does not guarantee behavioral faithfulness, and EAP-IG circuits are more faithful than EAP circuits in their experiments."
+    locator: {type: section, value: "Abstract and results overview", label: "Source-local locator"}
+    evidence:
+      kind: reported-experiment
+      confidence: well-supported
+      scope: "The finding motivates measuring behavior under complement ablation, not only graph overlap."
+      assumptions:
+        - "Interpretation is restricted to the source version, model/task and protocol named by the paper."
+      limitations:
+        - "Do not generalize the measured faithfulness ranking beyond the tested tasks, data and ablation protocol."
+    disposition: integrate
+    disposition_rationale: "Retain as source-scoped evidence; do not promote directly to a universal canonical concept."
