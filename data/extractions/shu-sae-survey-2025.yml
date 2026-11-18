@@ -56,3 +56,42 @@ items:
       limitations: ["Full survey taxonomy and references have not yet been audited; use as a field map, not primary evidence."]
     disposition: cite
     disposition_rationale: "Use as a map of the field; trace empirical claims to the primary sources."
+
+  - id: shu-survey-sparse-autoencoders-2025:explanation-method-taxonomy
+    kind: definition
+    summary: "The survey distinguishes input-based explanation methods such as MaxAct and PruningMaxAct from output-based methods such as VocabProj and mutual-information-based explanation."
+    locator: {type: section, value: "Section 3, subsections 3.1-3.2", label: "Input-based and output-based feature explanation"}
+    evidence:
+      kind: full-survey-synthesis
+      confidence: established
+      scope: "The survey's classification of SAE feature explanation methods."
+      assumptions: ["The taxonomy is a survey organization of selected methods, not a universally standardized ontology."]
+      limitations: ["Method outputs are evidence/representations about a feature, not the feature itself or ground truth."]
+    disposition: cite
+    disposition_rationale: "Use the distinction to organize method families while preserving the primary-source lineage of each method."
+
+  - id: shu-survey-sparse-autoencoders-2025:evaluation-taxonomy
+    kind: definition
+    summary: "The survey separates structural metrics (reconstruction fidelity, sparsity, latent firing/density) from functional metrics (interpretability, feature-description faithfulness, probing, feature geometry and robustness)."
+    locator: {type: section, value: "Section 4, subsections 4.1-4.2", label: "Structural and functional evaluation"}
+    evidence:
+      kind: full-survey-synthesis
+      confidence: established
+      scope: "The survey's evaluation taxonomy and named metric families."
+      assumptions: ["Each metric must be interpreted according to its own operational definition and underlying primary study."]
+      limitations: ["No universal ground-truth labels or single score establish overall feature quality."]
+    disposition: cite
+    disposition_rationale: "Supports a multidimensional evaluation framework; do not collapse distinct metrics into one concept or scalar."
+
+  - id: shu-survey-sparse-autoencoders-2025:survey-scope-limitation
+    kind: limitation
+    summary: "The survey focuses on SAE research in the LLM era and does not comprehensively cover the history of related ideas in distributed representations, disentangled representation learning or sparse coding."
+    locator: {type: section, value: "Limitations section", label: "Scope limitation"}
+    evidence:
+      kind: full-survey-limitation
+      confidence: established
+      scope: "The survey's explicitly stated literature scope."
+      assumptions: ["The survey is a secondary synthesis, not primary evidence for each result it discusses."]
+      limitations: ["A separate historical literature review is needed for conceptual genealogy across adjacent fields."]
+    disposition: cite
+    disposition_rationale: "Use the survey as a field map and trace individual claims to primary studies."
