@@ -2,7 +2,7 @@
 
 **Status:** implementation plan for validator v1; this document does not claim that every rule below is enforced today.
 **Canonical implementation:** `site/tools/check_source_catalogue.py`.
-**Canonical vocabularies:** `data/source-taxonomy.yml`.
+**Canonical vocabularies:** `data/source-taxonomy.yml` and `data/source-collections.yml`.
 **Parent contract:** [Source catalogue and extraction data contract](source-catalogue-schema.md).
 **Related architecture:** [Source lineage architecture](source-lineage-architecture.md).
 
@@ -22,6 +22,9 @@ A missing value is not automatically an error. Rules marked conditional apply on
 |---|---|---|---|---|---|
 | Source identity | `id` stable kebab-case and unique | Every source | Error | Implemented | valid ID; malformed ID; duplicate |
 | Source identity | `source_type`, scan and integration states | Every source | Error | Implemented | each allowed value; unknown value |
+| Source collections | Registry schema, unique stable IDs, title, dossier path and lifecycle status | Registry required; every declared collection | Error | Implemented in PR #1313; CI pending | valid registry; duplicate/invalid ID; missing dossier; invalid status |
+| Source collections | Optional source `collections` list, unique IDs and registry references | When field is present; legacy absence remains valid | Error | Implemented in PR #1313; CI pending | absent, empty, single/multiple memberships, unknown ID, duplicate ID, malformed list |
+| Extraction collections | No duplicated collection membership; resolve through `source_id` only | Every extraction | Error | Implemented in PR #1313; CI pending | no extraction field; duplicate field rejected; source-ID join |
 | Bibliography | `title` non-empty; `creators` list of non-empty strings | When present; required for substantive sources after policy decision | Warning initially | Not fully enforced | absent, empty, malformed, multiple creators |
 | Bibliography | `canonical_url` absolute HTTP(S); DOI/other identifiers normalized | When present | Error for malformed supplied value; absence is not universally fatal | Not enforced | HTTP, HTTPS, relative URL, malformed DOI |
 | Bibliography | `language` BCP 47 | When present | Error for malformed supplied value; unknown remains explicit | Not enforced | en, fr, zh-Hans, invalid tag, null |
@@ -90,6 +93,8 @@ A missing value is not automatically an error. Rules marked conditional apply on
 **Purpose:** distinguish rules that the current validator actually enforces from the broader v1 design above. This is a code-and-fixture audit, not a claim that every historical record has been semantically reviewed.
 
 ### Current enforcement by record family
+
+**Collection-contract implementation under review:** PR #1313 adds the three collection-registry and source-membership checks below. Until CI passes on the final PR head and review is complete, these checks are implementation-in-review, not an accepted baseline.
 
 | Record family | Field / condition | Current enforced behavior | Direct regression evidence | Not established by this check |
 |---|---|---|---|---|
