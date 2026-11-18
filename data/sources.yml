@@ -3126,6 +3126,10 @@ sources:
           - "The post is a secondary pedagogical overview, not a primary architecture specification."
           - "No serving stack, hardware, model configuration or benchmark was inspected; performance bottlenecks are configuration-dependent."
           - "The diagram is not reproduced; reuse rights for the image are not established."
+    related:
+      pages: [fr/generation, en/generation]
+      concepts: [autoregressive-generation, prefill, decode-step, kv-cache]
+      audit_records: [docs/source-reviews/brij-pandey-inference-generation-2026-11.md]
   - id: balestriero-lecun-contrastive-non-contrastive-ssl-spectral-2022
     title: "Contrastive and Non-Contrastive Self-Supervised Learning Recover Global and Local Spectral Embedding Methods"
     creators: ["Randall Balestriero","Yann LeCun"]
