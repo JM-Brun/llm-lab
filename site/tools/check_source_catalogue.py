@@ -119,6 +119,17 @@ def _validate_item_controlled_values(
         errors.append(f"{where}.disposition: unsupported value {disposition!r}")
 
 
+def _validate_locator(locator: Any, where: str, errors: list[str]) -> None:
+    """Validate the shared structural contract without imposing type-specific syntax."""
+    if not isinstance(locator, dict):
+        errors.append(f"{where}: expected a mapping")
+        return
+    for field in ("type", "value"):
+        value = locator.get(field)
+        if not isinstance(value, str) or not value.strip():
+            errors.append(f"{where}.{field}: expected non-empty text")
+
+
 def _validate_tags(value: Any, where: str, errors: list[str]) -> None:
     tags = _strings(value, where, errors)
     if len(tags) != len(set(tags)):
@@ -457,9 +468,7 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
                 errors.append(f"{item_where}.kind: unsupported value {item.get('kind')!r}")
             if not isinstance(item.get("summary"), str) or not item["summary"].strip():
                 errors.append(f"{item_where}.summary: expected non-empty paraphrase")
-            locator = item.get("locator")
-            if not isinstance(locator, dict) or not locator.get("type") or not locator.get("value"):
-                errors.append(f"{item_where}.locator: expected type and value")
+            _validate_locator(item.get("locator"), f"{item_where}.locator", errors)
             _validate_item_controlled_values(
                 item,
                 item_where,
@@ -505,8 +514,14 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
                         errors.append(f"{item_where}.provenance.voice: unsupported voice")
                     if provenance.get("parent_source_id") not in source_ids:
                         errors.append(f"{item_where}.provenance.parent_source_id: unknown source")
-                    if not isinstance(provenance.get("locator"), dict):
-                        errors.append(f"{item_where}.provenance.locator: expected a mapping")
+                    _validate_locator(
+                        provenance.get("locator"), f"{item_where}.provenance.locator", errors
+                    )
+                    if "speaker" in provenance and (
+                        not isinstance(provenance["speaker"], str)
+                        or not provenance["speaker"].strip()
+                    ):
+                        errors.append(f"{item_where}.provenance.speaker: expected non-empty text")
                     if not _is_date(provenance.get("captured_at")):
                         errors.append(
                             f"{item_where}.provenance.captured_at: expected ISO 8601 date"

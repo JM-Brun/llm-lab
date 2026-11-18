@@ -157,6 +157,40 @@ def test_missing_extraction_locator_and_unknown_confidence_are_rejected(tmp_path
     assert any("evidence.confidence" in error for error in errors)
 
 
+def test_locator_type_and_value_must_be_non_empty_strings(tmp_path: Path) -> None:
+    _corpus(tmp_path, with_extraction=True)
+    extraction_path = tmp_path / "data" / "extractions" / "example-source.yml"
+    data = yaml.safe_load(extraction_path.read_text(encoding="utf-8"))
+    data["items"][0]["locator"] = {"type": ["section"], "value": {"heading": "Abstract"}}
+    _write_yaml(extraction_path, data)
+
+    errors = MODULE.validate_source_catalogue(tmp_path)
+
+    assert any("items[0].locator.type: expected non-empty text" in error for error in errors)
+    assert any("items[0].locator.value: expected non-empty text" in error for error in errors)
+
+
+def test_provenance_locator_and_optional_speaker_are_structurally_validated(
+    tmp_path: Path,
+) -> None:
+    _corpus(tmp_path, with_extraction=True)
+    extraction_path = tmp_path / "data" / "extractions" / "example-source.yml"
+    data = yaml.safe_load(extraction_path.read_text(encoding="utf-8"))
+    data["items"][0]["provenance"] = {
+        "voice": "reader-comment",
+        "parent_source_id": "example-source",
+        "locator": {"type": "comment", "value": "  "},
+        "captured_at": "2026-11-18T12:00:00Z",
+        "speaker": "",
+    }
+    _write_yaml(extraction_path, data)
+
+    errors = MODULE.validate_source_catalogue(tmp_path)
+
+    assert any("provenance.locator.value: expected non-empty text" in error for error in errors)
+    assert any("provenance.speaker: expected non-empty text" in error for error in errors)
+
+
 def test_instructional_source_requires_pedagogical_model(tmp_path: Path) -> None:
     _corpus(tmp_path, source_type="blog", with_extraction=True)
 
