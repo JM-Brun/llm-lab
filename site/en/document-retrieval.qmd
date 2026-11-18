@@ -26,6 +26,8 @@ tags: ["type:deep-dive", "destination:deepen", "topic:document-retrieval", "leve
 **Document retrieval** or **information retrieval** selects documents or passages relevant to a query. It can power a search engine, a RAG pipeline, or a memory system, but it does not guarantee that results will be supplied to the model. This page focuses on ingestion, indexing, retrieval families, ranking, and their evaluation. Its sibling page [RAG, memory, and context transmission](rag-memory-boundaries.qmd) follows retrieved information through to its possible use by the model.
 :::
 
+
+This is an optional, self-contained deep dive; it is not a prerequisite for reading the RAG or context-engineering lessons.
 ## What you should be able to do
 
 By the end of this page, you should be able to:
