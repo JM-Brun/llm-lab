@@ -56,3 +56,42 @@ items:
       limitations: ["Full metric, controls, datasets, supplementary analyses and reproduction remain pending."]
     disposition: integrate
     disposition_rationale: "Use only within the source's reported model, method, task and evidence scope."
+
+  - id: chanin-feature-absorption-sparse-autoencoders-2025:hierarchical-absorption-mechanism
+    kind: mechanism
+    summary: "When a dense parent feature always co-occurs with a sparse child feature, an SAE can reduce sparsity cost by folding the parent direction into the child decoder direction while suppressing the parent encoder on child-positive cases."
+    locator: {type: section, value: "Sections 3 and 7, Figures 2-3", label: "Toy model, hierarchy and absorption"}
+    evidence:
+      kind: full-paper-theory-and-experiment
+      confidence: well-supported
+      scope: "The paper's toy model, hierarchical co-occurrence assumptions and tested SAE settings."
+      assumptions: ["The parent-child implication and co-occurrence structure are part of the mechanism studied."]
+      limitations: ["Do not generalize the exact mechanism to all feature interactions without checking the hierarchy assumptions."]
+    disposition: integrate
+    disposition_rationale: "Explain how an apparently coherent feature can have a recall hole and why encoder/decoder directions can diverge."
+
+  - id: chanin-feature-absorption-sparse-autoencoders-2025:absorption-metric-scope
+    kind: limitation
+    summary: "The absorption metric uses probe alignment and causal ablation effects with manually selected thresholds; it is conservative and misses multiple absorbing latents or partially firing main latents."
+    locator: {type: section, value: "Section 5.3, Section 7 and Appendix A.11-A.13", label: "Absorption metric and limitations"}
+    evidence:
+      kind: full-paper-method-and-limitation
+      confidence: established
+      scope: "The paper's first-letter task, Gemma Scope SAEs and selected Qwen2/Llama SAEs."
+      assumptions: ["Ablation effects are used to confirm causal relevance of the absorbing latent."]
+      limitations: ["The method cannot assess layers after layer 17 in the Gemma-2-2B setup because attention has moved the information; the authors expect the metric to underestimate absorption."]
+    disposition: integrate
+    disposition_rationale: "Keep the absorption rate tied to its metric, model/task scope and causal intervention limits."
+
+  - id: chanin-feature-absorption-sparse-autoencoders-2025:experimental-scope
+    kind: result
+    summary: "The paper studies first-letter information using Gemma-2-2B and Gemma Scope 16k/65k residual-stream SAEs, with additional SAEs trained on Qwen2 0.5B and Llama 3.2 1B."
+    locator: {type: section, value: "Section 4 and Section 5.3", label: "Experimental setup"}
+    evidence:
+      kind: full-paper-experiment
+      confidence: established
+      scope: "Published paper experiments and stated model/SAE configurations."
+      assumptions: ["The reported rates are specific to the spelling task, models, layers and SAE releases evaluated."]
+      limitations: ["The paper reports limited seeds for existing released SAEs and does not claim universal prevalence rates."]
+    disposition: integrate
+    disposition_rationale: "Preserve experimental scope when using absorption as a counterexample to generic claims about SAE interpretability."
