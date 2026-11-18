@@ -89,3 +89,50 @@ Les sections « De la conception du contexte aux architectures de récupération
 ## Synthèse opérationnelle
 
 La séparation retrieval / RAG-mémoire est justifiée par deux objectifs autonomes déjà présents. La nouvelle page optionnelle possède les familles de retrievers, la recherche visuelle, le reranking et l'exemple FAISS ; la page RAG conserve le cycle d'information externe, l'expérience intégratrice, la mémoire et la sécurité. Context engineering reste propriétaire de la conception du contexte et ne perd que les explications qui appartiennent au propriétaire RAG. Les lots Generation/complexity et Training loop/Loss/Gradients restent distincts et seront traités après vérification de leurs dépendances.
+
+
+## 8. Audit détaillé des exercices et de l'index Deepen
+
+### Exercices RAG existants : répartition des objectifs
+
+Les sept exercices FR/EN ont été lus intégralement. Ils couvrent les objectifs suivants :
+
+| Exercice | Compétence testée | Propriétaire après découpage |
+|---|---|---|
+| 1. Frontière de transmission | Distinguer disponibilité, récupération, injection au contexte et retour d'outil au tour suivant | Page RAG : synthèse de bout en bout |
+| 2. Diagnostic d'un RAG défaillant | Parcourir source, parsing, chunking, requête, ranking, assemblage, troncature et usage par le modèle | Page RAG : diagnostic intégré ; renvoi vers retrieval pour les étapes recherche/classement |
+| 3. RAG, mémoire et ICL | Affecter des finalités différentes à documentation, continuité de projet et format d'exemple | Page RAG + liens vers Memory/ICL |
+| 4. Expérience contrôlée | Séparer stockage, indexation, récupération et transmission, puis contrôler les variables | Page RAG : expérience intégratrice |
+| 5. Qualité de retrieval vs exploitation | Interpréter rappel de récupération et fidélité de réponse conditionnelle | Pont entre les deux pages ; le détail des mesures de retrieval peut être lié depuis la page retrieval |
+| 6. Gouvernance mémoire | Gérer contradictions, fraîcheur, provenance, remplacement et propagation des suppressions | Page RAG : mémoire et gouvernance |
+| 7. Connaissance paramétrique vs information fournie | Distinguer pré-entraînement, fine-tuning, RAG et contexte ponctuel | Page RAG : synthèse d'ensemble |
+
+**Décision : ne pas scinder le hub d'exercices à ce stade.** Aucun exercice n'est exclusivement consacré aux architectures de retrievers ; l'exercice 2 et l'exercice 5 les touchent, mais au sein d'un diagnostic de bout en bout. Un exercice retrieval autonome ferait doublon tant qu'un objectif d'apprentissage spécifique (par exemple choisir un retriever selon une distribution de requêtes et interpréter nDCG/Recall@k) n'est pas ajouté au contenu et étayé par un protocole. La nouvelle page pourra renvoyer au hub existant, avec un libellé indiquant qu'il s'agit d'une pratique intégratrice RAG/mémoire, et non d'un atelier spécialisé de ranking.
+
+### Placement de la future page retrieval : implications constatées
+
+Le hub `site/fr/deepen.qmd` est une carte éditoriale manuelle, organisée par six questions. La page RAG actuelle figure explicitement sous **Inférence et efficacité**. L'ajout d'une page retrieval exige donc une mise à jour coordonnée de la carte FR et EN, pas seulement un changement de page map.
+
+Pour rester cohérent avec les contrats existants, la future page devra au minimum avoir :
+- un `LLM-LAB-PAGE-MAP` propre avec un identifiant stable `fr/document-retrieval` / `en/document-retrieval` ;
+- `domain: inference-efficiency`, `type:deep-dive`, `destination:deepen`, `level:advanced`, et un topic distinct `document-retrieval` ;
+- `hierarchy.parents: ["fr/deepen"]` / `["en/deepen"]`, sans parent RAG : ce n'est pas un sous-chapitre de RAG mais une page sœur ;
+- `suggested_route.previous: null` et `next: null` ; aucun lien d'ordre entre les deux approfondissements ;
+- des relations `related` réciproques avec RAG et Context engineering si elles expriment une pertinence réelle ;
+- une entrée dans `data/guided-route.yml` sous `optional_pages` de `context-use`, uniquement si les tests confirment que ce champ représente bien une appartenance facultative sans ordre ;
+- une entrée explicite dans la carte Deepen FR/EN, dans la liste `hierarchy.children` du hub si cette liste sert de projection, et dans les éventuels index/sidebar/render lists pilotés manuellement ;
+- une page d'exercices distincte seulement si le contenu produit un objectif de pratique non couvert par le hub RAG existant.
+
+Le champ `hierarchy.children` de `deepen.qmd` n'est pas à compléter aveuglément : il ne répertorie actuellement qu'un sous-ensemble des entrées visibles dans la carte. Avant édition, il faut identifier le consommateur de ce champ et vérifier s'il s'agit d'une hiérarchie volontairement partielle ou d'un inventaire incomplet. Ne pas transformer ce champ en inventaire parallèle.
+
+### Conséquence sur les durées
+
+Le découpage ne doit pas être justifié par la seule longueur de la page source. Il sépare deux questions autonomes : « comment retrouver et classer des documents ? » et « comment une information externe traverse-t-elle stockage, récupération, contexte et usage ? ». Après déplacement, mesurer les durées sur le rendu final FR/EN. Si la page RAG reste au-dessus de 15 minutes, examiner d'abord la densité réelle et les répétitions restantes ; ne pas couper automatiquement les sections sécurité, gouvernance ou expérience intégratrice.
+
+## 9. Compléments de validation requis avant création des pages
+
+- Inspecter les listes Quarto/sidebar, les contrôles de parité des pages bilingues, le générateur de page map et les tests qui consomment `hierarchy.children`, `related` et `optional_pages`.
+- Vérifier si `deepen.qmd` est la seule carte éditoriale à modifier, ou si une liste d'entrées avancées est également maintenue dans une configuration.
+- Auditer les liens de l'exercice RAG et les renvois depuis Context engineering pour éviter des liens qui pointent vers une section déplacée ou une ancre disparue.
+- Vérifier les références ColPali, FAISS, bi-encoder/cross-encoder dans les deux langues et leur statut de liens externes.
+- Après création, générer les projections de métadonnées et de graphe à partir des sources canoniques ; ne pas éditer les artefacts générés à la main.
