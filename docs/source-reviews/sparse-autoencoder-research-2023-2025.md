@@ -1,12 +1,12 @@
 # Sparse autoencoder research: source review and concept implications (2023–2025)
 
 **Review date:** 2026-11-18  
-**Review depth:** metadata and abstract-level first pass; full-paper audit pending  
+**Review depth:** full-paper sections audited for Cunningham et al., Gao et al. and Chanin et al.; metadata/abstract-level review only for Bricken et al. and Shu et al.; full audit still pending  
 **Purpose:** ground the proposed SAE and mechanistic-interpretability concepts in distinct primary sources and keep evidence, method and interpretation layers separate.
 
 ## 1. Scope and status
 
-Five scientific sources are now registered separately in `data/sources.yml`. Their catalogue records deliberately use `scan_status: partially-scanned` and `integration_status: partially-integrated`: this pass checked official publisher/proceedings metadata and abstracts (and preprint metadata where relevant), not every methods section, appendix, released checkpoint or code repository.
+Five scientific sources are registered separately in `data/sources.yml`. Their catalogue records deliberately remain `scan_status: partially-scanned` and `integration_status: partially-integrated`. Official publisher/proceedings metadata and abstracts were checked for all five; the full published papers of Cunningham et al., Gao et al. and Chanin et al. were then inspected for their main methods, evaluation protocols and limitations. Bricken et al. and Shu et al. remain overview/abstract-level. Code and checkpoints were not run, and not every appendix or cited work has been audited.
 
 No source in this review is treated as independently reproduced. The sources provide reported findings and technical framing, not direct measurements made by LLM Lab.
 
@@ -52,14 +52,33 @@ No source in this review is treated as independently reproduced. The sources pro
 - **Scope/limitation:** claims in the survey must be traced to the cited primary studies before being promoted to source-grounded claims in the knowledge graph. Full sections and references have not yet been audited.
 - **Primary record:** [ACL Anthology](https://aclanthology.org/2025.findings-emnlp.89/) · [arXiv](https://arxiv.org/abs/2503.05613)
 
+
+### 2.6 Full-paper cross-check: what the methods actually distinguish
+
+The full papers make several ontology boundaries more precise than their abstracts alone:
+
+- **Target activation site:** Cunningham et al. explicitly sample activations from residual-stream, MLP-sublayer or attention-head-sublayer locations. The activation vector is therefore always site-scoped; an SAE dictionary trained on one site is not automatically transferable to another.
+- **Encoder coefficient vs decoder direction:** the SAE encoder computes a latent coefficient for a given input, while the decoder direction contributes to reconstruction. The latent index links these parameters, but they are not definitionally the same vector. The Chanin analysis shows why this distinction matters: encoder and decoder directions can become asymmetric under absorption. Do not use "feature activation", "feature direction" and "reconstruction contribution" interchangeably.
+- **Cunningham's reported feature score:** their automated interpretation procedure asks GPT-4 to produce a human-readable description from activating examples, then predicts feature activations on other examples; correlation with actual activations forms the score. This is predictive agreement under that protocol, not a proof that the description is semantically true or exhaustive.
+- **Cunningham's causal evidence:** the paper uses activation patching along selected dictionary-feature directions in an indirect-object-identification task, compares with PCA, and applies ACDC while treating features as a flat computational graph with independent effects. The test set is 50 IOI examples. This is a specific intervention result, not a universal validation of SAE features or of arbitrary attribution graphs.
+- **Cunningham's coverage caveat:** even a feature described as an apostrophe detector does not fire on every apostrophe; other context-specific features activate. A convincing top-activating-example panel is not evidence of complete recall.
+- **Gao's quality measures:** the paper distinguishes normalized reconstruction MSE and sparsity (L0), dead-latent rate, recovery of hypothesized features, sparse downstream effects, and explanation precision/recall. It studies both a ReLU/L1 baseline and TopK variants; TopK directly constrains the number of active latents rather than applying the same L1 penalty. These are separate metrics and training choices, not one scalar notion of interpretability.
+- **Gao's scope:** the published experiments include GPT-2 small and GPT-4 residual-stream activations, with specific layer selection, context length and normalization. The 16M-latent result is tied to the authors' GPT-4 setup. Scaling trends should not be promoted to model-independent laws without preserving those conditions.
+- **Chanin's absorption mechanism:** when a dense parent feature always co-occurs with a sparse child feature, an SAE can lower its sparsity cost by folding the parent direction into the child decoder direction and suppressing the parent encoder on child-positive examples. This creates an encoder recall hole even when reconstruction remains good.
+- **Chanin's experimental protocol:** the paper tests first-letter information with Gemma-2-2B and Gemma Scope 16k/65k SAEs, plus selected SAEs trained on Qwen2 0.5B and Llama 3.2 1B. Its absorption metric combines probe alignment with ablation effects on a defined output-logit measure; thresholds were selected by manual inspection. This is a source-specific metric, not a universal diagnostic.
+- **Chanin's limitations:** the causal-ablation metric cannot be applied beyond layer 17 in its Gemma-2-2B spelling setup because attention has already moved the relevant information to the final token. The metric is conservative and likely underestimates absorption: it misses multiple absorbing latents and weakly firing main latents. The authors also lack multiple seeds for the released SAEs, so their own training runs are used to establish non-zero absorption rather than universal rates.
+
+The resulting practical rule is stronger than "inspect counterexamples": test both **precision** (what else activates?) and **recall** (what expected cases fail to activate?), then use a method-specific intervention only when a causal claim is needed. Record the model, layer/hook, token position, preprocessing, SAE architecture, latent index, encoder/decoder directions, evaluation metric and intervention protocol.
+
+
 ## 3. Cross-source synthesis: what the evidence supports
 
 1. **SAEs are auxiliary analysis models.** They learn a sparse representation of activations from a selected target-model site. The SAE is not itself a Transformer layer or a native component of the target model.
 2. **A feature is a learned latent/dictionary direction.** It is scoped to the target model/checkpoint, layer or hook, activation preprocessing, SAE training run and dictionary. A feature index is not globally portable.
 3. **A feature activation is a per-example coefficient.** It is not the direction/dictionary feature itself, and it depends on the input and the exact activation site.
 4. **Interpretability is not one metric.** Reconstruction fidelity, sparsity, dead-latent rate, feature recovery, explanation quality, coverage and downstream effects answer different questions.
-5. **Positive examples are insufficient.** Feature splitting and absorption make expected-positive misses and hierarchical counterexamples especially important.
-6. **Descriptions and causal claims are different.** A human-readable or model-generated label is a hypothesis; a causal claim requires a defined intervention and suitable controls. A paper's specific causal result should remain scoped to its own experiment.
+5. **Positive examples are insufficient.** Feature splitting and absorption make expected-positive misses and hierarchical counterexamples especially important. A feature may have a clear set of top activations yet poor recall on cases its description predicts.
+6. **Descriptions and causal claims are different.** A human-readable or model-generated label is a hypothesis; a causal claim requires a defined intervention and suitable controls. Cunningham's activation-patching result and Chanin's ablation-based absorption metric each depend on their own task, layer and metric; neither validates every feature or circuit.
 7. **Surveys are navigation aids.** The Shu et al. survey helps structure further reading, but source-level claims should point to the primary paper that establishes them.
 
 ## 4. Implications for the canonical concept graph
