@@ -76,6 +76,29 @@ Exécuter `python experiments/predictive-compression/domain_shift.py`. Deux mod�
 
 Ce contrôle synthétique montre que les probabilités apprises sur une source peuvent devenir peu utiles lorsque la distribution change. Il **n'isole pas la fréquence comme cause unique** et ne permet aucune conclusion quantitative sur les LLM ou les domaines réels.
 
+## Probabilités quantifiées et flux binaire explicitement encadré
+
+Exécuter cette seconde implémentation, distincte de la démonstration rationnelle exacte :
+
+~~~bash
+python experiments/predictive-compression/quantized_coder.py
+uv run pytest tests/unit/test_quantized_predictive_coder.py
+~~~
+
+Cette version convertit chaque distribution conditionnelle en fréquences entières strictement positives dont la somme est fixée à `2^12`. L'encodeur et le décodeur utilisent ces mêmes probabilités quantifiées. Le programme sérialise une trame déterministe contenant une signature de format, une version, la précision des probabilités, la longueur du message, le nombre de bits utiles et le contenu binaire compacté.
+
+Le rapport JSON distingue :
+
+- la NLL du modèle en virgule flottante (probabilités bigrammes lissées initiales) ;
+- la NLL idéale sous les fréquences effectivement quantifiées ;
+- les bits et octets du payload arithmétique produit ;
+- les bits de remplissage et les octets de l'en-tête fixe ;
+- la taille totale de la trame sérialisée, en octets et en bits.
+
+Le modèle, la séquence d'entraînement, l'alphabet et les tables de probabilités sont partagés hors bande : ils ne sont **ni transmis ni inclus** dans la taille de la trame. L'en-tête contient la longueur du message ; le format est donc une trame pour message fini, pas un flux auto-délimité. Les intervalles sont toujours calculés avec des fractions exactes : cette expérience teste la quantification des probabilités et la sérialisation explicite, pas un codeur de plages de production à état borné. Les deux implémentations répondent à des questions différentes et ne doivent pas être confondues.
+
+Aucun modèle de langage neuronal n'intervient. Il s'agit d'un pont contrôlé entre probabilités conditionnelles, coût prédictif idéal et flux binaire reproductible sans perte.
+
 ## Interprétation et limites
 
 - La longueur idéale est mesurée en **bits**, avec des logarithmes en base 2.
