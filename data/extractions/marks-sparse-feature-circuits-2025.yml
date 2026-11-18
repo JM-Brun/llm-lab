@@ -51,7 +51,7 @@ pedagogical_model:
 
 items:
   - id: marks-sparse-feature-circuits-2025:feature-circuit-construction
-    kind: method
+    kind: claim
     summary: "The paper proposes methods to discover sparse feature circuits as behavior-associated subnetworks of human-interpretable SAE features."
     locator: {type: section, value: "Abstract and method overview", label: "Source-local locator"}
     evidence:
@@ -65,7 +65,7 @@ items:
     disposition: integrate
     disposition_rationale: "Retain as source-scoped evidence; do not promote directly to a universal canonical concept."
   - id: marks-sparse-feature-circuits-2025:shift-feature-editing
-    kind: method
+    kind: claim
     summary: "SHIFT improves classifier generalization by ablating features that a human judges irrelevant to the classifier's task."
     locator: {type: section, value: "Abstract: SHIFT", label: "Source-local locator"}
     evidence:
