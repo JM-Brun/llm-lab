@@ -14,14 +14,14 @@ pedagogical_model:
       - "The reviewed documentation does not establish that every feature source supports custom-text inference or exposes identical evidence fields."
   source_graph:
     nodes:
-      - {id: src-model-release, kind: model-artifact, description: "A named model and source/release identify the context in which a feature index and its evidence are defined.", locator: "https://docs.neuronpedia.org/getting-started/key-concepts"}
-      - {id: src-sae-feature, kind: learned-representation, description: "A feature is a learned SAE latent/direction associated with a particular model source and release; it is not automatically a native neuron or a unique human concept.", locator: "https://docs.neuronpedia.org/sparse-autoencoders/overview"}
-      - {id: src-activation-evidence, kind: empirical-observation, description: "Feature dashboards expose activation examples and activation-density information for inspecting where a feature responds.", locator: "https://docs.neuronpedia.org/sparse-autoencoders/feature-dashboards"}
-      - {id: src-logit-evidence, kind: empirical-observation, description: "Dashboard logits provide evidence about associations with output tokens; they are not interchangeable with activation magnitudes.", locator: "https://docs.neuronpedia.org/sparse-autoencoders/feature-dashboards"}
-      - {id: src-auto-interpretation, kind: model-generated-hypothesis, description: "Auto-Interp methods generate natural-language explanations from selected activation evidence, with method-dependent scoring.", locator: "https://docs.neuronpedia.org/sparse-autoencoders/auto-interp"}
-      - {id: src-custom-text-test, kind: conditional-investigation, description: "Some feature sources expose inference endpoints that allow testing custom text; availability is source-dependent.", locator: "https://docs.neuronpedia.org/api/"}
+      - {id: src-model-release, kind: constraint, description: "A named model and source/release identify the context in which a feature index and its evidence are defined.", locator: "https://docs.neuronpedia.org/getting-started/key-concepts"}
+      - {id: src-sae-feature, kind: representation, description: "A feature is a learned SAE latent/direction associated with a particular model source and release; it is not automatically a native neuron or a unique human concept.", locator: "https://docs.neuronpedia.org/sparse-autoencoders/overview"}
+      - {id: src-activation-evidence, kind: intermediate, description: "Feature dashboards expose activation examples and activation-density information for inspecting where a feature responds.", locator: "https://docs.neuronpedia.org/sparse-autoencoders/feature-dashboards"}
+      - {id: src-logit-evidence, kind: intermediate, description: "Dashboard logits provide evidence about associations with output tokens; they are not interchangeable with activation magnitudes.", locator: "https://docs.neuronpedia.org/sparse-autoencoders/feature-dashboards"}
+      - {id: src-auto-interpretation, kind: representation, description: "Auto-Interp methods generate natural-language explanations from selected activation evidence, with method-dependent scoring.", locator: "https://docs.neuronpedia.org/sparse-autoencoders/auto-interp"}
+      - {id: src-custom-text-test, kind: operation, description: "Some feature sources expose inference endpoints that allow testing custom text; availability is source-dependent.", locator: "https://docs.neuronpedia.org/api/"}
       - {id: src-attention-head-view, kind: visualization, description: "The platform also provides attention-head exploration, a distinct object of analysis from SAE features.", locator: "https://docs.neuronpedia.org/"}
-      - {id: src-attribution-graph, kind: approximate-analysis, description: "Attribution/circuit views summarize selected computational paths under method-specific approximations.", locator: "https://docs.neuronpedia.org/"}
+      - {id: src-attribution-graph, kind: visualization, description: "Attribution/circuit views summarize selected computational paths under method-specific approximations.", locator: "https://docs.neuronpedia.org/"}
     edges:
       - {from: src-model-release, type: scopes-identity-of, to: src-sae-feature}
       - {from: src-sae-feature, type: has-observed-evidence, to: src-activation-evidence}
@@ -99,7 +99,7 @@ items:
     disposition_rationale: "Use activation examples as observations to test a hypothesis, not as a definition."
 
   - id: neuronpedia-interpretability-platform:logit-evidence
-    kind: observation
+    kind: claim
     summary: "Logit views describe associations with output tokens and must not be conflated with feature activation magnitude."
     locator: {type: section, value: "Sparse autoencoder feature dashboards", label: "Logits and activation views"}
     evidence:
