@@ -41,7 +41,10 @@ def cross_entropy_from_logits(
     A mathematically valid loss outside the finite float64 range is rejected.
     """
     logits, target_array = _validate_logits_targets(logits, targets)
-    log_partition = np.logaddexp.reduce(logits, axis=1)
+    # NumPy may raise a harmless intermediate-overflow warning while
+    # reducing values near float64 limits; the logaddexp result is finite.
+    with np.errstate(over="ignore", invalid="raise"):
+        log_partition = np.logaddexp.reduce(logits, axis=1)
     target_logits = logits[np.arange(logits.shape[0]), target_array]
     with np.errstate(over="ignore", invalid="raise"):
         per_example_losses = log_partition - target_logits
@@ -56,7 +59,8 @@ def cross_entropy_gradient(
 ) -> FloatArray:
     """Return the gradient of mean cross-entropy with respect to logits."""
     logits, target_array = _validate_logits_targets(logits, targets)
-    log_partition = np.logaddexp.reduce(logits, axis=1, keepdims=True)
+    with np.errstate(over="ignore", invalid="raise"):
+        log_partition = np.logaddexp.reduce(logits, axis=1, keepdims=True)
     # Underflow of a very unlikely class to probability zero is intentional.
     with np.errstate(over="ignore", under="ignore", invalid="raise"):
         probabilities = np.exp(logits - log_partition)
