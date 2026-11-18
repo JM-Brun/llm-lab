@@ -148,3 +148,31 @@ def test_mutual_information_is_expected_conditional_kl_to_marginal() -> None:
         if weight > 0.0
     )
     assert mutual_information(joint, base=2.0) == pytest.approx(expected)
+
+
+def test_row_kl_to_uniform_is_not_mutual_information() -> None:
+    """The same row concentration can coexist with different context-key MI."""
+    context_probabilities = np.array([0.5, 0.5])
+    uniform = np.array([0.5, 0.5])
+    repeated_rows = np.array([[0.9, 0.1], [0.9, 0.1]])
+    contrasting_rows = np.array([[0.9, 0.1], [0.1, 0.9]])
+
+    def mean_row_kl(rows: np.ndarray) -> float:
+        return float(
+            np.mean([kl_divergence(row, uniform, base=2.0) for row in rows])
+        )
+
+    repeated_joint = context_probabilities[:, None] * repeated_rows
+    contrasting_joint = context_probabilities[:, None] * contrasting_rows
+
+    repeated_kl = mean_row_kl(repeated_rows)
+    contrasting_kl = mean_row_kl(contrasting_rows)
+    repeated_mi = mutual_information(repeated_joint, base=2.0)
+    contrasting_mi = mutual_information(contrasting_joint, base=2.0)
+
+    assert repeated_kl == pytest.approx(0.5310044064)
+    assert contrasting_kl == pytest.approx(repeated_kl)
+    assert repeated_mi == pytest.approx(0.0)
+    # This equality is incidental: the contrasting rows have a uniform marginal.
+    assert contrasting_mi == pytest.approx(repeated_kl)
+
