@@ -233,3 +233,41 @@ La propriété retenue est :
 La page Gradients garde une phrase de frontière entre gradient et règle de mise à jour, mais renvoie à Training loop pour SGD et les optimiseurs. Son bloc « choix de l'optimiseur » et sa formule de mise à jour dupliquée sont retirés ; le contenu utile sur l'optimiseur reste chez Training loop. L'exemple numérique de Training loop est conservé : il relie explicitement la loss, le gradient de logits, la propagation vers les poids et la mise à jour sans prétendre simuler un entraînement complet.
 
 **Décision de découpage : aucune nouvelle page.** Generation conserve son approfondissement serving replié ; Training loop reste une leçon cohérente sous le plafond de 15 minutes estimé sur son contenu visible. Le travail porte sur les frontières de propriété et les répétitions, pas sur une fragmentation mécanique.
+
+
+## 13. Validation du lot 3 et correction des liens — 18 novembre 2026
+
+### État vérifié sur le commit `7ff33fbcaa0f90139208ddcee14791032a3b807b`
+
+- Le workflow CI associé au commit a réussi.
+- Le secret scanning a réussi.
+- Le rendu complet Quarto a réussi ; les projections de carte d'apprentissage, de graphe de connaissances et de chronologie ont été générées et leurs contrôles de rendu ont réussi.
+- Le contrôle des liens locaux a échoué sur deux fragments supprimés lors de la clarification de propriété entre Gradients et Training loop :
+  - EN : `site/en/training-loop.qmd` pointait vers `gradients.qmd#gradient-descent-update`.
+  - FR : `site/fr/training-loop.qmd` pointait vers `gradients.qmd#mise-à-jour-par-descente-de-gradient`.
+- Les sections correspondantes ont été retirées de Gradients parce que la règle de mise à jour et les choix d'optimiseur appartiennent désormais à Training loop. Les liens entrants n'avaient pas été actualisés. Il s'agit d'une régression de navigation, pas d'un contenu perdu.
+
+### Correction appliquée
+
+- Les deux renvois de Training loop pointent maintenant vers la page canonique Gradients sans fragment obsolète. Le détail de la règle de mise à jour reste expliqué dans Training loop, son propriétaire ; Gradients conserve la distinction conceptuelle entre gradient et mise à jour.
+- Modifications commitées sur `docs/llm-overview-learning-review` :
+  - EN : `b83b501efbd8fec92d57fbc4967d1ffa482d0f53`
+  - FR : `7580aaa9e28a4a426c627479b6f39578751cc6f7`
+- Ces corrections doivent être revalidées par le contrôle de liens locaux sur le nouveau HEAD. Ne pas considérer le contrôle comme réussi avant la conclusion du nouveau workflow.
+
+### Avertissement Quarto non bloquant observé
+
+Le rendu a également émis un avertissement SCSS (« Expecting punctuation: } ») lors de l'ajout du bloc CSS vars, signalé par Quarto comme probablement lié à son parseur. Le rendu complet s'est néanmoins terminé avec succès. À surveiller séparément ; ne pas le confondre avec l'échec bloquant des liens locaux.
+
+### Validation restante
+
+1. Attendre les workflows CI, Quarto et secret scanning sur le nouveau HEAD.
+2. Confirmer que le contrôle de liens locaux ne signale plus les deux fragments supprimés.
+3. Vérifier si le contrôle de liens déclenche ensuite l'audit navigateur ; celui-ci était ignoré après l'échec du contrôle dans le workflow précédent.
+4. Effectuer une revue rendue FR/EN : figures responsive, explorer, ancres, navigation, liens de langue, affichage du rail de parcours et ressources optionnelles.
+5. Confirmer les durées de lecture sur le rendu final, puis effectuer une revue d'accessibilité et un test apprenant. Ces deux dernières preuves ne sont pas encore disponibles.
+6. Réconcilier la branche avec `main` et vérifier les conflits avant de sortir la PR du brouillon.
+
+### Synthèse de preuve
+
+Le rendu Quarto complet et les contrôles Python sont des preuves techniques ; ils ne remplacent ni la revue visuelle/accessibilité ni le retour d'un apprenant. Les deux liens cassés sont identifiés et corrigés dans les sources, mais la correction ne sera attestée qu'après le nouveau contrôle automatisé.
