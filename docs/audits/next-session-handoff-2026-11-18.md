@@ -253,13 +253,10 @@ de tests déjà validé. Ne pas modifier la CI sur cette seule base.
 
 ## 14. Inventaire ENG-02 — périmètre approuvé et décompte candidat
 
-Le mainteneur a approuvé le périmètre de dix domaines GPT. Un inventaire
-candidat de **48 invariants** a été créé dans
+Le mainteneur a approuvé le périmètre de dix domaines GPT. Un inventaire initial de **48 lignes regroupées** a été créé, puis sa granularité a été revue : ces lignes ne sont pas 48 invariants indépendants dans
 [ENG-02 — inventaire des invariants critiques](eng-02-critical-invariants-inventory-2026-11-18.md).
 
-Ce nombre de 48 n'est pas encore le dénominateur officiel. Il reste à faire
-approuver les unités de comptage, les regroupements et la pondération uniforme
-proposée. Les statuts « protégé » sont des constats statiques de présence
+Le nombre 48 est retiré comme proposition de dénominateur : plusieurs lignes agrègent des propriétés indépendantes. La décomposition et la séparation des contrats API des invariants fonctionnels restent à effectuer. Les statuts « protégé » sont des constats statiques de présence
 d'assertions, non une preuve de sensibilité à une mutation. Les lignes partielles
 restent au dénominateur proposé et sont exclues du numérateur strict.
 
@@ -275,3 +272,27 @@ L'inventaire documente notamment les lacunes candidates suivantes :
 **ENG-02 reste not measured.** Les cinq mutations manuelles n'ont toujours pas
 été exécutées. Prochaine étape : revue du tableau de 48 lignes, puis mutation
 pilote dans un clone local et liaison de chaque résultat à l'ID concerné.
+
+
+## 15. Revue de granularité ENG-02 — 2026-11-18
+
+La revue méthodologique de la PR #1281 a validé la méthode générale, mais pas le dénominateur de 48. Les lignes ATT-02/03/04/05, LOSS-05, OPS-05, GPT-02, TRAIN-03, FILTER-04, GEN-05, EMB-05 et WEIGHT-06 doivent être décomposées selon les propriétés indépendantes et mutations discriminantes décrites dans l'inventaire §6.
+
+**Décision de mesure :** ne pas utiliser 48 comme dénominateur, ne pas calculer de pourcentage, et conserver ENG-02 à **not measured**. La revue est statique ; elle n'a pas exécuté pytest ni les cinq mutations.
+
+### État CI de la PR documentaire #1281
+
+Le commit documentaire `e3504f9f2b2a46036ce7a102afbb3a51c812375f` a obtenu des résultats Actions complets :
+- CI : succès (suite de tests et contrôles qualité/domaines) — run `44378806764`.
+- Quarto : succès — run `44378806979`.
+- Secret scanning : succès — run `44378806676`.
+
+Dans le job CI, les deux jobs opt-in (inventaire complet des locateurs et benchmark de montée en charge) ont été ignorés. Ces résultats valident ce commit documentaire, pas les mutations manuelles ni la sensibilité des tests.
+
+### Reprise
+
+1. Recomposer les invariants atomiques en repartant des douze axes de décomposition de l'inventaire §6.
+2. Vérifier les unités restantes afin d'éviter les agrégats cachés et les doublons.
+3. Distinguer explicitement invariants fonctionnels/mathématiques et contrats d'API/effets de bord ; faire approuver leur inclusion et pondération.
+4. Ajouter une colonne « mutation discriminante / raison de non-mutabilité ».
+5. Geler une version du dénominateur seulement après revue ; exécuter ensuite les mutations et établir le numérateur strict.
