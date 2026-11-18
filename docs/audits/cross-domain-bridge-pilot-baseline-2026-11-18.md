@@ -386,3 +386,10 @@ A repository-contract review found that the three new extraction files initially
 - implementation item → `implementation-pattern`.
 
 This is a taxonomy normalization, not a change in scientific meaning. The validator itself has not yet been executed against the branch, so this correction is not presented as a passing validation.
+
+
+## 13. CI validation follow-up
+
+The first CI execution on this branch exposed one remaining source-catalogue taxonomy violation: the Shannon source used the unsupported tag namespace `theorem:`, while `data/source-taxonomy.yml` currently permits only `topic`, `method`, `modality`, `application` and `ecosystem`. The source already carries the retrieval facets `topic:source-coding` and `topic:lossless-coding`; the redundant `theorem:noiseless-coding` tag was therefore removed rather than expanding the controlled namespace. The theorem remains documented in the source-local extraction and review, where its evidence role belongs.
+
+The same CI run executed 622 tests: 621 passed, 1 skipped, and the source-taxonomy contract test failed solely because of that tag. The independent source-catalogue validation step reported the same single error. The full Quarto render, generated learning-map and computational-graph fragments, graph export check, timeline parity check, and local-link check passed. A follow-up commit removes the unsupported tag; the new commit's CI must complete before this PR can be considered validated. No test or validation result is inferred from the correction itself.
