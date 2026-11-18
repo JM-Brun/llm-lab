@@ -107,11 +107,13 @@ For a token with probability 0.6, surprisal is \( -\ln(0.6)\approx0.51 \) nats; 
 
 **Transformer** names a family of architectures with several configurations:
 
+::: {.responsive-card-table}
 | Family | General behavior | Example |
 |---|---|---|
 | **Encoder-only** | Builds contextual representations of the input; often used for understanding or classification | [BERT](https://arxiv.org/abs/1810.04805) |
 | **Encoder–decoder** | Produces an output conditioned on an input, especially for sequence-to-sequence tasks | [Original Transformer](https://arxiv.org/abs/1706.03762), [T5](https://jmlr.org/papers/v21/20-074.html) |
 | **Decoder-only** | Processes a causal context and predicts subsequent tokens | [GPT-3](https://arxiv.org/abs/2005.14165) |
+:::
 
 **GPT** (*Generative Pre-trained Transformer*) names a family of decoder-only Transformers pretrained to predict the next token. LLM Lab studies a small GPT of this kind because its computation can be followed and programmed end to end ([architecture comparison](transformer-architectures.qmd), [Build path](build-path.qmd)). This is a teaching choice: not all LLMs are GPTs. For concise definitions, see the [LLM and Transformer glossary](glossary.qmd).
 
@@ -119,11 +121,13 @@ For a token with probability 0.6, surprisal is \( -\ln(0.6)\approx0.51 \) nats; 
 
 Describing a model means answering three questions:
 
+::: {.responsive-card-table}
 | Dimension | Question | Examples |
 |---|---|---|
 | **Architecture** | How does the network transform information? | Encoder-only, encoder–decoder, decoder-only |
 | **Learning** | How are parameters obtained or adapted? | Pretraining, fine-tuning, SFT, preference optimization |
 | **Use** | What do we do with the model, parameters fixed? | Generation, classification, scoring, ICL, RAG, tools |
+:::
 
 **Pretraining** learns regularities from large corpora. For a GPT, the text tokens are the targets; this is generally *self-supervised* learning. The resulting model before adaptation is often called a *base model*. A **foundation model** is a broader notion: a model trained at scale on broad data and adaptable to many tasks, sometimes beyond language ([Bommasani et al., 2021](https://crfm.stanford.edu/report)). Post-training may then adapt behavior or parameters, but it is not mandatory ([post-training](post-training.qmd)).
 
@@ -131,12 +135,14 @@ Describing a model means answering three questions:
 
 An answer can draw on information stored in different places. Distinguish **where it is stored**, **how it becomes accessible**, and **how it is used**.
 
+::: {.responsive-card-table}
 | Location | Examples | How it can influence the answer |
 |---|---|---|
 | **Learned parameters** | Regularities and representations acquired during pretraining or post-training | They participate in computation, but are not a queryable document database |
 | **Active context** | Instructions, messages, examples, documents, and tool results actually supplied | The model conditions its prediction on this content, which can change from one request to another |
 | **External sources** | Documents, databases, and indexes used by RAG or tools | Information matters only if it is retrieved and then made available to the model |
 | **Runtime state** | KV cache computed during inference | It avoids some recomputation and speeds up decoding; it is neither learning nor document memory |
+:::
 
 **RAG** retrieves external information and can add it to context; retrieval alone is not enough. A document can be stored, indexed, or retrieved without being supplied. [Context engineering](context-engineering.qmd) designs and structures the input; [RAG and memory](rag-memory-boundaries.qmd) follows the information lifecycle; [document retrieval](document-retrieval.qmd) details search and ranking methods. **ICL** describes what the model does with examples present in context ([ICL](in-context-learning.qmd)).
 
