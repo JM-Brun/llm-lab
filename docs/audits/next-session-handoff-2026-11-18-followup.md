@@ -152,3 +152,27 @@ La norme euclidienne directe est remplacée conceptuellement par une normalisati
 4. normaliser les lignes non nulles, puis calculer les produits scalaires entre vecteurs normalisés.
 
 Cette approche évite le débordement de la somme des carrés pour des entrées finies float64. Accepter `np.integer` pour `k` et rejeter `bool`/`np.bool_`. Ajouter des tests avec des lignes de très grande et très petite amplitude, plus un test positif pour `np.int64`.
+
+
+### PR #1294 — stabilité numérique des embeddings
+
+URL : https://github.com/JM-Brun/llm-lab/pull/1294
+
+Head : `9d48a3ecbc262fda47ad6c1ba28c0da01c9a319e`.
+
+- Remplace la norme directe par une mise à l'échelle ligne par ligne avant calcul de la norme.
+- Normalise ensuite les lignes mises à l'échelle et calcule les similarités par produit scalaire.
+- Accepte `np.integer` pour `k`, en rejetant explicitement `bool` et `np.bool_`.
+- Ajoute des tests avec des amplitudes `1e308` et `1e-300`, ainsi qu'un test `np.int64`.
+- PR ouverte en brouillon ; checks pas encore disponibles au moment de cette mise à jour. Pas de pytest local revendiqué.
+
+### État CI actualisé de #1287
+
+Sur le head `f30b5a85eca2e41ba552e0f86367f93ef9a76674`, le nouveau cycle a bien démarré :
+- Test suite : en cours.
+- Python quality and domain checks : en cours.
+- Quarto site & browser audit : en cours.
+- Secret scanning : succès.
+- Deux jobs opt-in : ignorés (hors périmètre obligatoire).
+
+Le précédent échec Ruff est donc remplacé par un nouveau cycle sur le commit de formatage ; attendre ses conclusions avant toute décision.
