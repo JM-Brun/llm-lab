@@ -227,3 +227,31 @@ Instantané déclaré dans le corps courant de l'issue :
 6. Après chaque lot, mettre à jour l'issue propriétaire et ce cahier de reprise avec SHA, fichiers, preuves, décisions et blocages.
 
 **Règle de session :** commencer par les états live et les SHA, ne jamais traiter un statut ancien comme actuel, et maintenir séparément les preuves statiques, les résultats CI, la revue humaine, le rendu navigateur et la sensibilité aux mutations.
+
+---
+
+## 9. Addendum — état live après intégration de #1318 et #1320 (18 novembre 2026)
+
+**Snapshot `main` :** `dec696bd92ccb71a4687710bd0afecd2b6fb5523`.
+
+### État des PR
+
+- #1315 est fusionnée dans `main` par `eeab0ba649bc6951c126fb0deeea2212f4a4b62e`.
+- #1318 est fusionnée dans `main` par `7f8f1ba21d6c959cc0c1304b5da76ae7e87b6d3e`. Sur son HEAD `003292555b93f8c4f7b2673c44744419e220fe25`, CI (5675), Quarto (5332) et secret scanning (651) ont réussi.
+- Aucune revue GitHub indépendante n'était enregistrée avant la fusion de #1318 ; les checks automatisés ne constituent pas cette revue.
+- #1320 est fusionnée par `dec696bd92ccb71a4687710bd0afecd2b6fb5523`. Ses trois checks initiaux avaient réussi sur son HEAD `0b08c42797bc8306f6d85ddf3a9e6570a5e03eca`.
+- Les sections 8.1–8.6 ci-dessus sont historiques : ne pas traiter #1315 ni #1318 comme des PR encore ouvertes.
+
+### #1211 — inventaire d'extractions
+
+- Le README des source reviews affiche encore 87 fichiers globaux ; #1318 a intégré une proposition de 95 noms canoniques et 44 IDs du catalogue sans fichier canonique correspondant.
+- Ne pas publier 95 comme KPI avant un inventaire reproductible qui distingue les fichiers YAML, les `source_id` déclarés et uniques, les IDs résolus dans le catalogue, les sources sans extraction et les anomalies.
+- Les 44 IDs sans fichier constituent un écart d'inventaire, pas un objectif de backfill ni un indicateur de qualité.
+
+### Suite recommandée
+
+1. Réaliser le comptage déterministe avant de modifier `docs/source-reviews/README.md` et le corps de #1211.
+2. Poursuivre l'audit SentencePiece et PyTorch Embedding avec versions/révisions et localisateurs précis ; ne créer une extraction que si elle apporte une preuve atomique utile.
+3. Classer les 44 sources sans extraction par rôle, priorité, accessibilité et redondance ; aucune extraction automatique.
+4. Maintenir distincts audits statiques, tests comportementaux, benchmarks, revue humaine et résultats de mutation.
+5. Conserver les issues #1306, #156, #163, #329, #472 et les autres ouvertes tant que leurs critères propres ne sont pas satisfaits.
