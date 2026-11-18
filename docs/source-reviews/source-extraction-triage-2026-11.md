@@ -1,6 +1,6 @@
 # Triage raisonné des sources sans extraction — 18 novembre 2026
 
-**Périmètre :** inventaire de `data/sources.yml` et des fichiers `data/extractions/`, complété par les titres, types, tags, pages associées et statuts de catalogue. Ce document est un **triage éditorial de métadonnées**, pas une attestation de lecture intégrale des 45 ressources.
+**Périmètre :** inventaire de `data/sources.yml` et des fichiers `data/extractions/`, complété par les titres, types, tags, pages associées et statuts de catalogue. Ce document est un **triage éditorial de métadonnées**, pas une attestation de lecture intégrale du nombre de ressources restant à auditer.
 
 ## 1. Réconciliation de l'inventaire
 
@@ -8,8 +8,8 @@
 - Fichiers d'extraction : **93**.
 - Cinq fichiers portent un nom différent de l'identifiant du catalogue, mais leur champ `source_id` renvoie bien à une source existante : Chanin, Cunningham, Neuronpedia, Shu et Wayland. Ils ne doivent pas être comptés comme cinq sources non extraites. La convention du dépôt demande néanmoins un nom de fichier égal à l'identifiant canonique ; cette anomalie de nommage mérite un correctif séparé.
 - Sennrich et al. (2016), #1311, a été fusionnée dans `main` le 18 novembre 2026 ; son extraction est incluse dans les 93 fichiers.
-- Gage (1994), #1314, reste une extraction proposée dans une PR ouverte.
-- Il reste donc **45 sources sans extraction identifiée sur `main`**, ou 44 si l'extraction proposée de Gage est prise en compte. Les cinq fichiers non canoniques restent des extractions existantes, pas cinq sources manquantes.
+- Gage (1994), #1314, a depuis également été fusionnée dans `main`.
+- Le décompte de **44 sources** du présent triage est donc obsolète. Il doit être recalculé par comparaison ensembliste des `source_id` du catalogue et des extractions du head courant ; ne pas le réutiliser comme état actuel. Les cinq fichiers non canoniques restent des extractions existantes, pas cinq sources manquantes.
 
 Ce décompte est un état de dépôt, pas un KPI de qualité ni une mesure de couverture documentaire. Il ne dit rien de la valeur des sources ni de leur inspection effective.
 
@@ -109,7 +109,7 @@ AIEdge, vidéo JEPA non vérifiée, Cornell visualizer et publication LinkedIn. 
 - Ne pas créer de nouveaux concepts ou relations à partir de tags ou de titres.
 - Pour toute source pédagogique effectivement extraite, construire le `pedagogical_model` requis (graphe local, outcomes, prérequis, route, forces/limites, comparaison).
 - Pour chaque décision finale, conserver les localisateurs, la justification de disposition et la comparaison avec la page canonique.
-- Sennrich et al. (#1311) est intégré à `main`. Gage (#1314) reste en attente de revue et de fusion ; son extraction n'est pas comptée comme intégrée.
+- Sennrich et al. (#1311) et Gage (#1314) sont intégrés à `main`. Le décompte des sources restantes doit être recalculé sur les `source_id` du head courant.
 
 ## 7. Prochaine action
 
