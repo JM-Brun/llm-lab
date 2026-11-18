@@ -24,7 +24,7 @@ Décisions :
 
 ### À conserver absolument
 
-- L'accroche Astérix et la continuation : un exemple concret et réutilisable.
+- Le fil rouge d’Otis (dans Astérix) et sa continuation : un exemple concret et réutilisable.
 - La distinction assistant/application et modèle interrogé.
 - Le prochain token, le contexte qui s'enrichit et les paramètres fixes à l'inférence.
 - Le tableau de probabilités fictives, son statut illustratif et sa cohérence entre pages.
@@ -138,7 +138,7 @@ Répartir entre les propriétaires post-training / context engineering / RAG et 
 
 | Contenu actuel | Destination cible | Règle de conservation |
 |---|---|---|
-| Accroche Astérix, préfixe et continuation | Panorama + Generation | Garder le fil rouge et les valeurs fictives cohérentes ; éviter de dupliquer l'explication complète. |
+| Fil rouge d’Otis (FR), préfixe et continuation | Panorama + Generation | Garder le fil rouge et les valeurs fictives cohérentes ; éviter de dupliquer l'explication complète. |
 | Modèle vs assistant/application | Panorama + page système | Repère immédiat ; détails runtime/outils chez le propriétaire système. |
 | Définition LLM / GPT | Panorama | Définition courte ; ne pas assimiler tous les LLM aux GPT ni aux Transformers. |
 | Token, contexte, paramètres | Text data / Generation / Glossary | Définitions canoniques et rappels minimaux. |
@@ -369,7 +369,7 @@ Les deux fichiers ont la même ossature de huit sections thématiques et une aut
 
 | Bloc source FR / EN | Garder dans le panorama | Fusionner / déplacer vers le propriétaire | Action et précaution |
 |---|---|---|---|
-| Accroche et callout d'ouverture (Astérix en FR, Monty Python en EN) | Oui, comme fil rouge propre à chaque langue | La continuation et les calculs détaillés dans `generation.qmd` / EN | Garder les easter eggs spécifiques à chaque langue sans expliquer la référence ; ne pas uniformiser les scénarios FR/EN. |
+| Accroche et callout d'ouverture (tirade d’Otis en FR ; référence Monty Python en EN) | Oui, comme fil rouge propre à chaque langue | La continuation et les calculs détaillés dans `generation.qmd` / EN | Garder les easter eggs spécifiques à chaque langue sans expliquer la référence ; ne pas uniformiser les scénarios FR/EN. |
 | « Ce que le modèle prédit » / “What the model predicts” | Définition courte de préfixe/continuation, distribution conditionnelle et « probable ≠ vrai » | Détails tokenisation dans `text-data.qmd`; formalisme et vraisemblance dans `vraisemblance.qmd` / `likelihood.qmd`; limites dans `llm-limits.qmd` | Préserver l'exemple numérique fictif et ses valeurs partagées ; conserver une seule explication détaillée de la distribution. |
 | « Du texte à la distribution » / “From text to a distribution” | Une vue d'ensemble lisible du flux, sans cours détaillé des composants | Texte/tokens, embeddings, Transformer, logits/probabilités et génération vers leurs pages canoniques | Ne pas recopier les six étapes du parcours comme une seconde liste. L'image doit être un repère conceptuel ; le séquencement et les étapes appartiennent au registre et à la carte canoniques. Auditer le rôle du next-token explorer avant de décider de son emplacement. |
 | « Un calcul, trois usages » / “One computation, three uses” | Oui : génération, scoring et apprentissage comme trois usages frères | Génération vers `generation.qmd`; scoring/vraisemblance vers `vraisemblance.qmd` / `likelihood.qmd`; loss, gradients et teacher forcing vers `loss.qmd`, `gradients.qmd`, `training-examples.qmd` | Garder les distinctions et les exemples ; déplacer le développement de surprisal, nat, entropie et calculs de log-vraisemblance vers les propriétaires mathématiques. Ne jamais faire du scoring un prérequis de génération ou de l'entraînement une étape de l'inférence. |
