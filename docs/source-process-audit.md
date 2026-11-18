@@ -258,6 +258,6 @@ La PR #1219 sur l'extraction Neuronpedia documente un cas utile de traçabilité
 - [Source-to-knowledge validation protocol](workflows/source-to-knowledge-validation.md)
 - [Source synthesis method](source-synthesis-method.md)
 - [Knowledge graph implementation audit](knowledge-graph-implementation-audit.md)
-- [Source coverage report](source-coverage-report.md) (si présent sur la branche/HEAD de référence)
+- [Source coverage report](source-coverage-report.md)
 - [Issue #1211 — provenance coverage and canonical graph reconciliation](https://github.com/JM-Brun/llm-lab/issues/1211)
 - [Issue #512 — knowledge-structure interoperability and relation semantics](https://github.com/JM-Brun/llm-lab/issues/512)
