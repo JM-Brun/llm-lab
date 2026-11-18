@@ -90,7 +90,7 @@ def test_probability_quantization_rejects_invalid_precision_and_distribution() -
             raise AssertionError("Invalid probability distribution was accepted")
 
 
-def test_cli_runs_and_reports_distinct_coding_costs(capsys: object) -> None:
+def test_cli_runs_and_reports_distinct_coding_costs(capsys) -> None:
     module = _module()
     module["main"]()
     report = json.loads(capsys.readouterr().out)
