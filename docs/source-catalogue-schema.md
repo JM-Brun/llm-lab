@@ -241,7 +241,8 @@ Keep `docs/references.md` as a readable bibliography. It may link to source IDs,
 The consolidated initial validator is `site/tools/check_source_catalogue.py`; it runs in CI after the YAML validation dependency is installed. Its current scope is deliberately explicit:
 
 - YAML syntax and schema version for source, taxonomy, domain, concept and extraction files;
-- unique source and extraction-item IDs, and extraction-to-source referential integrity;\n- collection registry identity, dossier-path and lifecycle validation, plus optional source-membership resolution and duplicate detection; extraction membership is not duplicated;
+- unique source and extraction-item IDs, and extraction-to-source referential integrity;
+- collection registry identity, dossier-path and lifecycle validation, plus optional source-membership resolution and duplicate detection; extraction membership is not duplicated;
 - controlled source types, scan/integration statuses, extraction kinds and item dispositions;
 - valid domain, concept and bilingual page references;
 - namespaced tag syntax and duplicate detection;
