@@ -21,6 +21,8 @@ related: ["fr/transformer", "fr/generation", "fr/hybrid-llm-architectures", "fr/
 tags: ["type:deep-dive", "destination:deepen", "topic:llm-computational-complexity", "level:advanced", "language:fr", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-fr-llm-computational-complexity.qmd >}}
+
 ::: {.chapter-lead}
 La performance d'un LLM ne dépend pas seulement du nombre d'opérations. Elle dépend aussi de **la façon dont elles croissent avec la longueur du contexte**, de la quantité de données à stocker ou déplacer, et de la possibilité de les exécuter simultanément. Une opération quadratique peut être fortement parallélisée ; une opération linéaire peut conserver une dépendance séquentielle.
 :::
