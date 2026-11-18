@@ -92,6 +92,8 @@ Certaines API rendent ce choix explicite au moyen d'une liste d'autorisation. Pa
 
 Voir l'[API d'encodage](https://github.com/openai/tiktoken/blob/main/tiktoken/core.py) de `tiktoken` et les [notes de `minbpe` sur les tokens spéciaux](https://github.com/karpathy/minbpe/blob/master/README.md).
 
+**Comparaison des implémentations.** Ces projets exposent des couches différentes d'une même grande famille BPE byte-level : `tiktoken` délègue l'encodage de production à un cœur natif et utilise des rangs de fusion et des politiques de tokens spéciaux propres à chaque encodage ; son module `_educational.py` rend la boucle de fusion inspectable. Le `minbpe` de Karpathy sépare une version minimale fondée sur les octets (`BasicTokenizer`) de variantes avec pré-tokenisation regex et gestion des tokens spéciaux (`RegexTokenizer`), puis propose un wrapper GPT-4 qui reconstruit un vocabulaire pré-entraîné précis. Ni le nom de la bibliothèque ni l'étiquette BPE ne suffisent à établir une compatibilité. Voir l'[audit comparatif des implémentations](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-reviews/tokenization-implementations-huggingface-tiktoken-minbpe-2026-11.md).
+
 Ces étapes ne sont pas toutes présentes de la même façon dans chaque tokenizer. Le nom de l'algorithme ne suffit donc pas à reproduire une segmentation : il faut aussi connaître la configuration et les versions.
 
 ### Un même texte, plusieurs pipelines de tokenisation
