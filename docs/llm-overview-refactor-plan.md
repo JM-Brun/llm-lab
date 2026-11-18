@@ -250,3 +250,91 @@ Ne pas supprimer une section parce qu'elle est longue : lui trouver un propriét
 Le contenu actuel est précieux. La refonte doit **réduire la charge du premier contact en redistribuant la matière**, pas amputer les connaissances. Le panorama répond rapidement à « qu'est-ce qu'un LLM et quelle est la carte de son fonctionnement ? ». Generation explique la boucle ; les pages canoniques enseignent composants, apprentissage, adaptation, limites et systèmes ; Deepen accueille histoire, dérivations et débats ; Practice vérifie les intuitions.
 
 Le principal enrichissement conceptuel est le passage de l'objectif de prédiction aux capacités transférables. Le principal garde-fou opérationnel est la matrice de conservation : chaque information déplacée a une destination vérifiée en français et en anglais avant que le texte source soit raccourci.
+
+
+## 11. Lot 0 — premiers constats vérifiés sur les sources actuelles
+
+Cette section complète le diagnostic initial à partir des deux fichiers Quarto et du registre canonique consultés sur la branche de travail le 2026-11-18. Elle ne vaut pas encore inventaire exhaustif paragraphe par paragraphe.
+
+### Mesure de départ
+
+| Indicateur | Français | English | Interprétation |
+|---|---:|---:|---|
+| Volume lexical brut du fichier Quarto | ~4 872 mots | ~4 476 mots | Comptage indicatif du source, qui inclut certains éléments techniques et textes alternatifs ; à recalculer sur le rendu lisible. |
+| Durée à 180 mots/min | ~27 min | ~25 min | Confirme que les pages sont des mini-cours, pas encore des panoramas d'orientation de 8–10 min. |
+| Sections de premier niveau | 8 | 8 | Les deux versions partagent la même ossature thématique. |
+| Sections de second niveau dans le bloc historique/capacités | 3 | 3 | La partie histoire/transfert est déjà développée dans les deux langues. |
+
+Le différentiel de volume FR/EN (~9 %) ne prouve pas à lui seul un défaut de parité, mais impose une comparaison sémantique et de densité lors de la refonte. Ne pas raccourcir mécaniquement la langue la plus longue : vérifier les exemples, nuances, réserves, références, exercices et renvois.
+
+### Ce que les sources montrent déjà
+
+- Les deux pages contiennent déjà le pont « prédiction du prochain token → régularités apprises → transfert vers d'autres tâches ». Il faut donc **auditer et améliorer ce contenu existant**, pas créer une nouvelle page ou une nouvelle étape pour combler un manque supposé.
+- Les deux pages incluent déjà les sections sur la résidence de l'information, l'histoire et les changements apportés par les Transformers, le transfert, le choix entre modèle/RAG/adaptation, et le modèle versus le système conversationnel. Ce sont précisément les zones candidates à redistribuer vers les propriétaires canoniques.
+- Le bloc « un calcul, trois usages » exprime correctement trois usages frères. Il ne doit pas devenir une progression pédagogique « génération puis scoring puis entraînement ».
+- Les deux fichiers incluent des fragments générés : contexte guidé, route suggérée et couverture. Ils doivent rester des projections produites depuis leurs registres, pas des contenus à maintenir manuellement.
+- Les métadonnées `suggested_route`, `hierarchy`, `covered_stages` et `related` ont des fonctions de navigation/classement distinctes. Elles ne doivent pas être transformées en un second séquencement d'apprentissage.
+
+### Décision sur le pont capacités/transfert
+
+Le contenu existant de « Pourquoi prédire le prochain token aide-t-il pour d'autres tâches ? » est le point de départ. Le travail doit :
+1. vérifier ses affirmations et références, notamment le statut de « représentations distribuées » et les limites de l'explication par compression ;
+2. conserver les trois voies distinctes : adaptation des paramètres, modification du contexte/ICL, apport d'information externe/RAG ;
+3. faire la différence entre mécanisme établi, interprétation, hypothèse et analogie ;
+4. déplacer le développement vers le propriétaire existant le plus cohérent après lecture de `llm-limits.qmd`, `post-training.qmd`, `in-context-learning.qmd`, `scaling-laws.qmd`, `emergence.qmd` et `llm-evolution.qmd` ;
+5. ne pas créer de page autonome ni de nouvelle étape de parcours à ce stade.
+
+## 12. Gouvernance stricte du parcours — aucune route parallèle
+
+### Source de vérité
+
+`data/guided-route.yml` est l'unique source de vérité pour l'ordre et les transitions du parcours Understand. Toute évolution de séquence, de prérequis ou de transition doit être faite dans ce fichier, puis propagée par les générateurs existants. La refonte du panorama ne modifie pas ce registre, sauf si un défaut réel du parcours est démontré et traité dans le périmètre de son propriétaire (#130 et issues de curriculum concernées).
+
+### Rôle autorisé du panorama
+
+Le panorama peut :
+- dire en une phrase qu'il constitue le point d'orientation initial du parcours Understand ;
+- renvoyer vers la vue canonique du parcours et vers l'étape suivante définie par le registre ;
+- présenter une carte **non séquencée** des grandes questions auxquelles les pages du projet répondent ;
+- distinguer les deux parcours principaux indépendants (Understand et Build), l'approfondissement facultatif (Deepen) et la pratique transversale (Practice & experiment) ;
+- proposer des liens contextuels vers des pages utiles, sans les présenter comme prérequis.
+
+Le panorama ne peut pas :
+- recopier la liste des étapes Understand, même sous la forme d'une « feuille de route », d'un « itinéraire conseillé » ou d'une succession numérotée ;
+- créer une nouvelle séquence locale, des prérequis, des étapes intermédiaires ou une route alternative ;
+- présenter les liens « à lire ensuite » comme un ordre obligatoire lorsqu'il s'agit de ressources complémentaires ;
+- transformer les trois usages (générer, scorer, apprendre) en étapes successives ;
+- introduire un « parcours capacités/transfert » parallèle ou une nouvelle étape obligatoire issue du pont explicatif ;
+- maintenir manuellement le contenu des fragments `generated-*`.
+
+### Ne pas confondre les registres
+
+| Élément | Fonction | Ce qu'il ne doit pas devenir |
+|---|---|---|
+| `data/guided-route.yml` | Ordre canonique, étapes, ressources et transitions Understand | Un catalogue exhaustif de toutes les pages |
+| `learning-map.qmd` et ses projections | Explorer le corpus, ses territoires, pages et concepts ; afficher le parcours canonique | Un second parcours ou un graphe de prérequis implicites |
+| Métadonnées `LLM-LAB-PAGE-MAP` | Décrire la portée, la hiérarchie éditoriale et les étapes couvertes pour les projections | Un ordre de lecture autonome |
+| `suggested_route` | Navigation locale précédente/suivante d'une page | Une route concurrente du registre |
+| `related` | Liens de proximité thématique | Une liste de prérequis |
+| Build path | Parcours d'implémentation indépendant | La suite obligatoire d'Understand |
+| Deepen | Ressources facultatives d'approfondissement | Une troisième route obligatoire |
+| Practice & experiment | Activités mobilisables transversalement | Un cursus linéaire supplémentaire |
+
+### Règles de mise en œuvre
+
+1. Avant modification, relever tous les liens, inclusions, blocs et libellés de parcours dans les versions FR et EN.
+2. Garder les inclusions générées lorsqu'elles affichent une projection utile du registre ; si elles produisent une répétition ou un encadré redondant, corriger leur source/générateur ou leur emplacement, jamais le fichier généré à la main.
+3. Dans le panorama raccourci, remplacer toute liste d'étapes par un lien unique et explicite vers la vue canonique Understand ; conserver uniquement les liens contextuels nécessaires à la compréhension locale.
+4. Ne pas modifier `data/guided-route.yml` pour satisfaire le budget de longueur du panorama.
+5. Ne pas ajouter de nouvelle valeur `covered_stages` ni de page dans `optional_pages` sans vérifier les conventions de génération et l'impact sur les vues.
+6. Pour chaque PR, contrôler qu'aucune nouvelle route, séquence numérotée, chaîne de prérequis ou projection maintenue manuellement n'a été introduite.
+7. Vérifier le rendu FR et EN de la page et de la carte d'apprentissage ; le source seul ne suffit pas à valider l'absence de doublons visuels.
+
+### Critères d'acceptation supplémentaires
+
+- [ ] Le seul ordre Understand affiché provient de `data/guided-route.yml`.
+- [ ] Le panorama ne contient aucune séquence locale concurrente, même non numérotée si elle implique un ordre obligatoire.
+- [ ] Les liens thématiques sont clairement optionnels/contextuels.
+- [ ] Build reste indépendant, Deepen facultatif et Practice transversal.
+- [ ] Les inclusions et cartes générées restent des projections, jamais des sources éditoriales secondaires.
+- [ ] Le pont transfert/capacités est intégré à un propriétaire existant ou, si une lacune est démontrée, proposé au propriétaire du curriculum avant toute création.
