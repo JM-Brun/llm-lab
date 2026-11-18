@@ -5,6 +5,12 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
+    inputs:
+      run_locator_inventory:
+        description: "Run the full-corpus extraction locator inventory"
+        required: true
+        default: false
+        type: boolean
 
 permissions:
   contents: read
@@ -176,3 +182,119 @@ jobs:
       - name: Test
         # Keep the complete suite and coverage threshold; scheduling is benchmarked separately.
         run: uv run pytest -n 2 --dist loadscope --durations=20
+
+  locator-inventory:
+    name: Opt-in full-corpus extraction locator inventory
+    if: >-
+      (github.event_name == 'workflow_dispatch' && inputs.run_locator_inventory) ||
+      (github.event_name == 'pull_request' && contains(github.event.pull_request.title, '[inventory]'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out inventory commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+
+      - name: Set up uv and Python
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          version: "0.13.7"
+          python-version: "3.12"
+          enable-cache: true
+          cache-dependency-glob: |
+            pyproject.toml
+            uv.lock
+            docs/requirements-history-validation.txt
+
+      - name: Run full-corpus locator inventory
+        env:
+          INVENTORY_COMMAND: uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/report_extraction_locator_inventory.py --output "$RUNNER_TEMP/extraction-locator-inventory.json"
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha || '' }}
+        run: |
+          set -euo pipefail
+          started_at="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          start_epoch="$(date +%s)"
+          uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/report_extraction_locator_inventory.py --output "$RUNNER_TEMP/extraction-locator-inventory.json"
+          end_epoch="$(date +%s)"
+          INVENTORY_STARTED_AT="$started_at" INVENTORY_DURATION_SECONDS="$((end_epoch - start_epoch))" uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python - <<'PY'
+          import datetime
+          import json
+          import os
+          import platform
+          import subprocess
+          import sys
+          import yaml
+
+          metadata = {
+              "commit_sha": subprocess.check_output(
+                  ["git", "rev-parse", "HEAD"], text=True
+              ).strip(),
+              "workflow_run_id": os.environ["GITHUB_RUN_ID"],
+              "workflow_run_attempt": os.environ["GITHUB_RUN_ATTEMPT"],
+              "event_name": os.environ["GITHUB_EVENT_NAME"],
+              "ref": os.environ["GITHUB_REF"],
+              "pull_request_head_sha": os.environ.get("PR_HEAD_SHA"),
+              "command": os.environ["INVENTORY_COMMAND"],
+              "started_at_utc": os.environ["INVENTORY_STARTED_AT"],
+              "completed_at_utc": datetime.datetime.now(
+                  datetime.timezone.utc
+              ).isoformat(),
+              "duration_seconds": int(os.environ["INVENTORY_DURATION_SECONDS"]),
+              "python_version": sys.version,
+              "python_implementation": platform.python_implementation(),
+              "platform": platform.platform(),
+              "runner_os": os.environ.get("RUNNER_OS"),
+              "runner_arch": os.environ.get("RUNNER_ARCH"),
+              "pyyaml_version": yaml.__version__,
+              "uv_version": subprocess.check_output(
+                  ["uv", "--version"], text=True
+              ).strip(),
+          }
+          with open(
+              os.environ["RUNNER_TEMP"] + "/extraction-locator-inventory-metadata.json",
+              "w",
+              encoding="utf-8",
+          ) as f:
+              json.dump(metadata, f, ensure_ascii=False, indent=2)
+              f.write("\\n")
+          PY
+          python - "$RUNNER_TEMP/extraction-locator-inventory.json" <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          import sys
+
+          with open(sys.argv[1], encoding="utf-8") as f:
+              report = json.load(f)
+          print("### Full-corpus extraction locator inventory")
+          print()
+          for key in (
+              "files_seen",
+              "items_seen",
+              "items_without_locator",
+              "items_with_scalar_locator",
+              "items_with_unsupported_locator_shape",
+              "items_with_non_mapping_extraction_record",
+              "locators_with_missing_or_invalid_required_fields",
+          ):
+              print(f"- **{key}:** {report.get(key)}")
+          print(f"- **YAML/record errors:** {len(report.get('yaml_or_record_errors', []))}")
+          print()
+          print("**Locator types**")
+          for key, value in report.get("locator_types", {}).items():
+              print(f"- `{key}`: {value}")
+          print()
+          print("**Mapping value shapes**")
+          for key, value in report.get("mapping_value_shapes_by_type", {}).items():
+              print(f"- `{key}`: {value}")
+          PY
+
+      - name: Upload raw inventory and execution metadata
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: extraction-locator-inventory-${{ github.event.pull_request.head.sha || github.sha }}
+          path: |
+            ${{ runner.temp }}/extraction-locator-inventory.json
+            ${{ runner.temp }}/extraction-locator-inventory-metadata.json
+          if-no-files-found: warn
+          retention-days: 90
