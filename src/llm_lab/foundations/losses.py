@@ -1,4 +1,4 @@
-"Small reference implementations of common training losses."
+"""Small reference implementations of common training losses."""
 
 from collections.abc import Sequence
 
@@ -47,7 +47,7 @@ def cross_entropy_from_logits(
         per_example_losses = log_partition - target_logits
     if not np.all(np.isfinite(per_example_losses)):
         raise ValueError("cross-entropy loss exceeds the finite float64 range")
-    return float(np.mean(per_example_losses / logits.shape[0]))
+    return float(np.sum(per_example_losses / logits.shape[0]))
 
 
 def cross_entropy_gradient(
