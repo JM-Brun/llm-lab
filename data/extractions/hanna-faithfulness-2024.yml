@@ -65,7 +65,7 @@ items:
     disposition: integrate
     disposition_rationale: "Retain as source-scoped evidence; do not promote directly to a universal canonical concept."
   - id: hanna-faithfulness-2024:eap-ig-method
-    kind: method
+    kind: claim
     summary: "EAP-IG extends edge attribution patching with integrated gradients to better preserve circuit faithfulness in the evaluated settings."
     locator: {type: section, value: "Method section: EAP-IG", label: "Source-local locator"}
     evidence:
