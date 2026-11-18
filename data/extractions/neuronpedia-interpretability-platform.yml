@@ -1,0 +1,232 @@
+schema_version: 1
+source_id: neuronpedia-interpretability-platform
+
+scan:
+  accessed_at: "2026-11-17"
+  retrieval_method: direct-page
+  author_text:
+    status: partially-inspected
+    coverage: "Selected official documentation pages listed in the source review; not the entire documentation corpus."
+    notes:
+      - "This is a documentation platform, not a single authored article."
+  figures_media:
+    status: not-inspected
+    coverage: null
+    notes:
+      - "No screenshots or figure assets were copied or independently inspected."
+  code_data:
+    status: partially-inspected
+    coverage: "API documentation and documented feature example only; no API calls, datasets or model execution reproduced."
+    notes:
+      - "No activations were recomputed and no model weights were run."
+  comments:
+    status: not-inspected
+    coverage: null
+    notes: []
+  linked_resources:
+    status: partially-inspected
+    coverage: "Official platform, SAE overview, feature dashboards, Auto-Interp, key concepts, search and API documentation."
+    notes:
+      - "Underlying research papers and all model/source releases were not audited end-to-end."
+  metadata:
+    status: partially-inspected
+    coverage: "Documentation terminology and one documented Gemma Scope feature identifier."
+    notes:
+      - "The example is release-specific; publication and update metadata for the documentation were not established."
+  rights:
+    status: unknown
+    coverage: null
+    notes:
+      - "No reuse permission for screenshots, datasets or figures was established."
+  unresolved_questions:
+    - "Which underlying research paper and release should be selected for an end-to-end empirical follow-up?"
+    - "Can one documented feature be independently inspected and tested in a reproducible environment?"
+    - "Which attribution-graph claims survive controlled interventions and counterfactual tests?"
+
+# Documentation is a reference source, so no source-local teaching graph is
+# inferred. The learner activity is an LLM Lab editorial integration recorded
+# in the source review, not attributed to Neuronpedia as its own teaching route.
+items:
+  - id: neuronpedia-interpretability-platform:release-scoped-feature-identity
+    kind: definition
+    summary: "A feature dashboard is interpreted in the context of its model, source/release and feature identifier; a feature index is not a globally stable semantic label."
+    locator:
+      type: url
+      value: "https://docs.neuronpedia.org/getting-started/key-concepts"
+      label: "Key concepts: models, sources, releases and feature identifiers"
+    evidence:
+      kind: direct-documentation
+      confidence: well-supported
+      scope: "Official key-concepts documentation and the documented Gemma Scope example recorded in the source review."
+      assumptions: []
+      limitations:
+        - "The example gemma-2-2b/20-gemmascope-res-16k/10956 is illustrative and does not establish the meaning of that index in another release or model."
+    technical_assessment:
+      status: reviewed
+      rationale: "The identity boundary is explicit in the documentation and is essential for reproducible interpretation."
+      corroborating_sources: []
+    classification:
+      primary_theme: architectures-mechanisms
+      tags: [topic:sparse-autoencoders, topic:features]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced]
+      concepts: [contextualized-representation]
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Use the release/model/layer/hook/feature identity checklist in the existing bilingual investigation; do not create a new canonical concept from a platform identifier."
+
+  - id: neuronpedia-interpretability-platform:activation-evidence
+    kind: visualization
+    summary: "Feature dashboards expose activation examples and activation-density views that let a learner inspect where a feature responds, rather than relying only on its textual explanation."
+    locator:
+      type: url
+      value: "https://docs.neuronpedia.org/sparse-autoencoders/feature-dashboards"
+      label: "Feature dashboards"
+    evidence:
+      kind: direct-documentation
+      confidence: well-supported
+      scope: "Official feature-dashboard documentation as summarized in the source review."
+      assumptions: []
+      limitations:
+        - "Displayed examples and density views are evidence about the selected feature/source, not proof of a unique human-interpretable concept or a complete causal role."
+        - "No feature activations were independently recomputed."
+    technical_assessment:
+      status: reviewed
+      rationale: "The documentation describes inspectable activation evidence; interpretation still requires counterexamples and source-specific context."
+      corroborating_sources: []
+    classification:
+      primary_theme: architectures-mechanisms
+      tags: [topic:sparse-autoencoders, modality:interactive-visualization]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced]
+      concepts: [contextualized-representation]
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Retain activation-example inspection and counterexample search in the existing bilingual exercise; do not treat the dashboard as an experimental reproduction."
+
+  - id: neuronpedia-interpretability-platform:logits-and-activation-distinction
+    kind: limitation
+    summary: "Activation evidence and positive/negative logit associations describe different quantities and should not be conflated; neither alone establishes a feature's full causal role."
+    locator:
+      type: url
+      value: "https://docs.neuronpedia.org/sparse-autoencoders/feature-dashboards"
+      label: "Feature dashboards: activations and logits"
+    evidence:
+      kind: editorial-synthesis
+      confidence: context-dependent
+      scope: "Distinction reconstructed from the dashboard elements and critical boundaries documented in the source review."
+      assumptions: []
+      limitations:
+        - "The causal-boundary statement is an editorial interpretation of what these views can establish, not a claim that the platform proves causality."
+    technical_assessment:
+      status: reviewed
+      rationale: "The distinction is pedagogically important; the limits are deliberately stated more narrowly than a mechanistic claim."
+      corroborating_sources: []
+    classification:
+      primary_theme: architectures-mechanisms
+      tags: [topic:features]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced, fr/llm-limits, en/llm-limits]
+      concepts: [contextualized-representation]
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Preserve the distinction in the existing learner debrief; do not add a separate concept node for dashboard display types."
+
+  - id: neuronpedia-interpretability-platform:auto-interpretability-explanations
+    kind: limitation
+    summary: "Auto-Interp explanations are generated from selected activation evidence by AI models; methods and scoring procedures vary, so explanations and scores are hypotheses to test against examples rather than ground truth."
+    locator:
+      type: url
+      value: "https://docs.neuronpedia.org/sparse-autoencoders/auto-interp"
+      label: "Auto-Interp"
+    evidence:
+      kind: direct-documentation
+      confidence: well-supported
+      scope: "Official Auto-Interp documentation on explanation provenance, methods and scoring workflow."
+      assumptions: []
+      limitations:
+        - "The review did not independently compare all explanation or scoring methods."
+        - "No generated explanation was independently benchmarked in this pass."
+    technical_assessment:
+      status: reviewed
+      rationale: "The platform documents model-generated explanations and method-dependent scoring; the learner activity appropriately asks for manual inspection and counterexamples."
+      corroborating_sources: []
+    classification:
+      primary_theme: architectures-mechanisms
+      tags: [topic:mechanistic-interpretability, topic:sparse-autoencoders]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced, fr/llm-limits, en/llm-limits]
+      concepts: [contextualized-representation]
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Use as a critical-reading checkpoint in the existing investigation; no new page is needed."
+
+  - id: neuronpedia-interpretability-platform:conditional-custom-text-inference
+    kind: limitation
+    summary: "Custom-text activation tests are available only for sources/releases where inference is enabled; availability must be checked for the selected model and source."
+    locator:
+      type: url
+      value: "https://docs.neuronpedia.org/api/"
+      label: "API documentation and inference availability"
+    evidence:
+      kind: direct-documentation
+      confidence: context-dependent
+      scope: "Official API documentation as reviewed on 2026-11-17."
+      assumptions: []
+      limitations:
+        - "Endpoint availability may change and depends on the selected source."
+        - "No API endpoint or inference run was exercised."
+    technical_assessment:
+      status: reviewed
+      rationale: "The conditional availability is explicitly preserved to avoid promising a capability for every feature dashboard."
+      corroborating_sources: []
+    classification:
+      primary_theme: architectures-mechanisms
+      tags: [topic:features, modality:interactive-visualization]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced]
+      concepts: [contextualized-representation]
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Keep the conditional wording in the existing exercise instructions; learners should not assume inference is universally available."
+
+  - id: neuronpedia-interpretability-platform:attribution-and-causal-boundaries
+    kind: limitation
+    summary: "Attribution graphs and steering views depend on particular methods and approximations; a graph or changed output alone does not establish a complete causal mechanism, which requires controlled interventions and counterfactual tests."
+    locator:
+      type: url
+      value: "https://docs.neuronpedia.org/"
+      label: "Platform documentation: circuit tracing, attribution graphs and steering"
+    evidence:
+      kind: editorial-synthesis
+      confidence: context-dependent
+      scope: "Critical boundary stated in the source review after reviewing the platform's documented tool categories."
+      assumptions: []
+      limitations:
+        - "This extraction does not validate a particular attribution-graph method or steering result."
+        - "No intervention, ablation or counterfactual experiment was run."
+    technical_assessment:
+      status: reviewed
+      rationale: "The claim is deliberately framed as an evidential limitation, not as a reproduced result about a specific model."
+      corroborating_sources: []
+    classification:
+      primary_theme: architectures-mechanisms
+      tags: [topic:mechanistic-interpretability, topic:attribution-graphs]
+      concept_ids: [self-attention, contextualized-representation]
+    candidate_destinations:
+      pages: [fr/llm-limits, en/llm-limits, fr/contextualized-representations-advanced, en/contextualized-representations-advanced]
+      concepts: [self-attention, contextualized-representation]
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Retain the calibrated caveat and requirement for controlled tests in the existing advanced page; this is not evidence for a new canonical causal-mechanism concept."
+
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "This extraction makes the documentation-level contributions and their evidential boundaries auditable. It intentionally reuses existing concepts and bilingual pages, creates no new ontology nodes, and does not upgrade the source beyond partially-scanned. The existing source review remains the synthesis of the platform's complementary tools and the LLM Lab learning activity."
