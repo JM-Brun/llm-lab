@@ -197,3 +197,36 @@ The existing vocabulary is adequate for broad pedagogical and representational l
 For now, retain causal claims in source-scoped evidence records or structured claim metadata, including intervention, metric, model, inputs and scope. Do not add a generic causal edge to the concept graph until the project has decided how evidence, confidence, scope and counterevidence are represented. This avoids both false precision and a proliferation of weakly typed edges.
 
 One schema hygiene point should also be checked in the implementation: the approximates relation definition appears after a large blank separator in the YAML. Its placement is syntactically valid if it remains inside relation_types, but validators and generated graph projections should confirm it is parsed as a relation type and not silently ignored.
+
+
+## 8. Source registration and extraction status (2026-11-18)
+
+The six works discussed above now have individual catalogue records in data/sources.yml and dedicated source-scoped extraction files:
+
+| Source ID | Dedicated extraction | Current scan status | Evidence captured in this pass |
+|---|---|---|---|
+| conmy-automated-circuit-discovery-2023 | data/extractions/conmy-automated-circuit-discovery-2023.yml | partially-scanned | NeurIPS proceedings metadata, abstract/overview, ACDC framing and reported GPT-2 Small Greater-Than result |
+| syed-attribution-patching-2024 | data/extractions/syed-attribution-patching-2024.yml | partially-scanned | ACL Anthology metadata, abstract, accessible PDF introduction and activation-vs-attribution distinction |
+| kramar-atp-star-2024 | data/extractions/kramar-atp-star-2024.yml | partially-scanned | arXiv and Google DeepMind metadata/abstract, two false-negative classes and residual-risk-bound claim |
+| hanna-faithfulness-2024 | data/extractions/hanna-faithfulness-2024.yml | partially-scanned | COLM proceedings metadata, abstract and accessible EAP-IG/faithfulness framing |
+| chan-causal-scrubbing-2022 | data/extractions/chan-causal-scrubbing-2022.yml | partially-scanned | Original Alignment Forum post: setup, hypothesis formalization, resampling algorithm and limitations |
+| marks-sparse-feature-circuits-2025 | data/extractions/marks-sparse-feature-circuits-2025.yml | partially-scanned | ICLR 2025 proceedings metadata, abstract, sparse feature-circuit framing and SHIFT summary |
+
+All six records intentionally retain partially-scanned status. The extraction items are atomic, source-scoped claims with section/abstract locators at the granularity actually inspected; where the detailed paper section or exact table locator has not been verified, that limitation is stated rather than guessed. Publication venue and version are recorded separately from licence/reuse rights; unknown rights remain unknown. No code, model, checkpoint, benchmark or experiment has been independently executed by LLM Lab in this work.
+
+### 8.1 What is complete versus pending
+
+**Completed in this increment**
+- Six catalogue records with authors, stable identifiers/URLs, venue/version distinctions, classification, tags, existing concept/page links and dated scan histories.
+- Six dedicated extraction files, each with a source-local graph, bounded pedagogical reconstruction and atomic evidence items.
+- A first cross-method comparison and a preliminary mapping to the existing relation vocabulary.
+
+**Still pending**
+- Full section-by-section reading of all six papers, including appendices, tables, supplementary material and implementation details.
+- Exact locator refinement for each empirical result and every limitation, including table/figure numbers and code/checkpoint revisions where available.
+- Source licence and asset reuse verification; unknown values must not be guessed.
+- Independent execution/reproduction of selected attribution, patching, scrubbing and sparse-feature-circuit examples.
+- Ontology audit of candidate concepts and mapping into the existing French and English pages/exercises.
+- Graph-projection and rendered-page verification after any canonical concept/resource changes.
+
+These pending items are split into follow-up issues rather than being silently treated as completed by this ingestion PR.
