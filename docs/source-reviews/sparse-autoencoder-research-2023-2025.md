@@ -46,7 +46,7 @@ No source in this review is treated as independently reproduced. The sources pro
 
 ### 2.5 Shu et al. — A Survey on Sparse Autoencoders: Interpreting the Internal Mechanisms of Large Language Models (Findings of EMNLP 2025)
 
-- **Version and identity:** arXiv:2503.05613; published Findings of EMNLP 2025, DOI 10.18653/v1/2025.findings-emnlp.89. Authors: Dong Shu, Xuansheng Wu, Haiyan Zhao, Daking Rai, Ziyu Yao, Ninghao Liu and Mengnan Du.
+- **Version and identity:** arXiv:2503.05613; published Findings of EMNLP 2025, DOI 10.18653/v1/2025.findings-emnlp.89. Authors: Dong Shu, Xuansheng Wu, Haiyan Zhao, Daking Rai, Ziyu Yao, Ninghao Liu and Mengnan Du. The ACL Anthology page states that post-2016 materials use CC BY 4.0.
 - **Abstract-level contribution:** surveys SAE architectures and training, input- and output-based feature explanation methods, structural and functional evaluation metrics, and applications.
 - **Concept implication:** use this source as a map of the field and its taxonomies, not as primary evidence for each underlying empirical result.
 - **Scope/limitation:** claims in the survey must be traced to the cited primary studies before being promoted to source-grounded claims in the knowledge graph. Full sections and references have not yet been audited.
