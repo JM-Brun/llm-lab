@@ -13,9 +13,9 @@ Attribution establishes provenance; it does not by itself grant permission. Conv
 
 ## Repository-level licensing finding
 
-[LICENSE.md](../LICENSE.md) offers project code under MIT and original project-authored prose in Quarto pages and documentation under CC BY-SA 4.0. The CC BY-SA grant explicitly excludes all non-text assets, including all 64 current local SVGs under `site/images/`, unless and until a separate asset-level licence is explicitly recorded. The provenance findings and their evidence are tracked separately below; provenance confirmation does not itself grant a licence. Externally hosted figures and other third-party material remain subject to their respective rights holders' terms; attribution or a source link is not, by itself, permission to reuse an asset.
+[LICENSE.md](../LICENSE.md) offers project code under MIT and original project-authored prose in Quarto pages and documentation under CC BY-SA 4.0. The CC BY-SA grant explicitly excludes all non-text assets, including all 81 current local SVGs under `site/images/`, unless and until a separate asset-level licence is explicitly recorded. The provenance findings and their evidence are tracked separately below; provenance confirmation does not itself grant a licence. Externally hosted figures and other third-party material remain subject to their respective rights holders' terms; attribution or a source link is not, by itself, permission to reuse an asset.
 
-The licence boundary remains independent of the provenance findings below: no asset-level licence has been declared for the 64 local SVGs. Third-party embeds retain their separate rights assessments. Do not remove, replace, hide, or disable an existing illustration solely because its rights are uncertain.
+The licence boundary remains independent of the provenance findings below: no asset-level licence has been declared for the 81 local SVGs. Third-party embeds retain their separate rights assessments. Do not remove, replace, hide, or disable an existing illustration solely because its rights are uncertain.
 
 ## Externally hosted images currently embedded
 
@@ -67,6 +67,11 @@ The original 2026-10-30 source-level scan found 32 SVG files. A fresh recursive 
 | `logits-common-shift-en.svg`, `logits-common-shift-fr.svg` | EN/FR `logits.qmd` | Bilingual common-shift/softmax-invariance figures added by PR #1118; project-managed SVG pair; verify authorship/history and licence |
 | `probability-decoding-flow-en.svg`, `probability-decoding-flow-fr.svg` | EN/FR `probabilities.qmd` | Bilingual logits-to-selection pipeline figures added by PR #1119; project-managed SVG pair; verify authorship/history and licence |
 | `training-loop-visual-en.svg`, `training-loop-visual-en-mobile.svg`, `training-loop-visual-fr.svg`, `training-loop-visual-fr-mobile.svg` | EN/FR `training-loop.qmd` | New bilingual desktop/mobile diagrams showing the optimizer update path and separate validation-only path; created as original LLM Lab teaching schematics in PR #1143; owner provenance confirmation and asset-level licence remain pending |
+
+| `dense-vs-sparse.svg`, `io-aware-tiling.svg`, `online-softmax.svg` | EN/FR `scaled-dot-product-attention.qmd` | Three original explanatory schematics added in PR #1108: IO-aware tiling, online-softmax state merging, and dense-versus-sparse connectivity. The PR explicitly says no third-party figure was copied. Asset-level licence remains undeclared. |
+| `optimizer-comparison-en.svg`, `optimizer-comparison-en-mobile.svg`, `optimizer-comparison-fr.svg`, `optimizer-comparison-fr-mobile.svg` | EN/FR `training-loop.qmd` | Original bilingual desktop/mobile diagrams added in PR #1179, comparing SGD, Newton and Adam/AdamW. The PR explicitly states no source image was copied. Asset-level licence remains undeclared. |
+| `positional-entry-points-en.svg`, `positional-entry-points-fr.svg` | EN/FR `rope.qmd` | Original bilingual diagrams added in PR #1152, comparing absolute input addition, Q/K RoPE and score-level relative bias. The PR identifies these as original project diagrams. Asset-level licence remains undeclared. |
+| `retrieval-architectures-en.svg`, `retrieval-architectures-fr.svg` | EN/FR `cosine-similarity.qmd` and `rag-memory-boundaries.qmd` | Original bilingual diagrams added in PR #1171, comparing bi-encoder, cross-encoder and late-interaction retrieval. The PR identifies these as original project diagrams. Asset-level licence remains undeclared. |
 | `contextualization-pipeline-en.svg`, `contextualization-pipeline-fr.svg` | EN/FR `contextualized-representations.qmd` | New bilingual pipeline figures added after the previous 38-file inventory; provenance and asset-level licence confirmation pending |
 | `embedding-lookup-en.svg`, `embedding-lookup-fr.svg` | EN/FR `embedding-space.qmd` | New bilingual lookup figures illustrating token ID → embedding-table row → vector; owner-authored PR #915 describes purpose-built diagrams; asset-level licence remains undeclared |
 | `llm-shared-prediction-uses-en.svg`, `llm-shared-prediction-uses-en-mobile.svg`, `llm-shared-prediction-uses-fr.svg`, `llm-shared-prediction-uses-fr-mobile.svg` | EN/FR `llm-overview.qmd` | New bilingual desktop/mobile figures for generation, scoring and training uses of the predictive distribution; owner-authored PR #782 describes a purpose-built visual; asset-level licence remains undeclared |
@@ -374,3 +379,18 @@ Four new bilingual responsive SVGs were added to the EN/FR `generation.qmd` page
 - The new SVGs contain accessible `title` and `desc` elements, no embedded raster, script, `foreignObject`, or external HTTP(S) references, and are paired with page-level alt text and captions. These source checks do not establish rendered accessibility or owner confirmation.
 
 No existing illustration was removed, replaced, hidden, or disabled. Preserve all assets unchanged while provenance and asset-level licensing remain unresolved.
+
+
+## Recursive inventory reconciliation — 2026-11-18
+
+A fresh recursive Git-tree enumeration of `main` finds **81 SVG files** under `site/images/`. The previous 64-file count was a dated 2026-11-16 snapshot and is superseded. Filename reconciliation found 11 current files not yet listed in this register; the four groups above map all 11 to their bilingual page sources and merged introduction PRs (#1108, #1152, #1171 and #1179).
+
+All 11 newly reconciled files were inspected at source level: each has an SVG `title` and `desc`; none contains an embedded raster image, `foreignObject`, script, or external HTTP(S) href. This is a source-pattern inspection, not XML conformance, rendered accessibility, authorship proof beyond the cited contribution records, or a legal review.
+
+- **81** local SVG files are present in the current recursive inventory.
+- **81/81** remain outside the MIT code / CC BY-SA prose grants; no asset-level licence is declared by this reconciliation.
+- The previous provenance ratio of 52/64 is retained only as a historical 2026-11-16 snapshot. Do not extrapolate it to the current 81-file inventory. The 11 newly reconciled files have contribution-level original-artwork declarations in their introduction PRs, but that does not grant an asset-level licence.
+- The four earlier pending owner-provenance confirmations and the rendered-DOM audit of remote/responsive assets remain open.
+- No illustration was removed, replaced, hidden, disabled or modified.
+
+This update reconciles source references and repository inventory only. It does not close #156 or select a licence under #163.
