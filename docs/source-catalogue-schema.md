@@ -13,6 +13,7 @@
 | Typed source lineage | Target: `data/source-lineage/<source-id>.yml` | Directional, evidence-linked relations to other sources and project artifacts |
 | Generated source index | Target: `data/sources.yml` | Compatibility/discovery projection, not a canonical authoring file |
 | Controlled source facets | `data/source-taxonomy.yml` | Allowed source types, levels, contributions, audiences, statuses, extraction kinds, and tag policy |
+| Living source-collection identities | `data/source-collections.yml` | Stable dossier IDs and paths; source membership remains on the canonical source identity |
 | Atomic extracted knowledge | `data/extractions/<source-id>.yml` | What a source contributes at a precise locator, with evidence and limitations |
 | Knowledge domains | `data/domains.yml` | The six canonical subject domains |
 | Scientific concepts and typed relations | `data/concepts.yml` | Durable concepts and semantic relationships |
