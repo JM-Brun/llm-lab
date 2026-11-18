@@ -3261,9 +3261,9 @@ sources:
     reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
     classification:
       primary_theme: architectures-mechanisms
-      secondary_themes: [mathematical-tools-geometry]
-      tags: [topic:positional-encoding, method:sinusoidal-encoding, topic:transformer]
-      concept_ids: [positional-encoding]
+      secondary_themes: [mathematical-tools-geometry, probabilistic-foundations-training]
+      tags: [topic:positional-encoding, method:sinusoidal-encoding, topic:transformer, topic:attention]
+      concept_ids: [positional-encoding, query, key, value, attention-score, attention-weight, softmax, scaled-dot-product-attention, self-attention]
     metadata:
       technical_level: advanced
       contribution_types: [theory, mathematical-derivation, architecture]
@@ -3279,10 +3279,18 @@ sources:
           - "The complete paper and supplementary references were not re-audited in this source-ingestion pass."
           - "The paper's reported extrapolation motivation is a hypothesis, not a guarantee of long-context generalization."
           - "No figure, text passage, code, or dataset was copied; reuse rights were not assessed."
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "Section 3.2.1, Scaled Dot-Product Attention: prose definition, Equation (1), dimensions, softmax normalization over keys, and Figure 2 operation sequence"
+        limitations:
+          - "This pass audits the attention definition only; it is not a complete re-audit of the paper."
+          - "Equation (1) does not itself define mutual information, attention entropy, semantic relevance, or compression."
+          - "No paper figure, text passage, code, or dataset was copied."
     related:
-      pages: [fr/positional-encoding, en/positional-encoding, fr/sinusoidal-positional-encoding, en/sinusoidal-positional-encoding]
-      concepts: [positional-encoding]
-      audit_records: [docs/source-reviews/sinusoidal-positional-encoding-2026-11.md]
+      pages: [fr/positional-encoding, en/positional-encoding, fr/sinusoidal-positional-encoding, en/sinusoidal-positional-encoding, fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/queries-keys-values, en/queries-keys-values]
+      concepts: [positional-encoding, query, key, value, attention-score, attention-weight, softmax, scaled-dot-product-attention, self-attention]
+      audit_records: [docs/source-reviews/sinusoidal-positional-encoding-2026-11.md, docs/source-reviews/vaswani-attention-formulation-2026-11.md]
   - id: harvardnlp-annotated-transformer
     title: "The Annotated Transformer"
     creators: ["Sasha Rush", "Austin Huang", "Suraj Subramanian", "Jonathan Sum", "Khalid Almubarak", "Stella Biderman"]
