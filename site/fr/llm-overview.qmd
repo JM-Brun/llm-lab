@@ -245,6 +245,7 @@ Pour aller plus loin sur l'usage des outils et l'orchestration, voir [l'évoluti
 - **Comparer les méthodes de découpage du texte :** [stratégies de tokenisation](tokenization-strategies.qmd).
 - **Suivre une implémentation :** [visite guidée du bloc Transformer](transformer-block-walkthrough.qmd).
 - **Retrouver une définition courte :** [glossaire des LLM et des Transformers](glossary.qmd).
+- **Voir une vue d'ensemble de bout en bout :** [Andrej Karpathy — Deep Dive into LLMs like ChatGPT](https://www.youtube.com/watch?v=7xTGNNLPyMI) (2025, vidéo en anglais, environ 3 h 31) : du pré-entraînement au post-entraînement et à l'inférence ; une ressource d'orientation, pas un substitut aux leçons détaillées.
 :::
 
 ::: {.self-check}
