@@ -139,6 +139,39 @@ On peut distinguer quatre dimensions fonctionnelles sans créer quatre bases ind
 
 Ce sont des **projections complémentaires sur des objets canoniques communs**. Elles se croisent par des IDs stables et des liens typés, sans recopier les définitions. Une proximité visuelle, un lien de navigation ou des tags communs ne prouvent jamais une relation scientifique.
 
+## 5 bis. Inventaire complet des graphes et structures reliées
+
+Les quatre vues du tableau précédent sont des **familles analytiques**, pas un inventaire exhaustif. Le dépôt contient plusieurs graphes, modèles et projections dont les vocabulaires et finalités doivent rester distincts. L'inventaire opérationnel à prendre comme contrat de compatibilité est le suivant :
+
+| Structure | Propriétaire canonique | Sémantique à préserver |
+|---|---|---|
+| Graphe conceptuel | `data/concepts.yml` + `data/domains.yml` | Concepts canoniques bilingues, relations sémantiques typées et appartenance multi-domaines |
+| Graphe computationnel | `data/computational-graph.yml` | Nœuds data/opération/contrôle/politique, flux typés, branches opérationnelles, boucles et retours explicites |
+| Graphe de pages/navigation | Blocs `LLM-LAB-PAGE-MAP` | Hiérarchie éditoriale, liens associés et navigation locale |
+| Parcours Understand | `data/guided-route.yml` | Étapes et transitions pédagogiques justifiées |
+| Build path | Leçons d'implémentation, jalons et preuves de code existants | Dépendances de construction, implémentation et inspection |
+| Généalogie historique | `data/history-pilot.yml` | Événements de recherche, publications, versions de modèles et écosystème avec relations historiques sourcées |
+| Graphes pédagogiques locaux aux sources | `data/extractions/<source-id>.yml` | Nœuds `src-` propres à une source et séquence pédagogique reconstruite |
+| Provenance et lineage | Cible `data/source-lineage/`, scans et extractions | Relations source/version/inspection/item/locator et décisions d'intégration |
+| Associations de ressources | `data/resources.yml`, associations des concepts et métadonnées de pages | Liens entre concepts, ressources réutilisables et pages |
+| Projections d'interopérabilité | Exports JSON-LD, SKOS, Schema.org et PROV-O | Exports déterministes ; PROV-O actuel au niveau dataset/artefact, pas une provenance scientifique complète au niveau claim |
+| Sous-graphes générés | Générateurs de learning map, Mermaid computationnel et JSON-LD | Vues dérivées de leur propriétaire canonique, jamais éditées manuellement |
+
+Les quatre familles analytiques sont donc des regroupements de consultation : scientifique/conceptuelle (notamment graphe conceptuel et généalogie), preuve (lineage et provenance), implémentation (computationnel et Build) et pédagogique (pages, route et graphes locaux). Les associations de ressources et les exports d'interopérabilité traversent ces familles sans les fusionner.
+
+### Ponts typés entre structures
+
+Les ponts doivent référencer les IDs existants, sans copier les définitions des nœuds ni fusionner les vocabulaires. Exemples :
+- un nœud computationnel est expliqué par une page ;
+- un événement historique implique ou précède un concept, sans déduire automatiquement une causalité ;
+- un item d'extraction étaye une affirmation ou une définition dans un périmètre explicite ;
+- un jalon Build implémente ou inspecte un nœud computationnel ;
+- un concept canonique est mis en correspondance avec un nœud pédagogique local, sans promotion automatique de ce dernier.
+
+Chaque pont précise sa catégorie (assertion sémantique, preuve, navigation, classification, représentation, implémentation ou pédagogie), sa direction, ses endpoints canoniques, sa justification et ses exigences de preuve. Une chronologie ne démontre pas une causalité ; l'ordre des pages ne crée pas un prérequis ; une citation ne prouve pas une affirmation ; un nœud local à une source ne devient pas automatiquement un concept canonique.
+
+Cinq parcours de traversée doivent servir de tests d'intégration : concept → computation → implémentation → page Build ; concept → événement historique → sources ; page → concept → extraction → locator ; concept multi-domaine → pont inter-domaines ; modèle pédagogique local à une source → concepts canoniques, sans promotion automatique.
+
 ## 6. Chaîne de traçabilité recommandée
 
 `SOURCE` → `SOURCE_VERSION` → `INSPECTION_EVENT` → `EXTRACTION_ITEM` → `KNOWLEDGE_OBJECT` → `IMPLEMENTATION / TEST / EXPERIMENT` → `PEDAGOGICAL_REPRESENTATION`
@@ -217,6 +250,35 @@ Réutiliser les issues ouvertes plutôt que créer des doublons :
 Suites à rattacher aux issues propriétaires après vérification de périmètre : migration distribuée et gates de compatibilité ; fixtures d'inspection/extraction/relations ; critères de complétude ; tests de cohérence des projections ; benchmarks x10/x100 ; indexation des contrats documentaires. Ne pas ouvrir de tickets redondants.
 
 Le pilote attention / information theory / compression met à l'épreuve les liens entre mathématiques, calcul, interprétation, implémentation, histoire et pédagogie. Il doit distinguer analogie, équivalence formelle, causalité, dépendance d'implémentation et choix pédagogique. Chaque passerelle doit être argumentée sur un exemple réel et accompagnée de ses limites.
+
+## 10 bis. Premier pilote scientifique : attention, théorie de l'information et compression
+
+L'issue [#1237](https://github.com/JM-Brun/llm-lab/issues/1237) est le premier test réel de cette architecture. Il faut commencer par réconcilier les contenus, IDs, extractions, expériences, locateurs et pages bilingues déjà présents, et non réingérer ou dupliquer les ressources.
+
+Matériel existant à réutiliser :
+- concepts/pages d'attention : self-attention, attention-score, attention-weight, Q/K/V et scaled dot-product attention ;
+- concepts/pages d'information : entropie, cross-entropy, KL, information mutuelle et V-information ;
+- synthèses : [information theory and LLMs](source-syntheses/information-theory-and-llms-2026-11.md), [two meanings of compression](source-syntheses/compression-two-meanings-2026-11.md), [model compression](source-syntheses/model-compression-2026-11.md) ;
+- expériences : `experiments/information-theory/attention_kl_vs_mutual_information.py`, `compression.py`, `run.py`, le dossier `experiments/information-theory-llm/` et `experiments/sequence-compression/` ;
+- extractions de Vaswani et al., FlashAttention et sources d'information theory, ainsi que les graphes computationnel et historique, en conservant leurs modèles séparés.
+
+### Passerelles à accepter avec leur portée
+
+1. **Softmax → distribution catégorielle.** Pour une requête donnée et un ensemble de clés visibles fixé, les poids softmax sont non négatifs et normalisés ; ils définissent une distribution catégorielle. L'entropie de Shannon de cette distribution est donc bien définie. Sa valeur caractérise la concentration des poids pour cette requête/tête/couche/entrée et ce masque ; elle ne mesure pas à elle seule l'information sémantique, l'information stockée dans les valeurs ou l'importance causale.
+2. **Attention → calcul → FlashAttention.** Le calcul d'attention met en œuvre scores, masque, softmax et somme pondérée des valeurs. FlashAttention réorganise le calcul exact (à la précision flottante près) avec tuilage et softmax en ligne pour réduire les transferts HBM et éviter de matérialiser toute la matrice. C'est une relation d'implémentation et d'IO, pas une preuve de compression informationnelle.
+3. **Modèle autorégressif → coût de codage prédictif.** La factorisation de la probabilité d'une séquence en probabilités conditionnelles relie le NLL à une longueur de code idéale ; la cross-entropy donne le coût idéal moyen sous inadéquation du modèle. Une expérience de codage sans perte exige toutefois un encodeur/décodeur déterministe, un modèle et tokenizer partagés, des conventions de précision et un test de reconstruction exacte. Un modèle génératif n'est pas à lui seul un codec.
+4. **Compression de modèle et mémoire d'exécution.** Séparer au moins le codage prédictif de données, la compression du checkpoint (quantification, pruning, distillation) et la mémoire runtime (KV cache, activations, buffers, trafic HBM). Taille du checkpoint, qualité prédictive, mémoire de travail, latence, débit et bits/token sont des mesures différentes.
+5. **Rate-distortion, information bottleneck et MDL.** N'ajouter un pont qu'avec des sources primaires inspectées et les variables, distorsion/perte, classe de modèles et hypothèses explicitement définies. Ne pas qualifier l'attention d'information bottleneck par simple analogie avec une représentation pondérée.
+
+### Contre-exemples à conserver dans le benchmark
+
+- Entropie des poids d'attention ≠ information mutuelle.
+- FlashAttention ≠ compression informationnelle, sans revendication de codage distincte.
+- Quantification d'un checkpoint ≠ codage source du corpus d'entraînement.
+- Quantification du KV cache → réduction potentielle de mémoire runtime, pas compression du checkpoint.
+- Poids d'attention diffus ou concentrés ≠ pertinence sémantique ou importance causale démontrée.
+
+Le benchmark doit inclure cas positifs, négatifs et ambigus, locateurs exacts, hypothèses, limites, statut épistémique, notes d'indépendance des sources et explications FR/EN. Mesurer la précision sur un jeu de candidats revu manuellement avant de présenter des liens suggérés comme connaissances validées. Chaque passerelle acceptée doit être traçable jusqu'à source/version + item d'extraction + locator, ou déclarer explicitement le manque de preuve.
 
 ## 11. Critères d'acceptation
 
