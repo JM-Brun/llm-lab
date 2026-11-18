@@ -288,7 +288,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: concept-registry-benchmark-${{ github.sha }}
+          name: concept-registry-benchmark-${{ github.event.pull_request.head.sha || github.sha }}
           path: |
             ${{ runner.temp }}/concept-registry-benchmark.json
             ${{ runner.temp }}/concept-registry-benchmark-metadata.json
