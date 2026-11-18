@@ -35,7 +35,7 @@ By the end of this page, you should be able to:
 - interpret candidate recall, ranking quality, latency, and cost separately;
 - explain what page-level visual retrieval adds and what it does not replace.
 
-## 2. Document retrieval: finding is not supplying
+## Document retrieval: finding is not supplying
 
 **Document retrieval** or **information retrieval** selects documents or passages relevant to a query. It can power a conventional search engine, a RAG pipeline, or a memory system.
 
