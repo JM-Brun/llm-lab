@@ -1,19 +1,5 @@
 schema_version: 1
 source_id: philip-gage-byte-pair-compression-1994
-scan:
-  accessed_at: "2026-11-18"
-  retrieval_method: direct-pdf
-  author_text: {status: complete, coverage: "Abstract, §§1-8, pseudocode Listings 1-2, Figures 1-2, Table 1 and C implementations Listings 3-4.", notes: ["Accessible PDF is a 2020 reconstruction of the 1994 C Users Journal article; DOI 10.5555/177910.177914 is stated."]}
-  figures_media: {status: partial, coverage: "Figures 1-2 inspected through extracted descriptions and captions; Table 1 inspected.", notes: ["No figure assets copied; reconstruction may not preserve all original visual details."]}
-  code_data: {status: partial, coverage: "Pseudocode, C listings and reported benchmark protocol/results inspected.", notes: ["C code was not compiled or executed; benchmark was not reproduced."]}
-  comments: {status: not-applicable, coverage: null, notes: ["Journal article; no public comment thread in the inspected source."]}
-  linked_resources: {status: partial, coverage: "Published PDF, DOI and cited references.", notes: ["Referenced works were not audited."]}
-  metadata: {status: partial, coverage: "Philip Gage, A New Algorithm for Data Compression, C Users Journal 12(2), 23-38, February 1994.", notes: ["Accessible PDF reconstructed from original journal HTML in 2020."]}
-  rights: {status: unknown, coverage: null, notes: ["Reuse permissions for figures and source code were not established."]}
-  unresolved_questions:
-    - "Implementation and reported benchmark were not independently reproduced."
-    - "Benchmark uses one binary executable and historical hardware/software; it is not a modern or broad benchmark."
-    - "Algorithm is byte-oriented and block-based, not a tokenizer specification."
 items:
   - id: philip-gage-byte-pair-compression-1994:byte-pair-substitution
     kind: method
