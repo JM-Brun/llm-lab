@@ -28,7 +28,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:contextualized-repres
 
 [Extended exercises on this topic](../exercises.qmd#transformer).
 
-Consider the two occurrences of **Romans** in “What have the Romans ever done for us?” and “The Romans built roads.” For this controlled comparison, assume the tokenizer assigns both occurrences the same token ID and that we compare them at the same simplified position.
+Consider the two occurrences of **Romans** in “What have the Romans ever done for us?” and “Where did the Romans build their roads?” For this controlled comparison, assume the tokenizer assigns both occurrences the same token ID and that we compare them at the same simplified position.
 
 1. Does the embedding lookup return the same initial vector for both occurrences?
 2. Must their hidden states after the Transformer layers be identical? Explain what the different surrounding sequences can contribute.
