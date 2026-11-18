@@ -1,6 +1,0 @@
-<nav class="guided-page-context" aria-label="Learning path context">
-  <span class="guided-page-context__label">Learning path</span>
-  <a class="guided-page-context__stage" href="learning-map.html#guided-stage-computation">04 · Understand Transformer computation</a>
-  <span class="guided-page-context__badge" data-stage-id="computation" data-stage-index="4" data-stage-total="9">Stage 4/9</span>
-  <span class="guided-page-context__position">Stage 4 of 9 · page 2 of 4</span>
-</nav>

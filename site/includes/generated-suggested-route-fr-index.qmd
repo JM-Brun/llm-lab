@@ -1,6 +1,0 @@
-<div class="route-nav-cards">
-  <a class="route-nav-card" href="llm-overview.qmd">
-    <span class="nav-direction">Étape suivante →</span>
-    <span class="nav-title">Panorama : qu’est-ce qu’un LLM ?</span>
-  </a>
-</div>

@@ -1,6 +1,0 @@
-<div class="route-nav-cards">
-  <a class="route-nav-card" href="exercises.qmd">
-    <span class="nav-direction">← Previous step</span>
-    <span class="nav-title">Exercise catalogue</span>
-  </a>
-</div>

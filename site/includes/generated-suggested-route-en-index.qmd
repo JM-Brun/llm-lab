@@ -1,6 +1,0 @@
-<div class="route-nav-cards">
-  <a class="route-nav-card" href="llm-overview.qmd">
-    <span class="nav-direction">Next step →</span>
-    <span class="nav-title">Overview: what is an LLM?</span>
-  </a>
-</div>

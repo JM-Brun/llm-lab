@@ -1,6 +1,0 @@
-<div class="route-nav-cards">
-  <a class="route-nav-card" href="post-training.qmd">
-    <span class="nav-direction">← Previous step</span>
-    <span class="nav-title">From a base model to an assistant: post-training</span>
-  </a>
-</div>

@@ -1,6 +1,0 @@
-<nav class="guided-page-context" aria-label="Learning path context">
-  <span class="guided-page-context__label">Learning path</span>
-  <a class="guided-page-context__stage" href="learning-map.html#guided-stage-training">09 · Learn and update parameters</a>
-  <span class="guided-page-context__badge" data-stage-id="training" data-stage-index="9" data-stage-total="9">Stage 9/9</span>
-  <span class="guided-page-context__position">Stage 9 of 9 · page 1 of 3</span>
-</nav>

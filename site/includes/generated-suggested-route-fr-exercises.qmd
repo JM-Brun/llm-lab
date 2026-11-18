@@ -1,6 +1,0 @@
-<div class="route-nav-cards">
-  <a class="route-nav-card" href="evaluation-experimentale.qmd">
-    <span class="nav-direction">Étape suivante →</span>
-    <span class="nav-title">Évaluer un modèle : du score au protocole expérimental</span>
-  </a>
-</div>

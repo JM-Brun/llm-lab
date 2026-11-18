@@ -1,6 +1,0 @@
-<div class="route-nav-cards">
-  <a class="route-nav-card" href="generation.qmd">
-    <span class="nav-direction">Continuer Fonctionnement d’un LLM →</span>
-    <span class="nav-title">Générer du texte : l&#x27;inférence pas à pas</span>
-  </a>
-</div>
