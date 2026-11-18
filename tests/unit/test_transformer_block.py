@@ -68,3 +68,17 @@ def test_gpt2_scaled_initialization_applies_only_to_residual_output_projections(
         rtol=0.0,
         atol=1e-15,
     )
+
+
+def test_block_forward_adds_both_sublayers_to_the_residual_stream(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    block = TransformerBlock(_small_config(), np.random.default_rng(0))
+    x = np.arange(2 * 3 * 16, dtype=np.float64).reshape(2, 3, 16)
+
+    monkeypatch.setattr(block, "_attention", lambda values: np.full_like(values, 2.0))
+    monkeypatch.setattr(block, "_mlp", lambda values: np.full_like(values, -0.5))
+
+    out = block.forward(x)
+
+    np.testing.assert_array_equal(out, x + 1.5)
