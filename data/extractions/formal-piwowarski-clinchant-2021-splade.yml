@@ -1,0 +1,54 @@
+schema_version: 1
+source_id: formal-piwowarski-clinchant-2021-splade
+scan:
+  accessed_at: "2026-11-18"
+  retrieval_method: direct-pdf
+  author_text:
+    status: partial
+    coverage: "SIGIR 2021 paper: SPLADE formulation, log-saturation, ranking and sparsity objectives, MS MARCO and TREC DL 2019 setup and reported first-stage results."
+    notes: ["Focused primary-source audit; no independent reproduction."]
+  figures_media: {status: partial, coverage: "Equations (4)-(6) and Table 1 inspected.", notes: ["No visual asset copied."]}
+  code_data: {status: not-inspected, coverage: null, notes: ["Repository, checkpoints, index and datasets not independently executed or audited."]}
+  comments: {status: not-inspected, coverage: null, notes: []}
+  linked_resources: {status: partial, coverage: "SIGIR proceedings metadata, DOI and published paper.", notes: ["Implementation repository not audited."]}
+  metadata: {status: partial, coverage: "SIGIR 2021, pp. 2288-2292; DOI 10.1145/3404835.3463098.", notes: []}
+  rights: {status: unknown, coverage: null, notes: ["No figure reuse permission established; paraphrases and locators only."]}
+  unresolved_questions:
+    - "Reproduction requires exact checkpoint, corpus, index backend, retrieval settings and hardware."
+    - "Reported FLOPS and custom-index measurements are not general production latency or end-to-end RAG cost."
+items:
+  - id: formal-piwowarski-clinchant-2021-splade:log-saturated-sparse-representation
+    kind: architecture
+    summary: "SPLADE projects contextualized token representations onto the BERT vocabulary and aggregates positive activations with log(1 + ReLU(.)), yielding sparse weighted query and document vectors with learned lexical expansion."
+    locator: {type: section, value: "§3.2, Eq. (4), pp. 2289-2290", label: "SPLADE term-weight aggregation"}
+    evidence: {kind: method-description, confidence: established, scope: "Original SPLADE formulation in the SIGIR 2021 paper.", assumptions: [], limitations: ["Representation is tied to the model vocabulary and checkpoint.", "Sparse vectors do not alone guarantee a low-cost index."]}
+    technical_assessment: {status: correct, rationale: "The paper defines the log-saturated vocabulary aggregation explicitly.", corroborating_sources: []}
+    classification: {primary_theme: inference-efficiency, tags: [topic:information-retrieval, method:learned-sparse, method:term-expansion], concept_ids: [retrieval-augmented-generation]}
+    candidate_destinations: {pages: [en/cosine-similarity, fr/cosine-similarity, en/document-retrieval, fr/document-retrieval], concepts: [retrieval-augmented-generation], route_ids: []}
+    disposition: integrate-by-reference
+    disposition_rationale: "Supports the existing learned-sparse retriever explanation; no new concept is needed."
+  - id: formal-piwowarski-clinchant-2021-splade:joint-ranking-sparsity-objective
+    kind: method
+    summary: "SPLADE jointly optimizes an in-batch ranking loss and query/document sparsity regularizers. The paper studies L1 and FLOPS regularization; FLOPS penalizes high average term activation to encourage more balanced posting-list activity."
+    locator: {type: section, value: "§3.2, Eqs. (5)-(6), pp. 2289-2290", label: "Ranking and sparsity objectives"}
+    evidence: {kind: mathematical-method, confidence: established, scope: "Objective functions in the original SPLADE paper.", assumptions: [], limitations: ["FLOPS is a proxy; actual latency depends on index, hardware and workload."]}
+    technical_assessment: {status: correct, rationale: "The ranking and regularization terms are explicitly defined.", corroborating_sources: []}
+    classification: {primary_theme: inference-efficiency, tags: [topic:information-retrieval, method:learned-sparse, method:regularization], concept_ids: [retrieval-augmented-generation]}
+    candidate_destinations: {pages: [en/document-retrieval, fr/document-retrieval], concepts: [retrieval-augmented-generation], route_ids: []}
+    disposition: integrate-by-reference
+    disposition_rationale: "Explains the effectiveness/index-cost trade-off without prescribing one regularizer universally."
+  - id: formal-piwowarski-clinchant-2021-splade:first-stage-results
+    kind: result
+    summary: "The paper reports competitive first-stage retrieval effectiveness on MS MARCO passage ranking and TREC DL 2019 for its SPLADE configuration, with sparsity/efficiency comparisons against selected baselines."
+    locator: {type: section, value: "§4, Table 1, pp. 2290-2291", label: "MS MARCO and TREC DL 2019 results"}
+    evidence: {kind: reported-experimental-result, confidence: well-supported, scope: "Datasets, baselines, training setup and custom retrieval implementation in the paper.", assumptions: [], limitations: ["First-stage evaluation, not end-to-end RAG.", "BERT-base, four V100 GPUs and a custom Python/Numba index.", "Some leaderboard results are not directly comparable."]}
+    technical_assessment: {status: qualified, rationale: "Results are valid within the paper's bounded protocol, not a universal sparse-versus-dense ranking.", corroborating_sources: []}
+    classification: {primary_theme: inference-efficiency, tags: [topic:information-retrieval, method:benchmark, method:learned-sparse], concept_ids: [retrieval-augmented-generation]}
+    candidate_destinations: {pages: [en/document-retrieval, fr/document-retrieval], concepts: [retrieval-augmented-generation], route_ids: []}
+    disposition: integrate-by-reference
+    disposition_rationale: "Historical evidence for learned sparse first-stage retrieval, with explicit dataset and implementation boundaries."
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "SPLADE combines learned vocabulary expansion, log-saturated sparse weights and ranking/sparsity objectives. Existing bilingual retrieval pages and concepts suffice."
