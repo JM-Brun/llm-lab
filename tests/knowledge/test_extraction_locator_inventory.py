@@ -29,7 +29,8 @@ def test_inventory_counts_locator_types_and_shapes_without_exposing_values(tmp_p
             "items": [
                 {"locator": {"type": "url", "value": "https://example.org/paper"}},
                 {"locator": {"type": "timestamp", "value": "01:23:45"}},
-                {"locator": {"type": "page", "value": "pp. 12-14"}},
+                {"locator": {"type": "page", "value": "12-14"}},
+                {"locator": {"type": "page", "value": "12–14"}},
                 {"locator": {"type": "section", "value": "Section 2.1"}},
                 {"locator": {"type": "custom", "value": "opaque"}},
                 {"locator": {"type": "url", "value": ""}},
@@ -41,12 +42,12 @@ def test_inventory_counts_locator_types_and_shapes_without_exposing_values(tmp_p
     report = MODULE.collect_inventory(tmp_path)
 
     assert report["files_seen"] == 1
-    assert report["items_seen"] == 7
+    assert report["items_seen"] == 8
     assert report["items_without_locator_mapping"] == 1
     assert report["locators_with_missing_or_invalid_required_fields"] == 1
     assert report["locator_types"]["url"] == 2
     assert report["value_shapes_by_type"]["url::http-url"] == 1
     assert report["value_shapes_by_type"]["timestamp::timestamp-like"] == 1
-    assert report["value_shapes_by_type"]["page::opaque-text"] == 1
+    assert report["value_shapes_by_type"]["page::page-number-like"] == 2
     assert report["value_shapes_by_type"]["section::section-like"] == 1
     assert "https://example.org/paper" not in str(report)
