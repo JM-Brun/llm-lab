@@ -51,7 +51,7 @@ pedagogical_model:
 
 items:
   - id: conmy-automated-circuit-discovery-2023:task-conditioned-search
-    kind: method
+    kind: claim
     summary: "Circuit discovery is conditioned on the chosen task, input dataset, target metric and computational graph; it does not discover a task-independent circuit."
     locator: {type: section, value: "Sections 2-3: setup", label: "Source-local locator"}
     evidence:
@@ -65,7 +65,7 @@ items:
     disposition: integrate
     disposition_rationale: "Retain as source-scoped evidence; do not promote directly to a universal canonical concept."
   - id: conmy-automated-circuit-discovery-2023:acdc-edge-pruning
-    kind: method
+    kind: claim
     summary: "ACDC automates edge selection/pruning in a computational graph using activation-patching-based tests."
     locator: {type: section, value: "Section 3: ACDC algorithm", label: "Source-local locator"}
     evidence:
