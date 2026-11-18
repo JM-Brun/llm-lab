@@ -142,6 +142,7 @@ def build_synthetic_registry(
     )
     return result
 
+
 def benchmark(
     base: dict[str, Any],
     published_pages: set[str],
