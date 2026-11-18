@@ -895,7 +895,7 @@ sources:
     updated_date: null
     language: en
     version: null
-    revision: null
+    revision: 79dc2c0533685b893616c78160b5d9e40876e724
     licence: {identifier: null, url: null, status: unknown}
     reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
     classification:
@@ -918,10 +918,16 @@ sources:
           - "This was source inspection; the code was not copied or executed as part of the audit."
           - "The educational module is not the optimized production path."
           - "The mutable main branch was not pinned in the historical note."
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "Pinned revision 79dc2c0533685b893616c78160b5d9e40876e724, tiktoken/_educational.py: UTF-8 bytes, regex pre-splitting, merge ranks, encode/decode and training walkthrough."
+        limitations:
+          - "Static source inspection only; the educational module was not executed and is not the optimized production path."
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies, en/embedding-space, fr/embedding-space]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md, docs/source-reviews/tokenization-implementations-huggingface-tiktoken-minbpe-2026-11.md]
 
   - id: karpathy-minbpe
     title: "minbpe"
@@ -934,7 +940,7 @@ sources:
     updated_date: null
     language: en
     version: null
-    revision: null
+    revision: 1acefe89412b20245db5a22d2a02001e547dc602
     licence: {identifier: "MIT", url: "https://github.com/karpathy/minbpe/blob/master/LICENSE", status: verified}
     reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
     classification:
@@ -958,10 +964,17 @@ sources:
           - "The implementation was not copied or executed in that audit."
           - "The licence check was repository-level; individual asset reuse is not inferred."
           - "The mutable master branch was not pinned in the historical note."
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "Pinned revision 1acefe89412b20245db5a22d2a02001e547dc602: base.py, basic.py, regex.py and gpt4.py."
+          - "Compared byte-level base units, optional regex pre-tokenization, special tokens and cl100k_base merge reconstruction."
+        limitations:
+          - "Static source inspection only; no tests, execution, performance comparison or independent compatibility reproduction."
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md, docs/source-reviews/tokenization-implementations-huggingface-tiktoken-minbpe-2026-11.md]
 
   - id: huggingface-tokenizers-pipeline-docs
     title: "Hugging Face Tokenizers — Pipeline and Components"
@@ -997,10 +1010,18 @@ sources:
         limitations:
           - "Living documentation; no immutable revision was recorded."
           - "Alignment/offset APIs and all implementation details were outside the audit scope."
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "Official Tokenizers pipeline documentation: normalization, pre-tokenization, model, post-processing and separately documented decoding."
+          - "Cross-check against bilingual tokenization-strategies pages and the current documentation-source builder."
+        limitations:
+          - "The published latest URL is mutable; no immutable docs release was established."
+          - "No exhaustive review of offsets, every component API or runtime behavior; no code executed."
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md, docs/source-reviews/tokenization-implementations-huggingface-tiktoken-minbpe-2026-11.md]
 
   - id: google-sentencepiece-documentation
     title: "SentencePiece — Overview and Normalization"
@@ -1224,7 +1245,7 @@ sources:
     updated_date: null
     language: en
     version: null
-    revision: null
+    revision: 79dc2c0533685b893616c78160b5d9e40876e724
     licence: {identifier: "MIT", url: "https://github.com/openai/tiktoken/blob/main/LICENSE", status: verified}
     reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
     classification:
@@ -1247,10 +1268,18 @@ sources:
           - "Historical README benchmark numbers were not reused as current performance evidence."
           - "The complete repository implementation and release history were not audited."
           - "The mutable main branch was not pinned in the historical note."
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "Pinned repository revision 79dc2c0533685b893616c78160b5d9e40876e724: tiktoken/core.py and tiktoken_ext/openai_public.py."
+          - "Compared production Encoding/CoreBPE delegation, per-encoding regex/ranks and special-token policy with minbpe."
+        limitations:
+          - "Rust CoreBPE internals, all encodings and performance were not audited or executed."
+          - "No benchmark or compatibility test was run."
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies, en/embedding-space, fr/embedding-space]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md, docs/source-reviews/tokenization-implementations-huggingface-tiktoken-minbpe-2026-11.md]
 
   - id: huggingface-tokenizers-repository
     title: "Tokenizers"

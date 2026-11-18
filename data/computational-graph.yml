@@ -83,7 +83,7 @@ nodes:
       fr: "Séquence d'entiers utilisée comme entrée du modèle."
       en: "Integer sequence used as model input."
     branches: [shared-prediction, generation, observed-target-scoring, training]
-    resources: [fr/text-data, en/text-data, fr/training-examples, en/training-examples]
+    resources: [fr/text-data, en/text-data, fr/tokenization-strategies, en/tokenization-strategies, fr/training-examples, en/training-examples]
   - id: token-context
     kind: data
     role: state

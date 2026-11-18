@@ -1,6 +1,6 @@
 # Tokenization and embeddings — cross-source synthesis
 
-**Current inventory snapshot (2026-11-18).** The canonical catalogue contains 139 source records across LLM Lab, and the repository-wide `data/extractions/` directory contains 87 YAML extraction files. The collection-specific extraction count is intentionally not restated: the catalogue has no deterministic collection-membership field, and the earlier 12-record figure is a historical 2026-11-08 snapshot. Reconcile membership from the current collection dossier and extraction source IDs before publishing a new subset count. These are inventory counts, not measures of scan completeness or pedagogical quality. The registration/extraction PRs #460, #463, #467, #468 and #469 are merged. Exact metadata and asset-level reuse gaps remain unresolved as described below and in #156.
+**Current inventory snapshot (2026-11-18).** The canonical catalogue contains 139 source records across LLM Lab, and the repository-wide `data/extractions/` directory contains 95 YAML extraction files. The collection-specific extraction count is intentionally not restated: the catalogue has no deterministic collection-membership field, and the earlier 12-record figure is a historical 2026-11-08 snapshot. Reconcile membership from the current collection dossier and extraction source IDs before publishing a new subset count. These are inventory counts, not measures of scan completeness or pedagogical quality. The registration/extraction PRs #460, #463, #467, #468 and #469 are merged. Exact metadata and asset-level reuse gaps remain unresolved as described below and in #156.
 
 **Status:** living source collection · **Review date:** 2026-11-18  
 **Catalogue:** [data/sources.yml](../../data/sources.yml)  
@@ -265,3 +265,12 @@ The source-to-knowledge workflow has now been retrospectively assessed against t
 ### Final assessment
 
 The source collection reinforces and qualifies the existing curriculum more than it expands it. Its strongest added value is a structured comparison of tokenizer design and multilingual evaluation, a precise distinction between static and contextual representations, and methodological caveats around embedding geometry and interactive visualizers. The right outcome is a traceable compilation of perspectives, not a larger sequence of overlapping lessons.
+
+
+## 8. Implementation audit — Hugging Face, tiktoken and minbpe (2026-11-18)
+
+The targeted static review is recorded in [Hugging Face / tiktoken / minbpe implementation audit](tokenization-implementations-huggingface-tiktoken-minbpe-2026-11.md). Its main distinction is between the configurable Hugging Face pipeline, tiktoken's production-oriented native BPE core plus educational Python module, and minbpe's readable Basic/Regex/GPT4 variants. The review inspected pinned repository revisions for tiktoken and minbpe; the Hugging Face published `latest` documentation remains mutable. No code was executed, no benchmark was run, and no compatibility claim was experimentally reproduced.
+
+**Disposition:** no additional extraction is warranted. The existing bilingual pages already cover the pipeline stages, byte-level BPE, special-token handling and training-versus-encoding distinction. The new dossier supplies precise implementation locators and a comparative synthesis rather than duplicating those claims in another extraction.
+
+**Graph links:** keep the canonical concept chain unchanged: `token` is linked to the bilingual tokenization pages; `token-embedding` is linked to the bilingual embedding-space pages; the computational graph connects `token-ids` → `token-context` → `embedding-lookup` → `token-embeddings`. The `token-ids` node now also links to the bilingual tokenization-strategies pages. No new scientific relation or concept is inferred from implementation code.
