@@ -28,13 +28,15 @@ tags: ["type:exercise-hub", "destination:practice", "topic:contextualized-repres
 
 [Extended exercises on this topic](../exercises.qmd#transformer).
 
-Two occurrences of the **same token ID** appear in two different sentences. Assume the embedding matrix is unchanged:
+Consider the two occurrences of **Romans** in “What have the Romans ever done for us?” and “The Romans built roads.” For this controlled comparison, assume the tokenizer assigns both occurrences the same token ID and that we compare them at the same simplified position.
 
-1. Are the vectors returned by the embedding lookup identical?
-2. Must the hidden states after the Transformer layers also be identical? Why?
-3. At which stage does contextual information enter the computation?
+1. Does the embedding lookup return the same initial vector for both occurrences?
+2. Must their hidden states after the Transformer layers be identical? Explain what the different surrounding sequences can contribute.
+3. Which parts of the computation can use the surrounding words, and which part—the lookup itself—cannot?
 
-You have understood this step if you can explain the difference between **identity of the initial vector** and **context-dependence of hidden states**, without attributing sentence understanding to the lookup itself.
+Now consider “They built roads.” Who does **they** refer to in this exchange? Why does resolving that reference not mean the initial embedding lookup already contained the answer?
+
+You have understood this step if you can distinguish **the identity of the initial vector**, **context-dependent information built by the Transformer**, and **the interpretation of a reference in the dialogue**. The same initial vector does not force identical hidden states; this example also does not prove that one attention head alone resolves reference.
 
 
 
