@@ -329,3 +329,5 @@ Les premières requêtes de référence doivent couvrir au minimum : ponts entre
 - [Cross-project knowledge-management transfer analysis](cross-project-knowledge-management-transfer-2026-11-18.md)
 
 - [Evidence-traced cross-graph pilot: attention, information theory and compression](cross-graph-pilot-attention-information-compression-2026-11-18.md)
+
+- [Scalability and capacity audit — 2026-11-18](scalability-capacity-audit-2026-11-18.md): current code-path assessment, capacity verdict and x1k/x5k/x10k synthetic workload matrix.
