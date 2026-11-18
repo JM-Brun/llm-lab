@@ -20,6 +20,8 @@ related: ["fr/gradients", "fr/llm-evolution"]
 tags: ["type:deep-dive", "destination:deepen", "topic:score-centering", "level:advanced", "language:fr", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-fr-score-centering.qmd >}}
+
 ::: {.chapter-lead}
 Le **centrage du score** est une correction additive des mises à jour par gradient de politique lorsque le moteur d'inférence qui a généré une trajectoire et le moteur d'entraînement qui calcule son gradient implémentent des distributions effectives différentes. À chaque préfixe, il soustrait l'espérance sous le sampler du score de la politique entraînée afin de supprimer un terme de dérive identifié.
 :::
