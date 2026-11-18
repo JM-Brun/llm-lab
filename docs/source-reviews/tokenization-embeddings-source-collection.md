@@ -265,3 +265,12 @@ The source-to-knowledge workflow has now been retrospectively assessed against t
 ### Final assessment
 
 The source collection reinforces and qualifies the existing curriculum more than it expands it. Its strongest added value is a structured comparison of tokenizer design and multilingual evaluation, a precise distinction between static and contextual representations, and methodological caveats around embedding geometry and interactive visualizers. The right outcome is a traceable compilation of perspectives, not a larger sequence of overlapping lessons.
+
+
+## 8. Implementation audit — Hugging Face, tiktoken and minbpe (2026-11-18)
+
+The targeted static review is recorded in [Hugging Face / tiktoken / minbpe implementation audit](tokenization-implementations-huggingface-tiktoken-minbpe-2026-11.md). Its main distinction is between the configurable Hugging Face pipeline, tiktoken's production-oriented native BPE core plus educational Python module, and minbpe's readable Basic/Regex/GPT4 variants. The review inspected pinned repository revisions for tiktoken and minbpe; the Hugging Face published `latest` documentation remains mutable. No code was executed, no benchmark was run, and no compatibility claim was experimentally reproduced.
+
+**Disposition:** no additional extraction is warranted. The existing bilingual pages already cover the pipeline stages, byte-level BPE, special-token handling and training-versus-encoding distinction. The new dossier supplies precise implementation locators and a comparative synthesis rather than duplicating those claims in another extraction.
+
+**Graph links:** keep the canonical concept chain unchanged: `token` is linked to the bilingual tokenization pages; `token-embedding` is linked to the bilingual embedding-space pages; the computational graph connects `token-ids` → `embedding-lookup` → `token-embeddings`. The `token-ids` node now also links to the bilingual tokenization-strategies pages. No new scientific relation or concept is inferred from implementation code.
