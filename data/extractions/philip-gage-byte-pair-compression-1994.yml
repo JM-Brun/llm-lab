@@ -19,17 +19,17 @@ items:
     technical_assessment: {status: correct, rationale: "Sections, pseudocode, figures and C listings agree on block-local tables and stack-based expansion.", corroborating_sources: []}
     classification: {primary_theme: text-tokenization, tags: [topic:compression, method:byte-pair-encoding, topic:implementation], concept_ids: [token]}
     candidate_destinations: {pages: [en/tokenization-strategies, fr/tokenization-strategies], concepts: [token], route_ids: []}
-    disposition: retain-as-boundary
+    disposition: clarify
     disposition_rationale: "Makes the reversible compression format and its constraints explicit; do not conflate it with tokenizer training and inference."
   - id: philip-gage-byte-pair-compression-1994:reported-benchmark
     kind: result
     summary: "On WIN386.EXE (544,789 bytes), Gage reports default BPE output of 276,955 bytes, 55 seconds compression and 20 seconds expansion, compared with 299,118 bytes, 28 seconds and 27 seconds for 12-bit LZW."
     locator: {type: section, value: "§6 Results, Table 1, pp. 5-6", label: "Single-file BPE/LZW comparison"}
-    evidence: {kind: reported-experimental-result, confidence: qualified, scope: "One binary file on a 33 MHz 486DX-compatible PC, MS-DOS 5.0 and Borland C++ 3.0.", assumptions: [], limitations: ["Single historical binary-file experiment.", "Author explicitly states performance varies by file type.", "Not independently reproduced and not evidence about NLP tokenizer quality."]}
+    evidence: {kind: reported-experimental-result, confidence: context-dependent, scope: "One binary file on a 33 MHz 486DX-compatible PC, MS-DOS 5.0 and Borland C++ 3.0.", assumptions: [], limitations: ["Single historical binary-file experiment.", "Author explicitly states performance varies by file type.", "Not independently reproduced and not evidence about NLP tokenizer quality."]}
     technical_assessment: {status: qualified, rationale: "The table supports only the exact reported setup; no general superiority claim over LZW is warranted.", corroborating_sources: []}
     classification: {primary_theme: text-tokenization, tags: [topic:compression, method:byte-pair-encoding, topic:benchmark], concept_ids: [token]}
     candidate_destinations: {pages: [en/tokenization-strategies, fr/tokenization-strategies], concepts: [token], route_ids: []}
-    disposition: retain-as-boundary
+    disposition: cite
     disposition_rationale: "Historical empirical context only; do not generalize to modern compression or tokenization."
 canonical_mapping:
   proposed_concepts: []
