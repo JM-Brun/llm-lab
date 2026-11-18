@@ -26,6 +26,8 @@ tags: ["type:deep-dive", "destination:deepen", "topic:document-retrieval", "leve
 La **récupération documentaire** (*document retrieval* ou *information retrieval*) sélectionne des documents ou passages pertinents à partir d'une requête. Elle peut alimenter un moteur de recherche, un pipeline RAG ou une mémoire, mais elle ne garantit pas que les résultats seront transmis au modèle. Cette page se concentre sur l'ingestion, l'indexation, les familles de recherche, le classement et leur évaluation. La page sœur [RAG, mémoire et transmission au contexte](rag-memory-boundaries.qmd) suit le trajet de l'information retrouvée jusqu'à son éventuelle exploitation par le modèle.
 :::
 
+
+Cette ressource est un approfondissement facultatif et autonome : elle n'est pas un prérequis pour lire RAG ou l'ingénierie du contexte.
 ## Ce que vous saurez faire
 
 À la fin de cette page, vous pourrez :
