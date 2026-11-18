@@ -38,9 +38,7 @@ The scene is a hook, not a literal single-speaker generation. For calculations, 
 :::
 
 ::: {.callout-tip title="The one-minute mental model"}
-- **What the model computes:** given a context, a probability for every token that could come next. One token after another, with parameters that do not change while the model is in use.
-- **One computation, three uses:** generate (choose a token and append it to the context), score (read the probability given to a token that is already known), learn (compare the prediction with the expected token and update the parameters).
-- **Three words to keep apart:** an **LLM** is a language model trained at scale; the **Transformer** is a family of architectures; a **GPT** is a decoder-only Transformer pretrained to predict the next token.
+A model estimates a next-token distribution. It can be used to generate, score, or train: three distinct uses, not steps in one execution. An **LLM** is a model category, **Transformer** an architecture family, and **GPT** a decoder-only Transformer family.
 :::
 
 ::: {.callout-note .learning-outcomes}
@@ -67,17 +65,17 @@ The question “What have the Romans ever done for us?” is the **prefix**: the
 
 [Practise the calculation on an observed continuation](exercises/likelihood.qmd#ex-overview-likelihood-transfer).
 
-These values are illustrative, not outputs from a trained model. A real vocabulary often contains tens of thousands of tokens, and a row does not necessarily correspond to a whole word. The same values are reused across pages so that the calculations can be checked by hand.
+These values are illustrative. Real tokens can be word fragments; the same numbers are reused across pages so the calculations can be checked by hand.
 
 This is a **conditional distribution**: probabilities are computed given the prefix and sum to 1. If the decoding rule selects “They”, the token is appended to the context; the model then computes a new distribution conditioned on the extended prefix.
 
 Three terms are enough:
 
-- **Token:** the unit handled by the model. It is not necessarily a word; a tokenizer splits text and assigns an ID to each unit ([text and tokens](text-data.qmd)).
-- **Context:** the tokens available to predict the next one: the supplied text and, during generation, the tokens already produced.
-- **Parameters:** the learned numbers—especially weights and biases—that determine the computation. They remain fixed during ordinary inference.
+- **Token:** a unit handled by the model, not necessarily a whole word ([tokenization](text-data.qmd)).
+- **Context:** supplied tokens and tokens already generated.
+- **Parameters:** learned numbers that stay fixed during ordinary inference.
 
-The probability of a sentence is the product of the conditional probabilities of its successive tokens ([mathematical formulation of language modeling](language-modeling-math.qmd)). But a probable continuation is not necessarily true: the probability assigned to “They” says nothing about what the Romans actually did. Good prediction does not prove human-like understanding either ([limits of the training objective](llm-limits.qmd)).
+A sequence likelihood is the product of its successive conditional token probabilities ([mathematical formulation](language-modeling-math.qmd)). A probable continuation is not necessarily true: good prediction does not prove human-like understanding ([limits](llm-limits.qmd)).
 
 ## From text to a distribution {#text-to-distribution}
 
@@ -91,21 +89,18 @@ The diagram describes **one computation**, not a reading order. The canonical Un
 
 ## One computation, three uses {#one-computation-three-uses}
 
-Once the distribution has been computed, three different questions can be asked: do we want to produce a continuation, measure how expected a known continuation was, or improve the model from an expected continuation?
+A computed distribution can be used to produce a continuation, score a known sequence, or train the model.
 
 <!-- Desktop: three-column view; mobile: stacked view for readable labels. -->
 ![From context to three uses of the predictive distribution: generation, observed-target scoring, and training.](../images/llm-shared-prediction-uses-en.svg){.d-none .d-md-block #fig-llm-shared-prediction-uses fig-alt="The context passes through the model, which produces logits and then a probability distribution over the next token. The distribution is used to select a token during generation, measure the probability of an observed token during scoring, or calculate a loss and update parameters during training."}
 
 ![From context to the three uses of the predictive distribution: generation, scoring, and training, stacked vertically for readability on small screens.](../images/llm-shared-prediction-uses-en-mobile.svg){.d-md-none fig-alt="Mobile version of the diagram: context passes through the model to produce logits and probabilities. Three blocks then show generation, scoring, and training."}
 
-- **Generate:** the continuation is unknown. A rule selects a token, appends it to the context, and the computation repeats. Processing the initial prompt is *prefill*; producing tokens one by one is *decode* ([generation](generation.qmd)).
-- **Score:** the continuation is known. Read the probability assigned to each observed token; their product is the sequence **likelihood** ([likelihood](likelihood.qmd)).
-- **Learn:** the expected continuation is known and the parameters should change. The **loss** measures the gap to the target; **gradients** indicate how to adjust the parameters ([loss](loss.qmd), [gradients](gradients.qmd)). *Teacher forcing* builds the context from the actual tokens in the text ([training examples](training-examples.qmd)).
+- **Generate:** select a token, append it to context, and repeat; *prefill* processes the prompt, *decode* produces tokens ([generation](generation.qmd)).
+- **Score:** calculate the probability of an observed sequence, its **likelihood** ([likelihood](likelihood.qmd)).
+- **Learn:** calculate a **loss** and **gradients** to update parameters; *teacher forcing* uses the actual tokens ([loss](loss.qmd), [gradients](gradients.qmd), [training examples](training-examples.qmd)).
 
-For an observed token with probability 0.6, its **surprisal** is \( -\ln(0.6)\approx0.51 \) nats; [entropy](entropy.qmd) measures expected surprisal before the token is known. The linked pages cover the mathematical details. **Scoring is not evaluation:** scoring assigns a probability to a given sequence; evaluation compares results over a defined set of examples held out from training.
-
-Generating and scoring leave parameters unchanged; only learning updates them. The three uses share a computation, but they are not steps in one execution.
-
+For a token with probability 0.6, surprisal is \( -\ln(0.6)\approx0.51 \) nats; [entropy](entropy.qmd) is expected surprisal. Scoring is not evaluation: evaluation compares results on held-out examples. Only learning changes parameters.
 ## LLM, Transformer, GPT: three notions {#llm-transformer-gpt}
 
 **LLM** describes a language model trained at scale, not a particular architecture. No universal parameter threshold defines the category on its own: data and training compute matter too ([scaling laws](scaling-laws.qmd)).
@@ -157,7 +152,7 @@ Depending on the task, one can use a general model as is, supply context and ext
 
 ## From a model to a conversational system {#model-to-conversational-system}
 
-A conversational assistant is a **system built around a model**. The application formats messages, manages context, and may coordinate external tools. The system, user, and assistant roles belong to the message format, not to Transformer layers. A tool request produced by the model has not yet been executed: the application must validate arguments and permissions, call the tool, and return its result. Persistent memory also requires application-side storage and orchestration ([LLM evolution](llm-evolution.qmd#tool-using-systems), [Build path](build-path.qmd)).
+A conversational assistant is a **system built around a model**. The application formats messages, manages context, and coordinates tools. System, user, and assistant are message roles, not Transformer layers. A model-generated tool request has not run: the application validates it, calls the tool, and returns the result. Persistent memory also belongs to the application ([LLM evolution](llm-evolution.qmd#tool-using-systems), [Build](build-path.qmd)).
 
 ::: {.callout-tip title="Go further"}
 - **History and architecture:** [history of Transformers](transformer-history.qmd) and [architecture comparison](transformer-architectures.qmd).
@@ -174,67 +169,40 @@ Related exercises: [overview practice page](exercises/llm-overview.qmd).
 
 <!-- self-check-coverage: enforced -->
 <!-- self-check-covers: what-model-predicts -->
-1. **Does a probable continuation have to be true?** The model assigns 0.6 to “They”. What does that probability prove?
-
-<details><summary>Show the answer</summary>
-It gives a conditional probability in this example; it does not prove that the continuation is true.
-</details>
+1. **Probability 0.6: does that make the continuation true?**
+<details><summary>Answer</summary>No: it is conditional probability, not proof of truth.</details>
 
 <!-- self-check-covers: text-to-distribution -->
 2. **What happens after a token is selected?**
-
-<details><summary>Show the answer</summary>
-The token is appended to context; the model recomputes a distribution with the same parameters.
-</details>
+<details><summary>Answer</summary>It is appended to context, then the model recomputes.</details>
 
 <!-- self-check-covers: one-computation-three-uses -->
-3. **Are generating, scoring, and learning the same operation?**
-
-<details><summary>Show the answer</summary>
-No: generation and scoring leave parameters fixed; learning updates them.
-</details>
+3. **Are generation, scoring, and learning identical?**
+<details><summary>Answer</summary>No: only learning updates parameters.</details>
 
 <!-- self-check-covers: llm-transformer-gpt -->
 4. **Is every LLM a GPT?**
-
-<details><summary>Show the answer</summary>
-No: LLM describes a model category, Transformer an architecture family, and GPT a decoder-only Transformer family.
-</details>
+<details><summary>Answer</summary>No: LLM is a category; GPT is a Transformer model family.</details>
 
 <!-- self-check-covers: architecture-learning-use -->
-5. **Does fine-tuning necessarily change the architecture?**
-
-<details><summary>Show the answer</summary>
-No: it mainly adapts parameters; architecture and learning method are distinct dimensions.
-</details>
+5. **Does fine-tuning change the architecture?**
+<details><summary>Answer</summary>No: it adapts parameters.</details>
 
 <!-- self-check-covers: information-residence -->
-6. **Does information retrieved by RAG become part of the model parameters?**
-
-<details><summary>Show the answer</summary>
-No: it remains external and must be supplied in context or made available through an invoked tool.
-</details>
+6. **Does RAG retrieval put a document in the parameters?**
+<details><summary>Answer</summary>No: it remains external and must be supplied.</details>
 
 <!-- self-check-covers: transformers-changed -->
-7. **Did the Transformer make autoregressive generation parallel?**
-
-<details><summary>Show the answer</summary>
-No: positions can be processed in parallel during training, but new tokens are generated successively.
-</details>
+7. **Is autoregressive generation parallel?**
+<details><summary>Answer</summary>No: new tokens are produced successively.</details>
 
 <!-- self-check-covers: choosing-an-approach -->
-8. **Documentation changes every day. Must the model be retrained?**
-
-<details><summary>Show the reasoning</summary>
-Not necessarily: RAG can retrieve an updated source without changing parameters, provided retrieval and answer quality are measured.
-</details>
+8. **Must changing documentation require retraining?**
+<details><summary>Answer</summary>Not necessarily: RAG can retrieve the updated source.</details>
 
 <!-- self-check-covers: model-to-conversational-system -->
-9. **A message contains a tool request. Has the tool already run?**
-
-<details><summary>Show the answer</summary>
-No: the application must validate, execute the tool, and return its result.
-</details>
+9. **Has a tool run when the model requests it?**
+<details><summary>Answer</summary>No: the application must execute it and return the result.</details>
 :::
 
 {{< include ../includes/generated-suggested-route-en-llm-overview.qmd >}}
