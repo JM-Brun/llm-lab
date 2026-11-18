@@ -22,6 +22,8 @@ A missing value is not automatically an error. Rules marked conditional apply on
 |---|---|---|---|---|---|
 | Source identity | `id` stable kebab-case and unique | Every source | Error | Implemented | valid ID; malformed ID; duplicate |
 | Source identity | `source_type`, scan and integration states | Every source | Error | Implemented | each allowed value; unknown value |
+| Source collections | Registry status must be a string in the controlled lifecycle vocabulary | Every registry entry | Error | Implemented | active, archived, unknown string, non-string (list/null) |
+| Extraction collections | Extraction records cannot declare `collections`; membership belongs to the canonical source identity | Every extraction | Error | Implemented in PR #1315 | absent field accepted; any declared field rejected |
 | Bibliography | `title` non-empty; `creators` list of non-empty strings | When present; required for substantive sources after policy decision | Warning initially | Not fully enforced | absent, empty, malformed, multiple creators |
 | Bibliography | `canonical_url` absolute HTTP(S); DOI/other identifiers normalized | When present | Error for malformed supplied value; absence is not universally fatal | Not enforced | HTTP, HTTPS, relative URL, malformed DOI |
 | Bibliography | `language` BCP 47 | When present | Error for malformed supplied value; unknown remains explicit | Not enforced | en, fr, zh-Hans, invalid tag, null |

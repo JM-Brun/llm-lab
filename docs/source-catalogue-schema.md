@@ -39,7 +39,7 @@ Source-review collections are dossier identities, not subject tags, concepts, or
       - attention-mechanisms
       - interpretability
 
-The field is optional during the staged backfill. When present, it must be a list of unique IDs declared in the registry. Each registry dossier path must resolve to an existing repository file. Never infer membership from tags, themes, title words, extraction paths, page links, or semantic similarity. Do not duplicate collection membership in extraction files: resolve it only through `extraction.source_id -> source identity -> source.collections`.
+The field is optional during the staged backfill. When present, it must be a list of unique IDs declared in the registry. Each registry dossier path must resolve to an existing repository file. Never infer membership from tags, themes, title words, extraction paths, page links, or semantic similarity. Do not duplicate collection membership in extraction files: the validator rejects an extraction-level `collections` field. Resolve membership only through `extraction.source_id -> source identity -> source.collections`.
 
 The initial registry may be empty while dossiers are inventoried. This does not imply that no collections exist; it means no collection identities have yet been approved for machine-readable membership. Make the field mandatory only in a later migration after a human-reviewed backfill. During the distributed lineage migration, the field moves with canonical source identity to `data/sources/<source-id>.yml`; `data/sources.yml` remains a generated compatibility projection.
 
