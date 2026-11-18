@@ -1339,6 +1339,7 @@ async function runCase(testCase, caseIndex) {
         report.failures.push(pagePath + "/" + lang + "/" + label + "/" + theme + ": next-token explorer failed: " + error.message);
       }
 
+      // The shortened bilingual overview keeps three substantive comparison tables responsive; the probability example remains compact and is intentionally excluded.
       const responsiveTables = page.locator(".responsive-card-table table");
       const responsiveTableCount = await responsiveTables.count();
       if (responsiveTableCount !== 3) {
