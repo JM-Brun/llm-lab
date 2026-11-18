@@ -450,3 +450,25 @@ The current CI already runs the full pytest suite with two workers, uses path-sc
 **Definition of done:** every counted invariant traces to a documented property and executable test; the first ENG-02 value is reproducible from that mapping; tests run in the existing fast suite without a duplicate invocation; and mutation analysis, if adopted, is separately scoped, measured and non-blocking until proven reliable.
 
 No test additions, mutation tooling or CI workflow changes are claimed by this plan. Those changes remain pending the audit and evidence above.
+
+
+## 18. Test-audit implementation progress (2026-11-18)
+
+The focused audit is documented in [test-suite-kpi-audit-2026-11-18.md](audits/test-suite-kpi-audit-2026-11-18.md) and the first implementation batch is proposed in [PR #1275](https://github.com/JM-Brun/llm-lab/pull/1275).
+
+### Implemented in the PR branch; CI validation pending
+
+- `losses`: compute the log-partition with `numpy.logaddexp.reduce`, suppress only its harmless intermediate overflow at float64 extremes, and raise `ValueError` when a mathematically valid loss cannot be represented as finite float64. The gradient remains finite for the same extreme logits.
+- `test_losses.py`: add tests for opposite-sign extreme logits, a finite gradient, zero loss when the maximum logit is the target, and explicit rejection when the loss exceeds the finite float64 range.
+- `gpt_ops` tests: add constant-row LayerNorm, configurable epsilon placement, and 2D linear projection cases.
+- `attention`: make `causal_mask` reject non-integer and boolean lengths with the documented `ValueError`; extend causal-invariance testing over several future boundaries and use local seeded generators.
+
+These changes remain pending CI confirmation. They do not yet establish an ENG-02 baseline: the invariant inventory still needs review, and assertion sensitivity must be checked with deliberate mutations. Keep all tests in the existing pytest suite; no duplicate invocation, new dependency, or mutation-testing workflow has been added.
+
+### Remaining validation
+
+- [ ] Confirm CI test, lint, formatting, type-check and Quarto results on the final PR head SHA.
+- [ ] Review the extreme-loss contract and the precision behavior of `logaddexp.reduce` on supported NumPy versions.
+- [ ] Run the three targeted test modules and full suite in CI; compare duration against a comparable baseline.
+- [ ] Perform the planned manual mutations and record which assertions detect each fault.
+- [ ] Review and approve the ENG-02 denominator across the complete critical-invariant inventory before reporting a value.
