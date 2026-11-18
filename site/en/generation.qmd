@@ -31,7 +31,7 @@ By repeating four moves: predict, select, feed back, then continue or stop. This
 :::
 
 ::: {.callout-note title="Running example: prompt versus continuation"}
-**Prefix supplied:** “What have the Romans ever done for us?” The question from *Monty Python's Life of Brian* is already in the context when generation starts. In the film the answers are spoken by several characters, so the scene is an analogy, not a literal one-speaker trace.
+**Prefix supplied:** “What have the Romans ever done for us?” The question is already in the context when generation starts. The successive replies are spoken by several members of the group, so this is a context-and-response analogy, not a literal one-speaker generation trace.
 
 **Continuation followed here:** “They built roads between distant towns.” It is an original LLM Lab text, not a film quotation or a model output. Its tokens are appended afterwards, one at a time.
 :::
