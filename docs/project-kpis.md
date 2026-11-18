@@ -514,3 +514,17 @@ Critical Invariant Coverage reste **not measured**. La couverture de lignes de 9
 ### Prochaine mesure
 
 Ne pas introduire de nouveau job dans la CI rapide. Réaliser d'abord le pilote manuel documenté dans l'audit, puis décider si un outil de mutation limité et non bloquant apporte suffisamment de valeur. La durée de 79.48 s devient un point d'observation ; l'écart avec les 57.14 s d'un run antérieur n'est pas une preuve de régression, faute de conditions appariées.
+
+
+
+## 20. Reprise de l'audit ENG-02
+
+Le cahier opérationnel pour la suite est maintenant disponible dans
+[le cahier de reprise](audits/next-session-handoff-2026-11-18.md).
+Il précise le protocole de mutations, les commandes pytest ciblées, les domaines
+à auditer ensuite, les critères d'approbation du dénominateur et les conditions
+de mesure du coût CI.
+
+Statut inchangé : ENG-02 reste **not measured** jusqu'à l'exécution documentée
+des mutations et à l'approbation du périmètre et du dénominateur. La CI verte
+sur un SHA ne suffit pas à établir la sensibilité des tests.
