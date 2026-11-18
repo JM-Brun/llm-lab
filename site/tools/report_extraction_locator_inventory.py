@@ -74,9 +74,7 @@ def collect_inventory(root: Path = ROOT) -> dict[str, Any]:
             shape = _value_shape(value)
             shapes[f"{locator_type}::{shape}"] += 1
             if len(examples[f"{locator_type}::{shape}"]) < 3:
-                examples[f"{locator_type}::{shape}"].append(
-                    f"{path.name}:items[{index}]"
-                )
+                examples[f"{locator_type}::{shape}"].append(f"{path.name}:items[{index}]")
 
     return {
         "inventory": "extraction-locator-shapes",
