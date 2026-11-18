@@ -364,3 +364,89 @@ Automation can prioritize samples and detect anomalies, but must not claim to es
 - [ ] Retire indicators that do not change decisions or cannot be measured reliably.
 
 The KPI system is considered operational only when a reviewer can reproduce a displayed value from its cited evidence and commit, understand its limitations, and identify the decision it is intended to inform.
+
+
+## 17. Focused quality-measurement and test-strengthening work (2026-11-18)
+
+### 17.1 Decision: replace CI Reliability in the four-KPI dashboard
+
+CI Reliability remains useful operational telemetry, but it is generic delivery health. Keep it outside the four primary project-quality KPIs. Use **Critical Invariant Coverage** (existing catalogue KPI ENG-02) as the fourth KPI; *Mathematical Invariant Protection* may be used as its explanatory label. This reuses ENG-02 rather than creating a duplicate KPI.
+
+Operational definition:
+- Numerator: critical, reviewed invariants with at least one executable test whose assertion can detect a violation.
+- Denominator: all critical invariants in the reviewed inventory for the declared scope.
+- Report numerator/denominator, scope, inventory revision, test paths and commit. Do not infer invariant coverage from line coverage or test count.
+- Initial status: **not measured** until the inventory and mapping are reviewed. The existing 90% code-coverage threshold is not an invariant-coverage baseline or target.
+- Mutation testing is a supplementary diagnostic of test strength, not the KPI denominator and not a substitute for reviewing inventory completeness.
+
+The four-KPI dashboard is therefore Source-to-Knowledge Coverage, Knowledge Validation Status, Learning Page Metadata Coverage and Critical Invariant Coverage. CI Reliability remains a secondary operational indicator.
+
+### 17.2 Test audit — first scope
+
+Before adding tests, inspect existing tests and implementations in this order:
+1. **attention:** softmax normalization and shift invariance; causal-mask orientation and future-token exclusion; attention shape and numerical edge cases.
+2. **losses:** cross-entropy reference values, gradient finite-difference checks, extreme logits and documented input/target conventions.
+3. **gpt_ops:** layer-normalization convention and epsilon, GELU reference points, linear projection dimensions and deterministic behavior.
+4. **transformer_block and gpt:** residual/normalization ordering, shape propagation, causal behavior and small deterministic end-to-end outputs.
+5. **training_examples:** exact input/target one-token shift, window boundaries, stride and short-sequence behavior.
+6. **generate and decoding_filters:** deterministic decoding, stopping conditions, top-k/top-p boundaries and probability validity.
+7. **embedding_inspection and GPT-2 weight mapping:** index bounds, dimensions, mapping completeness and independent reference parity where practical.
+
+For each candidate invariant, record its statement, implementation location, existing tests, missing case, proposed minimal test and whether the assertion is independent of the implementation. Do not create a permanent second invariant registry unless the audit demonstrates a concrete need; begin with a small reviewed table in the audit report or this document.
+
+### 17.3 Test design rules
+
+- Prefer deterministic examples, parametrized boundary cases and mathematical properties over duplicated examples.
+- Use finite-difference gradient checks only on tiny arrays, with documented tolerances and numerically stable points.
+- Use metamorphic tests when a reliable relation is known (for example, softmax invariance to adding a constant to every logit).
+- Use independent reference values or implementations for high-value checks; avoid tests that merely reproduce production formulas line-for-line.
+- Keep tests offline, CPU-only, seeded and small. No model downloads, large checkpoints, network calls or benchmark-sized fixtures in the fast path.
+- Test error handling only where the function contract promises validation.
+- Make pedagogical conventions explicit: tensor shapes, axis meanings, normalization convention, epsilon, masking polarity and tolerance.
+
+### 17.4 CI integration without duplicate work
+
+The current CI already runs the full pytest suite with two workers, uses path-scoped domain validation, and keeps benchmark and locator-inventory jobs opt-in. Preserve this architecture:
+1. Add missing tests to the existing pytest suite; do not add a second pytest invocation that repeats them.
+2. Keep tiny deterministic invariant tests in the ordinary suite.
+3. Reuse existing path-scope logic for expensive reference dependencies; extend it only when a new test genuinely needs an optional dependency.
+4. Do not split fast tests into another CI job unless measurements show a net feedback-time benefit without duplicate setup or execution.
+5. Run mutation testing only on a small allowlist of critical modules, on a schedule or manual dispatch. Publish its report as an artifact and keep it advisory initially.
+6. Keep large benchmarks, full-corpus audits and clean-environment reproduction outside the per-PR fast path unless a change specifically requires them.
+7. Record wall-clock duration before and after CI changes. Revert or redesign additions that materially increase routine feedback time without commensurate risk reduction.
+
+### 17.5 Remaining work and acceptance criteria
+
+**A — Inventory existing tests**
+- [ ] Locate the actual test modules and map them to the seven implementation areas above.
+- [ ] Record current test commands, coverage configuration and existing property/reference tests.
+- [ ] Identify duplicates and gaps; do not infer missing tests from filenames alone.
+
+**B — Build the invariant-to-test map**
+- [ ] Select a small first batch of high-impact invariants: attention causality, softmax stability, cross-entropy gradient, input/target alignment and deterministic generation.
+- [ ] Review each invariant against the implementation contract and an independent mathematical/reference expectation.
+- [ ] Map each selected invariant to meaningful assertions and identify untested boundaries.
+- [ ] Establish a reviewed denominator for ENG-02 and calculate its first baseline.
+
+**C — Add only justified tests**
+- [ ] Add the highest-value missing tests to existing test modules.
+- [ ] Use deterministic, tiny fixtures and explicit tolerances.
+- [ ] Verify that tests fail under a deliberate local fault or equivalent mutation where practical.
+- [ ] Run relevant tests and the complete existing suite; retain failure diagnostics.
+
+**D — Add optional mutation diagnostics**
+- [ ] Evaluate a mutation-testing tool on one or two small modules before adding a dependency or workflow.
+- [ ] Check runtime, mutation equivalence/noise, reproducibility and report usefulness.
+- [ ] If worthwhile, add a scheduled/manual workflow with pinned dependencies and a narrow module allowlist.
+- [ ] Keep the result advisory until a stable baseline and actionable threshold exist.
+
+**E — Update KPI and CI documentation**
+- [ ] Promote ENG-02 / Critical Invariant Coverage to the fourth primary KPI.
+- [ ] Retain CI Reliability as a secondary operational measure.
+- [ ] Document inventory scope, numerator, denominator, evidence and review date.
+- [ ] Compare CI duration before/after; confirm that the PR fast path has no redundant test run.
+- [ ] Update the KPI PR and tracking issue with actual findings and measured results.
+
+**Definition of done:** every counted invariant traces to a documented property and executable test; the first ENG-02 value is reproducible from that mapping; tests run in the existing fast suite without a duplicate invocation; and mutation analysis, if adopted, is separately scoped, measured and non-blocking until proven reliable.
+
+No test additions, mutation tooling or CI workflow changes are claimed by this plan. Those changes remain pending the audit and evidence above.
