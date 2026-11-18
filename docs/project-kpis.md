@@ -478,7 +478,8 @@ These changes remain pending CI confirmation. They do not yet establish an ENG-0
 
 ### Remaining validation
 
-- [ ] Confirm CI test, lint, formatting, type-check and Quarto results on the corrected and extended PR head SHA. The initial pytest success applies only to the earlier SHA; subsequent commits have no reported Actions run yet.
+- [x] Confirm full pytest job on expanded SHA `737e93aec3be4a9577970bf801eca056e9f50224`: passed (661 tests, 98.19% coverage, 57.14 s); Quarto and secret scanning also passed.
+- [ ] Confirm the formatting correction on final head `133fe837c54101219899c3e04d2756ea3d7e8f83` and obtain successful Ruff format, lint and type-check results. The expanded SHA failed only `ruff format --check` because of one extra blank line; that whitespace was corrected, but no run for the corrected SHA was visible at update time.
 - [ ] Review the extreme-loss contract and the precision behavior of `logaddexp.reduce` on supported NumPy versions.
 - [ ] Run the three targeted test modules and full suite in CI; compare duration against a comparable baseline.
 - [ ] Perform the planned manual mutations and record which assertions detect each fault.
