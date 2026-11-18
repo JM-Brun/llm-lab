@@ -173,4 +173,3 @@ def test_row_kl_to_uniform_is_not_mutual_information() -> None:
     assert repeated_mi == pytest.approx(0.0)
     # This equality is incidental: the contrasting rows have a uniform marginal.
     assert contrasting_mi == pytest.approx(repeated_kl)
-
