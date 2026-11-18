@@ -46,6 +46,8 @@ Chaque entrée répond à une question plus précise : pourquoi un mécanisme fo
 
 **Question directrice :** quelles variantes changent la circulation de l'information ou la structure de calcul ?
 
+**Point d'entrée :** commencez par [l'attention à produit scalaire](scaled-dot-product-attention.qmd) ; les variantes et dérivations ci-dessous restent facultatives.
+
 - [Pourquoi mettre les scores d'attention à l'échelle ?](attention-score-scaling.qmd) — variance des produits scalaires sous hypothèses gaussiennes, concentration du softmax et limites du facteur $\sqrt{d_k}$.
 - [Représentations contextualisées : dépendances entre positions et couches](contextualized-representations-advanced.qmd) — formalisation du contexte accessible, des masques et de l'évolution des états cachés.
 - [Q/K/V : formulation mathématique et variantes](queries-keys-values-advanced.qmd) — équations par position, dimensions avec lot, géométrie des compatibilités, chemins de gradient et partage des têtes/projections.
@@ -94,6 +96,8 @@ Ces ressources sont complémentaires, pas interchangeables : les visualisations 
 
 **Question directrice :** comment les choix de représentation du texte influencent-ils les propriétés d'un système ?
 
+**Point d'entrée :** commencez par [Texte et données](text-data.qmd), qui suit le passage du texte aux identifiants de tokens.
+
 - [Unicode et représentation du texte](unicode-text.qmd) — couches de représentation des caractères et conséquences.
 - [Concevoir et évaluer un tokenizer](tokenizer-design-evaluation.qmd) — familles BPE, WordPiece et Unigramme, conception et protocole empirique.
 
@@ -102,6 +106,8 @@ La page [Stratégies de tokenisation](tokenization-strategies.qmd) du parcours p
 ## Outils mathématiques et géométrie {#outils-mathematiques-et-geometrie}
 
 **Question directrice :** quelles opérations et propriétés mathématiques permettent d'analyser les représentations et les calculs ?
+
+**Point d'entrée :** commencez par [l'espace des embeddings](embedding-space.qmd) ; les pages ci-dessous étendent cette première géométrie à d'autres objets et usages.
 
 - [Dossier spécialisé : embeddings et représentations vectorielles](embeddings-deep-dive.qmd) — panorama autonome des familles, objectifs, géométrie, évaluation et usages au-delà des LLM.
 - [Tenseurs](tensors.qmd) — dimensions, opérations et conventions.
@@ -148,6 +154,8 @@ Ces pages fournissent des outils d'analyse ; elles ne constituent pas un cours d
 
 **Question directrice :** comment relier distribution prédite, vraisemblance observée, fonction objectif et optimisation ?
 
+**Point d'entrée :** commencez par [la vraisemblance](vraisemblance.qmd) et [la loss](loss.qmd) ; les approfondissements relient ces objets sans les confondre.
+
 - [Formaliser mathématiquement la modélisation du langage](language-modeling-math.qmd) — factorisation autorégressive, entropie croisée et divergence KL.
 - [La chaîne mathématique de l'entraînement d'un LLM](mathematical-foundations.qmd) — des logits aux gradients, en distinguant les objets mathématiques.
 - [Centrage du score en RL hors politique](score-centering.qmd) — correction de la dérive du gradient lorsque les distributions du sampler et du trainer diffèrent.
@@ -158,6 +166,8 @@ Les pages canoniques du parcours principal restent propriétaires des définitio
 
 **Question directrice :** comment le modèle exploite-t-il le contexte, choisit-il ses sorties et mobilise-t-il ses ressources ?
 
+**Point d'entrée :** commencez par [la génération autorégressive](generation.qmd) ; les stratégies et coûts avancés viennent ensuite si votre question le nécessite.
+
 - [Stratégies avancées de décodage](decoding-strategies.qmd) — transformations de distribution et recherche de séquences.
 - [Complexité et parallélisme dans les LLM](llm-computational-complexity.qmd) — calcul, mémoire et parallélisme en entraînement, préremplissage et décodage.
 - [RAG, mémoire et récupération documentaire](rag-memory-boundaries.qmd) — distinguer stockage, indexation, recherche, transmission au contexte et exploitation par le modèle.
@@ -167,6 +177,8 @@ Le parcours principal présente la génération autorégressive et ses opératio
 ## Échelle et questions de recherche {#echelle-et-questions-de-recherche}
 
 **Question directrice :** quelles régularités empiriques et quelles affirmations sur les capacités sont soutenues par les données ?
+
+**Point d'entrée :** commencez par le [panorama des LLM](llm-overview.qmd) et ses [limites](llm-limits.qmd) avant d'examiner les résultats de recherche et les lois empiriques.
 
 - [De GPT-2 aux systèmes LLM contemporains](llm-evolution.qmd) — synthèse transversale des évolutions de l'échelle au post-entraînement, du raisonnement aux systèmes utilisant des outils.
 - [Lois d'échelle : paramètres, données et calcul](scaling-laws.qmd) — relations empiriques entre ressources d'entraînement et perte, et limites d'extrapolation.
