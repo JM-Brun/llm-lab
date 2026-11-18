@@ -513,3 +513,18 @@ def test_duplicate_collection_registry_ids_are_rejected(tmp_path: Path) -> None:
     errors = MODULE.validate_source_catalogue(tmp_path)
 
     assert any("duplicate collection ID 'same-collection'" in error for error in errors)
+
+
+def test_explicit_null_collection_membership_is_rejected(tmp_path: Path) -> None:
+    _corpus(tmp_path)
+    source_path = tmp_path / "data" / "sources.yml"
+    data = yaml.safe_load(source_path.read_text(encoding="utf-8"))
+    data["sources"][0]["collections"] = None
+    _write_yaml(source_path, data)
+
+    errors = MODULE.validate_source_catalogue(tmp_path)
+
+    assert any(
+        "sources[0].collections: expected a list of collection IDs" in error
+        for error in errors
+    )
