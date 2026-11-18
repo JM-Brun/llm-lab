@@ -11,12 +11,21 @@ pedagogical_model:
       - "Learning implications are editorial synthesis and do not reproduce the paper's full method or experiment."
   source_graph:
     nodes:
-      - {id: activation-site, kind: constraint, description: "The studied target-model activation site scopes the SAE decomposition."}
-      - {id: sae-dictionary, kind: representation, description: "A sparse autoencoder learns an overcomplete dictionary of latent directions from target-model activations."}
-      - {id: task-causal-result, kind: intermediate, description: "The paper reports feature-level causal analysis on its indirect-object-identification counterfactual task."}
+      - id: src-activation-site
+        kind: constraint
+        description: "The studied target-model activation site scopes the SAE decomposition."
+        locator: "Abstract: target-model activations and selected model/task setup"
+      - id: src-sae-dictionary
+        kind: representation
+        description: "A sparse autoencoder learns an overcomplete dictionary of latent directions from target-model activations."
+        locator: "Abstract: sparse autoencoders and overcomplete features"
+      - id: src-task-causal-result
+        kind: intermediate
+        description: "The paper reports feature-level causal analysis on its indirect-object-identification counterfactual task."
+        locator: "Abstract: counterfactual indirect-object-identification result"
     edges:
-      - {from: activation-site, type: scopes, to: sae-dictionary}
-      - {from: sae-dictionary, type: evaluated-in, to: task-causal-result}
+      - {from: src-activation-site, type: scopes, to: src-sae-dictionary}
+      - {from: src-sae-dictionary, type: evaluated-in, to: src-task-causal-result}
     interpretation: "This is a source-local reconstruction of the reported finding and its scope, not a canonical concept graph or an independent reproduction."
   learning_outcomes:
     - {status: inferred, outcome: "Distinguish the paper's technical object or result from its natural-language interpretation.", basis: "Abstract-level review; full-paper audit pending."}
@@ -25,9 +34,19 @@ pedagogical_model:
   teaching_route:
     - {order: 1, section: "Identify scope", function: establish-provenance, moves: ["Record model, publication version and experimental scope."]}
     - {order: 2, section: "Inspect finding", function: qualify-evidence, moves: ["Separate the reported result from assumptions, limitations and untested generalizations."]}
+  pedagogical_strengths:
+    - "Makes a specific reported research finding available for concept-level comparison."
   pedagogical_limits:
     - "Abstract-level source review only; full methods, appendices and code have not yet been audited."
     - "No model or SAE was run by LLM Lab; no result was independently reproduced."
+  comparison:
+    dossier: "docs/source-reviews/sparse-autoencoder-research-2023-2025.md"
+    canonical_graph: "data/concepts.yml and generated JSON-LD projection"
+    canonical_routes: [docs/learning-path.md, data/guided-route.yml]
+    decision: "Use as source-scoped evidence for the interpretability concept audit; do not promote source-specific terms directly into canonical concepts."
+    structures_kept_separate:
+      - "The paper's result remains distinct from the canonical concept definition."
+      - "The paper's experiment and model scope remain distinct from a universal claim."
 
 items:
   - id: cunningham-sparse-autoencoders-interpretable-features-2024:abstract-finding
