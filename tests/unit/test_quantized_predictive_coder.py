@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import runpy
 from fractions import Fraction
 from pathlib import Path
@@ -87,3 +88,17 @@ def test_probability_quantization_rejects_invalid_precision_and_distribution() -
             pass
         else:
             raise AssertionError("Invalid probability distribution was accepted")
+
+
+def test_cli_runs_and_reports_distinct_coding_costs(capsys: object) -> None:
+    module = _module()
+    module["main"]()
+    report = json.loads(capsys.readouterr().out)
+
+    assert report["experiment"] == "quantized-predictive-arithmetic-coding"
+    assert report["decoded_exactly"] is True
+    assert report["float_model_nll_bits"] > 0
+    assert report["quantized_model_ideal_bits"] > 0
+    assert report["payload_bits"] > 0
+    assert report["serialized_bytes"] >= report["payload_bytes"]
+    assert report["model_and_training_cost_transmitted"] is False
