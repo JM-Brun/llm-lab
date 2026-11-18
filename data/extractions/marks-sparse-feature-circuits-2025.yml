@@ -24,8 +24,8 @@ pedagogical_model:
         description: "A sparse feature circuit is a candidate subnetwork of SAE features and computational dependencies associated with a model behavior."
         locator: "Abstract and method framing"
     edges:
-      - {from: src-sae-feature-node, type: contributes-to, to: src-sae-error-node}
-      - {from: src-sae-error-node, type: produces, to: src-feature-circuit}
+      - {from: src-sae-feature-node, type: part-of, to: src-feature-circuit}
+      - {from: src-sae-error-node, type: part-of, to: src-feature-circuit}
     interpretation: "Source-local reconstruction only; it is not the canonical concept graph, a complete computational graph or an independent reproduction."
   learning_outcomes:
     - {status: inferred, outcome: "Distinguish the source's technical object, method, estimate, intervention and explanatory representation.", basis: "Editorial synthesis of the inspected source scope."}
