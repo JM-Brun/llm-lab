@@ -1,0 +1,128 @@
+schema_version: 1
+source_ids:
+  - cunningham-sparse-autoencoders-interpretable-features-2024
+  - bricken-towards-monosemanticity-2023
+  - gao-scaling-evaluating-sparse-autoencoders-2025
+  - chanin-feature-absorption-sparse-autoencoders-2025
+  - shu-survey-sparse-autoencoders-2025
+
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Official publisher/proceedings metadata and abstracts, plus the official Transformer Circuits report overview, inspected 2026-11-18."
+      - "Cross-source synthesis recorded in docs/source-reviews/sparse-autoencoder-research-2023-2025.md."
+    inferred_elements:
+      - "The candidate concept boundaries and learning implications are editorial synthesis, not a taxonomy prescribed identically by all five papers."
+      - "The evidence ladder distinguishes what abstracts establish from what requires full methods and reproduction."
+  source_graph:
+    nodes:
+      - {id: target-activation-site, kind: constraint, description: "A target model/checkpoint and a specified layer or hook define the activation space to which an SAE is applied."}
+      - {id: sparse-autoencoder, kind: mechanism, description: "An auxiliary encoder/decoder system learns a sparse code that reconstructs target-model activations."}
+      - {id: learned-latent-dictionary, kind: representation, description: "The SAE dictionary contains learned latent directions; these are not automatically native neurons or universal semantic concepts."}
+      - {id: per-example-feature-coefficient, kind: intermediate, description: "A feature activation is a coefficient/value for one input at a specified activation site."}
+      - {id: feature-quality-evaluation, kind: operation, description: "Evaluation spans distinct measures such as reconstruction, sparsity, dead latents, feature recovery, explanation and downstream effects."}
+      - {id: feature-splitting-absorption, kind: result, description: "Feature splitting and absorption show that dictionary granularity and coverage can be unstable under hierarchical structure."}
+      - {id: verbal-feature-explanation, kind: representation, description: "A human- or model-authored explanation is a hypothesis about selected evidence, not the learned latent itself."}
+    edges:
+      - {from: target-activation-site, type: scopes, to: sparse-autoencoder}
+      - {from: sparse-autoencoder, type: learns, to: learned-latent-dictionary}
+      - {from: learned-latent-dictionary, type: yields-values, to: per-example-feature-coefficient}
+      - {from: learned-latent-dictionary, type: evaluated-by, to: feature-quality-evaluation}
+      - {from: feature-quality-evaluation, type: reveals-limitations, to: feature-splitting-absorption}
+      - {from: learned-latent-dictionary, type: interpreted-by, to: verbal-feature-explanation}
+    interpretation: "This source-local graph is an editorial synthesis across five publications. Its relation labels are local to this extraction and are not canonical concept-graph relation types."
+
+  learning_outcomes:
+    - {status: inferred, outcome: "Distinguish a target-model activation vector, the SAE's learned dictionary direction and a per-example feature coefficient.", basis: "Cunningham et al.; Bricken et al.; Gao et al."}
+    - {status: inferred, outcome: "Explain why SAE feature identity is scoped to a target model and activation site plus the SAE dictionary/version.", basis: "Cross-source technical framing; full implementation-level audit pending."}
+    - {status: inferred, outcome: "Compare reconstruction, sparsity, dead-latent and feature-quality measures without collapsing them into one interpretability score.", basis: "Gao et al. abstract and Shu et al. survey abstract."}
+    - {status: inferred, outcome: "Search for expected-positive misses and feature-absorption counterexamples, not only strong positive examples.", basis: "Chanin et al. abstract."}
+    - {status: inferred, outcome: "Treat natural-language feature descriptions as hypotheses whose evidence and provenance must be inspected.", basis: "Cunningham et al.; Bricken et al.; Shu et al."}
+
+  assumed_prerequisites:
+    - {status: inferred, topic: "Transformer hidden states, residual-stream activations and layer/hook terminology.", basis: "The papers analyze internal model activations rather than only token embeddings."}
+    - {status: inferred, topic: "Basic vectors, linear maps, reconstruction losses and sparsity.", basis: "SAE encoder/decoder and sparse latent-code formulation."}
+
+  teaching_route:
+    - {order: 1, section: "Locate the target activation", function: establish-scope, moves: ["Record model/checkpoint, layer or hook, token position and preprocessing."]}
+    - {order: 2, section: "Separate SAE objects", function: distinguish-objects, moves: ["Distinguish encoder/decoder parameters, latent dictionary directions and per-example coefficients."]}
+    - {order: 3, section: "Evaluate the dictionary", function: compare-metrics, moves: ["Keep reconstruction, sparsity, dead latents, feature recovery and downstream effects separate."]}
+    - {order: 4, section: "Test coverage", function: seek-counterexamples, moves: ["Inspect expected-positive misses and hierarchical splitting/absorption."]}
+    - {order: 5, section: "Calibrate the explanation", function: distinguish-hypothesis-from-evidence, moves: ["Compare human-readable descriptions with underlying examples and source-specific methods."]}
+
+  pedagogical_limits:
+    - "This is an abstract-level source extraction, not a full-paper or independent reproduction."
+    - "The five works differ in model, task, SAE setup, metrics and publication type; their results must not be merged into one universal claim."
+    - "The Bricken work is a 2023 research report on a one-layer Transformer, not a peer-reviewed ICLR/NeurIPS proceedings paper."
+    - "Cunningham's reported causal analysis is scoped to its studied indirect-object-identification setup."
+    - "Gao et al. is the ICLR 2025 published version of a 2024 preprint."
+    - "Chanin et al. is the NeurIPS 2025 published version of a 2024 preprint; the published author list includes Satvik Golechha."
+    - "Shu et al. is a survey; claims must be traced to cited primary work before being used as primary evidence."
+    - "No SAE, feature, activation, attribution or causal intervention was run by this project."
+
+items:
+  - id: cunningham-sparse-autoencoders-interpretable-features-2024:dictionary-features
+    kind: result
+    summary: "The published ICLR 2024 paper reports sparse autoencoders that reconstruct model activations into an overcomplete set of sparsely activating features and a task-scoped causal feature analysis."
+    locator: {type: publication, value: "ICLR 2024 proceedings paper; arXiv:2309.08600", label: "Abstract and publication record"}
+    evidence:
+      kind: official-proceedings-abstract
+      confidence: well-supported
+      scope: "Abstract-level review; reported causal result is specific to the paper's indirect-object-identification experiment."
+      assumptions: ["Published ICLR 2024 version is the source of record; arXiv identifier records the earlier preprint."]
+      limitations: ["Full methods, task setup, causal controls and appendices have not yet been audited."]
+    disposition: integrate
+    disposition_rationale: "Supports the distinction between SAE latent directions, native neurons and task-specific causal evidence."
+
+  - id: bricken-towards-monosemanticity-2023:one-layer-dictionary-learning
+    kind: result
+    summary: "The 2023 Transformer Circuits research report applies sparse dictionary learning to activations of a one-layer Transformer and reports many interpretable feature directions."
+    locator: {type: section, value: "Overview and abstract; published 2023-10-04", label: "Research report"}
+    evidence:
+      kind: official-research-report
+      confidence: well-supported
+      scope: "Overview-level review; studied one-layer Transformer and report-specific SAE setup."
+      assumptions: ["The report's examples are interpreted within its exact model and training setup."]
+      limitations: ["Not a peer-reviewed proceedings paper; full technical sections and figure rights have not yet been audited."]
+    disposition: integrate
+    disposition_rationale: "Provides historical and technical context for overcomplete feature directions beyond individual neuron units."
+
+  - id: gao-scaling-evaluating-sparse-autoencoders-2025:scaling-and-metrics
+    kind: result
+    summary: "The ICLR 2025 paper studies SAE scaling, k-sparse training, dead latents and multiple feature-quality metrics."
+    locator: {type: publication, value: "ICLR 2025 proceedings; arXiv:2406.04093", label: "Abstract and publication record"}
+    evidence:
+      kind: official-proceedings-abstract
+      confidence: well-supported
+      scope: "Abstract-level review of the published 2025 paper and 2024 preprint."
+      assumptions: ["Metric names and definitions must be checked in the full paper before detailed reuse."]
+      limitations: ["No training code, released SAE, checkpoint or evaluation result was executed by LLM Lab."]
+    disposition: integrate
+    disposition_rationale: "Supports a multidimensional treatment of feature quality rather than a single interpretability score."
+
+  - id: chanin-feature-absorption-sparse-autoencoders-2025:absorption
+    kind: limitation
+    summary: "The NeurIPS 2025 paper reports feature absorption: hierarchical child features can absorb activations expected for a broader feature, exposing coverage failures despite apparent interpretability."
+    locator: {type: publication, value: "NeurIPS 2025 proceedings; arXiv:2409.14507; DOI 10.52202/085713-2755", label: "Abstract and publication record"}
+    evidence:
+      kind: official-proceedings-abstract
+      confidence: well-supported
+      scope: "Abstract-level review; published paper reports evaluation across hundreds of SAEs."
+      assumptions: ["The mechanism is interpreted within the hierarchy assumptions and experiments studied by the authors."]
+      limitations: ["Full metric, controls, datasets, supplementary analyses and reproduction remain pending."]
+    disposition: integrate
+    disposition_rationale: "Makes expected-positive misses and counterexamples a necessary part of feature evaluation."
+
+  - id: shu-survey-sparse-autoencoders-2025:field-taxonomy
+    kind: claim
+    summary: "The Findings of EMNLP 2025 survey organizes SAE research across architectures/training, input- and output-based explanations, structural and functional evaluation, and applications."
+    locator: {type: publication, value: "Findings of EMNLP 2025; DOI 10.18653/v1/2025.findings-emnlp.89; arXiv:2503.05613", label: "Survey abstract and publication record"}
+    evidence:
+      kind: official-acl-anthology-abstract
+      confidence: established
+      scope: "Abstract-level review of the published survey."
+      assumptions: ["The survey is used to navigate the literature, not as primary evidence for every empirical claim it cites."]
+      limitations: ["Full survey taxonomy and references have not yet been audited."]
+    disposition: cite
+    disposition_rationale: "Use as a map of the research field; trace individual empirical claims to their primary sources."
