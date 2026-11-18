@@ -40,9 +40,13 @@ def collect_inventory(root: Path = ROOT) -> dict[str, Any]:
     files = sorted(extraction_dir.glob("*.yml"))
     types: Counter[str] = Counter()
     shapes: Counter[str] = Counter()
+    scalar_shapes: Counter[str] = Counter()
     key_shapes: Counter[str] = Counter()
     examples: dict[str, list[str]] = defaultdict(list)
+    scalar_examples: dict[str, list[str]] = defaultdict(list)
     missing = 0
+    scalar = 0
+    unsupported = 0
     malformed = 0
     items_count = 0
     yaml_errors: list[dict[str, str]] = []
@@ -59,9 +63,21 @@ def collect_inventory(root: Path = ROOT) -> dict[str, Any]:
         for index, item in enumerate(data["items"]):
             items_count += 1
             locator = item.get("locator") if isinstance(item, dict) else None
-            if not isinstance(locator, dict):
+            record_path = f"{path.name}:items[{index}]"
+            if locator is None:
                 missing += 1
                 continue
+            if isinstance(locator, str):
+                scalar += 1
+                shape = _value_shape(locator)
+                scalar_shapes[shape] += 1
+                if len(scalar_examples[shape]) < 3:
+                    scalar_examples[shape].append(record_path)
+                continue
+            if not isinstance(locator, dict):
+                unsupported += 1
+                continue
+
             key_shapes[",".join(sorted(str(key) for key in locator))] += 1
             locator_type = locator.get("type")
             if not isinstance(locator_type, str) or not locator_type.strip():
@@ -74,23 +90,29 @@ def collect_inventory(root: Path = ROOT) -> dict[str, Any]:
             shape = _value_shape(value)
             shapes[f"{locator_type}::{shape}"] += 1
             if len(examples[f"{locator_type}::{shape}"]) < 3:
-                examples[f"{locator_type}::{shape}"].append(f"{path.name}:items[{index}]")
+                examples[f"{locator_type}::{shape}"].append(record_path)
 
     return {
         "inventory": "extraction-locator-shapes",
         "scope": "data/extractions/*.yml",
         "files_seen": len(files),
         "items_seen": items_count,
-        "items_without_locator_mapping": missing,
+        "items_without_locator": missing,
+        "items_with_scalar_locator": scalar,
+        "items_with_unsupported_locator_shape": unsupported,
+        "items_without_locator_mapping": missing + scalar + unsupported,
         "locators_with_missing_or_invalid_required_fields": malformed,
         "yaml_or_record_errors": yaml_errors,
         "locator_types": dict(sorted(types.items())),
         "locator_key_shapes": dict(sorted(key_shapes.items())),
-        "value_shapes_by_type": dict(sorted(shapes.items())),
-        "representative_record_paths": dict(sorted(examples.items())),
+        "mapping_value_shapes_by_type": dict(sorted(shapes.items())),
+        "scalar_locator_value_shapes": dict(sorted(scalar_shapes.items())),
+        "representative_mapping_record_paths": dict(sorted(examples.items())),
+        "representative_scalar_record_paths": dict(sorted(scalar_examples.items())),
         "interpretation": (
-            "Observed shape inventory only. It does not assert that a locator resolves, "
-            "that its source was inspected, or that a type-specific grammar is correct."
+            "Observed shape inventory only. Scalar locators are reported separately, not "
+            "assumed invalid. The report does not assert that any locator resolves, that its "
+            "source was inspected, or that a type-specific grammar is correct."
         ),
     }
 
