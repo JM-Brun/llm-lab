@@ -79,7 +79,7 @@ $$
 p_\theta(x_t\mid x_{<t}).
 $$
 
-The same token can therefore receive different probabilities depending on the prefix. In the running scribe example, use the illustrative next-token distribution $p=(0.6,0.2,0.1,0.1)$ for the tokens “Être”, “Vous”, “Oui”, and “Non”. If “Être” is the observed target, its probability is $0.6$; this is a teaching example, not a measured model output. The likelihood of a complete sequence combines conditional probabilities position by position; the product and its logarithm are covered in the [likelihood](likelihood.qmd) lesson. Tokenization also matters: probabilities are assigned to tokenized units, not directly to words or semantic propositions.
+The same token can therefore receive different probabilities depending on the prefix. In the Romans example, use the illustrative next-token distribution $p=(0.6,0.2,0.1,0.1)$ for “They”, “Aqueducts”, “Nothing”, and “Well”. If “They” is the observed first token of the continuation, its probability is $0.6$; this is a teaching example, not a measured model output. The likelihood of a complete sequence combines conditional probabilities position by position; the product and its logarithm are covered in the [likelihood](likelihood.qmd) lesson. Tokenization also matters: probabilities are assigned to tokenized units, not directly to words or semantic propositions.
 
 ## Temperature and decoding strategy
 
