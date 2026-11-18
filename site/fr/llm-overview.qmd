@@ -103,11 +103,13 @@ Pour une probabilité de 0,6, la surprise vaut \( -\ln(0,6)\approx0,51 \) nat ; 
 
 **Transformer** désigne une famille d'architectures. Elle comprend plusieurs configurations :
 
+::: {.responsive-card-table}
 | Famille | Fonctionnement général | Exemple |
 |---|---|---|
 | **Encodeur seul** | Construit des représentations contextualisées de l'entrée ; souvent utilisé pour comprendre ou classer | [BERT](https://arxiv.org/abs/1810.04805) |
 | **Encodeur-décodeur** | Produit une sortie conditionnée par une entrée, notamment pour les tâches séquence-à-séquence | [Transformer original](https://arxiv.org/abs/1706.03762), [T5](https://jmlr.org/papers/v21/20-074.html) |
 | **Décodeur seul** | Traite un contexte causal et prédit les tokens suivants | [GPT-3](https://arxiv.org/abs/2005.14165) |
+:::
 
 **GPT** (*Generative Pre-trained Transformer*) désigne une famille de Transformers décodeur seul pré-entraînés à prédire le prochain token. LLM Lab étudie un petit GPT de ce type, car son calcul peut être suivi et programmé de bout en bout ([comparaison des architectures](transformer-architectures.qmd), [parcours Build](build-path.qmd)). C'est un choix pédagogique : tous les LLM ne sont pas des GPT. Pour les termes et leurs définitions, voir le [glossaire des LLM et des Transformers](glossary.qmd).
 
@@ -115,11 +117,13 @@ Pour une probabilité de 0,6, la surprise vaut \( -\ln(0,6)\approx0,51 \) nat ; 
 
 Pour décrire un modèle, séparons trois questions :
 
+::: {.responsive-card-table}
 | Dimension | Question | Exemples |
 |---|---|---|
 | **Architecture** | Comment le réseau transforme-t-il l'information ? | Encodeur seul, encodeur-décodeur, décodeur seul |
 | **Apprentissage** | Comment les paramètres sont-ils obtenus ou adaptés ? | Pré-entraînement, fine-tuning, SFT, optimisation par préférences |
 | **Utilisation** | Que fait-on du modèle, paramètres fixés ? | Génération, classification, scoring, ICL, RAG, outils |
+:::
 
 Le **pré-entraînement** apprend des régularités à partir de grands corpus. Pour un GPT, les tokens du texte servent de cibles : cet apprentissage est généralement *auto-supervisé*. Le modèle obtenu avant adaptation est souvent appelé *base model*. Un **modèle de fondation** (*foundation model*) est une notion plus large : un modèle entraîné à grande échelle sur des données générales et adaptable à de nombreuses tâches, parfois au-delà du langage ([Bommasani et al., 2021](https://crfm.stanford.edu/report)). Le post-entraînement peut ensuite adapter le comportement ou les paramètres, mais il n'est pas obligatoire ([post-entraînement](post-training.qmd)).
 
@@ -127,12 +131,14 @@ Le **pré-entraînement** apprend des régularités à partir de grands corpus. 
 
 Une réponse peut mobiliser des informations qui ne sont pas conservées au même endroit. Il faut distinguer leur **stockage**, leur **accès** et leur **exploitation**.
 
+::: {.responsive-card-table}
 | Emplacement | Exemples | Comment cela peut influencer la réponse |
 |---|---|---|
 | **Paramètres appris** | Régularités et représentations acquises au pré-entraînement ou au post-entraînement | Ils participent au calcul, mais ne constituent pas une base documentaire consultable |
 | **Contexte actif** | Instructions, messages, exemples, documents et résultats d'outils effectivement transmis | Le modèle conditionne sa prédiction sur ce contenu, qui peut changer d'une requête à l'autre |
 | **Sources externes** | Documents, bases et index mobilisés par un système RAG ou un outil | L'information n'influence la réponse que si elle est retrouvée puis rendue accessible au modèle |
 | **État d'exécution** | Cache KV calculé pendant l'inférence | Il évite certains recalculs et accélère le décodage ; ce n'est ni un apprentissage ni une mémoire documentaire |
+:::
 
 Le **RAG** recherche des informations externes et peut les ajouter au contexte ; la recherche seule ne suffit pas. Un document peut être stocké, indexé ou récupéré sans être transmis. L'[ingénierie du contexte](context-engineering.qmd) organise la sélection et la structuration de l'entrée ; [RAG et mémoire](rag-memory-boundaries.qmd) suit le cycle de l'information ; [récupération documentaire](document-retrieval.qmd) détaille les méthodes de recherche et de classement. L'**ICL** décrit ce que le modèle fait avec des exemples présents dans le contexte ([ICL](in-context-learning.qmd)).
 
