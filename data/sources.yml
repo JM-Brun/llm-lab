@@ -1152,10 +1152,10 @@ sources:
     canonical_url: "https://arxiv.org/abs/2104.09864"
     publisher: "arXiv"
     publication_date: "2021"
-    updated_date: null
+    updated_date: "2023-11-08"
     language: en
     version: "Preprint"
-    revision: null
+    revision: "arXiv v5"
     licence: {identifier: null, url: null, status: unknown}
     reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
     classification:
