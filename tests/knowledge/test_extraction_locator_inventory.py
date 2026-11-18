@@ -20,21 +20,25 @@ def _write(path: Path, value: object) -> None:
     path.write_text(yaml.safe_dump(value, sort_keys=False), encoding="utf-8")
 
 
-def test_inventory_counts_locator_types_and_shapes_without_exposing_values(tmp_path: Path) -> None:
+def test_inventory_separates_missing_scalar_and_mapping_locators(tmp_path: Path) -> None:
     _write(
         tmp_path / "data" / "extractions" / "sample.yml",
         {
             "schema_version": 1,
             "source_id": "sample-source",
             "items": [
-                {"locator": {"type": "url", "value": "https://example.org/paper"}},
-                {"locator": {"type": "timestamp", "value": "01:23:45"}},
-                {"locator": {"type": "page", "value": "12-14"}},
-                {"locator": {"type": "page", "value": "12\u201314"}},
-                {"locator": {"type": "section", "value": "Section 2.1"}},
-                {"locator": {"type": "custom", "value": "opaque"}},
-                {"locator": {"type": "url", "value": ""}},
+                {"locator": { "type": "url", "value": "https://example.org/paper" }},
+                {"locator": { "type": "timestamp", "value": "01:23:45" }},
+                {"locator": { "type": "page", "value": "12-14" }},
+                {"locator": { "type": "page", "value": "12\u201314" }},
+                {"locator": { "type": "section", "value": "Section 2.1" }},
+                {"locator": { "type": "custom", "value": "opaque" }},
+                {"locator": { "type": "url", "value": "" }},
+                {"locator": "Section 3.2: method and results"},
+                {"locator": "01:23:45"},
                 {"summary": "No locator"},
+                {"locator": None},
+                {"locator": ["unexpected", "shape"]},
             ],
         },
     )
@@ -42,12 +46,18 @@ def test_inventory_counts_locator_types_and_shapes_without_exposing_values(tmp_p
     report = MODULE.collect_inventory(tmp_path)
 
     assert report["files_seen"] == 1
-    assert report["items_seen"] == 8
-    assert report["items_without_locator_mapping"] == 1
+    assert report["items_seen"] == 12
+    assert report["items_without_locator"] == 2
+    assert report["items_with_scalar_locator"] == 2
+    assert report["items_with_unsupported_locator_shape"] == 1
+    assert report["items_without_locator_mapping"] == 5
     assert report["locators_with_missing_or_invalid_required_fields"] == 1
     assert report["locator_types"]["url"] == 2
-    assert report["value_shapes_by_type"]["url::http-url"] == 1
-    assert report["value_shapes_by_type"]["timestamp::timestamp-like"] == 1
-    assert report["value_shapes_by_type"]["page::page-number-like"] == 2
-    assert report["value_shapes_by_type"]["section::section-like"] == 1
+    assert report["mapping_value_shapes_by_type"]["url::http-url"] == 1
+    assert report["mapping_value_shapes_by_type"]["timestamp::timestamp-like"] == 1
+    assert report["mapping_value_shapes_by_type"]["page::page-number-like"] == 2
+    assert report["mapping_value_shapes_by_type"]["section::section-like"] == 1
+    assert report["scalar_locator_value_shapes"]["section-like"] == 1
+    assert report["scalar_locator_value_shapes"]["timestamp-like"] == 1
     assert "https://example.org/paper" not in str(report)
+    assert "Section 3.2: method and results" not in str(report)
