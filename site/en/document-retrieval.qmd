@@ -1,0 +1,129 @@
+---
+title: "Document retrieval: indexing, retrieval, and ranking"
+subtitle: "How to select relevant documents and passages, and evaluate retrieval quality"
+description-meta: "Understand ingestion, indexing, retriever families, visual search, ranking, and document-retrieval evaluation."
+lang: en
+keywords: ["type:deep-dive", "destination:deepen", "topic:document-retrieval", "level:advanced", "language:en", "status:published"]
+---
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/document-retrieval"
+summary: "Introduces document-retrieval stages, major retriever families, ColPali, and ranking-evaluation criteria."
+scope: "Covers document retrieval design and evaluation, from ingestion and indexing to candidate generation and ranking; model-context transmission and RAG/memory architectures remain in their dedicated page."
+domain: "inference-efficiency"
+purpose: "Readers should compare retrieval families, distinguish candidate recall from ranking quality, and identify trade-offs among lexical, vector, hybrid, and visual search."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: ["en/deepen"]
+  children: []
+related: ["en/rag-memory-boundaries", "en/context-engineering", "en/in-context-learning"]
+tags: ["type:deep-dive", "destination:deepen", "topic:document-retrieval", "level:advanced", "language:en", "status:published"]
+-->
+
+::: {.chapter-lead}
+**Document retrieval** or **information retrieval** selects documents or passages relevant to a query. It can power a search engine, a RAG pipeline, or a memory system, but it does not guarantee that results will be supplied to the model. This page focuses on ingestion, indexing, retrieval families, ranking, and their evaluation. Its sibling page [RAG, memory, and context transmission](rag-memory-boundaries.qmd) follows retrieved information through to its possible use by the model.
+:::
+
+## What you should be able to do
+
+By the end of this page, you should be able to:
+- describe the stages that turn a document collection into retrievable results;
+- distinguish lexical, dense, learned-sparse, late-interaction, hybrid retrieval, and reranking;
+- explain why a reranker cannot compensate for relevant candidates that were never retrieved;
+- interpret candidate recall, ranking quality, latency, and cost separately;
+- explain what page-level visual retrieval adds and what it does not replace.
+
+## 2. Document retrieval: finding is not supplying
+
+**Document retrieval** or **information retrieval** selects documents or passages relevant to a query. It can power a conventional search engine, a RAG pipeline, or a memory system.
+
+A typical pipeline includes:
+1. **Ingestion and parsing:** extract text, structure, and metadata from PDFs, web pages, repositories, and databases.
+2. **Normalization and chunking:** create retrievable units (*chunks*) while preserving headings, tables, references, and links to parent documents where possible.
+3. **Indexing:** build a lexical index, vector representations, filterable metadata, or a combination.
+4. **Query formulation:** optional rewriting, term expansion, or subqueries.
+5. **Search:** lexical matching, dense similarity, structured filters, or hybrid retrieval.
+6. **Ranking:** fusion, reranking, deduplication, and passage selection.
+7. **Return:** provide excerpts, identifiers, scores, and metadata to the application.
+
+
+### Retriever families: alternatives, not a single ladder
+
+The first-stage retriever and the second-stage ranker are separate design choices. Candidate generation may be lexical, dense, learned sparse, hybrid or structured; reranking is optional and only reorders candidates already found.
+
+| Family | Representation and retrieval | Useful when | Main trade-off |
+|---|---|---|---|
+| Lexical (e.g. BM25) | Terms and inverted index | Exact names, identifiers, rare terms, auditable matches | Vocabulary mismatch and paraphrases |
+| Dense bi-encoder | One vector per query/document; nearest-neighbour search | Semantic paraphrases and fast reusable document indexing | Fine-grained token evidence can be compressed into one vector |
+| Learned sparse (e.g. SPLADE) | Sparse learned term weights; inverted-index retrieval | Need lexical matching plus learned expansion | Larger/weighted sparse postings and model-specific costs |
+| Late interaction (e.g. ColBERT) | Multiple contextual token vectors; MaxSim | Fine-grained matching with offline document encoding | Larger multi-vector index and more complex serving |
+| Cross-encoder reranker | Joint query–candidate processing | Reordering a small shortlist with richer pairwise evidence | Cost grows with number and length of candidate pairs |
+
+A hybrid system can combine complementary first-stage retrievers before a reranker, but fusion is an empirical choice, not a guaranteed improvement. BEIR's heterogeneous evaluation finds BM25 to be a robust baseline and reports strong average effectiveness for reranking and late interaction alongside higher computational costs. See [BEIR (Thakur et al., 2021)](https://arxiv.org/abs/2104.08663), [SPLADE (Formal et al., 2021)](https://arxiv.org/abs/2107.05720), and [ColBERT (Khattab & Zaharia, 2020)](https://arxiv.org/abs/2004.12832).
+
+**Evaluation must separate candidate recall from ordering quality.** A reranker cannot recover relevant passages absent from its input shortlist. Report Recall@k for candidate generation and ranking measures such as MRR@k or nDCG@k after reranking, alongside latency, index size and cost. Evaluate on more than one domain when out-of-domain use matters.
+
+Search is **not necessarily vector-based**. BM25 and inverted indexes are lexical; dense embeddings support similarity search; SQL and metadata filters provide exact constraints. RAG therefore does not always require a vector database or embeddings.
+
+
+### When the document is visual: ColPali and page-level retrieval
+
+Text extraction is not always the best first representation. Scientific papers, scanned PDFs, forms, tables and infographics can carry important evidence in layout, diagrams, charts and spatial relationships. A conventional pipeline may require OCR, layout detection, table extraction, captioning and chunking before text retrieval.
+
+**ColPali** takes a different route: a vision-language model encodes each document page image into multiple contextual patch vectors. A textual query is encoded into token vectors, then a ColBERT-style late-interaction score matches query tokens to page patches. This can preserve visual evidence that OCR/chunking may miss, while avoiding a long preprocessing chain.
+
+```{mermaid}
+flowchart TD
+  A[PDF page image] --> B[OCR + layout + table / figure extraction]
+  B --> C[Text chunks and captions]
+  C --> D[Lexical / dense text index]
+  D --> E[Retrieve and rank pages]
+  Q[Text query] --> E
+  A2[PDF page image] --> V[Vision-language page encoder]
+  V --> M[Multi-vector patch index]
+  Q --> QE[Query token encoder]
+  M --> LI[Late interaction / MaxSim]
+  QE --> LI
+  LI --> R[Rank relevant pages]
+  E --> H[Selected evidence]
+  R --> H
+  H --> G[Answer from page evidence]
+```
+
+The [ColPali paper's Figure 1](https://proceedings.iclr.cc/paper_files/paper/2025/file/99e9e141aafc314f76b0ca3dd66898b3-Paper-Conference.pdf) visually compares the standard OCR/layout/captioning route with page-image encoding; Figure 3 also shows query-token-to-image-patch relevance heatmaps. These are useful external visual references, not figures reproduced here.
+
+**The result is not “vision always wins”.** On the paper's ViDoRe benchmark, ColPali reports a mean nDCG@5 of 81.3 versus 67.0 for the strongest listed text pipeline (Unstructured + captioning with BGE-M3) in its comparison; this is a benchmark-specific result, not a universal ranking. The same paper reports approximately 257.5 KB of vectors per page, around 30 ms query encoding, and discusses memory/latency trade-offs and token pooling. Its results also show that generic contrastive vision encoders do not automatically become good document retrievers: task-specific training and multi-vector alignment matter.
+
+Use this family when visual structure is part of the evidence and page-level retrieval is acceptable. Keep text extraction or structured parsing when downstream systems need exact text spans, accessible text, precise citations, table values or deterministic filtering. A hybrid system can retrieve pages visually and then extract or verify the relevant region before generation.
+
+Primary reference: [Faysse et al. (ICLR 2025), ColPali: Efficient Document Retrieval with Vision Language Models](https://proceedings.iclr.cc/paper_files/paper/2025/hash/99e9e141aafc314f76b0ca3dd66898b3-Abstract-Conference.html). For the short visual overview, see Daily Dose's [Visual Guide to Bi-encoders, Cross-encoders and ColBERT](https://blog.dailydoseofds.com/p/visual-guide-to-bi-encoders-cross).
+
+A document embedding is a numerical representation useful for search, not the source text. The search engine uses it to locate candidates; the system must then return relevant content or make it accessible to the model. Chunking matters: short chunks lose context, long chunks dilute information and consume more tokens, and arbitrary boundaries may separate a claim from its caveats.
+
+### Implementation example: vector search
+
+The [Hugging Face semantic-search tutorial with FAISS](https://huggingface.co/learn/llm-course/en/chapter5/6) builds a small search engine from embeddings of GitHub issue comments, a nearest-neighbour index, and a query. It illustrates one implementation of the “index → search → select” part of the RAG diagram, not a complete RAG system.
+
+Vector similarity does not guarantee factual relevance or answer quality. The embedding model, pooling, normalization, metric, document chunking, filters, and evaluation protocol must fit the task. At minimum, evaluate retrieval quality separately from generation quality.
+
+
+### Further reading: choosing a ranking model
+
+The bi-encoder / cross-encoder pattern gives a concrete example of two-stage ranking: reusable embeddings generate candidates, then a joint score for each pair reorders a short list. This is an option, not a requirement: lexical, hybrid, or structured retrieval can also generate candidates, and a cross-encoder is useful only when its relevance gain justifies its cost.
+
+- Avi Chawla, [Bi-encoders and Cross-encoders — Part 1](https://www.dailydoseofds.com/bi-encoders-and-cross-encoders-for-sentence-pair-similarity-scoring-part-1/) — background and motivation; the central technical section is paywalled.
+- Avi Chawla, [AugSBERT — Part 2](https://www.dailydoseofds.com/augsbert-bi-encoders-cross-encoders-for-sentence-pair-similarity-scoring-part-2/) — architectural distinction and overview of hybrid training; later details are partially paywalled.
+- Avi Chawla, [Foundations of RAG systems](https://www.dailydoseofds.com/a-crash-course-on-building-rag-systems-part-1-with-implementations/) — pedagogical example of a dense pipeline with chunking, embeddings, approximate retrieval, and reranking; later sections are partially inaccessible.
+
+
+## Pour pratiquer
+
+Les exercices [RAG, mémoire et frontières de transmission](exercises/rag-memory-boundaries.qmd) restent une pratique intégratrice de bout en bout : ils aident à relier la qualité de la recherche à la transmission et à l'exploitation des résultats. Ils ne constituent pas un atelier spécialisé de classement documentaire.
+
+For the full information lifecycle, see [RAG, memory, and context transmission](rag-memory-boundaries.qmd).
+
+::: {.language-switch}
+[Version française](../fr/document-retrieval.qmd)
+:::
