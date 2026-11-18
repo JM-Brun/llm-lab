@@ -250,7 +250,25 @@ La provenance des valeurs sensibles de métadonnées (dates, versions, droits) e
 
 **À faire évoluer :** la traçabilité champ par champ des métadonnées sensibles, la provenance des arêtes conceptuelles, les contrôles de qualité de l'extraction, l'observabilité du pipeline et la migration distribuée lorsque son bénéfice est démontré.
 
-## 8. Limites de cet audit
+## 8. Découverte inter-domaines et mémoire des décisions
+
+L'audit du cycle source → connaissance ne suffit pas, à lui seul, à garantir que le corpus permette de découvrir des relations entre plusieurs centaines de sujets. Le graphe conceptuel existant décrit des relations typées entre concepts ; il ne doit pas être confondu avec un graphe exhaustif de toutes les sources, pages, ressources, expériences et décisions.
+
+Le suivi transversal est désormais explicité dans [#1233 — découverte inter-domaines et traçabilité des décisions](https://github.com/JM-Brun/llm-lab/issues/1233), en coordination avec #512 (interopérabilité et provenance des affirmations), #416 (sémantique du graphe conceptuel) et #1211 (réconciliation du corpus).
+
+Les exigences structurantes sont les suivantes :
+
+- **Un modèle multi-structures, pas un registre parallèle :** relier les identifiants canoniques existants (source/version, item extrait, concept, domaine, page, ressource, expérience, nœud computationnel, décision) sans recopier leurs définitions.
+- **Des relations qualifiées par leur fonction :** distinguer assertion sémantique, preuve, contradiction, corroboration indépendante, citation bibliographique, classification, navigation, représentation, dépendance d'implémentation et relation pédagogique.
+- **Des chemins de preuve explicables :** une relation fondée sur une source doit pouvoir remonter à l'item extrait, au locator, à la version inspectée et aux limites de l'inspection. Une relation conceptuelle directe peut conserver une rationale explicite lorsque la preuve bibliographique n'est pas le bon fondement.
+- **Des suggestions non promues automatiquement :** cooccurrence, tags partagés, proximité de pages ou citation commune peuvent proposer une piste de recherche, jamais prouver une relation. Les candidats doivent exposer leur raison et passer une revue avant d'intégrer le graphe canonique.
+- **Une mémoire des décisions proportionnée :** conserver Git, issues, PR et rationales existantes comme historique primaire ; ne structurer que les décisions durables qui doivent être retrouvées depuis les entités affectées. Enregistrer alternatives, motifs, portée, preuves, statut et conditions de réexamen.
+- **Des projections exploratoires séparées des parcours :** les requêtes de découverte peuvent traverser domaines et concepts, mais ne deviennent ni un nouvel ordre d'apprentissage ni une seconde navigation pédagogique.
+- **Une scalabilité mesurée :** tester génération incrémentale, invalidation sélective, coût de validation et conflits à 1k/5k/10k sources avant de choisir une base de données ou un moteur de graphe. YAML reste le format canonique tant qu'une mesure ne justifie pas autre chose.
+
+Les premières requêtes de référence doivent couvrir au minimum : ponts entre domaines, explications concurrentes, corroborations/contradictions indépendantes, pages ou concepts insuffisamment étayés, chemin complet vers la preuve et décisions qui affectent une page. Chaque résultat devra afficher le chemin et ses limites, pas seulement un score de similarité.
+
+## 9. Limites de cet audit
 
 - Audit documentaire et examen des contrats et états GitHub disponibles ; les commandes de validation n'ont pas toutes été réexécutées localement pendant cet audit.
 - Le rapport de couverture est un instantané lié à un commit de PR, pas un décompte garanti du HEAD actuel de `main`.
