@@ -17,7 +17,7 @@ pedagogical_model:
       - {id: src-data-curation, kind: process, description: "Filtering and preparing raw web data into a usable training corpus.", locator: "00:01:00"}
       - {id: src-tokenization, kind: representation-process, description: "Converting text into discrete token IDs from a finite vocabulary.", locator: "00:07:47"}
       - {id: src-neural-network, kind: architecture, description: "A parameterized neural network mapping token sequences to next-token scores.", locator: "00:14:27-00:26:01"}
-      - {id: src-kind: architecture, description: "Transformer computation underlying the GPT-family model discussed.", locator: "00:20:11"}
+      - {id: src-transformer, kind: architecture, description: "Transformer computation underlying the GPT-family model discussed.", locator: "00:20:11"}
       - {id: src-next-token-objective, kind: training-objective, description: "Learning statistical regularities by predicting the next token in a sequence.", locator: "00:31:09"}
       - {id: src-pretraining, kind: learning-stage, description: "Learning general language-model parameters from large-scale text.", locator: "00:01:00-00:59:23"}
       - {id: src-base-model, kind: model-state, description: "A pretrained model before conversational post-training.", locator: "00:31:09-00:59:23"}
