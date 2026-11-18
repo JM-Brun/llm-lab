@@ -4184,7 +4184,7 @@ sources:
         inspected_scope: ["Official article outline and indexed sections on experts, routing, capacity and load balancing"]
         limitations: ["Full article equations and linked primary papers not audited.", "No independent reproduction of routing examples.", "Figure reuse rights not established."]
     related:
-      pages: [fr/transformer-architectures, en/transformer-architectures, fr/en/transformer]
+      pages: [fr/transformer-architectures, en/transformer-architectures, fr/transformer]
       concepts: []
       audit_records: [docs/source-reviews/visual-learning-resources-2026-11.md]
 
