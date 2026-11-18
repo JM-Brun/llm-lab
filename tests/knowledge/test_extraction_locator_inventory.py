@@ -69,6 +69,7 @@ def test_inventory_separates_missing_scalar_and_mapping_locators(tmp_path: Path)
     assert "https://example.org/paper" not in str(report)
     assert "Section 3.2: method and results" not in str(report)
 
+
 def test_value_shape_recognizes_timestamp_ranges() -> None:
     assert MODULE._value_shape("01:23:45") == "timestamp-like"
     assert MODULE._value_shape("05:41–10:22") == "timestamp-like"
