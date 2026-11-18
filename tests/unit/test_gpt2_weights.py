@@ -134,16 +134,36 @@ def test_rejects_untied_output_head() -> None:
         _loaded(state)
 
 
+def _model_parameter_snapshot(model: GPT) -> dict[str, np.ndarray]:
+    snapshot = {
+        f"model.{name}": value.copy()
+        for name, value in vars(model).items()
+        if isinstance(value, np.ndarray)
+    }
+    for i, block in enumerate(model.blocks):
+        snapshot.update(
+            {
+                f"blocks.{i}.{name}": value.copy()
+                for name, value in vars(block).items()
+                if isinstance(value, np.ndarray)
+            }
+        )
+    return snapshot
+
+
 def test_rejects_missing_parameter_without_modifying_model() -> None:
     state = _gpt2_state_dict(TINY)
-    del state["h.1.mlp.c_fc.bias"]
+    del state["h.1.mlp.c_proj.bias"]
     model = GPT(TINY)
-    before = model.token_embedding.copy()
+    before = _model_parameter_snapshot(model)
 
-    with pytest.raises(ValueError, match=r"h\.1\.mlp\.c_fc\.bias"):
+    with pytest.raises(ValueError, match=r"h\\.1\\.mlp\\.c_proj\\.bias"):
         load_gpt2_state_dict(model, state)
 
-    np.testing.assert_array_equal(model.token_embedding, before)
+    after = _model_parameter_snapshot(model)
+    assert after.keys() == before.keys()
+    for name in before:
+        np.testing.assert_array_equal(after[name], before[name])
 
 
 def test_rejects_unexpected_parameter() -> None:
@@ -161,6 +181,39 @@ def test_rejects_shape_that_does_not_match_config() -> None:
     with pytest.raises(ValueError, match=r"wpe\.weight.*\(9, 6\).*\(8, 6\)"):
         _loaded(state)
 
+
+
+@pytest.mark.parametrize("prefixed_value", [np.array([1.0]), np.array([2.0])])
+def test_rejects_prefixed_and_unprefixed_parameter_collision(prefixed_value: np.ndarray) -> None:
+    state = _gpt2_state_dict(TINY)
+    state["transformer.wte.weight"] = prefixed_value
+    with pytest.raises(ValueError, match="duplicate GPT-2 parameter"):
+        _loaded(state)
+
+
+@pytest.mark.parametrize(
+    "invalid",
+    [
+        np.array([np.nan] * TINY.embedding_dim),
+        np.array([np.inf] * TINY.embedding_dim),
+        np.array([-np.inf] * TINY.embedding_dim),
+        np.array([1.0 + 2.0j] * TINY.embedding_dim),
+        np.array([1.0] * TINY.embedding_dim, dtype=object),
+        np.array([np.longdouble("1e400")] * TINY.embedding_dim),
+    ],
+)
+def test_rejects_nonreal_nonfinite_or_unrepresentable_tensor(invalid: np.ndarray) -> None:
+    state = _gpt2_state_dict(TINY)
+    state["h.1.mlp.c_proj.bias"] = invalid
+    model = GPT(TINY)
+    before = _model_parameter_snapshot(model)
+
+    with pytest.raises(ValueError, match=r"h\\.1\\.mlp\\.c_proj\\.bias"):
+        load_gpt2_state_dict(model, state)
+
+    after = _model_parameter_snapshot(model)
+    for name in before:
+        np.testing.assert_array_equal(after[name], before[name])
 
 def test_gpt2_small_config_matches_published_dimensions() -> None:
     assert GPT2_SMALL_CONFIG.vocab_size == 50257
