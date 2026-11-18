@@ -1,0 +1,42 @@
+schema_version: 1
+source_id: gao-scaling-evaluating-sparse-autoencoders-2025
+
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Official publisher/proceedings metadata and abstract or report overview inspected 2026-11-18."
+      - "Cross-source context: docs/source-reviews/sparse-autoencoder-research-2023-2025.md."
+    inferred_elements:
+      - "Learning implications are editorial synthesis and do not reproduce the paper's full method or experiment."
+  source_graph:
+    nodes:
+      - {id: sae-training, kind: operation, description: "The paper studies k-sparse SAE training, sparsity control and dead-latent reduction."}
+      - {id: quality-metrics, kind: intermediate, description: "The paper introduces multiple feature-quality metrics covering recovery, explanation and downstream effects."}
+    edges:
+      - {from: sae-training, type: evaluated-by, to: quality-metrics}
+    interpretation: "This is a source-local reconstruction of the reported finding and its scope, not a canonical concept graph or an independent reproduction."
+  learning_outcomes:
+    - {status: inferred, outcome: "Distinguish the paper's technical object or result from its natural-language interpretation.", basis: "Abstract-level review; full-paper audit pending."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Transformer activations and basic sparse representation concepts.", basis: "The paper concerns sparse decomposition of model activations."}
+  teaching_route:
+    - {order: 1, section: "Identify scope", function: establish-provenance, moves: ["Record model, publication version and experimental scope."]}
+    - {order: 2, section: "Inspect finding", function: qualify-evidence, moves: ["Separate the reported result from assumptions, limitations and untested generalizations."]}
+  pedagogical_limits:
+    - "Abstract-level source review only; full methods, appendices and code have not yet been audited."
+    - "No model or SAE was run by LLM Lab; no result was independently reproduced."
+
+items:
+  - id: gao-scaling-evaluating-sparse-autoencoders-2025:abstract-finding
+    kind: result
+    summary: "The ICLR 2025 paper studies SAE scaling, k-sparse training, dead latents and multiple feature-quality metrics."
+    locator: {type: section, value: "ICLR 2025 proceedings; arXiv:2406.04093", label: "Abstract or report overview"}
+    evidence:
+      kind: official-proceedings-abstract
+      confidence: well-supported
+      scope: "Abstract-level review of the published 2025 paper and 2024 preprint."
+      assumptions: ["The published source and its stated experimental scope are the unit of interpretation."]
+      limitations: ["No training code, released SAE, checkpoint or evaluation result was executed by LLM Lab."]
+    disposition: integrate
+    disposition_rationale: "Use only within the source's reported model, method, task and evidence scope."
