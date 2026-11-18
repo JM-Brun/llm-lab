@@ -363,3 +363,16 @@ Après les cinq cas, relancer les fichiers de tests concernés sur le code resta
 - Aucun avis de revue GitHub n'est enregistré pour #1307 à la dernière vérification. Ne pas fusionner sans revue du diff et CI verte.
 - Les mutations MUT-01 à MUT-05 ne sont toujours pas exécutées. L'ajout du test LOSS-03a n'est ni une mutation ni un résultat de mutation. ENG-02 reste `not measured`.
 
+
+### Addendum — source collections contract / PR #1313 (2026-11-18)
+
+- Inventoried the living-collection index in `docs/source-reviews/README.md`. The controlled vocabulary contains exactly three current dossiers: `tokenization-embeddings`, `qkv-attention`, and `visual-learning-tools`. Individual source reviews and one-off comparative syntheses were not promoted to collection identities.
+- Created [PR #1313](https://github.com/JM-Brun/llm-lab/pull/1313) from `feat/source-collection-contract-1306`, based on main SHA `2f6e5fc5e4265bfdb07da627e43d9cb09fbd8a18`.
+- Added `data/source-collections.yml`, optional source-level `collections` validation, unique registry IDs, valid existing dossier paths, controlled status and optional positive owning issue. Legacy sources without the field remain valid; an explicit empty list is valid.
+- Extraction-level `collections` is rejected to prevent duplicated ownership. The only supported join is `extraction.source_id -> canonical source identity.collections`.
+- Updated `docs/source-catalogue-schema.md`, `docs/source-reviews/README.md` and `docs/source-contract-validation-matrix.md`; added focused tests in `tests/test_source_catalogue_validator.py`.
+- No membership was assigned to any of the 139 sources; no collection-specific source/extraction/item count was generated. Human backfill and count reconciliation remain separate work.
+- Latest known PR head when this addendum was written: `1c01d6fc0251e2a0a09a1c473b3fb1f3f34cecd5`. Re-fetch PR #1313 and Actions before relying on this SHA or reporting CI. Secret scanning was green on an earlier head; CI and Quarto were still running on `178a249686a2bc171950730ea95f4e1f5e69dd89`; neither result applies automatically to the later commits.
+- The PR was not reviewed or merged. Issue #1306 remains open. Do not close it when the schema PR merges; the explicit membership backfill, reconciliation and count publication are still outstanding.
+
+**Next actions:** verify CI/Quarto/secret scanning on the exact current head; inspect any failure logs and fix before requesting review; then review the diff and the proposed validation matrix delta. After merge, plan a separate evidence-led source membership backfill with explicit assignment rationale and a distinct source / extraction-file / atomic-item count report. Do not infer assignments from tags, themes, titles, citations, filenames or proximity in a dossier.
