@@ -1,0 +1,52 @@
+schema_version: 1
+source_id: sennrich-subword-nmt-2016
+scan:
+  accessed_at: "2026-11-18"
+  retrieval_method: direct-pdf
+  author_text: {status: partial, coverage: "ACL 2016 paper: open-vocabulary NMT motivation, subword units, adaptation of byte-pair encoding to word segmentation, BPE merge algorithm, English-German and English-Russian experiments.", notes: ["Primary-text review; no independent reproduction."]}
+  figures_media: {status: partial, coverage: "Algorithm 1, Figure 1 and Tables 1-3 inspected.", notes: ["No visual asset copied."]}
+  code_data: {status: not-inspected, coverage: null, notes: ["Released software archive and training data not independently executed or audited."]}
+  comments: {status: not-inspected, coverage: null, notes: []}
+  linked_resources: {status: partial, coverage: "ACL Anthology proceedings record and published PDF.", notes: ["Software archive not audited."]}
+  metadata: {status: partial, coverage: "ACL 2016, pp. 1715-1725; DOI 10.18653/v1/P16-1162.", notes: []}
+  rights: {status: unknown, coverage: null, notes: ["No third-party figures or code copied; reuse status not independently established in this pass."]}
+  unresolved_questions:
+    - "The paper adapts BPE for word segmentation in recurrent NMT; it is not a specification of byte-level BPE used by GPT-family tokenizers."
+    - "Experiments are limited to WMT 2015 English-German and English-Russian and the paper's Groundhog recurrent encoder-decoder setup."
+    - "No independent reproduction of the reported translation results or released software."
+items:
+  - id: sennrich-subword-nmt-2016:open-vocabulary-subword-translation
+    kind: method
+    summary: "The paper represents rare and unseen words as variable-length sequences of subword units, allowing NMT models to compose names, compounds, cognates and loanwords without relying on a back-off dictionary. The motivation is open-vocabulary translation, not a general claim that subword segmentation discovers linguistic morphemes."
+    locator: {type: section, value: "Abstract; §§1 and 3, pp. 1715-1717", label: "Open-vocabulary translation with subword units"}
+    evidence: {kind: method-description, confidence: established, scope: "The subword representation and motivation in the ACL 2016 NMT paper.", assumptions: [], limitations: ["Translation task and recurrent NMT setting; not a general tokenizer-quality result.", "The authors acknowledge that not every segmentation is semantically transparent."]}
+    technical_assessment: {status: correct, rationale: "The paper explicitly motivates subword units for open-vocabulary NMT and rare-word handling.", corroborating_sources: []}
+    classification: {primary_theme: text-tokenization, tags: [topic:tokenization, method:subword, topic:historical-context], concept_ids: [token]}
+    candidate_destinations: {pages: [en/tokenization-strategies, fr/tokenization-strategies], concepts: [token], route_ids: []}
+    disposition: integrate-by-reference
+    disposition_rationale: "Provides the primary NLP motivation for adapting BPE from compression to subword segmentation."
+  - id: sennrich-subword-nmt-2016:bpe-word-segmentation-algorithm
+    kind: method
+    summary: "The authors adapt Gage's byte-pair compression idea to word segmentation: initialize each word as characters plus an end-of-word marker, count adjacent symbol pairs weighted by word frequency, repeatedly merge the most frequent pair into a new symbol, and apply the learned merge operations to unseen words. The merge count controls the vocabulary extension."
+    locator: {type: section, value: "§3.2, Algorithm 1 and Figure 1, pp. 1717-1718", label: "BPE adaptation for word segmentation"}
+    evidence: {kind: algorithm-description, confidence: established, scope: "The paper's word-level BPE training and encoding procedure.", assumptions: [], limitations: ["Pairs crossing word boundaries are excluded.", "This is not GPT-style byte-level BPE: the paper uses character units, word boundaries and an end-of-word marker.", "Pre-tokenization and implementation choices differ across modern tokenizer families."]}
+    technical_assessment: {status: correct, rationale: "The paper gives the merge procedure and explicitly attributes the underlying pair replacement idea to Gage (1994).", corroborating_sources: []}
+    classification: {primary_theme: text-tokenization, tags: [topic:tokenization, method:bpe, topic:historical-context], concept_ids: [token]}
+    candidate_destinations: {pages: [en/tokenization-strategies, fr/tokenization-strategies], concepts: [token], route_ids: []}
+    disposition: integrate-by-reference
+    disposition_rationale: "Supports the distinction between Gage's compression algorithm and its NLP adaptation."
+  - id: sennrich-subword-nmt-2016:translation-evaluation
+    kind: result
+    summary: "The paper evaluates subword systems on WMT 2015 English-German and English-Russian translation. It reports improvements over a word-level back-off-dictionary baseline for rare and unseen words and BLEU gains of up to 1.1 for English-German and 1.3 for English-Russian in the reported ensemble comparisons."
+    locator: {type: section, value: "§4.2, Tables 2-3 and §5, pp. 1719-1722", label: "WMT 2015 translation experiments"}
+    evidence: {kind: reported-experimental-result, confidence: well-supported, scope: "The paper's Groundhog recurrent encoder-decoder experiments, WMT 2015 data and selected model/ensemble comparisons.", assumptions: [], limitations: ["Not an evaluation of GPT tokenizers or language-model pretraining.", "Reported BLEU gains depend on the translation direction, segmentation and selected ensemble; the paper notes run-to-run variability.", "No independent reproduction."]}
+    technical_assessment: {status: qualified, rationale: "The result is supported within the paper's NMT protocol and should not be generalized to modern LLM tokenizers.", corroborating_sources: []}
+    classification: {primary_theme: text-tokenization, tags: [topic:tokenization, method:bpe, topic:benchmark], concept_ids: [token]}
+    candidate_destinations: {pages: [en/tokenization-strategies, fr/tokenization-strategies], concepts: [token], route_ids: []}
+    disposition: integrate-by-reference
+    disposition_rationale: "Retain the empirical claim only as a historical NMT result with task and baseline named."
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "Sennrich et al. provide the primary NLP adaptation of Gage-style pair merging for subword NMT. Cite this work for the word-segmentation adaptation, but keep it distinct from GPT-style byte-level tokenization."

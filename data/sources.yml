@@ -1101,10 +1101,20 @@ sources:
           - "ACL Anthology abstract and historical use of BPE-derived subword units in neural machine translation"
         limitations:
           - "Abstract-level review only; this paper is not treated as a specification of GPT-2 byte-level BPE."
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "Published ACL 2016 PDF: open-vocabulary subword NMT motivation, word-level BPE adaptation, Algorithm 1, Figure 1 and WMT 2015 evaluation tables."
+          - "Created claim-level extraction: data/extractions/sennrich-subword-nmt-2016.yml."
+          - "Created primary-source review dossier: docs/source-reviews/sennrich-2016-primary-audit.md."
+          - "Added explicit bilingual citations in the historical distinction between Gage's compression algorithm and NLP subword BPE."
+        limitations:
+          - "Results concern the paper's recurrent NMT experiments on WMT 2015 English-German and English-Russian, not GPT-style byte-level tokenizers."
+          - "No independent reproduction; software archive and training data not audited."
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md, docs/source-reviews/sennrich-2016-primary-audit.md]
 
   - id: pytorch-embedding-api
     title: "torch.nn.Embedding"
