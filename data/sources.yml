@@ -1818,7 +1818,6 @@ sources:
         limitations:
           - "The migration reuses the prior source audit; it does not independently re-audit the complete paper."
           - "Reported associations remain scoped to the study's experimental setup."
-    scan_history:
       - accessed_at: "2026-11-18"
         status: partially-scanned
         inspected_scope:
@@ -1866,7 +1865,6 @@ sources:
         limitations:
           - "The migration reuses the prior source audit; it does not independently re-audit the complete paper."
           - "Claims are scoped to the cited experiments and should not be generalized beyond their evaluation settings."
-    scan_history:
       - accessed_at: "2026-11-18"
         status: partially-scanned
         inspected_scope:
