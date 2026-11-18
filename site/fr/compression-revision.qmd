@@ -308,6 +308,21 @@ Cette séquence distingue trois niveaux : **intuition de codage** (arbre et mots
 5. À la mémoire temporaire d'exécution.
 :::
 
+## De l'information à l'agentivité : quatre niveaux à distinguer
+
+La compression fournit un fil conducteur, mais elle ne suffit pas à définir l'intelligence. Pour raisonner proprement, séparons quatre niveaux :
+
+| Niveau | Question | Notions et critères |
+|---|---|---|
+| **1. Information** | Quelle incertitude et quel coût de codage ? | Entropie, surprisal, entropie croisée ; préciser la distribution et le protocole. |
+| **2. Apprentissage** | Comment un modèle capture-t-il des régularités ? | Prédiction conditionnelle, compression prédictive et MDL ; compter le modèle et les résidus. |
+| **3. Adaptation** | Comment le système met-il à jour ses croyances ou ses compétences ? | Données nouvelles, mise à jour du modèle, transfert et coût d'adaptation ; mesurer les gains sur des situations tenues à l'écart. |
+| **4. Agentivité** | Comment le système choisit-il des actions dans un environnement ? | AIXI articule prédiction universelle et maximisation de récompense ; l'inférence active articule perception et action dans le cadre du principe de l'énergie libre. |
+
+Ces niveaux sont liés, mais ne sont pas interchangeables. Une bonne prédiction n'établit pas à elle seule une adaptation efficace ; une compression faible ne démontre ni causalité ni capacité à agir. AIXI et l'inférence active sont deux cadres théoriques distincts, pas des conséquences automatiques de MDL.
+
+Pour approfondir les cadres agentifs et leurs limites, voir [Intelligence artificielle universelle](universal-artificial-intelligence.qmd) et la [synthèse transversale compression, intelligence et inférence](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/compression-intelligence-cross-source-2026-11.md).
+
 ## Pour approfondir
 
 - [Entropie](entropy.qmd) · [Entropie croisée](cross-entropy.qmd) · [Vraisemblance](vraisemblance.qmd)
