@@ -2160,7 +2160,7 @@ sources:
         - topic:knowledge-distillation
         - topic:model-compression
         - method:teacher-student
-      concept_ids: []
+      concept_ids: [knowledge-distillation]
     metadata:
       technical_level: unspecified
       contribution_types: [theory, pedagogy]
