@@ -12,7 +12,6 @@ import struct
 from collections import Counter, defaultdict
 from fractions import Fraction
 from math import log2
-from typing import TypeAlias
 
 ALPHABET = ("A", "B", "C", "D")
 TRAINING = "ABABACABADABABACABADABABACABADABABACABAD"
@@ -21,7 +20,7 @@ SMOOTHING = 1
 MAGIC = b"LLPC"
 VERSION = 1
 HEADER = struct.Struct(">4sBBII")
-Model: TypeAlias = dict[str, dict[str, Fraction]]
+type Model = dict[str, dict[str, Fraction]]
 
 
 def train_bigram_model(training: str) -> Model:
