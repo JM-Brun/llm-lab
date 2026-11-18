@@ -295,3 +295,61 @@ Dans le job CI, les deux jobs opt-in (inventaire complet des locateurs et benchm
 3. Distinguer explicitement invariants fonctionnels/mathématiques et contrats d'API/effets de bord ; faire approuver leur inclusion et pondération.
 4. Ajouter une colonne « mutation discriminante / raison de non-mutabilité ».
 5. Geler une version du dénominateur seulement après revue ; exécuter ensuite les mutations et établir le numérateur strict.
+
+## 16. Reprise après PR #1305 et préparation GEN-03 — 2026-11-18 21:34 UTC
+
+### Livraisons et validations récentes
+
+- PR #1305 est fusionnée dans `main` : merge commit `2480b9dfcb4396fcf22768a3ff5405b24f9f0747`.
+- Sur son head `05a8f4c62cdf6f55d4813003321bd69ccdf8be99`, CI, Quarto et secret scanning sont tous terminés avec succès. Cela valide la livraison documentaire, pas une mutation ni la sensibilité des tests.
+- PR #1307 (`test/gen03-window-observation-eng02-atomics`) porte le test GEN-03 qui enregistre les arguments réels de chaque appel à `model.forward`, ainsi que la décomposition candidate ATTENTION/LOSSES.
+- Le premier run de #1307 a révélé un défaut de formatage dans le nouveau test ; l'espacement a été corrigé. Le head actuel est à revalider par CI. Ne pas fusionner avant les contrôles verts et une revue du diff.
+- Le test GEN-03 attend exactement les fenêtres `[1,2,3]`, `[2,3,7]`, `[3,7,7]` pour un contexte de longueur 3 et trois tokens générés. Il doit être confirmé par l'exécution CI, puis relu pour vérifier qu'il discrimine bien une absence de troncature et un décalage erroné.
+
+### Exécution réelle des cinq mutations — protocole opératoire
+
+**Précondition bloquante :** aucun clone local exploitable n'est disponible dans l'environnement de cette session. Les API GitHub permettent de consulter les sources et Actions, pas de lancer une commande arbitraire dans un clone. Ne pas convertir les inspections API/CI ordinaires en résultats de mutations. La campagne doit être faite dans un clone local propre ou un environnement de développement contrôlé autorisé.
+
+Préparation et preuve de restauration :
+
+```bash
+git fetch origin
+git switch test/critical-invariants-audit-clean
+git pull --ff-only
+git status --short
+git rev-parse HEAD
+```
+
+Le répertoire de travail doit être propre. Noter le SHA initial. Pour chaque mutation, injecter **un seul défaut**, lancer uniquement le test sentinelle correspondant, enregistrer sortie/code retour/assertion, restaurer immédiatement, puis vérifier :
+
+```bash
+git restore -- <fichier-muté>
+git diff --exit-code
+git status --short
+git rev-parse HEAD
+```
+
+Matrice d'exécution :
+
+| Ordre | Défaut temporaire unique | Fichier cible | Commande sentinelle |
+|---|---|---|---|
+| MUT-01 | Retirer une seule addition résiduelle (attention ou MLP) du flux TransformerBlock | `src/llm_lab/foundations/transformer_block.py` | `uv run pytest -q tests/unit/test_transformer_block.py::test_block_forward_adds_both_sublayers_to_the_residual_stream` |
+| MUT-02 | Introduire un couplage entre exemples du batch dans le forward GPT | `src/llm_lab/foundations/gpt.py` | `uv run pytest -q tests/unit/test_gpt.py::test_batch_items_are_independent` |
+| MUT-03 | Neutraliser ou inverser temporairement le masque causal | chemin d'attention du Transformer/GPT | `uv run pytest -q tests/unit/test_attention.py tests/unit/test_gpt.py::test_prefix_invariance_future_tokens_do_not_change_earlier_logits` |
+| MUT-04 | Déplacer epsilon hors de la racine : `sqrt(variance) + eps` au lieu de `sqrt(variance + eps)` | `src/llm_lab/foundations/gpt_ops.py` | `uv run pytest -q tests/unit/test_gpt_ops.py -k 'epsilon or constant_rows'` |
+| MUT-05 | Remplacer la moyenne par une somme ou sommer avant division | `src/llm_lab/foundations/losses.py` | `uv run pytest -q tests/unit/test_losses.py::test_cross_entropy_averages_large_finite_losses_without_sum_overflow` |
+
+Pour MUT-01, retirer une branche résiduelle à la fois et restaurer entre les deux variantes éventuelles ; ne pas combiner les défauts. Pour MUT-03, conserver à la fois le test direct d'attention et le test GPT de préfixe : le premier localise la protection, le second vérifie le comportement de bout en bout. Pour MUT-04, confirmer que le test analytique d'epsilon échoue, et que le test de variance constante reste un signal distinct.
+
+Registre obligatoire par mutation : SHA initial ; diff temporaire exact ; commande ; code retour ; test/assertion et message ; conclusion détectée/survivante/équivalente ; restauration ; `git diff --exit-code` ; SHA final identique au SHA initial. Une mutation survivante déclenche une analyse du test ou de l'équivalence, jamais une correction a posteriori du résultat. Ne jamais committer ni pousser une mutation volontaire.
+
+Après les cinq cas, relancer les fichiers de tests concernés sur le code restauré. Archiver les sorties brutes ou un journal daté. Aucun framework de mutation ni workflow dédié ne doit être ajouté avant l'analyse du pilote manuel.
+
+### État de mesure
+
+- Les mutations MUT-01 à MUT-05 sont toujours **non exécutées**.
+- Les décompositions ATTENTION/LOSSES de #1307 sont candidates et non approuvées.
+- Les autres domaines doivent encore être décomposés et dédoublonnés.
+- Le dénominateur ENG-02 n'est pas approuvé ; ENG-02 reste **not measured**.
+- Aucun pourcentage ne doit être calculé à partir de couverture de lignes, de CI ou de la seule présence d'assertions.
+
