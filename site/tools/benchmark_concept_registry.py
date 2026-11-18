@@ -85,9 +85,7 @@ def _build_synthetic_relations(
     degree = min(mixed_degree, len(candidates))
     relations = []
     for index, source in enumerate(identifiers):
-        for offset, target in enumerate(
-            identifiers[index + 1 : index + 1 + degree]
-        ):
+        for offset, target in enumerate(identifiers[index + 1 : index + 1 + degree]):
             kind = candidates[(index + offset) % len(candidates)]
             definition = relation_types[kind]
             from_id, to_id = source, target
@@ -171,9 +169,7 @@ def benchmark(
             relation_count = 0
             for _ in range(repeats):
                 started = time.perf_counter()
-                fixture = build_synthetic_registry(
-                    base, size, shape, dense_degree, mixed_degree
-                )
+                fixture = build_synthetic_registry(base, size, shape, dense_degree, mixed_degree)
                 build_durations.append(time.perf_counter() - started)
                 relation_count = len(fixture["relations"])
 
@@ -191,12 +187,8 @@ def benchmark(
                     "shape": shape,
                     "concepts": size,
                     "relations": relation_count,
-                    "fixture_build_seconds_median": round(
-                        statistics.median(build_durations), 6
-                    ),
-                    "validation_seconds_median": round(
-                        statistics.median(validation_durations), 6
-                    ),
+                    "fixture_build_seconds_median": round(statistics.median(build_durations), 6),
+                    "validation_seconds_median": round(statistics.median(validation_durations), 6),
                     "validation_seconds_min": round(min(validation_durations), 6),
                     "validation_seconds_max": round(max(validation_durations), 6),
                     "validation_peak_bytes_max": max(peak_bytes),
