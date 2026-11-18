@@ -186,3 +186,181 @@ The 2026-11-18 scalability audit says the architecture is directionally scalable
 - [Scalability and capacity audit (2026-11-18)](scalability-capacity-audit-2026-11-18.md)
 - [Concept registry validation benchmark (2026-11-18)](concept-registry-validation-benchmark-2026-11-18.md)
 - [Roadmap](roadmap.md)
+
+## 11. Quality-driving KPI hierarchy
+
+The 24 KPIs above form the full measurement catalogue. They are not all dashboard headline metrics. Use the following hierarchy to focus decisions while retaining the detailed catalogue as the source of definitions.
+
+### 11.1 Twelve headline indicators
+
+| Priority | Headline KPI | Catalogue mapping | Why it drives quality |
+|---|---|---|---|
+| Strategic | Learning Outcome Success | EDU-01 | Checks whether learners reach declared objectives |
+| Strategic | Learning Gain | EDU-02 | Measures improvement rather than activity or completion |
+| Strategic | Autonomous Transfer Rate | EDU-03 | Tests whether understanding transfers to unfamiliar tasks |
+| Scientific | Evidence Coverage | SCI-01 | Makes unsupported substantive claims visible |
+| Scientific | Experiment Reproducibility | SCI-02 | Tests whether published results can be independently checked |
+| Scientific | Scientific Completeness | SCI-03 | Detects missing experimental controls, metrics or limitations |
+| Knowledge | Concept Integrity | KNO-03 plus registry validation checks | Separates valid structure from meaningful, justified relations |
+| Knowledge | Knowledge Traceability | KNO-01 and KNO-02 | Connects claims and knowledge records to evidence |
+| Documentation | FR/EN Semantic Parity | DOC-01 | Protects conceptual equivalence across languages |
+| Engineering | Regression Escape Rate | Supplementary metric; see §12 | Reveals defects escaping pre-merge controls |
+| Engineering | Clean Build Reliability | ENG-03 | Measures reproducibility from a clean environment |
+| Engineering | Validation Scalability | ENG-04 | Checks whether quality controls remain affordable as the corpus grows |
+
+These headline indicators are a decision-oriented view, not a replacement for the stable KPI IDs. Concept Integrity must not be interpreted as a count of valid YAML records alone: its human-reviewed semantic component must assess definitions, endpoints, relation types and evidence.
+
+### 11.2 Three strategic outcomes
+
+Use these three questions in quarterly project reviews:
+
+1. **Learning transfer:** can learners explain and apply mechanisms in a new situation without solution-level guidance?
+2. **Evidence and reproducibility:** can an independent reader trace and verify important claims and experimental results?
+3. **Quality preservation at scale:** can the project add sources, concepts, experiments, pages and learning paths without degrading correctness, discoverability, performance or maintainability?
+
+Do not calculate a weighted composite score from these outcomes. Report each dimension with its evidence and uncertainty.
+
+## 12. Supplementary diagnostic KPIs
+
+These measures complement the core catalogue. Promote one to the headline set only when its definition, data source and decision use are stable.
+
+| ID | KPI | Operational definition | Measurement / caveat |
+|---|---|---|---|
+| EDU-05 | Misconception Rate | Recurring target misconceptions observed / misconception opportunities assessed | Requires a reviewed misconception taxonomy and learner-task rubric; segment by concept |
+| EDU-06 | Concept Prerequisite Coverage | Audited concepts with necessary prerequisites identified and pedagogically ordered / concepts audited that require prerequisites | Human review required; absence of a prerequisite is not always a defect |
+| EDU-07 | Time to Understand | Median elapsed learner time to meet a predefined mastery criterion | Use only with a consistent task and opt-in, privacy-preserving observations; do not equate time spent with learning |
+| PATH-01 | Broken Learning Path Rate | Audited path steps with missing, inaccessible or unsatisfied prerequisites / path steps audited | Combine automated link/metadata checks with manual pedagogical review |
+| SRC-01 | Priority Source Freshness | Priority sources reviewed within their declared review interval / priority sources due for review | Complements KNO-04; use one canonical source-review history |
+| DOC-05 | Documentation Debt | Open editorial/scientific documentation defects weighted by severity and age | Complements DOC-04; publish weighting rules and raw counts to avoid hiding severe defects |
+| ENG-05 | Flaky Test Rate | Tests with inconsistent outcomes under unchanged inputs/environment / tests rerun for flakiness assessment | Separate product failures, runner/infrastructure failures and nondeterminism |
+| ENG-06 | Regression Escape Rate | Defects first detected after integration / all defects detected in the same mature cohort | Define cohort, detection window and severity; attribution is often imperfect |
+| OPS-05 | Issue Recurrence Rate | Defects recurring after a fix / fixed defects observed over a defined follow-up window | Define recurrence links and follow-up window; issue closure alone is not success |
+| OPS-06 | Maintenance Cost Ratio | Maintenance and repair effort / total recorded project effort | Use only if effort data are consistently captured; never optimize by suppressing maintenance |
+| SCI-05 | Evidence Gap Rate | High-impact audited claims with absent, stale or insufficient evidence / high-impact claims audited | A risk-oriented complement to SCI-01; publish severity and evidence-gap categories |
+
+Avoid double-counting: SRC-01 may be implemented as a view of KNO-04; DOC-05 may be a severity/age-weighted view of DOC-04. Do not create separate registries or duplicate observations when the same canonical evidence can support both.
+
+## 13. Quality gates, drivers and strategic outcomes
+
+Classify measures by the decisions they support. A KPI can be both a trend measure and a gate only when its scope and evidence are suitable.
+
+### 13.1 Quality gates
+
+Quality gates are release/merge conditions for the relevant change scope, not global claims that the whole project is perfect.
+
+| Gate | Proposed rule | Scope and exception handling |
+|---|---|---|
+| Data and metadata validity | All applicable required validators pass | Run validators affected by changed data and required global checks |
+| Critical regression | No unresolved critical regression introduced by the change | Severity and evidence must be recorded; flaky/infrastructure failures are triaged separately |
+| Internal references | No broken internal links/anchors in the affected rendered scope | Full-site check where feasible; explain exclusions |
+| Experiment reproducibility | Do not label an experiment reproducible unless its declared reproduction procedure passes | Gate only experiments changed or newly labelled; retain environment/tolerance metadata |
+| Bilingual parity | Material claims, assumptions, caveats and exercises are equivalent for changed bilingual content | Human review for semantic equivalence; automated presence checks are insufficient |
+
+A gate must have a named check, a defined scope, an actionable failure message and a documented exception path. Do not block unrelated changes on a measure that has not yet been instrumented reliably.
+
+### 13.2 Quality drivers
+
+Use these to prioritize work and evaluate trends: EDU-01–04, SCI-01–04, DOC-01–04, ENG-01–04, KNO-01–04 and selected supplementary indicators. They should normally trigger investigation and corrective work rather than automatic rejection on a single noisy observation.
+
+### 13.3 Strategic outcomes
+
+Review learning transfer, evidence/reproducibility and quality preservation at scale quarterly. These outcomes require multiple indicators and qualitative interpretation; they are not individual pass/fail checks.
+
+## 14. KPI-to-action decision rules
+
+The dashboard must make the next useful action clear. The following are default playbook mappings; thresholds and escalation windows are calibrated after baselines.
+
+| Signal | First investigation | Likely corrective action |
+|---|---|---|
+| EDU-02 learning gain falls | Check cohort comparability, assessment equivalence, sample size and uncertainty | Revise explanations, exercises, examples or prerequisites; rerun the pilot |
+| EDU-03 transfer falls or EDU-05 misconceptions rise | Inspect failed tasks and misconception patterns by concept | Add contrastive examples, mechanism-level explanations and novel transfer exercises |
+| SCI-01 evidence coverage falls / SCI-05 gaps rise | Identify high-impact unsupported claims and source relevance | Source, qualify, test or remove claims; record unresolved uncertainty |
+| SCI-02 reproducibility fails | Compare commit, environment, data, seeds, dependencies and tolerance | Repair protocol or implementation; withdraw reproducibility label until rerun |
+| SCI-03 completeness falls | Identify missing protocol elements | Complete controls, baselines, metrics, uncertainty, error analysis or limitations |
+| KNO-01/02 traceability falls | Trace records to source locators and extraction lineage | Repair lineage and locators at the canonical source; regenerate dependent outputs |
+| KNO-03 relation quality falls | Review relation semantics, endpoints, rationale and contradictory edges | Correct or remove unsupported relations; add explicit relation evidence |
+| DOC-01 parity falls | Compare claims, caveats, examples and exercises in both languages | Update the incomplete language version and require bilingual review |
+| PATH-01 broken path rate rises | Locate inaccessible steps, missing prerequisites or dead ends | Repair path metadata, navigation and pedagogical ordering |
+| ENG-01 CI reliability falls / ENG-05 flakiness rises | Classify product, test, runner and infrastructure failures | Fix root cause, quarantine only with an issue and expiry, improve deterministic setup |
+| ENG-03 clean build reliability falls | Reproduce from documented clean environment | Fix hidden dependencies, setup instructions, lockfiles or environment assumptions |
+| ENG-04 scalability degrades | Compare runtime/memory by workload shape, size, runner and commit | Profile bottlenecks, optimize incremental processing and set evidence-based budgets |
+| OPS-03 reopen / OPS-05 recurrence rises | Check whether fixes addressed root causes and acceptance criteria | Improve issue diagnosis, regression tests and definition of done |
+| DOC-04 / DOC-05 debt grows | Segment by severity, age, affected learning path and scientific risk | Prioritize high-impact debt; avoid optimizing raw issue count |
+
+Escalation should consider severity, persistence and confidence. A small-sample learner result or noisy benchmark should trigger review, not a false claim of regression.
+
+## 15. Dashboard and measurement architecture
+
+### 15.1 Recommended layers
+
+1. **Canonical project data:** existing source, extraction, concept, domain, resource, page, experiment, issue and workflow records remain authoritative.
+2. **Measurement adapters:** small scripts or queries read canonical data and expose explicit, versioned calculations. Adapters must not silently repair or rewrite source records.
+3. **Observation output:** emit immutable, commit-pinned KPI observations using the contract in §4. Store generated reports as build artifacts or versioned reports only where they have durable project value.
+4. **Human review records:** store sampling frame, rubric version, reviewer role, sample size, agreement and evidence references. Avoid learner personal data and unnecessary reviewer data.
+5. **Presentation:** dashboard views group by strategic dimension, headline KPI, trend, confidence/status, evidence and recommended action. It is a view over observations, not another source of truth.
+6. **Alerts:** alert on sustained, material changes, critical evidence gaps and failed gates. Include the affected scope and a link to the evidence.
+
+### 15.2 Dashboard minimum fields
+
+For each displayed KPI show:
+- stable KPI ID and human-readable name;
+- current value, unit, numerator and denominator where applicable;
+- baseline and previous comparable period;
+- target or threshold, explicitly labelled provisional or calibrated;
+- trend and sample size;
+- measurement status (measured, not-measured, insufficient-sample, invalid);
+- measurement type (automated, human-reviewed or mixed);
+- commit, period, method version and evidence link;
+- limitations and next action.
+
+Do not render missing data as zero, green, or success. Do not compare observations with different scopes or method versions without an explicit comparability warning.
+
+### 15.3 Automation boundaries
+
+**Good automation candidates:** schema/metadata validity, internal links, workflow outcomes, benchmark runtime/memory, clean-build checks, source-locator presence and mechanical lineage integrity.
+
+**Human or mixed assessment required:** conceptual correctness, claim relevance, scientific interpretation, relation quality, bilingual semantic parity, editorial acceptance, misconception analysis and learner transfer.
+
+Automation can prioritize samples and detect anomalies, but must not claim to establish scientific truth or learner understanding by itself.
+
+### 15.4 Anti-gaming and quality safeguards
+
+- Publish numerator and denominator; do not report percentages alone.
+- Keep raw counts and severity distributions beside weighted scores.
+- Never reward page, concept, relation, commit, test or issue volume as a proxy for quality.
+- Do not improve resolution time by closing issues prematurely.
+- Do not improve test success by deleting difficult tests or silently quarantining flaky tests.
+- Do not improve evidence coverage by attaching irrelevant citations.
+- Do not improve bilingual parity by reducing the richer language version without editorial justification.
+- Keep failed, excluded and insufficient-sample observations visible.
+- Version rubrics and calculation methods; preserve historical observations rather than rewriting them.
+- Review incentives and thresholds quarterly for unintended consequences.
+
+## 16. Rollout priorities and definition of done
+
+### Immediate — establish trustworthy baselines
+- [ ] Map the 12 headline KPIs to concrete repository paths, workflows or pilot instruments.
+- [ ] Mark each as automatable, human-reviewed, mixed or currently unmeasurable.
+- [ ] Calculate only values with defensible numerator, denominator and scope.
+- [ ] Add regression-escape and flaky-test definitions only after agreeing on defect/test cohort semantics.
+- [ ] Publish a baseline report with commit, method, limitations and explicit missing-data statuses.
+
+### Next — make measurements repeatable
+- [ ] Implement a minimal versioned observation schema and report generator.
+- [ ] Add unit tests for denominators of zero, missing fields, exclusions, cohort filters and method changes.
+- [ ] Add CI reporting for technical gates without duplicating existing validators.
+- [ ] Define review samples and rubrics for claims, relations, bilingual parity and editorial quality.
+
+### Then — measure learner outcomes
+- [ ] Run the learner-validation pilot with pre/post assessments and independent transfer tasks.
+- [ ] Record sample size, attrition, assessment equivalence, rubric and uncertainty.
+- [ ] Add misconception analysis only after defining a reviewed taxonomy.
+- [ ] Protect learner privacy and do not publish identifiable individual-level data.
+
+### Finally — dashboard and governance
+- [ ] Build a read-only dashboard from observation outputs.
+- [ ] Add trend alerts only after comparable baselines exist.
+- [ ] Review targets, cost, usefulness and unintended incentives quarterly.
+- [ ] Retire indicators that do not change decisions or cannot be measured reliably.
+
+The KPI system is considered operational only when a reviewer can reproduce a displayed value from its cited evidence and commit, understand its limitations, and identify the decision it is intended to inform.
