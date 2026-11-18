@@ -234,3 +234,93 @@ def test_unknown_source_domain_concept_and_page_references_are_rejected(
     assert any("classification.concept_ids: unknown concept" in error for error in errors)
     assert any("related.pages: unknown page" in error for error in errors)
     assert any("related.concepts: unknown concept" in error for error in errors)
+
+def test_duplicate_source_tags_are_rejected(tmp_path: Path) -> None:
+    _corpus(tmp_path)
+    source_path = tmp_path / "data" / "sources.yml"
+    data = yaml.safe_load(source_path.read_text(encoding="utf-8"))
+    data["sources"][0]["classification"]["tags"] = ["topic:attention", "topic:attention"]
+    _write_yaml(source_path, data)
+
+    errors = MODULE.validate_source_catalogue(tmp_path)
+
+    assert any("classification.tags: duplicate tags" in error for error in errors)
+
+
+def test_malformed_namespaced_source_tag_is_rejected(tmp_path: Path) -> None:
+    _corpus(tmp_path)
+    source_path = tmp_path / "data" / "sources.yml"
+    data = yaml.safe_load(source_path.read_text(encoding="utf-8"))
+    data["sources"][0]["classification"]["tags"] = ["subject:attention"]
+    _write_yaml(source_path, data)
+
+    errors = MODULE.validate_source_catalogue(tmp_path)
+
+    assert any("invalid namespaced tag" in error for error in errors)
+
+
+def test_valid_extraction_disposition_and_assessment_are_accepted(tmp_path: Path) -> None:
+    _corpus(tmp_path, with_extraction=True)
+    extraction_path = tmp_path / "data" / "extractions" / "example-source.yml"
+    data = yaml.safe_load(extraction_path.read_text(encoding="utf-8"))
+    item = data["items"][0]
+    item["disposition"] = "defer"
+    item["pedagogical_assessment"] = {
+        "novelty": {"level": "moderate", "rationale": "Adds a scoped example."},
+        "evidence_quality": {"level": "high", "rationale": "The source states the result directly."},
+    }
+    _write_yaml(extraction_path, data)
+
+    assert MODULE.validate_source_catalogue(tmp_path) == []
+
+
+def test_unknown_extraction_disposition_is_rejected(tmp_path: Path) -> None:
+    _corpus(tmp_path, with_extraction=True)
+    extraction_path = tmp_path / "data" / "extractions" / "example-source.yml"
+    data = yaml.safe_load(extraction_path.read_text(encoding="utf-8"))
+    data["items"][0]["disposition"] = "maybe"
+    _write_yaml(extraction_path, data)
+
+    errors = MODULE.validate_source_catalogue(tmp_path)
+
+    assert any("disposition: unsupported value 'maybe'" in error for error in errors)
+
+
+def test_invalid_pedagogical_assessment_level_is_rejected(tmp_path: Path) -> None:
+    _corpus(tmp_path, with_extraction=True)
+    extraction_path = tmp_path / "data" / "extractions" / "example-source.yml"
+    data = yaml.safe_load(extraction_path.read_text(encoding="utf-8"))
+    data["items"][0]["pedagogical_assessment"] = {
+        "novelty": {"level": "excellent", "rationale": "A reason."}
+    }
+    _write_yaml(extraction_path, data)
+
+    errors = MODULE.validate_source_catalogue(tmp_path)
+
+    assert any("pedagogical_assessment.novelty.level: unsupported value 'excellent'" in error for error in errors)
+
+
+def test_empty_pedagogical_assessment_rationale_is_rejected(tmp_path: Path) -> None:
+    _corpus(tmp_path, with_extraction=True)
+    extraction_path = tmp_path / "data" / "extractions" / "example-source.yml"
+    data = yaml.safe_load(extraction_path.read_text(encoding="utf-8"))
+    data["items"][0]["pedagogical_assessment"] = {
+        "novelty": {"level": "moderate", "rationale": "  "}
+    }
+    _write_yaml(extraction_path, data)
+
+    errors = MODULE.validate_source_catalogue(tmp_path)
+
+    assert any("pedagogical_assessment.novelty.rationale: expected non-empty text" in error for error in errors)
+
+
+def test_extraction_tag_namespace_and_duplicates_are_checked(tmp_path: Path) -> None:
+    _corpus(tmp_path, with_extraction=True)
+    extraction_path = tmp_path / "data" / "extractions" / "example-source.yml"
+    data = yaml.safe_load(extraction_path.read_text(encoding="utf-8"))
+    data["items"][0]["classification"] = {"tags": ["topic:attention", "topic:attention"]}
+    _write_yaml(extraction_path, data)
+
+    errors = MODULE.validate_source_catalogue(tmp_path)
+
+    assert any("classification.tags: duplicate tags" in error for error in errors)
