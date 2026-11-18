@@ -164,3 +164,29 @@ Pour chaque exécution, consigner : SHA propre de départ ; patch exact ; comman
 - MUT-03 doit être évaluée à la fois au niveau du masque et au niveau de l'attention ; un seul résultat ne prouve pas automatiquement les deux propriétés.
 - MUT-05 cible spécifiquement la réduction batch. La vérification par différences finies peut rester cohérente si loss et gradient subissent la même erreur d'échelle ; elle ne remplace donc pas le test de moyenne.
 - Les cinq résultats ne suffisent pas à approuver le dénominateur global : ils valident seulement cinq correspondances ciblées dans l'inventaire.
+
+
+## 8. Première correspondance atomique — lot pilote
+
+Cette table précise les unités candidates derrière le pilote. Les identifiants sont des repères de travail, **pas un dénominateur approuvé**. Les unités voisines restent séparées lorsqu'une mutation peut violer l'une sans violer l'autre.
+
+| ID candidat | Propriété atomique | Implémentation | Assertion sentinelle | Mutation discriminante |
+|---|---|---|---|---|
+| BLOCK-02a | La sortie de la sous-couche attention est ajoutée au flux résiduel | `src/llm_lab/foundations/transformer_block.py::TransformerBlock.forward` | `tests/unit/test_transformer_block.py::test_block_forward_adds_both_sublayers_to_the_residual_stream` | Omettre uniquement `x + attention_output` |
+| BLOCK-02b | La sortie de la sous-couche MLP est ajoutée au flux résiduel après l'attention | `src/llm_lab/foundations/transformer_block.py::TransformerBlock.forward` | Même test sentinelle ; la constante MLP vaut `-0.5` | Omettre uniquement l'addition de la sortie MLP |
+| GPT-04 | Un exemple du batch ne dépend pas des autres exemples | `src/llm_lab/foundations/gpt.py::GPT.forward` | `tests/unit/test_gpt.py::test_batch_items_are_independent` | Introduire une opération qui mélange les éléments du batch |
+| ATT-01a | Le masque causal représente les positions futures comme interdites | `src/llm_lab/foundations/attention.py::causal_mask` | `tests/unit/test_attention.py::test_causal_mask_structure` | Inverser le triangle autorisé/interdit |
+| ATT-01b | Les sorties antérieures de l'attention ne dépendent pas des clés/valeurs futures | `src/llm_lab/foundations/attention.py::scaled_dot_product_attention` | `tests/unit/test_attention.py::test_scaled_dot_product_attention_causal_invariance` | Ignorer le masque causal dans le calcul des poids |
+| OPS-03a | L'epsilon est ajouté à la variance avant la racine carrée | `src/llm_lab/foundations/gpt_ops.py::layer_norm` | `tests/unit/test_gpt_ops.py::test_layer_norm_epsilon_is_added_to_variance_before_sqrt` | Déplacer l'addition de l'epsilon après la racine |
+| LOSS-03a | La cross-entropy est réduite par moyenne sur le batch, et non par somme | `src/llm_lab/foundations/losses.py::cross_entropy_from_logits` | `tests/unit/test_losses.py::test_cross_entropy_averages_large_finite_losses_without_sum_overflow` | Remplacer la moyenne par une somme |
+| LOSS-03b | La réduction de pertes finies proches de la limite float64 évite un débordement intermédiaire | `src/llm_lab/foundations/losses.py::cross_entropy_from_logits` | Même test sentinelle | Sommer les pertes avant division, de façon à provoquer un overflow intermédiaire |
+
+Commandes ciblées prévues, à exécuter séparément pour chaque mutation :
+
+- `pytest -q tests/unit/test_transformer_block.py::test_block_forward_adds_both_sublayers_to_the_residual_stream`
+- `pytest -q tests/unit/test_gpt.py::test_batch_items_are_independent`
+- `pytest -q tests/unit/test_attention.py::test_causal_mask_structure tests/unit/test_attention.py::test_scaled_dot_product_attention_causal_invariance`
+- `pytest -q tests/unit/test_gpt_ops.py::test_layer_norm_epsilon_is_added_to_variance_before_sqrt`
+- `pytest -q tests/unit/test_losses.py::test_cross_entropy_averages_large_finite_losses_without_sum_overflow`
+
+La même assertion peut étayer plusieurs unités candidates si elle détecte séparément chacune des mutations définies. La preuve doit toutefois être consignée mutation par mutation ; une exécution réussie du test sur le code non muté n'établit pas sa sensibilité.
