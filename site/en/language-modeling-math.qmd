@@ -21,6 +21,8 @@ related: ["en/probabilities", "en/likelihood", "en/cross-entropy", "en/loss", "e
 tags: ["type:deep-dive", "destination:deepen", "topic:language-modeling", "level:advanced", "language:en", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-en-language-modeling-math.qmd >}}
+
 ::: {.chapter-lead}
 This page does not reintroduce tokenization, the next-token distribution, or likelihood as foundational concepts: those have canonical lessons. It deepens two mathematical connections: the chain rule that justifies autoregressive factorization, and the relationship between soft-target cross-entropy and KL divergence.
 :::

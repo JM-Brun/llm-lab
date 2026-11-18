@@ -21,6 +21,8 @@ related: ["en/generation", "en/decoding-strategies", "en/llm-computational-compl
 tags: ["type:concept-lesson", "destination:deepen", "topic:next-concept-modeling", "level:advanced", "language:en", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-en-next-concept-modeling.qmd >}}
+
 ::: {.chapter-lead}
 Autoregressive generation predicts the next token from the prefix produced so far. **Next-Concept Modeling (NCM)** explores a different prediction unit: a hierarchy of discrete codes that progressively represents a sequence, from coarse to fine. Codes within one level are predicted in parallel; levels remain ordered.
 :::

@@ -21,6 +21,8 @@ related: ["fr/probabilites", "fr/vraisemblance", "fr/cross-entropy", "fr/loss", 
 tags: ["type:deep-dive", "destination:deepen", "topic:language-modeling", "level:advanced", "language:fr", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-fr-language-modeling-math.qmd >}}
+
 ::: {.chapter-lead}
 Cette page ne réintroduit ni la tokenisation, ni la distribution du prochain token, ni la vraisemblance comme notions de base : ces objets ont déjà leurs leçons canoniques. Elle approfondit deux articulations mathématiques : la règle de chaîne qui justifie la factorisation autorégressive, puis la relation entre entropie croisée à cible souple et divergence KL.
 :::

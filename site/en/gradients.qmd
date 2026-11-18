@@ -74,7 +74,7 @@ $$
 
 The factor $1/|\mathcal{M}|$ comes from the mean; ignored positions have zero derivative with respect to their logits in this objective. A sum, weighting, or another reduction changes the corresponding factor. The local formula follows from combining softmax and cross-entropy; it does not mean the network parameters are the logits directly, since logits depend on parameters through many differentiable operations.
 
-For the one-position scribe example, $p=(0.6,0.2,0.1,0.1)$ and target $y=0$ (“Être”), so:
+For the first step of the Romans example, $p=(0.6,0.2,0.1,0.1)$ and target $y=0$ (“They”), so:
 
 $$
 \nabla_z\ell=p-y=(-0.4,0.2,0.1,0.1).

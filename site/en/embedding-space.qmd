@@ -37,11 +37,13 @@ By the end of this lesson, you should be able to:
 
 ## Start with the prefix supplied to the model
 
-For the recurring example, the English pages use the cultural parallel from *Monty Python's Life of Brian*. The text already present in the context is the group's question:
+The text already present in the context is:
 
 > **Prefix / prompt:** “What have the Romans ever done for us?”
 
-The film's successive replies are a cultural analogy, not the continuation used in the worked trace. For that trace, LLM Lab uses the original sentence “They built roads between distant towns.” It is not a film quotation or a model output. The exact tokenization and IDs depend on the tokenizer; no universal segmentation or ID is assumed here.
+The replies add examples such as aqueducts, sanitation, roads, and irrigation. They are not yet present when the model processes the prefix. In the scene, different members of the group supply these replies, so this is a context-and-response analogy rather than a single-speaker generation trace. No universal segmentation or token ID is assumed here.
+
+For a controlled, single-speaker continuation used to trace next-token mechanics, keep a separate illustrative example in mind: **“They built roads between distant towns.”** It is not one of the group's replies and does not turn the scene into a single-speaker generation trace.
 
 A tokenizer splits the prefix into tokens according to its vocabulary and rules, then assigns an integer ID to each token. A visible word is not necessarily one token: the exact segmentation depends on the tokenizer in use.
 

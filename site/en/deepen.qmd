@@ -45,6 +45,8 @@ Each entry answers a more specific question: why a mechanism works, under which 
 
 **Guiding question:** which variants change information flow or a model's computational structure?
 
+**Start here:** begin with [scaled dot-product attention](scaled-dot-product-attention.qmd); the variants and derivations below are optional extensions.
+
 - [Why scale attention scores?](attention-score-scaling.qmd) — dot-product variance under Gaussian assumptions, softmax concentration, and the limits of the $\sqrt{d_k}$ factor.
 - [Contextualized representations: dependencies across positions and layers](contextualized-representations-advanced.qmd) — formalizing accessible context, masks, and hidden-state evolution.
 - [Q/K/V: mathematical formulation and variants](queries-keys-values-advanced.qmd) — per-position equations, batched dimensions, compatibility geometry, gradient paths, and head/projection sharing.
@@ -93,6 +95,8 @@ These resources are complementary, not interchangeable: visualizations build int
 
 **Guiding question:** how do text-representation choices affect a system's properties?
 
+**Start here:** begin with [Text and data](text-data.qmd), which follows the transformation from text to token IDs.
+
 - [Unicode and text representation](unicode-text.qmd) — character-representation layers and their consequences.
 - [Tokenizer design and evaluation](tokenizer-design-evaluation.qmd) — BPE, WordPiece, and Unigram families, design, and empirical protocols.
 
@@ -101,6 +105,8 @@ The core [Tokenization strategies](tokenization-strategies.qmd) lesson remains t
 ## Mathematical tools and geometry {#mathematical-tools-and-geometry}
 
 **Guiding question:** which mathematical operations and properties help analyze representations and computations?
+
+**Start here:** begin with [embedding space](embedding-space.qmd); the pages below extend that first geometric picture to other objects and uses.
 
 - [Specialized deep dive: embeddings and vector representations](embeddings-deep-dive.qmd) — a self-contained map of families, objectives, geometry, evaluation, and uses beyond LLMs.
 - [Tensors](tensors.qmd) — dimensions, operations, and conventions.
@@ -147,6 +153,8 @@ These pages provide analytical tools; they are not a prerequisite mathematics co
 
 **Guiding question:** how are the predicted distribution, observed likelihood, objective function, and optimization connected?
 
+**Start here:** begin with [likelihood](likelihood.qmd) and [loss](loss.qmd); the deep dives connect these objects without conflating them.
+
 - [Mathematical formalization of language modeling](language-modeling-math.qmd) — autoregressive factorization, cross-entropy, and KL divergence.
 - [The mathematical chain of LLM training](mathematical-foundations.qmd) — from logits to gradients, distinguishing the mathematical objects involved.
 - [Score centering in off-policy RL](score-centering.qmd) — correcting policy-gradient drift when sampler and trainer distributions differ.
@@ -157,6 +165,8 @@ The core route's canonical pages remain responsible for local definitions of lik
 
 **Guiding question:** how does a model use context, select outputs, and consume resources?
 
+**Start here:** begin with [autoregressive generation](generation.qmd); explore advanced strategies and costs only when your question calls for them.
+
 - [Advanced decoding strategies](decoding-strategies.qmd) — distribution transformations and sequence search.
 - [Computational complexity and parallelism in LLMs](llm-computational-complexity.qmd) — compute, memory, and parallelism in training, prefill, and decoding.
 - [RAG, memory, and document retrieval](rag-memory-boundaries.qmd) — distinguish storage, indexing, search, context transmission, and model use.
@@ -166,6 +176,8 @@ The core route introduces autoregressive generation and its minimum operations. 
 ## Scale and research questions {#scale-and-research-questions}
 
 **Guiding question:** which empirical regularities and capability claims are supported by evidence?
+
+**Start here:** begin with the [LLM overview](llm-overview.qmd) and its discussion of [limitations](llm-limits.qmd) before examining research results and empirical scaling laws.
 
 - [From GPT-2 to contemporary LLM systems](llm-evolution.qmd) — a cross-cutting synthesis from scale and post-training to reasoning and tool-using systems.
 - [Scaling laws: parameters, data, and compute](scaling-laws.qmd) — empirical relationships between training resources and loss, and limits to extrapolation.

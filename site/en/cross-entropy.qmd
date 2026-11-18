@@ -68,7 +68,7 @@ $$
 
 The cost increases when the model assigns low probability to the observed token. A wrong but highly confident prediction is therefore strongly penalized.
 
-For the running scribe example, let $p=(0.6,0.2,0.1,0.1)$ for “Être”, “Vous”, “Oui”, and “Non”, and let the one-hot target be $q=(1,0,0,0)$ because “Être” is observed. Then:
+For the Romans example, let $p=(0.6,0.2,0.1,0.1)$ for “They”, “Aqueducts”, “Nothing”, and “Well”, and let the one-hot target be $q=(1,0,0,0)$ because “They” is the observed next token. Then:
 
 $$
 H(q,p)=-\sum_i q_i\log p_i=-\log(0.6)\approx0.511\text{ nats}.

@@ -17,6 +17,8 @@ Understand what an LLM is and follow a complete generation loop as a black box w
 
 - [Transformer architectures: encoder, encoder–decoder, and decoder](transformer-architectures.html)
 - [The training objective: guarantees and limits](llm-limits.html)
+- [From GPT-2 to contemporary LLM systems](llm-evolution.html)
+- [Next-Concept Modeling: generation over representation levels](next-concept-modeling.html)
 
 :::
 
@@ -60,6 +62,9 @@ Trace embedding lookup and the addition of positional information, then distingu
 
 - [Tensors in a Transformer: shapes and axes](tensors.html)
 - [RoPE: geometry, derivation, and limitations](rope.html)
+- [Sinusoidal positional encodings: frequencies, geometry, and limits](sinusoidal-positional-encoding.html)
+- [Contextualized representations: dependencies across positions and layers](contextualized-representations-advanced.html)
+- [Embeddings: from vector representations to search spaces](embeddings-deep-dive.html)
 
 :::
 
@@ -80,6 +85,9 @@ Connect Q/K/V projections, attention scores and weights, value aggregation, caus
 
 - [Cross-attention: connecting two sequences](cross-attention.html)
 - [Why scale attention scores?](attention-score-scaling.html)
+- [Q/K/V: mathematical formulation and variants](queries-keys-values-advanced.html)
+- [Multimodal architectures: understanding and generation](multimodal-architectures.html)
+- [Hybrid LLM architectures: Nemotron 3 and 3.5](hybrid-llm-architectures.html)
 
 :::
 
@@ -116,6 +124,7 @@ Distinguish prompt prefill from iterative decode, select a token with a decoding
 **Optional resources**
 
 - [Advanced decoding strategies](decoding-strategies.html)
+- [Complexity and parallelism in LLMs](llm-computational-complexity.html)
 
 :::
 
@@ -147,6 +156,11 @@ Evaluate the probability assigned to a known target, build a sequence likelihood
 - [Likelihood and log-likelihood](likelihood.html)
 - [Cross-entropy: the token-prediction objective](cross-entropy.html)
 
+**Optional resources**
+
+- [The mathematics of language modeling](language-modeling-math.html)
+- [The mathematical chain of LLM training](mathematical-foundations.html)
+
 :::
 
 ::: {.guided-route-stage #guided-stage-training}
@@ -166,6 +180,8 @@ Connect observed targets to the aggregated loss, gradients, and parameter update
 - [Cross-entropy: the token-prediction objective](cross-entropy.html) *(recap)*
 - [Scaling laws: parameters, data, and compute](scaling-laws.html)
 - [From a base model to an assistant: post-training](post-training.html)
+- [The mathematical chain of LLM training](mathematical-foundations.html) *(recap)*
+- [Score centering in off-policy LLM reinforcement learning](score-centering.html)
 
 :::
 

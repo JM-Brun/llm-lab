@@ -23,6 +23,8 @@ related: ["fr/rope", "fr/queries-keys-values", "fr/scaled-dot-product-attention"
 tags: ["type:deep-dive", "destination:deepen", "topic:sinusoidal-positional-encoding", "level:advanced", "language:fr", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-fr-sinusoidal-positional-encoding.qmd >}}
+
 ::: {.chapter-lead}
 L'encodage sinusoïdal transforme un indice de position en un vecteur déterministe composé de sinusoïdes à plusieurs fréquences. Cette page reconstruit la formule du Transformer de 2017, explique pourquoi les fréquences sont réparties logarithmiquement et dérive la propriété qui rend un décalage fixe accessible à une transformation linéaire. Elle examine aussi ce que cette propriété ne garantit pas.
 :::
