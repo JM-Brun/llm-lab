@@ -528,3 +528,24 @@ de mesure du coût CI.
 Statut inchangé : ENG-02 reste **not measured** jusqu'à l'exécution documentée
 des mutations et à l'approbation du périmètre et du dénominateur. La CI verte
 sur un SHA ne suffit pas à établir la sensibilité des tests.
+
+
+## 21. Inventaire candidat ENG-02
+
+Le périmètre de dix domaines GPT a été approuvé par le mainteneur. Le premier
+inventaire comporte **48 invariants candidats**, avec leurs tests/assertions
+repérés et leur statut de preuve statique :
+[consulter l'inventaire ENG-02](audits/eng-02-critical-invariants-inventory-2026-11-18.md).
+
+Les 48 unités ne sont pas encore un dénominateur approuvé. Le comptage, les
+regroupements, l'inclusion des contrats d'API et la pondération uniforme
+proposée doivent être relus. « Protégé » signifie qu'une assertion pertinente
+a été repérée, pas que sa sensibilité aux défauts est démontrée. Les invariants
+partiels restent au dénominateur proposé et ne sont pas comptés au numérateur
+strict.
+
+Définition proposée après approbation :
+invariants avec preuve de test sensible / invariants approuvés.
+La sensibilité doit être démontrée par mutation ciblée ou preuve indépendante
+équivalente. Jusqu'à cette validation, ENG-02 reste **not measured** ; la
+couverture de lignes ne s'y substitue pas.
