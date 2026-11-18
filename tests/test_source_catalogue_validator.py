@@ -267,7 +267,10 @@ def test_valid_extraction_disposition_and_assessment_are_accepted(tmp_path: Path
     item["disposition"] = "defer"
     item["pedagogical_assessment"] = {
         "novelty": {"level": "moderate", "rationale": "Adds a scoped example."},
-        "evidence_quality": {"level": "high", "rationale": "The source states the result directly."},
+        "evidence_quality": {
+            "level": "high",
+            "rationale": "The source states the result directly.",
+        },
     }
     _write_yaml(extraction_path, data)
 
@@ -297,7 +300,10 @@ def test_invalid_pedagogical_assessment_level_is_rejected(tmp_path: Path) -> Non
 
     errors = MODULE.validate_source_catalogue(tmp_path)
 
-    assert any("pedagogical_assessment.novelty.level: unsupported value 'excellent'" in error for error in errors)
+    assert any(
+        "pedagogical_assessment.novelty.level: unsupported value 'excellent'" in error
+        for error in errors
+    )
 
 
 def test_empty_pedagogical_assessment_rationale_is_rejected(tmp_path: Path) -> None:
@@ -311,7 +317,10 @@ def test_empty_pedagogical_assessment_rationale_is_rejected(tmp_path: Path) -> N
 
     errors = MODULE.validate_source_catalogue(tmp_path)
 
-    assert any("pedagogical_assessment.novelty.rationale: expected non-empty text" in error for error in errors)
+    assert any(
+        "pedagogical_assessment.novelty.rationale: expected non-empty text" in error
+        for error in errors
+    )
 
 
 def test_extraction_tag_namespace_and_duplicates_are_checked(tmp_path: Path) -> None:
