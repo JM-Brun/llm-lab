@@ -44,12 +44,12 @@ Les statuts sont issus d'une lecture statique des sources et tests. « Protégé
 | GPT-06 | GPT | Nombre de paramètres conforme à une formule indépendante | test_num_parameters_matches_configuration_formula | Protégé |
 | TRAIN-01 | Training examples | Chaque cible est le token suivant l'entrée, pas une copie | test_every_target_is_the_next_token_in_the_stream; test_targets_are_shifted_not_copied | Protégé |
 | TRAIN-02 | Training examples | Nombre et chevauchement des fenêtres conformes à context/stride | tests window_count, stride_equal_to_context_length, smaller_stride, worked_example | Protégé |
-| TRAIN-03 | Training examples | Séquences courtes et paramètres/formes/types invalides rejetés | test_invalid_inputs_raise_value_error | Partiel : booléens/flottants positifs context/stride non testés |
+| TRAIN-03 | Training examples | Séquences courtes et paramètres/formes/types invalides rejetés | test_invalid_inputs_raise_value_error | Assertion repérée (revérifiée statiquement) |
 | TRAIN-04 | Training examples | Construction déterministe sans mutation du flux source | test_output_is_deterministic_and_stream_is_not_mutated | Protégé |
 | FILTER-01 | Decoding filters | Top-k garde exactement k candidats et renormalise | test_top_k_keeps_exactly_k_renormalized_candidates; identity when k >= vocab | Protégé |
 | FILTER-02 | Decoding filters | Top-p garde le plus petit noyau atteignant le seuil, token de franchissement inclus | test_top_p_includes_the_token_that_crosses_the_threshold; test_top_p_nucleus_size_adapts_to_distribution_shape | Protégé |
 | FILTER-03 | Decoding filters | Égalités départagées de façon déterministe par indice | test_top_k_breaks_ties_by_lowest_index_deterministically; test_top_p_breaks_ties_by_lowest_index | Protégé |
-| FILTER-04 | Decoding filters | Seuils/distributions invalides rejetés et entrée non mutée | tests invalid_distributions, top_k_invalid_k, top_p_invalid_p, filters_do_not_mutate_the_input | Partiel : p=True accepté comme 1.0 |
+| FILTER-04 | Decoding filters | Seuils/distributions invalides rejetés et entrée non mutée | tests invalid_distributions, top_k_invalid_k, top_p_invalid_p, filters_do_not_mutate_the_input | Assertion repérée (revérifiée statiquement) |
 | GEN-01 | Generation | Greedy choisit l'argmax du dernier pas et construit la chaîne autoregressive | test_generate_greedy_is_deterministic_and_matches_manual_argmax_chain | Protégé |
 | GEN-02 | Generation | Échantillonnage reproductible avec RNG seedé | test_generate_sampled_tokens_are_reproducible_with_seeded_rng | Protégé |
 | GEN-03 | Generation | Chaque pas transmet au modèle uniquement la dernière fenêtre de contexte | test_generate_slides_the_context_window | Partiel : sortie vérifiée, pas les fenêtres réellement transmises |
@@ -59,7 +59,7 @@ Les statuts sont issus d'une lecture statique des sources et tests. « Protégé
 | EMB-02 | Embedding inspection | Matrice/IDs invalides (forme, type, non-finis, bornes) rejetés | test_lookup_rejects_invalid_matrix_or_ids | Protégé |
 | EMB-03 | Embedding inspection | Top-k cosine renvoie IDs et scores en ordre décroissant | test_cosine_top_k_returns_ids_and_descending_scores | Protégé |
 | EMB-04 | Embedding inspection | Égalités stables par ID et exclusion de soi contrôlée | tests excludes_self_and_breaks_ties_by_id; can_include_self_explicitly | Protégé |
-| EMB-05 | Embedding inspection | Requête cosine définie et candidats de norme nulle exclus | tests rejects_undefined_or_invalid_requests; excludes_zero_norm_candidates | Partiel : amplitude extrême et np.int64(k) non couverts |
+| EMB-05 | Embedding inspection | Requête cosine définie et candidats de norme nulle exclus | tests rejects_undefined_or_invalid_requests; excludes_zero_norm_candidates; cosine_top_k_is_stable_for_very_large_and_small_finite_rows; cosine_top_k_accepts_numpy_integer_k | Assertion repérée (revérifiée statiquement) |
 | WEIGHT-01 | GPT-2 weights | Embeddings de tokens et tête de sortie liées selon le contrat | test_copies_embeddings_and_ties_output_head_to_token_table | Protégé |
 | WEIGHT-02 | GPT-2 weights | QKV fusionné découpé Q/K/V et transposé correctement | test_splits_fused_qkv_and_transposes_conv1d_weights | Protégé |
 | WEIGHT-03 | GPT-2 weights | Projections attention/MLP mappées selon conventions et formes | test_splits_fused_qkv_and_transposes_conv1d_weights; test_gpt2_small_config_matches_published_dimensions | Protégé |
@@ -190,3 +190,22 @@ Commandes ciblées prévues, à exécuter séparément pour chaque mutation :
 - `pytest -q tests/unit/test_losses.py::test_cross_entropy_averages_large_finite_losses_without_sum_overflow`
 
 La même assertion peut étayer plusieurs unités candidates si elle détecte séparément chacune des mutations définies. La preuve doit toutefois être consignée mutation par mutation ; une exécution réussie du test sur le code non muté n'établit pas sa sensibilité.
+
+
+## 9. Recontrôle statique ciblé — 2026-11-18
+
+Une relecture directe des implémentations et tests sur `main` (référence `cb7e3c859591b954188bb435a7b888ae2949875f`) corrige trois constats devenus obsolètes dans l'inventaire initial. Il s'agit d'une inspection du code et des assertions, **pas d'une exécution de pytest ni d'une preuve de sensibilité aux mutations**.
+
+| Invariant | Vérification de l'implémentation | Vérification des tests | Correction de l'état statique |
+|---|---|---|---|
+| TRAIN-03 | `sliding_input_target_pairs` rejette explicitement booléens, flottants et valeurs inférieures à 1 pour `context_length` et `stride`; valide aussi dimension/type du flux et longueur minimale | `test_invalid_inputs_raise_value_error` paramètre notamment `True`, `False`, flottants Python et NumPy, valeurs nulles/négatives, flux multidimensionnel, flux flottant et séquence trop courte | L'ancienne lacune « booléens/flottants positifs non testés » est obsolète ; assertion repérée |
+| FILTER-04 | `top_k_filter` rejette booléens et types/valeurs invalides de `k`; `top_p_filter` rejette booléens, valeurs non finies et seuils hors de (0, 1]; le validateur commun rejette distributions invalides | Tests dédiés top-k/top-p, distributions invalides et non-mutation ; `True`, `False` et `np.bool_(True)` sont explicitement paramétrés comme seuils top-p invalides | L'ancienne lacune « p=True accepté » est obsolète ; assertion repérée |
+| EMB-05 | `cosine_top_k` met à l'échelle chaque ligne avant le calcul de norme, exclut les lignes nulles et accepte les entiers NumPy pour `k` | Tests pour amplitudes `1e308` et `1e-300`, candidats de norme nulle, requête nulle, égalités et `np.int64(k)` | Les deux lacunes signalées sont couvertes statiquement ; assertion repérée |
+
+### Conséquence pour ENG-02
+
+- Ces trois lignes ne doivent plus être décrites comme présentant les lacunes précises indiquées dans la première version de l'inventaire.
+- Leur état peut passer de « partiel » à « assertion repérée » au sens de la taxonomie statique du document.
+- Elles ne passent **pas** au statut « sensibilité démontrée » : aucune mutation discriminante de ces propriétés n'a été exécutée.
+- Les autres lacunes mentionnées dans les sections précédentes restent à vérifier une par une ; cette revue ciblée ne vaut pas audit exhaustif des dix domaines.
+- ENG-02 demeure **not measured** et aucun dénominateur n'est proposé par cette mise à jour.
