@@ -84,7 +84,6 @@ def top_p_filter(probabilities: FloatArray, p: float) -> FloatArray:
     if (
         isinstance(p, (bool, np.bool_))
         or not isinstance(p, (int, float, np.integer, np.floating))
-        or not np.isfinite(p)
         or not 0.0 < p <= 1.0
     ):
         raise ValueError("p must be a finite number in (0, 1]")
