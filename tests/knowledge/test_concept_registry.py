@@ -79,6 +79,15 @@ def test_registry_rejects_duplicate_ids_and_unknown_relation_endpoints() -> None
     assert any("unknown concept" in error for error in errors)
 
 
+def test_registry_rejects_unknown_target_endpoint() -> None:
+    data = _valid_registry()
+    data["relations"] = [{"from": "token", "type": "part-of", "to": "missing"}]
+
+    errors = validate_registry(data)
+
+    assert any(".to: unknown concept 'missing'" in error for error in errors)
+
+
 def test_registry_rejects_missing_translation_and_self_relation() -> None:
     data = _valid_registry()
     data["concepts"][0]["labels"].pop("en")
