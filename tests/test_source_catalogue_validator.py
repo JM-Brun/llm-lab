@@ -175,3 +175,62 @@ def test_source_without_scan_history_is_rejected(tmp_path: Path) -> None:
     errors = MODULE.validate_source_catalogue(tmp_path)
 
     assert any("scan_history: expected at least one inspection event" in error for error in errors)
+
+
+def test_duplicate_source_ids_are_rejected(tmp_path: Path) -> None:
+    _corpus(tmp_path)
+    source_path = tmp_path / "data" / "sources.yml"
+    data = yaml.safe_load(source_path.read_text(encoding="utf-8"))
+    data["sources"].append(data["sources"][0].copy())
+    _write_yaml(source_path, data)
+
+    errors = MODULE.validate_source_catalogue(tmp_path)
+
+    assert any("duplicate source ID 'example-source'" in error for error in errors)
+
+
+def test_duplicate_extraction_item_ids_are_rejected(tmp_path: Path) -> None:
+    _corpus(tmp_path, with_extraction=True)
+    extraction_path = tmp_path / "data" / "extractions" / "example-source.yml"
+    data = yaml.safe_load(extraction_path.read_text(encoding="utf-8"))
+    data["items"].append(data["items"][0].copy())
+    _write_yaml(extraction_path, data)
+
+    errors = MODULE.validate_source_catalogue(tmp_path)
+
+    assert any("items[1].id: expected unique ID prefixed by source_id" in error for error in errors)
+
+
+def test_extraction_item_id_must_use_its_source_prefix(tmp_path: Path) -> None:
+    _corpus(tmp_path, with_extraction=True)
+    extraction_path = tmp_path / "data" / "extractions" / "example-source.yml"
+    data = yaml.safe_load(extraction_path.read_text(encoding="utf-8"))
+    data["items"][0]["id"] = "another-source:item-1"
+    _write_yaml(extraction_path, data)
+
+    errors = MODULE.validate_source_catalogue(tmp_path)
+
+    assert any("items[0].id: expected unique ID prefixed by source_id" in error for error in errors)
+
+
+def test_unknown_source_domain_concept_and_page_references_are_rejected(
+    tmp_path: Path,
+) -> None:
+    _corpus(tmp_path)
+    source_path = tmp_path / "data" / "sources.yml"
+    data = yaml.safe_load(source_path.read_text(encoding="utf-8"))
+    source = data["sources"][0]
+    source["classification"]["primary_theme"] = "unknown-domain"
+    source["classification"]["concept_ids"] = ["unknown-concept"]
+    source["related"] = {
+        "pages": ["en/unknown-page"],
+        "concepts": ["unknown-concept"],
+    }
+    _write_yaml(source_path, data)
+
+    errors = MODULE.validate_source_catalogue(tmp_path)
+
+    assert any("primary_theme: unknown domain" in error for error in errors)
+    assert any("classification.concept_ids: unknown concept" in error for error in errors)
+    assert any("related.pages: unknown page" in error for error in errors)
+    assert any("related.concepts: unknown concept" in error for error in errors)
