@@ -51,7 +51,7 @@ pedagogical_model:
 
 items:
   - id: chan-causal-scrubbing-2022:hypothesis-as-resampling-rules
-    kind: method
+    kind: claim
     summary: "Causal scrubbing converts a mechanistic hypothesis into constraints on which activations may be replaced by activations from other inputs."
     locator: {type: section, value: "Sections 2-3: hypothesis and algorithm", label: "Source-local locator"}
     evidence:
@@ -65,7 +65,7 @@ items:
     disposition: integrate
     disposition_rationale: "Retain as source-scoped evidence; do not promote directly to a universal canonical concept."
   - id: chan-causal-scrubbing-2022:scrubbed-behavior-comparison
-    kind: evaluation
+    kind: claim
     summary: "The procedure compares expected behavior under hypothesis-permitted resampling with behavior on the original input distribution."
     locator: {type: section, value: "Section 3.2: scrubbed expectation", label: "Source-local locator"}
     evidence:
