@@ -72,9 +72,9 @@ def test_inventory_separates_missing_scalar_and_mapping_locators(tmp_path: Path)
 
 def test_value_shape_recognizes_timestamp_ranges() -> None:
     assert MODULE._value_shape("01:23:45") == "timestamp-like"
-    assert MODULE._value_shape("05:41–10:22") == "timestamp-like"
+    assert MODULE._value_shape("05:41\u201310:22") == "timestamp-like"
     assert MODULE._value_shape("00:01:00-03:21:46") == "timestamp-like"
-    assert MODULE._value_shape("00:01:00 — 03:21:46") == "timestamp-like"
-    assert MODULE._value_shape("00:00–03:02 and 12:59–14:55") == "timestamp-like"
-    assert MODULE._value_shape("1:28:42–1:49:58 onward") == "timestamp-like"
-    assert MODULE._value_shape("Chapter 2: 05:41–10:22") == "opaque-text"
+    assert MODULE._value_shape("00:01:00 \u2014 03:21:46") == "timestamp-like"
+    assert MODULE._value_shape("00:00\u201303:02 and 12:59\u201314:55") == "timestamp-like"
+    assert MODULE._value_shape("1:28:42\u20131:49:58 onward") == "timestamp-like"
+    assert MODULE._value_shape("Chapter 2: 05:41\u201310:22") == "opaque-text"
