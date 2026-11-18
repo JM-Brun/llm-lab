@@ -1008,7 +1008,6 @@ relation_types:
 relations:
 
   - {from: free-energy-principle, type: contributes-to, to: active-inference}
-  - {from: free-energy-principle, type: approximates, to: surprisal}
   - {from: active-inference, type: contrasts-with, to: aixi}
   - {from: predictive-compression, type: applies-to, to: conditional-distribution}
   - {from: predictive-compression, type: contributes-to, to: entropy-coding}
