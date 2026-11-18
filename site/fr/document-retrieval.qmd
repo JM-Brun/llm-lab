@@ -22,6 +22,8 @@ related: ["fr/rag-memory-boundaries", "fr/context-engineering", "fr/in-context-l
 tags: ["type:deep-dive", "destination:deepen", "topic:document-retrieval", "level:advanced", "language:fr", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-fr-document-retrieval.qmd >}}
+
 ::: {.chapter-lead}
 La **récupération documentaire** (*document retrieval* ou *information retrieval*) sélectionne des documents ou passages pertinents à partir d'une requête. Elle peut alimenter un moteur de recherche, un pipeline RAG ou une mémoire, mais elle ne garantit pas que les résultats seront transmis au modèle. Cette page se concentre sur l'ingestion, l'indexation, les familles de recherche, le classement et leur évaluation. La page sœur [RAG, mémoire et transmission au contexte](rag-memory-boundaries.qmd) suit le trajet de l'information retrouvée jusqu'à son éventuelle exploitation par le modèle.
 :::
@@ -127,5 +129,5 @@ Les exercices [RAG, mémoire et frontières de transmission](exercises/rag-memor
 Pour le cycle complet, voir [RAG, mémoire et transmission au contexte](rag-memory-boundaries.qmd).
 
 ::: {.language-switch}
-[English version](../en/document-retrieval.qmd)
+**Langue :** [Français](document-retrieval.qmd) · [English](../en/document-retrieval.qmd)
 :::
