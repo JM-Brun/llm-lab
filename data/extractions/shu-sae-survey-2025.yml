@@ -11,10 +11,16 @@ pedagogical_model:
       - "Learning implications are editorial synthesis and do not reproduce the paper's full method or experiment."
   source_graph:
     nodes:
-      - {id: sae-research-field, kind: representation, description: "The survey organizes SAE research into architectures, training, explanation, evaluation and applications."}
-      - {id: primary-studies, kind: constraint, description: "Empirical claims in the survey must be traced to the cited primary studies."}
+      - id: src-sae-research-field
+        kind: representation
+        description: "The survey organizes SAE research into architectures, training, explanation, evaluation and applications."
+        locator: "Abstract: survey contribution and topic coverage"
+      - id: src-primary-studies
+        kind: constraint
+        description: "Empirical claims in the survey must be traced to the cited primary studies."
+        locator: "Survey status: synthesis, not primary evidence"
     edges:
-      - {from: sae-research-field, type: synthesizes, to: primary-studies}
+      - {from: src-sae-research-field, type: synthesizes, to: src-primary-studies}
     interpretation: "This is a source-local reconstruction of the reported finding and its scope, not a canonical concept graph or an independent reproduction."
   learning_outcomes:
     - {status: inferred, outcome: "Distinguish the paper's technical object or result from its natural-language interpretation.", basis: "Abstract-level review; full-paper audit pending."}
@@ -23,9 +29,19 @@ pedagogical_model:
   teaching_route:
     - {order: 1, section: "Identify scope", function: establish-provenance, moves: ["Record model, publication version and experimental scope."]}
     - {order: 2, section: "Inspect finding", function: qualify-evidence, moves: ["Separate the reported result from assumptions, limitations and untested generalizations."]}
+  pedagogical_strengths:
+    - "Makes a specific reported research finding available for concept-level comparison."
   pedagogical_limits:
     - "Abstract-level source review only; full methods, appendices and code have not yet been audited."
     - "No model or SAE was run by LLM Lab; no result was independently reproduced."
+  comparison:
+    dossier: "docs/source-reviews/sparse-autoencoder-research-2023-2025.md"
+    canonical_graph: "data/concepts.yml and generated JSON-LD projection"
+    canonical_routes: [docs/learning-path.md, data/guided-route.yml]
+    decision: "Use as source-scoped evidence for the interpretability concept audit; do not promote source-specific terms directly into canonical concepts."
+    structures_kept_separate:
+      - "The paper's result remains distinct from the canonical concept definition."
+      - "The paper's experiment and model scope remain distinct from a universal claim."
 
 items:
   - id: shu-survey-sparse-autoencoders-2025:abstract-finding
