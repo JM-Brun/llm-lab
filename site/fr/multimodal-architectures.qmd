@@ -23,6 +23,8 @@ related: ["fr/llm-overview", "fr/cross-attention", "fr/generation", "fr/transfor
 tags: ["type:concept-lesson", "destination:deepen", "topic:multimodal-architectures", "level:advanced", "language:fr", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-fr-multimodal-architectures.qmd >}}
+
 ::: {.chapter-lead}
 Un modèle qui **reçoit** une image n'est pas nécessairement capable d'en **produire** une. « Multimodal » peut désigner la compréhension d'entrées non textuelles, la génération de sorties non textuelles, ou les deux. Pour comprendre une architecture, il faut suivre séparément les représentations qui entrent dans le modèle et celles qui en sortent.
 :::
