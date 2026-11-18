@@ -335,6 +335,7 @@ def test_extraction_tag_namespace_and_duplicates_are_checked(tmp_path: Path) -> 
 
     assert any("classification.tags: duplicate tags" in error for error in errors)
 
+
 def test_valid_community_provenance_and_verification_are_accepted(tmp_path: Path) -> None:
     _corpus(tmp_path, with_extraction=True)
     extraction_path = tmp_path / "data" / "extractions" / "example-source.yml"
