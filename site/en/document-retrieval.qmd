@@ -22,6 +22,8 @@ related: ["en/rag-memory-boundaries", "en/context-engineering", "en/in-context-l
 tags: ["type:deep-dive", "destination:deepen", "topic:document-retrieval", "level:advanced", "language:en", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-en-document-retrieval.qmd >}}
+
 ::: {.chapter-lead}
 **Document retrieval** or **information retrieval** selects documents or passages relevant to a query. It can power a search engine, a RAG pipeline, or a memory system, but it does not guarantee that results will be supplied to the model. This page focuses on ingestion, indexing, retrieval families, ranking, and their evaluation. Its sibling page [RAG, memory, and context transmission](rag-memory-boundaries.qmd) follows retrieved information through to its possible use by the model.
 :::
@@ -127,5 +129,5 @@ Les exercices [RAG, mémoire et frontières de transmission](exercises/rag-memor
 For the full information lifecycle, see [RAG, memory, and context transmission](rag-memory-boundaries.qmd).
 
 ::: {.language-switch}
-[Version française](../fr/document-retrieval.qmd)
+**Language:** [Français](../fr/document-retrieval.qmd) · [English](document-retrieval.qmd)
 :::
