@@ -6169,7 +6169,7 @@ sources:
     classification:
       primary_theme: probabilistic-foundations-training
       secondary_themes: [mathematical-tools-geometry]
-      tags: [topic:entropy, topic:source-coding, topic:lossless-coding, theorem:noiseless-coding]
+      tags: [topic:entropy, topic:source-coding, topic:lossless-coding]
       concept_ids: [entropy, surprisal, conditional-distribution, predictive-compression, entropy-coding]
     metadata:
       technical_level: advanced
