@@ -84,7 +84,8 @@ Les sections « De la conception du contexte aux architectures de récupération
 - Vérifié : exercices RAG FR/EN et leurs sept familles de questions.
 - Vérifié : Loss et Gradients possèdent déjà les explications mathématiques que Training loop doit rappeler sans recopier.
 - Vérifié : `data/guided-route.yml` a neuf étapes et une seule entrée facultative `rag-memory-boundaries` sous `context-use`.
-- Non effectué : déplacement/suppression de contenu, création de page retrieval, modification de métadonnées, génération du graphe, rendu Quarto, CI, revue rendue ou test avec apprenant.
+- Réalisé depuis cet inventaire : création des pages retrieval FR/EN, transfert vérifié des sections et ressources correspondantes, réduction des pages RAG et Context engineering, intégration dans le registre de route optionnelle, la carte Deepen, la configuration Quarto et le test de membership.
+- En attente : génération locale du graphe/projections, rendu Quarto final, CI sur le dernier commit, revue rendue/accessibilité et test avec apprenant.
 
 ## Synthèse opérationnelle
 
@@ -136,3 +137,35 @@ Le découpage ne doit pas être justifié par la seule longueur de la page sourc
 - Auditer les liens de l'exercice RAG et les renvois depuis Context engineering pour éviter des liens qui pointent vers une section déplacée ou une ancre disparue.
 - Vérifier les références ColPali, FAISS, bi-encoder/cross-encoder dans les deux langues et leur statut de liens externes.
 - Après création, générer les projections de métadonnées et de graphe à partir des sources canoniques ; ne pas éditer les artefacts générés à la main.
+
+
+## 10. Lot 1 exécuté — récupération documentaire et cycle RAG
+
+### Pages créées et rôles stabilisés
+
+- `site/fr/document-retrieval.qmd` et `site/en/document-retrieval.qmd` sont créées comme pages Deepen sœurs, avec le topic commun `document-retrieval`, le domaine `inference-efficiency`, un rôle avancé et aucun `suggested_route.previous/next`.
+- Elles possèdent le pipeline d'ingestion/indexation/recherche/classement, les familles BM25/dense/SPLADE/ColBERT/cross-encoder, la recherche visuelle ColPali, le diagramme Mermaid, les résultats ViDoRe et leurs réserves, l'exemple FAISS et les ressources de reranking.
+- Les blocs transférés ont été comparés au texte source avant réduction : le contenu de la section retrieval et des exemples FAISS/reranking est présent dans la nouvelle page dans les deux langues.
+- `rag-memory-boundaries.qmd` conserve son identifiant et possède désormais le titre « RAG, mémoire et transmission au contexte ». Il garde les six états de l'information, le pipeline RAG et ses échecs, les types et la gouvernance de mémoire, la frontière ICL, l'expérience Orion/Delta, la sécurité et le diagnostic. Les blocs retrieval détaillés et l'exemple FAISS ne sont plus dupliqués.
+- `context-engineering.qmd` conserve son rôle core. Les longs développements de pipeline retrieval/RAG/mémoire ont été remplacés par une synthèse locale qui garde les distinctions indispensables et renvoie vers les deux pages propriétaires.
+
+### Intégration de navigation et du graphe
+
+- Les deux nouvelles pages sont déclarées dans `data/guided-route.yml` comme membres **optionnels** de `context-use`, au même niveau que RAG. Aucune étape ni transition n'a été ajoutée.
+- Le générateur existant projette directement les pages de `optional_pages` ; aucun nouveau mécanisme ni champ parallèle n'a été introduit.
+- Les deux cartes Deepen et leurs relations hiérarchiques réciproques incluent la nouvelle page.
+- `site/_quarto.yml` inclut les deux pages dans le rendu explicite et dans la navigation latérale FR/EN.
+- Les liens context engineering ↔ retrieval/RAG et les relations page-map bilingues ont été mis à jour.
+- Le test `test_guided_route_memberships.py` vérifie désormais que `document-retrieval` est optionnel dans `context-use`, et non une page core.
+
+### Contrôles effectués et limites
+
+- Comparaison de conservation automatisée sur les chaînes sources FR/EN : sections retrieval et exemples FAISS/reranking présents dans les nouvelles pages ; sections détaillées absentes des pages RAG après transfert.
+- Contrôle structurel des pages : titres, topics, tags, relations, headings, diagramme Mermaid et liens de pratique.
+- Le contrôle Python « Validate page metadata learning graph » a réussi sur un commit précédent de cette branche, après l'intégration des pages et de leurs métadonnées. Les commits de finition ultérieurs doivent encore repasser les contrôles.
+- Les jobs Test suite et Quarto site & browser audit étaient encore en cours au dernier relevé ; ne pas les déclarer réussis avant lecture de leur conclusion sur le SHA courant.
+- Pas de validation visuelle/accessibilité ni de test avec apprenant revendiqué.
+
+### Synthèse du lot
+
+Le découpage a été exécuté sans créer de route parallèle : retrieval est désormais une ressource Deepen facultative indépendante, tandis que RAG/mémoire garde le parcours de l'information externe jusqu'à son usage et Context engineering reste propriétaire de la conception du contexte. Les éléments déplacés sont préservés dans les deux langues ; les tests et le rendu sur le dernier commit restent les conditions de clôture du lot.
