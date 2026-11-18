@@ -49,7 +49,7 @@ Chemins inspectés : `tiktoken/core.py`, `tiktoken/_educational.py`, `tiktoken_e
 
 `_educational.py` rend l'algorithme visible en Python : expression regex, conversion UTF-8 en octets, initialisation des 256 octets, recherche répétée de la paire fusionnable de rang minimal, reconstruction des octets et décodage. Il peut afficher les fusions intermédiaires et charger les rangs d'un encodage existant.
 
-Ce module est explicitement pédagogique : il ne faut pas le confondre avec le chemin natif optimisé utilisé par la bibliothèque.
+Ce module est explicitement pédagogique : il ne faut pas le confondre avec le chemin natif optimisé utilisé par la bibliothèque. Il travaille sur les rangs fusionnables et ne reproduit pas à lui seul la politique de tokens spéciaux de l'API de production.
 
 ## 3. minbpe — décomposition pédagogique des variantes
 
