@@ -1,0 +1,4 @@
+# Controlled registry of source-review collection dossiers.
+# Membership is assigned explicitly on source records; no keyword inference.
+schema_version: 1
+collections: []
