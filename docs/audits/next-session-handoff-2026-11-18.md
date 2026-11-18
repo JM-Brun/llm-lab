@@ -251,14 +251,14 @@ de tests déjà validé. Ne pas modifier la CI sur cette seule base.
 
 
 
-## 14. Inventaire ENG-02 — périmètre approuvé et décompte candidat
+## 14. Inventaire ENG-02 — périmètre approuvé et première version révisée
 
 Le mainteneur a approuvé le périmètre de dix domaines GPT. Un inventaire initial de **48 lignes regroupées** a été créé, puis sa granularité a été revue : ces lignes ne sont pas 48 invariants indépendants dans
 [ENG-02 — inventaire des invariants critiques](eng-02-critical-invariants-inventory-2026-11-18.md).
 
 Le nombre 48 est retiré comme proposition de dénominateur : plusieurs lignes agrègent des propriétés indépendantes. La décomposition et la séparation des contrats API des invariants fonctionnels restent à effectuer. Les statuts « protégé » sont des constats statiques de présence
 d'assertions, non une preuve de sensibilité à une mutation. Les lignes partielles
-restent au dénominateur proposé et sont exclues du numérateur strict.
+ne peuvent être comptées au numérateur strict ; leur inclusion dans le dénominateur dépendra de la version atomique approuvée.
 
 L'inventaire documente notamment les lacunes candidates suivantes :
 - validation de types pour `context_length` / `stride` ;
@@ -270,8 +270,7 @@ L'inventaire documente notamment les lacunes candidates suivantes :
   GPT-2.
 
 **ENG-02 reste not measured.** Les cinq mutations manuelles n'ont toujours pas
-été exécutées. Prochaine étape : revue du tableau de 48 lignes, puis mutation
-pilote dans un clone local et liaison de chaque résultat à l'ID concerné.
+été exécutées. Prochaine étape : reconstruire un inventaire atomique à partir des axes de décomposition du §15, puis exécuter le pilote de mutations dans un clone local et relier chaque résultat à l'ID concerné.
 
 
 ## 15. Revue de granularité ENG-02 — 2026-11-18
