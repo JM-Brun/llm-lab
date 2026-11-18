@@ -527,3 +527,39 @@ def test_explicit_null_collection_membership_is_rejected(tmp_path: Path) -> None
     assert any(
         "sources[0].collections: expected a list of collection IDs" in error for error in errors
     )
+
+
+def test_collection_registry_rejects_non_string_status_without_crashing(tmp_path: Path) -> None:
+    _corpus(tmp_path)
+    _write_yaml(
+        tmp_path / "data" / "source-collections.yml",
+        {
+            "schema_version": 1,
+            "collections": [
+                {
+                    "id": "invalid-status",
+                    "title": "Invalid status",
+                    "dossier_path": "docs/missing.md",
+                    "status": ["active"],
+                }
+            ],
+        },
+    )
+
+    errors = MODULE.validate_source_catalogue(tmp_path)
+
+    assert any(".status: expected 'active' or 'archived'" in error for error in errors)
+
+
+def test_extraction_cannot_duplicate_source_collection_membership(tmp_path: Path) -> None:
+    _corpus(tmp_path, with_extraction=True)
+    extraction_path = tmp_path / "data" / "extractions" / "example-source.yml"
+    data = yaml.safe_load(extraction_path.read_text(encoding="utf-8"))
+    data["collections"] = ["qkv-attention"]
+    _write_yaml(extraction_path, data)
+
+    errors = MODULE.validate_source_catalogue(tmp_path)
+
+    assert any(
+        "membership belongs on the canonical source record" in error for error in errors
+    )
