@@ -376,3 +376,7 @@ Après les cinq cas, relancer les fichiers de tests concernés sur le code resta
 - The PR was not reviewed or merged. Issue #1306 remains open. Do not close it when the schema PR merges; the explicit membership backfill, reconciliation and count publication are still outstanding.
 
 **Next actions:** verify CI/Quarto/secret scanning on the exact current head; inspect any failure logs and fix before requesting review; then review the diff and the proposed validation matrix delta. After merge, plan a separate evidence-led source membership backfill with explicit assignment rationale and a distinct source / extraction-file / atomic-item count report. Do not infer assignments from tags, themes, titles, citations, filenames or proximity in a dossier.
+
+### Correction — PR #1307 merged (2026-11-18 22:17 UTC)
+
+The earlier handoff note saying not to merge #1307 is superseded: GitHub now reports PR #1307 merged at 2026-11-18 22:17:12 UTC, merge commit `04d6cfbac65f9fa41f603035c25bffdb796dded3`. The PR head was `aa4bed2af4136c38777b76e35fda44f5c248883a`; CI, Quarto and secret scanning all completed successfully on that exact head. The review API showed no submitted review at the last check, so record the merge as an observed repository event, not as evidence of an independent review. The GEN-03 and LOSS-03a tests/inventory changes are now in main. This does not change the mutation boundary: MUT-01..05 remain unexecuted and ENG-02 remains `not measured`.
