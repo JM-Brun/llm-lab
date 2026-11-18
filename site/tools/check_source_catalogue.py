@@ -285,6 +285,58 @@ def _validate_pedagogical_model(model: Any, where: str, errors: list[str]) -> No
         )
 
 
+def _validate_collection_registry(
+    registry: Any, root: Path, errors: list[str]
+) -> set[str]:
+    """Validate controlled collection identities and return their stable IDs."""
+    where = "data/source-collections.yml"
+    if not isinstance(registry, dict) or registry.get("schema_version") != 1:
+        errors.append(f"{where}: expected schema_version: 1")
+        return set()
+    entries = registry.get("collections")
+    if not isinstance(entries, list):
+        errors.append(f"{where}.collections: expected a list")
+        return set()
+
+    collection_ids: set[str] = set()
+    for index, collection in enumerate(entries):
+        item_where = f"{where}.collections[{index}]"
+        if not isinstance(collection, dict):
+            errors.append(f"{item_where}: expected a mapping")
+            continue
+        collection_id = collection.get("id")
+        if not isinstance(collection_id, str) or not ID_PATTERN.fullmatch(collection_id):
+            errors.append(f"{item_where}.id: expected a stable kebab-case ID")
+        elif collection_id in collection_ids:
+            errors.append(f"{item_where}.id: duplicate collection ID {collection_id!r}")
+        else:
+            collection_ids.add(collection_id)
+
+        for field in ("title",):
+            if not isinstance(collection.get(field), str) or not collection[field].strip():
+                errors.append(f"{item_where}.{field}: expected non-empty text")
+
+        dossier = collection.get("dossier")
+        if not isinstance(dossier, str) or not dossier.strip():
+            errors.append(f"{item_where}.dossier: expected a repository-relative file path")
+        else:
+            dossier_path = Path(dossier)
+            if dossier_path.is_absolute() or ".." in dossier_path.parts:
+                errors.append(f"{item_where}.dossier: path must stay inside the repository")
+            elif not (root / dossier_path).is_file():
+                errors.append(f"{item_where}.dossier: file does not exist: {dossier!r}")
+
+        if collection.get("status") not in {"active", "paused", "archived"}:
+            errors.append(f"{item_where}.status: unsupported value {collection.get('status')!r}")
+        if "owning_issue" in collection and (
+            not isinstance(collection["owning_issue"], int)
+            or isinstance(collection["owning_issue"], bool)
+            or collection["owning_issue"] < 1
+        ):
+            errors.append(f"{item_where}.owning_issue: expected a positive issue number")
+    return collection_ids
+
+
 def validate_source_catalogue(root: Path = ROOT) -> list[str]:
     """Return structural and referential-integrity errors for sources and extractions."""
     source_file = root / "data" / "sources.yml"
@@ -298,6 +350,7 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
     domains = _load_yaml(domain_file, root, errors)
     concepts = _load_yaml(concept_file, root, errors)
     sources_data = _load_yaml(source_file, root, errors)
+    collection_registry = _load_yaml(root / "data" / "source-collections.yml", root, errors)
     if errors:
         return errors
 
@@ -333,6 +386,8 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
     if not isinstance(source_entries, list):
         return ["data/sources.yml: expected a sources list"]
 
+    collection_ids = _validate_collection_registry(collection_registry, root, errors)
+
     source_ids: set[str] = set()
     source_types_by_id: dict[str, str] = {}
     for index, source in enumerate(source_entries):
@@ -341,6 +396,20 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
             errors.append(f"{where}: expected a mapping")
             continue
         source_id = source.get("id")
+        if "collections" in source:
+            memberships = source["collections"]
+            if not isinstance(memberships, list) or not all(
+                isinstance(value, str) for value in memberships
+            ):
+                errors.append(f"{where}.collections: expected a list of collection IDs")
+            else:
+                if len(memberships) != len(set(memberships)):
+                    errors.append(f"{where}.collections: duplicate collection ID")
+                for collection_id in memberships:
+                    if collection_id not in collection_ids:
+                        errors.append(
+                            f"{where}.collections: unknown collection {collection_id!r}"
+                        )
         if not isinstance(source_id, str) or not ID_PATTERN.fullmatch(source_id):
             errors.append(f"{where}.id: expected a stable kebab-case ID")
         elif source_id in source_ids:
@@ -427,6 +496,8 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
             errors.append(f"{where}: expected schema_version: 1")
             continue
         source_id = data.get("source_id")
+        if "collections" in data:
+            errors.append(f"{where}.collections: membership belongs on the canonical source record")
         pedagogical_model = data.get("pedagogical_model")
         if source_types_by_id.get(source_id) in {"blog", "tutorial", "course", "book-chapter"}:
             if pedagogical_model is None:
