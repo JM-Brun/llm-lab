@@ -4270,7 +4270,7 @@ sources:
     related:
       pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced, fr/llm-limits, en/llm-limits]
       concepts: [contextualized-representation, self-attention]
-      audit_records: [docs/source-reviews/visual-learning-resources-2026-11.md, docs/source-reviews/embedding-atlas-neuronpedia-integration-2026-11.md]
+      audit_records: [docs/source-reviews/visual-learning-resources-2026-11.md, docs/source-reviews/embedding-atlas-neuronpedia-integration-2026-11.md, data/extractions/neuronpedia-interpretability-platform-2026.yml]
 
   - id: apple-embedding-atlas
     title: "Embedding Atlas: Low-Friction, Interactive Embedding Visualization"
