@@ -211,6 +211,15 @@ La PR #1219 sur l'extraction Neuronpedia documente un cas utile de traçabilité
 
 ## 6. Priorités recommandées
 
+**Mise à jour après revue du contrat d'extraction — 2026-11-18**
+
+La comparaison du validateur réel avec le template et le README des extractions a révélé un écart entre les champs suggérés et les champs effectivement imposés. La correction documentaire est proposée dans [PR #1223](https://github.com/JM-Brun/llm-lab/pull/1223) : propriété du scan conservée au niveau source, graphe source-local explicitement extensible, exemple README corrigé et aide éditoriale distinguée du contrat CI.
+
+Le renforcement raisonné du validateur est suivi séparément dans [#1226](https://github.com/JM-Brun/llm-lab/issues/1226). Il faudra établir une matrice champ/propriétaire/obligation/validation/fixtures/compatibilité, puis distinguer erreurs d'intégrité et avertissements de qualité. Ne pas rendre obligatoires les dates/licences inconnues ni imposer une taxonomie fermée sans preuve corpus.
+
+La provenance des valeurs sensibles de métadonnées (dates, versions, droits) est étudiée dans [#1225](https://github.com/JM-Brun/llm-lab/issues/1225). Elle reste distincte de la provenance des affirmations et relations conceptuelles suivie dans [#512](https://github.com/JM-Brun/llm-lab/issues/512).
+
+
 ### P0 — Fiabiliser la traçabilité et les statuts
 
 1. Poursuivre [#1211](https://github.com/JM-Brun/llm-lab/issues/1211) : traiter les alertes du rapport une par une, avec décisions justifiées et sans remplissage automatique.
