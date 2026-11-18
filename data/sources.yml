@@ -4303,7 +4303,7 @@ sources:
         inspected_scope: ["Official ICLR 2024 proceedings metadata and abstract", "arXiv preprint metadata and abstract"]
         limitations: ["Full paper, appendices, code and training details have not yet been audited in this ingestion.", "Reported causal feature results have not been independently reproduced."]
     related:
-      pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced, fr/exercises/contextualized-representations, en/exercises/contextualized-representations]
+      pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced, fr/contextualized-representations-exercises, en/contextualized-representations-exercises]
       concepts: [contextualized-representation]
       audit_records: [docs/source-reviews/interpretability-concept-audit-2026-11.md, docs/source-reviews/sparse-autoencoder-research-2023-2025.md, data/extractions/cunningham-sparse-autoencoders-2024.yml]
 
@@ -4338,7 +4338,7 @@ sources:
         inspected_scope: ["Official Transformer Circuits Thread article metadata and abstract/overview"]
         limitations: ["Research report rather than a peer-reviewed proceedings paper; do not conflate its studied one-layer model and feature demonstrations with general claims about all LLMs.", "Full technical sections and figures have not yet been audited; no model experiment was reproduced."]
     related:
-      pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced, fr/exercises/contextualized-representations, en/exercises/contextualized-representations]
+      pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced, fr/contextualized-representations-exercises, en/contextualized-representations-exercises]
       concepts: [contextualized-representation]
       audit_records: [docs/source-reviews/interpretability-concept-audit-2026-11.md, docs/source-reviews/sparse-autoencoder-research-2023-2025.md, data/extractions/bricken-towards-monosemanticity-2023.yml]
 
@@ -4373,7 +4373,7 @@ sources:
         inspected_scope: ["Official ICLR 2025 proceedings metadata and abstract", "arXiv preprint metadata and abstract"]
         limitations: ["Full paper, appendices, released checkpoints and code have not yet been audited or executed.", "Reported scaling and evaluation results have not been independently reproduced."]
     related:
-      pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced, fr/exercises/contextualized-representations, en/exercises/contextualized-representations]
+      pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced, fr/contextualized-representations-exercises, en/contextualized-representations-exercises]
       concepts: [contextualized-representation]
       audit_records: [docs/source-reviews/interpretability-concept-audit-2026-11.md, docs/source-reviews/sparse-autoencoder-research-2023-2025.md, data/extractions/gao-scaling-evaluating-sparse-autoencoders-2025.yml]
 
@@ -4408,7 +4408,7 @@ sources:
         inspected_scope: ["Official NeurIPS 2025 proceedings metadata and abstract", "arXiv preprint metadata and abstract"]
         limitations: ["Full paper and supplementary material have not yet been audited.", "The reported absorption mechanism and experiments have not been independently reproduced."]
     related:
-      pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced, fr/exercises/contextualized-representations, en/exercises/contextualized-representations]
+      pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced, fr/contextualized-representations-exercises, en/contextualized-representations-exercises]
       concepts: [contextualized-representation]
       audit_records: [docs/source-reviews/interpretability-concept-audit-2026-11.md, docs/source-reviews/sparse-autoencoder-research-2023-2025.md, data/extractions/chanin-feature-absorption-2025.yml]
 
@@ -4443,7 +4443,7 @@ sources:
         inspected_scope: ["Official ACL Anthology EMNLP 2025 proceedings metadata and abstract", "arXiv preprint metadata and abstract"]
         limitations: ["Survey synthesis only; claims must be traced to cited primary studies before being treated as primary evidence.", "Full survey sections and cited works have not yet been audited."]
     related:
-      pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced, fr/exercises/contextualized-representations, en/exercises/contextualized-representations]
+      pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced, fr/contextualized-representations-exercises, en/contextualized-representations-exercises]
       concepts: [contextualized-representation]
       audit_records: [docs/source-reviews/interpretability-concept-audit-2026-11.md, docs/source-reviews/sparse-autoencoder-research-2023-2025.md, data/extractions/shu-sae-survey-2025.yml]
 
