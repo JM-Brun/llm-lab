@@ -285,7 +285,7 @@ def _validate_pedagogical_model(model: Any, where: str, errors: list[str]) -> No
         )
 
 
-def _validate_collection_registry(registry: Any, root: Path, errors: list[str]) -> set[str>:
+def _validate_collection_registry(registry: Any, root: Path, errors: list[str]) -> set[str]:
     """Validate controlled collection identities and return their stable IDs."""
     where = "data/source-collections.yml"
     if not isinstance(registry, dict) or registry.get("schema_version") != 1:
