@@ -18,11 +18,11 @@ pedagogical_model:
   source_graph:
     nodes:
       - {id: target-activation-site, kind: constraint, description: "A target model/checkpoint and a specified layer or hook define the activation space to which an SAE is applied."}
-      - {id: sparse-autoencoder, kind: mechanism, description: "An auxiliary encoder/decoder system learns a sparse code that reconstructs target-model activations."}
+      - {id: sparse-autoencoder, kind: operation, description: "An auxiliary encoder/decoder system learns a sparse code that reconstructs target-model activations."}
       - {id: learned-latent-dictionary, kind: representation, description: "The SAE dictionary contains learned latent directions; these are not automatically native neurons or universal semantic concepts."}
       - {id: per-example-feature-coefficient, kind: intermediate, description: "A feature activation is a coefficient/value for one input at a specified activation site."}
       - {id: feature-quality-evaluation, kind: operation, description: "Evaluation spans distinct measures such as reconstruction, sparsity, dead latents, feature recovery, explanation and downstream effects."}
-      - {id: feature-splitting-absorption, kind: result, description: "Feature splitting and absorption show that dictionary granularity and coverage can be unstable under hierarchical structure."}
+      - {id: feature-splitting-absorption, kind: intermediate, description: "Feature splitting and absorption show that dictionary granularity and coverage can be unstable under hierarchical structure."}
       - {id: verbal-feature-explanation, kind: representation, description: "A human- or model-authored explanation is a hypothesis about selected evidence, not the learned latent itself."}
     edges:
       - {from: target-activation-site, type: scopes, to: sparse-autoencoder}
