@@ -6151,3 +6151,125 @@ sources:
       audit_records:
         - docs/source-reviews/circuit-attribution-faithfulness-2022-2025.md
         - data/extractions/marks-sparse-feature-circuits-2025.yml
+
+  - id: shannon-mathematical-theory-communication-1948
+    title: "A Mathematical Theory of Communication"
+    creators: ["Claude E. Shannon"]
+    source_type: paper
+    identifiers: {doi: "10.1002/j.1538-7305.1948.tb01338.x"}
+    canonical_url: "https://doi.org/10.1002/j.1538-7305.1948.tb01338.x"
+    publisher: "The Bell System Technical Journal / Wiley"
+    publication_date: "1948-07"
+    updated_date: null
+    language: en
+    version: "Bell System Technical Journal, 27(3), 379–423; July 1948"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:entropy, topic:source-coding, topic:lossless-coding, theorem:noiseless-coding]
+      concept_ids: [entropy, surprisal, conditional-distribution, predictive-compression, entropy-coding]
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, mathematical-derivation]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    scan_history:
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "Primary paper PDF, Part I: §§ 6–9, including conditional entropy, finite-state source entropy, Theorems 3–6 and the noiseless-channel Theorem 9"
+          - "Section 9 construction using finite blocks, integer binary code lengths and the bound between block-average ideal information and realizable code length"
+        limitations:
+          - "The paper is a foundational noiseless-channel treatment, not a modern autoregressive neural-language-model specification."
+          - "Theorem 9 is an asymptotic rate theorem; it does not assert that a finite implementation's byte count equals a model's summed NLL."
+          - "Part II (October 1948) and the paper's appendices were not exhaustively re-audited in this pass."
+          - "No project implementation or experiment was reproduced from this paper."
+    related:
+      pages: [fr/entropy, en/entropy, fr/cross-entropy, en/cross-entropy, fr/compression-revision, en/compression-revision]
+      concepts: [entropy, surprisal, conditional-distribution, predictive-compression, entropy-coding]
+      audit_records: [docs/source-reviews/predictive-coding-primary-sources-2026-11.md, data/extractions/shannon-mathematical-theory-communication-1948.yml]
+
+  - id: rissanen-langdon-arithmetic-coding-1979
+    title: "Arithmetic Coding"
+    creators: ["Jorma Rissanen", "G. G. Langdon, Jr."]
+    source_type: paper
+    identifiers: {doi: "10.1147/rd.232.0149"}
+    canonical_url: "https://doi.org/10.1147/rd.232.0149"
+    publisher: "IBM Journal of Research and Development"
+    publication_date: "1979-03"
+    updated_date: null
+    language: en
+    version: "IBM Journal of Research and Development, 23(2), 149–162; March 1979"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [mathematical-tools-geometry, inference-efficiency]
+      tags: [topic:arithmetic-coding, topic:entropy-coding, method:finite-state-coding, method:lossless-decoding]
+      concept_ids: [arithmetic-coding, entropy-coding, predictive-compression, surprisal]
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, mathematical-derivation, method]
+      audiences: [practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    scan_history:
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "Primary article PDF: introduction, arithmetic coding equations and probability-derived ideal lengths (pp. 149–152)"
+          - "Finite-precision approximation and unique-inverse discussion (pp. 151–152)"
+          - "Decodability criteria section and theorem context (pp. 157–159)"
+        limitations:
+          - "The paper develops a broad finite-state arithmetic-code family; it is not a drop-in specification for the particular modern range coder to be implemented in LLM Lab."
+          - "The scanned copy has OCR/layout artefacts; equation numbering and page boundaries should be checked against the publisher copy before quoting exact formula typography."
+          - "No project implementation or experiment was reproduced from this paper."
+    related:
+      pages: [fr/compression-revision, en/compression-revision, fr/entropy, en/entropy]
+      concepts: [arithmetic-coding, entropy-coding, predictive-compression, surprisal]
+      audit_records: [docs/source-reviews/predictive-coding-primary-sources-2026-11.md, data/extractions/rissanen-langdon-arithmetic-coding-1979.yml]
+
+  - id: witten-neal-cleary-arithmetic-coding-1987
+    title: "Arithmetic Coding for Data Compression"
+    creators: ["Ian H. Witten", "Radford M. Neal", "John G. Cleary"]
+    source_type: paper
+    identifiers: {doi: "10.1145/214762.214771"}
+    canonical_url: "https://doi.org/10.1145/214762.214771"
+    publisher: "Communications of the ACM"
+    publication_date: "1987-06"
+    updated_date: null
+    language: en
+    version: "Communications of the ACM, 30(6), 520–540; June 1987"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
+    classification:
+      primary_theme: probabilistic-foundations-training
+      secondary_themes: [mathematical-tools-geometry, inference-efficiency]
+      tags: [topic:arithmetic-coding, topic:lossless-coding, method:adaptive-model, method:encoder-decoder]
+      concept_ids: [arithmetic-coding, entropy-coding, conditional-distribution, predictive-compression, surprisal]
+    metadata:
+      technical_level: advanced
+      contribution_types: [method, implementation, experiment, pedagogy]
+      audiences: [learner, practitioner, researcher, educator]
+    scan_status: partially-scanned
+    integration_status: reviewed
+    scan_history:
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "Primary article text and implementation listing: model/decoder agreement, context-dependent next-symbol probabilities, interval narrowing, EOF termination and encoding/decoding pseudocode (pp. 520–527)"
+          - "Finite precision, integer arithmetic, overflow/underflow and implementation constraints (pp. 523–527)"
+        limitations:
+          - "Only the model/algorithm and implementation sections were audited in detail; later performance tables, model variants and applications were not exhaustively reviewed."
+          - "The paper's C implementation and experimental results were not independently rerun."
+          - "The article's particular coder is a historical reference, not a requirement to reproduce its code verbatim."
+    related:
+      pages: [fr/compression-revision, en/compression-revision, fr/cross-entropy, en/cross-entropy, fr/entropy, en/entropy]
+      concepts: [arithmetic-coding, entropy-coding, conditional-distribution, predictive-compression, surprisal]
+      audit_records: [docs/source-reviews/predictive-coding-primary-sources-2026-11.md, data/extractions/witten-neal-cleary-arithmetic-coding-1987.yml]
