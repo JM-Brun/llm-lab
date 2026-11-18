@@ -20,10 +20,10 @@ A targeted inspection of the current canonical concept registry found:
 - `teacher-forcing` already exists as a core concept, defined around using observed previous tokens as training context.
 - `instruction-tuning` already exists as a supporting concept and is linked to the bilingual LLM-evolution lessons.
 - Training examples, observed targets, cross-entropy and training objectives are represented in the existing training concepts and relations.
-- No canonical concept explicitly named knowledge distillation, teacher model, student model, response/logit distillation or feature distillation was found in the inspected concept registry.
-- The current source registry and bibliography do not yet provide an inspected AiEdge article record.
+- The canonical concept `knowledge-distillation` already exists in `data/concepts.yml`, with bilingual definitions and links to the LLM-evolution, language-modeling-math and compression-revision lessons. It is also related to `model-compression` in the canonical graph.
+- The AiEdge source record already points to the bilingual training-examples and LLM-evolution pages, but its `classification.concept_ids` was empty despite the explicit distillation topic in its title and tags. This is a metadata-link gap, not evidence that the inaccessible article's claims have been reviewed.
 
-This is a coverage observation, not a claim about what the inaccessible article teaches. It suggests a potentially useful topic gap, but does not yet justify adding concepts, changing the graph or modifying the learning route.
+This is a coverage observation, not a claim about what the inaccessible article teaches. The source remains inaccessible and no article-specific extraction is justified. The title-level topic relation is now linked to the existing `knowledge-distillation` concept; no new concept, page or learning-route step is proposed.
 
 ## 3. Candidate comparison dimensions — pending article access
 
@@ -86,3 +86,8 @@ A separate AiEdge article, [How To Deploy LLM Applications](https://newsletter.t
 This is **not** the requested 2026 article and must not be attributed to it. It is a separately published source by the same newsletter author, surfaced during follow-up research. It offers a useful candidate cross-check for the extraction framework, but it is not yet registered or scanned as an independent source. In particular, this short taxonomy should not be treated as exhaustive: it does not by itself cover logit/soft-target objectives, rationale supervision, on-policy variants or detailed training losses.
 
 The target article remains inaccessible and its source status is unchanged. If this 2024 article is later selected for ingestion, register it under its own canonical source ID and perform a separate scan rather than folding its claims into this record.
+
+
+## 7. Correction — canonical concept already exists (2026-11-18)
+
+A re-check of `data/concepts.yml` on main found that the earlier statement in §2 saying no knowledge-distillation concept existed was stale: `knowledge-distillation` is already a canonical bilingual concept, linked to `fr/en/llm-evolution`, `fr/en/language-modeling-math` and `fr/en/compression-revision`, and related to `model-compression`. The AiEdge source record's empty `classification.concept_ids` was therefore inconsistent with its explicit title/topic tag. The source record now links to `knowledge-distillation` at the topic/metadata level. This does not upgrade its inaccessible scan status, attribute claims to the article, or justify an extraction.
