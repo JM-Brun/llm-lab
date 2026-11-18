@@ -111,7 +111,9 @@ def collect_inventory(root: Path = ROOT) -> dict[str, Any]:
         "items_with_scalar_locator": scalar,
         "items_with_unsupported_locator_shape": unsupported,
         "unsupported_locator_shapes": dict(sorted(unsupported_shapes.items())),
-        "representative_unsupported_locator_record_paths": dict(sorted(unsupported_examples.items())),
+        "representative_unsupported_locator_record_paths": dict(
+            sorted(unsupported_examples.items())
+        ),
         "items_with_non_mapping_extraction_record": malformed_items,
         "items_without_locator_mapping": missing + scalar + unsupported,
         "locators_with_missing_or_invalid_required_fields": malformed,
