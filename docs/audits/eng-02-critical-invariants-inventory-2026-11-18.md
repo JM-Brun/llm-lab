@@ -228,3 +228,62 @@ Inspection directe des implémentations et tests de `main` après intégration d
 - `GEN-03` reste partiel : l'implémentation paraît correcte, mais le test ne vérifie pas la fenêtre passée au modèle. La recommandation de test est précise et directement falsifiable.
 - `BLOCK-01` doit être décomposé en deux candidats, sans créer artificiellement un nouveau total approuvé.
 - Aucun de ces constats ne démontre la sensibilité aux mutations. ENG-02 reste **not measured** ; le dénominateur reste non approuvé.
+
+## 8. Décomposition atomique ciblée — ATTENTION et LOSSES (2026-11-18)
+
+Cette décomposition est une **proposition de granularité**, pas une approbation du dénominateur. Les suffixes alphabétiques identifient des propriétés candidates séparables ; ils ne constituent pas un nouveau total ENG-02. Les états ci-dessous restent statiques tant que les mutations discriminantes ne sont pas exécutées.
+
+### ATTENTION — propriétés candidates
+
+| ID candidat | Propriété atomique | Assertion/test existant à rattacher | Mutation discriminante candidate |
+|---|---|---|---|
+| ATT-01a | `causal_mask(n)` produit zéro sur la diagonale et sous la diagonale, puis `-inf` strictement au-dessus | `test_causal_mask_structure` | Inverser la triangularité ou rendre une position future autorisée ; l'égalité élément par élément doit échouer |
+| ATT-01b | L'attention causale ne laisse pas les clés/valeurs futures influencer les sorties antérieures | `test_scaled_dot_product_attention_causal_invariance` | Neutraliser le masque dans le calcul d'attention ; la perturbation des positions futures doit modifier une sortie antérieure |
+| ATT-02a | Le softmax normalise indépendamment chaque tranche le long de l'axe demandé | `test_softmax_with_temperature_properties`, `test_wrong_softmax_axis_fails_per_query_normalization_invariant` | Remplacer l'axe de normalisation par un axe voisin ; les sommes attendues par tranche ne valent plus 1 |
+| ATT-02b | Ajouter une constante à tous les logits d'une tranche ne change pas ses probabilités | `test_softmax_with_temperature_properties` | Supprimer la soustraction du maximum ou introduire un décalage dépendant de la valeur absolue ; comparer les probabilités avant/après translation |
+| ATT-03a | À logits non uniformes fixés, une température basse concentre la distribution et une température élevée l'aplatit | `test_softmax_with_temperature_properties` | Ignorer la température ou multiplier au lieu de diviser les logits ; les distributions froide/chaude cessent de satisfaire les références |
+| ATT-03b | Une température non finie ou non strictement positive est rejetée | `test_softmax_with_temperature_invalid`, `test_softmax_rejects_nonfinite_temperature` | Supprimer la validation de température ; au moins une entrée invalide doit ne plus lever `ValueError` |
+| ATT-04a | Les logits finis extrêmes restent traités de façon numériquement stable lorsque le résultat mathématique est représentable | `test_softmax_extreme_finite_logits_stays_normalized`, tests des logits extrêmes proches | Réintroduire une exponentiation non stabilisée ou une soustraction qui déborde ; les tests sous `np.errstate` doivent échouer |
+| ATT-04b | Les logits non finis sont rejetés par le softmax | `test_softmax_with_temperature_invalid` | Retirer le contrôle de finitude ; NaN/infini ne provoque plus le rejet attendu |
+| ATT-04c | Les entrées de masque NaN/+inf sont rejetées | `test_attention_rejects_invalid_mask_entries` | Supprimer le contrôle NaN/+inf ; une entrée de masque invalide est acceptée |
+| ATT-04d | Une ligne entièrement masquée produit des poids et une sortie nuls sans avertissement/NaN | `test_fully_masked_attention_row_returns_zeros_without_warning` | Diviser par la somme nulle sans branche de sécurité ; le test sous `np.errstate(invalid="raise")` échoue |
+| ATT-05a | Les scores QK sont divisés par \(\sqrt{d_k}\) avant softmax | `test_scaled_dot_product_attention_matches_hand_computable_weighted_sum` | Supprimer le facteur d'échelle ; les poids et la somme pondérée divergent de la référence analytique |
+| ATT-05b | Les positions interdites par le masque reçoivent un poids nul et ne contribuent pas à la normalisation | `test_attention_weights_normalize_only_over_allowed_keys` | Ignorer le masque ou le traiter avec une polarité inversée ; le poids de la clé interdite devient non nul |
+| ATT-05c | La sortie est la somme pondérée des vecteurs valeurs avec les poids effectivement calculés | `test_scaled_dot_product_attention_matches_hand_computable_weighted_sum`, `test_attention_weights_normalize_only_over_allowed_keys` | Remplacer l'agrégation pondérée par une somme non pondérée ou utiliser un axe erroné ; la référence manuelle échoue |
+| ATT-05d | Les dimensions de sortie et de poids respectent respectivement \((T_q,d_v)\) et \((T_q,T_k)\) | `test_scaled_dot_product_attention_shapes_and_invariants` | Transposer la sortie ou les poids, ou réduire un axe ; les formes exactes échouent |
+
+Précisions de frontière :
+- ATT-01a porte sur la construction du masque ; ATT-01b porte sur son effet causal dans le calcul d'attention. Ne pas les fusionner au seul motif qu'ils concernent le même mécanisme.
+- ATT-04a est une propriété numérique sur des résultats représentables ; ATT-04b/04c relèvent du contrat d'entrée et de la convention explicite des lignes entièrement masquées.
+- ATT-05a/b/c/d séparent formule des scores, application du masque, agrégation des valeurs et contrat de formes. Une seule mutation ne doit pas être supposée casser les quatre propriétés.
+
+### LOSSES — propriétés candidates
+
+| ID candidat | Propriété atomique | Assertion/test existant à rattacher | Mutation discriminante candidate |
+|---|---|---|---|
+| LOSS-01a | La cross-entropy calculée depuis les logits bruts correspond à la valeur analytique attendue | `test_cross_entropy_matches_known_value` | Calculer la perte sur logits normalisés de façon incorrecte ou inverser la classe cible ; la valeur analytique échoue |
+| LOSS-02a | Le gradient par rapport aux logits correspond à la dérivée numérique de la loss moyenne | `test_gradient_matches_central_finite_differences` | Inverser le signe du gradient ou omettre la division par batch ; les différences finies divergent |
+| LOSS-02b | La somme des composantes du gradient est nulle pour chaque exemple | `test_gradient_rows_sum_to_zero` | Omettre la soustraction de 1 sur la classe cible ou altérer une probabilité ; la somme par ligne n'est plus nulle |
+| LOSS-03a | La réduction de la loss est la moyenne des pertes individuelles du batch, et non leur somme | `test_cross_entropy_averages_distinct_per_example_losses` | Remplacer la moyenne par une somme ; la valeur obtenue diverge de la moyenne analytique des deux pertes distinctes |
+| LOSS-03b | La réduction moyenne évite un débordement intermédiaire lorsque la moyenne finale est représentable | `test_cross_entropy_averages_large_finite_losses_without_sum_overflow` | Sommer les pertes brutes avant division ; le test sous `np.errstate(over="raise")` doit échouer |
+| LOSS-04a | La loss est invariante à une translation constante indépendante de chaque ligne de logits | `test_cross_entropy_is_invariant_to_rowwise_constant_shift` | Omettre la normalisation log-sum-exp stable ou introduire une dépendance à l'offset absolu ; la comparaison échoue |
+| LOSS-04b | Les logits extrêmes float64 dont la loss/gradient est représentable produisent un résultat fini conforme | `test_extreme_opposite_sign_logits_have_finite_gradient`, `test_extreme_opposite_sign_logits_have_zero_loss_for_maximum_target` | Réintroduire une soustraction/exponentiation instable ; les résultats numériques de référence échouent |
+| LOSS-04c | Une cross-entropy mathématiquement non représentable en float64 est rejetée explicitement | `test_unrepresentable_extreme_cross_entropy_is_rejected` | Supprimer le contrôle de finitude de la loss ; le cas extrême ne lève plus `ValueError` |
+| LOSS-05a | Les logits sont de rang 2 et le batch/classe ne sont pas vides ; les cibles ont la forme du batch | `test_invalid_inputs_raise_value_error`, `test_gradient_invalid_inputs_raise_value_error` | Retirer les contrôles de rang/dimensions/forme des cibles ; un cas paramétré correspondant n'est plus rejeté |
+| LOSS-05b | Les logits doivent être finis | `test_invalid_inputs_raise_value_error`, `test_gradient_invalid_inputs_raise_value_error` | Retirer le contrôle `isfinite` ; NaN/infini est accepté ou propage un résultat |
+| LOSS-05c | Les cibles doivent être des indices de classe entiers | `test_invalid_inputs_raise_value_error`, `test_gradient_invalid_inputs_raise_value_error` | Accepter les cibles flottantes ; le cas `0.5` ne lève plus `ValueError` |
+| LOSS-05d | Les indices de cible doivent rester dans les bornes des classes | `test_invalid_inputs_raise_value_error`, `test_gradient_invalid_inputs_raise_value_error` | Retirer le contrôle de bornes ; un indice négatif ou égal à `num_classes` n'est plus rejeté |
+| LOSS-05e | Les fonctions de loss et de gradient ne modifient pas le tableau de logits fourni par l'appelant | `test_loss_and_gradient_do_not_mutate_logits` | Modifier les logits en place pendant la stabilisation ou la construction des probabilités ; le snapshot avant/après diffère |
+
+Le test multi-exemples `test_cross_entropy_averages_distinct_per_example_losses` complète le test de batch 1 : il utilise deux pertes distinctes, calcule leur moyenne analytique et vérifie explicitement que le résultat n'est pas leur somme. Le test d'overflow reste séparé, car il vérifie une propriété numérique distincte.
+
+### Règles de consolidation
+
+1. Les identifiants suffixés sont des unités candidates à discuter ; ils ne sont ni approuvés ni comptés dans un dénominateur.
+2. Les tests cités établissent seulement la présence d'assertions repérées. Les mutations indiquées sont des expériences proposées, pas des résultats.
+3. Lorsqu'un même test soutient deux propriétés, vérifier qu'il contient bien deux assertions indépendantes et qu'une mutation peut en faire échouer une sans nécessairement faire échouer l'autre.
+4. Pour chaque candidat, confirmer le contrat public, l'implémentation, la localisation précise de l'assertion et l'effet observable avant de le conserver.
+5. Les contrats API (validation, formes, non-mutation) doivent rester identifiés séparément des propriétés mathématiques/fonctionnelles jusqu'à décision explicite sur leur inclusion et leur pondération. Les classes de validation ne sont regroupées que si elles partagent réellement le même contrat et le même mode de détection.
+
+**État après cette décomposition :** ATTENTION et LOSSES sont structurés en propriétés candidates plus fines ; la revue n'est pas exhaustive, aucun dénominateur n'est proposé, aucune mutation n'est exécutée ici et ENG-02 reste **not measured**.
+
