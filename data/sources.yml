@@ -4241,7 +4241,7 @@ sources:
       primary_theme: architectures-mechanisms
       secondary_themes: [mathematical-tools-geometry]
       tags: [topic:mechanistic-interpretability, topic:sparse-autoencoders, topic:features, topic:attribution-graphs, modality:interactive-visualization]
-      concept_ids: []
+      concept_ids: [contextualized-representation, self-attention]
     metadata:
       technical_level: advanced
       contribution_types: [visualization, experiment, pedagogy]
@@ -4269,7 +4269,7 @@ sources:
           - "No screenshot, dataset or figure reuse rights were established."
     related:
       pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced, fr/llm-limits, en/llm-limits]
-      concepts: []
+      concepts: [contextualized-representation, self-attention]
       audit_records: [docs/source-reviews/visual-learning-resources-2026-11.md, docs/source-reviews/embedding-atlas-neuronpedia-integration-2026-11.md]
 
   - id: apple-embedding-atlas
