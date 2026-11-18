@@ -1,7 +1,7 @@
 # Cross-graph scientific pilot: attention, information theory and compression
 
 **Date:** 2026-11-18  
-**Status:** repository-grounded inventory and manual traversal review; not yet an automated cross-graph benchmark or a fresh execution of the experiments.  
+**Status:** repository-grounded inventory and manual traversal review, with a narrow deterministic regression fixture for the attention evidence path, the KL/MI counterexample and FlashAttention's IO scope; not a general cross-graph query benchmark or a fresh full experiment run.  
 **Parent tracking:** [#1233](https://github.com/JM-Brun/llm-lab/issues/1233) · [scientific pilot #1237](https://github.com/JM-Brun/llm-lab/issues/1237)
 
 ## Purpose and method
@@ -94,7 +94,7 @@ The Vaswani record is still `partially-scanned`; its 2026-11-18 scan explicitly 
 
 This is a reviewed hand-curated candidate set, not a precision benchmark for an automated discovery system. No automated recommendations are being advertised.
 
-## Coverage and missing links
+## Automated regression coverage\n\nA focused test at `tests/knowledge/test_cross_graph_scientific_pilot.py` now locks three repository-grounded checks: (1) the existing attention computation chain resolves to the Vaswani §3.2.1 extraction item and retains its explicit non-MI limitation; (2) the existing toy experiment gives positive row-to-uniform KL but zero mutual information when every context has the same non-uniform row; and (3) the FlashAttention extraction resolves to §§3.1–3.2 and retains its IO-aware implementation scope and floating-point/FLOP caveats. These tests protect selected endpoints and a negative control; they do not implement graph traversal, evaluate arbitrary candidate edges, establish source completeness, or constitute a precision benchmark.\n\n## Coverage and missing links
 
 | Acceptance check | Current result |
 |---|---|
