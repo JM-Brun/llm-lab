@@ -1015,9 +1015,12 @@ sources:
         inspected_scope:
           - "Official Tokenizers pipeline documentation: normalization, pre-tokenization, model, post-processing and separately documented decoding."
           - "Cross-check against bilingual tokenization-strategies pages and the current documentation-source builder."
+          - "Inspected pipeline.mdx, components.mdx, quicktour.mdx, API reference pages for Encoding/Tokenizer/normalizers/pre-tokenizers/decoders, and REQUIRED_FOR_V1.md at commit 1a9ec50b1cdf1cf97da689aad32003aa73d49755."
+          - "Recorded rc0 binding limitations, the Encoding offsets availability discrepancy, and Python character-index versus Rust UTF-8-byte-index examples."
         limitations:
           - "The published latest URL is mutable; no immutable docs release was established."
-          - "No exhaustive review of offsets, every component API or runtime behavior; no code executed."
+          - "The API reference pages explicitly mark several rc0 bindings as unavailable or not yet documented; the quicktour's offsets example conflicts with the Encoding API availability note."
+          - "No exhaustive review of all component APIs or runtime behavior; no code executed. The rc0 limitation is version-specific and must not be generalized to other releases."
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
       concepts: [token]
