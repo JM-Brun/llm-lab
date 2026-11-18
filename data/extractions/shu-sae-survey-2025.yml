@@ -1,0 +1,42 @@
+schema_version: 1
+source_id: shu-survey-sparse-autoencoders-2025
+
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Official publisher/proceedings metadata and abstract or report overview inspected 2026-11-18."
+      - "Cross-source context: docs/source-reviews/sparse-autoencoder-research-2023-2025.md."
+    inferred_elements:
+      - "Learning implications are editorial synthesis and do not reproduce the paper's full method or experiment."
+  source_graph:
+    nodes:
+      - {id: sae-research-field, kind: representation, description: "The survey organizes SAE research into architectures, training, explanation, evaluation and applications."}
+      - {id: primary-studies, kind: constraint, description: "Empirical claims in the survey must be traced to the cited primary studies."}
+    edges:
+      - {from: sae-research-field, type: synthesizes, to: primary-studies}
+    interpretation: "This is a source-local reconstruction of the reported finding and its scope, not a canonical concept graph or an independent reproduction."
+  learning_outcomes:
+    - {status: inferred, outcome: "Distinguish the paper's technical object or result from its natural-language interpretation.", basis: "Abstract-level review; full-paper audit pending."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Transformer activations and basic sparse representation concepts.", basis: "The paper concerns sparse decomposition of model activations."}
+  teaching_route:
+    - {order: 1, section: "Identify scope", function: establish-provenance, moves: ["Record model, publication version and experimental scope."]}
+    - {order: 2, section: "Inspect finding", function: qualify-evidence, moves: ["Separate the reported result from assumptions, limitations and untested generalizations."]}
+  pedagogical_limits:
+    - "Abstract-level source review only; full methods, appendices and code have not yet been audited."
+    - "No model or SAE was run by LLM Lab; no result was independently reproduced."
+
+items:
+  - id: shu-survey-sparse-autoencoders-2025:abstract-finding
+    kind: claim
+    summary: "The Findings of EMNLP 2025 survey organizes SAE research across architectures/training, input- and output-based explanations, structural and functional evaluation, and applications."
+    locator: {type: section, value: "Findings of EMNLP 2025; DOI 10.18653/v1/2025.findings-emnlp.89; arXiv:2503.05613", label: "Abstract or report overview"}
+    evidence:
+      kind: official-acl-anthology-abstract
+      confidence: established
+      scope: "Abstract-level review of the published survey."
+      assumptions: ["The published source and its stated experimental scope are the unit of interpretation."]
+      limitations: ["Full survey taxonomy and references have not yet been audited; use as a field map, not primary evidence."]
+    disposition: cite
+    disposition_rationale: "Use as a map of the field; trace empirical claims to the primary sources."
