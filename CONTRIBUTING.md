@@ -10,6 +10,8 @@ This is a learning and experimentation repository. Prefer small, testable change
 
 Use this routing sequence; do not create a second registry or copy a rule into a neighbouring guide.
 
+For work that adds knowledge, connects existing topics, or proposes a new reader-facing page, start with the [knowledge-change workflow](docs/workflows/knowledge-change-workflow.md). It identifies the smallest justified change and routes the work to the existing specialist skills. Use [new-learning-page](.agents/skills/new-learning-page/SKILL.md) only when the distinct-page gate is passed; do not create a page merely because a new source or concept has appeared.
+
 1. **Reader-facing page and destination:** consult [Content-section mapping](docs/content-section-mapping.md) for Understand / Build / Deepen / Practice & experiment, and [Learning path](docs/learning-path.md) for sequence, prerequisites, milestones, and evidence.
 2. **Page identity and graph metadata:** consult [Page metadata schema](docs/page-metadata-schema.md). The page map owns page IDs, page roles, destinations, tags, and page-to-page navigation relations.
 3. **Concepts, domains, and non-page resources:** consult [Information architecture](docs/information-architecture.md) for ownership boundaries, then edit only the canonical source it identifies: `data/concepts.yml`, `data/domains.yml`, or `data/resources.yml`. Do not infer concepts from headings or resources from every code file.
