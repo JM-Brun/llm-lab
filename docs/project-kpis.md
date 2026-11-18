@@ -462,6 +462,9 @@ The focused audit is documented in [test-suite-kpi-audit-2026-11-18.md](audits/t
 - `test_losses.py`: add tests for opposite-sign extreme logits, a finite gradient, zero loss when the maximum logit is the target, and explicit rejection when the loss exceeds the finite float64 range.
 - `gpt_ops` tests: add constant-row LayerNorm, configurable epsilon placement, and 2D linear projection cases.
 - `attention`: make `causal_mask` reject non-integer and boolean lengths with the documented `ValueError`; extend causal-invariance testing over several future boundaries and use local seeded generators.
+- `losses`: add a batch-size-two boundary test ensuring large finite per-example losses are averaged without overflowing an intermediate sum.
+- `transformer_block`: add a deterministic test isolating the addition of both attention and MLP outputs to the residual stream.
+- `gpt`: add a batch-independence test, comparing one sequence evaluated alone and as an item in a larger batch.
 
 These changes remain pending CI confirmation. They do not yet establish an ENG-02 baseline: the invariant inventory still needs review, and assertion sensitivity must be checked with deliberate mutations. Keep all tests in the existing pytest suite; no duplicate invocation, new dependency, or mutation-testing workflow has been added.
 
@@ -475,7 +478,7 @@ These changes remain pending CI confirmation. They do not yet establish an ENG-0
 
 ### Remaining validation
 
-- [ ] Confirm CI test, lint, formatting, type-check and Quarto results on the corrected PR head SHA.
+- [ ] Confirm CI test, lint, formatting, type-check and Quarto results on the corrected and extended PR head SHA. The initial pytest success applies only to the earlier SHA; subsequent commits have no reported Actions run yet.
 - [ ] Review the extreme-loss contract and the precision behavior of `logaddexp.reduce` on supported NumPy versions.
 - [ ] Run the three targeted test modules and full suite in CI; compare duration against a comparable baseline.
 - [ ] Perform the planned manual mutations and record which assertions detect each fault.
