@@ -308,6 +308,21 @@ This sequence separates three levels: **coding intuition** (tree and codewords),
 5. It belongs to temporary runtime memory.
 :::
 
+## From information to agency: four levels to keep distinct
+
+Compression provides a useful thread, but it is not a sufficient definition of intelligence. Separate four levels:
+
+| Level | Question | Concepts and criteria |
+|---|---|---|
+| **1. Information** | What are the uncertainty and coding cost? | Entropy, surprisal, cross-entropy; specify the distribution and protocol. |
+| **2. Learning** | How does a model capture regularities? | Conditional prediction, predictive compression, and MDL; count both model and residual costs. |
+| **3. Adaptation** | How does a system update its beliefs or skills? | New data, model updates, transfer, and adaptation cost; measure gains on held-out situations. |
+| **4. Agency** | How does a system choose actions in an environment? | AIXI combines universal prediction with reward maximization; active inference connects perception and action within the Free Energy Principle framework. |
+
+These levels are related but not interchangeable. Good prediction alone does not establish effective adaptation; low coding cost does not demonstrate causality or the ability to act. AIXI and active inference are distinct theoretical frameworks, not automatic consequences of MDL.
+
+For the agentic frameworks and their limitations, see [Universal artificial intelligence](universal-artificial-intelligence.qmd) and the [cross-source synthesis on compression, intelligence, and inference](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/compression-intelligence-cross-source-2026-11.md).
+
 ## Go deeper
 
 - [Entropy](entropy.qmd) · [Cross-entropy](cross-entropy.qmd) · [Likelihood](likelihood.qmd)
