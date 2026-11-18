@@ -83,9 +83,7 @@ def _parameter_tensors(state_dict: Mapping[str, ArrayLike]) -> dict[str, ArrayLi
         if name.endswith(_MASK_BUFFER_SUFFIXES):
             continue
         if name in tensors:
-            raise ValueError(
-                f"duplicate GPT-2 parameter after prefix normalization: {name!r}"
-            )
+            raise ValueError(f"duplicate GPT-2 parameter after prefix normalization: {name!r}")
         tensors[name] = value
     head = tensors.pop("lm_head.weight", None)
     if (
@@ -123,25 +121,16 @@ def load_gpt2_state_dict(model: GPT, state_dict: Mapping[str, ArrayLike]) -> Non
         if name not in tensors:
             raise ValueError(f"missing GPT-2 parameter {name!r}")
         raw = np.asarray(tensors[name])
-        if not (
-            np.issubdtype(raw.dtype, np.integer)
-            or np.issubdtype(raw.dtype, np.floating)
-        ):
-            raise ValueError(
-                f"{name!r} must contain real integer or floating-point values"
-            )
+        if not (np.issubdtype(raw.dtype, np.integer) or np.issubdtype(raw.dtype, np.floating)):
+            raise ValueError(f"{name!r} must contain real integer or floating-point values")
         if raw.shape != shape:
-            raise ValueError(
-                f"{name!r} has shape {raw.shape}, expected {shape} for this GPTConfig"
-            )
+            raise ValueError(f"{name!r} has shape {raw.shape}, expected {shape} for this GPTConfig")
         if not np.isfinite(raw).all():
             raise ValueError(f"{name!r} must contain only finite values")
         with np.errstate(over="ignore", invalid="ignore"):
             array = np.asarray(raw, dtype=np.float64)
         if not np.isfinite(array).all():
-            raise ValueError(
-                f"{name!r} cannot be represented as finite float64 values"
-            )
+            raise ValueError(f"{name!r} cannot be represented as finite float64 values")
         used.add(name)
         return array
 
