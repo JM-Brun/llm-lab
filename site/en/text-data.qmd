@@ -35,6 +35,8 @@ The prompt is **“What have the Romans ever done for us?”** The replies add e
 
 Encode the prompt and the reply text separately with the tokenizer being studied. The scene is a useful context-and-response analogy, but its replies are spoken by different members of the group; it is not a single-speaker autoregressive trace. Token boundaries depend on the tokenizer; token IDs are not universal.
 
+For a controlled, single-speaker continuation when tracing the mechanics of next-token generation, use the illustrative sentence **“They built roads between distant towns.”** It is a separate technical example, not a claim that the group replies form one speaker's output.
+
 For a reproducible output with real IDs, the exercise collection provides a separate technical trace using `hello world` and the GPT-2 tokenizer; the embedding vectors remain synthetic. [Open the optional trace](exercises-text-data.qmd#tokenizer-embedding-trace).
 :::
 
