@@ -155,6 +155,7 @@ Le découpage ne doit pas être justifié par la seule longueur de la page sourc
 - Le générateur existant projette directement les pages de `optional_pages` ; aucun nouveau mécanisme ni champ parallèle n'a été introduit.
 - Les deux cartes Deepen et leurs relations hiérarchiques réciproques incluent la nouvelle page.
 - `site/_quarto.yml` inclut les deux pages dans le rendu explicite et dans la navigation latérale FR/EN.
+- `docs/content-section-mapping.md` attribue explicitement les propriétaires retrieval, RAG/mémoire et Context engineering ; `docs/learning-path.md` décrit les deux pages Deepen comme ressources sœurs sans ordre.
 - Les liens context engineering ↔ retrieval/RAG et les relations page-map bilingues ont été mis à jour.
 - Le test `test_guided_route_memberships.py` vérifie désormais que `document-retrieval` est optionnel dans `context-use`, et non une page core.
 
@@ -162,7 +163,7 @@ Le découpage ne doit pas être justifié par la seule longueur de la page sourc
 
 - Comparaison de conservation automatisée sur les chaînes sources FR/EN : sections retrieval et exemples FAISS/reranking présents dans les nouvelles pages ; sections détaillées absentes des pages RAG après transfert.
 - Contrôle structurel des pages : titres, topics, tags, relations, headings, diagramme Mermaid et liens de pratique.
-- Le contrôle Python « Validate page metadata learning graph » a réussi sur un commit précédent de cette branche, après l'intégration des pages et de leurs métadonnées. Les commits de finition ultérieurs doivent encore repasser les contrôles.
+- Le contrôle Python « Validate page metadata learning graph » a réussi sur un commit antérieur ; après la mise à jour des documents canoniques, le contrôle Python et la suite de tests ont été relancés sur le dernier SHA et sont en attente de conclusion.
 - Les jobs Test suite et Quarto site & browser audit étaient encore en cours au dernier relevé ; ne pas les déclarer réussis avant lecture de leur conclusion sur le SHA courant.
 - Pas de validation visuelle/accessibilité ni de test avec apprenant revendiqué.
 
