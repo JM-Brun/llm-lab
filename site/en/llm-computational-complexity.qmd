@@ -21,6 +21,8 @@ related: ["en/transformer", "en/generation", "en/hybrid-llm-architectures", "en/
 tags: ["type:deep-dive", "destination:deepen", "topic:llm-computational-complexity", "level:advanced", "language:en", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-en-llm-computational-complexity.qmd >}}
+
 ::: {.chapter-lead}
 LLM performance does not depend only on the number of operations. It also depends on **how those operations scale with context length**, how much data must be stored or moved, and whether they can run simultaneously. A quadratic operation can be highly parallelized; a linear operation can still have a sequential dependency.
 :::
