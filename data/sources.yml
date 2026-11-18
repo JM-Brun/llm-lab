@@ -5018,7 +5018,7 @@ sources:
     related:
       pages: [fr/rag-memory-boundaries, en/rag-memory-boundaries, fr/cosine-similarity, en/cosine-similarity, fr/document-retrieval, en/document-retrieval]
       concepts: [retrieval-augmented-generation]
-      audit_records: [[docs/source-reviews/dailydose-main-path-2026-11.md, docs/source-reviews/splade-2021-primary-audit.md]
+      audit_records: [docs/source-reviews/dailydose-main-path-2026-11.md, docs/source-reviews/splade-2021-primary-audit.md]
   - id: thakur-etal-2021-beir
     title: "BEIR: A Heterogenous Benchmark for Zero-shot Evaluation of Information Retrieval Models"
     creators: ["Nandan Thakur", "Nils Reimers", "Andreas Rücklé", "Abhishek Srivastava", "Iryna Gurevych"]
@@ -5064,7 +5064,7 @@ sources:
     related:
       pages: [fr/rag-memory-boundaries, en/rag-memory-boundaries, fr/cosine-similarity, en/cosine-similarity, fr/document-retrieval, en/document-retrieval]
       concepts: [retrieval-augmented-generation]
-      audit_records: [[docs/source-reviews/dailydose-main-path-2026-11.md, docs/source-reviews/beir-2021-primary-audit.md]
+      audit_records: [docs/source-reviews/dailydose-main-path-2026-11.md, docs/source-reviews/beir-2021-primary-audit.md]
 
 
   - id: dailydose-visual-guide-bi-cross-colbert-2025
@@ -5153,7 +5153,7 @@ sources:
     related:
       pages: [fr/rag-memory-boundaries, en/rag-memory-boundaries, fr/document-retrieval, en/document-retrieval]
       concepts: [retrieval-augmented-generation, contextualized-representation]
-      audit_records: [[docs/source-reviews/dailydose-main-path-2026-11.md, docs/source-reviews/colpali-2025-primary-audit.md]
+      audit_records: [docs/source-reviews/dailydose-main-path-2026-11.md, docs/source-reviews/colpali-2025-primary-audit.md]
 
   - id: jothi-moorthy-llm-processing-linkedin
     title: "When you type a prompt, the LLM sees numbers, not words"
