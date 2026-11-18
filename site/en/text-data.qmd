@@ -31,9 +31,9 @@ Generation starts with a prompt written in ordinary language. Yet the neural net
 :::
 
 ::: {.callout-note title="Running example: the text to encode"}
-For the recurring example, the prompt is **“A model receives text written by a person.”** The continuation begins: **“It turns that text into tokens before processing it.”**
+The prompt is **“What have the Romans ever done for us?”** The replies add examples such as aqueducts, sanitation, roads, and irrigation.
 
-Encode the prompt and this continuation separately with the tokenizer being studied. Token boundaries depend on the tokenizer; token IDs are not universal.
+Encode the prompt and the reply text separately with the tokenizer being studied. The scene is a useful context-and-response analogy, but its replies are spoken by different members of the group; it is not a single-speaker autoregressive trace. Token boundaries depend on the tokenizer; token IDs are not universal.
 
 For a reproducible output with real IDs, the exercise collection provides a separate technical trace using `hello world` and the GPT-2 tokenizer; the embedding vectors remain synthetic. [Open the optional trace](exercises-text-data.qmd#tokenizer-embedding-trace).
 :::
