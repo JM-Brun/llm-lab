@@ -31,7 +31,7 @@ def test_report_joins_extractions_by_source_id_and_surfaces_review_queues(tmp_pa
                     "integration_status": "integrated",
                     "scan_history": [{"status": "partially-scanned"}],
                     "classification": {"concept_ids": []},
-                    "related": {"concepts": [], "pages": []},
+                    "related": {"concepts": [], "pages": ["en/example"]},
                 },
                 {
                     "id": "source-two",
@@ -61,7 +61,6 @@ def test_report_joins_extractions_by_source_id_and_surfaces_review_queues(tmp_pa
             "items": [
                 {
                     "classification": {"concept_ids": ["concept-one"]},
-                    "candidate_destinations": {"pages": ["en/example"]},
                 }
             ],
         },
