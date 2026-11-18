@@ -106,7 +106,9 @@ project:
     - fr/context-engineering.qmd
     - en/context-engineering.qmd
     - fr/rag-memory-boundaries.qmd
+    - fr/document-retrieval.qmd
     - en/rag-memory-boundaries.qmd
+    - en/document-retrieval.qmd
     - en/llm-overview.qmd
     - en/deepen.qmd
     - en/language-modeling-math.qmd
@@ -467,6 +469,7 @@ website:
                 - fr/llm-computational-complexity.qmd
                 - fr/compression-revision.qmd
                 - fr/rag-memory-boundaries.qmd
+                - fr/document-retrieval.qmd
             - section: "Échelle et questions de recherche"
               contents:
                 - fr/scaling-laws.qmd
@@ -668,6 +671,7 @@ website:
                 - en/llm-computational-complexity.qmd
                 - en/compression-revision.qmd
                 - en/rag-memory-boundaries.qmd
+                - en/document-retrieval.qmd
             - section: "Scale and research questions"
               contents:
                 - en/scaling-laws.qmd
