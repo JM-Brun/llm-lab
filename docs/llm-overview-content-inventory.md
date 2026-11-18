@@ -54,8 +54,8 @@ Les sections « De la conception du contexte aux architectures de récupération
 | Pages / blocs | Constat | Décision de conservation |
 |---|---|---|
 | `generation.qmd` §§ boucle, notation, prefill/decode, sélection, limites (FR l. 74–230 ; EN miroir) | Noyau conceptuel nécessaire à Understand | Garder boucle, sélection et explication minimale prefill/decode dans Generation. |
-| Callout Generation latence/serving (FR l. 145–181 ; EN l. 140–177) | Mélange latence, ordonnancement multi-requêtes et cache | Déplacer les explications coût/mémoire/KV-cache vers `llm-computational-complexity.qmd`. Vérifier un propriétaire existant pour scheduling/serving avant de déplacer ce sous-bloc ; ne pas charger la page de complexité de tout le sujet. Garder un repère et un lien dans Generation. |
-| `llm-computational-complexity.qmd` §4 et §9 (FR l. 91–116, 159–169 ; EN miroir) | Compare entraînement, prefill, decode, travail, dépendances et mémoire | Étendre si nécessaire avec le mécanisme du cache KV et ses coûts, sans refaire le tutoriel de génération. Distinguer coûts théoriques et politiques de serving. |
+| Callout Generation latence/serving (FR l. 145–181 ; EN l. 140–177) | Métriques TTFT/ITL/TPOT, continuous batching, prefix caching, chunked prefill, speculative decoding et formule de mémoire KV | Garder les mécanismes opérationnels et les métriques dans Generation, seule page propriétaire du serving. Déplacer la formule quantitative de mémoire KV et ses variables vers `llm-computational-complexity.qmd` ; Generation conserve la définition du cache et un lien vers l'estimation. |
+| `llm-computational-complexity.qmd` §4 et §9 (FR l. 91–116, 159–169 ; EN miroir) | Compare entraînement, prefill, decode, travail, dépendances et mémoire ; le tableau donne déjà le cache KV en O(T) | Ajouter ici l'estimation quantitative de mémoire KV et ses hypothèses ; ne pas déplacer les métriques de serving ni les politiques d'ordonnancement, qui restent dans Generation. |
 | `training-loop.qmd` (FR l. 61–170 ; EN miroir) | Le pas d'entraînement, l'exemple jouet, la validation et le pré-entraînement forment une progression intégrée | Garder la boucle, l'exemple, la validation, le code et le lien Build. Raccourcir les rappels mathématiques avec liens vers Loss et Gradients. |
 | `loss.qmd` (FR l. 59–115 ; EN miroir) | Propriétaire de l'agrégation de loss, des cibles décalées, du masquage et du teacher forcing | Ne pas recopier les dérivations dans Training loop ; garder une synthèse et un lien. |
 | `gradients.qmd` (gradient des logits, règle de chaîne, exemple de projection ; EN miroir) | Propriétaire du gradient et de la rétropropagation | Training loop ne garde que le rôle du gradient dans la boucle et renvoie vers la dérivation. |
@@ -207,3 +207,29 @@ La version FR/EN raccourcie contient environ **2 329 mots FR** et **2 139 mots E
 ### Synthèse opérationnelle
 
 Le panorama devient une orientation système, pas un cours condensé : il garde le modèle mental du prochain token, la distinction des trois usages, la taxonomie minimale, les frontières d'information, le pont prédiction → transfert et la distinction modèle/application. Les détails historiques, mathématiques, de retrieval, de mémoire, de contexte et de post-entraînement restent chez leurs propriétaires. Aucun second parcours n'est ajouté.
+
+
+## 12. Frontière Generation / complexité et entraînement / gradients
+
+### Génération et complexité
+
+L'audit des deux pages confirme une frontière plus précise que la proposition initiale :
+
+- **Generation** reste propriétaire de l'exécution opérationnelle : boucle autorégressive, prefill/decode, sélection, arrêt, TTFT/ITL/TPOT, continuous batching, prefix caching, chunked prefill et speculative decoding. Ces éléments n'ont pas d'autre page propriétaire identifiée ; ils restent dans son approfondissement facultatif replié.
+- **Complexity** possède le coût de calcul et la mémoire : travail attentionnel, dépendances séquentielles, parallélisme et taille du cache KV. La page donne déjà le coût attentionnel du decode et le comportement O(T) du cache.
+- Le seul déplacement est la formule quantitative de mémoire KV et ses variables. Elle est maintenant placée dans la section 9 de Complexity, sous l'ancre \`#kv-cache-memory\`. Generation conserve la définition du cache, explique son rôle opérationnel et renvoie vers cette formule.
+- Aucun cours de serving supplémentaire n'est créé. Le fait qu'aucune page dédiée au serving n'existe confirme que déplacer TTFT, scheduling et batching vers Complexity brouillerait la propriété des concepts.
+
+### Entraînement, loss et gradients
+
+La propriété retenue est :
+
+| Page | Propriété canonique | Ce qu'elle ne doit pas refaire |
+|---|---|---|
+| \`loss.qmd\` | Cibles décalées, masquage, agrégation de l'objectif, teacher forcing et pièges de la loss | Répéter le cycle complet d'entraînement ou les choix d'optimiseur |
+| \`gradients.qmd\` | Dérivées, gradient des logits, règle de chaîne, rétropropagation, jacobien-vecteur, exemple de projection et vérification numérique | Enseigner les choix d'optimiseur, les plannings ou la validation |
+| \`training-loop.qmd\` | Boucle répétée, rôle du gradient, SGD/Adam/AdamW au niveau conceptuel, taux d'apprentissage, train/validation/test, surapprentissage et exemple de boucle | Refaire la dérivation du gradient ou l'agrégation de la loss |
+
+La page Gradients garde une phrase de frontière entre gradient et règle de mise à jour, mais renvoie à Training loop pour SGD et les optimiseurs. Son bloc « choix de l'optimiseur » et sa formule de mise à jour dupliquée sont retirés ; le contenu utile sur l'optimiseur reste chez Training loop. L'exemple numérique de Training loop est conservé : il relie explicitement la loss, le gradient de logits, la propagation vers les poids et la mise à jour sans prétendre simuler un entraînement complet.
+
+**Décision de découpage : aucune nouvelle page.** Generation conserve son approfondissement serving replié ; Training loop reste une leçon cohérente sous le plafond de 15 minutes estimé sur son contenu visible. Le travail porte sur les frontières de propriété et les répétitions, pas sur une fragmentation mécanique.
