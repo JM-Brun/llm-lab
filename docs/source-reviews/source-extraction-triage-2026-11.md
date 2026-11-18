@@ -6,10 +6,10 @@
 
 - Catalogue : **139 sources**.
 - Fichiers d'extraction : **95**.
-- Cinq fichiers portent un nom différent de l'identifiant du catalogue, mais leur champ `source_id` renvoie bien à une source existante : Chanin, Cunningham, Neuronpedia, Shu et Wayland. Ils ne doivent pas être comptés comme cinq sources non extraites. La convention du dépôt demande néanmoins un nom de fichier égal à l'identifiant canonique ; cette anomalie de nommage mérite un correctif séparé.
+- Les cinq écarts de nommage précédemment identifiés (Chanin, Cunningham, Neuronpedia, Shu et Wayland) ont été corrigés et fusionnés par #1317. Les 95 noms de fichiers sont désormais canoniques ; ils ne constituent pas cinq sources supplémentaires ni cinq absences d'extraction.
 - Sennrich et al. (2016), #1311, a été fusionnée dans `main` le 18 novembre 2026 ; son extraction est incluse dans les fichiers présents sur `main`.
 - Gage (1994), #1314, a depuis également été fusionnée dans `main`.
-- Le décompte de **44 sources** du présent triage est donc obsolète. Il doit être recalculé par comparaison ensembliste des `source_id` du catalogue et des extractions du head courant ; ne pas le réutiliser comme état actuel. Les cinq fichiers non canoniques restent des extractions existantes, pas cinq sources manquantes.
+- Le rapprochement du head `main` après #1317 donne **44 identifiants du catalogue sans fichier d'extraction canonique** (139 sources, 95 fichiers, 95 noms uniques, aucun nom hors catalogue). Ce décompte repose sur la convention vérifiée `data/extractions/<source_id>.yml` ; il ne constitue ni une mesure de qualité ni une attestation d'inspection des sources.
 
 Ce décompte est un état de dépôt, pas un KPI de qualité ni une mesure de couverture documentaire. Il ne dit rien de la valeur des sources ni de leur inspection effective.
 
