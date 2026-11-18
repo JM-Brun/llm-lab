@@ -76,8 +76,7 @@ def test_synthetic_registry_supports_multiple_graph_topologies() -> None:
         else:
             assert added_relations > expected_additional_relations["dense"]
             mixed_types = {
-                relation["type"]
-                for relation in fixture["relations"][len(base["relations"]) :]
+                relation["type"] for relation in fixture["relations"][len(base["relations"]) :]
             }
             assert len(mixed_types) > 1
 
