@@ -4448,7 +4448,7 @@ sources:
     language: en
     version: "Published proceedings survey; preprint first posted 2025"
     revision: null
-    licence: {identifier: null, url: null, status: unknown}
+    licence: {identifier: CC-BY-4.0, url: "https://creativecommons.org/licenses/by/4.0/", status: verified}
     reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
     classification:
       primary_theme: architectures-mechanisms
