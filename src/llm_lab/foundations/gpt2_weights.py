@@ -127,7 +127,9 @@ def load_gpt2_state_dict(model: GPT, state_dict: Mapping[str, ArrayLike]) -> Non
             np.issubdtype(raw.dtype, np.integer)
             or np.issubdtype(raw.dtype, np.floating)
         ):
-            raise ValueError(f"{name!r} must contain real integer or floating-point values")
+            raise ValueError(
+                f"{name!r} must contain real integer or floating-point values"
+            )
         if raw.shape != shape:
             raise ValueError(
                 f"{name!r} has shape {raw.shape}, expected {shape} for this GPTConfig"
@@ -137,7 +139,9 @@ def load_gpt2_state_dict(model: GPT, state_dict: Mapping[str, ArrayLike]) -> Non
         with np.errstate(over="ignore", invalid="ignore"):
             array = np.asarray(raw, dtype=np.float64)
         if not np.isfinite(array).all():
-            raise ValueError(f"{name!r} cannot be represented as finite float64 values")
+            raise ValueError(
+                f"{name!r} cannot be represented as finite float64 values"
+            )
         used.add(name)
         return array
 
