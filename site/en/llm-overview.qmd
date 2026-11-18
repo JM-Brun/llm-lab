@@ -26,7 +26,7 @@ tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "
 {{< include ../includes/generated-guided-context-en-llm-overview.qmd >}}
 
 ::: {.chapter-lead}
-“What have the Romans ever done for us?” In *Monty Python's Life of Brian*, the question sets off a long series of answers. Put the same question to a conversational assistant: it carries on too. How does a program produce a continuation from a question?
+“What have the Romans ever done for us?” The question sets off a long series of answers. Put the same question to a conversational assistant: it carries on too. How does a program produce a continuation from a question?
 
 It does not write its answer in one block. For each possible continuation, it estimates the probability that it comes after the text already written, keeps one, and starts again. A program that assigns probabilities to the continuations of a text in this way is a **language model**. Trained at scale, it is a **large language model** (LLM).
 :::
