@@ -47,6 +47,7 @@ def test_synthetic_registry_rejects_target_below_baseline() -> None:
     else:
         raise AssertionError("expected target below baseline to fail")
 
+
 def test_synthetic_registry_supports_multiple_graph_topologies() -> None:
     base = yaml.safe_load((ROOT / "data" / "concepts.yml").read_text(encoding="utf-8"))
     domains = yaml.safe_load((ROOT / "data" / "domains.yml").read_text(encoding="utf-8"))
