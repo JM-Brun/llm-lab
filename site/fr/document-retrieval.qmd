@@ -35,7 +35,7 @@ La **récupération documentaire** (*document retrieval* ou *information retriev
 - interpréter séparément rappel des candidats, qualité du classement, latence et coût ;
 - expliquer ce que la recherche visuelle par pages apporte, et ce qu'elle ne remplace pas.
 
-## 2. Récupération documentaire : retrouver n'est pas transmettre
+## Récupération documentaire : retrouver n'est pas transmettre
 
 La **récupération documentaire** (*document retrieval* ou *information retrieval*) sélectionne des documents ou passages pertinents à partir d'une requête. Elle peut alimenter un moteur de recherche classique, un pipeline RAG ou une mémoire.
 
