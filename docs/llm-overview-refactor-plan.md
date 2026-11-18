@@ -68,7 +68,7 @@ Garder :
 - cycle de vie : données et pré-entraînement → éventuel post-entraînement/adaptation → inférence → évaluation ;
 - principe autorégressif en une phrase et lien vers Generation ;
 - carte des capacités et limites : utile, mais pas magique ; plausible n'est pas vrai ;
-- carte des questions du parcours.
+- carte thématique non séquencée des grandes questions du domaine, accompagnée d'un renvoi unique vers la vue canonique Understand ; elle ne liste pas les étapes.
 
 Ne pas y développer la tokenisation, les embeddings, l'attention, les logits, les dérivations mathématiques, l'histoire détaillée, les méthodes de post-entraînement ou le serving.
 
@@ -166,7 +166,7 @@ Répartir entre les propriétaires post-training / context engineering / RAG et 
 
 Le registre canonique reste `data/guided-route.yml`. Ne créer ni route ni registre parallèle.
 
-- **Understand :** le panorama reste l'orientation de la première étape et mène à Generation. La route conceptuelle garde ses étapes existantes : orientation → texte/tokens → représentations → calcul Transformer → prédiction → inférence → contexte/adaptation → scoring → apprentissage. Une éventuelle page sur les capacités/généralisation ne devient pas une nouvelle étape obligatoire ; elle est rattachée comme ressource optionnelle à l'étape la plus pertinente après vérification des sémantiques et projections.
+- **Understand :** le panorama reste l'orientation initiale et mène vers la page suivante définie par `data/guided-route.yml`. Le document ne recopie pas les étapes ni leurs intitulés : le registre est l'unique définition de la séquence. Une éventuelle ressource sur les capacités/généralisation ne devient pas une nouvelle étape ; son éventuel rattachement comme ressource optionnelle doit être décidé dans le registre par le propriétaire du curriculum.
 - **Build :** reste indépendant. Les liens vers code/tests et G0–G9 sont des passerelles contextuelles, jamais des prérequis d'Understand.
 - **Deepen :** histoire, dérivations, lois d'échelle, émergence, compression, architectures avancées et serving avancé restent facultatifs.
 - **Practice & experiment :** relier les activités existantes avant d'en créer. Toute simulation précise si elle utilise des valeurs fictives, un petit modèle réel ou un modèle externe, et ce qu'elle ne prouve pas.
