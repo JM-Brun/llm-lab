@@ -65,6 +65,12 @@ jobs:
         if: steps.validation_scope.outputs.domain_checks == 'true'
         run: uv run python site/tools/check_source_catalogue.py
 
+      - name: Publish source-to-knowledge coverage in job summary
+        if: steps.validation_scope.outputs.domain_checks == 'true'
+        run: |
+          uv run python site/tools/report_source_coverage.py --output "$RUNNER_TEMP/source-coverage.md"
+          cat "$RUNNER_TEMP/source-coverage.md" >> "$GITHUB_STEP_SUMMARY"
+
       - name: Validate page metadata learning graph
         if: steps.validation_scope.outputs.domain_checks == 'true'
         run: uv run python site/tools/check_page_metadata.py
