@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
@@ -166,24 +166,6 @@ jobs:
       - name: Install parallel test runner
         # CI-only orchestration; keep it outside the project lock.
         run: uv pip install --python .venv/bin/python pytest-xdist==3.8.0
-
-      - name: Regenerate tracked map-data projections for this PR
-        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
-        env:
-          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
-        run: |
-          git fetch origin "$PR_HEAD_REF"
-          git checkout -B "$PR_HEAD_REF" FETCH_HEAD
-          uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/build_learning_map.py
-          git add site/includes/generated-map-data-fr.qmd site/includes/generated-map-data-en.qmd
-          if git diff --cached --quiet; then
-            echo "Generated map-data projections are already current."
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "chore: regenerate map-data projections"
-          git push origin "HEAD:$PR_HEAD_REF"
 
       - name: Test
         # Keep the complete suite and coverage threshold; scheduling is benchmarked separately.
