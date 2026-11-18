@@ -32,7 +32,7 @@ The report is deterministic for a fixed repository tree. It reads:
 - extraction records whose `source_id` does not resolve to a canonical source;
 - disagreement between a source's current scan status and its latest recorded scan event.
 
-Source destinations combine `related.pages` and extraction-item `candidate_destinations.pages`. Concept coverage combines source classification, source related concepts, and extraction-item classification.
+Page destinations are read from the canonical source record's `related.pages` field. Concept coverage combines source classification, source related concepts, and extraction-item classification. The report does not invent a destination field that is absent from the extraction schema.
 
 ## Interpretation rules
 
