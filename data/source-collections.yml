@@ -1,0 +1,17 @@
+schema_version: 1
+# Controlled identities for living source-collection dossiers.
+# Source membership is declared separately on canonical source records.
+collections:
+  - id: tokenization-embeddings
+    title: "Tokenization and embeddings"
+    dossier: docs/source-reviews/tokenization-embeddings-source-collection.md
+    status: active
+    owning_issue: 458
+  - id: qkv-attention
+    title: "Q/K/V and attention"
+    dossier: docs/source-reviews/qkv-source-collection.md
+    status: active
+  - id: visual-learning-tools
+    title: "Visual learning tools"
+    dossier: docs/source-reviews/visual-learning-resources-2026-11.md
+    status: active
