@@ -3109,7 +3109,7 @@ sources:
       primary_theme: inference-efficiency
       secondary_themes: [architectures-mechanisms]
       tags: [topic:inference, topic:kv-cache, method:speculative-decoding]
-      concept_ids: []
+      concept_ids: [autoregressive-generation, prefill, decode-step, kv-cache]
     metadata:
       technical_level: intermediate
       contribution_types: [pedagogy, visualization]
