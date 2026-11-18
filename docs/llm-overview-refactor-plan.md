@@ -389,3 +389,51 @@ Les deux fichiers ont la même ossature de huit sections thématiques et une aut
 3. Établir pour chaque ligne une destination précise FR et EN, avec ancre cible, état de conservation et preuve de présence.
 4. Réviser d'abord les pages propriétaires et leurs frontières, puis raccourcir le panorama ; ne jamais retirer le texte source avant que la destination soit prête et vérifiée.
 5. Après modification, produire un différentiel de conservation et une revue de parité sémantique FR/EN ; le nombre de mots ne suffit pas.
+
+
+## 15. Cohérence du corpus au-delà du panorama — arbitrages de refactorisation
+
+La refonte du panorama doit s'inscrire dans la topologie canonique déjà définie dans `docs/learning-path.md` et le contrat de propriété de `docs/content-section-mapping.md`. Ces documents sont complémentaires : le premier définit les modules et leurs dépendances pédagogiques ; le second attribue la propriété des explications et les règles de répétition. Il ne faut pas créer un troisième modèle de curriculum dans ce plan.
+
+### Principes de cohérence à appliquer à tout le corpus
+
+- **Une page = une question principale et un contrat de sortie lisible.** Une page peut mobiliser plusieurs notions, mais elle doit annoncer ce que le lecteur saura expliquer, calculer, décider ou vérifier après lecture.
+- **Une notion = un propriétaire d'explication détaillée.** Les autres pages peuvent faire un rappel bref, une mise en relation ou un exercice de transfert, puis renvoyer au propriétaire.
+- **Une seule séquence Understand.** Le parcours neuf étapes reste défini dans `data/guided-route.yml`. La topologie canonique de `docs/learning-path.md` en explique les dépendances ; elle n'est pas une autre route affichée au lecteur. La taxonomie Deepen est un système de découverte thématique, pas une route.
+- **Les pages d'approfondissement sont des ressources sœurs, non des prérequis.** Plusieurs liens optionnels au sein d'une même étape n'induisent ni ordre de lecture ni dépendance entre eux.
+- **La scission est motivée par une rupture de question, pas par un seuil mécanique de mots.** Une page longue mais cohérente peut rester entière ; une page plus courte avec deux objectifs autonomes peut être séparée.
+- **La parité FR/EN est sémantique.** Même portée, mêmes réserves, exemples et références utiles ; les fils rouges et formulations idiomatiques restent spécifiques à la langue.
+
+### Décisions de refactorisation proposées après audit des pages propriétaires
+
+| Page actuelle | Constat observé | Décision recommandée | Relation au parcours |
+|---|---|---|---|
+| `generation.qmd` / EN | ~3 186 / 3 018 mots ; la section prefill/decode regroupe à elle seule ~1 086 / 979 mots, dont l'ordonnancement multi-requêtes et la réutilisation du cache. Une partie recoupe la page de complexité qui possède déjà un traitement distinct entraînement/prefill/decode. | **Refactoriser sans créer une nouvelle page core.** Garder dans Generation la boucle, le prefill/decode au niveau opérationnel nécessaire, la sélection de token et l'arrêt. Déplacer les détails de serving, ordonnancement, throughput/latence et cache KV vers `llm-computational-complexity.qmd` (Deepen), qui est le propriétaire de la comparaison des régimes de calcul et de mémoire. Laisser dans Generation un résumé et un lien. | Generation reste la ressource core d'inférence dans les étapes orientation et inference existantes. La page de complexité reste optionnelle ; aucune nouvelle étape. |
+| `rag-memory-boundaries.qmd` / EN | ~3 024 / 2 626 mots ; le bloc « récupération documentaire » représente ~1 091 / 923 mots, dont familles de retrievers et recherche visuelle/ColPali. Le reste traite du cycle d'information, RAG, mémoire, ICL, sécurité et diagnostic. | **Scinder en deux approfondissements sœurs** après inventaire fin : (A) nouvelle page « Récupération documentaire : indexer, retrouver, classer » pour les familles de retrievers, recherche visuelle, ranking et évaluation de récupération ; (B) conserver une page recentrée « RAG, mémoire et transmission au contexte » pour source → récupération → contexte → usage, mémoire persistante, ICL, sécurité et diagnostic système. Les frontières doivent éviter de répéter le pipeline d'introduction. | Les deux pages sont des ressources Deepen facultatives rattachées à la même étape existante `context-use`, sans relation entre elles, sans flèche, sans prérequis et sans ordre recommandé. Elles ne modifient pas les neuf étapes. |
+| `context-engineering.qmd` / EN | ~2 143 / 1 919 mots ; page core déjà proche de 12 minutes, couvrant la conception du contexte de système, opérations, niveaux de contexte, RAG/mémoire et évaluation. | **Ne pas scinder à ce stade.** Clarifier son contrat : conception et orchestration du contexte au niveau système ; garder un seul exemple de bout en bout ; déplacer ou condenser les explications détaillées des mécanismes de récupération et de mémoire vers les pages Deepen correspondantes. Préserver l'évaluation du contexte. | Reste core dans l'étape `context-use`. Les approfondissements liés ne deviennent pas des conditions de complétion. |
+| `llm-evolution.qmd` / EN | ~2 676 / 2 407 mots ; plusieurs axes de synthèse, mais chacun est bref et la page est explicitement conçue comme synthèse avancée, après l'histoire des Transformers. | **Ne pas scinder.** Maintenir la synthèse multi-axes, réduire les répétitions et faire des renvois vers les propriétaires mécanistiques. Le seuil de lecture FR approche 15 min, mais la séparation par axes créerait des micro-pages et une fausse séquence historique. | Reste Deepen, reliée contextuellement aux pages propriétaires ; pas d'étape Understand supplémentaire. |
+| `transformer-history.qmd` / EN | ~1 317 / 1 172 mots ; page historique autonome et déjà distincte de la synthèse contemporaine. | **Garder séparée et courte.** Elle possède la provenance historique ; ne pas réintroduire son contenu dans `llm-evolution` ou le panorama. | Reference facultative, non prérequis. |
+| `llm-limits.qmd` / EN | ~1 596 / 1 435 mots ; la page combine garanties de l'objectif, évaluation, compréhension et émergence. | **Garder une page critique cohérente.** Clarifier l'évaluation conceptuelle et les interprétations ; renvoyer les protocoles, métriques et statistiques à `experimental-evaluation.qmd`, sans scinder pour l'instant. | Compagnon Understand facultatif déjà rattaché à l'orientation ; ne pas créer d'étape. |
+| `training-loop.qmd` / EN | ~3 129 / 2 795 mots ; page dense au-delà de 15 min côté FR. | **Audit de capacité prioritaire, sans scission automatique.** Vérifier ce qui relève de l'explication conceptuelle de la boucle, de la démonstration mathématique (propriétaires loss/gradients) et du tutoriel de code (Build). Déplacer les détails vers ces propriétaires existants et conserver un exemple complet minimal. Ne créer une page que si une question autonome reste sans propriétaire. | La page reste core dans l'étape training ; Build demeure indépendant et n'est pas inséré dans Understand. |
+
+### Contrat de frontières entre les trois pages « information à l'inférence »
+
+Pour prévenir les doublons entre `in-context-learning.qmd`, `context-engineering.qmd` et les approfondissements RAG/récupération :
+
+- **ICL** répond à : que fait le modèle lorsqu'on lui fournit des exemples ou instructions dans son contexte ? Il possède zero/one/few-shot, l'adaptation sans mise à jour des poids et ses limites.
+- **Context engineering** répond à : comment une application construit-elle, sélectionne-t-elle, ordonne-t-elle, actualise-t-elle et évalue-t-elle le contexte transmis au modèle ?
+- **Document retrieval** répond à : comment retrouver et classer des passages/documents pertinents dans un corpus, et comment mesurer la qualité de cette récupération ?
+- **RAG & memory** répond à : comment une information externe circule-t-elle de sa source jusqu'à son éventuelle exploitation, comment distinguer récupération, injection de contexte et mémoire persistante, et quelles garanties de provenance/sécurité faut-il préserver ?
+- **Post-training** répond à : comment les paramètres sont-ils adaptés, et en quoi cela diffère-t-il de l'adaptation par contexte ?
+
+Les pages peuvent se référencer mutuellement ; elles ne doivent pas réexpliquer le même mécanisme en entier. Le schéma source → préparation/indexation → récupération → construction du contexte → exploitation peut apparaître en version courte dans le panorama système, mais son explication détaillée appartient à un seul propriétaire par étape.
+
+### Conditions avant de réaliser les scissions/déplacements
+
+1. Vérifier les pages existantes et les identifiants de page pour éviter de créer un doublon de ressource déjà publiée.
+2. Relever les figures, tableaux, références, exemples, exercices, ancres entrantes et liens de navigation des pages candidates.
+3. Définir le contrat de la page source et des pages cibles en FR/EN avant de déplacer un bloc.
+4. Garder les nouvelles pages Deepen hors de `stages` et les déclarer uniquement comme ressources optionnelles de l'étape `context-use` si le registre et le générateur confirment que cette relation n'implique aucun ordre.
+5. Mettre à jour les projections de la carte et la taxonomie Deepen depuis leurs sources canoniques ; ne jamais modifier les projections générées à la main.
+6. Contrôler le graphe des liens : pas de cycle présenté comme une séquence, pas de liens « suivant » entre approfondissements frères, pas de prérequis implicites.
+7. Après déplacement, recalculer les durées des pages source et cibles, vérifier la parité FR/EN et fournir un différentiel de conservation.
