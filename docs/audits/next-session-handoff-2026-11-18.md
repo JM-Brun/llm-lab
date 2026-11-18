@@ -184,3 +184,68 @@ Ne pas ajouter de framework de mutation tout de suite. Décision après MUT-01 �
 - [Audit de la suite de tests](test-suite-kpi-audit-2026-11-18.md)
 - [KPIs du projet](../project-kpis.md)
 - [PR #1277](https://github.com/JM-Brun/llm-lab/pull/1277)
+
+
+## 12. Audit statique des cinq domaines complémentaires — 2026-11-18
+
+Revue des cinq modules et de leurs fichiers de tests sur le HEAD
+`bad9fc2b0e676d872158d569048d9cf8f0cac278`. Il s'agit d'une lecture du code
+et des assertions, pas d'une exécution pytest ni d'une validation par mutation.
+
+| Domaine | Protections déjà visibles | Lacunes / points à clarifier | Priorité |
+|---|---|---|---|
+| Exemples d'entraînement | Décalage input/target, formule du nombre de fenêtres, stride, chevauchement, dernière cible complète, déterminisme et non-mutation du flux | `context_length` et `stride` ne valident que `< 1` : les booléens passent et les flottants positifs peuvent provoquer un `TypeError` plus loin au lieu du `ValueError` annoncé. Ajouter des cas booléen/flottant/entier NumPy et vérifier les types au point d'entrée | Haute |
+| Filtres de décodage | top-k exact et renormalisé, égalités stables, top-p inclut le token de franchissement, seuil exact, p=1, distributions invalides, non-mutation | `top_p_filter` accepte `True` comme `p=1.0` ; décider explicitement si booléen est invalide et tester. Le chemin top-k a déjà une validation stricte, y compris entiers NumPy | Moyenne |
+| Génération | Chaîne greedy, reproductibilité RNG, ordre température → top-k → top-p, fenêtre de contexte, prompt invalide, zéro nouveau token, bornes top-k/top-p/température | Le test de fenêtre glissante vérifie surtout la forme et les bornes des tokens, pas les fenêtres réellement transmises au modèle après dépassement du contexte. Ajouter un faux modèle qui enregistre les entrées. Pas d'assertion explicite de non-mutation du prompt. `top_p=True` est accepté comme 1.0 | Haute |
+| Inspection embeddings | Ordre et doublons des IDs, copie des lignes, similarités décroissantes, exclusion de soi, ties stables, candidats nuls exclus, requête nulle rejetée | `cosine_top_k` rejette `np.int64(k)` alors que le contrat dit entier positif et que d'autres API acceptent les entiers NumPy. Les normes calculées directement peuvent déborder sur des vecteurs finis de grande amplitude ; tester l'invariance d'échelle ou borner/documenter le domaine | Moyenne |
+| Chargement GPT-2 | Copie/transposition des projections, split QKV, head lié en valeur, préfixe HF et buffers, clés manquantes/inattendues, formes, copie float64, absence d'assignation avant validation complète | Pas de rejet explicite des tenseurs non finis/non réels avant conversion float64. Les alias préfixés et non préfixés d'une même clé peuvent se remplacer silencieusement dans `_parameter_tensors`. Le test d'atomicité ne compare qu'un paramètre après erreur : vérifier l'état complet du modèle après un échec tardif | Haute |
+
+### Conclusion de périmètre
+
+- Les cinq domaines disposent d'une base de tests substantielle ; aucune raison
+  de dupliquer les cas déjà présents.
+- Les lacunes du tableau sont des candidats à tests ciblés, pas des défauts
+  démontrés par exécution. Ne pas les compter comme violations détectées.
+- Le périmètre proposé pour la revue ENG-02 comprend les cinq domaines déjà
+  traités (`attention`, `losses`, `gpt_ops`, `TransformerBlock`, `GPT`)
+  et ces cinq domaines complémentaires. L'inventaire doit rester limité aux
+  invariants pédagogiques et fonctionnels explicitement documentés dans ces
+  modules ; les fonctions auxiliaires non critiques et les détails de
+  présentation sont exclus.
+- Aucun dénominateur chiffré n'est approuvé dans cette session : les propriétés
+  doivent d'abord être dédoublonnées, reliées à une assertion précise et
+  soumises à validation humaine. ENG-02 reste **not measured**.
+
+## 13. Comparaison des durées pytest sur le HEAD courant
+
+Le run CI `44376545387` valide le HEAD `bad9fc2` : 673 tests réussis,
+98.19 % de couverture de lignes, commande
+`uv run pytest -n 2 --dist loadscope --durations=20`, Python 3.12.16,
+pytest 9.2.0, deux workers. Le job pytest rapporte **81.58 s**.
+
+Trois observations disponibles avec le même OS Linux, Python, pytest,
+commande et nombre de workers :
+
+| SHA | Run CI | Tests | Durée pytest |
+|---|---:|---:|---:|
+| `68f9bc205699a40a21a378bd6902dd4b0b7ca0f4` | `44365219499` | 673 | 79.48 s |
+| `d4ea580bd403c5b60984e56ebc3fdb2a994b90d9` | `44375498268` | 673 | 73.57 s |
+| `bad9fc2b0e676d872158d569048d9cf8f0cac278` | `44376545387` | 673 | 81.58 s |
+
+Médiane : **79.48 s** ; étendue : **8.01 s**. Les trois observations sont
+comparables sur les paramètres visibles, mais l'échantillon reste trop petit
+pour conclure à une régression ou attribuer les écarts aux changements de code.
+Les deux derniers SHA sont des mises à jour documentaires par rapport au code
+de tests déjà validé. Ne pas modifier la CI sur cette seule base.
+
+### État de validation au moment de cette revue
+
+- CI sur `bad9fc2` : succès (qualité/domain checks et 673 tests).
+- Secret scanning sur `bad9fc2` : succès.
+- Quarto sur `bad9fc2` : encore en cours au dernier relevé ; résultat à
+  confirmer avant de considérer le SHA entièrement validé.
+- Les jobs opt-in d'inventaire complet des locateurs et de benchmark du registre
+  restent ignorés ; aucun résultat ne leur est attribué.
+- Aucune des cinq mutations manuelles n'a été exécutée dans un clone local.
+- Aucune revue humaine n'est enregistrée sur la PR ; elle reste en brouillon.
+
