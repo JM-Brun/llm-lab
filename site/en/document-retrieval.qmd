@@ -118,7 +118,7 @@ The bi-encoder / cross-encoder pattern gives a concrete example of two-stage ran
 - Avi Chawla, [Foundations of RAG systems](https://www.dailydoseofds.com/a-crash-course-on-building-rag-systems-part-1-with-implementations/) — pedagogical example of a dense pipeline with chunking, embeddings, approximate retrieval, and reranking; later sections are partially inaccessible.
 
 
-## Pour pratiquer
+## Practice
 
 Les exercices [RAG, mémoire et frontières de transmission](exercises/rag-memory-boundaries.qmd) restent une pratique intégratrice de bout en bout : ils aident à relier la qualité de la recherche à la transmission et à l'exploitation des résultats. Ils ne constituent pas un atelier spécialisé de classement documentaire.
 
