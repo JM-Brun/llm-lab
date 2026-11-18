@@ -80,6 +80,32 @@ def test_membership_projection_preserves_core_optional_and_multiple_contexts(
         ("computation", "optional")
     ]
 
+    # Deep dives are discoverable from the stage where their question arises,
+    # but remain optional and do not become prerequisites.
+    expected_deep_dive_stages = {
+        "llm-evolution": [("orientation", "optional")],
+        "next-concept-modeling": [("orientation", "optional")],
+        "sinusoidal-positional-encoding": [("representations", "optional")],
+        "contextualized-representations-advanced": [("representations", "optional")],
+        "embeddings-deep-dive": [("representations", "optional")],
+        "queries-keys-values-advanced": [("computation", "optional")],
+        "cross-attention": [("computation", "optional")],
+        "multimodal-architectures": [("computation", "optional")],
+        "hybrid-llm-architectures": [("computation", "optional")],
+        "decoding-strategies": [("inference", "optional")],
+        "llm-computational-complexity": [("inference", "optional")],
+        "rag-memory-boundaries": [("context-use", "optional")],
+        "language-modeling-math": [("scoring", "optional")],
+        "mathematical-foundations": [
+            ("scoring", "optional"),
+            ("training", "optional"),
+        ],
+        "score-centering": [("training", "optional")],
+    }
+    for slug, expected in expected_deep_dive_stages.items():
+        page_id = f"{language}/{slug}"
+        assert [(item.stage_id, item.role) for item in memberships[page_id]] == expected
+
     assert f"{language}/build-path" not in memberships
     practice_page = (
         f"{language}/evaluation-experimentale"
