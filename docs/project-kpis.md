@@ -533,19 +533,23 @@ sur un SHA ne suffit pas à établir la sensibilité des tests.
 ## 21. Inventaire candidat ENG-02
 
 Le périmètre de dix domaines GPT a été approuvé par le mainteneur. Le premier
-inventaire comporte **48 invariants candidats**, avec leurs tests/assertions
+inventaire comporte **48 lignes de regroupement initiales**, dont la granularité a été revue, avec leurs tests/assertions
 repérés et leur statut de preuve statique :
 [consulter l'inventaire ENG-02](audits/eng-02-critical-invariants-inventory-2026-11-18.md).
 
-Les 48 unités ne sont pas encore un dénominateur approuvé. Le comptage, les
-regroupements, l'inclusion des contrats d'API et la pondération uniforme
-proposée doivent être relus. « Protégé » signifie qu'une assertion pertinente
+Les 48 lignes ne sont pas des unités atomiques : plusieurs agrègent des propriétés indépendantes et le nombre 48 est retiré comme proposition de dénominateur. Il faut reconstruire le comptage à partir de propriétés discriminables. L'inclusion et la pondération des contrats d'API doivent être décidées séparément. « Protégé » signifie qu'une assertion pertinente
 a été repérée, pas que sa sensibilité aux défauts est démontrée. Les invariants
-partiels restent au dénominateur proposé et ne sont pas comptés au numérateur
-strict.
+partiels ne peuvent pas être comptés au numérateur strict ; leur présence dans le dénominateur dépendra de la version atomique approuvée.
 
 Définition proposée après approbation :
 invariants avec preuve de test sensible / invariants approuvés.
 La sensibilité doit être démontrée par mutation ciblée ou preuve indépendante
 équivalente. Jusqu'à cette validation, ENG-02 reste **not measured** ; la
 couverture de lignes ne s'y substitue pas.
+
+
+## 22. Revue de granularité ENG-02 — 2026-11-18
+
+La revue méthodologique de l'inventaire a confirmé que 48 était un nombre de lignes de regroupement, pas un dénominateur défendable. Les lignes composites doivent être scindées selon les propriétés qui peuvent être rompues indépendamment (notamment softmax, validation des entrées, non-mutation, initialisation, génération, cosinus et atomicité du chargement GPT-2). Voir la section 6 de l'[inventaire ENG-02](audits/eng-02-critical-invariants-inventory-2026-11-18.md).
+
+**Décision :** ENG-02 reste **not measured** ; le dénominateur 48 est retiré et aucun pourcentage ne doit être publié avant reconstruction et approbation d'un inventaire atomique. La pondération uniforme reste à décider. La revue n'est pas une preuve de sensibilité : les cinq mutations manuelles restent à exécuter.
