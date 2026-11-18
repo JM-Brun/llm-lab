@@ -80,6 +80,35 @@ The scalar-locator count of zero applies specifically to `items[].locator`. Hist
 
 **Heuristic limitation found:** timestamp ranges with en dashes or hyphens are currently classified as `opaque-text` because the shape detector recognizes single timestamps but not ranges. Representative examples were inspected in `3blue1brown-cross-entropy-compression-intelligence-part-2-2026.yml` and the Karpathy chapter locators. This is a reporting-classification gap, not a malformed locator; a follow-up should extend the heuristic and add regression tests without changing validation policy.
 
+### Preliminary type contract matrix
+
+The corpus supports a structural contract, but not one universal value grammar. The following matrix records the observed forms and the conservative rule for now.
+
+| Type | Count | Representative historical value | Provisional interpretation / validation policy |
+|---|---:|---|---|
+| `section` | 354 | `§2.1–2.2 and §3.2, pp. 9905–9906`; `Definition, lines 19–24` | Broad textual anchor: headings, section numbers, page ranges and line references. Preserve opaque text; do not impose one grammar. |
+| `page` | 18 | `https://huggingface.co/learn/llm-course/` | URL locator; all observed values are HTTP(S). Keep URL-shape monitoring report-only until compatibility is established. |
+| `timestamp` | 14 | `05:41–10:22` | Video time range. The initial classifier labels ranges opaque; this is a heuristic gap, not malformed data. |
+| `chapter` | 11 | `00:01:00-03:21:46`; `01:20:32` | Video chapter/time anchor; both ranges and single timestamps occur. |
+| `page-section` | 7 | `pp. 150–152, especially Eqs. (1)–(5)` | Combined page and section/equation anchor. |
+| `heading` | 7 | `AI and Compression` | Descriptive heading text. |
+| `figure` | 4 | `Fig. 1 caption`; `After 'Three different vectors…'` | Figure caption or nearby in-body anchor; not always a numbered figure. |
+| `paragraph` | 4 | `Post body, paragraphs 2–3` | Paragraph/range anchor in article or post text. |
+| `article` | 3 | `From Full to Hybrid Attention in LLMs` | Article title plus optional label for a subtopic. |
+| `comment` | 3 | `Visible reply by @X_differentials on the mirrored post` | Comment/reply anchor; canonical source identity remains elsewhere in the source/evidence metadata. |
+| `abstract` | 2 | `Benchmark description` | Abstract subheading/topic anchor. |
+| `code` | 2 | `PositionalEncoding.__init__ and PositionalEncoding.forward` | Symbol/function anchor. |
+| `external-source` | 2 | `Dao et al. 2022, abstract and IO analysis` | Descriptive pointer to an external source; the value need not itself be a URL. Canonical source identity must be resolved through source/evidence metadata. |
+| `external-code` | 1 | `rasbt/LLMs-from-scratch/...ipynb; code cells 10, 11, 13 and 15` | Repository path and code-cell anchor. |
+
+Common fields:
+- `type`: required non-empty string under the current validator.
+- `value`: required non-empty string under the observed corpus; the validator currently checks truthiness, not the Python type or a type-specific grammar.
+- `label`: optional descriptive disambiguator. Present on 361/432 locators; absent on 71/432. Do not make it mandatory.
+- Additional keys are not currently governed by a closed schema.
+
+**Compatibility rule:** keep the mapping shape and required non-empty `type`/`value` as the structural contract. Treat unknown types, opaque text, mixed page/section anchors and additional keys as report-only until their semantics are reviewed. Do not promote locator presence into proof of source inspection or claim support.
+
 ### Reproducibility
 
 - CPython 3.12.16, PyYAML 6.0.3, uv 0.13.7.
