@@ -214,13 +214,13 @@ jobs:
 
       - name: Run concept-registry benchmark
         env:
-          BENCHMARK_COMMAND: uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/benchmark_concept_registry.py --sizes 500 2000 10000 --repeats 5 --output "$RUNNER_TEMP/concept-registry-benchmark.json"
+          BENCHMARK_COMMAND: uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/benchmark_concept_registry.py --shapes chain hub disconnected dense mixed --dense-degree 4 --mixed-degree 6 --sizes 500 2000 10000 --repeats 5 --output "$RUNNER_TEMP/concept-registry-benchmark.json"
           PR_HEAD_SHA: ${{ github.event.pull_request.head.sha || '' }}
         run: |
           set -euo pipefail
           started_at="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
           start_epoch="$(date +%s)"
-          uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/benchmark_concept_registry.py --sizes 500 2000 10000 --repeats 5 --output "$RUNNER_TEMP/concept-registry-benchmark.json"
+          uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/benchmark_concept_registry.py --shapes chain hub disconnected dense mixed --dense-degree 4 --mixed-degree 6 --sizes 500 2000 10000 --repeats 5 --output "$RUNNER_TEMP/concept-registry-benchmark.json"
           end_epoch="$(date +%s)"
           BENCHMARK_STARTED_AT="$started_at" BENCHMARK_DURATION_SECONDS="$((end_epoch - start_epoch))" uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python - <<'PY'
           import datetime
@@ -255,6 +255,9 @@ jobs:
               "uv_version": subprocess.check_output(
                   ["uv", "--version"], text=True
               ).strip(),
+              "shapes": ["chain", "hub", "disconnected", "dense", "mixed"],
+              "dense_degree": 4,
+              "mixed_degree": 6,
               "sizes": [500, 2000, 10000],
               "repeats": 5,
           }
@@ -274,13 +277,13 @@ jobs:
               report = json.load(f)
           print("### Concept-registry benchmark")
           print()
-          print("| Concepts | Relations | Build median (s) | Validation median (s) | Validation peak (MiB) | Errors |")
-          print("|---:|---:|---:|---:|---:|---:|")
+          print("| Shape | Concepts | Relations | Build median (s) | Validation median (s) | Validation peak (MiB) | Errors |")
+          print("|---|---:|---:|---:|---:|---:|---:|")
           for row in report["results"]:
               peak_mib = row["validation_peak_bytes_max"] / (1024 * 1024)
               errors = max(row["validation_error_counts"], default=0)
               print(
-                  f"| {row['concepts']} | {row['relations']} | "
+                  f"| {row['shape']} | {row['concepts']} | {row['relations']} | "
                   f"{row['fixture_build_seconds_median']:.6f} | "
                   f"{row['validation_seconds_median']:.6f} | "
                   f"{peak_mib:.2f} | {errors} |"
