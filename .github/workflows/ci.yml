@@ -171,7 +171,7 @@ jobs:
           git fetch origin "$PR_HEAD_REF"
           git checkout -B "$PR_HEAD_REF" FETCH_HEAD
           uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/build_learning_map.py
-          git add -f site/includes/generated-*.qmd site/learning-map-data-*.json site/knowledge-graph.jsonld
+          git add site/includes/generated-guided-route-fr.qmd site/includes/generated-guided-route-en.qmd site/includes/generated-map-list-fr.qmd site/includes/generated-map-list-en.qmd site/includes/generated-map-data-fr.qmd site/includes/generated-map-data-en.qmd
           if git diff --cached --quiet; then
             echo "Generated learning-map artifacts are already current."
             exit 0
