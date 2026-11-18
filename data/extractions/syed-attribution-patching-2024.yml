@@ -51,7 +51,7 @@ pedagogical_model:
 
 items:
   - id: syed-attribution-patching-2024:activation-vs-attribution
-    kind: distinction
+    kind: claim
     summary: "Activation patching is a direct intervention; attribution patching estimates its effect through a gradient-based approximation."
     locator: {type: section, value: "Section 3.3: definitions", label: "Source-local locator"}
     evidence:
@@ -65,7 +65,7 @@ items:
     disposition: integrate
     disposition_rationale: "Retain as source-scoped evidence; do not promote directly to a universal canonical concept."
   - id: syed-attribution-patching-2024:eap-linear-estimate
-    kind: method
+    kind: claim
     summary: "Edge Attribution Patching linearizes the change in a target statistic to estimate the effect of patching computational-graph edges."
     locator: {type: section, value: "Section 3.3: Edge Attribution Patching", label: "Source-local locator"}
     evidence:
