@@ -74,6 +74,20 @@ Run 2 used commit `aa62fe79411e157487a5ff2cbb9e8b1fb460bc87`, Actions run `44321
 
 Validation medians were 25–29% slower in run 2, while the measured peak memory was identical at all three sizes. The 500-concept run also had one noticeably slower repetition. This is evidence of timing noise between hosted-runner executions, not a change in algorithmic scaling. Both runs retain approximately linear growth across the tested chain sizes. Two runs are not enough to set a stable time budget; collect more comparable runs before introducing thresholds.
 
+## Expanded topology workloads
+
+The initial two archived runs above are the **chain-only baseline**. The opt-in runner now supports five deterministic graph shapes at each of 500 / 2,000 / 10,000 concepts (five repetitions each):
+
+| Shape | Construction | Stress characteristic |
+|---|---|---|
+| `chain` | One directed `part-of` chain. | Long path / iterative traversal. |
+| `hub` | Two high-degree hubs; remaining concepts point to one hub. | Concentrated degree and adjacency fan-in. |
+| `disconnected` | Independent directed chains of 10 concepts each. | Many components and roots. |
+| `dense` | Each concept points to the next four concepts using `part-of`. | Bounded dense local neighborhoods; remains acyclic. |
+| `mixed` | Six relation types selected from the checked-in relation definitions, with forward edges and canonical ordering for symmetric types. | Mixed relation processing and adjacency maps. |
+
+The benchmark records the actual relation count per shape, fixture-build time separately, validation median/min/max and peak `tracemalloc` memory. The mixed workload excludes learning-dependency types that require bilingual rationales; all generated relation types are defined by the current registry contract. The chain-only baseline files remain unchanged for historical comparison.
+
 ## Interpretation and limits
 
 A successful run proves that the validator accepts the generated workload and provides a local timing/memory observation for that exact machine, interpreter, commit and fixture. It does not prove performance on other runners, browser graph usability, source/extraction scalability, or correctness of arbitrary graph semantics.
