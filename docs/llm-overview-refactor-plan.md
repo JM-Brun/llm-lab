@@ -1,9 +1,9 @@
 # Refonte pédagogique du panorama LLM — décision éditoriale et plan de conservation
 
-**Statut :** proposition à exécuter par lots bilingues, sans suppression de contenu.  
+**Statut :** plan documentaire proposé dans PR #1209 ; exécution bilingue suivie par #1208 ; aucune suppression de contenu autorisée.  
 **Date :** 2026-11-18  
 **Périmètre :** `site/fr/llm-overview.qmd`, `site/en/llm-overview.qmd` et leurs destinations canoniques.  
-**Coordination :** #130 ; issue d'exécution dédiée à créer.
+**Coordination :** [#130](https://github.com/JM-Brun/llm-lab/issues/130) ; exécution : [#1208](https://github.com/JM-Brun/llm-lab/issues/1208) ; documentation proposée dans [PR #1209](https://github.com/JM-Brun/llm-lab/pull/1209).
 
 ## 1. Décision en bref
 
