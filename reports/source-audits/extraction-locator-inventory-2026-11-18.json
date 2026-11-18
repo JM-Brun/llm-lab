@@ -1,0 +1,145 @@
+{
+  "inventory": "extraction-locator-shapes",
+  "scope": "data/extractions/*.yml",
+  "files_seen": 84,
+  "items_seen": 432,
+  "items_without_locator": 0,
+  "items_with_scalar_locator": 0,
+  "items_with_unsupported_locator_shape": 0,
+  "unsupported_locator_shapes": {},
+  "representative_unsupported_locator_record_paths": {},
+  "items_with_non_mapping_extraction_record": 0,
+  "items_without_locator_mapping": 0,
+  "locators_with_missing_or_invalid_required_fields": 0,
+  "yaml_or_record_errors": [],
+  "locator_types": {
+    "abstract": 2,
+    "article": 3,
+    "chapter": 11,
+    "code": 2,
+    "comment": 3,
+    "external-code": 1,
+    "external-source": 2,
+    "figure": 4,
+    "heading": 7,
+    "page": 18,
+    "page-section": 7,
+    "paragraph": 4,
+    "section": 354,
+    "timestamp": 14
+  },
+  "locator_key_shapes": {
+    "label,type,value": 361,
+    "type,value": 71
+  },
+  "mapping_value_shapes_by_type": {
+    "abstract::opaque-text": 2,
+    "article::opaque-text": 3,
+    "chapter::opaque-text": 8,
+    "chapter::timestamp-like": 3,
+    "code::opaque-text": 2,
+    "comment::opaque-text": 3,
+    "external-code::opaque-text": 1,
+    "external-source::opaque-text": 2,
+    "figure::opaque-text": 4,
+    "heading::opaque-text": 7,
+    "page-section::opaque-text": 7,
+    "page::http-url": 18,
+    "paragraph::opaque-text": 4,
+    "section::line-reference-like": 25,
+    "section::opaque-text": 281,
+    "section::page-number-like": 14,
+    "section::section-like": 34,
+    "timestamp::opaque-text": 14
+  },
+  "scalar_locator_value_shapes": {},
+  "representative_mapping_record_paths": {
+    "abstract::opaque-text": [
+      "gerstmayr-et-al-meceng-benchmark-2026.yml:items[0]",
+      "gerstmayr-et-al-meceng-benchmark-2026.yml:items[1]"
+    ],
+    "article::opaque-text": [
+      "sebastian-raschka-full-to-hybrid-attention-2026.yml:items[0]",
+      "sebastian-raschka-full-to-hybrid-attention-2026.yml:items[1]",
+      "sebastian-raschka-full-to-hybrid-attention-2026.yml:items[2]"
+    ],
+    "chapter::opaque-text": [
+      "andrej-karpathy-deep-dive-llms-chatgpt.yml:items[0]",
+      "andrej-karpathy-deep-dive-llms-chatgpt.yml:items[1]",
+      "andrej-karpathy-deep-dive-llms-chatgpt.yml:items[2]"
+    ],
+    "chapter::timestamp-like": [
+      "andrej-karpathy-deep-dive-llms-chatgpt.yml:items[5]",
+      "andrej-karpathy-deep-dive-llms-chatgpt.yml:items[6]",
+      "andrej-karpathy-deep-dive-llms-chatgpt.yml:items[8]"
+    ],
+    "code::opaque-text": [
+      "harvardnlp-annotated-transformer.yml:items[0]",
+      "huang-zhang-shan-he-compression-intelligence-linearly-2024.yml:items[6]"
+    ],
+    "comment::opaque-text": [
+      "deliriumm-llms-do-not-guess-they-optimize-2026.yml:items[7]",
+      "maor-farid-large-mechanical-model-brep-geometry-2026.yml:items[3]",
+      "nishanthan-k-qkv-transformers-devto.yml:items[6]"
+    ],
+    "external-code::opaque-text": [
+      "sebastian-raschka-understanding-positional-embeddings-2026.yml:items[7]"
+    ],
+    "external-source::opaque-text": [
+      "the-ai-edge-how-flashattention-speeds-up-llm-attention.yml:items[3]",
+      "the-ai-edge-how-flashattention-speeds-up-llm-attention.yml:items[4]"
+    ],
+    "figure::opaque-text": [
+      "neha-kk-understanding-qkv-medium.yml:items[10]",
+      "neha-kk-understanding-qkv-medium.yml:items[11]",
+      "neha-kk-understanding-qkv-medium.yml:items[12]"
+    ],
+    "heading::opaque-text": [
+      "notion-intelligence-compression-summary.yml:items[0]",
+      "notion-intelligence-compression-summary.yml:items[1]",
+      "notion-intelligence-compression-summary.yml:items[2]"
+    ],
+    "page-section::opaque-text": [
+      "rissanen-langdon-arithmetic-coding-1979.yml:items[0]",
+      "rissanen-langdon-arithmetic-coding-1979.yml:items[1]",
+      "shannon-mathematical-theory-communication-1948.yml:items[0]"
+    ],
+    "page::http-url": [
+      "huggingface-llm-course.yml:items[0]",
+      "huggingface-llm-course.yml:items[1]",
+      "huggingface-llm-course.yml:items[2]"
+    ],
+    "paragraph::opaque-text": [
+      "maor-farid-large-mechanical-model-brep-geometry-2026.yml:items[0]",
+      "maor-farid-large-mechanical-model-brep-geometry-2026.yml:items[1]",
+      "maor-farid-large-mechanical-model-brep-geometry-2026.yml:items[2]"
+    ],
+    "section::line-reference-like": [
+      "codefinity-qkv-building-blocks.yml:items[0]",
+      "codefinity-qkv-building-blocks.yml:items[1]",
+      "codefinity-qkv-building-blocks.yml:items[2]"
+    ],
+    "section::opaque-text": [
+      "ahia-do-all-languages-cost-the-same-2023.yml:items[0]",
+      "ahia-do-all-languages-cost-the-same-2023.yml:items[1]",
+      "ahia-do-all-languages-cost-the-same-2023.yml:items[3]"
+    ],
+    "section::page-number-like": [
+      "balestriero-lecun-contrastive-non-contrastive-ssl-spectral-2022.yml:items[3]",
+      "hutter-universal-algorithmic-intelligence-2007.yml:items[3]",
+      "hutter-universal-algorithmic-intelligence-2007.yml:items[4]"
+    ],
+    "section::section-like": [
+      "ahia-do-all-languages-cost-the-same-2023.yml:items[2]",
+      "aiedge-how-cuda-graphs-speed-up-llm-inference.yml:items[1]",
+      "aiedge-how-cuda-graphs-speed-up-llm-inference.yml:items[3]"
+    ],
+    "timestamp::opaque-text": [
+      "3blue1brown-cross-entropy-compression-intelligence-part-2-2026.yml:items[0]",
+      "3blue1brown-cross-entropy-compression-intelligence-part-2-2026.yml:items[1]",
+      "3blue1brown-cross-entropy-compression-intelligence-part-2-2026.yml:items[2]"
+    ]
+  },
+  "representative_scalar_record_paths": {},
+  "interpretation": "Observed shape inventory only. Scalar locators are reported separately, not assumed invalid. The report does not assert that any locator resolves, that its source was inspected, or that a type-specific grammar is correct."
+}
