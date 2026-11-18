@@ -1,4 +1,4 @@
-"Tests for the reference loss implementation."
+"""Tests for the reference loss implementation."""
 
 import numpy as np
 import pytest
@@ -64,7 +64,7 @@ def test_extreme_opposite_sign_logits_have_finite_gradient() -> None:
     logits = np.array([[1e308, -1e308]], dtype=np.float64)
     with np.errstate(over="raise", invalid="raise"):
         gradient = cross_entropy_gradient(logits, np.array([1], dtype=np.int64))
-    np.testing.assert_array_equal(gradient, np.array([[0.5, -0.5]]))
+    np.testing.assert_array_equal(gradient, np.array([[1.0, -1.0]]))
 
 
 def test_extreme_opposite_sign_logits_have_zero_loss_for_maximum_target() -> None:
