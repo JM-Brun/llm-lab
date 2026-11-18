@@ -228,9 +228,10 @@ def test_wrong_softmax_axis_fails_per_query_normalization_invariant() -> None:
 
 def test_scaled_dot_product_attention_shapes_and_invariants() -> None:
     t_q, t_k, d_k, d_v = 3, 4, 8, 12
-    q = np.random.randn(t_q, d_k)
-    k = np.random.randn(t_k, d_k)
-    v = np.random.randn(t_k, d_v)
+    rng = np.random.default_rng(7)
+    q = rng.standard_normal((t_q, d_k))
+    k = rng.standard_normal((t_k, d_k))
+    v = rng.standard_normal((t_k, d_v))
 
     out, weights = scaled_dot_product_attention(q, k, v)
 
