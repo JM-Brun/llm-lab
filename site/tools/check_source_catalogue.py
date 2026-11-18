@@ -326,8 +326,9 @@ def _validate_collection_registry(
             elif not (root / dossier_path).is_file():
                 errors.append(f"{item_where}.dossier: file does not exist: {dossier!r}")
 
-        if collection.get("status") not in {"active", "paused", "archived"}:
-            errors.append(f"{item_where}.status: unsupported value {collection.get('status')!r}")
+        status = collection.get("status")
+        if not isinstance(status, str) or status not in {"active", "paused", "archived"}:
+            errors.append(f"{item_where}.status: unsupported value {status!r}")
         if "owning_issue" in collection and (
             not isinstance(collection["owning_issue"], int)
             or isinstance(collection["owning_issue"], bool)
