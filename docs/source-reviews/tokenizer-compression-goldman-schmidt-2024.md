@@ -104,3 +104,10 @@ The apparent disagreement is not a direct contradiction: Goldman varies support 
 - The extraction records are structured documentation, not independent reproduction.
 - The linked repositories, model weights, tokenizer artifacts, raw data and training/evaluation code were not audited or executed.
 - Next review in the source queue: continue with the next explicitly prioritized paper (Sentence-BERT), while preserving the distinction between sentence-embedding similarity and retrieval/ranking systems.
+
+
+## Synchronisation de branche — 2026-11-18
+
+La branche de cette revue a été réintégrée à `main` par un commit de fusion à deux parents. Les mises à jour principales de `main` sont conservées, notamment les audits RoPE et les corrections GPT-2/embeddings ; les ajouts de cette revue restent limités aux deux extractions Goldman/Schmidt, à leurs métadonnées dans le catalogue et à ce dossier.
+
+La fusion de `data/sources.yml` a conservé les deux ensembles de modifications : les ajouts Goldman/Schmidt ont été appliqués à leurs entrées respectives sans écraser la mise à jour RoPE de `main`. Cette note décrit la réconciliation du contenu ; elle ne remplace pas la validation CI du nouveau head.
