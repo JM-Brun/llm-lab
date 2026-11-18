@@ -39,9 +39,9 @@ Après la tokenisation, le modèle reçoit une séquence d'**IDs entiers**. Chaq
 
 Le texte déjà présent dans le contexte est :
 
-> **Préfixe / prompt :** « Un modèle reçoit un texte écrit par une personne. »
+> **Préfixe / prompt :** « C'est une bonne situation, ça, scribe ? »
 
-La continuation commence par « Il le transforme en tokens avant de le traiter. » Elle n'est pas encore présente lorsque le modèle traite le préfixe ; elle sera ajoutée token par token pendant la génération. Aucune segmentation ni aucun ID ne doit être supposé universel.
+La continuation commence par « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation... ». Elle n'est pas encore présente lorsque le modèle traite le préfixe ; elle sera ajoutée token par token pendant la génération. Aucune segmentation ni aucun ID ne doit être supposé universel.
 
 Le tokenizer découpe le préfixe en tokens selon son vocabulaire et ses règles. Il attribue à chaque token un ID entier. Un mot visible n'est pas nécessairement un token unique : la segmentation exacte dépend du tokenizer utilisé.
 
