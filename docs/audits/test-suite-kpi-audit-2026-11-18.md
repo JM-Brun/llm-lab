@@ -94,7 +94,7 @@ Les fonctions n'annoncent pas de contrat de validation des formes/paramètres : 
 | GPTOPS-03 | GELU conforme à l'approximation | Référence erf | Protégé |
 | GPTOPS-04 | Initialisation reproductible | Seed, formes, biais nul | Protégé |
 
-Lecture de travail : 8 protégés et 3 partiels sur 11 candidats. **Ce ratio 8/11 n'est pas une mesure ENG-02 publiable** : l'inventaire est partiel et la sensibilité des assertions aux défauts n'a pas été vérifiée. Un test ne compte que si son assertion peut effectivement détecter la violation.
+Lecture historique de l'audit initial : 8 protégés et 3 partiels sur 11 candidats. Les lacunes ont depuis reçu des tests dans la branche PR #1275 (voir sections 10 et 11). Ce ratio historique ne doit pas être réutilisé comme valeur courante. **Aucun score ENG-02 n'est publié** : le périmètre critique complet n'a pas été approuvé et la sensibilité des assertions aux défauts n'a pas encore été vérifiée par mutations.
 
 ## 6. Actions et ordre recommandé
 
@@ -126,11 +126,11 @@ Lecture de travail : 8 protégés et 3 partiels sur 11 candidats. **Ce ratio 8/1
 
 La CI actuelle exécute déjà la suite pytest complète avec deux workers (`pytest -n 2 --dist loadscope --durations=20`). Les nouveaux tests déterministes et minuscules doivent rejoindre les modules existants : **pas de seconde invocation pytest, pas de job dédié**. Les mutations restent manuelles/advisory au début ; un job planifié ou manuel ne sera envisagé qu'après mesure du coût et du bruit.
 
-## 8. Limites de cet audit
+## 8. Limites de l'audit initial
 
-- Les six fichiers ont été inspectés sur le commit indiqué ; le dépôt n'a pas pu être cloné dans l'environnement de travail.
-- Aucun test, lint, type-check, benchmark ou mutation n'a été exécuté dans cette session.
-- Les constats de comportement numérique sont des risques déduits du code ; les tests de caractérisation doivent confirmer le résultat et fixer le contrat.
+- Les six fichiers initiaux ont été inspectés sur le commit de référence indiqué ; le dépôt n'a pas pu être cloné dans l'environnement de travail.
+- À cette étape initiale, aucun test, lint, type-check, benchmark ou mutation n'avait été exécuté. Les résultats ultérieurs sont consignés séparément en sections 10 et 11.
+- Les constats de comportement numérique initiaux étaient des risques déduits du code ; les tests de caractérisation ajoutés fixent maintenant plusieurs contrats, sous réserve de validation sur le dernier SHA.
 - Le nombre de tests, le taux de couverture de lignes et le présent échantillon ne constituent pas le dénominateur ENG-02.
 
 ## 9. Fichiers audités
@@ -139,3 +139,61 @@ La CI actuelle exécute déjà la suite pytest complète avec deux workers (`pyt
 - [tests/unit/test_losses.py](../../tests/unit/test_losses.py) · [losses.py](../../src/llm_lab/foundations/losses.py)
 - [tests/unit/test_gpt_ops.py](../../tests/unit/test_gpt_ops.py) · [gpt_ops.py](../../src/llm_lab/foundations/gpt_ops.py)
 - [Contrat KPI](../project-kpis.md) · [CI](../../.github/workflows/ci.yml)
+
+
+## 10. Second review: TransformerBlock and assembled GPT
+
+The next audit pass reviewed `tests/unit/test_transformer_block.py`,
+`src/llm_lab/foundations/transformer_block.py`, `tests/unit/test_gpt.py`,
+and `src/llm_lab/foundations/gpt.py` on `main`.
+
+### Existing protections retained
+
+- TransformerBlock: forward shape and finite outputs; 3D input contract; head-count divisibility; depth-scaled initialization applied only to the two residual-output projections.
+- GPT: output shape and finite logits; invalid rank, dtype, empty inputs, context overflow and token range; same-seed reproducibility and different-seed divergence; prefix invariance; independently derived parameter-count formula.
+
+### High-value additions in the PR branch
+
+- TransformerBlock residual composition: replace the two sublayer functions with deterministic outputs and assert that both are added to the residual stream. This isolates the pre-LN residual wiring from the numerical behavior of attention and the MLP.
+- GPT batch independence: assert that an input sequence produces identical logits alone and as one item in a batch. This detects accidental cross-example mixing.
+- Loss batch-mean numerical boundary: two individually large but representable per-example losses must average to a finite value without overflowing an intermediate sum.
+
+These additions are in the branch but have not yet been confirmed by a new CI run. They are candidate invariant protections, not a measured ENG-02 score.
+
+### Remaining gaps worth considering later
+
+- TransformerBlock: test that the MLP preserves the batch/sequence dimensions and returns the configured embedding width; current full-forward coverage provides indirect protection, so a separate test is justified only if it adds a distinct failure signal.
+- GPT: test the position-embedding contribution or exact embedding-to-logit wiring only if a small deterministic test can isolate it without duplicating the end-to-end prefix and shape tests.
+- Mutation pilot: deliberately break one residual addition, introduce cross-batch mixing, remove causal masking, and alter the loss reduction. Record the exact failing assertion for each mutation. Restore the source after each mutation and do not commit intentionally broken code.
+
+### Updated validation status
+
+The first run on the earlier implementation commit `c35b7b50985946c6175ab0f848b98d0793faf7b9` passed the complete pytest job in approximately 58 seconds, Quarto and secret scanning. Ruff formatting passed, but Ruff lint failed on one `SIM117` nested-context finding. That finding was corrected in `b180b2a`.
+
+Subsequent commits add the corrected context-manager test, a batch-mean numerical boundary test, the TransformerBlock residual test and GPT batch-independence test. The GitHub Actions API did not report a new run for the latest commits at the time of this audit update. Therefore the initial pytest success does not validate these later additions, and lint/type-check on the corrected head remain unconfirmed.
+
+
+## 11. CI follow-up and formatting correction
+
+A workflow run was subsequently created for the expanded head
+`737e93aec3be4a9577970bf801eca056e9f50224`:
+
+- Full test job: passed.
+- Quarto site: passed.
+- Secret scanning: passed.
+- Python quality job: failed at `ruff format --check .`, before lint and type checking.
+- Exact finding: one extra blank line before
+  `test_cross_entropy_averages_large_finite_losses_without_sum_overflow`
+  in `tests/unit/test_losses.py`. No semantic or lint failure was reported in that run because those later checks were skipped.
+
+The whitespace was corrected in commit `133fe837c54101219899c3e04d2756ea3d7e8f83`.
+A new Actions run for that exact commit was not yet visible when this update was written.
+Do not treat the correction as validated until formatting, lint, type checking and
+the full workflow complete successfully.
+
+The test job on the expanded head is independent evidence that the new tests
+present at that SHA passed as part of the full suite. The formatting-only failure
+does not invalidate that test result, but it does prevent declaring the PR green.
+
+
+A subsequent source review found that the first whitespace-only follow-up (`133fe83`) had removed the wrong blank line: it left only one blank line between the large-loss test and the next test definition. The formatter finding therefore remained unresolved despite the commit message. This was corrected explicitly in `8eacc07a0584a114f050bc684a14b2efe1679de9` by restoring the required separation. The current PR head is later than the last observed workflow run; no CI validation for this exact correction is available yet. This correction supersedes the earlier claim that `133fe83` had resolved formatting.
