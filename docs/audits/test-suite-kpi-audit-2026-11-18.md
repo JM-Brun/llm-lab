@@ -282,3 +282,19 @@ Ordre d'exécution recommandé :
 - [ ] Mesure ENG-02 calculée, ou statut « not measured » maintenu avec justification.
 - [ ] Mesures CI comparables et interprétées sans attribution abusive.
 - [ ] PR #1277 revue puis fusionnée explicitement ; aucun merge automatique implicite.
+
+
+
+## 14. Cahier de reprise opérationnel
+
+Le protocole détaillé des prochaines sessions est désormais centralisé dans
+[docs/audits/next-session-handoff-2026-11-18.md](next-session-handoff-2026-11-18.md).
+Il contient les commandes locales, les cinq mutations à effectuer, les chemins
+de tests ciblés, l'inventaire des domaines GPT restant à auditer, les critères
+d'acceptation ENG-02 et la méthode de comparaison CI.
+
+La validation CI complète du SHA `d4ea580bd403c5b60984e56ebc3fdb2a994b90d9`
+est acquise (runs `44375498268`, `44375498283` et `44375498160`).
+En revanche, le pilote de mutations n'a pas été exécuté dans cet environnement :
+les résultats de MUT-01 à MUT-05 restent à produire localement. ENG-02 reste
+« not measured ».
