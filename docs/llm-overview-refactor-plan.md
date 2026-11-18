@@ -338,3 +338,26 @@ Le panorama ne peut pas :
 - [ ] Build reste indépendant, Deepen facultatif et Practice transversal.
 - [ ] Les inclusions et cartes générées restent des projections, jamais des sources éditoriales secondaires.
 - [ ] Le pont transfert/capacités est intégré à un propriétaire existant ou, si une lacune est démontrée, proposé au propriétaire du curriculum avant toute création.
+
+
+## 13. Capacité réelle des pages propriétaires — ne pas déplacer la surcharge
+
+Le principe « déplacer vers le propriétaire canonique » ne signifie pas y transférer un bloc entier sans mesurer sa capacité. Un propriétaire déjà dense doit être allégé, redistribué dans ses sous-sections existantes ou faire l'objet d'un arbitrage de périmètre avant de recevoir de nouveaux développements.
+
+Mesure indicative des fichiers actuels (comptage lexical brut, à confirmer sur rendu, estimation à 180 mots/min) :
+
+| Propriétaire | FR | EN | Durée indicative FR / EN | Décision de capacité |
+|---|---:|---:|---:|---|
+| `generation.qmd` | ~3 186 | ~3 018 | 17,7 / 16,8 min | Déjà au-dessus de 15 min : conserver la boucle comme cœur, évaluer le déplacement des détails de serving/cache vers leur propriétaire existant ou Deepen. Ne pas y déverser le panorama. |
+| `llm-limits.qmd` | ~1 596 | ~1 435 | 8,9 / 8,0 min | Bon candidat pour le pont objectif/limites/transfert si le contenu est bien de sa responsabilité ; vérifier la place des cas d'évaluation. |
+| `post-training.qmd` | ~1 905 | ~1 701 | 10,6 / 9,5 min | Capacité limitée mais raisonnable ; n'y déplacer que les notions d'adaptation des paramètres. |
+| `in-context-learning.qmd` | ~1 153 | ~1 040 | 6,4 / 5,8 min | Peut accueillir les explications ICL actuellement dispersées, sans répéter context engineering. |
+| `context-engineering.qmd` | ~2 143 | ~1 919 | 11,9 / 10,7 min | Proche du plafond : ne pas lui transférer tout le bloc information/mémoire ; coordonner avec RAG boundaries. |
+| `rag-memory-boundaries.qmd` | ~3 024 | ~2 626 | 16,8 / 14,6 min | FR dépasse déjà le plafond : répartir avec context engineering et approfondissements existants, sans créer un chapitre concurrent. |
+| `transformer-history.qmd` | ~1 317 | ~1 172 | 7,3 / 6,5 min | Peut accueillir les jalons historiques, mais le panorama ne doit pas lui transférer le pont de capacités entier. |
+| `llm-evolution.qmd` | ~2 676 | ~2 407 | 14,9 / 13,4 min | Très proche du plafond : ne pas y déplacer en bloc histoire, compression, transfert et outils. |
+| `training-loop.qmd` | ~3 129 | ~2 795 | 17,4 / 15,5 min | Déjà trop dense : ne pas lui transférer la totalité des explications sur loss/gradients/teacher forcing ; conserver les propriétaires mathématiques. |
+
+**Conséquence éditoriale :** la matrice de conservation doit être enrichie avec une colonne « capacité/durée de la destination avant et après déplacement ». Tout déplacement qui ferait dépasser 15 minutes à une page cible doit déclencher une redistribution entre propriétaires déjà établis, une clarification du périmètre ou un approfondissement optionnel. Ne pas créer une nouvelle page uniquement pour respecter un compteur de mots : une nouvelle page exige une question pédagogique autonome, un propriétaire explicite, un emplacement dans les destinations existantes et l'accord du propriétaire du curriculum.
+
+Les durées ci-dessus sont des signaux de densité, pas des normes absolues. Les formules, figures, exercices et difficultés conceptuelles peuvent ralentir la lecture ; le test final reste le rendu et une lecture réelle.
