@@ -17,6 +17,14 @@ uv run --no-project --with-requirements docs/requirements-history-validation.txt
   --output reports/source-audits/extraction-locator-inventory.json
 ```
 
+## GitHub Actions execution
+
+The CI workflow exposes the full-corpus report as an opt-in job:
+- From **Actions → CI → Run workflow**, set `run_locator_inventory=true`.
+- A pull request whose title contains `[inventory]` also opts in and checks out that PR's head commit.
+
+The job runs the command above against every `data/extractions/*.yml` file, prints a compact report to the job summary, and uploads a 90-day artifact containing the raw JSON plus separate execution metadata (exact SHA, run/attempt, command, timestamps, duration, Python/PyYAML/uv versions, platform and runner architecture). It does not add a new required-CI gate for locator shapes: only YAML or record-structure errors make the report command fail; scalar and unsupported locator shapes remain observational categories.
+
 ## What it reports
 
 - Number of extraction files and items visited.
