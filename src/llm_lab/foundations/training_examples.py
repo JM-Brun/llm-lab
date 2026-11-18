@@ -43,10 +43,13 @@ def sliding_input_target_pairs(
             if it holds fewer than `context_length + 1` tokens, or if
             `context_length` or `stride` is below one.
     """
-    if context_length < 1:
-        raise ValueError("context_length must be at least 1")
-    if stride < 1:
-        raise ValueError("stride must be at least 1")
+    for name, value in (("context_length", context_length), ("stride", stride)):
+        if (
+            isinstance(value, (bool, np.bool_))
+            or not isinstance(value, (int, np.integer))
+            or value < 1
+        ):
+            raise ValueError(f"{name} must be a positive integer")
 
     ids = np.asarray(token_ids)
     if ids.ndim != 1:
