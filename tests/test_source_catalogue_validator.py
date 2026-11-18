@@ -95,6 +95,10 @@ def _corpus(root: Path, *, source_type: str = "paper", with_extraction: bool = F
             ],
         },
     )
+    _write_yaml(
+        root / "data" / "source-collections.yml",
+        {"schema_version": 1, "collections": []},
+    )
     if with_extraction:
         _write_yaml(
             root / "data" / "extractions" / "example-source.yml",
@@ -415,3 +419,161 @@ def test_invalid_community_provenance_and_verification_are_rejected(tmp_path: Pa
     assert any("provenance.captured_at: expected ISO 8601 date" in error for error in errors)
     assert any("verification.status: unsupported status" in error for error in errors)
     assert any("verification.sources: unknown source 'missing-source'" in error for error in errors)
+
+
+def _add_collection(root: Path, *, collection_id: str = "qkv-attention") -> None:
+    dossier = root / "docs" / "qkv-source-collection.md"
+    dossier.parent.mkdir(parents=True, exist_ok=True)
+    dossier.write_text("# Q/K/V collection\\n", encoding="utf-8")
+    _write_yaml(
+        root / "data" / "source-collections.yml",
+        {
+            "schema_version": 1,
+            "collections": [
+                {
+                    "id": collection_id,
+                    "title": "Q/K/V and attention",
+                    "dossier": "docs/qkv-source-collection.md",
+                    "status": "active",
+                }
+            ],
+        },
+    )
+
+
+def test_legacy_source_without_collections_and_empty_registry_are_accepted(tmp_path: Path) -> None:
+    _corpus(tmp_path)
+
+    assert MODULE.validate_source_catalogue(tmp_path) == []
+
+
+def test_source_can_have_one_or_multiple_explicit_collection_memberships(tmp_path: Path) -> None:
+    _corpus(tmp_path, with_extraction=True)
+    _add_collection(tmp_path)
+    registry_path = tmp_path / "data" / "source-collections.yml"
+    registry = yaml.safe_load(registry_path.read_text(encoding="utf-8"))
+    registry["collections"].append(
+        {
+            "id": "tokenization-embeddings",
+            "title": "Tokenization and embeddings",
+            "dossier": "docs/qkv-source-collection.md",
+            "status": "active",
+        }
+    )
+    _write_yaml(registry_path, registry)
+    source_path = tmp_path / "data" / "sources.yml"
+    source_data = yaml.safe_load(source_path.read_text(encoding="utf-8"))
+    source_data["sources"][0]["collections"] = [
+        "qkv-attention",
+        "tokenization-embeddings",
+    ]
+    _write_yaml(source_path, source_data)
+
+    assert MODULE.validate_source_catalogue(tmp_path) == []
+
+
+def test_empty_source_membership_is_accepted(tmp_path: Path) -> None:
+    _corpus(tmp_path)
+    source_path = tmp_path / "data" / "sources.yml"
+    source_data = yaml.safe_load(source_path.read_text(encoding="utf-8"))
+    source_data["sources"][0]["collections"] = []
+    _write_yaml(source_path, source_data)
+
+    assert MODULE.validate_source_catalogue(tmp_path) == []
+
+
+def test_unknown_and_duplicate_source_collection_ids_are_rejected(tmp_path: Path) -> None:
+    _corpus(tmp_path)
+    _add_collection(tmp_path)
+    source_path = tmp_path / "data" / "sources.yml"
+    source_data = yaml.safe_load(source_path.read_text(encoding="utf-8"))
+    source_data["sources"][0]["collections"] = ["qkv-attention", "missing", "qkv-attention"]
+    _write_yaml(source_path, source_data)
+
+    errors = MODULE.validate_source_catalogue(tmp_path)
+
+    assert any("unknown collection 'missing'" in error for error in errors)
+    assert any("collections: duplicate collection ID" in error for error in errors)
+
+
+def test_duplicate_registry_ids_and_missing_dossiers_are_rejected(tmp_path: Path) -> None:
+    _corpus(tmp_path)
+    _write_yaml(
+        tmp_path / "data" / "source-collections.yml",
+        {
+            "schema_version": 1,
+            "collections": [
+                {
+                    "id": "qkv-attention",
+                    "title": "Q/K/V",
+                    "dossier": "docs/missing.md",
+                    "status": "active",
+                },
+                {
+                    "id": "qkv-attention",
+                    "title": "Duplicate",
+                    "dossier": "docs/missing.md",
+                    "status": "active",
+                },
+            ],
+        },
+    )
+
+    errors = MODULE.validate_source_catalogue(tmp_path)
+
+    assert any("duplicate collection ID 'qkv-attention'" in error for error in errors)
+    assert any("dossier: file does not exist" in error for error in errors)
+
+
+def test_collection_registry_rejects_invalid_ids_status_and_unsafe_paths(tmp_path: Path) -> None:
+    _corpus(tmp_path)
+    _write_yaml(
+        tmp_path / "data" / "source-collections.yml",
+        {
+            "schema_version": 1,
+            "collections": [
+                {
+                    "id": "Not Valid",
+                    "title": "",
+                    "dossier": "../outside.md",
+                    "status": "current",
+                    "owning_issue": 0,
+                }
+            ],
+        },
+    )
+
+    errors = MODULE.validate_source_catalogue(tmp_path)
+
+    assert any(".id: expected a stable kebab-case ID" in error for error in errors)
+    assert any(".title: expected non-empty text" in error for error in errors)
+    assert any("path must stay inside the repository" in error for error in errors)
+    assert any(".status: unsupported value" in error for error in errors)
+    assert any(".owning_issue: expected a positive issue number" in error for error in errors)
+
+
+def test_extraction_cannot_duplicate_source_collection_membership(tmp_path: Path) -> None:
+    _corpus(tmp_path, with_extraction=True)
+    extraction_path = tmp_path / "data" / "extractions" / "example-source.yml"
+    data = yaml.safe_load(extraction_path.read_text(encoding="utf-8"))
+    data["collections"] = ["qkv-attention"]
+    _write_yaml(extraction_path, data)
+
+    errors = MODULE.validate_source_catalogue(tmp_path)
+
+    assert any("membership belongs on the canonical source record" in error for error in errors)
+
+
+def test_extraction_membership_resolves_through_source_id_only(tmp_path: Path) -> None:
+    _corpus(tmp_path, with_extraction=True)
+    _add_collection(tmp_path)
+    source_path = tmp_path / "data" / "sources.yml"
+    source_data = yaml.safe_load(source_path.read_text(encoding="utf-8"))
+    source_data["sources"][0]["collections"] = ["qkv-attention"]
+    _write_yaml(source_path, source_data)
+    extraction_path = tmp_path / "data" / "extractions" / "example-source.yml"
+    extraction_data = yaml.safe_load(extraction_path.read_text(encoding="utf-8"))
+    assert extraction_data["source_id"] == "example-source"
+    assert "collections" not in extraction_data
+
+    assert MODULE.validate_source_catalogue(tmp_path) == []
