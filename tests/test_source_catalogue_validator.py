@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 import importlib.util
+import sys
 from pathlib import Path
 
 import yaml
 
 SCRIPT = Path(__file__).resolve().parents[1] / "site" / "tools" / "check_source_catalogue.py"
+sys.path.insert(0, str(SCRIPT.parent))
 SPEC = importlib.util.spec_from_file_location("check_source_catalogue", SCRIPT)
 assert SPEC is not None and SPEC.loader is not None
 MODULE = importlib.util.module_from_spec(SPEC)
