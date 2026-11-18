@@ -253,6 +253,7 @@ These distinctions are useful when moving from model fundamentals to deployed sy
 - **Compare text-splitting methods:** [tokenization strategies](tokenization-strategies.qmd).
 - **Follow an implementation:** [guided tour of the Transformer block](transformer-block-walkthrough.qmd).
 - **Look up a concise definition:** [LLM and Transformer glossary](glossary.qmd).
+- **Watch an end-to-end overview:** [Andrej Karpathy — Deep Dive into LLMs like ChatGPT](https://www.youtube.com/watch?v=7xTGNNLPyMI) (2025, English video, about 3 h 31): from pretraining to post-training and inference; an orientation resource, not a replacement for the detailed lessons.
 :::
 
 ::: {.self-check}

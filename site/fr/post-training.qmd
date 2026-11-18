@@ -125,6 +125,7 @@ Vérifier les distinctions entre SFT, RLHF, DPO, LoRA et récupération sur la [
 - [Rafailov et al. — Direct Preference Optimization](https://arxiv.org/abs/2305.18290) : apprentissage des préférences sans modèle de récompense séparé.
 - [Hu et al. — LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685) : adaptation économe en paramètres par mises à jour de faible rang.
 - [Lewis et al. — Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401) : récupération insérée dans le contexte au moment de l'inférence.
+- [Andrej Karpathy — Deep Dive into LLMs like ChatGPT](https://www.youtube.com/watch?v=7xTGNNLPyMI) (2025, vidéo en anglais, environ 3 h 31) : panorama pédagogique du pré-entraînement, du SFT, du RL, de DeepSeek-R1 et du RLHF. À utiliser pour relier les étapes, puis revenir aux articles primaires pour les détails algorithmiques.
 
 </div>
 </details>

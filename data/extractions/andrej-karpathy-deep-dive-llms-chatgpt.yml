@@ -1,0 +1,213 @@
+schema_version: 1
+source_id: andrej-karpathy-deep-dive-llms-chatgpt
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Reconstructed from the public description, all 24 chapter markers, and a timestamped third-party transcript index for the 3 h 31 min video."
+      - "The transcript provides broad textual coverage, but it is not a verified verbatim transcript of the audio."
+      - "Visual explanations, slide content, demonstrations, speaker emphasis and exact audiovisual transitions were not independently inspected."
+      - "The source-local graph and teaching route below are editorial reconstructions from the available chapter structure and transcript, not a formal graph supplied by the speaker."
+    inferred_elements:
+      - "Learning outcomes and prerequisite relationships are editorially inferred from the sequence and explanations."
+      - "The six-part grouping is an editorial synthesis of the 24 chapter markers, not a taxonomy declared by the speaker."
+  source_graph:
+    nodes:
+      - {id: src-web-corpus, kind: data-source, description: "Large-scale internet text gathered as candidate pretraining material.", locator: "00:01:00"}
+      - {id: src-data-curation, kind: process, description: "Filtering and preparing raw web data into a usable training corpus.", locator: "00:01:00"}
+      - {id: src-tokenization, kind: representation-process, description: "Converting text into discrete token IDs from a finite vocabulary.", locator: "00:07:47"}
+      - {id: src-neural-network, kind: architecture, description: "A parameterized neural network mapping token sequences to next-token scores.", locator: "00:14:27-00:26:01"}
+      - {id: src-transformer, kind: architecture, description: "Transformer computation underlying the GPT-family model discussed.", locator: "00:20:11"}
+      - {id: src-next-token-objective, kind: training-objective, description: "Learning statistical regularities by predicting the next token in a sequence.", locator: "00:31:09"}
+      - {id: src-pretraining, kind: learning-stage, description: "Learning general language-model parameters from large-scale text.", locator: "00:01:00-00:59:23"}
+      - {id: src-base-model, kind: model-state, description: "A pretrained model before conversational post-training.", locator: "00:31:09-00:59:23"}
+      - {id: src-autoregressive-inference, kind: inference-process, description: "Repeatedly predicting and feeding back tokens while model parameters remain fixed.", locator: "00:26:01-00:59:23"}
+      - {id: src-conversation-data, kind: training-data, description: "Conversation-shaped examples used to teach assistant-style interaction.", locator: "01:01:06"}
+      - {id: src-supervised-finetuning, kind: learning-stage, description: "Supervised adaptation on demonstrations of desired assistant behavior.", locator: "00:59:23-01:20:32"}
+      - {id: src-post-training, kind: learning-stage, description: "Stages that adapt a pretrained base model toward assistant behavior.", locator: "00:59:23"}
+      - {id: src-context, kind: inference-input, description: "Prompt and conversation information supplied at inference time.", locator: "01:20:32"}
+      - {id: src-parametric-knowledge, kind: information-location, description: "Information reflected in learned model parameters.", locator: "01:20:32-01:41:46"}
+      - {id: src-working-context, kind: information-location, description: "Information available in the current input/context window.", locator: "01:20:32-01:46:56"}
+      - {id: src-hallucination, kind: failure-mode, description: "Plausible generated content that is not reliably grounded in facts.", locator: "01:20:32"}
+      - {id: src-tool-use, kind: system-capability, description: "Application-mediated access to external tools during interaction.", locator: "01:20:32"}
+      - {id: src-token-mediated-reasoning, kind: inference-process, description: "Reasoning-like computation expressed through generated intermediate tokens.", locator: "01:46:56"}
+      - {id: src-jagged-intelligence, kind: capability-property, description: "Uneven capability profile across tasks rather than uniformly human-like competence.", locator: "02:04:53"}
+      - {id: src-reinforcement-learning, kind: optimization-method, description: "Learning from reward signals through interaction or scored outputs.", locator: "02:07:28-02:48:26"}
+      - {id: src-deepseek-r1, kind: claim, description: "Reasoning-model case study used to discuss reinforcement learning and inference-time reasoning.", locator: "02:27:47"}
+      - {id: src-alphago, kind: claim, description: "Earlier landmark example of reinforcement learning and search in a constrained game domain.", locator: "02:42:07"}
+      - {id: src-rlhf, kind: alignment-method, description: "Using human preference feedback as a signal in assistant post-training.", locator: "02:48:26"}
+    edges:
+      - {from: src-web-corpus, type: curated-into, to: src-data-curation}
+      - {from: src-data-curation, type: supplies, to: src-pretraining}
+      - {from: src-tokenization, type: represents-input-for, to: src-neural-network}
+      - {from: src-neural-network, type: instantiated-as, to: src-transformer}
+      - {from: src-transformer, type: optimized-for, to: src-next-token-objective}
+      - {from: src-next-token-objective, type: drives, to: src-pretraining}
+      - {from: src-pretraining, type: produces, to: src-base-model}
+      - {from: src-base-model, type: used-by, to: src-autoregressive-inference}
+      - {from: src-autoregressive-inference, type: conditioned-on, to: src-context}
+      - {from: src-base-model, type: adapted-by, to: src-post-training}
+      - {from: src-conversation-data, type: supplies, to: src-supervised-finetuning}
+      - {from: src-supervised-finetuning, type: part-of, to: src-post-training}
+      - {from: src-post-training, type: produces, to: src-autoregressive-inference}
+      - {from: src-context, type: exposes, to: src-working-context}
+      - {from: src-base-model, type: stores-information-in, to: src-parametric-knowledge}
+      - {from: src-working-context, type: distinct-from, to: src-parametric-knowledge}
+      - {from: src-autoregressive-inference, type: can-exhibit, to: src-hallucination}
+      - {from: src-autoregressive-inference, type: can-invoke-through-application, to: src-tool-use}
+      - {from: src-token-mediated-reasoning, type: uses, to: src-working-context}
+      - {from: src-jagged-intelligence, type: qualifies-claims-about, to: src-autoregressive-inference}
+      - {from: src-reinforcement-learning, type: used-in, to: src-post-training}
+      - {from: src-deepseek-r1, type: illustrates, to: src-reinforcement-learning}
+      - {from: src-alphago, type: historical-precedent-for, to: src-reinforcement-learning}
+      - {from: src-rlhf, type: preference-based-form-of, to: src-reinforcement-learning}
+    interpretation: "Editorial source-local reconstruction. Edges summarize the video's teaching narrative; they are not a canonical ontology, proof of causality, or a substitute for checking the cited papers and implementations."
+  learning_outcomes:
+    - {status: inferred, outcome: "Trace the main pipeline from web data and tokenization through Transformer pretraining, post-training and inference.", basis: "Chapters 1-10 and grand summary."}
+    - {status: inferred, outcome: "Explain next-token prediction and the distinction between a base model and a conversational assistant.", basis: "Chapters 7-10."}
+    - {status: inferred, outcome: "Distinguish information encoded in parameters from information supplied in the active context.", basis: "Chapters 11-13."}
+    - {status: inferred, outcome: "Identify hallucination, tool-use boundaries and uneven task capabilities as important behavioral limitations.", basis: "Chapters 11-16."}
+    - {status: inferred, outcome: "Describe at a high level how supervised fine-tuning, reinforcement learning and preference feedback contribute to post-training.", basis: "Chapters 17-21."}
+    - {status: inferred, outcome: "Relate contemporary reasoning-model discussions to earlier reinforcement-learning examples without assuming identical methods or objectives.", basis: "Chapters 18-21."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Basic familiarity with text, sequences and probability.", basis: "The video introduces tokenization and neural-network concepts but does not develop all mathematical prerequisites."}
+    - {status: inferred, topic: "No implementation prerequisite for the general-audience narrative.", basis: "The video aims to remain accessible and uses demonstrations rather than requiring the viewer to build a model."}
+  teaching_route:
+    - {order: 1, section: "Introduction; pretraining data; tokenization", function: establish-data-and-input-pipeline, moves: ["Frame the model as a system to be understood", "Follow web data through curation", "Convert text into token IDs"]}
+    - {order: 2, section: "Neural network I/O; internals; inference", function: explain-model-computation, moves: ["Trace discrete inputs and prediction outputs", "Open the neural-network black box", "Explain iterative generation"]}
+    - {order: 3, section: "GPT-2 and Llama 3.1 base-model demonstrations", function: connect-concepts-to-running-models, moves: ["Use GPT-2 to illustrate training and inference", "Contrast a base model's continuation behavior with assistant behavior"]}
+    - {order: 4, section: "Pretraining to post-training; conversation data", function: distinguish-model-lifecycle-stages, moves: ["Introduce assistant-style conversation examples", "Explain why pretraining alone does not define ChatGPT-like behavior"]}
+    - {order: 5, section: "Hallucinations; tools; knowledge and working memory; self-knowledge; tokens to think; jagged intelligence", function: build-behavioral-mental-model, moves: ["Separate parameter knowledge from context", "Discuss failure modes and application-mediated tools", "Challenge anthropomorphic assumptions", "Show uneven task competence"]}
+    - {order: 6, section: "SFT, reinforcement learning, DeepSeek-R1, AlphaGo and RLHF", function: explain-post-training-and-reward-learning, moves: ["Move from demonstrations to reward signals", "Use contemporary and historical case studies", "Explain preference feedback as a distinct training signal"]}
+    - {order: 7, section: "Future directions; tracking and finding models; grand summary", function: consolidate-and-orient, moves: ["Survey directions and ecosystem resources", "Reconstruct the complete lifecycle"]}
+  pedagogical_strengths:
+    - "A coherent end-to-end lifecycle narrative connects data, representation, architecture, learning, inference and assistant behavior."
+    - "Concrete GPT-2 and Llama base-model demonstrations help distinguish a learned continuation model from a post-trained assistant."
+    - "Behavioral limitations are integrated into the technical explanation rather than relegated to a generic disclaimer."
+    - "The distinction between parameter knowledge and active context is a useful bridge to in-context learning, retrieval and context engineering."
+    - "The transition from supervised demonstrations to reward-based optimization creates a useful high-level map of post-training."
+    - "Historical comparison with AlphaGo helps motivate reinforcement learning, search and reward signals."
+  pedagogical_limits:
+    - "The video is a broad general-audience lecture; several technical topics are compressed and should be linked to canonical lessons or primary literature."
+    - "Transcript-only review cannot validate slide content, code demonstrations, visual analogies or exact spoken qualifications."
+    - "The discussion of hallucinations and model psychology should not be read as a complete causal theory of model behavior."
+    - "The boundary between model-side tool-call generation and application-side tool execution needs explicit treatment; a model does not autonomously execute external tools merely by emitting text."
+    - "The terms knowledge, working memory, reasoning and self-knowledge are pedagogical framings, not direct evidence of human-like mental states."
+    - "Reinforcement-learning examples across games and language models differ in action spaces, reward construction, environment feedback and evaluation; analogy does not establish methodological equivalence."
+    - "The lecture is a 2025 snapshot; model names, ecosystem rankings, tools and current best practices can change."
+  comparison:
+    dossier: docs/source-reviews/karpathy-deep-dive-learning-graph-2026-11.md
+    canonical_graph: "data/concepts.yml and generated JSON-LD projection"
+    canonical_routes: [data/guided-route.yml, docs/learning-path.md, "page-level metadata and Build route"]
+    decision: "Use the video as a high-level integrating resource, not as a replacement curriculum. Existing canonical lessons own the detailed mechanisms; add contextual links and targeted clarifications only where the source exposes a genuine gap."
+    structures_kept_separate: [source-semantic-graph, source-pedagogical-route, canonical-concept-graph, canonical-learning-routes, site-navigation]
+items:
+  - id: andrej-karpathy-deep-dive-llms-chatgpt:end-to-end-lifecycle
+    kind: mental-model
+    summary: "The lecture's central organizing model is a lifecycle: curated data is tokenized, a Transformer is pretrained with a next-token objective, the resulting base model is adapted through post-training, and the model is then used through iterative inference inside an application."
+    locator: {type: chapter, value: "00:01:00-03:21:46", label: "Pretraining data through grand summary"}
+    evidence: {kind: pedagogical-synthesis, confidence: well-supported, scope: "Cross-chapter synthesis of the lecture's explicit lifecycle narrative.", assumptions: ["The description is a high-level map, not a complete production training specification."], limitations: ["The exact stack varies by model family and provider.", "No single linear recipe captures every contemporary system."]}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:llm-lifecycle, modality:video], concept_ids: [pretraining, fine-tuning, autoregressive-generation]}
+    candidate_destinations: {pages: [fr/llm-overview, en/llm-overview], concepts: [pretraining, fine-tuning, autoregressive-generation]}
+    disposition: integrate-by-reference
+    disposition_rationale: "The lifecycle is a useful cross-page orientation, but the project already has canonical pages for its component mechanisms. Prefer a source card and contextual links over duplicating the complete pipeline."
+
+  - id: andrej-karpathy-deep-dive-llms-chatgpt:tokenization-and-neural-io
+    kind: mechanism
+    summary: "Raw text is not directly consumed as ordinary words by the model: a tokenizer maps text into token IDs from a finite vocabulary, which become the discrete sequence processed by the neural network. The model's output scores correspond to candidate next tokens."
+    locator: {type: chapter, value: "00:07:47-00:26:01", label: "Tokenization, neural-network I/O and internals"}
+    evidence: {kind: technical-explanation, confidence: well-supported, scope: "General tokenization and model I/O explanation.", assumptions: ["The lecture's GPT-style token interface is the reference case."], limitations: ["Tokenizer algorithms and model input conventions vary.", "Multimodal models may represent non-text inputs through additional token or modality-specific pathways."]}
+    classification: {primary_theme: architectures-mechanisms, secondary_themes: [probabilistic-foundations-training], tags: [topic:tokenization, topic:logits], concept_ids: [token, logits, softmax]}
+    candidate_destinations: {pages: [fr/text-data, en/text-data, fr/tokenization-strategies, en/tokenization-strategies, fr/logits, en/logits], concepts: [token, logits, softmax]}
+    disposition: already-covered
+    disposition_rationale: "The project has canonical lessons for text-to-token IDs and prediction scores. Use the lecture as an additional explanation, not as a reason to repeat the definitions."
+
+  - id: andrej-karpathy-deep-dive-llms-chatgpt:next-token-pretraining
+    kind: mechanism
+    summary: "Pretraining optimizes a model to predict observed next tokens over large text sequences. This objective produces a reusable base model, but it does not by itself specify the conversational interaction style expected from an assistant."
+    locator: {type: chapter, value: "00:31:09-01:01:06", label: "GPT-2 training/inference and transition to post-training"}
+    evidence: {kind: training-objective, confidence: well-supported, scope: "Lecture's explanation of GPT-style next-token pretraining.", assumptions: ["Autoregressive decoder-only language modeling is the main example."], limitations: ["Not all language models use the same architecture or objective.", "The lecture's simplified lifecycle omits many data, optimization and distributed-training details."]}
+    classification: {primary_theme: probabilistic-foundations-training, tags: [topic:pretraining, method:next-token-prediction], concept_ids: [pretraining, cross-entropy]}
+    candidate_destinations: {pages: [fr/loss, en/loss, fr/training-loop, en/training-loop, fr/llm-overview, en/llm-overview], concepts: [pretraining, cross-entropy]}
+    disposition: integrate-by-reference
+    disposition_rationale: "The source is an accessible lifecycle-level explanation; canonical lessons already own the objective and training loop."
+
+  - id: andrej-karpathy-deep-dive-llms-chatgpt:base-model-versus-assistant
+    kind: mental-model
+    summary: "A pretrained base model is trained to continue sequences; assistant-style interaction is a behavior shaped by later stages such as supervised instruction fine-tuning and preference/reward-based optimization. These stages adapt a model rather than replacing the underlying Transformer inference process."
+    locator: {type: chapter, value: "00:42:52-01:20:32", label: "Llama 3.1 base-model inference through conversation post-training"}
+    evidence: {kind: conceptual-distinction, confidence: well-supported, scope: "The demonstrations and transition from pretraining to conversation-shaped post-training.", assumptions: ["The examples concern GPT-like assistant systems."], limitations: ["Production pipelines differ and may include multiple data, filtering, reward-model and policy-optimization stages.", "A chat template alone is not equivalent to post-training."]}
+    classification: {primary_theme: probabilistic-foundations-training, tags: [topic:base-model, topic:assistant-model, topic:post-training], concept_ids: [pretraining, fine-tuning]}
+    candidate_destinations: {pages: [fr/llm-overview, en/llm-overview, fr/post-training, en/post-training], concepts: [pretraining, fine-tuning]}
+    disposition: integrate
+    disposition_rationale: "This is a high-value distinction to preserve explicitly in the panorama and post-training lesson, with a link to the video."
+
+  - id: andrej-karpathy-deep-dive-llms-chatgpt:parameters-versus-context
+    kind: mental-model
+    summary: "Information reflected in model parameters after training must be distinguished from information supplied in the active prompt or conversation context. Context can condition the current prediction without updating the model's parameters; neither should be casually equated with a human memory system."
+    locator: {type: chapter, value: "01:20:32-01:46:56", label: "Hallucinations, tool use, knowledge/working memory and self-knowledge"}
+    evidence: {kind: conceptual-distinction, confidence: well-supported, scope: "Lecture's contrast between model knowledge and working context.", assumptions: ["The parameter/context distinction is applied to ordinary inference without online weight updates."], limitations: ["The term working memory is an analogy for active context, not a claim of cognitive equivalence.", "External retrieval and application state add further information stores."]}
+    classification: {primary_theme: inference-efficiency, secondary_themes: [architectures-mechanisms], tags: [topic:parametric-knowledge, topic:context-window, topic:in-context-learning], concept_ids: [in-context-learning]}
+    candidate_destinations: {pages: [fr/in-context-learning, en/in-context-learning, fr/context-engineering, en/context-engineering, fr/rag-memory-boundaries, en/rag-memory-boundaries], concepts: [in-context-learning]}
+    disposition: integrate
+    disposition_rationale: "Retain this boundary as a recurring conceptual distinction. Cross-link the existing ICL/context-engineering lessons; do not create a new memory concept merely from the analogy."
+
+  - id: andrej-karpathy-deep-dive-llms-chatgpt:hallucination-and-grounding
+    kind: limitation
+    summary: "Fluent next-token generation does not guarantee factual grounding. A model may produce plausible but unsupported statements, so users and applications need verification, provenance and appropriate external evidence rather than treating confident language as proof."
+    locator: {type: chapter, value: "01:20:32", label: "Hallucinations, tool use, knowledge and working memory"}
+    evidence: {kind: failure-mode-explanation, confidence: well-supported, scope: "General behavioral limitation discussed in the lecture.", assumptions: ["Hallucination is used broadly for unsupported or false generated content."], limitations: ["The lecture is not a complete taxonomy or causal account of hallucinations.", "Frequency and severity depend on task, model, prompting and evaluation."]}
+    classification: {primary_theme: architectures-mechanisms, tags: [topic:hallucination, topic:reliability]}
+    candidate_destinations: {pages: [fr/llm-limits, en/llm-limits, fr/llm-overview, en/llm-overview]}
+    disposition: integrate-by-reference
+    disposition_rationale: "The limitation is already represented in the bilingual limits page. Use the video as a supporting explanation and avoid presenting hallucination as one fully explained mechanism."
+
+  - id: andrej-karpathy-deep-dive-llms-chatgpt:tool-use-boundary
+    kind: mental-model
+    summary: "A language model can generate a structured tool request, but the surrounding application or runtime is responsible for executing the tool, returning its result and deciding what happens next. Tool use is therefore a model-plus-orchestrator system behavior, not proof that the model directly performs external actions."
+    locator: {type: chapter, value: "01:20:32", label: "Hallucinations and tool use"}
+    evidence: {kind: system-boundary, confidence: well-supported, scope: "System-level distinction between generated tool calls and external execution.", assumptions: ["Tools are mediated by an application runtime."], limitations: ["Specific protocols and orchestration designs vary.", "The source's general discussion needs to be checked against the exact demonstration before attributing implementation details."]}
+    classification: {primary_theme: inference-efficiency, tags: [topic:tool-use, topic:orchestration]}
+    candidate_destinations: {pages: [fr/llm-evolution, en/llm-evolution, fr/llm-overview, en/llm-overview]}
+    disposition: integrate
+    disposition_rationale: "This boundary is important for preventing anthropomorphic descriptions of tool execution. Link to the existing application/system discussion rather than adding a new agent tutorial."
+
+  - id: andrej-karpathy-deep-dive-llms-chatgpt:tokens-and-reasoning
+    kind: mental-model
+    summary: "The lecture emphasizes that computation during autoregressive inference is expressed through token generation: when a model produces intermediate reasoning text, those tokens become part of the context on which later predictions condition. This is a useful operational model, not a complete explanation of internal computation or a guarantee that visible reasoning faithfully reports it."
+    locator: {type: chapter, value: "01:46:56-02:01:11", label: "Models need tokens to think"}
+    evidence: {kind: pedagogical-interpretation, confidence: context-dependent, scope: "Lecture's explanation of token-mediated reasoning.", assumptions: ["The discussion concerns autoregressive language-model inference."], limitations: ["Visible chain-of-thought is not a transparent readout of all internal computation.", "Not every reasoning method requires exposing natural-language intermediate steps.", "The phrase 'think' is anthropomorphic shorthand."]}
+    classification: {primary_theme: inference-efficiency, secondary_themes: [scale-research], tags: [topic:reasoning, topic:inference-time-compute]}
+    candidate_destinations: {pages: [fr/llm-evolution, en/llm-evolution, fr/post-training, en/post-training]}
+    disposition: integrate-by-reference
+    disposition_rationale: "Preserve the token-level operational intuition with explicit caveats; do not convert it into a claim that all reasoning is equivalent to human thought or visible chain-of-thought."
+
+  - id: andrej-karpathy-deep-dive-llms-chatgpt:jagged-intelligence
+    kind: limitation
+    summary: "LLM capabilities can be highly uneven: strong performance on one task does not imply reliable performance on another, even when the tasks appear similarly difficult to a human. Evaluation therefore needs task-specific tests, counterexamples and explicit failure analysis rather than a single undifferentiated intelligence score."
+    locator: {type: chapter, value: "02:04:53", label: "Jagged intelligence"}
+    evidence: {kind: behavioral-generalization, confidence: context-dependent, scope: "The lecture's general framing of uneven capability.", assumptions: ["Capability is evaluated across distinct task families."], limitations: ["The term is descriptive rather than a formal metric.", "The lecture's examples should not be generalized without task-specific evidence."]}
+    classification: {primary_theme: scale-research, tags: [topic:jagged-intelligence, topic:evaluation]}
+    candidate_destinations: {pages: [fr/llm-limits, en/llm-limits, fr/llm-overview, en/llm-overview]}
+    disposition: integrate
+    disposition_rationale: "This is a useful organizing caution for evaluation and learner expectations. Keep it tied to concrete task-level evidence rather than treating it as a new measurable construct."
+
+  - id: andrej-karpathy-deep-dive-llms-chatgpt:sft-and-reinforcement-learning
+    kind: mental-model
+    summary: "Supervised fine-tuning teaches from demonstration examples, whereas reinforcement-learning stages optimize behavior using reward or preference signals. These are distinct learning signals and should not be collapsed into a single generic 'fine-tuning' operation."
+    locator: {type: chapter, value: "02:07:28-02:48:26", label: "Supervised fine-tuning, reinforcement learning, DeepSeek-R1 and AlphaGo"}
+    evidence: {kind: training-method-comparison, confidence: well-supported, scope: "High-level comparison of demonstrations and reward-based optimization.", assumptions: ["The terms refer to common post-training families."], limitations: ["Specific algorithms, reward models, data pipelines and policy objectives differ substantially.", "AlphaGo is an analogy/history case, not the same training setup as an LLM."]}
+    classification: {primary_theme: probabilistic-foundations-training, secondary_themes: [scale-research], tags: [method:supervised-fine-tuning, method:reinforcement-learning]}
+    candidate_destinations: {pages: [fr/post-training, en/post-training], concepts: [fine-tuning ]}
+    disposition: integrate
+    disposition_rationale: "The distinction is central to the post-training lesson; preserve the differences between SFT, RL and preference optimization."
+
+  - id: andrej-karpathy-deep-dive-llms-chatgpt:rlhf-and-reasoning-case-studies
+    kind: claim
+    summary: "The lecture uses DeepSeek-R1 and AlphaGo to make reward-based learning and search more concrete, then introduces RLHF as a human-preference-based post-training family. These cases should be compared by their environment, action space, reward signal, optimization algorithm and evaluation protocol rather than treated as interchangeable examples."
+    locator: {type: chapter, value: "02:27:47-03:09:39", label: "DeepSeek-R1, AlphaGo and RLHF"}
+    evidence: {kind: historical-and-technical-case-study, confidence: context-dependent, scope: "Lecture's selected case studies and their pedagogical role.", assumptions: ["The examples illustrate broad reinforcement-learning ideas."], limitations: ["The video is a 2025 snapshot; later methods and evidence may have changed.", "The cases use materially different objectives and environments.", "Primary papers are required for precise algorithmic claims."]}
+    classification: {primary_theme: probabilistic-foundations-training, secondary_themes: [scale-research], tags: [topic:deepseek-r1, topic:alphago, method:rlhf, method:reinforcement-learning]}
+    candidate_destinations: {pages: [fr/post-training, en/post-training, fr/llm-evolution, en/llm-evolution]}
+    disposition: case-study
+    disposition_rationale: "Retain as an entry point to primary sources and comparative analysis, not as standalone evidence for current model performance or algorithm details."
