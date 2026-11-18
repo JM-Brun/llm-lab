@@ -83,7 +83,7 @@ Y conserver/fusionner :
 - distribution conditionnelle et exemple numérique fictif ;
 - sélection, ajout au contexte, nouvel appel et arrêt ;
 - distinction entre calcul des logits/probabilités et règle de décodage ;
-- prefill/decode, cache KV et optimisations de serving au niveau approprié ;
+- prefill/decode et optimisations opérationnelles de serving dans Generation ; coût et formule de mémoire KV dans Complexity ;
 - repère bref sur génération / scoring / apprentissage, avec renvois vers les propriétaires du scoring et de l'entraînement.
 
 Les mathématiques de vraisemblance, surprisal, entropie, température et loss restent chez leurs propriétaires canoniques au-delà de l'intuition nécessaire.
@@ -122,7 +122,7 @@ Répartir selon les propriétaires :
 - contexte et ICL : `in-context-learning.qmd` ;
 - construction du contexte : `context-engineering.qmd` ;
 - recherche externe, RAG et mémoire : `rag-memory-boundaries.qmd` ;
-- cache KV : `generation.qmd` et pages de serving.
+- cache KV : Generation pour le mécanisme opérationnel ; Complexity pour le coût et l'estimation de mémoire.
 
 Conserver la chaîne « source disponible → préparée/indexée → récupérée → transmise → éventuellement exploitée » dans la page RAG/context engineering. Garder explicitement la différence entre mémoire applicative persistante et cache KV temporaire.
 
@@ -153,7 +153,7 @@ Répartir entre les propriétaires post-training / context engineering / RAG et 
 | Architecture / apprentissage / utilisation | Panorama | Conserver comme cadre mental central. |
 | Pré-entraînement / base / foundation / SFT / préférences | Training loop / Post-training | Préserver définitions, ordre et paramètres modifiés. |
 | Paramètres / fine-tuning / RAG / contexte | Post-training / ICL / Context engineering / RAG | Répartir par propriétaire, maintenir les frontières. |
-| Mémoire applicative / cache KV | RAG-memory / Generation | Ne pas les présenter comme des mémoires équivalentes. |
+| Mémoire applicative / cache KV | RAG-memory / Generation / Complexity | Ne pas les présenter comme des mémoires équivalentes ; Generation explique la réutilisation opérationnelle, Complexity quantifie la mémoire du cache. |
 | Transfert / généralisation | Propriétaire à arbitrer avec LLM limits et post-training | Ajouter explication explicite, sourcée et bornée. |
 | Histoire des Transformers | Transformer history | Déplacer le développement, garder le lien. |
 | Choisir modèle / RAG / adaptation | Pages d'adaptation et récupération | Garder tous les critères de décision. |
@@ -348,7 +348,7 @@ Mesure indicative des fichiers actuels (comptage lexical brut, à confirmer sur 
 
 | Propriétaire | FR | EN | Durée indicative FR / EN | Décision de capacité |
 |---|---:|---:|---:|---|
-| `generation.qmd` | ~3 186 | ~3 018 | 17,7 / 16,8 min | Déjà au-dessus de 15 min : conserver la boucle comme cœur, évaluer le déplacement des détails de serving/cache vers leur propriétaire existant ou Deepen. Ne pas y déverser le panorama. |
+| `generation.qmd` | ~3 186 | ~3 018 | 10,1 / 9,9 min au premier passage visible ; 14,2 / 13,4 min avec le callout facultatif | Garder la boucle et le serving opérationnel ; le comptage source brut surestime le temps de lecture car il inclut le callout replié, les figures et le balisage. Déplacer seulement la formule mémoire KV vers Complexity. |
 | `llm-limits.qmd` | ~1 596 | ~1 435 | 8,9 / 8,0 min | Bon candidat pour le pont objectif/limites/transfert si le contenu est bien de sa responsabilité ; vérifier la place des cas d'évaluation. |
 | `post-training.qmd` | ~1 905 | ~1 701 | 10,6 / 9,5 min | Capacité limitée mais raisonnable ; n'y déplacer que les notions d'adaptation des paramètres. |
 | `in-context-learning.qmd` | ~1 153 | ~1 040 | 6,4 / 5,8 min | Peut accueillir les explications ICL actuellement dispersées, sans répéter context engineering. |
