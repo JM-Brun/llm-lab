@@ -465,9 +465,17 @@ The focused audit is documented in [test-suite-kpi-audit-2026-11-18.md](audits/t
 
 These changes remain pending CI confirmation. They do not yet establish an ENG-02 baseline: the invariant inventory still needs review, and assertion sensitivity must be checked with deliberate mutations. Keep all tests in the existing pytest suite; no duplicate invocation, new dependency, or mutation-testing workflow has been added.
 
+### Validation observed on the initial implementation SHA `c35b7b50985946c6175ab0f848b98d0793faf7b9`
+
+- The complete pytest job passed (GitHub Actions run `44351756536`; test job `134969052643`). The test step completed successfully in approximately 58 seconds on the hosted runner.
+- Quarto site validation passed (run `44351756648`); secret scanning passed (run `44351756608`).
+- Formatting passed (`ruff format --check .`, 388 files already formatted).
+- Ruff lint found one issue only: `SIM117` in the new unrepresentable-loss test, caused by nested context managers. This was corrected by combining `np.errstate` and `pytest.raises` into one multi-context `with` statement in commit `b180b2a10c7395bc8acc195119a03d07777bed34`.
+- The initial quality job therefore failed at lint; type checking was skipped as a consequence. The correction has been pushed, but its new CI result is not yet available at the time of this update.
+
 ### Remaining validation
 
-- [ ] Confirm CI test, lint, formatting, type-check and Quarto results on the final PR head SHA.
+- [ ] Confirm CI test, lint, formatting, type-check and Quarto results on the corrected PR head SHA.
 - [ ] Review the extreme-loss contract and the precision behavior of `logaddexp.reduce` on supported NumPy versions.
 - [ ] Run the three targeted test modules and full suite in CI; compare duration against a comparable baseline.
 - [ ] Perform the planned manual mutations and record which assertions detect each fault.
