@@ -75,6 +75,8 @@ Run 2 used commit `aa62fe79411e157487a5ff2cbb9e8b1fb460bc87`, Actions run `44321
 Validation medians were 25–29% slower in run 2, while the measured peak memory was identical at all three sizes. The 500-concept run also had one noticeably slower repetition. This is evidence of timing noise between hosted-runner executions, not a change in algorithmic scaling. Both runs retain approximately linear growth across the tested chain sizes. Two runs are not enough to set a stable time budget; collect more comparable runs before introducing thresholds.
 
 ## Expanded topology workloads
+The expanded workload is enabled for pull requests carrying the `[benchmark]` title marker; the standard CI suite remains independent of this opt-in performance job.
+
 
 The initial two archived runs above are the **chain-only baseline**. The opt-in runner now supports five deterministic graph shapes at each of 500 / 2,000 / 10,000 concepts (five repetitions each):
 
