@@ -13,6 +13,14 @@ uv run --no-project --with-requirements docs/requirements-history-validation.txt
 
 Use `--sizes 500 2000 10000`, `--repeats 5` (also the default), or `--output reports/benchmarks/concept-registry.json` to customize a run. The default sizes mirror the capacity scenarios in the audit. The script writes JSON to stdout and optionally to a file; generated measurements should be committed only when they are intentionally used as a dated baseline.
 
+## GitHub Actions execution
+
+The CI workflow exposes this benchmark as an opt-in job:
+- From **Actions → CI → Run workflow**, set `run_concept_benchmark=true` to run it on the selected branch.
+- A pull request whose title contains `[benchmark]` also opts in, and the job checks out that PR's head commit rather than the synthetic merge commit.
+
+The job runs the documented 500 / 2,000 / 10,000 sizes with five repetitions. It publishes a job-summary table and a 90-day artifact containing the raw JSON and a separate execution-metadata JSON (checked-out SHA, workflow run/attempt, command, timestamps, duration, Python/PyYAML/uv versions, platform and runner architecture). No timing threshold is added to required CI.
+
 ## Fixture and measurement contract
 
 - Start from the checked-in `data/concepts.yml` registry.
