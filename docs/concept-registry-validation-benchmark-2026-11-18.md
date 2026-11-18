@@ -55,8 +55,24 @@ The measured validation time grows by about 4.16× when the workload grows 4× (
 The exact raw output and execution metadata are committed separately:
 - `reports/benchmarks/concept-registry-validation-2026-11-18.json`
 - `reports/benchmarks/concept-registry-validation-2026-11-18.metadata.json`
+- `reports/benchmarks/concept-registry-validation-2026-11-18-run-2.json`
+- `reports/benchmarks/concept-registry-validation-2026-11-18-run-2.metadata.json`
 
-These files preserve the benchmark dimensions, baseline registry size (102 concepts / 125 relations), synthetic chain definition, timed/memory scopes, exact command, commit SHA and environment. The CI artifact is retained for 90 days as a second copy.
+These files preserve the benchmark dimensions, baseline registry size (102 concepts / 125 relations), synthetic chain definition, timed/memory scopes, exact command, commit SHA and environment. The CI artifacts are retained for 90 days as additional copies.
+
+### Second independent execution
+
+A second run on the same hosted-runner image completed five repetitions at each size with zero validation errors:
+
+| Concepts | Fixture build median | Validation median | Validation min–max | Peak validation memory |
+|---:|---:|---:|---:|---:|
+| 500 | 0.005927 s | 0.064100 s | 0.063751–0.093089 s | 228,750 bytes |
+| 2,000 | 0.024934 s | 0.263519 s | 0.258465–0.309845 s | 999,982 bytes |
+| 10,000 | 0.113342 s | 1.355029 s | 1.348475–1.363246 s | 5,199,430 bytes |
+
+Run 2 used commit `aa62fe79411e157487a5ff2cbb9e8b1fb460bc87`, Actions run `44321450442`, started 2026-11-18 14:11:14 UTC and completed in 11 seconds. Python, PyYAML, uv and platform versions matched run 1.
+
+Validation medians were 25–29% slower in run 2, while the measured peak memory was identical at all three sizes. The 500-concept run also had one noticeably slower repetition. This is evidence of timing noise between hosted-runner executions, not a change in algorithmic scaling. Both runs retain approximately linear growth across the tested chain sizes. Two runs are not enough to set a stable time budget; collect more comparable runs before introducing thresholds.
 
 ## Interpretation and limits
 
