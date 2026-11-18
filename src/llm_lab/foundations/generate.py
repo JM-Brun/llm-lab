@@ -118,8 +118,12 @@ def generate(
         raise ValueError("temperature must be strictly positive and finite")
     if top_k is not None and (top_k < 1 or not np.issubdtype(np.asarray(top_k).dtype, np.integer)):
         raise ValueError("top_k must be an integer >= 1 when provided")
-    if top_p is not None and not 0.0 < top_p <= 1.0:
-        raise ValueError("top_p must be in the interval (0, 1] when provided")
+    if top_p is not None and (
+        isinstance(top_p, (bool, np.bool_))
+        or not isinstance(top_p, (int, float, np.integer, np.floating))
+        or not 0.0 < top_p <= 1.0
+    ):
+        raise ValueError("top_p must be a finite number in the interval (0, 1] when provided")
     if not greedy and rng is None:
         raise ValueError("rng is required when greedy is False")
 

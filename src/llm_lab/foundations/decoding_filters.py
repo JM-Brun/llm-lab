@@ -81,8 +81,12 @@ def top_p_filter(probabilities: FloatArray, p: float) -> FloatArray:
         ValueError: If `p` is outside (0, 1], or if `probabilities` is not
             a non-empty 1-D finite, non-negative distribution summing to 1.
     """
-    if not 0.0 < p <= 1.0:
-        raise ValueError("p must be in (0, 1]")
+    if (
+        isinstance(p, (bool, np.bool_))
+        or not isinstance(p, (int, float, np.integer, np.floating))
+        or not 0.0 < p <= 1.0
+    ):
+        raise ValueError("p must be a finite number in (0, 1]")
     probs = _validated_probabilities(probabilities)
     if p == 1.0:
         return probs.copy()

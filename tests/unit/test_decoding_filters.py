@@ -122,7 +122,9 @@ def test_top_k_accepts_numpy_integer() -> None:
     np.testing.assert_allclose(filtered, [0.0, 0.375, 0.625])
 
 
-@pytest.mark.parametrize("p", [0.0, -0.5, 1.5])
+@pytest.mark.parametrize(
+    "p", [0.0, -0.5, 1.5, True, False, np.bool_(True), np.nan, np.inf, 10**100, "0.5"]
+)
 def test_top_p_invalid_p_raises(p: float) -> None:
     with pytest.raises(ValueError):
         top_p_filter(np.array([0.5, 0.5]), p)
