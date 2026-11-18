@@ -75,7 +75,7 @@ def test_flashattention_evidence_is_an_io_implementation_not_source_coding() -> 
     assert item["locator"]["type"] == "section"
     assert "3.1" in item["locator"]["value"]
     assert "3.2" in item["locator"]["value"]
-    assert "IO-aware" in item["summary"]
+    assert "high-bandwidth memory (HBM)" in item["summary"]
     limitations = " ".join(item["evidence"]["limitations"]).lower()
     assert "floating-point" in limitations
     assert "o(n^2" in limitations
