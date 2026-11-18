@@ -95,6 +95,10 @@ def _corpus(root: Path, *, source_type: str = "paper", with_extraction: bool = F
             ],
         },
     )
+    _write_yaml(
+        root / "data" / "source-collections.yml",
+        {"schema_version": 1, "collections": []},
+    )
     if with_extraction:
         _write_yaml(
             root / "data" / "extractions" / "example-source.yml",
@@ -415,3 +419,111 @@ def test_invalid_community_provenance_and_verification_are_rejected(tmp_path: Pa
     assert any("provenance.captured_at: expected ISO 8601 date" in error for error in errors)
     assert any("verification.status: unsupported status" in error for error in errors)
     assert any("verification.sources: unknown source 'missing-source'" in error for error in errors)
+
+
+def test_source_collection_membership_is_optional_during_backfill(tmp_path: Path) -> None:
+    _corpus(tmp_path)
+
+    assert MODULE.validate_source_catalogue(tmp_path) == []
+
+
+def test_valid_single_and_multiple_collection_memberships_are_accepted(tmp_path: Path) -> None:
+    _corpus(tmp_path)
+    _write_yaml(
+        tmp_path / "docs" / "collections" / "one.md",
+        {"title": "Collection one"},
+    )
+    _write_yaml(
+        tmp_path / "docs" / "collections" / "two.md",
+        {"title": "Collection two"},
+    )
+    _write_yaml(
+        tmp_path / "data" / "source-collections.yml",
+        {
+            "schema_version": 1,
+            "collections": [
+                {
+                    "id": "collection-one",
+                    "title": "Collection one",
+                    "dossier_path": "docs/collections/one.md",
+                    "status": "active",
+                },
+                {
+                    "id": "collection-two",
+                    "title": "Collection two",
+                    "dossier_path": "docs/collections/two.md",
+                    "status": "archived",
+                },
+            ],
+        },
+    )
+    source_path = tmp_path / "data" / "sources.yml"
+    data = yaml.safe_load(source_path.read_text(encoding="utf-8"))
+    data["sources"][0]["collections"] = ["collection-one", "collection-two"]
+    _write_yaml(source_path, data)
+
+    assert MODULE.validate_source_catalogue(tmp_path) == []
+
+
+def test_unknown_and_duplicate_collection_memberships_are_rejected(tmp_path: Path) -> None:
+    _corpus(tmp_path)
+    _write_yaml(
+        tmp_path / "data" / "source-collections.yml",
+        {
+            "schema_version": 1,
+            "collections": [
+                {
+                    "id": "known-collection",
+                    "title": "Known collection",
+                    "dossier_path": "docs/collections/missing.md",
+                    "status": "active",
+                }
+            ],
+        },
+    )
+    source_path = tmp_path / "data" / "sources.yml"
+    data = yaml.safe_load(source_path.read_text(encoding="utf-8"))
+    data["sources"][0]["collections"] = [
+        "unknown-collection",
+        "known-collection",
+        "known-collection",
+    ]
+    _write_yaml(source_path, data)
+
+    errors = MODULE.validate_source_catalogue(tmp_path)
+
+    assert any("unknown collection ID 'unknown-collection'" in error for error in errors)
+    assert any("duplicate collection IDs" in error for error in errors)
+    assert any("dossier_path: file does not exist" in error for error in errors)
+
+
+def test_duplicate_collection_registry_ids_are_rejected(tmp_path: Path) -> None:
+    _corpus(tmp_path)
+    entry = {
+        "id": "same-collection",
+        "title": "Same collection",
+        "dossier_path": "docs/collections/same.md",
+        "status": "active",
+    }
+    _write_yaml(
+        tmp_path / "data" / "source-collections.yml",
+        {"schema_version": 1, "collections": [entry, entry]},
+    )
+
+    errors = MODULE.validate_source_catalogue(tmp_path)
+
+    assert any("duplicate collection ID 'same-collection'" in error for error in errors)
+
+
+def test_explicit_null_collection_membership_is_rejected(tmp_path: Path) -> None:
+    _corpus(tmp_path)
+    source_path = tmp_path / "data" / "sources.yml"
+    data = yaml.safe_load(source_path.read_text(encoding="utf-8"))
+    data["sources"][0]["collections"] = None
+    _write_yaml(source_path, data)
+
+    errors = MODULE.validate_source_catalogue(tmp_path)
+
+    assert any(
+        "sources[0].collections: expected a list of collection IDs" in error for error in errors
+    )

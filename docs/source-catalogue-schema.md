@@ -13,6 +13,7 @@
 | Typed source lineage | Target: `data/source-lineage/<source-id>.yml` | Directional, evidence-linked relations to other sources and project artifacts |
 | Generated source index | Target: `data/sources.yml` | Compatibility/discovery projection, not a canonical authoring file |
 | Controlled source facets | `data/source-taxonomy.yml` | Allowed source types, levels, contributions, audiences, statuses, extraction kinds, and tag policy |
+| Source-review collections | `data/source-collections.yml` | Controlled dossier identities; source membership is declared on source records |
 | Atomic extracted knowledge | `data/extractions/<source-id>.yml` | What a source contributes at a precise locator, with evidence and limitations |
 | Knowledge domains | `data/domains.yml` | The six canonical subject domains |
 | Scientific concepts and typed relations | `data/concepts.yml` | Durable concepts and semantic relationships |
@@ -29,6 +30,18 @@ Every source has one primary theme once it is selected for substantive inspectio
 - `classification.secondary_themes`: zero or more distinct IDs from the same registry; use only when a second domain is materially covered.
 - `classification.tags`: zero or more namespaced, lowercase-kebab-case retrieval facets, such as `topic:attention`, `method:contrastive-learning`, `modality:video`, `application:code-generation`, or `ecosystem:pytorch`.
 - `classification.concept_ids`: optional references to existing canonical concepts in `data/concepts.yml`. These are not tags and must not be guessed from keyword overlap.
+
+### Explicit source-to-collection membership
+
+Source-review collections are dossier identities, not subject tags, concepts, or inferred topics. The registry `data/source-collections.yml` defines each collection with a stable `id`, human-readable `title`, repository-relative `dossier_path`, and lifecycle `status` (`active` or `archived`). The source record may declare zero or more IDs:
+
+    collections:
+      - attention-mechanisms
+      - interpretability
+
+The field is optional during the staged backfill. When present, it must be a list of unique IDs declared in the registry. Each registry dossier path must resolve to an existing repository file. Never infer membership from tags, themes, title words, extraction paths, page links, or semantic similarity. Do not duplicate collection membership in extraction files: resolve it only through `extraction.source_id -> source identity -> source.collections`.
+
+The initial registry may be empty while dossiers are inventoried. This does not imply that no collections exist; it means no collection identities have yet been approved for machine-readable membership. Make the field mandatory only in a later migration after a human-reviewed backfill. During the distributed lineage migration, the field moves with canonical source identity to `data/sources/<source-id>.yml`; `data/sources.yml` remains a generated compatibility projection.
 
 The primary theme is a classification, not a claim that the source belongs exclusively to that domain. A cross-disciplinary source may have several secondary themes. Do not duplicate the same ID in primary and secondary themes.
 
@@ -224,6 +237,10 @@ Backfill in evidence-aware passes:
 6. report counts, duplicates, missing provenance/licences and unresolved statuses.
 
 Keep `docs/references.md` as a readable bibliography. It may link to source IDs, but must not become a second canonical machine-readable catalogue. A source catalogue entry does not require a published page change.
+
+## 6a. Collection membership migration
+
+The validator checks registry structure, unique collection IDs, dossier-path existence, and any explicit source memberships. It deliberately accepts source records without `collections` during the transitional phase. This compatibility rule must be removed only after every source has received a reviewed membership decision (including an explicit empty list for sources belonging to no collection). The registry is a controlled vocabulary of dossier identities, not a second source-lineage graph.
 
 ## 7. Validation and evolution
 
