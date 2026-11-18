@@ -24,7 +24,9 @@ def _load_yaml(path: Path) -> dict[str, Any]:
 def test_attention_computation_resolves_to_primary_source_locator() -> None:
     concepts = _load_yaml(ROOT / "data" / "concepts.yml")
     computational = _load_yaml(ROOT / "data" / "computational-graph.yml")
-    extraction = _load_yaml(ROOT / "data" / "extractions" / "vaswani-et-al-attention-is-all-you-need-2017.yml")
+    extraction = _load_yaml(
+        ROOT / "data" / "extractions" / "vaswani-et-al-attention-is-all-you-need-2017.yml"
+    )
 
     concept_ids = {item["id"] for item in concepts["concepts"]}
     assert {"attention-weight", "softmax", "entropy", "mutual-information"} <= concept_ids
