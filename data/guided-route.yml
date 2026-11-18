@@ -67,8 +67,8 @@ stages:
       fr: [fr/logits, fr/probabilites, fr/entropy]
       en: [en/logits, en/probabilities, en/entropy]
     optional_pages:
-      fr: [fr/language-modeling-math, fr/mathematical-foundations]
-      en: [en/language-modeling-math, en/mathematical-foundations]
+      fr: []
+      en: []
 
   - id: inference
     title:
