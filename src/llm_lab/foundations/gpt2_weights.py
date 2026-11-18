@@ -77,10 +77,16 @@ def _parameter_tensors(state_dict: Mapping[str, ArrayLike]) -> dict[str, ArrayLi
         ValueError: If ``lm_head.weight`` is present but differs from
             ``wte.weight``: the reference head can only be loaded tied.
     """
-    tensors = {name.removeprefix(_PREFIX): value for name, value in state_dict.items()}
-    tensors = {
-        name: value for name, value in tensors.items() if not name.endswith(_MASK_BUFFER_SUFFIXES)
-    }
+    tensors: dict[str, ArrayLike] = {}
+    for original_name, value in state_dict.items():
+        name = original_name.removeprefix(_PREFIX)
+        if name.endswith(_MASK_BUFFER_SUFFIXES):
+            continue
+        if name in tensors:
+            raise ValueError(
+                f"duplicate GPT-2 parameter after prefix normalization: {name!r}"
+            )
+        tensors[name] = value
     head = tensors.pop("lm_head.weight", None)
     if (
         head is not None
@@ -116,11 +122,22 @@ def load_gpt2_state_dict(model: GPT, state_dict: Mapping[str, ArrayLike]) -> Non
     def take(name: str, shape: tuple[int, ...]) -> FloatArray:
         if name not in tensors:
             raise ValueError(f"missing GPT-2 parameter {name!r}")
-        array = np.array(tensors[name], dtype=np.float64)
-        if array.shape != shape:
+        raw = np.asarray(tensors[name])
+        if not (
+            np.issubdtype(raw.dtype, np.integer)
+            or np.issubdtype(raw.dtype, np.floating)
+        ):
+            raise ValueError(f"{name!r} must contain real integer or floating-point values")
+        if raw.shape != shape:
             raise ValueError(
-                f"{name!r} has shape {array.shape}, expected {shape} for this GPTConfig"
+                f"{name!r} has shape {raw.shape}, expected {shape} for this GPTConfig"
             )
+        if not np.isfinite(raw).all():
+            raise ValueError(f"{name!r} must contain only finite values")
+        with np.errstate(over="ignore", invalid="ignore"):
+            array = np.asarray(raw, dtype=np.float64)
+        if not np.isfinite(array).all():
+            raise ValueError(f"{name!r} cannot be represented as finite float64 values")
         used.add(name)
         return array
 
