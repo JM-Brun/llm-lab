@@ -19,6 +19,9 @@ See [the learning path](docs/learning-path.md) for the authoritative module-leve
 
 ## Knowledge management and cross-project architecture
 
+The [extraction locator inventory workflow](docs/extraction-locator-inventory.md) provides a read-only audit of the locator types and value shapes used in source extractions before type-specific validation rules are introduced.
+
+
 The comparative analysis of knowledge-management practices from Society Lab, including the transfer boundaries, provenance model, graph semantics, quality controls, scalability recommendations and existing follow-up issues, is documented in [the cross-project knowledge-management transfer analysis](docs/cross-project-knowledge-management-transfer-2026-11-18.md). The first evidence-traced scientific pilot across attention, information theory and compression is documented in [the cross-graph pilot report](docs/cross-graph-pilot-attention-information-compression-2026-11-18.md). The separate [scalability and capacity audit](docs/scalability-capacity-audit-2026-11-18.md) evaluates current bottlenecks and defines synthetic growth tests before the project claims readiness for thousands of sources. This complements rather than replaces the [information architecture](docs/information-architecture.md), [source-lineage architecture](docs/source-lineage-architecture.md), and [source-process audit](docs/source-process-audit.md).
 
 ## Inspiration and sources
