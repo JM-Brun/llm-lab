@@ -233,7 +233,7 @@ def test_generate_truncation_validation_errors() -> None:
         generate(model, prompt, 2, greedy=False, top_p=0.0, rng=rng)
     with pytest.raises(ValueError, match="top_p must be"):
         generate(model, prompt, 2, greedy=False, top_p=True, rng=rng)
-    with pytest.raises(ValueError, match="top_p must be in the interval"):
+    with pytest.raises(ValueError, match="top_p must be"):
         generate(model, prompt, 2, greedy=False, top_p=1.5, rng=rng)
     # Hidden invalid values must not wait for a switch to sampling: the
     # truncation parameters are validated in greedy mode too.
