@@ -61,3 +61,55 @@ items:
       limitations: ["Full methods, task setup, causal controls and appendices have not yet been audited."]
     disposition: integrate
     disposition_rationale: "Use only within the source's reported model, method, task and evidence scope."
+
+  - id: cunningham-sparse-autoencoders-interpretable-features-2024:encoder-decoder-distinction
+    kind: definition
+    summary: "The SAE encoder maps a target activation to sparse coefficients, while decoder dictionary directions combine those coefficients to reconstruct the activation; the coefficient and direction are distinct objects."
+    locator: {type: section, value: "Section 2, equations 1-4 and Figure 1", label: "SAE architecture and training"}
+    evidence:
+      kind: full-paper-method
+      confidence: established
+      scope: "The paper's tied-weight ReLU/L1 implementation and stated residual-stream, MLP and attention-head activation sites."
+      assumptions: ["The paper's encoder/decoder parameterization is one implementation, not a universal SAE architecture."]
+      limitations: ["Tied weights make encoder/decoder directions coincide in this implementation; later SAE architectures may not tie them."]
+    disposition: integrate
+    disposition_rationale: "Prevents conflating a feature's per-example activation coefficient with its dictionary direction."
+
+  - id: cunningham-sparse-autoencoders-interpretable-features-2024:autointerp-score
+    kind: limitation
+    summary: "The automated interpretation score is based on a language model generating a feature description and predicting held-out feature activations; correlation measures predictive agreement under that protocol, not semantic truth."
+    locator: {type: section, value: "Section 3.1 and Table 1", label: "Automated feature interpretation"}
+    evidence:
+      kind: full-paper-method
+      confidence: established
+      scope: "GPT-4-generated descriptions and activation predictions on the paper's sampled feature examples."
+      assumptions: ["The held-out activation prediction task is used as a proxy for explanation quality."]
+      limitations: ["The paper notes limitations in finding patterns involving previous/next tokens and in verifying descriptions against output changes."]
+    disposition: integrate
+    disposition_rationale: "Treat generated feature descriptions as testable hypotheses, not definitions."
+
+  - id: cunningham-sparse-autoencoders-interpretable-features-2024:ioi-activation-patching
+    kind: experiment
+    summary: "The paper patches residual-stream activations along selected SAE feature directions in an indirect-object-identification task and compares output KL effects with PCA-based interventions."
+    locator: {type: section, value: "Sections 4.1-4.2, Figure 4", label: "Causal feature localization"}
+    evidence:
+      kind: full-paper-experiment
+      confidence: well-supported
+      scope: "Pythia-410M, layer 11 for the main comparison, 50 IOI test examples, and an ACDC-selected feature ordering."
+      assumptions: ["ACDC is applied to a flat feature graph where each feature is treated as contributing an independent change to the output metric."]
+      limitations: ["This is a task- and model-specific intervention result, not general validation of all SAE features or circuit graphs."]
+    disposition: integrate
+    disposition_rationale: "Keep causal evidence attached to its actual intervention protocol and experimental scope."
+
+  - id: cunningham-sparse-autoencoders-interpretable-features-2024:feature-recall-counterexample
+    kind: limitation
+    summary: "A case-study feature described as detecting apostrophes does not activate on all apostrophes; other features respond in context-specific cases."
+    locator: {type: section, value: "Section 5.1, Figures 5 and 13-14", label: "Feature case studies"}
+    evidence:
+      kind: full-paper-observation
+      confidence: well-supported
+      scope: "Selected Pythia feature case studies."
+      assumptions: ["The selected examples are illustrative case studies, not a comprehensive coverage evaluation."]
+      limitations: ["The observed coverage issue is scoped to the studied features and model."]
+    disposition: integrate
+    disposition_rationale: "Make recall and expected-positive counterexamples part of feature evaluation."
