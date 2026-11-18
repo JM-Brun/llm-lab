@@ -12,11 +12,7 @@ def _validate_logits_targets(
     logits: FloatArray,
     targets: Sequence[int] | NDArray[np.integer],
 ) -> tuple[FloatArray, NDArray[np.integer]]:
-    """Validate and return cleaned logits and target arrays.
-
-    Raises:
-        ValueError: If shapes are incompatible, the batch is empty, or targets are invalid.
-    """
+    """Validate and return cleaned logits and target arrays."""
     if logits.ndim != 2:
         raise ValueError("logits must have shape (batch_size, num_classes)")
     if not np.all(np.isfinite(logits)):
@@ -31,7 +27,6 @@ def _validate_logits_targets(
         raise ValueError("targets must contain integer class indices")
     if np.any(target_array < 0) or np.any(target_array >= logits.shape[1]):
         raise ValueError("target class index is out of range")
-
     return logits, target_array
 
 
@@ -41,19 +36,21 @@ def cross_entropy_from_logits(
 ) -> float:
     """Return mean multiclass cross-entropy from unnormalized logits.
 
-    Args:
-        logits: Array with shape (batch_size, num_classes).
-        targets: Integer class index for each row, shape (batch_size,).
-
-    Raises:
-        ValueError: If shapes are incompatible, the batch is empty, or targets are invalid.
+    Uses logaddexp.reduce to avoid an overflowing max-subtraction
+    intermediate for finite logits with opposite signs near float64 limits.
+    A mathematically valid loss outside the finite float64 range is rejected.
     """
     logits, target_array = _validate_logits_targets(logits, targets)
-
-    shifted = logits - np.max(logits, axis=1, keepdims=True)
-    log_partition = np.log(np.exp(shifted).sum(axis=1))
-    target_logits = shifted[np.arange(logits.shape[0]), target_array]
-    return float(np.mean(log_partition - target_logits))
+    # NumPy may raise a harmless intermediate-overflow warning while
+    # reducing values near float64 limits; the logaddexp result is finite.
+    with np.errstate(over="ignore", invalid="raise"):
+        log_partition = np.logaddexp.reduce(logits, axis=1)
+    target_logits = logits[np.arange(logits.shape[0]), target_array]
+    with np.errstate(over="ignore", invalid="raise"):
+        per_example_losses = log_partition - target_logits
+    if not np.all(np.isfinite(per_example_losses)):
+        raise ValueError("cross-entropy loss exceeds the finite float64 range")
+    return float(np.sum(per_example_losses / logits.shape[0]))
 
 
 def cross_entropy_gradient(
@@ -62,9 +59,10 @@ def cross_entropy_gradient(
 ) -> FloatArray:
     """Return the gradient of mean cross-entropy with respect to logits."""
     logits, target_array = _validate_logits_targets(logits, targets)
-
-    shifted = logits - np.max(logits, axis=1, keepdims=True)
-    probabilities = np.exp(shifted)
-    probabilities /= probabilities.sum(axis=1, keepdims=True)
+    with np.errstate(over="ignore", invalid="raise"):
+        log_partition = np.logaddexp.reduce(logits, axis=1, keepdims=True)
+    # Underflow of a very unlikely class to probability zero is intentional.
+    with np.errstate(over="ignore", under="ignore", invalid="raise"):
+        probabilities = np.exp(logits - log_partition)
     probabilities[np.arange(logits.shape[0]), target_array] -= 1.0
     return np.asarray(probabilities / logits.shape[0], dtype=np.float64)
