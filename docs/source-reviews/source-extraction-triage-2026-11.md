@@ -1,14 +1,15 @@
 # Triage raisonné des sources sans extraction — 18 novembre 2026
 
-**Périmètre :** inventaire de `data/sources.yml` et des fichiers `data/extractions/`, complété par les titres, types, tags, pages associées et statuts de catalogue. Ce document est un **triage éditorial de métadonnées**, pas une attestation de lecture intégrale des 44 ressources.
+**Périmètre :** inventaire de `data/sources.yml` et des fichiers `data/extractions/`, complété par les titres, types, tags, pages associées et statuts de catalogue. Ce document est un **triage éditorial de métadonnées**, pas une attestation de lecture intégrale du nombre de ressources restant à auditer.
 
 ## 1. Réconciliation de l'inventaire
 
 - Catalogue : **139 sources**.
-- Fichiers d'extraction : **93**.
-- Cinq fichiers portent un nom différent de l'identifiant du catalogue, mais leur champ `source_id` renvoie bien à une source existante : Chanin, Cunningham, Neuronpedia, Shu et Wayland. Ils ne doivent pas être comptés comme cinq sources non extraites. La convention du dépôt demande néanmoins un nom de fichier égal à l'identifiant canonique ; cette anomalie de nommage mérite un correctif séparé.
-- Deux sources sans extraction sur `main` ont une extraction proposée dans des PR ouvertes : Gage (1994), #1314, et Sennrich et al. (2016), #1311.
-- Il reste donc **44 sources sans extraction identifiée**, après prise en compte des deux PR et des cinq noms de fichiers non canoniques.
+- Fichiers d'extraction : **95**.
+- Les cinq écarts de nommage précédemment identifiés (Chanin, Cunningham, Neuronpedia, Shu et Wayland) ont été corrigés et fusionnés par #1317. Les 95 noms de fichiers sont désormais canoniques ; ils ne constituent pas cinq sources supplémentaires ni cinq absences d'extraction.
+- Sennrich et al. (2016), #1311, a été fusionnée dans `main` le 18 novembre 2026 ; son extraction est incluse dans les fichiers présents sur `main`.
+- Gage (1994), #1314, a depuis également été fusionnée dans `main`.
+- Le rapprochement du head `main` après #1317 donne **44 identifiants du catalogue sans fichier d'extraction canonique** (139 sources, 95 fichiers, 95 noms uniques, aucun nom hors catalogue). Ce décompte repose sur la convention vérifiée `data/extractions/<source_id>.yml` ; il ne constitue ni une mesure de qualité ni une attestation d'inspection des sources.
 
 Ce décompte est un état de dépôt, pas un KPI de qualité ni une mesure de couverture documentaire. Il ne dit rien de la valeur des sources ni de leur inspection effective.
 
@@ -108,7 +109,7 @@ AIEdge, vidéo JEPA non vérifiée, Cornell visualizer et publication LinkedIn. 
 - Ne pas créer de nouveaux concepts ou relations à partir de tags ou de titres.
 - Pour toute source pédagogique effectivement extraite, construire le `pedagogical_model` requis (graphe local, outcomes, prérequis, route, forces/limites, comparaison).
 - Pour chaque décision finale, conserver les localisateurs, la justification de disposition et la comparaison avec la page canonique.
-- Les sources Gage et Sennrich restent en attente de validation/intégration de leurs PR respectives ; elles ne sont pas comptées comme intégrées sur `main`.
+- Sennrich et al. (#1311) et Gage (#1314) sont intégrés à `main`. Le décompte des sources restantes doit être recalculé sur les `source_id` du head courant.
 
 ## 7. Prochaine action
 

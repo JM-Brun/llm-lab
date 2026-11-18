@@ -93,6 +93,8 @@ Some APIs make this choice explicit through an allow-list. For example, `tiktoke
 
 See the `tiktoken` [encoding API](https://github.com/openai/tiktoken/blob/main/tiktoken/core.py) and the `minbpe` [special-token handling notes](https://github.com/karpathy/minbpe/blob/master/README.md).
 
+**Implementation comparison.** These projects expose different layers of the same broad byte-level BPE family: `tiktoken` delegates production encoding to a native core and uses encoding-specific merge ranks and special-token policies; its `_educational.py` module makes the merge loop inspectable. Karpathy's `minbpe` separates a minimal byte-only implementation (`BasicTokenizer`) from regex-pretokenized and special-token-aware variants (`RegexTokenizer`), with a GPT-4 wrapper that reconstructs a specific pretrained vocabulary. Neither the library name nor the BPE label alone establishes compatibility. See the [implementation audit and comparison](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-reviews/tokenization-implementations-huggingface-tiktoken-minbpe-2026-11.md).
+
 Not every tokenizer exposes or uses these stages in the same way. An algorithm name alone is therefore insufficient to reproduce a segmentation: the configuration and versions also matter.
 
 ### Same text, different tokenizer pipelines
