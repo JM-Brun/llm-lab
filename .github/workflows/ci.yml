@@ -210,13 +210,14 @@ jobs:
       - name: Run concept-registry benchmark
         env:
           BENCHMARK_COMMAND: uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/benchmark_concept_registry.py --sizes 500 2000 10000 --repeats 5 --output "$RUNNER_TEMP/concept-registry-benchmark.json"
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha || '' }}
         run: |
           set -euo pipefail
           started_at="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
           start_epoch="$(date +%s)"
           uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/benchmark_concept_registry.py --sizes 500 2000 10000 --repeats 5 --output "$RUNNER_TEMP/concept-registry-benchmark.json"
           end_epoch="$(date +%s)"
-          BENCHMARK_STARTED_AT="$started_at" BENCHMARK_DURATION_SECONDS="$((end_epoch - start_epoch))" python - <<'PY'
+          BENCHMARK_STARTED_AT="$started_at" BENCHMARK_DURATION_SECONDS="$((end_epoch - start_epoch))" uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python - <<'PY'
           import datetime
           import json
           import os
@@ -258,7 +259,7 @@ jobs:
               encoding="utf-8",
           ) as f:
               json.dump(metadata, f, ensure_ascii=False, indent=2)
-              f.write("\\n")
+              f.write("\n")
           PY
           python - "$RUNNER_TEMP/concept-registry-benchmark.json" <<'PY' >> "$GITHUB_STEP_SUMMARY"
           import json
