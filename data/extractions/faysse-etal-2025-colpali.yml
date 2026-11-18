@@ -3,16 +3,16 @@ source_id: faysse-etal-2025-colpali
 scan:
   accessed_at: "2026-11-18"
   retrieval_method: direct-pdf
-  author_text: {status: partial, coverage: "ICLR 2025 paper: page-level retrieval, ViDoRe benchmark, ColPali architecture and late interaction, training data and reported results.", notes: ["Focused primary-source audit; no independent reproduction."]}
-  figures_media: {status: partial, coverage: "Figures 1-2 and Tables 1-2 inspected.", notes: ["No visual asset copied."]}
+  author_text: {status: partial, coverage: "ICLR 2025 paper: page-level retrieval, ViDoRe benchmark, ColPali architecture and late interaction, training data, Table 2 effectiveness, §5.2 memory/query claims and Appendix B.4 indexing measurements.", notes: ["Focused primary-source audit; no independent reproduction."]}
+  figures_media: {status: partial, coverage: "Figures 1-3, Tables 1-2 and Appendix B.4 / Tables 4-5 inspected.", notes: ["No visual asset copied."]}
   code_data: {status: not-inspected, coverage: null, notes: ["ColPali repository, checkpoints, ViDoRe data and evaluation scripts not independently executed or audited."]}
   comments: {status: not-inspected, coverage: null, notes: []}
   linked_resources: {status: partial, coverage: "Official ICLR proceedings record and published PDF.", notes: ["Repository, model weights and full benchmark data not audited."]}
   metadata: {status: partial, coverage: "ICLR 2025.", notes: []}
   rights: {status: unknown, coverage: null, notes: ["No figure reuse permission established; paraphrases and locators only."]}
   unresolved_questions:
-    - "Verify storage and latency figures against exact appendix tables and hardware before reusing quantitative claims."
-    - "Reproduction requires pinned checkpoints, ViDoRe splits, index configuration and hardware."
+    - "Resolve the paper-internal sample-size discrepancy: footnote 13 says 100 pages for indexing measurements, while Appendix B.4 says 1,000 randomly selected documents for Table 5; do not conflate Figure 2 and Table 5 protocols."
+    - "The paper does not give a single fully reproducible end-to-end production benchmark; reproduction requires pinned checkpoints, ViDoRe splits, index configuration and hardware."
     - "Page-level retrieval does not itself return exact text spans or structured table values."
 items:
   - id: faysse-etal-2025-colpali:vision-language-multi-vector-architecture
@@ -45,8 +45,38 @@ items:
     candidate_destinations: {pages: [en/document-retrieval, fr/document-retrieval], concepts: [], route_ids: []}
     disposition: integrate-by-reference
     disposition_rationale: "Retain the score only with its benchmark, metric and comparator named."
+  - id: faysse-etal-2025-colpali:offline-indexing-measurements
+    kind: result
+    summary: "Appendix B.4 reports mean per-page indexing latencies on a GCP g2-standard-8 VM with an NVIDIA L4: Unstructured totals 7.22 s (0.81 s layout detection, 2.67 s OCR, 3.71 s captioning, 0.03 s page encoding), SigLIP 0.12 s and ColPali 0.39 s. The table describes 1,000 randomly selected ViDoRe test documents, with batch sizes 8 for BGE-M3/Unstructured and 4 for SigLIP/ColPali."
+    locator: {type: section, value: "§5.2, Figure 2, Appendix B.4, Table 5, pp. 7-8 and 18-19", label: "Offline indexing latency and measurement protocol"}
+    evidence: {kind: reported-performance-measurement, confidence: well-supported, scope: "Authors' per-page indexing measurements on the stated GCP VM, NVIDIA L4 and ViDoRe test sample.", assumptions: [], limitations: ["Not an end-to-end production benchmark or a universal speedup.", "Footnote 13 states 100 pages, whereas Appendix B.4 states 1,000 randomly selected documents for Table 5; preserve this internal sample-size discrepancy and do not merge protocols.", "The comparison includes different processing pipelines; ColPali skips layout detection, OCR and captioning rather than making those operations faster."]}
+    technical_assessment: {status: qualified, rationale: "Appendix B.4 specifies hardware, batch sizes and per-page averages, but the paper contains a sample-size discrepancy between footnote 13 and Table 5's appendix description.", corroborating_sources: []}
+    classification: {primary_theme: inference-efficiency, tags: [topic:visual-document-retrieval, topic:benchmark, method:inference-optimization], concept_ids: [retrieval-augmented-generation]}
+    candidate_destinations: {pages: [en/document-retrieval, fr/document-retrieval], concepts: [retrieval-augmented-generation], route_ids: []}
+    disposition: integrate-by-reference
+    disposition_rationale: "Useful as a bounded comparison of ingestion pipelines, with protocol and sample-size caveat kept explicit."
+  - id: faysse-etal-2025-colpali:storage-footprint
+    kind: result
+    summary: "Appendix B.3 reports 257.5 KB per page for ColPali float16 embeddings on the DocVQA ViDoRe test set, compared with 8.60 KB for BGE-M3. The paper attributes the larger footprint to retaining one vector per image patch plus six prompt tokens, projected to 128 dimensions; it discusses pooling and quantization as possible reductions."
+    locator: {type: section, value: "§5.2, Appendix B.3, Table 4, pp. 8 and 18", label: "Per-page embedding storage footprint"}
+    evidence: {kind: reported-storage-measurement, confidence: well-supported, scope: "Embedding size comparison on the DocVQA test set, with ColPali in float16.", assumptions: [], limitations: ["Per-page embedding size, not total deployed index size including metadata, ANN structures, replication or serving overhead.", "Other models may use multiple vectors per page; the table's BGE-M3 value is 8.60 KB.", "Pooling and quantization savings are potential techniques, not measurements of the uncompressed Table 4 configuration."]}
+    technical_assessment: {status: qualified, rationale: "Table 4 gives a direct per-page comparison; operational storage costs depend on indexing and serving choices.", corroborating_sources: []}
+    classification: {primary_theme: inference-efficiency, tags: [topic:visual-document-retrieval, topic:benchmark, method:multi-vector], concept_ids: [retrieval-augmented-generation]}
+    candidate_destinations: {pages: [en/document-retrieval, fr/document-retrieval], concepts: [retrieval-augmented-generation], route_ids: []}
+    disposition: integrate-by-reference
+    disposition_rationale: "Makes the effectiveness/indexing/storage trade-off explicit without treating embedding size as total infrastructure cost."
+  - id: faysse-etal-2025-colpali:online-query-latency
+    kind: result
+    summary: "Section 5.2 reports approximately 30 ms to encode a query with ColPali's language model versus 22 ms for BGE-M3 on 15 tokens. For smaller corpora, the authors estimate late-interaction overhead at approximately 1 ms per 1,000 pages; the footnote states batch size 1 and an average over 1,000 queries."
+    locator: {type: section, value: "§5.2, footnote 12, p. 8", label: "Online query latency"}
+    evidence: {kind: reported-performance-measurement, confidence: well-supported, scope: "Authors' query-encoding and late-interaction measurements for the described setup.", assumptions: [], limitations: ["Query encoding and corpus scoring are separate components; do not report 30 ms as complete end-to-end search latency.", "The approximately 1 ms per 1,000 pages is scoped to smaller corpora; million-document scalability is attributed to optimized late-interaction engines rather than measured in this experiment."]}
+    technical_assessment: {status: qualified, rationale: "The paper distinguishes encoding latency from late-interaction overhead and qualifies the small-corpus observation.", corroborating_sources: []}
+    classification: {primary_theme: inference-efficiency, tags: [topic:visual-document-retrieval, topic:benchmark, method:late-interaction], concept_ids: [retrieval-augmented-generation]}
+    candidate_destinations: {pages: [en/document-retrieval, fr/document-retrieval], concepts: [retrieval-augmented-generation], route_ids: []}
+    disposition: integrate-by-reference
+    disposition_rationale: "Adds the online side of the offline-indexing comparison while preserving measurement boundaries."
 canonical_mapping:
   proposed_concepts: []
   proposed_relations: []
   route_implications: []
-  decision_summary: "ColPali combines VLM-based page representations and late interaction. ViDoRe is a finite page-level benchmark; preserve the task scope and separate offline indexing from online latency."
+  decision_summary: "ColPali combines VLM-based page representations and late interaction. ViDoRe is a finite page-level benchmark; preserve the task scope and separate offline indexing from online latency, and record the paper-internal sample-size discrepancy between Table 5 and footnote 13."
