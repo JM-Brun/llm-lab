@@ -6022,7 +6022,7 @@ sources:
   - id: chan-causal-scrubbing-2022
     title: "Causal Scrubbing: A Method for Rigorously Testing Interpretability Hypotheses"
     creators: ["Lawrence Chan", "Adrià Garriga-Alonso", "Nicholas Goldowsky-Dill", "Ryan Greenblatt", "Jenny Nitishinskaya", "Ansh Radhakrishnan", "Buck Shlegeris", "Nate Thomas"]
-    source_type: research-report
+    source_type: other
     identifiers: {}
     canonical_url: "https://www.alignmentforum.org/posts/JvZhhzycHu2Yd57RN/causal-scrubbing-a-method-for-rigorously-testing"
     publisher: "AI Alignment Forum / Redwood Research"
