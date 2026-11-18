@@ -182,7 +182,7 @@ sources:
       tags:
         - topic:kv-cache
         - topic:autoregressive-generation
-      concept_ids: [key, value, self-attention]
+      concept_ids: [key, value, self-attention, kv-cache]
     metadata:
       technical_level: intermediate
       contribution_types: [architecture, implementation]
@@ -201,8 +201,8 @@ sources:
           - "No code was executed."
           - "Licence and figure/code reuse conditions were not independently checked."
     related:
-      pages: []
-      concepts: [key, value, self-attention]
+      pages: [fr/generation, en/generation]
+      concepts: [key, value, self-attention, kv-cache]
       audit_records:
         - docs/source-reviews/qkv-nishanthan-devto-2026-11.md
   - id: andrej-karpathy-gpt-tokenizer-video
@@ -2960,7 +2960,7 @@ sources:
       primary_theme: mathematical-tools-geometry
       secondary_themes: ["architectures-mechanisms","scale-research"]
       tags: ["topic:platonic-representation-hypothesis","topic:jepa","topic:spectral-embedding","topic:cross-modal-alignment","method:positive-pairs","method:whitening","modality:multimodal"]
-      concept_ids: ["contextualized-representation","next-token-prediction","training-objective"]
+      concept_ids: ["contextualized-representation","next-token-prediction","training-objective","platonic-representation-hypothesis"]
     metadata:
       technical_level: advanced
       contribution_types: ["theory","mathematical-derivation","experiment","benchmark"]
@@ -3000,8 +3000,8 @@ sources:
           - "The platform-generated summary and author comment are not treated as peer-reviewed evidence."
           - "The hosted figure's exact provenance and reuse permissions were not established; link only, do not copy."
     related:
-      pages: ["fr/contextualized-representations","en/contextualized-representations"]
-      concepts: ["contextualized-representation","next-token-prediction","training-objective"]
+      pages: ["fr/contextualized-representations","en/contextualized-representations","fr/jepa-platonic-representation","en/jepa-platonic-representation"]
+      concepts: ["contextualized-representation","next-token-prediction","training-objective","platonic-representation-hypothesis"]
       audit_records:
         - docs/source-reviews/platonic-representation-jepa-2026-11.md
         - data/extractions/balestriero-lecun-platonic-representation-jepas-2026.yml
@@ -3024,7 +3024,7 @@ sources:
       primary_theme: mathematical-tools-geometry
       secondary_themes: [architectures-mechanisms, scale-research]
       tags: [topic:platonic-representation-hypothesis, topic:jepa, topic:spectral-embedding, topic:cross-modal-alignment, method:positive-pairs, method:laplacian-eigenmaps]
-      concept_ids: [contextualized-representation, training-objective]
+      concept_ids: [contextualized-representation, training-objective, platonic-representation-hypothesis]
     metadata:
       technical_level: advanced
       contribution_types: [mathematical-derivation, pedagogy, paper-review]
@@ -3045,8 +3045,8 @@ sources:
           - "The article is a secondary explanation; the arXiv paper remains authoritative for theorem assumptions and experimental protocol."
           - "No licence or permission to reproduce the article's figures or prose was established."
     related:
-      pages: []
-      concepts: [contextualized-representation, training-objective]
+      pages: [fr/jepa-platonic-representation, en/jepa-platonic-representation]
+      concepts: [contextualized-representation, training-objective, platonic-representation-hypothesis]
       audit_records:
         - docs/source-reviews/platonic-representation-jepa-2026-11.md
         - data/extractions/eleventh-hour-enthusiast-platonic-representation-jepa-2026.yml
@@ -3109,7 +3109,7 @@ sources:
       primary_theme: inference-efficiency
       secondary_themes: [architectures-mechanisms]
       tags: [topic:inference, topic:kv-cache, method:speculative-decoding]
-      concept_ids: []
+      concept_ids: [autoregressive-generation, prefill, decode-step, kv-cache]
     metadata:
       technical_level: intermediate
       contribution_types: [pedagogy, visualization]
@@ -3126,6 +3126,10 @@ sources:
           - "The post is a secondary pedagogical overview, not a primary architecture specification."
           - "No serving stack, hardware, model configuration or benchmark was inspected; performance bottlenecks are configuration-dependent."
           - "The diagram is not reproduced; reuse rights for the image are not established."
+    related:
+      pages: [fr/generation, en/generation]
+      concepts: [autoregressive-generation, prefill, decode-step, kv-cache]
+      audit_records: [docs/source-reviews/brij-pandey-inference-generation-2026-11.md]
   - id: balestriero-lecun-contrastive-non-contrastive-ssl-spectral-2022
     title: "Contrastive and Non-Contrastive Self-Supervised Learning Recover Global and Local Spectral Embedding Methods"
     creators: ["Randall Balestriero","Yann LeCun"]
@@ -3259,7 +3263,7 @@ sources:
       primary_theme: architectures-mechanisms
       secondary_themes: [mathematical-tools-geometry]
       tags: [topic:positional-encoding, method:sinusoidal-encoding, topic:transformer]
-      concept_ids: []
+      concept_ids: [positional-encoding]
     metadata:
       technical_level: advanced
       contribution_types: [theory, mathematical-derivation, architecture]
@@ -3277,7 +3281,7 @@ sources:
           - "No figure, text passage, code, or dataset was copied; reuse rights were not assessed."
     related:
       pages: [fr/positional-encoding, en/positional-encoding, fr/sinusoidal-positional-encoding, en/sinusoidal-positional-encoding]
-      concepts: []
+      concepts: [positional-encoding]
       audit_records: [docs/source-reviews/sinusoidal-positional-encoding-2026-11.md]
   - id: harvardnlp-annotated-transformer
     title: "The Annotated Transformer"
@@ -3297,7 +3301,7 @@ sources:
       primary_theme: architectures-mechanisms
       secondary_themes: [mathematical-tools-geometry]
       tags: [topic:positional-encoding, method:sinusoidal-encoding, ecosystem:pytorch, topic:transformer]
-      concept_ids: []
+      concept_ids: [positional-encoding]
     metadata:
       technical_level: intermediate
       contribution_types: [pedagogy, implementation, mathematical-derivation]
@@ -3315,7 +3319,7 @@ sources:
           - "No code was copied into the project without adaptation; reuse rights were not independently assessed."
     related:
       pages: [fr/sinusoidal-positional-encoding, en/sinusoidal-positional-encoding]
-      concepts: []
+      concepts: [positional-encoding]
       audit_records: [docs/source-reviews/sinusoidal-positional-encoding-2026-11.md]
   - id: stanford-ee269-transformers-signal-prediction
     title: "Transformers for Signal Prediction"
@@ -3335,7 +3339,7 @@ sources:
       primary_theme: mathematical-tools-geometry
       secondary_themes: [architectures-mechanisms]
       tags: [topic:positional-encoding, method:sinusoidal-encoding, topic:signal-processing]
-      concept_ids: []
+      concept_ids: [positional-encoding]
     metadata:
       technical_level: intermediate
       contribution_types: [pedagogy, mathematical-derivation]
@@ -3353,7 +3357,7 @@ sources:
           - "No figures or text were copied; reuse rights were not assessed."
     related:
       pages: [fr/sinusoidal-positional-encoding, en/sinusoidal-positional-encoding]
-      concepts: []
+      concepts: [positional-encoding]
       audit_records: [docs/source-reviews/sinusoidal-positional-encoding-2026-11.md]
 
   - id: sebastian-raschka-full-to-hybrid-attention-2026
