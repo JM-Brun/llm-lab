@@ -2960,7 +2960,7 @@ sources:
       primary_theme: mathematical-tools-geometry
       secondary_themes: ["architectures-mechanisms","scale-research"]
       tags: ["topic:platonic-representation-hypothesis","topic:jepa","topic:spectral-embedding","topic:cross-modal-alignment","method:positive-pairs","method:whitening","modality:multimodal"]
-      concept_ids: ["contextualized-representation","next-token-prediction","training-objective"]
+      concept_ids: ["contextualized-representation","next-token-prediction","training-objective","platonic-representation-hypothesis"]
     metadata:
       technical_level: advanced
       contribution_types: ["theory","mathematical-derivation","experiment","benchmark"]
@@ -3001,7 +3001,7 @@ sources:
           - "The hosted figure's exact provenance and reuse permissions were not established; link only, do not copy."
     related:
       pages: ["fr/contextualized-representations","en/contextualized-representations","fr/jepa-platonic-representation","en/jepa-platonic-representation"]
-      concepts: ["contextualized-representation","next-token-prediction","training-objective"]
+      concepts: ["contextualized-representation","next-token-prediction","training-objective","platonic-representation-hypothesis"]
       audit_records:
         - docs/source-reviews/platonic-representation-jepa-2026-11.md
         - data/extractions/balestriero-lecun-platonic-representation-jepas-2026.yml
