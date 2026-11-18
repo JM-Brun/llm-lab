@@ -4000,7 +4000,7 @@ sources:
       contribution_types: [theory, architecture, implementation, pedagogy, experiment]
       audiences: [learner, practitioner, educator]
     scan_status: partially-scanned
-    integration_status: integrated
+    integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-17"
         status: partially-scanned
@@ -4883,7 +4883,7 @@ sources:
       contribution_types: [theory, mathematical-derivation, pedagogy]
       audiences: [learner, practitioner, educator, researcher]
     scan_status: partially-scanned
-    integration_status: partially-integrated
+    integration_status: integrated
     scan_history:
       - accessed_at: "2026-11-17"
         status: partially-scanned
