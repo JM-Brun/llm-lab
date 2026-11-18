@@ -82,6 +82,41 @@ This teaches evidence inspection and hypothesis revision. It deliberately does n
 
 No new concept IDs were created: the current concept registry does not yet provide a dedicated, validated concept node for SAE features or mechanistic interpretability. The source records link to existing pages and concepts without inventing registry identifiers. A future graph extension should first define bilingual concept pages and their prerequisite/related edges.
 
+## 3.1 Keep technical objects, evidence views, methods and teaching representations distinct
+
+The Neuronpedia integration must not turn the platform's interface into an ontology of model internals. Use the following distinctions when extending the concept graph or revising the activities:
+
+| Layer | What belongs here | What it is not |
+|---|---|---|
+| **Model and learned objects** | Model checkpoint/release; activation tensors at a named layer/hook; residual-stream components; SAE parameters and learned feature directions/latents; native attention heads and MLP components | A natural-language feature label, a dashboard card, or a universal semantic concept |
+| **Measured or derived evidence** | Activation values at specified positions; selected positive/negative activation examples; activation-density statistics; token-level output/logit effects as defined by the particular dashboard | A complete description of a feature, proof of its meaning, or proof of causal importance |
+| **Analysis methods and interventions** | SAE encoding/decoding; feature search; Auto-Interp generation/scoring; custom-text inference where supported; attribution methods; steering, ablation and other controlled interventions | Interchangeable kinds of evidence; an intervention is not automatically a valid causal experiment without controls |
+| **Tool-level representations** | Highlighted tokens, activation tables, density plots, logit displays, attention-head visualizations and attribution/circuit graphs | The underlying tensors, heads, circuits or a complete causal graph of the model |
+| **Pedagogical representations** | Human-readable labels, narrative examples, analogies, diagrams, exercise prompts, rubrics and learner worksheets | Technical objects or empirical evidence; they are explanatory devices whose scope and limitations must be stated |
+
+Several consequences follow:
+
+- An **SAE feature** is a learned latent/direction in a particular model, source/release, layer and hook. It is not automatically a native neuron, a stable cross-model identity, or one uniquely named human concept.
+- An **activation** is a numerical value/tensor associated with a specified computation and location. An activation example is a selected observation; a list of examples is not the feature itself.
+- A **logit view** must be interpreted according to the exact quantity the dashboard computes and displays. Do not conflate output-token logit effects with SAE feature activation magnitude.
+- An **Auto-Interp explanation** is generated text, with method-dependent scoring. It is a hypothesis about selected evidence, not a definition of the latent.
+- An **attribution graph** is a method-dependent explanatory representation, often approximate and scoped to a selected computation. It is not the model's native execution graph or a validated causal graph by default.
+- **Steering, ablation and inference** are distinct operations. A changed output is evidence of sensitivity under a specified intervention, not by itself a complete causal explanation.
+- The source-local extraction graph is an editorial reconstruction using the template's limited node-kind vocabulary. Its node kinds (`representation`, `operation`, `intermediate`, `visualization`, etc.) classify a node's role in that reconstruction; they do not define new canonical technical concepts.
+
+Accordingly, keep the extraction graph, canonical concept graph, interface visualizations and learner route separate. Add canonical concept IDs only after a definition, bilingual label, scope, prerequisites, relations and suitable technical sources have been reviewed. Do not create a `feature` concept merely by promoting a dashboard label or a single example index.
+
+## 3.2 Preserve distinct bilingual narrative threads
+
+The two exercise sheets test equivalent capabilities but intentionally use different narrative anchors:
+
+- **French:** the two senses of *situation* in « une bonne situation, ça, scribe ? » and « de bonne ou de mauvaise situation », followed by the relation between *moi* and *je*.
+- **English:** the two occurrences of *Romans* in “What have the Romans ever done for us?” and “The Romans built roads”, followed by the reference of *they* in “They built roads.”
+
+These are not translations of one another and should not be made identical. Keep each thread implicit: do not name or explain its cultural source in learner-facing copy. Preserve the common technical assumptions and learning outcomes (same token ID under the stated assumption; controlled positional comparison; identical lookup; context-dependent hidden states; reference interpretation is not stored in the initial lookup). The story is a pedagogical representation, not evidence about the model.
+
+The Neuronpedia investigation that follows may remain structurally equivalent across languages because it concerns the same documented feature and evidence protocol; the narrative opening is where each language retains its own thread.
+
 ## 4. Synthesis and next research steps
 
 The central distinction is between **exploring the geometry of a dataset** (Embedding Atlas) and **inspecting evidence about internal model features** (Neuronpedia). Both tools make complex objects visible, but neither visualization turns an interpretation into proof.
