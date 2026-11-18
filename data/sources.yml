@@ -4276,6 +4276,213 @@ sources:
       concepts: [contextualized-representation, self-attention]
       audit_records: [docs/source-reviews/visual-learning-resources-2026-11.md, docs/source-reviews/embedding-atlas-neuronpedia-integration-2026-11.md, data/extractions/neuronpedia-interpretability-platform-2026.yml]
 
+  - id: cunningham-sparse-autoencoders-interpretable-features-2024
+    title: "Sparse Autoencoders Find Highly Interpretable Features in Language Models"
+    creators: ["Robert Huben", "Hoagy Cunningham", "Logan Smith", "Aidan Ewart", "Lee Sharkey"]
+    source_type: paper
+    identifiers: {arxiv: "2309.08600"}
+    canonical_url: "https://proceedings.iclr.cc/paper_files/paper/2024/hash/1fa1ab11f4bd5f94b2ec20e794dbfa3b-Abstract-Conference.html"
+    publisher: "International Conference on Learning Representations (ICLR)"
+    publication_date: "2024"
+    updated_date: null
+    language: en
+    version: "Published ICLR 2024 paper; preprint first posted 2023"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:mechanistic-interpretability, topic:sparse-autoencoders, topic:superposition, method:dictionary-learning, topic:feature-interpretability]
+      concept_ids: [contextualized-representation]
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, architecture, experiment]
+      audiences: [researcher, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope: ["Official ICLR 2024 proceedings metadata and abstract", "arXiv preprint metadata and abstract"]
+        limitations: ["Full paper, appendices, code and training details have not yet been audited in this ingestion.", "Reported causal feature results have not been independently reproduced."]
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "Full ICLR 2024 paper sections 1-5: activation sites, SAE dictionary and loss, automated interpretation score, IOI activation-patching protocol and feature case studies"
+        limitations:
+          - "The reported causal analysis is specific to Pythia models and the IOI setup; ACDC treats features as a flat graph with independent effects and uses a 50-example test set."
+          - "Automated explanation score measures held-out activation prediction under the paper's protocol, not semantic truth or complete coverage."
+          - "Appendices, full code reproduction and additional model runs remain pending."
+    related:
+      pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced]
+      concepts: [contextualized-representation]
+      audit_records: [docs/source-reviews/interpretability-concept-audit-2026-11.md, docs/source-reviews/sparse-autoencoder-research-2023-2025.md, data/extractions/cunningham-sparse-autoencoders-2024.yml]
+
+  - id: bricken-towards-monosemanticity-2023
+    title: "Towards Monosemanticity: Decomposing Language Models With Dictionary Learning"
+    creators: ["Trenton Bricken", "Adly Templeton", "Joshua Batson", "Brian Chen", "Adam Jermyn", "Tom Conerly", "Nicholas L Turner", "Cem Anil", "Carson Denison", "Amanda Askell", "Robert Lasenby", "Yifan Wu", "Shauna Kravec", "Nicholas Schiefer", "Tim Maxwell", "Nicholas Joseph", "Zac Hatfield-Dodds", "Alex Tamkin", "Karina Nguyen", "Brayden McLean", "Josiah E Burke", "Tristan Hume", "Shan Carter", "Tom Henighan", "Chris Olah"]
+    source_type: paper
+    identifiers: {}
+    canonical_url: "https://transformer-circuits.pub/2023/monosemantic-features/index.html"
+    publisher: "Transformer Circuits Thread / Anthropic"
+    publication_date: "2023-10-04"
+    updated_date: null
+    language: en
+    version: "Research report published 2023-10-04"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:mechanistic-interpretability, topic:sparse-autoencoders, topic:superposition, method:dictionary-learning, topic:feature-interpretability]
+      concept_ids: [contextualized-representation]
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, architecture, experiment]
+      audiences: [researcher, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope: ["Official Transformer Circuits Thread article metadata and abstract/overview"]
+        limitations: ["Research report rather than a peer-reviewed proceedings paper; do not conflate its studied one-layer model and feature demonstrations with general claims about all LLMs.", "Full technical sections and figures have not yet been audited; no model experiment was reproduced."]
+    related:
+      pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced]
+      concepts: [contextualized-representation]
+      audit_records: [docs/source-reviews/interpretability-concept-audit-2026-11.md, docs/source-reviews/sparse-autoencoder-research-2023-2025.md, data/extractions/bricken-towards-monosemanticity-2023.yml]
+
+  - id: gao-scaling-evaluating-sparse-autoencoders-2025
+    title: "Scaling and Evaluating Sparse Autoencoders"
+    creators: ["Leo Gao", "Tom Dupré la Tour", "Henk Tillman", "Gabriel Goh", "Rajan Troll", "Alec Radford", "Ilya Sutskever", "Jan Leike", "Jeffrey Wu"]
+    source_type: paper
+    identifiers: {arxiv: "2406.04093"}
+    canonical_url: "https://proceedings.iclr.cc/paper_files/paper/2025/hash/42ef3308c230942d223c411adf182c88-Abstract-Conference.html"
+    publisher: "International Conference on Learning Representations (ICLR)"
+    publication_date: "2025"
+    updated_date: null
+    language: en
+    version: "Published ICLR 2025 paper; preprint first posted 2024"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: link-only, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:mechanistic-interpretability, topic:sparse-autoencoders, method:feature-evaluation, method:scaling]
+      concept_ids: [contextualized-representation]
+    metadata:
+      technical_level: advanced
+      contribution_types: [mathematical-derivation, experiment, benchmark, implementation]
+      audiences: [researcher, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope: ["Official ICLR 2025 proceedings metadata and abstract", "arXiv preprint metadata and abstract"]
+        limitations: ["Full paper, appendices, released checkpoints and code have not yet been audited or executed.", "Reported scaling and evaluation results have not been independently reproduced."]
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "Full ICLR 2025 paper sections 1-4 and relevant appendix material: residual-stream preprocessing, ReLU/L1 and TopK variants, dead-latent prevention, scaling and feature-quality metrics"
+        limitations:
+          - "Reported results are scoped to the paper's GPT-2/GPT-4 model families, selected layers, context length, normalization and compute budget."
+          - "No released autoencoder, checkpoint or training code was executed; the 16M-latent GPT-4 result was not reproduced."
+          - "Full appendices and all training ablations remain to be audited."
+    related:
+      pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced]
+      concepts: [contextualized-representation]
+      audit_records: [docs/source-reviews/interpretability-concept-audit-2026-11.md, docs/source-reviews/sparse-autoencoder-research-2023-2025.md, data/extractions/gao-scaling-evaluating-sparse-autoencoders-2025.yml]
+
+  - id: chanin-feature-absorption-sparse-autoencoders-2025
+    title: "A is for Absorption: Studying Feature Splitting and Absorption in Sparse Autoencoders"
+    creators: ["David Chanin", "James Wilken-Smith", "Tomáš Dulka", "Hardik Bhatnagar", "Satvik Golechha", "Joseph Bloom"]
+    source_type: paper
+    identifiers: {arxiv: "2409.14507", doi: "10.52202/085713-2755"}
+    canonical_url: "https://proceedings.neurips.cc/paper_files/paper/2025/hash/764ff7477b8e24dbe01531f6791e8bdf-Abstract-Conference.html"
+    publisher: "Advances in Neural Information Processing Systems 38 (NeurIPS 2025)"
+    publication_date: "2025"
+    updated_date: null
+    language: en
+    version: "Published NeurIPS 2025 paper; preprint first posted 2024"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:mechanistic-interpretability, topic:sparse-autoencoders, topic:feature-splitting, topic:feature-absorption, method:feature-evaluation]
+      concept_ids: [contextualized-representation]
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, experiment, benchmark]
+      audiences: [researcher, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope: ["Official NeurIPS 2025 proceedings metadata and abstract", "arXiv preprint metadata and abstract"]
+        limitations: ["Full paper and supplementary material have not yet been audited.", "The reported absorption mechanism and experiments have not been independently reproduced."]
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "Full NeurIPS 2025 paper sections 2-7 and appendices A.2, A.4, A.10-A.14: hierarchy definition, toy proof, first-letter task, probe/ablation absorption metric and limitations"
+        limitations:
+          - "The absorption metric is conservative, threshold-dependent and may underestimate multiple or partial absorption cases."
+          - "Causal ablation evidence cannot be applied past layer 17 in the Gemma-2-2B spelling setup because attention has moved the information to the final token."
+          - "The authors report no multiple seeds for released SAEs; exact general prevalence and reproduction remain open."
+    related:
+      pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced]
+      concepts: [contextualized-representation]
+      audit_records: [docs/source-reviews/interpretability-concept-audit-2026-11.md, docs/source-reviews/sparse-autoencoder-research-2023-2025.md, data/extractions/chanin-feature-absorption-2025.yml]
+
+  - id: shu-survey-sparse-autoencoders-2025
+    title: "A Survey on Sparse Autoencoders: Interpreting the Internal Mechanisms of Large Language Models"
+    creators: ["Dong Shu", "Xuansheng Wu", "Haiyan Zhao", "Daking Rai", "Ziyu Yao", "Ninghao Liu", "Mengnan Du"]
+    source_type: paper
+    identifiers: {arxiv: "2503.05613", doi: "10.18653/v1/2025.findings-emnlp.89"}
+    canonical_url: "https://aclanthology.org/2025.findings-emnlp.89/"
+    publisher: "Findings of the Association for Computational Linguistics: EMNLP 2025"
+    publication_date: "2025"
+    updated_date: null
+    language: en
+    version: "Published proceedings survey; preprint first posted 2025"
+    revision: null
+    licence: {identifier: CC-BY-4.0, url: "https://creativecommons.org/licenses/by/4.0/", status: verified}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:mechanistic-interpretability, topic:sparse-autoencoders, method:feature-explanation, method:feature-evaluation, topic:survey]
+      concept_ids: [contextualized-representation]
+    metadata:
+      technical_level: advanced
+      contribution_types: [theory, historical-context]
+      audiences: [researcher, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope: ["Official ACL Anthology EMNLP 2025 proceedings metadata and abstract", "arXiv preprint metadata and abstract"]
+        limitations: ["Survey synthesis only; claims must be traced to cited primary studies before being treated as primary evidence.", "Full survey sections and cited works have not yet been audited."]
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "Full EMNLP 2025 survey sections 1-5, conclusion and stated limitations: SAE variants, input/output feature explanation methods, structural/functional metrics and applications"
+        limitations:
+          - "The survey is a secondary synthesis; cited empirical claims must be traced to primary studies before use as evidence."
+          - "The survey explicitly does not comprehensively cover pre-LLM history in distributed representations, disentangled representation learning and sparse coding."
+          - "The full bibliography has not been independently audited and no cited methods or benchmarks were reproduced."
+    related:
+      pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced]
+      concepts: [contextualized-representation]
+      audit_records: [docs/source-reviews/interpretability-concept-audit-2026-11.md, docs/source-reviews/sparse-autoencoder-research-2023-2025.md, data/extractions/shu-sae-survey-2025.yml]
+
   - id: apple-embedding-atlas
     title: "Embedding Atlas: Low-Friction, Interactive Embedding Visualization"
     creators: ["Donghao Ren", "Fred Hohman", "Halden Lin", "Dominik Moritz"]

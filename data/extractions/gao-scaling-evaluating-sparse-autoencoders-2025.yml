@@ -1,0 +1,97 @@
+schema_version: 1
+source_id: gao-scaling-evaluating-sparse-autoencoders-2025
+
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Official publisher/proceedings metadata and abstract or report overview inspected 2026-11-18."
+      - "Cross-source context: docs/source-reviews/sparse-autoencoder-research-2023-2025.md."
+    inferred_elements:
+      - "Learning implications are editorial synthesis and do not reproduce the paper's full method or experiment."
+  source_graph:
+    nodes:
+      - id: src-sae-training
+        kind: operation
+        description: "The paper studies k-sparse SAE training, sparsity control and dead-latent reduction."
+        locator: "Abstract: k-sparse training and dead-latent discussion"
+      - id: src-quality-metrics
+        kind: intermediate
+        description: "The paper introduces multiple feature-quality metrics covering recovery, explanation and downstream effects."
+        locator: "Abstract: feature-quality metrics"
+    edges:
+      - {from: src-sae-training, type: evaluated-by, to: src-quality-metrics}
+    interpretation: "This is a source-local reconstruction of the reported finding and its scope, not a canonical concept graph or an independent reproduction."
+  learning_outcomes:
+    - {status: inferred, outcome: "Distinguish the paper's technical object or result from its natural-language interpretation.", basis: "Abstract-level review; full-paper audit pending."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Transformer activations and basic sparse representation concepts.", basis: "The paper concerns sparse decomposition of model activations."}
+  teaching_route:
+    - {order: 1, section: "Identify scope", function: establish-provenance, moves: ["Record model, publication version and experimental scope."]}
+    - {order: 2, section: "Inspect finding", function: qualify-evidence, moves: ["Separate the reported result from assumptions, limitations and untested generalizations."]}
+  pedagogical_strengths:
+    - "Makes a specific reported research finding available for concept-level comparison."
+  pedagogical_limits:
+    - "Abstract-level source review only; full methods, appendices and code have not yet been audited."
+    - "No model or SAE was run by LLM Lab; no result was independently reproduced."
+  comparison:
+    dossier: "docs/source-reviews/sparse-autoencoder-research-2023-2025.md"
+    canonical_graph: "data/concepts.yml and generated JSON-LD projection"
+    canonical_routes: [docs/learning-path.md, data/guided-route.yml]
+    decision: "Use as source-scoped evidence for the interpretability concept audit; do not promote source-specific terms directly into canonical concepts."
+    structures_kept_separate:
+      - "The paper's result remains distinct from the canonical concept definition."
+      - "The paper's experiment and model scope remain distinct from a universal claim."
+
+items:
+  - id: gao-scaling-evaluating-sparse-autoencoders-2025:abstract-finding
+    kind: result
+    summary: "The ICLR 2025 paper studies SAE scaling, k-sparse training, dead latents and multiple feature-quality metrics."
+    locator: {type: section, value: "ICLR 2025 proceedings; arXiv:2406.04093", label: "Abstract or report overview"}
+    evidence:
+      kind: official-proceedings-abstract
+      confidence: well-supported
+      scope: "Abstract-level review of the published 2025 paper and 2024 preprint."
+      assumptions: ["The published source and its stated experimental scope are the unit of interpretation."]
+      limitations: ["No training code, released SAE, checkpoint or evaluation result was executed by LLM Lab."]
+    disposition: integrate
+    disposition_rationale: "Use only within the source's reported model, method, task and evidence scope."
+
+  - id: gao-scaling-evaluating-sparse-autoencoders-2025:quality-metric-family
+    kind: definition
+    summary: "The paper evaluates SAE quality using distinct quantities: reconstruction MSE and L0 sparsity, recovery of hypothesized features, sparse downstream effects, and explanation precision/recall."
+    locator: {type: section, value: "Sections 2-4", label: "Methods and feature evaluation"}
+    evidence:
+      kind: full-paper-method
+      confidence: established
+      scope: "Metrics and definitions used in the published ICLR 2025 paper."
+      assumptions: ["Each metric measures a different property and must be interpreted according to its operational definition."]
+      limitations: ["No single metric establishes semantic truth, full feature coverage or causal completeness."]
+    disposition: integrate
+    disposition_rationale: "Represent feature quality as a family of metrics rather than a single interpretability score."
+
+  - id: gao-scaling-evaluating-sparse-autoencoders-2025:topk-training
+    kind: mechanism
+    summary: "The paper contrasts a ReLU/L1 SAE baseline with TopK SAEs, which directly retain the k largest latent activations and therefore control L0 sparsity without the same L1 penalty."
+    locator: {type: section, value: "Sections 2.2-2.3, equations 1-2", label: "ReLU and TopK parameterizations"}
+    evidence:
+      kind: full-paper-method
+      confidence: established
+      scope: "The training variants and experiments described in the ICLR 2025 paper."
+      assumptions: ["TopK and ReLU/L1 results are not interchangeable architectures or objectives."]
+      limitations: ["Results depend on training setup, model family, layer selection, normalization and compute budget."]
+    disposition: integrate
+    disposition_rationale: "Keep SAE architecture and sparsity objective explicit in concept and source metadata."
+
+  - id: gao-scaling-evaluating-sparse-autoencoders-2025:dead-latent-mitigation
+    kind: result
+    summary: "The paper reports that tied encoder initialization and an auxiliary loss targeting dead latents reduce the number of inactive latents in its training experiments."
+    locator: {type: section, value: "Section 2.4 and Appendix B", label: "Preventing dead latents"}
+    evidence:
+      kind: full-paper-experiment
+      confidence: well-supported
+      scope: "The paper's GPT-2/GPT-4 autoencoder training experiments."
+      assumptions: ["A latent is considered dead under the paper's activation-count criterion."]
+      limitations: ["No released model or training run was executed by LLM Lab."]
+    disposition: integrate
+    disposition_rationale: "Treat dead-latent rate as a training/evaluation property, not as a semantic concept."

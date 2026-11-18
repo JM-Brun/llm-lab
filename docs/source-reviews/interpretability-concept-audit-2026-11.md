@@ -21,7 +21,7 @@ The existing bilingual advanced pages already contain a learner-facing Neuronped
 | Layer | Technical meaning | Examples | Not to be mistaken for |
 |---|---|---|---|
 | Model state / computational object | A vector or tensor at a defined model, layer, hook, token position and computation stage | Residual-stream activation; MLP or attention output | A feature label or a plot |
-| Learned analysis object | Parameters/directions learned by an auxiliary analysis model | SAE encoder, decoder, dictionary, latent feature | A native Transformer neuron or a universal semantic concept |
+| Learned analysis object | Parameters/directions learned by an auxiliary analysis model | SAE encoder, decoder, dictionary, latent index with its encoder detector and decoder reconstruction direction | A native Transformer neuron or a universal semantic concept |
 | Per-example measurement | A value obtained when a learned object is applied to a particular input/state | Feature activation coefficient at a position | The feature direction itself |
 | Analysis / intervention method | A defined procedure that estimates, decomposes, modifies or tests a quantity | SAE encoding, attribution, ablation, activation patching, steering | A dashboard visualization |
 | Interpretation / teaching representation | A human- or model-authored account of selected evidence | Auto-Interp label, feature description, attribution graph, analogy, exercise | The underlying model state, latent, or causal mechanism |
@@ -35,10 +35,10 @@ The bilingual definitions below are editorial candidates for review. They are de
 | Candidate | Proposed French label | Proposed English label | Proposed definition boundary | Preliminary decision |
 |---|---|---|---|---|
 | Sparse autoencoder (SAE) | Autoencodeur parcimonieux (SAE) | Sparse autoencoder (SAE) | An auxiliary encoder/decoder model trained to map activations from a specified model site to a sparse latent code and reconstruct them | **Add candidate.** A method/model object; not a Transformer component |
-| SAE latent feature | Feature latente de SAE | SAE latent feature | A learned coordinate/direction in a particular SAE dictionary, scoped to the model, checkpoint, activation site and SAE version | **Add candidate.** Keep distinct from a native neuron and from a human concept |
-| Feature activation | Activation d'une feature | Feature activation | The coefficient/value of a particular SAE latent for a specified input, token position and activation site | **Add candidate.** A per-example measurement, not the latent itself |
+| SAE latent feature | Feature latente de SAE | SAE latent feature | A learned latent index in a particular SAE, associating an encoder-side detector and decoder-side reconstruction direction, scoped to the target model, checkpoint, activation site and SAE version | **Add candidate.** Keep distinct from a native neuron and from a human concept; encoder and decoder directions need not be identical |
+| Feature activation | Activation d'une feature | Feature activation | The coefficient produced by the SAE encoder for a particular latent index, input, token position and activation site | **Add candidate.** A per-example measurement, not the latent index or decoder direction |
 | Model activation / activation vector | Activation du modèle / vecteur d'activation | Model activation / activation vector | A vector/tensor produced at a defined computation site; it requires explicit model, layer/hook and position scope | **Defer or merge carefully.** It overlaps with existing contextualized hidden states but is broader; do not add a vague generic node |
-| Feature explanation | Explication d'une feature | Feature explanation | A human- or model-generated hypothesis describing observed activation patterns, with provenance and evaluation method | **Likely a representation/evidence annotation, not necessarily a canonical concept.** Avoid promoting every dashboard label |
+| Feature evaluation | Évaluation d'une feature | Feature evaluation | A family of distinct measurements such as reconstruction error, sparsity, dead-latent rate, feature recovery, explanation precision/recall, coverage and downstream effects | **Prefer a property/method family or structured evidence, not one scalar concept.** Preserve each operational definition |\n| Feature explanation | Explication d'une feature | Feature explanation | A human- or model-generated hypothesis describing observed activation patterns, with provenance and evaluation method | **Likely a representation/evidence annotation, not necessarily a canonical concept.** Avoid promoting every dashboard label |
 | Attribution method | Méthode d'attribution | Attribution method | A method-specific estimate/decomposition relating model components or inputs to a defined target quantity | **Add candidate if the selected methods are specified.** Attribution is not intervention |
 | Circuit hypothesis | Hypothèse de circuit | Circuit hypothesis | A proposed set of model components and computational relations intended to explain a bounded behavior | **Add candidate.** A hypothesis, not a graph UI or established mechanism by default |
 | Causal intervention | Intervention causale | Causal intervention | A controlled modification of a specified internal state/component followed by measurement of a defined outcome | **Add candidate.** Requires controls and explicit intervention protocol |
@@ -51,6 +51,9 @@ The bilingual definitions below are editorial candidates for review. They are de
 - Highlighted tokens, heatmaps, dashboards and attribution-graph drawings: tool visualizations.
 - Narrative examples, analogies and exercise prompts: pedagogical representations.
 - "Neuronpedia feature": a platform-specific record/reference, not a separate scientific object category.
+
+
+**Important refinement from the full-paper review:** a latent index links encoder and decoder parameters, but those directions are not definitionally identical. The encoder determines whether/how strongly the latent activates on an input; the decoder direction determines what vector is added to the reconstruction for that coefficient. Feature absorption can create a recall hole in the encoder while the decoder direction includes part of a parent feature. Therefore the canonical concept model should not describe a feature as only "a direction" without specifying whether it means the encoder detector, decoder reconstruction direction, or the paired latent unit.
 
 ## 4. Proposed relationships to the existing graph
 
