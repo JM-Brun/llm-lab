@@ -40,7 +40,7 @@ Le premier cas relève du **few-shot / in-context learning** : les exemples cond
 
 </details>
 
-5. **Reconstituer la boucle de génération.** Un assistant reçoit un prompt et doit produire trois tokens. Remettez dans l'ordre ces opérations : (a) ajouter le token choisi au contexte ; (b) convertir le texte en tokens ; (c) vérifier si la limite de trois nouveaux tokens est atteinte ; (d) calculer la distribution du prochain token ; (e) choisir un token selon la règle de décodage ; (f) traiter le contexte initial. Les paramètres du modèle changent-ils à chaque tour ?
+6. **Reconstituer la boucle de génération.** Un assistant reçoit un prompt et doit produire trois tokens. Remettez dans l'ordre ces opérations : (a) ajouter le token choisi au contexte ; (b) convertir le texte en tokens ; (c) vérifier si la limite de trois nouveaux tokens est atteinte ; (d) calculer la distribution du prochain token ; (e) choisir un token selon la règle de décodage ; (f) traiter le contexte initial. Les paramètres du modèle changent-ils à chaque tour ?
 
 <details>
 <summary>Afficher la réponse et le raisonnement</summary>

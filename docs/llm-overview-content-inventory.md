@@ -170,3 +170,40 @@ Le découpage ne doit pas être justifié par la seule longueur de la page sourc
 ### Synthèse du lot
 
 Le découpage a été exécuté sans créer de route parallèle : retrieval est désormais une ressource Deepen facultative indépendante, tandis que RAG/mémoire garde le parcours de l'information externe jusqu'à son usage et Context engineering reste propriétaire de la conception du contexte. Les éléments déplacés sont préservés dans les deux langues ; les tests et le rendu sur le dernier commit restent les conditions de clôture du lot.
+
+
+## 11. Inventaire détaillé du panorama — avant / après le lot 2
+
+Le comptage lexical brut de la source avant réécriture était de **5 069 mots FR** et **4 356 mots EN**. Les sections principales et leur traitement prévu/implémenté sont :
+
+| Bloc source | Volume brut avant (FR / EN) | Décision de conservation | Propriétaire ou destination |
+|---|---:|---|---|
+| Préambule, récit et objectifs | 446 / 605 | Conserver le fil Otis en français et Monty Python en anglais, raccourcir l'orientation et annoncer 8–10 minutes | Panorama FR/EN |
+| Ce que prédit le modèle | 538 / 401 | Garder le préfixe, la continuation, la table de probabilités fictives, token/contexte/paramètres et la réserve probable ≠ vrai ; renvoyer les dérivations | Panorama ; vraisemblance, formalisation mathématique, limites |
+| Du texte à la distribution | 332 / 295 | Garder le schéma et l'explorateur ; remplacer les six étapes numérotées et leurs renvois par une description compacte du calcul. Dire explicitement que le schéma n'est pas un parcours de lecture | Panorama ; carte d'apprentissage canonique ; pages Text/Tokenization, Embeddings, Transformer, Probabilities et Generation |
+| Un calcul, trois usages | 593 / 507 | Garder les deux variantes responsive du schéma et la distinction génération/scoring/apprentissage ; réduire le calcul de surprise à un repère | Panorama ; Generation, Likelihood/Vraisemblance, Entropy, Loss, Gradients, Training examples |
+| LLM, Transformer, GPT | 302 / 241 | Garder les définitions et le tableau des trois familles ; déplacer les détails architecturaux | Panorama ; Transformer architectures |
+| Architecture, apprentissage, utilisation | 380 / 242 | Garder les trois dimensions et la distinction base model/foundation model ; raccourcir les mécanismes d'entraînement | Panorama ; Training loop, Post-training |
+| Où se trouve l'information ? | 603 / 524 | Garder un tableau synthétique paramètres/contexte/sources externes/état d'exécution ; déplacer les mécanismes détaillés | Panorama ; Context engineering, ICL, Document retrieval, RAG/memory, Computational complexity |
+| Pourquoi les Transformers et les LLM pré-entraînés ont changé la donne | 899 / 670 | Garder une explication concise du transfert et ses limites ; déplacer la chronologie et les comparaisons détaillées ; présenter la compression comme une perspective, pas une théorie complète de l'intelligence | Panorama ; Transformer history, LLM evolution, Scaling laws, Emergence, LLM limits, Entropy et Compression revision |
+| Choisir une approche | 166 / 153 | Garder un rappel bref des alternatives et des critères de décision, sans en faire une séquence | Panorama ; Post-training, Context engineering, RAG/memory |
+| Du modèle au système conversationnel | 255 / 220 | Garder la frontière modèle/application et l'exemple de demande d'outil non exécutée ; déplacer les détails d'orchestration | Panorama ; LLM evolution, Build |
+| Vérifier sa compréhension | 555 / 498 | Garder un contrôle court par concept/section et le lien vers le hub d'exercices | Panorama ; exercises/llm-overview.qmd |
+
+### Médias, liens et contrats préservés
+
+- Figure du calcul autorégressif \`fig-gpt-generation-process\` et explorateur \`next-token-explorer.html\) conservés.
+- Figure des trois usages \`fig-llm-shared-prediction-uses\`, versions desktop/mobile et textes alternatifs conservés.
+- Table de probabilités fictives et valeurs cohérentes entre pages conservées.
+- Ancres des sections principales et marqueurs \`self-check-covers\` conservés ; les inclusions générées de contexte, route et couverture restent intactes.
+- Les liens historiques, probabilistes et d'architecture sont transférés vers les pages propriétaires ; la perspective compression est reliée à Entropy et Compression revision avec une réserve explicite.
+- Le hub d'exercices du panorama est conservé. Sa numérotation est corrigée : le second exercice numéroté 5 devient 6 dans les deux langues.
+- Le diagramme du calcul décrit une computation et ne reproduit plus les étapes du parcours Understand. \`data/guided-route.yml\` reste l'unique source de vérité de ce parcours.
+
+### Mesure après réécriture
+
+Le brouillon FR/EN réécrit contient environ **2 710 mots FR** et **2 539 mots EN** dans les fichiers source, soit une réduction brute d'environ 46,5 % et 41,7 %. Ce comptage inclut les métadonnées, le texte alternatif des figures et les marqueurs de composants ; il ne remplace pas le temps de lecture calculé sur le rendu. La cible affichée est 8–10 minutes, avec 15 minutes comme plafond : le rendu Quarto et son temps de lecture doivent confirmer que cette cible est tenue.
+
+### Synthèse opérationnelle
+
+Le panorama devient une orientation système, pas un cours condensé : il garde le modèle mental du prochain token, la distinction des trois usages, la taxonomie minimale, les frontières d'information, le pont prédiction → transfert et la distinction modèle/application. Les détails historiques, mathématiques, de retrieval, de mémoire, de contexte et de post-entraînement restent chez leurs propriétaires. Aucun second parcours n'est ajouté.
