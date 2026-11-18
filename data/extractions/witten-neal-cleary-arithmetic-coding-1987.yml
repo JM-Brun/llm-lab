@@ -2,7 +2,7 @@ schema_version: 1
 source_id: witten-neal-cleary-arithmetic-coding-1987
 items:
   - id: witten-neal-cleary-arithmetic-coding-1987:shared-probability-model-contract
-    kind: method
+    kind: mechanism
     summary: "The encoder maps an input string and a probability model to a bit string; the decoder must have access to the same model and reproduce the same next-symbol distribution in the same context to reconstruct the exact input."
     locator: {type: page-section, value: "pp. 520–521, Data Compression", label: "Model-based coding and decoder agreement"}
     evidence:
@@ -28,7 +28,7 @@ items:
     mapped_concepts: [surprisal, conditional-distribution, predictive-compression, arithmetic-coding]
     target_resources: [fr/compression-revision, en/compression-revision]
   - id: witten-neal-cleary-arithmetic-coding-1987:finite-precision-implementation
-    kind: implementation
+    kind: implementation-pattern
     summary: "The practical encoder and decoder use bounded integer state, renormalization, bit output/input and explicit finalization. The article identifies precision growth, incremental operation, overflow/underflow and model representation as implementation concerns."
     locator: {type: page-section, value: "pp. 523–527, Figs. 2–3 and implementation discussion", label: "Integer arithmetic encoder and decoder"}
     evidence:
