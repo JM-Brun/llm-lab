@@ -280,3 +280,39 @@ Le rendu Quarto complet et les contrôles Python sont des preuves techniques ; i
 - Les changements de `main` ont été intégrés dans un commit de fusion à deux parents : `8c4a9d581c4fd142615ada47577948b73b395211`. Les chemins modifiés par les deux branches ont été comparés ; `.github/workflows/ci.yml` était identique des deux côtés, les autres ajouts ont été importés depuis `main`.
 - La comparaison `main...docs/llm-overview-learning-review` indique maintenant zéro commit de retard. La PR demeure ouverte et en brouillon ; ne pas considérer sa fusion comme acquise.
 - Les validations doivent être relues sur ce nouveau HEAD. Au premier relevé, seul le scan des secrets était visible et encore en cours ; l'absence de conclusion CI/Quarto ne vaut pas réussite.
+
+
+## 14. Audit navigateur : rétablissement des tableaux comparatifs responsives — 18 novembre 2026
+
+### Diagnostic sur HEAD `de2da3a8f19397551a015f022695eaad15abdfe3`
+
+- CI Python/domain checks : succès.
+- Suite de tests : succès.
+- Secret scanning : succès.
+- Rendu Quarto : effectué ; contrôles de carte d'apprentissage et graphe JSON-LD réussis.
+- Audit navigateur : échec sur les quatre variantes du panorama (FR/EN × mobile/desktop), avec le message `expected two dense descriptive tables, found 0`.
+- Le rapport indique que l'explorateur next-token fonctionne, que les pages n'ont pas de débordement horizontal détecté et que les cibles de focus sont visibles. La cause de l'échec était la disparition des wrappers `.responsive-card-table` des tableaux du panorama après refonte, alors que l'audit et le style mobile dépendent de ces wrappers.
+- L'attente « exactement deux tableaux » était également devenue obsolète : le panorama refondu contient trois tableaux comparatifs structurants (familles d'architectures ; dimensions architecture/apprentissage/utilisation ; résidence de l'information).
+
+### Correction appliquée
+
+- Ajout du wrapper `responsive-card-table` autour de chacun de ces trois tableaux dans les sources FR et EN. Le tableau de probabilités reste volontairement un tableau compact et n'est pas transformé en carte.
+- Mise à jour de l'assertion de l'audit navigateur : trois tableaux sont désormais attendus, avec leurs fonctions nommées dans le message d'erreur.
+- Les contrôles d'amélioration responsive ne sont pas affaiblis : l'audit vérifie toujours que chaque tableau enveloppé est enrichi, et que sur mobile chaque cellule est rendue comme carte avec un libellé.
+- Commits :
+  - FR : `fc5c4c0c4a8bfc4b72481a3bbc530b9cb1006a1a`
+  - EN : `66382d2e96bce4ad6994dcdbceb853d9ddcef7ff`
+  - Audit : `0b825220e9db2352ef20df33bcfbb461f030b968`
+
+### Ce qui reste à prouver
+
+Le correctif est commité mais n'est pas encore validé par un nouveau rendu/audit sur le HEAD qui l'intègre. Vérifier :
+1. Quarto complet et audit navigateur sur le nouveau HEAD.
+2. Trois tableaux détectés et améliorés en FR/EN, desktop/mobile.
+3. Absence de débordement et lisibilité des libellés sur mobile.
+4. Accessibilité Axe et navigation clavier, qui sont des contrôles distincts de l'assertion des tableaux.
+5. Que la réduction du panorama reste dans la cible 8–10 minutes et que le wrapper n'altère pas la lecture desktop.
+
+### Conservation
+
+Aucun contenu de tableau n'a été réécrit ou supprimé dans ce correctif ; seuls des wrappers de présentation ont été restaurés. L'assertion du test a été adaptée à la nouvelle structure éditoriale, sans supprimer les vérifications de rendu responsive.
