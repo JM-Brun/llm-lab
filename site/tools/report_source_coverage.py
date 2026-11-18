@@ -37,7 +37,9 @@ def build_report(root: Path) -> dict[str, Any]:
     extraction_by_source: dict[str, list[dict[str, Any]]] = defaultdict(list)
     orphan_extractions: list[str] = []
     extraction_item_count = 0
+    extraction_record_count = 0
     for path in sorted((data_dir / "extractions").glob("*.yml")):
+        extraction_record_count += 1
         record = _load(path)
         source_id = record.get("source_id")
         items = record.get("items", [])
@@ -153,10 +155,13 @@ def build_report(root: Path) -> dict[str, Any]:
         },
         "counts": {
             "sources": len(sources),
-            "extraction_records": sum(len(records) for records in extraction_by_source.values()),
+            "extraction_records": extraction_record_count,
             "extraction_items": extraction_item_count,
             "concepts": len(known_concepts),
             "sources_without_extraction": len(sources_without_extraction),
+            "integrated_sources_without_extraction": sum(
+                item["integration_status"] == "integrated" for item in sources_without_extraction
+            ),
             "sources_without_concept_link": len(source_without_concept),
             "sources_without_page_destination": len(source_without_destination),
             "concepts_without_source": len(concepts_without_sources),
@@ -173,6 +178,10 @@ def build_report(root: Path) -> dict[str, Any]:
         },
         "review_queues": {
             "sources_without_extraction": sources_without_extraction,
+            "integrated_sources_without_extraction": [
+                item["id"] for item in sources_without_extraction
+                if item["integration_status"] == "integrated"
+            ],
             "sources_without_concept_link": sorted(source_without_concept),
             "sources_without_page_destination": sorted(source_without_destination),
             "concepts_without_source": concepts_without_sources,
