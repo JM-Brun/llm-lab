@@ -163,6 +163,10 @@ jobs:
         if: steps.reference_scope.outputs.reference_parity == 'true'
         run: uv pip install --python .venv/bin/python -r docs/requirements-gpt2-reference.txt
 
+      - name: Install parallel test runner
+        # CI-only orchestration; keep it outside the project lock.
+        run: uv pip install --python .venv/bin/python pytest-xdist==3.8.0
+
       - name: Regenerate tracked learning-map artifacts for this PR
         if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
         env:
