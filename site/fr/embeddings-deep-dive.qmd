@@ -23,6 +23,8 @@ related: ["fr/embedding-space", "fr/contextualized-representations", "fr/cosine-
 tags: ["type:deep-dive", "destination:deepen", "topic:embeddings", "level:advanced", "language:fr", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-fr-embeddings-deep-dive.qmd >}}
+
 # Pourquoi consacrer un dossier entier aux embeddings ?
 
 Un **embedding** est une représentation d'un objet sous la forme d'un vecteur numérique. L'objet peut être un mot, un token, une phrase, un document, une image, un segment audio, un utilisateur, un produit ou un nœud de graphe. Le terme ne désigne donc pas une technique unique, ni une propriété magique de « compréhension » : il désigne une famille de représentations dont la forme, l'espace et l'utilité dépendent de la tâche et de la méthode qui les a produites.
