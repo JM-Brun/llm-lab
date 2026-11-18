@@ -5,6 +5,12 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
+    inputs:
+      run_concept_benchmark:
+        description: "Run the 500/2,000/10,000 concept-registry benchmark"
+        required: true
+        default: false
+        type: boolean
 
 permissions:
   contents: read
@@ -176,3 +182,115 @@ jobs:
       - name: Test
         # Keep the complete suite and coverage threshold; scheduling is benchmarked separately.
         run: uv run pytest -n 2 --dist loadscope --durations=20
+
+  benchmark:
+    name: Opt-in concept-registry scale benchmark
+    if: >-
+      (github.event_name == 'workflow_dispatch' && inputs.run_concept_benchmark) ||
+      (github.event_name == 'pull_request' && contains(github.event.pull_request.title, '[benchmark]'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out benchmark commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+
+      - name: Set up uv and Python
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          version: "0.13.7"
+          python-version: "3.12"
+          enable-cache: true
+          cache-dependency-glob: |
+            pyproject.toml
+            uv.lock
+            docs/requirements-history-validation.txt
+
+      - name: Run concept-registry benchmark
+        env:
+          BENCHMARK_COMMAND: uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/benchmark_concept_registry.py --sizes 500 2000 10000 --repeats 5 --output "$RUNNER_TEMP/concept-registry-benchmark.json"
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha || '' }}
+        run: |
+          set -euo pipefail
+          started_at="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          start_epoch="$(date +%s)"
+          uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/benchmark_concept_registry.py --sizes 500 2000 10000 --repeats 5 --output "$RUNNER_TEMP/concept-registry-benchmark.json"
+          end_epoch="$(date +%s)"
+          BENCHMARK_STARTED_AT="$started_at" BENCHMARK_DURATION_SECONDS="$((end_epoch - start_epoch))" uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python - <<'PY'
+          import datetime
+          import json
+          import os
+          import platform
+          import subprocess
+          import sys
+          import yaml
+
+          metadata = {
+              "commit_sha": subprocess.check_output(
+                  ["git", "rev-parse", "HEAD"], text=True
+              ).strip(),
+              "workflow_run_id": os.environ["GITHUB_RUN_ID"],
+              "workflow_run_attempt": os.environ["GITHUB_RUN_ATTEMPT"],
+              "event_name": os.environ["GITHUB_EVENT_NAME"],
+              "ref": os.environ["GITHUB_REF"],
+              "pull_request_head_sha": os.environ.get("PR_HEAD_SHA"),
+              "command": os.environ["BENCHMARK_COMMAND"],
+              "started_at_utc": os.environ["BENCHMARK_STARTED_AT"],
+              "completed_at_utc": datetime.datetime.now(
+                  datetime.timezone.utc
+              ).isoformat(),
+              "duration_seconds": int(os.environ["BENCHMARK_DURATION_SECONDS"]),
+              "python_version": sys.version,
+              "python_implementation": platform.python_implementation(),
+              "platform": platform.platform(),
+              "runner_os": os.environ.get("RUNNER_OS"),
+              "runner_arch": os.environ.get("RUNNER_ARCH"),
+              "pyyaml_version": yaml.__version__,
+              "uv_version": subprocess.check_output(
+                  ["uv", "--version"], text=True
+              ).strip(),
+              "sizes": [500, 2000, 10000],
+              "repeats": 5,
+          }
+          with open(
+              os.environ["RUNNER_TEMP"] + "/concept-registry-benchmark-metadata.json",
+              "w",
+              encoding="utf-8",
+          ) as f:
+              json.dump(metadata, f, ensure_ascii=False, indent=2)
+              f.write("\n")
+          PY
+          python - "$RUNNER_TEMP/concept-registry-benchmark.json" <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          import sys
+
+          with open(sys.argv[1], encoding="utf-8") as f:
+              report = json.load(f)
+          print("### Concept-registry benchmark")
+          print()
+          print("| Concepts | Relations | Build median (s) | Validation median (s) | Validation peak (MiB) | Errors |")
+          print("|---:|---:|---:|---:|---:|---:|")
+          for row in report["results"]:
+              peak_mib = row["validation_peak_bytes_max"] / (1024 * 1024)
+              errors = max(row["validation_error_counts"], default=0)
+              print(
+                  f"| {row['concepts']} | {row['relations']} | "
+                  f"{row['fixture_build_seconds_median']:.6f} | "
+                  f"{row['validation_seconds_median']:.6f} | "
+                  f"{peak_mib:.2f} | {errors} |"
+              )
+          print()
+          print(f"Commit: `{report['environment']['commit_sha']}`")
+          PY
+
+      - name: Upload raw benchmark and execution metadata
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: concept-registry-benchmark-${{ github.event.pull_request.head.sha || github.sha }}
+          path: |
+            ${{ runner.temp }}/concept-registry-benchmark.json
+            ${{ runner.temp }}/concept-registry-benchmark-metadata.json
+          if-no-files-found: warn
+          retention-days: 90

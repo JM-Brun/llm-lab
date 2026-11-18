@@ -1,0 +1,72 @@
+{
+  "benchmark": "concept-registry-validation",
+  "method": {
+    "repeats": 5,
+    "sizes": [
+      500,
+      2000,
+      10000
+    ],
+    "baseline_concepts": 102,
+    "baseline_relations": 125,
+    "synthetic_shape": "existing checked-in registry plus bilingual synthetic concepts; new concepts form one directed acyclic part-of chain",
+    "timed_scope": "in-memory validate_registry call; YAML loading, page discovery, fixture construction and interpreter startup are excluded",
+    "memory_scope": "tracemalloc peak during validate_registry only"
+  },
+  "environment": {
+    "python": "3.12.16",
+    "platform": "Linux-7.0.0-1019-azure-x86_64-with-glibc2.43",
+    "repository_root": "/home/runner/work/llm-lab/llm-lab",
+    "commit_sha": "38d0e69507525beb4c2679f206b4f03a9ba6988b"
+  },
+  "results": [
+    {
+      "concepts": 500,
+      "relations": 522,
+      "fixture_build_seconds_median": 0.004077,
+      "validation_seconds_median": 0.049707,
+      "validation_seconds_min": 0.049647,
+      "validation_seconds_max": 0.053422,
+      "validation_peak_bytes_max": 228750,
+      "validation_error_counts": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "concepts": 2000,
+      "relations": 2022,
+      "fixture_build_seconds_median": 0.01528,
+      "validation_seconds_median": 0.206559,
+      "validation_seconds_min": 0.205567,
+      "validation_seconds_max": 0.215764,
+      "validation_peak_bytes_max": 999982,
+      "validation_error_counts": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "concepts": 10000,
+      "relations": 10022,
+      "fixture_build_seconds_median": 0.083452,
+      "validation_seconds_median": 1.083805,
+      "validation_seconds_min": 1.076992,
+      "validation_seconds_max": 1.088022,
+      "validation_peak_bytes_max": 5199430,
+      "validation_error_counts": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ]
+}
