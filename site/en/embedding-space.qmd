@@ -43,6 +43,8 @@ The text already present in the context is:
 
 The replies add examples such as aqueducts, sanitation, roads, and irrigation. They are not yet present when the model processes the prefix. In the scene, different members of the group supply these replies, so this is a context-and-response analogy rather than a single-speaker generation trace. No universal segmentation or token ID is assumed here.
 
+For a controlled, single-speaker continuation used to trace next-token mechanics, keep a separate illustrative example in mind: **“They built roads between distant towns.”** It is not one of the group's replies and does not turn the scene into a single-speaker generation trace.
+
 A tokenizer splits the prefix into tokens according to its vocabulary and rules, then assigns an integer ID to each token. A visible word is not necessarily one token: the exact segmentation depends on the tokenizer in use.
 
 ## Lookup: select a row, not a coordinate
