@@ -285,6 +285,69 @@ def _validate_pedagogical_model(model: Any, where: str, errors: list[str]) -> No
         )
 
 
+def _validate_source_collections(
+    root: Path,
+    source_entries: list[Any],
+    errors: list[str],
+) -> None:
+    """Validate explicit source-to-dossier membership without requiring backfill."""
+    registry_path = root / "data" / "source-collections.yml"
+    registry = _load_yaml(registry_path, root, errors)
+    if not isinstance(registry, dict) or registry.get("schema_version") != 1:
+        errors.append("data/source-collections.yml: expected schema_version: 1")
+        return
+
+    entries = registry.get("collections")
+    if not isinstance(entries, list):
+        errors.append("data/source-collections.yml: expected a collections list")
+        return
+
+    collection_ids: set[str] = set()
+    for index, collection in enumerate(entries):
+        where = f"data/source-collections.yml:collections[{index}]"
+        if not isinstance(collection, dict):
+            errors.append(f"{where}: expected a mapping")
+            continue
+        collection_id = collection.get("id")
+        if not isinstance(collection_id, str) or not ID_PATTERN.fullmatch(collection_id):
+            errors.append(f"{where}.id: expected a stable kebab-case ID")
+        elif collection_id in collection_ids:
+            errors.append(f"{where}.id: duplicate collection ID {collection_id!r}")
+        else:
+            collection_ids.add(collection_id)
+        for field in ("title", "dossier_path"):
+            value = collection.get(field)
+            if not isinstance(value, str) or not value.strip():
+                errors.append(f"{where}.{field}: expected non-empty text")
+        if collection.get("status") not in {"active", "archived"}:
+            errors.append(f"{where}.status: expected 'active' or 'archived'")
+        dossier_path = collection.get("dossier_path")
+        if isinstance(dossier_path, str) and dossier_path.strip():
+            candidate = Path(dossier_path)
+            if candidate.is_absolute() or ".." in candidate.parts:
+                errors.append(f"{where}.dossier_path: expected a repository-relative path")
+            elif not (root / candidate).is_file():
+                errors.append(f"{where}.dossier_path: file does not exist")
+
+    for index, source in enumerate(source_entries):
+        if not isinstance(source, dict):
+            continue
+        memberships = source.get("collections")
+        if memberships is None:
+            continue  # Transitional: human-reviewed backfill is a separate migration.
+        where = f"data/sources.yml:sources[{index}].collections"
+        if not isinstance(memberships, list) or not all(
+            isinstance(value, str) for value in memberships
+        ):
+            errors.append(f"{where}: expected a list of collection IDs")
+            continue
+        if len(memberships) != len(set(memberships)):
+            errors.append(f"{where}: duplicate collection IDs")
+        for collection_id in memberships:
+            if collection_id not in collection_ids:
+                errors.append(f"{where}: unknown collection ID {collection_id!r}")
+
+
 def validate_source_catalogue(root: Path = ROOT) -> list[str]:
     """Return structural and referential-integrity errors for sources and extractions."""
     source_file = root / "data" / "sources.yml"
@@ -332,6 +395,8 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
     source_entries = sources_data.get("sources")
     if not isinstance(source_entries, list):
         return ["data/sources.yml: expected a sources list"]
+
+    _validate_source_collections(root, source_entries, errors)
 
     source_ids: set[str] = set()
     source_types_by_id: dict[str, str] = {}
