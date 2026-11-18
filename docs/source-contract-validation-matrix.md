@@ -81,3 +81,75 @@ A missing value is not automatically an error. Rules marked conditional apply on
 - The current corpus passes without silently changing source status, confidence, rights or scientific claims.
 - Report-only warnings are reviewed and documented before severity is raised.
 - Full-corpus and synthetic scale measurements are recorded; no scalability claim is based only on schema design.
+
+## As-built contract snapshot — 2026-11-18
+
+**Audited source revision:** `b32663df12166ad0bbffaff7e948a79c551a429c` (`main`).  
+**Implementation:** `site/tools/check_source_catalogue.py`.  
+**Direct regression tests:** `tests/test_source_catalogue_validator.py`.  
+**Purpose:** distinguish rules that the current validator actually enforces from the broader v1 design above. This is a code-and-fixture audit, not a claim that every historical record has been semantically reviewed.
+
+### Current enforcement by record family
+
+| Record family | Field / condition | Current enforced behavior | Direct regression evidence | Not established by this check |
+|---|---|---|---|---|
+| Catalogue envelope | Schema versions for taxonomy, domains, concepts, sources and extraction files | Exact supported versions are required | Existing validator tests and full-catalogue CI | Semantic compatibility of every future schema revision |
+| Source identity | Source `id` | Stable kebab-case syntax and uniqueness | Duplicate source-ID test; other ID behavior is implemented | Identity equivalence across mirrors, editions or aliases |
+| Source classification | `source_type`, `scan_status`, `integration_status` | Values must occur in the taxonomy | Minimal valid source fixture; malformed status fixture | Whether the chosen status truthfully describes the inspected source |
+| Source classification | `classification.primary_theme`, `secondary_themes`, `concept_ids` | Supplied IDs must resolve; secondary themes cannot duplicate or overlap primary | Unknown domain/concept references test | Whether the classification is substantively appropriate |
+| Source tags | `classification.tags` | Supplied tags must be unique and match the five allowed namespaces and kebab-case syntax | Duplicate and malformed source-tag tests | Retrieval usefulness or semantic correctness of a tag |
+| Source inspection | `scan_history` | At least one event; each event must be a mapping with parseable ISO date/date-time, known status, and string-list scope/limitations | Invalid date/status test; empty-history test | Scope completeness, accuracy of the scan summary, or truth of the reported inspection |
+| Source relationships | `related.pages`, `related.concepts` | Supplied page and concept IDs must resolve; `related` must be a mapping | Unknown page/concept references test | Whether a page genuinely uses or is supported by the source |
+| Bibliography and rights | `title`, `creators`, `identifiers`, `canonical_url`, `publisher`, `publication_date`, `updated_date`, `language`, `version`, `revision`, `licence`, `reuse`, `metadata` | No comprehensive field-level validation in the current validator | No direct fixture coverage | URL validity, BCP 47 conformance, chronology, SPDX correctness, reuse permission or rights interpretation |
+| Extraction envelope | `source_id`, `items` | Source reference must resolve; items must be a list | Valid extraction fixture and unknown source reference behavior in implementation | Whether every source ought to have an extraction |
+| Extraction item | `id`, `kind`, `summary` | ID must be unique and prefixed by source ID; kind must be in taxonomy; summary must be non-empty text | Duplicate ID, wrong prefix and valid extraction fixtures | Atomicity or fidelity of the paraphrase |
+| Extraction locator | `locator.type`, `locator.value` | Mapping with truthy type and value; no type-specific grammar and no explicit string-type check | Missing locator field test; corpus inventory in `docs/extraction-locator-inventory.md` | URL resolution, source inspection, precision, or claim support |
+| Evidence | `evidence.confidence` | Evidence must be a mapping and confidence must be a controlled value | Unknown confidence test | Adequacy of evidence, truth of claim, or calibration of confidence |
+| Item classification | `classification` | Optional mapping; supplied primary domain, concept IDs and tags are checked | Extraction tag duplicate test; source-level reference tests cover adjacent logic | Whether item classification should override or inherit source classification in a given case |
+| Item disposition | `disposition` | Optional; if present, must be a taxonomy value | Valid and invalid disposition tests | Requiredness of a disposition or rationale quality |
+| Pedagogical assessment | `pedagogical_assessment` | Optional mapping; each supplied supported dimension requires a known level and non-empty rationale | Valid, invalid-level and empty-rationale tests | Whether assessment is required for a particular contribution; quality of the human judgement |
+| Community provenance | `provenance` | Optional mapping; checks voice, resolvable parent source ID, locator mapping shape and capture date | Valid and invalid provenance tests | Speaker identity, locator type/value quality, authenticity or correctness of the quoted statement |
+| Verification | `verification` | Optional mapping; checks status, sources list shape, and that each reference is a known source ID or begins with HTTP(S) | Valid and invalid verification tests | URL validity/retrieval, independence, self-corroboration, evidence quality or actual claim support |
+| Candidate destinations | `candidate_destinations.pages` | Supplied page IDs must resolve | Implemented; no dedicated focused fixture identified in this batch | Whether the destination is editorially appropriate |
+| Pedagogical model | Required for source types `blog`, `tutorial`, `course`, `book-chapter`; optional for other source types | Structural checks for reconstruction, source-local graph nodes/edges, interpretation, declared/inferred outcomes and prerequisites, route order, strengths/limits and comparison fields | Existing corpus validation; focused positive/negative fixtures are not yet comprehensive | Whether the reconstructed graph, teaching sequence or inferred prerequisite is scientifically/pedagogically correct |
+
+### Important implementation details and boundaries
+
+- The validator currently enforces the *presence* of a non-empty extraction locator `type` and `value`, but it does not require both values to be strings. The full-corpus inventory found 432 mapping locators with non-empty required fields; this is a corpus observation, not a stronger validator guarantee.
+- The locator inventory observed 14 types. The 354 `section` values are heterogeneous; do not impose a universal grammar or make `label` mandatory. Unknown types and extra keys remain report-only.
+- `scan_history` must be a non-empty list, but an event's `inspected_scope` and `limitations` may currently be empty lists. A syntactically valid event does not prove that its stated scope was actually inspected.
+- Source bibliography, language, version and rights fields are represented in canonical records but are not comprehensively validated. Explicit `null` and `unknown` values are legitimate and must not be converted to fabricated metadata.
+- A provenance locator is currently checked only as a mapping, unlike an extraction locator; its `type` and `value` are not required by this code path.
+- Verification references beginning with `http://` or `https://` pass the current syntactic prefix check. The validator does not fetch them or establish that they identify an independent source. A source ID in the list can refer to the parent source itself; independence is not checked.
+- The validator checks graph endpoint identity and route numbering, not semantic validity of source-local relations or truth of reconstructed learning outcomes.
+- The inventory report's timestamp classification is heuristic. It describes observed value shapes and does not validate locator resolution.
+
+### Regression coverage present on the audited revision
+
+The direct test module includes temporary-corpus cases for:
+- minimal source and unknown optional metadata accepted;
+- valid extraction accepted;
+- malformed scan-history date/status and empty scan history rejected;
+- missing locator and unknown evidence confidence rejected;
+- instructional source missing its pedagogical model rejected;
+- duplicate source IDs and extraction-item IDs rejected;
+- extraction item ID with the wrong source prefix rejected;
+- unresolved source domain, concept and page references rejected;
+- duplicate and malformed source tags rejected;
+- valid and invalid item dispositions and pedagogical assessments;
+- duplicate extraction tags;
+- valid and invalid community provenance and verification structures.
+
+This list describes direct fixtures in the test module, not exhaustive coverage of every row in the matrix. In particular, there are not yet focused fixtures for malformed bibliography/rights fields, URL semantics, provenance locator internals, verification URL validity or independence, every pedagogical-model branch, and all conditional/legacy combinations.
+
+### Next bounded work
+
+1. Add this as-built matrix to review and keep it synchronized with validator changes.
+2. Audit the actual source/extraction corpus for the unvalidated bibliography, rights, language and version fields before proposing constraints. Preserve unknowns and distinguish malformed supplied values from absent values.
+3. Add isolated fixtures only for rules whose semantics are clear and whose compatibility has been checked against the corpus. Prefer report-only diagnostics for uncertain historical patterns.
+4. Review scan-summary/history consistency as a report first; do not rewrite append-only inspection history.
+5. Keep locator resolution, source inspection, claim support and independent corroboration as separate evidence questions.
+6. Add focused pedagogical-model fixtures only after checking representative instructional records and distinguishing declared source content from project reconstruction.
+
+No validator policy, canonical source record, taxonomy or CI workflow was changed in this snapshot.
+
