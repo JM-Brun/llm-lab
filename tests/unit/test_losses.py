@@ -76,9 +76,11 @@ def test_extreme_opposite_sign_logits_have_zero_loss_for_maximum_target() -> Non
 
 def test_unrepresentable_extreme_cross_entropy_is_rejected() -> None:
     logits = np.array([[1e308, -1e308]], dtype=np.float64)
-    with np.errstate(over="raise", invalid="raise"):
-        with pytest.raises(ValueError, match="finite float64 range"):
-            cross_entropy_from_logits(logits, np.array([1], dtype=np.int64))
+    with (
+        np.errstate(over="raise", invalid="raise"),
+        pytest.raises(ValueError, match="finite float64 range"),
+    ):
+        cross_entropy_from_logits(logits, np.array([1], dtype=np.int64))
 
 
 @pytest.mark.parametrize(
