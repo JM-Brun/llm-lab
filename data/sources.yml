@@ -1830,10 +1830,18 @@ sources:
         limitations:
           - "The migration reuses the prior source audit; it does not independently re-audit the complete paper."
           - "Reported associations remain scoped to the study's experimental setup."
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "Published Findings of ACL 2024 PDF: experimental setup, English and Turkish tokenizer-support conditions, downstream result tables, Spearman/Pearson correlation tables and limitations"
+          - "Created four source-scoped atomic extraction items and a comparative primary-source review dossier"
+        limitations:
+          - "Training code, tokenizer artifacts, raw data and evaluation scripts were not independently audited or executed."
+          - "The Turkish downstream experiment covers only three tokenizer-support conditions; no independent reproduction was performed."
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies, en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: [token]
-      audit_records: [docs/tokenization-embedding-source-audit.md, docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
+      audit_records: [docs/tokenization-embedding-source-audit.md, docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md, docs/source-reviews/tokenizer-compression-goldman-schmidt-2024.md]
 
   - id: schmidt-tokenization-more-than-compression-2024
     title: "Tokenization Is More Than Compression"
@@ -1869,10 +1877,18 @@ sources:
         limitations:
           - "The migration reuses the prior source audit; it does not independently re-audit the complete paper."
           - "Claims are scoped to the cited experiments and should not be generalized beyond their evaluation settings."
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "Published EMNLP 2024 PDF: three-stage tokenization framework, PathPiece segmentation and vocabulary construction, English experimental setup, CTC/results comparisons, pre-tokenization and initialization analyses, and limitations"
+          - "Created five source-scoped atomic extraction items and a comparative primary-source review dossier"
+        limitations:
+          - "Released model weights, tokenizer vocabularies, training code and evaluation harness were not independently audited or executed."
+          - "All reported experiments use English; no independent reproduction was performed."
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies, en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: [token]
-      audit_records: [docs/tokenization-embedding-source-audit.md, docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
+      audit_records: [docs/tokenization-embedding-source-audit.md, docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md, docs/source-reviews/tokenizer-compression-goldman-schmidt-2024.md]
 
   - id: mike-x-cohen-llm-breakdown-tokenization-2025
     title: "LLM breakdown 1/6: Tokenization (words to integers)"
