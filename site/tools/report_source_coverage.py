@@ -115,11 +115,6 @@ def build_report(root: Path) -> dict[str, Any]:
                         for value in item_classification.get("concept_ids", [])
                         if isinstance(value, str)
                     )
-                destinations = item.get("candidate_destinations")
-                if isinstance(destinations, dict):
-                    pages.update(
-                        value for value in destinations.get("pages", []) if isinstance(value, str)
-                    )
 
         valid_concepts = concept_ids & known_concepts
         for concept_id in valid_concepts:
