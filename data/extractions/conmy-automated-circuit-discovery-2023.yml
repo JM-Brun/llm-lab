@@ -24,8 +24,8 @@ pedagogical_model:
         description: "ACDC iteratively removes candidate computational-graph edges according to activation-patching tests and a threshold."
         locator: "Sections 3-4: ACDC algorithm and experiments"
     edges:
-      - {from: src-task-metric, type: contributes-to, to: src-activation-patching}
-      - {from: src-activation-patching, type: produces, to: src-acdc}
+      - {from: src-task-metric, type: constrains, to: src-activation-patching}
+      - {from: src-acdc, type: applies-to, to: src-activation-patching}
     interpretation: "Source-local reconstruction only; it is not the canonical concept graph, a complete computational graph or an independent reproduction."
   learning_outcomes:
     - {status: inferred, outcome: "Distinguish the source's technical object, method, estimate, intervention and explanatory representation.", basis: "Editorial synthesis of the inspected source scope."}
