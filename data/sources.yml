@@ -5006,10 +5006,19 @@ sources:
         limitations:
           - "Full paper experiments and implementation details were not exhaustively reviewed."
           - "The sparse effectiveness/efficiency trade-off depends on model, index and serving configuration."
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "Published SIGIR 2021 paper: SPLADE vocabulary projection and log-saturation, ranking and sparsity objectives, MS MARCO/TREC DL 2019 first-stage evaluation."
+          - "Created claim-level extraction: data/extractions/formal-piwowarski-clinchant-2021-splade.yml."
+          - "Created primary-source review dossier: docs/source-reviews/splade-2021-primary-audit.md."
+        limitations:
+          - "Code, checkpoints, corpus and index not independently audited; efficiency results remain bounded to the paper's custom implementation and hardware."
+          - "No independent reproduction; figures and other third-party assets were not copied."
     related:
       pages: [fr/rag-memory-boundaries, en/rag-memory-boundaries, fr/cosine-similarity, en/cosine-similarity, fr/document-retrieval, en/document-retrieval]
       concepts: [retrieval-augmented-generation]
-      audit_records: [docs/source-reviews/dailydose-main-path-2026-11.md]
+      audit_records: [[docs/source-reviews/dailydose-main-path-2026-11.md, docs/source-reviews/splade-2021-primary-audit.md]
   - id: thakur-etal-2021-beir
     title: "BEIR: A Heterogenous Benchmark for Zero-shot Evaluation of Information Retrieval Models"
     creators: ["Nandan Thakur", "Nils Reimers", "Andreas Rücklé", "Abhishek Srivastava", "Iryna Gurevych"]
@@ -5043,10 +5052,19 @@ sources:
         limitations:
           - "Per-dataset result tables and all benchmark settings were not re-audited in this pass."
           - "Aggregate findings are not universal rankings for every domain or production system."
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "Published NeurIPS 2021 paper: heterogeneous benchmark composition, task families, cross-family retrieval results and lexical relevance-judgement bias analysis."
+          - "Created claim-level extraction: data/extractions/thakur-etal-2021-beir.yml."
+          - "Created primary-source review dossier: docs/source-reviews/beir-2021-primary-audit.md."
+        limitations:
+          - "No benchmark rerun; model recipes differ and annotation bias limits causal interpretation; 18 zero-shot datasets distinguished from MS MARCO reference/training row."
+          - "No independent reproduction; figures and other third-party assets were not copied."
     related:
       pages: [fr/rag-memory-boundaries, en/rag-memory-boundaries, fr/cosine-similarity, en/cosine-similarity, fr/document-retrieval, en/document-retrieval]
       concepts: [retrieval-augmented-generation]
-      audit_records: [docs/source-reviews/dailydose-main-path-2026-11.md]
+      audit_records: [[docs/source-reviews/dailydose-main-path-2026-11.md, docs/source-reviews/beir-2021-primary-audit.md]
 
 
   - id: dailydose-visual-guide-bi-cross-colbert-2025
@@ -5123,10 +5141,19 @@ sources:
           - "Reported nDCG@5 and latency values are tied to ViDoRe, the paper's hardware and protocol; not generalized."
           - "Original paper figures are linked, not reproduced; reuse rights were not independently established."
           - "The paper's ViDoRe training/evaluation overlap differs by task; interpret its zero-shot and in-domain claims per dataset."
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "Published ICLR 2025 paper: multi-vector page retrieval architecture, ViDoRe construction, Table 2 results and efficiency methodology."
+          - "Created claim-level extraction: data/extractions/faysse-etal-2025-colpali.yml."
+          - "Created primary-source review dossier: docs/source-reviews/colpali-2025-primary-audit.md."
+        limitations:
+          - "No code/checkpoint/benchmark reproduction; storage and latency appendix figures require exact hardware and phase verification."
+          - "No independent reproduction; figures and other third-party assets were not copied."
     related:
       pages: [fr/rag-memory-boundaries, en/rag-memory-boundaries, fr/document-retrieval, en/document-retrieval]
       concepts: [retrieval-augmented-generation, contextualized-representation]
-      audit_records: [docs/source-reviews/dailydose-main-path-2026-11.md]
+      audit_records: [[docs/source-reviews/dailydose-main-path-2026-11.md, docs/source-reviews/colpali-2025-primary-audit.md]
 
   - id: jothi-moorthy-llm-processing-linkedin
     title: "When you type a prompt, the LLM sees numbers, not words"
