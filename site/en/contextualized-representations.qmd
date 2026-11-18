@@ -84,16 +84,11 @@ This is an original, simplified illustration, not a reproduction of Rushang Chau
 
 ## Start with what stays the same
 
-Suppose the visible word `bank` is represented by the same token ID in two sentences:
+In the question “What have the Romans ever done for us?” and in a reply such as “The Romans built roads”, the visible word `Romans` may be represented by the same token ID. Under that explicit assumption, both occurrences retrieve the same initial embedding:
 
-- “The river bank eroded.”
-- “The financial bank collapsed.”
+$e_{\text{Romans}} = E[\text{ID}_{\text{Romans}}]$
 
-Under that explicit assumption, both occurrences retrieve the same initial embedding:
-
-$e_{\text{bank}} = E[\text{ID}_{\text{bank}}]$
-
-The embedding lookup is a table access. It does not inspect the surrounding words, infer which sense is intended, or produce a sentence-specific vector.
+The embedding lookup is a table access. It does not inspect the surrounding words or produce a sentence-specific vector. The contextualized states can nevertheless differ because each occurrence is processed with a different surrounding sequence.
 
 One qualification: a visible word is not guaranteed to correspond to one token. A tokenizer may split it into several tokens. This example isolates the contextualization principle by assuming one shared token ID.
 
