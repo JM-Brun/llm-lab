@@ -84,7 +84,7 @@ Cette architecture est particulièrement utile pour enseigner les différences e
 - Conserver tiktoken comme implémentation de production et `_educational.py` comme démonstration du mécanisme BPE ; ne pas fusionner ces deux rôles.
 - Conserver minbpe comme implémentation pédagogique complémentaire, particulièrement utile pour comparer Basic, Regex et la reconstruction d'un tokenizer pré-entraîné.
 - Ne pas créer d'extraction dédiée : les pages et synthèses existantes couvrent déjà les distinctions générales. Cette inspection ajoute surtout une comparaison d'implémentations et des localisateurs vérifiables, pas un ensemble de claims scientifiques indépendants.
-- Graphe canonique : aucun nouveau concept ni aucune relation scientifique nouvelle ne sont justifiés. Les liens existants suffisent : `token` → pages de tokenisation ; `token-embedding` → pages d'embeddings ; le graphe computationnel relie les `token-ids` à l'opération `embedding-lookup` puis aux `token-embeddings`. Les ressources techniques restent des preuves documentaires attachées aux pages et concepts existants, pas des nœuds conceptuels.
+- Graphe canonique : aucun nouveau concept ni aucune relation scientifique nouvelle ne sont justifiés. Les liens existants suffisent : `token` → pages de tokenisation ; `token-embedding` → pages d'embeddings ; le graphe computationnel relie `token-ids` → `token-context` → l'opération `embedding-lookup` → `token-embeddings`. Les ressources techniques restent des preuves documentaires attachées aux pages et concepts existants, pas des nœuds conceptuels.
 
 ## 6. Limites de l'audit
 
