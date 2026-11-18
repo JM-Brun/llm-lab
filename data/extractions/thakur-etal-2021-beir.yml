@@ -1,0 +1,51 @@
+schema_version: 1
+source_id: thakur-etal-2021-beir
+scan:
+  accessed_at: "2026-11-18"
+  retrieval_method: direct-pdf
+  author_text: {status: partial, coverage: "NeurIPS Datasets and Benchmarks 2021 paper: benchmark motivation, task composition, model families, comparative results and lexical-bias discussion.", notes: ["Focused primary-source audit; no benchmark rerun."]}
+  figures_media: {status: partial, coverage: "Figure 1, Table 1 and comparative results table inspected.", notes: ["No visual asset copied."]}
+  code_data: {status: not-inspected, coverage: null, notes: ["BEIR repository, datasets, checkpoints and evaluation scripts not independently executed or audited."]}
+  comments: {status: not-inspected, coverage: null, notes: []}
+  linked_resources: {status: partial, coverage: "Official NeurIPS proceedings record and published PDF.", notes: ["Repository and dataset contents not audited."]}
+  metadata: {status: partial, coverage: "NeurIPS Datasets and Benchmarks 2021.", notes: ["18 zero-shot evaluation datasets must be distinguished from MS MARCO training/reference rows in broader comparisons."]}
+  rights: {status: unknown, coverage: null, notes: ["No figure reuse permission established; paraphrases and locators only."]}
+  unresolved_questions:
+    - "Reproduction requires pinned dataset and judgement versions, checkpoints, training data and evaluation code."
+    - "Different training recipes and annotation bias limit causal interpretation of architecture comparisons."
+items:
+  - id: thakur-etal-2021-beir:heterogeneous-benchmark-composition
+    kind: benchmark
+    summary: "BEIR is a zero-shot retrieval benchmark spanning nine task families and heterogeneous domains, query/document lengths and corpus sizes. The paper describes 18 zero-shot evaluation datasets; MS MARCO also appears as a training/reference dataset in broader comparisons and should not be silently counted among those 18."
+    locator: {type: section, value: "§1, Figure 1, Table 1 and §4, pp. 1-3, 7-8", label: "Benchmark scope and dataset composition"}
+    evidence: {kind: benchmark-description, confidence: established, scope: "Dataset suite and evaluation framing in the NeurIPS 2021 paper.", assumptions: [], limitations: ["Selected benchmark, not exhaustive of retrieval tasks.", "Dataset sizes and relevance-judgement formats vary."]}
+    technical_assessment: {status: correct, rationale: "The paper enumerates task families and distinguishes the zero-shot suite from training/reference settings.", corroborating_sources: []}
+    classification: {primary_theme: inference-efficiency, tags: [topic:information-retrieval, topic:benchmark, method:zero-shot-evaluation], concept_ids: [retrieval-augmented-generation]}
+    candidate_destinations: {pages: [en/cosine-similarity, fr/cosine-similarity, en/document-retrieval, fr/document-retrieval], concepts: [retrieval-augmented-generation], route_ids: []}
+    disposition: integrate-by-reference
+    disposition_rationale: "Supports cross-domain evaluation and cautious generalization; no new concept is needed."
+  - id: thakur-etal-2021-beir:cross-family-results
+    kind: result
+    summary: "Across BEIR tasks, no retrieval approach consistently outperforms all others. BM25 remains a strong zero-shot baseline; reranking and late interaction perform strongly on average at higher computational cost, with substantial dataset-level variation."
+    locator: {type: section, value: "§1 and §4, comparative results table, pp. 1-2 and 7-9", label: "Cross-dataset effectiveness and efficiency"}
+    evidence: {kind: reported-benchmark-result, confidence: well-supported, scope: "Models, datasets, training recipes and evaluation protocol in BEIR 2021.", assumptions: [], limitations: ["Average rankings depend on selected systems and datasets.", "Training data and hard-negative strategies differ across systems."]}
+    technical_assessment: {status: qualified, rationale: "The paper explicitly reports no consistent winner; this is not a causal architecture comparison.", corroborating_sources: []}
+    classification: {primary_theme: inference-efficiency, tags: [topic:information-retrieval, topic:benchmark, method:zero-shot-evaluation], concept_ids: [retrieval-augmented-generation]}
+    candidate_destinations: {pages: [en/cosine-similarity, fr/cosine-similarity, en/document-retrieval, fr/document-retrieval], concepts: [retrieval-augmented-generation], route_ids: []}
+    disposition: integrate-by-reference
+    disposition_rationale: "Keep the comparison benchmark-scoped rather than universal."
+  - id: thakur-etal-2021-beir:lexical-judgement-bias
+    kind: limitation
+    summary: "The authors identify possible lexical bias in relevance judgements and analyze TREC-COVID: adding missing judgements improves non-lexical systems, showing that incomplete labels can distort comparisons."
+    locator: {type: section, value: "§1, pp. 2-3; TREC-COVID relevance-judgement analysis", label: "Lexical bias and missing judgements"}
+    evidence: {kind: reported-analysis, confidence: well-supported, scope: "The authors' targeted TREC-COVID analysis.", assumptions: [], limitations: ["Do not generalize the measured effect quantitatively to every BEIR dataset.", "This is not a full independent relabelling of the benchmark."]}
+    technical_assessment: {status: qualified, rationale: "The authors explicitly describe potential bias and a targeted intervention.", corroborating_sources: []}
+    classification: {primary_theme: inference-efficiency, tags: [topic:information-retrieval, topic:benchmark-limitations, method:zero-shot-evaluation], concept_ids: [retrieval-augmented-generation]}
+    candidate_destinations: {pages: [en/cosine-similarity, fr/cosine-similarity, en/document-retrieval, fr/document-retrieval], concepts: [], route_ids: []}
+    disposition: integrate-by-reference
+    disposition_rationale: "Adds an essential caveat to benchmark interpretation without a new concept."
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "BEIR supports heterogeneous zero-shot evaluation and exposes annotation/protocol limitations. It is not a causal architecture experiment or universal leaderboard."
