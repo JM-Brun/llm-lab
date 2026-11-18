@@ -170,9 +170,9 @@ Le parallélisme ne supprime pas les dépendances algorithmiques : il distribue 
 
 Pour un cache clés/valeurs standard, non quantifié, une estimation de la mémoire nécessaire est :
 
-$
+$$
 M_{KV} \approx 2 \, L \, B \, T \, n_{KV} \, d_{head} \, s,
-$
+$$
 
 où $L$ est le nombre de couches, $B$ le nombre de séquences dans le batch, $T$ le nombre de positions conservées, $n_{KV}$ le nombre de têtes clés/valeurs, $d_{head}$ leur dimension et $s$ le nombre d'octets par élément (par exemple 2 pour un format 16 bits). Le facteur 2 compte les clés et les valeurs. Cette approximation suppose des longueurs identiques et ignore les surcoûts d'allocation ; pour un batch de longueurs différentes, il faut sommer les positions réellement mises en cache. La quantification change le nombre d'octets par élément. Avec Grouped-Query Attention, $n_{KV}$ est inférieur au nombre de têtes de requête, ce qui réduit le cache.
 
