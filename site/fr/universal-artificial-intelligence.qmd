@@ -240,12 +240,12 @@ Un Transformer entraîné par cross-entropy **n'implémente pas** l'induction de
 7. Les égalités exactes entre valeurs d'actions et la définition itérative de la valeur à horizon infini actualisé ; ε-optimalité évite de départager exactement les égalités, tandis qu'une fonction de valeur récursive traite l'obstacle de l'horizon infini.
 :::
 
-- [Friston (2010) : The free-energy principle, a unified brain theory?](https://doi.org/10.1038/nrn2787)
 ## Pour approfondir
 
 - [Compression et LLM](compression-revision.qmd)
 - [Entropie](entropy.qmd) · [Entropie croisée](cross-entropy.qmd)
 - [Complexité de calcul et parallélisme](llm-computational-complexity.qmd)
+- [Friston (2010) : The free-energy principle, a unified brain theory?](https://doi.org/10.1038/nrn2787)
 - [Hutter (2007) : Universal Algorithmic Intelligence](https://arxiv.org/abs/cs/0701125)
 - [Leike & Hutter (2015) : On the Computability of AIXI](https://arxiv.org/abs/1510.05572)
 - [Hutter, Quarel & Catt (2024) : An Introduction to Universal Artificial Intelligence](https://hutter1.net/publ/uaibook2.pdf)

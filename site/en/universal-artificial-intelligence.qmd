@@ -242,12 +242,12 @@ A Transformer trained with cross-entropy does **not** implement Solomonoff induc
 7. Exact ties between actions and the iterative discounted infinite-horizon value definition; ε-optimality avoids exact tie resolution, while a recursive value function addresses the infinite-horizon obstacle.
 :::
 
-- [Friston (2010): The free-energy principle, a unified brain theory?](https://doi.org/10.1038/nrn2787)
 ## Go deeper
 
 - [Compression and LLMs](compression-revision.qmd)
 - [Entropy](entropy.qmd) · [Cross-entropy](cross-entropy.qmd)
 - [Computational complexity and parallelism](llm-computational-complexity.qmd)
+- [Friston (2010): The free-energy principle, a unified brain theory?](https://doi.org/10.1038/nrn2787)
 - [Hutter (2007): Universal Algorithmic Intelligence](https://arxiv.org/abs/cs/0701125)
 - [Leike & Hutter (2015): On the Computability of AIXI](https://arxiv.org/abs/1510.05572)
 - [Hutter, Quarel & Catt (2024): An Introduction to Universal Artificial Intelligence](https://hutter1.net/publ/uaibook2.pdf)
