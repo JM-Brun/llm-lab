@@ -1,0 +1,169 @@
+schema_version: 1
+source_id: schmidt-tokenization-more-than-compression-2024
+scan:
+  accessed_at: "2026-11-18"
+  retrieval_method: direct-pdf
+  author_text:
+    status: partial
+    coverage: "Published EMNLP 2024 PDF: tokenization-stage definitions, PathPiece segmentation and vocabulary construction, experimental setup, principal results, conclusion and limitations."
+    notes: ["Focused primary-source audit; no independent reproduction."]
+  figures_media:
+    status: partial
+    coverage: "Main architecture/segmentation figures and selected result tables/plots inspected in the PDF."
+    notes: ["No figure or table asset was copied."]
+  code_data:
+    status: not-inspected
+    coverage: null
+    notes: ["Public model/tokenizer resources were not downloaded, executed or independently audited."]
+  comments: {status: not-inspected, coverage: null, notes: []}
+  linked_resources:
+    status: partial
+    coverage: "Primary ACL Anthology proceedings page and PDF; linked project repositories identified in the paper."
+    notes: ["Repository contents and all outbound references were not exhaustively inspected."]
+  metadata:
+    status: partial
+    coverage: "EMNLP 2024, pp. 678–702; DOI 10.18653/v1/2024.emnlp-main.40."
+    notes: []
+  rights:
+    status: unknown
+    coverage: null
+    notes: ["No asset reuse permission was established; this record contains paraphrases only."]
+  unresolved_questions:
+    - "Independent reproduction requires auditing the released tokenizer vocabularies, model weights, training code and evaluation harness."
+    - "The all-English experimental corpus limits conclusions about languages without whitespace-delimited words."
+items:
+  - id: schmidt-tokenization-more-than-compression-2024:three-stage-tokenization-model
+    kind: definition
+    summary: "The paper separates tokenization into pre-tokenization constraints, vocabulary construction, and segmentation of a document using the resulting vocabulary; corpus token count is the sum of segmented token counts over documents."
+    locator: {type: section, value: "§1, pp. 678–679", label: "Three-stage tokenization definition"}
+    evidence:
+      kind: explicit-method-definition
+      confidence: established
+      scope: "The terminology and experimental framework defined by this paper."
+      assumptions: []
+      limitations: ["This is the authors' analytical decomposition; it should not be mistaken for a mandatory implementation pipeline in every tokenizer."]
+    technical_assessment:
+      status: correct
+      rationale: "The three stages and corpus-token-count measure are explicitly defined."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:tokenizer-evaluation, topic:pre-tokenization, topic:vocabulary]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "The decomposition provides a useful framework for comparing design choices in the existing advanced lesson."
+  - id: schmidt-tokenization-more-than-compression-2024:pathpiece-minimum-token-segmentation
+    kind: mechanism
+    summary: "PathPiece finds a minimum-token segmentation for a fixed vocabulary by shortest-path dynamic programming over byte positions; its vocabulary-construction procedure then heuristically removes tokens to reduce corpus token count."
+    locator: {type: section, value: "§3.1–3.2, pp. 680–681; Algorithm 1", label: "PathPiece segmentation and vocabulary construction"}
+    evidence:
+      kind: algorithm-description
+      confidence: established
+      scope: "The PathPiece method proposed in this paper, with a maximum token width of 16 bytes in the described segmentation algorithm."
+      assumptions: []
+      limitations:
+        - "Minimum token count is conditional on the supplied vocabulary and the algorithm's byte-width constraint."
+        - "The vocabulary-construction stage is heuristic and distinct from the exact shortest-path segmentation step."
+    technical_assessment:
+      status: correct
+      rationale: "The paper distinguishes shortest-path segmentation from the top-down vocabulary construction heuristic."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [method:pathpiece, method:dynamic-programming, topic:compression]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "PathPiece is the paper's experimental instrument for testing the minimum-token hypothesis, not a required addition to the essential tokenizer implementation route."
+  - id: schmidt-tokenization-more-than-compression-2024:corpus-token-count-not-sufficient
+    kind: result
+    summary: "Across the reported experimental settings, the authors find no clear relationship between corpus token count and downstream accuracy; changing tokenizer stages can change accuracy even when corpus token count alone does not explain the result."
+    locator: {type: section, value: "§5.3, pp. 683–684; Figure 3 and Table 2; §7, p. 685", label: "CTC versus downstream accuracy"}
+    evidence:
+      kind: reported-experimental-result
+      confidence: well-supported
+      scope: "The paper's English Pile/MiniPile experiments, evaluated tokenizer variants, model sizes and ten multiple-choice tasks."
+      assumptions: []
+      limitations:
+        - "The authors note confounding factors including pre-tokenization, vocabulary initialization and differing token counts/computational opportunities."
+        - "The task suite is finite and the results are not a universal ranking of tokenizers."
+        - "The paper reports a Pearson correlation of 0.241 between CTC and average accuracy in the summarized comparison, not evidence of a strong general relationship."
+    technical_assessment:
+      status: qualified
+      rationale: "The results challenge a simple compression-only explanation but do not prove that compression is never useful."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:compression, topic:downstream-performance, method:correlation]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "This is a counterpoint to Goldman et al.; retain it as protocol-specific evidence rather than replacing one universal claim with another."
+  - id: schmidt-tokenization-more-than-compression-2024:pretokenization-and-vocabulary-findings
+    kind: result
+    summary: "Within the tested PathPiece configurations, pre-tokenization choices materially affect downstream accuracy, and BPE-initialized vocabularies outperform the tested unigram and n-gram initializations for the specified top-down construction comparison."
+    locator: {type: section, value: "§6.1–6.3, pp. 684–685; Figures 4–5", label: "Pre-tokenization and vocabulary initialization"}
+    evidence:
+      kind: reported-experimental-result
+      confidence: well-supported
+      scope: "The paper's PathPiece/SaGe experiments and English downstream task suite."
+      assumptions: []
+      limitations:
+        - "The authors explicitly note that the pre-tokenization result may be specific to PathPiece."
+        - "The finding about whitespace-based pre-tokenization does not transfer directly to languages without space-delimited words."
+        - "BPE initialization is a result for the tested top-down vocabulary-construction methods, not a universal requirement for all tokenizers."
+    technical_assessment:
+      status: qualified
+      rationale: "The reported comparisons support local design findings, with explicit method and language boundaries."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:pre-tokenization, topic:vocabulary, topic:downstream-performance]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "The advanced lesson can use these results to explain why tokenizer quality depends on multiple pipeline decisions."
+  - id: schmidt-tokenization-more-than-compression-2024:english-task-model-limitations
+    kind: limitation
+    summary: "The experiments use English text and a finite set of downstream tasks/models; the authors caution that results may not generalize to other domains, languages or task selections."
+    locator: {type: section, value: "Limitations, pp. 685–686", label: "Authors' limitations"}
+    evidence:
+      kind: author-stated-limitation
+      confidence: established
+      scope: "The paper's stated external-validity limitations."
+      assumptions: []
+      limitations:
+        - "The authors specifically caution that whitespace pre-tokenization findings do not apply to languages without space-delimited words."
+        - "The authors note potential noise and sensitivity to downstream task selection."
+    technical_assessment:
+      status: correct
+      rationale: "The limitations are explicitly stated by the authors."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:experimental-limitations, topic:multilingual-tokenization]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "Keep the language, model and task scope adjacent to the paper's negative result."
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "The paper challenges the hypothesis that fewer tokens alone improve downstream performance. Its main contribution is a controlled analysis of pre-tokenization, vocabulary construction and segmentation; preserve the English-only and task/model limits, and treat its results as a counterpoint to Goldman et al. rather than a universal refutation."

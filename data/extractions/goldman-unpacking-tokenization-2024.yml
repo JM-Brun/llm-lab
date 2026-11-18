@@ -1,0 +1,144 @@
+schema_version: 1
+source_id: goldman-unpacking-tokenization-2024
+scan:
+  accessed_at: "2026-11-18"
+  retrieval_method: direct-pdf
+  author_text:
+    status: partial
+    coverage: "Published Findings of ACL 2024 PDF: abstract, intrinsic/extrinsic evaluation framing, English and Turkish protocols, result tables, correlation analysis, conclusion and limitations."
+    notes: ["Focused primary-source audit; no independent reproduction."]
+  figures_media:
+    status: partial
+    coverage: "Main tokenizer-support figure and result tables inspected in the PDF."
+    notes: ["No figure or table asset was copied."]
+  code_data:
+    status: not-inspected
+    coverage: null
+    notes: ["Training code, tokenizer artifacts and raw data were not independently audited or executed."]
+  comments: {status: not-inspected, coverage: null, notes: []}
+  linked_resources:
+    status: partial
+    coverage: "Primary ACL Anthology proceedings page and PDF."
+    notes: ["Supplementary resources and all outbound references were not exhaustively inspected."]
+  metadata:
+    status: partial
+    coverage: "Findings of ACL 2024, pp. 2274–2286; DOI 10.18653/v1/2024.findings-acl.134."
+    notes: []
+  rights:
+    status: unknown
+    coverage: null
+    notes: ["No asset reuse permission was established; this record contains paraphrases only."]
+  unresolved_questions:
+    - "Independent reproduction would require the original training code, tokenizer artifacts, datasets and evaluation scripts."
+    - "The limited Turkish subset does not establish generalization across typologically diverse languages."
+items:
+  - id: goldman-unpacking-tokenization-2024:controlled-support-intervention
+    kind: experiment
+    summary: "The authors vary the amount of tokenizer-training support documents for BPE (from one million documents down to one document and a character baseline), train decoder-only models at 1B, 128M and 10M parameters, and evaluate four English downstream tasks."
+    locator: {type: section, value: "§4.1, pp. 2277–2278; Table 1 and Table 2", label: "English experimental design and results"}
+    evidence:
+      kind: experimental-protocol
+      confidence: established
+      scope: "English C4 training split, six tokenizer-support conditions, three model sizes and four downstream tasks."
+      assumptions: []
+      limitations:
+        - "Tokenizer support is manipulated through the amount of supporting documents; this does not isolate every possible tokenizer design choice."
+        - "Model sizes and task suite are specific to this experiment."
+    technical_assessment:
+      status: correct
+      rationale: "The paper explicitly reports the support conditions, model sizes, data split and tasks."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:tokenizer-evaluation, method:controlled-comparison, topic:downstream-performance]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "A concrete controlled protocol supports the existing advanced evaluation synthesis; it does not justify a new concept or route step."
+  - id: goldman-unpacking-tokenization-2024:compression-performance-correlation
+    kind: result
+    summary: "Within the evaluated support conditions, better compression generally accompanies better downstream performance; the reported association is stronger for generation than classification and is more pronounced in smaller models."
+    locator: {type: section, value: "§5.1–5.3, pp. 2278–2279; Tables 1–4", label: "Compression and downstream results"}
+    evidence:
+      kind: reported-experimental-result
+      confidence: well-supported
+      scope: "The English and Turkish experiments, their tokenizer-support conditions, model sizes and selected downstream tasks."
+      assumptions: []
+      limitations:
+        - "The English rank-correlation table contains only six tokenizer-support conditions per task/model setting."
+        - "For the 1B English model, the classification-task Spearman correlations are not statistically significant."
+        - "The Turkish extrinsic evaluation uses only three tokenizer conditions because of compute cost."
+        - "Correlation within this intervention is not proof that minimizing token count universally improves model quality."
+    technical_assessment:
+      status: qualified
+      rationale: "The tables support a protocol-specific association, not a universal intrinsic quality metric."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:compression, topic:downstream-performance, method:correlation]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Retain the positive result alongside the study's sample-size and language limits."
+  - id: goldman-unpacking-tokenization-2024:turkish-replication-boundary
+    kind: limitation
+    summary: "The Turkish extension repeats intrinsic evaluation across six support conditions but trains downstream models for only three conditions (1M-DOC, 10-DOC and CHAR), over XNLI, XL-Sum and Turkish question generation."
+    locator: {type: section, value: "§4.2, p. 2278; §5, pp. 2278–2280", label: "Turkish experimental subset"}
+    evidence:
+      kind: experimental-protocol-and-limitation
+      confidence: established
+      scope: "The Turkish subset of the study."
+      assumptions: []
+      limitations:
+        - "The authors explicitly cite pretraining and fine-tuning cost as the reason for the reduced Turkish experiment."
+        - "The full English protocol was not replicated for Turkish or for additional languages."
+    technical_assessment:
+      status: correct
+      rationale: "The paper clearly distinguishes the six intrinsic conditions from the three downstream conditions."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:multilingual-tokenization, topic:experimental-limitations]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The bilingual lesson already cautions against generalizing multilingual results beyond the studied languages and protocols."
+  - id: goldman-unpacking-tokenization-2024:resource-and-generalization-limit
+    kind: limitation
+    summary: "The authors identify the compute cost of repeating large-model pretraining and the small number of non-English experiments as principal limitations, and call for more typologically diverse language studies."
+    locator: {type: section, value: "§8, p. 2282", label: "Authors' limitations"}
+    evidence:
+      kind: author-stated-limitation
+      confidence: established
+      scope: "The paper's own account of the study's resource and language coverage."
+      assumptions: []
+      limitations:
+        - "This records the authors' stated limitations; it is not an independent audit of all possible confounders."
+    technical_assessment:
+      status: correct
+      rationale: "The limitation is explicitly acknowledged by the authors."
+      corroborating_sources: []
+    classification:
+      primary_theme: text-tokenization
+      tags: [topic:experimental-limitations, topic:multilingual-tokenization]
+      concept_ids: [token]
+    candidate_destinations:
+      pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Keep the resource and language limits adjacent to the correlation claim."
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "The paper supplies protocol-specific evidence that compression correlates with downstream performance under a controlled variation in BPE support. Preserve the positive result and its small-condition, compute and language limits; do not promote compression to a universal tokenizer-quality KPI."
