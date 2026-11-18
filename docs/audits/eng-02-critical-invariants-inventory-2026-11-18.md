@@ -1,6 +1,6 @@
 # ENG-02 — Inventaire des invariants critiques GPT
 
-**Version :** 0.1 — 2026-11-18  
+**Version :** 0.2 — 2026-11-18  
 **Référence inspectée :** `71f87f8d633e1a7a4fdcf1ac82b29bda181b307d`  
 **Statut :** périmètre de dix domaines approuvé ; inventaire candidat ; dénominateur non approuvé ; ENG-02 = **not measured**.
 
@@ -10,9 +10,9 @@ L'inventaire transforme le périmètre approuvé en propriétés comportementale
 
 Une propriété est comptée une seule fois, même si plusieurs tests l'étayent. Deux propriétés sont séparées lorsqu'une mutation plausible peut en casser une sans casser l'autre. Les validations homogènes sont regroupées ; elles ne sont pas comptées une fois par valeur invalide.
 
-Le tableau contient **48 invariants candidats**. Ce nombre est un inventaire de travail, pas le dénominateur officiel : regroupements, exclusions et criticité doivent être relus et approuvés. Les lignes « partiel » restent au dénominateur proposé, mais ne sont pas réputées couvertes au numérateur.
+Le tableau contient **48 lignes de regroupement initiales**, et non 48 invariants indépendants démontrés. La revue de granularité a identifié plusieurs lignes qui agrègent des propriétés séparables par mutation. Le nombre 48 est donc retiré comme proposition de dénominateur ; il ne doit pas être utilisé pour calculer ENG-02. Les lignes « partiel » ne peuvent pas être comptées au numérateur strict.
 
-## 2. Inventaire candidat (48)
+## 2. Inventaire initial — 48 lignes regroupées (version à décomposer)
 
 Les statuts sont issus d'une lecture statique des sources et tests. « Protégé » signifie qu'une assertion pertinente a été repérée ; cela ne prouve pas sa sensibilité à une mutation.
 
@@ -97,3 +97,46 @@ Cette mesure est plus exigeante que la simple présence d'un test. Elle ne confo
 5. Faire la campagne de mutations manuelles prévue, puis étendre uniquement aux invariants où une mutation plausible et discriminante existe.
 
 **Décision conservée :** les dix domaines sont approuvés par le mainteneur. Le nombre de 48 est proposé, pas approuvé. ENG-02 reste **not measured** jusqu'à approbation de l'inventaire et preuves de sensibilité suffisantes.
+
+
+## 6. Revue de granularité — 2026-11-18
+
+La revue méthodologique du 18 novembre conclut que la méthode générale est pertinente, mais que les **48 lignes ne constituent pas encore des unités de comptage suffisamment indépendantes**. Le dénominateur de 48 est retiré. Il ne faut ni le figer ni chercher à préserver ce nombre.
+
+### Décompositions requises
+
+| Ligne initiale | Propriétés à distinguer | Motif |
+|---|---|---|
+| ATT-02 | Normalisation/axe du softmax ; invariance par translation des logits | Deux propriétés mathématiques distinctes |
+| ATT-03 | Effet de la température sur la concentration ; validation du paramètre température | Comportement numérique et contrat d'entrée indépendants |
+| ATT-04 | Stabilité numérique des extrêmes ; validation des logits/scores/masques et lignes entièrement masquées | Stabilité et rejet d'entrées sont des contrats distincts |
+| ATT-05 | Formule et mise à l'échelle des scores ; respect du masque ; somme pondérée ; contrat de formes | Comportements pouvant être rompus séparément |
+| LOSS-05 | Validation logits/cibles ; absence de mutation des entrées | Contrat d'entrée et effet de bord indépendants |
+| OPS-05 | Formes/biais de l'initialisation ; reproductibilité RNG ; échelle/distribution statistique | Contrats indépendants |
+| GPT-02 | Rang/type ; dimensions vides ; longueur de contexte ; bornes des token IDs | Classes de validation à séparer si les mutations sont indépendantes |
+| TRAIN-03 | Séquences trop courtes ; type/valeur de context_length ; type/valeur de stride | Préconditions et frontières de type distinctes |
+| FILTER-04 | Validation top-k ; validation top-p ; validation des distributions ; non-mutation | Contrats non interchangeables |
+| GEN-05 | Validation du nombre de tokens ; validation des paramètres de sampling ; validation même en greedy ; max_new_tokens=0 | Chemins de validation et comportement fonctionnel distincts |
+| EMB-05 | Définition du cosinus ; exclusion des normes nulles ; stabilité aux amplitudes extrêmes ; type de k | Propriétés mathématiques, numériques et API distinctes |
+| WEIGHT-06 | Copie indépendante des tenseurs ; validation avant assignation ; atomicité de l'état du modèle | Une copie correcte ne prouve pas l'atomicité transactionnelle |
+
+Cette liste fixe les **axes de décomposition**, pas un nouveau décompte final. Certaines lignes initiales non citées peuvent encore nécessiter une séparation après inspection de l'implémentation et des assertions. À l'inverse, deux assertions qui vérifient la même propriété ne doivent pas créer deux unités.
+
+### Règle de révision du dénominateur
+
+Pour chaque unité révisée, documenter :
+1. l'énoncé atomique de la propriété ;
+2. la frontière du contrat et les exclusions ;
+3. une mutation plausible qui la viole sans nécessairement violer les unités voisines, ou une justification explicite de non-mutabilité ;
+4. le chemin du code, le test et l'assertion discriminante ;
+5. l'état de preuve (non audité, assertion repérée, sensibilité démontrée).
+
+Séparer aussi les **invariants fonctionnels/mathématiques** des **contrats d'API et effets de bord** dans le tableau, puis demander une décision explicite sur leur inclusion et leur poids. La pondération uniforme reste une hypothèse, pas une décision.
+
+### Décision
+
+- Périmètre de dix domaines : approuvé antérieurement.
+- Inventaire de 48 lignes : index de départ utile, mais **non approuvé et retiré comme dénominateur**.
+- Nouveau dénominateur : non établi ; ne pas publier de pourcentage.
+- ENG-02 : **not measured**.
+- Mutations manuelles : toujours non exécutées ; la revue statique ne les remplace.
