@@ -87,3 +87,14 @@ def test_num_parameters_matches_configuration_formula() -> None:
     )
 
     assert model.num_parameters() == expected
+
+
+def test_batch_items_are_independent() -> None:
+    model = GPT(_small_config())
+    first = np.array([[1, 2, 3]], dtype=np.int64)
+    second = np.array([[4, 5, 6]], dtype=np.int64)
+
+    separate_first = model.forward(first)
+    together = model.forward(np.concatenate((first, second), axis=0))
+
+    np.testing.assert_array_equal(together[0], separate_first[0])
