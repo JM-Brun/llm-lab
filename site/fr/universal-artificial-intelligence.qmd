@@ -114,6 +114,18 @@ où $h$ est l'historique d'interaction, $\xi$ le mélange universel sur les semi
 
 AIXI n'est ni un compresseur sans perte, ni un modèle de langage classique, ni une architecture neuronale pratique. Son optimalité est relative à une classe formelle d'environnements, une définition de la récompense, des hypothèses d'horizon/actualisation et une machine universelle de référence.
 
+::: {.callout-note title="Cadre voisin : principe de l’énergie libre et inférence active"}
+AIXI n’épuise pas les cadres agentifs fondés sur la prédiction. Le **principe de l’énergie libre** (FEP) décrit un système auto-organisé qui limite une surprise à long terme au moyen d’une borne variationnelle. L’**inférence active** en dérive une boucle perception-action où l’agent peut apprendre (mettre à jour son modèle) ou agir (modifier ses sensations pour les rendre conformes à ses prédictions et à des états préférés).
+
+Trois distinctions gardent les cadres étanches :
+
+- AIXI maximise une récompense explicite sous un mélange universel ; l’inférence active minimise une énergie libre attendue selon un modèle génératif et des états préférés. Ce sont des idéalisations distinctes, pas des variantes l’une de l’autre.
+- Surprisal (négatif du logarithme d’une probabilité), énergie libre variationnelle (borne utilisée en inférence bayésienne approchée) et erreur de prédiction (résidu dépendant du modèle) ne sont pas synonymes.
+- Ni AIXI ni le FEP ne découlent de la compression prédictive seule : présenter le slogan « compression = intelligence » comme une conséquence formelle de ces cadres serait un dépassement.
+
+Référence primaire : Friston, [The free-energy principle: a unified brain theory?](https://doi.org/10.1038/nrn2787), *Nature Reviews Neuroscience*, 2010. Comparaison pédagogique : [Fiche compression](compression-revision.qmd) · [Synthèse transversale compression et intelligence](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/compression-intelligence-cross-source-2026-11.md).
+:::
+
 ### Pourquoi AIXI est incalculable
 
 Le mélange universel idéal n'est pas calculable exactement, et le calcul de décision séquentielle optimale qui s'appuie dessus est lui aussi incalculable.
@@ -228,6 +240,7 @@ Un Transformer entraîné par cross-entropy **n'implémente pas** l'induction de
 7. Les égalités exactes entre valeurs d'actions et la définition itérative de la valeur à horizon infini actualisé ; ε-optimalité évite de départager exactement les égalités, tandis qu'une fonction de valeur récursive traite l'obstacle de l'horizon infini.
 :::
 
+- [Friston (2010) : The free-energy principle, a unified brain theory?](https://doi.org/10.1038/nrn2787)
 ## Pour approfondir
 
 - [Compression et LLM](compression-revision.qmd)
