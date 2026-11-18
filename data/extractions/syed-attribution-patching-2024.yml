@@ -24,8 +24,8 @@ pedagogical_model:
         description: "Estimated edge effects are used to rank and prune edges in a candidate computational graph."
         locator: "Sections 3-4: edge pruning and evaluation"
     edges:
-      - {from: src-direct-patching, type: contributes-to, to: src-edge-attribution}
-      - {from: src-edge-attribution, type: produces, to: src-circuit-ranking}
+      - {from: src-edge-attribution, type: approximates, to: src-direct-patching}
+      - {from: src-edge-attribution, type: contributes-to, to: src-circuit-ranking}
     interpretation: "Source-local reconstruction only; it is not the canonical concept graph, a complete computational graph or an independent reproduction."
   learning_outcomes:
     - {status: inferred, outcome: "Distinguish the source's technical object, method, estimate, intervention and explanatory representation.", basis: "Editorial synthesis of the inspected source scope."}
