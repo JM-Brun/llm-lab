@@ -47,9 +47,7 @@ def test_framed_quantized_coder_round_trips_and_separates_costs() -> None:
 def test_quantized_coder_is_deterministic() -> None:
     module = _module()
     model = module["train_bigram_model"](module["TRAINING"])
-    assert module["encode"](module["MESSAGE"], model) == module["encode"](
-        module["MESSAGE"], model
-    )
+    assert module["encode"](module["MESSAGE"], model) == module["encode"](module["MESSAGE"], model)
 
 
 def test_decoder_rejects_truncated_and_corrupt_frames() -> None:
