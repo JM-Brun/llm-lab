@@ -484,3 +484,33 @@ These changes have partial test-suite evidence on SHA `737e93a` (661 tests passe
 - [ ] Run the three targeted test modules and full suite in CI; compare duration against a comparable baseline.
 - [ ] Perform the planned manual mutations and record which assertions detect each fault.
 - [ ] Review and approve the ENG-02 denominator across the complete critical-invariant inventory before reporting a value.
+
+
+
+## 19. Validation du pilote de tests — 2026-11-18
+
+La PR #1277 a maintenant une validation CI complète sur le commit
+`68f9bc205699a40a21a378bd6902dd4b0b7ca0f4` :
+
+- **673 tests réussis**, 0 échec, en **79.48 s** avec deux workers.
+- Couverture de lignes : **98.19 %** (554 statements, 10 missed).
+- Ruff format, Ruff lint et type check : succès.
+- Validations métier/domaines : succès.
+- Rendu complet Quarto et audits des liens locaux/export graphe/timeline : succès.
+- Secret scanning : succès.
+
+Runs : CI `44365219499`, Quarto `44365219545`, secret scanning `44365219836`.
+Rapport détaillé et limites : [audit des tests](audits/test-suite-kpi-audit-2026-11-18.md#12-validation-complète-de-la-branche-propre-1277).
+
+**Important :** ces résultats valident le SHA indiqué, pas automatiquement les commits documentaires ultérieurs. Les jobs opt-in d'inventaire complet des locateurs et de benchmark de registre ont été ignorés.
+
+### ENG-02 — statut inchangé
+
+Critical Invariant Coverage reste **not measured**. La couverture de lignes de 98.19 % et le nombre de tests ne peuvent pas servir de substitut. Il manque encore :
+1. une revue complète et approuvée du dénominateur critique ;
+2. une correspondance invariant → test → assertion probante ;
+3. un pilote de mutations réellement exécuté pour vérifier la sensibilité des tests.
+
+### Prochaine mesure
+
+Ne pas introduire de nouveau job dans la CI rapide. Réaliser d'abord le pilote manuel documenté dans l'audit, puis décider si un outil de mutation limité et non bloquant apporte suffisamment de valeur. La durée de 79.48 s devient un point d'observation ; l'écart avec les 57.14 s d'un run antérieur n'est pas une preuve de régression, faute de conditions appariées.
