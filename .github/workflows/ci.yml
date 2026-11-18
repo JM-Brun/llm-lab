@@ -69,7 +69,7 @@ jobs:
         if: steps.validation_scope.outputs.domain_checks == 'true'
         run: |
           uv run python site/tools/report_source_coverage.py --output "$RUNNER_TEMP/source-coverage.md"
-          cat "$RUNNER_TEMP/source-coverage.md" >> "$GITHUB_STEP_SUMMARY"
+          tee -a "$GITHUB_STEP_SUMMARY" < "$RUNNER_TEMP/source-coverage.md"
 
       - name: Validate page metadata learning graph
         if: steps.validation_scope.outputs.domain_checks == 'true'
