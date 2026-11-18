@@ -47,6 +47,9 @@ def collect_inventory(root: Path = ROOT) -> dict[str, Any]:
     missing = 0
     scalar = 0
     unsupported = 0
+    malformed_items = 0
+    unsupported_shapes: Counter[str] = Counter()
+    unsupported_examples: dict[str, list[str]] = defaultdict(list)
     malformed = 0
     items_count = 0
     yaml_errors: list[dict[str, str]] = []
@@ -62,8 +65,11 @@ def collect_inventory(root: Path = ROOT) -> dict[str, Any]:
             continue
         for index, item in enumerate(data["items"]):
             items_count += 1
-            locator = item.get("locator") if isinstance(item, dict) else None
             record_path = f"{path.name}:items[{index}]"
+            if not isinstance(item, dict):
+                malformed_items += 1
+                continue
+            locator = item.get("locator")
             if locator is None:
                 missing += 1
                 continue
@@ -76,6 +82,10 @@ def collect_inventory(root: Path = ROOT) -> dict[str, Any]:
                 continue
             if not isinstance(locator, dict):
                 unsupported += 1
+                shape = f"{type(locator).__name__}::{_value_shape(locator)}"
+                unsupported_shapes[shape] += 1
+                if len(unsupported_examples[shape]) < 3:
+                    unsupported_examples[shape].append(record_path)
                 continue
 
             key_shapes[",".join(sorted(str(key) for key in locator))] += 1
@@ -100,6 +110,9 @@ def collect_inventory(root: Path = ROOT) -> dict[str, Any]:
         "items_without_locator": missing,
         "items_with_scalar_locator": scalar,
         "items_with_unsupported_locator_shape": unsupported,
+        "unsupported_locator_shapes": dict(sorted(unsupported_shapes.items())),
+        "representative_unsupported_locator_record_paths": dict(sorted(unsupported_examples.items())),
+        "items_with_non_mapping_extraction_record": malformed_items,
         "items_without_locator_mapping": missing + scalar + unsupported,
         "locators_with_missing_or_invalid_required_fields": malformed,
         "yaml_or_record_errors": yaml_errors,
