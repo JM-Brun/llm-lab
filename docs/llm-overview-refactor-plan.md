@@ -437,3 +437,37 @@ Les pages peuvent se référencer mutuellement ; elles ne doivent pas réexpliqu
 5. Mettre à jour les projections de la carte et la taxonomie Deepen depuis leurs sources canoniques ; ne jamais modifier les projections générées à la main.
 6. Contrôler le graphe des liens : pas de cycle présenté comme une séquence, pas de liens « suivant » entre approfondissements frères, pas de prérequis implicites.
 7. Après déplacement, recalculer les durées des pages source et cibles, vérifier la parité FR/EN et fournir un différentiel de conservation.
+
+
+## 16. Suivi d'exécution et preuves — 18 novembre 2026
+
+### État après le nouvel audit navigateur
+
+Le HEAD `49706b8ba54cb078e3ffc6b2550137a14899d6a9` contient les corrections de navigation Gradients, la réconciliation avec `main`, puis le rétablissement des trois tableaux comparatifs responsives du panorama FR/EN et l'alignement de l'assertion navigateur.
+
+| Contrôle | Preuve disponible | État |
+|---|---|---|
+| Qualité Python et contrôles métier | Run CI 5310 sur HEAD antérieur `de2da3a` | Réussi |
+| Suite Python | Run CI 5310, 623 tests rapportés | Réussi |
+| Secret scanning | Run 289 sur HEAD `49706b8` | Réussi |
+| Rendu Quarto complet et liens locaux | Run 5044 sur HEAD `49706b8` | En cours au dernier relevé |
+| Audit navigateur FR/EN desktop/mobile | Inclus dans le run Quarto 5044 | En cours au dernier relevé |
+| Axe / clavier | Rapport du run navigateur à examiner après fin | Non conclu |
+| Revue humaine du rendu | Pas encore effectuée | À faire |
+| Test réel avec apprenant | Aucun résultat documenté | À faire |
+
+### Contrat responsive du panorama
+
+Les tableaux comparatifs « familles d'architectures », « architecture / apprentissage / utilisation » et « résidence de l'information » sont enveloppés dans `.responsive-card-table` en FR et EN. Le tableau de probabilités reste compact et hors de ce traitement. Le test navigateur attend exactement ces trois tableaux et continue à vérifier leur enrichissement ainsi que les libellés de cellules sur mobile. Il ne s'agit donc pas d'une suppression du contrôle, mais d'une adaptation à la structure réelle de la page.
+
+### Suite de validation
+
+1. Lire les conclusions du run Quarto 5044 et du run CI 5313 sur le HEAD courant.
+2. En cas d'échec navigateur, utiliser le rapport JSON et les captures d'écran pour corriger le défaut réel ; ne pas neutraliser l'assertion.
+3. En cas de réussite, vérifier les violations Axe, les contrôles clavier, les ancres et les liens FR/EN.
+4. Faire une revue humaine mobile et desktop des trois tableaux, des deux figures responsive, de l'explorateur next-token et de la navigation.
+5. Organiser le test apprenant et consigner les observations, sans assimiler les validations automatisées à ce retour.
+6. Recalculer la durée de lecture à partir du rendu visible ; conserver séparément l'estimation source.
+7. Ne sortir la PR du brouillon qu'après ces preuves et après revue de conservation finale.
+
+La branche est synchronisée avec `main` (zéro commit de retard au dernier contrôle). Aucun changement n'a été apporté à `data/guided-route.yml` : la route Understand reste unique.
