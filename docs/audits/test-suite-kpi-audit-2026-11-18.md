@@ -197,3 +197,88 @@ does not invalidate that test result, but it does prevent declaring the PR green
 
 
 A subsequent source review found that the first whitespace-only follow-up (`133fe83`) had removed the wrong blank line: it left only one blank line between the large-loss test and the next test definition. The formatter finding therefore remained unresolved despite the commit message. This was corrected explicitly in `8eacc07a0584a114f050bc684a14b2efe1679de9` by restoring the required separation. The current PR head is later than the last observed workflow run; no CI validation for this exact correction is available yet. This correction supersedes the earlier claim that `133fe83` had resolved formatting.
+
+
+
+## 12. Validation complète de la branche propre #1277
+
+**État vérifié le 2026-11-18 — commit testé :** `68f9bc205699a40a21a378bd6902dd4b0b7ca0f4`.
+
+Les workflows GitHub Actions associés à ce SHA sont terminés avec succès :
+
+| Contrôle | Run / job | Résultat |
+|---|---|---|
+| Python quality and domain checks | CI run `44365219499`, job `135017010363` | **success** |
+| Test suite | CI run `44365219499`, job `135017012033` | **success** |
+| Quarto site & browser audit | run `44365219545`, job `135017011048` | **success** |
+| Secret scanning | run `44365219836` | **success** |
+
+Détail de la suite de tests :
+
+- Commande : `uv run pytest -n 2 --dist loadscope --durations=20`.
+- Environnement : Linux, Python 3.12.16, pytest 9.2.0, deux workers.
+- Résultat : **673 passed in 79.48s**.
+- Couverture : **98.19 %** (554 statements, 10 missed).
+- Les modules `attention.py`, `losses.py`, `gpt.py`, `gpt_ops.py` et `transformer_block.py` affichent chacun 100 % de couverture de lignes dans ce rapport. Cela ne prouve pas à lui seul la couverture des invariants.
+- Le seuil global existant de 90 % est atteint.
+
+Détail qualité :
+
+- `ruff format --check .` : success.
+- Ruff lint : success.
+- Type check : success.
+- Les validations catalogue/extractions, graphe de métadonnées, ressources pédagogiques, registre de concepts bilingue, dataset historique et fragments associés passent également.
+
+Détail Quarto :
+
+- Rendu complet du site : success.
+- Contrôles des contrôles de learning map, export du graphe de connaissances, parité de la timeline et liens locaux : success.
+- Certains contrôles de navigateur et rendus incrémentaux ont été ignorés car le scope de cette PR ne les déclenchait pas ; le workflow Quarto global reste en succès.
+
+Les deux jobs opt-in « full-corpus extraction locator inventory » et « concept-registry scale benchmark » ont été ignorés. Ils ne doivent pas être décrits comme exécutés.
+
+### Interprétation de la durée
+
+La suite actuelle dure 79.48 s sur deux workers. Le précédent point de comparaison mentionné dans ce rapport était 57.14 s pour 661 tests sur un autre SHA et un autre run. L'écart brut est de +22.34 s (+39.1 %) pour +12 tests ; il ne permet pas d'attribuer le surcoût aux seuls tests ajoutés, car l'environnement, le cache, la charge du runner et les autres tests peuvent varier. Conserver cette mesure comme observation, pas comme preuve de régression. Pour une comparaison causale, relancer les deux versions dans des conditions identiques ou comparer plusieurs runs appariés.
+
+### Statut des conclusions
+
+- Les ajouts de tests de cette branche sont validés par la suite complète et les contrôles qualité.
+- La couverture de lignes à 98.19 % n'est **pas** une mesure ENG-02.
+- Aucune mutation volontaire n'a encore été exécutée ; la sensibilité des assertions n'est donc pas établie.
+- Le dénominateur ENG-02 n'est toujours pas approuvé : ne publier aucun score de couverture des invariants.
+- Les workflows sont verts sur le SHA ci-dessus. Toute modification ultérieure de documentation crée un nouveau SHA et ne bénéficie pas automatiquement de cette preuve CI ; il faut distinguer le SHA validé du SHA documentaire courant.
+
+## 13. Cahier de reprise — prochaines sessions
+
+Ordre d'exécution recommandé :
+
+1. **Mutation pilote manuelle (priorité immédiate).** Dans un clone local, exécuter une mutation à la fois sur une copie de travail, lancer uniquement le test ciblé, noter le test/assertion qui échoue, puis restaurer le fichier avant la mutation suivante. Cas minimaux :
+   - retirer l'addition résiduelle attention dans `TransformerBlock` ;
+   - introduire un mélange entre exemples du batch dans GPT ;
+   - désactiver le masque causal dans l'attention ;
+   - retirer ou déplacer l'epsilon de LayerNorm ;
+   - modifier la réduction de cross-entropy / moyenne du batch.
+   Résultat attendu : matrice mutation → test ciblé → détectée (oui/non) → diagnostic. Ne jamais committer une mutation volontaire.
+
+2. **Étendre l'inventaire critique au périmètre GPT pédagogique.** Examiner `training_examples` (décalage entrée/cible, fenêtres, stride, séquences courtes), `generate` et `decoding_filters` (arrêt, déterminisme, top-k/top-p, validité des probabilités), puis `embedding_inspection` et `gpt2_weights` (bornes, dimensions, complétude et parité indépendante). Pour chaque invariant, noter le contrat, le test existant, l'assertion probante et les limites.
+
+3. **Approuver le dénominateur ENG-02.** Établir une liste courte mais exhaustive sur le périmètre explicitement déclaré ; distinguer invariant critique, propriété secondaire et simple validation d'entrée. Exiger une revue humaine de chaque élément et une correspondance vers une assertion exécutable. Ne compter un invariant comme protégé que si le test détecte une violation plausible.
+
+4. **Calculer ENG-02 seulement après revue.** Publier numérateur, dénominateur, périmètre, révision de l'inventaire, commit, chemins de tests et mutations associées. En cas d'incertitude ou d'inventaire incomplet, conserver le statut « not measured ».
+
+5. **Mesurer le coût CI correctement.** Le point actuel est 673 tests, 98.19 %, 79.48 s, deux workers, sur le SHA validé ci-dessus. Ne pas conclure à une régression à partir du seul écart avec 661 tests / 57.14 s. Recueillir plusieurs mesures appariées avant d'ajuster le pipeline.
+
+6. **Décider ensuite de l'outillage de mutation.** N'ajouter ni dépendance ni workflow tant que le pilote manuel ne montre pas un bénéfice concret. Si pertinent, tester un outil sur une liste blanche d'un ou deux modules, mesurer runtime et équivalences, puis envisager un workflow manuel/planifié non bloquant.
+
+7. **Revalider la branche après toute modification.** Le SHA `68f9bc205699a40a21a378bd6902dd4b0b7ca0f4` est le dernier SHA avec preuve CI complète consignée ici. Vérifier le head actuel de la PR, relancer les workflows après changement de code ou de configuration, et ne pas confondre succès d'un ancien SHA avec validation du nouveau.
+
+### Critères de clôture
+
+- [ ] Matrice des mutations renseignée avec des résultats réellement observés.
+- [ ] Inventaire critique complet du périmètre déclaré et revu.
+- [ ] Chaque invariant compté lié à un test et à une assertion détectant une violation.
+- [ ] Dénominateur ENG-02 approuvé et reproductible.
+- [ ] Mesure ENG-02 calculée, ou statut « not measured » maintenu avec justification.
+- [ ] Mesures CI comparables et interprétées sans attribution abusive.
+- [ ] PR #1277 revue puis fusionnée explicitement ; aucun merge automatique implicite.
