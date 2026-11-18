@@ -2,8 +2,8 @@
 
 Store one YAML file per source in this directory, named with its stable source ID.
 
-The current canonical source identity and scan history live in data/sources.yml. The target distributed model is documented in docs/source-lineage-architecture.md; until its migration and validator land, do not create parallel source or scan records.
-Extraction records contain atomic, evidence-linked items; they are not a second source catalogue or concept registry.
+The current canonical source identity, inspection history and rights metadata live in data/sources.yml. The target distributed model is documented in docs/source-lineage-architecture.md; until its migration and validator land, do not create parallel source or scan records.
+Extraction records contain atomic, evidence-linked items; they are not a second source catalogue or concept registry. Record inspection events in the source's scan history, not in a duplicate extraction-level scan block.
 
 ## Top-level shape
 
@@ -22,7 +22,7 @@ Instructional sources may include a top-level `pedagogical_model` alongside atom
           label: "Scaled dot-product attention"
         evidence:
           kind: formal-definition
-          confidence: high
+          confidence: well-supported
           scope: "The paper's mathematical formulation."
           assumptions: []
           limitations: []
@@ -40,7 +40,7 @@ Instructional sources may include a top-level `pedagogical_model` alongside atom
             - en/scaled-dot-product-attention
           concepts:
             - self-attention
-        disposition: pending
+        disposition: defer
 
 ## Record rules
 
@@ -53,7 +53,7 @@ Instructional sources may include a top-level `pedagogical_model` alongside atom
 - Item-level classification may refine the source classification; it must not silently rewrite it.
 - concept_ids refer only to existing canonical concepts in data/concepts.yml. Candidate concepts are proposals, not IDs to insert pre-emptively.
 - Candidate page IDs are proposals and must resolve before integration.
-- disposition: pending is an extraction hand-off state, not a publication status.
+- Use only item_dispositions from data/source-taxonomy.yml; pending is not a controlled disposition. Use defer when an item is retained for later review, with a rationale.
 - Keep full text, copied figures, datasets, and code out of these records unless rights permit it. Prefer concise paraphrases and links to source locations.
 
 ### Community-derived item example
@@ -76,7 +76,20 @@ verification:
 
 Use `unverified` or `not-assessed` until the claim has actually been checked. A corroborating source must have its own source record and extraction when its content is retained.
 
-The exact schema and validation contract is specified in docs/source-catalogue-schema.md.
+The exact data contract is specified in docs/source-catalogue-schema.md. The reusable template also contains editorial prompts; not every prompt is a mandatory field enforced by CI.
+
+### What the current validator enforces
+
+site/tools/check_source_catalogue.py currently checks, among other things:
+
+- extraction source_id resolves to a source record; item IDs are unique and prefixed by that source ID;
+- item kind, evidence confidence and any supplied disposition use the controlled values in data/source-taxonomy.yml;
+- item summaries, locators and evidence mappings are present;
+- source-local graph node IDs and edge endpoints resolve within the same graph; node kind and edge type must be non-empty strings, but are not currently closed taxonomies;
+- instructional source types (blog, tutorial, course, book chapter) have a valid pedagogical_model;
+- supplied concept, page and tag references resolve and follow their respective rules.
+
+The validator does not currently require an extraction-level scan block or canonical_mapping block. Scan history remains source-owned. canonical_mapping is an optional editorial proposal area, not a second source of canonical links. Treat the template as a guided authoring aid and this validator as the actual automated contract; keep them synchronized when either changes.
 
 
 ## Provenance and lineage
