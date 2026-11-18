@@ -103,23 +103,23 @@ A missing value is not automatically an error. Rules marked conditional apply on
 | Bibliography and rights | `title`, `creators`, `identifiers`, `canonical_url`, `publisher`, `publication_date`, `updated_date`, `language`, `version`, `revision`, `licence`, `reuse`, `metadata` | No comprehensive field-level validation in the current validator | No direct fixture coverage | URL validity, BCP 47 conformance, chronology, SPDX correctness, reuse permission or rights interpretation |
 | Extraction envelope | `source_id`, `items` | Source reference must resolve; items must be a list | Valid extraction fixture and unknown source reference behavior in implementation | Whether every source ought to have an extraction |
 | Extraction item | `id`, `kind`, `summary` | ID must be unique and prefixed by source ID; kind must be in taxonomy; summary must be non-empty text | Duplicate ID, wrong prefix and valid extraction fixtures | Atomicity or fidelity of the paraphrase |
-| Extraction locator | `locator.type`, `locator.value` | Mapping with truthy type and value; no type-specific grammar and no explicit string-type check | Missing locator field test; corpus inventory in `docs/extraction-locator-inventory.md` | URL resolution, source inspection, precision, or claim support |
+| Extraction locator | `locator.type`, `locator.value` | Mapping with non-empty string `type` and `value`; no type-specific grammar | Missing-field and malformed-type/value fixtures; corpus inventory in `docs/extraction-locator-inventory.md` | URL resolution, source inspection, precision, or claim support |
 | Evidence | `evidence.confidence` | Evidence must be a mapping and confidence must be a controlled value | Unknown confidence test | Adequacy of evidence, truth of claim, or calibration of confidence |
 | Item classification | `classification` | Optional mapping; supplied primary domain, concept IDs and tags are checked | Extraction tag duplicate test; source-level reference tests cover adjacent logic | Whether item classification should override or inherit source classification in a given case |
 | Item disposition | `disposition` | Optional; if present, must be a taxonomy value | Valid and invalid disposition tests | Requiredness of a disposition or rationale quality |
 | Pedagogical assessment | `pedagogical_assessment` | Optional mapping; each supplied supported dimension requires a known level and non-empty rationale | Valid, invalid-level and empty-rationale tests | Whether assessment is required for a particular contribution; quality of the human judgement |
-| Community provenance | `provenance` | Optional mapping; checks voice, resolvable parent source ID, locator mapping shape and capture date | Valid and invalid provenance tests | Speaker identity, locator type/value quality, authenticity or correctness of the quoted statement |
+| Community provenance | `provenance` | Optional mapping; checks voice, resolvable parent source ID, locator mapping with non-empty string `type`/`value`, capture date, and non-empty `speaker` when supplied | Valid/invalid provenance tests plus malformed locator/speaker fixtures | Speaker identity/authenticity or correctness of the quoted statement; locator resolution |
 | Verification | `verification` | Optional mapping; checks status, sources list shape, and that each reference is a known source ID or begins with HTTP(S) | Valid and invalid verification tests | URL validity/retrieval, independence, self-corroboration, evidence quality or actual claim support |
 | Candidate destinations | `candidate_destinations.pages` | Supplied page IDs must resolve | Implemented; no dedicated focused fixture identified in this batch | Whether the destination is editorially appropriate |
 | Pedagogical model | Required for source types `blog`, `tutorial`, `course`, `book-chapter`; optional for other source types | Structural checks for reconstruction, source-local graph nodes/edges, interpretation, declared/inferred outcomes and prerequisites, route order, strengths/limits and comparison fields | Existing corpus validation; focused positive/negative fixtures are not yet comprehensive | Whether the reconstructed graph, teaching sequence or inferred prerequisite is scientifically/pedagogically correct |
 
 ### Important implementation details and boundaries
 
-- The validator currently enforces the *presence* of a non-empty extraction locator `type` and `value`, but it does not require both values to be strings. The full-corpus inventory found 432 mapping locators with non-empty required fields; this is a corpus observation, not a stronger validator guarantee.
+- The validator requires extraction locator `type` and `value` to be non-empty strings. It deliberately does not impose type-specific grammar. The full-corpus inventory found 432 mapping locators with non-empty required fields; it did not establish URL resolution or claim support.
 - The locator inventory observed 14 types. The 354 `section` values are heterogeneous; do not impose a universal grammar or make `label` mandatory. Unknown types and extra keys remain report-only.
 - `scan_history` must be a non-empty list, but an event's `inspected_scope` and `limitations` may currently be empty lists. A syntactically valid event does not prove that its stated scope was actually inspected.
 - Source bibliography, language, version and rights fields are represented in canonical records but are not comprehensively validated. Explicit `null` and `unknown` values are legitimate and must not be converted to fabricated metadata.
-- A provenance locator is currently checked only as a mapping, unlike an extraction locator; its `type` and `value` are not required by this code path.
+- A provenance locator follows the same minimal structural contract as an extraction locator: mapping plus non-empty string `type` and `value`. This still does not establish that the locator resolves.
 - Verification references beginning with `http://` or `https://` pass the current syntactic prefix check. The validator does not fetch them or establish that they identify an independent source. A source ID in the list can refer to the parent source itself; independence is not checked.
 - The validator checks graph endpoint identity and route numbering, not semantic validity of source-local relations or truth of reconstructed learning outcomes.
 - The inventory report's timestamp classification is heuristic. It describes observed value shapes and does not validate locator resolution.
@@ -138,6 +138,7 @@ The direct test module includes temporary-corpus cases for:
 - duplicate and malformed source tags rejected;
 - valid and invalid item dispositions and pedagogical assessments;
 - duplicate extraction tags;
+- non-string extraction locator fields and empty provenance locator/speaker values;
 - valid and invalid community provenance and verification structures.
 
 This list describes direct fixtures in the test module, not exhaustive coverage of every row in the matrix. In particular, there are not yet focused fixtures for malformed bibliography/rights fields, URL semantics, provenance locator internals, verification URL validity or independence, every pedagogical-model branch, and all conditional/legacy combinations.
@@ -151,5 +152,5 @@ This list describes direct fixtures in the test module, not exhaustive coverage 
 5. Keep locator resolution, source inspection, claim support and independent corroboration as separate evidence questions.
 6. Add focused pedagogical-model fixtures only after checking representative instructional records and distinguishing declared source content from project reconstruction.
 
-No validator policy, canonical source record, taxonomy or CI workflow was changed in this snapshot.
+This focused follow-up strengthens only the structural locator contract (non-empty string `type`/`value`, plus non-empty optional provenance `speaker`). It does not add type-specific locator grammars, fetch URLs, change canonical records/taxonomy, or alter CI policy.
 
