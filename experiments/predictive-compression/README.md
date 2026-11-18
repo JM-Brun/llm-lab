@@ -79,6 +79,15 @@ This synthetic control shows that probabilities learned from one source may beco
 
 Read the [entropy lesson](../../site/en/entropy.qmd) and [cross-entropy lesson](../../site/en/cross-entropy.qmd). The [compression synthesis](../../docs/source-syntheses/compression-two-meanings-2026-11.md) distinguishes predictive data coding from model compression and runtime-memory optimization.
 
+
+## Relation to Huang et al. (2024)
+
+The study [“Compression Represents Intelligence Linearly”](../../docs/source-reviews/huang-zhang-shan-he-compression-intelligence-linearly-2024.md) reports a strong association, across 31 models and 12 benchmarks, between predictive coding cost measured in bits per character (BPC) and evaluated capability scores. Its protocol compares corpora aligned with knowledge, coding, and mathematics domains.
+
+The AB/CD experiment above illustrates only a prerequisite mechanism: a probability model has an advantage when the test distribution resembles its training distribution. **It does not reproduce Huang et al.'s result.** It uses no LLM, text corpus, benchmark, or BPC; its synthetic patterns support no conclusion about intelligence.
+
+A serious reproduction would require evaluating multiple models on independent, documented, domain-aligned test corpora; normalizing cost in bits per character despite tokenizer differences; controlling context and contamination; and statistically comparing BPC with benchmark results. Such a reproduction remains to be designed and executed as a separate protocol.
+
 ## Additional control: Huffman coding and Kraft's inequality
 
 The program also builds a Huffman code for the exact distribution:
