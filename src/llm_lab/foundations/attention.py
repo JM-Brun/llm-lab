@@ -18,7 +18,7 @@ def causal_mask(seq_len: int) -> FloatArray:
     Raises:
         ValueError: If seq_len is not a positive integer.
     """
-    if seq_len <= 0:
+    if isinstance(seq_len, bool) or not isinstance(seq_len, (int, np.integer)) or seq_len <= 0:
         raise ValueError("seq_len must be a positive integer")
 
     mask = np.full((seq_len, seq_len), -np.inf, dtype=np.float64)

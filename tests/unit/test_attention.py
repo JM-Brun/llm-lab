@@ -28,6 +28,10 @@ def test_causal_mask_invalid_length() -> None:
         causal_mask(0)
     with pytest.raises(ValueError, match="seq_len must be a positive integer"):
         causal_mask(-3)
+    with pytest.raises(ValueError, match="seq_len must be a positive integer"):
+        causal_mask(2.5)  # type: ignore[arg-type]
+    with pytest.raises(ValueError, match="seq_len must be a positive integer"):
+        causal_mask(True)  # type: ignore[arg-type]
 
 
 def test_softmax_with_temperature_properties() -> None:
@@ -224,9 +228,10 @@ def test_wrong_softmax_axis_fails_per_query_normalization_invariant() -> None:
 
 def test_scaled_dot_product_attention_shapes_and_invariants() -> None:
     t_q, t_k, d_k, d_v = 3, 4, 8, 12
-    q = np.random.randn(t_q, d_k)
-    k = np.random.randn(t_k, d_k)
-    v = np.random.randn(t_k, d_v)
+    rng = np.random.default_rng(7)
+    q = rng.standard_normal((t_q, d_k))
+    k = rng.standard_normal((t_k, d_k))
+    v = rng.standard_normal((t_k, d_v))
 
     out, weights = scaled_dot_product_attention(q, k, v)
 
@@ -236,33 +241,31 @@ def test_scaled_dot_product_attention_shapes_and_invariants() -> None:
     assert np.all(weights >= 0.0)
 
 
-def test_scaled_dot_product_attention_causal_invariance() -> None:
+@pytest.mark.parametrize("first_future_position", [1, 2, 3])
+def test_scaled_dot_product_attention_causal_invariance(first_future_position: int) -> None:
     seq_len, d_k, d_v = 4, 6, 6
-    np.random.seed(42)
-    q = np.random.randn(seq_len, d_k)
-    k = np.random.randn(seq_len, d_k)
-    v = np.random.randn(seq_len, d_v)
+    rng = np.random.default_rng(42)
+    q = rng.standard_normal((seq_len, d_k))
+    k = rng.standard_normal((seq_len, d_k))
+    v = rng.standard_normal((seq_len, d_v))
 
     mask = causal_mask(seq_len)
     out1, weights1 = scaled_dot_product_attention(q, k, v, mask=mask)
 
-    # Check future weights are strictly zero
     for i in range(seq_len):
-        for j in range(i + 1, seq_len):
-            assert weights1[i, j] == 0.0
+        np.testing.assert_array_equal(weights1[i, i + 1 :], 0.0)
 
-    # Modify future keys and values for token at position 3
+    # Perturb every key/value from the selected future boundary onward.
     k_modified = k.copy()
     v_modified = v.copy()
-    k_modified[3] += 50.0
-    v_modified[3] += 100.0
+    k_modified[first_future_position:] += 50.0
+    v_modified[first_future_position:] += 100.0
 
     out2, _ = scaled_dot_product_attention(q, k_modified, v_modified, mask=mask)
 
-    # Invariance check: positions 0, 1, and 2 MUST BE COMPLETELY UNCHANGED
-    assert np.allclose(out1[:3], out2[:3])
-    # Position 3 can change
-    assert not np.allclose(out1[3], out2[3])
+    # Earlier positions cannot depend on any token at or after the boundary.
+    np.testing.assert_allclose(out1[:first_future_position], out2[:first_future_position])
+    assert not np.allclose(out1[first_future_position:], out2[first_future_position:])
 
 
 def test_scaled_dot_product_attention_validation_errors() -> None:

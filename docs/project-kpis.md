@@ -450,3 +450,81 @@ The current CI already runs the full pytest suite with two workers, uses path-sc
 **Definition of done:** every counted invariant traces to a documented property and executable test; the first ENG-02 value is reproducible from that mapping; tests run in the existing fast suite without a duplicate invocation; and mutation analysis, if adopted, is separately scoped, measured and non-blocking until proven reliable.
 
 No test additions, mutation tooling or CI workflow changes are claimed by this plan. Those changes remain pending the audit and evidence above.
+
+
+## 18. Test-audit implementation progress (2026-11-18)
+
+The focused audit is documented in [test-suite-kpi-audit-2026-11-18.md](audits/test-suite-kpi-audit-2026-11-18.md) and the first implementation batch is proposed in [PR #1275](https://github.com/JM-Brun/llm-lab/pull/1275).
+
+### Implemented in the PR branch; CI validation pending
+
+- `losses`: compute the log-partition with `numpy.logaddexp.reduce`, suppress only its harmless intermediate overflow at float64 extremes, and raise `ValueError` when a mathematically valid loss cannot be represented as finite float64. The gradient remains finite for the same extreme logits.
+- `test_losses.py`: add tests for opposite-sign extreme logits, a finite gradient, zero loss when the maximum logit is the target, and explicit rejection when the loss exceeds the finite float64 range.
+- `gpt_ops` tests: add constant-row LayerNorm, configurable epsilon placement, and 2D linear projection cases.
+- `attention`: make `causal_mask` reject non-integer and boolean lengths with the documented `ValueError`; extend causal-invariance testing over several future boundaries and use local seeded generators.
+- `losses`: add a batch-size-two boundary test ensuring large finite per-example losses are averaged without overflowing an intermediate sum.
+- `transformer_block`: add a deterministic test isolating the addition of both attention and MLP outputs to the residual stream.
+- `gpt`: add a batch-independence test, comparing one sequence evaluated alone and as an item in a larger batch.
+
+These changes have partial test-suite evidence on SHA `737e93a` (661 tests passed), but the latest formatting correction and final quality checks remain pending CI confirmation. They do not yet establish an ENG-02 baseline: the invariant inventory still needs review, and assertion sensitivity must be checked with deliberate mutations. Keep all tests in the existing pytest suite; no duplicate invocation, new dependency, or mutation-testing workflow has been added.
+
+### Validation observed on the initial implementation SHA `c35b7b50985946c6175ab0f848b98d0793faf7b9`
+
+- The complete pytest job passed (GitHub Actions run `44351756536`; test job `134969052643`). The test step completed successfully in approximately 58 seconds on the hosted runner.
+- Quarto site validation passed (run `44351756648`); secret scanning passed (run `44351756608`).
+- Formatting passed (`ruff format --check .`, 388 files already formatted).
+- Ruff lint found one issue only: `SIM117` in the new unrepresentable-loss test, caused by nested context managers. This was corrected by combining `np.errstate` and `pytest.raises` into one multi-context `with` statement in commit `b180b2a10c7395bc8acc195119a03d07777bed34`.
+- The initial quality job therefore failed at lint; type checking was skipped as a consequence. The correction has been pushed, but its new CI result is not yet available at the time of this update.
+
+### Remaining validation
+
+- [x] Confirm full pytest job on expanded SHA `737e93aec3be4a9577970bf801eca056e9f50224`: passed (661 tests, 98.19% coverage, 57.14 s); Quarto and secret scanning also passed.
+- [ ] Confirm Ruff format, lint and type-check on the current PR head. The first whitespace follow-up (`133fe83`) did not actually restore the required blank-line separation; a second correction was committed as `8eacc07a0584a114f050bc684a14b2efe1679de9`. No Actions run is visible for that correction or the current documentation-only head.
+- [ ] Review the extreme-loss contract and the precision behavior of `logaddexp.reduce` on supported NumPy versions.
+- [ ] Run the three targeted test modules and full suite in CI; compare duration against a comparable baseline.
+- [ ] Perform the planned manual mutations and record which assertions detect each fault.
+- [ ] Review and approve the ENG-02 denominator across the complete critical-invariant inventory before reporting a value.
+
+
+
+## 19. Validation du pilote de tests — 2026-11-18
+
+La PR #1277 a maintenant une validation CI complète sur le commit
+`68f9bc205699a40a21a378bd6902dd4b0b7ca0f4` :
+
+- **673 tests réussis**, 0 échec, en **79.48 s** avec deux workers.
+- Couverture de lignes : **98.19 %** (554 statements, 10 missed).
+- Ruff format, Ruff lint et type check : succès.
+- Validations métier/domaines : succès.
+- Rendu complet Quarto et audits des liens locaux/export graphe/timeline : succès.
+- Secret scanning : succès.
+
+Runs : CI `44365219499`, Quarto `44365219545`, secret scanning `44365219836`.
+Rapport détaillé et limites : [audit des tests](audits/test-suite-kpi-audit-2026-11-18.md#12-validation-complète-de-la-branche-propre-1277).
+
+**Important :** ces résultats valident le SHA indiqué, pas automatiquement les commits documentaires ultérieurs. Les jobs opt-in d'inventaire complet des locateurs et de benchmark de registre ont été ignorés.
+
+### ENG-02 — statut inchangé
+
+Critical Invariant Coverage reste **not measured**. La couverture de lignes de 98.19 % et le nombre de tests ne peuvent pas servir de substitut. Il manque encore :
+1. une revue complète et approuvée du dénominateur critique ;
+2. une correspondance invariant → test → assertion probante ;
+3. un pilote de mutations réellement exécuté pour vérifier la sensibilité des tests.
+
+### Prochaine mesure
+
+Ne pas introduire de nouveau job dans la CI rapide. Réaliser d'abord le pilote manuel documenté dans l'audit, puis décider si un outil de mutation limité et non bloquant apporte suffisamment de valeur. La durée de 79.48 s devient un point d'observation ; l'écart avec les 57.14 s d'un run antérieur n'est pas une preuve de régression, faute de conditions appariées.
+
+
+
+## 20. Reprise de l'audit ENG-02
+
+Le cahier opérationnel pour la suite est maintenant disponible dans
+[le cahier de reprise](audits/next-session-handoff-2026-11-18.md).
+Il précise le protocole de mutations, les commandes pytest ciblées, les domaines
+à auditer ensuite, les critères d'approbation du dénominateur et les conditions
+de mesure du coût CI.
+
+Statut inchangé : ENG-02 reste **not measured** jusqu'à l'exécution documentée
+des mutations et à l'approbation du périmètre et du dénominateur. La CI verte
+sur un SHA ne suffit pas à établir la sensibilité des tests.
