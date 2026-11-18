@@ -466,7 +466,7 @@ The focused audit is documented in [test-suite-kpi-audit-2026-11-18.md](audits/t
 - `transformer_block`: add a deterministic test isolating the addition of both attention and MLP outputs to the residual stream.
 - `gpt`: add a batch-independence test, comparing one sequence evaluated alone and as an item in a larger batch.
 
-These changes remain pending CI confirmation. They do not yet establish an ENG-02 baseline: the invariant inventory still needs review, and assertion sensitivity must be checked with deliberate mutations. Keep all tests in the existing pytest suite; no duplicate invocation, new dependency, or mutation-testing workflow has been added.
+These changes have partial test-suite evidence on SHA `737e93a` (661 tests passed), but the latest formatting correction and final quality checks remain pending CI confirmation. They do not yet establish an ENG-02 baseline: the invariant inventory still needs review, and assertion sensitivity must be checked with deliberate mutations. Keep all tests in the existing pytest suite; no duplicate invocation, new dependency, or mutation-testing workflow has been added.
 
 ### Validation observed on the initial implementation SHA `c35b7b50985946c6175ab0f848b98d0793faf7b9`
 
@@ -479,7 +479,7 @@ These changes remain pending CI confirmation. They do not yet establish an ENG-0
 ### Remaining validation
 
 - [x] Confirm full pytest job on expanded SHA `737e93aec3be4a9577970bf801eca056e9f50224`: passed (661 tests, 98.19% coverage, 57.14 s); Quarto and secret scanning also passed.
-- [ ] Confirm the formatting correction on final head `133fe837c54101219899c3e04d2756ea3d7e8f83` and obtain successful Ruff format, lint and type-check results. The expanded SHA failed only `ruff format --check` because of one extra blank line; that whitespace was corrected, but no run for the corrected SHA was visible at update time.
+- [ ] Confirm Ruff format, lint and type-check on the current PR head. The first whitespace follow-up (`133fe83`) did not actually restore the required blank-line separation; a second correction was committed as `8eacc07a0584a114f050bc684a14b2efe1679de9`. No Actions run is visible for that correction or the current documentation-only head.
 - [ ] Review the extreme-loss contract and the precision behavior of `logaddexp.reduce` on supported NumPy versions.
 - [ ] Run the three targeted test modules and full suite in CI; compare duration against a comparable baseline.
 - [ ] Perform the planned manual mutations and record which assertions detect each fault.
