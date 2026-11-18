@@ -87,7 +87,8 @@
     - [Stratégies avancées de décodage](decoding-strategies.html)
     - [Complexité et parallélisme dans les LLM](llm-computational-complexity.html)
     - [Fiche de révision — Compression et LLM](compression-revision.html)
-    - [RAG, mémoire et récupération documentaire](rag-memory-boundaries.html)
+    - [RAG, mémoire et transmission au contexte](rag-memory-boundaries.html)
+    - [Récupération documentaire : indexer, retrouver, classer](document-retrieval.html)
   - Échelle et questions de recherche
     - [Lois d'échelle : paramètres, données et calcul](scaling-laws.html)
     - [Émergence des capacités : que change l’échelle ?](emergence.html)

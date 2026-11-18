@@ -1,0 +1,6 @@
+<nav class="guided-page-context" aria-label="Contexte du parcours pédagogique">
+  <span class="guided-page-context__label">Parcours pédagogique</span>
+  <a class="guided-page-context__stage" href="learning-map.html#guided-stage-prediction">05 · Des états à la distribution prédictive</a>
+  <span class="guided-page-context__badge" data-stage-id="prediction" data-stage-index="5" data-stage-total="9">Étape 5/9</span>
+  <span class="guided-page-context__position">Étape 5 sur 9 · page 2 sur 3</span>
+</nav>

@@ -1,0 +1,6 @@
+<div class="route-nav-cards">
+  <a class="route-nav-card" href="universal-artificial-intelligence.qmd">
+    <span class="nav-direction">Étape suivante →</span>
+    <span class="nav-title">Complexité de Kolmogorov, AIXI et limites du calcul</span>
+  </a>
+</div>

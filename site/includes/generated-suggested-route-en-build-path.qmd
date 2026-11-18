@@ -1,0 +1,6 @@
+<div class="route-nav-cards">
+  <a class="route-nav-card" href="gpt-config-walkthrough.qmd">
+    <span class="nav-direction">Next step →</span>
+    <span class="nav-title">Guided tour: GPT configuration (`gpt_config.py`)</span>
+  </a>
+</div>

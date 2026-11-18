@@ -1,0 +1,6 @@
+<div class="route-nav-cards">
+  <a class="route-nav-card" href="compression-revision.qmd">
+    <span class="nav-direction">← Previous step</span>
+    <span class="nav-title">Revision sheet — Compression and LLMs</span>
+  </a>
+</div>

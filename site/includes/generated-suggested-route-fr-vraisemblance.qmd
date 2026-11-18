@@ -1,0 +1,10 @@
+<div class="route-nav-cards">
+  <a class="route-nav-card" href="context-engineering.qmd">
+    <span class="nav-direction">← Étape précédente · Attribuer un score aux tokens observés</span>
+    <span class="nav-title">Ingénierie du contexte (context engineering)</span>
+  </a>
+  <a class="route-nav-card" href="cross-entropy.qmd">
+    <span class="nav-direction">Continuer Attribuer un score aux tokens observés →</span>
+    <span class="nav-title">Entropie croisée : l&#x27;objectif de prédiction des tokens</span>
+  </a>
+</div>

@@ -1,0 +1,6 @@
+<nav class="guided-page-context" aria-label="Contexte du parcours pédagogique">
+  <span class="guided-page-context__label">Parcours pédagogique</span>
+  <a class="guided-page-context__stage" href="learning-map.html#guided-stage-computation">04 · Comprendre le calcul du Transformer</a>
+  <span class="guided-page-context__badge" data-stage-id="computation" data-stage-index="4" data-stage-total="9">Étape 4/9</span>
+  <span class="guided-page-context__position">Étape 4 sur 9 · page 4 sur 4</span>
+</nav>

@@ -1,0 +1,10 @@
+<div class="route-nav-cards">
+  <a class="route-nav-card" href="probabilites.qmd">
+    <span class="nav-direction">← Étape précédente · Des états à la distribution prédictive</span>
+    <span class="nav-title">Probabilités de sortie : des logits aux tokens</span>
+  </a>
+  <a class="route-nav-card" href="generation.qmd">
+    <span class="nav-direction">Continuer Des états à la distribution prédictive →</span>
+    <span class="nav-title">Générer du texte : l&#x27;inférence pas à pas</span>
+  </a>
+</div>

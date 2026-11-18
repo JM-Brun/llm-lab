@@ -1,0 +1,6 @@
+<nav class="guided-page-context" aria-label="Learning path context">
+  <span class="guided-page-context__label">Learning path</span>
+  <a class="guided-page-context__stage" href="learning-map.html#guided-stage-representations">03 · From IDs to representations</a>
+  <span class="guided-page-context__badge" data-stage-id="representations" data-stage-index="3" data-stage-total="9">Stage 3/9</span>
+  <span class="guided-page-context__position">Stage 3 of 9 · page 2 of 3</span>
+</nav>

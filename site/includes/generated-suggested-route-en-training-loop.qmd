@@ -1,0 +1,10 @@
+<div class="route-nav-cards">
+  <a class="route-nav-card" href="gradients.qmd">
+    <span class="nav-direction">← Previous · Learn and update parameters</span>
+    <span class="nav-title">Gradients: connecting loss to parameters</span>
+  </a>
+  <a class="route-nav-card" href="build-path.qmd">
+    <span class="nav-direction">Path complete · optional companion path: build a GPT →</span>
+    <span class="nav-title">Build a small GPT</span>
+  </a>
+</div>

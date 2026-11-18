@@ -1,0 +1,10 @@
+<div class="route-nav-cards">
+  <a class="route-nav-card" href="scaled-dot-product-attention.qmd">
+    <span class="nav-direction">← Previous · Understand Transformer computation</span>
+    <span class="nav-title">Scaled dot-product attention</span>
+  </a>
+  <a class="route-nav-card" href="logits.qmd">
+    <span class="nav-direction">Continue Understand Transformer computation →</span>
+    <span class="nav-title">Logits: scores before normalization</span>
+  </a>
+</div>

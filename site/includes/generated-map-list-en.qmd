@@ -87,7 +87,8 @@
     - [Advanced decoding strategies](decoding-strategies.html)
     - [Complexity and parallelism in LLMs](llm-computational-complexity.html)
     - [Revision sheet — Compression and LLMs](compression-revision.html)
-    - [RAG, memory, and document retrieval](rag-memory-boundaries.html)
+    - [RAG, memory, and context transmission](rag-memory-boundaries.html)
+    - [Document retrieval: indexing, retrieval, and ranking](document-retrieval.html)
   - Scale and research questions
     - [Scaling laws: parameters, data, and compute](scaling-laws.html)
     - [Emergent capabilities: what changes with scale?](emergence.html)

@@ -1,0 +1,6 @@
+<div class="route-nav-cards">
+  <a class="route-nav-card" href="tensors.qmd">
+    <span class="nav-direction">Étape suivante →</span>
+    <span class="nav-title">Tenseurs dans un Transformer : formes et axes</span>
+  </a>
+</div>

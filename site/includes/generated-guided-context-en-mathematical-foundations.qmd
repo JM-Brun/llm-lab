@@ -1,0 +1,18 @@
+<section class="guided-page-context guided-page-context--multiple"
+         aria-labelledby="guided-page-context-heading">
+  <p id="guided-page-context-heading">This page appears at more than one point in the learning path : <strong>The mathematical chain of LLM training</strong>.</p>
+  <ul>
+    <li>
+      <a href="learning-map.html#guided-stage-scoring">08 · Score observed tokens</a>
+      <span class="guided-page-context__role">Optional</span>
+      <span class="guided-page-context__badge" data-stage-id="scoring" data-stage-index="8" data-stage-total="9">Stage 8/9</span>
+      <p>Evaluate the probability assigned to a known target, build a sequence likelihood, and connect negative log-likelihood to cross-entropy without selecting a token or changing parameters.</p>
+    </li>
+    <li>
+      <a href="learning-map.html#guided-stage-training">09 · Learn and update parameters</a>
+      <span class="guided-page-context__role">Optional</span>
+      <span class="guided-page-context__badge" data-stage-id="training" data-stage-index="9" data-stage-total="9">Stage 9/9</span>
+      <p>Connect observed targets to the aggregated loss, gradients, and parameter updates, then to the repeated training loop and validation loss; understand teacher forcing conceptually without making shifted-example preparation a stage of the Theory path.</p>
+    </li>
+  </ul>
+</section>
