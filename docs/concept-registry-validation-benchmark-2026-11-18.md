@@ -33,6 +33,31 @@ The job runs the documented 500 / 2,000 / 10,000 sizes with five repetitions. It
 
 The timed validation excludes YAML parsing, filesystem traversal, published-page discovery, process startup and Quarto rendering. It therefore isolates the in-memory concept-registry validator; it is not an end-to-end CI benchmark and cannot be compared directly with the source-catalogue validator or site build.
 
+## First measured baseline — 2026-11-18
+
+The first opt-in GitHub Actions run completed five repetitions at each size with zero validation errors.
+
+| Concepts | Relations | Fixture build median | Validation median | Validation min–max | Peak validation memory |
+|---:|---:|---:|---:|---:|---:|
+| 500 | 522 | 0.004077 s | 0.049707 s | 0.049647–0.053422 s | 228,750 bytes |
+| 2,000 | 2,022 | 0.015280 s | 0.206559 s | 0.205567–0.215764 s | 999,982 bytes |
+| 10,000 | 10,022 | 0.083452 s | 1.083805 s | 1.076992–1.088022 s | 5,199,430 bytes |
+
+The measured validation time grows by about 4.16× when the workload grows 4× (500 → 2,000), and by about 5.25× when it grows 5× (2,000 → 10,000). Peak memory grows by about 4.37× and 5.20× respectively. This is consistent with approximately linear scaling for this particular sparse chain; it is not evidence about other graph topologies or the full application pipeline.
+
+**Run identity and environment**
+- Measured commit: `38d0e69507525beb4c2679f206b4f03a9ba6988b`
+- GitHub Actions run: `44321178540`, attempt 1; started 2026-11-18 14:09:34 UTC; benchmark command duration 9 seconds.
+- Runner: GitHub-hosted Linux x64, `Linux-7.0.0-1019-azure-x86_64-with-glibc2.43`.
+- CPython 3.12.16, PyYAML 6.0.3, uv 0.13.7.
+- Repetitions: 5; all 15 validation calls returned zero errors.
+
+The exact raw output and execution metadata are committed separately:
+- `reports/benchmarks/concept-registry-validation-2026-11-18.json`
+- `reports/benchmarks/concept-registry-validation-2026-11-18.metadata.json`
+
+These files preserve the benchmark dimensions, baseline registry size (102 concepts / 125 relations), synthetic chain definition, timed/memory scopes, exact command, commit SHA and environment. The CI artifact is retained for 90 days as a second copy.
+
 ## Interpretation and limits
 
 A successful run proves that the validator accepts the generated workload and provides a local timing/memory observation for that exact machine, interpreter, commit and fixture. It does not prove performance on other runners, browser graph usability, source/extraction scalability, or correctness of arbitrary graph semantics.
