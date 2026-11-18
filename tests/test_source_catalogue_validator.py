@@ -424,7 +424,7 @@ def test_invalid_community_provenance_and_verification_are_rejected(tmp_path: Pa
 def _add_collection(root: Path, *, collection_id: str = "qkv-attention") -> None:
     dossier = root / "docs" / "qkv-source-collection.md"
     dossier.parent.mkdir(parents=True, exist_ok=True)
-    dossier.write_text("# Q/K/V collection\\n", encoding="utf-8")
+    dossier.write_text("# Q/K/V collection\n", encoding="utf-8")
     _write_yaml(
         root / "data" / "source-collections.yml",
         {
@@ -577,3 +577,12 @@ def test_extraction_membership_resolves_through_source_id_only(tmp_path: Path) -
     assert "collections" not in extraction_data
 
     assert MODULE.validate_source_catalogue(tmp_path) == []
+
+
+def test_missing_collection_registry_is_rejected(tmp_path: Path) -> None:
+    _corpus(tmp_path)
+    (tmp_path / "data" / "source-collections.yml").unlink()
+
+    errors = MODULE.validate_source_catalogue(tmp_path)
+
+    assert any("source-collections.yml: cannot load YAML" in error for error in errors)
