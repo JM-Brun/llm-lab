@@ -177,7 +177,8 @@ def build_report(root: Path) -> dict[str, Any]:
         "review_queues": {
             "sources_without_extraction": sources_without_extraction,
             "integrated_sources_without_extraction": [
-                item["id"] for item in sources_without_extraction
+                item["id"]
+                for item in sources_without_extraction
                 if item["integration_status"] == "integrated"
             ],
             "sources_without_concept_link": sorted(source_without_concept),
