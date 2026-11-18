@@ -111,7 +111,7 @@ Accordingly, keep the extraction graph, canonical concept graph, interface visua
 The two exercise sheets test equivalent capabilities but intentionally use different narrative anchors:
 
 - **French:** the two senses of *situation* in « une bonne situation, ça, scribe ? » and « de bonne ou de mauvaise situation », followed by the relation between *moi* and *je*.
-- **English:** the two occurrences of *Romans* in “What have the Romans ever done for us?” and “The Romans built roads”, followed by the reference of *they* in “They built roads.”
+- **English:** the two occurrences of *Romans* in “What have the Romans ever done for us?” and “Where did the Romans build their roads?”, followed by the reference of *they* in “They built roads.”
 
 These are not translations of one another and should not be made identical. Keep each thread implicit: do not name or explain its cultural source in learner-facing copy. Preserve the common technical assumptions and learning outcomes (same token ID under the stated assumption; controlled positional comparison; identical lookup; context-dependent hidden states; reference interpretation is not stored in the initial lookup). The story is a pedagogical representation, not evidence about the model.
 
