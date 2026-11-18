@@ -1,6 +1,0 @@
-<div class="route-nav-cards">
-  <a class="route-nav-card" href="exercises/post-training.qmd">
-    <span class="nav-direction">Next step →</span>
-    <span class="nav-title">Exercises — Post-training</span>
-  </a>
-</div>
