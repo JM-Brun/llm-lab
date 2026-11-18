@@ -89,6 +89,15 @@ Ce contrôle synthétique montre que les probabilités apprises sur une source p
 
 Consulter la leçon sur l'[entropie](../../site/fr/entropy.qmd), celle sur l'[entropie croisée](../../site/fr/cross-entropy.qmd) et la [synthèse comparative sur la compression](../../docs/source-syntheses/compression-two-meanings-2026-11.md).
 
+
+## Mise en perspective avec Huang et al. (2024)
+
+L'étude [« Compression Represents Intelligence Linearly »](../../docs/source-reviews/huang-zhang-shan-he-compression-intelligence-linearly-2024.md) rapporte, sur 31 modèles et 12 benchmarks, une forte association entre le coût prédictif mesuré en bits par caractère (BPC) et les scores de capacités évaluées. Son protocole compare notamment des corpus adaptés aux domaines de connaissance, de programmation et de mathématiques.
+
+L'expérience AB/CD ci-dessus illustre seulement un mécanisme préalable : un modèle de probabilités est avantagé lorsque la distribution du test ressemble à celle de son entraînement. **Elle ne reproduit pas le résultat de Huang et al.** Elle n'utilise ni LLM, ni corpus textuel, ni benchmark, ni BPC ; ses motifs synthétiques ne permettent aucune conclusion sur l'intelligence.
+
+Pour reproduire sérieusement l'étude, il faudrait au minimum comparer plusieurs modèles sur des corpus de test indépendants et documentés, alignés par domaine, normaliser le coût en bits par caractère malgré les tokenizers différents, contrôler le contexte et la contamination, puis comparer les BPC aux résultats de benchmarks avec une analyse statistique. Cette expérience reste à concevoir et à exécuter dans un protocole distinct.
+
 ## Contrôle complémentaire : code de Huffman et inégalité de Kraft
 
 Le programme construit aussi un code de Huffman pour la distribution exacte :
