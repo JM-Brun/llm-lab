@@ -38,3 +38,28 @@ items:
       pages: [fr/sinusoidal-positional-encoding, en/sinusoidal-positional-encoding]
     disposition: integrate
     disposition_rationale: "The derivation is central to the advanced page and is explicitly separated from claims about learned behaviour."
+  - id: vaswani-et-al-attention-is-all-you-need-2017:scaled-dot-product-attention
+    kind: mechanism
+    summary: "Scaled dot-product attention computes query–key dot products, divides the scores by the square root of the key dimension, applies softmax across keys for each query, and uses the resulting weights to form a weighted sum of value vectors. In matrix form: Attention(Q, K, V) = softmax(QK^T / sqrt(d_k)) V."
+    locator: {type: section, value: "3.2.1", label: "Scaled Dot-Product Attention"}
+    evidence:
+      kind: formal-definition
+      confidence: established
+      scope: "The paper's prose and Equation (1) define the scaled dot-product attention operation; the softmax weights are applied to the value vectors."
+      assumptions:
+        - "Q and K use key dimension d_k; V uses value dimension d_v."
+        - "Softmax is applied over the key positions for each query."
+      limitations:
+        - "The equation defines an attention computation, not mutual information between query and key variables."
+        - "The paper does not interpret attention weights as Shannon entropy, semantic relevance, causal importance, or a lossless compression code."
+        - "Masking is an optional operation shown in Figure 2 and is not written explicitly in Equation (1)."
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry, probabilistic-foundations-training]
+      tags: [topic:attention, topic:transformer]
+      concept_ids: [query, key, value, attention-score, attention-weight, softmax, scaled-dot-product-attention, self-attention]
+    candidate_destinations:
+      pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/queries-keys-values, en/queries-keys-values]
+      concepts: [query, key, value, attention-score, attention-weight, softmax, scaled-dot-product-attention, self-attention]
+    disposition: integrate
+    disposition_rationale: "Add the primary mathematical definition as a source-backed extraction item so the existing canonical concepts and computational attention nodes can be traversed to the exact paper section and equation without duplicating the concept graph."
