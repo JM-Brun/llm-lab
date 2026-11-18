@@ -327,3 +327,5 @@ Les premières requêtes de référence doivent couvrir au minimum : ponts entre
 - [Issue #1211 — provenance coverage and canonical graph reconciliation](https://github.com/JM-Brun/llm-lab/issues/1211)
 - [Issue #512 — knowledge-structure interoperability and relation semantics](https://github.com/JM-Brun/llm-lab/issues/512)
 - [Cross-project knowledge-management transfer analysis](cross-project-knowledge-management-transfer-2026-11-18.md)
+
+- [Evidence-traced cross-graph pilot: attention, information theory and compression](cross-graph-pilot-attention-information-compression-2026-11-18.md)
