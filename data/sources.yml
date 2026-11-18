@@ -4466,6 +4466,14 @@ sources:
         status: partially-scanned
         inspected_scope: ["Official ACL Anthology EMNLP 2025 proceedings metadata and abstract", "arXiv preprint metadata and abstract"]
         limitations: ["Survey synthesis only; claims must be traced to cited primary studies before being treated as primary evidence.", "Full survey sections and cited works have not yet been audited."]
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "Full EMNLP 2025 survey sections 1-5, conclusion and stated limitations: SAE variants, input/output feature explanation methods, structural/functional metrics and applications"
+        limitations:
+          - "The survey is a secondary synthesis; cited empirical claims must be traced to primary studies before use as evidence."
+          - "The survey explicitly does not comprehensively cover pre-LLM history in distributed representations, disentangled representation learning and sparse coding."
+          - "The full bibliography has not been independently audited and no cited methods or benchmarks were reproduced."
     related:
       pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced]
       concepts: [contextualized-representation]
