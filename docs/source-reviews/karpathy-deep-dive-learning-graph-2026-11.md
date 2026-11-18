@@ -87,10 +87,10 @@ Before claiming a visual technique or precise spoken nuance, inspect the relevan
 - [x] Atomic extractions carry locators, assumptions, limits and dispositions.
 - [x] Existing canonical page owners identified.
 - [x] No new concepts or duplicate curriculum created.
-- [ ] Inspect audiovisual demonstrations at the key timestamps.
-- [ ] Validate all referenced canonical concept IDs and page IDs with project validators.
-- [ ] Add/verify bilingual contextual source links where they improve learner navigation.
-- [ ] Run source-catalogue, extraction, graph, site and full test validations.
+- [ ] Inspect audiovisual demonstrations at the key timestamps; transcript-led inspection does not verify visual teaching claims.
+- [x] Validate referenced canonical concept IDs, page IDs and source/extraction records with project validators (CI run 44260220267).
+- [x] Add and verify bilingual contextual source links in the French and English LLM overview and post-training pages (Quarto/browser audit run 44260220370).
+- [x] Run source-catalogue, extraction, metadata/topology, full test, quality, site-render and browser validations (CI runs 44260220267 and 44260220370).
 
 ## 8. Primary timestamps for targeted follow-up
 
