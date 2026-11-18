@@ -49,7 +49,7 @@ def test_inventory_separates_missing_scalar_and_mapping_locators(tmp_path: Path)
     assert report["items_with_non_mapping_locator"] == 2
     assert report["items_with_non_mapping_locator_by_shape"] == {
         "str::http-url": 1,
-        "str::opaque-text": 1,
+        "str::section-like": 1,
     }
     assert report["locators_with_missing_or_invalid_required_fields"] == 1
     assert report["locator_types"]["url"] == 2
@@ -73,6 +73,4 @@ def test_inventory_counts_non_mapping_records_separately(tmp_path: Path) -> None
     assert report["items_with_non_mapping_extraction_record"] == 1
     assert report["items_with_non_mapping_locator"] == 1
     assert report["items_without_locator"] == 0
-    assert report["items_with_non_mapping_locator_by_shape"] == {
-        "int::non-string:int": 1
-    }
+    assert report["items_with_non_mapping_locator_by_shape"] == {"int::non-string:int": 1}
