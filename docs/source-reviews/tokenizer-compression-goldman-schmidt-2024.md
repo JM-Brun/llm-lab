@@ -111,3 +111,8 @@ The apparent disagreement is not a direct contradiction: Goldman varies support 
 La branche de cette revue a été réintégrée à `main` par un commit de fusion à deux parents. Les mises à jour principales de `main` sont conservées, notamment les audits RoPE et les corrections GPT-2/embeddings ; les ajouts de cette revue restent limités aux deux extractions Goldman/Schmidt, à leurs métadonnées dans le catalogue et à ce dossier.
 
 La fusion de `data/sources.yml` a conservé les deux ensembles de modifications : les ajouts Goldman/Schmidt ont été appliqués à leurs entrées respectives sans écraser la mise à jour RoPE de `main`. Cette note décrit la réconciliation du contenu ; elle ne remplace pas la validation CI du nouveau head.
+
+
+### Synchronisation complémentaire — 2026-11-18
+
+Une seconde synchronisation a intégré le HEAD `cb7e3c859591b954188bb435a7b888ae2949875f` de `main`, qui inclut la documentation ENG-02 fusionnée par la PR #1300. Le diff propre de la PR reste limité aux deux extractions, au catalogue des sources et à ce dossier. Les validations doivent être lues sur le nouveau head de branche.
