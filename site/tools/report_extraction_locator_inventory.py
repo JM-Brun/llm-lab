@@ -41,9 +41,13 @@ def collect_inventory(root: Path = ROOT) -> dict[str, Any]:
     types: Counter[str] = Counter()
     shapes: Counter[str] = Counter()
     key_shapes: Counter[str] = Counter()
+    non_mapping_shapes: Counter[str] = Counter()
     examples: dict[str, list[str]] = defaultdict(list)
+    non_mapping_examples: dict[str, list[str]] = defaultdict(list)
     missing = 0
+    non_mapping = 0
     malformed = 0
+    malformed_items = 0
     items_count = 0
     yaml_errors: list[dict[str, str]] = []
 
@@ -58,9 +62,20 @@ def collect_inventory(root: Path = ROOT) -> dict[str, Any]:
             continue
         for index, item in enumerate(data["items"]):
             items_count += 1
-            locator = item.get("locator") if isinstance(item, dict) else None
-            if not isinstance(locator, dict):
+            record_path = f"{path.name}:items[{index}]"
+            if not isinstance(item, dict):
+                malformed_items += 1
+                continue
+            if "locator" not in item or item["locator"] is None:
                 missing += 1
+                continue
+            locator = item["locator"]
+            if not isinstance(locator, dict):
+                non_mapping += 1
+                shape = f"{type(locator).__name__}::{_value_shape(locator)}"
+                non_mapping_shapes[shape] += 1
+                if len(non_mapping_examples[shape]) < 3:
+                    non_mapping_examples[shape].append(record_path)
                 continue
             key_shapes[",".join(sorted(str(key) for key in locator))] += 1
             locator_type = locator.get("type")
@@ -74,14 +89,18 @@ def collect_inventory(root: Path = ROOT) -> dict[str, Any]:
             shape = _value_shape(value)
             shapes[f"{locator_type}::{shape}"] += 1
             if len(examples[f"{locator_type}::{shape}"]) < 3:
-                examples[f"{locator_type}::{shape}"].append(f"{path.name}:items[{index}]")
+                examples[f"{locator_type}::{shape}"].append(record_path)
 
     return {
         "inventory": "extraction-locator-shapes",
         "scope": "data/extractions/*.yml",
         "files_seen": len(files),
         "items_seen": items_count,
-        "items_without_locator_mapping": missing,
+        "items_without_locator": missing,
+        "items_with_non_mapping_locator": non_mapping,
+        "items_with_non_mapping_locator_by_shape": dict(sorted(non_mapping_shapes.items())),
+        "non_mapping_locator_examples": dict(sorted(non_mapping_examples.items())),
+        "items_with_non_mapping_extraction_record": malformed_items,
         "locators_with_missing_or_invalid_required_fields": malformed,
         "yaml_or_record_errors": yaml_errors,
         "locator_types": dict(sorted(types.items())),
@@ -89,8 +108,10 @@ def collect_inventory(root: Path = ROOT) -> dict[str, Any]:
         "value_shapes_by_type": dict(sorted(shapes.items())),
         "representative_record_paths": dict(sorted(examples.items())),
         "interpretation": (
-            "Observed shape inventory only. It does not assert that a locator resolves, "
-            "that its source was inspected, or that a type-specific grammar is correct."
+            "Observed shape inventory only. Missing locators, scalar/non-mapping locators, "
+            "malformed mappings and mapping value shapes are counted separately. It does not "
+            "assert that a locator resolves, that its source was inspected, or that a "
+            "type-specific grammar is correct."
         ),
     }
 
