@@ -41,7 +41,11 @@ def test_report_joins_extractions_by_source_id_and_surfaces_review_queues(tmp_pa
                     "integration_status": "integrated",
                     "scan_history": [{"status": "partially-scanned"}],
                     "classification": {"concept_ids": []},
-                    "related": {"concepts": [], "pages": []},
+                    "related": {
+                        "concepts": [],
+                        "pages": [],
+                        "audit_records": ["docs/source-reviews/source-two-review.md"],
+                    },
                 },
             ],
         },
@@ -73,6 +77,8 @@ def test_report_joins_extractions_by_source_id_and_surfaces_review_queues(tmp_pa
     assert counts["extraction_records"] == 1
     assert counts["sources_without_extraction"] == 1
     assert counts["integrated_sources_without_extraction"] == 1
+    assert counts["sources_without_extraction_with_audit_record"] == 1
+    assert counts["sources_without_extraction_without_audit_record"] == 0
     assert counts["sources_without_concept_link"] == 1
     assert counts["sources_without_page_destination"] == 1
     assert counts["concepts_without_source"] == 1
@@ -82,6 +88,10 @@ def test_report_joins_extractions_by_source_id_and_surfaces_review_queues(tmp_pa
     assert counts["extraction_source_references_unknown"] == 0
     assert counts["scan_history_status_mismatches"] == 1
     assert report["review_queues"]["integrated_sources_without_extraction"] == ["source-two"]
+    assert report["review_queues"]["sources_without_extraction_with_audit_record"] == [
+        "source-two"
+    ]
+    assert report["review_queues"]["sources_without_extraction_without_audit_record"] == []
 
 
 def test_markdown_report_explains_that_gaps_are_review_queues() -> None:
@@ -89,7 +99,10 @@ def test_markdown_report_explains_that_gaps_are_review_queues() -> None:
         "counts": {"sources": 1},
         "status_distribution": {"scan": {"scanned": 1}},
         "review_queues": {"sources_without_extraction": []},
-        "interpretation": {"contradictions": "Require human review."},
+        "interpretation": {
+            "contradictions": "Require human review.",
+            "audit_record_links": "A link is not proof of an extraction decision.",
+        },
     }
 
     markdown = MODULE.render_markdown(report)
@@ -97,3 +110,4 @@ def test_markdown_report_explains_that_gaps_are_review_queues() -> None:
     assert "Source-to-knowledge coverage report" in markdown
     assert "sources without extraction (0)" in markdown
     assert "Require human review." in markdown
+    assert "A link is not proof of an extraction decision." in markdown
