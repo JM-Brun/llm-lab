@@ -16,6 +16,21 @@ import yaml
 ROOT = Path(__file__).resolve().parents[2]
 
 
+def _error_record(path: Path, category: str, exc: Exception | None = None) -> dict[str, Any]:
+    """Return a source-safe diagnostic without serializing exception messages."""
+    record: dict[str, Any] = {
+        "file": path.name,
+        "category": category,
+    }
+    if exc is not None:
+        record["exception_type"] = type(exc).__name__
+        mark = getattr(exc, "problem_mark", None)
+        if mark is not None:
+            record["line"] = mark.line + 1
+            record["column"] = mark.column + 1
+    return record
+
+
 def _value_shape(value: Any) -> str:
     if not isinstance(value, str):
         return f"non-string:{type(value).__name__}"
@@ -24,7 +39,13 @@ def _value_shape(value: Any) -> str:
         return "empty"
     if re.match(r"^https?://", text, re.IGNORECASE):
         return "http-url"
-    if re.match(r"^(?:\d{1,2}:)?\d{1,2}:\d{2}(?:\.\d+)?$", text):
+    timestamp = r"(?:\d{1,2}:)?\d{1,2}:\d{2}(?:\.\d+)?"
+    timestamp_or_range = rf"{timestamp}(?:\s*[-\u2013\u2014]\s*{timestamp})?"
+    if re.fullmatch(
+        rf"{timestamp_or_range}(?:\s+(?:and|or)\s+{timestamp_or_range})*(?:\s+onward)?",
+        text,
+        flags=re.IGNORECASE,
+    ):
         return "timestamp-like"
     if re.match(r"^(?:p(?:age)?\s*)?\d+(?:\s*[-\u2013]\s*\d+)?$", text, re.IGNORECASE):
         return "page-number-like"
@@ -52,16 +73,19 @@ def collect_inventory(root: Path = ROOT) -> dict[str, Any]:
     unsupported_examples: dict[str, list[str]] = defaultdict(list)
     malformed = 0
     items_count = 0
-    yaml_errors: list[dict[str, str]] = []
+    yaml_errors: list[dict[str, Any]] = []
 
     for path in files:
         try:
             data = yaml.safe_load(path.read_text(encoding="utf-8"))
-        except (OSError, yaml.YAMLError) as exc:
-            yaml_errors.append({"file": path.name, "error": str(exc)})
+        except OSError as exc:
+            yaml_errors.append(_error_record(path, "file-read-failed", exc))
+            continue
+        except yaml.YAMLError as exc:
+            yaml_errors.append(_error_record(path, "yaml-parse-failed", exc))
             continue
         if not isinstance(data, dict) or not isinstance(data.get("items"), list):
-            yaml_errors.append({"file": path.name, "error": "expected mapping with items list"})
+            yaml_errors.append(_error_record(path, "invalid-record-structure"))
             continue
         for index, item in enumerate(data["items"]):
             items_count += 1
