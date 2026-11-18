@@ -1459,7 +1459,7 @@ sources:
           - "The 3Blue1Brown baseline was But what is a GPT?, not the separate Attention in Transformers, step by step lesson."
           - "No claim is made that the study demonstrates learning gains for LLM Lab."
     related:
-      pages: [en/fr/en/transformer-explainer, fr/transformer-explainer, en/text-data, fr/text-data, en/embedding-space, fr/embedding-space]
+      pages: [en/transformer-explainer, fr/transformer-explainer, en/text-data, fr/text-data, en/embedding-space, fr/embedding-space]
       concepts: [token, token-embedding, contextualized-representation, self-attention, multi-head-attention, logits, decoding-policy]
       audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md, docs/source-reviews/transformer-attention-pedagogical-comparison-2026-11.md]
 
@@ -1508,7 +1508,7 @@ sources:
           - "This was selected-file static inspection, not a full repository audit or browser execution."
           - "Keyboard/mobile accessibility and numerical parity against a reference implementation remain unverified."
     related:
-      pages: [en/fr/en/transformer-explainer, fr/transformer-explainer]
+      pages: [en/transformer-explainer, fr/transformer-explainer]
       concepts: [token, token-embedding, contextualized-representation, self-attention, multi-head-attention, logits, decoding-policy]
       audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md, docs/source-reviews/transformer-attention-pedagogical-comparison-2026-11.md]
   - id: raschka-bpe-from-scratch-2025
@@ -2652,7 +2652,7 @@ sources:
     classification:
       primary_theme: architectures-mechanisms
       secondary_themes: [mathematical-tools-geometry]
-      tags: [topic:topic:self-attention, topic:multi-head-attention, topic:positional-encoding, method:sinusoidal-encoding, modality:illustration, modality:visualization]
+      tags: [topic:self-attention, topic:multi-head-attention, topic:positional-encoding, method:sinusoidal-encoding, modality:illustration, modality:visualization]
       concept_ids: [token-embedding, self-attention, multi-head-attention, causal-mask]
     metadata:
       technical_level: introductory
@@ -2680,7 +2680,7 @@ sources:
           - "The article explicitly distinguishes its earlier concatenated visualization from the interleaved formulation in the original paper."
           - "Embedded image assets were not separately audited; no reuse rights were established."
     related:
-      pages: [en/fr/en/queries-keys-values, fr/queries-keys-values, en/scaled-dot-product-attention, fr/scaled-dot-product-attention, en/transformer-architectures, fr/transformer-architectures, fr/sinusoidal-positional-encoding, en/sinusoidal-positional-encoding]
+      pages: [en/queries-keys-values, fr/queries-keys-values, en/scaled-dot-product-attention, fr/scaled-dot-product-attention, en/transformer-architectures, fr/transformer-architectures, fr/sinusoidal-positional-encoding, en/sinusoidal-positional-encoding]
       concepts: [token-embedding, self-attention, multi-head-attention, causal-mask]
       audit_records: [docs/source-reviews/transformer-attention-pedagogical-comparison-2026-11.md, docs/source-reviews/sinusoidal-positional-encoding-2026-11.md]
 
@@ -2701,7 +2701,7 @@ sources:
     classification:
       primary_theme: architectures-mechanisms
       secondary_themes: [inference-efficiency]
-      tags: [topic:decoder-only-topic:self-attention, topic:causal-masking, topic:autoregressive-generation, topic:kv-cache, modality:illustration]
+      tags: [topic:decoder-only, topic:self-attention, topic:causal-masking, topic:autoregressive-generation, topic:kv-cache, modality:illustration]
       concept_ids: [token-embedding, contextualized-representation, self-attention, multi-head-attention, causal-mask, autoregressive-generation, kv-cache]
     metadata:
       technical_level: intermediate
@@ -2721,7 +2721,7 @@ sources:
           - "The article is GPT-2-era and should not be generalized to all contemporary architectures."
           - "The cache explanation is conceptual and does not replace a precise prefill/decode or per-layer KV-cache specification."
     related:
-      pages: [en/fr/en/generation, fr/generation, en/queries-keys-values, fr/queries-keys-values, en/scaled-dot-product-attention, fr/scaled-dot-product-attention]
+      pages: [en/generation, fr/generation, en/queries-keys-values, fr/queries-keys-values, en/scaled-dot-product-attention, fr/scaled-dot-product-attention]
       concepts: [token-embedding, contextualized-representation, self-attention, multi-head-attention, causal-mask, autoregressive-generation, kv-cache]
       audit_records: [docs/source-reviews/transformer-attention-pedagogical-comparison-2026-11.md]
 
@@ -2742,7 +2742,7 @@ sources:
     classification:
       primary_theme: architectures-mechanisms
       secondary_themes: [text-tokenization, inference-efficiency]
-      tags: [topic:topic:self-attention, topic:kv-cache, topic:multi-query-attention, topic:grouped-query-attention, topic:sparse-attention, topic:mixture-of-experts, ecosystem:huggingface, modality:video]
+      tags: [topic:self-attention, topic:kv-cache, topic:multi-query-attention, topic:grouped-query-attention, topic:sparse-attention, topic:mixture-of-experts, ecosystem:huggingface, modality:video]
       concept_ids: [token, token-embedding, contextualized-representation, self-attention, multi-head-attention, kv-cache]
     metadata:
       technical_level: mixed
@@ -2762,7 +2762,7 @@ sources:
           - "The public announcement links the book's code repository; this does not establish that a separate public repository contains all course-specific code."
           - "Advanced topics are recorded as candidates from the outline, not as fully audited explanations."
     related:
-      pages: [en/fr/en/transformer-block-walkthrough, fr/transformer-block-walkthrough, en/queries-keys-values, fr/queries-keys-values, en/scaled-dot-product-attention, fr/scaled-dot-product-attention]
+      pages: [en/transformer-block-walkthrough, fr/transformer-block-walkthrough, en/queries-keys-values, fr/queries-keys-values, en/scaled-dot-product-attention, fr/scaled-dot-product-attention]
       concepts: [token, token-embedding, contextualized-representation, self-attention, multi-head-attention, kv-cache]
       audit_records: [docs/source-reviews/transformer-attention-pedagogical-comparison-2026-11.md]
 
@@ -2850,7 +2850,7 @@ sources:
           - "The literal zero-temperature case is not defined by division by zero; it is a limiting intuition as temperature approaches zero from above."
           - "No figures, animation frames or code were copied or assessed for reuse."
     related:
-      pages: [en/text-data, fr/text-data, en/embedding-space, fr/embedding-space, en/contextualized-representations, fr/contextualized-representations, en/fr/en/generation, fr/generation, en/probabilities]
+      pages: [en/text-data, fr/text-data, en/embedding-space, fr/embedding-space, en/contextualized-representations, fr/contextualized-representations, en/generation, fr/generation, en/probabilities]
       concepts: [token, token-embedding, contextualized-representation, positional-encoding, next-token-prediction, conditional-distribution, logits, softmax, autoregressive-generation, decoding-policy, training-objective]
       audit_records: [docs/source-reviews/transformer-attention-pedagogical-comparison-2026-11.md]
 
@@ -3993,7 +3993,7 @@ sources:
     classification:
       primary_theme: architectures-mechanisms
       secondary_themes: [text-tokenization, probabilistic-foundations-training, inference-efficiency]
-      tags: [topic:topic:llm-training, topic:fine-tuning, topic:dataset-curation, topic:reasoning-models, ecosystem:huggingface]
+      tags: [topic:llm-training, topic:fine-tuning, topic:dataset-curation, topic:reasoning-models, ecosystem:huggingface]
       concept_ids: [self-attention, token, token-embedding, contextualized-representation]
     metadata:
       technical_level: mixed
@@ -4042,7 +4042,7 @@ sources:
           - "Current English index and supplied French Chapter 1 do not expose identical chapter outlines; preserve locale/version differences rather than assuming parity."
           - "Course text, figures and code remain link-only; no reuse permission was established."
     related:
-      pages: [fr/en/fr/tokenization-strategies, en/tokenization-strategies, fr/generation, en/generation, fr/training-loop, en/training-loop, fr/corpus-preparation, en/corpus-preparation, fr/post-training, en/post-training, fr/build-path, en/build-path, fr/evaluation-experimentale, en/experimental-evaluation, fr/glossary, en/glossary]
+      pages: [fr/tokenization-strategies, en/tokenization-strategies, fr/generation, en/generation, fr/training-loop, en/training-loop, fr/corpus-preparation, en/corpus-preparation, fr/post-training, en/post-training, fr/build-path, en/build-path, fr/evaluation-experimentale, en/experimental-evaluation, fr/glossary, en/glossary]
       concepts: [self-attention, token, token-embedding, contextualized-representation, dataset-curation, chat-template, group-relative-policy-optimization]
       audit_records:
         - docs/source-reviews/huggingface-llm-course-2026-11.md
@@ -4065,7 +4065,7 @@ sources:
     classification:
       primary_theme: architectures-mechanisms
       secondary_themes: [mathematical-tools-geometry]
-      tags: [topic:topic:tensor-shapes, modality:interactive-visualization]
+      tags: [topic:tensor-shapes, modality:interactive-visualization]
       concept_ids: [token-embedding, self-attention, multi-head-attention]
     metadata:
       technical_level: intermediate
@@ -4079,7 +4079,7 @@ sources:
         inspected_scope: ["Public walkthrough description and indexed captures of overview and Transformer chapters"]
         limitations: ["Full interactive walkthrough and source revision not inspected.", "Model-specific tensor dimensions and 3D proportions must not be generalized.", "No reuse licence for screenshots or explanatory text established."]
     related:
-      pages: [fr/en/fr/tensors, en/tensors, fr/transformer-explainer, en/transformer-explainer]
+      pages: [fr/tensors, en/tensors, fr/transformer-explainer, en/transformer-explainer]
       concepts: [token-embedding, contextualized-representation, self-attention, multi-head-attention]
       audit_records: [docs/source-reviews/visual-learning-resources-2026-11.md]
 
@@ -4149,7 +4149,7 @@ sources:
         inspected_scope: ["Indexed article introduction, GQA sections, sparse-attention sections and conclusion"]
         limitations: ["Full article and all architecture entries not independently checked.", "Model examples are time-sensitive and require primary-source verification.", "Not a controlled benchmark; figure reuse rights not established."]
     related:
-      pages: [fr/en/fr/queries-keys-values, en/queries-keys-values, fr/generation, en/generation]
+      pages: [fr/queries-keys-values, en/queries-keys-values, fr/generation, en/generation]
       concepts: [scaled-dot-product-attention, multi-head-attention, self-attention]
       audit_records: [docs/source-reviews/visual-learning-resources-2026-11.md]
 
@@ -4855,7 +4855,7 @@ sources:
           - "The complete comment thread and linked newsletter were not inspected; visible comments are not treated as author-authored claims."
           - "No licence or permission to reuse the text or image was established; link-only handling."
     related:
-      pages: [fr/llm-overview, en/llm-overview, fr/text-data, en/text-data, fr/tokenization-strategies, en/tokenization-strategies, fr/embedding-space, en/embedding-space, fr/en/fr/generation, en/generation]
+      pages: [fr/llm-overview, en/llm-overview, fr/text-data, en/text-data, fr/tokenization-strategies, en/tokenization-strategies, fr/embedding-space, en/embedding-space, fr/generation, en/generation]
       concepts: [token, token-embedding, contextualized-representation, self-attention, causal-mask]
       audit_records: [docs/source-reviews/jothi-moorthy-llm-processing-linkedin-2026-11.md]
 
@@ -4924,7 +4924,7 @@ sources:
     classification:
       primary_theme: probabilistic-foundations-training
       secondary_themes: [mathematical-tools-geometry, inference-efficiency]
-      tags: [topic:optimization, topic:llm-training, method:method:newton-method, method:golden-section-search, method:simplex-method, method:kkt-conditions, method:minimax-approximation]
+      tags: [topic:optimization, topic:llm-training, method:newton-method, method:golden-section-search, method:simplex-method, method:kkt-conditions, method:minimax-approximation]
       concept_ids: [training-objective, cross-entropy, negative-log-likelihood, sequence-likelihood, gradient, parameter-update, training-loop, logits, decoding-policy, next-token-prediction, entropy-coding]
     metadata:
       technical_level: intermediate
@@ -5219,7 +5219,7 @@ sources:
     classification:
       primary_theme: architectures-mechanisms
       secondary_themes: [text-tokenization, inference-efficiency, probabilistic-foundations-training]
-      tags: [topic:llm-learning-roadmap, topic:topic:hallucination, topic:knowledge-distillation, topic:multimodal-llm, topic:learning-strategy]
+      tags: [topic:llm-learning-roadmap, topic:hallucination, topic:knowledge-distillation, topic:multimodal-llm, topic:learning-strategy]
       concept_ids: [token, token-embedding, self-attention]
     metadata:
       technical_level: intermediate
@@ -5248,7 +5248,7 @@ sources:
           - "Technical claims are not independently reproduced; source-specific simplifications are qualified in the review."
           - "No licence or permission to reuse article text, diagrams, book-derived notes or repository images was established."
     related:
-      pages: [en/llm-overview, fr/llm-overview, en/fr/en/generation, fr/generation, en/post-training, fr/post-training, en/transformer-architectures, fr/transformer-architectures]
+      pages: [en/llm-overview, fr/llm-overview, en/generation, fr/generation, en/post-training, fr/post-training, en/transformer-architectures, fr/transformer-architectures]
       concepts: [token, token-embedding, self-attention]
       audit_records:
         - docs/source-reviews/hesam-sheikh-llm-study-roadmap-2026-11.md
