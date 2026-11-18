@@ -319,7 +319,8 @@ def _validate_source_collections(
             value = collection.get(field)
             if not isinstance(value, str) or not value.strip():
                 errors.append(f"{where}.{field}: expected non-empty text")
-        if collection.get("status") not in {"active", "archived"}:
+        status = collection.get("status")
+        if not isinstance(status, str) or status not in {"active", "archived"}:
             errors.append(f"{where}.status: expected 'active' or 'archived'")
         dossier_path = collection.get("dossier_path")
         if isinstance(dossier_path, str) and dossier_path.strip():
