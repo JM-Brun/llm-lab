@@ -359,10 +359,20 @@ sources:
         limitations:
           - "The audit is scoped to the historical algorithm and its distinction from later tokenizer designs."
           - "No figure, code or data reuse rights were established."
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "Published/reconstructed PDF: abstract, §§1-8, Figures 1-2, Table 1, pseudocode Listings 1-2 and C Listings 3-4"
+          - "Byte-level substitution, blockwise constraints, pair-table format, stack-based expansion and exact benchmark protocol/results"
+          - "Dedicated claim-level extraction and primary-source audit dossier"
+        limitations:
+          - "C listings were inspected but not compiled or executed; benchmark results were not independently reproduced."
+          - "Table 1 reports one historical binary-file experiment on a 33 MHz 486DX-compatible system; no broad performance claim is warranted."
+          - "The accessible PDF is a 2020 reconstruction of the 1994 journal article; figures/code reuse rights remain unknown."
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies, en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md, docs/source-reviews/gage-1994-primary-audit.md]
 
   - id: ahia-do-all-languages-cost-the-same-2023
     title: "Do All Languages Cost the Same?"
