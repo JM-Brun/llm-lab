@@ -21,6 +21,8 @@ related: ["fr/transformer-architectures", "fr/transformer", "fr/generation", "fr
 tags: ["type:concept-lesson", "destination:deepen", "topic:hybrid-llm-architectures", "level:advanced", "language:fr", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-fr-hybrid-llm-architectures.qmd >}}
+
 ::: {.chapter-lead}
 Un modèle performant doit aussi déplacer et stocker ses données efficacement. **Nemotron 3** illustre une réponse : combiner des couches Mamba-2, quelques couches d'attention et des couches *Mixture of Experts* (MoE), puis optimiser la génération et la précision numérique. Ce cas explique des compromis ; il ne constitue pas une recette universelle. Attention au raccourci « modèle basé sur Transformer » parfois employé dans les synthèses secondaires : Nemotron 3/3.5 est une architecture **hybride Mamba–Attention–MoE**, pas une pile Transformer conventionnelle où chaque bloc utilise l'attention globale.
 :::
