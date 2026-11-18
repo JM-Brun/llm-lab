@@ -224,6 +224,7 @@ The standards profile documents the graph-export and rendered-output checks; use
 | Source lifecycle and quality audit | [Source process audit](source-process-audit.md) |
 | Cross-project knowledge-management comparison and graph-family transfer | [Society Lab → LLM Lab analysis](cross-project-knowledge-management-transfer-2026-11-18.md) |
 | Evidence-traced scientific cross-graph pilot | [Attention, information theory and compression pilot](cross-graph-pilot-attention-information-compression-2026-11-18.md) |
+| Scalability and capacity audit | [Knowledge architecture scale assessment and test matrix](scalability-capacity-audit-2026-11-18.md) |
 | Normative source-ingestion workflow | [Source-to-learning-system integration](workflows/source-to-learning-system-integration.md); [source-to-knowledge validation protocol](workflows/source-to-knowledge-validation.md) |
 | Repeatable information-architecture audits | [Knowledge architecture audit skill](../.agents/skills/knowledge-architecture-audit/SKILL.md) |
 | Page review evidence and remaining checks | [Page audit inventory](page-audit-inventory.md) |
