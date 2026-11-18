@@ -1,0 +1,42 @@
+schema_version: 1
+source_id: bricken-towards-monosemanticity-2023
+
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Official publisher/proceedings metadata and abstract or report overview inspected 2026-11-18."
+      - "Cross-source context: docs/source-reviews/sparse-autoencoder-research-2023-2025.md."
+    inferred_elements:
+      - "Learning implications are editorial synthesis and do not reproduce the paper's full method or experiment."
+  source_graph:
+    nodes:
+      - {id: one-layer-transformer, kind: constraint, description: "The research report studies a one-layer Transformer and its activation space."}
+      - {id: dictionary-features, kind: representation, description: "Sparse dictionary learning identifies an overcomplete set of feature directions in the studied activation space."}
+    edges:
+      - {from: one-layer-transformer, type: scopes, to: dictionary-features}
+    interpretation: "This is a source-local reconstruction of the reported finding and its scope, not a canonical concept graph or an independent reproduction."
+  learning_outcomes:
+    - {status: inferred, outcome: "Distinguish the paper's technical object or result from its natural-language interpretation.", basis: "Abstract-level review; full-paper audit pending."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Transformer activations and basic sparse representation concepts.", basis: "The paper concerns sparse decomposition of model activations."}
+  teaching_route:
+    - {order: 1, section: "Identify scope", function: establish-provenance, moves: ["Record model, publication version and experimental scope."]}
+    - {order: 2, section: "Inspect finding", function: qualify-evidence, moves: ["Separate the reported result from assumptions, limitations and untested generalizations."]}
+  pedagogical_limits:
+    - "Abstract-level source review only; full methods, appendices and code have not yet been audited."
+    - "No model or SAE was run by LLM Lab; no result was independently reproduced."
+
+items:
+  - id: bricken-towards-monosemanticity-2023:abstract-finding
+    kind: result
+    summary: "The 2023 Transformer Circuits research report applies sparse dictionary learning to activations of a one-layer Transformer and reports many interpretable feature directions."
+    locator: {type: section, value: "Transformer Circuits Thread report, published 2023-10-04", label: "Abstract or report overview"}
+    evidence:
+      kind: official-research-report
+      confidence: well-supported
+      scope: "Overview-level review; studied one-layer Transformer and report-specific SAE setup."
+      assumptions: ["The published source and its stated experimental scope are the unit of interpretation."]
+      limitations: ["Not a peer-reviewed proceedings paper; full technical sections and figure rights have not yet been audited."]
+    disposition: integrate
+    disposition_rationale: "Use only within the source's reported model, method, task and evidence scope."
