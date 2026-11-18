@@ -19,7 +19,7 @@ hierarchy:
   parents: ["fr/index"]
   children: ["fr/transformer", "fr/transformer-architectures", "fr/generation", "fr/build-path", "fr/language-modeling-math", "fr/mathematical-foundations", "fr/llm-limits", "fr/llm-computational-complexity"]
 covered_stages: [orientation, text-input, representations, computation, prediction, inference, context-use, scoring, training]
-related: ["fr/transformer-history", "fr/scaling-laws", "fr/llm-evolution", "fr/entropy", "fr/compression-revision", "fr/in-context-learning", "fr/context-engineering", "fr/rag-memory-boundaries", "fr/document-retrieval", "fr/post-training", "fr/llm-overview-exercises"]
+related: ["fr/transformer-history", "fr/scaling-laws", "fr/llm-evolution", "fr/entropy", "fr/compression-revision", "fr/in-context-learning", "fr/context-engineering", "fr/rag-memory-boundaries", "fr/document-retrieval", "fr/post-training", "fr/llm-overview-exercises", "fr/glossary"]
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:fr", "status:published"]
 -->
 
@@ -109,7 +109,7 @@ Pour une probabilité de 0,6, la surprise vaut \( -\ln(0,6)\approx0,51 \) nat ; 
 | **Encodeur-décodeur** | Produit une sortie conditionnée par une entrée, notamment pour les tâches séquence-à-séquence | [Transformer original](https://arxiv.org/abs/1706.03762), [T5](https://jmlr.org/papers/v21/20-074.html) |
 | **Décodeur seul** | Traite un contexte causal et prédit les tokens suivants | [GPT-3](https://arxiv.org/abs/2005.14165) |
 
-**GPT** (*Generative Pre-trained Transformer*) désigne une famille de Transformers décodeur seul pré-entraînés à prédire le prochain token. LLM Lab étudie un petit GPT de ce type, car son calcul peut être suivi et programmé de bout en bout ([comparaison des architectures](transformer-architectures.qmd), [parcours Build](build-path.qmd)). C'est un choix pédagogique : tous les LLM ne sont pas des GPT.
+**GPT** (*Generative Pre-trained Transformer*) désigne une famille de Transformers décodeur seul pré-entraînés à prédire le prochain token. LLM Lab étudie un petit GPT de ce type, car son calcul peut être suivi et programmé de bout en bout ([comparaison des architectures](transformer-architectures.qmd), [parcours Build](build-path.qmd)). C'est un choix pédagogique : tous les LLM ne sont pas des GPT. Pour les termes et leurs définitions, voir le [glossaire des LLM et des Transformers](glossary.qmd).
 
 ## Architecture, apprentissage, utilisation {#architecture-learning-use}
 
