@@ -69,11 +69,7 @@ def cosine_top_k(
     matrix = _as_embedding_matrix(embedding_matrix)
     ids = _as_token_ids(np.asarray([token_id]), matrix.shape[0])
     query_id = int(ids[0])
-    if (
-        isinstance(k, (bool, np.bool_))
-        or not isinstance(k, (int, np.integer))
-        or k < 1
-    ):
+    if isinstance(k, (bool, np.bool_)) or not isinstance(k, (int, np.integer)) or k < 1:
         raise ValueError("k must be a positive integer")
     if not isinstance(exclude_self, bool):
         raise ValueError("exclude_self must be a boolean")
