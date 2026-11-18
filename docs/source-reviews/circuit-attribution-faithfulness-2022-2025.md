@@ -174,3 +174,26 @@ The papers form a methodological sequence rather than competing definitions of o
 - Sparse Feature Circuits move the graph's units to SAE features and reconstruction-error terms, then use attribution and interventions for downstream analysis.
 
 The next integration step is to register each source independently, create source-scoped extractions with method/evidence/limitation locators, then audit the canonical relation vocabulary and bilingual concept pages. No experiment has been run by LLM Lab in this review; no external result is represented as independently reproduced.
+
+
+## 7. Audit of the existing canonical relation vocabulary
+
+The current data/concepts.yml already defines 12 bilingual relation types: represented-by, prerequisite, part-of, constrains, contributes-to, applies-to, mapped-by, produces, normalized-by, contrasts-with, evaluated-by and approximates. This review does not require a new relation type for every method distinction.
+
+| Intended statement | Existing relation candidate | Guardrail |
+|---|---|---|
+| A method estimates an effect of a direct patching operation | approximates | The estimate is not the intervention; preserve the target quantity and approximation assumptions in evidence metadata |
+| A circuit candidate is selected by a discovery algorithm | produces | Record the algorithm, graph, metric, threshold and data; “produces” does not imply correctness |
+| A validation method is applied to a circuit hypothesis | applies-to | This records method scope, not a successful validation result |
+| A circuit/hypothesis is assessed with a faithfulness or recovery metric | evaluated-by | Store the metric definition and intervention protocol; score is not a universal property |
+| A graph or plot depicts a candidate computational graph | represented-by | The representation is not the underlying model graph or proof |
+| An SAE feature/error term is a node in a particular feature-circuit abstraction | part-of | Keep this scoped to the represented graph; do not claim the SAE feature is a native Transformer component |
+| Attribution and intervention are distinct procedures | contrasts-with | Use to prevent conceptual conflation, not as an ontological claim that they are opposites |
+
+### Relation-vocabulary finding
+
+The existing vocabulary is adequate for broad pedagogical and representational links, but it is **not sufficient by itself to encode a rigorous causal claim**. In particular, contributes-to should not be used as a shortcut for “causes”, and produces should not be interpreted as proof that an algorithm's output is valid. The registry currently has no dedicated relation whose semantics explicitly state an experimentally supported causal effect with scope and evidence.
+
+For now, retain causal claims in source-scoped evidence records or structured claim metadata, including intervention, metric, model, inputs and scope. Do not add a generic causal edge to the concept graph until the project has decided how evidence, confidence, scope and counterevidence are represented. This avoids both false precision and a proliferation of weakly typed edges.
+
+One schema hygiene point should also be checked in the implementation: the approximates relation definition appears after a large blank separator in the YAML. Its placement is syntactically valid if it remains inside relation_types, but validators and generated graph projections should confirm it is parsed as a relation type and not silently ignored.
