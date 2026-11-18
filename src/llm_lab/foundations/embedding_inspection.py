@@ -69,24 +69,39 @@ def cosine_top_k(
     matrix = _as_embedding_matrix(embedding_matrix)
     ids = _as_token_ids(np.asarray([token_id]), matrix.shape[0])
     query_id = int(ids[0])
-    if isinstance(k, bool) or not isinstance(k, int) or k < 1:
+    if isinstance(k, (bool, np.bool_)) or not isinstance(k, (int, np.integer)) or k < 1:
         raise ValueError("k must be a positive integer")
     if not isinstance(exclude_self, bool):
         raise ValueError("exclude_self must be a boolean")
 
-    norms = np.linalg.norm(matrix, axis=1)
-    query_norm = norms[query_id]
-    if query_norm == 0:
+    # Scale each row before computing its norm. Direct sum-of-squares can
+    # overflow for large finite values or underflow for tiny ones.
+    scales = np.max(np.abs(matrix), axis=1)
+    scaled = np.divide(
+        matrix,
+        scales[:, None],
+        out=np.zeros_like(matrix),
+        where=scales[:, None] > 0,
+    )
+    scaled_norms = np.sqrt(np.sum(scaled * scaled, axis=1))
+    nonzero = scales > 0
+    if not nonzero[query_id]:
         raise ValueError("the query embedding row must have non-zero norm")
 
-    candidate_ids = np.flatnonzero(norms > 0)
+    candidate_ids = np.flatnonzero(nonzero)
     if exclude_self:
         candidate_ids = candidate_ids[candidate_ids != query_id]
     if k > candidate_ids.size:
         raise ValueError("k exceeds the number of eligible non-zero candidate rows")
 
-    normalized_query = matrix[query_id] / query_norm
-    normalized_candidates = matrix[candidate_ids] / norms[candidate_ids, None]
+    normalized = np.divide(
+        scaled,
+        scaled_norms[:, None],
+        out=np.zeros_like(scaled),
+        where=scaled_norms[:, None] > 0,
+    )
+    normalized_query = normalized[query_id]
+    normalized_candidates = normalized[candidate_ids]
     similarities = normalized_candidates @ normalized_query
     order = np.lexsort((candidate_ids, -similarities))[:k]
     return (
