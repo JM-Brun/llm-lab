@@ -21,6 +21,8 @@ related: []
 tags: ["type:deep-dive", "destination:deepen", "topic:mathematical-foundations", "level:advanced", "language:fr", "status:published"]
 -->
 
+{{< include ../includes/generated-guided-context-fr-mathematical-foundations.qmd >}}
+
 ::: {.chapter-lead}
 Un modèle autorégressif produit des **logits** pour le token suivant. Le softmax les transforme en probabilités ; le token observé détermine la vraisemblance et la perte ; le gradient de cette perte indique comment ajuster les paramètres. Ces étapes sont liées, mais chacune a un rôle précis.
 :::
