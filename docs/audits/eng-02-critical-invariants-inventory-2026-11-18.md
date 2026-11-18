@@ -140,3 +140,27 @@ Séparer aussi les **invariants fonctionnels/mathématiques** des **contrats d'A
 - Nouveau dénominateur : non établi ; ne pas publier de pourcentage.
 - ENG-02 : **not measured**.
 - Mutations manuelles : toujours non exécutées ; la revue statique ne les remplace.
+
+
+## 7. Pilote de mutations — protocole discriminant (préparation)
+
+Les cinq mutations ci-dessous sont définies comme un premier pilote ciblé. Cette section documente les mutations attendues et leurs tests sentinelles ; **elle ne prétend pas qu'elles ont été exécutées**. Le résultat de chacune doit être renseigné uniquement après exécution sur un environnement de test, puis restauration vérifiée du code.
+
+| Mutation | Défaut injecté (un seul changement) | Test sentinelle principal | Signal attendu | État |
+|---|---|---|---|---|
+| MUT-01 — addition résiduelle | Supprimer l'addition de l'attention ou du MLP au flux résiduel dans `TransformerBlock.forward` | `test_block_forward_adds_both_sublayers_to_the_residual_stream` | Échec de l'égalité exacte avec `x + 1.5` lorsque les deux sous-couches sont remplacées par des constantes | À exécuter |
+| MUT-02 — indépendance du batch | Introduire une dépendance entre exemples (par exemple une réduction/normalisation accidentelle sur l'axe batch) | `test_batch_items_are_independent` | Les logits du premier exemple évalué seul diffèrent de ceux du même exemple dans un batch plus grand | À exécuter |
+| MUT-03 — masque causal | Inverser la polarité du triangle causal ou laisser accessibles des clés futures | `test_causal_mask_structure` et `test_scaled_dot_product_attention_causal_invariance` | La structure du masque ou l'invariance des sorties antérieures est violée | À exécuter |
+| MUT-04 — epsilon LayerNorm | Calculer `sqrt(variance) + eps` au lieu de `sqrt(variance + eps)` | `test_layer_norm_epsilon_is_added_to_variance_before_sqrt` | La valeur de sortie ne correspond plus à la référence analytique avec `eps=0.25` | À exécuter |
+| MUT-05 — réduction cross-entropy | Remplacer la moyenne sur le batch par une somme (ou sommer avant de diviser de façon à provoquer un débordement intermédiaire) | `test_cross_entropy_averages_large_finite_losses_without_sum_overflow` | La valeur n'est plus la moyenne attendue, ou le calcul déclenche un débordement/rejet | À exécuter |
+
+### Enregistrement obligatoire par mutation
+
+Pour chaque exécution, consigner : SHA propre de départ ; patch exact ; commande pytest ciblée ; code de sortie ; test/assertion qui échoue ; vérification qu'aucun test sans rapport n'explique l'échec ; restauration ; puis `git diff --exit-code` et vérification du SHA propre. Une mutation survivante doit être analysée : soit l'assertion est insuffisante, soit la mutation ne représente pas un défaut observable dans le contrat. Ne jamais committer une mutation volontaire sur une branche de travail.
+
+### Limites d'interprétation
+
+- Un test sentinelle nommé ici est un candidat justifié par lecture statique, pas encore une preuve de sensibilité.
+- MUT-03 doit être évaluée à la fois au niveau du masque et au niveau de l'attention ; un seul résultat ne prouve pas automatiquement les deux propriétés.
+- MUT-05 cible spécifiquement la réduction batch. La vérification par différences finies peut rester cohérente si loss et gradient subissent la même erreur d'échelle ; elle ne remplace donc pas le test de moyenne.
+- Les cinq résultats ne suffisent pas à approuver le dénominateur global : ils valident seulement cinq correspondances ciblées dans l'inventaire.
