@@ -66,6 +66,29 @@ Run `python experiments/predictive-compression/domain_shift.py`. Two bigram mode
 
 This synthetic control shows that probabilities learned from one source may become unhelpful when the distribution changes. It **does not isolate frequency as the sole cause** and supports no quantitative conclusion about real LLMs or real-world domains.
 
+## Quantized probabilities and an explicitly framed bitstream
+
+Run the second, separate implementation:
+
+~~~bash
+python experiments/predictive-compression/quantized_coder.py
+uv run pytest tests/unit/test_quantized_predictive_coder.py
+~~~
+
+Unlike the exact-rational demonstration above, this path first converts each conditional distribution to positive integer frequencies with a fixed total of `2^12`. It then uses those quantized probabilities for both encoding and decoding, and writes a deterministic frame containing a format marker, version, probability precision, message length, payload bit count and packed payload.
+
+The JSON report keeps distinct quantities:
+
+- floating-point model NLL (the original smoothed bigram probabilities);
+- ideal NLL under the effective quantized frequencies;
+- emitted arithmetic payload bits and payload bytes;
+- padding bits and fixed frame-header bytes;
+- total serialized frame bytes/bits.
+
+The model, training sequence, alphabet and probability tables are shared out of band and are **not transmitted or included** in the frame-size metric. The header carries the message length; this is a framed finite-message demonstration, not a self-delimiting stream. Interval arithmetic still uses exact rational numbers: the experiment tests probability quantization and explicit serialization, not a bounded-state production range coder. The two implementations therefore answer different questions and must not be conflated.
+
+No neural language model is involved. This is a controlled bridge between conditional probabilities, ideal predictive cost and a reproducible lossless bitstream.
+
 ## Interpretation and limits
 
 - Ideal code length is measured in **bits**, using base-2 logarithms.
