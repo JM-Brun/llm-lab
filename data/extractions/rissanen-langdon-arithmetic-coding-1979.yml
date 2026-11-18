@@ -15,7 +15,7 @@ items:
     mapped_concepts: [surprisal, predictive-compression, arithmetic-coding, entropy-coding]
     target_resources: [fr/compression-revision, en/compression-revision]
   - id: rissanen-langdon-arithmetic-coding-1979:finite-precision-and-decodability
-    kind: method
+    kind: mechanism
     summary: "The paper treats finite-precision approximation and unique decodability as explicit construction constraints, rather than assuming that an ideal real-valued interval automatically yields a practical code."
     locator: {type: page-section, value: "pp. 151–152; § Decodability criteria, pp. 157–159", label: "Finite precision and decodability"}
     evidence:
