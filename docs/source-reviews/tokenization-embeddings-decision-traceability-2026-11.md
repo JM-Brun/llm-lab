@@ -43,3 +43,55 @@ The only maintenance obligation exposed by this matrix is to preserve denominato
 - [ ] Keep unresolved revision provenance, visual rights and source retrieval in their owning issues; this matrix does not close #156 or certify asset permissions.
 
 **Status:** bounded matrix drafted for review; no curriculum, source metadata, graph, asset, code or test-suite changes are proposed.
+
+## Traceability audit addendum — 2026-11-18
+
+This addendum closes a gap in the first matrix review: the original table carried evidence types and limitations, but did not expose extraction confidence, cross-source relationships, or concrete editorial action as separate decision fields. It does not change any source claim or disposition.
+
+### Evidence confidence and scan boundary
+
+Confidence values below are copied from the selected extraction items, not inferred from the number of sources. All four extraction records have partial author-text coverage; none represents a complete audit of every linked resource or a reproduced experiment.
+
+| Extraction | Selected evidence confidence | Scan boundary relevant to interpretation |
+|---|---|---|
+| Ali et al. (2024) | established for the intrinsic/extrinsic definition and controlled protocol; well-supported for the downstream result. | Author text and selected figures/tables: partial; code/data: not inspected; rights: unknown. Training code, tokenizer artifacts and raw evaluation data were not independently audited. |
+| Arnett et al. (2025) | established for metric definition and controlled design; well-supported for regression/intervention analyses. | Author text, figures, code/data and linked resources: partial; rights: unknown. Repository contents, trained artifacts and raw corpora were not executed or independently audited. |
+| Wegmann et al. (2025) | established for task-dependent framing; well-supported for pre-tokenizer/task results and task-aware proxy. | Author text and figures: partial; code/data: not inspected; linked resources and metadata: partial; rights: unknown. Preserve the paper's BERT-base and within-English/task-specific scope. |
+| Chiu et al. (2026, TokLens) | established for metric definitions, sample design and English null result; well-supported for multilingual associations and Qwen-family comparison. | Author text, figures, code/data and linked resources: partial; rights: unknown. Results remain bounded by the paper's subsets and observational design; no independent reproduction was performed. |
+
+The confidence field is a claim-level assessment in each YAML extraction. It is not a global quality score for a paper and must not be aggregated across rows.
+
+### Cross-source relationship and decision
+
+| Evidence items | Relationship | What can safely be concluded | What must not be inferred |
+|---|---|---|---|
+| Ali intrinsic/extrinsic evaluation; TokLens six intrinsic metrics | Convergent definitions, complementary scope. Both separate tokenizer-internal properties from downstream model evaluation; TokLens formalizes a broader set of intrinsic denominators. | Keep intrinsic metrics distinct from task/model outcomes and state each unit. | That the two papers use identical metric implementations or datasets. |
+| Arnett token premium/CTC; TokLens cross-lingual parity | Complementary but non-equivalent. Arnett compares content-matched parallel text and corpus-level FLORES CTC; TokLens parity compares tokens/character rates on native-language corpora. | Both expose cross-language tokenizer differences, with different denominators and corpus protocols. | A pooled score, direct numerical comparison, or claim that one validates the other. |
+| Arnett language-feature/whitespace analysis; Wegmann pre-tokenizer boundaries | Mechanistic complementarity across scopes. Both show why pre-tokenization boundaries and orthographic conventions matter; the studied language/task settings differ. | Explain that pre-tokenization constrains merge opportunities and that whitespace is not a universal word boundary. | A causal generalization to all scripts or all production tokenizers. |
+| Ali downstream tokenizer comparison; TokLens English benchmark null; TokLens multilingual associations | Different outcomes, not a contradiction. Model scale, training/evaluation design, task suite, sample subset and statistical controls differ. | Tokenizer effects are context-dependent; intrinsic metrics alone do not establish downstream quality. | A universal ranking, a universal null effect, or causal interpretation of observational multilingual associations. |
+| Wegmann task-aware proxy; Ali downstream outcomes; TokLens benchmark analyses | Complementary evaluation principle. A proxy is meaningful only relative to the task and its evaluation protocol. | Ask what task the metric is intended to predict and validate against that task. | Treating any proxy correlation as a replacement for downstream evaluation. |
+| Arnett vocabulary/SuperBPE interventions; Ali/TokLens production-model evidence | Different evidence levels and experimental objects. Arnett tests tokenizer-level interventions; Ali trains downstream models; TokLens mostly reports intrinsic metrics and observational model associations. | Keep tokenizer compression interventions separate from evidence about trained-model quality. | Claiming Arnett's tokenizer-level gains prove LLM quality or fairness gains. |
+
+No direct replication or head-to-head comparison among these four papers was identified in the inspected extraction records. The matrix therefore records convergence and complementarity, not independent replication.
+
+### Concrete editorial action
+
+| Existing destination | Action justified by this evidence | Decision |
+|---|---|---|
+| Advanced tokenizer evaluation (EN/FR) | Preserve metric definitions, units, subset denominators, model/task scope, and the distinction between aligned-text token premium, FLORES CTC and native-corpus parity. Keep the English null result and multilingual associations separately qualified. | Already implemented in merged bilingual clarification PR #1299; no further edit proposed. |
+| Tokenization strategies / text-data (EN/FR) | Retain the existing explanation that pre-tokenizer boundaries constrain merges; use Arnett/Wegmann only as qualified research references if the mechanism is discussed. | Integrate by reference; no new page or mechanism diagram. |
+| Embedding/contextualization lessons | Preserve the existing distinction between static word-type vectors, token embedding lookup and contextualized hidden states. | Already covered in the existing lessons; no new concept or route step. |
+| Exercise catalogue / learner route | No evidence here establishes a new prerequisite or an additional learner activity. | No route or exercise change. |
+
+### Residual limits and ownership
+
+- The matrix is decision-traceable for the selected claims in the four inspected extraction records; it is not a complete audit of every source in the collection.
+- Mikolov and Ethayarajh remain explicitly outside the atomic matrix because this pass did not retrieve and inspect their exact extraction item IDs and locators. Do not manufacture them from the synthesis.
+- Source revision provenance, complete linked-resource review, code/data reproducibility and asset-level rights remain unresolved at source/asset level. The extraction records mark rights as unknown; this matrix grants no permission.
+- The source-collection inventory snapshot is dated 2026-11-08. Reconcile it against current main before reusing its counts; counts are not evidence completeness.
+- #156 owns the rendered asset inventory and provenance/rights follow-up. #320 owns the four canonical representation pages' browser evidence. #329 owns exercise-hub and manual interaction checks. #82 is closed and must not be listed as an open dependency.
+- Automated rendering or browser assertions do not demonstrate learner mastery or educational effectiveness.
+
+### Audit conclusion
+
+The original decision dispositions remain unchanged. The matrix now makes confidence, evidence relationships, and concrete editorial consequences explicit while preserving the boundaries of partial scans. No new experiment, source record, concept, page, exercise, or route step is justified by this audit.
