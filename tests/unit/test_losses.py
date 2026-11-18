@@ -82,6 +82,7 @@ def test_cross_entropy_averages_large_finite_losses_without_sum_overflow() -> No
     assert loss == pytest.approx(1.7e308)
     assert np.isfinite(loss)
 
+
 def test_unrepresentable_extreme_cross_entropy_is_rejected() -> None:
     logits = np.array([[1e308, -1e308]], dtype=np.float64)
     with (
