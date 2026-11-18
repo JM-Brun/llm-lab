@@ -271,3 +271,12 @@ Le rendu a également émis un avertissement SCSS (« Expecting punctuation: } �
 ### Synthèse de preuve
 
 Le rendu Quarto complet et les contrôles Python sont des preuves techniques ; ils ne remplacent ni la revue visuelle/accessibilité ni le retour d'un apprenant. Les deux liens cassés sont identifiés et corrigés dans les sources, mais la correction ne sera attestée qu'après le nouveau contrôle automatisé.
+
+
+### Réconciliation de la branche avec main
+
+- La branche était en retard de cinq commits sur `main` (merge base `a4294292`, main `80a92115`).
+- Les cinq commits de `main` ont été examinés : ils ajoutent le workflow canonique de changement de connaissances, les skills de création/intégration de pages, le rapport de couverture source → connaissances et les mises à jour de contribution/catalogue.
+- Les changements de `main` ont été intégrés dans un commit de fusion à deux parents : `8c4a9d581c4fd142615ada47577948b73b395211`. Les chemins modifiés par les deux branches ont été comparés ; `.github/workflows/ci.yml` était identique des deux côtés, les autres ajouts ont été importés depuis `main`.
+- La comparaison `main...docs/llm-overview-learning-review` indique maintenant zéro commit de retard. La PR demeure ouverte et en brouillon ; ne pas considérer sa fusion comme acquise.
+- Les validations doivent être relues sur ce nouveau HEAD. Au premier relevé, seul le scan des secrets était visible et encore en cours ; l'absence de conclusion CI/Quarto ne vaut pas réussite.
