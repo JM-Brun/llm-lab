@@ -249,3 +249,29 @@ de tests déjà validé. Ne pas modifier la CI sur cette seule base.
 - Aucune des cinq mutations manuelles n'a été exécutée dans un clone local.
 - Aucune revue humaine n'est enregistrée sur la PR ; elle reste en brouillon.
 
+
+
+## 14. Inventaire ENG-02 — périmètre approuvé et décompte candidat
+
+Le mainteneur a approuvé le périmètre de dix domaines GPT. Un inventaire
+candidat de **48 invariants** a été créé dans
+[ENG-02 — inventaire des invariants critiques](eng-02-critical-invariants-inventory-2026-11-18.md).
+
+Ce nombre de 48 n'est pas encore le dénominateur officiel. Il reste à faire
+approuver les unités de comptage, les regroupements et la pondération uniforme
+proposée. Les statuts « protégé » sont des constats statiques de présence
+d'assertions, non une preuve de sensibilité à une mutation. Les lignes partielles
+restent au dénominateur proposé et sont exclues du numérateur strict.
+
+L'inventaire documente notamment les lacunes candidates suivantes :
+- validation de types pour `context_length` / `stride` ;
+- rejet explicite de `top_p=True` ;
+- vérification des fenêtres réellement transmises par `generate` ;
+- stabilité de cosine sur amplitudes extrêmes et prise en charge éventuelle de
+  `np.int64(k)` ;
+- collisions de noms préfixés/non préfixés et atomicité complète du chargement
+  GPT-2.
+
+**ENG-02 reste not measured.** Les cinq mutations manuelles n'ont toujours pas
+été exécutées. Prochaine étape : revue du tableau de 48 lignes, puis mutation
+pilote dans un clone local et liaison de chaque résultat à l'ID concerné.
