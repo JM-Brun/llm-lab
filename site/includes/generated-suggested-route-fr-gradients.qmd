@@ -1,0 +1,10 @@
+<div class="route-nav-cards">
+  <a class="route-nav-card" href="loss.qmd">
+    <span class="nav-direction">← Étape précédente · Apprendre et mettre à jour les paramètres</span>
+    <span class="nav-title">Loss : de la perte par token à l&#x27;objectif</span>
+  </a>
+  <a class="route-nav-card" href="training-loop.qmd">
+    <span class="nav-direction">Continuer Apprendre et mettre à jour les paramètres →</span>
+    <span class="nav-title">La boucle d&#x27;entraînement : des gradients au modèle entraîné</span>
+  </a>
+</div>

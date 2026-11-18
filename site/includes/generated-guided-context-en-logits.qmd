@@ -1,0 +1,6 @@
+<nav class="guided-page-context" aria-label="Learning path context">
+  <span class="guided-page-context__label">Learning path</span>
+  <a class="guided-page-context__stage" href="learning-map.html#guided-stage-prediction">05 · From hidden states to the predictive distribution</a>
+  <span class="guided-page-context__badge" data-stage-id="prediction" data-stage-index="5" data-stage-total="9">Stage 5/9</span>
+  <span class="guided-page-context__position">Stage 5 of 9 · page 1 of 3</span>
+</nav>

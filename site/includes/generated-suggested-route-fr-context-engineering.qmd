@@ -1,0 +1,10 @@
+<div class="route-nav-cards">
+  <a class="route-nav-card" href="in-context-learning.qmd">
+    <span class="nav-direction">← Étape précédente · Exploiter et concevoir le contexte</span>
+    <span class="nav-title">Apprentissage en contexte (in-context learning)</span>
+  </a>
+  <a class="route-nav-card" href="vraisemblance.qmd">
+    <span class="nav-direction">Continuer Exploiter et concevoir le contexte →</span>
+    <span class="nav-title">Vraisemblance et log-vraisemblance</span>
+  </a>
+</div>

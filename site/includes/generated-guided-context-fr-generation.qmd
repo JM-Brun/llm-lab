@@ -1,0 +1,28 @@
+<section class="guided-page-context guided-page-context--multiple"
+         aria-labelledby="guided-page-context-heading">
+  <p id="guided-page-context-heading">Cette page intervient à plusieurs moments du parcours : <strong>Générer du texte : l&#x27;inférence pas à pas</strong>.</p>
+  <ul>
+    <li>
+      <a href="learning-map.html#guided-stage-orientation">01 · Fonctionnement d’un LLM</a>
+      <span class="guided-page-context__role">Étape centrale</span>
+      <span class="guided-page-context__badge" data-stage-id="orientation" data-stage-index="1" data-stage-total="9">Étape 1/9</span>
+      <span class="guided-page-context__position">Étape 1 sur 9 · page 2 sur 2</span>
+      <p>Comprendre ce qu&#x27;est un LLM et suivre une génération complète comme une boîte noire, avec des paramètres fixes, avant d&#x27;en étudier les mécanismes internes.</p>
+    </li>
+    <li>
+      <a href="learning-map.html#guided-stage-inference">06 · Exécuter l&#x27;inférence et générer du texte</a>
+      <span class="guided-page-context__role">Étape centrale</span>
+      <span class="guided-page-context__badge" data-stage-id="inference" data-stage-index="6" data-stage-total="9">Étape 6/9</span>
+      <span class="guided-page-context__position">Étape 6 sur 9 · page 1 sur 1</span>
+      <p>Distinguer le prefill du prompt du decode itératif, sélectionner un token selon une politique de décodage, le réinjecter dans le contexte et arrêter la génération sans mettre à jour les paramètres.</p>
+    </li>
+  </ul>
+</section>
+<section class="guided-page-transitions" aria-label="Liens entre étapes expliqués sur cette page">
+  <p class="guided-page-transitions__label">Liens entre étapes expliqués sur cette page</p>
+  <details class="guided-page-transitions__item">
+    <summary>Des états à la distribution prédictive → Exécuter l&#x27;inférence et générer du texte</summary>
+    <p class="guided-page-transitions__stages"><a href="learning-map.html#guided-stage-prediction">Des états à la distribution prédictive</a> → <a href="learning-map.html#guided-stage-inference">Exécuter l&#x27;inférence et générer du texte</a></p>
+    <p>Relier la distribution conditionnelle du prochain token à sa sélection, puis à sa réinjection dans la boucle autorégressive jusqu&#x27;à l&#x27;arrêt.</p>
+  </details>
+</section>

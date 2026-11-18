@@ -1,0 +1,10 @@
+<div class="route-nav-cards">
+  <a class="route-nav-card" href="positional-encoding.qmd">
+    <span class="nav-direction">← Previous · From IDs to representations</span>
+    <span class="nav-title">Positional encoding: giving tokens an order</span>
+  </a>
+  <a class="route-nav-card" href="transformer.qmd">
+    <span class="nav-direction">Continue From IDs to representations →</span>
+    <span class="nav-title">The Transformer in a GPT: architecture and computation</span>
+  </a>
+</div>

@@ -1,0 +1,28 @@
+<section class="guided-page-context guided-page-context--multiple"
+         aria-labelledby="guided-page-context-heading">
+  <p id="guided-page-context-heading">This page appears at more than one point in the learning path : <strong>Generating text: inference step by step</strong>.</p>
+  <ul>
+    <li>
+      <a href="learning-map.html#guided-stage-orientation">01 · How an LLM works</a>
+      <span class="guided-page-context__role">Core stage</span>
+      <span class="guided-page-context__badge" data-stage-id="orientation" data-stage-index="1" data-stage-total="9">Stage 1/9</span>
+      <span class="guided-page-context__position">Stage 1 of 9 · page 2 of 2</span>
+      <p>Understand what an LLM is and follow a complete generation loop as a black box with fixed parameters before studying its internal mechanisms.</p>
+    </li>
+    <li>
+      <a href="learning-map.html#guided-stage-inference">06 · Run inference and generate text</a>
+      <span class="guided-page-context__role">Core stage</span>
+      <span class="guided-page-context__badge" data-stage-id="inference" data-stage-index="6" data-stage-total="9">Stage 6/9</span>
+      <span class="guided-page-context__position">Stage 6 of 9 · page 1 of 1</span>
+      <p>Distinguish prompt prefill from iterative decode, select a token with a decoding policy, feed it back into the context, and stop generation without updating parameters.</p>
+    </li>
+  </ul>
+</section>
+<section class="guided-page-transitions" aria-label="Stage connections explained on this page">
+  <p class="guided-page-transitions__label">Stage connections explained on this page</p>
+  <details class="guided-page-transitions__item">
+    <summary>From hidden states to the predictive distribution → Run inference and generate text</summary>
+    <p class="guided-page-transitions__stages"><a href="learning-map.html#guided-stage-prediction">From hidden states to the predictive distribution</a> → <a href="learning-map.html#guided-stage-inference">Run inference and generate text</a></p>
+    <p>Connect the conditional next-token distribution to token selection, then to feedback into the autoregressive loop until stopping.</p>
+  </details>
+</section>

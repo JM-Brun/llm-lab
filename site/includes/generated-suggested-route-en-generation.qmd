@@ -1,0 +1,18 @@
+<div class="route-nav-cards">
+  <a class="route-nav-card" href="llm-overview.qmd">
+    <span class="nav-direction">← Previous · How an LLM works</span>
+    <span class="nav-title">Overview: what is an LLM?</span>
+  </a>
+  <a class="route-nav-card" href="text-data.qmd">
+    <span class="nav-direction">Continue How an LLM works →</span>
+    <span class="nav-title">From text to tokens: representing language</span>
+  </a>
+  <a class="route-nav-card" href="entropy.qmd">
+    <span class="nav-direction">← Previous · Run inference and generate text</span>
+    <span class="nav-title">Entropy: uncertainty over the next token</span>
+  </a>
+  <a class="route-nav-card" href="in-context-learning.qmd">
+    <span class="nav-direction">Continue Run inference and generate text →</span>
+    <span class="nav-title">In-context learning</span>
+  </a>
+</div>

@@ -1,0 +1,10 @@
+<div class="route-nav-cards">
+  <a class="route-nav-card" href="logits.qmd">
+    <span class="nav-direction">← Previous · From hidden states to the predictive distribution</span>
+    <span class="nav-title">Logits: scores before normalization</span>
+  </a>
+  <a class="route-nav-card" href="entropy.qmd">
+    <span class="nav-direction">Continue From hidden states to the predictive distribution →</span>
+    <span class="nav-title">Entropy: uncertainty over the next token</span>
+  </a>
+</div>

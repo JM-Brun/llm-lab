@@ -1,0 +1,6 @@
+<div class="route-nav-cards">
+  <a class="route-nav-card" href="mathematical-foundations.qmd">
+    <span class="nav-direction">← Previous step</span>
+    <span class="nav-title">The mathematical chain of LLM training</span>
+  </a>
+</div>

@@ -1,0 +1,10 @@
+<div class="route-nav-cards">
+  <a class="route-nav-card" href="loss.qmd">
+    <span class="nav-direction">← Previous · Learn and update parameters</span>
+    <span class="nav-title">Loss: from per-token penalty to training objective</span>
+  </a>
+  <a class="route-nav-card" href="training-loop.qmd">
+    <span class="nav-direction">Continue Learn and update parameters →</span>
+    <span class="nav-title">The training loop: from gradients to a trained model</span>
+  </a>
+</div>

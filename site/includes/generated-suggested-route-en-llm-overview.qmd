@@ -1,0 +1,6 @@
+<div class="route-nav-cards">
+  <a class="route-nav-card" href="generation.qmd">
+    <span class="nav-direction">Continue How an LLM works →</span>
+    <span class="nav-title">Generating text: inference step by step</span>
+  </a>
+</div>

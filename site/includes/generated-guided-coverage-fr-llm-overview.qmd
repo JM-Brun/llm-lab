@@ -1,0 +1,14 @@
+<section class="guided-page-coverage" aria-labelledby="guided-coverage-fr-llm-overview">
+  <h2 class="guided-page-coverage__heading" id="guided-coverage-fr-llm-overview">Étapes du parcours abordées dans ce panorama</h2>
+  <ul class="guided-page-coverage__list">
+    <li><a href="learning-map.html#guided-stage-orientation">Fonctionnement d’un LLM</a></li>
+    <li><a href="learning-map.html#guided-stage-text-input">Du texte aux tokens</a></li>
+    <li><a href="learning-map.html#guided-stage-representations">Des identifiants aux représentations</a></li>
+    <li><a href="learning-map.html#guided-stage-computation">Comprendre le calcul du Transformer</a></li>
+    <li><a href="learning-map.html#guided-stage-prediction">Des états à la distribution prédictive</a></li>
+    <li><a href="learning-map.html#guided-stage-inference">Exécuter l&#x27;inférence et générer du texte</a></li>
+    <li><a href="learning-map.html#guided-stage-context-use">Exploiter et concevoir le contexte</a></li>
+    <li><a href="learning-map.html#guided-stage-scoring">Attribuer un score aux tokens observés</a></li>
+    <li><a href="learning-map.html#guided-stage-training">Apprendre et mettre à jour les paramètres</a></li>
+  </ul>
+</section>

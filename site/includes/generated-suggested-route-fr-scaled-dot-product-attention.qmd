@@ -1,0 +1,10 @@
+<div class="route-nav-cards">
+  <a class="route-nav-card" href="queries-keys-values.qmd">
+    <span class="nav-direction">← Étape précédente · Comprendre le calcul du Transformer</span>
+    <span class="nav-title">Requêtes, clés et valeurs (Q, K, V)</span>
+  </a>
+  <a class="route-nav-card" href="causal-masking.qmd">
+    <span class="nav-direction">Continuer Comprendre le calcul du Transformer →</span>
+    <span class="nav-title">Masque causal</span>
+  </a>
+</div>
