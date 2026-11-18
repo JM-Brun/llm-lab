@@ -525,6 +525,5 @@ def test_explicit_null_collection_membership_is_rejected(tmp_path: Path) -> None
     errors = MODULE.validate_source_catalogue(tmp_path)
 
     assert any(
-        "sources[0].collections: expected a list of collection IDs" in error
-        for error in errors
+        "sources[0].collections: expected a list of collection IDs" in error for error in errors
     )
