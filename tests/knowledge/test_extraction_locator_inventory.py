@@ -78,3 +78,36 @@ def test_value_shape_recognizes_timestamp_ranges() -> None:
     assert MODULE._value_shape("00:00\u201303:02 and 12:59\u201314:55") == "timestamp-like"
     assert MODULE._value_shape("1:28:42\u20131:49:58 onward") == "timestamp-like"
     assert MODULE._value_shape("Chapter 2: 05:41\u201310:22") == "section-like"
+
+
+def test_yaml_error_diagnostics_do_not_disclose_source_text(tmp_path: Path) -> None:
+    sentinel = "PRIVATE_SOURCE_SENTINEL_7f3a91"
+    extraction = tmp_path / "data" / "extractions" / "malformed.yml"
+    extraction.parent.mkdir(parents=True, exist_ok=True)
+    extraction.write_text(f"items:\\n  - locator: [\\n    {sentinel}: value\\n", encoding="utf-8")
+
+    report = MODULE.collect_inventory(tmp_path)
+
+    assert len(report["yaml_or_record_errors"]) == 1
+    diagnostic = report["yaml_or_record_errors"][0]
+    assert diagnostic["file"] == "malformed.yml"
+    assert diagnostic["category"] == "yaml-parse-failed"
+    assert diagnostic["exception_type"]
+    assert isinstance(diagnostic.get("line"), int)
+    assert isinstance(diagnostic.get("column"), int)
+    assert sentinel not in str(report)
+    assert "locator: [" not in str(report)
+
+
+def test_invalid_structure_diagnostic_is_fixed_and_source_free(tmp_path: Path) -> None:
+    sentinel = "PRIVATE_STRUCTURE_SENTINEL_91ac"
+    extraction = tmp_path / "data" / "extractions" / "structure.yml"
+    extraction.parent.mkdir(parents=True, exist_ok=True)
+    extraction.write_text(f"{sentinel}: not-an-items-list\\n", encoding="utf-8")
+
+    report = MODULE.collect_inventory(tmp_path)
+
+    assert report["yaml_or_record_errors"] == [
+        {"file": "structure.yml", "category": "invalid-record-structure"}
+    ]
+    assert sentinel not in str(report)
