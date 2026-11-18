@@ -158,9 +158,7 @@ def test_row_kl_to_uniform_is_not_mutual_information() -> None:
     contrasting_rows = np.array([[0.9, 0.1], [0.1, 0.9]])
 
     def mean_row_kl(rows: np.ndarray) -> float:
-        return float(
-            np.mean([kl_divergence(row, uniform, base=2.0) for row in rows])
-        )
+        return float(np.mean([kl_divergence(row, uniform, base=2.0) for row in rows]))
 
     repeated_joint = context_probabilities[:, None] * repeated_rows
     contrasting_joint = context_probabilities[:, None] * contrasting_rows
@@ -175,4 +173,3 @@ def test_row_kl_to_uniform_is_not_mutual_information() -> None:
     assert repeated_mi == pytest.approx(0.0)
     # This equality is incidental: the contrasting rows have a uniform marginal.
     assert contrasting_mi == pytest.approx(repeated_kl)
-

@@ -5893,3 +5893,261 @@ sources:
       audit_records:
         - docs/source-reviews/karpathy-deep-dive-llms-2026-11.md
         - docs/source-reviews/karpathy-deep-dive-learning-graph-2026-11.md
+
+  - id: conmy-automated-circuit-discovery-2023
+    title: "Towards Automated Circuit Discovery for Mechanistic Interpretability"
+    creators: ["Arthur Conmy", "Augustine N. Mavor-Parker", "Aengus Lynch", "Stefan Heimersheim", "Adrià Garriga-Alonso"]
+    source_type: paper
+    identifiers: {arxiv: "2304.14997", doi: "10.52202/075280-0719"}
+    canonical_url: "https://papers.nips.cc/paper_files/paper/2023/hash/34e1dbe95d34d7ebaf99b9bcaeb5b2be-Abstract-Conference.html"
+    publisher: "Advances in Neural Information Processing Systems 36 (NeurIPS 2023)"
+    publication_date: "2023"
+    updated_date: null
+    language: en
+    version: "Published NeurIPS 2023 conference paper; preprint first posted 2023"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: link-only, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:mechanistic-interpretability, topic:circuits, method:activation-patching, method:circuit-discovery]
+      concept_ids: [contextualized-representation]
+    metadata:
+      technical_level: advanced
+      contribution_types: [method, experiment, implementation]
+      audiences: [researcher, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "Official NeurIPS 2023 proceedings metadata, abstract and available paper overview"
+          - "Reported ACDC Greater-Than result and graph-pruning framing"
+        limitations:
+          - "Full methods, appendices, implementation details and all benchmark tasks still require a line-by-line audit."
+          - "The 68-of-32,000-edge result is specific to GPT-2 Small, the Greater-Than task and the paper's graph/metric setup."
+          - "No ACDC run or independent reproduction was performed by LLM Lab."
+          - "Licence and figure/data reuse permissions have not been independently verified."
+    related:
+      pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced]
+      concepts: [contextualized-representation]
+      audit_records:
+        - docs/source-reviews/circuit-attribution-faithfulness-2022-2025.md
+        - data/extractions/conmy-automated-circuit-discovery-2023.yml
+
+  - id: syed-attribution-patching-2024
+    title: "Attribution Patching Outperforms Automated Circuit Discovery"
+    creators: ["Aaquib Syed", "Can Rager", "Arthur Conmy"]
+    source_type: paper
+    identifiers: {arxiv: "2310.10348", doi: "10.18653/v1/2024.blackboxnlp-1.25"}
+    canonical_url: "https://aclanthology.org/2024.blackboxnlp-1.25/"
+    publisher: "Proceedings of the 7th BlackboxNLP Workshop, Association for Computational Linguistics"
+    publication_date: "2024-11-15"
+    updated_date: null
+    language: en
+    version: "Published BlackboxNLP 2024 paper, pages 407-416; preprint first posted 2023"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: link-only, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:mechanistic-interpretability, topic:circuits, method:attribution-patching, method:circuit-discovery]
+      concept_ids: [contextualized-representation]
+    metadata:
+      technical_level: advanced
+      contribution_types: [method, experiment, benchmark]
+      audiences: [researcher, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "ACL Anthology proceedings record, author list, DOI, venue, pages and abstract"
+          - "Accessible paper PDF abstract, introduction and method distinction between activation patching and attribution patching"
+        limitations:
+          - "Detailed benchmark tables, all task-level results and complete failure-mode analysis remain to be audited."
+          - "The reported average AUC comparison is scoped to the paper's benchmark suite and recovery protocol."
+          - "No implementation, benchmark or circuit recovery experiment was independently reproduced."
+          - "Licence and reuse permissions for figures/code/data remain unverified."
+    related:
+      pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced]
+      concepts: [contextualized-representation]
+      audit_records:
+        - docs/source-reviews/circuit-attribution-faithfulness-2022-2025.md
+        - data/extractions/syed-attribution-patching-2024.yml
+
+  - id: kramar-atp-star-2024
+    title: "AtP*: Efficient and Scalable Methods for Localizing LLM Behaviour to Components"
+    creators: ["János Kramár", "Tom Lieberum", "Rohin Shah", "Neel Nanda"]
+    source_type: paper
+    identifiers: {arxiv: "2403.00745"}
+    canonical_url: "https://arxiv.org/abs/2403.00745"
+    publisher: "arXiv / Google DeepMind"
+    publication_date: "2024-03-01"
+    updated_date: null
+    language: en
+    version: "2024 arXiv preprint; Google DeepMind research publication page dated 2024-03-04"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:mechanistic-interpretability, topic:circuits, method:attribution-patching, method:activation-patching]
+      concept_ids: [contextualized-representation]
+    metadata:
+      technical_level: advanced
+      contribution_types: [method, mathematical-derivation, experiment]
+      audiences: [researcher, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "arXiv metadata and abstract"
+          - "Google DeepMind publication record and abstract, including the stated two false-negative classes and residual-risk bound"
+        limitations:
+          - "Full derivations, precise AtP* modifications, experimental tables and assumptions behind the residual false-negative bound remain to be audited."
+          - "AtP* remains a gradient-based pre-filter/approximation; the reported bound is conditional on the paper's assumptions."
+          - "No code, model or patching sweep was executed by LLM Lab."
+          - "The source is catalogued as an arXiv preprint, not as peer-reviewed proceedings."
+    related:
+      pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced]
+      concepts: [contextualized-representation]
+      audit_records:
+        - docs/source-reviews/circuit-attribution-faithfulness-2022-2025.md
+        - data/extractions/kramar-atp-star-2024.yml
+
+  - id: hanna-faithfulness-2024
+    title: "Have Faith in Faithfulness: Going Beyond Circuit Overlap When Finding Model Mechanisms"
+    creators: ["Michael Hanna", "Sandro Pezzelle", "Yonatan Belinkov"]
+    source_type: paper
+    identifiers: {arxiv: "2403.17806"}
+    canonical_url: "https://openreview.net/forum?id=zSf8PJyQb2"
+    publisher: "Proceedings of the 2024 Conference on Language Modeling (COLM 2024)"
+    publication_date: "2024"
+    updated_date: null
+    language: en
+    version: "Published COLM 2024 conference paper; preprint first posted 2024"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:mechanistic-interpretability, topic:circuits, method:attribution-patching, method:faithfulness-evaluation]
+      concept_ids: [contextualized-representation]
+    metadata:
+      technical_level: advanced
+      contribution_types: [method, experiment, evaluation]
+      audiences: [researcher, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "COLM proceedings paper metadata, author list and abstract"
+          - "Accessible paper text describing EAP-IG, circuit faithfulness and comparison with edge/node overlap"
+        limitations:
+          - "Complete task-by-task results, ablation settings, metrics and appendices still require detailed audit."
+          - "Faithfulness is operationalized for the paper's tasks, data, target metrics and ablation protocol; it is not a universal scalar property."
+          - "No EAP-IG implementation or circuit evaluation was independently reproduced."
+          - "Licence and reuse permissions for figures/code/data remain unverified."
+    related:
+      pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced]
+      concepts: [contextualized-representation]
+      audit_records:
+        - docs/source-reviews/circuit-attribution-faithfulness-2022-2025.md
+        - data/extractions/hanna-faithfulness-2024.yml
+
+  - id: chan-causal-scrubbing-2022
+    title: "Causal Scrubbing: A Method for Rigorously Testing Interpretability Hypotheses"
+    creators: ["Lawrence Chan", "Adrià Garriga-Alonso", "Nicholas Goldowsky-Dill", "Ryan Greenblatt", "Jenny Nitishinskaya", "Ansh Radhakrishnan", "Buck Shlegeris", "Nate Thomas"]
+    source_type: other
+    identifiers: {}
+    canonical_url: "https://www.alignmentforum.org/posts/JvZhhzycHu2Yd57RN/causal-scrubbing-a-method-for-rigorously-testing"
+    publisher: "AI Alignment Forum / Redwood Research"
+    publication_date: "2022-12-03"
+    updated_date: null
+    language: en
+    version: "Research report published 2022-12-03; part of a multi-post sequence"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:mechanistic-interpretability, topic:circuits, method:causal-scrubbing, method:resampling-ablation]
+      concept_ids: [contextualized-representation]
+    metadata:
+      technical_level: advanced
+      contribution_types: [method, theory, experiment]
+      audiences: [researcher, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "Original Alignment Forum post metadata, author list, setup, hypothesis formalization and causal-scrubbing algorithm overview"
+          - "Limitations section: exact equivalence classes, dataset support, correlated features and incomplete hypotheses"
+        limitations:
+          - "Appendix sequence and companion empirical posts on induction heads and parenthesis balancing have not been ingested as separate sources."
+          - "The method tests a hypothesis under its own resampling/equivalence rules; passing does not guarantee that a hypothesis is desirable or complete."
+          - "No causal-scrubbing implementation or model experiment was run by LLM Lab."
+          - "Research-report status must not be upgraded to peer-reviewed publication."
+    related:
+      pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced]
+      concepts: [contextualized-representation]
+      audit_records:
+        - docs/source-reviews/circuit-attribution-faithfulness-2022-2025.md
+        - data/extractions/chan-causal-scrubbing-2022.yml
+
+  - id: marks-sparse-feature-circuits-2025
+    title: "Sparse Feature Circuits: Discovering and Editing Interpretable Causal Graphs in Language Models"
+    creators: ["Samuel Marks", "Can Rager", "Eric J. Michaud", "Yonatan Belinkov", "David Bau", "Aaron Mueller"]
+    source_type: paper
+    identifiers: {arxiv: "2403.19647"}
+    canonical_url: "https://proceedings.iclr.cc/paper_files/paper/2025/hash/3ba4d47a83e498c2b1a0868cba20f6de-Abstract-Conference.html"
+    publisher: "International Conference on Learning Representations (ICLR 2025)"
+    publication_date: "2025"
+    updated_date: null
+    language: en
+    version: "Published ICLR 2025 conference paper; preprint first posted 2024"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: link-only, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: [mathematical-tools-geometry]
+      tags: [topic:mechanistic-interpretability, topic:circuits, topic:sparse-autoencoders, method:feature-circuit-discovery, method:feature-editing]
+      concept_ids: [contextualized-representation]
+    metadata:
+      technical_level: advanced
+      contribution_types: [method, experiment, implementation]
+      audiences: [researcher, practitioner, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "Official ICLR 2025 proceedings metadata, author list and abstract"
+          - "Reported sparse feature circuit framing and SHIFT application"
+        limitations:
+          - "Full method, graph construction, SAE reconstruction-error handling, indirect-effect estimation, thresholds and experimental tables still require detailed audit."
+          - "Human judgments used by SHIFT to label task-irrelevant features are part of the method and should not be confused with a model-native semantic label."
+          - "No SAE circuit pipeline or SHIFT experiment was independently reproduced."
+          - "Licence and figure/data reuse permissions have not been independently verified."
+    related:
+      pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced]
+      concepts: [contextualized-representation]
+      audit_records:
+        - docs/source-reviews/circuit-attribution-faithfulness-2022-2025.md
+        - data/extractions/marks-sparse-feature-circuits-2025.yml
