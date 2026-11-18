@@ -15,7 +15,7 @@ items:
     mapped_concepts: [entropy, conditional-distribution, surprisal]
     target_resources: [fr/entropy, en/entropy, fr/cross-entropy, en/cross-entropy]
   - id: shannon-mathematical-theory-communication-1948:noiseless-channel-coding-theorem
-    kind: theorem
+    kind: claim
     summary: "Theorem 9 establishes the asymptotic coding-rate limit for a discrete source over a noiseless channel: coding can approach the entropy-limited rate, while exceeding it is impossible under the theorem's source/channel assumptions. Its constructive discussion uses finite blocks and integer binary code lengths."
     locator: {type: page-section, value: "§9, pp. 16–17, Theorem 9 and second proof", label: "The fundamental theorem for a noiseless channel"}
     evidence:
