@@ -31,6 +31,19 @@ Le décodage est documenté séparément. Il ne faut donc pas présenter la list
 
 **Limites :** documentation vivante, sans révision immuable garantie par l'URL `latest` ; l'inspection ne couvre ni toutes les API d'alignement/offsets, ni les bindings, ni les comportements de chaque composant.
 
+### Vérification des bindings, offsets et limites de version
+
+Le commit documentaire inspecté (`1a9ec50b1cdf1cf97da689aad32003aa73d49755`) contient un avertissement important qui doit accompagner toute lecture générale du pipeline :
+
+- `pipeline.mdx`, `components.mdx` et `quicktour.mdx` avertissent que les bindings `rc0` ne permettent alors que de charger un `tokenizer.json`, puis d'encoder et décoder. Construire un tokenizer depuis ses composants, le modifier, le sauvegarder et l'entraîner ne sont pas exposés dans ces bindings.
+- `api/encoding.mdx` annonce explicitement que `offsets`, `tokens`, `sequence_ids`, `word_ids`, `overflowing` et plusieurs autres attributs ne sont pas encore disponibles dans les bindings `rc0`.
+- `api/tokenizer.mdx` indique de même que les propriétés `decoder`, `model`, `normalizer`, `post_processor` et `pre_tokenizer` ne sont pas encore exposées en lecture dans ces bindings ; les pages d'API des normalizers, pre-tokenizers et decoders portent elles aussi un avertissement de documentation de référence non encore générée.
+- `REQUIRED_FOR_V1.md` décrit des éléments retirés ou en attente de réintroduction avant 1.0 : setters, écriture de `tokenizer.json`, constructeurs, truncation/padding et tests. Le document signale notamment que la pipeline peut actuellement ignorer silencieusement une configuration de truncation/padding lue depuis `tokenizer.json`. Ce point est une limite documentée de cette révision, pas une affirmation sur toutes les versions de Tokenizers.
+
+Une incohérence documentaire ciblée mérite d'être conservée comme réserve : le quicktour donne un exemple d'accès à `output.offsets`, alors que la page de référence `api/encoding.mdx` dit que cet attribut n'est pas disponible dans les bindings `rc0`. L'exemple d'offset illustre en outre deux référentiels d'indexation : Python montre `(26, 27)` pour l'emoji dans la chaîne Unicode, tandis que Rust montre `(26, 30)` pour les octets UTF-8. Les valeurs ne doivent pas être comparées sans préciser le référentiel et le langage.
+
+**Conséquence pour le projet :** citer la documentation du pipeline pour expliquer l'architecture conceptuelle, mais ne pas en déduire que toutes les opérations décrites sont exposées dans chaque binding/version. Pour un usage pratique, consigner la version de Tokenizers, le langage, le type d'offset (caractères/octets) et la disponibilité effective des API. Les offsets sont un point de vérification prioritaire dans un futur audit exécuté.
+
 ## 2. tiktoken — production et module éducatif
 
 **Dépôt :** [openai/tiktoken](https://github.com/openai/tiktoken)  
