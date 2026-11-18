@@ -17,6 +17,14 @@ uv run --no-project --with-requirements docs/requirements-history-validation.txt
   --output reports/source-audits/extraction-locator-inventory.json
 ```
 
+## GitHub Actions execution
+
+The CI workflow exposes the full-corpus report as an opt-in job:
+- From **Actions → CI → Run workflow**, set `run_locator_inventory=true`.
+- A pull request whose title contains `[inventory]` also opts in and checks out that PR's head commit.
+
+The job runs the command above against every `data/extractions/*.yml` file, prints a compact report to the job summary, and uploads a 90-day artifact containing the raw JSON plus separate execution metadata (exact SHA, run/attempt, command, timestamps, duration, Python/PyYAML/uv versions, platform and runner architecture). It does not add a new required-CI gate for locator shapes: only YAML or record-structure errors make the report command fail; scalar and unsupported locator shapes remain observational categories.
+
 ## What it reports
 
 - Number of extraction files and items visited.
@@ -30,10 +38,93 @@ uv run --no-project --with-requirements docs/requirements-history-validation.txt
 
 Non-mapping extraction records are not counted as items with missing locators. The report deliberately does not print locator values, fetch URLs, resolve citations, infer that a source was inspected, or declare a grammar valid. Scalar text locators are preserved as an observed representation and are not automatically treated as invalid. Shape buckets are heuristics for triage, not semantic validation.
 
+## Full-corpus baseline — 2026-11-18
+
+The first official YAML-parsed inventory completed on GitHub Actions run `44322275805`, measured commit `452b30e9d14dcf0f9c5723ff91318b51a564b9af`.
+
+| Measure | Result |
+|---|---:|
+| Extraction YAML files | 84 |
+| Extraction items | 432 |
+| Items without locator | 0 |
+| Scalar `items[].locator` values | 0 |
+| Unsupported locator shapes | 0 |
+| Non-mapping extraction records | 0 |
+| Mappings with missing/invalid required fields | 0 |
+| YAML or record-structure errors | 0 |
+| Locator key sets `type,value` | 71 |
+| Locator key sets `label,type,value` | 361 |
+
+All 432 extraction items have a mapping locator with a non-empty `type` and a non-empty `value` according to the current inventory checks. No locator values were printed in the report.
+
+### Observed locator types
+
+| Type | Count | Observed value forms |
+|---|---:|---|
+| `section` | 354 | 281 opaque text, 34 section-like, 25 line-reference-like, 14 page-number-like |
+| `page` | 18 | 18 HTTP(S) URLs |
+| `timestamp` | 14 | 14 timestamp-like values after range-aware classification |
+| `chapter` | 11 | 11 timestamp-like values (single times and ranges) |
+| `page-section` | 7 | 7 opaque text |
+| `heading` | 7 | 7 opaque text |
+| `figure` | 4 | 4 opaque text |
+| `paragraph` | 4 | 4 opaque text |
+| `article` | 3 | 3 opaque text |
+| `comment` | 3 | 3 opaque text |
+| `abstract` | 2 | 2 opaque text |
+| `code` | 2 | 2 opaque text |
+| `external-source` | 2 | 2 opaque text |
+| `external-code` | 1 | 1 opaque text |
+
+The scalar-locator count of zero applies specifically to `items[].locator`. Historical descriptive strings in other fields, such as `pedagogical_model.source_graph.nodes[].locator`, are a separate contract and are not part of this inventory.
+
+**Heuristic correction:** the first report classified timestamp ranges with en dashes or hyphens as `opaque-text`. The classifier is now range-aware and recognizes single timestamps, hyphen/en-dash/em-dash ranges, multiple ranges joined by `and`/`or`, and an optional `onward` suffix. Regression tests cover `05:41–10:22`, `00:01:00-03:21:46`, `00:00–03:02 and 12:59–14:55`, and `1:28:42–1:49:58 onward`. This changes only the report's descriptive bucket, not validation policy.
+
+### Preliminary type contract matrix
+
+The corpus supports a structural contract, but not one universal value grammar. The following matrix records the observed forms and the conservative rule for now.
+
+| Type | Count | Representative historical value | Provisional interpretation / validation policy |
+|---|---:|---|---|
+| `section` | 354 | `§2.1–2.2 and §3.2, pp. 9905–9906`; `Definition, lines 19–24` | Broad textual anchor: headings, section numbers, page ranges and line references. Preserve opaque text; do not impose one grammar. |
+| `page` | 18 | `https://huggingface.co/learn/llm-course/` | URL locator; all observed values are HTTP(S). Keep URL-shape monitoring report-only until compatibility is established. |
+| `timestamp` | 14 | `05:41–10:22`; `00:00–03:02 and 12:59–14:55` | Video time range, possibly multiple segments or a trailing `onward` note; range-aware shape classification is covered by regression tests. |
+| `chapter` | 11 | `00:01:00-03:21:46`; `01:20:32` | Video chapter/time anchor; both ranges and single timestamps occur. |
+| `page-section` | 7 | `pp. 150–152, especially Eqs. (1)–(5)` | Combined page and section/equation anchor. |
+| `heading` | 7 | `AI and Compression` | Descriptive heading text. |
+| `figure` | 4 | `Fig. 1 caption`; `After 'Three different vectors…'` | Figure caption or nearby in-body anchor; not always a numbered figure. |
+| `paragraph` | 4 | `Post body, paragraphs 2–3` | Paragraph/range anchor in article or post text. |
+| `article` | 3 | `From Full to Hybrid Attention in LLMs` | Article title plus optional label for a subtopic. |
+| `comment` | 3 | `Visible reply by @X_differentials on the mirrored post` | Comment/reply anchor; canonical source identity remains elsewhere in the source/evidence metadata. |
+| `abstract` | 2 | `Benchmark description` | Abstract subheading/topic anchor. |
+| `code` | 2 | `PositionalEncoding.__init__ and PositionalEncoding.forward` | Symbol/function anchor. |
+| `external-source` | 2 | `Dao et al. 2022, abstract and IO analysis` | Descriptive pointer to an external source; the value need not itself be a URL. Canonical source identity must be resolved through source/evidence metadata. |
+| `external-code` | 1 | `rasbt/LLMs-from-scratch/...ipynb; code cells 10, 11, 13 and 15` | Repository path and code-cell anchor. |
+
+Common fields:
+- `type`: required non-empty string under the current validator.
+- `value`: required non-empty string under the observed corpus; the validator currently checks truthiness, not the Python type or a type-specific grammar.
+- `label`: optional descriptive disambiguator. Present on 361/432 locators; absent on 71/432. Do not make it mandatory.
+- Additional keys are not currently governed by a closed schema.
+
+**Compatibility rule:** keep the mapping shape and required non-empty `type`/`value` as the structural contract. Treat unknown types, opaque text, mixed page/section anchors and additional keys as report-only until their semantics are reviewed. Do not promote locator presence into proof of source inspection or claim support.
+
+### Reproducibility
+
+Two raw snapshots are retained:
+- Initial classifier output: `reports/source-audits/extraction-locator-inventory-2026-11-18.json` and `reports/source-audits/extraction-locator-inventory-2026-11-18.metadata.json`.
+- Range-aware corrected output: `reports/source-audits/extraction-locator-inventory-2026-11-18-v2.json` and `reports/source-audits/extraction-locator-inventory-2026-11-18-v2.metadata.json`.
+
+The corrected run used commit `a765ac6f5e0f8006831c1f870ae37454c15b1b63`, Actions run `44323092996`, attempt 1. It completed in 2 seconds on GitHub-hosted Linux x64 (`Linux-7.0.0-1016-aws-x86_64-with-glibc2.43`), CPython 3.12.16, PyYAML 6.0.3 and uv 0.13.7. The exact command, timestamps and all execution metadata are in the JSON metadata file. Artifact archive SHA-256: `005b8e406e5ee13b25d9a5259c9cd61a845c284d1f7b384ca3732d06c55f8ef7` (90-day GitHub Actions copy).
+
+The two snapshots have identical structural counts (84 files, 432 items, zero malformed/missing/scalar/unsupported records). The corrected snapshot changes only the heuristic shape classification: all 14 timestamp locators and all 11 chapter locators are now timestamp-like.
+
+This baseline establishes the observed corpus shape, not locator resolution, source inspection, claim support, independent corroboration or type-specific semantic validity.
+
 ## Next steps
 
-1. Run against the complete checked-out corpus and retain the dated JSON artifact when useful.
-2. Inspect representative examples for each locator type and scalar form; identify collisions (one type used for multiple incompatible forms).
+1. Repeat the inventory after meaningful extraction-corpus changes and retain dated JSON plus execution metadata.
+2. Continue type-specific semantic review, especially the broad `section` category and the descriptive `external-source`/`external-code` anchors.
 3. Define a grammar only for types with stable, unambiguous usage; keep unknown/custom types report-only until classified.
-4. Add type-specific unit fixtures, including legacy and partial records, before promoting malformed values to CI errors.
+4. Add compatibility fixtures before promoting malformed values to CI errors.
 5. Keep locator syntax validation separate from source availability, claim support, and independent corroboration.
