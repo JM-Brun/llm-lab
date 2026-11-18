@@ -13,5 +13,5 @@ collections:
     status: active
   - id: visual-learning-tools
     title: "Visual learning tools"
-    dossier: docs/source-reviews/visual-learning-resources-2026-11.md
+    dossier: docs/source-reviews/embedding-atlas-neuronpedia-integration-2026-11.md
     status: active
