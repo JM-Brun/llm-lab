@@ -94,7 +94,7 @@ Dans un réseau profond, la rétropropagation applique efficacement cette règle
 
 ### Exemple numérique : de la loss aux poids de sortie
 
-Reprenons la distribution du premier tour du scribe, $p=(0{,}6;0{,}2;0{,}1;0{,}1)$, avec « Être » comme cible. Le gradient par rapport aux logits est :
+Reprenons la distribution du premier tour, $p=(0{,}6;0{,}2;0{,}1;0{,}1)$, avec « Vous » comme cible. Le gradient par rapport aux logits est :
 
 $$
 g_z=p-y=(-0{,}4;\,0{,}2;\,0{,}1;\,0{,}1).
