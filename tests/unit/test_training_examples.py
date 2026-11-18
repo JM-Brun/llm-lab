@@ -110,12 +110,18 @@ def test_output_is_deterministic_and_stream_is_not_mutated() -> None:
         ([1, 2, 3], 2, 0),
         ([1, 2, 3], -1, 1),
         ([1, 2, 3], 1, -2),
+        ([1, 2, 3], True, 1),
+        ([1, 2, 3], 1, False),
+        ([1, 2, 3], 1.5, 1),
+        ([1, 2, 3], 1, 1.5),
+        ([1, 2, 3], np.float64(2.0), 1),
+        ([1, 2, 3], 1, np.bool_(True)),
     ],
 )
 def test_invalid_inputs_raise_value_error(
     token_ids: object,
-    context_length: int,
-    stride: int,
+    context_length: object,
+    stride: object,
 ) -> None:
     with pytest.raises(ValueError):
         sliding_input_target_pairs(token_ids, context_length, stride)
