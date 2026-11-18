@@ -24,8 +24,8 @@ pedagogical_model:
         description: "AtP* modifies the approximation to address two reported classes of false negatives and provides a residual-risk estimate."
         locator: "Abstract: AtP* and false-negative bound"
     edges:
-      - {from: src-activation-patching, type: contributes-to, to: src-atp}
-      - {from: src-atp, type: produces, to: src-atp-star}
+      - {from: src-atp, type: approximates, to: src-activation-patching}
+      - {from: src-atp-star, type: approximates, to: src-activation-patching}
     interpretation: "Source-local reconstruction only; it is not the canonical concept graph, a complete computational graph or an independent reproduction."
   learning_outcomes:
     - {status: inferred, outcome: "Distinguish the source's technical object, method, estimate, intervention and explanatory representation.", basis: "Editorial synthesis of the inspected source scope."}
