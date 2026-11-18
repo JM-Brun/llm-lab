@@ -170,9 +170,9 @@ Parallelism does not remove algorithmic dependencies: it distributes available w
 
 For a standard, unquantized key–value cache, a useful memory estimate is:
 
-$
+$$
 M_{KV} \approx 2 \, L \, B \, T \, n_{KV} \, d_{head} \, s,
-$
+$$
 
 where $L$ is the number of layers, $B$ the number of sequences in the batch, $T$ the number of cached positions, $n_{KV}$ the number of key–value heads, $d_{head}$ their dimension, and $s$ the bytes per element (for example, 2 for a 16-bit format). The factor 2 counts keys and values. This estimate assumes equal sequence lengths and omits allocation overhead; for a batch with different lengths, sum the positions actually cached. Quantization changes the bytes per element. With Grouped-Query Attention, $n_{KV}$ is smaller than the number of query heads, reducing cache size.
 
