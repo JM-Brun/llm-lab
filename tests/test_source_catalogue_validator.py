@@ -536,7 +536,7 @@ def test_collection_registry_rejects_invalid_ids_status_and_unsafe_paths(tmp_pat
                     "id": "Not Valid",
                     "title": "",
                     "dossier": "../outside.md",
-                    "status": "current",
+                    "status": ["active"],
                     "owning_issue": 0,
                 }
             ],
