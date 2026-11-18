@@ -38,7 +38,7 @@ By the end of this lesson, you should be able to:
   <span class="epistemic-badge badge-status">Architecture: Transformer Blocks</span>
 </div>
 
-Two sentences can contain the same token without giving it the same role: *bank* refers to a river edge in one and a financial institution in the other. Yet the tokenizer may assign the same ID to both occurrences. **The lookup does not change; the Transformer's processing of the sequence builds hidden states that depend on context.**
+The question “What have the Romans ever done for us?” and a reply such as “The Romans built roads” contain the same visible word in different surrounding sequences. Under the assumption that the tokenizer assigns it the same ID, both occurrences retrieve the same initial vector. **The lookup does not change; the Transformer's processing of each sequence builds hidden states that depend on context.**
 :::
 
 ::: {.callout-tip title="The one-minute mental model"}
