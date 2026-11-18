@@ -62,7 +62,7 @@ def build_report(root: Path) -> dict[str, Any]:
     unknown_concept_references: set[str] = set()
     source_without_concept: list[str] = []
     source_without_destination: list[str] = []
-    sources_without_extraction: list[dict[str, str]] = []
+    sources_without_extraction: list[dict[str, Any]] = []
     unknown_dates: list[str] = []
     unknown_licences: list[str] = []
     scan_history_mismatches: list[str] = []
@@ -98,11 +98,15 @@ def build_report(root: Path) -> dict[str, Any]:
             )
         related = source.get("related")
         pages: set[str] = set()
+        audit_records: list[str] = []
         if isinstance(related, dict):
             concept_ids.update(
                 value for value in related.get("concepts", []) if isinstance(value, str)
             )
             pages.update(value for value in related.get("pages", []) if isinstance(value, str))
+            audit_records = [
+                value for value in related.get("audit_records", []) if isinstance(value, str)
+            ]
 
         records = extraction_by_source.get(source_id, [])
         for record in records:
@@ -127,7 +131,11 @@ def build_report(root: Path) -> dict[str, Any]:
             source_without_destination.append(source_id)
         if not records:
             sources_without_extraction.append(
-                {"id": source_id, "integration_status": integration_status}
+                {
+                    "id": source_id,
+                    "integration_status": integration_status,
+                    "audit_records": audit_records,
+                }
             )
 
     concepts_without_sources = sorted(
@@ -159,6 +167,12 @@ def build_report(root: Path) -> dict[str, Any]:
             "integrated_sources_without_extraction": sum(
                 item["integration_status"] == "integrated" for item in sources_without_extraction
             ),
+            "sources_without_extraction_with_audit_record": sum(
+                bool(item["audit_records"]) for item in sources_without_extraction
+            ),
+            "sources_without_extraction_without_audit_record": sum(
+                not item["audit_records"] for item in sources_without_extraction
+            ),
             "sources_without_concept_link": len(source_without_concept),
             "sources_without_page_destination": len(source_without_destination),
             "concepts_without_source": len(concepts_without_sources),
@@ -181,6 +195,12 @@ def build_report(root: Path) -> dict[str, Any]:
                 for item in sources_without_extraction
                 if item["integration_status"] == "integrated"
             ],
+            "sources_without_extraction_with_audit_record": [
+                item["id"] for item in sources_without_extraction if item["audit_records"]
+            ],
+            "sources_without_extraction_without_audit_record": [
+                item["id"] for item in sources_without_extraction if not item["audit_records"]
+            ],
             "sources_without_concept_link": sorted(source_without_concept),
             "sources_without_page_destination": sorted(source_without_destination),
             "concepts_without_source": concepts_without_sources,
@@ -195,6 +215,11 @@ def build_report(root: Path) -> dict[str, Any]:
             "sources_without_extraction": (
                 "Review queue, not an error: record an explicit defer/reject/already-covered "
                 "decision where appropriate; do not create empty extraction files."
+            ),
+            "audit_record_links": (
+                "A related.audit_records link is a navigation aid, not proof that the audit "
+                "contains a source-specific extraction decision or item-level evidence. "
+                "Review the linked record before treating a source as already covered."
             ),
             "concepts_with_one_source": (
                 "Coverage signal only. A single authoritative source may be sufficient; "
@@ -245,7 +270,8 @@ def render_markdown(report: dict[str, Any]) -> str:
                 if isinstance(value, dict):
                     lines.append(
                         f"- {value.get('id')}: integration status "
-                        f"`{value.get('integration_status')}`"
+                        f"`{value.get('integration_status')}`; "
+                        f"{len(value.get('audit_records', []))} linked audit record(s)"
                     )
                 else:
                     lines.append(f"- {value}")
