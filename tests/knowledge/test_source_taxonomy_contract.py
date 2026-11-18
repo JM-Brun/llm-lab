@@ -116,3 +116,23 @@ def test_pedagogical_assessment_rejects_evidence_confidence_as_rating() -> None:
     )
     expected_error = "assessment.novelty.level: unsupported value 'well-supported'"
     assert expected_error in errors
+
+
+def test_controlled_value_lists_are_unique() -> None:
+    taxonomy = _taxonomy()
+    controlled_lists = (
+        "source_types",
+        "technical_levels",
+        "contribution_types",
+        "audiences",
+        "scan_statuses",
+        "integration_statuses",
+        "item_dispositions",
+        "assessment_levels",
+        "evidence_confidence_levels",
+        "extraction_kinds",
+    )
+
+    for field in controlled_lists:
+        values = taxonomy[field]
+        assert len(values) == len(set(values)), f"{field} contains duplicate controlled values"
