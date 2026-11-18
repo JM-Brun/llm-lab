@@ -24,8 +24,8 @@ pedagogical_model:
         description: "Causal scrubbing recursively resamples activations from inputs permitted by the hypothesis and compares resulting behavior with the original behavior."
         locator: "Section 3.2: algorithm"
     edges:
-      - {from: src-mechanistic-hypothesis, type: contributes-to, to: src-equivalence-classes}
-      - {from: src-equivalence-classes, type: produces, to: src-resampling-test}
+      - {from: src-mechanistic-hypothesis, type: evaluated-by, to: src-resampling-test}
+      - {from: src-equivalence-classes, type: constrains, to: src-resampling-test}
     interpretation: "Source-local reconstruction only; it is not the canonical concept graph, a complete computational graph or an independent reproduction."
   learning_outcomes:
     - {status: inferred, outcome: "Distinguish the source's technical object, method, estimate, intervention and explanatory representation.", basis: "Editorial synthesis of the inspected source scope."}
