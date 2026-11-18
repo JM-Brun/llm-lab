@@ -3000,7 +3000,7 @@ sources:
           - "The platform-generated summary and author comment are not treated as peer-reviewed evidence."
           - "The hosted figure's exact provenance and reuse permissions were not established; link only, do not copy."
     related:
-      pages: ["fr/contextualized-representations","en/contextualized-representations"]
+      pages: ["fr/contextualized-representations","en/contextualized-representations","fr/jepa-platonic-representation","en/jepa-platonic-representation"]
       concepts: ["contextualized-representation","next-token-prediction","training-objective"]
       audit_records:
         - docs/source-reviews/platonic-representation-jepa-2026-11.md
@@ -3024,7 +3024,7 @@ sources:
       primary_theme: mathematical-tools-geometry
       secondary_themes: [architectures-mechanisms, scale-research]
       tags: [topic:platonic-representation-hypothesis, topic:jepa, topic:spectral-embedding, topic:cross-modal-alignment, method:positive-pairs, method:laplacian-eigenmaps]
-      concept_ids: [contextualized-representation, training-objective]
+      concept_ids: [contextualized-representation, training-objective, platonic-representation-hypothesis]
     metadata:
       technical_level: advanced
       contribution_types: [mathematical-derivation, pedagogy, paper-review]
@@ -3045,8 +3045,8 @@ sources:
           - "The article is a secondary explanation; the arXiv paper remains authoritative for theorem assumptions and experimental protocol."
           - "No licence or permission to reproduce the article's figures or prose was established."
     related:
-      pages: []
-      concepts: [contextualized-representation, training-objective]
+      pages: [fr/jepa-platonic-representation, en/jepa-platonic-representation]
+      concepts: [contextualized-representation, training-objective, platonic-representation-hypothesis]
       audit_records:
         - docs/source-reviews/platonic-representation-jepa-2026-11.md
         - data/extractions/eleventh-hour-enthusiast-platonic-representation-jepa-2026.yml
