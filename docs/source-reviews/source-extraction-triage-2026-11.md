@@ -5,9 +5,9 @@
 ## 1. Réconciliation de l'inventaire
 
 - Catalogue : **139 sources**.
-- Fichiers d'extraction : **93**.
+- Fichiers d'extraction : **95**.
 - Cinq fichiers portent un nom différent de l'identifiant du catalogue, mais leur champ `source_id` renvoie bien à une source existante : Chanin, Cunningham, Neuronpedia, Shu et Wayland. Ils ne doivent pas être comptés comme cinq sources non extraites. La convention du dépôt demande néanmoins un nom de fichier égal à l'identifiant canonique ; cette anomalie de nommage mérite un correctif séparé.
-- Sennrich et al. (2016), #1311, a été fusionnée dans `main` le 18 novembre 2026 ; son extraction est incluse dans les 93 fichiers.
+- Sennrich et al. (2016), #1311, a été fusionnée dans `main` le 18 novembre 2026 ; son extraction est incluse dans les fichiers présents sur `main`.
 - Gage (1994), #1314, a depuis également été fusionnée dans `main`.
 - Le décompte de **44 sources** du présent triage est donc obsolète. Il doit être recalculé par comparaison ensembliste des `source_id` du catalogue et des extractions du head courant ; ne pas le réutiliser comme état actuel. Les cinq fichiers non canoniques restent des extractions existantes, pas cinq sources manquantes.
 
