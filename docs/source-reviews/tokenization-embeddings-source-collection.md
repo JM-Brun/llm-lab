@@ -1,8 +1,8 @@
 # Tokenization and embeddings — cross-source synthesis
 
-**Current inventory snapshot (2026-11-08).** The canonical catalogue contains 54 source records across LLM Lab. This collection has 12 structured tokenization/embeddings extraction records; the repository-wide `data/extractions/` directory contains 20 YAML extraction records (12 tokenization/embeddings, 4 Q/K/V, and 4 records in adjacent attention, KV-cache, inference-efficiency and multimodal topics). These are inventory counts, not measures of scan completeness or pedagogical quality. The registration/extraction PRs #460, #463, #467, #468 and #469 are merged. Exact metadata and asset-level reuse gaps remain unresolved as described below and in #156.
+**Current inventory snapshot (2026-11-18).** The canonical catalogue contains 139 source records across LLM Lab, and the repository-wide `data/extractions/` directory contains 87 YAML extraction files. The collection-specific extraction count is intentionally not restated: the catalogue has no deterministic collection-membership field, and the earlier 12-record figure is a historical 2026-11-08 snapshot. Reconcile membership from the current collection dossier and extraction source IDs before publishing a new subset count. These are inventory counts, not measures of scan completeness or pedagogical quality. The registration/extraction PRs #460, #463, #467, #468 and #469 are merged. Exact metadata and asset-level reuse gaps remain unresolved as described below and in #156.
 
-**Status:** living source collection · **Review date:** 2026-11-05  
+**Status:** living source collection · **Review date:** 2026-11-18  
 **Catalogue:** [data/sources.yml](../../data/sources.yml)  
 **Migration map:** [Tokenization and embeddings source migration map](tokenization-embeddings-source-migration-map-2026-11.md)  
 **Method transfer assessment:** [Source-to-knowledge method transfer validation](../source-syntheses/tokenization-embeddings-method-transfer-validation-2026-11.md)  
