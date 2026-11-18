@@ -140,3 +140,53 @@ Séparer aussi les **invariants fonctionnels/mathématiques** des **contrats d'A
 - Nouveau dénominateur : non établi ; ne pas publier de pourcentage.
 - ENG-02 : **not measured**.
 - Mutations manuelles : toujours non exécutées ; la revue statique ne les remplace.
+
+
+## 7. Pilote de mutations — protocole discriminant (préparation)
+
+Les cinq mutations ci-dessous sont définies comme un premier pilote ciblé. Cette section documente les mutations attendues et leurs tests sentinelles ; **elle ne prétend pas qu'elles ont été exécutées**. Le résultat de chacune doit être renseigné uniquement après exécution sur un environnement de test, puis restauration vérifiée du code.
+
+| Mutation | Défaut injecté (un seul changement) | Test sentinelle principal | Signal attendu | État |
+|---|---|---|---|---|
+| MUT-01 — addition résiduelle | Supprimer l'addition de l'attention ou du MLP au flux résiduel dans `TransformerBlock.forward` | `test_block_forward_adds_both_sublayers_to_the_residual_stream` | Échec de l'égalité exacte avec `x + 1.5` lorsque les deux sous-couches sont remplacées par des constantes | À exécuter |
+| MUT-02 — indépendance du batch | Introduire une dépendance entre exemples (par exemple une réduction/normalisation accidentelle sur l'axe batch) | `test_batch_items_are_independent` | Les logits du premier exemple évalué seul diffèrent de ceux du même exemple dans un batch plus grand | À exécuter |
+| MUT-03 — masque causal | Inverser la polarité du triangle causal ou laisser accessibles des clés futures | `test_causal_mask_structure` et `test_scaled_dot_product_attention_causal_invariance` | La structure du masque ou l'invariance des sorties antérieures est violée | À exécuter |
+| MUT-04 — epsilon LayerNorm | Calculer `sqrt(variance) + eps` au lieu de `sqrt(variance + eps)` | `test_layer_norm_epsilon_is_added_to_variance_before_sqrt` | La valeur de sortie ne correspond plus à la référence analytique avec `eps=0.25` | À exécuter |
+| MUT-05 — réduction cross-entropy | Remplacer la moyenne sur le batch par une somme (ou sommer avant de diviser de façon à provoquer un débordement intermédiaire) | `test_cross_entropy_averages_large_finite_losses_without_sum_overflow` | La valeur n'est plus la moyenne attendue, ou le calcul déclenche un débordement/rejet | À exécuter |
+
+### Enregistrement obligatoire par mutation
+
+Pour chaque exécution, consigner : SHA propre de départ ; patch exact ; commande pytest ciblée ; code de sortie ; test/assertion qui échoue ; vérification qu'aucun test sans rapport n'explique l'échec ; restauration ; puis `git diff --exit-code` et vérification du SHA propre. Une mutation survivante doit être analysée : soit l'assertion est insuffisante, soit la mutation ne représente pas un défaut observable dans le contrat. Ne jamais committer une mutation volontaire sur une branche de travail.
+
+### Limites d'interprétation
+
+- Un test sentinelle nommé ici est un candidat justifié par lecture statique, pas encore une preuve de sensibilité.
+- MUT-03 doit être évaluée à la fois au niveau du masque et au niveau de l'attention ; un seul résultat ne prouve pas automatiquement les deux propriétés.
+- MUT-05 cible spécifiquement la réduction batch. La vérification par différences finies peut rester cohérente si loss et gradient subissent la même erreur d'échelle ; elle ne remplace donc pas le test de moyenne.
+- Les cinq résultats ne suffisent pas à approuver le dénominateur global : ils valident seulement cinq correspondances ciblées dans l'inventaire.
+
+
+## 8. Première correspondance atomique — lot pilote
+
+Cette table précise les unités candidates derrière le pilote. Les identifiants sont des repères de travail, **pas un dénominateur approuvé**. Les unités voisines restent séparées lorsqu'une mutation peut violer l'une sans violer l'autre.
+
+| ID candidat | Propriété atomique | Implémentation | Assertion sentinelle | Mutation discriminante |
+|---|---|---|---|---|
+| BLOCK-02a | La sortie de la sous-couche attention est ajoutée au flux résiduel | `src/llm_lab/foundations/transformer_block.py::TransformerBlock.forward` | `tests/unit/test_transformer_block.py::test_block_forward_adds_both_sublayers_to_the_residual_stream` | Omettre uniquement `x + attention_output` |
+| BLOCK-02b | La sortie de la sous-couche MLP est ajoutée au flux résiduel après l'attention | `src/llm_lab/foundations/transformer_block.py::TransformerBlock.forward` | Même test sentinelle ; la constante MLP vaut `-0.5` | Omettre uniquement l'addition de la sortie MLP |
+| GPT-04 | Un exemple du batch ne dépend pas des autres exemples | `src/llm_lab/foundations/gpt.py::GPT.forward` | `tests/unit/test_gpt.py::test_batch_items_are_independent` | Introduire une opération qui mélange les éléments du batch |
+| ATT-01a | Le masque causal représente les positions futures comme interdites | `src/llm_lab/foundations/attention.py::causal_mask` | `tests/unit/test_attention.py::test_causal_mask_structure` | Inverser le triangle autorisé/interdit |
+| ATT-01b | Les sorties antérieures de l'attention ne dépendent pas des clés/valeurs futures | `src/llm_lab/foundations/attention.py::scaled_dot_product_attention` | `tests/unit/test_attention.py::test_scaled_dot_product_attention_causal_invariance` | Ignorer le masque causal dans le calcul des poids |
+| OPS-03a | L'epsilon est ajouté à la variance avant la racine carrée | `src/llm_lab/foundations/gpt_ops.py::layer_norm` | `tests/unit/test_gpt_ops.py::test_layer_norm_epsilon_is_added_to_variance_before_sqrt` | Déplacer l'addition de l'epsilon après la racine |
+| LOSS-03a | La cross-entropy est réduite par moyenne sur le batch, et non par somme | `src/llm_lab/foundations/losses.py::cross_entropy_from_logits` | `tests/unit/test_losses.py::test_cross_entropy_averages_large_finite_losses_without_sum_overflow` | Remplacer la moyenne par une somme |
+| LOSS-03b | La réduction de pertes finies proches de la limite float64 évite un débordement intermédiaire | `src/llm_lab/foundations/losses.py::cross_entropy_from_logits` | Même test sentinelle | Sommer les pertes avant division, de façon à provoquer un overflow intermédiaire |
+
+Commandes ciblées prévues, à exécuter séparément pour chaque mutation :
+
+- `pytest -q tests/unit/test_transformer_block.py::test_block_forward_adds_both_sublayers_to_the_residual_stream`
+- `pytest -q tests/unit/test_gpt.py::test_batch_items_are_independent`
+- `pytest -q tests/unit/test_attention.py::test_causal_mask_structure tests/unit/test_attention.py::test_scaled_dot_product_attention_causal_invariance`
+- `pytest -q tests/unit/test_gpt_ops.py::test_layer_norm_epsilon_is_added_to_variance_before_sqrt`
+- `pytest -q tests/unit/test_losses.py::test_cross_entropy_averages_large_finite_losses_without_sum_overflow`
+
+La même assertion peut étayer plusieurs unités candidates si elle détecte séparément chacune des mutations définies. La preuve doit toutefois être consignée mutation par mutation ; une exécution réussie du test sur le code non muté n'établit pas sa sensibilité.
