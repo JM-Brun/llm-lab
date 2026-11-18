@@ -40,7 +40,7 @@ The first case is **few-shot / in-context learning**: the examples condition the
 
 </details>
 
-5. **Reconstruct the generation loop.** An assistant receives a prompt and must produce three tokens. Put these operations in order: (a) append the selected token to the context; (b) convert the text into tokens; (c) check whether the three-new-token limit has been reached; (d) compute the next-token distribution; (e) select a token using the decoding rule; (f) process the initial context. Do the model parameters change at each iteration?
+6. **Reconstruct the generation loop.** An assistant receives a prompt and must produce three tokens. Put these operations in order: (a) append the selected token to the context; (b) convert the text into tokens; (c) check whether the three-new-token limit has been reached; (d) compute the next-token distribution; (e) select a token using the decoding rule; (f) process the initial context. Do the model parameters change at each iteration?
 
 <details>
 <summary>Show the answer and reasoning</summary>

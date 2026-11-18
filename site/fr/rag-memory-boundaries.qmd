@@ -1,28 +1,28 @@
 ---
-title: "RAG, mémoire et récupération documentaire"
-subtitle: "Comment une information externe devient — ou ne devient pas — exploitable par un modèle"
-description-meta: "Distinguer recherche documentaire, RAG, mémoire persistante, injection dans le contexte et apprentissage en contexte."
+title: "RAG, mémoire et transmission au contexte"
+subtitle: "Du stockage externe à l’information effectivement utilisée par le modèle"
+description-meta: "Comprendre le cycle de vie des informations externes, le RAG, la mémoire applicative, la transmission au contexte et leurs limites."
 lang: fr
 keywords: ["type:deep-dive", "destination:deepen", "topic:rag-memory", "level:advanced", "language:fr", "status:published"]
 ---
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/rag-memory-boundaries"
-scope: "Frontières entre stockage externe, récupération documentaire, mémoire applicative, construction du contexte, RAG et ICL."
+scope: "Suit le cycle de vie de l’information externe depuis sa sélection par un système RAG ou mémoire jusqu’à sa transmission et son exploitation par le modèle ; les méthodes de recherche documentaire sont détaillées dans leur page sœur."
 domain: "inference-efficiency"
-purpose: "Tracer le trajet d'une information externe jusqu'à son éventuelle exploitation par un LLM et diagnostiquer les défaillances de chaque étape."
+purpose: "Le lecteur doit distinguer stockage, récupération, transmission et exploitation, expliquer les rôles du RAG et de la mémoire, et diagnostiquer les défaillances de la chaîne."
 suggested_route:
   previous: null
   next: null
 hierarchy:
   parents: ["fr/deepen"]
   children: []
-related: ["fr/in-context-learning", "fr/context-engineering", "fr/contextualized-representations", "fr/generation", "fr/post-training"]
+related: ["fr/in-context-learning", "fr/context-engineering", "fr/contextualized-representations", "fr/generation", "fr/post-training", "fr/document-retrieval"]
 tags: ["type:deep-dive", "destination:deepen", "topic:rag-memory", "level:advanced", "language:fr", "status:published"]
 -->
 
 ::: {.chapter-lead}
-Un document peut exister dans une base, être indexé et retrouvé par une recherche sans que le modèle en ait connaissance au moment de répondre. Pour devenir exploitable, une information externe doit franchir une frontière supplémentaire : être transmise au modèle dans son contexte, ou lui être rendue accessible par un outil effectivement appelé. Cette page distingue récupération documentaire, RAG, mémoire et *context engineering* de l'**in-context learning (ICL)**, qui décrit ce que le modèle fait avec les informations reçues.
+Un document peut exister dans une base, être indexé et retrouvé sans que le modèle en ait connaissance au moment de répondre. Cette page suit le passage de l'information externe vers son usage effectif : récupération par un système, sélection, transmission au contexte ou accès par un outil, puis exploitation par le modèle. Elle distingue RAG, mémoire applicative et *context engineering* de l'**in-context learning (ICL)**, qui décrit ce que le modèle fait avec les informations reçues.
 :::
 
 ## 1. De la source à l'exploitation : six états distincts
@@ -40,72 +40,9 @@ Un document peut exister dans une base, être indexé et retrouvé par une reche
 
 Cette distinction prolonge les trois niveaux de contexte décrits dans [Ingénierie du contexte](context-engineering.qmd) : informations sélectionnées par l'application, séquence réellement fournie au modèle et positions accessibles dans le calcul du Transformer. Voir aussi [Représentations contextualisées](contextualized-representations.qmd) et [Masquage causal](causal-masking.qmd).
 
-## 2. Récupération documentaire : retrouver n'est pas transmettre
+## 2. De la recherche à la transmission
 
-La **récupération documentaire** (*document retrieval* ou *information retrieval*) sélectionne des documents ou passages pertinents à partir d'une requête. Elle peut alimenter un moteur de recherche classique, un pipeline RAG ou une mémoire.
-
-Un pipeline typique comprend :
-1. **Ingestion et parsing** : extraction du texte, de la structure et des métadonnées depuis des PDF, pages web, dépôts ou bases.
-2. **Normalisation et découpage** : production d'unités récupérables (*chunks*) en préservant autant que possible titres, tableaux, références et liens vers le document parent.
-3. **Indexation** : index lexical, représentations vectorielles, métadonnées filtrables ou combinaison de ces structures.
-4. **Formulation de requête** : reformulation, expansion des termes ou sous-requêtes éventuelles.
-5. **Recherche** : correspondance lexicale, similarité dense, filtres structurés ou recherche hybride.
-6. **Classement** : fusion, *reranking*, dédoublonnage et sélection des passages.
-7. **Restitution** : retour des extraits, identifiants, scores et métadonnées à l'application.
-
-
-### Familles de retrievers : des alternatives, pas une échelle unique
-
-Le retriever de première étape et le classeur de seconde étape sont deux choix distincts. La génération des candidats peut être lexicale, dense, sparse apprise, hybride ou structurée ; le reranking est facultatif et ne fait que réordonner les candidats déjà retrouvés.
-
-| Famille | Représentation et recherche | Utile lorsque | Principal compromis |
-|---|---|---|---|
-| Lexicale (ex. BM25) | Termes et index inversé | Noms exacts, identifiants, termes rares, correspondances auditables | Vocabulaire différent et paraphrases |
-| Bi-encoder dense | Un vecteur par requête/document ; recherche de voisins proches | Paraphrases sémantiques et indexation documentaire réutilisable | Les indices fins entre tokens sont comprimés dans un vecteur |
-| Sparse appris (ex. SPLADE) | Poids appris et creux par terme ; index inversé | Besoin de correspondance lexicale et d'expansion apprise | Postings sparse pondérés plus volumineux et coûts propres au modèle |
-| Interaction tardive (ex. ColBERT) | Plusieurs vecteurs contextualisés par token ; MaxSim | Correspondances fines avec encodage documentaire hors ligne | Index multi-vecteurs plus lourd et service plus complexe |
-| Cross-encoder reranker | Traitement conjoint requête–candidat | Réordonner une courte liste avec des indices de paire plus riches | Coût proportionnel au nombre et à la longueur des paires candidates |
-
-Un système hybride peut combiner des retrievers de première étape complémentaires avant un reranker, mais la fusion est un choix empirique, pas une amélioration garantie. L'évaluation hétérogène BEIR identifie BM25 comme une baseline robuste et rapporte une forte efficacité moyenne du reranking et de l'interaction tardive, avec des coûts de calcul plus élevés. Voir [BEIR (Thakur et al., 2021)](https://arxiv.org/abs/2104.08663), [SPLADE (Formal et al., 2021)](https://arxiv.org/abs/2107.05720) et [ColBERT (Khattab et Zaharia, 2020)](https://arxiv.org/abs/2004.12832).
-
-**Il faut distinguer le rappel des candidats de la qualité de leur classement.** Un reranker ne peut pas récupérer des passages pertinents absents de sa liste d'entrée. Rapporter Recall@k pour la génération des candidats et des métriques de classement comme MRR@k ou nDCG@k après reranking, avec latence, taille d'index et coût. Évaluer sur plusieurs domaines lorsque l'usage hors domaine est important.
-
-La recherche n'est **pas nécessairement vectorielle**. BM25 et les index inversés sont lexicaux ; les embeddings denses permettent une recherche par proximité ; SQL et les filtres de métadonnées apportent des contraintes exactes. Le RAG ne requiert donc pas systématiquement une base vectorielle ni des embeddings.
-
-
-### Quand le document est visuel : ColPali et la recherche à l'échelle de la page
-
-L'extraction de texte n'est pas toujours la meilleure représentation initiale. Les articles scientifiques, PDF numérisés, formulaires, tableaux et infographies peuvent contenir des éléments essentiels dans leur mise en page, leurs schémas, graphiques et relations spatiales. Un pipeline classique peut nécessiter OCR, détection de mise en page, extraction de tableaux, légendes et découpage en segments avant la recherche textuelle.
-
-**ColPali** suit une autre voie : un modèle vision-langage encode chaque image de page en plusieurs vecteurs de patchs contextualisés. Une requête textuelle est encodée en vecteurs de tokens, puis un score d'interaction tardive de type ColBERT rapproche les tokens de la requête des patchs de la page. Cela peut préserver des indices visuels que l'OCR et le découpage risquent de perdre, tout en évitant une longue chaîne de prétraitement.
-
-```{mermaid}
-flowchart TD
-  A[Image de page PDF] --> B[OCR + mise en page + extraction tableaux / figures]
-  B --> C[Segments textuels et légendes]
-  C --> D[Index lexical / dense textuel]
-  D --> E[Récupérer et classer les pages]
-  Q[Requête textuelle] --> E
-  A2[Image de page PDF] --> V[Encodeur de page vision-langage]
-  V --> M[Index multi-vecteurs de patchs]
-  Q --> QE[Encodeur de tokens de requête]
-  M --> LI[Interaction tardive / MaxSim]
-  QE --> LI
-  LI --> R[Classer les pages pertinentes]
-  E --> H[Éléments de preuve sélectionnés]
-  R --> H
-  H --> G[Réponse fondée sur les pages]
-```
-
-La [figure 1 de l'article ColPali](https://proceedings.iclr.cc/paper_files/paper/2025/file/99e9e141aafc314f76b0ca3dd66898b3-Paper-Conference.pdf) compare visuellement le parcours classique OCR/mise en page/légendes avec l'encodage direct des images de pages ; la figure 3 montre aussi des cartes de chaleur reliant les tokens de requête aux patchs d'image. Ce sont des références visuelles externes, pas des figures reproduites ici.
-
-**Cela ne signifie pas que « la vision gagne toujours ».** Sur le benchmark ViDoRe de l'article, ColPali rapporte un nDCG@5 moyen de 81,3 contre 67,0 pour le meilleur pipeline textuel listé dans cette comparaison (Unstructured + légendes avec BGE-M3) ; ce résultat dépend du benchmark et ne constitue pas un classement universel. Le même article rapporte environ 257,5 Ko de vecteurs par page, environ 30 ms pour encoder une requête, et discute les compromis de mémoire/latence ainsi que le *token pooling*. Ses résultats montrent aussi que des encodeurs vision contrastifs génériques ne deviennent pas automatiquement de bons retrievers documentaires : l'entraînement spécifique à la tâche et l'alignement multi-vecteurs comptent.
-
-Cette famille est pertinente lorsque la structure visuelle fait partie des preuves et qu'une recherche à l'échelle de la page suffit. Conserver l'extraction textuelle ou structurée lorsque les étapes suivantes exigent des extraits exacts, du texte accessible, des citations précises, des valeurs de tableaux ou des filtres déterministes. Un système hybride peut retrouver visuellement des pages, puis extraire ou vérifier la zone pertinente avant la génération.
-
-Référence primaire : [Faysse et al. (ICLR 2025), ColPali: Efficient Document Retrieval with Vision Language Models](https://proceedings.iclr.cc/paper_files/paper/2025/hash/99e9e141aafc314f76b0ca3dd66898b3-Abstract-Conference.html). Pour une courte présentation visuelle, voir le [guide illustré Daily Dose sur les bi-encodeurs, cross-encodeurs et ColBERT](https://blog.dailydoseofds.com/p/visual-guide-to-bi-encoders-cross).
-
-Un embedding de document est une représentation numérique utile à la recherche, pas le texte source. Le moteur l'utilise pour localiser des candidats ; le système doit ensuite restituer le contenu pertinent ou le rendre accessible au modèle. Le découpage compte : des segments trop courts perdent leur contexte, des segments trop longs diluent l'information et consomment davantage de tokens, et des frontières arbitraires peuvent séparer une affirmation de ses réserves.
+La récupération documentaire sélectionne des documents ou passages pertinents, mais ne les rend pas automatiquement accessibles au modèle. Les familles de retrievers, la recherche visuelle, le classement et leur évaluation sont traités dans l'approfondissement facultatif [Récupération documentaire : indexer, retrouver, classer](document-retrieval.qmd). Ici, nous suivons la suite de la chaîne : comment les résultats sont filtrés, assemblés, transmis et utilisés.
 
 ## 3. RAG : récupérer puis construire le contexte
 
@@ -230,21 +167,6 @@ Pour chaque information réutilisée, conserver si possible sa source, son ident
 | Comment le modèle utilise-t-il ce qu'il reçoit ? | ICL, génération, limites et évaluation |
 
 **Règle à retenir :** une information externe n'influence pas la prédiction du modèle simplement parce qu'elle existe ou a été retrouvée. Elle doit franchir le mécanisme de transmission — dans le contexte ou via un outil effectivement utilisé — puis être correctement exploitée.
-
-### Exemple d'implémentation : recherche vectorielle
-
-Le [tutoriel Hugging Face sur la recherche sémantique avec FAISS](https://huggingface.co/learn/llm-course/en/chapter5/6) construit un petit moteur de recherche à partir d'embeddings de commentaires GitHub, d'un index de voisins proches et d'une requête. Il illustre une implémentation possible du bloc « indexation → recherche → sélection » du schéma RAG, pas un système RAG complet.
-
-La similarité vectorielle ne garantit ni la pertinence factuelle ni la qualité de la réponse. Le modèle d'embedding, le pooling, la normalisation, la métrique, le découpage documentaire, les filtres et le protocole d'évaluation doivent être adaptés à la tâche. Évaluez au minimum la qualité de récupération séparément de la qualité de génération.
-
-
-### Pour approfondir le choix du modèle de classement
-
-Le schéma bi-encoder / cross-encoder donne un exemple concret de classement en deux temps : embeddings réutilisables pour générer les candidats, puis score conjoint de chaque paire pour réordonner une liste courte. Ce montage est une option, pas une obligation : une recherche lexicale, hybride ou structurée peut aussi produire les candidats, et un cross-encoder n'est utile que si le gain de pertinence justifie son coût.
-
-- Avi Chawla, [Bi-encoders and Cross-encoders — Part 1](https://www.dailydoseofds.com/bi-encoders-and-cross-encoders-for-sentence-pair-similarity-scoring-part-1/) — contexte historique et motivation ; la partie technique centrale est derrière un paywall.
-- Avi Chawla, [AugSBERT — Part 2](https://www.dailydoseofds.com/augsbert-bi-encoders-cross-encoders-for-sentence-pair-similarity-scoring-part-2/) — distinction architecturale et aperçu de l'entraînement hybride ; détails ultérieurs partiellement payants.
-- Avi Chawla, [Foundations of RAG systems](https://www.dailydoseofds.com/a-crash-course-on-building-rag-systems-part-1-with-implementations/) — exemple pédagogique d'un pipeline dense avec découpage, embeddings, recherche approchée et reranking ; la partie aval est partiellement inaccessible.
 
 ## Limites
 

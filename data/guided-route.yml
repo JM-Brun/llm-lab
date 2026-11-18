@@ -95,8 +95,8 @@ stages:
       fr: [fr/in-context-learning, fr/context-engineering]
       en: [en/in-context-learning, en/context-engineering]
     optional_pages:
-      fr: [fr/rag-memory-boundaries]
-      en: [en/rag-memory-boundaries]
+      fr: [fr/rag-memory-boundaries, fr/document-retrieval]
+      en: [en/rag-memory-boundaries, en/document-retrieval]
 
   - id: scoring
     title:

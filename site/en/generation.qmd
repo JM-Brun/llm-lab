@@ -147,13 +147,7 @@ Visible latency comes from two different phases. Two metrics help distinguish th
 
 A longer prompt tends to increase *prefill* work and therefore TTFT; a longer answer requires more *decode* steps and increases total generation time. These are tendencies, not absolute laws: queueing, cached prefixes, batch size, hardware, and kernels can change the result.
 
-The **KV cache** retains the keys (K) and values (V) already computed for each previous position and layer. It avoids recomputing attention over the entire prefix for every new token, at the cost of memory that grows with context length and the number of concurrent sequences. For a standard, unquantized K/V cache, a useful estimate is:
-
-$$
-M_{KV} \approx 2 \, L \, B \, T \, n_{KV} \, d_{head} \, s,
-$$
-
-where $L$ is the number of layers, $B$ the batch size, $T$ the number of cached positions, $n_{KV}$ the number of K/V heads, $d_{head}$ their dimension, and $s$ the bytes per element. This approximation omits allocation overhead and implementation-specific details. *Grouped-Query Attention* notably reduces the number of K/V heads relative to the number of query heads.
+The **KV cache** retains the keys (K) and values (V) already computed for each previous position and layer. It avoids recomputing attention over the entire prefix for every new token, at the cost of memory that grows with context length and the number of concurrent sequences. Its size depends on layers, cached positions, concurrent sequences, and K/V heads; the [memory estimate](llm-computational-complexity.qmd#kv-cache-memory) is derived in the complexity deep dive. *Grouped-Query Attention* reduces the number of K/V heads and therefore cache memory.
 
 *Prefill* is often compute-bound, while *decode* can become memory-bandwidth-bound because each step reads the accumulated cache to produce only a small amount of new output. The actual bottleneck depends on hardware, batch size, context length, and kernels: measure rather than assume.
 

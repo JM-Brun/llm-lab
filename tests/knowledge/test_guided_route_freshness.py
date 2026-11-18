@@ -18,8 +18,8 @@ GENERATOR: dict[str, Any] = runpy.run_path(
 def test_tracked_guided_route_matches_canonical_sources(language: str) -> None:
     pages = [page for page in GENERATOR["load_pages"]() if page["language"] in {language, "shared"}]
     stages = GENERATOR["load_guided_route"](language, pages)
-    expected = GENERATOR["render_guided_route_markdown"](stages, language)
     fragment = ROOT / "site" / "includes" / f"generated-guided-route-{language}.qmd"
+    expected = GENERATOR["prepare_guided_route_fragment"](language, stages)[fragment]
 
     assert fragment.is_file(), f"Missing tracked guided route: {fragment}"
     assert fragment.read_text(encoding="utf-8") == expected, (

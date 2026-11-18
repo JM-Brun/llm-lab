@@ -112,19 +112,9 @@ Here, $z$ denotes all logits involved in the objective (for example, the logits 
 
 In a deep network, backpropagation applies this chain rule efficiently through the computation graph. Shapes must agree: derivatives are vectors or tensors with the same shape as the variable being differentiated.
 
-::: {.callout-note collapse="true" title="Optimizer choices (advanced)"}
-Learning rate, momentum, clipping, regularization, and adaptive optimizers change the effective training dynamics, not the definition of the gradient.
-:::
+## From gradient to parameter update
 
-## Gradient-descent update
-
-An elementary SGD update is:
-
-$$
-\theta_{k+1}=\theta_k-\eta\nabla_\theta\mathcal{L}(\theta_k),
-$$
-
-where $\eta>0$ is the learning rate. The minus sign follows the direction of steepest local decrease for a small update in Euclidean space. Adaptive optimizers, momentum, clipping, and regularization alter the effective dynamics.
+The gradient describes local loss sensitivity; it does not specify the update rule on its own. The optimizer turns it into a parameter update, and the learning rate sets its scale. The SGD rule and optimizer choices are covered in the [training loop](training-loop.qmd).
 
 ::: {.callout-note collapse="true" title="Numerical gradient checking (advanced)"}
 For parameter coordinate $\theta_i$:

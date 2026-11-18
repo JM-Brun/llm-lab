@@ -95,6 +95,7 @@ def test_membership_projection_preserves_core_optional_and_multiple_contexts(
         "decoding-strategies": [("inference", "optional")],
         "llm-computational-complexity": [("inference", "optional")],
         "rag-memory-boundaries": [("context-use", "optional")],
+        "document-retrieval": [("context-use", "optional")],
         "language-modeling-math": [("scoring", "optional")],
         "mathematical-foundations": [
             ("scoring", "optional"),

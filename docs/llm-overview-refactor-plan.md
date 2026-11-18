@@ -83,7 +83,7 @@ Y conserver/fusionner :
 - distribution conditionnelle et exemple numérique fictif ;
 - sélection, ajout au contexte, nouvel appel et arrêt ;
 - distinction entre calcul des logits/probabilités et règle de décodage ;
-- prefill/decode, cache KV et optimisations de serving au niveau approprié ;
+- prefill/decode et optimisations opérationnelles de serving dans Generation ; coût et formule de mémoire KV dans Complexity ;
 - repère bref sur génération / scoring / apprentissage, avec renvois vers les propriétaires du scoring et de l'entraînement.
 
 Les mathématiques de vraisemblance, surprisal, entropie, température et loss restent chez leurs propriétaires canoniques au-delà de l'intuition nécessaire.
@@ -122,7 +122,7 @@ Répartir selon les propriétaires :
 - contexte et ICL : `in-context-learning.qmd` ;
 - construction du contexte : `context-engineering.qmd` ;
 - recherche externe, RAG et mémoire : `rag-memory-boundaries.qmd` ;
-- cache KV : `generation.qmd` et pages de serving.
+- cache KV : Generation pour le mécanisme opérationnel ; Complexity pour le coût et l'estimation de mémoire.
 
 Conserver la chaîne « source disponible → préparée/indexée → récupérée → transmise → éventuellement exploitée » dans la page RAG/context engineering. Garder explicitement la différence entre mémoire applicative persistante et cache KV temporaire.
 
@@ -153,7 +153,7 @@ Répartir entre les propriétaires post-training / context engineering / RAG et 
 | Architecture / apprentissage / utilisation | Panorama | Conserver comme cadre mental central. |
 | Pré-entraînement / base / foundation / SFT / préférences | Training loop / Post-training | Préserver définitions, ordre et paramètres modifiés. |
 | Paramètres / fine-tuning / RAG / contexte | Post-training / ICL / Context engineering / RAG | Répartir par propriétaire, maintenir les frontières. |
-| Mémoire applicative / cache KV | RAG-memory / Generation | Ne pas les présenter comme des mémoires équivalentes. |
+| Mémoire applicative / cache KV | RAG-memory / Generation / Complexity | Ne pas les présenter comme des mémoires équivalentes ; Generation explique la réutilisation opérationnelle, Complexity quantifie la mémoire du cache. |
 | Transfert / généralisation | Propriétaire à arbitrer avec LLM limits et post-training | Ajouter explication explicite, sourcée et bornée. |
 | Histoire des Transformers | Transformer history | Déplacer le développement, garder le lien. |
 | Choisir modèle / RAG / adaptation | Pages d'adaptation et récupération | Garder tous les critères de décision. |
@@ -348,7 +348,7 @@ Mesure indicative des fichiers actuels (comptage lexical brut, à confirmer sur 
 
 | Propriétaire | FR | EN | Durée indicative FR / EN | Décision de capacité |
 |---|---:|---:|---:|---|
-| `generation.qmd` | ~3 186 | ~3 018 | 17,7 / 16,8 min | Déjà au-dessus de 15 min : conserver la boucle comme cœur, évaluer le déplacement des détails de serving/cache vers leur propriétaire existant ou Deepen. Ne pas y déverser le panorama. |
+| `generation.qmd` | ~3 186 | ~3 018 | 10,1 / 9,9 min au premier passage visible ; 14,2 / 13,4 min avec le callout facultatif | Garder la boucle et le serving opérationnel ; le comptage source brut surestime le temps de lecture car il inclut le callout replié, les figures et le balisage. Déplacer seulement la formule mémoire KV vers Complexity. |
 | `llm-limits.qmd` | ~1 596 | ~1 435 | 8,9 / 8,0 min | Bon candidat pour le pont objectif/limites/transfert si le contenu est bien de sa responsabilité ; vérifier la place des cas d'évaluation. |
 | `post-training.qmd` | ~1 905 | ~1 701 | 10,6 / 9,5 min | Capacité limitée mais raisonnable ; n'y déplacer que les notions d'adaptation des paramètres. |
 | `in-context-learning.qmd` | ~1 153 | ~1 040 | 6,4 / 5,8 min | Peut accueillir les explications ICL actuellement dispersées, sans répéter context engineering. |
@@ -408,7 +408,7 @@ La refonte du panorama doit s'inscrire dans la topologie canonique déjà défin
 
 | Page actuelle | Constat observé | Décision recommandée | Relation au parcours |
 |---|---|---|---|
-| `generation.qmd` / EN | ~3 186 / 3 018 mots ; la section prefill/decode regroupe à elle seule ~1 086 / 979 mots, dont l'ordonnancement multi-requêtes et la réutilisation du cache. Une partie recoupe la page de complexité qui possède déjà un traitement distinct entraînement/prefill/decode. | **Refactoriser sans créer une nouvelle page core.** Garder dans Generation la boucle, le prefill/decode au niveau opérationnel nécessaire, la sélection de token et l'arrêt. Déplacer les détails de serving, ordonnancement, throughput/latence et cache KV vers `llm-computational-complexity.qmd` (Deepen), qui est le propriétaire de la comparaison des régimes de calcul et de mémoire. Laisser dans Generation un résumé et un lien. | Generation reste la ressource core d'inférence dans les étapes orientation et inference existantes. La page de complexité reste optionnelle ; aucune nouvelle étape. |
+| `generation.qmd` / EN | ~3 186 / 3 018 mots source ; estimation du contenu visible du premier passage ~10,1 / 9,9 min, hors callout facultatif replié. Le callout regroupe TTFT/ITL/TPOT, ordonnancement, cache et optimisations. | **Refactoriser sans créer une nouvelle page core.** Generation reste propriétaire de la boucle, du prefill/decode et du serving opérationnel : métriques, continuous batching, prefix caching, chunked prefill et speculative decoding. Déplacer uniquement la formule quantitative de mémoire KV vers `llm-computational-complexity.qmd` (Deepen), qui possède déjà les coûts de calcul et le comportement O(T) du cache. Generation garde la définition et un lien vers la formule. | Generation reste la ressource core d'inférence ; les optimisations de serving sont facultatives. Complexity reste optionnelle ; aucune nouvelle étape. |
 | `rag-memory-boundaries.qmd` / EN | ~3 024 / 2 626 mots ; le bloc « récupération documentaire » représente ~1 091 / 923 mots, dont familles de retrievers et recherche visuelle/ColPali. Le reste traite du cycle d'information, RAG, mémoire, ICL, sécurité et diagnostic. | **Scinder en deux approfondissements sœurs** après inventaire fin : (A) nouvelle page « Récupération documentaire : indexer, retrouver, classer » pour les familles de retrievers, recherche visuelle, ranking et évaluation de récupération ; (B) conserver une page recentrée « RAG, mémoire et transmission au contexte » pour source → récupération → contexte → usage, mémoire persistante, ICL, sécurité et diagnostic système. Les frontières doivent éviter de répéter le pipeline d'introduction. | Les deux pages sont des ressources Deepen facultatives rattachées à la même étape existante `context-use`, sans relation entre elles, sans flèche, sans prérequis et sans ordre recommandé. Elles ne modifient pas les neuf étapes. |
 | `context-engineering.qmd` / EN | ~2 143 / 1 919 mots ; page core déjà proche de 12 minutes, couvrant la conception du contexte de système, opérations, niveaux de contexte, RAG/mémoire et évaluation. | **Ne pas scinder à ce stade.** Clarifier son contrat : conception et orchestration du contexte au niveau système ; garder un seul exemple de bout en bout ; déplacer ou condenser les explications détaillées des mécanismes de récupération et de mémoire vers les pages Deepen correspondantes. Préserver l'évaluation du contexte. | Reste core dans l'étape `context-use`. Les approfondissements liés ne deviennent pas des conditions de complétion. |
 | `llm-evolution.qmd` / EN | ~2 676 / 2 407 mots ; plusieurs axes de synthèse, mais chacun est bref et la page est explicitement conçue comme synthèse avancée, après l'histoire des Transformers. | **Ne pas scinder.** Maintenir la synthèse multi-axes, réduire les répétitions et faire des renvois vers les propriétaires mécanistiques. Le seuil de lecture FR approche 15 min, mais la séparation par axes créerait des micro-pages et une fausse séquence historique. | Reste Deepen, reliée contextuellement aux pages propriétaires ; pas d'étape Understand supplémentaire. |
@@ -437,3 +437,37 @@ Les pages peuvent se référencer mutuellement ; elles ne doivent pas réexpliqu
 5. Mettre à jour les projections de la carte et la taxonomie Deepen depuis leurs sources canoniques ; ne jamais modifier les projections générées à la main.
 6. Contrôler le graphe des liens : pas de cycle présenté comme une séquence, pas de liens « suivant » entre approfondissements frères, pas de prérequis implicites.
 7. Après déplacement, recalculer les durées des pages source et cibles, vérifier la parité FR/EN et fournir un différentiel de conservation.
+
+
+## 16. Suivi d'exécution et preuves — 18 novembre 2026
+
+### État après le nouvel audit navigateur
+
+Le HEAD `49706b8ba54cb078e3ffc6b2550137a14899d6a9` contient les corrections de navigation Gradients, la réconciliation avec `main`, puis le rétablissement des trois tableaux comparatifs responsives du panorama FR/EN et l'alignement de l'assertion navigateur.
+
+| Contrôle | Preuve disponible | État |
+|---|---|---|
+| Qualité Python et contrôles métier | Run CI 5310 sur HEAD antérieur `de2da3a` | Réussi |
+| Suite Python | Run CI 5310, 623 tests rapportés | Réussi |
+| Secret scanning | Run 289 sur HEAD `49706b8` | Réussi |
+| Rendu Quarto complet et liens locaux | Run 5044 sur HEAD `49706b8` | En cours au dernier relevé |
+| Audit navigateur FR/EN desktop/mobile | Inclus dans le run Quarto 5044 | En cours au dernier relevé |
+| Axe / clavier | Rapport du run navigateur à examiner après fin | Non conclu |
+| Revue humaine du rendu | Pas encore effectuée | À faire |
+| Test réel avec apprenant | Aucun résultat documenté | À faire |
+
+### Contrat responsive du panorama
+
+Les tableaux comparatifs « familles d'architectures », « architecture / apprentissage / utilisation » et « résidence de l'information » sont enveloppés dans `.responsive-card-table` en FR et EN. Le tableau de probabilités reste compact et hors de ce traitement. Le test navigateur attend exactement ces trois tableaux et continue à vérifier leur enrichissement ainsi que les libellés de cellules sur mobile. Il ne s'agit donc pas d'une suppression du contrôle, mais d'une adaptation à la structure réelle de la page.
+
+### Suite de validation
+
+1. Lire les conclusions du run Quarto 5044 et du run CI 5313 sur le HEAD courant.
+2. En cas d'échec navigateur, utiliser le rapport JSON et les captures d'écran pour corriger le défaut réel ; ne pas neutraliser l'assertion.
+3. En cas de réussite, vérifier les violations Axe, les contrôles clavier, les ancres et les liens FR/EN.
+4. Faire une revue humaine mobile et desktop des trois tableaux, des deux figures responsive, de l'explorateur next-token et de la navigation.
+5. Organiser le test apprenant et consigner les observations, sans assimiler les validations automatisées à ce retour.
+6. Recalculer la durée de lecture à partir du rendu visible ; conserver séparément l'estimation source.
+7. Ne sortir la PR du brouillon qu'après ces preuves et après revue de conservation finale.
+
+La branche est synchronisée avec `main` (zéro commit de retard au dernier contrôle). Aucun changement n'a été apporté à `data/guided-route.yml` : la route Understand reste unique.
