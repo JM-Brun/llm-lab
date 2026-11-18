@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["en/in-context-learning", "en/contextualized-representations", "en/generation", "en/post-training", "en/llm-evolution", "en/llm-limits", "en/rag-memory-boundaries"]
+related: ["en/in-context-learning", "en/contextualized-representations", "en/generation", "en/post-training", "en/llm-evolution", "en/llm-limits", "en/rag-memory-boundaries", "en/document-retrieval"]
 tags: ["type:concept-lesson", "destination:understand", "topic:context-engineering", "level:core", "language:en", "status:published"]
 -->
 
@@ -91,7 +91,7 @@ ICL describes a model capability or behavior; context engineering describes the 
 
 ## From context design to retrieval and memory architectures
 
-Context engineering decides which information is actually supplied and how it is structured. Document retrieval and memory are two mechanisms that can provide information to this context, but they do not replace it: finding a document or retaining a fact does not make it visible to the model. The deep dive [RAG, memory, and document retrieval](rag-memory-boundaries.qmd) follows this chain from the external source to model use.
+Context engineering decides which information is actually supplied and how it is structured. Document retrieval and memory are two mechanisms that can provide information to this context, but they do not replace it: finding a document or retaining a fact does not make it visible to the model. The deep dive [RAG, memory, and context transmission](rag-memory-boundaries.qmd) follows this chain from the external source to model use. Retriever families and their evaluation are covered in the [document-retrieval deep dive](document-retrieval.qmd).
 
 ## From document retrieval to usable information
 
