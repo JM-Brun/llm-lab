@@ -230,3 +230,166 @@ The equality in the second case is incidental: the contrasting rows induce a uni
 - [ ] Review the candidate cross-entropy/NLL → predictive-compression relation before any canonical edge change.
 - [ ] Add a machine-readable benchmark only if an existing experiment/test format cannot express these reviewed cases without creating a second graph.
 
+
+
+## 10. Follow-up review: predictive loss and coding cost / Revue complémentaire : perte prédictive et coût de codage
+
+**Review date:** 2026-11-18  
+**Status:** canonical-registry inspection and decision recorded; no graph mutation; no test execution claimed.
+
+### 10.1 What was verified in the current registry
+
+The canonical registry already contains the bilingual concepts:
+- `cross-entropy`
+- `negative-log-likelihood`
+- `surprisal`
+- `predictive-compression`
+- `entropy-coding`
+- `arithmetic-coding`
+
+The existing relation vocabulary and edges already express part of the story:
+- `predictive-compression --applies-to--> conditional-distribution`
+- `predictive-compression --contributes-to--> entropy-coding`
+- `surprisal --contributes-to--> predictive-compression`
+- `arithmetic-coding --part-of--> entropy-coding`
+- `negative-log-likelihood --contributes-to--> training-objective`
+- `cross-entropy --prerequisite--> training-objective`
+
+Therefore, the earlier gap description must be narrowed: the registry is not missing all connections between prediction and coding. It is missing an explicit, semantically precise, evidence-bearing statement of the conditional mapping from a model's token-level predictive loss to ideal code length under a compatible coding protocol.
+
+### 10.2 Mathematical boundary
+
+For a fixed conditional model (q), observed token sequence (x_1,\ldots,x_n), and logarithms base 2, the model-assigned ideal information cost is:
+
+`L_q(x_1,\ldots,x_n) = -\\sum_{i=1}^{n} \\log_2 q(x_i \\mid x_{<i})`
+bits.
+
+This is the idealized probabilistic coding cost associated with that model. To turn it into an actual lossless code, the encoder and decoder must share the model and all relevant conventions (tokenization, probability precision/quantization, context initialization, symbol support, termination/framing and protocol). A practical finite file can include overhead and implementation constraints; its byte length is not automatically equal to the summed NLL.
+
+Under a true data distribution (P), expected per-symbol log loss of (q) is cross-entropy (H(P,q)). It equals source entropy (H(P)) only when the predictive distribution matches the source in the relevant sense. Token-level NLL on one-hot observed targets equals token-level cross-entropy, but that identity alone does not create an encoder, decoder or exact file-size guarantee.
+
+### 10.3 Existing experiment boundary
+
+The current `experiments/information-theory/compression.py` experiment:
+- generates constant, IID-uniform and symmetric first-order Markov sequences with fixed seeds;
+- compares known marginal entropy and source entropy rate;
+- compresses raw uint8 bytes with zlib level 9;
+- reports finite compressed size including container overhead.
+
+It is a useful deterministic source-entropy / practical-compressor comparison. It does **not** feed an LLM's conditional probabilities into a probability coder, nor does it test a model-conditioned encode/decode round trip. It must not be cited as an empirical demonstration that LLM NLL equals realized compressed file size.
+
+### 10.4 Relation-schema decision
+
+No existing relation type precisely expresses “maps to ideal code length under a specified probabilistic model and compatible lossless coding protocol”:
+- `contributes-to` is too broad and functional;
+- `mapped-by` describes a transformation/projection and would misstate this claim;
+- `applies-to` describes applicability, not an information-length identity;
+- `equivalent-to` is not currently part of the vocabulary and would overstate the scope unless assumptions are carried with the claim.
+
+**Decision:** do not add a canonical edge or a new relation type yet. First review primary coding-theory sources and determine whether the provenance/claim schema can carry assumptions and locators. If the relation schema is extended, it must have bilingual semantics, explicit direction and family, documented transitivity/acyclicity, and validation/rendering coverage. A bare concept edge cannot carry all the conditions of this theorem-like mapping.
+
+### 10.5 Work completed in this follow-up
+
+- Re-read the canonical concept and relation registry; confirmed existing concepts and partial edges rather than duplicating them.
+- Re-read the deterministic zlib experiment and narrowed the claim it supports.
+- Wrote down the conditional mathematical statement and the encoder/decoder assumptions needed for actual lossless coding.
+- Recorded a no-mutation decision for the canonical graph.
+- Updated tracking issue #1237 with the audit, decision and validation caveat.
+
+### 10.6 Remaining work, ordered by dependency
+
+1. **Primary evidence:** catalogue and inspect primary sources for Shannon's source-coding theorem and arithmetic/range coding; create source records and extraction items with exact versions, sections/pages/equations, and scan limitations. Do not infer exact locators from secondary summaries.
+2. **Claim/provenance design:** inspect existing extraction, synthesis and claim schemas. Decide whether a scoped mathematical bridge can be represented as a provenance-bearing claim without adding a generic relation type. Document the design decision before implementation.
+3. **Conditional coder experiment:** implement a small deterministic arithmetic/range coder driven by an explicitly shared conditional probability table/model; encode and decode the same token stream; assert exact reconstruction; report ideal NLL bits, actual bitstream/file length and framing/termination overhead separately. Keep zlib as a distinct baseline.
+4. **Positive and negative tests:** accept the conditional ideal-cost statement under declared assumptions; reject claims that NLL alone predicts exact finite file size, that cross-entropy always equals source entropy, or that checkpoint quantization is source coding.
+5. **Bilingual integration:** update both language pages/syntheses only after the evidence and experiment are reviewed; preserve each page's pedagogical examples while aligning definitions, assumptions and conclusions.
+6. **Validation:** run focused experiment and unit tests, then the repository's locked full validation suite; capture environment/versions and actual outputs. Current CI status lookup for the pilot's latest commit returned no workflow runs and no commit statuses; this is absence of a reported check, not a passing result.
+7. **Graph promotion:** only after steps 1–6, decide whether a narrowly scoped canonical relation is justified. If not, keep the bridge in the evidence-bearing synthesis/claim layer and document why.
+
+### 10.7 Acceptance criteria for closure
+
+- [ ] Primary coding sources are catalogued with exact locators and source-role distinctions.
+- [ ] The bridge states model, target sequence, tokenization, logarithm base and coding protocol assumptions.
+- [ ] Encoder and decoder share the probability model and reconstruct the input exactly.
+- [ ] Ideal NLL cost, actual bitstream length and framing/termination overhead are reported separately.
+- [ ] Positive and negative bridge tests pass.
+- [ ] Existing zlib experiment remains correctly described as a separate practical baseline.
+- [ ] Any relation-schema change has bilingual definitions and validator/rendering tests.
+- [ ] FR/EN pages preserve pedagogical parity without forcing identical examples.
+- [ ] Focused and full validation commands/results are recorded; no unrun test is marked complete.
+- [ ] Issue #1237 is closed only after the evidence path and validation criteria are met.
+
+## 11. Primary-source evidence for predictive coding / Sources primaires du codage prédictif
+
+**Review date:** 2026-11-18  
+**Status:** three primary sources catalogued and extracted; no coder implementation or test execution claimed.
+
+### 11.1 Primary sources and exact evidence locators
+
+| Source / extraction | Exact locator inspected | Supported claim | Boundary |
+|---|---|---|---|
+| Shannon (1948), `shannon-mathematical-theory-communication-1948` | §7, pp. 12–14, Theorems 3–6; §9, pp. 16–17, Theorem 9 and second proof | Finite-state source entropy is a weighted conditional entropy; lossless coding approaches the entropy-limited average rate. The finite-block construction uses integer binary code lengths bounded by ideal negative-log probability plus less than one bit per block. | Asymptotic/average source-coding theorem, not exact finite model-NLL-to-file-size identity. |
+| Rissanen & Langdon (1979), `rissanen-langdon-arithmetic-coding-1979` | pp. 149–152, Eqs. (1)–(5); “Decodability criteria,” pp. 157–159 | Arithmetic coding relates probability-derived ideal lengths to code construction and explicitly analyzes finite-precision approximations and invertibility. | A family of finite-state arithmetic codes, not a universal specification for every range coder; scanned PDF has OCR artefacts. |
+| Witten, Neal & Cleary (1987), `witten-neal-cleary-arithmetic-coding-1987` | pp. 520–521, “Data Compression”; pp. 521–523, interval example and Fig. 2; pp. 523–527, Figs. 2–3 and implementation discussion | Encoder and decoder must reproduce the same conditional model in the same context; interval narrowing, EOF termination, integer state and finalization are explicit. | Historical implementation reference; code and reported performance were not rerun. |
+
+The detailed source review is `docs/source-reviews/predictive-coding-primary-sources-2026-11.md`. Machine-readable source records and extraction items are now present in `data/sources.yml` and:
+- `data/extractions/shannon-mathematical-theory-communication-1948.yml`
+- `data/extractions/rissanen-langdon-arithmetic-coding-1979.yml`
+- `data/extractions/witten-neal-cleary-arithmetic-coding-1987.yml`
+
+### 11.2 Refined mathematical and implementation contract
+
+For an autoregressive predictor (q), the ideal sequence cost remains:
+
+`L_q(x_{1:n})=-\\sum_{i=1}^{n}\\log_2 q(x_i\\mid x_{<i})`.
+
+This is a model-assigned ideal cost, not by itself a complete lossless file format. Encoder and decoder must agree on tokenization, support/vocabulary, context initialization, model parameters, probability quantization, symbol ordering, integer-frequency construction, update rules and termination/framing.
+
+A further distinction is now explicit for the experiment: if floating-point probabilities are converted to integer cumulative frequencies, the coder operates on an **effective quantized distribution**. Report separately:
+1. floating-point NLL under the declared model (q);
+2. ideal cost under the coder's effective quantized probabilities;
+3. emitted payload bits;
+4. serialized bytes;
+5. termination, padding, header and framing overhead.
+
+This avoids treating the original model NLL as though it were automatically the exact cost of a finite integer arithmetic coder.
+
+### 11.3 Decisions and remaining work
+
+- [x] Catalogue Shannon's source-coding theorem with section, theorem and page locators.
+- [x] Catalogue Rissanen–Langdon's arithmetic-coding and finite-precision/decodability treatment.
+- [x] Catalogue Witten–Neal–Cleary's operational shared-model and encoder/decoder contract.
+- [x] Add source records and source-local extraction items without adding concepts or canonical edges.
+- [ ] Inspect the repository's extraction/source validators and run the focused validation commands against the new records.
+- [ ] Review existing claim/provenance structures for a scoped mathematical statement with assumptions and exact source locators.
+- [ ] Implement a deterministic conditional coder/decoder and exact round-trip tests; distinguish original-model NLL from effective quantized-model cost and actual file size.
+- [ ] Add positive and negative tests, then update bilingual learning pages while preserving their distinct examples.
+- [ ] Run the locked full validation suite and record actual commands/results before promoting any canonical relation.
+
+No test is marked as passed by this documentation/source-ingestion step.
+
+## 12. Claim-level provenance and validator review
+
+The current source catalogue and extraction contract, consolidated validator, and source-lineage target architecture were inspected. The resulting gap is documented in `docs/source-reviews/cross-domain-claim-provenance-gap-2026-11.md`.
+
+Key distinction: extraction items already carry source-local locators, evidence kind/confidence, scope, assumptions, limitations and editorial disposition. However, this is not yet a general first-class scientific claim that can combine several sources, a mathematical derivation, a computational mapping and a reproducible experiment result. The extraction `provenance`/`verification` fields are specifically designed for embedded community voices; they should not be overloaded as universal claim provenance.
+
+The documented `docs/source-lineage-architecture.md` is a **target architecture**, not an implemented distributed schema. Its source-lineage relation vocabulary and per-source/per-scan files must not be treated as live until migration, validators, fixtures and consumers have passed their acceptance gates. The current consolidated validator is `site/tools/check_source_catalogue.py`; it checks structural and selected referential constraints but explicitly does not validate scientific correctness or all metadata/rights dimensions.
+
+**Decision:** do not add a claim registry, relation type or canonical concept edge in this pilot. First complete/coordinate the source-lineage migration, then test a minimal claim fixture that references existing source extraction items, concept IDs, computational nodes and experiment artifacts without duplicating their identities. Add valid/invalid fixtures and validator tests before adopting any new schema.
+
+### 12.1 Extraction taxonomy correction
+
+A repository-contract review found that the three new extraction files initially used unsupported `kind` values (`theorem`, `method`, `implementation`). They have been remapped to existing controlled values:
+- theorem item → `claim`;
+- method items → `mechanism`;
+- implementation item → `implementation-pattern`.
+
+This is a taxonomy normalization, not a change in scientific meaning. The validator itself has not yet been executed against the branch, so this correction is not presented as a passing validation.
+
+
+## 13. CI validation follow-up
+
+The first CI execution on this branch exposed one remaining source-catalogue taxonomy violation: the Shannon source used the unsupported tag namespace `theorem:`, while `data/source-taxonomy.yml` currently permits only `topic`, `method`, `modality`, `application` and `ecosystem`. The source already carries the retrieval facets `topic:source-coding` and `topic:lossless-coding`; the redundant `theorem:noiseless-coding` tag was therefore removed rather than expanding the controlled namespace. The theorem remains documented in the source-local extraction and review, where its evidence role belongs.
+
+The same CI run executed 622 tests: 621 passed, 1 skipped, and the source-taxonomy contract test failed solely because of that tag. The independent source-catalogue validation step reported the same single error. The full Quarto render, generated learning-map and computational-graph fragments, graph export check, timeline parity check, and local-link check passed. A follow-up commit removes the unsupported tag; the new commit's CI must complete before this PR can be considered validated. No test or validation result is inferred from the correction itself.

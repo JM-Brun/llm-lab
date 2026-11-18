@@ -1,0 +1,29 @@
+schema_version: 1
+source_id: shannon-mathematical-theory-communication-1948
+items:
+  - id: shannon-mathematical-theory-communication-1948:source-entropy-and-conditional-entropy
+    kind: definition
+    summary: "For a finite-state discrete source, Shannon defines entropy per symbol as the state-probability-weighted mean of the conditional symbol entropies. The formulation makes context dependence explicit."
+    locator: {type: page-section, value: "§7, pp. 12–14; Theorems 3–6", label: "The entropy of an information source"}
+    evidence:
+      kind: primary-definition-and-theorem
+      confidence: well-supported
+      scope: "Discrete finite-state source entropy and finite-context conditional entropy."
+      assumptions: ["A discrete source with the state/probability structure specified in §7.", "Logarithm base 2 when quantities are interpreted in bits."]
+      limitations: ["The theorem statements use the source model and limiting operations defined in the paper.", "Do not silently identify this source entropy with cross-entropy under an arbitrary mismatched predictor."]
+    disposition: integrate
+    mapped_concepts: [entropy, conditional-distribution, surprisal]
+    target_resources: [fr/entropy, en/entropy, fr/cross-entropy, en/cross-entropy]
+  - id: shannon-mathematical-theory-communication-1948:noiseless-channel-coding-theorem
+    kind: claim
+    summary: "Theorem 9 establishes the asymptotic coding-rate limit for a discrete source over a noiseless channel: coding can approach the entropy-limited rate, while exceeding it is impossible under the theorem's source/channel assumptions. Its constructive discussion uses finite blocks and integer binary code lengths."
+    locator: {type: page-section, value: "§9, pp. 16–17, Theorem 9 and second proof", label: "The fundamental theorem for a noiseless channel"}
+    evidence:
+      kind: primary-theorem
+      confidence: well-supported
+      scope: "Asymptotic average-rate limit and a finite-block construction for lossless transmission over a noiseless channel."
+      assumptions: ["The discrete source and noiseless channel model of the paper.", "A non-singular encoding/transmission mapping for the converse.", "Large-block/limiting argument for approaching the bound."]
+      limitations: ["The theorem is not a statement that a finite encoded file has exactly the real-valued sum of negative log probabilities as its bit count.", "The finite-block construction has integer code lengths and a bounded per-symbol coding excess; model mismatch and protocol overhead are separate issues.", "The theorem is not itself a modern arithmetic-coder implementation."]
+    disposition: integrate
+    mapped_concepts: [entropy, surprisal, predictive-compression, entropy-coding]
+    target_resources: [fr/compression-revision, en/compression-revision]

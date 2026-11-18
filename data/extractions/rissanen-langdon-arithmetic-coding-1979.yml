@@ -1,0 +1,29 @@
+schema_version: 1
+source_id: rissanen-langdon-arithmetic-coding-1979
+items:
+  - id: rissanen-langdon-arithmetic-coding-1979:probability-derived-ideal-length
+    kind: derivation
+    summary: "The arithmetic-coding discussion relates symbol ideal lengths to negative logarithms of their probabilities and accumulates the probability cost over a sequence. The paper then separates ideal probability-derived quantities from finite-precision implementation parameters."
+    locator: {type: page-section, value: "pp. 150–152, especially Eqs. (1)–(5) and accompanying discussion", label: "Background; coding equations"}
+    evidence:
+      kind: primary-derivation
+      confidence: well-supported
+      scope: "Probability-derived ideal lengths and arithmetic constructions for finite symbol sequences."
+      assumptions: ["A specified symbol alphabet and probability assignment.", "The logarithmic base and binary representation conventions used by the coding construction."]
+      limitations: ["The paper's several arithmetic-code variants must not be collapsed into one universal implementation.", "Finite-precision approximations alter the construction and require separate decodability analysis."]
+    disposition: integrate
+    mapped_concepts: [surprisal, predictive-compression, arithmetic-coding, entropy-coding]
+    target_resources: [fr/compression-revision, en/compression-revision]
+  - id: rissanen-langdon-arithmetic-coding-1979:finite-precision-and-decodability
+    kind: mechanism
+    summary: "The paper treats finite-precision approximation and unique decodability as explicit construction constraints, rather than assuming that an ideal real-valued interval automatically yields a practical code."
+    locator: {type: page-section, value: "pp. 151–152; § Decodability criteria, pp. 157–159", label: "Finite precision and decodability"}
+    evidence:
+      kind: primary-method-analysis
+      confidence: well-supported
+      scope: "The finite-state arithmetic-code family and the conditions under which its encoding can be uniquely inverted."
+      assumptions: ["The specific state, shift, augend and ordering conditions of the paper's arithmetic-code construction."]
+      limitations: ["Do not transfer a theorem or condition to a different range-coder implementation without checking its integer arithmetic and invariants.", "The scanned copy contains OCR artefacts; equation typography should be checked against the publisher version before exact quotation."]
+    disposition: integrate
+    mapped_concepts: [arithmetic-coding, entropy-coding, predictive-compression]
+    target_resources: [fr/compression-revision, en/compression-revision]
