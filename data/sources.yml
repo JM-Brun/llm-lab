@@ -373,7 +373,6 @@ sources:
       pages: [en/tokenization-strategies, fr/tokenization-strategies, en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: [token]
       audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md, docs/source-reviews/gage-1994-primary-audit.md]
-      extraction: data/extractions/philip-gage-byte-pair-compression-1994.yml
 
   - id: ahia-do-all-languages-cost-the-same-2023
     title: "Do All Languages Cost the Same?"
