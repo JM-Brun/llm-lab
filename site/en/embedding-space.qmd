@@ -39,9 +39,9 @@ By the end of this lesson, you should be able to:
 
 The text already present in the context is:
 
-> **Prefix / prompt:** “A model receives text written by a person.”
+> **Prefix / prompt:** “What have the Romans ever done for us?”
 
-The continuation begins: “It turns that text into tokens before processing it.” It is not yet present when the model processes the prefix; it will be added token by token during generation. No universal segmentation or token ID is assumed here.
+The replies add examples such as aqueducts, sanitation, roads, and irrigation. They are not yet present when the model processes the prefix. In the scene, different members of the group supply these replies, so this is a context-and-response analogy rather than a single-speaker generation trace. No universal segmentation or token ID is assumed here.
 
 A tokenizer splits the prefix into tokens according to its vocabulary and rules, then assigns an integer ID to each token. A visible word is not necessarily one token: the exact segmentation depends on the tokenizer in use.
 
