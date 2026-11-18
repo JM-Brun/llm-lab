@@ -74,6 +74,16 @@ def test_extreme_opposite_sign_logits_have_zero_loss_for_maximum_target() -> Non
     assert loss == 0.0
 
 
+
+def test_cross_entropy_averages_large_finite_losses_without_sum_overflow() -> None:
+    logits = np.array([[1e308, -7e307], [1e308, -7e307]], dtype=np.float64)
+    targets = np.array([1, 1], dtype=np.int64)
+    with np.errstate(over="raise", invalid="raise"):
+        loss = cross_entropy_from_logits(logits, targets)
+    assert loss == pytest.approx(1.7e308)
+    assert np.isfinite(loss)
+
+
 def test_unrepresentable_extreme_cross_entropy_is_rejected() -> None:
     logits = np.array([[1e308, -1e308]], dtype=np.float64)
     with (
