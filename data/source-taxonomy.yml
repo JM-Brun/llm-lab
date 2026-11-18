@@ -42,7 +42,6 @@ extraction_kinds:
   - mechanism
   - architecture
   - method
-  - method
   - derivation
   - assumption
   - result
