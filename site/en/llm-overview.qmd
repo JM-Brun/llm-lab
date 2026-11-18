@@ -19,7 +19,7 @@ hierarchy:
   parents: ["en/index"]
   children: ["en/transformer", "en/transformer-architectures", "en/generation", "en/build-path", "en/language-modeling-math", "en/mathematical-foundations", "en/llm-limits", "en/llm-computational-complexity"]
 covered_stages: [orientation, text-input, representations, computation, prediction, inference, context-use, scoring, training]
-related: ["en/transformer-history", "en/scaling-laws", "en/llm-evolution", "en/entropy", "en/compression-revision", "en/in-context-learning", "en/context-engineering", "en/rag-memory-boundaries", "en/document-retrieval", "en/post-training", "en/llm-overview-exercises"]
+related: ["en/transformer-history", "en/scaling-laws", "en/llm-evolution", "en/entropy", "en/compression-revision", "en/in-context-learning", "en/context-engineering", "en/rag-memory-boundaries", "en/document-retrieval", "en/post-training", "en/llm-overview-exercises", "en/glossary"]
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:en", "status:published"]
 -->
 
@@ -113,7 +113,7 @@ For a token with probability 0.6, surprisal is \( -\ln(0.6)\approx0.51 \) nats; 
 | **Encoder–decoder** | Produces an output conditioned on an input, especially for sequence-to-sequence tasks | [Original Transformer](https://arxiv.org/abs/1706.03762), [T5](https://jmlr.org/papers/v21/20-074.html) |
 | **Decoder-only** | Processes a causal context and predicts subsequent tokens | [GPT-3](https://arxiv.org/abs/2005.14165) |
 
-**GPT** (*Generative Pre-trained Transformer*) names a family of decoder-only Transformers pretrained to predict the next token. LLM Lab studies a small GPT of this kind because its computation can be followed and programmed end to end ([architecture comparison](transformer-architectures.qmd), [Build path](build-path.qmd)). This is a teaching choice: not all LLMs are GPTs.
+**GPT** (*Generative Pre-trained Transformer*) names a family of decoder-only Transformers pretrained to predict the next token. LLM Lab studies a small GPT of this kind because its computation can be followed and programmed end to end ([architecture comparison](transformer-architectures.qmd), [Build path](build-path.qmd)). This is a teaching choice: not all LLMs are GPTs. For concise definitions, see the [LLM and Transformer glossary](glossary.qmd).
 
 ## Architecture, learning, use {#architecture-learning-use}
 
