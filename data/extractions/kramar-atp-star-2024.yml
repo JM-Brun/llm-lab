@@ -1,0 +1,94 @@
+schema_version: 1
+source_id: kramar-atp-star-2024
+
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "arXiv record and Google DeepMind publication page/abstract reviewed 2026-11-18."
+      - "Cross-source methodological synthesis: docs/source-reviews/circuit-attribution-faithfulness-2022-2025.md."
+    inferred_elements:
+      - "Pedagogical sequencing and cross-source interpretation are editorial synthesis, not claims made verbatim by the source."
+  source_graph:
+    nodes:
+      - id: src-activation-patching
+        kind: operation
+        description: "Activation patching directly evaluates a component's effect by intervening on its activation."
+        locator: "Abstract: Activation Patching"
+      - id: src-atp
+        kind: intermediate
+        description: "Attribution Patching is a gradient-based approximation used as a scalable pre-filter for direct activation-patching sweeps."
+        locator: "Abstract: Attribution Patching"
+      - id: src-atp-star
+        kind: operation
+        description: "AtP* modifies the approximation to address two reported classes of false negatives and provides a residual-risk estimate."
+        locator: "Abstract: AtP* and false-negative bound"
+    edges:
+      - {from: src-activation-patching, type: contributes-to, to: src-atp}
+      - {from: src-atp, type: produces, to: src-atp-star}
+    interpretation: "Source-local reconstruction only; it is not the canonical concept graph, a complete computational graph or an independent reproduction."
+  learning_outcomes:
+    - {status: inferred, outcome: "Distinguish the source's technical object, method, estimate, intervention and explanatory representation.", basis: "Editorial synthesis of the inspected source scope."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Transformer computation, activations and basic causal/intervention terminology.", basis: "The source studies internal model computations and interpretability methods."}
+  teaching_route:
+    - {order: 1, section: "Establish the target", function: establish-provenance, moves: ["Identify model, behavior, dataset, graph abstraction and target metric."]}
+    - {order: 2, section: "Classify the method", function: qualify-evidence, moves: ["Separate direct interventions from estimates, selection algorithms and validation tests."]}
+    - {order: 3, section: "Bound the claim", function: assess-limitations, moves: ["Record assumptions, failure modes, task scope and untested generalizations."]}
+  pedagogical_strengths:
+    - "Makes the method's role and evidence scope explicit for comparison with adjacent circuit methods."
+  pedagogical_limits:
+    - "Full derivations, exact AtP* modifications, evaluation tables and assumptions behind the residual-risk bound remain to be audited; no model/code was executed."
+  comparison:
+    dossier: "docs/source-reviews/circuit-attribution-faithfulness-2022-2025.md"
+    canonical_graph: "data/concepts.yml and generated knowledge-graph projections"
+    canonical_routes: [docs/learning-path.md, data/guided-route.yml]
+    decision: "Keep source-specific claims in this extraction; canonical concept promotion and bilingual page integration require a separate ontology and resource audit."
+    structures_kept_separate:
+      - "The source's model/task-specific results remain distinct from canonical definitions."
+      - "Attribution estimates remain distinct from interventions and validation evidence."
+      - "Visualizations and human-readable labels remain distinct from model-native objects."
+
+items:
+  - id: kramar-atp-star-2024:atp-prefilter
+    kind: method
+    summary: "AtP is proposed as an O(1)-pass gradient-based pre-filter for selecting components for more expensive activation-patching evaluation."
+    locator: {type: section, value: "Abstract and method overview", label: "Source-local locator"}
+    evidence:
+      kind: paper-method
+      confidence: well-supported
+      scope: "The stated role is to reduce the cost of broad localization sweeps."
+      assumptions:
+        - "Interpretation is restricted to the source version, model/task and protocol named by the paper."
+      limitations:
+        - "It remains an approximation and must not be reported as a direct intervention."
+    disposition: integrate
+    disposition_rationale: "Retain as source-scoped evidence; do not promote directly to a universal canonical concept."
+  - id: kramar-atp-star-2024:atp-false-negative-classes
+    kind: limitation
+    summary: "The paper identifies two classes of AtP failure that lead to false negatives and proposes changes in AtP* to address them."
+    locator: {type: section, value: "Abstract and method overview", label: "Source-local locator"}
+    evidence:
+      kind: paper-method
+      confidence: well-supported
+      scope: "The failures motivate the modified method."
+      assumptions:
+        - "Interpretation is restricted to the source version, model/task and protocol named by the paper."
+      limitations:
+        - "Exact definitions and empirical frequencies of the two classes require full methods/results extraction."
+    disposition: integrate
+    disposition_rationale: "Retain as source-scoped evidence; do not promote directly to a universal canonical concept."
+  - id: kramar-atp-star-2024:atp-star-risk-bound
+    kind: result
+    summary: "The paper proposes a method to estimate residual error and bound the probability of remaining false negatives for AtP* estimates."
+    locator: {type: section, value: "Abstract", label: "Source-local locator"}
+    evidence:
+      kind: reported-method
+      confidence: well-supported
+      scope: "The bound is conditional on the paper's assumptions and estimator."
+      assumptions:
+        - "Interpretation is restricted to the source version, model/task and protocol named by the paper."
+      limitations:
+        - "Do not interpret the bound as an unconditional guarantee or as validation of every selected component."
+    disposition: integrate
+    disposition_rationale: "Retain as source-scoped evidence; do not promote directly to a universal canonical concept."
