@@ -85,13 +85,13 @@ A learner-facing claim should state the exact model/checkpoint, source/release, 
 For a common ReLU-SAE parameterization, an activation vector $x$ at a specified layer/hook is encoded as:
 
 $$
-z = \\operatorname{ReLU}(W_{enc}(x-b_{pre})+b_{enc}),
+z = \operatorname{ReLU}(W_{enc}(x-b_{pre})+b_{enc}),
 $$
 
 and reconstructed as:
 
 $$
-\\hat{x}=W_{dec}z+b_{dec}.
+\hat{x}=W_{dec}z+b_{dec}.
 $$
 
 This notation is an anchor for one common family, not a universal implementation. Keep the following objects separate:
