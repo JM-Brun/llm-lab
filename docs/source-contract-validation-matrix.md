@@ -148,6 +148,18 @@ The direct test module includes temporary-corpus cases for:
 
 This list describes direct fixtures in the test module, not exhaustive coverage of every row in the matrix. In particular, there are not yet focused fixtures for malformed bibliography/rights fields, URL semantics, provenance locator internals, verification URL validity or independence, every pedagogical-model branch, and all conditional/legacy combinations.
 
+### Proposed collection-contract delta — PR #1313 (not yet merged)
+
+The first collection-membership implementation is isolated in [PR #1313](https://github.com/JM-Brun/llm-lab/pull/1313). Its CI/review status must be checked before moving these checks into the accepted as-built baseline.
+
+- `data/source-collections.yml` is a required version-1 registry with unique kebab-case IDs, non-empty titles, repository-relative existing dossier paths, controlled lifecycle status and optional positive issue number.
+- A source may omit `collections` during compatibility rollout. When present, it must be a list of unique IDs resolving to the registry; an empty list is valid and means no declared membership.
+- Extraction records may not carry their own `collections` field. Collection membership is inherited only through the extraction's `source_id` and the canonical source identity.
+- The three registry entries reflect the living collection index in `docs/source-reviews/README.md`; no source memberships are backfilled in this PR.
+- Focused tests cover legacy absence, empty/multiple membership, unknown/duplicate IDs, duplicate registry IDs, missing dossier, invalid IDs/status/path/issue number, extraction-field rejection and the source-ID ownership boundary.
+
+The registry and source membership are structural identities, not editorial classification. Passing validation does not prove that a future human assignment is correct. Membership backfill and all collection-specific counts remain separate, review-gated work.
+
 ### Next bounded work
 
 1. Add this as-built matrix to review and keep it synchronized with validator changes.
