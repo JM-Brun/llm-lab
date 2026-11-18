@@ -114,6 +114,18 @@ where $h$ is the interaction history, $\xi$ is the universal environment mixture
 
 AIXI is not a lossless compressor, a conventional language model, or a practical neural architecture. Its optimality is relative to a formal environment class, reward definition, horizon/discount assumptions and reference universal machine.
 
+::: {.callout-note title="Neighbouring framework: the free energy principle and active inference"}
+AIXI does not exhaust agentive frameworks built on prediction. The **free energy principle** (FEP) describes a self-organising system that limits long-run surprise through a variational bound. **Active inference** turns this into a perception-action loop in which the agent can learn (update its model) or act (change its sensations so they match its predictions and preferred states).
+
+Three distinctions keep the frameworks watertight:
+
+- AIXI maximises an explicit reward under a universal mixture; active inference minimises an expected free energy given a generative model and preferred states. These are distinct idealisations, not variants of each other.
+- Surprisal (the negative logarithm of a probability), variational free energy (a bound used in approximate Bayesian inference) and prediction error (a model-dependent residual) are not synonyms.
+- Neither AIXI nor the FEP follows from predictive compression alone: presenting the slogan "compression = intelligence" as a formal consequence of these frameworks would overshoot the evidence.
+
+Primary reference: Friston, [The free-energy principle: a unified brain theory?](https://doi.org/10.1038/nrn2787), *Nature Reviews Neuroscience*, 2010. Pedagogical comparison: [Compression revision sheet](compression-revision.qmd) · [Cross-source synthesis on compression and intelligence](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-syntheses/compression-intelligence-cross-source-2026-11.md).
+:::
+
 ### Why AIXI is uncomputable
 
 The ideal universal mixture is not computable exactly, and the optimal sequential decision calculation built on it is also uncomputable.
@@ -230,6 +242,7 @@ A Transformer trained with cross-entropy does **not** implement Solomonoff induc
 7. Exact ties between actions and the iterative discounted infinite-horizon value definition; ε-optimality avoids exact tie resolution, while a recursive value function addresses the infinite-horizon obstacle.
 :::
 
+- [Friston (2010): The free-energy principle, a unified brain theory?](https://doi.org/10.1038/nrn2787)
 ## Go deeper
 
 - [Compression and LLMs](compression-revision.qmd)
