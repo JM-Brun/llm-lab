@@ -77,4 +77,4 @@ def test_value_shape_recognizes_timestamp_ranges() -> None:
     assert MODULE._value_shape("00:01:00 \u2014 03:21:46") == "timestamp-like"
     assert MODULE._value_shape("00:00\u201303:02 and 12:59\u201314:55") == "timestamp-like"
     assert MODULE._value_shape("1:28:42\u20131:49:58 onward") == "timestamp-like"
-    assert MODULE._value_shape("Chapter 2: 05:41\u201310:22") == "opaque-text"
+    assert MODULE._value_shape("Chapter 2: 05:41\u201310:22") == "section-like"
