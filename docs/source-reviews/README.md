@@ -1,6 +1,6 @@
 # Source reviews and comparative collections
 
-This directory contains source-specific reviews and living multi-source collections. It is the human-readable navigation layer for the machine-readable catalogue in [data/sources.yml](../../data/sources.yml) and atomic evidence records in [data/extractions/](../../data/extractions/).
+This directory contains source-specific reviews and living multi-source collections. The controlled identities and canonical dossier paths for the living collections are listed in [the source collection registry](../../data/source-collections.yml); source membership is declared only on canonical source records. It is the human-readable navigation layer for the machine-readable catalogue in [data/sources.yml](../../data/sources.yml) and atomic evidence records in [data/extractions/](../../data/extractions/).
 
 A collection dossier is not a replacement for the canonical concept graph, bilingual learning pages or project learning route. It compares external perspectives and records their integration decisions.
 
