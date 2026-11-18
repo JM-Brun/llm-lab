@@ -4877,7 +4877,7 @@ sources:
       primary_theme: probabilistic-foundations-training
       secondary_themes: [mathematical-tools-geometry, architectures-mechanisms]
       tags: [topic:predictive-compression, topic:minimum-description-length, topic:generalization, topic:active-inference, topic:universal-intelligence]
-      concept_ids: [predictive-compression, minimum-description-length, entropy, surprisal, cross-entropy, conditional-distribution, sequence-likelihood, next-token-prediction]
+      concept_ids: [predictive-compression, minimum-description-length, entropy, surprisal, cross-entropy, conditional-distribution, sequence-likelihood, next-token-prediction, free-energy-principle, active-inference]
     metadata:
       technical_level: intermediate
       contribution_types: [theory, mathematical-derivation, pedagogy]
@@ -4901,7 +4901,7 @@ sources:
           - "No reuse licence or permission for article text or figures was established; link-only treatment."
     related:
       pages: [fr/entropy, en/entropy, fr/cross-entropy, en/cross-entropy, fr/compression-revision, en/compression-revision, fr/universal-artificial-intelligence, en/universal-artificial-intelligence]
-      concepts: [predictive-compression, minimum-description-length, entropy, surprisal, cross-entropy, conditional-distribution, sequence-likelihood, next-token-prediction, aixi]
+      concepts: [predictive-compression, minimum-description-length, entropy, surprisal, cross-entropy, conditional-distribution, sequence-likelihood, next-token-prediction, aixi, free-energy-principle, active-inference]
       audit_records:
         - docs/source-reviews/lewish-intelligence-and-compression-2025.md
         - data/extractions/lewish-intelligence-and-compression-2025.yml
