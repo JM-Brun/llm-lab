@@ -353,3 +353,13 @@ Après les cinq cas, relancer les fichiers de tests concernés sur le code resta
 - Le dénominateur ENG-02 n'est pas approuvé ; ENG-02 reste **not measured**.
 - Aucun pourcentage ne doit être calculé à partir de couverture de lignes, de CI ou de la seule présence d'assertions.
 
+### Addendum — poursuite de la session (2026-11-18)
+
+- Le run CI sur le commit `60114b270a4b05885c7c0e9a0e1a6406474d2ea0` a échoué uniquement au contrôle `ruff format --check` : une ligne vide attendue après la docstring du test GEN-03 manquait. Le job de tests était vert ; le job Quarto était vert ; secret scanning était vert. Ce run ne doit pas être qualifié de validation globale verte.
+- Le formatage a été corrigé dans `c7ccad2ba0affb5478bd02ec730ee75c2cd5c1a1`.
+- Le test de réduction multi-exemples a été ajouté dans `tests/unit/test_losses.py` : deux pertes distinctes, moyenne analytique et assertion explicite que le résultat n'est pas la somme.
+- L'inventaire LOSS-03a et sa note de lacune ont été actualisés pour pointer vers ce nouveau test.
+- Le dernier commit connu à ce stade est `2c77c36bae183e9f5f0ea0eafb0da09a3635f732`. Les exécutions Actions lancées sur les commits précédents ont été annulées ou remplacées par les commits suivants ; il faut attendre et examiner les runs déclenchés sur ce dernier head avant toute conclusion.
+- Aucun avis de revue GitHub n'est enregistré pour #1307 à la dernière vérification. Ne pas fusionner sans revue du diff et CI verte.
+- Les mutations MUT-01 à MUT-05 ne sont toujours pas exécutées. L'ajout du test LOSS-03a n'est ni une mutation ni un résultat de mutation. ENG-02 reste `not measured`.
+
