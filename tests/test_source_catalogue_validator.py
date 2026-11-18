@@ -560,6 +560,4 @@ def test_extraction_cannot_duplicate_source_collection_membership(tmp_path: Path
 
     errors = MODULE.validate_source_catalogue(tmp_path)
 
-    assert any(
-        "membership belongs on the canonical source record" in error for error in errors
-    )
+    assert any("membership belongs on the canonical source record" in error for error in errors)
