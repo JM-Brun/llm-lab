@@ -285,9 +285,7 @@ def _validate_pedagogical_model(model: Any, where: str, errors: list[str]) -> No
         )
 
 
-def _validate_collection_registry(
-    registry: Any, root: Path, errors: list[str]
-) -> set[str]:
+def _validate_collection_registry(registry: Any, root: Path, errors: list[str]) -> set[str>:
     """Validate controlled collection identities and return their stable IDs."""
     where = "data/source-collections.yml"
     if not isinstance(registry, dict) or registry.get("schema_version") != 1:
@@ -408,9 +406,7 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
                     errors.append(f"{where}.collections: duplicate collection ID")
                 for collection_id in memberships:
                     if collection_id not in collection_ids:
-                        errors.append(
-                            f"{where}.collections: unknown collection {collection_id!r}"
-                        )
+                        errors.append(f"{where}.collections: unknown collection {collection_id!r}")
         if not isinstance(source_id, str) or not ID_PATTERN.fullmatch(source_id):
             errors.append(f"{where}.id: expected a stable kebab-case ID")
         elif source_id in source_ids:
