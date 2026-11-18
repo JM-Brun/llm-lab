@@ -28,7 +28,7 @@ tags: ["type:exercise-hub", "destination:practice", "topic:contextualized-repres
 
 [Exercices approfondis sur ce thème](../exercises.qmd#transformer).
 
-Considérez les deux emplois de *situation* dans « une bonne situation, ça, scribe ? » et « de bonne ou de mauvaise situation ». On suppose, pour isoler le mécanisme, que le tokenizer attribue le même ID au mot dans les deux contextes.
+Considérez les deux emplois de *situation* dans « une bonne situation, ça, scribe ? » et « de bonne ou de mauvaise situation ». Pour isoler le rôle du contexte, on suppose que le tokenizer attribue le même ID au mot dans les deux contextes et que les deux occurrences sont comparées à une même position simplifiée.
 
 1. Les vecteurs obtenus par lookup sont-ils identiques ?
 2. Les états cachés après les couches du Transformer doivent-ils être identiques ? Pourquoi ?

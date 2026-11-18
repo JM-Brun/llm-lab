@@ -82,6 +82,76 @@ This teaches evidence inspection and hypothesis revision. It deliberately does n
 
 No new concept IDs were created: the current concept registry does not yet provide a dedicated, validated concept node for SAE features or mechanistic interpretability. The source records link to existing pages and concepts without inventing registry identifiers. A future graph extension should first define bilingual concept pages and their prerequisite/related edges.
 
+## 3.1 Keep technical objects, evidence views, methods and teaching representations distinct
+
+The Neuronpedia integration must not turn the platform's interface into an ontology of model internals. Use the following distinctions when extending the concept graph or revising the activities:
+
+| Layer | What belongs here | What it is not |
+|---|---|---|
+| **Model and learned objects** | Model checkpoint/release; activation tensors at a named layer/hook; residual-stream components; SAE parameters and learned feature directions/latents; native attention heads and MLP components | A natural-language feature label, a dashboard card, or a universal semantic concept |
+| **Measured or derived evidence** | Activation values at specified positions; selected positive/negative activation examples; activation-density statistics; token-level output/logit effects as defined by the particular dashboard | A complete description of a feature, proof of its meaning, or proof of causal importance |
+| **Analysis methods and interventions** | SAE encoding/decoding; feature search; Auto-Interp generation/scoring; custom-text inference where supported; attribution methods; steering, ablation and other controlled interventions | Interchangeable kinds of evidence; an intervention is not automatically a valid causal experiment without controls |
+| **Tool-level representations** | Highlighted tokens, activation tables, density plots, logit displays, attention-head visualizations and attribution/circuit graphs | The underlying tensors, heads, circuits or a complete causal graph of the model |
+| **Pedagogical representations** | Human-readable labels, narrative examples, analogies, diagrams, exercise prompts, rubrics and learner worksheets | Technical objects or empirical evidence; they are explanatory devices whose scope and limitations must be stated |
+
+Several consequences follow:
+
+- An **SAE feature** is a learned latent/direction in a particular model, source/release, layer and hook. It is not automatically a native neuron, a stable cross-model identity, or one uniquely named human concept.
+- An **activation** is a numerical value/tensor associated with a specified computation and location. An activation example is a selected observation; a list of examples is not the feature itself.
+- A **logit view** must be interpreted according to the exact quantity the dashboard computes and displays. Do not conflate output-token logit effects with SAE feature activation magnitude.
+- An **Auto-Interp explanation** is generated text, with method-dependent scoring. It is a hypothesis about selected evidence, not a definition of the latent.
+- An **attribution graph** is a method-dependent explanatory representation, often approximate and scoped to a selected computation. It is not the model's native execution graph or a validated causal graph by default.
+- **Steering, ablation and inference** are distinct operations. A changed output is evidence of sensitivity under a specified intervention, not by itself a complete causal explanation.
+- The source-local extraction graph is an editorial reconstruction using the template's limited node-kind vocabulary. Its node kinds (`representation`, `operation`, `intermediate`, `visualization`, etc.) classify a node's role in that reconstruction; they do not define new canonical technical concepts.
+
+Accordingly, keep the extraction graph, canonical concept graph, interface visualizations and learner route separate. Add canonical concept IDs only after a definition, bilingual label, scope, prerequisites, relations and suitable technical sources have been reviewed. Do not create a `feature` concept merely by promoting a dashboard label or a single example index.
+
+## 3.2 Preserve distinct bilingual narrative threads
+
+The two exercise sheets test equivalent capabilities but intentionally use different narrative anchors:
+
+- **French:** the two senses of *situation* in « une bonne situation, ça, scribe ? » and « de bonne ou de mauvaise situation », followed by the relation between *moi* and *je*.
+- **English:** the two occurrences of *Romans* in “What have the Romans ever done for us?” and “Where did the Romans build their roads?”, followed by the reference of *they* in “They built roads.”
+
+These are not translations of one another and should not be made identical. Keep each thread implicit: do not name or explain its cultural source in learner-facing copy. Preserve the common technical assumptions and learning outcomes (same token ID under the stated assumption; controlled positional comparison; identical lookup; context-dependent hidden states; reference interpretation is not stored in the initial lookup). The story is a pedagogical representation, not evidence about the model.
+
+The Neuronpedia investigation that follows may remain structurally equivalent across languages because it concerns the same documented feature and evidence protocol; the narrative opening is where each language retains its own thread.
+
+## 3.3 Technical findings that constrain the concept model
+
+The primary literature supports a more precise starting point than the shorthand “SAEs find concepts”:
+
+1. **The object being decomposed is an activation vector, not raw text and not a neuron label.** In a common ReLU-SAE parameterization, a model activation vector $x$ at a chosen layer/hook is encoded as a sparse latent vector $z = \mathrm{ReLU}(W_{enc}(x-b_{pre})+b_{enc})$, then reconstructed as $\hat{x}=W_{dec}z+b_{dec}$. This is one family of parameterizations, not a universal SAE implementation. The latent coordinate $z_i$, its learned decoder direction, and the value of that coordinate on one input are related but distinct objects.
+2. **A feature is not a native neuron.** SAEs learn an overcomplete dictionary whose latent directions need not align with the model's neuron basis. The feature index is meaningful only with its exact model/checkpoint, source/release, layer/hook, SAE dictionary and version. This is why Neuronpedia provenance is part of the learner's first step.
+3. **“Interpretable” is an evaluated property, not a guarantee of semantic truth.** Research evaluates reconstruction, sparsity, recovery of hypothesized features, explanation precision/recall and downstream effects. These metrics answer different questions; no single automated score establishes that a latent is a complete, unique human concept or a faithful causal unit.
+4. **Feature dictionaries have resolution and coverage failure modes.** Feature splitting changes the granularity of a learned dictionary as SAE size changes. Feature absorption can make a seemingly coherent latent fail to activate on cases expected by its human-readable description. These results make counterexample search and coverage testing essential, not optional polish.
+5. **Description and causal validation are different stages.** Highly activating examples, density views and generated text help form hypotheses. Logit-based analysis can characterize output associations/effects, but direct contribution is not causal necessity. Interventions such as ablation or activation/feature patching can test effects under specified conditions, but require controls, baselines and attention to distribution-shift artifacts.
+6. **A circuit is a proposed computation-level explanation, not merely a graph-shaped visualization.** A graph becomes a mechanistic claim only when its nodes/edges have computational definitions and the proposed path is tested for causal relevance and, where claimed, sufficiency/necessity. A product interface's attribution view must therefore be named as a method-dependent attribution representation unless its construction and validation justify a stronger term.
+
+### Candidate concept boundaries (not yet canonical IDs)
+
+| Candidate | Technical definition to validate | Must not be merged with |
+|---|---|---|
+| Sparse autoencoder (SAE) | Learned encoder/decoder system that maps a selected model activation into a sparse latent code and reconstructs the activation | The target Transformer layer; the feature dictionary alone; an explanation label |
+| SAE latent feature | A dictionary coordinate/direction in a particular trained SAE, scoped to its model activation site and SAE version | A native neuron; an activation value on one example; a universal concept |
+| Feature activation | The scalar coefficient/value of a latent for a specified input, token position and hook | The latent direction itself; a natural-language feature description |
+| Feature explanation | A human or model-generated hypothesis summarizing observed feature behavior | The feature, ground truth, or causal mechanism |
+| Attribution | A method-specific estimate or decomposition connecting an input/component to a target quantity | A causal intervention or proof of necessity |
+| Circuit hypothesis | A proposed set of components and computational relations explaining a bounded behavior | Any graph visualization, attention map or unvalidated attribution path |
+| Causal intervention | A controlled modification of an internal quantity/component followed by measurement of a defined outcome | Passive activation inspection, logit projection or generated explanation |
+
+This table is a research scaffold for issue #1220, not an instruction to add seven nodes. Some candidates may be better represented as methods, properties or evidence types in the final ontology. The canonical registry should be updated only after checking existing IDs, technical definitions, bilingual labels, relations and page ownership.
+
+### Primary and synthesis references
+
+- Cunningham et al. (2023), [Sparse Autoencoders Find Highly Interpretable Features in Language Models](https://arxiv.org/abs/2309.08600): dictionary learning from model activations; superposition and neuron-basis distinctions; early SAE interpretability and causal case studies.
+- Bricken et al. (2023), [Towards Monosemanticity: Decomposing Language Models With Dictionary Learning](https://transformer-circuits.pub/2023/monosemantic-features/index.html): feature dictionaries, feature splitting and steering examples; claims must remain scoped to the studied model and methods.
+- Gao et al. (2024), [Scaling and Evaluating Sparse Autoencoders](https://arxiv.org/abs/2406.04093): SAE parameterization, scaling, dead latents and multiple feature-quality metrics.
+- Chanin et al. (2024), [A is for Absorption: Studying Feature Splitting and Absorption in Sparse Autoencoders](https://arxiv.org/abs/2409.14507): hierarchical feature absorption and counterexamples to naive monosemanticity assumptions.
+- Shu et al. (2025), [A Survey on Sparse Autoencoders: Interpreting the Internal Mechanisms of Large Language Models](https://aclanthology.org/2025.findings-emnlp.89/): overview of SAE architectures, explanation methods, evaluation and applications.
+
+The source review remains documentation-level. These papers inform the conceptual model; they do not mean that the linked Neuronpedia feature, its explanations or its causal effects have been independently reproduced in this project.
+
 ## 4. Synthesis and next research steps
 
 The central distinction is between **exploring the geometry of a dataset** (Embedding Atlas) and **inspecting evidence about internal model features** (Neuronpedia). Both tools make complex objects visible, but neither visualization turns an interpretation into proof.
