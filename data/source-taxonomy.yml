@@ -40,6 +40,9 @@ extraction_kinds:
   - claim
   - definition
   - mechanism
+  - architecture
+  - method
+  - method
   - derivation
   - assumption
   - result

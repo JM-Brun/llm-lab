@@ -1,0 +1,198 @@
+schema_version: 1
+source_id: reimers-gurevych-2019-sentence-bert
+scan:
+  accessed_at: "2026-11-18"
+  retrieval_method: direct-pdf
+  author_text:
+    status: partial
+    coverage: "Published EMNLP-IJCNLP 2019 PDF: architecture, pooling, training objectives, NLI training protocol, STS and SentEval results, AFS cross-topic evaluation, ablations, computational-efficiency comparison and conclusion."
+    notes: ["Focused primary-source audit; no independent reproduction."]
+  figures_media:
+    status: partial
+    coverage: "Siamese training and inference architecture diagrams and Tables 1–7 inspected in the published PDF."
+    notes: ["No figure or table asset was copied."]
+  code_data:
+    status: not-inspected
+    coverage: null
+    notes: ["The cited Sentence-Transformers repository, checkpoints, datasets and evaluation scripts were not independently executed or audited."]
+  comments: {status: not-inspected, coverage: null, notes: []}
+  linked_resources:
+    status: partial
+    coverage: "ACL Anthology proceedings page, published PDF and repository link cited in the paper."
+    notes: ["Repository contents and all outbound references were not exhaustively inspected."]
+  metadata:
+    status: partial
+    coverage: "EMNLP-IJCNLP 2019, pp. 3982–3992; DOI 10.18653/v1/D19-1410."
+    notes: []
+  rights:
+    status: unknown
+    coverage: null
+    notes: ["No figure reuse permission was established; this extraction contains paraphrases and locators only."]
+  unresolved_questions:
+    - "Independent reproduction requires pinning the exact BERT/RoBERTa checkpoints, pooling configuration, training seeds, benchmark versions and evaluation scripts."
+    - "The paper's latency estimates use 2019-era hardware/software and should not be treated as current deployment measurements."
+    - "The paper's task suite and language scope do not establish universal semantic similarity or multilingual retrieval quality."
+items:
+  - id: reimers-gurevych-2019-sentence-bert:shared-weight-sentence-encoder
+    kind: architecture
+    summary: "Sentence-BERT adds a pooling operation to a pretrained BERT or RoBERTa encoder and fine-tunes it through siamese or triplet training so that each input sentence can be mapped independently to a fixed-size vector. In the original Siamese design, the two branches share weights; this is a property of this architecture, not a requirement for every bi-encoder."
+    locator: {type: section, value: "§3, pp. 3984–3985; Figures 1–2", label: "SBERT model and inference architecture"}
+    evidence:
+      kind: architecture-description
+      confidence: established
+      scope: "The original SBERT architecture described by Reimers and Gurevych."
+      assumptions: []
+      limitations:
+        - "The paper's tied-weight Siamese design should not be generalized to all dual-encoder systems."
+        - "A fixed-size sentence vector is a learned task-dependent representation, not a guaranteed universal semantic representation."
+    technical_assessment:
+      status: correct
+      rationale: "The paper explicitly describes two BERT branches with tied weights, pooling and independent sentence embeddings at inference."
+      corroborating_sources: []
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:sentence-embeddings, method:bi-encoder, method:siamese-network]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [en/cosine-similarity, fr/cosine-similarity, en/embedding-space, fr/embedding-space]
+      concepts: [contextualized-representation]
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Supports the existing bi-encoder explanation; no new concept or separate route step is needed."
+  - id: reimers-gurevych-2019-sentence-bert:pooling-and-training-objectives
+    kind: method
+    summary: "The paper compares CLS, mean and max pooling and three training objectives: classification on NLI pairs using softmax over (u, v, |u-v|), regression on STS pairs using cosine similarity with mean-squared error, and triplet loss that separates anchor-positive from anchor-negative distances by a margin."
+    locator: {type: section, value: "§3, pp. 3984–3985; Eqs. (1)–(3)", label: "Pooling and objective functions"}
+    evidence:
+      kind: method-description
+      confidence: established
+      scope: "The original paper's SBERT training configurations; mean pooling is the default reported configuration."
+      assumptions: []
+      limitations:
+        - "The best objective depends on the available supervision and target task."
+        - "The pair-combination vector is used by the classification training head; at similarity inference, the paper compares the sentence vectors directly."
+    technical_assessment:
+      status: correct
+      rationale: "The paper distinguishes the classification, regression and triplet objectives and reports separate ablations."
+      corroborating_sources: []
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:sentence-embeddings, topic:pooling, topic:contrastive-learning]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [en/cosine-similarity, fr/cosine-similarity]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Useful optional detail for explaining how training objectives shape the embedding geometry; avoid turning one objective into a universal prescription."
+  - id: reimers-gurevych-2019-sentence-bert:sts-benchmark-results
+    kind: result
+    summary: "With NLI fine-tuning and cosine similarity, SBERT-NLI-large reports average Spearman correlation 76.55 across seven STS datasets, compared with 71.22 for Universal Sentence Encoder and 61.32 for averaged GloVe embeddings in Table 1. Results vary by dataset; Universal Sentence Encoder is stronger on SICK-R."
+    locator: {type: section, value: "§4.1, pp. 3985–3986; Table 1", label: "Unsupervised STS comparison"}
+    evidence:
+      kind: reported-experimental-result
+      confidence: well-supported
+      scope: "Seven STS datasets and the paper's evaluated sentence-embedding baselines and NLI-fine-tuned SBERT configurations."
+      assumptions: []
+      limitations:
+        - "The reported average aggregates a finite set of STS datasets and model configurations."
+        - "SBERT does not win every dataset; the paper reports Universal Sentence Encoder as stronger on SICK-R."
+        - "These 2019 results are not a ranking of current embedding models."
+    technical_assessment:
+      status: qualified
+      rationale: "The values are reported in Table 1; dataset-specific exceptions are material to the interpretation."
+      corroborating_sources: []
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:sentence-embeddings, topic:semantic-similarity, method:benchmark]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [en/cosine-similarity, fr/cosine-similarity]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Retain as historical evidence for task-trained sentence embeddings, with the dataset-level exception and date."
+  - id: reimers-gurevych-2019-sentence-bert:argument-cross-topic-generalization
+    kind: limitation
+    summary: "On Argument Facet Similarity, SBERT is close to BERT under random 10-fold cross-validation but loses about seven Spearman points in the cross-topic setting; the authors explain that representing unseen arguments in a fixed vector space is harder than directly comparing both arguments with cross-attention."
+    locator: {type: section, value: "§4.3, pp. 3986–3987; Table 3", label: "Argument similarity and cross-topic evaluation"}
+    evidence:
+      kind: reported-experimental-result-and-limitation
+      confidence: well-supported
+      scope: "The AFS corpus, its three controversial topics, and the paper's cross-validation versus leave-one-topic-out comparison."
+      assumptions: []
+      limitations:
+        - "The dataset contains only three topics, limiting the breadth of the cross-topic generalization test."
+        - "The result illustrates a task-specific limitation; it does not establish that all bi-encoders fail on out-of-domain retrieval."
+    technical_assessment:
+      status: qualified
+      rationale: "The paper reports the performance drop and directly contrasts the two evaluation protocols."
+      corroborating_sources: []
+    classification:
+      primary_theme: inference-efficiency
+      tags: [topic:sentence-embeddings, topic:domain-generalization, method:cross-encoder]
+      concept_ids: [contextualized-representation, retrieval-augmented-generation]
+    candidate_destinations:
+      pages: [en/cosine-similarity, fr/cosine-similarity, en/document-retrieval, fr/document-retrieval]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "A concrete warning that pairwise embedding quality and generalization must be evaluated on the target task and split design."
+  - id: reimers-gurevych-2019-sentence-bert:pooling-ablation
+    kind: result
+    summary: "In the reported ablation, mean pooling is the default and performs best overall for the NLI and STSb development configurations; max pooling is notably worse for the regression-trained STSb setup. For NLI classification, the choice of pair-combination features matters more than the pooling choice, and adding the element-wise product does not improve the reported best configuration."
+    locator: {type: section, value: "§6, pp. 3988–3989; Table 6", label: "Pooling and pair-combination ablation"}
+    evidence:
+      kind: reported-ablation
+      confidence: well-supported
+      scope: "SBERT-base on SNLI/MultiNLI and STSb training configurations, evaluated on the STSb development split with ten random seeds."
+      assumptions: []
+      limitations:
+        - "Ablation results are tied to the paper's architecture, datasets, objective and development split."
+        - "They do not establish mean pooling as optimal for all encoders or embedding tasks."
+    technical_assessment:
+      status: qualified
+      rationale: "The table and discussion support a configuration-specific comparison, not a universal pooling rule."
+      corroborating_sources: []
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:sentence-embeddings, topic:pooling, method:ablation]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [en/cosine-similarity, fr/cosine-similarity]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "Useful evidence for why pooling is a design choice; no need to prescribe one default beyond this paper."
+  - id: reimers-gurevych-2019-sentence-bert:computational-efficiency
+    kind: result
+    summary: "On the authors' 2019 V100 setup and STS benchmark sentences, SBERT with smart batching encodes 2,042 sentences per second on GPU versus 1,876 for InferSent and 1,318 for Universal Sentence Encoder. On CPU, SBERT is slower than InferSent; the authors attribute the GPU advantage to Transformer parallelism and report smart-batching speedups of 89% on CPU and 48% on GPU."
+    locator: {type: section, value: "§7, pp. 3989–3990; Table 7", label: "Sentence-embedding throughput"}
+    evidence:
+      kind: reported-benchmark-result
+      confidence: well-supported
+      scope: "The authors' Intel i7-5820K / Nvidia Tesla V100 / CUDA 9.2 benchmark, STS benchmark sentences and stated implementations."
+      assumptions: []
+      limitations:
+        - "Hardware, software, batching and model versions are historical and implementation-specific."
+        - "Encoding throughput is not end-to-end nearest-neighbour search latency and excludes index construction and serving costs."
+        - "These values must not be presented as current deployment performance."
+    technical_assessment:
+      status: qualified
+      rationale: "The paper explicitly describes the hardware, smart-batching procedure and per-model throughput."
+      corroborating_sources: []
+    classification:
+      primary_theme: inference-efficiency
+      tags: [topic:sentence-embeddings, topic:inference-throughput, method:benchmark]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [en/document-retrieval, fr/document-retrieval, en/cosine-similarity, fr/cosine-similarity]
+      concepts: []
+      route_ids: []
+    disposition: integrate-by-reference
+    disposition_rationale: "The benchmark illustrates the encoding/indexing separation but is too old and setup-specific to serve as a current KPI."
+canonical_mapping:
+  proposed_concepts: []
+  proposed_relations: []
+  route_implications: []
+  decision_summary: "The original SBERT paper supports the distinction between independently reusable sentence vectors and pairwise cross-encoding, and documents how pooling and NLI/STS/triplet objectives shape those vectors. Its results also show task- and split-dependent limits, especially on cross-topic argument similarity. Preserve the historical benchmark conditions; do not treat cosine similarity as calibrated semantic truth, mean pooling as universally optimal, or 2019 throughput as current performance."
