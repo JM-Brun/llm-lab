@@ -4302,6 +4302,14 @@ sources:
         status: partially-scanned
         inspected_scope: ["Official ICLR 2024 proceedings metadata and abstract", "arXiv preprint metadata and abstract"]
         limitations: ["Full paper, appendices, code and training details have not yet been audited in this ingestion.", "Reported causal feature results have not been independently reproduced."]
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "Full ICLR 2024 paper sections 1-5: activation sites, SAE dictionary and loss, automated interpretation score, IOI activation-patching protocol and feature case studies"
+        limitations:
+          - "The reported causal analysis is specific to Pythia models and the IOI setup; ACDC treats features as a flat graph with independent effects and uses a 50-example test set."
+          - "Automated explanation score measures held-out activation prediction under the paper's protocol, not semantic truth or complete coverage."
+          - "Appendices, full code reproduction and additional model runs remain pending."
     related:
       pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced]
       concepts: [contextualized-representation]
@@ -4372,6 +4380,14 @@ sources:
         status: partially-scanned
         inspected_scope: ["Official ICLR 2025 proceedings metadata and abstract", "arXiv preprint metadata and abstract"]
         limitations: ["Full paper, appendices, released checkpoints and code have not yet been audited or executed.", "Reported scaling and evaluation results have not been independently reproduced."]
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "Full ICLR 2025 paper sections 1-4 and relevant appendix material: residual-stream preprocessing, ReLU/L1 and TopK variants, dead-latent prevention, scaling and feature-quality metrics"
+        limitations:
+          - "Reported results are scoped to the paper's GPT-2/GPT-4 model families, selected layers, context length, normalization and compute budget."
+          - "No released autoencoder, checkpoint or training code was executed; the 16M-latent GPT-4 result was not reproduced."
+          - "Full appendices and all training ablations remain to be audited."
     related:
       pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced]
       concepts: [contextualized-representation]
@@ -4407,6 +4423,14 @@ sources:
         status: partially-scanned
         inspected_scope: ["Official NeurIPS 2025 proceedings metadata and abstract", "arXiv preprint metadata and abstract"]
         limitations: ["Full paper and supplementary material have not yet been audited.", "The reported absorption mechanism and experiments have not been independently reproduced."]
+      - accessed_at: "2026-11-18"
+        status: partially-scanned
+        inspected_scope:
+          - "Full NeurIPS 2025 paper sections 2-7 and appendices A.2, A.4, A.10-A.14: hierarchy definition, toy proof, first-letter task, probe/ablation absorption metric and limitations"
+        limitations:
+          - "The absorption metric is conservative, threshold-dependent and may underestimate multiple or partial absorption cases."
+          - "Causal ablation evidence cannot be applied past layer 17 in the Gemma-2-2B spelling setup because attention has moved the information to the final token."
+          - "The authors report no multiple seeds for released SAEs; exact general prevalence and reproduction remain open."
     related:
       pages: [fr/contextualized-representations-advanced, en/contextualized-representations-advanced]
       concepts: [contextualized-representation]
