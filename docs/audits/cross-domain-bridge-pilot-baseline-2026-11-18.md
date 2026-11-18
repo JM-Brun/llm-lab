@@ -367,3 +367,22 @@ This avoids treating the original model NLL as though it were automatically the 
 - [ ] Run the locked full validation suite and record actual commands/results before promoting any canonical relation.
 
 No test is marked as passed by this documentation/source-ingestion step.
+
+## 12. Claim-level provenance and validator review
+
+The current source catalogue and extraction contract, consolidated validator, and source-lineage target architecture were inspected. The resulting gap is documented in `docs/source-reviews/cross-domain-claim-provenance-gap-2026-11.md`.
+
+Key distinction: extraction items already carry source-local locators, evidence kind/confidence, scope, assumptions, limitations and editorial disposition. However, this is not yet a general first-class scientific claim that can combine several sources, a mathematical derivation, a computational mapping and a reproducible experiment result. The extraction `provenance`/`verification` fields are specifically designed for embedded community voices; they should not be overloaded as universal claim provenance.
+
+The documented `docs/source-lineage-architecture.md` is a **target architecture**, not an implemented distributed schema. Its source-lineage relation vocabulary and per-source/per-scan files must not be treated as live until migration, validators, fixtures and consumers have passed their acceptance gates. The current consolidated validator is `site/tools/check_source_catalogue.py`; it checks structural and selected referential constraints but explicitly does not validate scientific correctness or all metadata/rights dimensions.
+
+**Decision:** do not add a claim registry, relation type or canonical concept edge in this pilot. First complete/coordinate the source-lineage migration, then test a minimal claim fixture that references existing source extraction items, concept IDs, computational nodes and experiment artifacts without duplicating their identities. Add valid/invalid fixtures and validator tests before adopting any new schema.
+
+### 12.1 Extraction taxonomy correction
+
+A repository-contract review found that the three new extraction files initially used unsupported `kind` values (`theorem`, `method`, `implementation`). They have been remapped to existing controlled values:
+- theorem item → `claim`;
+- method items → `mechanism`;
+- implementation item → `implementation-pattern`.
+
+This is a taxonomy normalization, not a change in scientific meaning. The validator itself has not yet been executed against the branch, so this correction is not presented as a passing validation.
