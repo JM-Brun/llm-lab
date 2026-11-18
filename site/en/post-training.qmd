@@ -125,6 +125,7 @@ Check the distinctions between SFT, RLHF, DPO, LoRA and retrieval on the [dedica
 - [Rafailov et al. — Direct Preference Optimization](https://arxiv.org/abs/2305.18290): preference learning without a separate reward model.
 - [Hu et al. — LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685): parameter-efficient adaptation by low-rank updates.
 - [Lewis et al. — Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401): retrieval inserted into the context at inference time.
+- [Andrej Karpathy — Deep Dive into LLMs like ChatGPT](https://www.youtube.com/watch?v=7xTGNNLPyMI) (2025, English video, about 3 h 31): an educational overview of pretraining, SFT, RL, DeepSeek-R1, and RLHF. Use it to connect the stages, then consult primary papers for algorithmic details.
 
 </div>
 </details>
