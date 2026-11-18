@@ -63,9 +63,9 @@ Les statuts sont issus d'une lecture statique des sources et tests. « Protégé
 | WEIGHT-01 | GPT-2 weights | Embeddings de tokens et tête de sortie liées selon le contrat | test_copies_embeddings_and_ties_output_head_to_token_table | Protégé |
 | WEIGHT-02 | GPT-2 weights | QKV fusionné découpé Q/K/V et transposé correctement | test_splits_fused_qkv_and_transposes_conv1d_weights | Protégé |
 | WEIGHT-03 | GPT-2 weights | Projections attention/MLP mappées selon conventions et formes | test_splits_fused_qkv_and_transposes_conv1d_weights; test_gpt2_small_config_matches_published_dimensions | Protégé |
-| WEIGHT-04 | GPT-2 weights | Préfixes HF et buffers de masque gérés sans collision silencieuse | test_accepts_transformer_prefix_tied_head_and_mask_buffers | Partiel : collision préfixé/non préfixé non testée |
+| WEIGHT-04 | GPT-2 weights | Préfixes HF et buffers de masque gérés sans collision silencieuse | test_accepts_transformer_prefix_tied_head_and_mask_buffers; test_rejects_prefixed_and_unprefixed_parameter_collision | Assertion repérée (revérifiée statiquement) |
 | WEIGHT-05 | GPT-2 weights | Tête non liée, clés manquantes/inattendues et formes incorrectes rejetées | tests rejects_untied_output_head, rejects_missing_parameter, rejects_unexpected_parameter, rejects_shape_that_does_not_match_config | Protégé |
-| WEIGHT-06 | GPT-2 weights | Copies float64 indépendantes et validation complète avant assignation | tests loaded_parameters_are_independent_float64_copies; rejects_missing_parameter_without_modifying_model | Partiel : atomicité comparée sur un seul attribut |
+| WEIGHT-06 | GPT-2 weights | Copies float64 indépendantes et validation complète avant assignation | tests loaded_parameters_are_independent_float64_copies; rejects_missing_parameter_without_modifying_model; rejects_nonreal_nonfinite_or_unrepresentable_tensor | Assertion repérée (revérifiée statiquement) |
 
 ## 3. Limites de la preuve statique
 
@@ -209,3 +209,22 @@ Une relecture directe des implémentations et tests sur `main` (référence `cb7
 - Elles ne passent **pas** au statut « sensibilité démontrée » : aucune mutation discriminante de ces propriétés n'a été exécutée.
 - Les autres lacunes mentionnées dans les sections précédentes restent à vérifier une par une ; cette revue ciblée ne vaut pas audit exhaustif des dix domaines.
 - ENG-02 demeure **not measured** et aucun dénominateur n'est proposé par cette mise à jour.
+
+
+## 10. Recontrôle statique ciblé — chargement GPT-2 et génération (2026-11-18)
+
+Inspection directe des implémentations et tests de `main` après intégration de #1301. Cette section ne rapporte aucune exécution locale de pytest et aucune mutation exécutée.
+
+| Invariant / axe | Code et assertions observés | Conclusion statique |
+|---|---|---|
+| WEIGHT-04 — normalisation des préfixes | `_parameter_tensors` retire le préfixe `transformer.`, ignore les buffers `.attn.bias` / `.attn.masked_bias` et rejette les doublons après normalisation. Les tests couvrent le cas préfixé valide avec tête liée et buffers, ainsi que la collision préfixé/non préfixé | La lacune précédemment signalée est couverte ; « assertion repérée » |
+| WEIGHT-06 — validation avant assignation | `load_gpt2_state_dict` collecte toutes les valeurs dans `updates`, vérifie les paramètres manquants/inattendus, formes, types réels et finitude/représentabilité avant la boucle finale de `setattr`. Les tests prennent un snapshot de tous les paramètres NumPy du modèle avant rejet d'un paramètre manquant et d'un tenseur invalide | L'atomicité n'est pas limitée à un attribut dans les tests actuels ; « assertion repérée » pour les cas de rejet couverts. La sensibilité mutationnelle reste inconnue |
+| GEN-03 — fenêtre réellement transmise | `generate` calcule `window = context[-context_length:]` à chaque itération et passe `window[None, :]` à `model.forward`. Le test actuel vérifie la longueur finale et les bornes des tokens, mais n'intercepte pas les arguments réellement transmis à `forward` | Reste « partiel ». Test discriminant recommandé : remplacer/intercepter `model.forward`, enregistrer chaque entrée, puis vérifier pour chaque pas la fenêtre exacte attendue, sa taille maximale et l'inclusion du token nouvellement généré |
+| BLOCK-01 — forme et finitude | `forward` compose les branches et le test vérifie séparément `out.shape == x.shape` et `np.all(np.isfinite(out))` | Deux propriétés candidates à séparer dans la prochaine matrice atomique : préservation de forme et finitude de sortie. Elles ne deviennent pas deux unités approuvées sans mutations discriminantes |
+
+### Mise à jour de la décomposition candidate
+
+- `WEIGHT-04` et `WEIGHT-06` ne doivent plus conserver leurs anciennes lacunes statiques telles quelles ; les assertions pertinentes sont maintenant repérées dans la suite actuelle.
+- `GEN-03` reste partiel : l'implémentation paraît correcte, mais le test ne vérifie pas la fenêtre passée au modèle. La recommandation de test est précise et directement falsifiable.
+- `BLOCK-01` doit être décomposé en deux candidats, sans créer artificiellement un nouveau total approuvé.
+- Aucun de ces constats ne démontre la sensibilité aux mutations. ENG-02 reste **not measured** ; le dénominateur reste non approuvé.
