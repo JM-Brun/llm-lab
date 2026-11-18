@@ -5014,7 +5014,7 @@ sources:
           - "Created primary-source review dossier: docs/source-reviews/splade-2021-primary-audit.md."
         limitations:
           - "Code, checkpoints, corpus and index not independently audited; efficiency results remain bounded to the paper's custom implementation and hardware."
-          - "No independent reproduction; figures and other third-party assets were not copied."
+          - "The paper has an internal sample-size discrepancy: footnote 13 states 100 pages, while Appendix B.4 describes 1,000 documents for Table 5; preserve this uncertainty. No independent reproduction; figures and other third-party assets were not copied."
     related:
       pages: [fr/rag-memory-boundaries, en/rag-memory-boundaries, fr/cosine-similarity, en/cosine-similarity, fr/document-retrieval, en/document-retrieval]
       concepts: [retrieval-augmented-generation]
@@ -5144,11 +5144,11 @@ sources:
       - accessed_at: "2026-11-18"
         status: partially-scanned
         inspected_scope:
-          - "Published ICLR 2025 paper: multi-vector page retrieval architecture, ViDoRe construction, Table 2 results and efficiency methodology."
+          - "Published ICLR 2025 paper: multi-vector page retrieval architecture, ViDoRe construction, Table 2 results, §5.2 online latency and storage claims, and Appendix B.3-B.4 / Tables 4-5 indexing and storage protocols."
           - "Created claim-level extraction: data/extractions/faysse-etal-2025-colpali.yml."
           - "Created primary-source review dossier: docs/source-reviews/colpali-2025-primary-audit.md."
         limitations:
-          - "No code/checkpoint/benchmark reproduction; storage and latency appendix figures require exact hardware and phase verification."
+          - "No code/checkpoint/benchmark reproduction; measurements are bounded to the stated GCP g2-standard-8 / NVIDIA L4 setup, batch sizes and ViDoRe sample."
           - "No independent reproduction; figures and other third-party assets were not copied."
     related:
       pages: [fr/rag-memory-boundaries, en/rag-memory-boundaries, fr/document-retrieval, en/document-retrieval]
