@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
@@ -106,7 +107,7 @@ def main() -> int:
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(rendered, encoding="utf-8")
-    print(rendered, end="")
+    sys.stdout.write(rendered)
     return 1 if report["yaml_or_record_errors"] else 0
 
 
