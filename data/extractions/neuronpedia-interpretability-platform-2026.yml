@@ -86,7 +86,7 @@ items:
     disposition_rationale: "Make provenance a required first step in the bilingual feature-investigation worksheet."
 
   - id: neuronpedia-interpretability-platform:activation-evidence
-    kind: observation
+    kind: result
     summary: "Feature dashboards expose activation examples and density views that help inspect where a feature responds."
     locator: {type: section, value: "Sparse autoencoder feature dashboards", label: "Activation examples and density"}
     evidence:
@@ -125,7 +125,7 @@ items:
     disposition_rationale: "Make counterexample search and explicit uncertainty part of the learner activity."
 
   - id: neuronpedia-interpretability-platform:conditional-inference
-    kind: capability-boundary
+    kind: limitation
     summary: "Custom-text activation testing is available only for sources that expose the required inference support; it must not be assumed for every feature dashboard."
     locator: {type: section, value: "API documentation", label: "Feature and inference endpoints"}
     evidence:
