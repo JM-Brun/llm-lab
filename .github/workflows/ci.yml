@@ -257,7 +257,7 @@ jobs:
               encoding="utf-8",
           ) as f:
               json.dump(metadata, f, ensure_ascii=False, indent=2)
-              f.write("\\n")
+              f.write("\n")
           PY
           python - "$RUNNER_TEMP/extraction-locator-inventory.json" <<'PY' >> "$GITHUB_STEP_SUMMARY"
           import json
