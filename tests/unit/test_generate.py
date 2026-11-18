@@ -262,3 +262,32 @@ def test_generate_rejects_nonfinite_temperature(temperature: float, greedy: bool
             greedy=greedy,
             rng=np.random.default_rng(0),
         )
+
+def test_generate_passes_exact_sliding_windows_to_model_forward() -> None:
+    class RecordingModel:
+        config = type("Config", (), {"context_length": 3, "vocab_size": 11})()
+
+        def __init__(self) -> None:
+            self.forward_inputs: list[np.ndarray] = []
+
+        def forward(self, input_ids: np.ndarray) -> np.ndarray:
+            self.forward_inputs.append(input_ids.copy())
+            logits = np.zeros((1, input_ids.shape[1], self.config.vocab_size))
+            logits[:, :, 7] = 1.0
+            return logits
+
+    model = RecordingModel()
+    prompt = np.array([1, 2, 3], dtype=np.int64)
+
+    generated = generate(model, prompt, 3)  # type: ignore[arg-type]
+
+    expected_windows = [
+        np.array([[1, 2, 3]], dtype=np.int64),
+        np.array([[2, 3, 7]], dtype=np.int64),
+        np.array([[3, 7, 7]], dtype=np.int64),
+    ]
+    assert len(model.forward_inputs) == len(expected_windows)
+    for actual, expected in zip(model.forward_inputs, expected_windows, strict=True):
+        np.testing.assert_array_equal(actual, expected)
+        assert actual.shape[1] <= model.config.context_length
+    np.testing.assert_array_equal(generated, [1, 2, 3, 7, 7, 7])
