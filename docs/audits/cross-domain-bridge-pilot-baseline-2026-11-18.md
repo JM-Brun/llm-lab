@@ -186,3 +186,47 @@ For the pilot, if the current extraction schema cannot attach evidence to a cros
 - `experiments/information-theory/compression.py`
 - `experiments/information-theory/run.py`
 - `tests/unit/test_information_theory.py`
+
+## 9. Five concrete cross-structure paths / Cinq chemins transversaux concrets
+
+This path inventory was completed after the initial baseline. It reuses the current canonical IDs and source-local records. A path is not automatically a new concept relation: the table marks where the canonical graph is already connected and where only a source/provenance traversal currently exists.
+
+| Path | Existing evidence path | What the traversal establishes | Remaining boundary |
+|---|---|---|---|
+| **P1 — Mathematical attention** | Source `vaswani-et-al-attention-is-all-you-need-2017` → extraction `...:scaled-dot-product-attention` (§3.2.1, Eq. 1) → canonical Q/K/V, score, weight, softmax and scaled-dot-product concepts → computational nodes `attention-score-computation → attention-scores → attention-softmax → attention-weights → value-aggregation → attention-output`. | The primary equation is connected to the existing implementation-level computation without duplicating either graph. | The formula itself does not establish an information-theoretic or causal interpretation. |
+| **P2 — Attention versus mutual information** | Wayland source → extraction `wayland-zhang-information-theory-llm-2026:attention-mutual-information` (section “Attention as Mutual Information”) → canonical `attention-weight` / `mutual-information` contrast → `experiments/information-theory/attention_kl_vs_mutual_information.py` → information-theory synthesis. | The source's analogy is preserved as an analogy/contrast, and the experiment supplies a negative case against identifying row-wise KL-to-uniform with MI. | No positive equivalence between attention weights and MI is supported. A single attention row does not define the required joint distribution. |
+| **P3 — Shannon MI versus predictive V-information** | Xu et al. source → `xu-et-al-usable-information-2020:predictive-family-definition` (Definition 1) and `:v-information-definition` (Definition 3) → canonical `v-information`, `mutual-information`, `cross-entropy` → bilingual finite-family experiment. | The primary formal definition and optional-ignorance condition ground a family-relative predictive quantity; the paper's unrestricted-family special case is kept distinct from restricted predictive families. | The project's toy example is an exact finite-distribution illustration, not a reproduction of the paper's PAC theorem or high-dimensional experiments. |
+| **P4 — Predictive loss and source coding** | Wayland source → `:cross-entropy-kl-decomposition` and `:compression-intelligence` → canonical `cross-entropy`, `negative-log-likelihood`, `surprisal`, `predictive-compression`, `entropy-coding` → `experiments/information-theory/run.py` (ideal lengths) and `compression.py` (finite zlib and entropy-rate comparison). | The expected ideal code-length interpretation of log loss is distinguished from a finite compressor's actual byte count and framing overhead. | The zlib experiment does not use the LLM's conditional distribution. The canonical concept graph has no explicit reviewed edge yet connecting cross-entropy/NLL to predictive compression; retain this as a candidate relation, not an implicit path. |
+| **P5 — Attention function and IO-aware implementation** | Vaswani primary attention extraction → computational attention nodes → Dao et al. source `dao-et-al-flashattention-2022` and extraction items `:exact-io-aware-attention`, `:online-softmax-tiling`, `:io-complexity`, `:block-sparse-extension` → source review → existing FlashAttention benchmark protocol. | The mathematical attention operation, exact dense IO-aware implementation, online-softmax mechanism, asymptotic HBM bounds and separate block-sparse approximation can be followed through distinct structures. | No new FlashAttention concept node is warranted. A benchmark result must still record actual hardware/backend, shapes, dtype, masks, correctness tolerance and workload; the paper's results are not universal runtime guarantees. |
+
+### Explicit relation candidates held back
+
+1. **Cross-entropy / NLL ↔ predictive compression:** mathematically justified under a specified target distribution, model distribution, tokenization, logarithm base and coding protocol. The existing `cross-entropy-kl-decomposition` extraction and `run.py` experiment are evidence anchors. Do not add an edge until its direction and relation label are reviewed against the current relation vocabulary.
+2. **Attention-weight row ↔ Shannon entropy:** valid as applying a standard functional to a normalized row for a fixed query/head/layer/input/mask. This can remain an experiment-derived metric; it does not require a new canonical concept.
+3. **FlashAttention ↔ scaled-dot-product attention:** an implementation mapping, not a taxonomy or causal relation. The primary Dao extraction supports it; do not claim that IO optimization is information-theoretic source compression.
+4. **Attention ↔ information bottleneck:** unresolved. No relation is added without explicit random variables, objective, assumptions and a source-backed theorem or empirical test.
+
+### Numerical negative-case oracle
+
+For equally likely contexts and repeated conditional rows `[0.9, 0.1]`:
+
+- Mean row-wise KL to the uniform distribution: **0.5310044064 bits**.
+- Context–key mutual information: **0 bits**, because the conditional row is identical for both contexts and the variables are independent.
+
+For contrasting rows `[0.9, 0.1]` and `[0.1, 0.9]`:
+
+- Mean row-wise KL to uniform: **0.5310044064 bits** (unchanged).
+- Context–key mutual information: **0.5310044064 bits**.
+
+The equality in the second case is incidental: the contrasting rows induce a uniform marginal. The first case is the decisive counterexample. A regression test for this distinction is merged in the existing information-theory unit tests.
+
+### Verification status
+
+- [x] Primary-source extraction for Vaswani §3.2.1 / Equation (1) merged.
+- [x] Primary-source extraction for Dao et al. (2022), including theorem and block-sparse boundaries, merged.
+- [x] Existing Wayland and Xu extraction items identified and reused.
+- [x] Negative KL-to-uniform versus MI regression test merged.
+- [ ] Execute the repository's locked test suite and validators; no CI status was reported for the documentation/source/test PRs during this pass.
+- [ ] Review the candidate cross-entropy/NLL → predictive-compression relation before any canonical edge change.
+- [ ] Add a machine-readable benchmark only if an existing experiment/test format cannot express these reviewed cases without creating a second graph.
+
