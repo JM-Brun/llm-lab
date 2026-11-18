@@ -1,0 +1,94 @@
+schema_version: 1
+source_id: chan-causal-scrubbing-2022
+
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis:
+      - "Original AI Alignment Forum post, metadata, setup, hypothesis formalization, algorithm and limitations section reviewed 2026-11-18."
+      - "Cross-source methodological synthesis: docs/source-reviews/circuit-attribution-faithfulness-2022-2025.md."
+    inferred_elements:
+      - "Pedagogical sequencing and cross-source interpretation are editorial synthesis, not claims made verbatim by the source."
+  source_graph:
+    nodes:
+      - id: src-mechanistic-hypothesis
+        kind: representation
+        description: "A mechanistic hypothesis specifies a computational graph, an input-level interpretation and a correspondence between interpreted variables and graph nodes."
+        locator: "Sections 2-3: hypothesis formalization"
+      - id: src-equivalence-classes
+        kind: intermediate
+        description: "The hypothesis induces equivalence classes of inputs whose corresponding activations are predicted to be interchangeable without changing behavior."
+        locator: "Section 3: allowed activation replacements"
+      - id: src-resampling-test
+        kind: operation
+        description: "Causal scrubbing recursively resamples activations from inputs permitted by the hypothesis and compares resulting behavior with the original behavior."
+        locator: "Section 3.2: algorithm"
+    edges:
+      - {from: src-mechanistic-hypothesis, type: contributes-to, to: src-equivalence-classes}
+      - {from: src-equivalence-classes, type: produces, to: src-resampling-test}
+    interpretation: "Source-local reconstruction only; it is not the canonical concept graph, a complete computational graph or an independent reproduction."
+  learning_outcomes:
+    - {status: inferred, outcome: "Distinguish the source's technical object, method, estimate, intervention and explanatory representation.", basis: "Editorial synthesis of the inspected source scope."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Transformer computation, activations and basic causal/intervention terminology.", basis: "The source studies internal model computations and interpretability methods."}
+  teaching_route:
+    - {order: 1, section: "Establish the target", function: establish-provenance, moves: ["Identify model, behavior, dataset, graph abstraction and target metric."]}
+    - {order: 2, section: "Classify the method", function: qualify-evidence, moves: ["Separate direct interventions from estimates, selection algorithms and validation tests."]}
+    - {order: 3, section: "Bound the claim", function: assess-limitations, moves: ["Record assumptions, failure modes, task scope and untested generalizations."]}
+  pedagogical_strengths:
+    - "Makes the method's role and evidence scope explicit for comparison with adjacent circuit methods."
+  pedagogical_limits:
+    - "Companion empirical posts and appendices remain separate follow-up sources; no implementation or model experiment was run by LLM Lab."
+  comparison:
+    dossier: "docs/source-reviews/circuit-attribution-faithfulness-2022-2025.md"
+    canonical_graph: "data/concepts.yml and generated knowledge-graph projections"
+    canonical_routes: [docs/learning-path.md, data/guided-route.yml]
+    decision: "Keep source-specific claims in this extraction; canonical concept promotion and bilingual page integration require a separate ontology and resource audit."
+    structures_kept_separate:
+      - "The source's model/task-specific results remain distinct from canonical definitions."
+      - "Attribution estimates remain distinct from interventions and validation evidence."
+      - "Visualizations and human-readable labels remain distinct from model-native objects."
+
+items:
+  - id: chan-causal-scrubbing-2022:hypothesis-as-resampling-rules
+    kind: method
+    summary: "Causal scrubbing converts a mechanistic hypothesis into constraints on which activations may be replaced by activations from other inputs."
+    locator: {type: section, value: "Sections 2-3: hypothesis and algorithm", label: "Source-local locator"}
+    evidence:
+      kind: research-report
+      confidence: well-supported
+      scope: "The test evaluates the hypothesis's predicted invariances under resampling."
+      assumptions:
+        - "Interpretation is restricted to the source version, model/task and protocol named by the paper."
+      limitations:
+        - "The result is conditional on the hypothesis's equivalence classes and available dataset."
+    disposition: integrate
+    disposition_rationale: "Retain as source-scoped evidence; do not promote directly to a universal canonical concept."
+  - id: chan-causal-scrubbing-2022:scrubbed-behavior-comparison
+    kind: evaluation
+    summary: "The procedure compares expected behavior under hypothesis-permitted resampling with behavior on the original input distribution."
+    locator: {type: section, value: "Section 3.2: scrubbed expectation", label: "Source-local locator"}
+    evidence:
+      kind: research-report
+      confidence: well-supported
+      scope: "A small discrepancy supports the hypothesis under the defined resampling test."
+      assumptions:
+        - "Interpretation is restricted to the source version, model/task and protocol named by the paper."
+      limitations:
+        - "A pass does not guarantee the hypothesis is desirable, complete or uniquely correct."
+    disposition: integrate
+    disposition_rationale: "Retain as source-scoped evidence; do not promote directly to a universal canonical concept."
+  - id: chan-causal-scrubbing-2022:scrubbing-limitations
+    kind: limitation
+    summary: "The authors identify limitations involving exact equivalence, dataset support, correlated features and incomplete hypotheses that may pass despite omitting important mechanisms."
+    locator: {type: section, value: "Section 7: Limitations", label: "Source-local locator"}
+    evidence:
+      kind: research-report
+      confidence: well-supported
+      scope: "The source explicitly treats mechanistic explanations as defeasible and open to refinement."
+      assumptions:
+        - "Interpretation is restricted to the source version, model/task and protocol named by the paper."
+      limitations:
+        - "Companion posts and appendices are not included in this extraction; the method is a 2022 research report, not peer-reviewed proceedings."
+    disposition: integrate
+    disposition_rationale: "Retain as source-scoped evidence; do not promote directly to a universal canonical concept."
