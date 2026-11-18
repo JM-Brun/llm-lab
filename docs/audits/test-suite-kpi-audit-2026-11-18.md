@@ -171,3 +171,26 @@ These additions are in the branch but have not yet been confirmed by a new CI ru
 The first run on the earlier implementation commit `c35b7b50985946c6175ab0f848b98d0793faf7b9` passed the complete pytest job in approximately 58 seconds, Quarto and secret scanning. Ruff formatting passed, but Ruff lint failed on one `SIM117` nested-context finding. That finding was corrected in `b180b2a`.
 
 Subsequent commits add the corrected context-manager test, a batch-mean numerical boundary test, the TransformerBlock residual test and GPT batch-independence test. The GitHub Actions API did not report a new run for the latest commits at the time of this audit update. Therefore the initial pytest success does not validate these later additions, and lint/type-check on the corrected head remain unconfirmed.
+
+
+## 11. CI follow-up and formatting correction
+
+A workflow run was subsequently created for the expanded head
+`737e93aec3be4a9577970bf801eca056e9f50224`:
+
+- Full test job: passed.
+- Quarto site: passed.
+- Secret scanning: passed.
+- Python quality job: failed at `ruff format --check .`, before lint and type checking.
+- Exact finding: one extra blank line before
+  `test_cross_entropy_averages_large_finite_losses_without_sum_overflow`
+  in `tests/unit/test_losses.py`. No semantic or lint failure was reported in that run because those later checks were skipped.
+
+The whitespace was corrected in commit `133fe837c54101219899c3e04d2756ea3d7e8f83`.
+A new Actions run for that exact commit was not yet visible when this update was written.
+Do not treat the correction as validated until formatting, lint, type checking and
+the full workflow complete successfully.
+
+The test job on the expanded head is independent evidence that the new tests
+present at that SHA passed as part of the full suite. The formatting-only failure
+does not invalidate that test result, but it does prevent declaring the PR green.
