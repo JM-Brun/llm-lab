@@ -6664,3 +6664,46 @@ sources:
       audit_records:
         - docs/source-reviews/jose-parreno-garcia-understanding-transformers-part-4-2026-11.md
         - docs/source-reviews/vaswani-attention-formulation-2026-11.md
+
+  - id: jose-parreno-garcia-llms-explained-part-3-tokenization-training-2025
+    title: "LLMs explained (Part 3): From tokens to training – how a baseline LLM learns"
+    creators: ["Jose Parreño Garcia"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://joseparreogarcia.substack.com/p/llms-explained-part-3-tokenization-training"
+    publisher: "Substack"
+    publication_date: "2025-05-03"
+    updated_date: null
+    language: en
+    version: "visible article body"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: text-tokenization
+      secondary_themes: [probabilistic-foundations-training, scale-research]
+      tags: [topic:tokenization, topic:next-token-prediction, topic:base-model, method:autoregressive-pretraining]
+      concept_ids: [token, next-token-prediction, cross-entropy]
+    metadata:
+      technical_level: introductory
+      contribution_types: [architecture, pedagogy]
+      audiences: [beginner, learner]
+    scan_status: partially-scanned
+    integration_status: not-reviewed
+    collections: [tokenization-embeddings]
+    scan_history:
+      - accessed_at: "2026-11-19"
+        status: partially-scanned
+        inspected_scope:
+          - "Complete visible author-authored article text, including tokenization, tokenizer families, next-token training example and compute discussion"
+        limitations:
+          - "Embedded figures and screenshots were not retrieved as image bytes or visually inspected."
+          - "Linked resources were identified but not exhaustively opened."
+          - "No code, data, model or experiment was audited."
+          - "Comments were not substantively inspected."
+          - "No reuse licence was established."
+    related:
+      pages: [fr/text-data, en/text-data, fr/tokenization-strategies, en/tokenization-strategies, fr/language-modeling-math, en/language-modeling-math]
+      concepts: [token, next-token-prediction, cross-entropy]
+      audit_records:
+        - docs/source-reviews/jose-parreno-garcia-llms-explained-part-3-tokenization-training-2026-11.md
