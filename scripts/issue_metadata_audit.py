@@ -86,8 +86,7 @@ def classify(
         title_priorities = sorted(set(PRIORITY_PATTERN.findall(title)))
         if len(title_priorities) > 1:
             errors.append(
-                f"#{number}: title contains multiple priorities "
-                f"({', '.join(title_priorities)})"
+                f"#{number}: title contains multiple priorities ({', '.join(title_priorities)})"
             )
         elif len(title_priorities) == 1 and len(priorities) == 1:
             if title_priorities[0] != priorities[0]:
@@ -101,9 +100,7 @@ def classify(
     return errors, counts, audited
 
 
-def render_report(
-    repo: str, errors: list[str], counts: Counter[str], audited: int
-) -> str:
+def render_report(repo: str, errors: list[str], counts: Counter[str], audited: int) -> str:
     total = sum(counts.values())
     lines = [
         "# Issue metadata audit",
