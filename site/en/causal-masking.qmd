@@ -19,6 +19,11 @@ hierarchy:
   parents: ["en/scaled-dot-product-attention"]
   children: []
 related: ["en/logits", "en/causal-masking-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "The recap states the causal rule, the j ≤ i convention and its link to parallel computation; the triangular diagram and practice distinguish causal, padding and loss masks."
 tags: ["type:concept-lesson", "destination:understand", "topic:causal-masking", "level:core", "language:en", "status:published"]
 -->
 
@@ -33,7 +38,7 @@ Causal masking is an information constraint: to predict the token at position $t
   <span class="epistemic-badge badge-status">Architecture: Autoregressive Decoder</span>
 </div>
 
-::: {.callout-tip title="The one-minute mental model"}
+::: {.callout-tip title="The one-minute mental model" #revision-summary}
 Causal masking enforces an information rule: **the output at position $i$ must not depend on a token after position $i$**. It blocks the corresponding scores before softmax. The current position is usually allowed because the target is the next token.
 
 **First pass:** inspect the lower-triangular matrix and remember the rule $j\leq i$. This lets the model compute multiple positions in parallel without revealing their future.

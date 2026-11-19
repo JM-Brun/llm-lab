@@ -497,18 +497,28 @@ def test_real_repository_index_has_referential_integrity() -> None:
         index.revision_support_for_lesson(page_id)["status"] == "partial"
         for page_id in ("fr/entropy", "en/entropy", "fr/cross-entropy", "en/cross-entropy")
     )
-    assert all(
-        index.revision_support_for_lesson(page_id)["status"] == "integrated_sufficient"
-        for page_id in (
-            "fr/corpus-preparation",
-            "en/corpus-preparation",
-            "fr/training-examples",
-            "en/training-examples",
-        )
-    )
+    integrated_pages = {
+        "fr/corpus-preparation",
+        "en/corpus-preparation",
+        "fr/training-examples",
+        "en/training-examples",
+        "fr/causal-masking",
+        "en/causal-masking",
+        "fr/transformer-architectures",
+        "en/transformer-architectures",
+        "fr/llm-overview",
+        "en/llm-overview",
+        "fr/generation",
+        "en/generation",
+    }
+    assert {
+        page_id
+        for page_id, assessment in index.revision_support_by_page.items()
+        if assessment["status"] == "integrated_sufficient"
+    } == integrated_pages
     assert (
         sum(item["status"] == "not_assessed" for item in index.revision_support_by_page.values())
-        == len(index.revision_support_by_page) - 8
+        == len(index.revision_support_by_page) - 16
     )
     assert all(edge.target in index.pages_by_id for edge in index.page_edges)
     assert index.stats() == ProjectIndex.build(ROOT).stats()

@@ -138,20 +138,26 @@ def build_concept_coverage(index: Any) -> dict[str, Any]:
         if not page_ids:
             revision_state = "needs_review"
             revision_reason = "No associated teaching page is available for revision assessment."
-        elif revision_states and all(state == "not_applicable" for state in revision_states):
+        elif all(state == "not_applicable" for state in revision_states):
             revision_state = "not_applicable"
             revision_reason = "All associated pages are explicitly outside revision-support scope."
-        elif revision_states and all(state == "not_assessed" for state in revision_states):
+        elif all(state == "not_assessed" for state in revision_states):
             revision_state = "not_assessed"
             revision_reason = (
-                "Associated pages have not been assessed under the proposed revision contract."
+                "No editorial revision-support assessment is recorded for the associated pages."
+            )
+        elif all(
+            state in {"integrated_sufficient", "companion_sufficient"} for state in revision_states
+        ):
+            revision_state = "present"
+            revision_reason = (
+                "All associated teaching pages have sufficient assessed revision support."
             )
         else:
-            # The revision contract is not yet validator-approved. Even declared
-            # edges remain review evidence rather than an accepted coverage verdict.
             revision_state = "needs_review"
             revision_reason = (
-                "Revision assessment or declarations require review under the unapproved contract."
+                "At least one associated page has partial, missing, or "
+                "mixed revision-support status."
             )
         revision_evidence = [
             {
@@ -168,7 +174,6 @@ def build_concept_coverage(index: Any) -> dict[str, Any]:
                 "id": f"{edge.aid_page_id}:{edge.role}:{edge.source_page_id}",
                 "path": _page_path(index.pages_by_id[edge.aid_page_id]),
                 "role": edge.role,
-                "target_type": "page",
                 "target_id": edge.source_page_id,
             }
             for edge in revision_edges

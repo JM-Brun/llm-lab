@@ -19,6 +19,11 @@ hierarchy:
   parents: ["fr/scaled-dot-product-attention"]
   children: []
 related: ["fr/logits", "fr/causal-masking-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "Le récapitulatif formule la règle causale, la convention j ≤ i et le lien avec le calcul parallèle ; le schéma triangulaire et la pratique distinguent les masques causaux, de padding et de loss."
 tags: ["type:concept-lesson", "destination:understand", "topic:causal-masking", "level:core", "language:fr", "status:published"]
 -->
 
@@ -33,7 +38,7 @@ Pour prédire le token suivant à la position $t+1$, le modèle ne doit utiliser
   <span class="epistemic-badge badge-status">Architecture : Décodeur autorégressif</span>
 </div>
 
-::: {.callout-tip title="L'idée à retenir en une minute"}
+::: {.callout-tip title="L'idée à retenir en une minute" #revision-summary}
 Le masque causal impose une règle d'information : **la sortie à la position $i$ ne doit pas dépendre d'un token situé après $i$**. Il bloque les scores correspondants avant le softmax. Il autorise généralement la position courante, car la cible prédite est le token suivant.
 
 **Première lecture :** observez la matrice triangulaire et retenez la règle $j\leq i$. Le modèle peut ainsi calculer plusieurs positions en parallèle sans leur révéler le futur.

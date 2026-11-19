@@ -19,6 +19,11 @@ hierarchy:
   parents: ["en/llm-overview"]
   children: ["en/logits", "en/probabilities"]
 related: ["en/text-data", "en/transformer", "en/context-engineering", "en/build-path", "en/decoding-strategies", "en/gpt-generation-walkthrough", "en/training-examples", "en/generation-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "The recap covers model computation, token selection and feedback, and fixed parameters; Practice questions and exercises deepen sampling, prefill/decode and KV-cache behaviour."
 tags: ["type:concept-lesson", "destination:understand", "topic:inference-generation", "level:core", "language:en", "status:published"]
 -->
 
@@ -36,7 +41,7 @@ By repeating four moves: predict, select, feed back, then continue or stop. This
 **Continuation followed here:** “They built roads between distant towns.” It is an original LLM Lab text, not a film quotation or a model output. Its tokens are appended afterwards, one at a time.
 :::
 
-::: {.callout-tip title="The one-minute mental model"}
+::: {.callout-tip title="The one-minute mental model" #revision-summary}
 - **The model computes, a rule chooses.** The model supplies a distribution over the next token. A decoding rule, outside the network, draws a single token from it.
 - **The chosen token becomes context.** It is appended to the text, and the model recomputes a distribution for the next position.
 - **Nothing is learned along the way.** The parameters are the same at the first token and at the last.

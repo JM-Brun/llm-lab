@@ -18,6 +18,11 @@ hierarchy:
   parents: ["fr/llm-overview"]
   children: ["fr/cross-attention", "fr/transformer", "fr/transformer-explainer"]
 related: ["fr/transformer-history", "fr/generation", "fr/hybrid-llm-architectures", "fr/llm-computational-complexity", "fr/transformer-architectures-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "Le récapitulatif et le tableau comparent les trois architectures, les flux d'information et les mécanismes d'attention ; le self-check et la pratique distinguent architecture, objectif et tâche."
 tags: ["type:concept-lesson", "destination:understand", "topic:transformer-architectures", "level:core", "language:fr", "status:published"]
 -->
 
@@ -27,7 +32,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:transformer-archi
 Un Transformer peut utiliser un encodeur, un décodeur ou les deux. Ce choix détermine quelles positions peuvent échanger de l'information et comment le modèle traite une séquence. Il ne fixe pas, à lui seul, l'objectif d'entraînement ni la tâche réalisée.
 :::
 
-::: {.callout-tip title="L'idée à retenir en une minute"}
+::: {.callout-tip title="L'idée à retenir en une minute" #revision-summary}
 - **Encodeur seul :** contextualise l'entrée avec une attention généralement bidirectionnelle ; BERT et RoBERTa en sont des exemples.
 - **Encodeur-décodeur :** l'encodeur représente l'entrée ; le décodeur génère la sortie avec une attention causale et une attention croisée vers l'encodeur ; T5 en est un exemple.
 - **Décodeur seul :** utilise une attention causale pour prolonger un préfixe ; GPT en est l'exemple pédagogique central ici.

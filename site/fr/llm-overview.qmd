@@ -20,6 +20,11 @@ hierarchy:
   children: ["fr/transformer", "fr/transformer-architectures", "fr/generation", "fr/build-path", "fr/language-modeling-math", "fr/mathematical-foundations", "fr/llm-limits", "fr/llm-computational-complexity"]
 covered_stages: [orientation, text-input, representations, computation, prediction, inference, context-use, scoring, training]
 related: ["fr/transformer-history", "fr/scaling-laws", "fr/llm-evolution", "fr/entropy", "fr/compression-revision", "fr/in-context-learning", "fr/context-engineering", "fr/rag-memory-boundaries", "fr/document-retrieval", "fr/post-training", "fr/llm-overview-exercises", "fr/glossary"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "Le récapitulatif présente la distribution du prochain token et distingue génération, scoring et apprentissage ; le self-check et les six questions Practice couvrent les principaux repères d'orientation."
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:fr", "status:published"]
 -->
 
@@ -33,7 +38,7 @@ Il ne rédige pas sa réponse d'un seul bloc. À partir du texte déjà écrit, 
 Le préfixe est « C'est une bonne situation, ça, scribe ? » ; la continuation commence par « Vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation… ». Les valeurs numériques qui suivent sont fictives. L'assistant est une application ; le LLM est le modèle qu'elle interroge : seul ce dernier est étudié ici.
 :::
 
-::: {.callout-tip title="L'idée à retenir"}
+::: {.callout-tip title="L'idée à retenir" #revision-summary}
 Un modèle estime une distribution du prochain token. Elle sert à générer, scorer ou entraîner : trois usages distincts, pas les étapes d'une même exécution.
 :::
 
