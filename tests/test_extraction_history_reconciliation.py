@@ -30,9 +30,7 @@ def _corpus():
 def test_historical_scan_blocks_pair_with_source_history_without_lossy_assumptions() -> None:
     sources, extractions, _ = _corpus()
     scan_records = {
-        source_id: record
-        for source_id, record in extractions.items()
-        if "scan" in record
+        source_id: record for source_id, record in extractions.items() if "scan" in record
     }
 
     assert len(scan_records) == 36
@@ -105,22 +103,15 @@ def test_all_canonical_mapping_blocks_are_preserved_and_classified_by_shape() ->
     marek = mappings["marek-ryabinin-score-centering-off-policy-rl-2026"]
     assert len(marek["integrated_concepts"]) == 6
     canonical_concept_ids = {concept["id"] for concept in concepts["concepts"]}
-    assert {
-        item["id"] for item in marek["integrated_concepts"]
-    } <= canonical_concept_ids
+    assert {item["id"] for item in marek["integrated_concepts"]} <= canonical_concept_ids
 
 
 def test_aiedge_relation_proposals_are_not_canonical_edges_or_declared_relations() -> None:
     _, extractions, concepts = _corpus()
-    mapping = extractions["aiedge-how-cuda-graphs-speed-up-llm-inference"][
-        "canonical_mapping"
-    ]
+    mapping = extractions["aiedge-how-cuda-graphs-speed-up-llm-inference"]["canonical_mapping"]
     concept_ids = {concept["id"] for concept in concepts["concepts"]}
     relation_types = set(concepts["relation_types"])
-    canonical_edges = {
-        (edge["from"], edge["type"], edge["to"])
-        for edge in concepts["relations"]
-    }
+    canonical_edges = {(edge["from"], edge["type"], edge["to"]) for edge in concepts["relations"]}
 
     assert mapping["proposed_concepts"][0]["id"] == "cuda-graphs"
     assert "cuda-graphs" not in concept_ids
@@ -130,16 +121,13 @@ def test_aiedge_relation_proposals_are_not_canonical_edges_or_declared_relations
     assert {(item["type"]) for item in proposals} == {"optimizes", "complements"}
     assert all(item["type"] not in relation_types for item in proposals)
     assert all(
-        (item["from"], item["type"], item["to"]) not in canonical_edges
-        for item in proposals
+        (item["from"], item["type"], item["to"]) not in canonical_edges for item in proposals
     )
 
 
 def test_marek_prose_relations_are_not_silently_promoted_to_edges() -> None:
     _, extractions, concepts = _corpus()
-    mapping = extractions["marek-ryabinin-score-centering-off-policy-rl-2026"][
-        "canonical_mapping"
-    ]
+    mapping = extractions["marek-ryabinin-score-centering-off-policy-rl-2026"]["canonical_mapping"]
     proposals = mapping["proposed_relations"]
 
     assert len(proposals) == 6
