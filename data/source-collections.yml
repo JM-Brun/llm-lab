@@ -1,4 +1,16 @@
 # Controlled registry of source-review collection dossiers.
 # Membership is assigned explicitly on source records; no keyword inference.
 schema_version: 1
-collections: []
+collections:
+  - id: tokenization-embeddings
+    title: "Tokenization and embeddings"
+    dossier_path: docs/source-reviews/tokenization-embeddings-source-collection.md
+    status: active
+  - id: qkv-attention
+    title: "Q/K/V and attention"
+    dossier_path: docs/source-reviews/qkv-source-collection.md
+    status: active
+  - id: visual-learning-tools
+    title: "Visual learning tools: Embedding Atlas and Neuronpedia"
+    dossier_path: docs/source-reviews/embedding-atlas-neuronpedia-integration-2026-11.md
+    status: active
