@@ -42,6 +42,30 @@ def test_inventory_covers_every_published_understand_and_build_page() -> None:
     assert len(actual) == len(inventory["pages"])
 
 
+def test_real_repository_inventory_projects_revision_links_and_assessments() -> None:
+    project_index = AUDIT["ProjectIndex"].build(ROOT)
+    revision_aids: dict[str, list[dict[str, str]]] = {}
+    for edge in project_index.revision_edges:
+        revision_aids.setdefault(edge.source_page_id, []).append(
+            {"id": edge.aid_page_id, "role": edge.role}
+        )
+    inventory = AUDIT["build_revision_inventory"](
+        AUDIT["load_pages"](),
+        AUDIT["registry_entries"](ROOT / "data/concepts.yml", "concepts"),
+        AUDIT["registry_entries"](ROOT / "data/resources.yml", "resources"),
+        revision_support_by_page=project_index.revision_support_by_page,
+        revision_aids_by_lesson=revision_aids,
+    )
+
+    understand = inventory["counts"]["understand"]
+    assert understand["revision_aid_links"] == 4
+    assert understand["pages_with_revision_aids"] == 4
+    assert understand["revision_support_by_status"]["partial"] == 4
+    by_id = {page["id"]: page for page in inventory["pages"]}
+    assert by_id["fr/entropy"]["revision_aids"][0]["id"] == "fr/revision-information-theory"
+    assert by_id["en/cross-entropy"]["revision_support"]["status"] == "partial"
+
+
 def test_understand_pages_without_membership_are_reported_not_dropped() -> None:
     pages = [page("fr/unlisted", "fr", "understand", "unlisted")]
     inventory = AUDIT["build_revision_inventory"](pages, [], [], route_memberships={})
