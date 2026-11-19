@@ -2,7 +2,7 @@
 
 **Status:** proposed architecture contract; not an implemented metadata schema.  
 **Date:** 2026-11-19  
-**Scope:** explicit associations between a learning page and its revision artifacts (synthesis, flashcards, revision sheet), whether the target is another published page or a first-class non-page resource.
+**Scope:** explicit associations between a learning page and its revision support (integrated section, companion page or non-page artifact) for synthesis, flashcards and revision sheets.
 
 This document records a candidate model for review. It does **not** authorize edits to the 62-page historical snapshot, changes to `LLM-LAB-PAGE-MAP v1`, changes to `data/resources.yml`, or changes to any validator. Those changes require a separately reviewed implementation plan after this contract and the existing data inventory have been checked.
 
@@ -10,8 +10,9 @@ This document records a candidate model for review. It does **not** authorize ed
 
 1. A learning page may have zero, one or several revision artifacts.
 2. A revision artifact may support more than one learning page; do not duplicate a shared artifact to manufacture one-to-one links.
-3. A revision artifact may be either:
-   - a published Quarto page with its existing stable page ID; or
+3. Revision support may be either:
+   - an integrated section of the learning page itself, identified by an explicit heading anchor;
+   - a companion published Quarto page with its existing stable page ID; or
    - a non-page artifact with its own stable resource ID in `data/resources.yml`.
 4. The relationship has an explicit pedagogical role. A synthesis, a flashcard set and a revision sheet are not interchangeable.
 5. The relation is directional: **learning page → revision artifact**. Reverse lookups are derived indexes, not separately authored links.
@@ -26,7 +27,8 @@ This document records a candidate model for review. It does **not** authorize ed
 | Term | Meaning | Canonical identity |
 |---|---|---|
 | Learning page | Published page whose explanation or implementation is supported by revision material | Existing page ID from `LLM-LAB-PAGE-MAP v1` |
-| Page artifact | Revision material published as a Quarto page | Existing page ID; it is not copied into `data/resources.yml` |
+| Integrated section | Revision material embedded in the learning page itself | Explicit heading anchor within the source page |
+| Page artifact | Revision material published as a separate Quarto page | Existing page ID; it is not copied into `data/resources.yml` |
 | Non-page artifact | Revision material not published as a Quarto page (for example, a machine-readable flashcard set) | Stable resource ID in `data/resources.yml` |
 | Revision role | The function the artifact serves for the learning page | Controlled value on the relationship |
 | Revision relationship | Explicit association from one learning page to one artifact | Derived key from source page, role, target type and target ID |
@@ -86,10 +88,11 @@ Do not add a role merely because a file has a particular extension or title. If 
 
 Each relationship must contain exactly one target form:
 
-- `target.type: page` with `target.id` resolving to an existing, published page ID;
+- `target.type: section` with `target.id` resolving to an explicit, unique heading anchor in the source page itself;
+- `target.type: page` with `target.id` resolving to an existing, published companion page ID;
 - `target.type: resource` with `target.id` resolving to an existing, published non-page resource ID.
 
-No bare string target is allowed: the explicit type prevents collisions between page and resource namespaces. The relationship role is independent of target type; a synthesis can be a page or a non-page artifact.
+No bare string target is allowed: the explicit type prevents collisions between page and resource namespaces. A section target is local to the source page and does not create a self-relation in the page graph. The relationship role is independent of target type; a synthesis can be an integrated section, a companion page or a non-page artifact.
 
 ## 4. Proposed constraints
 
@@ -101,13 +104,21 @@ These constraints are requirements for a future validator implementation, not cu
 - `status` is one of `not_assessed`, `assessed`, or `not_applicable`.
 - `resources` is a list; each entry contains exactly `role` and `target`.
 - `role` is one of `synthesis`, `flashcards`, or `revision_sheet`.
-- `target` contains exactly `type` and `id`; `type` is `page` or `resource`.
+- `target` contains exactly `type` and `id`; `type` is `section`, `page` or `resource`.
 - Duplicate relationships (same source page, role, target type and target ID) are rejected.
-- A page cannot target itself.
+- A `page` target cannot be the source page. A `section` target is expected to belong to the source page and is not a page-graph self-edge.
 - `not_assessed` has no relationships. `not_applicable` requires a non-empty reason and has no relationships.
 - `assessed` may have an empty list; that is the only state in which an empty list means “reviewed, no retained artifact”.
 
 ### 4.2 Referential and lifecycle constraints
+
+For a section target:
+
+- the anchor must be explicitly declared on a heading in the source page;
+- the anchor must be unique within that page;
+- the section must contain the claimed revision role rather than merely being a generic heading;
+- the section link is rendered as the source page URL plus its fragment;
+- it does not count as a separate page or non-page resource.
 
 For a page target:
 
@@ -195,7 +206,7 @@ No migration is authorized by this document.
 After review and approval:
 
 1. inventory the actual revision artifacts and their page associations on the real Understand and Build corpus;
-2. classify each candidate as a page artifact or non-page resource and identify its language and role;
+2. classify each candidate as an integrated section, companion page artifact or non-page resource, and identify its language and role;
 3. test the proposed shape against representative existing cases without editing the historical snapshot;
 4. define a versioned migration and validator compatibility strategy;
 5. implement the validator and focused fixtures before migrating page metadata;
@@ -205,7 +216,8 @@ The 62-page historical snapshot must remain unchanged until the contract, its co
 
 ## 7. Decisions still requiring review
 
-- Is the optional page-map `revision` object the right canonical owner, or should the relation live in a separate relation registry?\n- Should integrated sections be targeted by explicit heading anchors, and what exact heading/block syntax should the validator recognize?
+- Is the optional page-map `revision` object the right canonical owner, or should the relation live in a separate relation registry?
+- Which explicit heading-anchor convention should identify integrated revision sections, and how should the validator prove that the anchor exists?\n- Should integrated sections be targeted by explicit heading anchors, and what exact heading/block syntax should the validator recognize?
 - Are the three proposed roles sufficiently distinct for the artifacts actually present?
 - Does the resource registry need a generic `revision` kind, or do concrete non-page artifacts justify narrower kinds?
 - What is the precise eligibility rule for `not_applicable`?
