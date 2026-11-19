@@ -26,7 +26,7 @@ def test_missing_multiple_and_unknown_labels_are_reported() -> None:
     issues = [
         {
             "number": 21,
-            "title": "[P1] Conflicting priority",
+            "title": "[P1/P2] Conflicting priority",
             "state": "open",
             "labels": [
                 {"name": "P2"},
