@@ -258,4 +258,3 @@ def test_marek_bilingual_pages_do_not_retain_superseded_audit_warning() -> None:
     assert "official tests have not been executed" not in en_page
     assert "jax>=0.11.1" in fr_page
     assert "jax>=0.11.1" in en_page
-
