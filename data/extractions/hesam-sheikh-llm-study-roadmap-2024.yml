@@ -151,7 +151,7 @@ items:
     evidence: {kind: reviewer-assessment, confidence: context-dependent, scope: "Terminology and causal interpretation in the article's summary.", assumptions: ["Positional effects and train/inference prefix mismatch are distinct mechanisms."], limitations: ["A full hallucination taxonomy requires primary literature and controlled evaluation."]}
     pedagogical_assessment: {novelty: {level: moderate, rationale: "The named mechanisms are easy to overgeneralize."}, complementarity: {level: high, rationale: "Adds a caution to generation and context-failure explanations."}, pedagogical_value: {level: high, rationale: "Prevents simplistic single-cause accounts."}, applicability: {level: high, rationale: "Use when reviewing hallucination explanations."}, redundancy: {level: moderate, rationale: "Hallucination already appears in the project."}, evidence_quality: {level: moderate, rationale: "Mechanism-specific primary-source verification remains needed."}}
     classification: {primary_theme: inference-efficiency, tags: [topic:hallucination, topic:exposure-bias], concept_ids: []}
-    candidate_destinations: {pages: [en/generation, fr/generation, en/context-engineering, fr/context-engineering], concepts: [autoregressive-generation, context-window]}
+    candidate_destinations: {pages: [en/generation, fr/generation, en/context-engineering, fr/context-engineering], concepts: [autoregressive-generation]}
     disposition: clarify
     disposition_rationale: "Preserve multi-causal framing; do not assert positional or exposure bias as universal explanations."
   - id: hesam-sheikh-llm-study-roadmap-2024:adaptive-question-led-reading
