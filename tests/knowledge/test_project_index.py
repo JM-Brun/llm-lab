@@ -10,7 +10,8 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[2]
 MODULE = runpy.run_path(
-    str(ROOT / "site" / "tools" / "project_index.py"), run_name="project_index_test"
+    str(ROOT / "site" / "tools" / "project_index.py"),
+    run_name="project_index_test",
 )
 ProjectIndex = MODULE["ProjectIndex"]
 
