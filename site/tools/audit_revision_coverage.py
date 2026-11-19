@@ -105,8 +105,7 @@ def build_revision_inventory(
             aid_page = page_by_id.get(aid_id)
             if aid_page is None:
                 raise ValueError(
-                    f"revision aid {aid_id!r} for lesson {page_id!r} "
-                    "is not a published page"
+                    f"revision aid {aid_id!r} for lesson {page_id!r} is not a published page"
                 )
             revision_aids.append(
                 {
