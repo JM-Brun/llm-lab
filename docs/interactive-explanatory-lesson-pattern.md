@@ -143,3 +143,32 @@ This checklist is a review aid, not a requirement to force every page into the s
 ## Validation boundary
 
 A source-level review can assess the authored explanation and interaction contract. A successful Quarto render establishes that the site builds, not that the interaction is correct or that learners understand it. For changed interactive pages, use the existing rendered-site browser harness and inspect both language versions at desktop and narrow widths; test keyboard behavior and the actual state transition. Learner comprehension requires separate learner evidence and must not be inferred from visual polish, test coverage or page completion.
+
+## Non-regression and preservation protocol
+
+This pattern is an additive improvement to an established learning system. It must never be used as a reason to simplify by deleting existing material, replace canonical templates, or reorganize the curriculum without a separate, reviewed migration plan.
+
+Before changing an existing page:
+
+1. **Inventory before editing.** Record its headings, explanations, equations, examples, figures, citations, source/provenance notes, caveats, exercises, interactive behavior, metadata, inbound/outbound links and navigation elements. Treat existing content as presumed intentional until reviewed.
+2. **Map old content to new structure.** Every existing information-bearing element must have an explicit destination in the revised page or a documented reason for relocation. If its status is uncertain, retain it.
+3. **Prefer additive composition.** Improve hierarchy, progressive disclosure, explanations, captions, diagrams and interactions around existing content. Do not silently summarize away technical nuance, remove references, replace precise claims with analogies, or move essential explanations behind optional controls.
+4. **Preserve the learning architecture.** Do not add, remove, rename or reorder mandatory curriculum stages as part of a page-level UX improvement. Preserve the established nine-stage core route, page archetypes, metadata contracts and learning destinations unless a separately scoped architecture change is approved.
+5. **Preserve orientation and navigation.** Retain breadcrumb coverage, explicit previous/next links on main-path pages (including when both destinations happen to be the same), preferred next-page metadata, branch navigation and endpoint guidance. Do not rely on a generated navigation widget as a substitute for required authored links.
+6. **Preserve bilingual equivalence.** Apply the same substantive content, examples, controls, states, caveats, source coverage and navigation in French and English. Translation may adapt phrasing, not weaken or omit the underlying information.
+7. **Reuse before creating.** Inspect existing components, shared includes, tokens, page templates and interaction patterns before introducing new ones. Extend shared implementations where appropriate; avoid parallel design systems and one-off widgets.
+8. **Make changes reviewable.** Keep the diff focused, state what was added, moved, corrected or intentionally retired, and explain any unavoidable removal with evidence and an explicit rationale. Prefer small PRs that can be validated and reverted independently.
+
+### Required regression checks for changed pages
+
+Run the checks appropriate to the scope, and do not claim checks that were not run:
+
+- Compare the before/after content inventory; account for every previously present section and information-bearing element.
+- Verify FR/EN parity, metadata/catalogue consistency, source references and local links.
+- Verify breadcrumb coverage, previous/next links, preferred next-page targets, branches and route endpoints.
+- Run focused tests and the relevant repository test/lint/type checks; fix root causes rather than disabling checks.
+- Run a full Quarto render and local-link/data consistency checks when page sources or shared rendering components change.
+- Inspect rendered pages in both languages at desktop and narrow widths; test keyboard operation, focus, reduced motion, accessibility/contrast and interactive state transitions.
+- Validate the latest commit and CI results. Do not merge while required checks are pending or failing; published-site verification remains necessary where the deployment workflow requires it.
+
+A passing build or a visually improved screenshot is not proof that information, navigation or learning outcomes were preserved. If a check cannot be run, record it as outstanding and keep the change scoped accordingly.
