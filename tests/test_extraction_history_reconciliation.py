@@ -74,7 +74,6 @@ def test_historical_scan_newer_source_events_remain_distinguishable() -> None:
         assert max(str(event["accessed_at"]) for event in history) == latest_source_date
 
 
-
 def test_aiedge_scan_preserves_facet_detail_beyond_the_source_event_summary() -> None:
     sources, extractions, _ = _corpus()
     source_id = "aiedge-how-cuda-graphs-speed-up-llm-inference"
