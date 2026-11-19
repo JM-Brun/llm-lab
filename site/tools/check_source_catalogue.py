@@ -631,17 +631,22 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
                                 f"{item_where}.verification.sources: unknown source {reference!r}"
                             )
 
-            destinations = item.get("candidate_destinations", {})
-            if isinstance(destinations, dict):
-                for page_id in _strings(
-                    destinations.get("pages"),
-                    f"{item_where}.candidate_destinations.pages",
-                    errors,
-                ):
-                    if page_id not in pages:
-                        errors.append(
-                            f"{item_where}.candidate_destinations.pages: unknown page {page_id!r}"
-                        )
+            if "candidate_destinations" in item:
+                destinations = item["candidate_destinations"]
+                if not isinstance(destinations, dict):
+                    errors.append(
+                        f"{item_where}.candidate_destinations: expected a mapping"
+                    )
+                else:
+                    for page_id in _strings(
+                        destinations.get("pages"),
+                        f"{item_where}.candidate_destinations.pages",
+                        errors,
+                    ):
+                        if page_id not in pages:
+                            errors.append(
+                                f"{item_where}.candidate_destinations.pages: unknown page {page_id!r}"
+                            )
 
     return errors
 
