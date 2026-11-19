@@ -49,8 +49,7 @@ def _write_page(
     front = {"title": slug, "lang": language, "keywords": tags}
     content = (
         "---\n" + yaml.safe_dump(front, sort_keys=False) + "---\n\n"
-        "<!--\nLLM-LAB-PAGE-MAP v1\n" + yaml.safe_dump(metadata, sort_keys=False) + "-->\n"
-        + body
+        "<!--\nLLM-LAB-PAGE-MAP v1\n" + yaml.safe_dump(metadata, sort_keys=False) + "-->\n" + body
     )
     path.write_text(content, encoding="utf-8")
 
@@ -299,9 +298,7 @@ def test_revision_adapter_keeps_three_target_types_separate(tmp_path: Path) -> N
 def test_revision_section_requires_an_explicit_anchor(tmp_path: Path) -> None:
     revision = {
         "status": "assessed",
-        "resources": [
-            {"role": "synthesis", "target": {"type": "section", "id": "missing-anchor"}}
-        ],
+        "resources": [{"role": "synthesis", "target": {"type": "section", "id": "missing-anchor"}}],
     }
     _write_page(tmp_path / "site", "fr/attention", "fr")
     _write_page(tmp_path / "site", "en/attention", "en", revision=revision)
@@ -315,9 +312,7 @@ def test_revision_section_requires_an_explicit_anchor(tmp_path: Path) -> None:
 def test_revision_page_target_must_be_published_and_language_compatible(tmp_path: Path) -> None:
     revision = {
         "status": "assessed",
-        "resources": [
-            {"role": "revision_sheet", "target": {"type": "page", "id": "fr/attention"}}
-        ],
+        "resources": [{"role": "revision_sheet", "target": {"type": "page", "id": "fr/attention"}}],
     }
     _write_page(tmp_path / "site", "fr/attention", "fr")
     _write_page(tmp_path / "site", "en/attention", "en", revision=revision)
