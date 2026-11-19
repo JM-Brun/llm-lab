@@ -183,6 +183,7 @@ def test_marek_prose_relations_are_not_silently_promoted_to_edges() -> None:
         "score-centering",
     ) in canonical_edges
 
+
 def test_marek_source_history_records_the_complete_paper_and_test_review() -> None:
     sources, _, _ = _corpus()
     history = sources["marek-ryabinin-score-centering-off-policy-rl-2026"]["scan_history"]
