@@ -57,7 +57,7 @@ def test_missing_multiple_and_unknown_labels_are_reported() -> None:
     assert any("expected exactly one area" in error for error in errors)
     assert any("expected exactly one type" in error for error in errors)
     assert any("not in the repository taxonomy" in error for error in errors)
-    assert any("multiple priorities" in error for error in errors)
+    assert any("multiple priority labels" in error for error in errors)
 
 
 def test_title_and_priority_label_must_agree() -> None:
