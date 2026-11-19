@@ -147,15 +147,17 @@ def build_concept_coverage(index: Any) -> dict[str, Any]:
                 "No editorial revision-support assessment is recorded for the associated pages."
             )
         elif all(
-            state in {"integrated_sufficient", "companion_sufficient"}
-            for state in revision_states
+            state in {"integrated_sufficient", "companion_sufficient"} for state in revision_states
         ):
             revision_state = "present"
-            revision_reason = "All associated teaching pages have sufficient assessed revision support."
+            revision_reason = (
+                "All associated teaching pages have sufficient assessed revision support."
+            )
         else:
             revision_state = "needs_review"
             revision_reason = (
                 "At least one associated page has partial, missing, or mixed revision-support status."
+            )
             )
         revision_evidence = [
             {
