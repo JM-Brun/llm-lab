@@ -66,6 +66,10 @@ def test_historical_scan_newer_source_events_remain_distinguishable() -> None:
             "2026-11-07",
             "2026-11-15",
         ),
+        "marek-ryabinin-score-centering-off-policy-rl-2026": (
+            "2026-11-09",
+            "2026-11-19",
+        ),
     }
 
     for source_id, (extraction_date, latest_source_date) in expected.items():
