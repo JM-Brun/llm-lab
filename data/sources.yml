@@ -212,7 +212,7 @@ sources:
     identifiers: {}
     canonical_url: "https://www.youtube.com/watch?v=zduSFxRajkE"
     publisher: "YouTube"
-    publication_date: null
+    publication_date: "2024-02-20"
     updated_date: null
     language: en
     version: null
@@ -240,6 +240,13 @@ sources:
           - "The full video was not watched; transcript-based review is not equivalent to audiovisual inspection."
           - "The transcript is a third-party rendering of public captions."
           - "Visuals, comments, linked resources and reuse rights were not independently audited."
+      - accessed_at: "2026-11-19"
+        status: partially-scanned
+        inspected_scope:
+          - "Official YouTube video metadata: title, creator and publication date (2024-02-20)"
+        limitations:
+          - "The date identifies the video's publication, not the date of the linked code repository or supplementary resources."
+          - "The full audiovisual content, comments, linked resources and reuse rights were not audited."
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies, en/unicode-text, fr/unicode-text, en/text-data, fr/text-data]
       concepts: [token]
@@ -2661,7 +2668,7 @@ sources:
     identifiers: {}
     canonical_url: "https://cameronrwolfe.substack.com/p/score-centering"
     publisher: "Cameron R. Wolfe / Substack"
-    publication_date: null
+    publication_date: "2026-11-09"
     updated_date: null
     language: en
     version: null
@@ -2693,8 +2700,14 @@ sources:
         limitations:
           - "Direct Substack retrieval returned a cache miss; the article body, equations, section structure and examples were not independently inspected."
           - "The primary paper and its official implementation are recorded separately; their contents are not attributed to Wolfe."
-          - "The public author archive inspected on 2026-11-09 does not list a post with this title; the exact post may be unlisted or otherwise inaccessible."
-          - "Publication date, linked references, comments, figures and reuse rights remain unverified."
+          - "The author archive snapshot inspected on 2026-11-09 did not expose this post; the canonical post page was subsequently retrieved and supplies its publication date."
+          - "The publication date is now confirmed by the canonical Substack post itself (2026-11-09); linked references, comments, figures and reuse rights remain unverified."
+      - accessed_at: "2026-11-19"
+        status: partially-scanned
+        inspected_scope:
+          - "Retrieved the canonical Substack post and confirmed its displayed publication date (2026-11-09)"
+        limitations:
+          - "The post's technical claims, cited primary paper, figures, comments and reuse rights were not re-audited in this metadata pass."
     related:
       pages: []
       concepts: []
@@ -3132,7 +3145,7 @@ sources:
     identifiers: {}
     canonical_url: "https://medium.com/@EleventhHourEnthusiast/proving-and-improving-the-platonic-representation-hypothesis-with-jepas-80a88aa3766d"
     publisher: "Medium"
-    publication_date: null
+    publication_date: "2026-11-05"
     updated_date: null
     language: en
     version: "Full article body inspected on 2026-11-10"
@@ -3162,6 +3175,13 @@ sources:
           - "The article's embedded mathematical figures were not separately retrieved as image files; the text descriptions and equations were inspected."
           - "The derivation was checked for consistency with the primary paper's Appendix A framing, but not independently peer reviewed."
           - "The article is a secondary explanation; the arXiv paper remains authoritative for theorem assumptions and experimental protocol."
+          - "No licence or permission to reproduce the article's figures or prose was established."
+      - accessed_at: "2026-11-19"
+        status: scanned
+        inspected_scope:
+          - "Canonical Medium article page and displayed publication date (Nov 5, 2026)"
+        limitations:
+          - "The Medium publication date does not change the separate arXiv preprint date or version history."
           - "No licence or permission to reproduce the article's figures or prose was established."
     related:
       pages: [fr/jepa-platonic-representation, en/jepa-platonic-representation]
@@ -3298,7 +3318,7 @@ sources:
     identifiers: {}
     canonical_url: "https://huggingface.co/spaces/hesamation/primer-llm-embedding"
     publisher: "Hugging Face Spaces"
-    publication_date: null
+    publication_date: "2025-03-18"
     updated_date: null
     language: en
     version: "Interactive Space; article citation states 2025"
@@ -3339,6 +3359,13 @@ sources:
           - "Embedded visual assets were represented by captions/placeholders in the retrieved text; individual image bytes, authorship and reuse rights were not audited."
           - "No licence or permission to reproduce article text, figures, code or model-derived data was established."
           - "The article is a secondary tutorial; simplified claims about semantic quality, dimensionality, TF-IDF geometry and BERT objectives require qualification against primary sources."
+      - accessed_at: "2026-11-19"
+        status: partially-scanned
+        inspected_scope:
+          - "Canonical Hugging Face Space static source page src/index.html and embedded Distill front matter; publication field states Mar 18, 2025"
+        limitations:
+          - "The repository's commit history is not substituted for publication date; this date is taken from the article's own published metadata."
+          - "Licence and asset reuse rights remain unverified."
       - accessed_at: "2026-11-12"
         status: partially-scanned
         inspected_scope:
