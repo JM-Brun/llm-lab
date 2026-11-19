@@ -155,7 +155,10 @@ def build_concept_coverage(index: Any) -> dict[str, Any]:
             )
         else:
             revision_state = "needs_review"
-            revision_reason = "At least one associated page has partial, missing, or mixed revision-support status."
+            revision_reason = (
+                "At least one associated page has partial, missing, or "
+                "mixed revision-support status."
+            )
         revision_evidence = [
             {
                 "id": page_id,
