@@ -70,6 +70,14 @@ Keep four operations distinct:
 3. **Tokenizer pipeline:** configured normalization and pre-tokenization, applied during training and encoding.
 4. **Encoding:** converting text into IDs with a frozen tokenizer version.
 
+::: {.callout-note title="Three quantities that must not be confused"}
+- **Training-token occurrences:** the total number of token instances processed across a corpus or training run. The same token ID can occur many times.
+- **Tokenizer vocabulary size:** the number of distinct token IDs the frozen tokenizer can emit.
+- **Model parameters:** the learned numerical values in the neural network.
+
+A corpus containing trillions of token occurrences does not imply a tokenizer with trillions of vocabulary entries. Report the corpus/token budget, vocabulary size, and parameter count separately, with their measurement scope and source.
+:::
+
 Normalization and pre-tokenization do not replace document filtering. Conversely, cleaning a corpus does not by itself define tokenizer behaviour.
 
 ## 4. Human annotation and label quality
