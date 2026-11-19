@@ -139,7 +139,7 @@ It is not a new stage in the core next-token predictive spine and does not repla
 
 
 ::: {.callout-warning}
-**Research boundary:** the canonical arXiv PDF and all appendices have not yet been independently audited, official tests have not been executed, and the Cameron Wolfe article body remains unavailable. Treat empirical figures as author-reported and the top-k tail as an implementation approximation.
+**Verification and limits:** the 16-page arXiv v1 PDF, appendices A.1–A.4 and B.1–B.3, and both experimental tables have been inspected. The official `tests/test_loss.py` passed all 7 cases against upstream snapshot `fdca22b19793babdf08e33e5ba51537e82cbed2f`, using JAX 0.9.0.1 and pytest 9.0.2; this environment does not match the declared minimum dependency (`jax>=0.11.1`). Large-scale experiments and framework integrations were not reproduced. Numerical results remain author-reported, and the separate Cameron Wolfe article body remains unavailable.
 :::
 
 :::: {.language-switch}
