@@ -2,6 +2,8 @@
 
 **Status (2026-11-19):** inventory PR [#1379](https://github.com/JM-Brun/llm-lab/pull/1379) is merged. Its final PR head was `817048ecda141fbf256e42237dc1a4f34bf44a88`; CI, Quarto render and secret scanning passed on that exact SHA. The merge commit is `6f914064a18abbdb6e839c3247139f1295944b55`. Editorial assessment, typed revision links and the learner-facing revision experience remain open under [#1109](https://github.com/JM-Brun/llm-lab/issues/1109). Build-specific implementation expectations remain coordinated with [#78](https://github.com/JM-Brun/llm-lab/issues/78).
 
+**Detailed existing-resource inventory:** [Understand/Build revision-support inventory — 19 November 2026](revision-resource-inventory-2026-11-19.md). This is a read-only structural inventory; it does not prescribe mass creation of new revision sheets.
+
 ## 1. Inventory snapshot
 
 The generated CI report for source commit `e7366639b258c83c37fa9606edd643ebe6ab8789` counted every published page whose metadata declares `destination:understand` or `destination:build`.
