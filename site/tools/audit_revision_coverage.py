@@ -188,7 +188,7 @@ def build_revision_inventory(
             )
 
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "source_of_truth": [
             "published Quarto page metadata",
             "data/guided-route.yml",
@@ -215,7 +215,7 @@ def render_markdown(inventory: dict[str, Any]) -> str:
         "# Revision coverage inventory",
         "",
         "> Generated projection; do not edit by hand.",
-        "> Synthesis status remains unassessed until its editorial contract is explicit.",
+        "> Revision support status is an explicit editorial assessment; missing status remains not_assessed.",
         "",
     ]
     for destination in DESTINATIONS:
