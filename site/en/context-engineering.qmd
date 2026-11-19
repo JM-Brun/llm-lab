@@ -19,6 +19,11 @@ hierarchy:
   parents: []
   children: []
 related: ["en/in-context-learning", "en/contextualized-representations", "en/generation", "en/post-training", "en/llm-evolution", "en/llm-limits", "en/rag-memory-boundaries", "en/document-retrieval"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "The three context levels and distinctions from RAG, memory and ICL are summarized in the key takeaways; seven Practice questions test selection, transmission, causal access, provenance and evaluation."
 tags: ["type:concept-lesson", "destination:understand", "topic:context-engineering", "level:core", "language:en", "status:published"]
 -->
 
@@ -118,7 +123,7 @@ Context engineering can reduce some risks, but it does not guarantee truth, inst
 
 Establish a baseline, add one source or example at a time, test questions with known answers, introduce irrelevant or contradictory documents in a controlled environment, then measure accuracy, source faithfulness, robustness, cost, and latency. An observed improvement on a test set is not a general guarantee: a context that performs well on a few examples may fail on other tasks or distributions.
 
-## Key takeaways
+## Key takeaways {#revision-summary}
 
 - Context is the information actually supplied to the model for a call, not just the latest user message.
 - Context engineering organizes that context through selection, retrieval, structure, prioritization, compression, updating, security, and evaluation.
