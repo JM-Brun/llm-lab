@@ -79,7 +79,11 @@ The legacy `target_resources` field contains bilingual page-like IDs (for exampl
 - All 96 extraction records resolve to a known source; filenames match their declared `source_id`.
 - Source-level `related.pages`, `related.concepts`, and source/item classification concept references contain no unresolved IDs in this snapshot.
 - Candidate page destinations are distinct from already-recorded source page associations. Candidate destinations remain proposals, even when their page IDs resolve.
-- Three candidate concept IDs are not present in the canonical concept registry: `context-window`, `log-probability`, and `weighted-aggregation`. They are report-only exceptions, not validator errors. Review their exact item occurrences before deciding whether to map them to existing concepts, create concepts through the normal review process, or remove the proposals.
+- Three candidate concept IDs are not present in the canonical concept registry: `context-window`, `log-probability`, and `weighted-aggregation`. They are report-only exceptions, not validator errors:
+  - `context-window`: `hesam-sheikh-llm-study-roadmap-2024:hallucination-causality-qualification` (clarify).
+  - `log-probability`: `marek-ryabinin-score-centering-off-policy-rl-2026:topk-and-compute` (integrate-by-reference).
+  - `weighted-aggregation`: `codefinity-qkv-building-blocks:quiz-pooling`, `codefinity-qkv-building-blocks:quiz-context` (integrate-by-reference), and `mbrenndoerfer-qkv-attention-mechanism:convex-hull` (integrate).
+  Review each proposal before mapping it to an existing concept, creating a concept through the normal review process, or removing the proposal.
 - No explicit route destination field is used. Do not interpret source-local teaching sequences or the legacy `target_resources` field as proof of a canonical route integration.
 
 ## Interpretation rules
