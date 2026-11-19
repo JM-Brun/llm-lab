@@ -1118,10 +1118,19 @@ sources:
         limitations:
           - "The moving main documentation URL was not pinned to a commit."
           - "The review covered the relevant algorithm overview, not the complete Transformers documentation."
+      - accessed_at: "2026-11-19"
+        status: partially-scanned
+        inspected_scope:
+          - "Current Transformers tokenizer summary: BPE, WordPiece, Unigram and SentencePiece overview"
+          - "Bilingual tokenizer-strategies pages and cross-source collection synthesis"
+        limitations:
+          - "The main documentation URL is living and no immutable commit or release was pinned; historical versioned pages differ in wording and model examples."
+          - "This was a bounded comparison of the algorithm overview, not an audit of Transformers tokenizer implementations or all model-specific tokenizer configurations."
+          - "The page's model-family examples and simplified algorithm descriptions were not treated as universal specifications or primary evidence."
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md, docs/source-reviews/huggingface-tokenizer-summary-2026-11-19.md]
 
   - id: sennrich-subword-nmt-2016
     title: "Neural Machine Translation of Rare Words with Subword Units"
