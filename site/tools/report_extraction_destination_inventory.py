@@ -221,9 +221,9 @@ def build_report(root: Path) -> dict[str, Any]:
                             unknown = set(refs) - known_concepts
                             unknown_concepts["item.candidate_destinations.concepts"].update(unknown)
                             for concept_id in unknown:
-                                unknown_concept_occurrences[
-                                    "item.candidate_destinations.concepts"
-                                ][concept_id].append(
+                                unknown_concept_occurrences["item.candidate_destinations.concepts"][
+                                    concept_id
+                                ].append(
                                     {"extraction_file": relative_path, "item_id": item.get("id")}
                                 )
 
