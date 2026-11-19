@@ -129,6 +129,7 @@ The first matrix is concept-centred: one row per canonical concept ID. It is a s
 | build | Reviewed milestone/page/evidence association | No machine-readable milestone crosswalk | not_registered |
 | computation | Explicit concept-to-computational-node bridge | No canonical bridge established | not_registered |
 | resources | Explicit first-class resource association | resources.yml v1 + ProjectIndex | available |
+| revision_support | Per-page revision assessment and typed declarations; not_assessed remains distinct from missing | ProjectIndex revision adapter; proposed contract not validator-approved | human_review |
 | sources | Explicit concept IDs in source/extraction records with valid lineage | sources.yml and extraction manifests; adapter pending | not_registered |
 | practice | Explicit reviewed exercise/test/experiment mapping | No complete canonical mapping | not_registered |
 | bilingual_parity | Expected FR and EN teaching-page counterparts under an explicit parity rule | Page-map v1 + reviewed pairing policy | needs_review |
@@ -165,4 +166,4 @@ Generated reports are disposable projections. Never edit a generated matrix as c
 
 The registry is accepted when every metric has a stable ID, exact unit and definition; every metric names a canonical owner/version or explicitly states no registry exists; bilingual grouping and exclusions are explicit; unsupported dimensions are not_registered rather than zero; revision status distinguishes not_assessed from missing; and future implementations are tested on synthetic fixtures and a real repository snapshot.
 
-**Decision:** this document defines the metric registry and matrix contract. It does not claim all metrics are implemented or that a coverage matrix has already been computed.
+**Decision:** this document defines the metric registry and matrix contract. The first read-only matrix builder is being implemented against ProjectIndex; no validated repository-wide matrix snapshot is claimed yet.
