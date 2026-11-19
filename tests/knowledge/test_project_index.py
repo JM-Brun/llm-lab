@@ -15,8 +15,12 @@ def _write_page(site: Path, page_id: str, language: str, *, next_page: str | Non
     path = site / language / f"{slug}.qmd"
     path.parent.mkdir(parents=True, exist_ok=True)
     tags = [
-        "type:concept-lesson", "destination:understand", f"topic:{slug}",
-        "level:core", f"language:{language}", "status:published",
+        "type:concept-lesson",
+        "destination:understand",
+        f"topic:{slug}",
+        "level:core",
+        f"language:{language}",
+        "status:published",
     ]
     metadata = {
         "id": page_id,
