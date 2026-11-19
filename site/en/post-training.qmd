@@ -19,6 +19,11 @@ hierarchy:
   parents: ["en/training-loop"]
   children: ["en/post-training-exercises"]
 related: ["en/llm-overview", "en/llm-evolution", "en/in-context-learning", "en/loss", "en/glossary", "en/llm-limits"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "The recap distinguishes updated parameters from request-specific context; the comparison table contrasts methods, data, signals and parameters, while four Practice questions and a transfer scenario test these choices."
 tags: ["type:concept-lesson", "destination:understand", "topic:post-training", "level:applied", "language:en", "status:published"]
 -->
 
@@ -28,7 +33,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:post-training", "
 A pretrained *base model* predicts likely continuations of text; it was not trained to follow instructions or to hold a conversation. Post-training adapts its parameters to that end. The mechanism is the [training loop](training-loop.qmd) already studied, applied to a model that starts from learned parameters and uses different data, targets, or training signals.
 :::
 
-::: {.callout-tip title="The one-minute mental model"}
+::: {.callout-tip title="The one-minute mental model" #revision-summary}
 Two different things can change an answer.
 
 - **Change the parameters** (post-training): run the training loop on new data. The change persists in the checkpoint and applies to every later prompt.
