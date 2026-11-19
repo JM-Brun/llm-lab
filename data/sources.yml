@@ -2399,7 +2399,7 @@ sources:
       contribution_types: [theory, pedagogy]
       audiences: [learner, practitioner]
     scan_status: inaccessible
-    integration_status: partially-integrated
+    integration_status: not-reviewed
     scan_history:
       - accessed_at: "2026-11-06"
         status: inaccessible
@@ -6689,7 +6689,7 @@ sources:
       contribution_types: [architecture, pedagogy]
       audiences: [beginner, learner]
     scan_status: partially-scanned
-    integration_status: not-reviewed
+    integration_status: partially-integrated
     collections: [tokenization-embeddings]
     scan_history:
       - accessed_at: "2026-11-19"
