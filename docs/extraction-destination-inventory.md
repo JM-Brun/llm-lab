@@ -62,13 +62,17 @@ The report also retains a complete field-presence map, including fields not list
 | Source `classification.concept_ids` | 139 | 454 | 82 |
 | Item `candidate_destinations.pages` | 385 | 840 | 96 |
 | Item `candidate_destinations.concepts` | 325 | 374 | 64 |
+| Item `candidate_destinations.route_ids` | 143 | 0 | 0 |
 | Item `classification.concept_ids` | 342 | 582 | 69 |
 | Legacy item `mapped_concepts` | 39 | 105 | 26 |
 | Legacy item `target_resources` | 39 | 100 | 22 |
+| Pedagogical-model `comparison.canonical_routes` | 51 | 142 | 37 |
 
-No explicit canonical `routes`, `target_routes`, or `candidate_destinations.routes` fields occur in this snapshot. The 294 `pedagogical_model.teaching_route` steps are source-local instructional sequences, not canonical destination routes.
+No explicit non-empty canonical route-ID destination is recorded. The `candidate_destinations.route_ids` key is present on 143 items, but all 143 lists are empty; `candidate_destinations.routes` and `target_routes` are absent. The 294 `pedagogical_model.teaching_route` steps are source-local instructional sequences, not canonical destination routes.
 
-The legacy `target_resources` field contains bilingual page-like IDs (for example, `fr/...` and `en/...`). It is counted separately rather than silently renamed or merged with `candidate_destinations.pages`.
+A separate `pedagogical_model.comparison.canonical_routes` field occurs in 51 instructional source models (142 entries, 37 distinct strings). Its values mix route labels, prose descriptions, page-metadata references and file paths such as `data/guided-route.yml` and `docs/learning-path.md`. These are useful review annotations, but they are not a normalized route-ID vocabulary and must not be counted as 142 integrated route links.
+
+The legacy `target_resources` field contains bilingual page-like IDs (for example, `fr/...` and `en/...`). It is counted separately rather than silently renamed or merged with `candidate_destinations.pages`; its name should not be confused with the stable non-page resource IDs in `data/resources.yml`.
 
 ### Compatibility findings
 
