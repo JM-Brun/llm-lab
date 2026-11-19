@@ -17,12 +17,21 @@ hierarchy:
   parents: ["en/build-path"]
   children: []
 related: ["en/transformer", "en/queries-keys-values", "en/scaled-dot-product-attention", "en/causal-masking", "en/contextualized-representations", "en/transformer-block-walkthrough-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "The recap describes the pre-LN flow, multi-head attention, projections and residuals, and explicitly separates compared architectural variants from the tested implementation."
 tags: ["type:guided-build", "destination:build", "topic:reference-transformer-block", "level:applied", "language:en", "status:published"]
 -->
 
 ::: {.chapter-lead}
 This page is the third stop (3 of 5) of the guided tour. The block is the repeated unit of the network. This page follows the file line by line, from parameter initialization to the full `forward`. Source: [`src/llm_lab/foundations/transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/transformer_block.py).
 :::
+::: {.callout-tip title="The Transformer block in one minute" #revision-summary}
+The reference block follows a pre-LN order: normalize, compute multi-head self-attention, add the residual path, then normalize, apply the MLP, and add its residual. Q/K/V/O projections and tensor shapes make the computation traceable; MQA/GQA, MLA and local attention are compared as architectural variants, not claimed as implemented in this code.
+:::
+
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 By the end of this tour, you will be able to:
 - trace a `(B, T, d)` shape through the block, from input to output;
