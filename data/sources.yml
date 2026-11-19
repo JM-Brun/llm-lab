@@ -212,7 +212,7 @@ sources:
     identifiers: {}
     canonical_url: "https://www.youtube.com/watch?v=zduSFxRajkE"
     publisher: "YouTube"
-    publication_date: null
+    publication_date: "2024-02-20"
     updated_date: null
     language: en
     version: null
@@ -240,6 +240,13 @@ sources:
           - "The full video was not watched; transcript-based review is not equivalent to audiovisual inspection."
           - "The transcript is a third-party rendering of public captions."
           - "Visuals, comments, linked resources and reuse rights were not independently audited."
+      - accessed_at: "2026-11-19"
+        status: partially-scanned
+        inspected_scope:
+          - "Official YouTube video metadata: title, creator and publication date (2024-02-20)"
+        limitations:
+          - "The date identifies the video's publication, not the date of the linked code repository or supplementary resources."
+          - "The full audiovisual content, comments, linked resources and reuse rights were not audited."
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies, en/unicode-text, fr/unicode-text, en/text-data, fr/text-data]
       concepts: [token]
