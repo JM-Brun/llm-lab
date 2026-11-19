@@ -156,3 +156,45 @@ This list describes direct fixtures in the test module, not exhaustive coverage 
 
 This focused follow-up strengthens only the structural locator contract (non-empty string `type`/`value`, plus non-empty optional provenance `speaker`). It does not add type-specific locator grammars, fetch URLs, change canonical records/taxonomy, or alter CI policy.
 
+
+
+## Template-to-validator alignment audit — 2026-11-19
+
+**Scope inspected:** the six maintained workflow templates under `docs/workflows/templates/`, the source catalogue contract, `data/source-taxonomy.yml`, `site/tools/check_source_catalogue.py`, `site/tools/check_resource_registry.py`, and the focused source-catalogue/taxonomy tests. This is a static contract audit; it does not claim that every populated record or human review was re-evaluated.
+
+### Ownership and validation boundary
+
+| Template | Intended record / use | Current enforcement | Decision |
+|---|---|---|---|
+| `source-registration-template.yml` | One source entry in `data/sources.yml` | The catalogue validator checks identity, controlled source/scan/integration values, supplied theme/concept/tag references, scan-history structure, and related page/concept references. It does not comprehensively validate bibliography, language, version, licence or reuse fields. | Keep as the source-record template. Preserve explicit unknowns; follow the unvalidated-field audit below before tightening constraints. |
+| `source-extraction-template.yml` | One structured extraction per source | The validator checks source linkage, item identity/kind/summary, locator shape, evidence confidence, dispositions when present, supported pedagogical ratings, selected classification/provenance/verification fields, candidate page destinations, and instructional pedagogical-model structure. | Keep as the structured evidence record. Do not treat template presence as proof that every optional field is enforced. |
+| `source-review-template.md` | Human technical/pedagogical interpretation | No Markdown semantic validator; it is a reviewer deliverable linked to structured extraction. | Keep separate from extraction; do not duplicate the full item inventory or treat Markdown as canonical machine data. |
+| `multi-source-comparison-template.md` | Topic-level cross-source synthesis | No Markdown semantic validator; controlled item dispositions and confidence vocabularies are referenced from the canonical taxonomy. | Keep one living dossier per topic; the dossier is a synthesis, not a second source registry. |
+| `project-learning-resource-audit-template.md` | Project/resource-family audit | Human review only; its validation table records evidence from other layers rather than replacing their validators. | Keep distinct from source-level review and source extraction. |
+| `visual-asset-audit-template.md` | Figure-level inspection, accessibility and rights review | Human evidence/rights audit; no automated legal or visual-inspection validation. | Keep distinct. A passing YAML validator cannot establish asset inspection or reuse permission. |
+
+### Concrete alignment findings
+
+1. **Candidate destinations are only partially checked.** The extraction template exposes `candidate_destinations.pages`, `concepts`, and `route_ids`. The current validator resolves page IDs only. Concept proposals and route IDs are not checked for existence or syntax. These remain proposals, but the gap should be explicit; do not silently imply all three destination lists are validated.
+2. **Canonical mapping is intentionally outside CI.** The extraction template labels `canonical_mapping` as an optional editorial hand-off and explicitly says it is not validated. Its proposed concepts, relations and route implications must therefore receive human review against the canonical registries and route ownership before implementation.
+3. **Technical assessment is not structurally validated.** The template's `technical_assessment.status`, `rationale`, and `corroborating_sources` are not covered by the current validator. Their presence is not evidence that a claim was independently checked.
+4. **Pedagogical assessment has a deliberate partial contract.** CI validates the six rating dimensions' controlled `level` and non-empty `rationale` when those dimensions are present. It does not validate the descriptive fields `learner_question`, `explanatory_lens`, or `teaching_form`, nor does it enforce when an assessment is editorially required. The latter remains a human gate.
+5. **Locator metadata is deliberately permissive.** CI requires non-empty string `type` and `value`; it does not validate `label`, resolve URLs, or apply type-specific locator grammar. The template's optional `label` is descriptive metadata, not a required contract field.
+6. **Evidence content is not fully validated.** The current validator enforces `evidence.confidence`, but does not establish the truth or adequacy of `evidence.kind`, `scope`, `assumptions`, or `limitations`. Those fields remain reviewer-authored evidence descriptions.
+7. **Source metadata and rights remain the highest-value structural gap.** The registration template includes `canonical_url`, `language`, dates, version/revision, licence and reuse fields. The current source validator does not comprehensively validate their syntax or cross-field consistency. The existing matrix already classifies these as unimplemented; retain that distinction and audit corpus shapes before adding constraints.
+8. **Human-readable templates are not interchangeable.** Source review, cross-source synthesis, project audit and visual audit answer different questions and carry different evidence boundaries. No template consolidation is justified by this comparison.
+
+### Recommended bounded follow-up
+
+- First add report-only corpus diagnostics for supplied bibliography, BCP 47 language tags, date chronology, version/revision and licence/reuse structure. Preserve null/unknown and classify existing values before introducing errors.
+- Add focused fixtures only after the diagnostics show stable semantics. Prioritize malformed supplied values and conditional consistency, not universal requiredness.
+- Decide separately whether candidate concept/route destinations should be resolved by a future validator. A route registry/contract must be identified first; do not invent a second route vocabulary.
+- Keep `technical_assessment`, source-graph meaning, pedagogical adequacy, asset inspection and rights interpretation as explicit human-review boundaries unless a precise, authoritative controlled contract is introduced.
+- Update the matrix and its tests together when enforcement changes. Do not create a parallel validator per template.
+
+### Non-findings
+
+- No evidence supports merging the six templates.
+- No evidence supports adding another source, rights, route or asset registry.
+- The existing split between canonical source metadata, atomic extraction, human review, topic synthesis, project audit and asset audit is coherent.
+- The main defect is not template duplication; it is the difference between fields that are documented, fields that are structurally checked, and fields that require human evidence review.
