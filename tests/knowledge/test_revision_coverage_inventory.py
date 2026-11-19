@@ -42,7 +42,7 @@ def test_understand_pages_without_membership_are_reported_not_dropped() -> None:
 
 def test_build_inventory_does_not_invent_a_guided_route() -> None:
     inventory = AUDIT["build_revision_inventory"](
-        [page("fr/build-example", "fr", "build", "implementation")], [], []
+        [page("fr/build-example", "fr", "build", "implementation")], [], [], route_memberships={}
     )
     record = inventory["pages"][0]
     assert record["route_status"] == "not_applicable"
@@ -54,6 +54,7 @@ def test_explicit_concept_and_implementation_edges_are_projected() -> None:
         [page("fr/attention", "fr", "understand", "attention")],
         [{"id": "self-attention", "resources": ["fr/attention"]}],
         [{"id": "attention-module", "referenced_by": ["fr/attention"]}],
+        route_memberships={},
     )
     record = inventory["pages"][0]
     assert record["concept_ids"] == ["self-attention"]
@@ -62,7 +63,7 @@ def test_explicit_concept_and_implementation_edges_are_projected() -> None:
 
 def test_report_documents_unrouted_and_unassessed_semantics() -> None:
     inventory = AUDIT["build_revision_inventory"](
-        [page("fr/lesson", "fr", "understand", "lesson")], [], []
+        [page("fr/lesson", "fr", "understand", "lesson")], [], [], route_memberships={}
     )
     report = AUDIT["render_markdown"](inventory)
     assert "unrouted" in report
