@@ -4,6 +4,14 @@
 **Méthode :** rapprochement exact des 139 identifiants du catalogue avec les 95 fichiers YAML du répertoire d'extractions, puis examen des audits et synthèses déjà présents. Ce document ne constitue pas une nouvelle lecture intégrale des 23 sources.
 **Règle :** « déjà couvert » signifie qu'une preuve de couverture identifiable existe dans le dépôt ; la simple présence d'une source dans la bibliographie ou dans le catalogue ne suffit pas. « Différer » n'est pas une validation scientifique ni une décision de rejet.
 
+
+## Réconciliation du corpus courant — 2026-11-19, après PR #1347
+
+Le tableau ci-dessous conserve son instantané historique (95 fichiers / 44 écarts). Un contrôle exact du `main` courant (`7d821968f6165220e494144798968aaded0ff525`) a depuis établi : **139 IDs source, 96 fichiers d'extraction canoniques, 43 IDs sans fichier correspondant**. Les deux tableaux de décisions de cette tranche et de `remaining-unextracted-source-decisions-2026-11-19.md` couvrent exactement ces 43 IDs manquants, sans doublon ni omission. Le premier tableau contient aussi le cas `poloclub-transformer-explainer-paper-2026`, désormais doté d'une extraction et donc hors des 43 écarts actuels.
+
+Cette vérification est un rapprochement d'identifiants et de dispositions documentées, pas une nouvelle inspection des 43 sources. Les décisions « déjà couvert », « différer », « extraire » ou « rejeter » conservent leurs limites et conditions propres. La disposition « extraire » du papier Polo Club est satisfaite au niveau du fichier dédié, sans que cela signifie que tous ses claims, figures ou droits sont entièrement audités.
+
+
 ## 1. Décisions explicites — 23 sources marquées intégrées
 
 | Source ID | Décision | Motif et preuve / condition |
