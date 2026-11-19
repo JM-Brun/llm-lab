@@ -88,8 +88,11 @@ def classify(
             errors.append(
                 f"#{number}: title contains multiple priorities ({', '.join(title_priorities)})"
             )
-        elif len(title_priorities) == 1 and len(priorities) == 1:
-            if title_priorities[0] != priorities[0]:
+        elif (
+            len(title_priorities) == 1
+            and len(priorities) == 1
+            and title_priorities[0] != priorities[0]
+        ):
                 errors.append(
                     f"#{number}: title says {title_priorities[0]} but label is {priorities[0]}"
                 )
@@ -155,7 +158,7 @@ def main() -> int:
 
     errors, counts, audited = classify(issues, known_labels)
     report = render_report(args.repo, errors, counts, audited)
-    print(report)
+    sys.stdout.write(report + "\\n")
     return 1 if errors else 0
 
 
@@ -163,5 +166,5 @@ if __name__ == "__main__":
     try:
         raise SystemExit(main())
     except (KeyError, OSError, json.JSONDecodeError, RuntimeError) as exc:
-        print(f"issue metadata audit: {exc}", file=sys.stderr)
+        sys.stderr.write(f"issue metadata audit: {exc}\\n")
         raise SystemExit(2) from exc
