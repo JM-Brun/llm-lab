@@ -61,9 +61,9 @@ def test_real_repository_inventory_projects_revision_links_and_assessments() -> 
     build = inventory["counts"]["build"]
     assert understand["revision_aid_links"] == 4
     assert understand["pages_with_revision_aids"] == 4
-    assert understand["revision_support_by_status"]["partial"] == 4
-    assert understand["revision_support_by_status"]["integrated_sufficient"] == 24
-    assert understand["revision_support_by_status"]["not_assessed"] == 18
+    assert understand["revision_support_by_status"]["partial"] == 6
+    assert understand["revision_support_by_status"]["integrated_sufficient"] == 28
+    assert understand["revision_support_by_status"]["not_assessed"] == 12
     assert build["revision_support_by_status"] == {
         "integrated_sufficient": 4,
         "not_assessed": 12,
