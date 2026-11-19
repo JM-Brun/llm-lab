@@ -12,7 +12,7 @@
 | Build | 16 | 8 | 8 | 8 |
 | **Total** | **62** | **31** | **31** | **31** |
 
-The artifact records 144 explicit concept-to-page edges in Understand, 18 in Build, and 10 implementation-resource associations, all in Build. The original snapshot reported all 62 `synthesis_status` values as `not_assessed`. The relation pilot in PR #1408 adds explicit links and `partial` assessments for four Understand pages (FR/EN entropy and cross-entropy); the other 42 Understand and all 16 Build pages remain `not_assessed` until individually assessed.
+The artifact records 144 explicit concept-to-page edges in Understand, 18 in Build, and 10 implementation-resource associations, all in Build. The original snapshot reported all 62 `synthesis_status` values as `not_assessed`. The relation pilot in PR #1408 adds four explicit page-aid links and `partial` assessments for the FR/EN entropy and cross-entropy lessons. It also records `integrated_sufficient` assessments for the FR/EN corpus-preparation and training-examples pages, each anchored to its existing revision callout. The other 42 Understand and 12 Build pages remain `not_assessed` until individually assessed.
 
 The editorial observations below come from source reviews recorded in issue [#1109](https://github.com/JM-Brun/llm-lab/issues/1109). The artifact and those comments are the evidence base; this document does not claim that every page has received a paragraph-by-paragraph scientific re-review or rendered accessibility review.
 
@@ -77,7 +77,7 @@ The following records summarize existing source-level audits. “Reuse” means 
 - The 16-page first-tranche review was initially a structural source audit; later passes deepened selected pairs (embedding/position/contextualization, entropy/cross-entropy, post-training/context engineering and LLM limits).
 - Several visual increments have CI and Quarto validation, but no rendered desktop/mobile, keyboard, screen-reader or learner-outcome sign-off is claimed.
 - The inventory records observed support and decisions, not a numeric pedagogical-quality score.
-- The relation pilot projects four `partial` assessments and four explicit aid links into the generated inventory. The remaining 42 Understand pages are still `not_assessed`; rendered UX, accessibility and learner-outcome validation remain separate.
+- The relation pilot projects four `partial` Understand assessments, four explicit aid links, and four `integrated_sufficient` Build assessments into the generated inventory. The remaining 42 Understand and 12 Build pages are still `not_assessed`; rendered UX, accessibility and learner-outcome validation remain separate.
 
 ## 4. Build inventory — 8 bilingual topic pairs
 
