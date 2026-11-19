@@ -2463,6 +2463,19 @@ sources:
           - "The syndicated mirror is secondary retrieval evidence; its text was not treated as the canonical article."
           - "Cover and in-body figures were not retrieved or visually inspected; figure rights remain unknown."
           - "No performance measurements or numerical speedup claims were available in the inspected text."
+      - accessed_at: "2026-11-19"
+        status: partially-scanned
+        inspected_scope:
+          - "Reopened the canonical Substack article directly: title, author, publication date, subtitle, six table-of-contents headings and the public introductory excerpt (capture/replay, fresh data, stable addresses, persistent buffers and graph variants)"
+          - "Cross-checked the same public excerpt against the indexed Muck Rack author-article listing"
+          - "Checked the WorldThatGrows syndicated page; its indexed content repeats the introductory preview and its direct page retrieval timed out"
+          - "Searched for article-specific figures; returned CUDA Graph illustrations were from unrelated sources and were not attributed to the AiEdge article"
+        limitations:
+          - "The canonical article is marked Paid; the six headings and public introduction do not expose the full technical sections."
+          - "No authorized complete article export or full-text mirror was found."
+          - "No original cover or in-body figure bytes could be attributed to this article or visually inspected; generic CUDA Graph images from search were excluded."
+          - "Code, benchmark tables, linked references, comments and the detailed break-even analysis remain uninspected."
+          - "The full-text and figure access gap still blocks source-complete semantic review and any article-specific integration decision."
     related:
       pages: [fr/generation, en/generation]
       concepts: [prefill, decode-step, kv-cache]
