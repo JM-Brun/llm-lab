@@ -20,10 +20,10 @@ hierarchy:
   children: ["en/loss"]
 related: ["en/likelihood", "en/cross-entropy-exercises"]
 revision_support:
-  status: partial
+  status: integrated_sufficient
   evidence:
-    - aid: en/revision-information-theory
-      note: "The sheet covers the entropy + KL identity and one-hot case; shifted alignment, masks and the valid-token denominator remain lesson-specific."
+    - anchor: revision-summary
+      note: "The recap and four answered questions check the one-hot case, logits[t] to target[t+1] alignment, causal-mask/loss-mask separation and averaging over valid positions only."
 tags: ["type:concept-lesson", "destination:understand", "topic:cross-entropy", "level:core", "language:en", "status:published"]
 -->
 
@@ -33,7 +33,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:cross-entropy", "
 The previous page built a sequence's likelihood by combining the conditional probabilities of observed tokens, then its negative log-likelihood (NLL). For a one-hot target, cross-entropy at one position is the negative log-probability of the observed token. During autoregressive training, this quantity is computed for allowed target positions and then aggregated using a convention that must be stated explicitly.
 :::
 
-::: {.callout-tip title="The one-minute mental model"}
+::: {.callout-tip title="The one-minute mental model" #revision-summary}
 - **One target:** for a one-hot target $y$, $\ell=-\log p_\theta(y\mid x_{<t})$; assigning low probability to the observed token is costly.
 - **A target distribution:** more generally, $H(q,p)=-\sum_i q_i\log p_i$. Cross-entropy is not predictive entropy $H(p)$.
 - **A sequence:** align each logit with the correct target token, shift inputs and targets consistently, then exclude invalid positions from both numerator and denominator.
@@ -329,6 +329,7 @@ The [mathematical foundations collection](exercises.qmd#foundations) includes wo
 1. Why is the loss zero when the target probability is 1?
 2. Why should masked positions be excluded from the denominator of the mean?
 3. Does perplexity directly measure the truth or usefulness of an answer?
+4. In next-token training, why must logits at position $t$ align with the target at position $t+1$?
 
 <details>
 <summary>Show the answers</summary>
@@ -336,6 +337,7 @@ The [mathematical foundations collection](exercises.qmd#foundations) includes wo
 1. The loss is $-\log p_y$, which is zero when $p_y=1$.
 2. Otherwise, the mean is no longer taken only over valid tokens and its scale is distorted.
 3. No. Perplexity measures probability assigned to tokens in a particular dataset; it does not directly measure truth, usefulness, or safety.
+4. The representation at position $t$ sees only the prefix through $t$ and predicts the next token. Without the shift, logits would be compared with the token already at position $t$ instead of the next-token target.
 
 </details>
 :::
