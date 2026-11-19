@@ -9,6 +9,10 @@ lang: en
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/revision-information-theory"
+revision_role: revision_sheet
+revision_of:
+  - en/entropy
+  - en/cross-entropy
 summary: "Revision sheet for the information-theory quantities used to understand predictive LLM objectives."
 scope: "Summarizes surprisal, entropy, cross-entropy, KL divergence and predictive coding without replacing the detailed lessons."
 purpose: "Help learners review the core identities, units, assumptions and conceptual traps before practising."
@@ -18,7 +22,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["en/entropy", "en/cross-entropy", "en/experience-information-theory"]
+related: ["en/experience-information-theory"]
 tags: ["type:exercise-collection", "destination:practice", "topic:information-theory-revision", "level:applied", "language:en", "status:published"]
 -->
 
