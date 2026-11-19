@@ -104,3 +104,47 @@ Compare the article's teaching moves against these pages, including summaries/fl
 3. Inspect linked Epoch AI charts and methodology before considering cost figures.
 4. Compare extraction items with current bilingual pages and revision resources.
 5. If an addition is accepted, implement French/English parity and update resource relations; otherwise record item-specific no-change decisions.
+
+
+## Phase B — repository comparison and integration decision (19 November 2026)
+
+The bilingual pages and their practice resources were inspected directly in the repository:
+
+| Destination | Existing coverage | Decision |
+|---|---|---|
+| \`site/{en,fr}/text-data.qmd\` | Text → tokens → IDs → embeddings; vocabulary size \(V\) versus embedding dimension \(d\); practical consequences of token count | No new pipeline explanation |
+| \`site/{en,fr}/tokenization-strategies.qmd\` | Granularity, normalization/pre-tokenization, BPE, WordPiece, unigram, worked BPE merges, tokenizer training versus inference encoding | No duplicate algorithm overview |
+| \`site/{en,fr}/language-modeling-math.qmd\` | Autoregressive factorization, \(P_\\theta(x_t\\mid x_{<t})\), sequence likelihood, NLL, soft-target cross-entropy and KL | No duplicate mathematical lesson |
+| \`site/{en,fr}/exercises-text-data.qmd\` | Real GPT-2 tokenizer trace, BPE merge exercise, shifted windows and target alignment, leakage diagnosis | No duplicate tokenization or window exercise |
+| \`site/{en,fr}/build-path.qmd\` | Generation/scoring/training distinction; G2 data branch; partial loss functions; no complete optimizer/training loop or automated validation runner | Keep implementation-status caveat explicit |
+
+### Accepted integration
+
+Added a short bilingual callout to \`site/en/corpus-preparation.qmd\` and \`site/fr/corpus-preparation.qmd\`, immediately after the four corpus/tokenizer operations are distinguished. It defines separately:
+
+1. training-token occurrences;
+2. tokenizer vocabulary size;
+3. model parameter count.
+
+The note deliberately does not repeat or endorse the article's unverified GPT-4 13-trillion figure. The extraction's candidate destination and catalogue relation now include both corpus-preparation pages.
+
+### No-change decisions
+
+- **BPE / WordPiece / character-level overview:** already covered in the canonical tokenization lesson; the source's beginner comparison is not sufficiently novel to warrant a second explanation.
+- **Eiffel Tower next-token example:** useful source-side teaching example, but the current Understand/Build materials already define next-token prediction and the exercise collection builds shifted input/target pairs. Retain it as a linked source example rather than duplicate it.
+- **Probability knobs:** do not reproduce as a standalone diagram. The metaphor risks implying independent candidate-specific controls; current mathematical lessons already connect logits, cross-entropy and gradients.
+- **Fluency versus factuality:** retain as a source-level bridge to evaluation and post-training; no new page is justified.
+- **Tokenizer encoding/decoding versus encoder-decoder architecture:** preserve as an editorial caution in the source review; no evidence of a current learner-facing misconception warrants another callout.
+- **Compute-cost charts and GPT-4 numerical claims:** defer pending inspection of the original figures and primary evidence.
+
+### Build implementation boundary
+
+The Build path describes generation, scoring and training as three uses of the same next-token computation, but explicitly records that only loss calculations are currently implemented; there is no complete training loop, optimizer, automated validation runner or checkpoint. The article's toy optimisation story must not be presented as an implementation already available in LLM Lab.
+
+### Revision resources and graph decision
+
+The existing text-data exercise collection already covers the nearest reusable practice forms (tokenizer trace, BPE merges, windows and target alignment). No separate flashcard or summary is created: the accepted quantity distinction is a compact correction best located at the corpus/tokenizer handoff. No new canonical concept or graph edge is warranted. The source-to-page relation is recorded in the source catalogue and extraction only.
+
+### Verification note
+
+The first CI run on the ingestion commit passed source/extraction validation, metadata and revision-resource checks, lint/type checks, tokenizer example execution, and secret scanning. Its test suite had 753 passes and one failure: a historical inventory test asserted a hard-coded count of 36 scan records, now 37 after the intentional addition. The assertion has been updated to 37; the follow-up CI run must confirm this correction. The Quarto site audit was still running at the time of this note.
