@@ -63,7 +63,7 @@ def test_real_repository_inventory_projects_revision_links_and_assessments() -> 
     assert understand["pages_with_revision_aids"] == 4
     assert understand["revision_support_by_status"].get("partial", 0) == 0
     assert understand["revision_support_by_status"]["integrated_sufficient"] == 46
-    assert understand["revision_support_by_status"]["not_assessed"] == 0
+    assert understand["revision_support_by_status"].get("not_assessed", 0) == 0
     assert build["revision_support_by_status"] == {
         "integrated_sufficient": 16,
     }
