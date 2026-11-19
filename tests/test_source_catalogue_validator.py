@@ -430,9 +430,7 @@ def test_non_mapping_candidate_destinations_are_rejected(tmp_path: Path) -> None
 
     errors = MODULE.validate_source_catalogue(tmp_path)
 
-    assert any(
-        "candidate_destinations: expected a mapping" in error for error in errors
-    )
+    assert any("candidate_destinations: expected a mapping" in error for error in errors)
 
 
 def test_source_collection_membership_is_optional_during_backfill(tmp_path: Path) -> None:
