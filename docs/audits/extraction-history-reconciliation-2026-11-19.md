@@ -9,7 +9,7 @@ This is a conservative, evidence-linked reconciliation. A historical proposal is
 
 ## 1. Executive findings
 
-The repository inventory documents 36 extraction-level `scan` blocks and 28 `canonical_mapping` blocks. Direct inspection of the 96 extraction files on the audited `main` snapshot found all 28 mapping-bearing files, but only 35 files with an unquoted top-level `scan:` key using the first-pass locator. The 36th scan has **not** yet been identified. This is an unresolved discrepancy, not a reason to revise the documented count.
+The repository inventory documents 36 extraction-level `scan` blocks and 28 `canonical_mapping` blocks. Direct inspection of all 96 extraction files first found 35 blocks; a second locator allowing leading whitespace identified the missing 36th block in `bdtech-next-concept-modeling-2026.yml`. The 36-file inventory is now reconciled. All 36 corresponding source records exist and have `scan_history` entries.
 
 The 28 mapping blocks are all mappings. Their observed shape is:
 
@@ -101,9 +101,9 @@ Relevant canonical neighborhood edges (all exact triples in `data/concepts.yml`)
 
 **Conclusion:** no one of the six historical prose proposals is an exact duplicate of a canonical edge. Four are partially covered by the current graph neighborhood; one references a missing `policy-drift` concept; the final compatibility/composition claim is not represented. Do not infer any edge or reverse a relation based on wording alone.
 
-## 4. Historical scan locator — 35 identified, one unresolved
+## 4. Historical scan locator — all 36 identified
 
-The first-pass exact-key locator found these 35 extraction files with a top-level `scan:` block:
+The first-pass exact-key locator found 35 files; the broader locator found the final `bdtech-next-concept-modeling-2026` record (the key is at the root but was missed by the first pass). The complete list is:
 
 1. `ahia-do-all-languages-cost-the-same-2023`
 2. `aiedge-how-cuda-graphs-speed-up-llm-inference`
@@ -141,7 +141,7 @@ The first-pass exact-key locator found these 35 extraction files with a top-leve
 34. `varis-stephen-libovicky-tokcollate-2026`
 35. `wegmann-tokenization-language-variation-2025`
 
-The inventory says 36. The outstanding 36th record must be found by a broader YAML-key locator (including quoted keys, whitespace variants and parser-level key detection), then compared field-by-field against the matching source-level `scan_history`. No scan content is declared migrated, duplicated, stale or richer until that comparison is done.
+### Source-history correspondence and content differences\n\nAll 36 extraction `scan.accessed_at` dates occur in the corresponding source record's `scan_history`. For 34 records, the extraction scan date is also the latest source-history date. Two records have later source-history events that are not represented by the extraction-level scan snapshot:\n\n- `andrej-karpathy-gpt-tokenizer-video`: extraction scan is dated 2026-10-30; source history also records a 2026-11-19 metadata-only check of the official YouTube title, creator and publication date. This is an additional event, not evidence that the 2026-10-30 transcript inspection was superseded.\n- `maarten-grootendorst-visual-guide-multimodal-generation`: extraction scan is dated 2026-11-07; source history adds a 2026-11-15 event covering the original bilingual Deepen pages, a Mermaid map/tables, four live article image elements, and navigation updates. That later work is not reflected in the extraction-level scan block.\n\nThe content models are not structurally equivalent. Each extraction `scan` is a ten-key facet snapshot (`accessed_at`, `retrieval_method`, `author_text`, `figures_media`, `code_data`, `comments`, `linked_resources`, `metadata`, `rights`, `unresolved_questions`). Source `scan_history` is an append-only event list with `accessed_at`, `status`, `inspected_scope`, and `limitations`. Therefore a date match is not content equality: facet-level evidence and unresolved questions cannot be reconstructed losslessly from the source event summary without a deliberate migration mapping. The two later source events are unique chronological content and must remain preserved.\n\nThe current comparison establishes identity/date correspondence for all 36 and two clear later-event differences. A field-by-field semantic comparison of all facet notes against each event's `inspected_scope` and `limitations` remains required before declaring any field duplicated, richer, stale or safe to migrate.
 
 ## 5. Compatibility and non-regression contract
 
@@ -188,7 +188,7 @@ Regression tests should assert:
 
 1. Find the 36th scan using parser-level key detection and produce the 36-file list.
 2. Retrieve source-level `scan_history` for all 36 source IDs; compare the ten fields and record differences without migration.
-3. Verify all six Marek concepts under `integrated_concepts` against canonical IDs, definitions, pages and source evidence (the first-pass check found all six except any additional proposal IDs to be reviewed individually; do not infer relation integration).
+3. Verify all six Marek concepts under `integrated_concepts` against canonical IDs, definitions, pages and source evidence. All six IDs resolve in `data/concepts.yml`; page-level support and source evidence still require individual review. Do not infer relation integration.
 4. Decide whether any Marek prose relation should be normalized; retain non-representable propositions if no declared relation expresses them accurately.
 5. Keep both AiEdge relations deferred until full source inspection; do not extend the relation vocabulary solely to accommodate them.
 6. Build the real fixtures and tests above; run focused tests, full Python tests, inventory and relevant CI on the new commit.
