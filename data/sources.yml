@@ -31,6 +31,7 @@ sources:
       audiences: [beginner, learner]
     scan_status: partially-scanned
     integration_status: integrated
+    collections: [qkv-attention]
     scan_history:
       - accessed_at: "2026-11-04"
         status: partially-scanned
@@ -129,6 +130,7 @@ sources:
       audiences: [beginner, learner]
     scan_status: partially-scanned
     integration_status: integrated
+    collections: [qkv-attention]
     scan_history:
       - accessed_at: "2026-11-04"
         status: partially-scanned
@@ -2202,6 +2204,7 @@ sources:
       audiences: [beginner, learner]
     scan_status: partially-scanned
     integration_status: integrated
+    collections: [qkv-attention]
     scan_history:
       - accessed_at: "2026-11-05"
         status: partially-scanned
@@ -2307,6 +2310,7 @@ sources:
       audiences: [learner, practitioner]
     scan_status: partially-scanned
     integration_status: reviewed
+    collections: [qkv-attention]
     scan_history:
       - accessed_at: "2026-11-05"
         status: partially-scanned
