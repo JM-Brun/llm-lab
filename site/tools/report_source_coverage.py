@@ -31,6 +31,7 @@ def build_report(root: Path) -> dict[str, Any]:
     data_dir = root / "data"
     sources_doc = _load(data_dir / "sources.yml")
     concepts_doc = _load(data_dir / "concepts.yml")
+    collections_doc = _load(data_dir / "source-collections.yml")
     sources = [item for item in sources_doc.get("sources", []) if isinstance(item, dict)]
     concepts = [item for item in concepts_doc.get("concepts", []) if isinstance(item, dict)]
 
@@ -150,6 +151,57 @@ def build_report(root: Path) -> dict[str, Any]:
         key=lambda item: (item["source_count"], item["id"]),
     )
 
+    collection_entries = [
+        item for item in collections_doc.get("collections", []) if isinstance(item, dict)
+    ]
+    collection_source_ids: dict[str, set[str]] = {
+        str(item["id"]): set() for item in collection_entries if isinstance(item.get("id"), str)
+    }
+    collection_extraction_records: Counter[str] = Counter()
+    collection_extraction_items: Counter[str] = Counter()
+    explicit_collection_decisions: set[str] = set()
+    explicit_unassigned_sources: set[str] = set()
+    for source in sources:
+        source_id = source.get("id")
+        if not isinstance(source_id, str) or "collections" not in source:
+            continue
+        explicit_collection_decisions.add(source_id)
+        memberships = source.get("collections")
+        if not isinstance(memberships, list):
+            continue  # Structural errors are reported by check_source_catalogue.py.
+        if not memberships:
+            explicit_unassigned_sources.add(source_id)
+        for collection_id in memberships:
+            if not isinstance(collection_id, str) or collection_id not in collection_source_ids:
+                continue
+            collection_source_ids[collection_id].add(source_id)
+            records = extraction_by_source.get(source_id, [])
+            collection_extraction_records[collection_id] += len(records)
+            collection_extraction_items[collection_id] += sum(
+                len(record.get("items", []))
+                for record in records
+                if isinstance(record.get("items"), list)
+            )
+    collection_coverage = {
+        "counts": {
+            "sources_with_explicit_decision": len(explicit_collection_decisions),
+            "sources_explicitly_unassigned": len(explicit_unassigned_sources),
+            "sources_without_explicit_decision": len(sources) - len(explicit_collection_decisions),
+            "total_source_memberships": sum(
+                len(values) for values in collection_source_ids.values()
+            ),
+        },
+        "collections": {
+            collection_id: {
+                "source_records": len(source_ids_for_collection),
+                "extraction_files": collection_extraction_records[collection_id],
+                "atomic_items": collection_extraction_items[collection_id],
+            }
+            for collection_id, source_ids_for_collection in sorted(collection_source_ids.items())
+        },
+        "join_rule": "extraction.source_id -> source.id -> source.collections",
+    }
+
     return {
         "schema_version": 1,
         "scope": {
@@ -183,6 +235,7 @@ def build_report(root: Path) -> dict[str, Any]:
             "concept_references_unknown": len(unknown_concept_references),
             "scan_history_status_mismatches": len(scan_history_mismatches),
         },
+        "collection_coverage": collection_coverage,
         "status_distribution": {
             "scan": dict(sorted(scan_status_counts.items())),
             "integration": dict(sorted(integration_status_counts.items())),
@@ -252,6 +305,23 @@ def render_markdown(report: dict[str, Any]) -> str:
     ]
     for key, value in counts.items():
         lines.append(f"| {key.replace('_', ' ')} | {value} |")
+    collection_coverage = report.get("collection_coverage", {})
+    collection_counts = collection_coverage.get("counts", {})
+    lines.extend(["", "## Explicit collection coverage", ""])
+    lines.append(f"Join rule: `{collection_coverage.get('join_rule', 'not available')}`")
+    lines.append("")
+    lines.append("| Measure | Count |")
+    lines.append("|---|---:|")
+    for key, value in collection_counts.items():
+        lines.append(f"| {key.replace('_', ' ')} | {value} |")
+    lines.extend(["", "### Per collection", ""])
+    lines.append("| Collection | Source records | Extraction files | Atomic items |")
+    lines.append("|---|---:|---:|---:|")
+    for collection_id, metrics in collection_coverage.get("collections", {}).items():
+        lines.append(
+            f"| {collection_id} | {metrics['source_records']} | "
+            f"{metrics['extraction_files']} | {metrics['atomic_items']} |"
+        )
     lines.extend(["", "## Status distribution", ""])
     for dimension, values in report["status_distribution"].items():
         lines.append(f"### {dimension}")
