@@ -181,11 +181,14 @@ def render_markdown(inventory: dict[str, Any]) -> str:
         [
             "## Interpretation",
             "",
-            "- Understand preserves every core/optional stage membership, including multiple memberships.",
+            "- Understand preserves every core/optional stage membership,",
+            "  including multiple memberships.",
             "- Understand pages outside the guided route are explicitly marked unrouted.",
-            "- Build is inventoried from the published destination tag; no linear order is inferred.",
+            "- Build is inventoried from the published destination tag;",
+            "  no linear order is inferred.",
             "- Concept and implementation links come from explicit registry edges.",
-            "- not_assessed does not mean a page lacks a synthesis; no typed synthesis relation exists yet.",
+            "- not_assessed does not mean a page lacks a synthesis;",
+            "  no typed synthesis relation exists yet.",
             "",
         ]
     )
