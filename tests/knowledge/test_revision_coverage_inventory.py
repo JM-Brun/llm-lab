@@ -65,8 +65,7 @@ def test_real_repository_inventory_projects_revision_links_and_assessments() -> 
     assert understand["revision_support_by_status"]["integrated_sufficient"] == 42
     assert understand["revision_support_by_status"]["not_assessed"] == 0
     assert build["revision_support_by_status"] == {
-        "integrated_sufficient": 4,
-        "not_assessed": 12,
+        "integrated_sufficient": 16,
     }
     by_id = {page["id"]: page for page in inventory["pages"]}
     assert by_id["fr/entropy"]["revision_aids"][0]["id"] == "fr/revision-information-theory"
