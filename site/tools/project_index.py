@@ -624,7 +624,9 @@ class ProjectIndex:
         """Return typed revision targets declared by a source page."""
         if page_id not in self.pages_by_id:
             raise KeyError(f"unknown published page: {page_id}")
-        if role is not None and role not in REVISION_ROLES:
+        if role is not None and (
+            not isinstance(role, str) or role not in REVISION_ROLES
+        ):
             raise ValueError(f"unknown revision role: {role}")
         return tuple(
             edge
@@ -641,8 +643,12 @@ class ProjectIndex:
         role: str | None = None,
     ) -> tuple[RevisionEdge, ...]:
         """Return source→target revision edges using a page-local key for sections."""
-        if role is not None and role not in REVISION_ROLES:
+        if role is not None and (
+            not isinstance(role, str) or role not in REVISION_ROLES
+        ):
             raise ValueError(f"unknown revision role: {role}")
+        if not isinstance(target_id, str) or not target_id.strip():
+            raise ValueError("target_id must be a non-empty string")
         if target_type == "page":
             if section_page_id is not None:
                 raise ValueError("section_page_id is only valid for section targets")
@@ -656,8 +662,8 @@ class ProjectIndex:
                 raise KeyError(f"unknown revision target resource: {target_id}")
             edges = self.revision_sources_by_resource.get(target_id, ())
         elif target_type == "section":
-            if section_page_id is None:
-                raise ValueError("section targets require section_page_id")
+            if not isinstance(section_page_id, str) or not section_page_id:
+                raise ValueError("section targets require a non-empty section_page_id")
             page = self.pages_by_id.get(section_page_id)
             if page is None:
                 raise KeyError(f"unknown section owner page: {section_page_id}")
