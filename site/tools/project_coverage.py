@@ -40,6 +40,11 @@ def build_concept_coverage(index: Any) -> dict[str, Any]:
     rows: list[dict[str, Any]] = []
 
     memberships_by_page: dict[str, list[Any]] = {}
+    resource_ids_by_concept: dict[str, set[str]] = {}
+    for association in index.concept_resource_associations:
+        resource_ids_by_concept.setdefault(association.concept_id, set()).add(
+            association.resource_id
+        )
     for membership in index.route_memberships:
         memberships_by_page.setdefault(membership.page_id, []).append(membership)
 
@@ -108,11 +113,7 @@ def build_concept_coverage(index: Any) -> dict[str, Any]:
             ),
         )
 
-        resource_ids = sorted(
-            association.resource_id
-            for association in index.concept_resource_associations
-            if association.concept_id == concept_id
-        )
+        resource_ids = sorted(resource_ids_by_concept.get(concept_id, ()))
         resource_evidence = [
             {"id": resource_id, "path": f"data/resources.yml#{resource_id}"}
             for resource_id in resource_ids
@@ -128,11 +129,11 @@ def build_concept_coverage(index: Any) -> dict[str, Any]:
         )
 
         revision_states = [
-            index.revision_support_by_page.get(page_id, {"status": "not_assessed"})["status"]
+            index.revision_support_by_page.get(page_id, {}).get("status", "not_assessed")
             for page_id in page_ids
         ]
         revision_edges = [
-            edge for edge in index.revision_edges if edge.source_page_id in set(page_ids)
+            edge for page_id in page_ids for edge in index.revision_aids_for_lesson(page_id)
         ]
         if not page_ids:
             revision_state = "needs_review"
@@ -160,9 +161,9 @@ def build_concept_coverage(index: Any) -> dict[str, Any]:
             {
                 "id": page_id,
                 "path": _page_path(index.pages_by_id[page_id]),
-                "status": index.revision_support_by_page.get(
-                    page_id, {"status": "not_assessed"}
-                )["status"],
+                "status": index.revision_support_by_page.get(page_id, {}).get(
+                    "status", "not_assessed"
+                ),
             }
             for page_id in page_ids
         ]
