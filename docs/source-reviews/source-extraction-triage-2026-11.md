@@ -1,8 +1,21 @@
-# Triage raisonné des sources sans extraction — 18 novembre 2026
+# Triage raisonné des sources sans extraction — 19 novembre 2026
 
 **Périmètre :** inventaire de `data/sources.yml` et des fichiers `data/extractions/`, complété par les titres, types, tags, pages associées et statuts de catalogue. Ce document est un **triage éditorial de métadonnées**, pas une attestation de lecture intégrale du nombre de ressources restant à auditer.
 
 ## 1. Réconciliation de l'inventaire
+
+### Contrôle des identifiants — 2026-11-19
+
+Un contrôle direct des 95 fichiers YAML de `data/extractions/` sur `main` a été effectué fichier par fichier :
+
+- 139 enregistrements source et 139 IDs source distincts dans `data/sources.yml`.
+- 95 fichiers `.yml` dans `data/extractions/` (README exclu).
+- 95/95 fichiers contiennent un champ supérieur `source_id`.
+- 95/95 valeurs `source_id` sont distinctes, résolvent vers un ID du catalogue et correspondent exactement au nom canonique `<source_id>.yml`.
+- Aucun champ `source_id` manquant, aucun ID d'extraction orphelin, aucun doublon d'ID d'extraction et aucun écart nom de fichier / `source_id` dans cet inventaire.
+- 44 IDs du catalogue n'ont donc pas de fichier d'extraction correspondant.
+
+**Méthode :** énumération du répertoire GitHub, récupération de chacun des 95 fichiers, lecture du champ supérieur `source_id`, comparaison avec le stem du fichier et l'ensemble des IDs du catalogue. La structure YAML complète, les items, les locateurs et le support scientifique des extractions n'ont pas été revalidés par ce contrôle. Ce résultat est un rapprochement d'identité, pas une mesure de qualité ni une preuve de lecture des sources.
 
 - Catalogue : **139 sources**.
 - Fichiers d'extraction : **95**.
