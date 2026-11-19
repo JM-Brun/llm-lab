@@ -469,7 +469,7 @@ def test_draft_non_page_revision_aid_is_not_in_public_inverse_index(tmp_path: Pa
     index = ProjectIndex.build(tmp_path)
 
     assert index.revision_aids_for_lesson("en/attention") == ()
-    with pytest.raises(KeyError, match="unknown revision-aid resource"):
+    with pytest.raises(KeyError, match="unknown published revision-aid resource"):
         index.lessons_for_revision_aid("resource", "draft-attention-revision")
 
 
