@@ -2693,6 +2693,12 @@ sources:
           - "The primary paper and its official implementation are recorded separately; their contents are not attributed to Wolfe."
           - "The author archive snapshot inspected on 2026-11-09 did not expose this post; the canonical post page was subsequently retrieved and supplies its publication date."
           - "The publication date is now confirmed by the canonical Substack post itself (2026-11-09); linked references, comments, figures and reuse rights remain unverified."
+      - accessed_at: "2026-11-19"
+        status: partially-scanned
+        inspected_scope:
+          - "Retrieved the canonical Substack post and confirmed its displayed publication date (2026-11-09)"
+        limitations:
+          - "The post's technical claims, cited primary paper, figures, comments and reuse rights were not re-audited in this metadata pass."
     related:
       pages: []
       concepts: []
