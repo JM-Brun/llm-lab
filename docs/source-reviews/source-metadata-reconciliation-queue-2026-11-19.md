@@ -214,3 +214,19 @@
 - Une entrée n'est clôturée qu'avec une preuve primaire stable, une valeur qualifiée et un périmètre explicite, ou une décision documentée de conserver l'inconnu.
 - Les files licence et date sont indépendantes : une source peut être résolue sur une dimension et rester inconnue sur l'autre.
 - Aucun KPI de couverture scientifique n'est calculé à partir de ces métadonnées.
+
+
+## Suivi des résolutions — 2026-11-19 (mise à jour)
+
+L'instantané ci-dessus reste conservé comme photographie initiale au commit indiqué. Les changements fusionnés ou en attente sont suivis séparément afin de ne pas réécrire rétroactivement le périmètre de l'audit.
+
+- **Dates :** PR [#1334](https://github.com/JM-Brun/llm-lab/pull/1334) fusionnée après succès des contrôles Python, tests, scan des secrets et audit Quarto/navigateur. Quatre dates ont été renseignées avec preuve primaire et événement d'historique. Le nombre attendu de dates inconnues passe donc de 44 à **40**, sous réserve de recomptage du registre courant.
+- **Licence :** PR [#1337](https://github.com/JM-Brun/llm-lab/pull/1337) ouverte pour vérifier la licence MIT du module éducatif `tiktoken/_educational.py` à partir du LICENSE du dépôt et de l'inspection du fichier. Les contrôles n'ont pas encore démarré au moment de cette note ; le statut reste **en attente**, et le total de 127 statuts inconnus/incomplets n'est pas encore décrémenté.
+- **Périmètre :** la vérification MIT porte sur le logiciel du dépôt et le module inspecté. Elle ne couvre pas automatiquement les dépendances, modèles, ressources tierces ou données. Les droits sur les données restent inconnus ; aucun contenu n'a été copié dans LLM Lab.
+
+### Contrôles de clôture à effectuer
+
+1. Recompter les dates et licences sur le registre courant après chaque fusion.
+2. Ne clôturer la vérification MIT qu'après succès des contrôles obligatoires de #1337 et fusion effective.
+3. Mettre à jour les files détaillées en conservant l'historique des décisions et les URLs de preuve.
+4. Maintenir séparés les statuts de publication, licence du texte, licence du code, droits sur les figures et droits sur les données.
