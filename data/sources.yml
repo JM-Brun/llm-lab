@@ -1193,10 +1193,19 @@ sources:
         limitations:
           - "The review was limited to API semantics relevant to the embedding-space lesson."
           - "No exhaustive PyTorch API review was intended."
+      - accessed_at: "2026-11-19"
+        status: partially-scanned
+        inspected_scope:
+          - "Official stable torch.nn.Embedding API: lookup contract, weight shape, arbitrary-rank integer input, output shape, padding_idx, max_norm, sparse gradients and from_pretrained"
+          - "Bilingual embedding-space lessons and the assembled NumPy GPT implementation"
+        limitations:
+          - "The stable documentation is a living page; no immutable PyTorch documentation revision was established."
+          - "This was a bounded audit of torch.nn.Embedding, not all PyTorch embedding, quantization, functional or optimizer APIs."
+          - "No PyTorch code or API examples were executed in this audit."
     related:
       pages: [en/embedding-space, fr/embedding-space]
       concepts: [token-embedding]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md, docs/source-reviews/pytorch-embedding-api-2026-11-19.md]
 
   - id: su-roformer-rope-2021
     title: "RoFormer: Enhanced Transformer with Rotary Position Embedding"
