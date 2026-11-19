@@ -36,7 +36,7 @@ def test_inventory_covers_every_published_understand_and_build_page() -> None:
 
 def test_understand_pages_without_membership_are_reported_not_dropped() -> None:
     pages = [page("fr/unlisted", "fr", "understand", "unlisted")]
-    inventory = AUDIT["build_revision_inventory"](pages, [], [])
+    inventory = AUDIT["build_revision_inventory"](pages, [], [], route_memberships={})
     assert inventory["pages"][0]["route_status"] == "unrouted"
 
 
