@@ -121,9 +121,7 @@ class ProjectIndex:
                                 f"guided-route stage {stage['id']!r} references "
                                 f"unpublished or unknown page {page_id!r}"
                             )
-                        membership = RouteMembership(
-                            stage["id"], language, role, page_id, position
-                        )
+                        membership = RouteMembership(stage["id"], language, role, page_id, position)
                         memberships.append(membership)
                         route_page_lists[(stage["id"], language, role)].append(page_id)
 
@@ -134,21 +132,19 @@ class ProjectIndex:
             page_edges=tuple(edges),
             route_memberships=tuple(memberships),
             pages_by_tag={key: frozenset(value) for key, value in tag_index.items()},
-            pages_by_concept={
-                key: frozenset(value) for key, value in concept_to_pages.items()
-            },
-            concepts_by_page={
-                key: frozenset(value) for key, value in page_to_concepts.items()
-            },
-            pages_by_domain={
-                key: frozenset(value) for key, value in page_domain_index.items()
-            },
+            pages_by_concept={key: frozenset(value) for key, value in concept_to_pages.items()},
+            concepts_by_page={key: frozenset(value) for key, value in page_to_concepts.items()},
+            pages_by_domain={key: frozenset(value) for key, value in page_domain_index.items()},
             pages_incoming={
-                key: tuple(sorted(value, key=lambda edge: (edge.source, edge.family, edge.relation)))
+                key: tuple(
+                    sorted(value, key=lambda edge: (edge.source, edge.family, edge.relation))
+                )
                 for key, value in incoming.items()
             },
             pages_outgoing={
-                key: tuple(sorted(value, key=lambda edge: (edge.target, edge.family, edge.relation)))
+                key: tuple(
+                    sorted(value, key=lambda edge: (edge.target, edge.family, edge.relation))
+                )
                 for key, value in outgoing.items()
             },
             route_pages={key: tuple(value) for key, value in route_page_lists.items()},
@@ -167,7 +163,9 @@ class ProjectIndex:
         """Return pages explicitly listed by a canonical concept record."""
         if concept_id not in self.concepts_by_id:
             raise KeyError(f"unknown concept: {concept_id}")
-        return tuple(self.pages_by_id[key] for key in sorted(self.pages_by_concept.get(concept_id, ())))
+        return tuple(
+            self.pages_by_id[key] for key in sorted(self.pages_by_concept.get(concept_id, ()))
+        )
 
     def concepts_for_page(self, page_id: str) -> tuple[dict[str, Any], ...]:
         """Return concepts explicitly associated with a page in concepts.yml."""
@@ -184,7 +182,8 @@ class ProjectIndex:
         if page_id not in self.pages_by_id:
             raise KeyError(f"unknown published page: {page_id}")
         return tuple(
-            edge for edge in self.pages_incoming.get(page_id, ())
+            edge
+            for edge in self.pages_incoming.get(page_id, ())
             if (family is None or edge.family == family)
             and (relation is None or edge.relation == relation)
         )
@@ -196,12 +195,15 @@ class ProjectIndex:
         if page_id not in self.pages_by_id:
             raise KeyError(f"unknown published page: {page_id}")
         return tuple(
-            edge for edge in self.pages_outgoing.get(page_id, ())
+            edge
+            for edge in self.pages_outgoing.get(page_id, ())
             if (family is None or edge.family == family)
             and (relation is None or edge.relation == relation)
         )
 
-    def route_stage(self, stage_id: str, language: str, role: str = "core") -> tuple[PublishedPage, ...]:
+    def route_stage(
+        self, stage_id: str, language: str, role: str = "core"
+    ) -> tuple[PublishedPage, ...]:
         """Return explicitly ordered route members; role is core or optional."""
         if language not in {"fr", "en"} or role not in {"core", "optional"}:
             raise ValueError("language must be fr/en and role must be core/optional")
@@ -224,14 +226,16 @@ class ProjectIndex:
             "pages_by_tag": dict(by_tag),
             "concepts_by_importance": {
                 importance: sum(
-                    1 for concept in self.concepts_by_id.values()
+                    1
+                    for concept in self.concepts_by_id.values()
                     if concept.get("importance") == importance
                 )
                 for importance in ("core", "supporting", "specialized")
             },
             "concepts_by_domain": {
                 domain_id: sum(
-                    1 for concept in self.concepts_by_id.values()
+                    1
+                    for concept in self.concepts_by_id.values()
                     if domain_id in concept.get("domains", [])
                 )
                 for domain_id in sorted(self.domains_by_id)
