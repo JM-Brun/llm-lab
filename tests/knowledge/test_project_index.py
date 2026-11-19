@@ -481,12 +481,12 @@ def test_real_repository_resource_and_revision_inverse_queries() -> None:
     assert [
         concept["id"] for concept in index.concepts_for_resource("transformer-block-module")
     ] == [
-        "attention-mask",
-        "layer-normalization",
-        "multi-head-attention",
-        "residual-connections",
-        "scaled-dot-product-attention",
+        "causal-mask",
+        "contextualized-representation",
+        "key",
+        "query",
         "self-attention",
+        "value",
     ]
 
     assert index.revision_targets_for_page("en/entropy") == ()
