@@ -12,8 +12,8 @@ scan:
     coverage: null
     notes: ["FineWeb, tokenizer, model-output, Karpathy and Epoch AI images were visible only as placements/captions; image bytes not inspected."]
   code_data: {status: not-inspected, coverage: null, notes: ["No code, checkpoint or dataset was executed or audited."]}
-  comments: {status: not-inspected, coverage: null, notes: ["Discussion not inspected."]}
-  linked_resources: {status: partial, coverage: "FineWeb, Common Crawl, GPT-3 paper, TikTokenizer, BPE/WordPiece references, MIT material, Karpathy and Epoch AI links identified.", notes: ["One Llama 3.1 70B Base output screenshot (Eiffel Tower example) retrieved and visually inspected; other FineWeb, TikTokenizer and Karpathy screenshots were not reliably retrievable.", "Epoch AI article text and captions reviewed; Substack-embedded chart pixels remain uninspected, and estimates are methodology-dependent."]}
+  comments: {status: partial, coverage: "One public comment exposed in the fetched page view.", notes: ["The visible comment is not a substantiated technical review; replies and any unexposed discussion remain unaudited."]}
+  linked_resources: {status: partial, coverage: "FineWeb, Common Crawl, GPT-3 paper, TikTokenizer, BPE/WordPiece references, MIT material, Karpathy and Epoch AI links identified.", notes: ["One Llama 3.1 70B Base output screenshot (Eiffel Tower example) retrieved and visually inspected; embedded FineWeb, TikTokenizer and Karpathy screenshot assets remain uninspected.", "Epoch AI article text and captions reviewed; Substack-embedded chart pixels remain uninspected, and estimates are methodology-dependent."]}
   metadata: {status: complete, coverage: "Author, title, publisher, URL and publication date (3 May 2025) visible.", notes: []}
   rights: {status: unknown, coverage: null, notes: ["No reuse licence established."]}
   unresolved_questions:
