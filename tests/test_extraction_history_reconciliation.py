@@ -134,10 +134,7 @@ def test_marek_prose_relations_are_not_silently_promoted_to_edges() -> None:
     assert all(isinstance(proposal, str) for proposal in proposals)
     assert all("from" not in proposal and "type" not in proposal for proposal in proposals)
 
-    canonical_edges = {
-        (edge["from"], edge["type"], edge["to"])
-        for edge in concepts["relations"]
-    }
+    canonical_edges = {(edge["from"], edge["type"], edge["to"]) for edge in concepts["relations"]}
     assert (
         "score-function",
         "part-of",
