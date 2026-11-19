@@ -13,6 +13,8 @@ This document inventories existing material. It does not decide that every page 
 
 The CI inventory covers every published page whose canonical page metadata declares `destination:understand` or `destination:build`. It uses the published page index, `data/guided-route.yml`, `data/concepts.yml`, and `data/resources.yml`; it does not infer page identity or semantic relationships from filenames.
 
+Pages with other destinations—including optional `destination:deepen` pages such as Unicode, RoPE and Next-Concept Modeling—are deliberately outside this Understand/Build denominator. Their pedagogical value and revision support may be audited separately, but they must not inflate Understand coverage. The inventory's destination filter is explicit in `site/tools/audit_revision_coverage.py` (`DESTINATIONS = ("understand", "build")`), and a regression test protects this boundary.
+
 The report was generated on PR #1379's head commit. A comparison from that snapshot to the inspected current `main` shows subsequent changes to the two `score-centering` pages, which are outside the Understand/Build destination set; the route, concept, resource registries and the 62 in-scope page files were not changed in that comparison. The 62-page counts below therefore remain applicable to the inspected main snapshot. The report itself remains pinned to its source commit and must not be described as a freshly generated artifact for current main.
 
 ## 2. Published page population
