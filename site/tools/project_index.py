@@ -45,6 +45,8 @@ class ResourceRecord:
     concepts: tuple[str, ...]
     programming_language: str | None = None
     provenance: dict[str, str] | None = None
+    revision_role: str | None = None
+    revision_of: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -65,28 +67,34 @@ class ConceptResourceAssociation:
 
 @dataclass(frozen=True, slots=True)
 class RevisionEdge:
-    """A typed page-to-revision-support relation, separate from page graph edges."""
+    """A typed revision-aid → source-lesson relation, separate from page graph edges."""
 
-    source_page_id: str
+    aid_type: str
+    aid_id: str
     role: str
-    target_type: str
-    target_id: str
+    source_page_id: str
 
 
-REVISION_STATUSES = {"not_assessed", "assessed", "not_applicable"}
 REVISION_ROLES = {"synthesis", "flashcards", "revision_sheet"}
-REVISION_TARGET_TYPES = {"section", "page", "resource"}
-STABLE_ANCHOR = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
+REVISION_SUPPORT_STATUSES = {
+    "not_assessed",
+    "integrated_sufficient",
+    "companion_sufficient",
+    "partial",
+    "missing",
+    "not_applicable",
+}
+ELIGIBLE_LESSON_DESTINATIONS = {"understand", "build"}
 
 
-def _language_matches(source: str, target: str) -> bool:
-    """Allow exact language matches, regional variants, and language-neutral targets."""
-    source_tag, target_tag = source.lower(), target.lower()
-    if target_tag == "shared":
-        return True
-    if source_tag == "shared":
-        return target_tag == "shared"
-    return target_tag == source_tag or target_tag.startswith(source_tag + "-")
+def _language_matches(aid_language: str, lesson_language: str) -> bool:
+    """Require same-language aids; allow a genuinely multilingual resource."""
+    aid_tag, lesson_tag = aid_language.lower(), lesson_language.lower()
+    if aid_tag == "mul":
+        return lesson_tag in {"fr", "en"}
+    if aid_tag == "shared":
+        return lesson_tag == "shared"
+    return lesson_tag == aid_tag or lesson_tag.startswith(aid_tag + "-")
 
 
 def _has_explicit_anchor(source: str, anchor: str) -> bool:
