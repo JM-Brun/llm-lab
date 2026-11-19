@@ -1021,6 +1021,16 @@ sources:
           - "The published latest URL is mutable; no immutable docs release was established."
           - "The API reference pages explicitly mark several rc0 bindings as unavailable or not yet documented; the quicktour's offsets example conflicts with the Encoding API availability note."
           - "No exhaustive review of all component APIs or runtime behavior; no code executed. The rc0 limitation is version-specific and must not be generalized to other releases."
+      - accessed_at: "2026-11-19"
+        status: partially-scanned
+        inspected_scope:
+          - "Compared the versioned Tokenizers v0.23.3 pipeline documentation with the unversioned pipeline page and its rc0 binding warning; the version selector identifies v1.0.0-rc.4 as newer."
+          - "Rechecked component optionality, the mandatory model, the pre-tokenizer's ability to transform as well as split text, and the separate decoding section."
+          - "Recorded the distinction between conceptual pipeline documentation and version-/language-specific API availability."
+        limitations:
+          - "No Tokenizers runtime or language binding was executed; no cross-version API compatibility is claimed."
+          - "The unversioned page's rc0 warning and the version selector's v1.0.0-rc.4 label are retained as published; their exact release mapping was not independently established."
+
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
       concepts: [token]
