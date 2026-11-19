@@ -50,6 +50,7 @@ def test_inventory_separates_candidate_destinations_legacy_fields_and_local_rout
             "source_id": "source-one",
             "pedagogical_model": {
                 "teaching_route": [{"order": 1}, {"order": 2}],
+                "comparison": {"canonical_routes": ["data/guided-route.yml"]},
             },
             "items": [
                 {
@@ -90,6 +91,9 @@ def test_inventory_separates_candidate_destinations_legacy_fields_and_local_rout
     }
     assert report["candidate_destination_shapes"] == {"mapping": 1, "non-mapping": 1}
     assert report["candidate_destination_keys"]["route_ids"] == 1
+    assert report["pedagogical_model_routes"]["comparison.canonical_routes"][
+        "unique_references"
+    ] == ["data/guided-route.yml"]
     assert report["item_destinations"]["candidate_destinations.route_ids"]["unique_references"] == [
         "understand"
     ]
