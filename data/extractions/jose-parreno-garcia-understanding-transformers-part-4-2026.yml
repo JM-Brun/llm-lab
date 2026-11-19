@@ -59,7 +59,7 @@ pedagogical_model:
     structures_kept_separate: ["Article's Netflix analogy", "Article-local teaching route", "Canonical concept graph", "Canonical bilingual Understand and Build routes"]
 items:
   - id: jose-parreno-garcia-understanding-transformers-part-4-2026:contextual-relationships
-    kind: motivation
+    kind: claim
     summary: "Embeddings encode token features and positional encodings add order, but contextual relationships between tokens require a content-dependent interaction mechanism."
     locator: {type: section, value: "But, that is still not enough"}
     evidence: {kind: explanatory-motivation, confidence: well-supported, scope: "The cake/it example motivates contextual interaction.", assumptions: [], limitations: ["The example motivates attention but does not demonstrate actual learned coreference behaviour."]}
