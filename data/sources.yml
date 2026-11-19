@@ -913,7 +913,7 @@ sources:
     language: en
     version: null
     revision: 79dc2c0533685b893616c78160b5d9e40876e724
-    licence: {identifier: null, url: null, status: unknown}
+    licence: {identifier: "MIT", url: "https://github.com/openai/tiktoken/blob/main/LICENSE", status: verified}
     reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
     classification:
       primary_theme: text-tokenization
@@ -941,6 +941,14 @@ sources:
           - "Pinned revision 79dc2c0533685b893616c78160b5d9e40876e724, tiktoken/_educational.py: UTF-8 bytes, regex pre-splitting, merge ranks, encode/decode and training walkthrough."
         limitations:
           - "Static source inspection only; the educational module was not executed and is not the optimized production path."
+      - accessed_at: "2026-11-19"
+        status: partially-scanned
+        inspected_scope:
+          - "Official openai/tiktoken repository LICENSE file: MIT License, copyright 2022 OpenAI and Shantanu Jain"
+          - "Rechecked tiktoken/_educational.py against the repository-level licence; no file-specific exception or alternate licence header was present."
+        limitations:
+          - "The verified MIT grant is scoped to the repository software and associated documentation; it does not establish rights in external dependencies, model assets or third-party materials."
+          - "No code was copied into LLM Lab; reuse remains link-only."
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies, en/embedding-space, fr/embedding-space]
       concepts: [token]
