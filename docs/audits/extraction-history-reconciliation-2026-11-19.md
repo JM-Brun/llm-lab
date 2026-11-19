@@ -259,10 +259,16 @@ The historical reconciliation itself is closed. The remaining items below are so
 No further changes to canonical concepts, relation types, route definitions or page associations are justified by the historical proposals alone. Keep the existing 28-entry decision register unchanged unless new primary-source evidence changes a specific decision.
 
 
-## 8. Explicit non-changes
+## 8. Explicit changes and non-changes
 
-- No canonical concept, relation, page, resource or route was added or removed.
-- No `scan` block was migrated, deleted or rewritten.
+Limited closeout edits:
+- Appended a 2026-11-19 source-history event to the Marek/Ryabinin source record to reconcile the full-PDF and upstream-test evidence already present in its extraction snapshot. The earlier 2026-11-09 event was retained.
+- Corrected the stale audit-status callouts on the French and English score-centering pages; the technical lesson content and canonical concept links were not changed.
+- Extended the corpus-backed tests to verify the new source event, all six bilingual page associations and the unrepresented policy-drift proposal.
+
+Explicit non-changes:
+- No canonical concept, relation, resource association or route was added or removed.
+- No extraction-level scan block was migrated, deleted or rewritten.
 - No validator rule was tightened.
 - No new relation type was introduced.
 - No candidate destination or historical prose proposal was promoted to an integrated canonical edge.
