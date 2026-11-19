@@ -428,8 +428,7 @@ def test_real_repository_index_has_referential_integrity() -> None:
     assert len(index.page_resource_associations) == 10
     assert len(index.revision_edges) == 4
     assert {
-        (edge.aid_page_id, edge.role, edge.source_page_id)
-        for edge in index.revision_edges
+        (edge.aid_page_id, edge.role, edge.source_page_id) for edge in index.revision_edges
     } == {
         ("fr/revision-information-theory", "revision_sheet", "fr/entropy"),
         ("fr/revision-information-theory", "revision_sheet", "fr/cross-entropy"),
