@@ -12,7 +12,7 @@
 | Build | 16 | 8 | 8 | 8 |
 | **Total** | **62** | **31** | **31** | **31** |
 
-The artifact records 144 explicit concept-to-page edges in Understand, 18 in Build, and 10 implementation-resource associations, all in Build. All 62 generated `synthesis_status` values are `not_assessed`; this is an inventory limitation, not a finding that the pages lack synthesis.
+The artifact records 144 explicit concept-to-page edges in Understand, 18 in Build, and 10 implementation-resource associations, all in Build. The original snapshot reported all 62 `synthesis_status` values as `not_assessed`. The relation pilot in PR #1401 adds explicit links and `partial` assessments for four Understand pages (FR/EN entropy and cross-entropy); the other 42 Understand and all 16 Build pages remain `not_assessed` until individually assessed.
 
 The editorial observations below come from source reviews recorded in issue [#1109](https://github.com/JM-Brun/llm-lab/issues/1109). The artifact and those comments are the evidence base; this document does not claim that every page has received a paragraph-by-paragraph scientific re-review or rendered accessibility review.
 
@@ -22,7 +22,7 @@ The editorial observations below come from source reviews recorded in issue [#11
 
 | Artifact | Existing metadata | Existing learner-facing function | Current disposition |
 |---|---|---|---|
-| `site/{fr,en}/revision-information-theory.qmd` | `destination:practice`, `type:exercise-collection`; language-specific pages | Dedicated revision sheet: core formulas, cross-entropy/KL identity, worked numerical example, conceptual traps, attention/KL vs mutual information, predictive V-information, self-check and answers | Retain as the canonical learner-facing information-theory revision sheet. Candidate sources include entropy and cross-entropy; exact typed links remain to be added only after contract implementation. |
+| `site/{fr,en}/revision-information-theory.qmd` | `destination:practice`, `type:exercise-collection`; language-specific pages | Dedicated revision sheet: core formulas, cross-entropy/KL identity, worked numerical example, conceptual traps, attention/KL vs mutual information, predictive V-information, self-check and answers | Retain as the canonical learner-facing information-theory revision sheet. The pilot now links each language version to its matching entropy and cross-entropy lessons via `revision_of`; the reverse lesson-to-aids view is derived. |
 | `site/{fr,en}/compression-revision.qmd` | `destination:deepen`, `type:concept-bridge`; language-specific pages | Mental map and compact conceptual bridge between predictive data compression, model compression and runtime memory; equations, coding constraints, entropy/surprisal distinctions and references | Retain. Treat as an existing page-based synthesis candidate; assess its exact source lessons and role before adding typed links. Do not create another generic compression sheet. |
 
 The two pairs are not interchangeable: the information-theory page is explicitly a Practice revision sheet, while compression is a Deepen concept bridge. Keep their existing editorial types and destinations; the future relation must not rewrite them into a new page type merely to make the inventory work.
@@ -51,9 +51,9 @@ The following records summarize existing source-level audits. “Reuse” means 
 | `causal-masking` | One-minute mental model, formal causal rule, triangular mask visual, distinction from padding/document/loss masks, invariance check and exercises | Reuse; no second sheet or diagram |
 | `context-engineering` | Three context levels and distinctions between stored history, transmitted context and attention-accessible information; seven applied Practice questions | Reuse; no duplicate overview |
 | `contextualized-representations` | One-minute recap, pipeline, same-ID vs context-dependent state distinction, attention-head caveats; Practice self-check and advanced SAE investigation | Reuse; no separate sheet |
-| `cross-entropy` | Per-token objective, target distribution, worked example, sequence alignment, masking/reduction and edge cases; exercises and self-check | Reuse the information-theory sheet for conceptual recall; keep a targeted recall prompt for shift/mask/valid-token denominator in the canonical lesson |
+| `cross-entropy` | Per-token objective, target distribution, worked example, sequence alignment, masking/reduction and edge cases; exercises and self-check | Reuse the linked information-theory sheet for conceptual recall; the source lesson is explicitly assessed `partial` because shift/mask/valid-token denominator still need targeted retrieval coverage |
 | `embedding-space` | Integrated lookup diagram and distinctions among token ID, embedding row/vector and point in space; Practice questions and NumPy exercise | Reuse; no separate sheet |
-| `entropy` | One-minute model, definition, numerical example, bounds, entropy vs observed surprisal and self-check; covered by the information-theory revision sheet | Reuse; ensure context/temperature/calibration caveats remain represented in the lesson or practice |
+| `entropy` | One-minute model, definition, numerical example, bounds, entropy vs observed surprisal and self-check; covered by the information-theory revision sheet | Reuse the linked information-theory sheet; the source lesson is explicitly assessed `partial` because context/temperature/calibration caveats need targeted retrieval coverage |
 | `gradients` | Chain-rule explanation, worked derivation, gradient-vs-update distinction, examples and executable tests/exercises | Reuse; no generic recap |
 | `in-context-learning` | Fixed-weights/changing-context distinction, zero/one/few-shot, relation to fine-tuning and RAG, experimental checklist; bilingual diagram added in PR #1112 | Reuse the integrated visual and Practice material |
 | `inference-generation` | Distribution-to-selection loop, decoding policy, prefill/decode and KV-cache distinctions; Practice resources | Reuse; keep generation separate from scoring and training |
@@ -77,7 +77,7 @@ The following records summarize existing source-level audits. “Reuse” means 
 - The 16-page first-tranche review was initially a structural source audit; later passes deepened selected pairs (embedding/position/contextualization, entropy/cross-entropy, post-training/context engineering and LLM limits).
 - Several visual increments have CI and Quarto validation, but no rendered desktop/mobile, keyboard, screen-reader or learner-outcome sign-off is claimed.
 - The inventory records observed support and decisions, not a numeric pedagogical-quality score.
-- All 46 pages remain `not_assessed` in the machine-generated inventory until the typed relation and independent assessment schema are implemented and migrated.
+- The relation pilot projects four `partial` assessments and four explicit aid links into the generated inventory. The remaining 42 Understand pages are still `not_assessed`; rendered UX, accessibility and learner-outcome validation remain separate.
 
 ## 4. Build inventory — 8 bilingual topic pairs
 
@@ -100,8 +100,8 @@ Build's six pages without implementation-resource associations are exactly the t
 2. Keep the internal Markdown sheet outside the learner-facing resource graph until its publication and maintenance role is explicitly changed.
 3. Do not add a non-page revision resource kind to `data/resources.yml` yet; current records are implementation resources only.
 4. Continue individual editorial assessment where the evidence is provisional, especially cross-entropy's shift/mask contract, entropy caveats, and Build corpus-preparation/training-examples.
-5. Implement page-aid relations first after the contract is accepted; the published page index already preserves raw metadata, but the metadata validator and inventory projection do not yet validate or use revision fields.
-6. Revisit the non-page adapter only when a genuine learner-facing non-page aid is identified.
+5. The initial page-aid pilot now links `revision-information-theory` to the FR/EN entropy and cross-entropy lessons; the generated coverage inventory reads the ProjectIndex relation and assessment projection. The metadata validator still needs a dedicated follow-up to validate these fields at page-map ingestion.
+6. Review the exact source mapping and role of `compression-revision` before adding typed links; do not infer targets from its `related` list.
 7. Keep rendered UX/accessibility validation as a separate gate before closing #1109.
 
 ## 6. Audit provenance
