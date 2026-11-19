@@ -79,10 +79,10 @@ Tests must exercise the real repository, not only synthetic fixtures. Cover all 
 - Unsupported Build, practice, source-bridge and computation-bridge dimensions are explicitly marked not_registered rather than zero.
 - Revision support remains not_assessed until its proposed contract is approved and validated.
 
-**Substep 5b — coverage matrix (not yet implemented):**
-- Build one concept-centred row per canonical concept ID using the ProjectIndex query layer.
+**Substep 5b — coverage matrix (first read-only projection implemented; validation pending):**
+- `site/tools/project_coverage.py` builds one concept-centred row per canonical concept ID using the ProjectIndex query layer.
 - Keep definition, teaching pages, Understand, Build, computation, resources, sources, practice and bilingual parity as separate dimensions.
-- Every cell must carry state plus evidence IDs/paths and the rule that assigned it.
+- Every cell carries state, evidence IDs/paths and an explanatory reason; the matrix includes deterministic state counts.
 - Do not compute an opaque aggregate score or treat not_registered/not_applicable/needs_review/not_assessed as failures.
 
 **Acceptance:** every published metric has a reproducible definition and explicit unit; matrix cells distinguish present, missing, not_applicable, not_registered, needs_review and not_assessed; unsupported dimensions remain visibly unregistered.
@@ -131,12 +131,11 @@ The CLI, JSON and dashboard must not implement separate counting or relationship
 
 ## 5. Immediate next actions
 
-1. Complete the concept-centred coverage matrix from the canonical metric registry.
-2. Implement only dimensions currently enumerable from ProjectIndex; label Build, computation, sources and practice as not_registered where no reviewed mapping exists.
-3. Add synthetic and real-repository tests for matrix states, evidence paths, bilingual grouping and deterministic ordering.
-4. Publish a reproducible matrix snapshot with repository commit and registry version.
-5. Review the matrix semantics and false-positive risk before considering diagnostics.
-6. Only after step 6 diagnostics are stable, add CLI, JSON/Markdown and dashboard interfaces.
+1. Validate the first concept-centred matrix implementation with CI and the real repository.
+2. Review cell-state semantics, especially no-association cases, revision not_assessed and bilingual parity; do not convert them to missing.
+3. Extend tests for any corrected semantics, then publish a reproducible matrix snapshot with commit and registry version.
+4. Only after step 5 is accepted, begin deterministic diagnostics.
+5. Keep CLI, JSON/Markdown and dashboard interfaces deferred until diagnostics are stable in step 6.
 
 ## 6. Definition of done for the PIL
 
