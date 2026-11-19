@@ -213,7 +213,6 @@ def test_page_edge_target_must_exist(tmp_path: Path) -> None:
         ProjectIndex.build(tmp_path)
 
 
-
 def test_non_page_resource_adapter_preserves_explicit_associations(tmp_path: Path) -> None:
     index = _index(tmp_path)
 
