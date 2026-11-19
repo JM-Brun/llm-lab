@@ -2,6 +2,8 @@
 
 **Status:** inventory implementation is in PR [#1379](https://github.com/JM-Brun/llm-lab/pull/1379); editorial contract and pilot remain tracked by [#1109](https://github.com/JM-Brun/llm-lab/issues/1109). Build-specific implementation expectations remain coordinated with [#78](https://github.com/JM-Brun/llm-lab/issues/78).
 
+**Detailed existing-resource inventory:** [Understand/Build revision-support inventory — 19 November 2026](revision-resource-inventory-2026-11-19.md). It records integrated recaps, self-checks, existing companion sheets, concept links and implementation resources without creating new revision content.
+
 ## 1. Inventory snapshot
 
 The generated CI report for source commit `e7366639b258c83c37fa9606edd643ebe6ab8789` counted every published page whose metadata declares `destination:understand` or `destination:build`.
