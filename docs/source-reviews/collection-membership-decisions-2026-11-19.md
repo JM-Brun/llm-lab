@@ -97,3 +97,29 @@ Licence status remains `unknown`; figure, code and data reuse rights remain unre
 ## Change
 
 Add `collections: [tokenization-embeddings]` to the existing canonical source record only. Preserve all existing provenance, scan, integration, licence and reuse fields.
+
+
+---
+
+# Source-to-collection decision: Ethayarajh (2019)
+
+**Review date:** 2026-11-19  
+**Source ID:** `ethayarajh-contextualized-representations-2019`  
+**Collection:** `tokenization-embeddings`  
+**Decision:** assign explicit membership.
+
+## Evidence and rationale
+
+The tokenization/embeddings collection dossier explicitly places Ethayarajh among its sources for token and contextualized embeddings, and its cross-source synthesis uses the paper to distinguish static word-type vectors from contextualized representations and to qualify the interpretation of cosine similarity. The source migration map places it in the token and contextualized embeddings family and links the bilingual contextualized-representations and cosine-similarity lessons. The existing source record and structured extraction provide source-specific provenance rather than relying on topic tags alone.
+
+The extraction records four atomic contributions: the paper's three contextuality measures (self-similarity, intra-sentence similarity and maximum explainable variance), anisotropy-adjusted random baselines, the layer-wise findings for the evaluated ELMo/BERT/GPT-2 models, and the study-specific static-vector explainability bound. These are directly within the collection's declared scope of token and contextualized embeddings and embedding geometry.
+
+## Evidence boundary retained
+
+The source remains `partially-scanned` and `integrated`. The primary EMNLP-IJCNLP 2019 PDF and the stated definitions, figures and results were reviewed, but model checkpoints and analysis code were not independently executed. The empirical findings remain specific to the evaluated ELMo, BERT and GPT-2 configurations, layers, datasets and anisotropy-corrected measures; they are not generalized to contemporary models or treated as evidence that a layer performs a named linguistic task.
+
+Licence status remains `unknown`; figure, code and data reuse rights remain unresolved. No permission is inferred. The existing extraction is reused; no duplicate extraction, new scan claim, page, concept, route or learner-content change is proposed.
+
+## Change
+
+Add `collections: [tokenization-embeddings]` to this canonical source record only. Existing provenance, scan, integration, licence and reuse fields remain unchanged.
