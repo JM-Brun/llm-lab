@@ -1430,9 +1430,9 @@ sources:
     publication_date: null
     updated_date: null
     language: en
-    version: null
-    revision: null
-    licence: {identifier: "Apache-2.0", url: "https://github.com/google/sentencepiece/blob/master/LICENSE", status: verified}
+    version: "v0.2.3"
+    revision: "eafd99cf3b8bfa5101c2c5f42aab2cc39947938"
+    licence: {identifier: "Apache-2.0", url: "https://github.com/google/sentencepiece/blob/eafd99cf3b8bfa5101c2c5f42aab2cc39947938/LICENSE", status: verified}
     reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
     classification:
       primary_theme: text-tokenization
@@ -1453,10 +1453,18 @@ sources:
         limitations:
           - "Detailed API and implementation internals were outside the initial audit."
           - "The mutable master branch was not pinned in the historical note."
+      - accessed_at: "2026-11-19"
+        status: partially-scanned
+        inspected_scope:
+          - "Pinned v0.2.3 commit eafd99cf3b8bfa5101c2c5f42aab2cc39947938: normalizer.cc and tests, trainer_interface.cc, bpe_model.cc, unigram_model.cc, sentencepiece_processor.cc, and representative model tests"
+        limitations:
+          - "Bounded static spot-check; not every C++ file, Python binding, training option, serialization path, or test was inspected."
+          - "No C++/Python tests, build, training run, benchmark, or cross-library experiment was executed."
+          - "The selected upstream test files were read as specifications only; their assertions are not execution results."
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
+      audit_records: [docs/source-reviews/tokenizers-embedding-lookup-targeted-audit-2026-11-19.md, docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: sauravp97-hf-bpe-visualizer-article
     title: "Visualizing BPE Tokenizer Encoding"

@@ -86,3 +86,35 @@ Execution phases:
 - Implement and execute the shared fixtures/adapters; no comparative measurements exist yet.
 - Continue the 44-source triage individually. This document finalizes only the bounded disposition for `google-sentencepiece-documentation`.
 - Validate candidate collection identities in #1306 before any membership backfill.
+
+## 6. SentencePiece v0.2.3 — bounded implementation spot-check
+
+**Pinned repository:** `google/sentencepiece` tag `v0.2.3`, commit `eafd99cf3b8bfa5101c2c5f42aab2cc39947938`. The following are static observations at that revision; the cited tests were read but not run.
+
+### Normalization and whitespace are executable configuration, not an invariant of the model family
+
+- `src/normalizer.cc:94-116` returns an empty normalized string for empty input and, when `remove_extra_whitespaces` is enabled, strips leading whitespace before processing.
+- `src/normalizer.cc:124-142` maps spaces to U+2581 (`▁`) when `escape_whitespaces` is enabled and optionally prepends a dummy whitespace marker. The source comment explains that the prefix helps the trainer learn word-initial pieces; it is not a linguistic token boundary guarantee.
+- `src/normalizer.cc:143-188` collapses/removes leading, repeated and trailing whitespace according to `remove_extra_whitespaces`; `treat_whitespace_as_suffix` changes where the dummy marker is placed.
+- `src/normalizer_test.cc:63-82` includes compatibility-style examples such as circled digits, the corporate symbol, half-width Katakana and control characters. These fixtures show the configured normalizer's behavior, not complete Unicode NFKC conformance.
+- `src/normalizer_test.cc:85-155` explicitly tests dummy-prefix disabled, whitespace-as-suffix, preservation of repeated whitespace, and unescaped spaces. This supports the claim that these outputs depend on the NormalizerSpec and TrainerSpec.
+
+### BPE and Unigram have distinct inference mechanisms
+
+- `src/bpe_model.cc:111-180` initializes symbols by longest-prefix matching from the model vocabulary, with character splitting as fallback, then constructs adjacent candidate pairs from known pieces. `src/bpe_model.cc:183-266` processes candidates through a priority queue using model piece scores; selected pairs are merged and neighboring candidates are reconsidered.
+- Control symbols are deliberately excluded from merges: `src/bpe_model.cc:100-106` documents the reserved-ID design; `src/bpe_model.cc:160-169` and `:199-207` skip reserved IDs during candidate creation.
+- `src/unigram_model.cc:746-775` implements ordinary encoding and N-best paths. `src/unigram_model.cc:796-818` describes an optimized Viterbi path for the unigram model; its scoring decomposition differs from the BPE pair-merge loop.
+- `src/unigram_model.cc:778-793` samples a path from the lattice. The existence of N-best and sampling APIs is model-dependent; the processor checks availability rather than promising them for every model.
+
+### Sampling and byte fallback are configuration/model-dependent
+
+- `src/sentencepiece_processor.cc:420-447` normalizes input before N-best encoding and checks whether the current model supports N-best.
+- `src/sentencepiece_processor.cc:449-485` validates that `alpha` is finite and non-negative; depending on model capabilities and `nbest_size`, the API chooses direct sampling, deterministic best encoding, or sampling among N-best candidates. It is therefore incorrect to describe `alpha` as a universal randomness switch independent of model type and `nbest_size`.
+- `src/trainer_interface.cc:832-840` shows that byte fallback changes the requirement for an explicit unknown piece and records a backward-compatibility warning for `unk_id=-1` with SentencePiece versions <=0.2.2.
+- `src/trainer_interface.cc:894-899` adds all 256 byte pieces when byte fallback is enabled. This is a training/model-construction option, not proof that every existing SentencePiece model has byte fallback.
+
+### Evidence boundary and consequence
+
+This code review narrows the implementation questions but does not complete an exhaustive repository audit. It covers selected normalizer, BPE, Unigram, processor and trainer paths plus representative tests. It does not inspect every language binding, every training option, the full model serialization path or all test cases. No C++/Python test, build, training run, benchmark or cross-library experiment was executed.
+
+**Decision:** keep `google-sentencepiece-documentation` as covered by the existing bilingual synthesis; retain the repository as a version-pinned implementation reference. Do not create a redundant extraction or claim runtime validation. The next evidence step is to run selected upstream tests at v0.2.3 and archive exact commands, environment and results.
