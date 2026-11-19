@@ -104,7 +104,10 @@ def build_revision_inventory(
             aid_id = aid.get("id")
             aid_page = page_by_id.get(aid_id)
             if aid_page is None:
-                raise ValueError(f"revision aid {aid_id!r} for lesson {page_id!r} is not a published page")
+                raise ValueError(
+                    f"revision aid {aid_id!r} for lesson {page_id!r} "
+                    "is not a published page"
+                )
             revision_aids.append(
                 {
                     "id": aid_id,
@@ -215,7 +218,10 @@ def render_markdown(inventory: dict[str, Any]) -> str:
         "# Revision coverage inventory",
         "",
         "> Generated projection; do not edit by hand.",
-        "> Revision support status is an explicit editorial assessment; missing status remains not_assessed.",
+        (
+            "> Revision support status is an explicit editorial assessment; "
+            "missing status remains not_assessed."
+        ),
         "",
     ]
     for destination in DESTINATIONS:
@@ -233,7 +239,10 @@ def render_markdown(inventory: dict[str, Any]) -> str:
         lines.extend(
             [
                 "",
-                "| Language | Page | Topic | Route | Revision support | Revision aids | Concepts | Implementation resources |",
+                (
+                    "| Language | Page | Topic | Route | Revision support | Revision aids | "
+                    "Concepts | Implementation resources |"
+                ),
                 "|---|---|---|---|---|---:|---:|---:|",
             ]
         )
