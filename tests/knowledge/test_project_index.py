@@ -44,10 +44,13 @@ def _write_page(
         "related": [],
         "tags": tags,
     }
+    if revision is not None:
+        metadata["revision"] = revision
     front = {"title": slug, "lang": language, "keywords": tags}
     content = (
         "---\n" + yaml.safe_dump(front, sort_keys=False) + "---\n\n"
         "<!--\nLLM-LAB-PAGE-MAP v1\n" + yaml.safe_dump(metadata, sort_keys=False) + "-->\n"
+        + body
     )
     path.write_text(content, encoding="utf-8")
 
@@ -269,7 +272,7 @@ def test_revision_adapter_keeps_three_target_types_separate(tmp_path: Path) -> N
         "en",
         next_page="en/query",
         revision=revision,
-        body="\\n## Revision summary {#revision-summary}\\n",
+        body="\n## Revision summary {#revision-summary}\n",
     )
     _write_page(tmp_path / "site", "en/query", "en")
     _write_sources(tmp_path)
