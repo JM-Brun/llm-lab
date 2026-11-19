@@ -182,3 +182,77 @@ def test_marek_prose_relations_are_not_silently_promoted_to_edges() -> None:
         "contrasts-with",
         "score-centering",
     ) in canonical_edges
+
+def test_marek_concepts_have_bilingual_pages_and_documentary_evidence() -> None:
+    sources, extractions, concepts = _corpus()
+    source_id = "marek-ryabinin-score-centering-off-policy-rl-2026"
+    extraction = extractions[source_id]
+    mapping = extraction["canonical_mapping"]
+    integrated_ids = {item["id"] for item in mapping["integrated_concepts"]}
+    expected_ids = {
+        "policy-gradient",
+        "score-function",
+        "off-policy-reinforcement-learning",
+        "training-inference-mismatch",
+        "score-centering",
+        "importance-sampling",
+    }
+    assert integrated_ids == expected_ids
+
+    concept_by_id = {concept["id"]: concept for concept in concepts["concepts"]}
+    for concept_id in expected_ids:
+        concept = concept_by_id[concept_id]
+        assert set(concept["labels"]) >= {"fr", "en"}
+        assert set(concept["definitions"]) >= {"fr", "en"}
+        assert {"fr/score-centering", "en/score-centering"} <= set(concept["resources"])
+
+    fr_page = ROOT / "site" / "fr" / "score-centering.qmd"
+    en_page = ROOT / "site" / "en" / "score-centering.qmd"
+    assert fr_page.is_file()
+    assert en_page.is_file()
+    fr_text = fr_page.read_text(encoding="utf-8")
+    en_text = en_page.read_text(encoding="utf-8")
+    for phrase in (
+        "gradient de politique",
+        "fonction score",
+        "hors politique",
+        "décalage entraînement",
+        "centrage du score",
+        "échantillonnage par importance",
+    ):
+        assert phrase in fr_text.lower()
+    for phrase in (
+        "policy-gradient",
+        "score function",
+        "off-policy",
+        "training–inference mismatch",
+        "score centering",
+        "importance sampling",
+    ):
+        assert phrase in en_text.lower()
+
+    source = sources[source_id]
+    assert {"fr/score-centering", "en/score-centering"} <= set(source["related"]["pages"])
+    assert expected_ids <= set(source["related"]["concepts"])
+    verification_event = next(
+        event
+        for event in source["scan_history"]
+        if event["accessed_at"] == "2026-11-19"
+    )
+    assert any("Canonical arXiv v1 PDF" in item for item in verification_event["inspected_scope"])
+    assert any("tests/test_loss.py" in item for item in verification_event["inspected_scope"])
+
+    review = ROOT / "docs" / "source-reviews" / "score-centering-2026-11.md"
+    assert "Verification update — 2026-11-19" in review.read_text(encoding="utf-8")
+    assert all("locator" in item and "evidence" in item for item in extraction["items"])
+
+
+def test_marek_bilingual_pages_do_not_retain_superseded_audit_warning() -> None:
+    fr_page = (ROOT / "site" / "fr" / "score-centering.qmd").read_text(encoding="utf-8")
+    en_page = (ROOT / "site" / "en" / "score-centering.qmd").read_text(encoding="utf-8")
+
+    assert "les tests officiels n'ont pas été exécutés" not in fr_page
+    assert "official tests have not been executed" not in en_page
+    assert "jax>=0.11.1" in fr_page
+    assert "jax>=0.11.1" in en_page
+
