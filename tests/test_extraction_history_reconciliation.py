@@ -74,6 +74,29 @@ def test_historical_scan_newer_source_events_remain_distinguishable() -> None:
         assert max(str(event["accessed_at"]) for event in history) == latest_source_date
 
 
+
+
+def test_aiedge_scan_preserves_facet_detail_beyond_the_source_event_summary() -> None:
+    sources, extractions, _ = _corpus()
+    source_id = "aiedge-how-cuda-graphs-speed-up-llm-inference"
+    scan = extractions[source_id]["scan"]
+    event = next(
+        event
+        for event in sources[source_id]["scan_history"]
+        if str(event["accessed_at"]) == str(scan["accessed_at"])
+    )
+
+    assert scan["author_text"]["status"] == "partial"
+    assert scan["figures_media"]["status"] == "not-inspected"
+    assert scan["code_data"]["status"] == "not-inspected"
+    assert scan["rights"]["status"] == "unknown"
+    assert len(scan["unresolved_questions"]) == 3
+    assert len(event["inspected_scope"]) == 3
+    assert len(event["limitations"]) == 5
+    assert "unresolved_questions" not in event
+    assert "rights" not in event
+
+
 def test_all_canonical_mapping_blocks_are_preserved_and_classified_by_shape() -> None:
     _, extractions, concepts = _corpus()
     mappings = {
