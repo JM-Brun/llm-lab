@@ -51,6 +51,34 @@ def test_synthetic_matrix_uses_explicit_evidence_and_keeps_unknown_states(tmp_pa
     )
 
 
+def test_sufficient_integrated_revision_support_projects_as_present(tmp_path: Path) -> None:
+    write_page = FIXTURES["_write_page"]
+    write_sources = FIXTURES["_write_sources"]
+    support = {
+        "status": "integrated_sufficient",
+        "evidence": [{"anchor": "revision-summary", "note": "Integrated recap."}],
+    }
+    for page_id, language in (
+        ("fr/attention", "fr"),
+        ("en/attention", "en"),
+    ):
+        write_page(
+            tmp_path / "site",
+            page_id,
+            language,
+            revision_support=support,
+            body="\n## Revision summary {#revision-summary}\n",
+        )
+    write_page(tmp_path / "site", "en/query", "en")
+    write_sources(tmp_path)
+
+    matrix = build_concept_coverage(ProjectIndex.build(tmp_path))
+    rows = {row["concept_id"]: row for row in matrix["rows"]}
+
+    assert _state(rows["attention"], "revision_support") == "present"
+    assert _state(rows["query"], "revision_support") == "present"
+
+
 def test_revision_not_applicable_is_not_counted_as_missing(tmp_path: Path) -> None:
     write_page = FIXTURES["_write_page"]
     write_sources = FIXTURES["_write_sources"]
