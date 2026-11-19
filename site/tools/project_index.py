@@ -575,9 +575,7 @@ class ProjectIndex:
         if page_id not in self.pages_by_id:
             raise KeyError(f"unknown published page: {page_id}")
         resource_ids = sorted(
-            edge.resource_id
-            for edge in self.page_resource_associations
-            if edge.page_id == page_id
+            edge.resource_id for edge in self.page_resource_associations if edge.page_id == page_id
         )
         return tuple(self.resources_by_id[key] for key in resource_ids)
 
