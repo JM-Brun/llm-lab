@@ -15,7 +15,7 @@ The 28 mapping blocks are all mappings. Their observed shape is:
 
 | Field | Mappings |
 |---|---:|
-| `proposed_concepts` present | 28 |
+| `proposed_concepts` present | 27 |
 | `proposed_relations` present | 28 |
 | `route_implications` present | 28 |
 | `decision_summary` present | 28 |
@@ -26,7 +26,7 @@ The 28 mapping blocks are all mappings. Their observed shape is:
 
 Interpretation:
 - AiEdge is the only mapping with a proposed concept and structured relation objects.
-- Marek/Ryabinin is the only mapping with `integrated_concepts`; its six relation proposals are plain-language strings, not normalized relation records.
+- Marek/Ryabinin is the only mapping with `integrated_concepts` instead of `proposed_concepts`; its six relation proposals are plain-language strings, not normalized relation records.
 - The other 26 mappings have empty proposed concept/relation/route lists. Their decision summaries still carry editorial decisions and evidence; empty lists do not mean the source itself is obsolete or irrelevant.
 
 ## 2. Complete inventory of the 28 mappings
