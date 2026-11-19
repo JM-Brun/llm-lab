@@ -101,9 +101,6 @@ def build_report(root: Path) -> dict[str, Any]:
     }
     item_key_presence: Counter[str] = Counter()
     candidate_shapes: Counter[str] = Counter()
-    unknown_concept_occurrences: dict[str, dict[str, list[dict[str, Any]]]] = {
-        key: defaultdict(list) for key in unknown_concepts
-    }
     unknown_concepts: dict[str, set[str]] = {
         key: set()
         for key in (
@@ -113,6 +110,9 @@ def build_report(root: Path) -> dict[str, Any]:
             "item.classification.concept_ids",
             "item.mapped_concepts",
         )
+    }
+    unknown_concept_occurrences: dict[str, dict[str, list[dict[str, Any]]]] = {
+        key: defaultdict(list) for key in unknown_concepts
     }
     extraction_files = extraction_items = candidate_items = local_route_steps = 0
     malformed: list[str] = []
