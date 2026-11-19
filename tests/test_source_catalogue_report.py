@@ -51,6 +51,10 @@ def test_report_joins_extractions_by_source_id_and_surfaces_review_queues(tmp_pa
         },
     )
     _write_yaml(
+        tmp_path / "data" / "source-collections.yml",
+        {"schema_version": 1, "collections": []},
+    )
+    _write_yaml(
         tmp_path / "data" / "concepts.yml",
         {
             "schema_version": 2,
