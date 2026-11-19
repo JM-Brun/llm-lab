@@ -135,3 +135,16 @@ This baseline establishes the observed corpus shape, not locator resolution, sou
 The 2026-11-18 snapshot above (84 extraction files / 432 items) is historical and must not be presented as the current corpus state. A repository-tree inventory on 2026-11-19 found 96 extraction YAML filenames. That filename count does not establish the number of valid extraction records, items, or locators, and it does not establish that each declared `source_id` resolves.
 
 A fresh full-corpus run of `site/tools/report_extraction_locator_inventory.py` is being requested through the opt-in CI inventory job. Its artifact and job summary—not this filename-level count—must supply the next current locator baseline. In parallel, the canonical `site/tools/check_source_catalogue.py` validation in CI must pass before claiming the 96-file corpus is structurally valid. Until those results are available, no current item or locator totals are asserted here.
+
+
+### Verified current snapshot — 2026-11-19
+
+The opt-in GitHub Actions inventory completed successfully on commit `0c856b92ebee9a069d405596c2e2d469aaf8d703` (workflow run `44531296011`). It parsed **96 files / 489 items** and reported:
+
+- 0 YAML/record errors;
+- 0 items without a locator, scalar locators, unsupported locator shapes, or non-mapping extraction records;
+- 0 locator mappings missing required fields;
+- 14 observed locator types: section 411, page 18, timestamp 14, chapter 11, heading 7, page-section 7, figure 4, paragraph 4, article 3, comment 3, abstract 2, code 2, external-source 2, external-code 1;
+- 418 locator mappings with keys `label,type,value`; 71 with `type,value`.
+
+The same workflow's canonical `site/tools/check_source_catalogue.py` step passed. That validator checks extraction source identity resolution, filename/source_id equality and duplicate extraction identities in addition to item structure. These results establish structural validity for this snapshot, not external locator resolution, source inspection completeness, evidential support, scientific correctness or independent corroboration. The earlier 84-file / 432-item snapshot is retained above as historical evidence.
