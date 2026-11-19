@@ -130,6 +130,10 @@ def _write_sources(root: Path) -> None:
     ):
         (data / name).write_text(yaml.safe_dump(value, sort_keys=False), encoding="utf-8")
 
+    source_dir = root / "src"
+    source_dir.mkdir(parents=True, exist_ok=True)
+    (source_dir / "attention.py").write_text("# test fixture\n", encoding="utf-8")
+
 
 def _index(tmp_path: Path) -> ProjectIndex:
     _write_page(tmp_path / "site", "fr/attention", "fr", next_page=None)
