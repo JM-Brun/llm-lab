@@ -236,7 +236,7 @@ items:
       corroborating_sources: []
     classification:
       primary_theme: probabilistic-foundations-training
-      tags: [topic:learning-outcome, metric:quiz-accuracy, method:between-subjects]
+      tags: [topic:learning-outcome, topic:quiz-accuracy, method:between-subjects]
       concept_ids: []
     candidate_destinations:
       pages: [en/generation, fr/generation]
