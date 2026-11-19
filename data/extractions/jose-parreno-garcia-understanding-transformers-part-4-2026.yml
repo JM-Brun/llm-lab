@@ -3,7 +3,8 @@ schema_version: 1
 pedagogical_model:
   reconstruction:
     status: partial
-    evidence_basis: "Complete visible article text retrieved on 2026-11-19; embedded figures were not inspected."
+    basis:
+      - "Complete visible article text retrieved on 2026-11-19; embedded figures were not inspected."
     inferred_elements:
       - "The article's teaching route moves from contextual motivation to Q/K/V roles, projections, score normalization, value aggregation and multiple heads."
   source_graph:
@@ -26,14 +27,14 @@ pedagogical_model:
       - {from: src-cake-pronoun-example, to: src-query-key-value, type: pedagogical-motivation}
     interpretation: "This is a maintainer reconstruction of the article's explanatory dependencies, not a formal graph asserted by the author. Analogy edges do not imply mathematical equivalence."
   learning_outcomes:
-    - {outcome: "Explain the distinct computational roles of Q, K and V.", status: declared, basis: "Article introduction and recap"}
-    - {outcome: "Trace scaled dot-product attention through scores, softmax and weighted aggregation.", status: declared, basis: "Four-step walkthrough"}
-    - {outcome: "Describe the high-level purpose of multiple attention heads.", status: declared, basis: "Multi-head section"}
+    - {outcome: "Explain the distinct computational roles of Q, K and V.", status: inferred, basis: "Article introduction and recap; no formal outcome checklist is published."}
+    - {outcome: "Trace scaled dot-product attention through scores, softmax and weighted aggregation.", status: inferred, basis: "Four-step walkthrough; outcome is inferred from the exposition."}
+    - {outcome: "Describe the high-level purpose of multiple attention heads.", status: inferred, basis: "Multi-head section; outcome is inferred from the exposition."}
   assumed_prerequisites:
-    - {concept: "vectors and matrix multiplication", status: inferred, basis: "The article assumes familiarity with vector dimensions and matrix products."}
-    - {concept: "token embeddings and positional encodings", status: declared, basis: "Explicit recap of Part 3"}
+    - {topic: "vectors and matrix multiplication", status: inferred, basis: "The article assumes familiarity with vector dimensions and matrix products."}
+    - {topic: "token embeddings and positional encodings", status: inferred, basis: "Explicit recap of Part 3"}
   teaching_route:
-    - {order: 1, section: "Positional encoding recap from part 3", function: motivation, teaching_moves: ["Recall embeddings plus position", "Expose missing contextual relationships"]}
+    - {order: 1, section: "Positional encoding recap from part 3", function: motivation, moves: ["Recall embeddings plus position", "Expose missing contextual relationships"]}
     - {order: 2, section: "The dreaded diagrams (again)", function: orientation, teaching_moves: ["Locate the multi-head attention component", "Narrow focus to scaled dot-product attention"]}
     - {order: 3, section: "Pre-phase: Introducing Q K, V", function: mental-model, teaching_moves: ["Use Netflix search analogy", "Map analogy roles to tokens"]}
     - {order: 4, section: "Step 1. MatMul of Q and K", function: derivation, teaching_moves: ["Project inputs with learned matrices", "Compute QK transpose logits"]}
@@ -53,8 +54,9 @@ pedagogical_model:
     - "The mask is presented too narrowly as training-only; causal masking also constrains autoregressive inference."
     - "Parallel computation is true for sequence-wide training and prefill, not unrestricted autoregressive token generation."
   comparison:
-    dossier: "docs/source-reviews/jose-parreno-garcia-transformers-part-4-2026-11.md"
+    dossier: "docs/source-reviews/jose-parreno-garcia-understanding-transformers-part-4-2026-11.md"
     canonical_graph: "data/concepts.yml"
+    canonical_routes: ["data/guided-route.yml", "docs/learning-path.md", "site/fr/build-path.qmd", "site/en/build-path.qmd"]
     decision: "reuse-existing-concepts; no new canonical concepts or pages proposed"
     structures_kept_separate: ["Article's Netflix analogy", "Article-local teaching route", "Canonical concept graph", "Canonical bilingual Understand and Build routes"]
 items:
