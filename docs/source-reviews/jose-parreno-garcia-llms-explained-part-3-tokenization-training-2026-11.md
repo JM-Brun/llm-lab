@@ -123,6 +123,16 @@ Other embedded FineWeb and TikTokenizer screenshots, the Karpathy training scree
 
 The official GPT-4 report also explicitly characterizes GPT-4 as pre-trained to predict the next token, then fine-tuned with RLHF; it states that further architecture, data-construction and training details are withheld. This supports the review's distinction between baseline next-token pretraining and post-training, without validating the article's GPT-4 scale estimates.
 
+
+### Linked resources and discussion — additional inspection
+
+- The FineWeb link resolves to the Hugging Face blogpost/Space for “FineWeb: decanting the web for the finest text data at scale”. The page shell and embedded Space were identified; the interactive Space itself was not fully audited.
+- The TikTokenizer link resolves and its interface loads, showing a selectable GPT-4o tokenizer, content input and token-count control. No tokenization experiment was run, so no output or tokenizer behavior is claimed from this inspection.
+- The article's Karpathy YouTube link was identified, but retrieval was throttled; the video and its referenced timestamps were not inspected.
+- The article page exposes one public comment in the fetched view. It makes a loosely stated comparison between NLTK tokenization and Word2Vec and mentions turning off unused parameters; it is not a technically substantiated counterargument. Replies and any comments not exposed in the page view remain unaudited.
+
+These checks improve link provenance but do not change the integration decision: use FineWeb and TikTokenizer as optional external demonstrations, not as prerequisites or as evidence for the article's unsupported GPT-4 scale figures.
+
 ## Remaining Phase C work
 
 1. Retrieve and visually inspect the article's embedded FineWeb, TikTokenizer, model-output, Karpathy and Epoch AI assets; record exact source locators.
