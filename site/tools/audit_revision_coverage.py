@@ -102,9 +102,7 @@ def build_revision_inventory(
                 "children": sorted(page.get("children", [])),
                 "related": sorted(page.get("related", [])),
                 "concept_ids": sorted(concept_ids_by_page.get(page_id, [])),
-                "implementation_resource_ids": sorted(
-                    implementation_ids_by_page.get(page_id, [])
-                ),
+                "implementation_resource_ids": sorted(implementation_ids_by_page.get(page_id, [])),
                 "synthesis_status": "not_assessed",
             }
         )
@@ -124,13 +122,9 @@ def build_revision_inventory(
             "synthesis_not_assessed": len(subset),
         }
 
-    topic_language_counts: dict[str, dict[str, int]] = defaultdict(
-        lambda: {"fr": 0, "en": 0}
-    )
+    topic_language_counts: dict[str, dict[str, int]] = defaultdict(lambda: {"fr": 0, "en": 0})
     for record in records:
-        topic_language_counts[f"{record['destination']}:{record['topic']}"][
-            record["language"]
-        ] += 1
+        topic_language_counts[f"{record['destination']}:{record['topic']}"][record["language"]] += 1
 
     return {
         "schema_version": 1,
