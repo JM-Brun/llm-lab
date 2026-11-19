@@ -93,7 +93,7 @@ def test_aiedge_scan_preserves_facet_detail_beyond_the_source_event_summary() ->
     assert scan["code_data"]["status"] == "not-inspected"
     assert scan["rights"]["status"] == "unknown"
     assert len(scan["unresolved_questions"]) == 3
-    assert len(event["inspected_scope"]) == 3
+    assert len(event["inspected_scope"]) == 4
     assert len(event["limitations"]) == 5
     assert "unresolved_questions" not in event
     assert "rights" not in event

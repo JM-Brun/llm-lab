@@ -2,20 +2,22 @@ schema_version: 1
 source_id: aiedge-how-cuda-graphs-speed-up-llm-inference
 
 scan:
-  accessed_at: "2026-11-06"
-  retrieval_method: indexed-text
+  accessed_at: "2026-11-19"
+  retrieval_method: canonical-page-and-indexed-search
   author_text:
     status: partial
     coverage: "Title, author/date metadata, subtitle, introduction and a substantial indexed excerpt describing replay, buffers and dynamic LLM state."
     notes:
-      - "Canonical article URL returned a cache miss on direct retrieval."
-      - "The indexed excerpt is attributable to the canonical article result."
-      - "A syndicated mirror exposed the table of contents; headings are retained as structural evidence, not as a substitute for the full body."
+      - "Reopened the canonical Substack page: the article is marked Paid; its public introduction and six table-of-contents headings are visible, but the full sections are not."
+      - "The same introduction is independently reproduced in the indexed Muck Rack author-article listing."
+      - "The WorldThatGrows syndicated page exposes the same introductory preview; direct retrieval timed out. It is not treated as a full-text source."
+      - "The six headings are retained as structural evidence only, not as a substitute for the full body."
   figures_media:
     status: not-inspected
     coverage: null
     notes:
-      - "No cover or in-body image bytes were retrieved or visually inspected."
+      - "No cover or in-body image bytes attributable to this article were retrieved or visually inspected."
+      - "Image search returned generic CUDA Graph illustrations from unrelated publications; these were explicitly excluded as non-evidence for AiEdge figures."
   code_data:
     status: not-inspected
     coverage: null
