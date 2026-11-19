@@ -20,6 +20,11 @@ hierarchy:
   children: ["en/transformer", "en/transformer-architectures", "en/generation", "en/build-path", "en/language-modeling-math", "en/mathematical-foundations", "en/llm-limits", "en/llm-computational-complexity"]
 covered_stages: [orientation, text-input, representations, computation, prediction, inference, context-use, scoring, training]
 related: ["en/transformer-history", "en/scaling-laws", "en/llm-evolution", "en/entropy", "en/compression-revision", "en/in-context-learning", "en/context-engineering", "en/rag-memory-boundaries", "en/document-retrieval", "en/post-training", "en/llm-overview-exercises", "en/glossary"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "The recap presents the next-token distribution and distinguishes generation, scoring and training; the self-check and six Practice questions cover the main orientation concepts."
 tags: ["type:system-overview", "destination:understand", "topic:llm-overview", "level:overview", "language:en", "status:published"]
 -->
 
@@ -37,7 +42,7 @@ It does not write its answer in one block. For each possible continuation, it es
 The scene is a hook, not a literal single-speaker generation. For calculations, the path uses an original continuation written for LLM Lab: “They built roads between distant towns.” The characters are fiction, the assistant is an application, and the LLM is the model that application queries: only the last one is studied here.
 :::
 
-::: {.callout-tip title="The one-minute mental model"}
+::: {.callout-tip title="The one-minute mental model" #revision-summary}
 A model estimates a next-token distribution. It can be used to generate, score, or train: three distinct uses, not steps in one execution. An **LLM** is a model category, **Transformer** an architecture family, and **GPT** a decoder-only Transformer family.
 :::
 
