@@ -19,6 +19,11 @@ hierarchy:
   parents: ["fr/transformer"]
   children: ["fr/queries-keys-values-advanced"]
 related: ["fr/contextualized-representations", "fr/scaled-dot-product-attention", "fr/cross-attention", "fr/transformer-block-walkthrough", "fr/queries-keys-values-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "Le récapitulatif distingue Q/K (scores et poids) de V (contenu agrégé), précise ce qui change si V varie seul et renvoie aux limites d'interprétation ; un auto-contrôle corrigé et les exercices dédiés complètent le rappel."
 tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-values", "level:core", "language:fr", "status:published"]
 -->
 
@@ -140,7 +145,7 @@ Les équations par position, la géométrie des compatibilités, les chemins de 
 
 Pour comparer les architectures qui modifient le nombre de têtes K/V, compressent le cache ou limitent les positions consultées, consultez la section [Variantes d'attention](transformer-block-walkthrough.qmd#attention-variants) de la visite guidée du bloc Transformer. Elle distingue explicitement cette comparaison du code MHA réellement implémenté.
 
-## À retenir et pour aller plus loin
+## À retenir et pour aller plus loin {#revision-summary}
 
 La distinction fonctionnelle est simple, mais fondamentale :
 
