@@ -4779,6 +4779,7 @@ sources:
       audiences: [learner, practitioner, researcher, educator]
     scan_status: partially-scanned
     integration_status: integrated
+    collections: [visual-learning-tools]
     scan_history:
       - accessed_at: "2026-11-16"
         status: partially-scanned
