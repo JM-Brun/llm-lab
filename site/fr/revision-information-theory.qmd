@@ -9,6 +9,10 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/revision-information-theory"
+revision_role: revision_sheet
+revision_of:
+  - fr/entropy
+  - fr/cross-entropy
 summary: "Fiche de révision des notions d'information utilisées pour comprendre l'objectif prédictif des LLM."
 scope: "Synthétise surprisal, entropie, cross-entropie, divergence KL et codage prédictif, sans remplacer les leçons détaillées."
 purpose: "Permettre de revoir les identités, unités, hypothèses et pièges conceptuels essentiels avant de passer aux exercices."
@@ -18,7 +22,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/entropy", "fr/cross-entropy", "fr/experience-information-theory"]
+related: ["fr/experience-information-theory"]
 tags: ["type:exercise-collection", "destination:practice", "topic:information-theory-revision", "level:applied", "language:fr", "status:published"]
 -->
 
