@@ -19,6 +19,11 @@ hierarchy:
   parents: ["en/probabilities"]
   children: []
 related: ["en/entropy", "en/cross-entropy", "en/likelihood-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "The recap connects scoring an observed sequence, the chain rule, summed log-probabilities and NLL while flagging comparison conventions; three answered exercises check factorization, independence and reduction."
 tags: ["type:concept-lesson", "destination:understand", "topic:vraisemblance", "level:core", "language:en", "status:published"]
 -->
 
@@ -28,7 +33,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:vraisemblance", "
 Likelihood measures the probability of observed data for fixed parameters. In autoregressive language modeling, it is built from the conditional probabilities of each target token.
 :::
 
-::: {.callout-tip title="The one-minute mental model"}
+::: {.callout-tip title="The one-minute mental model" #revision-summary}
 - **Scoring:** the model receives the reference prefix and assigns probability to the observed target; no generated token is fed back and parameters remain fixed.
 - **Sequence:** the chain rule gives $P_\theta(x_{1:T})=\prod_t P_\theta(x_t\mid x_{<t})$; the logarithm turns this product into a sum.
 - **Objective:** NLL is $-\log P_\theta(x_{1:T})$. For the same observations and positions, maximizing log-likelihood is equivalent to minimizing NLL.
