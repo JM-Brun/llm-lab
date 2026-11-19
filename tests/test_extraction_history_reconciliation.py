@@ -235,9 +235,7 @@ def test_marek_concepts_have_bilingual_pages_and_documentary_evidence() -> None:
     assert {"fr/score-centering", "en/score-centering"} <= set(source["related"]["pages"])
     assert expected_ids <= set(source["related"]["concepts"])
     verification_event = next(
-        event
-        for event in source["scan_history"]
-        if event["accessed_at"] == "2026-11-19"
+        event for event in source["scan_history"] if event["accessed_at"] == "2026-11-19"
     )
     assert any("Canonical arXiv v1 PDF" in item for item in verification_event["inspected_scope"])
     assert any("tests/test_loss.py" in item for item in verification_event["inspected_scope"])
