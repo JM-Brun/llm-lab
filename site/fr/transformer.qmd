@@ -19,6 +19,11 @@ hierarchy:
   parents: ["fr/index", "fr/llm-overview", "fr/transformer-architectures"]
   children: ["fr/queries-keys-values", "fr/scaled-dot-product-attention"]
 related: ["fr/text-data", "fr/embedding-space", "fr/positional-encoding", "fr/contextualized-representations", "fr/logits", "fr/tensors", "fr/generation", "fr/transformer-block-walkthrough", "fr/gpt-model-walkthrough", "fr/transformer-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "Le nouveau rappel relie architecture décodeur seul, rôle de l'auto-attention et du MLP, connexions résiduelles, normalisation et sortie en logits ; cinq questions corrigées vérifient le transfert entre sous-couches, bloc et génération."
 tags: ["type:system-overview", "destination:understand", "topic:transformer", "level:overview", "language:fr", "status:published"]
 -->
 
@@ -28,6 +33,10 @@ tags: ["type:system-overview", "destination:understand", "topic:transformer", "l
 Un **GPT** est un modèle de langage construit autour d'un **Transformer décodeur seul**. Le Transformer ne désigne pas une étape de traitement placée entre deux composants : c'est une architecture de réseau neuronal. Dans un GPT décodeur seul, son cœur est une pile de blocs Transformer qui transforment les représentations des tokens. À partir de ces représentations, le réseau calcule des **logits**, c'est-à-dire un score pour chaque token du vocabulaire.
 
 Cette page montre d'abord à quoi ressemble cette architecture, puis suit une passe avant à travers ses blocs jusqu'aux logits. Elle s'arrête à la sortie du réseau : la conversion des logits en probabilités et la sélection du prochain token appartiennent au décodage, pas au calcul interne du Transformer.
+:::
+
+::: {.callout-tip title="Le Transformer en une minute" #revision-summary}
+Un GPT décodeur seul est un réseau Transformer composé de blocs répétés. Dans chaque bloc, l’auto-attention mélange l’information entre positions autorisées, le MLP transforme chaque position, et les connexions résiduelles ainsi que la normalisation stabilisent le calcul. La pile produit des représentations finales puis des logits ; le choix du prochain token appartient au décodage.
 :::
 
 <div class="pipeline-stepper" role="group" aria-label="Étapes du calcul dans un Transformer">
