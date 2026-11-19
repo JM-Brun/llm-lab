@@ -47,9 +47,7 @@ def test_synthetic_matrix_uses_explicit_evidence_and_keeps_unknown_states(tmp_pa
     assert _state(rows["query"], "sources") == "not_registered"
     assert _state(rows["query"], "practice") == "not_registered"
     assert all(
-        cell["state"] != "missing"
-        for row in rows.values()
-        for cell in row["dimensions"].values()
+        cell["state"] != "missing" for row in rows.values() for cell in row["dimensions"].values()
     )
 
 
