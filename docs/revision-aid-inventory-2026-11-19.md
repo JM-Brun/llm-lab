@@ -12,7 +12,7 @@
 | Build | 16 | 8 | 8 | 8 |
 | **Total** | **62** | **31** | **31** | **31** |
 
-The artifact records 144 explicit concept-to-page edges in Understand, 18 in Build, and 10 implementation-resource associations, all in Build. The original snapshot reported all 62 `synthesis_status` values as `not_assessed`. The relation pilot in PR #1411 adds four explicit page-aid links and `partial` assessments for the FR/EN entropy and cross-entropy lessons. It also records `integrated_sufficient` assessments for the FR/EN corpus-preparation and training-examples pages, each anchored to its existing revision callout. The other 42 Understand and 12 Build pages remain `not_assessed` until individually assessed.
+The artifact records 144 explicit concept-to-page edges in Understand, 18 in Build, and 10 implementation-resource associations, all in Build. The original snapshot reported all 62 `synthesis_status` values as `not_assessed`. The relation pilot adds four explicit page-aid links and `partial` assessments for the FR/EN entropy and cross-entropy lessons. Integrated assessments now cover 12 pages: the FR/EN corpus-preparation and training-examples Build pages, plus the FR/EN causal-masking, transformer-architectures, LLM-overview and generation Understand pages. Each assessment points to an explicit `revision-summary` callout anchor. The other 34 Understand and 12 Build pages remain `not_assessed` until individually assessed.
 
 The editorial observations below come from source reviews recorded in issue [#1109](https://github.com/JM-Brun/llm-lab/issues/1109). The artifact and those comments are the evidence base; this document does not claim that every page has received a paragraph-by-paragraph scientific re-review or rendered accessibility review.
 
@@ -48,7 +48,7 @@ The following records summarize existing source-level audits. “Reuse” means 
 
 | Topic pair | Existing synthesis / retrieval support observed | Disposition |
 |---|---|---|
-| `causal-masking` | One-minute mental model, formal causal rule, triangular mask visual, distinction from padding/document/loss masks, invariance check and exercises | Reuse; no second sheet or diagram |
+| `causal-masking` | One-minute mental model, formal causal rule, triangular mask visual, distinction from padding/document/loss masks, invariance check and exercises | Reuse; `integrated_sufficient` via `revision-summary`; no second sheet or diagram |
 | `context-engineering` | Three context levels and distinctions between stored history, transmitted context and attention-accessible information; seven applied Practice questions | Reuse; no duplicate overview |
 | `contextualized-representations` | One-minute recap, pipeline, same-ID vs context-dependent state distinction, attention-head caveats; Practice self-check and advanced SAE investigation | Reuse; no separate sheet |
 | `cross-entropy` | Per-token objective, target distribution, worked example, sequence alignment, masking/reduction and edge cases; exercises and self-check | Reuse the linked information-theory sheet for conceptual recall; the source lesson is explicitly assessed `partial` because shift/mask/valid-token denominator still need targeted retrieval coverage |
@@ -56,9 +56,9 @@ The following records summarize existing source-level audits. “Reuse” means 
 | `entropy` | One-minute model, definition, numerical example, bounds, entropy vs observed surprisal and self-check; covered by the information-theory revision sheet | Reuse the linked information-theory sheet; the source lesson is explicitly assessed `partial` because context/temperature/calibration caveats need targeted retrieval coverage |
 | `gradients` | Chain-rule explanation, worked derivation, gradient-vs-update distinction, examples and executable tests/exercises | Reuse; no generic recap |
 | `in-context-learning` | Fixed-weights/changing-context distinction, zero/one/few-shot, relation to fine-tuning and RAG, experimental checklist; bilingual diagram added in PR #1112 | Reuse the integrated visual and Practice material |
-| `inference-generation` | Distribution-to-selection loop, decoding policy, prefill/decode and KV-cache distinctions; Practice resources | Reuse; keep generation separate from scoring and training |
+| `inference-generation` | Distribution-to-selection loop, decoding policy, prefill/decode and KV-cache distinctions; Practice resources | Reuse; `integrated_sufficient` via `revision-summary`; keep generation separate from scoring and training |
 | `llm-limits` | Critical synthesis of next-token objective vs guarantees, model/system evaluation dimensions, mechanical-design case; four bilingual retrieval questions | Reuse; no separate sheet |
-| `llm-overview` | Introductory mental model, six-stage computation diagram, generation/scoring/training separation, learning outcomes and Practice checks | Reuse as the orientation synthesis |
+| `llm-overview` | Introductory mental model, six-stage computation diagram, generation/scoring/training separation, learning outcomes and Practice checks | Reuse as the orientation synthesis; `integrated_sufficient` via `revision-summary` |
 | `logits` | Canonical lesson with targeted visual increment on translation invariance of softmax (PR #1118), examples and exercises | Reuse; no duplicate sheet |
 | `loss` | Aggregated objective, masking and reduction conventions, examples, exercises and worked answers | Reuse; preserve distinction from per-token cross-entropy |
 | `positional-encoding` | One-minute recap, insertion-point diagram, distinction from causal masking, extrapolation limits and bilingual Practice questions | Reuse; no separate sheet |
@@ -69,7 +69,7 @@ The following records summarize existing source-level audits. “Reuse” means 
 | `text-data` | Orientation pipeline from text through tokens and IDs to embeddings, practical boundaries and linked exercise paths | Reuse as the core entry point; do not copy advanced tokenization material into a second sheet |
 | `training-loop` | End-to-end workflow separating forward pass, loss, backpropagation, optimizer update and validation; examples and exercises | Reuse; keep implementation claims aligned with actual code |
 | `transformer` | Canonical computation walkthrough with self-check, exercises and code/test references | Reuse; no separate synthesis page |
-| `transformer-architectures` | One-minute mental model, six-dimension comparison, original bilingual diagram, architecture/objective/task distinction, limits and four-question Practice companion | Reuse; established positive exemplar |
+| `transformer-architectures` | One-minute mental model, six-dimension comparison, original bilingual diagram, architecture/objective/task distinction, limits and four-question Practice companion | Reuse; established positive exemplar; `integrated_sufficient` via `revision-summary` |
 | `vraisemblance` | Likelihood chain linked to generation/probabilities, numerical worked examples and Practice transfer questions | Reuse the lesson and exercises; the compression bridge adds a coding-length perspective but does not replace the likelihood-specific questions. Its typed source link is a follow-up after the first pilot review. |
 
 ### Understand limits
@@ -77,7 +77,7 @@ The following records summarize existing source-level audits. “Reuse” means 
 - The 16-page first-tranche review was initially a structural source audit; later passes deepened selected pairs (embedding/position/contextualization, entropy/cross-entropy, post-training/context engineering and LLM limits).
 - Several visual increments have CI and Quarto validation, but no rendered desktop/mobile, keyboard, screen-reader or learner-outcome sign-off is claimed.
 - The inventory records observed support and decisions, not a numeric pedagogical-quality score.
-- The relation pilot projects four `partial` Understand assessments, four explicit aid links, and four `integrated_sufficient` Build assessments into the generated inventory. The remaining 42 Understand and 12 Build pages are still `not_assessed`; rendered UX, accessibility and learner-outcome validation remain separate.
+- The relation pilot projects four `partial` Understand assessments, four explicit aid links, and 12 `integrated_sufficient` assessments (eight Understand, four Build) into the generated inventory. The remaining 34 Understand and 12 Build pages are still `not_assessed`; rendered UX, accessibility and learner-outcome validation remain separate.
 
 ## 4. Build inventory — 8 bilingual topic pairs
 
@@ -99,7 +99,7 @@ Build's six pages without implementation-resource associations are exactly the t
 1. Keep the two published page-aid pairs as the current explicit revision-aid candidates; do not create more generic sheets.
 2. Keep the internal Markdown sheet outside the learner-facing resource graph until its publication and maintenance role is explicitly changed.
 3. Do not add a non-page revision resource kind to `data/resources.yml` yet; current records are implementation resources only.
-4. Continue individual editorial assessment where evidence is provisional, especially cross-entropy's shift/mask contract and entropy caveats. Build corpus-preparation and training-examples already have integrated revision callouts and Practice companions.
+4. Continue individual editorial assessment where evidence is provisional, especially cross-entropy's shift/mask contract and entropy caveats. Causal masking, Transformer architectures, the LLM overview and generation now have explicit integrated assessments in both languages; Build corpus-preparation and training-examples remain assessed the same way.
 5. The initial page-aid pilot now links `revision-information-theory` to the FR/EN entropy and cross-entropy lessons; the generated coverage inventory reads the ProjectIndex relation and assessment projection. The metadata validator still needs a dedicated follow-up to validate these fields at page-map ingestion.
 6. The source audit confirms `compression-revision` as a cross-topic `synthesis` candidate for entropy, cross-entropy and likelihood. Add its typed links after the first pilot is reviewed; do not infer targets from `related` alone.
 7. Keep rendered UX/accessibility validation as a separate gate before closing #1109.
@@ -111,6 +111,8 @@ Relevant issue #1109 records:
 - Initial 16-page Understand source triage: [comment 7020226984](https://github.com/JM-Brun/llm-lab/issues/1109#issuecomment-7020226984).
 - Existing revision artifacts and information-theory pilot: [comment 7019921778](https://github.com/JM-Brun/llm-lab/issues/1109#issuecomment-7019921778).
 - Build audit of all eight topic pairs: [comment 7019937145](https://github.com/JM-Brun/llm-lab/issues/1109#issuecomment-7019937145).
+- Causal-masking and Transformer-architectures audit: [comment 7021377526](https://github.com/JM-Brun/llm-lab/issues/1109#issuecomment-7021377526).
+- LLM-overview and generation audit: [comment 7021409283](https://github.com/JM-Brun/llm-lab/issues/1109#issuecomment-7021409283).
 - Embeddings, position and contextualization audit: [comment 7019976945](https://github.com/JM-Brun/llm-lab/issues/1109#issuecomment-7019976945).
 - Post-training and context-engineering audit: [comment 7020045751](https://github.com/JM-Brun/llm-lab/issues/1109#issuecomment-7020045751).
 - LLM-limits audit: [comment 7020086727](https://github.com/JM-Brun/llm-lab/issues/1109#issuecomment-7020086727).
