@@ -643,7 +643,8 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
                     ):
                         if page_id not in pages:
                             errors.append(
-                                f"{item_where}.candidate_destinations.pages: unknown page {page_id!r}"
+                                f"{item_where}.candidate_destinations.pages: "
+                                f"unknown page {page_id!r}"
                             )
 
     return errors
