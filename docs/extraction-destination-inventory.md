@@ -34,6 +34,21 @@ Measured against the repository data snapshot used by PR #1369:
 | Malformed records or items | 0 |
 | Source-local teaching-route steps | 294 |
 
+### Extraction-record field presence
+
+| Field | Extraction records |
+|---|---:|
+| `schema_version`, `source_id`, `items` | 96 each |
+| `pedagogical_model` | 59 |
+| `scan` | 36 |
+| `canonical_mapping` | 28 |
+| `integration_decision` | 1 |
+| `pedagogical_limits` | 1 |
+| `pedagogical_strengths` | 1 |
+| `supplementary_audit` | 1 |
+
+The top-level `scan` field is present in 36 historical extraction records even though the authoring guide says scan history is source-owned and new extraction-level scan blocks should not be created. Preserve and report this legacy presence; do not infer that it is authoritative or promote its absence/presence to a new validation rule without inspecting the 36 records. `canonical_mapping` is an optional editorial proposal field, not a second canonical source of links.
+
 ### Item-field presence
 
 | Field | Items |
