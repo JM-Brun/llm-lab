@@ -187,6 +187,7 @@ def test_marek_prose_relations_are_not_silently_promoted_to_edges() -> None:
         "score-centering",
     ) in canonical_edges
 
+
 def test_marek_concepts_have_bilingual_pages_and_documentary_evidence() -> None:
     sources, extractions, concepts = _corpus()
     source_id = "marek-ryabinin-score-centering-off-policy-rl-2026"
