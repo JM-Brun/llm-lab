@@ -114,6 +114,15 @@ The paper distinguishes final-run costs from broader development costs. Its clou
 
 **Decision:** the article's broad infrastructure-cost point is supported as a dated, qualified claim. Do not import chart values or the article's broad “fewer than 20 companies” market-concentration claim without separately inspecting the exact embedded figures, their source data and a suitable market definition. Epoch AI's paper is published under CC BY on its page; that does not grant reuse rights to the Substack author's screenshots or composites.
 
+
+### Visual asset inspection update
+
+The article's embedded Llama 3.1 70B Base output screenshot (the Eiffel Tower prompt example) was retrieved and visually inspected. It shows a continuation beginning with historical context about the tower rather than a concise location answer, which supports the article's point that a fluent base-model continuation need not satisfy the user's intended question. This is one illustrative output only; it does not establish a general hallucination rate or factuality property.
+
+Other embedded FineWeb and TikTokenizer screenshots, the Karpathy training screenshots, and the Epoch AI chart images were not reliably retrievable as their original image assets in this pass. Some image links exposed by the page resolve to unrelated placeholder content, so they were not treated as evidence. The Epoch AI article's own text and figure captions were reviewed instead; its Jan. 13, 2025 update notes that Figures 1 and 2 were revised to remove fine-tuned models and that Figure 3's random seed was fixed. Exact embedded chart pixels from the Substack post remain uninspected.
+
+The official GPT-4 report also explicitly characterizes GPT-4 as pre-trained to predict the next token, then fine-tuned with RLHF; it states that further architecture, data-construction and training details are withheld. This supports the review's distinction between baseline next-token pretraining and post-training, without validating the article's GPT-4 scale estimates.
+
 ## Remaining Phase C work
 
 1. Retrieve and visually inspect the article's embedded FineWeb, TikTokenizer, model-output, Karpathy and Epoch AI assets; record exact source locators.
