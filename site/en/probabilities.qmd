@@ -19,6 +19,11 @@ hierarchy:
   parents: ["en/logits", "en/generation"]
   children: ["en/entropy", "en/likelihood"]
 related: ["en/probabilities-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "The recap connects softmax, conditional distributions, temperature, selection and the limits of calibration/truth. The numerical workbench, warnings and four answered questions cover normalization, concentration and interpretation."
 tags: ["type:concept-lesson", "destination:understand", "topic:probabilites", "level:core", "language:en", "status:published"]
 -->
 
@@ -28,7 +33,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:probabilites", "l
 An LLM does not directly produce facts or probabilities of truth. At each position, it produces scores that are transformed into a distribution over possible tokens, conditioned on the prefix.
 :::
 
-::: {.callout-tip title="The one-minute mental model"}
+::: {.callout-tip title="The one-minute mental model" #revision-summary}
 Softmax turns logits into a **distribution conditioned on the prefix**. It guarantees positive values that sum to one; it does not guarantee calibration or factual truth.
 
 **First pass:** follow the two-logit example, then remember that $p_\theta(x_t\mid x_{<t})$ depends on context. Temperature changes the concentration of this distribution, not the learned parameters.
