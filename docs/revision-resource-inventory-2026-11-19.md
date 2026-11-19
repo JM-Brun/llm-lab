@@ -3,7 +3,7 @@
 **Date:** 2026-11-19  
 **Status:** read-only inventory; no revision content created or migrated.  
 **Repository:** `JM-Brun/llm-lab`  
-**Current main inspected:** `6b4d291b7cf68c87f34790023721d562c608e072`  
+**Current main inspected:** `06b268a4b419a688a6057cbfebe5d79ede5704a1`  
 **Inventory implementation:** `site/tools/audit_revision_coverage.py`, introduced in PR [#1379](https://github.com/JM-Brun/llm-lab/pull/1379).  
 **Machine-readable snapshot inspected:** CI run [#5888](https://github.com/JM-Brun/llm-lab/actions/runs/44567812323), artifact `revision-coverage-inventory-0e98372c76a6bf1e4b00f731a9e9654ce3fb06d9`, generated from commit `817048ecda141fbf256e42237dc1a4f34bf44a88`.
 
