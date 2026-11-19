@@ -110,7 +110,8 @@ This confirms that the missing output projection W_O is a genuine omission in th
 - No code reproduction or numerical verification is claimed.
 - The primary-source formulation and all eight bilingual Understand/Build destinations have now been checked; no page, concept, resource or route changes are warranted.
 - The page-by-page comparison found the current canonical pages already cover all extracted technical content; retain the no-duplication decision.
-- Validate YAML and catalogue/extraction contracts with `site/tools/check_source_catalogue.py`, then inspect the CI run for the final PR HEAD.
+- `site/tools/check_source_catalogue.py` passed on PR HEAD `8175b59953c59f27c48b7066d6e872240a09201e` after fixing two prerequisite-field errors found by the first CI attempt.
+- CI's Python quality/domain checks and full test suite both passed on that HEAD; Quarto site/browser audit was still running at the time of this update.
 - Inspect the embedded figures only if visual integration is later proposed; their absence does not block link-only source registration.
 
 **Overall judgement:** a useful introductory secondary explanation of attention's computational flow, with a strong Q/K versus V mental model. Its technical shortcuts should be corrected before any of its prose is reused pedagogically.
