@@ -371,8 +371,16 @@ class ProjectIndex:
     resources_by_id: dict[str, ResourceRecord]
     page_resource_associations: tuple[PageResourceAssociation, ...]
     concept_resource_associations: tuple[ConceptResourceAssociation, ...]
+    resource_ids_by_page: dict[str, tuple[str, ...]]
+    page_ids_by_resource: dict[str, tuple[str, ...]]
+    resource_ids_by_concept: dict[str, tuple[str, ...]]
+    concept_ids_by_resource: dict[str, tuple[str, ...]]
     revision_status_by_page: dict[str, str]
     revision_edges: tuple[RevisionEdge, ...]
+    revision_edges_by_page: dict[str, tuple[RevisionEdge, ...]]
+    revision_sources_by_page: dict[str, tuple[RevisionEdge, ...]]
+    revision_sources_by_resource: dict[str, tuple[RevisionEdge, ...]]
+    revision_sources_by_section: dict[tuple[str, str], tuple[RevisionEdge, ...]]
 
     @classmethod
     def build(cls, root: Path) -> ProjectIndex:
@@ -390,6 +398,56 @@ class ProjectIndex:
             _load_non_page_resources(root, pages, concepts)
         )
         revision_status_by_page, revision_edges = _load_revision_relations(pages, resources)
+
+        resource_ids_by_page: dict[str, set[str]] = defaultdict(set)
+        page_ids_by_resource: dict[str, set[str]] = defaultdict(set)
+        resource_ids_by_concept: dict[str, set[str]] = defaultdict(set)
+        concept_ids_by_resource: dict[str, set[str]] = defaultdict(set)
+        for association in page_resource_associations:
+            resource_ids_by_page[association.page_id].add(association.resource_id)
+            page_ids_by_resource[association.resource_id].add(association.page_id)
+        for association in concept_resource_associations:
+            resource_ids_by_concept[association.concept_id].add(association.resource_id)
+            concept_ids_by_resource[association.resource_id].add(association.concept_id)
+
+        revision_by_page: dict[str, list[RevisionEdge]] = defaultdict(list)
+        revision_by_target_page: dict[str, list[RevisionEdge]] = defaultdict(list)
+        revision_by_target_resource: dict[str, list[RevisionEdge]] = defaultdict(list)
+        revision_by_target_section: dict[tuple[str, str], list[RevisionEdge]] = defaultdict(list)
+        for edge in revision_edges:
+            revision_by_page[edge.source_page_id].append(edge)
+            if edge.target_type == "page":
+                revision_by_target_page[edge.target_id].append(edge)
+            elif edge.target_type == "resource":
+                revision_by_target_resource[edge.target_id].append(edge)
+            else:
+                revision_by_target_section[(edge.source_page_id, edge.target_id)].append(edge)
+
+        def freeze_ids(index: dict[str, set[str]]) -> dict[str, tuple[str, ...]]:
+            return {key: tuple(sorted(value)) for key, value in index.items()}
+
+        def sort_revision_edges(edges: list[RevisionEdge]) -> tuple[RevisionEdge, ...]:
+            return tuple(
+                sorted(
+                    edges,
+                    key=lambda edge: (
+                        edge.source_page_id,
+                        edge.role,
+                        edge.target_type,
+                        edge.target_id,
+                    ),
+                )
+            )
+
+        def freeze_revision_by_page(
+            index: dict[str, list[RevisionEdge]],
+        ) -> dict[str, tuple[RevisionEdge, ...]]:
+            return {key: sort_revision_edges(value) for key, value in index.items()}
+
+        def freeze_revision_by_section(
+            index: dict[tuple[str, str], list[RevisionEdge]],
+        ) -> dict[tuple[str, str], tuple[RevisionEdge, ...]]:
+            return {key: sort_revision_edges(value) for key, value in index.items()}
 
         tag_index: dict[tuple[str, str], set[str]] = defaultdict(set)
         for page in published:
@@ -492,8 +550,16 @@ class ProjectIndex:
             resources_by_id=resources,
             page_resource_associations=page_resource_associations,
             concept_resource_associations=concept_resource_associations,
+            resource_ids_by_page=freeze_ids(resource_ids_by_page),
+            page_ids_by_resource=freeze_ids(page_ids_by_resource),
+            resource_ids_by_concept=freeze_ids(resource_ids_by_concept),
+            concept_ids_by_resource=freeze_ids(concept_ids_by_resource),
             revision_status_by_page=revision_status_by_page,
             revision_edges=revision_edges,
+            revision_edges_by_page=freeze_revision_by_page(revision_by_page),
+            revision_sources_by_page=freeze_revision_by_page(revision_by_target_page),
+            revision_sources_by_resource=freeze_revision_by_page(revision_by_target_resource),
+            revision_sources_by_section=freeze_revision_by_section(revision_by_target_section),
         )
 
     def select_pages(self, **filters: str) -> tuple[PublishedPage, ...]:
@@ -520,6 +586,111 @@ class ProjectIndex:
         return tuple(
             self.concepts_by_id[key] for key in sorted(self.concepts_by_page.get(page_id, ()))
         )
+
+    def resources_for_page(self, page_id: str) -> tuple[ResourceRecord, ...]:
+        """Return non-page resources explicitly referenced by a published page."""
+        if page_id not in self.pages_by_id:
+            raise KeyError(f"unknown published page: {page_id}")
+        return tuple(
+            self.resources_by_id[resource_id]
+            for resource_id in self.resource_ids_by_page.get(page_id, ())
+        )
+
+    def pages_for_resource(self, resource_id: str) -> tuple[PublishedPage, ...]:
+        """Return published pages listed by a non-page resource's referenced_by field."""
+        if resource_id not in self.resources_by_id:
+            raise KeyError(f"unknown resource: {resource_id}")
+        return tuple(
+            self.pages_by_id[page_id] for page_id in self.page_ids_by_resource.get(resource_id, ())
+        )
+
+    def resources_for_concept(self, concept_id: str) -> tuple[ResourceRecord, ...]:
+        """Return non-page resources explicitly associated with a canonical concept."""
+        if concept_id not in self.concepts_by_id:
+            raise KeyError(f"unknown concept: {concept_id}")
+        return tuple(
+            self.resources_by_id[resource_id]
+            for resource_id in self.resource_ids_by_concept.get(concept_id, ())
+        )
+
+    def concepts_for_resource(self, resource_id: str) -> tuple[dict[str, Any], ...]:
+        """Return canonical concepts explicitly associated with a non-page resource."""
+        if resource_id not in self.resources_by_id:
+            raise KeyError(f"unknown resource: {resource_id}")
+        return tuple(
+            self.concepts_by_id[concept_id]
+            for concept_id in self.concept_ids_by_resource.get(resource_id, ())
+        )
+
+    def revision_targets_for_page(
+        self, page_id: str, *, role: str | None = None
+    ) -> tuple[RevisionEdge, ...]:
+        """Return typed revision targets declared by a source page."""
+        if page_id not in self.pages_by_id:
+            raise KeyError(f"unknown published page: {page_id}")
+        if role is not None and (not isinstance(role, str) or role not in REVISION_ROLES):
+            raise ValueError(f"unknown revision role: {role}")
+        return tuple(
+            edge
+            for edge in self.revision_edges_by_page.get(page_id, ())
+            if role is None or edge.role == role
+        )
+
+    def revision_edges_for_target(
+        self,
+        target_type: str,
+        target_id: str,
+        *,
+        section_page_id: str | None = None,
+        role: str | None = None,
+    ) -> tuple[RevisionEdge, ...]:
+        """Return source→target revision edges using a page-local key for sections."""
+        if role is not None and (not isinstance(role, str) or role not in REVISION_ROLES):
+            raise ValueError(f"unknown revision role: {role}")
+        if not isinstance(target_id, str) or not target_id.strip():
+            raise ValueError("target_id must be a non-empty string")
+        if target_type == "page":
+            if section_page_id is not None:
+                raise ValueError("section_page_id is only valid for section targets")
+            if target_id not in self.pages_by_id:
+                raise KeyError(f"unknown revision target page: {target_id}")
+            edges = self.revision_sources_by_page.get(target_id, ())
+        elif target_type == "resource":
+            if section_page_id is not None:
+                raise ValueError("section_page_id is only valid for section targets")
+            if target_id not in self.resources_by_id:
+                raise KeyError(f"unknown revision target resource: {target_id}")
+            edges = self.revision_sources_by_resource.get(target_id, ())
+        elif target_type == "section":
+            if not isinstance(section_page_id, str) or not section_page_id:
+                raise ValueError("section targets require a non-empty section_page_id")
+            page = self.pages_by_id.get(section_page_id)
+            if page is None:
+                raise KeyError(f"unknown section owner page: {section_page_id}")
+            if not _has_explicit_anchor(page.source, target_id):
+                raise KeyError(f"unknown explicit section anchor: {section_page_id}#{target_id}")
+            edges = self.revision_sources_by_section.get((section_page_id, target_id), ())
+        else:
+            raise ValueError(f"unknown revision target type: {target_type}")
+        return tuple(edge for edge in edges if role is None or edge.role == role)
+
+    def pages_for_revision_target(
+        self,
+        target_type: str,
+        target_id: str,
+        *,
+        section_page_id: str | None = None,
+        role: str | None = None,
+    ) -> tuple[PublishedPage, ...]:
+        """Return unique source pages that point to a typed revision target."""
+        edges = self.revision_edges_for_target(
+            target_type,
+            target_id,
+            section_page_id=section_page_id,
+            role=role,
+        )
+        source_ids = sorted({edge.source_page_id for edge in edges})
+        return tuple(self.pages_by_id[page_id] for page_id in source_ids)
 
     def incoming_pages(
         self, page_id: str, *, family: str | None = None, relation: str | None = None

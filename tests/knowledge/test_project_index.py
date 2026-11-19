@@ -267,7 +267,12 @@ def test_revision_adapter_keeps_three_target_types_separate(tmp_path: Path) -> N
             {"role": "revision_sheet", "target": {"type": "resource", "id": "attention-module"}},
         ],
     }
-    _write_page(tmp_path / "site", "fr/attention", "fr")
+    _write_page(
+        tmp_path / "site",
+        "fr/attention",
+        "fr",
+        body="\n## Revision summary {#revision-summary}\n",
+    )
     _write_page(
         tmp_path / "site",
         "en/attention",
@@ -292,6 +297,41 @@ def test_revision_adapter_keeps_three_target_types_separate(tmp_path: Path) -> N
         ("en/attention", "synthesis", "section", "revision-summary"),
     ]
     assert all(edge.family != "revision" for edge in index.page_edges)
+    assert [resource.resource_id for resource in index.resources_for_page("en/attention")] == [
+        "attention-module"
+    ]
+    assert [page.page_id for page in index.pages_for_resource("attention-module")] == [
+        "en/attention",
+        "fr/attention",
+    ]
+    assert [resource.resource_id for resource in index.resources_for_concept("attention")] == [
+        "attention-module"
+    ]
+    assert [concept["id"] for concept in index.concepts_for_resource("attention-module")] == [
+        "attention"
+    ]
+
+    assert index.revision_targets_for_page("en/attention") == index.revision_edges
+    synthesis_edges = index.revision_targets_for_page("en/attention", role="synthesis")
+    assert synthesis_edges[0].target_type == "section"
+    assert [page.page_id for page in index.pages_for_revision_target("page", "en/query")] == [
+        "en/attention"
+    ]
+    assert [
+        page.page_id for page in index.pages_for_revision_target("resource", "attention-module")
+    ] == ["en/attention"]
+    assert [
+        page.page_id
+        for page in index.pages_for_revision_target(
+            "section", "revision-summary", section_page_id="en/attention"
+        )
+    ] == ["en/attention"]
+    assert (
+        index.pages_for_revision_target(
+            "section", "revision-summary", section_page_id="fr/attention"
+        )
+        == ()
+    )
 
 
 def test_revision_section_requires_an_explicit_anchor(tmp_path: Path) -> None:
@@ -387,6 +427,71 @@ def test_revision_status_constraints_are_enforced(tmp_path: Path) -> None:
 
     with pytest.raises(ValueError, match=r"not_applicable requires a non-empty reason"):
         ProjectIndex.build(tmp_path)
+
+
+def test_inverse_queries_reject_unknown_entities_and_invalid_targets(tmp_path: Path) -> None:
+    index = _index(tmp_path)
+
+    with pytest.raises(KeyError, match="unknown published page"):
+        index.resources_for_page("en/missing")
+    with pytest.raises(KeyError, match="unknown resource"):
+        index.pages_for_resource("missing-resource")
+    with pytest.raises(KeyError, match="unknown concept"):
+        index.resources_for_concept("missing-concept")
+    with pytest.raises(KeyError, match="unknown resource"):
+        index.concepts_for_resource("missing-resource")
+    with pytest.raises(KeyError, match="unknown revision target page"):
+        index.revision_edges_for_target("page", "en/missing")
+    with pytest.raises(ValueError, match="section targets require"):
+        index.revision_edges_for_target("section", "missing-anchor")
+    with pytest.raises(ValueError, match="unknown revision target type"):
+        index.revision_edges_for_target("concept", "attention")
+
+
+def test_real_repository_resource_and_revision_inverse_queries() -> None:
+    index = ProjectIndex.build(ROOT)
+
+    expected_pages = {
+        "gpt-config-module": ("en/gpt-config-walkthrough", "fr/gpt-config-walkthrough"),
+        "gpt-generation-module": (
+            "en/gpt-generation-walkthrough",
+            "fr/gpt-generation-walkthrough",
+        ),
+        "gpt-model-module": ("en/gpt-model-walkthrough", "fr/gpt-model-walkthrough"),
+        "gpt-ops-module": ("en/gpt-ops-walkthrough", "fr/gpt-ops-walkthrough"),
+        "transformer-block-module": (
+            "en/transformer-block-walkthrough",
+            "fr/transformer-block-walkthrough",
+        ),
+    }
+    assert set(expected_pages) == set(index.resources_by_id)
+    assert sum(len(page_ids) for page_ids in expected_pages.values()) == 10
+    for resource_id, expected_page_ids in expected_pages.items():
+        assert (
+            tuple(page.page_id for page in index.pages_for_resource(resource_id))
+            == expected_page_ids
+        )
+        for page_id in expected_page_ids:
+            assert [resource.resource_id for resource in index.resources_for_page(page_id)] == [
+                resource_id
+            ]
+    assert [resource.resource_id for resource in index.resources_for_concept("self-attention")] == [
+        "transformer-block-module"
+    ]
+    assert [
+        concept["id"] for concept in index.concepts_for_resource("transformer-block-module")
+    ] == [
+        "causal-mask",
+        "contextualized-representation",
+        "key",
+        "query",
+        "self-attention",
+        "value",
+    ]
+
+    assert index.revision_targets_for_page("en/entropy") == ()
+    assert index.pages_for_revision_target("page", "en/entropy") == ()
+    assert index.pages_for_revision_target("resource", "gpt-config-module") == ()
 
 
 def test_real_repository_index_has_referential_integrity() -> None:
