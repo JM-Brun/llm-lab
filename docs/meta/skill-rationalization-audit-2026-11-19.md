@@ -129,3 +129,45 @@ The router should make the distinctions operational:
 - External source through to accepted project changes → `source-to-learning-integration`; Phase A only → `source-extraction`; Phase B against existing reviewed records → `knowledge-and-learning-integration`.
 
 This is a routing clarification, not a reason to add another skill. The router already contains the principle to select one primary skill and add specialists only for distinct questions.
+
+
+## Exhaustive inventory and routing-boundary correction — 2026-11-19
+
+The repository Git tree was enumerated recursively from `main` (tree response `truncated=false`). It contains exactly **19** files matching `.agents/skills/*/SKILL.md`. The earlier count of 18 was incomplete: it omitted `llm-learning-explorer`. This section supersedes the earlier 18-file completeness caveat and corrects the inventory count; it does not claim that every supporting file inside every skill directory has been reviewed.
+
+### Complete skill inventory
+
+| Skill | Primary responsibility | Routing boundary |
+|---|---|---|
+| `audit-skill-routing` | Select and coordinate audit specialists | Sole router for audit selection, not all project tasks |
+| `build-path-audit` | Implementation route, dependencies, executable artifacts and reproducibility | Build-specific audit |
+| `editorial-boundary-audit` | Explanatory ownership, duplication and relocation | Editorial decisions |
+| `knowledge-and-learning-integration` | Apply reviewed source items to canonical knowledge and learning content | Phase B integration |
+| `knowledge-architecture-audit` | Formal information architecture, graph and metadata invariants | Structural correctness |
+| `knowledge-change-workflow` | Dispatch knowledge changes to existing workflows | Change orchestration, not audit selection |
+| `learner-path-feedback` | Evaluate the public journey from a learner perspective | Experience feedback, not authoring standard |
+| `learning-path-excellence` | Set learning-design ambition and value criteria | Normative design standard |
+| `llm-learning-explorer` | Discover and assess external ideas, projects, analogies and teaching perspectives | Exploration/discovery; intentionally outside the audit router |
+| `new-learning-page` | Gate and create a genuinely necessary bilingual learning page | Page creation lifecycle |
+| `page-content-audit` | Deep pedagogical/editorial review of one page | Page-level audit |
+| `page-group-audit` | Review coherence of page families, sequences and groups | Generic group-level audit |
+| `project-learning-resource-audit` | Audit a coherent external learning resource as a system | External project-level audit |
+| `rendered-site-audit` | Verify rendered behavior, layout, navigation and accessibility | Runtime/render evidence |
+| `scientific-content-audit` | Verify scientific, mathematical, algorithmic and empirical claims | Scientific evidence |
+| `source-extraction` | Inspect sources and extract traceable evidence/items | Phase A intake; no page/graph mutation |
+| `source-to-learning-integration` | Coordinate source intake and accepted integration | Cross-phase orchestration |
+| `understand-path-audit` | Audit conceptual progression and reader comprehension | Understand-specific audit |
+| `visual-asset-audit` | Verify asset identity, provenance, rights and reuse | Asset-specific evidence |
+
+### What the count establishes — and what it does not
+
+- The recursive Git tree response was complete (`truncated=false`); the 19-path inventory above is exhaustive for tracked files matching `.agents/skills/*/SKILL.md` on the inspected `main` tree.
+- The inventory does not assert that each directory contains only `SKILL.md`; supporting files and nested references require a separate directory-level review.
+- `llm-learning-explorer` is not a missing audit-router entry. Its activation contract is discovery and external-idea evaluation, whereas `audit-skill-routing` explicitly selects audit procedures. Keep the distinction; do not turn the audit router into a universal dispatcher.
+- The earlier statement that the audit had not enumerated the tree is superseded. The earlier 18-file list and its omission of `llm-learning-explorer` should be read as a first-pass sample, not the final inventory.
+
+### Routing and overlap review status
+
+The router directly names the audit specialists relevant to its scope. Skills with different task lifecycles—`llm-learning-explorer`, `learning-path-excellence`, `learner-path-feedback`, `new-learning-page`, and the knowledge/source workflow skills—must be reached through their own activation contracts or the knowledge-change dispatcher where appropriate, not forced into an audit-only matrix. This is a boundary decision, not proof of complete reachability across every agent entry point.
+
+No skill has been deleted, renamed or merged. The evidence supports preserving the 19 distinct activation contracts while continuing to simplify duplicated orchestration text only where exact procedure comparison demonstrates safe delegation.
