@@ -94,7 +94,8 @@ def classify(
             and title_priorities[0] != priorities[0]
         ):
                 errors.append(
-                    f"#{number}: title says {title_priorities[0]} but label is {priorities[0]}"
+                    f"#{number}: title says {title_priorities[0]} "
+                    f"but label is {priorities[0]}"
                 )
 
         if len(priorities) == 1:
