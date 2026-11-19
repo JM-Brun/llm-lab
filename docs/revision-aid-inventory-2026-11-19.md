@@ -3,7 +3,7 @@
 **Status:** source-level inventory and editorial triage; not a rendered UX or learner-outcome sign-off.  
 **Scope:** the 62 published Understand and Build pages in the inventory artifact produced by PR #1379, plus existing page-based and non-page revision candidates.  
 **Snapshot:** source SHA `817048ecda141fbf256e42237dc1a4f34bf44a88`; CI artifact `revision-coverage-inventory-0e98372c76a6bf1e4b00f731a9e9654ce3fb06d9`.
-**Latest assessment tranche:** the four bilingual Understand pairs causal-masking, transformer-architectures, llm-overview and generation are now recorded in the typed index; see the audit trail in issue [#1109](https://github.com/JM-Brun/llm-lab/issues/1109).
+**Latest assessment tranche:** six additional Understand pages (the FR/EN pairs post-training, context-engineering and llm-limits) are recorded as `integrated_sufficient` with explicit `revision-summary` anchors; see the audit trail in issue [#1109](https://github.com/JM-Brun/llm-lab/issues/1109).
 
 ## 1. Inventory baseline
 
@@ -13,7 +13,7 @@
 | Build | 16 | 8 | 8 | 8 |
 | **Total** | **62** | **31** | **31** | **31** |
 
-The artifact records 144 explicit concept-to-page edges in Understand, 18 in Build, and 10 implementation-resource associations, all in Build. The original snapshot reported all 62 `synthesis_status` values as `not_assessed`. The relation pilot adds four explicit page-aid links and `partial` assessments for the FR/EN entropy and cross-entropy lessons. Integrated assessments now cover 12 pages: the FR/EN corpus-preparation and training-examples Build pages, plus the FR/EN causal-masking, transformer-architectures, LLM-overview and generation Understand pages. Each assessment points to an explicit `revision-summary` callout anchor. The other 34 Understand and 12 Build pages remain `not_assessed` until individually assessed.
+The artifact records 144 explicit concept-to-page edges in Understand, 18 in Build, and 10 implementation-resource associations, all in Build. The original snapshot reported all 62 `synthesis_status` values as `not_assessed`. The relation pilot adds four explicit page-aid links and `partial` assessments for the FR/EN entropy and cross-entropy lessons. Integrated assessments now cover 18 pages: the FR/EN corpus-preparation and training-examples Build pages, plus the FR/EN causal-masking, transformer-architectures, LLM-overview, generation, post-training, context-engineering and llm-limits Understand pages. Each assessment points to an explicit `revision-summary` anchor on the lesson. The other 28 Understand and 12 Build pages remain `not_assessed` until individually assessed.
 
 The editorial observations below come from source reviews recorded in issue [#1109](https://github.com/JM-Brun/llm-lab/issues/1109). The artifact and those comments are the evidence base; this document does not claim that every page has received a paragraph-by-paragraph scientific re-review or rendered accessibility review.
 
@@ -50,7 +50,7 @@ The following records summarize existing source-level audits. “Reuse” means 
 | Topic pair | Existing synthesis / retrieval support observed | Disposition |
 |---|---|---|
 | `causal-masking` | One-minute mental model, formal causal rule, triangular mask visual, distinction from padding/document/loss masks, invariance check and exercises | Reuse; `integrated_sufficient` via `revision-summary`; no second sheet or diagram |
-| `context-engineering` | Three context levels and distinctions between stored history, transmitted context and attention-accessible information; seven applied Practice questions | Reuse; no duplicate overview |
+| `context-engineering` | Three context levels and distinctions between stored history, transmitted context and attention-accessible information; seven applied Practice questions | Reuse; `integrated_sufficient` via explicit `revision-summary`; no duplicate overview |
 | `contextualized-representations` | One-minute recap, pipeline, same-ID vs context-dependent state distinction, attention-head caveats; Practice self-check and advanced SAE investigation | Reuse; no separate sheet |
 | `cross-entropy` | Per-token objective, target distribution, worked example, sequence alignment, masking/reduction and edge cases; exercises and self-check | Reuse the linked information-theory sheet for conceptual recall; the source lesson is explicitly assessed `partial` because shift/mask/valid-token denominator still need targeted retrieval coverage |
 | `embedding-space` | Integrated lookup diagram and distinctions among token ID, embedding row/vector and point in space; Practice questions and NumPy exercise | Reuse; no separate sheet |
@@ -58,12 +58,12 @@ The following records summarize existing source-level audits. “Reuse” means 
 | `gradients` | Chain-rule explanation, worked derivation, gradient-vs-update distinction, examples and executable tests/exercises | Reuse; no generic recap |
 | `in-context-learning` | Fixed-weights/changing-context distinction, zero/one/few-shot, relation to fine-tuning and RAG, experimental checklist; bilingual diagram added in PR #1112 | Reuse the integrated visual and Practice material |
 | `inference-generation` | Distribution-to-selection loop, decoding policy, prefill/decode and KV-cache distinctions; Practice resources | Reuse; `integrated_sufficient` via `revision-summary`; keep generation separate from scoring and training |
-| `llm-limits` | Critical synthesis of next-token objective vs guarantees, model/system evaluation dimensions, mechanical-design case; four bilingual retrieval questions | Reuse; no separate sheet |
+| `llm-limits` | Critical synthesis of next-token objective vs guarantees, model/system evaluation dimensions, mechanical-design case; one-minute recap, quick question and four bilingual retrieval questions on truth, emergence, calibration and benchmark scope | Reuse; `integrated_sufficient` via explicit `revision-summary`; no separate sheet |
 | `llm-overview` | Introductory mental model, six-stage computation diagram, generation/scoring/training separation, learning outcomes and Practice checks | Reuse as the orientation synthesis; `integrated_sufficient` via `revision-summary` |
 | `logits` | Canonical lesson with targeted visual increment on translation invariance of softmax (PR #1118), examples and exercises | Reuse; no duplicate sheet |
 | `loss` | Aggregated objective, masking and reduction conventions, examples, exercises and worked answers | Reuse; preserve distinction from per-token cross-entropy |
 | `positional-encoding` | One-minute recap, insertion-point diagram, distinction from causal masking, extrapolation limits and bilingual Practice questions | Reuse; no separate sheet |
-| `post-training` | One-minute recap and comparison of pretraining, SFT, preference methods and context-only interventions; four retrieval questions and transfer scenario | Reuse; no separate sheet |
+| `post-training` | One-minute recap and comparison of pretraining, SFT, preference methods and context-only interventions; four retrieval questions and a transfer scenario choosing interventions for changing facts vs fixed output schemas | Reuse; `integrated_sufficient` via explicit `revision-summary`; no separate sheet |
 | `probabilites` | Conditional distributions, temperature, filtering/renormalization and calibration distinctions; bilingual visual increment in PR #1119 and exercises | Reuse; no duplicate sheet |
 | `queries-keys-values` | Three-projection visual and explicit distinction between Q/K determining weights and V supplying aggregated content; exercises | Reuse; visual already carries the core synthesis |
 | `scaled-dot-product-attention` | Five-step mechanism, equations, counterexamples and limits; bilingual Q/K vs V computation visual in PR #1120 and exercises | Reuse; no extra infographic quota |
@@ -78,7 +78,7 @@ The following records summarize existing source-level audits. “Reuse” means 
 - The 16-page first-tranche review was initially a structural source audit; later passes deepened selected pairs (embedding/position/contextualization, entropy/cross-entropy, post-training/context engineering and LLM limits).
 - Several visual increments have CI and Quarto validation, but no rendered desktop/mobile, keyboard, screen-reader or learner-outcome sign-off is claimed.
 - The inventory records observed support and decisions, not a numeric pedagogical-quality score.
-- The relation pilot projects four `partial` Understand assessments, four explicit aid links, and 12 `integrated_sufficient` assessments (eight Understand, four Build) into the generated inventory. The remaining 34 Understand and 12 Build pages are still `not_assessed`; rendered UX, accessibility and learner-outcome validation remain separate.
+- The relation pilot projects four `partial` Understand assessments, four explicit aid links, and 18 `integrated_sufficient` assessments (14 Understand, four Build) into the generated inventory. The remaining 28 Understand and 12 Build pages are still `not_assessed`; rendered UX, accessibility and learner-outcome validation remain separate.
 
 ## 4. Build inventory — 8 bilingual topic pairs
 
@@ -100,7 +100,7 @@ Build's six pages without implementation-resource associations are exactly the t
 1. Keep the two published page-aid pairs as the current explicit revision-aid candidates; do not create more generic sheets.
 2. Keep the internal Markdown sheet outside the learner-facing resource graph until its publication and maintenance role is explicitly changed.
 3. Do not add a non-page revision resource kind to `data/resources.yml` yet; current records are implementation resources only.
-4. Continue individual editorial assessment where evidence is provisional, especially cross-entropy's shift/mask contract and entropy caveats. Causal masking, Transformer architectures, the LLM overview and generation now have explicit integrated assessments in both languages; Build corpus-preparation and training-examples remain assessed the same way.
+4. Continue individual editorial assessment where evidence is provisional, especially cross-entropy's shift/mask contract and entropy caveats. Causal masking, Transformer architectures, the LLM overview, generation, post-training, context-engineering and LLM limits now have explicit integrated assessments in both languages; Build corpus-preparation and training-examples remain assessed the same way.
 5. The initial page-aid pilot now links `revision-information-theory` to the FR/EN entropy and cross-entropy lessons; the generated coverage inventory reads the ProjectIndex relation and assessment projection. The metadata validator still needs a dedicated follow-up to validate these fields at page-map ingestion.
 6. The source audit confirms `compression-revision` as a cross-topic `synthesis` candidate for entropy, cross-entropy and likelihood. Add its typed links after the first pilot is reviewed; do not infer targets from `related` alone.
 7. Keep rendered UX/accessibility validation as a separate gate before closing #1109.
