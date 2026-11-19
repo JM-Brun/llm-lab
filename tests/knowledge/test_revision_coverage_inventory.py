@@ -92,17 +92,11 @@ def test_revision_aids_and_assessments_are_projected_independently() -> None:
     support = {
         "fr/attention": {
             "status": "partial",
-            "evidence": [
-                {"aid": "fr/revision-sheet", "note": "Core formulas are covered."}
-            ],
+            "evidence": [{"aid": "fr/revision-sheet", "note": "Core formulas are covered."}],
             "reason": None,
         }
     }
-    aids = {
-        "fr/attention": [
-            {"id": "fr/revision-sheet", "role": "revision_sheet"}
-        ]
-    }
+    aids = {"fr/attention": [{"id": "fr/revision-sheet", "role": "revision_sheet"}]}
 
     inventory = AUDIT["build_revision_inventory"](
         pages,
