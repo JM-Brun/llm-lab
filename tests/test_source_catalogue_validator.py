@@ -561,3 +561,32 @@ def test_extraction_cannot_duplicate_source_collection_membership(tmp_path: Path
     errors = MODULE.validate_source_catalogue(tmp_path)
 
     assert any("membership belongs on the canonical source record" in error for error in errors)
+
+
+def test_extraction_filename_must_match_canonical_source_id(tmp_path: Path) -> None:
+    _corpus(tmp_path, with_extraction=True)
+    extraction_dir = tmp_path / "data" / "extractions"
+    canonical = extraction_dir / "example-source.yml"
+    noncanonical = extraction_dir / "renamed-extraction.yml"
+    noncanonical.write_text(canonical.read_text(encoding="utf-8"), encoding="utf-8")
+
+    errors = MODULE.validate_source_catalogue(tmp_path)
+
+    assert any(
+        "filename must be canonical (expected example-source.yml)" in error
+        for error in errors
+    )
+    assert any("duplicate extraction for 'example-source'" in error for error in errors)
+
+
+def test_extraction_source_id_must_be_a_string_and_not_a_collection(tmp_path: Path) -> None:
+    _corpus(tmp_path, with_extraction=True)
+    extraction_path = tmp_path / "data" / "extractions" / "example-source.yml"
+    data = yaml.safe_load(extraction_path.read_text(encoding="utf-8"))
+    data["source_id"] = ["example-source"]
+    _write_yaml(extraction_path, data)
+
+    errors = MODULE.validate_source_catalogue(tmp_path)
+
+    assert any("source_id: expected a stable kebab-case ID" in error for error in errors)
+    assert any("source_id: unknown source" in error for error in errors)
