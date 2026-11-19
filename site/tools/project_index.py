@@ -274,7 +274,8 @@ def _load_revision_relations(
         if page.tags.get("destination") not in ELIGIBLE_LESSON_DESTINATIONS:
             if "revision_support" in page.metadata:
                 raise ValueError(
-                    f"{page.path.as_posix()}.revision_support: only Understand/Build lessons may be assessed"
+                    f"{page.path.as_posix()}.revision_support: "
+                    "only Understand/Build lessons may be assessed"
                 )
             continue
         raw_support = page.metadata.get("revision_support")
