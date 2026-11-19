@@ -82,14 +82,14 @@ The current bilingual pages were opened and checked against the extracted items.
 
 | Existing resource | Verified coverage | Consequence for this source |
 |---|---|---|
-| [Q/K/V — FR](../../site/fr/queries-keys-values.qmd) / [EN](../../site/en/queries-keys-values.qmd) | Contextual motivation, three roles, parallel learned projections, QKᵀ → scores → softmax → weights, weights × V → output; advanced dimensions and variants are routed to dedicated deep dives. | No duplicate explanation. The Netflix analogy is an optional source alternative, not a page gap. |
+| [Q/K/V — FR](../../site/fr/queries-keys-values.qmd) / [EN](../../site/en/queries-keys-values.qmd) | Contextual motivation, three roles, parallel learned projections, QKᵀ → scores → softmax → weights, weights × V → output; advanced dimensions and variants are routed to dedicated deep dives. | No duplicate technical explanation; add only the optional complementary recommendation-system analogy, with explicit limits. |
 | [Scaled dot-product attention — FR](../../site/fr/scaled-dot-product-attention.qmd) / [EN](../../site/en/scaled-dot-product-attention.qmd) | Five-step computation, score/weight/output distinctions, scaling rationale, masking as a separate step, misconceptions and attention-weight interpretation limits. | Already more complete than the article's four-step summary. No page edit required. |
 | [Contextualized representations — FR](../../site/fr/contextualized-representations.qmd) / [EN](../../site/en/contextualized-representations.qmd) | Position/context distinction, pronoun-reference example, explicit caveat that this does not prove an individual head resolves coreference. | The article's cake/it example is redundant in function; no second pronoun example is warranted. |
 | [Causal masking — FR](../../site/fr/causal-masking.qmd) / [EN](../../site/en/causal-masking.qmd) | Lower-triangular access rule, mask before softmax, and parallel training without future-token leakage. | The article's training-only wording is already corrected by the existing page; link only. |
 | [Transformer block Build — FR](../../site/fr/transformer-block-walkthrough.qmd) / [EN](../../site/en/transformer-block-walkthrough.qmd) | Explicit Q/K/V/O projections, head isolation until W_O, causal mask implementation, MHA/MQA/GQA/MLA and local/sparse variants. | The missing W_O and head-shape details are already implemented and explained. No new Build page. |
 | [Build path — FR](../../site/fr/build-path.qmd) / [EN](../../site/en/build-path.qmd) | Existing guided construction route and milestones. | The article does not justify a new route node or milestone. |
 
-**Page audit decision:** no bilingual Understand or Build page changes are justified. The source record's page links are navigational associations, not proposals to duplicate content. The canonical routes and resource graph remain unchanged.
+**Page audit decision:** no new bilingual Understand or Build pages, concepts, or route nodes are justified. One optional analogy callout is warranted on the existing Q/K/V lesson; the source record's other page links remain navigational associations, not proposals to duplicate content. The canonical routes and resource graph remain unchanged.
 
 ### 6.2 Primary-source cross-check
 
