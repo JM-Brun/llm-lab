@@ -32,7 +32,7 @@ def test_valid_issue_metadata_passes() -> None:
 
 
 def test_missing_multiple_and_unknown_labels_are_reported() -> None:
-    known = {"P1", "P2", "area:governance", "type:audit"}
+    known = {"P1", "P2", "area:governance", "area:curriculum", "type:audit"}
     issues = [
         {
             "number": 21,
@@ -42,6 +42,7 @@ def test_missing_multiple_and_unknown_labels_are_reported() -> None:
                 {"name": "P2"},
                 {"name": "P1"},
                 {"name": "area:unknown"},
+                {"name": "area:curriculum"},
                 {"name": "type:audit"},
                 {"name": "type:feature"},
             ],
