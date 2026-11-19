@@ -117,9 +117,7 @@ def test_missing_topics_are_reported_and_excluded_from_parity() -> None:
         "fr/no-topic",
         "en/no-topic",
     }
-    assert [item["topic"] for item in inventory["bilingual_parity"]["understand"]] == [
-        "valid"
-    ]
+    assert [item["topic"] for item in inventory["bilingual_parity"]["understand"]] == ["valid"]
 
 
 def test_bilingual_parity_flags_duplicate_pages_per_language() -> None:
@@ -146,6 +144,4 @@ def test_unexpected_language_values_are_reported() -> None:
         [],
         route_memberships={},
     )
-    assert inventory["unexpected_languages"] == [
-        {"id": "shared/page", "language": "shared"}
-    ]
+    assert inventory["unexpected_languages"] == [{"id": "shared/page", "language": "shared"}]
