@@ -221,7 +221,6 @@ def _load_non_page_resources(
 
 def _load_revision_relations(
     pages: dict[str, PublishedPage],
-    resources: dict[str, ResourceRecord],
 ) -> tuple[dict[str, dict[str, Any]], tuple[RevisionEdge, ...]]:
     """Load aid → lesson relations and evidence-backed lesson assessments."""
     edges: list[RevisionEdge] = []
@@ -422,9 +421,9 @@ class ProjectIndex:
         resources, page_resource_associations, concept_resource_associations = (
             _load_non_page_resources(root, pages, concepts)
         )
-        revision_support_by_page, revision_edges = _load_revision_relations(pages, resources)
+        revision_support_by_page, revision_edges = _load_revision_relations(pages)
         aids_by_lesson: dict[str, list[RevisionEdge]] = defaultdict(list)
-        lessons_by_aid: dict[tuple[str, str], list[RevisionEdge]] = defaultdict(list)
+        lessons_by_aid: dict[str, list[RevisionEdge]] = defaultdict(list)
         for edge in revision_edges:
             aids_by_lesson[edge.source_page_id].append(edge)
             lessons_by_aid[edge.aid_page_id].append(edge)
