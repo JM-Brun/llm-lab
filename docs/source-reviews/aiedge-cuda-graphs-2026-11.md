@@ -112,3 +112,37 @@ After obtaining the full article, inspect the complete technical argument, figur
 4. Verify vLLM statements against a pinned/documented release rather than relying on the moving `latest` docs.
 5. Run the source catalogue and extraction validators on the PR branch.
 6. If Phase B is approved, update concepts, bilingual resources, knowledge-graph projections and route cross-links together; do not add a new workflow or duplicate catalogue.
+
+## 8. Follow-up retrieval audit — 2026-11-19
+
+The canonical Substack page was reopened directly. It is explicitly marked **Paid**. The publicly retrievable portion exposes the same introduction and the six section headings, not the article's complete technical argument:
+
+1. Where a decoding step spends time
+2. Capture a plan, replay fresh work
+3. Keep addresses stable while values change
+4. Fit changing LLM state into a replay
+5. Choose the right graph for the batch
+6. Decide whether replay pays
+
+The public introduction reconfirms the already extracted distinctions: replay executes the captured operation plan using current data; persistent addresses can remain stable while buffer values change; changes in workload shape may require another graph, a narrower captured region or eager execution; graph variants create a launch-savings versus memory/management trade-off. This is a re-verification of Phase A, not access to new full-section evidence.
+
+The indexed Muck Rack author-article listing reproduces the same introductory text. The WorldThatGrows syndicated page also exposes the same preview in its indexed result, but direct retrieval timed out. Neither source supplies the missing sections, figures, code or measurements, so neither qualifies as a complete mirror.
+
+An image search returned several generic CUDA Graph illustrations from unrelated sources (including CSDN, LinkedIn and a vLLM mind-map). None could be attributed to the AiEdge article. They were excluded rather than mislabelled as source figures. No original cover or in-body figure bytes were recovered.
+
+### Updated evidence decision
+
+- **Author text:** still partial; canonical introduction and section headings reverified.
+- **Figures/media:** not inspected; no attributable original figure recovered.
+- **Code/data:** not inspected; no AiEdge benchmark table or reproducible measurement recovered.
+- **Linked resources/comments:** not inspected.
+- **Rights:** unknown; link-only treatment remains mandatory.
+- **Integration:** still deferred. The excerpt supports the CUDA Graph mental model, but does not support article-specific claims about batch policy, measured break-even, or version-specific vLLM behavior.
+
+The source inventory now records this as an additional append-only `scan_history` event. The original 2026-11-06 extraction remains historical provenance; the extraction's current facet snapshot is updated to the 2026-11-19 re-verification without treating search-result illustrations as article assets.
+
+### Retrieval references
+
+- Canonical article: https://newsletter.theaiedge.io/p/how-cuda-graphs-speed-up-llm-inference
+- Muck Rack author listing: https://muckrack.com/damien-benveniste/articles
+- Syndicated preview: https://worldthatgrows.com/news/how-cuda-graphs-speed-up-llm-inference/
