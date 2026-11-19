@@ -108,7 +108,11 @@ def build_concept_coverage(index: Any) -> dict[str, Any]:
             ),
         )
 
-        resource_ids = sorted(index.resource_ids_by_concept.get(concept_id, ()))
+        resource_ids = sorted(
+            association.resource_id
+            for association in index.concept_resource_associations
+            if association.concept_id == concept_id
+        )
         resource_evidence = [
             {"id": resource_id, "path": f"data/resources.yml#{resource_id}"}
             for resource_id in resource_ids
@@ -124,44 +128,50 @@ def build_concept_coverage(index: Any) -> dict[str, Any]:
         )
 
         revision_states = [
-            index.revision_status_by_page.get(page_id, "not_assessed") for page_id in page_ids
+            index.revision_support_by_page.get(page_id, {"status": "not_assessed"})["status"]
+            for page_id in page_ids
         ]
         revision_edges = [
-            edge for page_id in page_ids for edge in index.revision_targets_for_page(page_id)
+            edge for edge in index.revision_edges if edge.source_page_id in set(page_ids)
         ]
         if not page_ids:
             revision_state = "needs_review"
             revision_reason = "No associated teaching page is available for revision assessment."
-        elif revision_states and all(state == "not_applicable" for state in revision_states):
+        elif all(state == "not_applicable" for state in revision_states):
             revision_state = "not_applicable"
             revision_reason = "All associated pages are explicitly outside revision-support scope."
-        elif revision_states and all(state == "not_assessed" for state in revision_states):
+        elif all(state == "not_assessed" for state in revision_states):
             revision_state = "not_assessed"
             revision_reason = (
-                "Associated pages have not been assessed under the proposed revision contract."
+                "No editorial revision-support assessment is recorded for the associated pages."
             )
+        elif all(
+            state in {"integrated_sufficient", "companion_sufficient"}
+            for state in revision_states
+        ):
+            revision_state = "present"
+            revision_reason = "All associated teaching pages have sufficient assessed revision support."
         else:
-            # The revision contract is not yet validator-approved. Even declared
-            # edges remain review evidence rather than an accepted coverage verdict.
             revision_state = "needs_review"
             revision_reason = (
-                "Revision assessment or declarations require review under the unapproved contract."
+                "At least one associated page has partial, missing, or mixed revision-support status."
             )
         revision_evidence = [
             {
                 "id": page_id,
                 "path": _page_path(index.pages_by_id[page_id]),
-                "status": index.revision_status_by_page.get(page_id, "not_assessed"),
+                "status": index.revision_support_by_page.get(
+                    page_id, {"status": "not_assessed"}
+                )["status"],
             }
             for page_id in page_ids
         ]
         revision_evidence.extend(
             {
-                "id": (f"{edge.source_page_id}:{edge.role}:{edge.target_type}:{edge.target_id}"),
-                "path": _page_path(index.pages_by_id[edge.source_page_id]),
+                "id": f"{edge.aid_page_id}:{edge.role}:{edge.source_page_id}",
+                "path": _page_path(index.pages_by_id[edge.aid_page_id]),
                 "role": edge.role,
-                "target_type": edge.target_type,
-                "target_id": edge.target_id,
+                "target_id": edge.source_page_id,
             }
             for edge in revision_edges
         )
