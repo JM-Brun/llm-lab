@@ -1706,6 +1706,7 @@ sources:
       audiences: [learner, practitioner]
     scan_status: partially-scanned
     integration_status: reviewed
+    collections: [tokenization-embeddings]
     scan_history:
       - accessed_at: "2026-10-30"
         status: partially-scanned
@@ -1901,6 +1902,7 @@ sources:
       audiences: [learner, practitioner]
     scan_status: partially-scanned
     integration_status: reviewed
+    collections: [tokenization-embeddings]
     scan_history:
       - accessed_at: "2026-10-30"
         status: partially-scanned
@@ -1940,6 +1942,7 @@ sources:
       audiences: [beginner, learner]
     scan_status: partially-scanned
     integration_status: reviewed
+    collections: [tokenization-embeddings]
     scan_history:
       - accessed_at: "2026-10-30"
         status: partially-scanned
@@ -2073,6 +2076,7 @@ sources:
       audiences: [learner, practitioner]
     scan_status: partially-scanned
     integration_status: reviewed
+    collections: [tokenization-embeddings]
     scan_history:
       - accessed_at: "2026-10-29"
         status: partially-scanned
@@ -2112,6 +2116,7 @@ sources:
       audiences: [learner, practitioner]
     scan_status: partially-scanned
     integration_status: reviewed
+    collections: [tokenization-embeddings]
     scan_history:
       - accessed_at: "2026-10-29"
         status: partially-scanned
@@ -2152,6 +2157,7 @@ sources:
       audiences: [beginner, learner]
     scan_status: partially-scanned
     integration_status: reviewed
+    collections: [tokenization-embeddings]
     scan_history:
       - accessed_at: "2026-10-29"
         status: partially-scanned
@@ -3316,6 +3322,7 @@ sources:
       audiences: [learner, practitioner, educator]
     scan_status: partially-scanned
     integration_status: partially-integrated
+    collections: []
     scan_history:
       - accessed_at: "2026-11-10"
         status: partially-scanned
@@ -4332,6 +4339,7 @@ sources:
       audiences: [learner, educator, practitioner]
     scan_status: partially-scanned
     integration_status: partially-integrated
+    collections: [visual-learning-tools]
     scan_history:
       - accessed_at: "2026-11-16"
         status: partially-scanned
@@ -4367,6 +4375,7 @@ sources:
       audiences: [beginner, learner, educator]
     scan_status: partially-scanned
     integration_status: partially-integrated
+    collections: [visual-learning-tools]
     scan_history:
       - accessed_at: "2026-11-16"
         status: partially-scanned
@@ -4402,6 +4411,7 @@ sources:
       audiences: [learner, practitioner, researcher, educator]
     scan_status: partially-scanned
     integration_status: partially-integrated
+    collections: [visual-learning-tools]
     scan_history:
       - accessed_at: "2026-11-16"
         status: partially-scanned
@@ -4437,6 +4447,7 @@ sources:
       audiences: [learner, practitioner, educator]
     scan_status: partially-scanned
     integration_status: partially-integrated
+    collections: [visual-learning-tools]
     scan_history:
       - accessed_at: "2026-11-16"
         status: partially-scanned
@@ -4472,6 +4483,7 @@ sources:
       audiences: [learner, practitioner, researcher]
     scan_status: partially-scanned
     integration_status: partially-integrated
+    collections: [visual-learning-tools]
     scan_history:
       - accessed_at: "2026-11-16"
         status: partially-scanned
@@ -5270,6 +5282,7 @@ sources:
       audiences: [learner, practitioner, educator]
     scan_status: partially-scanned
     integration_status: partially-integrated
+    collections: []
     scan_history:
       - accessed_at: "2026-11-17"
         status: partially-scanned
