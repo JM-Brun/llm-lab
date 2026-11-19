@@ -1,8 +1,8 @@
 # Project Intelligence Layer — implementation plan
 
 **Status date:** 2026-11-19  
-**Implementation branch:** `feat/project-intelligence-index`  
-**Initial implementation:** [PR #1380](https://github.com/JM-Brun/llm-lab/pull/1380)  
+**Initial implementation branch:** `feat/project-intelligence-index`  
+**Initial implementation:** [PR #1380](https://github.com/JM-Brun/llm-lab/pull/1380); resource/revision adapters: [PR #1394](https://github.com/JM-Brun/llm-lab/pull/1394)  
 **Architecture:** [Project intelligence layer](project-intelligence-layer.md)  
 **Tracking:** [Issue #1378](https://github.com/JM-Brun/llm-lab/issues/1378)
 
@@ -12,120 +12,98 @@ This document is the operational backlog for turning the proposed Project Intell
 
 ### Delivered in the first slice (PR #1380)
 
-- Read-only in-memory `ProjectIndex` composed from the existing published-page reader and canonical YAML readers.
-- Published page lookup by stable page ID.
-- Canonical concept and domain records loaded from `data/concepts.yml` and `data/domains.yml`.
-- Exact tag lookup, page-domain lookup, and explicit concept-to-page associations from `concepts[].resources`.
-- Typed page-edge records preserving relation family and direction for `suggested_route`, `hierarchy`, and `related`.
-- Understand guided-route membership by stage, language, and core/optional role from `data/guided-route.yml`.
-- Deterministic query methods for tag filters, concept/page reverse lookups, incoming/outgoing page edges, route-stage membership, and basic counts.
-- Synthetic tests for distinct count units, bilingual page records, explicit associations, edge direction/family, route roles, and unknown identifiers.
+- Read-only in-memory `ProjectIndex` composed from the published-page reader and canonical YAML readers.
+- Stable page lookup, concept/domain records, tag and domain indexes, and explicit concept-to-page associations.
+- Typed page-edge records preserving `suggested_route`, `hierarchy` and `related` families and their direction.
+- Understand guided-route membership by stage, language and core/optional role.
+- Deterministic page/concept/route queries and basic count units.
 
-### Deliberate boundaries of the first slice
+### Delivered in the second slice (PR #1394)
 
-- It does not yet inventory non-page resources from `data/resources.yml`.
-- It does not yet model source records, extraction items, source lineage, computational graph nodes/edges, historical records, experiments, or Build milestones.
-- It does not infer semantic concept links from tags, titles, body text, or lexical similarity.
-- It does not treat page tags as route membership or the Understand route as the Build path.
-- It does not yet provide a stable CLI, JSON/Markdown report, cache, dashboard, recommendation engine, or repository-wide audit.
-- Synthetic tests do not establish real repository totals or full-registry correctness.
+- First-class non-page `ResourceRecord` objects from `data/resources.yml`.
+- Explicit page/resource and concept/resource association records.
+- A separate `RevisionEdge` adapter for the proposed page-map relation, with `section`, `page` and `resource` target types.
+- Status, duplicate, reference, publication, language and explicit-anchor checks in the read-model adapter.
+- Synthetic tests plus a real-repository assertion for five resources, ten page/resource associations, zero declared revision edges and 62 pages still `not_assessed`.
+
+### Deliberate boundaries
+
+- The revision contract is documentation/proposal only. The adapter does not change the page metadata schema, `check_page_metadata.py`, `check_resource_registry.py`, or any of the 62 page records.
+- No current page declares a `revision` object; the adapter therefore exposes no current revision edges.
+- Inverse resource/revision query methods are not yet implemented; they are the next step.
+- Source/extraction, computational graph, historical, experiment and Build-milestone adapters remain future work.
+- No semantic links are inferred from tags, titles, body text or lexical similarity.
+- No metrics registry, coverage matrix, diagnostics, stable CLI, JSON/Markdown interface, cache, dashboard or recommendation engine exists yet.
 
 ## 2. Remaining work — ordered backlog
 
-### P0 — Stabilize and review the first slice
+The revision-support and ProjectIndex work follows this dependency order. Do not skip ahead to interfaces or bulk page migration.
 
-1. **Close CI defects on PR #1380.**
-   - Re-run Python quality/domain checks after the Ruff fixes.
-   - Confirm the test suite, Secret scanning, and Quarto site workflow on the exact PR head.
-   - Inspect any failure logs; do not infer success from a queued or skipped workflow.
-2. **Review semantics against the real repository.**
-   - Check all indexed page relations against the page metadata schema and existing graph conventions.
-   - Verify whether reciprocal hierarchy declarations are stored as separate authored edges; document count semantics rather than silently deduplicating.
-   - Verify page-domain and concept-domain dimensions remain distinct.
-3. **Add real-corpus integration tests.**
-   - Build the index from the repository root in CI.
-   - Assert invariants and referential integrity, not brittle hard-coded counts unless the test intentionally snapshots a reviewed baseline.
-   - Check unknown page/concept IDs, missing references, and deterministic ordering.
+### Step 1 — Contract and validator compatibility (documented proposal)
 
-**Acceptance:** PR #1380 passes required CI on its current head; public methods and count units are documented; at least one real-repository build is exercised in tests.
+- Contract: [revision-resource-contract.md](revision-resource-contract.md), documented in PRs [#1388](https://github.com/JM-Brun/llm-lab/pull/1388) and [#1391](https://github.com/JM-Brun/llm-lab/pull/1391).
+- The proposed page-map relation distinguishes integrated sections, companion pages and non-page resources; statuses remain `not_assessed`, `assessed` and `not_applicable`.
+- The current page/resource validators are not changed. The proposal is not an approved schema migration.
+- Before changing validators or any historical page records, review canonical ownership, role vocabulary, anchor conventions, lifecycle rules, language compatibility and the non-page resource representation.
 
-### P1 — Complete the source inventory and metric contracts
+### Step 2 — Existing-resource inventory (complete)
 
-4. **Create a canonical source/metric registry.**
-   For every metric, record: name, definition, unit, canonical owner, reader/validator, inclusion rules, exclusions, language treatment, deduplication rule, and tests.
-5. **Inventory every structured source before adding adapters.**
-   Inspect the actual schemas and readers for:
-   - page metadata and Quarto render inventory;
-   - Understand guided route;
-   - Build path and its implementation/test evidence;
-   - concepts and domains;
-   - first-class resources;
-   - sources, extraction records, locators and lineage;
-   - computational graph;
-   - history pilot;
-   - experiments, source code, tests and generated reports.
-6. **Specify count units.**
-   Keep separate counts for page records, logical bilingual topics, lessons, route memberships, route stages, Build milestones, concepts, domains, resource records, source records, extraction items, experiments, tests and typed graph edges. Never combine unlike units into a single “content count”.
-7. **Define page identity and language grouping.**
-   Use stable page IDs. Bilingual page records count separately; logical-topic grouping is only reported when a canonical topic ID or reviewed pairing exists.
+- Inventory: [revision-resource-inventory-2026-11-19.md](revision-resource-inventory-2026-11-19.md), merged in [PR #1395](https://github.com/JM-Brun/llm-lab/pull/1395).
+- The report distinguishes in-page recaps, takeaway sections, self-checks, dedicated companion pages, concept links and implementation resources.
+- No mass creation of revision sheets or flashcards is part of this step.
 
-**Acceptance:** the registry identifies one canonical source per fact; each metric has an explicit unit and reproducible inclusion rule; no unsupported Build/resource/source totals are published.
+### Step 3 — Non-page resource and revision relation adapters (complete)
 
-### P1 — Extend the read model by typed adapters
+- Implemented in [PR #1394](https://github.com/JM-Brun/llm-lab/pull/1394).
+- `ProjectIndex` now adapts `data/resources.yml` and the optional proposed page-map `revision` object.
+- Revision relations remain separate from generic page graph edges. No current page has been migrated and no validator/schema change was made.
 
-8. **First-class resource adapter.**
-   Read `data/resources.yml` through its existing schema/reader; expose resources by ID and explicit resource↔concept/page links. Do not reinterpret `concepts[].resources` page IDs as resource IDs.
-9. **Concept relation adapter.**
-   Preserve typed concept-to-concept relations and domain membership, with forward and reverse queries.
-10. **Build evidence adapter.**
-    Identify the actual structured milestone/evidence contract in the Build path. If evidence is currently distributed across documentation, code and tests without a canonical mapping, first propose and review a minimal mapping contract; do not derive completion from file names or page tags.
-11. **Source and extraction adapters.**
-    Link source records, versions, extraction items, locators and lineage only through explicit IDs. Keep source citation, extraction provenance and concept association as distinct relations.
-12. **Computational graph adapter.**
-    Preserve node/edge types and computational semantics; add explicit bridges to pages/resources only where the source model provides them.
-13. **History and experiment adapters.**
-    Expose historical relations and experiment evidence without treating chronology, co-occurrence or file proximity as causality/association.
+### Step 4 — Inverse queries and real-repository tests (next)
 
-**Acceptance:** each adapter has schema-backed tests, stable IDs, source provenance, reverse lookup, and explicit edge semantics; no generic graph flattening loses relation family.
+Add deterministic forward/reverse query methods for:
+- pages ↔ non-page resources;
+- concepts ↔ non-page resources;
+- source pages ↔ revision targets of type section, page or resource;
+- revision status by source page.
 
-### P1 — Coverage and diagnostics
+Tests must exercise the real repository, not only synthetic fixtures. Cover all five current resources and ten page/resource associations, verify the inverse results, confirm the current 62-page revision inventory has no declared edges, and retain synthetic coverage for all three target types. Section-target keys must include the owning page ID because anchors are page-local.
 
-14. **Concept coverage matrix.**
-    For each concept, report explicit coverage by teaching page, Understand route placement, Build evidence, resource, source/evidence, exercise and experiment. Use statuses such as present, absent, not applicable, and unknown; absence is not automatically an error.
-15. **Route coverage.**
-    Report stage membership, core/optional role, language parity and unresolved page references. Keep Understand and Build separate.
-16. **Page relationship inspection.**
-    Provide incoming/outgoing views grouped by relation family and relation type; distinguish navigation, hierarchy, related links, concept associations and cross-resource links.
-17. **Integrity diagnostics.**
-    Detect dangling IDs, duplicate stable IDs, invalid relation targets, orphaned registry entries, invalid domain references and inconsistent bilingual links where the relevant schema defines a contract.
-18. **Explainable findings.**
-    Every finding includes severity, rule ID, source path, stable record ID, evidence and suggested review action. Heuristic similarity remains triage-only.
+**Acceptance:** reverse lookups are deterministic, preserve relation family and direction, return stable IDs, and do not double-count bilingual page records or symmetric page relations.
 
-**Acceptance:** diagnostics are deterministic and read-only; optional/intentional gaps are not reported as errors; every warning is traceable to canonical data.
+### Step 5 — Metric registry, then coverage matrix
 
-### P2 — Reporting and usability
+First define a canonical metric registry. Each metric records:
+- stable metric ID and human-readable name;
+- exact definition and counting unit;
+- canonical source, source path and schema version;
+- inclusion/exclusion rules and filters;
+- bilingual grouping and deduplication semantics;
+- missing/unknown/not-applicable behavior;
+- owning reader/validator and tests.
 
-19. **CLI.**
-    Add a small command interface only after the query API and metric definitions stabilize. Initial commands should cover `stats`, `inventory`, `concept-coverage`, `route`, `page-links`, and `audit`.
-20. **Machine-readable output.**
-    Provide deterministic JSON with schema/version metadata, source commit, generated-at timestamp, source paths and metric definitions. Avoid embedding full page bodies.
-21. **Human-readable reports.**
-    Provide Markdown and optionally CSV projections from the same result objects; include scope, limitations and counts by unit.
-22. **Documentation and examples.**
-    Document public API, CLI, metric definitions, source provenance, and examples of reverse lookups and coverage investigations.
+Then build the coverage matrix from the query layer. Keep separate dimensions for pages, route membership, concepts, resources, revision support, sources/evidence, practice and Build evidence where canonical mappings exist. Do not collapse dimensions into an opaque score or treat an unregistered association as a defect.
 
-**Acceptance:** CLI/report output is deterministic for the same checkout; JSON is versioned; Markdown/CSV are projections of the same calculations, not separate implementations.
+**Acceptance:** every published metric has a reproducible definition and explicit unit; matrix cells distinguish present, missing, not applicable, not registered and needs review.
 
-### P3 — Performance and optional intelligence
+### Step 6 — Diagnostics, then interfaces
 
-23. **Benchmark before optimization.**
-    Measure YAML/page parsing, normalization, index construction, query latency and serialization separately on representative repository size.
-24. **Cache only with evidence.**
-    If full rebuild is measurably expensive, add content-hash-based caching with adapter/schema versioning and explicit invalidation. Full rebuild remains the correctness oracle.
-25. **Recommendations last.**
-    Only after explicit coverage and diagnostics are reliable, offer candidate page/resource/lesson suggestions. Every candidate must show the gap it addresses, supporting records, likely overlap, confidence and human-review status. Never write canonical metadata automatically.
+Implement deterministic, read-only diagnostics from the validated query and coverage layers first. Every finding must carry a rule ID, severity, source path, stable entity IDs, evidence and suggested review action. Do not infer semantic relationships from lexical similarity.
 
-**Acceptance:** performance targets are measured and recorded; caching never hides stale inputs; recommendations are non-authoritative and reviewable.
+Only after diagnostics are stable, add:
+- CLI commands;
+- machine-readable JSON and review-friendly Markdown/CSV projections;
+- a dashboard or site interface consuming the same query results.
+
+The CLI, JSON and dashboard must not implement separate counting or relationship semantics.
+
+### Later ProjectIndex extensions (after the six-step sequence)
+
+- Typed concept-to-concept relation queries and domain membership.
+- Build milestone/evidence adapter, only after its canonical mapping contract is reviewed.
+- Source, extraction, locator and lineage adapters.
+- Computational graph adapter and explicit page/resource bridges.
+- History, experiment and test-evidence adapters.
+- Incremental cache and AI-assisted candidate recommendations, only after profiling and human-review rules.
 
 ## 3. Cross-cutting test strategy
 
