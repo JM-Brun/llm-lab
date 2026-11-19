@@ -6609,3 +6609,47 @@ sources:
       pages: [fr/compression-revision, en/compression-revision, fr/cross-entropy, en/cross-entropy, fr/entropy, en/entropy]
       concepts: [arithmetic-coding, entropy-coding, conditional-distribution, predictive-compression, surprisal]
       audit_records: [docs/source-reviews/predictive-coding-primary-sources-2026-11.md, data/extractions/witten-neal-cleary-arithmetic-coding-1987.yml]
+
+  - id: jose-parreno-garcia-understanding-transformers-part-4-2026
+    title: "Understanding Transformers (Part 4): Attention is just a few matrices"
+    creators: ["Jose Parreño Garcia"]
+    source_type: blog
+    identifiers: {}
+    canonical_url: "https://joseparreogarcia.substack.com/p/understanding-transformers-part-4"
+    publisher: "Substack"
+    publication_date: "2026-06-20"
+    updated_date: null
+    language: en
+    version: "visible article body"
+    revision: null
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: link-only, code: unknown, data: unknown}
+    classification:
+      primary_theme: architectures-mechanisms
+      secondary_themes: []
+      tags: [topic:self-attention, topic:qkv, method:scaled-dot-product-attention, topic:multi-head-attention, modality:visualization]
+      concept_ids: [query, key, value, attention-score, attention-weight, scaled-dot-product-attention, self-attention, softmax, multi-head-attention, contextualized-representation]
+    metadata:
+      technical_level: introductory
+      contribution_types: [architecture, pedagogy, visualization]
+      audiences: [beginner, learner]
+    scan_status: partially-scanned
+    integration_status: not-reviewed
+    scan_history:
+      - accessed_at: "2026-11-19"
+        status: partially-scanned
+        inspected_scope:
+          - "Complete visible author-authored article body, sections from positional-encoding recap through multi-head attention and conclusion"
+          - "Article metadata and visible series outline"
+          - "All textual examples, equations, dimensions and claims about Q/K/V, scaling, softmax, aggregation and parallelism"
+        limitations:
+          - "Embedded diagrams/images were not retrieved as image bytes or visually inspected; only their positions and surrounding text were available."
+          - "Linked Parts 1–3 and the original Attention Is All You Need paper were not opened as part of this scan."
+          - "Comments and discussion were not substantively audited."
+          - "No code, numerical example or experiment was executed."
+          - "No licence or permission to reuse article text or figures was established."
+    related:
+      pages: [fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/contextualized-representations, en/contextualized-representations, fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+      concepts: [query, key, value, attention-score, attention-weight, scaled-dot-product-attention, self-attention, softmax, multi-head-attention, contextualized-representation]
+      audit_records:
+        - docs/source-reviews/jose-parreno-garcia-transformers-part-4-2026-11.md
