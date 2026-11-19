@@ -229,7 +229,8 @@ def render_markdown(inventory: dict[str, Any]) -> str:
             "## Metadata diagnostics",
             "",
             f"- Pages without a non-empty topic: **{len(inventory['missing_topic_pages'])}**",
-            (
+            f"- Pages with unexpected language values: "
+            f"**{len(inventory['unexpected_languages'])}**",
             "",
             "Pages without a topic are excluded from topic-parity aggregation "
             "and listed in the JSON report.",
