@@ -7,7 +7,7 @@
 **Inventory implementation:** `site/tools/audit_revision_coverage.py`, introduced in PR [#1379](https://github.com/JM-Brun/llm-lab/pull/1379).  
 **Machine-readable snapshot inspected:** CI run [#5888](https://github.com/JM-Brun/llm-lab/actions/runs/44567812323), artifact `revision-coverage-inventory-0e98372c76a6bf1e4b00f731a9e9654ce3fb06d9`, generated from commit `817048ecda141fbf256e42237dc1a4f34bf44a88`.
 
-This document inventories existing material. It does not decide that every page needs a new sheet, and it does not claim that existing summaries are pedagogically sufficient.
+This document inventories existing material. It does not decide that every page needs a new sheet, and it does not claim that existing summaries are pedagogically sufficient. The proposed relationship model is documented in the [revision-resource contract](revision-resource-contract.md); its integrated-section target correction is under review in [PR #1391](https://github.com/JM-Brun/llm-lab/pull/1391).
 
 ## 1. Scope and snapshot validity
 
