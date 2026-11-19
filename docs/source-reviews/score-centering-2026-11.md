@@ -145,3 +145,16 @@ No learner-facing bilingual page or canonical graph concepts are added in this p
 - [Official implementation README](https://github.com/martin-marek/score-centering)
 - [Official loss implementation](https://github.com/martin-marek/score-centering/blob/main/losses.py)
 - [Related follow-up — arXiv:2610.40945](https://arxiv.org/abs/2610.40945)
+
+## 11. Verification update — 2026-11-19
+
+This section supersedes the outdated retrieval and test-status statements in the 2026-11-09 review above.
+
+- The canonical arXiv v1 PDF (16 pages) was subsequently inspected end-to-end, including the main derivation, Appendices A.1–A.4 and B.1–B.3, both experimental tables, and figure/table descriptions. The paper contains no formal theorem/lemma/proof block; the central result remains the per-prefix algebraic decomposition in Eqs. (3)–(5).
+- The official implementation README and public `losses.py` were checked. The exact official CPU test file `tests/test_loss.py` was executed against the `losses.py` snapshot at upstream commit `fdca22b19793babdf08e33e5ba51537e82cbed2f`; all seven parametrized cases passed.
+- The execution environment was JAX 0.9.0.1 and pytest 9.0.2. The upstream requirements declare `jax>=0.11.1`; therefore this is a successful compatibility check, not a run in the declared minimum-version environment.
+- No paper-scale sweeps, framework integrations, large-scale experimental results, or vLLM/SGLang overhead measurements were reproduced. Figures and their reuse provenance were not audited and no assets were copied.
+- The six concepts are present in `data/concepts.yml`, each has French and English labels/definitions, and each links to both `fr/score-centering` and `en/score-centering`. Both pages contain the corresponding explanations: policy-gradient objective, score function, off-policy sampling, training–inference mismatch, score-centering correction, and importance-sampling comparison.
+- The separate Cameron R. Wolfe Substack body remains unavailable; none of its claims are attributed to the primary paper.
+
+The source-level `scan_history` now contains a distinct 2026-11-19 event for this later inspection. The original extraction-level `scan` dated 2026-11-09 remains unchanged as historical provenance. The bilingual page warning blocks have been corrected to reflect the verified evidence and its compatibility limitations.
