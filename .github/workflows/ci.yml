@@ -98,6 +98,25 @@ jobs:
         if: steps.validation_scope.outputs.domain_checks == 'true'
         run: uv run python site/tools/check_resource_registry.py
 
+      - name: Generate Understand and Build revision coverage report
+        if: steps.validation_scope.outputs.domain_checks == 'true'
+        run: |
+          uv run python site/tools/audit_revision_coverage.py \
+            --json "$RUNNER_TEMP/revision-coverage.json" \
+            --markdown "$RUNNER_TEMP/revision-coverage.md"
+          tee -a "$GITHUB_STEP_SUMMARY" < "$RUNNER_TEMP/revision-coverage.md"
+
+      - name: Upload revision coverage inventory
+        if: always() && steps.validation_scope.outputs.domain_checks == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: revision-coverage-inventory-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/revision-coverage.json
+            ${{ runner.temp }}/revision-coverage.md
+          if-no-files-found: warn
+          retention-days: 30
+
       - name: Validate bilingual history pilot dataset
         if: steps.validation_scope.outputs.domain_checks == 'true'
         run: uv run python site/tools/check_history_pilot.py
