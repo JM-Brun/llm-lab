@@ -15,6 +15,19 @@ from page_index import PublishedPage, load_published_pages
 from strict_yaml import load_yaml
 
 
+class ProjectIndexIntegrityError(ValueError):
+    """A canonical project relation points to a missing or invalid record."""
+
+    def __init__(self, *, source: str, record_id: str, relation: str, target: object) -> None:
+        self.source = source
+        self.record_id = record_id
+        self.relation = relation
+        self.target = target
+        super().__init__(
+            f"{source}: record {record_id!r} has invalid {relation} reference {target!r}"
+        )
+
+
 @dataclass(frozen=True, slots=True)
 class PageEdge:
     """One authored page relation, preserving its relation family and direction."""
@@ -77,9 +90,15 @@ class ProjectIndex:
             # In schema v2, concepts[].resources contains page IDs. It is not
             # data/resources.yml and must not be counted as a non-page resource.
             for page_id in concept.get("resources", []):
-                if page_id in pages:
-                    concept_to_pages[concept_id].add(page_id)
-                    page_to_concepts[page_id].add(concept_id)
+                if not isinstance(page_id, str) or page_id not in pages:
+                    raise ProjectIndexIntegrityError(
+                        source="data/concepts.yml",
+                        record_id=concept_id,
+                        relation="resources (page ID)",
+                        target=page_id,
+                    )
+                concept_to_pages[concept_id].add(page_id)
+                page_to_concepts[page_id].add(concept_id)
 
         page_domain_index: dict[str, set[str]] = defaultdict(set)
         for page in published:
@@ -103,6 +122,16 @@ class ProjectIndex:
                         edges.append(PageEdge(page.page_id, target, "hierarchy", relation))
             for target in metadata.get("related", []):
                 edges.append(PageEdge(page.page_id, target, "related", "related"))
+
+        for edge in edges:
+            if edge.target not in pages:
+                source_page = pages[edge.source]
+                raise ProjectIndexIntegrityError(
+                    source=source_page.path.relative_to(root).as_posix(),
+                    record_id=edge.source,
+                    relation=f"{edge.family}.{edge.relation}",
+                    target=edge.target,
+                )
 
         incoming: dict[str, list[PageEdge]] = defaultdict(list)
         outgoing: dict[str, list[PageEdge]] = defaultdict(list)
