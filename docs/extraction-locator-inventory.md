@@ -128,3 +128,10 @@ This baseline establishes the observed corpus shape, not locator resolution, sou
 3. Define a grammar only for types with stable, unambiguous usage; keep unknown/custom types report-only until classified.
 4. Add compatibility fixtures before promoting malformed values to CI errors.
 5. Keep locator syntax validation separate from source availability, claim support, and independent corroboration.
+
+
+## Revalidation requested — 2026-11-19
+
+The 2026-11-18 snapshot above (84 extraction files / 432 items) is historical and must not be presented as the current corpus state. A repository-tree inventory on 2026-11-19 found 96 extraction YAML filenames. That filename count does not establish the number of valid extraction records, items, or locators, and it does not establish that each declared `source_id` resolves.
+
+A fresh full-corpus run of `site/tools/report_extraction_locator_inventory.py` is being requested through the opt-in CI inventory job. Its artifact and job summary—not this filename-level count—must supply the next current locator baseline. In parallel, the canonical `site/tools/check_source_catalogue.py` validation in CI must pass before claiming the 96-file corpus is structurally valid. Until those results are available, no current item or locator totals are asserted here.
