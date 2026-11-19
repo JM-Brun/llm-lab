@@ -88,7 +88,7 @@ def test_assessed_without_declared_aid_requires_review_not_missing(tmp_path: Pat
             tmp_path / "site",
             page_id,
             language,
-            revision_support={"status": "assessed", "resources": []},
+            revision_support={"status": "partial", "reason": "support needs editorial review"},
         )
     write_sources(tmp_path)
     matrix = build_concept_coverage(ProjectIndex.build(tmp_path))
