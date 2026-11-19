@@ -922,7 +922,7 @@ sources:
     language: en
     version: null
     revision: 79dc2c0533685b893616c78160b5d9e40876e724
-    licence: {identifier: null, url: null, status: unknown}
+    licence: {identifier: "MIT", url: "https://github.com/openai/tiktoken/blob/79dc2c0533685b893616c78160b5d9e40876e724/LICENSE", status: verified}
     reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
     classification:
       primary_theme: text-tokenization
