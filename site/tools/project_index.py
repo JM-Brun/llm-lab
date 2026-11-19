@@ -117,7 +117,7 @@ def _load_non_page_resources(
     tuple[PageResourceAssociation, ...],
     tuple[ConceptResourceAssociation, ...],
 ]:
-    """Adapt data/resources.yml without conflating it with concept page IDs."""
+    """Adapt data/resources.yml while keeping implementation and revision aids distinct."""
     path = root / "data" / "resources.yml"
     data = load_yaml(path)
     if (
@@ -151,6 +151,9 @@ def _load_non_page_resources(
         kind, language, status = item.get("kind"), item.get("language"), item.get("status")
         if not all(isinstance(value, str) and value for value in (kind, language, status)):
             raise ValueError(f"{where}: kind, language and status must be non-empty strings")
+        if kind not in {"implementation", "revision-aid"}:
+            raise ValueError(f"{where}.kind: unsupported resource kind {kind!r}")
+
         labels, descriptions, location = (
             item.get("labels"),
             item.get("descriptions"),
@@ -161,8 +164,8 @@ def _load_non_page_resources(
         if not isinstance(location, dict):
             raise ValueError(f"{where}.location: expected a mapping")
 
-        referenced_by = item.get("referenced_by")
-        resource_concepts = item.get("concepts")
+        referenced_by = item.get("referenced_by", [])
+        resource_concepts = item.get("concepts", [])
         if not isinstance(referenced_by, list) or not all(
             isinstance(value, str) for value in referenced_by
         ):
@@ -175,6 +178,38 @@ def _load_non_page_resources(
             raise ValueError(f"{where}.referenced_by: duplicate page IDs")
         if len(resource_concepts) != len(set(resource_concepts)):
             raise ValueError(f"{where}.concepts: duplicate concept IDs")
+
+        revision_role: str | None = None
+        revision_of: tuple[str, ...] = ()
+        if kind == "implementation":
+            if "revision_role" in item or "revision_of" in item:
+                raise ValueError(f"{where}: implementation resources cannot declare revision fields")
+            programming_language = item.get("programming_language")
+            if not isinstance(programming_language, str) or not programming_language.strip():
+                raise ValueError(f"{where}.programming_language: required for implementation")
+            if status in {"published", "deprecated"} and not referenced_by:
+                raise ValueError(f"{where}.referenced_by: published implementation needs a page")
+            if status in {"draft", "retired"} and referenced_by:
+                raise ValueError(f"{where}.referenced_by: draft/retired implementation cannot be linked")
+        else:
+            if referenced_by:
+                raise ValueError(f"{where}.referenced_by: revision aids use revision_of, not referenced_by")
+            if item.get("programming_language") is not None:
+                raise ValueError(f"{where}.programming_language: not valid for revision-aid")
+            revision_role = item.get("revision_role")
+            if not isinstance(revision_role, str) or revision_role not in REVISION_ROLES:
+                raise ValueError(f"{where}.revision_role: unsupported revision role {revision_role!r}")
+            raw_revision_of = item.get("revision_of")
+            if (
+                not isinstance(raw_revision_of, list)
+                or not raw_revision_of
+                or not all(isinstance(value, str) and value.strip() for value in raw_revision_of)
+            ):
+                raise ValueError(f"{where}.revision_of: expected a non-empty list of page IDs")
+            if len(raw_revision_of) != len(set(raw_revision_of)):
+                raise ValueError(f"{where}.revision_of: duplicate page IDs")
+            revision_of = tuple(raw_revision_of)
+            programming_language = None
 
         for page_id in referenced_by:
             if page_id not in pages:
@@ -195,9 +230,6 @@ def _load_non_page_resources(
                 )
             concept_associations.append(ConceptResourceAssociation(concept_id, resource_id))
 
-        programming_language = item.get("programming_language")
-        if programming_language is not None and not isinstance(programming_language, str):
-            raise ValueError(f"{where}.programming_language: expected a string when present")
         provenance = item.get("provenance")
         if provenance is not None and not isinstance(provenance, dict):
             raise ValueError(f"{where}.provenance: expected a mapping when present")
@@ -213,6 +245,8 @@ def _load_non_page_resources(
             concepts=tuple(resource_concepts),
             programming_language=programming_language,
             provenance=dict(provenance) if provenance is not None else None,
+            revision_role=revision_role,
+            revision_of=revision_of,
         )
 
     return (
