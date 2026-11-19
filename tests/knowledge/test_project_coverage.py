@@ -72,9 +72,7 @@ def test_revision_not_applicable_is_not_counted_as_missing(tmp_path: Path) -> No
     assert _state(rows["attention"], "revision_support") == "not_applicable"
     assert _state(rows["query"], "revision_support") == "not_applicable"
     assert all(
-        cell["state"] != "missing"
-        for row in rows.values()
-        for cell in row["dimensions"].values()
+        cell["state"] != "missing" for row in rows.values() for cell in row["dimensions"].values()
     )
 
 
