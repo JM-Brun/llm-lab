@@ -1,6 +1,6 @@
 # Project intelligence layer
 
-**Status:** proposed architecture with an initial read-only `ProjectIndex` implementation. Resource and revision adapters landed in [PR #1394](https://github.com/JM-Brun/llm-lab/pull/1394); inverse resource/revision queries, metrics, diagnostics and interfaces remain planned.  
+**Status:** proposed architecture with a read-only `ProjectIndex`, resource/revision adapters and inverse queries merged in [PR #1399](https://github.com/JM-Brun/llm-lab/pull/1399). The metric registry is documented in [project-metric-registry.md](project-metric-registry.md); the coverage matrix, diagnostics and interfaces remain planned.  
 **Scope:** reusable, deterministic queries and explainable diagnostics over the canonical LLM Lab metadata, registries, routes, graph families and project artifacts.  
 **Related architecture:** [Information architecture](information-architecture.md), [scalability audit](scalability-capacity-audit-2026-11-18.md), [knowledge-graph implementation audit](knowledge-graph-implementation-audit.md), [cross-graph discovery issue #1233](https://github.com/JM-Brun/llm-lab/issues/1233).
 
@@ -233,7 +233,7 @@ A concept coverage report should separate dimensions instead of collapsing them 
 | Practice | Explicit exercise/test/experiment mapping |
 | Bilingual parity | Expected FR/EN counterparts exist and satisfy page contracts |
 
-Use states such as `present`, `missing`, `not_applicable`, `not_registered` and `needs_review`. Do not interpret an absent association as a defect if no completeness contract exists. The report must identify which dimensions are fully enumerable today and which await an explicit mapping.
+Use states such as `present`, `missing`, `not_applicable`, `not_registered` and `needs_review`. Do not interpret an absent association as a defect if no completeness contract exists. The report must identify which dimensions are fully enumerable today and which await an explicit mapping. The canonical metric IDs, units, source versions and state semantics are defined in [project-metric-registry.md](project-metric-registry.md).
 
 ### 7.3 Page and entity impact analysis
 

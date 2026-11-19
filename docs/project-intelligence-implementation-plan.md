@@ -30,10 +30,10 @@ This document is the operational backlog for turning the proposed Project Intell
 
 - The revision contract is documentation/proposal only. The adapter does not change the page metadata schema, `check_page_metadata.py`, `check_resource_registry.py`, or any of the 62 page records.
 - No current page declares a `revision` object; the adapter therefore exposes no current revision edges.
-- Inverse resource/revision query methods are not yet implemented; they are the next step.
+- Inverse resource/revision query methods were merged in PR #1399 and tested against the real repository.
 - Source/extraction, computational graph, historical, experiment and Build-milestone adapters remain future work.
 - No semantic links are inferred from tags, titles, body text or lexical similarity.
-- No metrics registry, coverage matrix, diagnostics, stable CLI, JSON/Markdown interface, cache, dashboard or recommendation engine exists yet.
+- The metric registry and coverage-state contract are now documented in [project-metric-registry.md](project-metric-registry.md). The coverage matrix has not yet been computed. Diagnostics and interfaces remain unimplemented.
 
 ## 2. Remaining work — ordered backlog
 
@@ -58,7 +58,7 @@ The revision-support and ProjectIndex work follows this dependency order. Do not
 - `ProjectIndex` now adapts `data/resources.yml` and the optional proposed page-map `revision` object.
 - Revision relations remain separate from generic page graph edges. No current page has been migrated and no validator/schema change was made.
 
-### Step 4 — Inverse queries and real-repository tests (next)
+### Step 4 — Inverse queries and real-repository tests (complete)
 
 Add deterministic forward/reverse query methods for:
 - pages ↔ non-page resources;
@@ -68,22 +68,24 @@ Add deterministic forward/reverse query methods for:
 
 Tests must exercise the real repository, not only synthetic fixtures. Cover all five current resources and ten page/resource associations, verify the inverse results, confirm the current 62-page revision inventory has no declared edges, and retain synthetic coverage for all three target types. Section-target keys must include the owning page ID because anchors are page-local.
 
-**Acceptance:** reverse lookups are deterministic, preserve relation family and direction, return stable IDs, and do not double-count bilingual page records or symmetric page relations.
+**Delivered:** PR #1399 merged. Deterministic forward/reverse resource and revision queries are tested with synthetic fixtures and the real repository. The tests reconcile all five resource records and ten page/resource associations in both directions, and preserve page-local section-anchor identity. CI, Quarto and secret scanning passed on the final PR head.
 
-### Step 5 — Metric registry, then coverage matrix
+### Step 5 — Metric registry, then coverage matrix (in progress)
 
-First define a canonical metric registry. Each metric records:
-- stable metric ID and human-readable name;
-- exact definition and counting unit;
-- canonical source, source path and schema version;
-- inclusion/exclusion rules and filters;
-- bilingual grouping and deduplication semantics;
-- missing/unknown/not-applicable behavior;
-- owning reader/validator and tests.
+**Substep 5a — registry (documentation contract defined):**
+- Canonical registry: [project-metric-registry.md](project-metric-registry.md).
+- Stable IDs, definitions, units, populations, canonical sources/schema versions, filters, exclusions, bilingual grouping, unknown-state policy, implementation status and test expectations are specified.
+- Structural inventory metrics are kept distinct from outcome/quality KPIs.
+- Unsupported Build, practice, source-bridge and computation-bridge dimensions are explicitly marked not_registered rather than zero.
+- Revision support remains not_assessed until its proposed contract is approved and validated.
 
-Then build the coverage matrix from the query layer. Keep separate dimensions for pages, route membership, concepts, resources, revision support, sources/evidence, practice and Build evidence where canonical mappings exist. Do not collapse dimensions into an opaque score or treat an unregistered association as a defect.
+**Substep 5b — coverage matrix (not yet implemented):**
+- Build one concept-centred row per canonical concept ID using the ProjectIndex query layer.
+- Keep definition, teaching pages, Understand, Build, computation, resources, sources, practice and bilingual parity as separate dimensions.
+- Every cell must carry state plus evidence IDs/paths and the rule that assigned it.
+- Do not compute an opaque aggregate score or treat not_registered/not_applicable/needs_review/not_assessed as failures.
 
-**Acceptance:** every published metric has a reproducible definition and explicit unit; matrix cells distinguish present, missing, not applicable, not registered and needs review.
+**Acceptance:** every published metric has a reproducible definition and explicit unit; matrix cells distinguish present, missing, not_applicable, not_registered, needs_review and not_assessed; unsupported dimensions remain visibly unregistered.
 
 ### Step 6 — Diagnostics, then interfaces
 
@@ -129,13 +131,12 @@ The CLI, JSON and dashboard must not implement separate counting or relationship
 
 ## 5. Immediate next actions
 
-1. Finish PR #1380 CI verification and semantic review.
-2. Add real-corpus integration coverage.
-3. Inspect resource, concept-relation, source/extraction, computational-graph and Build schemas/readers.
-4. Publish the source/metric registry with explicit count definitions.
-5. Implement the resource adapter, then concept relations and Build evidence as separately reviewed increments.
-6. Add the concept coverage matrix and deterministic audit report.
-7. Add CLI and output formats only after metric contracts stabilize.
+1. Complete the concept-centred coverage matrix from the canonical metric registry.
+2. Implement only dimensions currently enumerable from ProjectIndex; label Build, computation, sources and practice as not_registered where no reviewed mapping exists.
+3. Add synthetic and real-repository tests for matrix states, evidence paths, bilingual grouping and deterministic ordering.
+4. Publish a reproducible matrix snapshot with repository commit and registry version.
+5. Review the matrix semantics and false-positive risk before considering diagnostics.
+6. Only after step 6 diagnostics are stable, add CLI, JSON/Markdown and dashboard interfaces.
 
 ## 6. Definition of done for the PIL
 
