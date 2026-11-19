@@ -139,7 +139,7 @@ Ce sujet n'est pas une nouvelle étape du fil computationnel central de prédict
 
 
 ::: {.callout-warning}
-**Limites de l'audit :** le PDF arXiv canonique et toutes ses annexes n'ont pas encore été vérifiés indépendamment, les tests officiels n'ont pas été exécutés et le corps de l'article de Cameron Wolfe reste indisponible. Les chiffres expérimentaux sont rapportés par les auteurs et l'approximation de la queue top-k reste une hypothèse d'implémentation.
+**Limites de l'audit :** le PDF arXiv v1 canonique (16 pages), les annexes A.1–A.4 et B.1–B.3 et les deux tableaux expérimentaux ont été inspectés. Les sept cas paramétrés du test CPU officiel ont réussi sur le snapshot upstream de `losses.py` au commit `fdca22b19793babdf08e33e5ba51537e82cbed2f`, avec JAX 0.9.0.1 et pytest 9.0.2. Cette vérification de compatibilité ne valide pas l'environnement minimal déclaré par le dépôt (`jax>=0.11.1`) et ne reproduit pas les expériences à grande échelle. Les figures et leurs droits de réutilisation n'ont pas été audités. Le corps de l'article distinct de Cameron Wolfe reste indisponible. Les résultats expérimentaux restent attribués aux auteurs et l'approximation de la queue top-k conserve ses limites.
 :::
 
 :::: {.language-switch}
