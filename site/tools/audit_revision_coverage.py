@@ -208,9 +208,7 @@ def render_markdown(inventory: dict[str, Any]) -> str:
         )
         for item in inventory["bilingual_parity"][destination]:
             status = "balanced" if item["balanced"] else "mismatch"
-            lines.append(
-                f"| {item['topic']} | {item['fr']} | {item['en']} | {status} |"
-            )
+            lines.append(f"| {item['topic']} | {item['fr']} | {item['en']} | {status} |")
         lines.append("")
     lines.extend(
         [
