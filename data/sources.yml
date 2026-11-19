@@ -2868,6 +2868,17 @@ sources:
           - "The official test suite was not executed; implementation source was inspected but not independently reproduced."
           - "Reported model-scale and stability results are author-reported, not independently reproduced."
           - "The paper's reuse licence and rights for figures/data were not independently established."
+      - accessed_at: "2026-11-19"
+        status: partially-scanned
+        inspected_scope:
+          - "Canonical arXiv v1 PDF (16 pages), inspected end-to-end, including the main derivation, Appendices A.1–A.4 and B.1–B.3, both experimental tables, and figure/table descriptions."
+          - "Official implementation README and public losses.py; exact upstream test file tests/test_loss.py executed against losses.py at commit fdca22b19793babdf08e33e5ba51537e82cbed2f."
+          - "All seven parametrized CPU test cases passed; result recorded in the extraction and bilingual lesson evidence notes."
+        limitations:
+          - "Execution used JAX 0.9.0.1 and pytest 9.0.2; upstream requirements declare jax>=0.11.1. This is a compatibility check, not validation in the declared minimum-version environment."
+          - "No paper-scale sweeps, large-scale experimental results, framework integrations or vLLM/SGLang overhead measurements were independently reproduced."
+          - "Figure reuse/provenance and third-party asset rights were not audited; no figures were copied."
+          - "Cameron R. Wolfe's separate Substack article body remains unavailable and is not used as evidence."
     related:
       pages: [fr/score-centering, en/score-centering]
       concepts: [policy-gradient, score-function, off-policy-reinforcement-learning, training-inference-mismatch, score-centering, importance-sampling]
