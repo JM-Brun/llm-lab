@@ -13,7 +13,7 @@ AUDIT: dict[str, Any] = runpy.run_path(
 )
 
 
-def page(page_id: str, language: str, destination: str, topic: str) -> dict[str, Any]:
+def page(page_id: str, language: str, destination: str, topic: str | None) -> dict[str, Any]:
     return {
         "id": page_id,
         "language": language,
@@ -100,3 +100,52 @@ def test_report_documents_unrouted_and_unassessed_semantics() -> None:
     report = AUDIT["render_markdown"](inventory)
     assert "unrouted" in report
     assert "not_assessed" in report
+
+def test_missing_topics_are_reported_and_excluded_from_parity() -> None:
+    inventory = AUDIT["build_revision_inventory"](
+        [
+            page("fr/no-topic", "fr", "understand", None),
+            page("en/no-topic", "en", "understand", ""),
+            page("fr/valid", "fr", "understand", "valid"),
+            page("en/valid", "en", "understand", "valid"),
+        ],
+        [],
+        [],
+        route_memberships={},
+    )
+    assert {item["id"] for item in inventory["missing_topic_pages"]} == {
+        "fr/no-topic",
+        "en/no-topic",
+    }
+    assert [item["topic"] for item in inventory["bilingual_parity"]["understand"]] == [
+        "valid"
+    ]
+
+
+def test_bilingual_parity_flags_duplicate_pages_per_language() -> None:
+    inventory = AUDIT["build_revision_inventory"](
+        [
+            page("fr/one", "fr", "understand", "duplicate"),
+            page("fr/two", "fr", "understand", "duplicate"),
+            page("en/one", "en", "understand", "duplicate"),
+        ],
+        [],
+        [],
+        route_memberships={},
+    )
+    item = inventory["bilingual_parity"]["understand"][0]
+    assert item["balanced"] is False
+    assert item["duplicate_fr"] is True
+    assert item["duplicate_en"] is False
+
+
+def test_unexpected_language_values_are_reported() -> None:
+    inventory = AUDIT["build_revision_inventory"](
+        [page("shared/page", "shared", "understand", "shared-topic")],
+        [],
+        [],
+        route_memberships={},
+    )
+    assert inventory["unexpected_languages"] == [
+        {"id": "shared/page", "language": "shared"}
+    ]
