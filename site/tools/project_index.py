@@ -645,9 +645,7 @@ class ProjectIndex:
         role: str | None = None,
     ) -> tuple[RevisionEdge, ...]:
         """Return source→target revision edges using a page-local key for sections."""
-        if role is not None and (
-            not isinstance(role, str) or role not in REVISION_ROLES
-        ):
+        if role is not None and (not isinstance(role, str) or role not in REVISION_ROLES):
             raise ValueError(f"unknown revision role: {role}")
         if not isinstance(target_id, str) or not target_id.strip():
             raise ValueError("target_id must be a non-empty string")
