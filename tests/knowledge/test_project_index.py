@@ -445,6 +445,10 @@ def test_real_repository_index_has_referential_integrity() -> None:
         index.revision_support_for_lesson(page_id)["status"] == "partial"
         for page_id in ("fr/entropy", "en/entropy", "fr/cross-entropy", "en/cross-entropy")
     )
+    assert all(
+        index.revision_support_for_lesson(page_id)["status"] == "partial"
+        for page_id in ("fr/embedding-space", "en/embedding-space")
+    )
     integrated_pages = {
         "fr/corpus-preparation",
         "en/corpus-preparation",
