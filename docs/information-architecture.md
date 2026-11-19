@@ -207,6 +207,7 @@ The standards profile documents the graph-export and rendered-output checks; use
 | Concern | Canonical reference |
 |---|---|
 | Overall information architecture | This document |
+| Project-wide metadata queries, coverage, diagnostics and recommendations | [Project intelligence layer](project-intelligence-layer.md) |
 | Knowledge graph implementation audit | [Implementation audit](knowledge-graph-implementation-audit.md) |
 | Domain/concept/resource knowledge graph | `data/concepts.yml`; `data/domains.yml`; `data/resources.yml` |
 | External sources, classification and extraction records | [Source catalogue schema](source-catalogue-schema.md); `data/sources.yml`; `data/source-taxonomy.yml`; `data/extractions/` |
