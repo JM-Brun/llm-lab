@@ -72,6 +72,21 @@ NFC/NFD concernent les formes canoniques ; NFKC/NFKD appliquent aussi certaines 
 3. Un tokeniseur peut normaliser et pré-découper le texte avant la segmentation ; les étapes exactes dépendent de l'implémentation.
 4. La figure illustre Unicode et UTF-8, **pas** la sortie d'un tokeniseur particulier. Pour connaître les tokens et IDs réels, exécutez le tokeniseur exact avec sa version et sa configuration.
 
+## Vérifier les distinctions
+
+Une lettre « é » est affichée à l'écran. Quelle proposition distingue correctement les niveaux de représentation ?
+
+1. Le caractère est l'unité abstraite de texte ; un point de code Unicode identifie un élément de l'espace de codes ; UTF-8 encode les points de code en octets.
+2. Le caractère est toujours un octet ; le point de code est le token ; UTF-8 est le vocabulaire du modèle.
+3. Un point de code et un octet UTF-8 sont deux noms pour la même chose.
+
+<details>
+<summary>Afficher la réponse et le raisonnement</summary>
+
+La première proposition est la bonne. Un caractère perçu peut être représenté par un ou plusieurs points de code ; chaque point de code est ensuite encodé en une séquence d'un à quatre octets en UTF-8. La normalisation peut aussi faire correspondre des séquences distinctes à une même forme normalisée. Ni les points de code ni les octets ne sont, à eux seuls, les tokens ou IDs d'un tokenizer donné.
+
+</details>
+
 ## Références techniques
 
 - [UTF-8, RFC 3629](https://www.rfc-editor.org/rfc/rfc3629) — définition de l'encodage UTF-8.
