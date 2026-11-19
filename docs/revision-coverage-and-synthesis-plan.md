@@ -47,85 +47,72 @@ The CI workflow generates JSON and Markdown reports, appends the Markdown report
 - Missing topic metadata is reported explicitly and excluded from bilingual topic aggregation; unexpected language values are also reported.
 - Concept/resource counts indicate explicit registry links only; zero links do not automatically mean a page is deficient.
 
-## 3. Remaining work, in dependency order
+## 3. Remaining work, in the required order
 
-### A. Close the inventory PR safely — completed
+### 1. Formalize the contract and verify validator compatibility — documented proposal
 
-PR #1379 is merged. On final head `817048ecda141fbf256e42237dc1a4f34bf44a88`, the repository CI, Quarto render and secret-scanning checks all passed. The CI run covered inventory generation, tests, formatting, lint and type checks; the Quarto run covered rendering, bilingual page/concept navigation and local links; the secret scan included repository history. The merge commit is `6f914064a18abbdb6e839c3247139f1295944b55`.
+The [revision-resource contract](revision-resource-contract.md) is documented in [PR #1388](https://github.com/JM-Brun/llm-lab/pull/1388) and its integrated-section correction in [PR #1391](https://github.com/JM-Brun/llm-lab/pull/1391).
 
-The generated artifact reported 62 published pages in scope (46 Understand, 16 Build), with 31 pages per language. Understand had 40 core and 6 optional route memberships and no unrouted page. These are inventory facts, not editorial coverage claims.
+The proposal distinguishes:
+- integrated sections, identified by explicit heading or Quarto block anchors;
+- companion Quarto pages;
+- non-page resources;
+- roles (synthesis, flashcards, revision_sheet) and statuses (not_assessed, assessed, not_applicable).
 
-### B. Harden the inventory diagnostics
+The compatibility audit is documented. The existing page metadata validator does not yet validate or normalize the optional revision object, and the resource validator still accepts only kind: implementation. The contract remains a proposal, not an approved schema migration. Do not change the validators or migrate the 62 historical page records until the model and constraints have been reviewed.
 
-1. Report pages with absent or invalid `topic` explicitly; do not aggregate them into a synthetic shared topic.
-2. Compare the French and English topic sets, not only counts for topics that happened to occur.
-3. Flag missing counterparts, multiple pages per topic/language, and unexpected language values separately. Multiple pages in one topic are not automatically duplicates.
-4. Keep count parity clearly labelled as structural; do not claim semantic parity.
-5. Add tests for missing topics, missing counterparts, topic multiplicity, unexpected language values, and empty destinations.
-6. Keep the inventory deterministic and derived from the existing registries and page index.
+### 2. Inventory existing Understand and Build resources — complete
 
-### C. Define and apply the synthesis editorial contract
+The read-only inventory is documented in [revision-resource-inventory-2026-11-19.md](revision-resource-inventory-2026-11-19.md), merged in [PR #1395](https://github.com/JM-Brun/llm-lab/pull/1395).
 
-Before mass-editing lessons, inspect the 62 pages and classify existing revision support individually:
+It covers 46 Understand and 16 Build pages and distinguishes:
+- 35 one-minute recap callouts and six additional takeaway sections;
+- 20 self-check blocks;
+- four integrated Build revision-sheet callouts;
+- two existing bilingual companion revision-sheet page pairs outside the 62-page population;
+- 162 concept-page associations and ten implementation-resource associations.
 
-- integrated recap already present and sufficient;
-- dedicated companion synthesis exists;
-- flashcards or retrieval questions exist but do not yet provide a sufficient synthesis;
-- partial or outdated revision support;
-- no revision support;
-- not applicable, with a documented reason.
+No mass creation of revision pages or flashcards is part of this inventory.
 
-A synthesis should let a learner recover the lesson's essential structure quickly without rereading the full page. For an Understand lesson, assess: central question, essential concepts and distinctions, explanatory mechanism, indispensable equations or diagrams, concise mental model, common misconceptions/limits, retrieval prompts, and links to the full lesson and practice.
+### 3. Implement non-page resource and revision relation adapters — complete
 
-For Build, coordinate with #78. A useful revision aid should capture the implementation step's purpose, prerequisites, interfaces and tensor shapes, algorithm, invariants, commands/entry points, tests and expected outputs, common errors, and limitations. A revision sheet does not demonstrate that the learner can implement the system unaided.
+The read-only adapters were merged in [PR #1394](https://github.com/JM-Brun/llm-lab/pull/1394). ProjectIndex now adapts non-page resource records and page/resource and concept/resource associations, plus typed revision edges with section, page and resource targets.
 
-Choose the lightest suitable format per page: an integrated synthesis section, a companion revision sheet, flashcards, or a justified exception. Do not create a separate page by default if a well-structured integrated synthesis already meets the contract.
+The adapter is separate from the existing page graph families. It does not change the page metadata schema, either validator, the resource registry, or any of the 62 pages. No current page declares a revision object, so the real repository currently has no typed revision edges; all 62 remain not_assessed.
 
-### D. Introduce a typed source-to-synthesis relation
+### 4. Add inverse queries and test them on the real repository — next
 
-A candidate contract has been documented in #1109: one-way `revision_of` from an aid to one or more canonical source lessons; derive the reverse lesson→aids index rather than storing both directions. Keep this separate from `related`, `parents` and `children`.
+Add deterministic queries for:
+- pages using a non-page resource and resources used by a page;
+- resources linked to a concept and concepts linked to a resource;
+- revision targets declared by a source page;
+- source pages that target a companion page or non-page resource;
+- page-local section targets, keyed by both page ID and anchor.
 
-Implementation findings from source inspection:
+Tests must use the real repository as well as synthetic fixtures. Reconcile the five current resources and ten page/resource associations in both directions, verify the current absence of typed revision edges, and cover all three target types with synthetic examples. Keep relation families distinct and return stable, deterministic ordering.
 
-- `page_index.PublishedPage.metadata` already retains the raw page-map dictionary. It does not need a new field merely to carry `revision_of`.
-- `check_page_metadata.py` must validate and preserve `revision_of` in its own normalized page projection, then validate targets against published pages and eligible lesson types.
-- `check_resource_registry.py` currently accepts only `kind: implementation`; its `referenced_by` relation means page→resource and must not be reused for resource→lesson ownership.
-- `audit_revision_coverage.py` must index published aid pages before limiting its output records to Understand/Build lessons.
+### 5. Define the metric registry, then build the coverage matrix
 
-Before implementing non-page revision aids, decide whether the resource registry should gain a distinct `kind: revision-aid` with its own required fields, or whether such aids warrant a separate registry. Do not make implementation resources appear as revision aids. The validator should receive published-page descriptors (ID, language, destination, type, status), not only a set of IDs, to enforce target eligibility and language compatibility.
+Define a canonical metric register before generating the matrix. Each metric must state its stable ID, definition, counting unit, canonical source, source path/schema version, filters, inclusion/exclusion rules, bilingual grouping, deduplication rule, missing-value semantics and tests.
 
-Remaining steps:
+Then construct a coverage matrix from the query layer. Keep page records, logical bilingual topics, route memberships, concepts, non-page resources, revision support, sources/evidence, practice and Build evidence as separate dimensions. Distinguish present, missing, not_applicable, not_registered and needs_review; do not collapse them into an opaque score or infer a defect from an unregistered association.
 
-1. Approve the page-map and resource representation, including the non-page resource-kind decision.
-2. Add tests for page→page and (if adopted) resource→page links, multi-source links, bilingual compatibility, unknown/unpublished/ineligible targets, self-links and duplicates.
-3. Implement validators and inventory projection without changing generic graph relations.
-4. Generate reverse links and aid diagnostics; keep editorial sufficiency assessment separate from link existence.
-5. Re-run CI and verify the machine-readable inventory.
+### 6. Add diagnostics, and only then interfaces
 
-### E. Pilot before scaling
+Implement deterministic, read-only diagnostics from the validated metric and coverage layers. Each finding must include a rule ID, severity, source path, stable entity IDs, supporting evidence and a suggested review action. Keep editorial sufficiency separate from relationship existence.
 
-1. Select a small but representative sample across Understand and Build, including both languages and different page types.
-2. Produce the revision aids in French and English, linked to the canonical pages.
-3. Review accuracy against the lesson, usefulness for rapid recall, accessibility, length, navigation, and bilingual equivalence.
-4. Check that the aid adds value rather than duplicating the lesson verbatim.
-5. Revise the editorial contract and templates from pilot findings before extending to all pages.
+Only after diagnostics are stable, add the CLI, JSON and review-friendly Markdown/CSV outputs, then a dashboard or site interface. All interfaces must consume the same query and diagnostic results rather than reimplementing counts or relationship semantics.
 
-### F. Build the learner-facing “Réviser” experience
+### Deferred editorial and learner-facing work
 
-1. Generate the revision index from the same canonical page metadata and typed relation; do not create a parallel hand-maintained list.
-2. Preserve the canonical Understand route order and any deliberately defined Build sequence/dependencies. Do not invent Build ordering.
-3. Provide filters or grouping by destination, topic, concept, and language only where the underlying metadata supports them.
-4. Link each aid to its full lesson, relevant exercises, concepts, and implementation resources.
-5. Keep French and English experiences aligned and ensure missing aids are visible as coverage gaps rather than silently omitted.
-6. Add route, link-integrity, ordering, accessibility, and bilingual coverage tests.
+After the technical sequence above:
+- assess the actual sufficiency, correctness, accessibility and bilingual equivalence of the existing recaps, self-checks and Build callouts;
+- pilot a small representative set before creating any new revision aid;
+- choose the lightest format per page and avoid duplicating existing companion sheets;
+- generate the learner-facing “Réviser” experience from the canonical relation and the Understand route;
+- keep issue #1109 open until the editorial contract, pilot, assessed coverage and learner-facing experience are complete.
 
-### G. Maintain coverage continuously
-
-1. Make every new Understand/Build page declare whether and how it is supported for revision.
-2. Make CI detect new pages without an assessed synthesis status once the typed relation is introduced.
-3. Publish counts and exceptions in the CI summary and retain machine-readable output.
-4. Re-run the audit after page moves, splits, merges, translations, or route changes.
-5. Keep #1109 open until the editorial contract, pilot, metadata relation, coverage review, and learner-facing experience are complete.
+For Build-specific revision expectations, continue coordinating with [issue #78](https://github.com/JM-Brun/llm-lab/issues/78). A revision sheet does not demonstrate that the learner can implement the system unaided.
 
 ## 4. Acceptance criteria for completion
 
@@ -143,4 +130,4 @@ The work is complete only when:
 
 ## 5. Current decision
 
-The inventory is complete and merged. Do not mass-create synthesis pages or change the metadata schema until the editorial contract and typed relation are approved. Continue the page-by-page Understand audit and close the pilot decision first. The relation proposal is sufficiently concrete to write tests once the resource representation is settled, but it is not yet an implemented repository contract. This sequence avoids duplicate pages, false coverage claims, and a second source of truth.
+The contract and inventory are documented, and the read-only ProjectIndex adapters are implemented. The contract remains a proposal: the page metadata validator and resource validator are unchanged, and none of the 62 pages has been migrated. The next task is inverse queries and real-repository tests, followed by the metric register and coverage matrix, then diagnostics and interfaces. Do not mass-create revision content or change the schema/validators ahead of that sequence and an explicit contract review.
