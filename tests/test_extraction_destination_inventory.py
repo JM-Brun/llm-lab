@@ -91,9 +91,10 @@ def test_inventory_separates_candidate_destinations_legacy_fields_and_local_rout
     }
     assert report["extraction_record_field_presence"]["pedagogical_model"] == 1
     assert report["extraction_record_field_shapes"]["pedagogical_model"] == {"mapping": 1}
-    assert report["extraction_record_nested_field_presence"]["pedagogical_model"][
-        "teaching_route"
-    ] == 1
+    assert (
+        report["extraction_record_nested_field_presence"]["pedagogical_model"]["teaching_route"]
+        == 1
+    )
     assert report["extraction_record_field_presence"]["items"] == 1
     assert report["candidate_destination_shapes"] == {"mapping": 1, "non-mapping": 1}
     assert report["candidate_destination_keys"]["route_ids"] == 1
