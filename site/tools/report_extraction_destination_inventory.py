@@ -99,6 +99,7 @@ def build_report(root: Path) -> dict[str, Any]:
             "target_routes",
         )
     }
+    pedagogical_model_routes = {"comparison.canonical_routes": _bucket()}
     item_key_presence: Counter[str] = Counter()
     candidate_shapes: Counter[str] = Counter()
     unknown_concepts: dict[str, set[str]] = {
@@ -158,8 +159,15 @@ def build_report(root: Path) -> dict[str, Any]:
                 filename_mismatches.append(relative_path)
 
         model = record.get("pedagogical_model")
-        if isinstance(model, dict) and isinstance(model.get("teaching_route"), list):
-            local_route_steps += len(model["teaching_route"])
+        if isinstance(model, dict):
+            if isinstance(model.get("teaching_route"), list):
+                local_route_steps += len(model["teaching_route"])
+            comparison = model.get("comparison")
+            if isinstance(comparison, dict) and "canonical_routes" in comparison:
+                _add(
+                    pedagogical_model_routes["comparison.canonical_routes"],
+                    comparison["canonical_routes"],
+                )
 
         items = record.get("items", [])
         if not isinstance(items, list):
@@ -246,6 +254,7 @@ def build_report(root: Path) -> dict[str, Any]:
         },
         "source_destinations": _finalize(source_destinations),
         "item_destinations": _finalize(item_destinations),
+        "pedagogical_model_routes": _finalize(pedagogical_model_routes),
         "unknown_concept_references": {
             key: sorted(values) for key, values in unknown_concepts.items()
         },
