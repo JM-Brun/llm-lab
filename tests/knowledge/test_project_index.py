@@ -297,10 +297,10 @@ def test_page_revision_aid_builds_bidirectional_queries_and_assessment(tmp_path:
 
     index = ProjectIndex.build(tmp_path)
 
-    edge = MODULE["RevisionEdge"]("page", "en/revision-sheet", "revision_sheet", "en/attention")
+    edge = MODULE["RevisionEdge"]("en/revision-sheet", "revision_sheet", "en/attention")
     assert index.revision_aids_for_lesson("en/attention") == (edge,)
     assert index.revision_aids_for_lesson("en/attention", role="flashcards") == ()
-    assert [page.page_id for page in index.lessons_for_revision_aid("page", "en/revision-sheet")] == [
+    assert [page.page_id for page in index.lessons_for_revision_aid("en/revision-sheet")] == [
         "en/attention"
     ]
     assert index.revision_support_for_lesson("en/attention")["status"] == "partial"
@@ -319,7 +319,7 @@ def test_revision_aid_must_target_a_published_understand_or_build_lesson(tmp_pat
         destination="practice",
         page_type="exercise-collection",
         revision_role="revision_sheet",
-        revision_of=["en/query"],
+        revision_of=["en/other-practice"],
     )
     _write_page(
         tmp_path / "site",
@@ -329,15 +329,11 @@ def test_revision_aid_must_target_a_published_understand_or_build_lesson(tmp_pat
         page_type="exercise-collection",
     )
     _write_sources(tmp_path)
-    path = tmp_path / "site" / "en" / "revision-sheet.qmd"
-    text = path.read_text(encoding="utf-8").replace("revision_of:\n- en/query", "revision_of:\n- en/other-practice")
-    path.write_text(text, encoding="utf-8")
-
     with pytest.raises(ValueError, match=r"revision_of \(eligible lesson\).*en/other-practice"):
         ProjectIndex.build(tmp_path)
 
 
-def test_revision_aid_rejects_duplicate_and_wrong_language_targets(tmp_path: Path) -> None:
+def test_revision_aid_rejects_duplicate_targets(tmp_path: Path) -> None:
     _write_page(tmp_path / "site", "fr/attention", "fr")
     _write_page(tmp_path / "site", "en/attention", "en")
     _write_page(
@@ -404,75 +400,6 @@ def test_integrated_revision_support_accepts_explicit_heading_anchor(tmp_path: P
     assert index.revision_support_for_lesson("en/attention")["status"] == "integrated_sufficient"
 
 
-def test_non_page_revision_aid_adapter_and_inverse_query(tmp_path: Path) -> None:
-    _write_page(tmp_path / "site", "fr/attention", "fr")
-    _write_page(tmp_path / "site", "en/attention", "en")
-    _write_page(tmp_path / "site", "en/query", "en")
-    _write_sources(tmp_path)
-    source = tmp_path / "src" / "revision-notes.md"
-    source.write_text("# Revision notes\n", encoding="utf-8")
-    path = tmp_path / "data" / "resources.yml"
-    resources = yaml.safe_load(path.read_text(encoding="utf-8"))
-    resources["resources"].append(
-        {
-            "id": "attention-revision-notes",
-            "kind": "revision-aid",
-            "labels": {"fr": "Fiche attention", "en": "Attention revision sheet"},
-            "descriptions": {"fr": "Fiche de révision.", "en": "Revision sheet."},
-            "language": "en",
-            "status": "published",
-            "location": {"type": "local", "path": "src/revision-notes.md"},
-            "concepts": [],
-            "revision_role": "revision_sheet",
-            "revision_of": ["en/attention"],
-        }
-    )
-    path.write_text(yaml.safe_dump(resources, sort_keys=False), encoding="utf-8")
-
-    index = ProjectIndex.build(tmp_path)
-
-    resource = index.resources_by_id["attention-revision-notes"]
-    assert resource.kind == "revision-aid"
-    assert resource.revision_role == "revision_sheet"
-    assert resource.revision_of == ("en/attention",)
-    assert [page.page_id for page in index.lessons_for_revision_aid("resource", resource.resource_id)] == [
-        "en/attention"
-    ]
-    assert index.revision_aids_for_lesson("en/attention")[0].aid_type == "resource"
-
-
-def test_draft_non_page_revision_aid_is_not_in_public_inverse_index(tmp_path: Path) -> None:
-    _write_page(tmp_path / "site", "fr/attention", "fr")
-    _write_page(tmp_path / "site", "en/attention", "en")
-    _write_page(tmp_path / "site", "en/query", "en")
-    _write_sources(tmp_path)
-    source = tmp_path / "src" / "revision-notes.md"
-    source.write_text("# Draft notes\n", encoding="utf-8")
-    path = tmp_path / "data" / "resources.yml"
-    resources = yaml.safe_load(path.read_text(encoding="utf-8"))
-    resources["resources"].append(
-        {
-            "id": "draft-attention-revision",
-            "kind": "revision-aid",
-            "labels": {"fr": "Fiche attention", "en": "Attention revision sheet"},
-            "descriptions": {"fr": "Brouillon.", "en": "Draft."},
-            "language": "en",
-            "status": "draft",
-            "location": {"type": "local", "path": "src/revision-notes.md"},
-            "concepts": [],
-            "revision_role": "revision_sheet",
-            "revision_of": ["en/attention"],
-        }
-    )
-    path.write_text(yaml.safe_dump(resources, sort_keys=False), encoding="utf-8")
-
-    index = ProjectIndex.build(tmp_path)
-
-    assert index.revision_aids_for_lesson("en/attention") == ()
-    with pytest.raises(KeyError, match="unknown published revision-aid resource"):
-        index.lessons_for_revision_aid("resource", "draft-attention-revision")
-
-
 def test_real_repository_index_has_referential_integrity() -> None:
     index = ProjectIndex.build(ROOT)
 
@@ -482,18 +409,16 @@ def test_real_repository_index_has_referential_integrity() -> None:
     assert len(index.page_resource_associations) == 10
     assert len(index.revision_edges) == 4
     assert {
-        (edge.aid_type, edge.aid_id, edge.role, edge.source_page_id)
+        (edge.aid_page_id, edge.role, edge.source_page_id)
         for edge in index.revision_edges
     } == {
-        ("page", "fr/revision-information-theory", "revision_sheet", "fr/entropy"),
-        ("page", "fr/revision-information-theory", "revision_sheet", "fr/cross-entropy"),
-        ("page", "en/revision-information-theory", "revision_sheet", "en/entropy"),
-        ("page", "en/revision-information-theory", "revision_sheet", "en/cross-entropy"),
+        ("fr/revision-information-theory", "revision_sheet", "fr/entropy"),
+        ("fr/revision-information-theory", "revision_sheet", "fr/cross-entropy"),
+        ("en/revision-information-theory", "revision_sheet", "en/entropy"),
+        ("en/revision-information-theory", "revision_sheet", "en/cross-entropy"),
     }
     assert {
-        page.page_id for page in index.lessons_for_revision_aid(
-            "page", "fr/revision-information-theory"
-        )
+        page.page_id for page in index.lessons_for_revision_aid("fr/revision-information-theory")
     } == {"fr/entropy", "fr/cross-entropy"}
     assert {
         edge.aid_id for edge in index.revision_aids_for_lesson("en/cross-entropy")
