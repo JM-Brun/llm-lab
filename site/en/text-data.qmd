@@ -19,6 +19,11 @@ hierarchy:
   parents: []
   children: ["en/unicode-text", "en/tokenization-strategies", "en/embedding-space"]
 related: ["en/generation", "en/context-engineering", "en/transformer", "en/text-data-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "The recap distinguishes token, ID and embedding, then traces Unicode text → tokens → IDs → vectors → contextual representations. The bilingual collection provides six formative exercises, worked solutions and a reproducible GPT-2 tokenizer trace; the introductory running example differs from FR without changing the concepts assessed."
 tags: ["type:concept-lesson", "destination:understand", "topic:text-data", "level:core", "language:en", "status:published"]
 -->
 
@@ -43,7 +48,7 @@ For a reproducible output with real IDs, the exercise collection provides a sepa
 
 The previous page introduced generation as a loop that operates on the tokens already present in the context. This page steps one stage upstream: it explains how a prompt becomes a sequence of tokens, then integer IDs that the model can turn into input vectors.
 
-::: {.callout-tip title="The one-minute mental model"}
+::: {.callout-tip title="The one-minute mental model" #revision-summary}
 Think of a **catalogue with reference numbers**. The tokenizer splits text into units (tokens) and assigns each one an ID. The ID retrieves a row from the embedding table: it is not a score or a measure of meaning. The Transformer then transforms these vectors using the surrounding context.
 
 **The key chain:** Unicode text → tokens → IDs → embedding vectors → contextual representations. Each arrow is a distinct transformation; in particular, do not confuse **vocabulary size** ($V$) with **embedding dimension** ($d$).
