@@ -33,7 +33,7 @@ This document is the operational backlog for turning the proposed Project Intell
 - Inverse resource/revision query methods were merged in PR #1399 and tested against the real repository.
 - Source/extraction, computational graph, historical, experiment and Build-milestone adapters remain future work.
 - No semantic links are inferred from tags, titles, body text or lexical similarity.
-- The metric registry and coverage-state contract are now documented in [project-metric-registry.md](project-metric-registry.md). The coverage matrix has not yet been computed. Diagnostics and interfaces remain unimplemented.
+- The metric registry and coverage-state contract are documented in [project-metric-registry.md](project-metric-registry.md). The first concept-matrix builder is being implemented; diagnostics and interfaces remain unimplemented.
 
 ## 2. Remaining work — ordered backlog
 
@@ -79,11 +79,12 @@ Tests must exercise the real repository, not only synthetic fixtures. Cover all 
 - Unsupported Build, practice, source-bridge and computation-bridge dimensions are explicitly marked not_registered rather than zero.
 - Revision support remains not_assessed until its proposed contract is approved and validated.
 
-**Substep 5b — coverage matrix (not yet implemented):**
-- Build one concept-centred row per canonical concept ID using the ProjectIndex query layer.
-- Keep definition, teaching pages, Understand, Build, computation, resources, sources, practice and bilingual parity as separate dimensions.
-- Every cell must carry state plus evidence IDs/paths and the rule that assigned it.
-- Do not compute an opaque aggregate score or treat not_registered/not_applicable/needs_review/not_assessed as failures.
+**Substep 5b — coverage matrix (first read-only projection implemented; validation pending):**
+- `site/tools/project_coverage.py` builds one concept-centred row per canonical concept ID using ProjectIndex.
+- Dimensions remain separate: definition, teaching pages, Understand, Build, computation, resources, revision support, sources, practice and bilingual parity.
+- Each cell carries state, evidence IDs/paths and an explanatory reason; deterministic state counts are included.
+- Build, computation, sources and practice remain not_registered. Revision support preserves not_assessed and the proposed-contract boundary.
+- No opaque aggregate score is computed; not_registered/not_applicable/needs_review/not_assessed are not failures.
 
 **Acceptance:** every published metric has a reproducible definition and explicit unit; matrix cells distinguish present, missing, not_applicable, not_registered, needs_review and not_assessed; unsupported dimensions remain visibly unregistered.
 
@@ -131,12 +132,11 @@ The CLI, JSON and dashboard must not implement separate counting or relationship
 
 ## 5. Immediate next actions
 
-1. Complete the concept-centred coverage matrix from the canonical metric registry.
-2. Implement only dimensions currently enumerable from ProjectIndex; label Build, computation, sources and practice as not_registered where no reviewed mapping exists.
-3. Add synthetic and real-repository tests for matrix states, evidence paths, bilingual grouping and deterministic ordering.
-4. Publish a reproducible matrix snapshot with repository commit and registry version.
-5. Review the matrix semantics and false-positive risk before considering diagnostics.
-6. Only after step 6 diagnostics are stable, add CLI, JSON/Markdown and dashboard interfaces.
+1. Validate the first concept-centred matrix implementation with CI and the real repository.
+2. Review cell-state semantics, especially no-association cases, revision not_assessed and bilingual parity; do not convert them to missing.
+3. Extend tests for any corrected semantics and publish a reproducible matrix snapshot with commit and registry version.
+4. Only after step 5 is accepted, begin deterministic diagnostics.
+5. Keep CLI, JSON/Markdown and dashboard interfaces deferred until diagnostics are stable in step 6.
 
 ## 6. Definition of done for the PIL
 
