@@ -467,9 +467,10 @@ def test_real_repository_resource_and_revision_inverse_queries() -> None:
     assert set(expected_pages) == set(index.resources_by_id)
     assert sum(len(page_ids) for page_ids in expected_pages.values()) == 10
     for resource_id, expected_page_ids in expected_pages.items():
-        assert tuple(
-            page.page_id for page in index.pages_for_resource(resource_id)
-        ) == expected_page_ids
+        assert (
+            tuple(page.page_id for page in index.pages_for_resource(resource_id))
+            == expected_page_ids
+        )
         for page_id in expected_page_ids:
             assert [resource.resource_id for resource in index.resources_for_page(page_id)] == [
                 resource_id
