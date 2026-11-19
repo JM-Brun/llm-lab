@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate a deterministic inventory of published Understand and Build pages."""
+"""Generate a deterministic inventory of Understand/Build pages and revision support."""
 
 from __future__ import annotations
 
