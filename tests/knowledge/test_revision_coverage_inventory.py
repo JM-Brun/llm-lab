@@ -1,4 +1,5 @@
 """Tests for the generated Understand/Build revision inventory."""
+
 from __future__ import annotations
 
 import runpy
@@ -14,10 +15,17 @@ AUDIT: dict[str, Any] = runpy.run_path(
 
 def page(page_id: str, language: str, destination: str, topic: str) -> dict[str, Any]:
     return {
-        "id": page_id, "language": language, "destination": destination,
-        "topic": topic, "level": "core", "type": "concept-lesson",
-        "title": page_id, "href": page_id + ".html",
-        "parents": [], "children": [], "related": [],
+        "id": page_id,
+        "language": language,
+        "destination": destination,
+        "topic": topic,
+        "level": "core",
+        "type": "concept-lesson",
+        "title": page_id,
+        "href": page_id + ".html",
+        "parents": [],
+        "children": [],
+        "related": [],
     }
 
 
@@ -42,7 +50,10 @@ def test_understand_pages_without_membership_are_reported_not_dropped() -> None:
 
 def test_build_inventory_does_not_invent_a_guided_route() -> None:
     inventory = AUDIT["build_revision_inventory"](
-        [page("fr/build-example", "fr", "build", "implementation")], [], [], route_memberships={}
+        [page("fr/build-example", "fr", "build", "implementation")],
+        [],
+        [],
+        route_memberships={},
     )
     record = inventory["pages"][0]
     assert record["route_status"] == "not_applicable"
@@ -63,7 +74,10 @@ def test_explicit_concept_and_implementation_edges_are_projected() -> None:
 
 def test_report_documents_unrouted_and_unassessed_semantics() -> None:
     inventory = AUDIT["build_revision_inventory"](
-        [page("fr/lesson", "fr", "understand", "lesson")], [], [], route_memberships={}
+        [page("fr/lesson", "fr", "understand", "lesson")],
+        [],
+        [],
+        route_memberships={},
     )
     report = AUDIT["render_markdown"](inventory)
     assert "unrouted" in report
