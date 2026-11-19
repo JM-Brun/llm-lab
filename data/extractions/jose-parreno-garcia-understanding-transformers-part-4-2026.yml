@@ -1,0 +1,149 @@
+source_id: jose-parreno-garcia-understanding-transformers-part-4-2026
+schema_version: 1
+pedagogical_model:
+  reconstruction:
+    status: partial
+    evidence_basis: "Complete visible article text retrieved on 2026-11-19; embedded figures were not inspected."
+    inferred_elements:
+      - "The article's teaching route moves from contextual motivation to Q/K/V roles, projections, score normalization, value aggregation and multiple heads."
+  source_graph:
+    nodes:
+      - {id: src-input-representations, kind: technical-entity, description: "Token embeddings combined with positional information.", locator: "Positional encoding recap from part 3"}
+      - {id: src-query-key-value, kind: technical-entity, description: "Learned projections produce query, key and value representations.", locator: "Pre-phase: Introducing Q K, V"}
+      - {id: src-attention-scores, kind: technical-entity, description: "Query-key dot products produce pairwise compatibility logits.", locator: "Step 1. MatMul of Q and K"}
+      - {id: src-scaled-softmax, kind: mechanism, description: "Scores are scaled and normalized row-wise.", locator: "Steps 2 and 3"}
+      - {id: src-value-aggregation, kind: mechanism, description: "Attention weights aggregate value vectors into contextualized outputs.", locator: "Step 4"}
+      - {id: src-multi-head, kind: architecture-component, description: "Multiple projected attention heads are concatenated.", locator: "Scaling attention through multiple heads"}
+      - {id: src-netflix-analogy, kind: analogy, description: "Recommendation search illustrates the distinct roles of query, key and value.", locator: "Pre-phase: Introducing Q K, V"}
+      - {id: src-cake-pronoun-example, kind: worked-example, description: "Cake/it sentence motivates context-dependent token relationships.", locator: "But, that is still not enough"}
+    edges:
+      - {from: src-input-representations, to: src-query-key-value, type: input-to-projection}
+      - {from: src-query-key-value, to: src-attention-scores, type: score-construction}
+      - {from: src-attention-scores, to: src-scaled-softmax, type: normalization}
+      - {from: src-scaled-softmax, to: src-value-aggregation, type: weighting}
+      - {from: src-value-aggregation, to: src-multi-head, type: parallel-head-extension}
+      - {from: src-netflix-analogy, to: src-query-key-value, type: pedagogical-analogy}
+      - {from: src-cake-pronoun-example, to: src-query-key-value, type: pedagogical-motivation}
+    interpretation: "This is a maintainer reconstruction of the article's explanatory dependencies, not a formal graph asserted by the author. Analogy edges do not imply mathematical equivalence."
+  learning_outcomes:
+    - {outcome: "Explain the distinct computational roles of Q, K and V.", status: declared, basis: "Article introduction and recap"}
+    - {outcome: "Trace scaled dot-product attention through scores, softmax and weighted aggregation.", status: declared, basis: "Four-step walkthrough"}
+    - {outcome: "Describe the high-level purpose of multiple attention heads.", status: declared, basis: "Multi-head section"}
+  assumed_prerequisites:
+    - {concept: "vectors and matrix multiplication", status: inferred, basis: "The article assumes familiarity with vector dimensions and matrix products."}
+    - {concept: "token embeddings and positional encodings", status: declared, basis: "Explicit recap of Part 3"}
+  teaching_route:
+    - {order: 1, section: "Positional encoding recap from part 3", function: motivation, teaching_moves: ["Recall embeddings plus position", "Expose missing contextual relationships"]}
+    - {order: 2, section: "The dreaded diagrams (again)", function: orientation, teaching_moves: ["Locate the multi-head attention component", "Narrow focus to scaled dot-product attention"]}
+    - {order: 3, section: "Pre-phase: Introducing Q K, V", function: mental-model, teaching_moves: ["Use Netflix search analogy", "Map analogy roles to tokens"]}
+    - {order: 4, section: "Step 1. MatMul of Q and K", function: derivation, teaching_moves: ["Project inputs with learned matrices", "Compute QK transpose logits"]}
+    - {order: 5, section: "Step 2. Scaling the scores", function: derivation, teaching_moves: ["Explain dimension-dependent scale", "Motivate softmax conditioning"]}
+    - {order: 6, section: "Step 3. Applying Softmax", function: derivation, teaching_moves: ["Normalize each query row", "Interpret weights as a distribution"]}
+    - {order: 7, section: "Step 4. MatMul of Attention Scores and Value Vectors", function: derivation, teaching_moves: ["Weight and sum value vectors", "Distinguish outputs from probabilities"]}
+    - {order: 8, section: "Scaling attention through multiple heads", function: extension, teaching_moves: ["Run multiple projections/heads", "Concatenate head outputs"]}
+  pedagogical_strengths:
+    - "Clear separation between matching (Q/K) and information aggregation (V)."
+    - "The Netflix analogy gives an accessible first mental model for the role distinction."
+    - "The worked matrix dimensions make the two matrix products concrete."
+    - "Explicitly warns that the weighted output vectors are not probabilities."
+  pedagogical_limits:
+    - "The Netflix analogy risks suggesting discrete catalogue labels; learned keys and values are continuous vectors."
+    - "The cake/it example can be mistaken for evidence that an individual attention head performs reliable coreference resolution."
+    - "The article omits the output projection W_O and detailed head dimensions."
+    - "The mask is presented too narrowly as training-only; causal masking also constrains autoregressive inference."
+    - "Parallel computation is true for sequence-wide training and prefill, not unrestricted autoregressive token generation."
+  comparison:
+    dossier: "docs/source-reviews/jose-parreno-garcia-transformers-part-4-2026-11.md"
+    canonical_graph: "data/concepts.yml"
+    decision: "reuse-existing-concepts; no new canonical concepts or pages proposed"
+    structures_kept_separate: ["Article's Netflix analogy", "Article-local teaching route", "Canonical concept graph", "Canonical bilingual Understand and Build routes"]
+items:
+  - id: jose-parreno-garcia-understanding-transformers-part-4-2026:contextual-relationships
+    kind: motivation
+    summary: "Embeddings encode token features and positional encodings add order, but contextual relationships between tokens require a content-dependent interaction mechanism."
+    locator: {type: section, value: "But, that is still not enough"}
+    evidence: {kind: explanatory-motivation, confidence: well-supported, scope: "The cake/it example motivates contextual interaction.", assumptions: [], limitations: ["The example motivates attention but does not demonstrate actual learned coreference behaviour."]}
+    classification: {concept_ids: [token-embedding, positional-encoding, self-attention, contextualized-representation]}
+    candidate_destinations: {pages: [fr/contextualized-representations, en/contextualized-representations], concepts: [self-attention, contextualized-representation]}
+    disposition: integrate-by-reference
+    disposition_rationale: "The canonical contextualized-representations lessons already cover this motivation; the example may serve as an optional illustration."
+  - id: jose-parreno-garcia-understanding-transformers-part-4-2026:qkv-role-analogy
+    kind: analogy
+    summary: "A recommendation-search analogy distinguishes the query as the request, keys as comparison representations and values as the information aggregated when matches receive weight."
+    locator: {type: section, value: "Pre-phase: Introducing Q K, V"}
+    evidence: {kind: pedagogical-analogy, confidence: context-dependent, scope: "Netflix science-fiction search analogy and its mapping to Q/K/V.", assumptions: [], limitations: ["A learned key is not simply a human-readable label, and a value is not a catalogue item; both are learned vector representations."]}
+    classification: {concept_ids: [query, key, value, attention-score, attention-weight]}
+    candidate_destinations: {pages: [fr/queries-keys-values, en/queries-keys-values], concepts: [query, key, value]}
+    pedagogical_profile: {learner_question: "Why are Q, K and V separate?", explanatory_lens: retrieval, teaching_form: [analogy, mental-model], abstraction_level: introductory, prerequisites: [token-embedding, matrix-multiplication], distinctive_value: "Separates relevance computation from information retrieval in a familiar search scenario.", limitations: ["The catalogue analogy is not a literal account of learned vector spaces."]}
+    pedagogical_assessment:
+      novelty: {level: low, rationale: "Q/K/V analogies already exist in project resources."}
+      complementarity: {level: moderate, rationale: "The recommendation-search framing is memorable and explicitly distinguishes matching from returned content."}
+      pedagogical_value: {level: moderate, rationale: "Can help beginners separate score computation from value aggregation."}
+      applicability: {level: moderate, rationale: "Could be offered as an optional analogy, not as the formal definition."}
+      redundancy: {level: moderate, rationale: "The conceptual distinction is already taught in canonical Q/K/V material."}
+      evidence_quality: {level: moderate, rationale: "The analogy is directly inspectable but is explanatory rather than empirical evidence."}
+    disposition: integrate-by-reference
+    disposition_rationale: "Retain as a reference analogy; do not add a second canonical explanation unless a page-level gap is demonstrated."
+  - id: jose-parreno-garcia-understanding-transformers-part-4-2026:learned-qkv-projections
+    kind: mechanism
+    summary: "Each input representation is linearly projected through learned matrices W_Q, W_K and W_V to form query, key and value vectors."
+    locator: {type: section, value: "Our input sentence as vectors goes through 2 linear transformations"}
+    evidence: {kind: architecture-description, confidence: well-supported, scope: "The article's learned Q/K/V projection explanation.", assumptions: ["The source discusses a standard learned-projection attention module."], limitations: ["Bias terms, parameter shapes and implementation variants are omitted."]}
+    classification: {concept_ids: [query, key, value, self-attention]}
+    candidate_destinations: {pages: [fr/queries-keys-values, en/queries-keys-values, fr/transformer-block-walkthrough, en/transformer-block-walkthrough], concepts: [query, key, value]}
+    disposition: already-covered
+    disposition_rationale: "Existing Q/K/V and Transformer block lessons explain the projections."
+  - id: jose-parreno-garcia-understanding-transformers-part-4-2026:query-key-scores
+    kind: mechanism
+    summary: "The matrix product QK transpose produces one compatibility logit for each query-key pair; rows correspond to queries and columns to keys."
+    locator: {type: section, value: "Now, we are ready for the MatMul of Q and K"}
+    evidence: {kind: mathematical-description, confidence: established, scope: "Scaled dot-product attention score construction.", assumptions: ["Q and K use compatible head dimensions."], limitations: ["A dot product is a learned compatibility score, not a calibrated semantic-similarity measure."]}
+    classification: {concept_ids: [attention-score, query, key, self-attention]}
+    candidate_destinations: {pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention], concepts: [attention-score, self-attention]}
+    disposition: already-covered
+    disposition_rationale: "The canonical scaled dot-product lessons already define the score matrix."
+  - id: jose-parreno-garcia-understanding-transformers-part-4-2026:scale-before-softmax
+    kind: mechanism
+    summary: "Scores are divided by the square root of the key dimension d_k before softmax, controlling logit magnitude and reducing softmax saturation as dimensionality grows."
+    locator: {type: section, value: "Step 2. Scaling the scores"}
+    evidence: {kind: mathematical-description, confidence: established, scope: "The scaling factor in scaled dot-product attention.", assumptions: ["The standard dot-product attention parameterization is used."], limitations: ["The article's explanation overstates brittleness and gradient instability; scaling controls variance and helps avoid saturated softmax/poor gradients, rather than guaranteeing stability."]}
+    classification: {concept_ids: [scaled-dot-product-attention, attention-score, softmax]}
+    candidate_destinations: {pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention], concepts: [scaled-dot-product-attention]}
+    disposition: correct
+    disposition_rationale: "Preserve the scaling intuition but use d_k precisely and qualify the optimization explanation."
+  - id: jose-parreno-garcia-understanding-transformers-part-4-2026:row-wise-softmax
+    kind: mechanism
+    summary: "Softmax is applied independently to each query row, turning that row's scaled logits into nonnegative weights that sum to one."
+    locator: {type: section, value: "Step 3. Applying Softmax"}
+    evidence: {kind: mathematical-description, confidence: established, scope: "Row-wise softmax over key positions.", assumptions: [], limitations: ["Softmax is a nonlinear normalization of logits; it does not learn complex token interactions by itself."]}
+    classification: {concept_ids: [softmax, attention-weight, self-attention]}
+    candidate_destinations: {pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention], concepts: [softmax, attention-weight]}
+    disposition: correct
+    disposition_rationale: "Correct the claim that softmax itself learns more complex interactions; the learned projections and subsequent layers provide model capacity."
+  - id: jose-parreno-garcia-understanding-transformers-part-4-2026:weighted-value-aggregation
+    kind: mechanism
+    summary: "Multiplying the attention-weight matrix by V computes a weighted sum of value vectors for each query, producing contextualized vectors that are not probabilities."
+    locator: {type: section, value: "Step 4. MatMul of Attention Scores and Value Vectors (V)"}
+    evidence: {kind: mathematical-description, confidence: established, scope: "The AV aggregation and its output dimensions.", assumptions: ["V has one row per key position."], limitations: ["The output mixes learned features; interpreting individual dimensions as explicit grammatical or sentiment labels is only a toy illustration."]}
+    classification: {concept_ids: [value, attention-weight, contextualized-representation, self-attention]}
+    candidate_destinations: {pages: [fr/contextualized-representations, en/contextualized-representations, fr/scaled-dot-product-attention, en/scaled-dot-product-attention], concepts: [contextualized-representation]}
+    disposition: already-covered
+    disposition_rationale: "The existing lessons already cover weighted aggregation and contextualized representations."
+  - id: jose-parreno-garcia-understanding-transformers-part-4-2026:multi-head-attention
+    kind: architecture
+    summary: "Multi-head attention applies several learned attention projections in parallel and combines their outputs, conventionally by concatenation followed by an output projection."
+    locator: {type: section, value: "Scaling attention through multiple heads"}
+    evidence: {kind: architecture-description, confidence: well-supported, scope: "The article's multi-head motivation and concatenation explanation.", assumptions: ["Standard multi-head attention."], limitations: ["The article omits the output projection W_O and its illustrative head dimensions should not be generalized to all Transformer configurations."]}
+    classification: {concept_ids: [multi-head-attention, self-attention]}
+    candidate_destinations: {pages: [fr/transformer-block-walkthrough, en/transformer-block-walkthrough], concepts: [multi-head-attention]}
+    disposition: correct
+    disposition_rationale: "Reuse the overview but supplement the missing output projection and precise per-head dimensions."
+  - id: jose-parreno-garcia-understanding-transformers-part-4-2026:parallelism-qualification
+    kind: limitation
+    summary: "Attention operations over a supplied sequence can be computed in parallel during training and prompt prefill, while autoregressive generation still depends sequentially on previously generated tokens."
+    locator: {type: section, value: "All of this happens in parallel!"}
+    evidence: {kind: technical-qualification, confidence: established, scope: "Qualification of the article's parallelism claim.", assumptions: ["Autoregressive decoder inference is considered."], limitations: ["Exact execution parallelism depends on the implementation and hardware."]}
+    classification: {concept_ids: [self-attention, autoregressive-generation]}
+    candidate_destinations: {pages: [fr/generation, en/generation, fr/transformer-block-walkthrough, en/transformer-block-walkthrough], concepts: [self-attention]}
+    disposition: correct
+    disposition_rationale: "Retain the training-parallelism point while distinguishing it from sequential token-by-token decoding."
