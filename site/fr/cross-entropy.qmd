@@ -19,6 +19,11 @@ hierarchy:
   parents: ["fr/entropy"]
   children: ["fr/loss"]
 related: ["fr/vraisemblance", "fr/cross-entropy-exercises"]
+revision_support:
+  status: partial
+  evidence:
+    - aid: fr/revision-information-theory
+      note: "La fiche couvre l’identité entropie + KL et le cas one-hot ; l’alignement décalé, les masques et le dénominateur des tokens valides restent spécifiques à la leçon."
 tags: ["type:concept-lesson", "destination:understand", "topic:cross-entropy", "level:core", "language:fr", "status:published"]
 -->
 
