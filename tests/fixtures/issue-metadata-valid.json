@@ -1,0 +1,22 @@
+{
+  "labels": [
+    {"name": "P0"},
+    {"name": "P1"},
+    {"name": "P2"},
+    {"name": "P3"},
+    {"name": "area:governance"},
+    {"name": "type:audit"}
+  ],
+  "issues": [
+    {
+      "number": 1,
+      "title": "[P2] Example governance audit",
+      "state": "open",
+      "labels": [
+        {"name": "P2"},
+        {"name": "area:governance"},
+        {"name": "type:audit"}
+      ]
+    }
+  ]
+}
