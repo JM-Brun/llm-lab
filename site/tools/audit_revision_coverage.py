@@ -289,8 +289,11 @@ def render_markdown(inventory: dict[str, Any]) -> str:
             "- Build is inventoried from the published destination tag;",
             "  no linear order is inferred.",
             "- Concept and implementation links come from explicit registry edges.",
-            "- not_assessed does not mean a page lacks a synthesis;",
-            "  no typed synthesis relation exists yet.",
+            "- not_assessed means no editorial revision-support assessment is recorded;",
+            "  it does not mean a page lacks a synthesis or revision aid.",
+            "- Revision-aid links and revision-support assessments are independent:",
+            "  a linked aid does not imply sufficient coverage, and integrated support",
+            "  is anchored to an explicit section or callout in the source page.",
             "",
         ]
     )
