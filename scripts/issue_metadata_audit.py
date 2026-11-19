@@ -169,5 +169,5 @@ if __name__ == "__main__":
     try:
         raise SystemExit(main())
     except (KeyError, OSError, json.JSONDecodeError, RuntimeError) as exc:
-        sys.stderr.write(f"issue metadata audit: {exc}\\n")
+        sys.stderr.write(f"issue metadata audit: {exc}\n")
         raise SystemExit(2) from exc
