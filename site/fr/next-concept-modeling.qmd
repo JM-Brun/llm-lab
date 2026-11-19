@@ -75,6 +75,17 @@ Ces chiffres sont des résultats d'expérience, pas des propriétés universelle
 - **Qualité et robustesse :** il faut étudier les erreurs qui se propagent entre niveaux, les compromis débit/qualité et le comportement hors distribution.
 - **Comparaison équitable :** mesurer latence, débit, mémoire, coût d'entraînement et qualité avec des protocoles comparables.
 
+## Vérifier le mécanisme et la portée des résultats
+
+Dans NCM, quelle partie de la génération est séquentielle, et quelle partie peut être parallélisée ? Quelle conclusion serait excessive à partir d'un bon résultat sur Sudoku ?
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+Les niveaux de codes sont générés séquentiellement, du grossier au fin ; les positions d'un même niveau peuvent être prédites en parallèle. Un résultat sur Sudoku documente une performance dans un protocole et un domaine précis. Il ne suffit pas à établir une capacité générale de raisonnement, l'interprétabilité des codes latents ou une supériorité universelle sur les modèles autorégressifs et de diffusion.
+
+</details>
+
 ## Expérimenter et lire les sources
 
 La prochaine étape expérimentale pertinente est d'inspecter le code officiel et les checkpoints, puis de reproduire une expérience réduite sur un jeu de données et un protocole documentés. Ne pas présenter une exécution non vérifiée comme une reproduction.
