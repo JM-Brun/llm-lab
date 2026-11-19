@@ -17,11 +17,20 @@ hierarchy:
   parents: ["fr/build-path"]
   children: []
 related: ["fr/transformer", "fr/gpt-config-walkthrough-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "Le rappel relie les sept champs de configuration aux dimensions et formes du modèle, l'immuabilité de GPTConfig et la validation précoce ; les tests et exercices existants vérifient ces contrats."
 tags: ["type:guided-build", "destination:build", "topic:reference-gpt-config", "level:applied", "language:fr", "status:published"]
 -->
 
 ::: {.chapter-lead}
 Cette page est la première étape (1 sur 5) de la visite guidée du code de référence : le fichier le plus petit du paquet, celui qui définit **ce qu'est le modèle** avant que tout autre fichier ne définisse **ce qu'il fait**. Chaque extrait de code est commenté ligne par ligne ; le code complet vit dans [`src/llm_lab/foundations/gpt_config.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt_config.py).
+:::
+
+::: {.callout-tip title="La configuration en une minute" #revision-summary}
+La configuration nomme les dimensions qui déterminent les formes du modèle et regroupe leurs contraintes dans un objet immuable. La validation à la construction fait échouer tôt les combinaisons incohérentes, avec un message qui désigne le champ concerné, avant qu'une opération numérique ne produise une erreur de forme plus difficile à diagnostiquer.
 :::
 
 :::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d'apprentissage"}
