@@ -81,7 +81,6 @@ class ProjectIndex:
                     concept_to_pages[concept_id].add(page_id)
                     page_to_concepts[page_id].add(concept_id)
 
-        for concept_id, concept in concepts.items():
         page_domain_index: dict[str, set[str]] = defaultdict(set)
         for page in published:
             domain = page.metadata.get("domain")
