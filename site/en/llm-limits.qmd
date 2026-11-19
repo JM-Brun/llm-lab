@@ -30,7 +30,8 @@ Predicting the next token is a **training objective**. What a model gains from i
 By the end of this page, you will be able to:
 - distinguish what follows from the training objective from what requires evaluation;
 - state the criterion used behind the word "understand";
-- distinguish model-only evaluation from evaluation of a complete assistant and name several relevant dimensions;\n- explain why an apparent ability depends on the metric and the protocol.
+- distinguish model-only evaluation from evaluation of a complete assistant and name several relevant dimensions;
+- explain why an apparent ability depends on the metric and the protocol.
 :::
 
 ## 1. What the objective guarantees — and does not
