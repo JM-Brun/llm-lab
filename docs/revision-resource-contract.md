@@ -1,6 +1,8 @@
 # Revision-resource relationship contract
 
-**Status:** proposed architecture contract; not an implemented metadata schema.  
+**Status:** proposed architecture contract; not an implemented metadata schema.
+
+**Read-model implementation note:** [PR #1394](https://github.com/JM-Brun/llm-lab/pull/1394) adds a read-only ProjectIndex adapter for this proposed shape. No current page declares a revision object; the page metadata and resource validators, registries and historical page records remain unchanged. This adapter does not make the proposal a canonical schema.  
 **Date:** 2026-11-19  
 **Scope:** explicit associations between a learning page and its revision support (integrated section, companion page or non-page artifact) for synthesis, flashcards and revision sheets.
 
