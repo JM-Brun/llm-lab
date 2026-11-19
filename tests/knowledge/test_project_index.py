@@ -351,6 +351,25 @@ def test_revision_aid_rejects_duplicate_targets(tmp_path: Path) -> None:
         ProjectIndex.build(tmp_path)
 
 
+def test_revision_aid_rejects_wrong_language_targets(tmp_path: Path) -> None:
+    _write_page(tmp_path / "site", "fr/attention", "fr")
+    _write_page(tmp_path / "site", "en/attention", "en")
+    _write_page(
+        tmp_path / "site",
+        "en/revision-sheet",
+        "en",
+        destination="practice",
+        page_type="exercise-collection",
+        revision_role="revision_sheet",
+        revision_of=["fr/attention"],
+    )
+    _write_page(tmp_path / "site", "en/query", "en")
+    _write_sources(tmp_path)
+
+    with pytest.raises(ValueError, match=r"revision_of language.*fr/attention"):
+        ProjectIndex.build(tmp_path)
+
+
 def test_revision_support_requires_valid_page_aid_evidence(tmp_path: Path) -> None:
     support = {
         "status": "companion_sufficient",
@@ -421,7 +440,7 @@ def test_real_repository_index_has_referential_integrity() -> None:
         page.page_id for page in index.lessons_for_revision_aid("fr/revision-information-theory")
     } == {"fr/entropy", "fr/cross-entropy"}
     assert {
-        edge.aid_id for edge in index.revision_aids_for_lesson("en/cross-entropy")
+        edge.aid_page_id for edge in index.revision_aids_for_lesson("en/cross-entropy")
     } == {"en/revision-information-theory"}
     assert all(
         index.revision_support_for_lesson(page_id)["status"] == "partial"
