@@ -100,6 +100,7 @@ def build_report(root: Path) -> dict[str, Any]:
         )
     }
     pedagogical_model_routes = {"comparison.canonical_routes": _bucket()}
+    record_key_presence: Counter[str] = Counter()
     item_key_presence: Counter[str] = Counter()
     candidate_shapes: Counter[str] = Counter()
     unknown_concepts: dict[str, set[str]] = {
@@ -149,6 +150,7 @@ def build_report(root: Path) -> dict[str, Any]:
         extraction_files += 1
         relative_path = path.relative_to(root).as_posix()
         record = _load(path)
+        record_key_presence.update(record.keys())
         source_id = record.get("source_id")
         if not isinstance(source_id, str) or not source_id:
             malformed.append(relative_path + ":missing-source-id")
@@ -248,6 +250,7 @@ def build_report(root: Path) -> dict[str, Any]:
             "malformed_records_or_items": len(malformed),
             "source_local_teaching_route_steps": local_route_steps,
         },
+        "extraction_record_field_presence": dict(sorted(record_key_presence.items())),
         "item_field_presence": dict(sorted(item_key_presence.items())),
         "candidate_destination_shapes": dict(sorted(candidate_shapes.items())),
         "candidate_destination_keys": {
@@ -304,6 +307,17 @@ def render_markdown(report: dict[str, Any]) -> str:
     ]
     for key, value in report["counts"].items():
         lines.append(f"| {key.replace('_', ' ')} | {value} |")
+    lines.extend(
+        [
+            "",
+            "## Extraction-record field presence",
+            "",
+            "| Field | Extraction records |",
+            "|---|---:|",
+        ]
+    )
+    for key, value in report["extraction_record_field_presence"].items():
+        lines.append(f"| `{key}` | {value} |")
     lines.extend(["", "## Item field presence", "", "| Field | Items |", "|---|---:|"])
     for key, value in report["item_field_presence"].items():
         lines.append(f"| `{key}` | {value} |")
