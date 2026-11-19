@@ -53,6 +53,55 @@ def test_synthetic_matrix_uses_explicit_evidence_and_keeps_unknown_states(tmp_pa
     )
 
 
+def test_revision_not_applicable_is_not_counted_as_missing(tmp_path: Path) -> None:
+    write_page = FIXTURES["_write_page"]
+    write_sources = FIXTURES["_write_sources"]
+    for page_id, language in (
+        ("fr/attention", "fr"),
+        ("en/attention", "en"),
+        ("en/query", "en"),
+    ):
+        write_page(
+            tmp_path / "site",
+            page_id,
+            language,
+            revision={"status": "not_applicable", "reason": "outside scope"},
+        )
+    write_sources(tmp_path)
+    matrix = build_concept_coverage(ProjectIndex.build(tmp_path))
+    rows = {row["concept_id"]: row for row in matrix["rows"]}
+
+    assert _state(rows["attention"], "revision_support") == "not_applicable"
+    assert _state(rows["query"], "revision_support") == "not_applicable"
+    assert all(
+        cell["state"] != "missing"
+        for row in rows.values()
+        for cell in row["dimensions"].values()
+    )
+
+
+def test_assessed_without_declared_aid_requires_review_not_missing(tmp_path: Path) -> None:
+    write_page = FIXTURES["_write_page"]
+    write_sources = FIXTURES["_write_sources"]
+    for page_id, language in (
+        ("fr/attention", "fr"),
+        ("en/attention", "en"),
+        ("en/query", "en"),
+    ):
+        write_page(
+            tmp_path / "site",
+            page_id,
+            language,
+            revision={"status": "assessed", "resources": []},
+        )
+    write_sources(tmp_path)
+    matrix = build_concept_coverage(ProjectIndex.build(tmp_path))
+    rows = {row["concept_id"]: row for row in matrix["rows"]}
+
+    assert _state(rows["attention"], "revision_support") == "needs_review"
+    assert _state(rows["query"], "revision_support") == "needs_review"
+
+
 def test_matrix_evidence_paths_are_repository_relative_and_deterministic() -> None:
     index = ProjectIndex.build(ROOT)
     first = build_concept_coverage(index)
