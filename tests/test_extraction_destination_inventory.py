@@ -110,11 +110,9 @@ def test_inventory_separates_candidate_destinations_legacy_fields_and_local_rout
     assert report["unknown_concept_references"]["item.candidate_destinations.concepts"] == [
         "missing-candidate-concept"
     ]
-    assert report["unknown_concept_reference_occurrences"][
-        "item.candidate_destinations.concepts"
-    ]["missing-candidate-concept"] == [
-        {"extraction_file": "data/extractions/source-one.yml", "item_id": "source-one:item-one"}
-    ]
+    assert report["unknown_concept_reference_occurrences"]["item.candidate_destinations.concepts"][
+        "missing-candidate-concept"
+    ] == [{"extraction_file": "data/extractions/source-one.yml", "item_id": "source-one:item-one"}]
     assert report["unknown_concept_references"]["item.mapped_concepts"] == [
         "missing-mapped-concept"
     ]
