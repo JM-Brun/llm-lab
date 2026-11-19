@@ -157,7 +157,9 @@ def build_concept_coverage(index: Any) -> dict[str, Any]:
             {
                 "id": page_id,
                 "path": _page_path(index.pages_by_id[page_id]),
-                "status": index.revision_support_by_page.get(page_id, {}).get("status", "not_assessed"),
+                "status": index.revision_support_by_page.get(page_id, {}).get(
+                    "status", "not_assessed"
+                ),
             }
             for page_id in page_ids
         ]
