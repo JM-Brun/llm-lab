@@ -10,7 +10,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from collections import Counter
+from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
 
@@ -101,6 +101,9 @@ def build_report(root: Path) -> dict[str, Any]:
     }
     item_key_presence: Counter[str] = Counter()
     candidate_shapes: Counter[str] = Counter()
+    unknown_concept_occurrences: dict[str, dict[str, list[dict[str, Any]]]] = {
+        key: defaultdict(list) for key in unknown_concepts
+    }
     unknown_concepts: dict[str, set[str]] = {
         key: set()
         for key in (
@@ -123,15 +126,23 @@ def build_report(root: Path) -> dict[str, Any]:
                 if field in related:
                     refs = _add(source_destinations[f"related.{field}"], related[field])
                     if field == "concepts":
-                        unknown_concepts["source.related.concepts"].update(
-                            set(refs) - known_concepts
-                        )
+                        unknown = set(refs) - known_concepts
+                        unknown_concepts["source.related.concepts"].update(unknown)
+                        for concept_id in unknown:
+                            unknown_concept_occurrences["source.related.concepts"][concept_id].append(
+                                {"source_id": source.get("id")}
+                            )
         classification = source.get("classification")
         if isinstance(classification, dict) and "concept_ids" in classification:
             refs = _add(
                 source_destinations["classification.concept_ids"], classification["concept_ids"]
             )
-            unknown_concepts["source.classification.concept_ids"].update(set(refs) - known_concepts)
+            unknown = set(refs) - known_concepts
+            unknown_concepts["source.classification.concept_ids"].update(unknown)
+            for concept_id in unknown:
+                unknown_concept_occurrences["source.classification.concept_ids"][concept_id].append(
+                    {"source_id": source.get("id")}
+                )
 
     for path in sorted((data_dir / "extractions").glob("*.yml")):
         extraction_files += 1
@@ -180,7 +191,12 @@ def build_report(root: Path) -> dict[str, Any]:
                 if field in item:
                     refs = _add(item_destinations[field], item[field])
                     if field == "mapped_concepts":
-                        unknown_concepts["item.mapped_concepts"].update(set(refs) - known_concepts)
+                        unknown = set(refs) - known_concepts
+                        unknown_concepts["item.mapped_concepts"].update(unknown)
+                        for concept_id in unknown:
+                            unknown_concept_occurrences["item.mapped_concepts"][concept_id].append(
+                                {"extraction_file": relative_path, "item_id": item.get("id")}
+                            )
 
             candidate = item.get("candidate_destinations")
             if "candidate_destinations" in item:
@@ -196,9 +212,14 @@ def build_report(root: Path) -> dict[str, Any]:
                                 candidate[field],
                             )
                             if field == "concepts":
-                                unknown_concepts["item.candidate_destinations.concepts"].update(
-                                    set(refs) - known_concepts
-                                )
+                                unknown = set(refs) - known_concepts
+                                unknown_concepts["item.candidate_destinations.concepts"].update(unknown)
+                                for concept_id in unknown:
+                                    unknown_concept_occurrences[
+                                        "item.candidate_destinations.concepts"
+                                    ][concept_id].append(
+                                        {"extraction_file": relative_path, "item_id": item.get("id")}
+                                    )
 
     return {
         "schema_version": 1,
@@ -224,6 +245,10 @@ def build_report(root: Path) -> dict[str, Any]:
         "item_destinations": _finalize(item_destinations),
         "unknown_concept_references": {
             key: sorted(values) for key, values in unknown_concepts.items()
+        },
+        "unknown_concept_reference_occurrences": {
+            key: {concept_id: locations for concept_id, locations in sorted(values.items())}
+            for key, values in unknown_concept_occurrences.items()
         },
         "exceptions": {
             "unknown_extraction_source_ids": sorted(unknown_sources),
