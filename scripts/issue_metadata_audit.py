@@ -69,9 +69,7 @@ def classify(
         types = [label for label in labels if label.startswith("type:")]
 
         if len(priorities) > 1:
-            errors.append(
-                f"#{number}: multiple priority labels ({', '.join(priorities)})"
-            )
+            errors.append(f"#{number}: multiple priority labels ({', '.join(priorities)})")
 
         for name, values in (
             ("priority", priorities),
