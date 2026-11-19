@@ -119,8 +119,8 @@ def _load_non_page_resources(
     ):
         raise ValueError("data/resources.yml: expected mapping with schema_version: 1")
     entries = data.get("resources")
-    if not isinstance(entries, list):
-        raise ValueError("data/resources.yml: resources must be a list")
+    if not isinstance(entries, list) or not entries:
+        raise ValueError("data/resources.yml: resources must be a non-empty list")
 
     records: dict[str, ResourceRecord] = {}
     page_associations: list[PageResourceAssociation] = []
