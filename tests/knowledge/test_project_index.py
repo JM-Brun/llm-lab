@@ -152,3 +152,36 @@ def test_unknown_ids_fail_clearly(tmp_path: Path) -> None:
         index.pages_for_concept("missing")
     with pytest.raises(KeyError, match="unknown published page"):
         index.concepts_for_page("missing")
+
+
+def test_concept_page_reference_must_exist(tmp_path: Path) -> None:
+    _write_page(tmp_path / "site", "fr/attention", "fr")
+    _write_page(tmp_path / "site", "en/attention", "en")
+    _write_page(tmp_path / "site", "en/query", "en")
+    _write_sources(tmp_path)
+    concepts_path = tmp_path / "data" / "concepts.yml"
+    concepts = yaml.safe_load(concepts_path.read_text(encoding="utf-8"))
+    concepts["concepts"][0]["resources"].append("fr/missing")
+    concepts_path.write_text(yaml.safe_dump(concepts, sort_keys=False), encoding="utf-8")
+
+    with pytest.raises(ValueError, match=r"data/concepts.yml.*attention.*fr/missing"):
+        ProjectIndex.build(tmp_path)
+
+
+def test_page_edge_target_must_exist(tmp_path: Path) -> None:
+    _write_page(tmp_path / "site", "fr/attention", "fr")
+    _write_page(tmp_path / "site", "en/attention", "en", next_page="en/missing")
+    _write_page(tmp_path / "site", "en/query", "en")
+    _write_sources(tmp_path)
+
+    with pytest.raises(ValueError, match=r"en/attention.qmd.*suggested_route.next.*en/missing"):
+        ProjectIndex.build(tmp_path)
+
+
+def test_real_repository_index_has_referential_integrity() -> None:
+    index = ProjectIndex.build(ROOT)
+
+    assert index.pages_by_id
+    assert index.concepts_by_id
+    assert all(edge.target in index.pages_by_id for edge in index.page_edges)
+    assert index.stats() == ProjectIndex.build(ROOT).stats()
