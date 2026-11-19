@@ -442,7 +442,7 @@ def test_real_repository_index_has_referential_integrity() -> None:
         "en/revision-information-theory"
     }
     assert all(
-        index.revision_support_for_lesson(page_id)["status"] == "partial"
+        index.revision_support_for_lesson(page_id)["status"] == "integrated_sufficient"
         for page_id in ("fr/entropy", "en/entropy", "fr/cross-entropy", "en/cross-entropy")
     )
     integrated_pages = {
@@ -474,6 +474,10 @@ def test_real_repository_index_has_referential_integrity() -> None:
         "en/loss",
         "fr/gradients",
         "en/gradients",
+        "fr/entropy",
+        "en/entropy",
+        "fr/cross-entropy",
+        "en/cross-entropy",
         "fr/positional-encoding",
         "en/positional-encoding",
         "fr/contextualized-representations",
