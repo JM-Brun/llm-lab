@@ -40,6 +40,11 @@ def build_concept_coverage(index: Any) -> dict[str, Any]:
     rows: list[dict[str, Any]] = []
 
     memberships_by_page: dict[str, list[Any]] = {}
+    resource_ids_by_concept: dict[str, set[str]] = {}
+    for association in index.concept_resource_associations:
+        resource_ids_by_concept.setdefault(association.concept_id, set()).add(
+            association.resource_id
+        )
     for membership in index.route_memberships:
         memberships_by_page.setdefault(membership.page_id, []).append(membership)
 
@@ -108,7 +113,7 @@ def build_concept_coverage(index: Any) -> dict[str, Any]:
             ),
         )
 
-        resource_ids = sorted(index.resource_ids_by_concept.get(concept_id, ()))
+        resource_ids = sorted(resource_ids_by_concept.get(concept_id, ()))
         resource_evidence = [
             {"id": resource_id, "path": f"data/resources.yml#{resource_id}"}
             for resource_id in resource_ids
@@ -124,10 +129,11 @@ def build_concept_coverage(index: Any) -> dict[str, Any]:
         )
 
         revision_states = [
-            index.revision_status_by_page.get(page_id, "not_assessed") for page_id in page_ids
+            index.revision_support_by_page.get(page_id, {}).get("status", "not_assessed")
+            for page_id in page_ids
         ]
         revision_edges = [
-            edge for page_id in page_ids for edge in index.revision_targets_for_page(page_id)
+            edge for page_id in page_ids for edge in index.revision_aids_for_lesson(page_id)
         ]
         if not page_ids:
             revision_state = "needs_review"
@@ -151,17 +157,19 @@ def build_concept_coverage(index: Any) -> dict[str, Any]:
             {
                 "id": page_id,
                 "path": _page_path(index.pages_by_id[page_id]),
-                "status": index.revision_status_by_page.get(page_id, "not_assessed"),
+                "status": index.revision_support_by_page.get(page_id, {}).get(
+                    "status", "not_assessed"
+                ),
             }
             for page_id in page_ids
         ]
         revision_evidence.extend(
             {
-                "id": (f"{edge.source_page_id}:{edge.role}:{edge.target_type}:{edge.target_id}"),
-                "path": _page_path(index.pages_by_id[edge.source_page_id]),
+                "id": f"{edge.aid_page_id}:{edge.role}:{edge.source_page_id}",
+                "path": _page_path(index.pages_by_id[edge.aid_page_id]),
                 "role": edge.role,
-                "target_type": edge.target_type,
-                "target_id": edge.target_id,
+                "target_type": "page",
+                "target_id": edge.source_page_id,
             }
             for edge in revision_edges
         )
