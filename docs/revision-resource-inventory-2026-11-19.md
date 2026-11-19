@@ -74,7 +74,7 @@ Two bilingual page pairs already exist elsewhere in the published site. They are
 | Page pair | Destination / type | Content and current relationship evidence |
 |---|---|---|
 | `fr/revision-information-theory`, `en/revision-information-theory` | Practice / `exercise-collection` | Revises surprisal, entropy, cross-entropy, KL divergence and predictive coding. Its `related` metadata points to entropy, cross-entropy and experience-information-theory pages. |
-| `fr/compression-revision`, `en/compression-revision` | Deepen / `concept-bridge` | Visual synthesis of predictive coding, entropy, model compression, runtime memory, empirical evidence and self-check. It is explicitly linked in the body of the French/English entropy and LLM-overview pages (four source-page links in total). |
+| `fr/compression-revision`, `en/compression-revision` | Deepen / `concept-bridge` | Visual synthesis of predictive coding, entropy, model compression, runtime memory, empirical evidence and self-check. It is explicitly linked in the body of the French/English entropy and LLM-overview pages (six link occurrences across four source pages). |
 
 These are existing revision resources worth retaining and reviewing. Their current `related` edges or body links are **not** typed revision-ownership relations. Do not count a generic related edge as proof that the page is the canonical revision companion for a lesson.
 
