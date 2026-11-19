@@ -33,7 +33,7 @@ P0 is not a synonym for "important". An empty P0 queue is valid. Priority expres
 
 - `area:*` identifies the principal project domain affected.
 - `type:*` identifies the nature of the work (for example, audit, documentation, feature, maintenance or test, using only existing repository labels).
-- `internal` and `meta` are cross-cutting scope markers, not replacements for area, type or priority. Use them only according to their existing repository meaning; do not infer them from a title alone.
+- Do not assume `internal` or `meta` are canonical labels. Searches of the current issue set found no issues using either label; their existence in the repository label catalogue and any intended semantics still require a separate taxonomy check. Do not introduce either label without an explicit decision.
 - Assignees express explicit ownership, not priority. Do not assign people without a clear basis.
 - Milestones express a real delivery grouping, not a substitute for a due date.
 - Dependencies must be represented by issue relationships or explicit links, not merely by ordering in a handoff.
