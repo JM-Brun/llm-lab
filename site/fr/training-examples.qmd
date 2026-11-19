@@ -19,6 +19,11 @@ hierarchy:
   parents: ["fr/corpus-preparation"]
   children: []
 related: ["fr/tokenization-strategies", "fr/vraisemblance", "fr/training-examples-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "Le récapitulatif couvre le décalage des cibles, le teacher forcing, le fenêtrage/stride, les masques distincts et les formes de tenseurs ; la checklist de débogage le complète."
 tags: ["type:concept-bridge", "destination:build", "topic:training-examples", "level:core", "language:fr", "status:published"]
 -->
 
@@ -235,7 +240,7 @@ Quand la perte est anormalement basse, élevée ou instable, vérifier :
 
 
 
-::: {.callout-tip title="Fiche de révision — construire des exemples autorégressifs"}
+::: {.callout-tip #revision-summary title="Fiche de révision — construire des exemples autorégressifs"}
 - **Alignement :** pour une entrée $x=[t_0,\ldots,t_{L-1}]$, la cible est décalée d'un token, $y=[t_1,\ldots,t_L]$. Chaque position prédit son successeur.
 - **Teacher forcing :** le préfixe observé sert de contexte ; le masque causal interdit l'accès aux tokens futurs. Ce conditionnement n'est ni la loss ni l'optimiseur.
 - **Fenêtrage :** la longueur fixe le contexte disponible ; le stride fixe le déplacement entre fenêtres et donc leur recouvrement.
