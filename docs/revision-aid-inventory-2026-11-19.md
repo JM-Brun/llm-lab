@@ -1,0 +1,118 @@
+# Inventory of existing revision support — 2026-11-19
+
+**Status:** source-level inventory and editorial triage; not a rendered UX or learner-outcome sign-off.  
+**Scope:** the 62 published Understand and Build pages in the inventory artifact produced by PR #1379, plus existing page-based and non-page revision candidates.  
+**Snapshot:** source SHA `817048ecda141fbf256e42237dc1a4f34bf44a88`; CI artifact `revision-coverage-inventory-0e98372c76a6bf1e4b00f731a9e9654ce3fb06d9`.
+
+## 1. Inventory baseline
+
+| Destination | Published pages | FR | EN | Topic groups |
+|---|---:|---:|---:|---:|
+| Understand | 46 | 23 | 23 | 23 |
+| Build | 16 | 8 | 8 | 8 |
+| **Total** | **62** | **31** | **31** | **31** |
+
+The artifact records 144 explicit concept-to-page edges in Understand, 18 in Build, and 10 implementation-resource associations, all in Build. All 62 generated `synthesis_status` values are `not_assessed`; this is an inventory limitation, not a finding that the pages lack synthesis.
+
+The editorial observations below come from source reviews recorded in issue [#1109](https://github.com/JM-Brun/llm-lab/issues/1109). The artifact and those comments are the evidence base; this document does not claim that every page has received a paragraph-by-paragraph scientific re-review or rendered accessibility review.
+
+## 2. Existing revision-aid entities
+
+### 2.1 Published Quarto page aids
+
+| Artifact | Existing metadata | Existing learner-facing function | Current disposition |
+|---|---|---|---|
+| `site/{fr,en}/revision-information-theory.qmd` | `destination:practice`, `type:exercise-collection`; language-specific pages | Dedicated revision sheet: core formulas, cross-entropy/KL identity, worked numerical example, conceptual traps, attention/KL vs mutual information, predictive V-information, self-check and answers | Retain as the canonical learner-facing information-theory revision sheet. Candidate sources include entropy and cross-entropy; exact typed links remain to be added only after contract implementation. |
+| `site/{fr,en}/compression-revision.qmd` | `destination:deepen`, `type:concept-bridge`; language-specific pages | Mental map and compact conceptual bridge between predictive data compression, model compression and runtime memory; equations, coding constraints, entropy/surprisal distinctions and references | Retain. Treat as an existing page-based synthesis candidate; assess its exact source lessons and role before adding typed links. Do not create another generic compression sheet. |
+
+The two pairs are not interchangeable: the information-theory page is explicitly a Practice revision sheet, while compression is a Deepen concept bridge. Keep their existing editorial types and destinations; the future relation must not rewrite them into a new page type merely to make the inventory work.
+
+### 2.2 Non-page candidates
+
+| Artifact | Current evidence | Classification |
+|---|---|---|
+| `docs/revision-sheets/information-theory-and-llms-2026-11.md` | 119-line internal Markdown document; overlaps the Quarto sheet but has additional XOR/zlib examples, seven self-checks and extended discussion | **Not currently a learner-facing companion.** Prior review classifies it as an internal editorial/source-work note unless publication intent changes. Do not register it as a revision aid now. |
+| `data/resources.yml` | Five records, all `kind: implementation` (GPT config, GPT ops, Transformer block, GPT model, generation modules) | Implementation resources only. Preserve their current kind and `referenced_by` semantics. |
+| `docs/source-syntheses/` and `docs/source-reviews/` | Research-source syntheses and technical source reviews | Research provenance/documentation, not learner revision aids. Do not count them as lesson revision coverage. |
+| Dedicated flashcard files | No filename-level flashcard artifact appeared in the recursive repository tree inventory | No dedicated flashcard resource identified in this pass. This is not proof that no inline retrieval prompts exist. |
+
+**Conclusion on non-page resources:** the inspected repository does not currently demonstrate a learner-facing non-page revision aid that warrants a new `kind: revision-aid`. Do not extend `data/resources.yml` yet. Keep the possibility in the contract, but defer the adapter and schema change until a concrete, approved learner-facing file or flashcard dataset exists.
+
+### 2.3 Practice and experiment resources are not automatically revision sheets
+
+Existing Practice pages and experiment guides often provide retrieval questions, worked solutions or reproducible procedures. They remain Practice resources according to their current metadata. A page is not a synthesis aid solely because it links to a lesson or contains exercises. A future typed role should be assigned only after an explicit editorial decision about the function it performs.
+
+## 3. Understand inventory — 23 bilingual topic pairs
+
+The following records summarize existing source-level audits. “Reuse” means use the current lesson/Practice support rather than create a duplicate sheet; it does not imply a rendered accessibility sign-off.
+
+| Topic pair | Existing synthesis / retrieval support observed | Disposition |
+|---|---|---|
+| `causal-masking` | One-minute mental model, formal causal rule, triangular mask visual, distinction from padding/document/loss masks, invariance check and exercises | Reuse; no second sheet or diagram |
+| `context-engineering` | Three context levels and distinctions between stored history, transmitted context and attention-accessible information; seven applied Practice questions | Reuse; no duplicate overview |
+| `contextualized-representations` | One-minute recap, pipeline, same-ID vs context-dependent state distinction, attention-head caveats; Practice self-check and advanced SAE investigation | Reuse; no separate sheet |
+| `cross-entropy` | Per-token objective, target distribution, worked example, sequence alignment, masking/reduction and edge cases; exercises and self-check | Reuse the information-theory sheet for conceptual recall; keep a targeted recall prompt for shift/mask/valid-token denominator in the canonical lesson |
+| `embedding-space` | Integrated lookup diagram and distinctions among token ID, embedding row/vector and point in space; Practice questions and NumPy exercise | Reuse; no separate sheet |
+| `entropy` | One-minute model, definition, numerical example, bounds, entropy vs observed surprisal and self-check; covered by the information-theory revision sheet | Reuse; ensure context/temperature/calibration caveats remain represented in the lesson or practice |
+| `gradients` | Chain-rule explanation, worked derivation, gradient-vs-update distinction, examples and executable tests/exercises | Reuse; no generic recap |
+| `in-context-learning` | Fixed-weights/changing-context distinction, zero/one/few-shot, relation to fine-tuning and RAG, experimental checklist; bilingual diagram added in PR #1112 | Reuse the integrated visual and Practice material |
+| `inference-generation` | Distribution-to-selection loop, decoding policy, prefill/decode and KV-cache distinctions; Practice resources | Reuse; keep generation separate from scoring and training |
+| `llm-limits` | Critical synthesis of next-token objective vs guarantees, model/system evaluation dimensions, mechanical-design case; four bilingual retrieval questions | Reuse; no separate sheet |
+| `llm-overview` | Introductory mental model, six-stage computation diagram, generation/scoring/training separation, learning outcomes and Practice checks | Reuse as the orientation synthesis |
+| `logits` | Canonical lesson with targeted visual increment on translation invariance of softmax (PR #1118), examples and exercises | Reuse; no duplicate sheet |
+| `loss` | Aggregated objective, masking and reduction conventions, examples, exercises and worked answers | Reuse; preserve distinction from per-token cross-entropy |
+| `positional-encoding` | One-minute recap, insertion-point diagram, distinction from causal masking, extrapolation limits and bilingual Practice questions | Reuse; no separate sheet |
+| `post-training` | One-minute recap and comparison of pretraining, SFT, preference methods and context-only interventions; four retrieval questions and transfer scenario | Reuse; no separate sheet |
+| `probabilites` | Conditional distributions, temperature, filtering/renormalization and calibration distinctions; bilingual visual increment in PR #1119 and exercises | Reuse; no duplicate sheet |
+| `queries-keys-values` | Three-projection visual and explicit distinction between Q/K determining weights and V supplying aggregated content; exercises | Reuse; visual already carries the core synthesis |
+| `scaled-dot-product-attention` | Five-step mechanism, equations, counterexamples and limits; bilingual Q/K vs V computation visual in PR #1120 and exercises | Reuse; no extra infographic quota |
+| `text-data` | Orientation pipeline from text through tokens and IDs to embeddings, practical boundaries and linked exercise paths | Reuse as the core entry point; do not copy advanced tokenization material into a second sheet |
+| `training-loop` | End-to-end workflow separating forward pass, loss, backpropagation, optimizer update and validation; examples and exercises | Reuse; keep implementation claims aligned with actual code |
+| `transformer` | Canonical computation walkthrough with self-check, exercises and code/test references | Reuse; no separate synthesis page |
+| `transformer-architectures` | One-minute mental model, six-dimension comparison, original bilingual diagram, architecture/objective/task distinction, limits and four-question Practice companion | Reuse; established positive exemplar |
+| `vraisemblance` | Likelihood chain linked to generation/probabilities, numerical worked examples and Practice transfer questions | Reuse existing lesson and exercises; no separate sheet |
+
+### Understand limits
+
+- The 16-page first-tranche review was initially a structural source audit; later passes deepened selected pairs (embedding/position/contextualization, entropy/cross-entropy, post-training/context engineering and LLM limits).
+- Several visual increments have CI and Quarto validation, but no rendered desktop/mobile, keyboard, screen-reader or learner-outcome sign-off is claimed.
+- The inventory records observed support and decisions, not a numeric pedagogical-quality score.
+- All 46 pages remain `not_assessed` in the machine-generated inventory until the typed relation and independent assessment schema are implemented and migrated.
+
+## 4. Build inventory — 8 bilingual topic pairs
+
+| Build pair | Existing revision support observed | Disposition |
+|---|---|---|
+| `build-path` | Construction order, milestones, verification evidence and distinction between generate, score and train | Keep as route/orientation; no formula sheet |
+| `corpus-preparation` | Five aligned decision areas: data sources, deduplication/split leakage, tokenizer fitting, annotation quality and hand-off; exercises, but no dedicated self-check block | Assess current exercises against a reusable corpus-release checklist before deciding whether to add one |
+| `training-examples` | Shifted inputs/targets, teacher forcing, windows/stride, document boundaries/packing, padding/loss masks, shapes, debugging checklist and worked exercises | Strong candidate for a concise implementation contract/checklist; improve the existing page/companion before creating a separate artifact |
+| `reference-gpt-config` | Bilingual code walkthrough, configuration fields, validation/test evidence, exercises and implementation-resource link | Reuse walkthrough/tests; no generic sheet |
+| `reference-gpt-ops` | Bilingual numerical operations, tensor shapes/conventions, tests and exercises | Reuse; compare the FR/EN recap presentation, but do not infer a content defect from a marker heuristic |
+| `reference-transformer-block` | Bilingual block recipe, Q/K/V/O, residual paths, shapes, tests and exercises | Reuse implementation evidence; no separate sheet |
+| `reference-gpt-model` | Bilingual assembly walkthrough, model components, tests, exercises and implementation-resource link | Reuse; no duplicate module summary |
+| `reference-gpt-generation` | Bilingual autoregressive generation walkthrough, tests, exercises and implementation-resource link | Reuse; no duplicate generation sheet |
+
+Build's six pages without implementation-resource associations are exactly the two language versions of `build-path`, `corpus-preparation` and `training-examples`. This is not automatically a defect: the first is orientation, and the latter two need a specific resource need established before linking code. The ten implementation associations remain distinct from revision coverage.
+
+## 5. Decisions and next work
+
+1. Keep the two published page-aid pairs as the current explicit revision-aid candidates; do not create more generic sheets.
+2. Keep the internal Markdown sheet outside the learner-facing resource graph until its publication and maintenance role is explicitly changed.
+3. Do not add a non-page revision resource kind to `data/resources.yml` yet; current records are implementation resources only.
+4. Continue individual editorial assessment where the evidence is provisional, especially cross-entropy's shift/mask contract, entropy caveats, and Build corpus-preparation/training-examples.
+5. Implement page-aid relations first after the contract is accepted; the published page index already preserves raw metadata, but the metadata validator and inventory projection do not yet validate or use revision fields.
+6. Revisit the non-page adapter only when a genuine learner-facing non-page aid is identified.
+7. Keep rendered UX/accessibility validation as a separate gate before closing #1109.
+
+## 6. Audit provenance
+
+Relevant issue #1109 records:
+
+- Initial 16-page Understand source triage: [comment 7020226984](https://github.com/JM-Brun/llm-lab/issues/1109#issuecomment-7020226984).
+- Existing revision artifacts and information-theory pilot: [comment 7019921778](https://github.com/JM-Brun/llm-lab/issues/1109#issuecomment-7019921778).
+- Build audit of all eight topic pairs: [comment 7019937145](https://github.com/JM-Brun/llm-lab/issues/1109#issuecomment-7019937145).
+- Embeddings, position and contextualization audit: [comment 7019976945](https://github.com/JM-Brun/llm-lab/issues/1109#issuecomment-7019976945).
+- Post-training and context-engineering audit: [comment 7020045751](https://github.com/JM-Brun/llm-lab/issues/1109#issuecomment-7020045751).
+- LLM-limits audit: [comment 7020086727](https://github.com/JM-Brun/llm-lab/issues/1109#issuecomment-7020086727).
+
+This inventory is a maintained snapshot, not a second source of truth. Refresh it from the generated inventory artifact and the page-by-page audit records after page moves, additions, translations or content changes.
