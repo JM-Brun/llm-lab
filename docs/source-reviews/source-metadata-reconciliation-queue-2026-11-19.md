@@ -218,15 +218,17 @@
 
 ## Suivi des résolutions — 2026-11-19 (mise à jour)
 
-L'instantané ci-dessus reste conservé comme photographie initiale au commit indiqué. Les changements fusionnés ou en attente sont suivis séparément afin de ne pas réécrire rétroactivement le périmètre de l'audit.
+L'instantané initial ci-dessus reste conservé comme photographie de départ. Les décisions ultérieures et les recomptages sont consignés séparément.
 
-- **Dates :** PR [#1334](https://github.com/JM-Brun/llm-lab/pull/1334) fusionnée après succès des contrôles Python, tests, scan des secrets et audit Quarto/navigateur. Quatre dates ont été renseignées avec preuve primaire et événement d'historique. Le nombre attendu de dates inconnues passe donc de 44 à **40**, sous réserve de recomptage du registre courant.
-- **Licence :** PR [#1337](https://github.com/JM-Brun/llm-lab/pull/1337) ouverte pour vérifier la licence MIT du module éducatif `tiktoken/_educational.py` à partir du LICENSE du dépôt et de l'inspection du fichier. Les contrôles n'ont pas encore démarré au moment de cette note ; le statut reste **en attente**, et le total de 127 statuts inconnus/incomplets n'est pas encore décrémenté.
-- **Périmètre :** la vérification MIT porte sur le logiciel du dépôt et le module inspecté. Elle ne couvre pas automatiquement les dépendances, modèles, ressources tierces ou données. Les droits sur les données restent inconnus ; aucun contenu n'a été copié dans LLM Lab.
+- **Dates :** PR [#1334](https://github.com/JM-Brun/llm-lab/pull/1334) fusionnée ; quatre dates ont été renseignées avec preuve primaire et événement d'historique. Le registre courant contient maintenant **40 dates de publication inconnues** (recomptage direct de 139 entrées, commit de registre observé pendant la réconciliation).
+- **Licence :** la vérification MIT du module éducatif tiktoken a été intégrée dans [#1339](https://github.com/JM-Brun/llm-lab/pull/1339), fusionnée. Le recomptage direct du registre courant donne **125 statuts de licence unknown/incomplete** sur 139 entrées. Le nombre initial de 127 est donc dépassé ; cette baisse ne doit pas être interprétée comme une validation globale des droits.
+- **PR intermédiaire :** [#1337](https://github.com/JM-Brun/llm-lab/pull/1337) a été fermée comme doublon/supersédée par #1339 ; elle n'est pas une étape encore en attente.
+- **Périmètre :** la vérification MIT porte sur le logiciel du dépôt tiktoken à la révision épinglée et le module éducatif inspecté. Elle ne couvre pas automatiquement les dépendances, modèles, ressources tierces, figures ou données. Les droits sur les données restent inconnus ; aucun contenu n'a été copié dans LLM Lab.
+- **Limite du recomptage :** les statuts unknown/incomplete sont un indicateur administratif de métadonnées, pas une mesure de couverture scientifique ni une autorisation de réutilisation. Les décisions source par source restent nécessaires.
 
 ### Contrôles de clôture à effectuer
 
-1. Recompter les dates et licences sur le registre courant après chaque fusion.
-2. Ne clôturer la vérification MIT qu'après succès des contrôles obligatoires de #1337 et fusion effective.
-3. Mettre à jour les files détaillées en conservant l'historique des décisions et les URLs de preuve.
-4. Maintenir séparés les statuts de publication, licence du texte, licence du code, droits sur les figures et droits sur les données.
+1. Poursuivre la vérification source par source des 125 licences inconnues/incomplètes, en séparant licence du texte, licence du code, droits sur les figures et droits sur les données.
+2. Examiner les 40 dates inconnues par lots de preuves primaires ; conserver explicitement null lorsqu'aucune date fiable n'est exposée.
+3. Recompter le registre après chaque lot fusionné et mettre à jour les files détaillées avec les URLs de preuve et limites.
+4. Ne convertir aucun statut inconnu en licence permissive par défaut ; le lien seul reste la règle en l'absence de preuve.
