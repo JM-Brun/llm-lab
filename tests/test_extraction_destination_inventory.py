@@ -59,6 +59,7 @@ def test_inventory_separates_candidate_destinations_legacy_fields_and_local_rout
                     "candidate_destinations": {
                         "pages": ["en/example"],
                         "concepts": ["known-concept", "missing-candidate-concept"],
+                        "route_ids": ["understand"],
                     },
                     "classification": {"concept_ids": ["known-concept"]},
                     "mapped_concepts": ["known-concept", "missing-mapped-concept"],
@@ -88,6 +89,10 @@ def test_inventory_separates_candidate_destinations_legacy_fields_and_local_rout
         "source_local_teaching_route_steps": 2,
     }
     assert report["candidate_destination_shapes"] == {"mapping": 1, "non-mapping": 1}
+    assert report["candidate_destination_keys"]["route_ids"] == 1
+    assert report["item_destinations"]["candidate_destinations.route_ids"]["unique_references"] == [
+        "understand"
+    ]
     assert report["source_destinations"]["related.pages"]["references"] == 1
     assert report["item_destinations"]["candidate_destinations.pages"]["references"] == 1
     assert report["item_destinations"]["mapped_concepts"]["references"] == 2
