@@ -19,6 +19,10 @@ For work that adds knowledge, connects existing topics, or proposes a new reader
 5. **Visual treatment:** use the [design system](docs/design-system.md); do not create page-specific styling when a shared component is appropriate.
 6. **Experiments and evidence:** use the [experiment protocol](docs/experiment-protocol.md), and keep configurations, reports, and source artifacts in their designated locations.
 
+## Issue backlog
+
+Use the [issue backlog governance](docs/workflows/issue-backlog-governance.md) policy when creating, prioritizing, classifying, linking, reviewing or closing issues. Run `python scripts/audit_issue_metadata.py JM-Brun/llm-lab` to check required metadata across all open issues.
+
 ## Maintenance and validation workflow
 
 For a change that affects page metadata, concepts, resources, curriculum, templates, or generated maps:
