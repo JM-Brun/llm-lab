@@ -131,18 +131,14 @@ def build_revision_inventory(
         if language not in LANGUAGES:
             unexpected_languages.append({"id": record["id"], "language": str(language)})
         if not isinstance(topic, str) or not topic.strip():
-            missing_topic_pages.append(
-                {"id": record["id"], "destination": record["destination"]}
-            )
+            missing_topic_pages.append({"id": record["id"], "destination": record["destination"]})
             continue
         if language in LANGUAGES:
             topic_language_counts[(record["destination"], topic)][language] += 1
 
     bilingual_parity: dict[str, list[dict[str, Any]]] = {}
     for destination in DESTINATIONS:
-        topics = sorted(
-            topic for dest, topic in topic_language_counts if dest == destination
-        )
+        topics = sorted(topic for dest, topic in topic_language_counts if dest == destination)
         bilingual_parity[destination] = []
         for topic in topics:
             counts_for_topic = topic_language_counts[(destination, topic)]
