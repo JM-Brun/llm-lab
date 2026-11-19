@@ -159,7 +159,7 @@ The current page validator:
 - validates the known page relation fields, tag dimensions, Quarto `keywords` parity, route/hierarchy reciprocity and acyclicity, bilingual parity, and render-list coverage;
 - returns a normalized page record containing only its currently recognized fields.
 
-It does **not** currently parse, normalize, validate or return a `revision` object. An extra `revision` key is therefore not covered by the current page contract; its presence could be silently ignored by downstream consumers. The proposed relationship is consequently **not validator-compatible as an implemented feature**, even though the current parser does not reject unknown page-map keys.
+It does **not** currently parse, normalize, validate or return a `revision` object, and it does not resolve revision anchors against page-body headings. An extra `revision` key is therefore not covered by the current page contract; its presence could be silently ignored by downstream consumers. The proposed relationship is consequently **not validator-compatible as an implemented feature**, even though the current parser does not reject unknown page-map keys.
 
 ### 5.2 `site/tools/check_resource_registry.py`
 
@@ -205,7 +205,7 @@ The 62-page historical snapshot must remain unchanged until the contract, its co
 
 ## 7. Decisions still requiring review
 
-- Is the optional page-map `revision` object the right canonical owner, or should the relation live in a separate relation registry?
+- Is the optional page-map `revision` object the right canonical owner, or should the relation live in a separate relation registry?\n- Should integrated sections be targeted by explicit heading anchors, and what exact heading/block syntax should the validator recognize?
 - Are the three proposed roles sufficiently distinct for the artifacts actually present?
 - Does the resource registry need a generic `revision` kind, or do concrete non-page artifacts justify narrower kinds?
 - What is the precise eligibility rule for `not_applicable`?
