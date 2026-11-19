@@ -6703,7 +6703,7 @@ sources:
           - "Comments were not substantively inspected."
           - "No reuse licence was established."
     related:
-      pages: [fr/text-data, en/text-data, fr/tokenization-strategies, en/tokenization-strategies, fr/language-modeling-math, en/language-modeling-math]
+      pages: [fr/corpus-preparation, en/corpus-preparation, fr/text-data, en/text-data, fr/tokenization-strategies, en/tokenization-strategies, fr/language-modeling-math, en/language-modeling-math]
       concepts: [token, next-token-prediction, cross-entropy]
       audit_records:
         - docs/source-reviews/jose-parreno-garcia-llms-explained-part-3-tokenization-training-2026-11.md
