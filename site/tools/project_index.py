@@ -1,7 +1,7 @@
 """Deterministic, read-only queries over LLM Lab's canonical project metadata.
 
 This module composes existing readers. It is an in-memory projection, not a
-new registry or source of truth. Page, concept, route, resource and revision relations stay distinct.
+new registry or source of truth. Page, concept, route, resource and revision relations\nstay distinct.
 """
 
 from __future__ import annotations
@@ -92,8 +92,8 @@ def _has_explicit_anchor(source: str, anchor: str) -> bool:
     """Find an explicit Quarto heading/div or HTML ID; never infer a slug from text."""
     escaped = re.escape(anchor)
     patterns = (
-        rf"^#{1,6}\s+.*\{{[^}}\n]*#{escaped}(?:\s|}})[^}}\n]*\}}\s*$",
-        rf"^:::\s+\{{[^}}\n]*#{escaped}(?:\s|}})[^}}\n]*\}}\s*$",
+        rf"^#{1,6}\s+.*\{{[^}}\n]*#{escaped}(?=\s|})[^}}\n]*\}}\s*$",
+        rf"^:::\s+\{{[^}}\n]*#{escaped}(?=\s|})[^}}\n]*\}}\s*$",
         rf"\bid=[\"']{escaped}[\"']",
     )
     return any(re.search(pattern, source, re.MULTILINE) for pattern in patterns)
