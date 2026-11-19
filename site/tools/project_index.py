@@ -1,7 +1,8 @@
 """Deterministic, read-only queries over LLM Lab's canonical project metadata.
 
 This module composes existing readers. It is an in-memory projection, not a
-new registry or source of truth. Page, concept, route, resource and revision relations\nstay distinct.
+new registry or source of truth. Page, concept, route, resource and revision relations
+stay distinct.
 """
 
 from __future__ import annotations
