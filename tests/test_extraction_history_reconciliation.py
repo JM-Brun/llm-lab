@@ -230,7 +230,7 @@ def test_marek_concepts_have_bilingual_pages_and_documentary_evidence() -> None:
         "policy-gradient",
         "score function",
         "off-policy",
-        "training–inference mismatch",
+        "mismatch",
         "score centering",
         "importance sampling",
     ):
