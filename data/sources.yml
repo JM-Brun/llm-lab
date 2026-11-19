@@ -2399,7 +2399,7 @@ sources:
       contribution_types: [theory, pedagogy]
       audiences: [learner, practitioner]
     scan_status: inaccessible
-    integration_status: not-reviewed
+    integration_status: partially-integrated
     scan_history:
       - accessed_at: "2026-11-06"
         status: inaccessible
