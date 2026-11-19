@@ -20,6 +20,7 @@ from build_learning_map import (  # noqa: E402
     load_guided_route,
     load_pages,
 )
+from project_index import ProjectIndex  # noqa: E402
 from strict_yaml import load_yaml  # noqa: E402
 
 DESTINATIONS = ("understand", "build")
@@ -39,6 +40,8 @@ def build_revision_inventory(
     concepts: list[dict[str, Any]],
     resources: list[dict[str, Any]],
     route_memberships: dict[str, list[dict[str, Any]]] | None = None,
+    revision_support_by_page: dict[str, dict[str, Any]] | None = None,
+    revision_aids_by_lesson: dict[str, list[dict[str, Any]]] | None = None,
 ) -> dict[str, Any]:
     """Project all published destination pages and their explicit relations."""
     concept_ids_by_page: dict[str, list[str]] = defaultdict(list)
@@ -52,6 +55,12 @@ def build_revision_inventory(
         for page_id in resource.get("referenced_by", []):
             if isinstance(page_id, str):
                 implementation_ids_by_page[page_id].append(str(resource.get("id")))
+
+    if revision_support_by_page is None:
+        revision_support_by_page = {}
+    if revision_aids_by_lesson is None:
+        revision_aids_by_lesson = {}
+    page_by_id = {page["id"]: page for page in pages}
 
     if route_memberships is None:
         route_memberships = {}
@@ -86,6 +95,24 @@ def build_revision_inventory(
                 route_status = "optional"
             else:
                 route_status = "unrouted"
+        revision_support = revision_support_by_page.get(
+            page_id,
+            {"status": "not_assessed", "evidence": [], "reason": None},
+        )
+        revision_aids: list[dict[str, Any]] = []
+        for aid in revision_aids_by_lesson.get(page_id, []):
+            aid_id = aid.get("id")
+            aid_page = page_by_id.get(aid_id)
+            if aid_page is None:
+                raise ValueError(f"revision aid {aid_id!r} for lesson {page_id!r} is not a published page")
+            revision_aids.append(
+                {
+                    "id": aid_id,
+                    "role": aid.get("role"),
+                    "title": aid_page.get("title"),
+                    "href": aid_page.get("href"),
+                }
+            )
         records.append(
             {
                 "id": page_id,
@@ -103,7 +130,8 @@ def build_revision_inventory(
                 "related": sorted(page.get("related", [])),
                 "concept_ids": sorted(concept_ids_by_page.get(page_id, [])),
                 "implementation_resource_ids": sorted(implementation_ids_by_page.get(page_id, [])),
-                "synthesis_status": "not_assessed",
+                "revision_support": revision_support,
+                "revision_aids": sorted(revision_aids, key=lambda aid: (aid["id"], aid["role"])),
             }
         )
     records.sort(key=lambda item: (item["destination"], item["language"], item["id"]))
@@ -119,7 +147,11 @@ def build_revision_inventory(
                 if destination == "understand"
                 else None
             ),
-            "synthesis_not_assessed": len(subset),
+            "revision_support_by_status": dict(
+                sorted(Counter(page["revision_support"]["status"] for page in subset).items())
+            ),
+            "pages_with_revision_aids": sum(bool(page["revision_aids"]) for page in subset),
+            "revision_aid_links": sum(len(page["revision_aids"]) for page in subset),
         }
 
     topic_language_counts: dict[tuple[str, str], Counter[str]] = defaultdict(Counter)
@@ -162,6 +194,8 @@ def build_revision_inventory(
             "data/guided-route.yml",
             "data/concepts.yml",
             "data/resources.yml",
+            "LLM-LAB-PAGE-MAP revision_role/revision_of/revision_support",
+            "site/tools/project_index.py",
         ],
         "counts": counts,
         "topic_language_counts": {
@@ -199,8 +233,8 @@ def render_markdown(inventory: dict[str, Any]) -> str:
         lines.extend(
             [
                 "",
-                "| Language | Page | Topic | Route | Concepts | Implementation resources |",
-                "|---|---|---|---|---:|---:|",
+                "| Language | Page | Topic | Route | Revision support | Revision aids | Concepts | Implementation resources |",
+                "|---|---|---|---|---|---:|---:|---:|",
             ]
         )
         for page in inventory["pages"]:
@@ -209,6 +243,7 @@ def render_markdown(inventory: dict[str, Any]) -> str:
             lines.append(
                 f"| {page['language']} | [{page['title']}]({page['href']}) "
                 f"({page['id']}) | {page['topic']} | {page['route_status']} | "
+                f"{page['revision_support']['status']} | {len(page['revision_aids'])} | "
                 f"{len(page['concept_ids'])} | {len(page['implementation_resource_ids'])} |"
             )
         lines.append("")
@@ -259,10 +294,18 @@ def main() -> int:
     parser.add_argument("--json", type=Path, help="Write JSON to this path (default: stdout)")
     parser.add_argument("--markdown", type=Path, help="Also write a Markdown report")
     args = parser.parse_args()
+    project_index = ProjectIndex.build(ROOT)
+    revision_aids_by_lesson: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for edge in project_index.revision_edges:
+        revision_aids_by_lesson[edge.source_page_id].append(
+            {"id": edge.aid_page_id, "role": edge.role}
+        )
     inventory = build_revision_inventory(
         load_pages(),
         registry_entries(ROOT / "data/concepts.yml", "concepts"),
         registry_entries(ROOT / "data/resources.yml", "resources"),
+        revision_support_by_page=project_index.revision_support_by_page,
+        revision_aids_by_lesson=revision_aids_by_lesson,
     )
     payload = json.dumps(inventory, ensure_ascii=False, indent=2) + "\n"
     if args.json:
