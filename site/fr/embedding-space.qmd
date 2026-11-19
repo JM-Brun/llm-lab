@@ -20,10 +20,10 @@ hierarchy:
   children: ["fr/positional-encoding", "fr/contextualized-representations", "fr/cosine-similarity", "fr/linearite-embeddings"]
 related: ["fr/embedding-space-exercises", "fr/gpt-model-walkthrough"]
 revision_support:
-  status: partial
+  status: integrated_sufficient
   evidence:
-    - anchor: lookup
-      note: "La leçon explique le lookup, la matrice V×d, l'apprentissage des vecteurs et la transition vers les états contextualisés ; le compagnon Practice propose trois questions corrigées et une exploration guidée. Il manque toutefois un rappel intégré très court qui rassemble adresse de ligne, vecteur statique et distinction avec l'état contextualisé."
+    - anchor: revision-summary
+      note: "Le rappel rassemble les trois distinctions de la leçon : l'ID est une adresse de ligne, la ligne contient un vecteur statique de dimension d, et les couches du Transformer produisent ensuite des états contextualisés dépendant de la position et du contexte. Trois questions corrigées et l'exploration guidée renforcent le rappel."
 tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:fr", "status:published"]
 -->
 
@@ -31,6 +31,10 @@ tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space",
 
 ::: {.chapter-lead}
 Après la tokenisation, le modèle reçoit une séquence d'**IDs entiers**. Chaque ID permet de retrouver un vecteur appris dans une table de paramètres : la **matrice de plongements** (*embedding matrix*). Cette page explique ce lookup, puis distingue soigneusement l'adresse de la ligne, le vecteur stocké dans cette ligne et les représentations que le Transformer construira ensuite.
+:::
+
+::: {.callout-tip title="L'idée à retenir en une minute" #revision-summary}
+Un **Token ID est une adresse de ligne**, pas un vecteur ni une coordonnée dans l'espace. La matrice d'embeddings $E\in\mathbb{R}^{V\times d}$ associe à chaque ID un vecteur initial de dimension $d$. Deux occurrences du même ID partagent ce vecteur de lookup ; les couches du Transformer produisent ensuite des états contextualisés différents selon la position et le contexte.
 :::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
