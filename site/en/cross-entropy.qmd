@@ -19,6 +19,11 @@ hierarchy:
   parents: ["en/entropy"]
   children: ["en/loss"]
 related: ["en/likelihood", "en/cross-entropy-exercises"]
+revision_support:
+  status: partial
+  evidence:
+    - aid: en/revision-information-theory
+      note: "The sheet covers the entropy + KL identity and one-hot case; shifted alignment, masks and the valid-token denominator remain lesson-specific."
 tags: ["type:concept-lesson", "destination:understand", "topic:cross-entropy", "level:core", "language:en", "status:published"]
 -->
 
