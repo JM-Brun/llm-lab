@@ -17,12 +17,21 @@ hierarchy:
   parents: ["en/build-path"]
   children: []
 related: ["en/transformer", "en/tensors", "en/gpt-ops-walkthrough-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "The recap brings together initialization, linear projection, per-position layer normalization with epsilon and approximate GELU; the page exposes shapes and unit tests for each operation."
 tags: ["type:guided-build", "destination:build", "topic:reference-gpt-ops", "level:applied", "language:en", "status:published"]
 -->
 
 ::: {.chapter-lead}
 This page is the second stop (2 of 5) of the guided tour. This file gathers the operations every Transformer block repeats: weight initialization, linear projection, normalization and activation. Keeping them out of the model classes has two benefits: each operation is **testable alone**, and the model files read **like architecture**. Full source: [`src/llm_lab/foundations/gpt_ops.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt_ops.py).
 :::
+::: {.callout-tip title="Numerical building blocks in one minute" #revision-summary}
+The module isolates four operations reused by the model: initialize weights, apply a linear projection with an explicit shape convention, normalize each position along the last axis with an epsilon term, and apply the tanh approximation of GELU. Testing them separately makes their shapes and behavior verifiable before assembling the network.
+:::
+
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 By the end of this tour, you will be able to:
 - predict each operation's output shape (`linear`, `layer_norm`, `gelu`) without running it;
