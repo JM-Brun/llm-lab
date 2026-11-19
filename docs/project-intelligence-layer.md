@@ -1,6 +1,6 @@
 # Project intelligence layer
 
-**Status:** proposed architecture with a read-only `ProjectIndex`, resource/revision adapters and inverse queries merged in [PR #1399](https://github.com/JM-Brun/llm-lab/pull/1399). The metric registry is documented in [project-metric-registry.md](project-metric-registry.md); the coverage matrix, diagnostics and interfaces remain planned.  
+**Status:** proposed architecture with a read-only `ProjectIndex`, resource/revision adapters and inverse queries merged in [PR #1399](https://github.com/JM-Brun/llm-lab/pull/1399). The metric registry is documented in [project-metric-registry.md](project-metric-registry.md); the first concept-centred matrix builder is in [project_coverage.py](../site/tools/project_coverage.py), with validation pending. Diagnostics and interfaces remain planned.  
 **Scope:** reusable, deterministic queries and explainable diagnostics over the canonical LLM Lab metadata, registries, routes, graph families and project artifacts.  
 **Related architecture:** [Information architecture](information-architecture.md), [scalability audit](scalability-capacity-audit-2026-11-18.md), [knowledge-graph implementation audit](knowledge-graph-implementation-audit.md), [cross-graph discovery issue #1233](https://github.com/JM-Brun/llm-lab/issues/1233).
 
