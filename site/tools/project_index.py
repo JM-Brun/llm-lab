@@ -8,7 +8,7 @@ stay distinct.
 from __future__ import annotations
 
 import re
-from collections import defaultdict
+from collections import Counter, defaultdict
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -473,8 +473,10 @@ class ProjectIndex:
     resources_by_id: dict[str, ResourceRecord]
     page_resource_associations: tuple[PageResourceAssociation, ...]
     concept_resource_associations: tuple[ConceptResourceAssociation, ...]
-    revision_status_by_page: dict[str, str]
+    revision_support_by_page: dict[str, dict[str, Any]]
     revision_edges: tuple[RevisionEdge, ...]
+    revision_aids_by_lesson: dict[str, tuple[RevisionEdge, ...]]
+    revision_lessons_by_aid: dict[tuple[str, str], tuple[RevisionEdge, ...]]
 
     @classmethod
     def build(cls, root: Path) -> ProjectIndex:
@@ -491,7 +493,12 @@ class ProjectIndex:
         resources, page_resource_associations, concept_resource_associations = (
             _load_non_page_resources(root, pages, concepts)
         )
-        revision_status_by_page, revision_edges = _load_revision_relations(pages, resources)
+        revision_support_by_page, revision_edges = _load_revision_relations(pages, resources)
+        aids_by_lesson: dict[str, list[RevisionEdge]] = defaultdict(list)
+        lessons_by_aid: dict[tuple[str, str], list[RevisionEdge]] = defaultdict(list)
+        for edge in revision_edges:
+            aids_by_lesson[edge.source_page_id].append(edge)
+            lessons_by_aid[(edge.aid_type, edge.aid_id)].append(edge)
 
         tag_index: dict[tuple[str, str], set[str]] = defaultdict(set)
         for page in published:
@@ -594,8 +601,16 @@ class ProjectIndex:
             resources_by_id=resources,
             page_resource_associations=page_resource_associations,
             concept_resource_associations=concept_resource_associations,
-            revision_status_by_page=revision_status_by_page,
+            revision_support_by_page=revision_support_by_page,
             revision_edges=revision_edges,
+            revision_aids_by_lesson={
+                key: tuple(sorted(value, key=lambda edge: (edge.aid_type, edge.aid_id, edge.role)))
+                for key, value in aids_by_lesson.items()
+            },
+            revision_lessons_by_aid={
+                key: tuple(sorted(value, key=lambda edge: edge.source_page_id))
+                for key, value in lessons_by_aid.items()
+            },
         )
 
     def select_pages(self, **filters: str) -> tuple[PublishedPage, ...]:
@@ -660,6 +675,41 @@ class ProjectIndex:
             raise KeyError(f"unknown route stage: {stage_id}")
         return tuple(self.pages_by_id[page_id] for page_id in self.route_pages.get(key, ()))
 
+    def revision_aids_for_lesson(
+        self, page_id: str, *, role: str | None = None
+    ) -> tuple[RevisionEdge, ...]:
+        """Return published revision aids explicitly linked to one lesson."""
+        if page_id not in self.pages_by_id:
+            raise KeyError(f"unknown published page: {page_id}")
+        return tuple(
+            edge
+            for edge in self.revision_aids_by_lesson.get(page_id, ())
+            if role is None or edge.role == role
+        )
+
+    def lessons_for_revision_aid(self, aid_type: str, aid_id: str) -> tuple[PublishedPage, ...]:
+        """Return source lessons targeted by a page or non-page revision aid."""
+        if aid_type == "page":
+            if aid_id not in self.pages_by_id:
+                raise KeyError(f"unknown published revision-aid page: {aid_id}")
+        elif aid_type == "resource":
+            if aid_id not in self.resources_by_id or self.resources_by_id[aid_id].kind != "revision-aid":
+                raise KeyError(f"unknown revision-aid resource: {aid_id}")
+        else:
+            raise ValueError("aid_type must be 'page' or 'resource'")
+        return tuple(
+            self.pages_by_id[edge.source_page_id]
+            for edge in self.revision_lessons_by_aid.get((aid_type, aid_id), ())
+        )
+
+    def revision_support_for_lesson(self, page_id: str) -> dict[str, Any]:
+        """Return the independent editorial assessment for one Understand/Build lesson."""
+        if page_id not in self.pages_by_id:
+            raise KeyError(f"unknown published page: {page_id}")
+        if page_id not in self.revision_support_by_page:
+            raise ValueError(f"page is not an Understand/Build lesson: {page_id}")
+        return self.revision_support_by_page[page_id]
+
     def stats(self) -> dict[str, Any]:
         """Return counts with explicit units; route memberships are not page counts."""
         by_tag: dict[str, dict[str, int]] = defaultdict(dict)
@@ -671,6 +721,10 @@ class ProjectIndex:
             "domains": len(self.domains_by_id),
             "page_edges": len(self.page_edges),
             "route_memberships": len(self.route_memberships),
+            "revision_edges": len(self.revision_edges),
+            "revision_support_by_status": dict(
+                sorted(Counter(item["status"] for item in self.revision_support_by_page.values()).items())
+            ),
             "pages_by_tag": dict(by_tag),
             "concepts_by_importance": {
                 importance: sum(
