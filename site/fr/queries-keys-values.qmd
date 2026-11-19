@@ -83,6 +83,20 @@ On peut distinguer les trois projections en suivant le trajet de l'information :
 
 Q et K servent donc à déterminer **la répartition de l'attention**. V fournit **le contenu agrégé** à l'aide de cette répartition. K et V peuvent représenter des caractéristiques différentes : la compatibilité sert au routage, tandis que la valeur porte le contenu transmis. Ce sont des vecteurs numériques appris, pas des étiquettes lisibles ni des réponses toutes faites.
 
+::: {.callout-tip title="Une autre intuition : un moteur de recommandation"}
+Imaginez un système qui compare une demande à plusieurs éléments proposés, puis combine des informations issues des éléments selon les poids calculés :
+
+- **Q (requête)** représente ce que la position courante cherche à faire correspondre ;
+- **K (clé)** fournit ce qui est comparé à cette requête ;
+- **V (valeur)** fournit le contenu qui sera combiné selon les poids obtenus.
+
+L'analogie aide à séparer **le calcul de compatibilité** (**Q/K**) du **transport de contenu** (**V**). Mais un Transformer ne consulte pas un catalogue de fiches : Q, K et V sont des vecteurs continus appris, et l'attention calcule une somme pondérée plutôt qu'une sélection discrète d'un résultat.
+
+Cette intuition complémentaire est développée dans l'article [Understanding Transformers (Part 4)](https://joseparreogarcia.substack.com/p/understanding-transformers-part-4). Elle prépare la lecture des équations ci-dessous ; elle ne les remplace pas.
+:::
+
+Pour suivre cette distinction dans les opérations, passez ensuite à [l'attention à produit scalaire](scaled-dot-product-attention.qmd), puis à la [visite guidée du bloc Transformer](transformer-block-walkthrough.qmd) pour retrouver les deux chemins dans le code.
+
 <picture>
   <source media="(max-width: 600px)" srcset="../images/queries-keys-values-mobile.svg">
   <img src="../images/queries-keys-values.svg" alt="Vue de l’auto-attention : l’entrée X est projetée en Q, K et V. Q et K produisent les scores puis les poids d’attention ; ceux-ci pondèrent les valeurs V pour produire la sortie. La version mobile présente les étapes verticalement." style="width:100%;height:auto">

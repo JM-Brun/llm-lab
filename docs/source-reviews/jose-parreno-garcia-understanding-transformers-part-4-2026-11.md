@@ -82,14 +82,14 @@ The current bilingual pages were opened and checked against the extracted items.
 
 | Existing resource | Verified coverage | Consequence for this source |
 |---|---|---|
-| [Q/K/V — FR](../../site/fr/queries-keys-values.qmd) / [EN](../../site/en/queries-keys-values.qmd) | Contextual motivation, three roles, parallel learned projections, QKᵀ → scores → softmax → weights, weights × V → output; advanced dimensions and variants are routed to dedicated deep dives. | No duplicate explanation. The Netflix analogy is an optional source alternative, not a page gap. |
+| [Q/K/V — FR](../../site/fr/queries-keys-values.qmd) / [EN](../../site/en/queries-keys-values.qmd) | Contextual motivation, three roles, parallel learned projections, QKᵀ → scores → softmax → weights, weights × V → output; advanced dimensions and variants are routed to dedicated deep dives. | No duplicate technical explanation; add only the optional complementary recommendation-system analogy, with explicit limits. |
 | [Scaled dot-product attention — FR](../../site/fr/scaled-dot-product-attention.qmd) / [EN](../../site/en/scaled-dot-product-attention.qmd) | Five-step computation, score/weight/output distinctions, scaling rationale, masking as a separate step, misconceptions and attention-weight interpretation limits. | Already more complete than the article's four-step summary. No page edit required. |
 | [Contextualized representations — FR](../../site/fr/contextualized-representations.qmd) / [EN](../../site/en/contextualized-representations.qmd) | Position/context distinction, pronoun-reference example, explicit caveat that this does not prove an individual head resolves coreference. | The article's cake/it example is redundant in function; no second pronoun example is warranted. |
 | [Causal masking — FR](../../site/fr/causal-masking.qmd) / [EN](../../site/en/causal-masking.qmd) | Lower-triangular access rule, mask before softmax, and parallel training without future-token leakage. | The article's training-only wording is already corrected by the existing page; link only. |
 | [Transformer block Build — FR](../../site/fr/transformer-block-walkthrough.qmd) / [EN](../../site/en/transformer-block-walkthrough.qmd) | Explicit Q/K/V/O projections, head isolation until W_O, causal mask implementation, MHA/MQA/GQA/MLA and local/sparse variants. | The missing W_O and head-shape details are already implemented and explained. No new Build page. |
 | [Build path — FR](../../site/fr/build-path.qmd) / [EN](../../site/en/build-path.qmd) | Existing guided construction route and milestones. | The article does not justify a new route node or milestone. |
 
-**Page audit decision:** no bilingual Understand or Build page changes are justified. The source record's page links are navigational associations, not proposals to duplicate content. The canonical routes and resource graph remain unchanged.
+**Page audit decision:** no new bilingual Understand or Build pages, concepts, or route nodes are justified. One optional analogy callout is warranted on the existing Q/K/V lesson; the source record's other page links remain navigational associations, not proposals to duplicate content. The canonical routes and resource graph remain unchanged.
 
 ### 6.2 Primary-source cross-check
 
@@ -103,13 +103,25 @@ The primary paper explicitly specifies:
 
 This confirms that the missing output projection W_O is a genuine omission in the article's brief MHA account, not a new feature proposed by LLM Lab. The article's broad parallelism wording remains subject to the causal-generation distinction documented in the existing masking and generation lessons.
 
+
+### 6.3 Applied pedagogical complement (19 November 2026)
+
+The article's recommendation-system analogy has now been integrated as an optional bilingual callout in the existing Q/K/V Understand lesson:
+
+- [Q/K/V — FR](../../site/fr/queries-keys-values.qmd) and [Q/K/V — EN](../../site/en/queries-keys-values.qmd) now offer a second mental model that separates compatibility scoring (Q/K) from content aggregation (V).
+- The callout links back to the article and explicitly limits the analogy: the model uses learned continuous vectors and a weighted sum, not a catalogue of discrete labelled records or a hard selection.
+- Both language versions point forward to the scaled-dot-product-attention lesson and then the guided Transformer-block Build walkthrough, making the Understand → formal mechanism → Build progression explicit.
+- The existing bilingual exercise that changes only (W_V) is the recommended transfer check; no duplicate exercise was created. Its stable anchors are `#exercice-calculer-q-k-et-v-puis-isoler-l-effet-de-v` (FR) and `#exercise-calculate-q-k-and-v-then-isolate-the-effect-of-v` (EN).
+
+This is a deliberately small intervention: no canonical concept, page, diagram, or route node was added. The source remains supplementary and link-only; its embedded figures are still not reused.
+
 ## 7. Disposition and remaining work
 
 - Source identity, structured extraction and source-local pedagogical graph are recorded in the catalogue and extraction file; the source is marked `reviewed` while remaining `partially-scanned` because article images are unresolved.
 - Keep article figures and prose link-only.
 - No code reproduction or numerical verification is claimed.
-- The primary-source formulation and all eight bilingual Understand/Build destinations have now been checked; no page, concept, resource or route changes are warranted.
-- The page-by-page comparison found the current canonical pages already cover all extracted technical content; retain the no-duplication decision.
+- The primary-source formulation and all eight bilingual Understand/Build destinations have now been checked; the article's analogy is now integrated as an optional bilingual supplement, without adding canonical concepts or route nodes.
+- The page-by-page comparison found the current canonical pages already cover all extracted technical content; the only justified change is the optional bilingual analogy callout and explicit progression links, with no duplicated technical lesson.
 - `site/tools/check_source_catalogue.py` passed on PR HEAD `8175b59953c59f27c48b7066d6e872240a09201e` after fixing two prerequisite-field errors found by the first CI attempt.
 - CI's Python quality/domain checks and full test suite both passed on that HEAD; Quarto site/browser audit was still running at the time of this update.
 - Inspect the embedded figures only if visual integration is later proposed; their absence does not block link-only source registration.

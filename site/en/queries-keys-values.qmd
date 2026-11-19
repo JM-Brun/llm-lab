@@ -83,6 +83,20 @@ The three projections are easiest to distinguish by following the flow of inform
 
 Q and K therefore determine **how attention is distributed**. V supplies **the content that is aggregated** using that distribution. K and V can represent different features: compatibility supports routing, while the value carries the transmitted content. They are learned numerical vectors, not readable labels or ready-made answers.
 
+::: {.callout-tip title="Another intuition: a recommendation system"}
+Imagine a system that compares a request with several candidate items, then combines information from those items according to the resulting weights:
+
+- **Q (query)** represents what the current position is trying to match;
+- **K (key)** provides what is compared with that query;
+- **V (value)** provides the content that will be combined using the computed weights.
+
+The analogy helps separate **compatibility scoring** (**Q/K**) from **content transport** (**V**). But a Transformer does not look up a catalogue of labelled records: Q, K, and V are learned continuous vectors, and attention computes a weighted sum rather than selecting one discrete result.
+
+This complementary intuition is developed in [Understanding Transformers (Part 4)](https://joseparreogarcia.substack.com/p/understanding-transformers-part-4). It prepares the reader for the equations below; it does not replace them.
+:::
+
+To follow this distinction through the actual operations, continue to [scaled dot-product attention](scaled-dot-product-attention.qmd), then to the [guided Transformer-block walkthrough](transformer-block-walkthrough.qmd) to trace both paths in code.
+
 <picture>
   <source media="(max-width: 600px)" srcset="../images/queries-keys-values-en-mobile.svg">
   <img src="../images/queries-keys-values-en.svg" alt="Self-attention overview: input X is projected into Q, K, and V. Q and K produce scores and then attention weights; these weights aggregate the V values to produce the output. The mobile version arranges the steps vertically." style="width:100%;height:auto">
