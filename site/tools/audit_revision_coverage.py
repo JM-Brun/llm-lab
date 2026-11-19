@@ -122,29 +122,42 @@ def build_revision_inventory(
             "synthesis_not_assessed": len(subset),
         }
 
-    topic_language_counts: dict[str, dict[str, int]] = defaultdict(lambda: {"fr": 0, "en": 0})
+    topic_language_counts: dict[tuple[str, str], Counter[str]] = defaultdict(Counter)
+    missing_topic_pages: list[dict[str, str]] = []
+    unexpected_languages: list[dict[str, str]] = []
     for record in records:
-        topic_language_counts[f"{record['destination']}:{record['topic']}"][record["language"]] += 1
+        language = record["language"]
+        topic = record["topic"]
+        if language not in LANGUAGES:
+            unexpected_languages.append({"id": record["id"], "language": str(language)})
+        if not isinstance(topic, str) or not topic.strip():
+            missing_topic_pages.append(
+                {"id": record["id"], "destination": record["destination"]}
+            )
+            continue
+        if language in LANGUAGES:
+            topic_language_counts[(record["destination"], topic)][language] += 1
 
     bilingual_parity: dict[str, list[dict[str, Any]]] = {}
     for destination in DESTINATIONS:
-        topics = {
-            key.split(":", 1)[1]
-            for key in topic_language_counts
-            if key.startswith(f"{destination}:")
-        }
-        bilingual_parity[destination] = [
-            {
-                "topic": topic,
-                "fr": topic_language_counts[f"{destination}:{topic}"]["fr"],
-                "en": topic_language_counts[f"{destination}:{topic}"]["en"],
-                "balanced": (
-                    topic_language_counts[f"{destination}:{topic}"]["fr"]
-                    == topic_language_counts[f"{destination}:{topic}"]["en"]
-                ),
-            }
-            for topic in sorted(topics, key=str)
-        ]
+        topics = sorted(
+            topic for dest, topic in topic_language_counts if dest == destination
+        )
+        bilingual_parity[destination] = []
+        for topic in topics:
+            counts_for_topic = topic_language_counts[(destination, topic)]
+            fr_count = counts_for_topic["fr"]
+            en_count = counts_for_topic["en"]
+            bilingual_parity[destination].append(
+                {
+                    "topic": topic,
+                    "fr": fr_count,
+                    "en": en_count,
+                    "balanced": fr_count == en_count and fr_count > 0,
+                    "duplicate_fr": fr_count > 1,
+                    "duplicate_en": en_count > 1,
+                }
+            )
 
     return {
         "schema_version": 1,
@@ -155,8 +168,13 @@ def build_revision_inventory(
             "data/resources.yml",
         ],
         "counts": counts,
-        "topic_language_counts": dict(sorted(topic_language_counts.items())),
+        "topic_language_counts": {
+            f"{destination}:{topic}": dict(sorted(counts.items()))
+            for (destination, topic), counts in sorted(topic_language_counts.items())
+        },
         "bilingual_parity": bilingual_parity,
+        "missing_topic_pages": missing_topic_pages,
+        "unexpected_languages": unexpected_languages,
         "pages": records,
     }
 
@@ -212,8 +230,17 @@ def render_markdown(inventory: dict[str, Any]) -> str:
         lines.append("")
     lines.extend(
         [
+            "## Metadata diagnostics",
+            "",
+            f"- Pages without a non-empty topic: **{len(inventory['missing_topic_pages'])}**",
+            f"- Pages with unexpected language values: **{len(inventory['unexpected_languages'])}**",
+            "",
+            "Pages without a topic are excluded from topic-parity aggregation and listed in the JSON report.",
+            "",
             "## Interpretation",
             "",
+            "- Topic parity compares page counts only; it does not establish semantic equivalence.",
+            "- Duplicate pages within a topic/language are flagged in the JSON report.",
             "- Understand preserves every core/optional stage membership,",
             "  including multiple memberships.",
             "- Understand pages outside the guided route are explicitly marked unrouted.",
