@@ -58,12 +58,16 @@ def test_real_repository_inventory_projects_revision_links_and_assessments() -> 
     )
 
     understand = inventory["counts"]["understand"]
+    build = inventory["counts"]["build"]
     assert understand["revision_aid_links"] == 4
     assert understand["pages_with_revision_aids"] == 4
     assert understand["revision_support_by_status"]["partial"] == 4
+    assert build["revision_support_by_status"]["integrated_sufficient"] == 4
     by_id = {page["id"]: page for page in inventory["pages"]}
     assert by_id["fr/entropy"]["revision_aids"][0]["id"] == "fr/revision-information-theory"
     assert by_id["en/cross-entropy"]["revision_support"]["status"] == "partial"
+    assert by_id["fr/corpus-preparation"]["revision_support"]["status"] == "integrated_sufficient"
+    assert by_id["en/training-examples"]["revision_support"]["status"] == "integrated_sufficient"
 
 
 def test_understand_pages_without_membership_are_reported_not_dropped() -> None:
