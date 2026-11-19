@@ -144,10 +144,11 @@ The first-pass exact-key locator found 35 files; the broader locator found the f
 
 ### Source-history correspondence and content differences
 
-All 36 extraction `scan.accessed_at` dates occur in the corresponding source record's `scan_history`. For 34 records, the extraction scan date is also the latest source-history date. Two records have later source-history events that are not represented by the extraction-level scan snapshot:
+All 36 extraction `scan.accessed_at` dates occur in the corresponding source record's `scan_history`. For 33 records, the extraction scan date is also the latest source-history date. Three records have later source-history events that are not represented by the extraction-level scan snapshot:
 
 - `andrej-karpathy-gpt-tokenizer-video`: extraction scan is dated 2026-10-30; source history also records a 2026-11-19 metadata-only check of the official YouTube title, creator and publication date. This is an additional event, not evidence that the 2026-10-30 transcript inspection was superseded.
 - `maarten-grootendorst-visual-guide-multimodal-generation`: extraction scan is dated 2026-11-07; source history adds a 2026-11-15 event covering the original bilingual Deepen pages, a Mermaid map/tables, four live article image elements, and navigation updates. That later work is not reflected in the extraction-level scan block.
+- `marek-ryabinin-score-centering-off-policy-rl-2026`: extraction scan is dated 2026-11-09; source history now adds a 2026-11-19 event for the later canonical-PDF/appendix audit and official CPU test execution. The 2026-11-09 extraction snapshot and its original source event remain unchanged.
 
 A concrete content comparison is available for AiEdge. Its extraction scan separates the partial indexed author text, uninspected figures/code/comments/linked resources, partial metadata, unknown rights, and three explicit unresolved questions (full article/figures, original assets/code/links/references, and possible vLLM-specific settings or measurements). The source event on the same date compresses this into three inspected-scope bullets and five limitations. It preserves the broad retrieval caveats, but not the ten facet-level status/coverage/notes or the three questions as separate structured entries. This is a real example of richer extraction-level facet detail alongside a more concise chronological event summary—not evidence that one record can replace the other.
 
