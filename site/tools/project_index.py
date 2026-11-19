@@ -54,7 +54,7 @@ class ProjectIndex:
     route_pages: dict[tuple[str, str, str], tuple[str, ...]]
 
     @classmethod
-    def build(cls, root: Path) -> "ProjectIndex":
+    def build(cls, root: Path) -> ProjectIndex:
         """Build a deterministic snapshot from the repository root."""
         root = Path(root)
         published = load_published_pages(root / "site")
