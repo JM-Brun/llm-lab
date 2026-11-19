@@ -19,6 +19,11 @@ hierarchy:
   parents: ["en/corpus-preparation"]
   children: []
 related: ["en/tokenization-strategies", "en/likelihood", "en/training-examples-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "The five-point recap covers shifted targets, teacher forcing, windowing/stride, distinct masks and tensor shapes; the debugging checklist extends it."
 tags: ["type:concept-bridge", "destination:build", "topic:training-examples", "level:core", "language:en", "status:published"]
 -->
 
@@ -235,7 +240,7 @@ When loss is unexpectedly low, high, or unstable, check:
 
 
 
-::: {.callout-tip title="Revision sheet — constructing autoregressive examples"}
+::: {.callout-tip #revision-summary title="Revision sheet — constructing autoregressive examples"}
 - **Alignment:** for input $x=[t_0,\ldots,t_{L-1}]$, the target is shifted by one token, $y=[t_1,\ldots,t_L]$. Each position predicts its successor.
 - **Teacher forcing:** the observed prefix supplies context; the causal mask prevents access to future tokens. This conditioning strategy is neither the loss nor the optimizer.
 - **Windowing:** length determines the available context; stride determines the displacement between windows and therefore their overlap.

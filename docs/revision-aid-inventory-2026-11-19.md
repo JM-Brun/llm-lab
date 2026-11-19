@@ -12,7 +12,7 @@
 | Build | 16 | 8 | 8 | 8 |
 | **Total** | **62** | **31** | **31** | **31** |
 
-The artifact records 144 explicit concept-to-page edges in Understand, 18 in Build, and 10 implementation-resource associations, all in Build. All 62 generated `synthesis_status` values are `not_assessed`; this is an inventory limitation, not a finding that the pages lack synthesis.
+The artifact records 144 explicit concept-to-page edges in Understand, 18 in Build, and 10 implementation-resource associations, all in Build. The original snapshot reported all 62 `synthesis_status` values as `not_assessed`. The relation pilot in PR #1411 adds four explicit page-aid links and `partial` assessments for the FR/EN entropy and cross-entropy lessons. It also records `integrated_sufficient` assessments for the FR/EN corpus-preparation and training-examples pages, each anchored to its existing revision callout. The other 42 Understand and 12 Build pages remain `not_assessed` until individually assessed.
 
 The editorial observations below come from source reviews recorded in issue [#1109](https://github.com/JM-Brun/llm-lab/issues/1109). The artifact and those comments are the evidence base; this document does not claim that every page has received a paragraph-by-paragraph scientific re-review or rendered accessibility review.
 
@@ -22,8 +22,8 @@ The editorial observations below come from source reviews recorded in issue [#11
 
 | Artifact | Existing metadata | Existing learner-facing function | Current disposition |
 |---|---|---|---|
-| `site/{fr,en}/revision-information-theory.qmd` | `destination:practice`, `type:exercise-collection`; language-specific pages | Dedicated revision sheet: core formulas, cross-entropy/KL identity, worked numerical example, conceptual traps, attention/KL vs mutual information, predictive V-information, self-check and answers | Retain as the canonical learner-facing information-theory revision sheet. Candidate sources include entropy and cross-entropy; exact typed links remain to be added only after contract implementation. |
-| `site/{fr,en}/compression-revision.qmd` | `destination:deepen`, `type:concept-bridge`; language-specific pages | Mental map and compact conceptual bridge between predictive data compression, model compression and runtime memory; equations, coding constraints, entropy/surprisal distinctions and references | Retain. Treat as an existing page-based synthesis candidate; assess its exact source lessons and role before adding typed links. Do not create another generic compression sheet. |
+| `site/{fr,en}/revision-information-theory.qmd` | `destination:practice`, `type:exercise-collection`; language-specific pages | Dedicated revision sheet: core formulas, cross-entropy/KL identity, worked numerical example, conceptual traps, attention/KL vs mutual information, predictive V-information, self-check and answers | Retain as the canonical learner-facing information-theory revision sheet. The pilot now links each language version to its matching entropy and cross-entropy lessons via `revision_of`; the reverse lesson-to-aids view is derived. |
+| `site/{fr,en}/compression-revision.qmd` | `destination:deepen`, `type:concept-bridge`; language-specific pages | Mental map and compact conceptual bridge between predictive data compression, model compression and runtime memory; equations, coding constraints, entropy/surprisal distinctions and references | Retain as a Deepen concept-bridge, with candidate role `synthesis`. The source audit confirms substantive coverage of entropy, cross-entropy and likelihood; typed links are deferred until the first page-aid pilot is reviewed because this is a broad cross-topic bridge, not a narrow revision sheet. Do not create another generic compression sheet. |
 
 The two pairs are not interchangeable: the information-theory page is explicitly a Practice revision sheet, while compression is a Deepen concept bridge. Keep their existing editorial types and destinations; the future relation must not rewrite them into a new page type merely to make the inventory work.
 
@@ -51,9 +51,9 @@ The following records summarize existing source-level audits. “Reuse” means 
 | `causal-masking` | One-minute mental model, formal causal rule, triangular mask visual, distinction from padding/document/loss masks, invariance check and exercises | Reuse; no second sheet or diagram |
 | `context-engineering` | Three context levels and distinctions between stored history, transmitted context and attention-accessible information; seven applied Practice questions | Reuse; no duplicate overview |
 | `contextualized-representations` | One-minute recap, pipeline, same-ID vs context-dependent state distinction, attention-head caveats; Practice self-check and advanced SAE investigation | Reuse; no separate sheet |
-| `cross-entropy` | Per-token objective, target distribution, worked example, sequence alignment, masking/reduction and edge cases; exercises and self-check | Reuse the information-theory sheet for conceptual recall; keep a targeted recall prompt for shift/mask/valid-token denominator in the canonical lesson |
+| `cross-entropy` | Per-token objective, target distribution, worked example, sequence alignment, masking/reduction and edge cases; exercises and self-check | Reuse the linked information-theory sheet for conceptual recall; the source lesson is explicitly assessed `partial` because shift/mask/valid-token denominator still need targeted retrieval coverage |
 | `embedding-space` | Integrated lookup diagram and distinctions among token ID, embedding row/vector and point in space; Practice questions and NumPy exercise | Reuse; no separate sheet |
-| `entropy` | One-minute model, definition, numerical example, bounds, entropy vs observed surprisal and self-check; covered by the information-theory revision sheet | Reuse; ensure context/temperature/calibration caveats remain represented in the lesson or practice |
+| `entropy` | One-minute model, definition, numerical example, bounds, entropy vs observed surprisal and self-check; covered by the information-theory revision sheet | Reuse the linked information-theory sheet; the source lesson is explicitly assessed `partial` because context/temperature/calibration caveats need targeted retrieval coverage |
 | `gradients` | Chain-rule explanation, worked derivation, gradient-vs-update distinction, examples and executable tests/exercises | Reuse; no generic recap |
 | `in-context-learning` | Fixed-weights/changing-context distinction, zero/one/few-shot, relation to fine-tuning and RAG, experimental checklist; bilingual diagram added in PR #1112 | Reuse the integrated visual and Practice material |
 | `inference-generation` | Distribution-to-selection loop, decoding policy, prefill/decode and KV-cache distinctions; Practice resources | Reuse; keep generation separate from scoring and training |
@@ -70,22 +70,22 @@ The following records summarize existing source-level audits. “Reuse” means 
 | `training-loop` | End-to-end workflow separating forward pass, loss, backpropagation, optimizer update and validation; examples and exercises | Reuse; keep implementation claims aligned with actual code |
 | `transformer` | Canonical computation walkthrough with self-check, exercises and code/test references | Reuse; no separate synthesis page |
 | `transformer-architectures` | One-minute mental model, six-dimension comparison, original bilingual diagram, architecture/objective/task distinction, limits and four-question Practice companion | Reuse; established positive exemplar |
-| `vraisemblance` | Likelihood chain linked to generation/probabilities, numerical worked examples and Practice transfer questions | Reuse existing lesson and exercises; no separate sheet |
+| `vraisemblance` | Likelihood chain linked to generation/probabilities, numerical worked examples and Practice transfer questions | Reuse the lesson and exercises; the compression bridge adds a coding-length perspective but does not replace the likelihood-specific questions. Its typed source link is a follow-up after the first pilot review. |
 
 ### Understand limits
 
 - The 16-page first-tranche review was initially a structural source audit; later passes deepened selected pairs (embedding/position/contextualization, entropy/cross-entropy, post-training/context engineering and LLM limits).
 - Several visual increments have CI and Quarto validation, but no rendered desktop/mobile, keyboard, screen-reader or learner-outcome sign-off is claimed.
 - The inventory records observed support and decisions, not a numeric pedagogical-quality score.
-- All 46 pages remain `not_assessed` in the machine-generated inventory until the typed relation and independent assessment schema are implemented and migrated.
+- The relation pilot projects four `partial` Understand assessments, four explicit aid links, and four `integrated_sufficient` Build assessments into the generated inventory. The remaining 42 Understand and 12 Build pages are still `not_assessed`; rendered UX, accessibility and learner-outcome validation remain separate.
 
 ## 4. Build inventory — 8 bilingual topic pairs
 
 | Build pair | Existing revision support observed | Disposition |
 |---|---|---|
 | `build-path` | Construction order, milestones, verification evidence and distinction between generate, score and train | Keep as route/orientation; no formula sheet |
-| `corpus-preparation` | Five aligned decision areas: data sources, deduplication/split leakage, tokenizer fitting, annotation quality and hand-off; exercises, but no dedicated self-check block | Assess current exercises against a reusable corpus-release checklist before deciding whether to add one |
-| `training-examples` | Shifted inputs/targets, teacher forcing, windows/stride, document boundaries/packing, padding/loss masks, shapes, debugging checklist and worked exercises | Strong candidate for a concise implementation contract/checklist; improve the existing page/companion before creating a separate artifact |
+| `corpus-preparation` | Five-point revision callout (provenance, transformations, splits, tokenizer isolation, hand-off) plus five Practice questions; deeper treatment of annotation, streaming and dataset cards | Reuse the integrated sheet and Practice companion; no extra checklist |
+| `training-examples` | Five-point revision callout, eight-point debugging checklist, scoped NumPy implementation/tests and four Practice questions | Reuse; no separate implementation-contract sheet |
 | `reference-gpt-config` | Bilingual code walkthrough, configuration fields, validation/test evidence, exercises and implementation-resource link | Reuse walkthrough/tests; no generic sheet |
 | `reference-gpt-ops` | Bilingual numerical operations, tensor shapes/conventions, tests and exercises | Reuse; compare the FR/EN recap presentation, but do not infer a content defect from a marker heuristic |
 | `reference-transformer-block` | Bilingual block recipe, Q/K/V/O, residual paths, shapes, tests and exercises | Reuse implementation evidence; no separate sheet |
@@ -99,9 +99,9 @@ Build's six pages without implementation-resource associations are exactly the t
 1. Keep the two published page-aid pairs as the current explicit revision-aid candidates; do not create more generic sheets.
 2. Keep the internal Markdown sheet outside the learner-facing resource graph until its publication and maintenance role is explicitly changed.
 3. Do not add a non-page revision resource kind to `data/resources.yml` yet; current records are implementation resources only.
-4. Continue individual editorial assessment where the evidence is provisional, especially cross-entropy's shift/mask contract, entropy caveats, and Build corpus-preparation/training-examples.
-5. Implement page-aid relations first after the contract is accepted; the published page index already preserves raw metadata, but the metadata validator and inventory projection do not yet validate or use revision fields.
-6. Revisit the non-page adapter only when a genuine learner-facing non-page aid is identified.
+4. Continue individual editorial assessment where evidence is provisional, especially cross-entropy's shift/mask contract and entropy caveats. Build corpus-preparation and training-examples already have integrated revision callouts and Practice companions.
+5. The initial page-aid pilot now links `revision-information-theory` to the FR/EN entropy and cross-entropy lessons; the generated coverage inventory reads the ProjectIndex relation and assessment projection. The metadata validator still needs a dedicated follow-up to validate these fields at page-map ingestion.
+6. The source audit confirms `compression-revision` as a cross-topic `synthesis` candidate for entropy, cross-entropy and likelihood. Add its typed links after the first pilot is reviewed; do not infer targets from `related` alone.
 7. Keep rendered UX/accessibility validation as a separate gate before closing #1109.
 
 ## 6. Audit provenance
@@ -114,5 +114,7 @@ Relevant issue #1109 records:
 - Embeddings, position and contextualization audit: [comment 7019976945](https://github.com/JM-Brun/llm-lab/issues/1109#issuecomment-7019976945).
 - Post-training and context-engineering audit: [comment 7020045751](https://github.com/JM-Brun/llm-lab/issues/1109#issuecomment-7020045751).
 - LLM-limits audit: [comment 7020086727](https://github.com/JM-Brun/llm-lab/issues/1109#issuecomment-7020086727).
+- Compression-revision source mapping: [comment 7021256593](https://github.com/JM-Brun/llm-lab/issues/1109#issuecomment-7021256593).
+- Build corpus-preparation and training-examples audit: [comment 7021273551](https://github.com/JM-Brun/llm-lab/issues/1109#issuecomment-7021273551).
 
 This inventory is a maintained snapshot, not a second source of truth. Refresh it from the generated inventory artifact and the page-by-page audit records after page moves, additions, translations or content changes.
