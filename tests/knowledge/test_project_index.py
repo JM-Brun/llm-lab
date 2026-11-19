@@ -28,9 +28,7 @@ def _write_page(site: Path, page_id: str, language: str, *, next_page: str | Non
     front = {"title": slug, "lang": language, "keywords": tags}
     content = (
         "---\n" + yaml.safe_dump(front, sort_keys=False) + "---\n\n"
-        "<!--\nLLM-LAB-PAGE-MAP v1\n"
-        + yaml.safe_dump(metadata, sort_keys=False)
-        + "-->\n"
+        "<!--\nLLM-LAB-PAGE-MAP v1\n" + yaml.safe_dump(metadata, sort_keys=False) + "-->\n"
     )
     path.write_text(content, encoding="utf-8")
 
@@ -42,14 +40,16 @@ def _write_sources(root: Path) -> None:
         "schema_version": 2,
         "concepts": [
             {
-                "id": "attention", "importance": "core",
+                "id": "attention",
+                "importance": "core",
                 "labels": {"fr": "Attention", "en": "Attention"},
                 "definitions": {"fr": "Mécanisme.", "en": "Mechanism."},
                 "domains": ["architectures-mechanisms"],
                 "resources": ["fr/attention", "en/attention"],
             },
             {
-                "id": "query", "importance": "supporting",
+                "id": "query",
+                "importance": "supporting",
                 "labels": {"fr": "Requête", "en": "Query"},
                 "definitions": {"fr": "Projection.", "en": "Projection."},
                 "domains": ["architectures-mechanisms"],
@@ -61,20 +61,31 @@ def _write_sources(root: Path) -> None:
     }
     domains = {
         "schema_version": 1,
-        "domains": [{"id": "architectures-mechanisms", "labels": {"fr": "Architectures", "en": "Architectures"}}],
+        "domains": [
+            {
+                "id": "architectures-mechanisms",
+                "labels": {"fr": "Architectures", "en": "Architectures"},
+            }
+        ],
     }
     route = {
         "schema_version": 1,
-        "stages": [{
-            "id": "orientation",
-            "title": {"fr": "Orientation", "en": "Orientation"},
-            "objective": {"fr": "Observer.", "en": "Observe."},
-            "pages": {"fr": ["fr/attention"], "en": ["en/attention"]},
-            "optional_pages": {"fr": [], "en": ["en/query"]},
-        }],
+        "stages": [
+            {
+                "id": "orientation",
+                "title": {"fr": "Orientation", "en": "Orientation"},
+                "objective": {"fr": "Observer.", "en": "Observe."},
+                "pages": {"fr": ["fr/attention"], "en": ["en/attention"]},
+                "optional_pages": {"fr": [], "en": ["en/query"]},
+            }
+        ],
         "transitions": [],
     }
-    for name, value in (("concepts.yml", concepts), ("domains.yml", domains), ("guided-route.yml", route)):
+    for name, value in (
+        ("concepts.yml", concepts),
+        ("domains.yml", domains),
+        ("guided-route.yml", route),
+    ):
         (data / name).write_text(yaml.safe_dump(value, sort_keys=False), encoding="utf-8")
 
 
@@ -97,10 +108,12 @@ def test_counts_distinguish_page_records_concepts_and_route_memberships(tmp_path
 def test_concept_page_associations_are_explicit_and_bidirectional(tmp_path: Path) -> None:
     index = _index(tmp_path)
     assert [page.page_id for page in index.pages_for_concept("attention")] == [
-        "en/attention", "fr/attention"
+        "en/attention",
+        "fr/attention",
     ]
     assert [concept["id"] for concept in index.concepts_for_page("fr/attention")] == [
-        "attention", "query"
+        "attention",
+        "query",
     ]
 
 
