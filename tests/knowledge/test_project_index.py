@@ -23,15 +23,19 @@ def _write_page(
     language: str,
     *,
     next_page: str | None = None,
-    revision: dict[str, Any] | None = None,
+    destination: str = "understand",
+    page_type: str = "concept-lesson",
+    revision_role: str | None = None,
+    revision_of: list[str] | None = None,
+    revision_support: dict[str, Any] | None = None,
     body: str = "",
 ) -> None:
     _, slug = page_id.split("/", 1)
     path = site / language / f"{slug}.qmd"
     path.parent.mkdir(parents=True, exist_ok=True)
     tags = [
-        "type:concept-lesson",
-        "destination:understand",
+        f"type:{page_type}",
+        f"destination:{destination}",
         f"topic:{slug}",
         "level:core",
         f"language:{language}",
@@ -44,8 +48,12 @@ def _write_page(
         "related": [],
         "tags": tags,
     }
-    if revision is not None:
-        metadata["revision"] = revision
+    if revision_role is not None:
+        metadata["revision_role"] = revision_role
+    if revision_of is not None:
+        metadata["revision_of"] = revision_of
+    if revision_support is not None:
+        metadata["revision_support"] = revision_support
     front = {"title": slug, "lang": language, "keywords": tags}
     content = (
         "---\n" + yaml.safe_dump(front, sort_keys=False) + "---\n\n"
@@ -258,13 +266,14 @@ def test_non_page_resource_concept_reference_must_resolve(tmp_path: Path) -> Non
         ProjectIndex.build(tmp_path)
 
 
-def test_revision_adapter_keeps_three_target_types_separate(tmp_path: Path) -> None:
-    revision = {
-        "status": "assessed",
-        "resources": [
-            {"role": "synthesis", "target": {"type": "section", "id": "revision-summary"}},
-            {"role": "flashcards", "target": {"type": "page", "id": "en/query"}},
-            {"role": "revision_sheet", "target": {"type": "resource", "id": "attention-module"}},
+def test_page_revision_aid_builds_bidirectional_queries_and_assessment(tmp_path: Path) -> None:
+    support = {
+        "status": "partial",
+        "evidence": [
+            {
+                "aid": "en/revision-sheet",
+                "note": "Core identities are covered; the lesson-specific mask contract remains.",
+            }
         ],
     }
     _write_page(tmp_path / "site", "fr/attention", "fr")
@@ -272,8 +281,119 @@ def test_revision_adapter_keeps_three_target_types_separate(tmp_path: Path) -> N
         tmp_path / "site",
         "en/attention",
         "en",
-        next_page="en/query",
-        revision=revision,
+        revision_support=support,
+    )
+    _write_page(tmp_path / "site", "en/query", "en")
+    _write_page(
+        tmp_path / "site",
+        "en/revision-sheet",
+        "en",
+        destination="practice",
+        page_type="exercise-collection",
+        revision_role="revision_sheet",
+        revision_of=["en/attention"],
+    )
+    _write_sources(tmp_path)
+
+    index = ProjectIndex.build(tmp_path)
+
+    edge = MODULE["RevisionEdge"]("page", "en/revision-sheet", "revision_sheet", "en/attention")
+    assert index.revision_aids_for_lesson("en/attention") == (edge,)
+    assert index.revision_aids_for_lesson("en/attention", role="flashcards") == ()
+    assert [page.page_id for page in index.lessons_for_revision_aid("page", "en/revision-sheet")] == [
+        "en/attention"
+    ]
+    assert index.revision_support_for_lesson("en/attention")["status"] == "partial"
+    assert index.revision_support_for_lesson("fr/attention")["status"] == "not_assessed"
+    assert all(edge.family != "revision" for edge in index.page_edges)
+
+
+def test_revision_aid_must_target_a_published_understand_or_build_lesson(tmp_path: Path) -> None:
+    _write_page(tmp_path / "site", "fr/attention", "fr")
+    _write_page(tmp_path / "site", "en/attention", "en")
+    _write_page(tmp_path / "site", "en/query", "en")
+    _write_page(
+        tmp_path / "site",
+        "en/revision-sheet",
+        "en",
+        destination="practice",
+        page_type="exercise-collection",
+        revision_role="revision_sheet",
+        revision_of=["en/query"],
+    )
+    _write_page(
+        tmp_path / "site",
+        "en/other-practice",
+        "en",
+        destination="practice",
+        page_type="exercise-collection",
+    )
+    _write_sources(tmp_path)
+    path = tmp_path / "site" / "en" / "revision-sheet.qmd"
+    text = path.read_text(encoding="utf-8").replace("revision_of:\n- en/query", "revision_of:\n- en/other-practice")
+    path.write_text(text, encoding="utf-8")
+
+    with pytest.raises(ValueError, match=r"revision_of \(eligible lesson\).*en/other-practice"):
+        ProjectIndex.build(tmp_path)
+
+
+def test_revision_aid_rejects_duplicate_and_wrong_language_targets(tmp_path: Path) -> None:
+    _write_page(tmp_path / "site", "fr/attention", "fr")
+    _write_page(tmp_path / "site", "en/attention", "en")
+    _write_page(
+        tmp_path / "site",
+        "en/revision-sheet",
+        "en",
+        destination="practice",
+        page_type="exercise-collection",
+        revision_role="revision_sheet",
+        revision_of=["en/attention", "en/attention"],
+    )
+    _write_sources(tmp_path)
+
+    with pytest.raises(ValueError, match="duplicate page IDs"):
+        ProjectIndex.build(tmp_path)
+
+
+def test_revision_support_requires_valid_page_aid_evidence(tmp_path: Path) -> None:
+    support = {
+        "status": "companion_sufficient",
+        "evidence": [{"aid": "en/missing-aid", "note": "A claimed aid."}],
+    }
+    _write_page(tmp_path / "site", "fr/attention", "fr")
+    _write_page(tmp_path / "site", "en/attention", "en", revision_support=support)
+    _write_page(tmp_path / "site", "en/query", "en")
+    _write_sources(tmp_path)
+
+    with pytest.raises(ValueError, match=r"revision evidence aid.*en/missing-aid"):
+        ProjectIndex.build(tmp_path)
+
+
+def test_integrated_revision_support_requires_explicit_section_anchor(tmp_path: Path) -> None:
+    support = {
+        "status": "integrated_sufficient",
+        "evidence": [{"anchor": "missing-summary", "note": "Integrated recap."}],
+    }
+    _write_page(tmp_path / "site", "fr/attention", "fr")
+    _write_page(tmp_path / "site", "en/attention", "en", revision_support=support)
+    _write_page(tmp_path / "site", "en/query", "en")
+    _write_sources(tmp_path)
+
+    with pytest.raises(ValueError, match=r"revision evidence anchor.*missing-summary"):
+        ProjectIndex.build(tmp_path)
+
+
+def test_integrated_revision_support_accepts_explicit_heading_anchor(tmp_path: Path) -> None:
+    support = {
+        "status": "integrated_sufficient",
+        "evidence": [{"anchor": "revision-summary", "note": "Integrated recap."}],
+    }
+    _write_page(tmp_path / "site", "fr/attention", "fr")
+    _write_page(
+        tmp_path / "site",
+        "en/attention",
+        "en",
+        revision_support=support,
         body="\n## Revision summary {#revision-summary}\n",
     )
     _write_page(tmp_path / "site", "en/query", "en")
@@ -281,112 +401,76 @@ def test_revision_adapter_keeps_three_target_types_separate(tmp_path: Path) -> N
 
     index = ProjectIndex.build(tmp_path)
 
-    assert index.revision_status_by_page["en/attention"] == "assessed"
-    assert index.revision_status_by_page["fr/attention"] == "not_assessed"
-    assert [
-        (edge.source_page_id, edge.role, edge.target_type, edge.target_id)
-        for edge in index.revision_edges
-    ] == [
-        ("en/attention", "flashcards", "page", "en/query"),
-        ("en/attention", "revision_sheet", "resource", "attention-module"),
-        ("en/attention", "synthesis", "section", "revision-summary"),
-    ]
-    assert all(edge.family != "revision" for edge in index.page_edges)
+    assert index.revision_support_for_lesson("en/attention")["status"] == "integrated_sufficient"
 
 
-def test_revision_section_requires_an_explicit_anchor(tmp_path: Path) -> None:
-    revision = {
-        "status": "assessed",
-        "resources": [{"role": "synthesis", "target": {"type": "section", "id": "missing-anchor"}}],
-    }
+def test_non_page_revision_aid_adapter_and_inverse_query(tmp_path: Path) -> None:
     _write_page(tmp_path / "site", "fr/attention", "fr")
-    _write_page(tmp_path / "site", "en/attention", "en", revision=revision)
+    _write_page(tmp_path / "site", "en/attention", "en")
     _write_page(tmp_path / "site", "en/query", "en")
     _write_sources(tmp_path)
-
-    with pytest.raises(ValueError, match=r"revision section anchor.*missing-anchor"):
-        ProjectIndex.build(tmp_path)
-
-
-def test_revision_section_accepts_explicit_quarto_block_anchor(tmp_path: Path) -> None:
-    revision = {
-        "status": "assessed",
-        "resources": [
-            {"role": "revision_sheet", "target": {"type": "section", "id": "revision-block"}}
-        ],
-    }
-    _write_page(tmp_path / "site", "fr/attention", "fr")
-    _write_page(
-        tmp_path / "site",
-        "en/attention",
-        "en",
-        revision=revision,
-        body="\n::: {.callout-tip #revision-block}\nA concise recap.\n:::\n",
+    source = tmp_path / "src" / "revision-notes.md"
+    source.write_text("# Revision notes\n", encoding="utf-8")
+    path = tmp_path / "data" / "resources.yml"
+    resources = yaml.safe_load(path.read_text(encoding="utf-8"))
+    resources["resources"].append(
+        {
+            "id": "attention-revision-notes",
+            "kind": "revision-aid",
+            "labels": {"fr": "Fiche attention", "en": "Attention revision sheet"},
+            "descriptions": {"fr": "Fiche de révision.", "en": "Revision sheet."},
+            "language": "en",
+            "status": "published",
+            "location": {"type": "local", "path": "src/revision-notes.md"},
+            "concepts": [],
+            "revision_role": "revision_sheet",
+            "revision_of": ["en/attention"],
+        }
     )
-    _write_page(tmp_path / "site", "en/query", "en")
-    _write_sources(tmp_path)
+    path.write_text(yaml.safe_dump(resources, sort_keys=False), encoding="utf-8")
 
     index = ProjectIndex.build(tmp_path)
 
-    assert index.revision_edges[0].target_type == "section"
-    assert index.revision_edges[0].target_id == "revision-block"
+    resource = index.resources_by_id["attention-revision-notes"]
+    assert resource.kind == "revision-aid"
+    assert resource.revision_role == "revision_sheet"
+    assert resource.revision_of == ("en/attention",)
+    assert [page.page_id for page in index.lessons_for_revision_aid("resource", resource.resource_id)] == [
+        "en/attention"
+    ]
+    assert index.revision_aids_for_lesson("en/attention")[0].aid_type == "resource"
 
 
-def test_duplicate_revision_relationships_are_rejected(tmp_path: Path) -> None:
-    relationship = {"role": "synthesis", "target": {"type": "page", "id": "en/query"}}
-    revision = {"status": "assessed", "resources": [relationship, relationship]}
+def test_draft_non_page_revision_aid_is_not_in_public_inverse_index(tmp_path: Path) -> None:
     _write_page(tmp_path / "site", "fr/attention", "fr")
-    _write_page(tmp_path / "site", "en/attention", "en", revision=revision)
+    _write_page(tmp_path / "site", "en/attention", "en")
     _write_page(tmp_path / "site", "en/query", "en")
     _write_sources(tmp_path)
-
-    with pytest.raises(ValueError, match="duplicate revision relationship"):
-        ProjectIndex.build(tmp_path)
-
-
-def test_revision_page_target_must_be_published_and_language_compatible(tmp_path: Path) -> None:
-    revision = {
-        "status": "assessed",
-        "resources": [{"role": "revision_sheet", "target": {"type": "page", "id": "fr/attention"}}],
-    }
-    _write_page(tmp_path / "site", "fr/attention", "fr")
-    _write_page(tmp_path / "site", "en/attention", "en", revision=revision)
-    _write_page(tmp_path / "site", "en/query", "en")
-    _write_sources(tmp_path)
-
-    with pytest.raises(ValueError, match=r"revision page target language.*fr/attention"):
-        ProjectIndex.build(tmp_path)
-
-
-def test_revision_resource_target_must_be_published_and_language_compatible(tmp_path: Path) -> None:
-    revision = {
-        "status": "assessed",
-        "resources": [
-            {"role": "flashcards", "target": {"type": "resource", "id": "attention-module"}}
-        ],
-    }
-    _write_page(tmp_path / "site", "fr/attention", "fr")
-    _write_page(tmp_path / "site", "en/attention", "en", revision=revision)
-    _write_page(tmp_path / "site", "en/query", "en")
-    _write_sources(tmp_path)
+    source = tmp_path / "src" / "revision-notes.md"
+    source.write_text("# Draft notes\n", encoding="utf-8")
     path = tmp_path / "data" / "resources.yml"
     resources = yaml.safe_load(path.read_text(encoding="utf-8"))
-    resources["resources"][0]["language"] = "fr"
+    resources["resources"].append(
+        {
+            "id": "draft-attention-revision",
+            "kind": "revision-aid",
+            "labels": {"fr": "Fiche attention", "en": "Attention revision sheet"},
+            "descriptions": {"fr": "Brouillon.", "en": "Draft."},
+            "language": "en",
+            "status": "draft",
+            "location": {"type": "local", "path": "src/revision-notes.md"},
+            "concepts": [],
+            "revision_role": "revision_sheet",
+            "revision_of": ["en/attention"],
+        }
+    )
     path.write_text(yaml.safe_dump(resources, sort_keys=False), encoding="utf-8")
 
-    with pytest.raises(ValueError, match=r"revision resource target language.*attention-module"):
-        ProjectIndex.build(tmp_path)
+    index = ProjectIndex.build(tmp_path)
 
-
-def test_revision_status_constraints_are_enforced(tmp_path: Path) -> None:
-    revision = {"status": "not_applicable", "resources": []}
-    _write_page(tmp_path / "site", "fr/attention", "fr")
-    _write_page(tmp_path / "site", "en/attention", "en", revision=revision)
-    _write_page(tmp_path / "site", "en/query", "en")
-    _write_sources(tmp_path)
-
-    with pytest.raises(ValueError, match=r"not_applicable requires a non-empty reason"):
-        ProjectIndex.build(tmp_path)
+    assert index.revision_aids_for_lesson("en/attention") == ()
+    with pytest.raises(KeyError, match="unknown revision-aid resource"):
+        index.lessons_for_revision_aid("resource", "draft-attention-revision")
 
 
 def test_real_repository_index_has_referential_integrity() -> None:
@@ -397,6 +481,8 @@ def test_real_repository_index_has_referential_integrity() -> None:
     assert len(index.resources_by_id) == 5
     assert len(index.page_resource_associations) == 10
     assert index.revision_edges == ()
-    assert set(index.revision_status_by_page.values()) == {"not_assessed"}
+    assert set(item["status"] for item in index.revision_support_by_page.values()) == {
+        "not_assessed"
+    }
     assert all(edge.target in index.pages_by_id for edge in index.page_edges)
     assert index.stats() == ProjectIndex.build(ROOT).stats()
