@@ -499,8 +499,7 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
         else:
             if path.stem != source_id:
                 errors.append(
-                    f"{where}.source_id: filename must be canonical "
-                    f"(expected {source_id}.yml)"
+                    f"{where}.source_id: filename must be canonical (expected {source_id}.yml)"
                 )
             previous_file = extraction_source_files.get(source_id)
             if previous_file is not None:
