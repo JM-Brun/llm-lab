@@ -97,9 +97,7 @@ def build_concept_coverage(index: Any) -> dict[str, Any]:
                         "path": "data/guided-route.yml",
                     }
                 )
-        route_evidence.sort(
-            key=lambda item: (item["stage_id"], item["role"], item["page_id"])
-        )
+        route_evidence.sort(key=lambda item: (item["stage_id"], item["role"], item["page_id"]))
         understand_cell = _cell(
             "present" if route_evidence else "needs_review",
             route_evidence,
@@ -126,13 +124,10 @@ def build_concept_coverage(index: Any) -> dict[str, Any]:
         )
 
         revision_states = [
-            index.revision_status_by_page.get(page_id, "not_assessed")
-            for page_id in page_ids
+            index.revision_status_by_page.get(page_id, "not_assessed") for page_id in page_ids
         ]
         revision_edges = [
-            edge
-            for page_id in page_ids
-            for edge in index.revision_targets_for_page(page_id)
+            edge for page_id in page_ids for edge in index.revision_targets_for_page(page_id)
         ]
         if not page_ids:
             revision_state = "needs_review"
@@ -162,10 +157,7 @@ def build_concept_coverage(index: Any) -> dict[str, Any]:
         ]
         revision_evidence.extend(
             {
-                "id": (
-                    f"{edge.source_page_id}:{edge.role}:"
-                    f"{edge.target_type}:{edge.target_id}"
-                ),
+                "id": (f"{edge.source_page_id}:{edge.role}:{edge.target_type}:{edge.target_id}"),
                 "path": _page_path(index.pages_by_id[edge.source_page_id]),
                 "role": edge.role,
                 "target_type": edge.target_type,
@@ -226,9 +218,7 @@ def build_concept_coverage(index: Any) -> dict[str, Any]:
     state_counts: dict[str, dict[str, int]] = {}
     dimension_ids = tuple(rows[0]["dimensions"]) if rows else ()
     for dimension_id in dimension_ids:
-        counts = Counter(
-            row["dimensions"][dimension_id]["state"] for row in rows
-        )
+        counts = Counter(row["dimensions"][dimension_id]["state"] for row in rows)
         state_counts[dimension_id] = dict(sorted(counts.items()))
 
     return {
