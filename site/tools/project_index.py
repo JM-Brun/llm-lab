@@ -1,11 +1,13 @@
 """Deterministic, read-only queries over LLM Lab's canonical project metadata.
 
 This module composes existing readers. It is an in-memory projection, not a
-new registry or source of truth. Page, concept, and route relations stay distinct.
+new registry or source of truth. Page, concept, route, resource and revision relations
+stay distinct.
 """
 
 from __future__ import annotations
 
+import re
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
@@ -26,6 +28,307 @@ class ProjectIndexIntegrityError(ValueError):
         super().__init__(
             f"{source}: record {record_id!r} has invalid {relation} reference {target!r}"
         )
+
+
+@dataclass(frozen=True, slots=True)
+class ResourceRecord:
+    """One first-class non-page resource, retaining its canonical metadata."""
+
+    resource_id: str
+    kind: str
+    language: str
+    status: str
+    labels: dict[str, str]
+    descriptions: dict[str, str]
+    location: dict[str, Any]
+    referenced_by: tuple[str, ...]
+    concepts: tuple[str, ...]
+    programming_language: str | None = None
+    provenance: dict[str, str] | None = None
+
+
+@dataclass(frozen=True, slots=True)
+class PageResourceAssociation:
+    """A page explicitly listed by a non-page resource's referenced_by field."""
+
+    page_id: str
+    resource_id: str
+
+
+@dataclass(frozen=True, slots=True)
+class ConceptResourceAssociation:
+    """A non-page resource explicitly associated with a canonical concept."""
+
+    concept_id: str
+    resource_id: str
+
+
+@dataclass(frozen=True, slots=True)
+class RevisionEdge:
+    """A typed page-to-revision-support relation, separate from page graph edges."""
+
+    source_page_id: str
+    role: str
+    target_type: str
+    target_id: str
+
+
+REVISION_STATUSES = {"not_assessed", "assessed", "not_applicable"}
+REVISION_ROLES = {"synthesis", "flashcards", "revision_sheet"}
+REVISION_TARGET_TYPES = {"section", "page", "resource"}
+STABLE_ANCHOR = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
+
+
+def _language_matches(source: str, target: str) -> bool:
+    """Allow exact language matches, regional variants, and language-neutral targets."""
+    source_tag, target_tag = source.lower(), target.lower()
+    if target_tag == "shared":
+        return True
+    if source_tag == "shared":
+        return target_tag == "shared"
+    return target_tag == source_tag or target_tag.startswith(source_tag + "-")
+
+
+def _has_explicit_anchor(source: str, anchor: str) -> bool:
+    """Find an explicit Quarto heading/div or HTML ID; never infer a slug from text."""
+    escaped = re.escape(anchor)
+    patterns = (
+        r"^#{1,6}\s+.*\{[^}\n]*#" + escaped + r"(?=\s|\})[^}\n]*\}\s*$",
+        r"^:::\s+\{[^}\n]*#" + escaped + r"(?=\s|\})[^}\n]*\}\s*$",
+        r'\bid=["\']' + escaped + r'["\']',
+    )
+    return any(re.search(pattern, source, re.MULTILINE) for pattern in patterns)
+
+
+def _load_non_page_resources(
+    root: Path,
+    pages: dict[str, PublishedPage],
+    concepts: dict[str, dict[str, Any]],
+) -> tuple[
+    dict[str, ResourceRecord],
+    tuple[PageResourceAssociation, ...],
+    tuple[ConceptResourceAssociation, ...],
+]:
+    """Adapt data/resources.yml without conflating it with concept page IDs."""
+    path = root / "data" / "resources.yml"
+    data = load_yaml(path)
+    if (
+        not isinstance(data, dict)
+        or type(data.get("schema_version")) is not int
+        or data.get("schema_version") != 1
+    ):
+        raise ValueError("data/resources.yml: expected mapping with schema_version: 1")
+    entries = data.get("resources")
+    if not isinstance(entries, list) or not entries:
+        raise ValueError("data/resources.yml: resources must be a non-empty list")
+
+    records: dict[str, ResourceRecord] = {}
+    page_associations: list[PageResourceAssociation] = []
+    concept_associations: list[ConceptResourceAssociation] = []
+    for index, item in enumerate(entries):
+        where = f"data/resources.yml: resources[{index}]"
+        if not isinstance(item, dict):
+            raise ValueError(f"{where}: expected a mapping")
+        resource_id = item.get("id")
+        if not isinstance(resource_id, str) or not resource_id.strip():
+            raise ValueError(f"{where}.id: expected a non-empty stable ID")
+        if resource_id in records:
+            raise ProjectIndexIntegrityError(
+                source="data/resources.yml",
+                record_id=resource_id,
+                relation="duplicate resource ID",
+                target=resource_id,
+            )
+
+        kind, language, status = item.get("kind"), item.get("language"), item.get("status")
+        if not all(isinstance(value, str) and value for value in (kind, language, status)):
+            raise ValueError(f"{where}: kind, language and status must be non-empty strings")
+        labels, descriptions, location = (
+            item.get("labels"),
+            item.get("descriptions"),
+            item.get("location"),
+        )
+        if not isinstance(labels, dict) or not isinstance(descriptions, dict):
+            raise ValueError(f"{where}: labels and descriptions must be mappings")
+        if not isinstance(location, dict):
+            raise ValueError(f"{where}.location: expected a mapping")
+
+        referenced_by = item.get("referenced_by")
+        resource_concepts = item.get("concepts")
+        if not isinstance(referenced_by, list) or not all(
+            isinstance(value, str) for value in referenced_by
+        ):
+            raise ValueError(f"{where}.referenced_by: expected a list of page IDs")
+        if not isinstance(resource_concepts, list) or not all(
+            isinstance(value, str) for value in resource_concepts
+        ):
+            raise ValueError(f"{where}.concepts: expected a list of concept IDs")
+        if len(referenced_by) != len(set(referenced_by)):
+            raise ValueError(f"{where}.referenced_by: duplicate page IDs")
+        if len(resource_concepts) != len(set(resource_concepts)):
+            raise ValueError(f"{where}.concepts: duplicate concept IDs")
+
+        for page_id in referenced_by:
+            if page_id not in pages:
+                raise ProjectIndexIntegrityError(
+                    source="data/resources.yml",
+                    record_id=resource_id,
+                    relation="referenced_by (page ID)",
+                    target=page_id,
+                )
+            page_associations.append(PageResourceAssociation(page_id, resource_id))
+        for concept_id in resource_concepts:
+            if concept_id not in concepts:
+                raise ProjectIndexIntegrityError(
+                    source="data/resources.yml",
+                    record_id=resource_id,
+                    relation="concepts (concept ID)",
+                    target=concept_id,
+                )
+            concept_associations.append(ConceptResourceAssociation(concept_id, resource_id))
+
+        programming_language = item.get("programming_language")
+        if programming_language is not None and not isinstance(programming_language, str):
+            raise ValueError(f"{where}.programming_language: expected a string when present")
+        provenance = item.get("provenance")
+        if provenance is not None and not isinstance(provenance, dict):
+            raise ValueError(f"{where}.provenance: expected a mapping when present")
+        records[resource_id] = ResourceRecord(
+            resource_id=resource_id,
+            kind=kind,
+            language=language,
+            status=status,
+            labels=dict(labels),
+            descriptions=dict(descriptions),
+            location=dict(location),
+            referenced_by=tuple(referenced_by),
+            concepts=tuple(resource_concepts),
+            programming_language=programming_language,
+            provenance=dict(provenance) if provenance is not None else None,
+        )
+
+    return (
+        records,
+        tuple(sorted(page_associations, key=lambda edge: (edge.page_id, edge.resource_id))),
+        tuple(sorted(concept_associations, key=lambda edge: (edge.concept_id, edge.resource_id))),
+    )
+
+
+def _load_revision_relations(
+    pages: dict[str, PublishedPage],
+    resources: dict[str, ResourceRecord],
+) -> tuple[dict[str, str], tuple[RevisionEdge, ...]]:
+    """Adapt the proposed page-map revision object without changing the page validator."""
+    statuses: dict[str, str] = {}
+    edges: list[RevisionEdge] = []
+    for page_id, page in pages.items():
+        if "revision" not in page.metadata:
+            statuses[page_id] = "not_assessed"
+            continue
+
+        revision = page.metadata["revision"]
+        where = f"{page.path.as_posix()}.revision"
+        if not isinstance(revision, dict):
+            raise ProjectIndexIntegrityError(
+                source=where, record_id=page_id, relation="revision object", target=revision
+            )
+        unknown_fields = set(revision) - {"status", "resources", "reason"}
+        if unknown_fields:
+            names = ", ".join(sorted(map(str, unknown_fields)))
+            raise ValueError(f"{where}: unknown field(s) {names}")
+        status = revision.get("status")
+        if not isinstance(status, str) or status not in REVISION_STATUSES:
+            raise ValueError(f"{where}.status: unsupported revision status {status!r}")
+        raw_edges = revision.get("resources", [])
+        if not isinstance(raw_edges, list):
+            raise ValueError(f"{where}.resources: expected a list")
+        reason = revision.get("reason")
+        if status == "not_applicable":
+            if not isinstance(reason, str) or not reason.strip():
+                raise ValueError(f"{where}.reason: not_applicable requires a non-empty reason")
+        elif reason is not None:
+            raise ValueError(f"{where}.reason: only not_applicable may declare a reason")
+        if status != "assessed" and raw_edges:
+            raise ValueError(f"{where}.resources: {status} cannot contain revision relations")
+
+        seen: set[tuple[str, str, str]] = set()
+        for index, item in enumerate(raw_edges):
+            relation_where = f"{where}.resources[{index}]"
+            if not isinstance(item, dict) or set(item) != {"role", "target"}:
+                raise ValueError(f"{relation_where}: expected exactly role and target")
+            role, target = item.get("role"), item.get("target")
+            if not isinstance(role, str) or role not in REVISION_ROLES:
+                raise ValueError(f"{relation_where}.role: unsupported revision role {role!r}")
+            if not isinstance(target, dict) or set(target) != {"type", "id"}:
+                raise ValueError(f"{relation_where}.target: expected exactly type and id")
+            target_type, target_id = target.get("type"), target.get("id")
+            if not isinstance(target_type, str) or target_type not in REVISION_TARGET_TYPES:
+                raise ValueError(
+                    f"{relation_where}.target.type: unsupported target type {target_type!r}"
+                )
+            if not isinstance(target_id, str) or not target_id.strip():
+                raise ValueError(f"{relation_where}.target.id: expected a non-empty string")
+            key = (role, target_type, target_id)
+            if key in seen:
+                raise ValueError(f"{relation_where}: duplicate revision relationship {key!r}")
+            seen.add(key)
+
+            if target_type == "section":
+                if not STABLE_ANCHOR.fullmatch(target_id):
+                    raise ValueError(f"{relation_where}.target.id: invalid section anchor")
+                if not _has_explicit_anchor(page.source, target_id):
+                    raise ProjectIndexIntegrityError(
+                        source=where,
+                        record_id=page_id,
+                        relation="revision section anchor",
+                        target=target_id,
+                    )
+            elif target_type == "page":
+                target_page = pages.get(target_id)
+                if target_page is None or target_id == page_id:
+                    raise ProjectIndexIntegrityError(
+                        source=where,
+                        record_id=page_id,
+                        relation="revision page target",
+                        target=target_id,
+                    )
+                if not _language_matches(page.language, target_page.language):
+                    raise ProjectIndexIntegrityError(
+                        source=where,
+                        record_id=page_id,
+                        relation="revision page target language",
+                        target=target_id,
+                    )
+            else:
+                target_resource = resources.get(target_id)
+                if target_resource is None or target_resource.status != "published":
+                    raise ProjectIndexIntegrityError(
+                        source=where,
+                        record_id=page_id,
+                        relation="revision resource target",
+                        target=target_id,
+                    )
+                if not _language_matches(page.language, target_resource.language):
+                    raise ProjectIndexIntegrityError(
+                        source=where,
+                        record_id=page_id,
+                        relation="revision resource target language",
+                        target=target_id,
+                    )
+            edges.append(RevisionEdge(page_id, role, target_type, target_id))
+        statuses[page_id] = status
+
+    return statuses, tuple(
+        sorted(
+            edges,
+            key=lambda edge: (
+                edge.source_page_id,
+                edge.role,
+                edge.target_type,
+                edge.target_id,
+            ),
+        )
+    )
 
 
 @dataclass(frozen=True, slots=True)
@@ -51,7 +354,7 @@ class RouteMembership:
 
 @dataclass(slots=True)
 class ProjectIndex:
-    """In-memory indexes over published pages and canonical concept/route YAML."""
+    """In-memory projection of canonical page, concept, route and resource records."""
 
     pages_by_id: dict[str, PublishedPage]
     concepts_by_id: dict[str, dict[str, Any]]
@@ -65,6 +368,11 @@ class ProjectIndex:
     pages_incoming: dict[str, tuple[PageEdge, ...]]
     pages_outgoing: dict[str, tuple[PageEdge, ...]]
     route_pages: dict[tuple[str, str, str], tuple[str, ...]]
+    resources_by_id: dict[str, ResourceRecord]
+    page_resource_associations: tuple[PageResourceAssociation, ...]
+    concept_resource_associations: tuple[ConceptResourceAssociation, ...]
+    revision_status_by_page: dict[str, str]
+    revision_edges: tuple[RevisionEdge, ...]
 
     @classmethod
     def build(cls, root: Path) -> ProjectIndex:
@@ -78,6 +386,10 @@ class ProjectIndex:
         route_data = load_yaml(root / "data" / "guided-route.yml")
         concepts = {item["id"]: item for item in concept_data["concepts"]}
         domains = {item["id"]: item for item in domain_data["domains"]}
+        resources, page_resource_associations, concept_resource_associations = (
+            _load_non_page_resources(root, pages, concepts)
+        )
+        revision_status_by_page, revision_edges = _load_revision_relations(pages, resources)
 
         tag_index: dict[tuple[str, str], set[str]] = defaultdict(set)
         for page in published:
@@ -177,6 +489,11 @@ class ProjectIndex:
                 for key, value in outgoing.items()
             },
             route_pages={key: tuple(value) for key, value in route_page_lists.items()},
+            resources_by_id=resources,
+            page_resource_associations=page_resource_associations,
+            concept_resource_associations=concept_resource_associations,
+            revision_status_by_page=revision_status_by_page,
+            revision_edges=revision_edges,
         )
 
     def select_pages(self, **filters: str) -> tuple[PublishedPage, ...]:

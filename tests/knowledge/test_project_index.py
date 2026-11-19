@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import runpy
 from pathlib import Path
+from typing import Any
 
 import pytest
 import yaml
@@ -16,7 +17,15 @@ MODULE = runpy.run_path(
 ProjectIndex = MODULE["ProjectIndex"]
 
 
-def _write_page(site: Path, page_id: str, language: str, *, next_page: str | None = None) -> None:
+def _write_page(
+    site: Path,
+    page_id: str,
+    language: str,
+    *,
+    next_page: str | None = None,
+    revision: dict[str, Any] | None = None,
+    body: str = "",
+) -> None:
     _, slug = page_id.split("/", 1)
     path = site / language / f"{slug}.qmd"
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -35,10 +44,12 @@ def _write_page(site: Path, page_id: str, language: str, *, next_page: str | Non
         "related": [],
         "tags": tags,
     }
+    if revision is not None:
+        metadata["revision"] = revision
     front = {"title": slug, "lang": language, "keywords": tags}
     content = (
         "---\n" + yaml.safe_dump(front, sort_keys=False) + "---\n\n"
-        "<!--\nLLM-LAB-PAGE-MAP v1\n" + yaml.safe_dump(metadata, sort_keys=False) + "-->\n"
+        "<!--\nLLM-LAB-PAGE-MAP v1\n" + yaml.safe_dump(metadata, sort_keys=False) + "-->\n" + body
     )
     path.write_text(content, encoding="utf-8")
 
@@ -95,8 +106,32 @@ def _write_sources(root: Path) -> None:
         ("concepts.yml", concepts),
         ("domains.yml", domains),
         ("guided-route.yml", route),
+        (
+            "resources.yml",
+            {
+                "schema_version": 1,
+                "resources": [
+                    {
+                        "id": "attention-module",
+                        "kind": "implementation",
+                        "labels": {"fr": "Module attention", "en": "Attention module"},
+                        "descriptions": {"fr": "Code.", "en": "Code."},
+                        "language": "en",
+                        "programming_language": "Python",
+                        "status": "published",
+                        "location": {"type": "local", "path": "src/attention.py"},
+                        "referenced_by": ["fr/attention", "en/attention"],
+                        "concepts": ["attention"],
+                    }
+                ],
+            },
+        ),
     ):
         (data / name).write_text(yaml.safe_dump(value, sort_keys=False), encoding="utf-8")
+
+    source_dir = root / "src"
+    source_dir.mkdir(parents=True, exist_ok=True)
+    (source_dir / "attention.py").write_text("# test fixture\n", encoding="utf-8")
 
 
 def _index(tmp_path: Path) -> ProjectIndex:
@@ -178,10 +213,190 @@ def test_page_edge_target_must_exist(tmp_path: Path) -> None:
         ProjectIndex.build(tmp_path)
 
 
+def test_non_page_resource_adapter_preserves_explicit_associations(tmp_path: Path) -> None:
+    index = _index(tmp_path)
+
+    resource = index.resources_by_id["attention-module"]
+    assert resource.kind == "implementation"
+    assert resource.language == "en"
+    assert resource.referenced_by == ("fr/attention", "en/attention")
+    assert resource.concepts == ("attention",)
+    assert index.page_resource_associations == (
+        MODULE["PageResourceAssociation"]("en/attention", "attention-module"),
+        MODULE["PageResourceAssociation"]("fr/attention", "attention-module"),
+    )
+    assert index.concept_resource_associations == (
+        MODULE["ConceptResourceAssociation"]("attention", "attention-module"),
+    )
+
+
+def test_non_page_resource_references_must_resolve(tmp_path: Path) -> None:
+    _write_page(tmp_path / "site", "fr/attention", "fr")
+    _write_page(tmp_path / "site", "en/attention", "en")
+    _write_page(tmp_path / "site", "en/query", "en")
+    _write_sources(tmp_path)
+    path = tmp_path / "data" / "resources.yml"
+    resources = yaml.safe_load(path.read_text(encoding="utf-8"))
+    resources["resources"][0]["referenced_by"].append("en/missing")
+    path.write_text(yaml.safe_dump(resources, sort_keys=False), encoding="utf-8")
+
+    with pytest.raises(ValueError, match=r"attention-module.*referenced_by.*en/missing"):
+        ProjectIndex.build(tmp_path)
+
+
+def test_non_page_resource_concept_reference_must_resolve(tmp_path: Path) -> None:
+    _write_page(tmp_path / "site", "fr/attention", "fr")
+    _write_page(tmp_path / "site", "en/attention", "en")
+    _write_page(tmp_path / "site", "en/query", "en")
+    _write_sources(tmp_path)
+    path = tmp_path / "data" / "resources.yml"
+    resources = yaml.safe_load(path.read_text(encoding="utf-8"))
+    resources["resources"][0]["concepts"].append("missing")
+    path.write_text(yaml.safe_dump(resources, sort_keys=False), encoding="utf-8")
+
+    with pytest.raises(ValueError, match=r"attention-module.*concepts.*missing"):
+        ProjectIndex.build(tmp_path)
+
+
+def test_revision_adapter_keeps_three_target_types_separate(tmp_path: Path) -> None:
+    revision = {
+        "status": "assessed",
+        "resources": [
+            {"role": "synthesis", "target": {"type": "section", "id": "revision-summary"}},
+            {"role": "flashcards", "target": {"type": "page", "id": "en/query"}},
+            {"role": "revision_sheet", "target": {"type": "resource", "id": "attention-module"}},
+        ],
+    }
+    _write_page(tmp_path / "site", "fr/attention", "fr")
+    _write_page(
+        tmp_path / "site",
+        "en/attention",
+        "en",
+        next_page="en/query",
+        revision=revision,
+        body="\n## Revision summary {#revision-summary}\n",
+    )
+    _write_page(tmp_path / "site", "en/query", "en")
+    _write_sources(tmp_path)
+
+    index = ProjectIndex.build(tmp_path)
+
+    assert index.revision_status_by_page["en/attention"] == "assessed"
+    assert index.revision_status_by_page["fr/attention"] == "not_assessed"
+    assert [
+        (edge.source_page_id, edge.role, edge.target_type, edge.target_id)
+        for edge in index.revision_edges
+    ] == [
+        ("en/attention", "flashcards", "page", "en/query"),
+        ("en/attention", "revision_sheet", "resource", "attention-module"),
+        ("en/attention", "synthesis", "section", "revision-summary"),
+    ]
+    assert all(edge.family != "revision" for edge in index.page_edges)
+
+
+def test_revision_section_requires_an_explicit_anchor(tmp_path: Path) -> None:
+    revision = {
+        "status": "assessed",
+        "resources": [{"role": "synthesis", "target": {"type": "section", "id": "missing-anchor"}}],
+    }
+    _write_page(tmp_path / "site", "fr/attention", "fr")
+    _write_page(tmp_path / "site", "en/attention", "en", revision=revision)
+    _write_page(tmp_path / "site", "en/query", "en")
+    _write_sources(tmp_path)
+
+    with pytest.raises(ValueError, match=r"revision section anchor.*missing-anchor"):
+        ProjectIndex.build(tmp_path)
+
+
+def test_revision_section_accepts_explicit_quarto_block_anchor(tmp_path: Path) -> None:
+    revision = {
+        "status": "assessed",
+        "resources": [
+            {"role": "revision_sheet", "target": {"type": "section", "id": "revision-block"}}
+        ],
+    }
+    _write_page(tmp_path / "site", "fr/attention", "fr")
+    _write_page(
+        tmp_path / "site",
+        "en/attention",
+        "en",
+        revision=revision,
+        body="\n::: {.callout-tip #revision-block}\nA concise recap.\n:::\n",
+    )
+    _write_page(tmp_path / "site", "en/query", "en")
+    _write_sources(tmp_path)
+
+    index = ProjectIndex.build(tmp_path)
+
+    assert index.revision_edges[0].target_type == "section"
+    assert index.revision_edges[0].target_id == "revision-block"
+
+
+def test_duplicate_revision_relationships_are_rejected(tmp_path: Path) -> None:
+    relationship = {"role": "synthesis", "target": {"type": "page", "id": "en/query"}}
+    revision = {"status": "assessed", "resources": [relationship, relationship]}
+    _write_page(tmp_path / "site", "fr/attention", "fr")
+    _write_page(tmp_path / "site", "en/attention", "en", revision=revision)
+    _write_page(tmp_path / "site", "en/query", "en")
+    _write_sources(tmp_path)
+
+    with pytest.raises(ValueError, match="duplicate revision relationship"):
+        ProjectIndex.build(tmp_path)
+
+
+def test_revision_page_target_must_be_published_and_language_compatible(tmp_path: Path) -> None:
+    revision = {
+        "status": "assessed",
+        "resources": [{"role": "revision_sheet", "target": {"type": "page", "id": "fr/attention"}}],
+    }
+    _write_page(tmp_path / "site", "fr/attention", "fr")
+    _write_page(tmp_path / "site", "en/attention", "en", revision=revision)
+    _write_page(tmp_path / "site", "en/query", "en")
+    _write_sources(tmp_path)
+
+    with pytest.raises(ValueError, match=r"revision page target language.*fr/attention"):
+        ProjectIndex.build(tmp_path)
+
+
+def test_revision_resource_target_must_be_published_and_language_compatible(tmp_path: Path) -> None:
+    revision = {
+        "status": "assessed",
+        "resources": [
+            {"role": "flashcards", "target": {"type": "resource", "id": "attention-module"}}
+        ],
+    }
+    _write_page(tmp_path / "site", "fr/attention", "fr")
+    _write_page(tmp_path / "site", "en/attention", "en", revision=revision)
+    _write_page(tmp_path / "site", "en/query", "en")
+    _write_sources(tmp_path)
+    path = tmp_path / "data" / "resources.yml"
+    resources = yaml.safe_load(path.read_text(encoding="utf-8"))
+    resources["resources"][0]["language"] = "fr"
+    path.write_text(yaml.safe_dump(resources, sort_keys=False), encoding="utf-8")
+
+    with pytest.raises(ValueError, match=r"revision resource target language.*attention-module"):
+        ProjectIndex.build(tmp_path)
+
+
+def test_revision_status_constraints_are_enforced(tmp_path: Path) -> None:
+    revision = {"status": "not_applicable", "resources": []}
+    _write_page(tmp_path / "site", "fr/attention", "fr")
+    _write_page(tmp_path / "site", "en/attention", "en", revision=revision)
+    _write_page(tmp_path / "site", "en/query", "en")
+    _write_sources(tmp_path)
+
+    with pytest.raises(ValueError, match=r"not_applicable requires a non-empty reason"):
+        ProjectIndex.build(tmp_path)
+
+
 def test_real_repository_index_has_referential_integrity() -> None:
     index = ProjectIndex.build(ROOT)
 
     assert index.pages_by_id
     assert index.concepts_by_id
+    assert len(index.resources_by_id) == 5
+    assert len(index.page_resource_associations) == 10
+    assert index.revision_edges == ()
+    assert set(index.revision_status_by_page.values()) == {"not_assessed"}
     assert all(edge.target in index.pages_by_id for edge in index.page_edges)
     assert index.stats() == ProjectIndex.build(ROOT).stats()
