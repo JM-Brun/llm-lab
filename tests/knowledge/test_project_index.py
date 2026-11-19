@@ -492,6 +492,18 @@ def test_real_repository_index_has_referential_integrity() -> None:
         "en/transformer",
         "fr/vraisemblance",
         "en/likelihood",
+        "fr/build-path",
+        "en/build-path",
+        "fr/gpt-config-walkthrough",
+        "en/gpt-config-walkthrough",
+        "fr/gpt-ops-walkthrough",
+        "en/gpt-ops-walkthrough",
+        "fr/transformer-block-walkthrough",
+        "en/transformer-block-walkthrough",
+        "fr/gpt-model-walkthrough",
+        "en/gpt-model-walkthrough",
+        "fr/gpt-generation-walkthrough",
+        "en/gpt-generation-walkthrough",
     }
     assert {
         page_id
@@ -500,7 +512,7 @@ def test_real_repository_index_has_referential_integrity() -> None:
     } == integrated_pages
     assert (
         sum(item["status"] == "not_assessed" for item in index.revision_support_by_page.values())
-        == len(index.revision_support_by_page) - 50
+        == len(index.revision_support_by_page) - 62
     )
     assert all(edge.target in index.pages_by_id for edge in index.page_edges)
     assert index.stats() == ProjectIndex.build(ROOT).stats()
