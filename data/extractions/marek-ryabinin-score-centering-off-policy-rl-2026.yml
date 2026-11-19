@@ -233,7 +233,7 @@ items:
       concept_ids: [score-centering]
     candidate_destinations:
       pages: [fr/score-centering, en/score-centering]
-      concepts: [score-centering, log-probability]
+      concepts: [score-centering, log-likelihood]
       route_ids: []
     disposition: integrate-by-reference
     disposition_rationale: "Retain as an implementation deep dive, not as a prerequisite for the conceptual derivation."
