@@ -3136,7 +3136,7 @@ sources:
     identifiers: {}
     canonical_url: "https://medium.com/@EleventhHourEnthusiast/proving-and-improving-the-platonic-representation-hypothesis-with-jepas-80a88aa3766d"
     publisher: "Medium"
-    publication_date: null
+    publication_date: "2026-11-05"
     updated_date: null
     language: en
     version: "Full article body inspected on 2026-11-10"
@@ -3166,6 +3166,13 @@ sources:
           - "The article's embedded mathematical figures were not separately retrieved as image files; the text descriptions and equations were inspected."
           - "The derivation was checked for consistency with the primary paper's Appendix A framing, but not independently peer reviewed."
           - "The article is a secondary explanation; the arXiv paper remains authoritative for theorem assumptions and experimental protocol."
+          - "No licence or permission to reproduce the article's figures or prose was established."
+      - accessed_at: "2026-11-19"
+        status: scanned
+        inspected_scope:
+          - "Canonical Medium article page and displayed publication date (Nov 5, 2026)"
+        limitations:
+          - "The Medium publication date does not change the separate arXiv preprint date or version history."
           - "No licence or permission to reproduce the article's figures or prose was established."
     related:
       pages: [fr/jepa-platonic-representation, en/jepa-platonic-representation]
