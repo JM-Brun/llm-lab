@@ -1,229 +1,199 @@
 # Revision-resource relationship contract
 
-**Status:** proposed architecture contract; not an implemented metadata schema.
-
-**Read-model implementation note:** [PR #1394](https://github.com/JM-Brun/llm-lab/pull/1394) adds a read-only ProjectIndex adapter for this proposed shape. No current page declares a revision object; the page metadata and resource validators, registries and historical page records remain unchanged. This adapter does not make the proposal a canonical schema.  
+**Status:** proposed canonical contract; not yet an implemented metadata schema.  
 **Date:** 2026-11-19  
-**Scope:** explicit associations between a learning page and its revision support (integrated section, companion page or non-page artifact) for synthesis, flashcards and revision sheets.
+**Scope:** explicit links from revision aids to the published Understand/Build lessons they support, plus a separate assessment of each lesson's revision coverage.
 
-This document records a candidate model for review. It does **not** authorize edits to the 62-page historical snapshot, changes to `LLM-LAB-PAGE-MAP v1`, changes to `data/resources.yml`, or changes to any validator. Those changes require a separately reviewed implementation plan after this contract and the existing data inventory have been checked.
+This document reconciles the competing designs discussed in [#1109](https://github.com/JM-Brun/llm-lab/issues/1109). It supersedes the earlier page-owned `revision.resources` sketch. No page metadata, resource registry, validator, graph or generated output is migrated by this proposal.
 
 ## 1. Design requirements
 
-1. A learning page may have zero, one or several revision artifacts.
-2. A revision artifact may support more than one learning page; do not duplicate a shared artifact to manufacture one-to-one links.
-3. Revision support may be either:
-   - an integrated section of the learning page itself, identified by an explicit heading or block anchor;
-   - a companion published Quarto page with its existing stable page ID; or
-   - a non-page artifact with its own stable resource ID in `data/resources.yml`.
-4. The relationship has an explicit pedagogical role. A synthesis, a flashcard set and a revision sheet are not interchangeable.
-5. The relation is directional: **learning page → revision artifact**. Reverse lookups are derived indexes, not separately authored links.
-6. Missing metadata must not be interpreted as proof that a page has no revision support.
-7. The relation must not be inferred from filenames, matching titles, links in the body, tags, topic overlap or proximity in a graph.
-8. The relationship is not a reading-order edge, prerequisite, conceptual hierarchy edge, concept-resource association, or evidence/provenance edge.
-9. French and English counterparts should link to the corresponding language version of an artifact. A language-neutral artifact may be shared when its content genuinely is language-independent.
-10. Existing page, concept and non-page resource identities remain owned by their current canonical sources.
+1. A lesson may have zero, one or several revision aids.
+2. One aid may support several lessons; do not duplicate a shared aid to manufacture one-to-one links.
+3. An aid may be a published Quarto page or a non-page artifact with a stable resource ID.
+4. The aid declares its relationship to its source lesson(s); the reverse lesson-to-aids view is derived.
+5. Link existence and pedagogical sufficiency are separate facts.
+6. Missing metadata means **not assessed**, not “no revision support”.
+7. Never infer a relationship from filenames, titles, body links, tags, topic overlap, sidebar position or generic graph proximity.
+8. Keep revision relationships separate from reading order, hierarchy, generic related links, concepts and source provenance.
+9. Language-specific aids target the corresponding language version. A genuinely bilingual aid may target an explicitly paired French/English source set.
+10. Existing page and resource identities remain owned by their canonical registries.
 
 ## 2. Terminology and identity
 
 | Term | Meaning | Canonical identity |
 |---|---|---|
-| Learning page | Published page whose explanation or implementation is supported by revision material | Existing page ID from `LLM-LAB-PAGE-MAP v1` |
-| Integrated section | Revision material embedded in the learning page itself | Explicit heading anchor within the source page |
-| Page artifact | Revision material published as a separate Quarto page | Existing page ID; it is not copied into `data/resources.yml` |
-| Non-page artifact | Revision material not published as a Quarto page (for example, a machine-readable flashcard set) | Stable resource ID in `data/resources.yml` |
-| Revision role | The function the artifact serves for the learning page | Controlled value on the relationship |
-| Revision relationship | Explicit association from one learning page to one artifact | Derived key from source page, role, target type and target ID |
+| Lesson | Published Understand or Build page whose learning is supported | Existing page ID from `LLM-LAB-PAGE-MAP v1` |
+| Page aid | Revision aid published as a Quarto page | Existing page ID; never duplicate it in `data/resources.yml` |
+| Non-page aid | Revision aid that is not a published Quarto page | Stable resource ID in `data/resources.yml` |
+| Revision role | Learner-facing function of an aid | Controlled value declared by the aid |
+| Revision edge | Directed link from an aid to a lesson | Aid identity + role + lesson page ID |
+| Revision assessment | Evidence-backed judgement of support sufficiency for one lesson | Field on the source lesson page |
 
-A page ID and a resource ID are different namespaces. Never resolve a page target by searching the resource registry, or a resource target by searching page metadata. In particular, `concepts[].resources` continues to contain published page IDs; it must not be overloaded with non-page resource IDs or revision links.
+Page IDs and resource IDs are separate namespaces. Resolve a page target only against the published-page index and a non-page target only against the resource registry. `concepts[].resources` continues to contain page IDs and must not be overloaded.
 
-## 3. Proposed relationship shape
+## 3. Canonical relation direction and representation
 
-The preferred candidate is an optional `revision` object in the page's existing `LLM-LAB-PAGE-MAP v1` block. This keeps page-owned relationships beside the page identity and its other page-level relations, while allowing the target to be either a page or a non-page resource.
+The canonical edge direction is **aid → source lesson**. This represents the provenance of the learning aid, supports one aid serving several lessons without duplicating declarations, and allows the reverse lesson → aids index to be generated deterministically.
+
+### 3.1 Page-based aid
+
+A published Quarto page that is a revision aid declares:
+
+- `revision_role`: one controlled primary role;
+- `revision_of`: a non-empty list of stable page IDs for the source lessons.
 
 Illustrative only:
 
 ```yaml
-revision:
-  status: assessed
-  resources:
-    - role: synthesis
-      target:
-        type: page
-        id: fr/information-theory-synthesis
-    - role: flashcards
-      target:
-        type: resource
-        id: information-theory-flashcards-fr
-    - role: revision_sheet
-      target:
-        type: page
-        id: fr/information-theory-revision
+revision_role: revision_sheet
+revision_of:
+  - fr/entropy
+  - fr/cross-entropy
 ```
 
-The example IDs and target pages are illustrative, not assertions that these artifacts exist in the current repository.
+A source lesson must not use these fields to point to an aid.
 
-### 3.1 Status semantics
+### 3.2 Non-page aid
 
-The `revision` object is optional so existing pages remain valid and untouched until a migration is approved.
+A non-page aid is represented in `data/resources.yml` with a distinct resource kind, provisionally `kind: revision-aid`, and the same `revision_role` / `revision_of` semantics. Its kind-specific required fields must be finalized after the non-page artifact inventory. Do not add `revision_of` to an `implementation` resource and do not reinterpret `referenced_by`.
 
-| Status | Meaning | Required behavior |
-|---|---|---|
-| Omitted | Not yet assessed under this contract | Report as unknown / not assessed, never as “no resource” |
-| `not_assessed` | Explicitly not reviewed | `resources` must be omitted or empty |
-| `assessed` | Reviewed against the declared revision roles | `resources` may be empty or contain validated relationships |
-| `not_applicable` | Page is outside the agreed revision-support scope | A non-empty `reason` is required; do not count as a missing resource |
+Illustrative only:
 
-An empty list is meaningful only with `status: assessed`: it means that the page was reviewed and no revision artifact was retained. It does not mean that no artifact could ever be useful.
+```yaml
+- id: information-theory-revision-notes
+  kind: revision-aid
+  revision_role: revision_sheet
+  revision_of:
+    - fr/entropy
+    - en/entropy
+  language: mul
+  status: published
+  location:
+    type: local
+    path: docs/revision-sheets/information-theory-and-llms-2026-11.md
+```
 
-### 3.2 Controlled roles
+The BCP 47 language tag `mul` is appropriate only when the artifact genuinely contains multiple languages. This example remains a sketch until the Markdown file is confirmed as a learner-facing aid rather than a source artifact.
 
-The initial proposed vocabulary is deliberately small:
+### 3.3 Controlled revision roles
 
-- `synthesis`: a concise, self-contained explanation of the central question, findings, distinctions and limits;
-- `flashcards`: retrieval-practice prompts with answers, stored as a set;
-- `revision_sheet`: a compact revision aid, structured for later recall or exam preparation.
+The initial vocabulary is:
 
-Do not add a role merely because a file has a particular extension or title. If a resource performs multiple roles, prefer one primary role per relationship and allow multiple relationships only when each role adds a distinct learner-facing function.
+- `synthesis`: concise recovery of the central question, mechanism, distinctions and limits;
+- `flashcards`: retrieval prompts with answers;
+- `revision_sheet`: a compact structured aid for later recall or exam preparation.
 
-### 3.3 Target discrimination
+An aid has one primary role. Do not infer roles from file extensions or titles. Multiple roles should be represented separately only when each provides a distinct learner-facing function.
 
-Each relationship must contain exactly one target form:
+## 4. Separate lesson-level assessment
 
-- `target.type: section` with `target.id` resolving to an explicit, unique heading or Quarto block anchor in the source page itself;
-- `target.type: page` with `target.id` resolving to an existing, published companion page ID;
-- `target.type: resource` with `target.id` resolving to an existing, published non-page resource ID.
+A relation says that an aid is associated with a lesson. It does **not** prove that the aid is accurate, current, complete or pedagogically sufficient. Each in-scope source lesson therefore needs a separate evidence-backed assessment, provisionally:
 
-No bare string target is allowed: the explicit type prevents collisions between page and resource namespaces. A section target is local to the source page and does not create a self-relation in the page graph. The relationship role is independent of target type; a synthesis can be an integrated section, a companion page or a non-page artifact.
+```yaml
+revision_support:
+  status: companion_sufficient
+  evidence:
+    - aid: fr/revision-information-theory
+      note: "Core identities, worked example and self-check cover the lesson's revision needs."
+```
 
-## 4. Proposed constraints
+Controlled statuses:
 
-These constraints are requirements for a future validator implementation, not current validation behavior.
+| Status | Meaning |
+|---|---|
+| `not_assessed` | No individual editorial assessment has been completed |
+| `integrated_sufficient` | The lesson's own recap, diagrams, examples and retrieval prompts are sufficient |
+| `companion_sufficient` | One or more linked aids are sufficient for the lesson |
+| `partial` | Some revision support exists but a material gap remains |
+| `missing` | Reviewed; no sufficient revision support exists |
+| `not_applicable` | The page is explicitly outside the agreed revision-support scope; a reason is required |
 
-### 4.1 Structural constraints
+Evidence should point to a section anchor, page-aid ID or resource ID and state briefly what it covers. `companion_sufficient` requires at least one valid published aid relation. `integrated_sufficient` requires evidence on the lesson itself. `missing` and `not_applicable` require a concise rationale. Absence of `revision_support` remains `not_assessed` during migration.
 
-- `revision`, when present, is a mapping with only `status`, `resources`, and optional `reason`.
-- `status` is one of `not_assessed`, `assessed`, or `not_applicable`.
-- `resources` is a list; each entry contains exactly `role` and `target`.
-- `role` is one of `synthesis`, `flashcards`, or `revision_sheet`.
-- `target` contains exactly `type` and `id`; `type` is `section`, `page` or `resource`.
-- Duplicate relationships (same source page, role, target type and target ID) are rejected.
-- A `page` target cannot be the source page. A `section` target is expected to belong to the source page and is not a page-graph self-edge.
-- `not_assessed` has no relationships. `not_applicable` requires a non-empty reason and has no relationships.
-- `assessed` may have an empty list; that is the only state in which an empty list means “reviewed, no retained artifact”.
+Do not infer assessment from a “one-minute” callout, a Practice page, a generic related edge or an aid title. Sufficiency is an editorial judgement made page by page.
 
-### 4.2 Referential and lifecycle constraints
+## 5. Proposed validation constraints
 
-For a section target:
+These are requirements for future validator behavior, not current implementation behavior.
 
-- the anchor must be explicitly declared on a heading or fenced Quarto block in the source page;
-- the anchor must be unique within that page;
-- the section must contain the claimed revision role rather than merely being a generic heading;
-- the section link is rendered as the source page URL plus its fragment;
-- it does not count as a separate page or non-page resource.
+### 5.1 Aid structure
 
-For a page target:
+- `revision_role` must be one of `synthesis`, `flashcards`, or `revision_sheet`.
+- `revision_of` must be a non-empty list of unique stable page IDs when present.
+- An aid cannot target itself.
+- Every target must resolve to a published Understand or Build lesson. Exclude Practice-only aids, exercise collections, references and other revision aids as targets.
+- Page-aid fields must be retained in the normalized page projection.
+- A non-page aid must use the dedicated revision-aid kind and satisfy that kind's required fields. Implementation resources remain unchanged.
+- Only published aids enter the public reverse index; draft, deprecated and retired lifecycle states must be handled explicitly.
 
-- the page ID must resolve uniquely in the published-page index;
-- the target must have `status:published`;
-- the target must not be the source page;
-- the target language must match the source page language, or be `shared` where the page contract permits it.
+### 5.2 Language and multiple sources
 
-For a non-page target:
+- A French page aid targets French lessons; an English page aid targets English lessons.
+- A `shared` page aid or `mul` non-page aid may target a bilingual pair only when it genuinely contains both language versions.
+- A language-neutral artifact may be shared only when no language-specific learner text is required.
+- Multiple source lessons are allowed, but every target must independently satisfy destination, publication and language rules.
+- Duplicate targets, unknown IDs, unpublished targets, ineligible targets and incompatible languages are errors.
 
-- the resource ID must resolve uniquely in `data/resources.yml`;
-- the resource must be in a published lifecycle state;
-- its language must match the source page language, or be language-neutral;
-- its location must pass the existing resource-location checks;
-- it must not be confused with an implementation module merely because both are non-page resources.
+### 5.3 Lesson assessment
 
-The current resource registry only admits `kind: implementation`. If real revision artifacts require non-page records, the future change must define and validate the smallest additional resource kind(s); it must not silently broaden the current vocabulary.
+- `revision_support.status` must use the controlled vocabulary above.
+- `evidence` must be structured references, not unsupported free-form claims alone.
+- `companion_sufficient` must reference at least one published aid that points back to this lesson.
+- `integrated_sufficient` must reference an anchor or identifiable integrated section on the lesson itself.
+- `missing` and `not_applicable` require a non-empty rationale.
+- Link integrity and editorial sufficiency must be reported separately.
 
-### 4.3 Bilingual and cardinality constraints
+## 6. Compatibility audit against current code
 
-- French and English learning-page counterparts should have semantically equivalent revision coverage.
-- Where both language-specific artifacts exist, each page should point to its matching language version.
-- A shared resource is permitted only when the artifact is genuinely language-neutral.
-- Multiple flashcard sets may be associated with one page if they have distinct, documented scopes; duplicate copies of the same set are not allowed.
-- The contract does not require every page to have every role. Coverage policy and eligibility rules belong in the later metric register, not in this relationship schema.
+This records the inspected `main` implementation as of 2026-11-19.
 
-### 4.4 Semantics that must remain separate
+### 6.1 Page metadata validator
 
-Do not encode revision support through:
+`site/tools/check_page_metadata.py` parses page-map YAML and returns a normalized dictionary containing only currently recognized fields. It validates route, hierarchy and `related` targets, publication status, reciprocity, cycles, tags, language/topic parity and render-list coverage.
 
-- `suggested_route`, `hierarchy` or `related`;
-- concept `resources` lists;
-- resource `referenced_by` alone (that field records which pages reference a non-page resource, not the role of a revision relationship);
-- Quarto sidebar position, exercise links or filename conventions;
-- source/evidence lineage.
+It does **not** currently validate or return `revision_role`, `revision_of` or `revision_support`. The page-map parser does not reject every unknown key, so these fields could be silently ignored downstream. The proposed relation and assessment are therefore not implemented or safely validated.
 
-A revision relationship does not prove that the artifact is accurate, complete, pedagogically effective, or up to date. Those require separate review evidence.
+### 6.2 Published page index
 
-## 5. Compatibility audit against current validators
+`site/tools/page_index.py` stores the raw page-map mapping on `PublishedPage.metadata`. It already preserves additional page-map keys when loading published pages. It does not need a new dataclass field merely to transport the revision fields; the normalized metadata validator and downstream projections still need explicit support.
 
-This section records what the current code actually validates on the inspected `main` snapshot. It is not a claim that the proposed contract is already supported.
+### 6.3 Non-page resource validator
 
-### 5.1 `site/tools/check_page_metadata.py`
+`site/tools/check_resource_registry.py` has a strict field allow-list and currently accepts only `kind: implementation`. It validates BCP 47 language, lifecycle status, locations, page references, concepts and optional provenance. It does not accept a revision-aid kind or revision relationships. The existing `referenced_by` field records pages that reference an implementation resource; it is not aid → lesson ownership.
 
-The current page validator:
+A distinct revision-aid kind is technically possible, but its required fields and lifecycle semantics must be based on the inventory of actual non-page aids before changing this validator.
 
-- parses the `LLM-LAB-PAGE-MAP v1` YAML comment;
-- requires `id`, `scope`, `purpose`, `suggested_route`, `hierarchy`, `related` and `tags`;
-- validates the known page relation fields, tag dimensions, Quarto `keywords` parity, route/hierarchy reciprocity and acyclicity, bilingual parity, and render-list coverage;
-- returns a normalized page record containing only its currently recognized fields.
+### 6.4 Revision inventory generator
 
-It does **not** currently parse, normalize, validate or return a `revision` object, and it does not resolve revision anchors against page-body headings. An extra `revision` key is therefore not covered by the current page contract; its presence could be silently ignored by downstream consumers. The proposed relationship is consequently **not validator-compatible as an implemented feature**, even though the current parser does not reject unknown page-map keys.
+`site/tools/audit_revision_coverage.py` currently projects Understand and Build pages, concept links and implementation-resource references. It assigns `synthesis_status: not_assessed` to every lesson and does not inspect Practice/Deepen pages or non-page files as candidate aids. It therefore cannot calculate incoming revision aids or evidence-backed support status.
 
-### 5.2 `site/tools/check_resource_registry.py`
+### 6.5 Identity boundaries
 
-The current resource validator:
+- `data/concepts.yml` associates concepts with published page IDs; keep this unchanged.
+- `data/resources.yml` remains the canonical registry for non-page resources; do not create a parallel revision registry unless the artifact inventory demonstrates that the existing registry cannot represent the required distinction.
+- Generic `related`, `parents`, `children` and `suggested_route` edges retain their existing meanings.
 
-- requires `schema_version: 1`;
-- rejects unknown resource fields;
-- accepts only `kind: implementation`;
-- validates bilingual labels/descriptions, BCP 47 language, status, local/external location, published-page references, concept references and optional provenance.
+**Compatibility conclusion:** the aid → lesson relation respects existing identity boundaries, and `page_index` already transports raw metadata. However, the current page validator, resource validator and inventory generator do not implement or enforce the contract. Do not write these fields into production metadata until validators and projections are updated.
 
-It does not currently admit a revision-resource kind or validate the relationship role of a resource. Do not add revision artifacts to `data/resources.yml` until the resource-kind decision and validator change have been reviewed.
+## 7. Migration and implementation order
 
-### 5.3 Existing concept registry
+1. Inventory existing aids across published Quarto pages and non-page files. Record identity, language, role, lifecycle, candidate source lessons and whether the artifact is genuinely learner-facing. Do not create new aids during this inventory.
+2. Confirm the resource-kind representation for concrete non-page aids. Keep implementation resources unchanged.
+3. Add validator tests first: page aid → lesson, non-page aid → lesson, multiple sources, bilingual pairs, unknown/unpublished/ineligible targets, self-link, duplicate, wrong language, draft/retired lifecycle, and malformed assessment evidence.
+4. Extend `check_page_metadata.py` to validate and preserve page-aid fields and lesson assessments; validate references against published page descriptors.
+5. Extend `check_resource_registry.py` only for non-page kinds justified by the inventory, validating target IDs, language and lifecycle.
+6. Extend the inventory generator to inspect all published pages and eligible non-page resources, then derive lesson → aids reverse links. Keep implementation resources in a separate field.
+7. Keep assessment status independent from relation existence; publish explicit unknown/unassessed counts.
+8. Migrate only reviewed lessons and aids in bounded, auditable batches. Do not rewrite the 62-page historical inventory snapshot wholesale.
+9. Validate the learner-facing revision index only after relation and assessment projections are deterministic and tested.
 
-`data/concepts.yml` uses `concepts[].resources` for published page IDs. That contract is distinct and must remain unchanged. Adding non-page resource IDs or revision roles to that list would violate the current identity boundary and create ambiguous consumers.
+## 8. Decisions still open
 
-### 5.4 Compatibility conclusion
+- Confirm the final controlled role vocabulary and whether a separate role is needed for short recall prompts embedded in a lesson.
+- Confirm whether the Markdown file in `docs/revision-sheets/` is a learner-facing non-page aid or a source artifact.
+- Decide the exact structured evidence fields and whether section anchors need static existence validation.
+- Define legitimate exceptions for `shared`/multilingual resources and pages outside Understand/Build.
+- Agree the first bounded migration sample after the resource inventory.
 
-| Area | Current state | Consequence |
-|---|---|---|
-| Page-map syntax | YAML comment parser accepts mappings but extracts only known fields | A revision field would currently be ignored, not validated |
-| Page relation validation | Only route, hierarchy and related-page relations are checked | No revision target resolution, lifecycle or language checks |
-| Non-page resource registry | Strict allow-list; only implementation kind | Revision artifacts are not currently representable as a supported resource kind |
-| Concept-to-page associations | Page IDs only | Must not be reused for non-page revision targets |
-| Generated learning map | Current page graph and concept graph have distinct projections | Revision relations must not be injected into route/hierarchy edges |
-
-**Decision:** the proposal is compatible with the repository's identity boundaries and can be implemented without changing the meaning of existing fields, but it is **not compatible with the current validators as a functioning, validated feature**. A future implementation must extend the page validator and, only if non-page revision artifacts are confirmed by the inventory, the resource validator. The extension must be additive, explicitly tested, and introduced only after this contract is accepted.
-
-## 6. Migration and rollout boundary
-
-No migration is authorized by this document.
-
-After review and approval:
-
-1. inventory the actual revision artifacts and their page associations on the real Understand and Build corpus;
-2. classify each candidate as an integrated section, companion page artifact or non-page resource, and identify its language and role;
-3. test the proposed shape against representative existing cases without editing the historical snapshot;
-4. define a versioned migration and validator compatibility strategy;
-5. implement the validator and focused fixtures before migrating page metadata;
-6. migrate only reviewed pages in bounded batches, preserving an auditable before/after report.
-
-The 62-page historical snapshot must remain unchanged until the contract, its constraints, and the migration plan have been explicitly validated.
-
-## 7. Decisions still requiring review
-
-- Is the optional page-map `revision` object the right canonical owner, or should the relation live in a separate relation registry?
-- Which explicit heading/block-anchor convention should identify integrated revision sections, and how should the validator prove that the anchor exists?\n- Should integrated sections be targeted by explicit heading anchors, and what exact heading/block syntax should the validator recognize?
-- Are the three proposed roles sufficiently distinct for the artifacts actually present?
-- Does the resource registry need a generic `revision` kind, or do concrete non-page artifacts justify narrower kinds?
-- What is the precise eligibility rule for `not_applicable`?
-- What bilingual-parity exceptions are legitimate for shared or language-neutral resources?
-- Should a page have one preferred synthesis/revision sheet per language, or may several coexist with explicit scope?
-
-Until these decisions are settled, this remains an architectural proposal. Do not implement the sample YAML or change any page, registry, schema, validator, route, graph or generated output.
+Until these decisions are closed, this remains a proposed contract. No metadata, registry, validator, graph or generated output should be changed on the assumption that these fields already work.
