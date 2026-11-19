@@ -19,6 +19,11 @@ hierarchy:
   parents: ["fr/probabilites"]
   children: ["fr/cross-entropy"]
 related: ["fr/vraisemblance", "fr/entropy-exercises"]
+revision_support:
+  status: partial
+  evidence:
+    - aid: fr/revision-information-theory
+      note: "La fiche couvre les identités et pièges centraux ; vérifier que les nuances sur contexte, température et calibration restent testées dans la leçon ou la pratique."
 tags: ["type:concept-lesson", "destination:understand", "topic:entropy", "level:core", "language:fr", "status:published"]
 -->
 
