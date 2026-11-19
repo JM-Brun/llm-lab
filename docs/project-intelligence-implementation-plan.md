@@ -1,8 +1,8 @@
 # Project Intelligence Layer — implementation plan
 
 **Status date:** 2026-11-19  
-**Implementation branch:** `feat/project-intelligence-index`  
-**Initial implementation:** [PR #1380](https://github.com/JM-Brun/llm-lab/pull/1380)  
+**Initial implementation branch:** `feat/project-intelligence-index`  
+**Initial implementation:** [PR #1380](https://github.com/JM-Brun/llm-lab/pull/1380); resource/revision adapters: [PR #1394](https://github.com/JM-Brun/llm-lab/pull/1394)  
 **Architecture:** [Project intelligence layer](project-intelligence-layer.md)  
 **Tracking:** [Issue #1378](https://github.com/JM-Brun/llm-lab/issues/1378)
 
