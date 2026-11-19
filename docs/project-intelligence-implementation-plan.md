@@ -131,13 +131,12 @@ The CLI, JSON and dashboard must not implement separate counting or relationship
 
 ## 5. Immediate next actions
 
-1. Finish PR #1380 CI verification and semantic review.
-2. Add real-corpus integration coverage.
-3. Inspect resource, concept-relation, source/extraction, computational-graph and Build schemas/readers.
-4. Publish the source/metric registry with explicit count definitions.
-5. Implement the resource adapter, then concept relations and Build evidence as separately reviewed increments.
-6. Add the concept coverage matrix and deterministic audit report.
-7. Add CLI and output formats only after metric contracts stabilize.
+1. Complete the concept-centred coverage matrix from the canonical metric registry.
+2. Implement only dimensions currently enumerable from ProjectIndex; label Build, computation, sources and practice as not_registered where no reviewed mapping exists.
+3. Add synthetic and real-repository tests for matrix states, evidence paths, bilingual grouping and deterministic ordering.
+4. Publish a reproducible matrix snapshot with repository commit and registry version.
+5. Review the matrix semantics and false-positive risk before considering diagnostics.
+6. Only after step 6 diagnostics are stable, add CLI, JSON/Markdown and dashboard interfaces.
 
 ## 6. Definition of done for the PIL
 
