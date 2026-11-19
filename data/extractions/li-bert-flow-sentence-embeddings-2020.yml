@@ -105,6 +105,33 @@ items:
       route_ids: []
     disposition: integrate-by-reference
     disposition_rationale: "A concrete optional example of geometric post-processing; a detailed flow implementation is outside the current essential path."
+  - id: li-bert-flow-sentence-embeddings-2020:reported-sts-gains
+    kind: result
+    summary: "In the paper's reported BERT-flow experiments across seven semantic textual similarity benchmarks, the authors report an average gain of 8.16 Spearman-correlation points and a maximum gain of 12.70 points over the BERT sentence-embedding baseline."
+    locator: {type: section, value: "§4, pp. 9124–9128; Tables 2–3", label: "STS benchmark results"}
+    evidence:
+      kind: reported-empirical-result
+      confidence: well-supported
+      scope: "The BERT-base/large sentence-embedding configurations, pooling choices and seven STS benchmarks evaluated in the 2020 paper; the reported gains depend on the flow-training setting."
+      assumptions: []
+      limitations:
+        - "These are reported benchmark gains, not independently reproduced results."
+        - "The maximum and average gains must not be generalized to all sentence encoders, retrieval systems or modern embedding models."
+        - "The target-flow setting uses unlabeled sentences from the target dataset's train, validation and test portions; it is transductive rather than strictly inductive."
+    technical_assessment:
+      status: qualified
+      rationale: "The quantitative summary is recorded from the primary-paper audit and remains attached to the paper's specific STS setup and target-distribution calibration protocol."
+      corroborating_sources: []
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:sentence-embeddings, topic:semantic-textual-similarity, method:normalizing-flow]
+      concept_ids: [contextualized-representation]
+    candidate_destinations:
+      pages: [en/cosine-similarity, fr/cosine-similarity]
+      concepts: []
+      route_ids: []
+    disposition: already-covered
+    disposition_rationale: "The existing bilingual cosine-similarity lesson already discusses BERT sentence-space anisotropy and the BERT-flow reference; this extraction improves traceability without requiring another page or a duplicated explanation."
   - id: li-bert-flow-sentence-embeddings-2020:target-adaptation-caveat
     kind: limitation
     summary: "The paper reports a target-distribution flow setting in which the transformation is fitted using target-dataset sentences without their semantic-similarity labels; this is a transductive-style protocol and should not be presented as evaluation on a wholly unseen target distribution."
@@ -135,4 +162,4 @@ canonical_mapping:
   proposed_concepts: []
   proposed_relations: []
   route_implications: []
-  decision_summary: "Li et al. provides a specific sentence-level example of anisotropy and post-hoc geometric calibration. It complements token-level contextuality studies but does not justify a universal embedding correction or new curriculum step."
+  decision_summary: "Li et al. provides a specific sentence-level example of anisotropy and post-hoc geometric calibration, with reported gains on seven STS benchmarks that remain tied to BERT configurations and a transductive target-flow protocol. It complements token-level contextuality studies but does not justify a universal embedding correction or new curriculum step."
