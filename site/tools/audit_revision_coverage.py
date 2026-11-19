@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Generate a deterministic inventory of published Understand and Build pages."""
+
 from __future__ import annotations
 
 import argparse
@@ -14,8 +15,12 @@ TOOLS = Path(__file__).resolve().parent
 if str(TOOLS) not in sys.path:
     sys.path.insert(0, str(TOOLS))
 
-from build_learning_map import build_guided_route_memberships, load_guided_route, load_pages
-from strict_yaml import load_yaml
+from build_learning_map import (  # noqa: E402
+    build_guided_route_memberships,
+    load_guided_route,
+    load_pages,
+)
+from strict_yaml import load_yaml  # noqa: E402
 
 DESTINATIONS = ("understand", "build")
 LANGUAGES = ("fr", "en")
@@ -75,11 +80,12 @@ def build_revision_inventory(
         memberships = route_memberships.get(page_id, [])
         route_status = "not_applicable"
         if destination == "understand":
-            route_status = (
-                "core" if any(m["role"] == "core" for m in memberships)
-                else "optional" if memberships
-                else "unrouted"
-            )
+            if any(m["role"] == "core" for m in memberships):
+                route_status = "core"
+            elif memberships:
+                route_status = "optional"
+            else:
+                route_status = "unrouted"
         records.append(
             {
                 "id": page_id,
@@ -112,17 +118,19 @@ def build_revision_inventory(
             "by_language": dict(Counter(p["language"] for p in subset)),
             "understand_route": (
                 dict(Counter(p["route_status"] for p in subset))
-                if destination == "understand" else None
+                if destination == "understand"
+                else None
             ),
             "synthesis_not_assessed": len(subset),
         }
+
     topic_language_counts: dict[str, dict[str, int]] = defaultdict(
         lambda: {"fr": 0, "en": 0}
     )
     for record in records:
-        topic_language_counts[
-            f"{record['destination']}:{record['topic']}"
-        ][record["language"]] += 1
+        topic_language_counts[f"{record['destination']}:{record['topic']}"][
+            record["language"]
+        ] += 1
 
     return {
         "schema_version": 1,
@@ -149,19 +157,23 @@ def render_markdown(inventory: dict[str, Any]) -> str:
     ]
     for destination in DESTINATIONS:
         summary = inventory["counts"][destination]
-        lines.extend([
-            f"## {destination.title()}",
-            "",
-            f"- Published pages: **{summary['total']}**",
-            f"- By language: {summary['by_language']}",
-        ])
+        lines.extend(
+            [
+                f"## {destination.title()}",
+                "",
+                f"- Published pages: **{summary['total']}**",
+                f"- By language: {summary['by_language']}",
+            ]
+        )
         if destination == "understand":
             lines.append(f"- Guided-route membership: {summary['understand_route']}")
-        lines.extend([
-            "",
-            "| Language | Page | Topic | Route | Concepts | Implementation resources |",
-            "|---|---|---|---|---:|---:|",
-        ])
+        lines.extend(
+            [
+                "",
+                "| Language | Page | Topic | Route | Concepts | Implementation resources |",
+                "|---|---|---|---|---:|---:|",
+            ]
+        )
         for page in inventory["pages"]:
             if page["destination"] != destination:
                 continue
@@ -171,16 +183,18 @@ def render_markdown(inventory: dict[str, Any]) -> str:
                 f"{len(page['concept_ids'])} | {len(page['implementation_resource_ids'])} |"
             )
         lines.append("")
-    lines.extend([
-        "## Interpretation",
-        "",
-        "- Understand preserves every core/optional stage membership, including multiple memberships.",
-        "- Understand pages outside the guided route are explicitly marked unrouted.",
-        "- Build is inventoried from the published destination tag; no linear order is inferred.",
-        "- Concept and implementation links come from explicit registry edges.",
-        "- not_assessed does not mean a page lacks a synthesis; no typed synthesis relation exists yet.",
-        "",
-    ])
+    lines.extend(
+        [
+            "## Interpretation",
+            "",
+            "- Understand preserves every core/optional stage membership, including multiple memberships.",
+            "- Understand pages outside the guided route are explicitly marked unrouted.",
+            "- Build is inventoried from the published destination tag; no linear order is inferred.",
+            "- Concept and implementation links come from explicit registry edges.",
+            "- not_assessed does not mean a page lacks a synthesis; no typed synthesis relation exists yet.",
+            "",
+        ]
+    )
     return "\n".join(lines)
 
 
