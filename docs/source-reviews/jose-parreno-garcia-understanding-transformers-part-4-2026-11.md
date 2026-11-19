@@ -76,13 +76,41 @@ The source-local pedagogical graph and route are recorded separately in the extr
 
 No new canonical concepts, pages, diagrams or route nodes are justified by this source alone. Reconcile the proposed links against current page/resource metadata before publishing any page changes.
 
+### 6.1 Repository page-by-page comparison (19 November 2026)
+
+The current bilingual pages were opened and checked against the extracted items. This confirms that the candidate destinations are real page-map IDs and that the core content is already present:
+
+| Existing resource | Verified coverage | Consequence for this source |
+|---|---|---|
+| [Q/K/V — FR](../../site/fr/queries-keys-values.qmd) / [EN](../../site/en/queries-keys-values.qmd) | Contextual motivation, three roles, parallel learned projections, QKᵀ → scores → softmax → weights, weights × V → output; advanced dimensions and variants are routed to dedicated deep dives. | No duplicate explanation. The Netflix analogy is an optional source alternative, not a page gap. |
+| [Scaled dot-product attention — FR](../../site/fr/scaled-dot-product-attention.qmd) / [EN](../../site/en/scaled-dot-product-attention.qmd) | Five-step computation, score/weight/output distinctions, scaling rationale, masking as a separate step, misconceptions and attention-weight interpretation limits. | Already more complete than the article's four-step summary. No page edit required. |
+| [Contextualized representations — FR](../../site/fr/contextualized-representations.qmd) / [EN](../../site/en/contextualized-representations.qmd) | Position/context distinction, pronoun-reference example, explicit caveat that this does not prove an individual head resolves coreference. | The article's cake/it example is redundant in function; no second pronoun example is warranted. |
+| [Causal masking — FR](../../site/fr/causal-masking.qmd) / [EN](../../site/en/causal-masking.qmd) | Lower-triangular access rule, mask before softmax, and parallel training without future-token leakage. | The article's training-only wording is already corrected by the existing page; link only. |
+| [Transformer block Build — FR](../../site/fr/transformer-block-walkthrough.qmd) / [EN](../../site/en/transformer-block-walkthrough.qmd) | Explicit Q/K/V/O projections, head isolation until W_O, causal mask implementation, MHA/MQA/GQA/MLA and local/sparse variants. | The missing W_O and head-shape details are already implemented and explained. No new Build page. |
+| [Build path — FR](../../site/fr/build-path.qmd) / [EN](../../site/en/build-path.qmd) | Existing guided construction route and milestones. | The article does not justify a new route node or milestone. |
+
+**Page audit decision:** no bilingual Understand or Build page changes are justified. The source record's page links are navigational associations, not proposals to duplicate content. The canonical routes and resource graph remain unchanged.
+
+### 6.2 Primary-source cross-check
+
+The article's central equations and architecture were cross-checked against the already-catalogued primary source, Vaswani et al., [Attention Is All You Need](https://arxiv.org/abs/1706.03762), especially §§3.2.1–3.2.2 and Figure 2. The project already has the focused review [Vaswani attention formulation](vaswani-attention-formulation-2026-11.md), so no duplicate primary-source record or extraction was created.
+
+The primary paper explicitly specifies:
+- scaled dot-product attention as softmax(QKᵀ / √dₖ)V;
+- the optional mask between scaling and softmax in Figure 2;
+- multiple learned Q/K/V projections, parallel head computations, concatenation, and a final learned linear projection;
+- the variance argument: under independent zero-mean, unit-variance components, q·k has variance dₖ, motivating division by √dₖ.
+
+This confirms that the missing output projection W_O is a genuine omission in the article's brief MHA account, not a new feature proposed by LLM Lab. The article's broad parallelism wording remains subject to the causal-generation distinction documented in the existing masking and generation lessons.
+
 ## 7. Disposition and remaining work
 
-- Source identity and structured extraction are proposed in the catalogue and extraction file.
+- Source identity, structured extraction and source-local pedagogical graph are recorded in the catalogue and extraction file; the source is marked `reviewed` while remaining `partially-scanned` because article images are unresolved.
 - Keep article figures and prose link-only.
 - No code reproduction or numerical verification is claimed.
-- Compare all extracted items with the current canonical pages and graph before changing page content.
-- Validate YAML and catalogue/extraction contracts with `site/tools/check_source_catalogue.py`, then run relevant CI.
-- Inspect the embedded figures and original *Attention Is All You Need* reference in a separate visual/primary-source pass if those assets are needed.
+- The primary-source formulation and all eight bilingual Understand/Build destinations have now been checked; no page, concept, resource or route changes are warranted.
+- The page-by-page comparison found the current canonical pages already cover all extracted technical content; retain the no-duplication decision.
+- Validate YAML and catalogue/extraction contracts with `site/tools/check_source_catalogue.py`, then inspect the CI run for the final PR HEAD.
+- Inspect the embedded figures only if visual integration is later proposed; their absence does not block link-only source registration.
 
 **Overall judgement:** a useful introductory secondary explanation of attention's computational flow, with a strong Q/K versus V mental model. Its technical shortcuts should be corrected before any of its prose is reused pedagogically.
