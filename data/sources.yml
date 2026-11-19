@@ -1681,7 +1681,7 @@ sources:
     language: en
     version: null
     revision: null
-    licence: {identifier: "MIT", url: "https://github.com/poloclub/transformer-explainer/blob/main/LICENSE", status verified}
+    licence: {identifier: "MIT", url: "https://github.com/poloclub/transformer-explainer/blob/main/LICENSE", status: verified}
     reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
     classification:
       primary_theme: architectures-mechanisms
