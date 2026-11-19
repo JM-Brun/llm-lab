@@ -297,25 +297,26 @@ def test_revision_adapter_keeps_three_target_types_separate(tmp_path: Path) -> N
         ("en/attention", "synthesis", "section", "revision-summary"),
     ]
     assert all(edge.family != "revision" for edge in index.page_edges)
-    assert [
-        resource.resource_id for resource in index.resources_for_page("en/attention")
-    ] == ["attention-module"]
-    assert [
-        page.page_id for page in index.pages_for_resource("attention-module")
-    ] == ["en/attention", "fr/attention"]
-    assert [
-        resource.resource_id for resource in index.resources_for_concept("attention")
-    ] == ["attention-module"]
-    assert [
-        concept["id"] for concept in index.concepts_for_resource("attention-module")
-    ] == ["attention"]
+    assert [resource.resource_id for resource in index.resources_for_page("en/attention")] == [
+        "attention-module"
+    ]
+    assert [page.page_id for page in index.pages_for_resource("attention-module")] == [
+        "en/attention",
+        "fr/attention",
+    ]
+    assert [resource.resource_id for resource in index.resources_for_concept("attention")] == [
+        "attention-module"
+    ]
+    assert [concept["id"] for concept in index.concepts_for_resource("attention-module")] == [
+        "attention"
+    ]
 
     assert index.revision_targets_for_page("en/attention") == index.revision_edges
     synthesis_edges = index.revision_targets_for_page("en/attention", role="synthesis")
     assert synthesis_edges[0].target_type == "section"
-    assert [
-        page.page_id for page in index.pages_for_revision_target("page", "en/query")
-    ] == ["en/attention"]
+    assert [page.page_id for page in index.pages_for_revision_target("page", "en/query")] == [
+        "en/attention"
+    ]
     assert [
         page.page_id for page in index.pages_for_revision_target("resource", "attention-module")
     ] == ["en/attention"]
@@ -325,9 +326,12 @@ def test_revision_adapter_keeps_three_target_types_separate(tmp_path: Path) -> N
             "section", "revision-summary", section_page_id="en/attention"
         )
     ] == ["en/attention"]
-    assert index.pages_for_revision_target(
-        "section", "revision-summary", section_page_id="fr/attention"
-    ) == ()
+    assert (
+        index.pages_for_revision_target(
+            "section", "revision-summary", section_page_id="fr/attention"
+        )
+        == ()
+    )
 
 
 def test_revision_section_requires_an_explicit_anchor(tmp_path: Path) -> None:
@@ -467,12 +471,12 @@ def test_real_repository_resource_and_revision_inverse_queries() -> None:
             page.page_id for page in index.pages_for_resource(resource_id)
         ) == expected_page_ids
         for page_id in expected_page_ids:
-            assert [
-                resource.resource_id for resource in index.resources_for_page(page_id)
-            ] == [resource_id]
-    assert [
-        resource.resource_id for resource in index.resources_for_concept("self-attention")
-    ] == ["transformer-block-module"]
+            assert [resource.resource_id for resource in index.resources_for_page(page_id)] == [
+                resource_id
+            ]
+    assert [resource.resource_id for resource in index.resources_for_concept("self-attention")] == [
+        "transformer-block-module"
+    ]
     assert [
         concept["id"] for concept in index.concepts_for_resource("transformer-block-module")
     ] == [
