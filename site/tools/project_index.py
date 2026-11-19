@@ -259,117 +259,177 @@ def _load_non_page_resources(
 def _load_revision_relations(
     pages: dict[str, PublishedPage],
     resources: dict[str, ResourceRecord],
-) -> tuple[dict[str, str], tuple[RevisionEdge, ...]]:
-    """Adapt the proposed page-map revision object without changing the page validator."""
-    statuses: dict[str, str] = {}
+) -> tuple[dict[str, dict[str, Any]], tuple[RevisionEdge, ...]]:
+    """Load aid → lesson relations and evidence-backed lesson assessments."""
     edges: list[RevisionEdge] = []
-    for page_id, page in pages.items():
-        if "revision" not in page.metadata:
-            statuses[page_id] = "not_assessed"
+    for page_id, aid in pages.items():
+        role = aid.metadata.get("revision_role")
+        raw_targets = aid.metadata.get("revision_of")
+        if role is None and raw_targets is None:
             continue
-
-        revision = page.metadata["revision"]
-        where = f"{page.path.as_posix()}.revision"
-        if not isinstance(revision, dict):
-            raise ProjectIndexIntegrityError(
-                source=where, record_id=page_id, relation="revision object", target=revision
-            )
-        unknown_fields = set(revision) - {"status", "resources", "reason"}
-        if unknown_fields:
-            names = ", ".join(sorted(map(str, unknown_fields)))
-            raise ValueError(f"{where}: unknown field(s) {names}")
-        status = revision.get("status")
-        if not isinstance(status, str) or status not in REVISION_STATUSES:
-            raise ValueError(f"{where}.status: unsupported revision status {status!r}")
-        raw_edges = revision.get("resources", [])
-        if not isinstance(raw_edges, list):
-            raise ValueError(f"{where}.resources: expected a list")
-        reason = revision.get("reason")
-        if status == "not_applicable":
-            if not isinstance(reason, str) or not reason.strip():
-                raise ValueError(f"{where}.reason: not_applicable requires a non-empty reason")
-        elif reason is not None:
-            raise ValueError(f"{where}.reason: only not_applicable may declare a reason")
-        if status != "assessed" and raw_edges:
-            raise ValueError(f"{where}.resources: {status} cannot contain revision relations")
-
-        seen: set[tuple[str, str, str]] = set()
-        for index, item in enumerate(raw_edges):
-            relation_where = f"{where}.resources[{index}]"
-            if not isinstance(item, dict) or set(item) != {"role", "target"}:
-                raise ValueError(f"{relation_where}: expected exactly role and target")
-            role, target = item.get("role"), item.get("target")
-            if not isinstance(role, str) or role not in REVISION_ROLES:
-                raise ValueError(f"{relation_where}.role: unsupported revision role {role!r}")
-            if not isinstance(target, dict) or set(target) != {"type", "id"}:
-                raise ValueError(f"{relation_where}.target: expected exactly type and id")
-            target_type, target_id = target.get("type"), target.get("id")
-            if not isinstance(target_type, str) or target_type not in REVISION_TARGET_TYPES:
-                raise ValueError(
-                    f"{relation_where}.target.type: unsupported target type {target_type!r}"
+        where = f"{aid.path.as_posix()}.revision"
+        if not isinstance(role, str) or role not in REVISION_ROLES:
+            raise ValueError(f"{where}.revision_role: unsupported revision role {role!r}")
+        if (
+            not isinstance(raw_targets, list)
+            or not raw_targets
+            or not all(isinstance(target, str) and target.strip() for target in raw_targets)
+        ):
+            raise ValueError(f"{where}.revision_of: expected a non-empty list of page IDs")
+        if len(raw_targets) != len(set(raw_targets)):
+            raise ValueError(f"{where}.revision_of: duplicate page IDs")
+        if aid.tags.get("destination") in ELIGIBLE_LESSON_DESTINATIONS:
+            raise ValueError(f"{where}: a source lesson cannot also be declared as a revision aid")
+        for target_id in raw_targets:
+            target = pages.get(target_id)
+            if target is None:
+                raise ProjectIndexIntegrityError(
+                    source=where,
+                    record_id=page_id,
+                    relation="revision_of (published page)",
+                    target=target_id,
                 )
-            if not isinstance(target_id, str) or not target_id.strip():
-                raise ValueError(f"{relation_where}.target.id: expected a non-empty string")
-            key = (role, target_type, target_id)
-            if key in seen:
-                raise ValueError(f"{relation_where}: duplicate revision relationship {key!r}")
-            seen.add(key)
+            if target.tags.get("destination") not in ELIGIBLE_LESSON_DESTINATIONS:
+                raise ProjectIndexIntegrityError(
+                    source=where,
+                    record_id=page_id,
+                    relation="revision_of (eligible lesson)",
+                    target=target_id,
+                )
+            if not _language_matches(aid.language, target.language):
+                raise ProjectIndexIntegrityError(
+                    source=where,
+                    record_id=page_id,
+                    relation="revision_of language",
+                    target=target_id,
+                )
+            edges.append(RevisionEdge("page", page_id, role, target_id))
 
-            if target_type == "section":
-                if not STABLE_ANCHOR.fullmatch(target_id):
-                    raise ValueError(f"{relation_where}.target.id: invalid section anchor")
-                if not _has_explicit_anchor(page.source, target_id):
+    for resource_id, aid in resources.items():
+        if aid.kind != "revision-aid":
+            continue
+        if aid.revision_role not in REVISION_ROLES or not aid.revision_of:
+            raise ValueError(
+                f"data/resources.yml: revision aid {resource_id!r} has incomplete metadata"
+            )
+        for target_id in aid.revision_of:
+            target = pages.get(target_id)
+            if target is None:
+                raise ProjectIndexIntegrityError(
+                    source="data/resources.yml",
+                    record_id=resource_id,
+                    relation="revision_of (published page)",
+                    target=target_id,
+                )
+            if target.tags.get("destination") not in ELIGIBLE_LESSON_DESTINATIONS:
+                raise ProjectIndexIntegrityError(
+                    source="data/resources.yml",
+                    record_id=resource_id,
+                    relation="revision_of (eligible lesson)",
+                    target=target_id,
+                )
+            if not _language_matches(aid.language, target.language):
+                raise ProjectIndexIntegrityError(
+                    source="data/resources.yml",
+                    record_id=resource_id,
+                    relation="revision_of language",
+                    target=target_id,
+                )
+            if aid.status == "published":
+                edges.append(RevisionEdge("resource", resource_id, aid.revision_role, target_id))
+
+    edge_keys = {(edge.aid_type, edge.aid_id, edge.source_page_id) for edge in edges}
+    assessments: dict[str, dict[str, Any]] = {}
+    for page_id, page in pages.items():
+        if page.tags.get("destination") not in ELIGIBLE_LESSON_DESTINATIONS:
+            if "revision_support" in page.metadata:
+                raise ValueError(
+                    f"{page.path.as_posix()}.revision_support: only Understand/Build lessons may be assessed"
+                )
+            continue
+        raw_support = page.metadata.get("revision_support")
+        if raw_support is None:
+            assessments[page_id] = {"status": "not_assessed", "evidence": (), "reason": None}
+            continue
+        where = f"{page.path.as_posix()}.revision_support"
+        if not isinstance(raw_support, dict) or set(raw_support) - {"status", "evidence", "reason"}:
+            raise ValueError(f"{where}: expected mapping with status, evidence and optional reason")
+        status = raw_support.get("status")
+        if not isinstance(status, str) or status not in REVISION_SUPPORT_STATUSES:
+            raise ValueError(f"{where}.status: unsupported revision support status {status!r}")
+        raw_evidence = raw_support.get("evidence", [])
+        if not isinstance(raw_evidence, list):
+            raise ValueError(f"{where}.evidence: expected a list")
+        reason = raw_support.get("reason")
+        if reason is not None and (not isinstance(reason, str) or not reason.strip()):
+            raise ValueError(f"{where}.reason: expected a non-empty string when present")
+        evidence: list[dict[str, str]] = []
+        has_aid = False
+        has_anchor = False
+        for index, item in enumerate(raw_evidence):
+            evidence_where = f"{where}.evidence[{index}]"
+            if not isinstance(item, dict) or set(item) not in ({"aid", "note"}, {"anchor", "note"}):
+                raise ValueError(f"{evidence_where}: expected exactly aid/anchor and note")
+            note = item.get("note")
+            if not isinstance(note, str) or not note.strip():
+                raise ValueError(f"{evidence_where}.note: expected a non-empty string")
+            if "anchor" in item:
+                anchor = item["anchor"]
+                if not isinstance(anchor, str) or not STABLE_ANCHOR.fullmatch(anchor):
+                    raise ValueError(f"{evidence_where}.anchor: expected a stable section anchor")
+                if not _has_explicit_anchor(page.source, anchor):
                     raise ProjectIndexIntegrityError(
                         source=where,
                         record_id=page_id,
-                        relation="revision section anchor",
-                        target=target_id,
+                        relation="revision evidence anchor",
+                        target=anchor,
                     )
-            elif target_type == "page":
-                target_page = pages.get(target_id)
-                if target_page is None or target_id == page_id:
-                    raise ProjectIndexIntegrityError(
-                        source=where,
-                        record_id=page_id,
-                        relation="revision page target",
-                        target=target_id,
-                    )
-                if not _language_matches(page.language, target_page.language):
-                    raise ProjectIndexIntegrityError(
-                        source=where,
-                        record_id=page_id,
-                        relation="revision page target language",
-                        target=target_id,
-                    )
+                has_anchor = True
+                evidence.append({"anchor": anchor, "note": note})
             else:
-                target_resource = resources.get(target_id)
-                if target_resource is None or target_resource.status != "published":
+                aid_id = item["aid"]
+                if not isinstance(aid_id, str) or not aid_id.strip():
+                    raise ValueError(f"{evidence_where}.aid: expected a non-empty aid ID")
+                if aid_id in pages and pages[aid_id].metadata.get("revision_role") in REVISION_ROLES:
+                    aid_type = "page"
+                elif aid_id in resources and resources[aid_id].kind == "revision-aid":
+                    aid_type = "resource"
+                else:
                     raise ProjectIndexIntegrityError(
                         source=where,
                         record_id=page_id,
-                        relation="revision resource target",
-                        target=target_id,
+                        relation="revision evidence aid",
+                        target=aid_id,
                     )
-                if not _language_matches(page.language, target_resource.language):
+                if (aid_type, aid_id, page_id) not in edge_keys:
                     raise ProjectIndexIntegrityError(
                         source=where,
                         record_id=page_id,
-                        relation="revision resource target language",
-                        target=target_id,
+                        relation="revision evidence aid does not target lesson",
+                        target=aid_id,
                     )
-            edges.append(RevisionEdge(page_id, role, target_type, target_id))
-        statuses[page_id] = status
+                has_aid = True
+                evidence.append({"aid": aid_id, "note": note})
+        if status == "not_assessed" and (evidence or reason):
+            raise ValueError(f"{where}: not_assessed cannot contain evidence or reason")
+        if status == "integrated_sufficient" and not has_anchor:
+            raise ValueError(f"{where}: integrated_sufficient requires anchor evidence")
+        if status == "companion_sufficient" and not has_aid:
+            raise ValueError(f"{where}: companion_sufficient requires linked aid evidence")
+        if status == "partial" and not (evidence or reason):
+            raise ValueError(f"{where}: partial requires evidence or a reason")
+        if status in {"missing", "not_applicable"} and not reason:
+            raise ValueError(f"{where}.reason: {status} requires a non-empty reason")
+        if status in {"missing", "not_applicable"} and evidence:
+            raise ValueError(f"{where}.evidence: {status} cannot claim revision aids or integrated support")
+        assessments[page_id] = {
+            "status": status,
+            "evidence": tuple(evidence),
+            "reason": reason,
+        }
 
-    return statuses, tuple(
-        sorted(
-            edges,
-            key=lambda edge: (
-                edge.source_page_id,
-                edge.role,
-                edge.target_type,
-                edge.target_id,
-            ),
-        )
+    return assessments, tuple(
+        sorted(edges, key=lambda edge: (edge.source_page_id, edge.aid_type, edge.aid_id, edge.role))
     )
 
 
