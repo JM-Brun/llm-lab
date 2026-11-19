@@ -2,12 +2,13 @@
 
 **Date:** 2026-11-19  
 **Status:** read-only inventory; no revision content created or migrated.  
+**Historical snapshot:** current revision-aid links and assessments are maintained in [revision-aid-inventory-2026-11-19.md](revision-aid-inventory-2026-11-19.md); the normative proposed relation model is in [revision-resource-contract.md](revision-resource-contract.md). This earlier document predates the typed page-aid pilot and must not be used as the current relationship inventory.  
 **Repository:** `JM-Brun/llm-lab`  
 **Current main inspected:** `8fc0b80cbcb7333720a42211e9119bbf0528763e`  
 **Inventory implementation:** `site/tools/audit_revision_coverage.py`, introduced in PR [#1379](https://github.com/JM-Brun/llm-lab/pull/1379).  
 **Machine-readable snapshot inspected:** CI run [#5888](https://github.com/JM-Brun/llm-lab/actions/runs/44567812323), artifact `revision-coverage-inventory-0e98372c76a6bf1e4b00f731a9e9654ce3fb06d9`, generated from commit `817048ecda141fbf256e42237dc1a4f34bf44a88`.
 
-This document inventories existing material. It does not decide that every page needs a new sheet, and it does not claim that existing summaries are pedagogically sufficient. The proposed relationship model is documented in the [revision-resource contract](revision-resource-contract.md); its integrated-section target correction was merged in [PR #1391](https://github.com/JM-Brun/llm-lab/pull/1391). The read-model adapters were added separately in [PR #1394](https://github.com/JM-Brun/llm-lab/pull/1394); they do not change the page schema or validators.
+This document inventories existing material. It does not decide that every page needs a new sheet, and it does not claim that existing summaries are pedagogically sufficient. The proposed relationship model is documented in the [revision-resource contract](revision-resource-contract.md); its integrated-section target correction is under review in [PR #1391](https://github.com/JM-Brun/llm-lab/pull/1391).
 
 ## 1. Scope and snapshot validity
 
@@ -102,7 +103,7 @@ These are implementation modules, not revision aids. The current `data/resources
 
 ## 5. Typed revision coverage: what is and is not known
 
-The generated report marks all **46 Understand and 16 Build pages** as `synthesis_status: not_assessed`. The CI inventory generator still hard-codes this status and has not yet been wired to the `ProjectIndex` revision adapter. The adapter can now represent the proposed typed relation, but no current page declares a `revision` object, so the real repository still has zero typed revision edges.
+The generated report marks all **46 Understand and 16 Build pages** as `synthesis_status: not_assessed`. This status is hard-coded by the current inventory generator because no typed source-page → revision-artifact relationship is implemented.
 
 It must be interpreted as **the relationship has not been assessed under a typed contract**, not as:
 - no summary exists;
@@ -110,7 +111,7 @@ It must be interpreted as **the relationship has not been assessed under a typed
 - the page is deficient;
 - a new sheet must be created.
 
-The source scan above finds integrated summaries, self-checks and existing companion pages. The CI report does not yet project these as typed revision edges; the `ProjectIndex` adapter can represent an integrated section through an explicit heading/block anchor once a page declares the relation. Conversely, the presence of a recap or a self-check does not prove that the page has sufficient revision support.
+The source scan above finds integrated summaries, self-checks and existing companion pages that the current typed inventory cannot represent. Conversely, the presence of a recap or a self-check does not prove that the page has sufficient revision support.
 
 No flashcard resource was identified in the canonical non-page resource registry or in the scanned page markers. This is an inventory finding, not proof that no informal or unindexed flashcards exist elsewhere.
 
