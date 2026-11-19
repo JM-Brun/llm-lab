@@ -1,3 +1,5 @@
+from collections import Counter
+
 from scripts.issue_metadata_audit import classify, render_report
 
 
@@ -78,7 +80,7 @@ def test_pull_requests_and_closed_issues_are_excluded() -> None:
 
 
 def test_report_states_structural_scope_and_limitations() -> None:
-    report = render_report("JM-Brun/llm-lab", [], {"P2": 3}, 3)
+    report = render_report("JM-Brun/llm-lab", [], Counter({"P2": 3}), 3)
 
     assert "Issues audited: **3**" in report
     assert "semantic priority" in report
