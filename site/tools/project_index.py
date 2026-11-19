@@ -349,7 +349,9 @@ def _load_revision_relations(
         if status in {"missing", "not_applicable"} and not reason:
             raise ValueError(f"{where}.reason: {status} requires a non-empty reason")
         if status in {"missing", "not_applicable"} and evidence:
-            raise ValueError(f"{where}.evidence: {status} cannot claim revision aids or integrated support")
+            raise ValueError(
+                f"{where}.evidence: {status} cannot claim revision aids or integrated support"
+            )
         assessments[page_id] = {
             "status": status,
             "evidence": tuple(evidence),
@@ -646,7 +648,11 @@ class ProjectIndex:
             "route_memberships": len(self.route_memberships),
             "revision_edges": len(self.revision_edges),
             "revision_support_by_status": dict(
-                sorted(Counter(item["status"] for item in self.revision_support_by_page.values()).items())
+                sorted(
+                    Counter(
+                        item["status"] for item in self.revision_support_by_page.values()
+                    ).items()
+                )
             ),
             "pages_by_tag": dict(by_tag),
             "concepts_by_importance": {
