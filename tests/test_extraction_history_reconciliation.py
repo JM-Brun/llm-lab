@@ -200,9 +200,7 @@ def test_marek_source_history_records_the_complete_paper_and_test_review() -> No
 
 def test_marek_integrated_concepts_have_bilingual_page_level_support() -> None:
     _, extractions, concepts_doc = _corpus()
-    mapping = extractions["marek-ryabinin-score-centering-off-policy-rl-2026"][
-        "canonical_mapping"
-    ]
+    mapping = extractions["marek-ryabinin-score-centering-off-policy-rl-2026"]["canonical_mapping"]
     expected_ids = {
         "policy-gradient",
         "score-function",
@@ -245,9 +243,7 @@ def test_marek_integrated_concepts_have_bilingual_page_level_support() -> None:
 
 def test_marek_policy_drift_proposal_remains_unrepresented() -> None:
     _, extractions, concepts_doc = _corpus()
-    mapping = extractions["marek-ryabinin-score-centering-off-policy-rl-2026"][
-        "canonical_mapping"
-    ]
+    mapping = extractions["marek-ryabinin-score-centering-off-policy-rl-2026"]["canonical_mapping"]
     canonical_ids = {concept["id"] for concept in concepts_doc["concepts"]}
     assert "policy-drift" not in canonical_ids
     assert any("policy-drift" in proposal for proposal in mapping["proposed_relations"])
