@@ -693,8 +693,12 @@ class ProjectIndex:
             if aid_id not in self.pages_by_id:
                 raise KeyError(f"unknown published revision-aid page: {aid_id}")
         elif aid_type == "resource":
-            if aid_id not in self.resources_by_id or self.resources_by_id[aid_id].kind != "revision-aid":
-                raise KeyError(f"unknown revision-aid resource: {aid_id}")
+            if (
+                aid_id not in self.resources_by_id
+                or self.resources_by_id[aid_id].kind != "revision-aid"
+                or self.resources_by_id[aid_id].status != "published"
+            ):
+                raise KeyError(f"unknown published revision-aid resource: {aid_id}")
         else:
             raise ValueError("aid_type must be 'page' or 'resource'")
         return tuple(
