@@ -96,3 +96,36 @@ Scientific, rendered-site, visual-asset, editorial and architecture audits have 
 ## Change control
 
 This report is a dated audit artifact. Update it only when a new evidence pass changes a disposition. Do not turn it into a second canonical skills registry; the skill files and the router remain authoritative for their own instructions.
+
+
+## Focused overlap verification — 2026-11-19
+
+A second pass inspected the full text of the three route/group skills and the three source-phase skills.
+
+### Build / Understand / page-group: retain separate skills
+
+The overlap is smaller than the initial trigger wording suggests:
+- `build-path-audit` explicitly owns implementation dependency order, executable artifacts, tests, expected outputs, failure modes and reproducibility.
+- `understand-path-audit` explicitly owns conceptual progression, reader comprehension, readability, route continuity and rendered reading experience.
+- `page-group-audit` owns the generic method for arbitrary page groups, families and sequences; it does not replace the Build-specific implementation contract or the eight-stage Understand route contract.
+
+**Revised disposition:** do not merge these three. Tighten routing so Build requests select Build, Understand requests select Understand, and page-group is used for other page families or as a supporting lens only when a separate group-level question exists. The distinct canonical inputs and acceptance evidence justify separate skills.
+
+### Source orchestration: keep, but avoid procedural duplication
+
+The three phase responsibilities are clear:
+- `source-extraction` is Phase A and prohibits page/graph mutation.
+- `knowledge-and-learning-integration` is Phase B and consumes persistent reviewed records.
+- `source-to-learning-integration` coordinates both phases and defines their hand-off, ordering and project-level routing.
+
+**Disposition:** keep the orchestrator because it owns cross-phase sequencing and hand-off. In future edits, prefer concise links to the Phase A/B procedures over repeating their detailed output checklists. Do not collapse the two phase skills.
+
+### Routing consequence
+
+The router should make the distinctions operational:
+- Whole Build route → `build-path-audit`, not automatically `page-group-audit`.
+- Theory / Understand route → `understand-path-audit`, not automatically `page-group-audit`.
+- Arbitrary page family / adjacency window → `page-group-audit`.
+- External source through to accepted project changes → `source-to-learning-integration`; Phase A only → `source-extraction`; Phase B against existing reviewed records → `knowledge-and-learning-integration`.
+
+This is a routing clarification, not a reason to add another skill. The router already contains the principle to select one primary skill and add specialists only for distinct questions.
