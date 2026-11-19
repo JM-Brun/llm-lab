@@ -6634,7 +6634,7 @@ sources:
       contribution_types: [architecture, pedagogy, visualization]
       audiences: [beginner, learner]
     scan_status: partially-scanned
-    integration_status: not-reviewed
+    integration_status: reviewed
     scan_history:
       - accessed_at: "2026-11-19"
         status: partially-scanned
