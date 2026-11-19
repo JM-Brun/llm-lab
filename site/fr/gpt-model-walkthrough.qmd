@@ -17,12 +17,21 @@ hierarchy:
   parents: ["fr/build-path"]
   children: []
 related: ["fr/transformer", "fr/embedding-space", "fr/positional-encoding", "fr/logits", "fr/gpt-model-walkthrough-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "Le rappel suit le contrat de formes (B,T) vers (B,T,V), les embeddings de tokens et de positions, les blocs, la normalisation finale, la tête de sortie non liée et la preuve de causalité par invariance de préfixe."
 tags: ["type:guided-build", "destination:build", "topic:reference-gpt-model", "level:applied", "language:fr", "status:published"]
 -->
 
 ::: {.chapter-lead}
 Cette page est la quatrième étape (4 sur 5) de la visite guidée du code de référence. La visite précédente s'arrêtait à la sortie d'un bloc ; ici, on suit leur empilement et les interfaces du modèle complet : embeddings en entrée, blocs répétés, normalisation finale et projection vers les logits. Lecture recommandée après la [configuration](gpt-config-walkthrough.qmd) et le [bloc](transformer-block-walkthrough.qmd). Code : [`src/llm_lab/foundations/gpt.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt.py).
 :::
+::: {.callout-tip title="L'assemblage du GPT en une minute" #revision-summary}
+Le modèle transforme les IDs de forme $(B,T)$ en embeddings de tokens auxquels s'ajoutent les positions, traverse la pile de blocs, applique la normalisation finale puis une tête de sortie non liée pour produire des logits de forme $(B,T,V)$. Les tests de préfixe invariant vérifient que les positions passées ne dépendent pas des tokens futurs.
+:::
+
 :::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d'apprentissage"}
 À l'issue de cette visite, vous pourrez :
 - tracer les formes d'une passe avant, de `(B, T)` à `(B, T, V)` ;
