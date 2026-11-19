@@ -19,6 +19,11 @@ hierarchy:
   parents: ["fr/loss"]
   children: []
 related: ["fr/gradients-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "Le rappel distingue l'objectif, sa variation locale et la rétropropagation par règle de chaîne ; le cours relie gradients des logits, paramètres et mises à jour. Trois questions corrigées couvrent la dérivée de cross-entropie, le contrôle numérique et le choix du pas."
 tags: ["type:concept-lesson", "destination:understand", "topic:gradients", "level:core", "language:fr", "status:published"]
 -->
 
@@ -32,7 +37,7 @@ Le gradient $\nabla_\theta\mathcal{L}$ rassemble les dérivées partielles de l'
 Les deux méthodes utilisent des dérivées, mais pas les mêmes informations. **La descente de gradient** utilise la dérivée première (le gradient) pour choisir une direction ; **la méthode de Newton** exploite aussi la courbure, représentée en plusieurs dimensions par la matrice hessienne, pour orienter et dimensionner le pas. L'entraînement des réseaux neuronaux emploie couramment des gradients stochastiques ou calculés par batch, avec des optimiseurs comme Adam ou AdamW — et non une mise à jour de Newton simplement simplifiée. Ces méthodes sont apparentées, mais l'une n'est pas simplement l'autre à laquelle on aurait retiré un terme.
 :::
 
-::: {.callout-tip title="L'idée à retenir en une minute"}
+::: {.callout-tip title="L'idée à retenir en une minute" #revision-summary}
 La loss indique **ce qui doit être amélioré** ; le gradient indique **comment elle varie quand les paramètres changent**. La rétropropagation applique la règle de chaîne pour transporter cette information depuis la sortie jusqu'aux paramètres.
 
 **Première lecture :** suivez le chemin loss → dérivée par rapport aux logits → dérivées par rapport aux paramètres → mise à jour. Le gradient décrit une variation locale : il ne garantit pas qu'un pas quelconque réduira la loss.
