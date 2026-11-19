@@ -480,9 +480,31 @@ def test_real_repository_index_has_referential_integrity() -> None:
     assert index.concepts_by_id
     assert len(index.resources_by_id) == 5
     assert len(index.page_resource_associations) == 10
-    assert index.revision_edges == ()
-    assert set(item["status"] for item in index.revision_support_by_page.values()) == {
-        "not_assessed"
+    assert len(index.revision_edges) == 4
+    assert {
+        (edge.aid_type, edge.aid_id, edge.role, edge.source_page_id)
+        for edge in index.revision_edges
+    } == {
+        ("page", "fr/revision-information-theory", "revision_sheet", "fr/entropy"),
+        ("page", "fr/revision-information-theory", "revision_sheet", "fr/cross-entropy"),
+        ("page", "en/revision-information-theory", "revision_sheet", "en/entropy"),
+        ("page", "en/revision-information-theory", "revision_sheet", "en/cross-entropy"),
     }
+    assert {
+        page.page_id for page in index.lessons_for_revision_aid(
+            "page", "fr/revision-information-theory"
+        )
+    } == {"fr/entropy", "fr/cross-entropy"}
+    assert {
+        edge.aid_id for edge in index.revision_aids_for_lesson("en/cross-entropy")
+    } == {"en/revision-information-theory"}
+    assert all(
+        index.revision_support_for_lesson(page_id)["status"] == "partial"
+        for page_id in ("fr/entropy", "en/entropy", "fr/cross-entropy", "en/cross-entropy")
+    )
+    assert sum(
+        item["status"] == "not_assessed"
+        for item in index.revision_support_by_page.values()
+    ) == len(index.revision_support_by_page) - 4
     assert all(edge.target in index.pages_by_id for edge in index.page_edges)
     assert index.stats() == ProjectIndex.build(ROOT).stats()
