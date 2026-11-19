@@ -146,3 +146,16 @@ def test_unexpected_language_values_are_reported() -> None:
         route_memberships={},
     )
     assert inventory["unexpected_languages"] == [{"id": "shared/page", "language": "shared"}]
+
+
+def test_optional_deepen_pages_are_excluded_from_understand_build_coverage() -> None:
+    pages = [
+        page("fr/core", "fr", "understand", "core-topic"),
+        page("en/core", "en", "understand", "core-topic"),
+        page("fr/optional-deep-dive", "fr", "deepen", "optional-topic"),
+        page("en/optional-deep-dive", "en", "deepen", "optional-topic"),
+    ]
+    inventory = AUDIT["build_revision_inventory"](pages, [], [], route_memberships={})
+    assert {record["id"] for record in inventory["pages"]} == {"fr/core", "en/core"}
+    assert inventory["counts"]["understand"]["total"] == 2
+    assert inventory["counts"]["build"]["total"] == 0
