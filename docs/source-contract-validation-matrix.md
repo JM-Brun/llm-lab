@@ -198,3 +198,58 @@ This focused follow-up strengthens only the structural locator contract (non-emp
 - No evidence supports adding another source, rights, route or asset registry.
 - The existing split between canonical source metadata, atomic extraction, human review, topic synthesis, project audit and asset audit is coherent.
 - The main defect is not template duplication; it is the difference between fields that are documented, fields that are structurally checked, and fields that require human evidence review.
+
+
+## Full-corpus compatibility evidence — 2026-11-19
+
+**Inventory implementation:** `site/tools/report_extraction_destination_inventory.py`  
+**Report and interpretation:** [Extraction destination and field inventory](extraction-destination-inventory.md)  
+**Corpus:** 96 extraction files / 489 items / 139 source records.  
+**Scope:** read-only field-presence, destination-reference and historical-shape inventory. No validator rule or canonical record was changed.
+
+### Observed optional-field usage
+
+| Field / family | Observed presence | Compatibility consequence |
+|---|---:|---|
+| Item `disposition` | 460 / 489 | Optionality is real; retain conditional validation. |
+| Item `disposition_rationale` | 341 / 489 | Do not make universally required without an editorial policy and migration plan. |
+| Item `classification` | 373 / 489 | Keep optional; validate supplied references and tags. |
+| Item `candidate_destinations` | 385 / 489 | Proposals are common, but not universal. |
+| Item `pedagogical_assessment` | 116 / 489 | Conditional editorial assessment; do not require for every item. |
+| Item `technical_assessment` | 132 / 489 | Present in a subset; currently outside structural validator coverage. |
+| Item `provenance` / `verification` | 3 / 7 | Keep conditional; test the present legacy cases before tightening. |
+| Item `mapped_concepts` / `target_resources` | 39 / 39 | Preserve as historical fields; do not merge automatically into current destination fields. |
+| Extraction-level `pedagogical_model` | 59 / 96 | Conditional source-type contract; 59 observed models are mappings. |
+| Extraction-level `scan` | 36 / 96 | Legacy mapping in 36 files; do not confuse with source-owned `scan_history` or remove automatically. |
+| Extraction-level `canonical_mapping` | 28 / 96 | Editorial proposal mapping; not a second canonical registry and not proof of integration. |
+
+All 489 items contain the five structural fields `id`, `kind`, `summary`, `locator`, and `evidence`. The full report contains all additional field counts and observed nested shapes.
+
+### Destination compatibility
+
+| Field | Records with field | References | Unique IDs / values | Current interpretation |
+|---|---:|---:|---:|---|
+| Source `related.pages` | 139 | 622 | 106 | Existing source-page associations; references resolve. |
+| Source `related.concepts` | 139 | 464 | 84 | Existing source-concept associations; references resolve. |
+| Source `classification.concept_ids` | 139 | 454 | 82 | Classification, not a destination proposal; references resolve. |
+| Item `candidate_destinations.pages` | 385 | 840 | 96 | Proposals; page references are checked by the current validator. |
+| Item `candidate_destinations.concepts` | 325 | 374 | 64 | Proposals; not checked by the current validator. Three IDs are unresolved and remain report-only. |
+| Item `classification.concept_ids` | 342 | 582 | 69 | Supplied classifications; references resolve. |
+| Item `mapped_concepts` | 39 | 105 | 26 | Legacy authoring field; all observed concept IDs resolve. |
+| Item `target_resources` | 39 | 100 | 22 | Historical bilingual page-like IDs; field name does not make them IDs in `data/resources.yml`. |
+
+### Route fields and historical exceptions
+
+- `candidate_destinations.route_ids` is present on 143 items, but every observed list is empty (zero references).
+- `candidate_destinations.routes` and `target_routes` are absent.
+- `pedagogical_model.comparison.canonical_routes` occurs in 51 models (142 values, 37 distinct strings). Values mix prose labels, page metadata descriptions and file paths; they are not a normalized route-ID set.
+- The 59 source-local pedagogical models contain 294 `teaching_route` steps. These are instructional sequences, not canonical site routes.
+- The three unresolved candidate concept IDs are `context-window`, `log-probability`, and `weighted-aggregation`. Their exact item IDs are listed in the linked inventory report/documentation. They are editorial proposals, not structural errors.
+
+### Compatibility decisions
+
+1. Preserve absent optional fields as absent; do not backfill empty lists or fabricated metadata.
+2. Keep candidate pages, candidate concepts, route annotations, legacy mapping fields and local teaching routes as separate semantic families.
+3. Keep unresolved candidate concepts report-only until each item is reviewed. Do not promote them to hard errors.
+4. Preserve the 36 historical extraction-level `scan` mappings and 28 `canonical_mapping` mappings during the v1 compatibility period.
+5. Do not change validator behavior until focused fixtures cover valid, invalid, unknown, conditional and legacy shapes and the complete corpus is re-run.
