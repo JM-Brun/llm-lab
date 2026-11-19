@@ -3,7 +3,7 @@
 **Repository:** `JM-Brun/llm-lab`  
 **Audited branch snapshot:** `main` at `1e20c55453421e079aefd6bdd686fe47277d98c8`  
 **Scope:** legacy extraction-level `scan` blocks and `canonical_mapping` blocks  
-**Status:** mapping inventory and relation comparison completed; scan reconciliation and regression fixtures remain open
+**Status:** all 36 scan identities and dates paired; all 28 mappings and relation proposals reconciled; semantic scan comparison and CI verification remain open
 
 This is a conservative, evidence-linked reconciliation. A historical proposal is not proof of canonical integration. No canonical record, relation, route, source or validator rule is changed by this audit.
 
@@ -176,7 +176,7 @@ Build real fixtures from the repository records after the 36th scan is found and
 - `mapping-deferred.yml`: proposal explicitly deferred pending source inspection.
 - `mapping-obsolete.yml`: redundant source retained for provenance, no canonical mutation.
 
-Regression tests should assert:
+The implemented regression tests assert:
 - exact source/extraction identity pairing by `source_id`, not filename guesswork;
 - lossless preservation of all historical blocks;
 - the four scan-difference classes above;
@@ -185,7 +185,7 @@ Regression tests should assert:
 - no mutation of canonical registries from candidate-only or prose proposals;
 - deterministic report output and stable counts.
 
-**Not yet implemented:** these fixtures and tests. This document records the actual candidate cases and the test contract; it does not claim test execution.
+**Verification status:** tests are committed, but a successful run on the latest PR head has not yet been observed. The initial CI attempt found formatting issues, which were corrected in subsequent commits; the cancelled test run must not be treated as a pass.
 
 ## 7. Remaining ordered work
 
