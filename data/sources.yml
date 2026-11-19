@@ -6644,12 +6644,23 @@ sources:
           - "All textual examples, equations, dimensions and claims about Q/K/V, scaling, softmax, aggregation and parallelism"
         limitations:
           - "Embedded diagrams/images were not retrieved as image bytes or visually inspected; only their positions and surrounding text were available."
-          - "Linked Parts 1–3 and the original Attention Is All You Need paper were not opened as part of this scan."
           - "Comments and discussion were not substantively audited."
           - "No code, numerical example or experiment was executed."
           - "No licence or permission to reuse article text or figures was established."
+      - accessed_at: "2026-11-19"
+        status: partially-scanned
+        inspected_scope:
+          - "Focused primary-source comparison with Vaswani et al., Attention Is All You Need (2017), sections 3.2.1–3.2.2 and Figure 2"
+          - "Existing bilingual Q/K/V, scaled-dot-product-attention, contextualized-representations and causal-masking Understand pages"
+          - "Existing bilingual Transformer-block Build walkthrough and bilingual Build route"
+          - "Existing primary-source review docs/source-reviews/vaswani-attention-formulation-2026-11.md"
+        limitations:
+          - "The complete Jose Parreño Garcia article's embedded image assets were not retrieved or visually inspected."
+          - "The Vaswani paper was checked only for the focused attention formulation and multi-head sections, not re-audited in full."
+          - "No implementation or experiment was executed."
     related:
-      pages: [fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/contextualized-representations, en/contextualized-representations, fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
-      concepts: [query, key, value, attention-score, attention-weight, scaled-dot-product-attention, self-attention, softmax, multi-head-attention, contextualized-representation]
+      pages: [fr/queries-keys-values, en/queries-keys-values, fr/scaled-dot-product-attention, en/scaled-dot-product-attention, fr/contextualized-representations, en/contextualized-representations, fr/causal-masking, en/causal-masking, fr/transformer-block-walkthrough, en/transformer-block-walkthrough]
+      concepts: [query, key, value, attention-score, attention-weight, scaled-dot-product-attention, self-attention, softmax, multi-head-attention, contextualized-representation, causal-mask, autoregressive-generation]
       audit_records:
-        - docs/source-reviews/jose-parreno-garcia-transformers-part-4-2026-11.md
+        - docs/source-reviews/jose-parreno-garcia-understanding-transformers-part-4-2026-11.md
+        - docs/source-reviews/vaswani-attention-formulation-2026-11.md
