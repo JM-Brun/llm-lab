@@ -3302,7 +3302,7 @@ sources:
     identifiers: {}
     canonical_url: "https://huggingface.co/spaces/hesamation/primer-llm-embedding"
     publisher: "Hugging Face Spaces"
-    publication_date: null
+    publication_date: "2025-03-18"
     updated_date: null
     language: en
     version: "Interactive Space; article citation states 2025"
@@ -3343,6 +3343,13 @@ sources:
           - "Embedded visual assets were represented by captions/placeholders in the retrieved text; individual image bytes, authorship and reuse rights were not audited."
           - "No licence or permission to reproduce article text, figures, code or model-derived data was established."
           - "The article is a secondary tutorial; simplified claims about semantic quality, dimensionality, TF-IDF geometry and BERT objectives require qualification against primary sources."
+      - accessed_at: "2026-11-19"
+        status: partially-scanned
+        inspected_scope:
+          - "Canonical Hugging Face Space static source page src/index.html and embedded Distill front matter; publication field states Mar 18, 2025"
+        limitations:
+          - "The repository's commit history is not substituted for publication date; this date is taken from the article's own published metadata."
+          - "Licence and asset reuse rights remain unverified."
       - accessed_at: "2026-11-12"
         status: partially-scanned
         inspected_scope:
