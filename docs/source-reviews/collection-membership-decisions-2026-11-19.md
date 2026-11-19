@@ -46,3 +46,29 @@ This membership decision does not create an extraction or change concepts, pages
 ## Change
 
 Add `collections: [tokenization-embeddings]` to this canonical source record only. Existing provenance, scan, integration, licence and reuse fields remain unchanged.
+
+
+---
+
+# Source-to-collection decision: Mikolov et al. (2013)
+
+**Review date:** 2026-11-19  
+**Source ID:** `mikolov-word2vec-2013`  
+**Collection:** `tokenization-embeddings`  
+**Decision:** assign explicit membership.
+
+## Evidence and rationale
+
+The canonical record maps the paper to the bilingual `embedding-space` and `contextualized-representations` pages, and identifies `token-embedding` and `contextualized-representation` as related concepts. The [collection synthesis](tokenization-embeddings-source-collection.md) explicitly treats Mikolov et al. as the historical source for static word-type vectors, contrasted with Transformer token lookup vectors and contextualized hidden states. The [migration map](tokenization-embeddings-source-migration-map-2026-11.md) places the paper in the token-embedding and representation-geometry source family.
+
+The existing five-item extraction `data/extractions/mikolov-word2vec-2013.yml` records the log-linear architecture, CBOW, Skip-gram, Huffman hierarchical softmax and analogy-benchmark limitations, each with source locators and bilingual destinations. The primary paper's full arXiv v3 PDF and main architecture figure/evaluation tables were reviewed in the existing audit. This is a substantive embedding-foundations contribution, not a classification inferred from tags alone.
+
+## Evidence boundary retained
+
+The source remains `partially-scanned` and `integrated`. The historical implementation, pretrained vectors, linked follow-up paper and code were not independently retrieved or executed. The benchmark is English-centric and measures a narrow exact-match analogy task; it is not evidence of general semantic understanding or multilingual performance. The paper's hierarchical-softmax account is not conflated with later negative-sampling implementations.
+
+Licence and figure/code/data reuse rights remain `unknown`; no permission is inferred. The existing extraction is reused; no duplicate extraction, new concept, page, route or learner-content change is proposed.
+
+## Change
+
+Add `collections: [tokenization-embeddings]` to this source record only. Preserve all existing scan, integration, licence, reuse and provenance fields.
