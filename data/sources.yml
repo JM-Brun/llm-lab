@@ -2659,7 +2659,7 @@ sources:
     identifiers: {}
     canonical_url: "https://cameronrwolfe.substack.com/p/score-centering"
     publisher: "Cameron R. Wolfe / Substack"
-    publication_date: null
+    publication_date: "2026-11-09"
     updated_date: null
     language: en
     version: null
@@ -2691,8 +2691,8 @@ sources:
         limitations:
           - "Direct Substack retrieval returned a cache miss; the article body, equations, section structure and examples were not independently inspected."
           - "The primary paper and its official implementation are recorded separately; their contents are not attributed to Wolfe."
-          - "The public author archive inspected on 2026-11-09 does not list a post with this title; the exact post may be unlisted or otherwise inaccessible."
-          - "Publication date, linked references, comments, figures and reuse rights remain unverified."
+          - "The author archive snapshot inspected on 2026-11-09 did not expose this post; the canonical post page was subsequently retrieved and supplies its publication date."
+          - "The publication date is now confirmed by the canonical Substack post itself (2026-11-09); linked references, comments, figures and reuse rights remain unverified."
     related:
       pages: []
       concepts: []
