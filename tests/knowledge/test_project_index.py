@@ -447,13 +447,29 @@ def test_inverse_queries_reject_unknown_entities_and_invalid_targets(tmp_path: P
 def test_real_repository_resource_and_revision_inverse_queries() -> None:
     index = ProjectIndex.build(ROOT)
 
-    assert [
-        page.page_id for page in index.pages_for_resource("gpt-config-module")
-    ] == ["en/gpt-config-walkthrough", "fr/gpt-config-walkthrough"]
-    assert [
-        resource.resource_id
-        for resource in index.resources_for_page("fr/gpt-config-walkthrough")
-    ] == ["gpt-config-module"]
+    expected_pages = {
+        "gpt-config-module": ("en/gpt-config-walkthrough", "fr/gpt-config-walkthrough"),
+        "gpt-generation-module": (
+            "en/gpt-generation-walkthrough",
+            "fr/gpt-generation-walkthrough",
+        ),
+        "gpt-model-module": ("en/gpt-model-walkthrough", "fr/gpt-model-walkthrough"),
+        "gpt-ops-module": ("en/gpt-ops-walkthrough", "fr/gpt-ops-walkthrough"),
+        "transformer-block-module": (
+            "en/transformer-block-walkthrough",
+            "fr/transformer-block-walkthrough",
+        ),
+    }
+    assert set(expected_pages) == set(index.resources_by_id)
+    assert sum(len(page_ids) for page_ids in expected_pages.values()) == 10
+    for resource_id, expected_page_ids in expected_pages.items():
+        assert tuple(
+            page.page_id for page in index.pages_for_resource(resource_id)
+        ) == expected_page_ids
+        for page_id in expected_page_ids:
+            assert [
+                resource.resource_id for resource in index.resources_for_page(page_id)
+            ] == [resource_id]
     assert [
         resource.resource_id for resource in index.resources_for_concept("self-attention")
     ] == ["transformer-block-module"]
