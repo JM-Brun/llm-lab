@@ -13,13 +13,13 @@ scan:
     notes: ["FineWeb, tokenizer, model-output, Karpathy and Epoch AI images were visible only as placements/captions; image bytes not inspected."]
   code_data: {status: not-inspected, coverage: null, notes: ["No code, checkpoint or dataset was executed or audited."]}
   comments: {status: not-inspected, coverage: null, notes: ["Discussion not inspected."]}
-  linked_resources: {status: partial, coverage: "FineWeb, Common Crawl, GPT-3 paper, TikTokenizer, BPE/WordPiece references, MIT material, Karpathy and Epoch AI links identified.", notes: ["Not all links opened."]}
+  linked_resources: {status: partial, coverage: "FineWeb, Common Crawl, GPT-3 paper, TikTokenizer, BPE/WordPiece references, MIT material, Karpathy and Epoch AI links identified. Epoch AI training-cost paper and estimation documentation opened; OpenAI GPT-4 Technical Report checked for disclosure of model size and training-data details.", notes: ["FineWeb, TikTokenizer, Karpathy and other links remain uninspected or only identified.", "Epoch AI estimates are methodology-dependent and should be reported with scope and uncertainty."]}
   metadata: {status: complete, coverage: "Author, title, publisher, URL and publication date (3 May 2025) visible.", notes: []}
   rights: {status: unknown, coverage: null, notes: ["No reuse licence established."]}
   unresolved_questions:
     - "Inspect embedded visual assets and rights."
     - "Verify GPT-4 token-count and parameter-count claims against dated primary evidence."
-    - "Inspect Epoch AI charts and methodology before reusing cost figures."
+    - "Epoch AI 2024 cost paper and estimation methodology reviewed; inspect the article’s embedded chart images and exact plotted data before reproducing them."
 pedagogical_model:
   reconstruction: {status: complete, basis: ["Complete visible article text retrieved directly on 2026-11-19."], inferred_elements: ["Teaching sequence bridges corpus preparation, tokenization and autoregressive pretraining."]}
   source_graph:
