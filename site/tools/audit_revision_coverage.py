@@ -126,6 +126,26 @@ def build_revision_inventory(
     for record in records:
         topic_language_counts[f"{record['destination']}:{record['topic']}"][record["language"]] += 1
 
+    bilingual_parity: dict[str, list[dict[str, Any]]] = {}
+    for destination in DESTINATIONS:
+        topics = {
+            key.split(":", 1)[1]
+            for key in topic_language_counts
+            if key.startswith(f"{destination}:")
+        }
+        bilingual_parity[destination] = [
+            {
+                "topic": topic,
+                "fr": topic_language_counts[f"{destination}:{topic}"]["fr"],
+                "en": topic_language_counts[f"{destination}:{topic}"]["en"],
+                "balanced": (
+                    topic_language_counts[f"{destination}:{topic}"]["fr"]
+                    == topic_language_counts[f"{destination}:{topic}"]["en"]
+                ),
+            }
+            for topic in sorted(topics, key=str)
+        ]
+
     return {
         "schema_version": 1,
         "source_of_truth": [
@@ -136,6 +156,7 @@ def build_revision_inventory(
         ],
         "counts": counts,
         "topic_language_counts": dict(sorted(topic_language_counts.items())),
+        "bilingual_parity": bilingual_parity,
         "pages": records,
     }
 
@@ -175,6 +196,20 @@ def render_markdown(inventory: dict[str, Any]) -> str:
                 f"| {page['language']} | [{page['title']}]({page['href']}) "
                 f"({page['id']}) | {page['topic']} | {page['route_status']} | "
                 f"{len(page['concept_ids'])} | {len(page['implementation_resource_ids'])} |"
+            )
+        lines.append("")
+        lines.extend(
+            [
+                "### Bilingual topic parity",
+                "",
+                "| Topic | FR pages | EN pages | Status |",
+                "|---|---:|---:|---|",
+            ]
+        )
+        for item in inventory["bilingual_parity"][destination]:
+            status = "balanced" if item["balanced"] else "mismatch"
+            lines.append(
+                f"| {item['topic']} | {item['fr']} | {item['en']} | {status} |"
             )
         lines.append("")
     lines.extend(
