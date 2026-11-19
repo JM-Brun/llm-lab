@@ -52,7 +52,7 @@ scan:
 
 items:
   - id: poloclub-transformer-explainer-paper-2026:token-centric-flow-design
-    kind: design-principle
+    kind: visualization
     summary: "The paper proposes a token-centric, continuous flow visualization that follows token embeddings from input through repeated Transformer components to next-token probabilities, using a Sankey-inspired visual grammar to connect high-level architecture and intermediate transformations."
     locator: {type: section, value: "§1, pp. 1–2; §5.1, pp. 6–7; §6.1, pp. 7–8", label: "Contribution and token-centric flow design"}
     evidence:
@@ -79,7 +79,7 @@ items:
     disposition_rationale: "Useful design evidence for the visual pedagogy of token and embedding flow; it should complement, not replace, mechanistic explanations of Transformer computation."
 
   - id: poloclub-transformer-explainer-paper-2026:progressive-attention-explanation
-    kind: design-principle
+    kind: visualization
     summary: "The system progressively discloses multi-head self-attention: it moves from an architectural overview to animated, step-by-step views of Q/K/V projections, attention scores, value aggregation and matrix operations, while retaining the surrounding token flow."
     locator: {type: section, value: "§4.2, pp. 5–6; §5.2, pp. 7; §6.2, pp. 8–9", label: "Attention design challenge and expanded explanation"}
     evidence:
@@ -97,9 +97,9 @@ items:
     classification:
       primary_theme: architectures-mechanisms
       tags: [topic:self-attention, topic:multi-head-attention, method:progressive-disclosure]
-      concept_ids: [self-attention, query-key-value, attention-head]
+      concept_ids: [self-attention, query, multi-head-attention]
     candidate_destinations:
-      pages: [en/self-attention, fr/self-attention]
+      pages: [en/queries-keys-values, fr/queries-keys-values]
       concepts: []
       route_ids: []
     disposition: integrate-by-reference
@@ -127,14 +127,14 @@ items:
       tags: [topic:autoregressive-generation, topic:sampling, topic:temperature, topic:top-k, topic:top-p]
       concept_ids: [token, self-attention]
     candidate_destinations:
-      pages: [en/text-generation, fr/text-generation]
+      pages: [en/generation, fr/generation]
       concepts: []
       route_ids: []
     disposition: integrate-by-reference
     disposition_rationale: "Useful for the connection between next-token distributions and sampling controls; retain the GPT-2 and implementation scope."
 
   - id: poloclub-transformer-explainer-paper-2026:browser-model-implementation
-    kind: implementation
+    kind: implementation-pattern
     summary: "The paper reports converting a PyTorch GPT-2 Small model to ONNX and running it with ONNX Runtime Web in the browser; the frontend uses Svelte and D3.js, while model files are split for parallel download and cached in IndexedDB."
     locator: {type: section, value: "§6.7, p. 11", label: "Web-based implementation"}
     evidence:
@@ -151,11 +151,11 @@ items:
       rationale: "The paper explicitly describes the deployment stack; reproducibility and current compatibility remain unverified."
       corroborating_sources: []
     classification:
-      primary_theme: software-implementation
-      tags: [topic:gpt-2, topic:onnx, topic:browser-inference, library:onnx-runtime-web]
-      concept_ids: [transformer, token-embedding]
+      primary_theme: architectures-mechanisms
+      tags: [topic:gpt-2, topic:onnx, topic:browser-inference, ecosystem:onnx-runtime-web]
+      concept_ids: [token-embedding]
     candidate_destinations:
-      pages: [en/transformer-architecture, fr/transformer-architecture]
+      pages: [en/transformer-block-walkthrough, fr/transformer-block-walkthrough]
       concepts: []
       route_ids: []
     disposition: integrate-by-reference
@@ -179,11 +179,11 @@ items:
       rationale: "The paper reports random assignment and a common quiz, supporting a controlled comparison within the study's selected population and materials."
       corroborating_sources: []
     classification:
-      primary_theme: scientific-methods
-      tags: [method:controlled-experiment, topic:ai-education, metric:learning-outcome]
+      primary_theme: probabilistic-foundations-training
+      tags: [method:controlled-experiment, topic:ai-education, topic:learning-outcome]
       concept_ids: []
     candidate_destinations:
-      pages: [en/learning-science, fr/learning-science]
+      pages: [en/generation, fr/generation]
       concepts: []
       route_ids: []
     disposition: integrate-by-reference
@@ -207,11 +207,11 @@ items:
       rationale: "The attrition and filtering rules are explicit; exclusion may improve data quality while narrowing the population represented by the analyzed sample."
       corroborating_sources: []
     classification:
-      primary_theme: scientific-methods
-      tags: [method:participant-screening, metric:sample-size, topic:external-validity]
+      primary_theme: probabilistic-foundations-training
+      tags: [method:participant-screening, topic:sample-size, topic:external-validity]
       concept_ids: []
     candidate_destinations:
-      pages: [en/learning-science, fr/learning-science]
+      pages: [en/generation, fr/generation]
       concepts: []
       route_ids: []
     disposition: integrate-by-reference
@@ -235,11 +235,11 @@ items:
       rationale: "The paper reports a randomized between-subject comparison and GLMM analysis; generalization beyond this study should remain cautious."
       corroborating_sources: []
     classification:
-      primary_theme: scientific-methods
-      tags: [result:learning-outcome, metric:quiz-accuracy, method:between-subjects]
+      primary_theme: probabilistic-foundations-training
+      tags: [topic:learning-outcome, metric:quiz-accuracy, method:between-subjects]
       concept_ids: []
     candidate_destinations:
-      pages: [en/learning-science, fr/learning-science]
+      pages: [en/generation, fr/generation]
       concepts: []
       route_ids: []
     disposition: integrate-by-reference
@@ -263,11 +263,11 @@ items:
       rationale: "The extraction preserves the distinction between self-reported understanding and objective quiz performance."
       corroborating_sources: []
     classification:
-      primary_theme: scientific-methods
-      tags: [result:self-report, metric:likert-scale, topic:learning-outcome]
+      primary_theme: probabilistic-foundations-training
+      tags: [topic:self-report, topic:likert-scale, topic:learning-outcome]
       concept_ids: []
     candidate_destinations:
-      pages: [en/learning-science, fr/learning-science]
+      pages: [en/generation, fr/generation]
       concepts: []
       route_ids: []
     disposition: integrate-by-reference
@@ -291,11 +291,11 @@ items:
       rationale: "The result suggests alignment between richer interaction and selected learning objectives, but the design does not isolate individual feature effects."
       corroborating_sources: []
     classification:
-      primary_theme: scientific-methods
-      tags: [result:learning-objective, topic:attention, topic:mlp, topic:sampling]
+      primary_theme: probabilistic-foundations-training
+      tags: [topic:learning-objective, topic:attention, topic:mlp, topic:sampling]
       concept_ids: [self-attention]
     candidate_destinations:
-      pages: [en/learning-science, fr/learning-science]
+      pages: [en/generation, fr/generation]
       concepts: []
       route_ids: []
     disposition: integrate-by-reference
@@ -319,11 +319,11 @@ items:
       rationale: "The means are reported by the authors; they describe perceived usefulness rather than measured feature-specific learning gains."
       corroborating_sources: []
     classification:
-      primary_theme: scientific-methods
-      tags: [result:feature-rating, metric:likert-scale, topic:guided-learning]
+      primary_theme: probabilistic-foundations-training
+      tags: [topic:feature-rating, topic:likert-scale, topic:guided-learning]
       concept_ids: []
     candidate_destinations:
-      pages: [en/learning-science, fr/learning-science]
+      pages: [en/generation, fr/generation]
       concepts: []
       route_ids: []
     disposition: integrate-by-reference
@@ -347,11 +347,11 @@ items:
       rationale: "These limits are explicitly acknowledged by the authors and constrain the interpretation of the efficacy results."
       corroborating_sources: []
     classification:
-      primary_theme: scientific-methods
-      tags: [limitation:external-validity, limitation:retention, limitation:measurement]
+      primary_theme: probabilistic-foundations-training
+      tags: [topic:external-validity, topic:retention, topic:measurement]
       concept_ids: []
     candidate_destinations:
-      pages: [en/learning-science, fr/learning-science]
+      pages: [en/generation, fr/generation]
       concepts: []
       route_ids: []
     disposition: integrate-by-reference
