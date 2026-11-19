@@ -19,6 +19,11 @@ hierarchy:
   parents: ["en/transformer"]
   children: ["en/causal-masking", "en/attention-score-scaling"]
 related: ["en/queries-keys-values", "en/scaled-dot-product-attention-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "The recap orders QKᵀ scores, scaling, optional masking, softmax and V aggregation; Practice questions check the steps and limits of interpreting attention weights."
 tags: ["type:concept-lesson", "destination:understand", "topic:scaled-dot-product-attention", "level:core", "language:en", "status:published"]
 -->
 
@@ -33,7 +38,7 @@ Scaled dot-product attention turns learned compatibility scores between queries 
   <span class="epistemic-badge badge-status">Architecture: Standard Attention</span>
 </div>
 
-::: {.callout-tip title="The one-minute mental model"}
+::: {.callout-tip title="The one-minute mental model" #revision-summary}
 Attention is not one indivisible operation: it is the sequence **scores → scaling → optional mask → softmax → aggregation**. Scores compare Q and K; weights are normalized row by row; the output is a weighted combination of V.
 
 **First pass:** follow the transition from scores to weights, then from weights to the output. Keep these three objects distinct; numerical calculations and detailed shapes are practised in the [Attention exercise collection](exercises-attention.qmd#at-0-scores-to-output).
