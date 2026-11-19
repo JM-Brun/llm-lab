@@ -634,9 +634,7 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
             if "candidate_destinations" in item:
                 destinations = item["candidate_destinations"]
                 if not isinstance(destinations, dict):
-                    errors.append(
-                        f"{item_where}.candidate_destinations: expected a mapping"
-                    )
+                    errors.append(f"{item_where}.candidate_destinations: expected a mapping")
                 else:
                     for page_id in _strings(
                         destinations.get("pages"),
