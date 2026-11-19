@@ -97,11 +97,28 @@ Candidate destinations to verify against current page content:
 
 Compare the article's teaching moves against these pages, including summaries/flashcards and current Understand and Build routes. The likely outcome is a small number of bounded additions, especially the worked example and vocabulary-size/token-count distinction, not new pages or concepts.
 
+
+## Phase C — primary-source verification
+
+### GPT-4 token and parameter counts
+
+OpenAI's [GPT-4 Technical Report](https://cdn.openai.com/papers/gpt-4.pdf) explicitly says it does not disclose model size, hardware, training compute, dataset construction or detailed training method. Therefore, neither the article's “13 trillion unique tokens” formulation nor the associated 1.8-trillion-parameter estimate can be treated as an officially confirmed GPT-4 specification on the basis of that report. The 13T wording is additionally conceptually invalid if read as vocabulary size: corpus token occurrences, vocabulary entries and model parameters are different quantities.
+
+**Decision:** keep both GPT-4 numbers out of canonical teaching content unless a traceable, appropriately qualified primary source becomes available. Do not replace them with another unsupported estimate.
+
+### Epoch AI cost charts
+
+The linked [Epoch AI paper, “How much does it cost to train frontier AI models?”](https://epoch.ai/publications/how-much-does-it-cost-to-train-frontier-ai-models), published 3 June 2024, estimates costs for up to 45 frontier models using separate approaches for hardware and energy, cloud rental, and R&D staff. It reports an estimated 2.4× annual growth in amortized hardware and energy cost for final training runs since 2016 (95% CI 2.0×–3.1×), and estimates hardware at 47–67% of selected model development costs, staff at 29–49%, and energy at 2–6%.
+
+The paper distinguishes final-run costs from broader development costs. Its cloud-compute chart multiplies training chip-hours by historical cloud rental prices; this is an estimate, not an invoice or a universal total cost of model development. Epoch AI's [estimation documentation](https://epoch.ai/data/ai-models-documentation/estimation) further explains that compute estimates can depend on reported hardware/time, peak throughput and utilization, or operation counts derived from architecture and data. Hardware-based estimates therefore carry assumptions.
+
+**Decision:** the article's broad infrastructure-cost point is supported as a dated, qualified claim. Do not import chart values or the article's broad “fewer than 20 companies” market-concentration claim without separately inspecting the exact embedded figures, their source data and a suitable market definition. Epoch AI's paper is published under CC BY on its page; that does not grant reuse rights to the Substack author's screenshots or composites.
+
 ## Remaining Phase C work
 
-1. Inspect the embedded visual assets and record exact locators and reuse/rights status.
-2. Verify any GPT-4 token-count or parameter-count claims against reliable dated primary evidence; otherwise keep them explicitly unverified.
-3. Open the linked Epoch AI charts and methodology before considering cost figures.
+1. Retrieve and visually inspect the article's embedded FineWeb, TikTokenizer, model-output, Karpathy and Epoch AI assets; record exact source locators.
+2. Inspect the article's comments and remaining linked resources if they are to inform the lesson.
+3. Establish the Substack text/figure reuse status before reproducing any material; prefer original diagrams and attributed links.
 4. Revisit the optional Eiffel Tower worked example only if a later review identifies a specific gap in the current next-token practice sequence.
 
-The bilingual quantity clarification is integrated in the corpus-preparation pages. The source remains **partially scanned** because figures, comments, linked materials and rights were not fully inspected.
+The bilingual quantity clarification is integrated in the corpus-preparation pages. The source remains **partially scanned** because embedded media, comments, some linked materials and Substack reuse rights are not fully inspected.
