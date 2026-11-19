@@ -1,6 +1,16 @@
-from collections import Counter
+from __future__ import annotations
 
-from scripts.issue_metadata_audit import classify, render_report
+import importlib.util
+from pathlib import Path
+
+SCRIPT = Path(__file__).resolve().parents[2] / "scripts" / "issue_metadata_audit.py"
+SPEC = importlib.util.spec_from_file_location("issue_metadata_audit", SCRIPT)
+assert SPEC is not None and SPEC.loader is not None
+MODULE = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(MODULE)
+
+classify = MODULE.classify
+render_report = MODULE.render_report
 
 
 def test_valid_issue_metadata_passes() -> None:
@@ -26,7 +36,7 @@ def test_missing_multiple_and_unknown_labels_are_reported() -> None:
     issues = [
         {
             "number": 21,
-            "title": "[P1/P2] Conflicting priority",
+            "title": "[P1] Conflicting priority",
             "state": "open",
             "labels": [
                 {"name": "P2"},
@@ -80,7 +90,7 @@ def test_pull_requests_and_closed_issues_are_excluded() -> None:
 
 
 def test_report_states_structural_scope_and_limitations() -> None:
-    report = render_report("JM-Brun/llm-lab", [], Counter({"P2": 3}), 3)
+    report = render_report("JM-Brun/llm-lab", [], {"P2": 3}, 3)
 
     assert "Issues audited: **3**" in report
     assert "semantic priority" in report
