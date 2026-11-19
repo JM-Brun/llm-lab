@@ -422,6 +422,10 @@ jobs:
           for key, value in report["counts"].items():
               print(f"- **{key}:** {value}")
           print()
+          print("**Extraction-record field presence**")
+          for key, value in report["extraction_record_field_presence"].items():
+              print(f"- `{key}`: {value}")
+          print()
           print("**Item field presence**")
           for key, value in report["item_field_presence"].items():
               print(f"- `{key}`: {value}")
