@@ -30,7 +30,8 @@ Prédire le prochain token est un **objectif d’entraînement**. Ce qu’un mod
 À l’issue de cette page, vous pourrez :
 - distinguer ce qui découle de l’objectif d’entraînement de ce qui exige une évaluation ;
 - préciser le critère utilisé derrière le mot « comprendre » ;
-- distinguer l’évaluation du modèle seul de celle d’un assistant complet et citer plusieurs dimensions pertinentes ;\n- expliquer pourquoi une capacité apparente dépend de la métrique et du protocole.
+- distinguer l’évaluation du modèle seul de celle d’un assistant complet et citer plusieurs dimensions pertinentes ;
+- expliquer pourquoi une capacité apparente dépend de la métrique et du protocole.
 :::
 
 ## 1. Ce que l’objectif garantit — et ne garantit pas
