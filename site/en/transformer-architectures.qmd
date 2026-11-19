@@ -18,6 +18,11 @@ hierarchy:
   parents: ["en/llm-overview"]
   children: ["en/cross-attention", "en/transformer", "en/transformer-explainer"]
 related: ["en/transformer-history", "en/generation", "en/hybrid-llm-architectures", "en/llm-computational-complexity", "en/transformer-architectures-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "The recap and comparison table cover the three architectures, information flow and attention mechanisms; the self-check and practice distinguish architecture, objective and task."
 tags: ["type:concept-lesson", "destination:understand", "topic:transformer-architectures", "level:core", "language:en", "status:published"]
 -->
 
@@ -27,7 +32,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:transformer-archi
 A Transformer can use an encoder, a decoder, or both. This choice determines which positions can exchange information and how the model processes a sequence. It does not, by itself, determine the training objective or the task being performed.
 :::
 
-::: {.callout-tip title="The one-minute mental model"}
+::: {.callout-tip title="The one-minute mental model" #revision-summary}
 - **Encoder-only:** contextualizes the input with generally bidirectional attention; BERT and RoBERTa are examples.
 - **Encoder–decoder:** the encoder represents the input; the decoder generates the output with causal self-attention and cross-attention to the encoder; T5 is an example.
 - **Decoder-only:** uses causal attention to extend a prefix; GPT is the central teaching example here.
