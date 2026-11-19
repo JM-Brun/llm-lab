@@ -279,6 +279,7 @@ sources:
       audiences: [learner, practitioner]
     scan_status: partially-scanned
     integration_status: integrated
+    collections: [tokenization-embeddings]
     scan_history:
       - accessed_at: "2026-10-30"
         status: partially-scanned
@@ -319,6 +320,7 @@ sources:
       audiences: [learner, practitioner, educator]
     scan_status: partially-scanned
     integration_status: integrated
+    collections: [tokenization-embeddings]
     scan_history:
       - accessed_at: "2026-11-19"
         status: partially-scanned
@@ -660,6 +662,7 @@ sources:
       audiences: [learner, practitioner]
     scan_status: partially-scanned
     integration_status: integrated
+    collections: [tokenization-embeddings]
     scan_history:
       - accessed_at: "2026-10-30"
         status: partially-scanned
@@ -897,6 +900,7 @@ sources:
       audiences: [practitioner, maintainer]
     scan_status: partially-scanned
     integration_status: integrated
+    collections: [tokenization-embeddings]
     scan_history:
       - accessed_at: "2026-11-02"
         status: partially-scanned
@@ -946,6 +950,7 @@ sources:
       audiences: [learner, practitioner]
     scan_status: partially-scanned
     integration_status: integrated
+    collections: [tokenization-embeddings]
     scan_history:
       - accessed_at: "2026-10-30"
         status: partially-scanned
@@ -998,6 +1003,7 @@ sources:
       audiences: [learner, practitioner]
     scan_status: partially-scanned
     integration_status: integrated
+    collections: [tokenization-embeddings]
     scan_history:
       - accessed_at: "2026-11-19"
         status: partially-scanned
@@ -1055,6 +1061,7 @@ sources:
       audiences: [practitioner, maintainer]
     scan_status: partially-scanned
     integration_status: integrated
+    collections: [tokenization-embeddings]
     scan_history:
       - accessed_at: "2026-10-30"
         status: partially-scanned
@@ -1115,6 +1122,7 @@ sources:
       audiences: [practitioner, maintainer]
     scan_status: partially-scanned
     integration_status: integrated
+    collections: [tokenization-embeddings]
     scan_history:
       - accessed_at: "2026-10-30"
         status: partially-scanned
@@ -1154,6 +1162,7 @@ sources:
       audiences: [learner, practitioner]
     scan_status: partially-scanned
     integration_status: integrated
+    collections: [tokenization-embeddings]
     scan_history:
       - accessed_at: "2026-10-30"
         status: partially-scanned
@@ -1248,6 +1257,7 @@ sources:
       audiences: [practitioner, maintainer]
     scan_status: partially-scanned
     integration_status: integrated
+    collections: [tokenization-embeddings]
     scan_history:
       - accessed_at: "2026-10-30"
         status: partially-scanned
@@ -1344,6 +1354,7 @@ sources:
       audiences: [practitioner, maintainer]
     scan_status: partially-scanned
     integration_status: integrated
+    collections: [tokenization-embeddings]
     scan_history:
       - accessed_at: "2026-10-30"
         status: partially-scanned
@@ -1398,6 +1409,7 @@ sources:
       audiences: [practitioner, maintainer]
     scan_status: partially-scanned
     integration_status: integrated
+    collections: [tokenization-embeddings]
     scan_history:
       - accessed_at: "2026-10-30"
         status: partially-scanned
@@ -1447,6 +1459,7 @@ sources:
       audiences: [practitioner, maintainer]
     scan_status: partially-scanned
     integration_status: integrated
+    collections: [tokenization-embeddings]
     scan_history:
       - accessed_at: "2026-10-30"
         status: partially-scanned
@@ -1493,6 +1506,7 @@ sources:
       audiences: [learner, practitioner]
     scan_status: partially-scanned
     integration_status: integrated
+    collections: [tokenization-embeddings]
     scan_history:
       - accessed_at: "2026-10-30"
         status: partially-scanned
@@ -1531,6 +1545,7 @@ sources:
       audiences: [practitioner, maintainer]
     scan_status: partially-scanned
     integration_status: integrated
+    collections: [tokenization-embeddings]
     scan_history:
       - accessed_at: "2026-10-30"
         status: partially-scanned
@@ -1571,6 +1586,7 @@ sources:
       audiences: [beginner, learner]
     scan_status: partially-scanned
     integration_status: integrated
+    collections: [tokenization-embeddings]
     scan_history:
       - accessed_at: "2026-10-30"
         status: partially-scanned
@@ -1747,6 +1763,7 @@ sources:
       audiences: [beginner, learner]
     scan_status: partially-scanned
     integration_status: integrated
+    collections: [tokenization-embeddings]
     scan_history:
       - accessed_at: "2026-10-30"
         status: partially-scanned
@@ -1825,6 +1842,7 @@ sources:
       audiences: [beginner, learner]
     scan_status: partially-scanned
     integration_status: integrated
+    collections: [tokenization-embeddings]
     scan_history:
       - accessed_at: "2026-10-30"
         status: partially-scanned
@@ -1864,6 +1882,7 @@ sources:
       audiences: [beginner, learner]
     scan_status: partially-scanned
     integration_status: integrated
+    collections: [tokenization-embeddings]
     scan_history:
       - accessed_at: "2026-10-30"
         status: partially-scanned
