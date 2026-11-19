@@ -9,7 +9,7 @@
 
 This is an accessible bridge between corpus preparation, tokenization and baseline autoregressive pretraining. Its strongest teaching contribution is the transition from cleaned text to token IDs and then to a concrete next-token prediction task. It also makes an important point: a model trained to continue text fluently is not thereby guaranteed to answer factual questions reliably.
 
-**Phase A decision:** retain the source and its teaching examples as complementary material for existing tokenization and language-modelling lessons. Do not create a new concept or page based on this article alone. Phase B must compare the exact current bilingual pages and Build route before any published change.
+**Integration decision:** retain the source as complementary material, add one bounded bilingual clarification about training-token occurrences versus vocabulary size and parameter count, and avoid duplicating existing lessons. No new concept or page is warranted.
 
 ## Inspection scope and limits
 
@@ -112,15 +112,15 @@ The bilingual pages and their practice resources were inspected directly in the 
 
 | Destination | Existing coverage | Decision |
 |---|---|---|
-| \`site/{en,fr}/text-data.qmd\` | Text → tokens → IDs → embeddings; vocabulary size \(V\) versus embedding dimension \(d\); practical consequences of token count | No new pipeline explanation |
-| \`site/{en,fr}/tokenization-strategies.qmd\` | Granularity, normalization/pre-tokenization, BPE, WordPiece, unigram, worked BPE merges, tokenizer training versus inference encoding | No duplicate algorithm overview |
-| \`site/{en,fr}/language-modeling-math.qmd\` | Autoregressive factorization, \(P_\\theta(x_t\\mid x_{<t})\), sequence likelihood, NLL, soft-target cross-entropy and KL | No duplicate mathematical lesson |
-| \`site/{en,fr}/exercises-text-data.qmd\` | Real GPT-2 tokenizer trace, BPE merge exercise, shifted windows and target alignment, leakage diagnosis | No duplicate tokenization or window exercise |
-| \`site/{en,fr}/build-path.qmd\` | Generation/scoring/training distinction; G2 data branch; partial loss functions; no complete optimizer/training loop or automated validation runner | Keep implementation-status caveat explicit |
+| `site/{en,fr}/text-data.qmd` | Text → tokens → IDs → embeddings; vocabulary size \(V\) versus embedding dimension \(d\); practical consequences of token count | No new pipeline explanation |
+| `site/{en,fr}/tokenization-strategies.qmd` | Granularity, normalization/pre-tokenization, BPE, WordPiece, unigram, worked BPE merges, tokenizer training versus inference encoding | No duplicate algorithm overview |
+| `site/{en,fr}/language-modeling-math.qmd` | Autoregressive factorization, \(P_\theta(x_t\mid x_{<t})\), sequence likelihood, NLL, soft-target cross-entropy and KL | No duplicate mathematical lesson |
+| `site/{en,fr}/exercises-text-data.qmd` | Real GPT-2 tokenizer trace, BPE merge exercise, shifted windows and target alignment, leakage diagnosis | No duplicate tokenization or window exercise |
+| `site/{en,fr}/build-path.qmd` | Generation/scoring/training distinction; G2 data branch; partial loss functions; no complete optimizer/training loop or automated validation runner | Keep implementation-status caveat explicit |
 
 ### Accepted integration
 
-Added a short bilingual callout to \`site/en/corpus-preparation.qmd\` and \`site/fr/corpus-preparation.qmd\`, immediately after the four corpus/tokenizer operations are distinguished. It defines separately:
+Added a short bilingual callout to `site/en/corpus-preparation.qmd` and `site/fr/corpus-preparation.qmd`, immediately after the four corpus/tokenizer operations are distinguished. It defines separately:
 
 1. training-token occurrences;
 2. tokenizer vocabulary size;
