@@ -229,14 +229,16 @@ def render_markdown(inventory: dict[str, Any]) -> str:
             "## Metadata diagnostics",
             "",
             f"- Pages without a non-empty topic: **{len(inventory['missing_topic_pages'])}**",
-            f"- Pages with unexpected language values: **{len(inventory['unexpected_languages'])}**",
+            (
             "",
-            "Pages without a topic are excluded from topic-parity aggregation and listed in the JSON report.",
+            "Pages without a topic are excluded from topic-parity aggregation "
+            "and listed in the JSON report.",
             "",
             "## Interpretation",
             "",
             "- Topic parity compares page counts only; it does not establish semantic equivalence.",
-            "- Multiple pages within a topic/language are counted explicitly; this is not a duplicate-page judgment.",
+            "- Multiple pages within a topic/language are counted explicitly; "
+            "this is not a duplicate-page judgment.",
             "- Understand preserves every core/optional stage membership,",
             "  including multiple memberships.",
             "- Understand pages outside the guided route are explicitly marked unrouted.",
