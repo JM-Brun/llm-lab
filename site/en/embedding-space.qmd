@@ -20,10 +20,10 @@ hierarchy:
   children: ["en/positional-encoding", "en/contextualized-representations", "en/cosine-similarity", "en/embedding-linearity"]
 related: ["en/embedding-space-exercises", "en/gpt-model-walkthrough"]
 revision_support:
-  status: partial
+  status: integrated_sufficient
   evidence:
-    - anchor: lookup
-      note: "The lesson explains lookup, the V×d matrix, learned vectors and the transition to contextualized states; the Practice companion provides three answered questions and a guided exploration. A concise integrated recap tying together row address, static vector and distinction from contextualized state is still missing."
+    - anchor: revision-summary
+      note: "The recap brings together the lesson's three distinctions: an ID is a row address, the row stores a static vector of dimension d, and Transformer layers then produce position- and context-dependent states. Three answered questions and guided exploration reinforce the recap."
 tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:en", "status:published"]
 -->
 
@@ -31,6 +31,10 @@ tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space",
 
 ::: {.chapter-lead}
 After tokenization, the model receives a sequence of **integer token IDs**. Each ID retrieves a learned vector from a parameter table: the **embedding matrix**. This lesson explains that lookup, then carefully distinguishes the row address, the vector stored in that row, and the representations that the Transformer builds afterwards.
+:::
+
+::: {.callout-tip title="The one-minute mental model" #revision-summary}
+A **token ID is a row address**, not a vector or a coordinate in space. The embedding matrix $E\in\mathbb{R}^{V\times d}$ maps each ID to an initial vector of dimension $d$. Two occurrences of the same ID share this lookup vector; Transformer layers then produce different contextualized states according to position and context.
 :::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
