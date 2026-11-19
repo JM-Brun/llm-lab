@@ -23,7 +23,7 @@ The editorial observations below come from source reviews recorded in issue [#11
 | Artifact | Existing metadata | Existing learner-facing function | Current disposition |
 |---|---|---|---|
 | `site/{fr,en}/revision-information-theory.qmd` | `destination:practice`, `type:exercise-collection`; language-specific pages | Dedicated revision sheet: core formulas, cross-entropy/KL identity, worked numerical example, conceptual traps, attention/KL vs mutual information, predictive V-information, self-check and answers | Retain as the canonical learner-facing information-theory revision sheet. The pilot now links each language version to its matching entropy and cross-entropy lessons via `revision_of`; the reverse lesson-to-aids view is derived. |
-| `site/{fr,en}/compression-revision.qmd` | `destination:deepen`, `type:concept-bridge`; language-specific pages | Mental map and compact conceptual bridge between predictive data compression, model compression and runtime memory; equations, coding constraints, entropy/surprisal distinctions and references | Retain. Treat as an existing page-based synthesis candidate; assess its exact source lessons and role before adding typed links. Do not create another generic compression sheet. |
+| `site/{fr,en}/compression-revision.qmd` | `destination:deepen`, `type:concept-bridge`; language-specific pages | Mental map and compact conceptual bridge between predictive data compression, model compression and runtime memory; equations, coding constraints, entropy/surprisal distinctions and references | Retain as a Deepen concept-bridge, with candidate role `synthesis`. The source audit confirms substantive coverage of entropy, cross-entropy and likelihood; typed links are deferred until the first page-aid pilot is reviewed because this is a broad cross-topic bridge, not a narrow revision sheet. Do not create another generic compression sheet. |
 
 The two pairs are not interchangeable: the information-theory page is explicitly a Practice revision sheet, while compression is a Deepen concept bridge. Keep their existing editorial types and destinations; the future relation must not rewrite them into a new page type merely to make the inventory work.
 
@@ -70,7 +70,7 @@ The following records summarize existing source-level audits. “Reuse” means 
 | `training-loop` | End-to-end workflow separating forward pass, loss, backpropagation, optimizer update and validation; examples and exercises | Reuse; keep implementation claims aligned with actual code |
 | `transformer` | Canonical computation walkthrough with self-check, exercises and code/test references | Reuse; no separate synthesis page |
 | `transformer-architectures` | One-minute mental model, six-dimension comparison, original bilingual diagram, architecture/objective/task distinction, limits and four-question Practice companion | Reuse; established positive exemplar |
-| `vraisemblance` | Likelihood chain linked to generation/probabilities, numerical worked examples and Practice transfer questions | Reuse existing lesson and exercises; no separate sheet |
+| `vraisemblance` | Likelihood chain linked to generation/probabilities, numerical worked examples and Practice transfer questions | Reuse the lesson and exercises; the compression bridge adds a coding-length perspective but does not replace the likelihood-specific questions. Its typed source link is a follow-up after the first pilot review. |
 
 ### Understand limits
 
@@ -101,7 +101,7 @@ Build's six pages without implementation-resource associations are exactly the t
 3. Do not add a non-page revision resource kind to `data/resources.yml` yet; current records are implementation resources only.
 4. Continue individual editorial assessment where evidence is provisional, especially cross-entropy's shift/mask contract and entropy caveats. Build corpus-preparation and training-examples already have integrated revision callouts and Practice companions.
 5. The initial page-aid pilot now links `revision-information-theory` to the FR/EN entropy and cross-entropy lessons; the generated coverage inventory reads the ProjectIndex relation and assessment projection. The metadata validator still needs a dedicated follow-up to validate these fields at page-map ingestion.
-6. Review the exact source mapping and role of `compression-revision` before adding typed links; do not infer targets from its `related` list.
+6. The source audit confirms `compression-revision` as a cross-topic `synthesis` candidate for entropy, cross-entropy and likelihood. Add its typed links after the first pilot is reviewed; do not infer targets from `related` alone.
 7. Keep rendered UX/accessibility validation as a separate gate before closing #1109.
 
 ## 6. Audit provenance
@@ -114,5 +114,7 @@ Relevant issue #1109 records:
 - Embeddings, position and contextualization audit: [comment 7019976945](https://github.com/JM-Brun/llm-lab/issues/1109#issuecomment-7019976945).
 - Post-training and context-engineering audit: [comment 7020045751](https://github.com/JM-Brun/llm-lab/issues/1109#issuecomment-7020045751).
 - LLM-limits audit: [comment 7020086727](https://github.com/JM-Brun/llm-lab/issues/1109#issuecomment-7020086727).
+- Compression-revision source mapping: [comment 7021256593](https://github.com/JM-Brun/llm-lab/issues/1109#issuecomment-7021256593).
+- Build corpus-preparation and training-examples audit: [comment 7021273551](https://github.com/JM-Brun/llm-lab/issues/1109#issuecomment-7021273551).
 
 This inventory is a maintained snapshot, not a second source of truth. Refresh it from the generated inventory artifact and the page-by-page audit records after page moves, additions, translations or content changes.
