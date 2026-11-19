@@ -19,6 +19,11 @@ hierarchy:
   parents: ["fr/loss"]
   children: ["fr/post-training"]
 related: ["fr/scaling-laws", "fr/build-path", "fr/evaluation-experimentale"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "Le rappel distingue passe avant, loss, gradient, mise à jour effective et mesure indépendante sur validation ; la leçon contient un auto-contrôle corrigé sur la boucle et le surapprentissage."
 tags: ["type:concept-lesson", "destination:understand", "topic:training-loop", "level:core", "language:fr", "status:published"]
 -->
 
@@ -28,7 +33,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:training-loop", "
 L'entraînement répète un même cycle : prédire, mesurer la loss, calculer le gradient, mettre à jour les paramètres. Son objectif est d'améliorer l'ajustement aux données d'entraînement ; cela ne garantit pas une baisse à chaque pas ni une meilleure performance sur un texte jamais vu, qui se mesure séparément sur des données réservées.
 :::
 
-::: {.callout-tip title="L'idée à retenir en une minute"}
+::: {.callout-tip title="L'idée à retenir en une minute" #revision-summary}
 Un **pas d'entraînement** prend un batch de préfixes observés et de cibles, exécute la passe avant, calcule la [loss](loss.qmd), obtient le [gradient](gradients.qmd), puis laisse un **optimiseur** transformer ce gradient en mise à jour des paramètres. L'**entraînement** est ce pas répété sur de nombreux batchs. Seule la mise à jour modifie les paramètres.
 
 Une seconde mesure accompagne l'entraînement : la même loss calculée sur des données de **validation** qui ne produisent jamais de mise à jour. La loss d'entraînement dit dans quelle mesure le modèle s'ajuste à ce sur quoi il est ajusté ; la loss de validation estime si cet ajustement se transfère.
