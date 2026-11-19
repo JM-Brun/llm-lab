@@ -84,8 +84,8 @@ The following records summarize existing source-level audits. “Reuse” means 
 | Build pair | Existing revision support observed | Disposition |
 |---|---|---|
 | `build-path` | Construction order, milestones, verification evidence and distinction between generate, score and train | Keep as route/orientation; no formula sheet |
-| `corpus-preparation` | Five aligned decision areas: data sources, deduplication/split leakage, tokenizer fitting, annotation quality and hand-off; exercises, but no dedicated self-check block | Assess current exercises against a reusable corpus-release checklist before deciding whether to add one |
-| `training-examples` | Shifted inputs/targets, teacher forcing, windows/stride, document boundaries/packing, padding/loss masks, shapes, debugging checklist and worked exercises | Strong candidate for a concise implementation contract/checklist; improve the existing page/companion before creating a separate artifact |
+| `corpus-preparation` | Five-point revision callout (provenance, transformations, splits, tokenizer isolation, hand-off) plus five Practice questions; deeper treatment of annotation, streaming and dataset cards | Reuse the integrated sheet and Practice companion; no extra checklist |
+| `training-examples` | Five-point revision callout, eight-point debugging checklist, scoped NumPy implementation/tests and four Practice questions | Reuse; no separate implementation-contract sheet |
 | `reference-gpt-config` | Bilingual code walkthrough, configuration fields, validation/test evidence, exercises and implementation-resource link | Reuse walkthrough/tests; no generic sheet |
 | `reference-gpt-ops` | Bilingual numerical operations, tensor shapes/conventions, tests and exercises | Reuse; compare the FR/EN recap presentation, but do not infer a content defect from a marker heuristic |
 | `reference-transformer-block` | Bilingual block recipe, Q/K/V/O, residual paths, shapes, tests and exercises | Reuse implementation evidence; no separate sheet |
@@ -99,7 +99,7 @@ Build's six pages without implementation-resource associations are exactly the t
 1. Keep the two published page-aid pairs as the current explicit revision-aid candidates; do not create more generic sheets.
 2. Keep the internal Markdown sheet outside the learner-facing resource graph until its publication and maintenance role is explicitly changed.
 3. Do not add a non-page revision resource kind to `data/resources.yml` yet; current records are implementation resources only.
-4. Continue individual editorial assessment where the evidence is provisional, especially cross-entropy's shift/mask contract, entropy caveats, and Build corpus-preparation/training-examples.
+4. Continue individual editorial assessment where evidence is provisional, especially cross-entropy's shift/mask contract and entropy caveats. Build corpus-preparation and training-examples already have integrated revision callouts and Practice companions.
 5. The initial page-aid pilot now links `revision-information-theory` to the FR/EN entropy and cross-entropy lessons; the generated coverage inventory reads the ProjectIndex relation and assessment projection. The metadata validator still needs a dedicated follow-up to validate these fields at page-map ingestion.
 6. Review the exact source mapping and role of `compression-revision` before adding typed links; do not infer targets from its `related` list.
 7. Keep rendered UX/accessibility validation as a separate gate before closing #1109.
