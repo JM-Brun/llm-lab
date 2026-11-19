@@ -651,6 +651,15 @@ sources:
         limitations:
           - "The exact figure's asset-level reuse rights remain unresolved in issue #156."
           - "Article review is not a universal tokenizer ranking."
+      - accessed_at: "2026-11-19"
+        status: partially-scanned
+        inspected_scope:
+          - "Full public article: tokenizer reuse, training-data representativeness, pre-tokenization regex examples, numeric segmentation and tokenizer-free trade-offs"
+          - "Linked primary research and current bilingual tokenizer-design/evaluation pages"
+        limitations:
+          - "This is a practitioner community article, not a controlled comparative study; its recommendations and causal hypotheses are not treated as established results."
+          - "Claims about numeric reasoning, model performance and runtime support are time-sensitive or explicitly speculative and require independent primary evidence."
+          - "The embedded fertility illustration remains subject to asset-level rights review in issue #156; the image was not copied or modified."
     related:
       pages: [en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation, en/text-data, fr/text-data]
       concepts: [token]
