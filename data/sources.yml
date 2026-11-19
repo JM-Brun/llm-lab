@@ -950,7 +950,6 @@ sources:
           - "Pinned revision 79dc2c0533685b893616c78160b5d9e40876e724, tiktoken/_educational.py: UTF-8 bytes, regex pre-splitting, merge ranks, encode/decode and training walkthrough."
         limitations:
           - "Static source inspection only; the educational module was not executed and is not the optimized production path."
-    scan_history:
       - accessed_at: "2026-11-19"
         status: partially-scanned
         inspected_scope:
@@ -1341,7 +1340,6 @@ sources:
         limitations:
           - "Rust CoreBPE internals, all encodings and performance were not audited or executed."
           - "No benchmark or compatibility test was run."
-    scan_history:
       - accessed_at: "2026-11-19"
         status: partially-scanned
         inspected_scope:
