@@ -220,9 +220,9 @@
 
 L'instantané initial ci-dessus reste conservé comme photographie de départ. Les décisions ultérieures et les recomptages sont consignés séparément.
 
-- **Dates :** PR [#1334](https://github.com/JM-Brun/llm-lab/pull/1334) fusionnée ; quatre dates ont été renseignées avec preuve primaire et événement d'historique. Le registre courant contient maintenant **40 dates de publication inconnues** (recomptage direct de 139 entrées, commit de registre observé pendant la réconciliation).
-- **Licence :** la vérification MIT du module éducatif tiktoken a été intégrée dans [#1339](https://github.com/JM-Brun/llm-lab/pull/1339), fusionnée. Le recomptage direct du registre courant donne **125 statuts de licence unknown/incomplete** sur 139 entrées. Le nombre initial de 127 est donc dépassé ; cette baisse ne doit pas être interprétée comme une validation globale des droits.
-- **PR intermédiaire :** [#1337](https://github.com/JM-Brun/llm-lab/pull/1337) a été fermée comme doublon/supersédée par #1339 ; elle n'est pas une étape encore en attente.
+- **Dates :** PR [#1334](https://github.com/JM-Brun/llm-lab/pull/1334) fusionnée ; quatre dates ont été renseignées avec preuve primaire et événement d'historique. Le registre courant contient maintenant **40 dates de publication inconnues** (recomptage direct de 139 entrées).
+- **Licence :** la vérification MIT du module éducatif tiktoken a été intégrée dans [#1339](https://github.com/JM-Brun/llm-lab/pull/1339), fusionnée. Le recomptage direct du registre courant donne **125 statuts de licence unknown/incomplete** sur 139 entrées. Cette baisse ne doit pas être interprétée comme une validation globale des droits.
+- **PR intermédiaire :** [#1337](https://github.com/JM-Brun/llm-lab/pull/1337) a été fermée comme doublon/supersédée par #1339.
 - **Périmètre :** la vérification MIT porte sur le logiciel du dépôt tiktoken à la révision épinglée et le module éducatif inspecté. Elle ne couvre pas automatiquement les dépendances, modèles, ressources tierces, figures ou données. Les droits sur les données restent inconnus ; aucun contenu n'a été copié dans LLM Lab.
 - **Limite du recomptage :** les statuts unknown/incomplete sont un indicateur administratif de métadonnées, pas une mesure de couverture scientifique ni une autorisation de réutilisation. Les décisions source par source restent nécessaires.
 
