@@ -434,6 +434,13 @@ jobs:
                   f"{value['invalid_entries']} invalid entries)"
               )
           print()
+          print("**Pedagogical-model route references**")
+          for key, value in report["pedagogical_model_routes"].items():
+              print(
+                  f"- `{key}`: {value['references']} references "
+                  f"({value['unique_reference_count']} unique values)"
+              )
+          print()
           print("**Unknown concept references**")
           for key, values in report["unknown_concept_references"].items():
               print(f"- `{key}`: {len(values)}")
