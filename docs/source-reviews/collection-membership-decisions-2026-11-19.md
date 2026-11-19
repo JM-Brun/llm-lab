@@ -72,3 +72,28 @@ Licence and figure/code/data reuse rights remain `unknown`; no permission is inf
 ## Change
 
 Add `collections: [tokenization-embeddings]` to this source record only. Preserve all existing scan, integration, licence, reuse and provenance fields.
+
+---
+
+# Source-to-collection decision: Li et al. (2020), BERT-flow
+
+**Review date:** 2026-11-19  
+**Source ID:** `li-bert-flow-sentence-embeddings-2020`  
+**Collection:** `tokenization-embeddings`  
+**Decision:** assign explicit membership to the existing canonical source record.
+
+## Evidence and rationale
+
+The canonical source record already identifies the published EMNLP 2020 paper, links it to the bilingual embedding-space and cosine-similarity lessons, and points to the tokenization/embeddings collection dossier and migration map. The existing extraction `data/extractions/li-bert-flow-sentence-embeddings-2020.yml` contains four source-scoped items: sentence-embedding construction from pooled BERT token states; anisotropic sentence-space geometry; the BERT-flow normalizing-flow transformation; and the target-distribution adaptation caveat. The collection dossier explicitly includes Li et al. in its sentence-embeddings-and-geometry family.
+
+This is a clear fit for the collection's embedding-geometry scope. Membership is based on the existing primary-source audit, extraction and explicit dossier mapping, not tags or title matching alone.
+
+## Evidence boundary retained
+
+The source remains `partially-scanned` and `integrated`. The extraction covers the published paper's sentence-level BERT setup and reported STS experiments; the cited implementation and benchmark data were not independently executed. The target-flow setting uses unlabeled sentences from train, validation and test portions, so it must remain described as transductive-style rather than strictly inductive; no claim of test-label use is made. Results are not generalized to all token embeddings, sentence encoders or modern retrieval models.
+
+Licence status remains `unknown`; figure, code and data reuse rights remain unresolved. The existing source record and extraction are reused. No duplicate source, extraction, audit, page, concept, route or learner-content change is created.
+
+## Change
+
+Add `collections: [tokenization-embeddings]` to the existing canonical source record only. Preserve all existing provenance, scan, integration, licence and reuse fields.
