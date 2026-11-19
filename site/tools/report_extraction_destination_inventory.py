@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """Inventory historical extraction fields and destination references.
 
-This report is observational: it separates canonical source links, item
-classifications, candidate destinations, legacy destination fields, and
-source-local teaching routes. It never promotes a proposal to an integration.
+This read-only report separates source links, item classifications, candidate
+destinations, legacy destination fields, and source-local teaching routes.
 """
 
 from __future__ import annotations
@@ -27,25 +26,41 @@ def _load(path: Path) -> dict[str, Any]:
 
 
 def _strings(value: Any) -> tuple[list[str], int]:
-    """Return non-empty strings and the number of non-string/empty entries."""
-    if value is None:
-        return [], 0
     if not isinstance(value, list):
-        return [], 1
+        return [], int(value is not None)
     refs = [entry for entry in value if isinstance(entry, str) and entry.strip()]
     return refs, len(value) - len(refs)
 
 
 def _bucket() -> dict[str, Any]:
-    return {"records_with_field": 0, "references": 0, "unique_references": [], "invalid_entries": 0}
+    return {
+        "records_with_field": 0,
+        "references": 0,
+        "invalid_entries": 0,
+        "_values": set(),
+    }
 
 
-def _add(bucket: dict[str, Any], value: Any) -> None:
+def _add(bucket: dict[str, Any], value: Any) -> list[str]:
     refs, invalid = _strings(value)
     bucket["records_with_field"] += 1
     bucket["references"] += len(refs)
     bucket["invalid_entries"] += invalid
     bucket["_values"].update(refs)
+    return refs
+
+
+def _finalize(buckets: dict[str, dict[str, Any]]) -> dict[str, Any]:
+    return {
+        key: {
+            "records_with_field": bucket["records_with_field"],
+            "references": bucket["references"],
+            "unique_references": sorted(bucket["_values"]),
+            "unique_reference_count": len(bucket["_values"]),
+            "invalid_entries": bucket["invalid_entries"],
+        }
+        for key, bucket in buckets.items()
+    }
 
 
 def build_report(root: Path) -> dict[str, Any]:
@@ -53,43 +68,37 @@ def build_report(root: Path) -> dict[str, Any]:
     sources_doc = _load(data_dir / "sources.yml")
     concepts_doc = _load(data_dir / "concepts.yml")
     sources = [item for item in sources_doc.get("sources", []) if isinstance(item, dict)]
-    known_sources = {item.get("id") for item in sources if isinstance(item.get("id"), str)}
+    known_sources = {item["id"] for item in sources if isinstance(item.get("id"), str)}
     known_concepts = {
-        item.get("id")
+        item["id"]
         for item in concepts_doc.get("concepts", [])
         if isinstance(item, dict) and isinstance(item.get("id"), str)
     }
 
-    fields: Counter[str] = Counter()
-    item_key_presence: Counter[str] = Counter()
     source_destinations = {
-        "related.pages": _bucket(),
-        "related.concepts": _bucket(),
-        "classification.concept_ids": _bucket(),
-        "related.routes": _bucket(),
+        key: _bucket()
+        for key in ("related.pages", "related.concepts", "related.routes", "classification.concept_ids")
     }
     item_destinations = {
-        "candidate_destinations.pages": _bucket(),
-        "candidate_destinations.concepts": _bucket(),
-        "candidate_destinations.routes": _bucket(),
-        "candidate_destinations.resources": _bucket(),
-        "classification.concept_ids": _bucket(),
-        "mapped_concepts": _bucket(),
-        "target_resources": _bucket(),
-        "target_pages": _bucket(),
-        "target_concepts": _bucket(),
-        "target_routes": _bucket(),
+        key: _bucket()
+        for key in (
+            "candidate_destinations.pages",
+            "candidate_destinations.concepts",
+            "candidate_destinations.routes",
+            "candidate_destinations.resources",
+            "classification.concept_ids",
+            "mapped_concepts",
+            "target_resources",
+            "target_pages",
+            "target_concepts",
+            "target_routes",
+        )
     }
-    candidate_shape_counts: Counter[str] = Counter()
-    local_teaching_routes = 0
-    extraction_files = 0
-    extraction_items = 0
-    malformed_records: list[str] = []
-    source_id_mismatches: list[str] = []
-    unknown_source_ids: set[str] = set()
-    extracted_source_ids: set[str] = set()
-    unknown_concept_refs: dict[str, set[str]] = {
-        key: set() for key in (
+    item_key_presence: Counter[str] = Counter()
+    candidate_shapes: Counter[str] = Counter()
+    unknown_concepts: dict[str, set[str]] = {
+        key: set()
+        for key in (
             "source.related.concepts",
             "source.classification.concept_ids",
             "item.candidate_destinations.concepts",
@@ -97,136 +106,77 @@ def build_report(root: Path) -> dict[str, Any]:
             "item.mapped_concepts",
         )
     }
+    extraction_files = extraction_items = candidate_items = local_route_steps = 0
+    malformed: list[str] = []
+    filename_mismatches: list[str] = []
+    unknown_sources: set[str] = set()
 
     for source in sources:
         related = source.get("related")
         if isinstance(related, dict):
             for field in ("pages", "concepts", "routes"):
-                key = f"related.{field}"
                 if field in related:
-                    _add(source_destinations[key], related[field])
-                    refs, _ = _strings(related[field])
+                    refs = _add(source_destinations[f"related.{field}"], related[field])
                     if field == "concepts":
-                        unknown_concept_refs["source.related.concepts"].update(
-                            set(refs) - known_concepts
-                        )
+                        unknown_concepts["source.related.concepts"].update(set(refs) - known_concepts)
         classification = source.get("classification")
         if isinstance(classification, dict) and "concept_ids" in classification:
-            value = classification["concept_ids"]
-            _add(source_destinations["classification.concept_ids"], value)
-            refs, _ = _strings(value)
-            unknown_concept_refs["source.classification.concept_ids"].update(
-                set(refs) - known_concepts
-            )
+            refs = _add(source_destinations["classification.concept_ids"], classification["concept_ids"])
+            unknown_concepts["source.classification.concept_ids"].update(set(refs) - known_concepts)
 
     for path in sorted((data_dir / "extractions").glob("*.yml")):
         extraction_files += 1
+        relative_path = path.relative_to(root).as_posix()
         record = _load(path)
         source_id = record.get("source_id")
         if not isinstance(source_id, str) or not source_id:
-            malformed_records.append(path.relative_to(root).as_posix())
+            malformed.append(relative_path + ":missing-source-id")
         else:
-            extracted_source_ids.add(source_id)
             if source_id not in known_sources:
-                unknown_source_ids.add(source_id)
+                unknown_sources.add(source_id)
             if path.stem != source_id:
-                source_id_mismatches.append(path.relative_to(root).as_posix())
+                filename_mismatches.append(relative_path)
+
+        model = record.get("pedagogical_model")
+        if isinstance(model, dict) and isinstance(model.get("teaching_route"), list):
+            local_route_steps += len(model["teaching_route"])
 
         items = record.get("items", [])
         if not isinstance(items, list):
-            malformed_records.append(path.relative_to(root).as_posix() + ":items-not-list")
+            malformed.append(relative_path + ":items-not-list")
             continue
         for item in items:
             if not isinstance(item, dict):
-                malformed_records.append(path.relative_to(root).as_posix() + ":non-mapping-item")
+                malformed.append(relative_path + ":non-mapping-item")
                 continue
             extraction_items += 1
-            for key in item:
-                item_key_presence[key] += 1
-            for key in item_destinations:
-                if key in item:
-                    if key == "candidate_destinations":
-                        continue
-                    _add(item_destinations[key], item[key])
-                    refs, _ = _strings(item[key])
-                    if key == "classification.concept_ids":
-                        unknown_concept_refs["item.classification.concept_ids"].update(
-                            set(refs) - known_concepts
-                        )
-                    elif key == "mapped_concepts":
-                        unknown_concept_refs["item.mapped_concepts"].update(
-                            set(refs) - known_concepts
-                        )
+            item_key_presence.update(item.keys())
+
+            classification = item.get("classification")
+            if isinstance(classification, dict) and "concept_ids" in classification:
+                refs = _add(item_destinations["classification.concept_ids"], classification["concept_ids"])
+                unknown_concepts["item.classification.concept_ids"].update(set(refs) - known_concepts)
+
+            for field in ("mapped_concepts", "target_resources", "target_pages", "target_concepts", "target_routes"):
+                if field in item:
+                    refs = _add(item_destinations[field], item[field])
+                    if field == "mapped_concepts":
+                        unknown_concepts["item.mapped_concepts"].update(set(refs) - known_concepts)
+
             candidate = item.get("candidate_destinations")
             if "candidate_destinations" in item:
+                candidate_items += 1
                 if not isinstance(candidate, dict):
-                    candidate_shape_counts["non-mapping"] += 1
+                    candidate_shapes["non-mapping"] += 1
                 else:
-                    candidate_shape_counts["mapping"] += 1
+                    candidate_shapes["mapping"] += 1
                     for field in ("pages", "concepts", "routes", "resources"):
                         if field in candidate:
-                            key = f"candidate_destinations.{field}"
-                            _add(item_destinations[key], candidate[field])
-                            refs, _ = _strings(candidate[field])
+                            refs = _add(item_destinations[f"candidate_destinations.{field}"], candidate[field])
                             if field == "concepts":
-                                unknown_concept_refs[
-                                    "item.candidate_destinations.concepts"
-                                ].update(set(refs) - known_concepts)
-            model = record.get("pedagogical_model")
-            if isinstance(model, dict):
-                route = model.get("teaching_route")
-                if isinstance(route, list):
-                    local_teaching_routes += len(route)
-
-    def finalize(buckets: dict[str, dict[str, Any]]) -> dict[str, Any]:
-        result = {}
-        for key, bucket in buckets.items():
-            result[key] = {
-                "records_with_field": bucket["records_with_field"],
-                "references": bucket["references"],
-                "unique_references": sorted(bucket["_values"]),
-                "unique_reference_count": len(bucket["_values"]),
-                "invalid_entries": bucket["invalid_entries"],
-            }
-        return result
-
-    for bucket in (*source_destinations.values(), *item_destinations.values()):
-        bucket["_values"] = set()
-
-    # The aggregation above uses a set for deterministic unique-reference output.
-    # Rebuild it in a second pass because buckets are initialized after loading.
-    # (The first pass is intentionally kept free of assumptions about field shapes.)
-    # This second pass also guarantees that malformed legacy values stay visible.
-    for source in sources:
-        related = source.get("related")
-        if isinstance(related, dict):
-            for field in ("pages", "concepts", "routes"):
-                if field in related:
-                    refs, _ = _strings(related[field])
-                    source_destinations[f"related.{field}"]["_values"].update(refs)
-        classification = source.get("classification")
-        if isinstance(classification, dict) and "concept_ids" in classification:
-            refs, _ = _strings(classification["concept_ids"])
-            source_destinations["classification.concept_ids"]["_values"].update(refs)
-
-    for path in sorted((data_dir / "extractions").glob("*.yml")):
-        record = _load(path)
-        items = record.get("items", [])
-        if not isinstance(items, list):
-            continue
-        for item in items:
-            if not isinstance(item, dict):
-                continue
-            for key in item_destinations:
-                if key in item and key != "candidate_destinations":
-                    refs, _ = _strings(item[key])
-                    item_destinations[key]["_values"].update(refs)
-            candidate = item.get("candidate_destinations")
-            if isinstance(candidate, dict):
-                for field in ("pages", "concepts", "routes", "resources"):
-                    if field in candidate:
-                        refs, _ = _strings(candidate[field])
-                        item_destinations[f"candidate_destinations.{field}"]["_values"].update(refs)
+                                unknown_concepts["item.candidate_destinations.concepts"].update(
+                                    set(refs) - known_concepts
+                                )
 
     return {
         "schema_version": 1,
@@ -234,31 +184,29 @@ def build_report(root: Path) -> dict[str, Any]:
             "sources_file": "data/sources.yml",
             "concepts_file": "data/concepts.yml",
             "extraction_directory": "data/extractions/",
-            "matching_rule": "extraction.source_id -> sources[].id; filename equality reported separately",
+            "matching_rule": "extraction.source_id -> sources[].id; filename equality is a separate diagnostic",
         },
         "counts": {
             "sources": len(sources),
             "extraction_files": extraction_files,
             "extraction_items": extraction_items,
-            "items_with_candidate_destinations": sum(
-                1 for value in item_key_presence if value == "candidate_destinations"
-            ),
-            "unknown_extraction_source_ids": len(unknown_source_ids),
-            "filename_source_id_mismatches": len(source_id_mismatches),
-            "malformed_records_or_items": len(malformed_records),
-            "local_teaching_route_steps": local_teaching_routes,
+            "items_with_candidate_destinations": candidate_items,
+            "unknown_extraction_source_ids": len(unknown_sources),
+            "filename_source_id_mismatches": len(filename_mismatches),
+            "malformed_records_or_items": len(malformed),
+            "source_local_teaching_route_steps": local_route_steps,
         },
         "item_field_presence": dict(sorted(item_key_presence.items())),
-        "candidate_destination_shapes": dict(sorted(candidate_shape_counts.items())),
-        "source_destinations": finalize(source_destinations),
-        "item_destinations": finalize(item_destinations),
+        "candidate_destination_shapes": dict(sorted(candidate_shapes.items())),
+        "source_destinations": _finalize(source_destinations),
+        "item_destinations": _finalize(item_destinations),
         "unknown_concept_references": {
-            key: sorted(values) for key, values in unknown_concept_refs.items()
+            key: sorted(values) for key, values in unknown_concepts.items()
         },
         "exceptions": {
-            "unknown_extraction_source_ids": sorted(unknown_source_ids),
-            "filename_source_id_mismatches": sorted(source_id_mismatches),
-            "malformed_records_or_items": sorted(malformed_records),
+            "unknown_extraction_source_ids": sorted(unknown_sources),
+            "filename_source_id_mismatches": sorted(filename_mismatches),
+            "malformed_records_or_items": sorted(malformed),
         },
         "interpretation": {
             "candidate_destinations": "Editorial proposals, not evidence of integration.",
@@ -287,7 +235,13 @@ def render_markdown(report: dict[str, Any]) -> str:
     for key, value in report["item_field_presence"].items():
         lines.append(f"| `{key}` | {value} |")
     for section in ("source_destinations", "item_destinations"):
-        lines.extend(["", f"## {section.replace('_', ' ').title()}", "", "| Field | Records with field | References | Unique | Invalid entries |", "|---|---:|---:|---:|---:|"])
+        lines.extend([
+            "",
+            f"## {section.replace('_', ' ').title()}",
+            "",
+            "| Field | Records with field | References | Unique | Invalid entries |",
+            "|---|---:|---:|---:|---:|",
+        ])
         for key, value in report[section].items():
             lines.append(
                 f"| `{key}` | {value['records_with_field']} | {value['references']} | "
