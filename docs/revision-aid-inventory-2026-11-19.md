@@ -3,6 +3,7 @@
 **Status:** source-level inventory and editorial triage; not a rendered UX or learner-outcome sign-off.  
 **Scope:** the 62 published Understand and Build pages in the inventory artifact produced by PR #1379, plus existing page-based and non-page revision candidates.  
 **Snapshot:** source SHA `817048ecda141fbf256e42237dc1a4f34bf44a88`; CI artifact `revision-coverage-inventory-0e98372c76a6bf1e4b00f731a9e9654ce3fb06d9`.
+**Latest assessment tranche:** the four bilingual Understand pairs causal-masking, transformer-architectures, llm-overview and generation are now recorded in the typed index; see the audit trail in issue [#1109](https://github.com/JM-Brun/llm-lab/issues/1109).
 
 ## 1. Inventory baseline
 
