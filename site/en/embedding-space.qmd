@@ -19,6 +19,11 @@ hierarchy:
   parents: ["en/text-data"]
   children: ["en/positional-encoding", "en/contextualized-representations", "en/cosine-similarity", "en/embedding-linearity"]
 related: ["en/embedding-space-exercises", "en/gpt-model-walkthrough"]
+revision_support:
+  status: partial
+  evidence:
+    - anchor: lookup
+      note: "The lesson explains lookup, the V×d matrix, learned vectors and the transition to contextualized states; the Practice companion provides three answered questions and a guided exploration. A concise integrated recap tying together row address, static vector and distinction from contextualized state is still missing."
 tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:en", "status:published"]
 -->
 
@@ -47,7 +52,7 @@ For a controlled, single-speaker continuation used to trace next-token mechanics
 
 A tokenizer splits the prefix into tokens according to its vocabulary and rules, then assigns an integer ID to each token. A visible word is not necessarily one token: the exact segmentation depends on the tokenizer in use.
 
-## Lookup: select a row, not a coordinate
+## Lookup: select a row, not a coordinate {#lookup}
 
 The embedding matrix, denoted by $E$, is a learned table. It contains one row per vocabulary ID, and each row contains a vector of real numbers.
 
