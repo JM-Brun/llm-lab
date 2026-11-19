@@ -318,6 +318,15 @@ sources:
     scan_status: partially-scanned
     integration_status: integrated
     scan_history:
+      - accessed_at: "2026-11-19"
+        status: partially-scanned
+        inspected_scope:
+          - "Section 6.8: composable Tokenizers pipeline, WikiText-2 corpus preparation, and worked WordPiece/BPE/Unigram construction paths."
+          - "Compared the course's workshop progression with bilingual tokenization-strategies pages and the existing Tokenizers pipeline audit."
+        limitations:
+          - "Living course documentation; no immutable course revision or Tokenizers runtime version established."
+          - "No notebook, dataset, code, or tokenizer training was executed."
+          - "Publication/update dates and figure/code reuse rights remain unknown."
       - accessed_at: "2026-10-30"
         status: partially-scanned
         inspected_scope:
@@ -330,7 +339,7 @@ sources:
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies, en/text-data, fr/text-data]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md, docs/source-reviews/huggingface-course-tokenizer-pedagogical-audit-2026-11-19.md]
 
   - id: philip-gage-byte-pair-compression-1994
     title: "A New Algorithm for Data Compression"
