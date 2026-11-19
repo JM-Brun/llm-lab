@@ -85,10 +85,11 @@ def test_all_canonical_mapping_blocks_are_preserved_and_classified_by_shape() ->
     assert len(mappings) == 28
     assert all(isinstance(mapping, dict) for mapping in mappings.values())
     assert all(
-        {"proposed_concepts", "proposed_relations", "route_implications", "decision_summary"}
-        <= set(mapping)
+        {"proposed_relations", "route_implications", "decision_summary"} <= set(mapping)
         for mapping in mappings.values()
     )
+    assert sum("proposed_concepts" in mapping for mapping in mappings.values()) == 27
+    assert sum("integrated_concepts" in mapping for mapping in mappings.values()) == 1
 
     non_empty_relations = {
         source_id: mapping["proposed_relations"]
