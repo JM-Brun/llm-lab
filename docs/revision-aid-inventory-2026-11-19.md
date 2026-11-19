@@ -3,7 +3,7 @@
 **Status:** source-level inventory and editorial triage; not a rendered UX or learner-outcome sign-off.  
 **Scope:** the 62 published Understand and Build pages in the inventory artifact produced by PR #1379, plus existing page-based and non-page revision candidates.  
 **Snapshot:** source SHA `817048ecda141fbf256e42237dc1a4f34bf44a88`; CI artifact `revision-coverage-inventory-0e98372c76a6bf1e4b00f731a9e9654ce3fb06d9`.
-**Latest assessment tranche:** all six remaining bilingual Build pairs (build path, GPT configuration, numerical operations, Transformer block, GPT assembly and generation) now have concise integrated recaps and typed evidence. Together with the completed Understand audit, all 62 pages in the inventory have an explicit source-level status. See issue [#1109](https://github.com/JM-Brun/llm-lab/issues/1109).
+**Latest assessment tranche:** the four final entropy/cross-entropy pages now have targeted retrieval questions for context, temperature, calibration, next-token shift and valid-token masking. All 62 pages in the inventory are now assessed `integrated_sufficient`; the four explicit links to the dedicated information-theory sheet remain intact. See issue [#1109](https://github.com/JM-Brun/llm-lab/issues/1109).
 
 ## 1. Inventory baseline
 
@@ -13,7 +13,7 @@
 | Build | 16 | 8 | 8 | 8 |
 | **Total** | **62** | **31** | **31** | **31** |
 
-The artifact records 144 explicit concept-to-page edges in Understand, 18 in Build, and 10 implementation-resource associations, all in Build. The original snapshot reported all 62 `synthesis_status` values as `not_assessed`. The relation pilot adds four explicit page-aid links and `partial` assessments for the FR/EN entropy and cross-entropy lessons. Integrated assessments now cover 62 pages: 42 Understand pages and all 16 Build pages. Each assessment points to an explicit `revision-summary` anchor. The four partial assessments are the FR/EN entropy and cross-entropy pages; no page in the 62-page inventory remains `not_assessed`.
+The artifact records 144 explicit concept-to-page edges in Understand, 18 in Build, and 10 implementation-resource associations, all in Build. The original snapshot reported all 62 `synthesis_status` values as `not_assessed`. The relation pilot adds four explicit page-aid links. All 62 pages now have `integrated_sufficient` assessments (46 Understand and 16 Build), each with an explicit `revision-summary` anchor. No page in the 62-page inventory remains `partial` or `not_assessed`.
 
 The editorial observations below come from source reviews recorded in issue [#1109](https://github.com/JM-Brun/llm-lab/issues/1109). The artifact and those comments are the evidence base; this document does not claim that every page has received a paragraph-by-paragraph scientific re-review or rendered accessibility review.
 
@@ -52,9 +52,9 @@ The following records summarize existing source-level audits. “Reuse” means 
 | `causal-masking` | One-minute mental model, formal causal rule, triangular mask visual, distinction from padding/document/loss masks, invariance check and exercises | Reuse; `integrated_sufficient` via `revision-summary`; no second sheet or diagram |
 | `context-engineering` | Three context levels and distinctions between stored history, transmitted context and attention-accessible information; seven applied Practice questions | Reuse; `integrated_sufficient` via explicit `revision-summary`; no duplicate overview |
 | `contextualized-representations` | One-minute recap, pipeline, same-ID vs context-dependent state distinction, attention-head caveats; three in-page retrieval questions and advanced SAE investigation | Reuse; `integrated_sufficient` via `revision-summary`; no separate sheet |
-| `cross-entropy` | Per-token objective, target distribution, worked example, sequence alignment, masking/reduction and edge cases; exercises and self-check | Reuse the linked information-theory sheet for conceptual recall; the source lesson is explicitly assessed `partial` because shift/mask/valid-token denominator still need targeted retrieval coverage |
+| `cross-entropy` | One-minute recap, target distribution and one-hot NLL; self-check now explicitly tests logits[t] → target[t+1], causal-mask/loss-mask separation and valid-token denominator | `integrated_sufficient` via `revision-summary`; retain the linked information-theory sheet as a companion, not a substitute |
 | `embedding-space` | One-minute recap ties together row address, static vector in the V×d matrix and later contextualized state; three answered Practice questions and guided Atlas exploration | `integrated_sufficient` via `revision-summary`; no duplicate sheet |
-| `entropy` | One-minute model, definition, numerical example, bounds, entropy vs observed surprisal and self-check; covered by the information-theory revision sheet | Reuse the linked information-theory sheet; the source lesson is explicitly assessed `partial` because context/temperature/calibration caveats need targeted retrieval coverage |
+| `entropy` | One-minute model, numerical example, bounds and entropy vs observed surprisal; self-check now tests context-conditional distributions, temperature effects and empirical calibration | `integrated_sufficient` via `revision-summary`; retain the linked information-theory sheet as a companion |
 | `gradients` | One-minute recap distinguishes objective, local variation and backpropagation; worked derivation and three answered questions cover cross-entropy derivative, numerical checking and step size | Reuse; `integrated_sufficient` via `revision-summary`; no generic recap |
 | `in-context-learning` | Fixed-weights/changing-context distinction, zero/one/few-shot, relation to fine-tuning and RAG, experimental checklist; two answered transfer questions | `integrated_sufficient` via `revision-summary`; reuse the integrated visual and Practice material |
 | `inference-generation` | Distribution-to-selection loop, decoding policy, prefill/decode and KV-cache distinctions; Practice resources | Reuse; `integrated_sufficient` via `revision-summary`; keep generation separate from scoring and training |
@@ -78,7 +78,7 @@ The following records summarize existing source-level audits. “Reuse” means 
 - The 16-page first-tranche review was initially a structural source audit; later passes deepened selected pairs (embedding/position/contextualization, entropy/cross-entropy, post-training/context engineering and LLM limits).
 - Several visual increments have CI and Quarto validation, but no rendered desktop/mobile, keyboard, screen-reader or learner-outcome sign-off is claimed.
 - The inventory records observed support and decisions, not a numeric pedagogical-quality score.
-- The relation pilot projects four `partial` Understand assessments, four explicit aid links, and 62 `integrated_sufficient` assessments (42 Understand, 16 Build) into the generated inventory. All 62 pages now have an explicit source-level editorial status; rendered UX, accessibility and learner-outcome validation remain separate.
+- The relation pilot projects four explicit aid links and 62 `integrated_sufficient` assessments (46 Understand, 16 Build) into the generated inventory. All 62 pages now have an explicit source-level editorial status; rendered UX, accessibility and learner-outcome validation remain separate.
 
 ## 4. Build inventory — 8 bilingual topic pairs
 
@@ -100,7 +100,7 @@ The six Build pages without implementation-resource associations are still exact
 1. Keep the two published page-aid pairs as the current explicit revision-aid candidates; do not create more generic sheets.
 2. Keep the internal Markdown sheet outside the learner-facing resource graph until its publication and maintenance role is explicitly changed.
 3. Do not add a non-page revision resource kind to `data/resources.yml` yet; current records are implementation resources only.
-4. Continue the targeted review of the four partial entropy/cross-entropy assessments, especially cross-entropy's shift/mask/valid-token denominator and entropy's context/temperature/calibration caveats. All 62 pages now have explicit source-level assessments; future work should close the four partial cases and separately validate rendered UX, accessibility and learner outcomes.
+4. All 62 pages now have explicit integrated source-level assessments. Remaining work is validation of rendered UX, accessibility (including keyboard and screen-reader use) and learner outcomes; these are distinct from the editorial status recorded here.
 5. The initial page-aid pilot now links `revision-information-theory` to the FR/EN entropy and cross-entropy lessons; the generated coverage inventory reads the ProjectIndex relation and assessment projection. The metadata validator still needs a dedicated follow-up to validate these fields at page-map ingestion.
 6. The source audit confirms `compression-revision` as a cross-topic `synthesis` candidate for entropy, cross-entropy and likelihood. Add its typed links after the first pilot is reviewed; do not infer targets from `related` alone.
 7. Keep rendered UX/accessibility validation as a separate gate before closing #1109.
