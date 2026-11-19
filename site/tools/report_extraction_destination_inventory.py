@@ -129,9 +129,9 @@ def build_report(root: Path) -> dict[str, Any]:
                         unknown = set(refs) - known_concepts
                         unknown_concepts["source.related.concepts"].update(unknown)
                         for concept_id in unknown:
-                            unknown_concept_occurrences["source.related.concepts"][concept_id].append(
-                                {"source_id": source.get("id")}
-                            )
+                            unknown_concept_occurrences["source.related.concepts"][
+                                concept_id
+                            ].append({"source_id": source.get("id")})
         classification = source.get("classification")
         if isinstance(classification, dict) and "concept_ids" in classification:
             refs = _add(
