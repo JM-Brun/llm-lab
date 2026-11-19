@@ -129,6 +129,7 @@ The first matrix is concept-centred: one row per canonical concept ID. It is a s
 | build | Reviewed milestone/page/evidence association | No machine-readable milestone crosswalk | not_registered |
 | computation | Explicit concept-to-computational-node bridge | No canonical bridge established | not_registered |
 | resources | Explicit first-class resource association | resources.yml v1 + ProjectIndex | available |
+| revision_support | Per-page revision assessment and typed declarations; current not_assessed remains distinct from missing | ProjectIndex revision adapter; proposed contract is not validator-approved | human_review |
 | sources | Explicit concept IDs in source/extraction records with valid lineage | sources.yml and extraction manifests; adapter pending | not_registered |
 | practice | Explicit reviewed exercise/test/experiment mapping | No complete canonical mapping | not_registered |
 | bilingual_parity | Expected FR and EN teaching-page counterparts under an explicit parity rule | Page-map v1 + reviewed pairing policy | needs_review |
