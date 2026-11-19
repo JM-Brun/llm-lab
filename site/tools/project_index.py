@@ -1,7 +1,7 @@
 """Deterministic, read-only queries over LLM Lab's canonical project metadata.
 
 This module composes existing readers. It is an in-memory projection, not a
-new registry or source of truth. Page, concept, and route relations stay distinct.
+new registry or source of truth. Page, concept, route, resource and revision relations stay distinct.
 """
 
 from __future__ import annotations
@@ -14,6 +14,19 @@ from typing import Any
 
 from page_index import PublishedPage, load_published_pages
 from strict_yaml import load_yaml
+
+
+class ProjectIndexIntegrityError(ValueError):
+    """A canonical project relation points to a missing or invalid record."""
+
+    def __init__(self, *, source: str, record_id: str, relation: str, target: object) -> None:
+        self.source = source
+        self.record_id = record_id
+        self.relation = relation
+        self.target = target
+        super().__init__(
+            f"{source}: record {record_id!r} has invalid {relation} reference {target!r}"
+        )
 
 
 @dataclass(frozen=True, slots=True)
@@ -220,7 +233,8 @@ def _load_revision_relations(
             )
         unknown_fields = set(revision) - {"status", "resources", "reason"}
         if unknown_fields:
-            raise ValueError(f"{where}: unknown field(s) {', '.join(sorted(unknown_fields))}")
+            names = ", ".join(sorted(map(str, unknown_fields)))
+            raise ValueError(f"{where}: unknown field(s) {names}")
         status = revision.get("status")
         if not isinstance(status, str) or status not in REVISION_STATUSES:
             raise ValueError(f"{where}.status: unsupported revision status {status!r}")
@@ -316,19 +330,6 @@ def _load_revision_relations(
     )
 
 
-class ProjectIndexIntegrityError(ValueError):
-    """A canonical project relation points to a missing or invalid record."""
-
-    def __init__(self, *, source: str, record_id: str, relation: str, target: object) -> None:
-        self.source = source
-        self.record_id = record_id
-        self.relation = relation
-        self.target = target
-        super().__init__(
-            f"{source}: record {record_id!r} has invalid {relation} reference {target!r}"
-        )
-
-
 @dataclass(frozen=True, slots=True)
 class PageEdge:
     """One authored page relation, preserving its relation family and direction."""
@@ -352,7 +353,7 @@ class RouteMembership:
 
 @dataclass(slots=True)
 class ProjectIndex:
-    """In-memory indexes over published pages and canonical concept/route YAML."""
+    """In-memory projection of canonical page, concept, route and resource records."""
 
     pages_by_id: dict[str, PublishedPage]
     concepts_by_id: dict[str, dict[str, Any]]
