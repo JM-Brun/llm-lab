@@ -12,14 +12,14 @@ scan:
     coverage: null
     notes: ["FineWeb, tokenizer, model-output, Karpathy and Epoch AI images were visible only as placements/captions; image bytes not inspected."]
   code_data: {status: not-inspected, coverage: null, notes: ["No code, checkpoint or dataset was executed or audited."]}
-  comments: {status: not-inspected, coverage: null, notes: ["Discussion not inspected."]}
-  linked_resources: {status: partial, coverage: "FineWeb, Common Crawl, GPT-3 paper, TikTokenizer, BPE/WordPiece references, MIT material, Karpathy and Epoch AI links identified.", notes: ["Not all links opened."]}
+  comments: {status: partial, coverage: "One public comment exposed in the fetched page view.", notes: ["The visible comment is not a substantiated technical review; replies and any unexposed discussion remain unaudited."]}
+  linked_resources: {status: partial, coverage: "FineWeb, Common Crawl, GPT-3 paper, TikTokenizer, BPE/WordPiece references, MIT material, Karpathy and Epoch AI links identified.", notes: ["One Llama 3.1 70B Base output screenshot (Eiffel Tower example) retrieved and visually inspected; embedded FineWeb, TikTokenizer and Karpathy screenshot assets remain uninspected.", "Epoch AI article text and captions reviewed; Substack-embedded chart pixels remain uninspected, and estimates are methodology-dependent."]}
   metadata: {status: complete, coverage: "Author, title, publisher, URL and publication date (3 May 2025) visible.", notes: []}
   rights: {status: unknown, coverage: null, notes: ["No reuse licence established."]}
   unresolved_questions:
     - "Inspect embedded visual assets and rights."
     - "Verify GPT-4 token-count and parameter-count claims against dated primary evidence."
-    - "Inspect Epoch AI charts and methodology before reusing cost figures."
+    - "Epoch AI 2024 cost paper and estimation methodology reviewed; inspect the article’s embedded chart images and exact plotted data before reproducing them."
 pedagogical_model:
   reconstruction: {status: complete, basis: ["Complete visible article text retrieved directly on 2026-11-19."], inferred_elements: ["Teaching sequence bridges corpus preparation, tokenization and autoregressive pretraining."]}
   source_graph:
@@ -56,7 +56,7 @@ pedagogical_model:
     - {order: 4, section: "Encoding-decoding machines", function: synthesis, moves: ["Reassemble text, IDs, model computation and decoded output."]}
     - {order: 5, section: "Training costs", function: systems-context, moves: ["Connect scale to compute and infrastructure."]}
   pedagogical_strengths: ["Accessible bridge from cleaning to pretraining.", "Concrete next-token example.", "Explicit warning that fluency does not guarantee factuality."]
-  pedagogical_limits: ["Probability knobs risk implying independent output controls rather than shared differentiable parameters.", "The objective is next-token, not necessarily next-word prediction.", "13 trillion training tokens is incorrectly described as 13 trillion unique tokens.", "Tokenizer encoding/decoding must not be confused with encoder-decoder architecture.", "Toy example omits loss, logits, gradients, batches and validation.", "Cost figures were not independently verified."]
+  pedagogical_limits: ["Probability knobs risk implying independent output controls rather than shared differentiable parameters.", "The objective is next-token, not necessarily next-word prediction.", "13 trillion training tokens is incorrectly described as 13 trillion unique tokens.", "Tokenizer encoding/decoding must not be confused with encoder-decoder architecture.", "Toy example omits loss, logits, gradients, batches and validation.", "Epoch AI cost methodology reviewed; embedded chart data and specific market-concentration claims remain unverified."]
   comparison:
     dossier: "docs/source-reviews/tokenization-embeddings-source-collection.md"
     canonical_graph: "data/concepts.yml"
