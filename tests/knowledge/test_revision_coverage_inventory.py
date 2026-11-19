@@ -62,7 +62,12 @@ def test_real_repository_inventory_projects_revision_links_and_assessments() -> 
     assert understand["revision_aid_links"] == 4
     assert understand["pages_with_revision_aids"] == 4
     assert understand["revision_support_by_status"]["partial"] == 4
-    assert build["revision_support_by_status"]["integrated_sufficient"] == 4
+    assert understand["revision_support_by_status"]["integrated_sufficient"] == 8
+    assert understand["revision_support_by_status"]["not_assessed"] == 34
+    assert build["revision_support_by_status"] == {
+        "integrated_sufficient": 4,
+        "not_assessed": 12,
+    }
     by_id = {page["id"]: page for page in inventory["pages"]}
     assert by_id["fr/entropy"]["revision_aids"][0]["id"] == "fr/revision-information-theory"
     assert by_id["en/cross-entropy"]["revision_support"]["status"] == "partial"
@@ -185,6 +190,8 @@ def test_report_documents_unrouted_and_unassessed_semantics() -> None:
     report = AUDIT["render_markdown"](inventory)
     assert "unrouted" in report
     assert "not_assessed" in report
+    assert "does not mean a page lacks a synthesis or revision aid" in report
+    assert "a linked aid does not imply sufficient coverage" in report
 
 
 def test_missing_topics_are_reported_and_excluded_from_parity() -> None:
