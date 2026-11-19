@@ -249,7 +249,7 @@ items:
     classification: {primary_theme: architectures-mechanisms, secondary_themes: [mathematical-tools-geometry], tags: [topic:attention, topic:weighted-aggregation], concept_ids: [attention-weight, value]}
     candidate_destinations:
       pages: [en/scaled-dot-product-attention, fr/scaled-dot-product-attention]
-      concepts: [attention-weight, weighted-aggregation]
+      concepts: [attention-weight]
     disposition: integrate
     disposition_rationale: "Integrated as a bounded optional note in both bilingual scaled-attention lessons; the statement is restricted to the pre-output-projection weighted sum and rows with at least one accessible key."
 
