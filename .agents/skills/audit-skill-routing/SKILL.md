@@ -15,6 +15,9 @@ This is a routing skill, not a substitute for specialist analysis.
 
 | User's central question | Primary skill | Add only when needed |
 |---|---|---|
+| Does the learner-facing implementation route build a small GPT coherently and reproducibly? | `build-path-audit` | `scientific-content-audit` for disputed technical claims; `rendered-site-audit` for observed UI behavior |
+| Does the Theory / Understand route build a coherent conceptual mental model? | `understand-path-audit` | `scientific-content-audit` for disputed claims; `rendered-site-audit` for observed UI behavior |
+| Do arbitrary pages in a family, section or local window cohere as a group? | `page-group-audit` | `page-content-audit` for deep page review; `editorial-boundary-audit` for ownership; `knowledge-architecture-audit` for canonical graph/route changes |
 | Is this one page pedagogically clear, complete and well structured? | `page-content-audit` | `scientific-content-audit` for technical claims; `editorial-boundary-audit` for cross-page ownership |
 | Do these pages form a coherent sequence, family or local window? | `page-group-audit` | `page-content-audit` for deep page-level review; `editorial-boundary-audit` for overlap; `knowledge-architecture-audit` for canonical graph/route changes |
 | Are explanations duplicated, misplaced or ambiguously owned? | `editorial-boundary-audit` | `page-group-audit` for sequence implications; `scientific-content-audit` for factual disputes |
