@@ -1,6 +1,6 @@
 # Project intelligence layer
 
-**Status:** proposed architecture; no new runtime component is implied by this design document.  
+**Status:** proposed architecture with an initial read-only `ProjectIndex` implementation. Resource and revision adapters landed in [PR #1394](https://github.com/JM-Brun/llm-lab/pull/1394); inverse resource/revision queries, metrics, diagnostics and interfaces remain planned.  
 **Scope:** reusable, deterministic queries and explainable diagnostics over the canonical LLM Lab metadata, registries, routes, graph families and project artifacts.  
 **Related architecture:** [Information architecture](information-architecture.md), [scalability audit](scalability-capacity-audit-2026-11-18.md), [knowledge-graph implementation audit](knowledge-graph-implementation-audit.md), [cross-graph discovery issue #1233](https://github.com/JM-Brun/llm-lab/issues/1233).
 
@@ -85,7 +85,7 @@ The index is built from the current checkout and is not persisted as canonical d
 
 ## 5. Proposed Python API
 
-Initial public module: `site/tools/project_intelligence.py` (name provisional; check existing imports and naming conventions before implementation).
+Initial read-model module: `site/tools/project_index.py`. Keep the existing `ProjectIndex` as the shared in-memory adapter; add a separate facade only if a concrete API need emerges.
 
 The API should be typed, documented, deterministic, and usable from tests, command-line commands and other repository scripts.
 
@@ -133,12 +133,16 @@ A query result should carry typed references rather than flatten every relations
 - `ConceptRelation`: typed concept-to-concept semantic relation;
 - `ConceptDomainMembership`: classification association;
 - `ConceptPageAssociation`: explicit concept-to-page association;
+- `ResourceRecord`: a first-class non-page record from `data/resources.yml`;
 - `ResourcePageAssociation` and `ResourceConceptAssociation`;
+- `RevisionEdge`: a source page, revision role and typed target (`section`, `page` or `resource`);
 - `GuidedRouteMembership`: stage, language and core/optional role;
 - `BuildMilestoneEvidence`: explicit page/code/test/evidence mapping;
 - `ComputationalEdge`: typed computation relation;
 - `SourceEvidenceLink`: source/version, extraction item and locator where available;
 - `HistoricalRelation`: history-model-specific relation.
+
+Current read-model projection (PR #1394): `resources_by_id`, `page_resource_associations`, `concept_resource_associations`, `revision_status_by_page` and `revision_edges`. Revision edges remain separate from page graph edges. The revision adapter consumes the optional proposal documented in [revision-resource-contract.md](revision-resource-contract.md); no current page declares a revision object, and neither page nor resource validator has been changed. Reverse resource/revision lookup methods are the next implementation step.
 
 Cross-structure traversal composes these typed links. It does not materialize a replacement universal graph or reinterpret the edge types of one graph as another.
 
@@ -168,8 +172,12 @@ Build dictionaries and adjacency maps once per snapshot:
 | `concepts_by_id` | concept ID | concept record |
 | `pages_by_concept` | concept ID | set of page IDs |
 | `concepts_by_page` | page ID | set of concept IDs |
-| `resources_by_id` | resource ID | resource record |
-| `resources_by_concept` | concept ID | set of resource IDs |
+| `resources_by_id` | resource ID | `ResourceRecord` |
+| `page_resource_associations` | page ID | explicit page→resource associations |
+| `concept_resource_associations` | concept ID | explicit resource↔concept associations |
+| `revision_status_by_page` | page ID | `not_assessed`, `assessed` or `not_applicable` |
+| `revision_edges` | source page ID | typed page→section/page/resource revision edges |
+| `resources_by_concept` | concept ID | reverse index planned in the next query slice |
 | `pages_by_route_stage` | stage ID + language + role | ordered page IDs |
 | `page_incoming` / `page_outgoing` | page ID | typed page edges |
 | `concept_incoming` / `concept_outgoing` | concept ID | typed concept relations |
