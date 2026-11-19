@@ -485,6 +485,7 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
             errors.append(f"{where}.related: expected a mapping")
 
     item_ids: set[str] = set()
+    extraction_source_files: dict[str, str] = {}
     extraction_files = sorted(extraction_dir.glob("*.yml"))
     for path in extraction_files:
         where = str(path.relative_to(root))
@@ -493,10 +494,26 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
             errors.append(f"{where}: expected schema_version: 1")
             continue
         source_id = data.get("source_id")
+        if not isinstance(source_id, str) or not ID_PATTERN.fullmatch(source_id):
+            errors.append(f"{where}.source_id: expected a stable kebab-case ID")
+        else:
+            if path.stem != source_id:
+                errors.append(
+                    f"{where}.source_id: filename must be canonical (expected {source_id}.yml)"
+                )
+            previous_file = extraction_source_files.get(source_id)
+            if previous_file is not None:
+                errors.append(
+                    f"{where}.source_id: duplicate extraction for {source_id!r} "
+                    f"(also declared in {previous_file})"
+                )
+            else:
+                extraction_source_files[source_id] = where
         if "collections" in data:
             errors.append(f"{where}.collections: membership belongs on the canonical source record")
         pedagogical_model = data.get("pedagogical_model")
-        if source_types_by_id.get(source_id) in {"blog", "tutorial", "course", "book-chapter"}:
+        source_type = source_types_by_id.get(source_id) if isinstance(source_id, str) else None
+        if source_type in {"blog", "tutorial", "course", "book-chapter"}:
             if pedagogical_model is None:
                 errors.append(f"{where}.pedagogical_model: required for instructional sources")
             else:
@@ -511,7 +528,7 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
                 f"{where}.pedagogical_model",
                 errors,
             )
-        if source_id not in source_ids:
+        if not isinstance(source_id, str) or source_id not in source_ids:
             errors.append(f"{where}.source_id: unknown source {source_id!r}")
         items = data.get("items")
         if not isinstance(items, list):
