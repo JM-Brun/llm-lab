@@ -182,3 +182,72 @@ def test_marek_prose_relations_are_not_silently_promoted_to_edges() -> None:
         "contrasts-with",
         "score-centering",
     ) in canonical_edges
+
+def test_marek_source_history_records_the_complete_paper_and_test_review() -> None:
+    sources, _, _ = _corpus()
+    history = sources["marek-ryabinin-score-centering-off-policy-rl-2026"]["scan_history"]
+    event = next(event for event in history if str(event["accessed_at"]) == "2026-11-19")
+
+    scope = " ".join(event["inspected_scope"])
+    limitations = " ".join(event["limitations"])
+    assert "Canonical arXiv v1 PDF (16 pages)" in scope
+    assert "tests/test_loss.py" in scope
+    assert "all 7 parametrized cases passed" in scope
+    assert "jax>=0.11.1" in limitations
+    assert "Cameron R. Wolfe" in limitations
+
+
+def test_marek_integrated_concepts_have_bilingual_page_level_support() -> None:
+    _, extractions, concepts_doc = _corpus()
+    mapping = extractions["marek-ryabinin-score-centering-off-policy-rl-2026"][
+        "canonical_mapping"
+    ]
+    expected_ids = {
+        "policy-gradient",
+        "score-function",
+        "off-policy-reinforcement-learning",
+        "training-inference-mismatch",
+        "score-centering",
+        "importance-sampling",
+    }
+    integrated = {item["id"] for item in mapping["integrated_concepts"]}
+    assert integrated == expected_ids
+
+    canonical = {concept["id"]: concept for concept in concepts_doc["concepts"]}
+    for concept_id in expected_ids:
+        assert concept_id in canonical
+        assert {"fr/score-centering", "en/score-centering"} <= set(
+            canonical[concept_id]["resources"]
+        )
+
+    french = (ROOT / "site" / "fr" / "score-centering.qmd").read_text(encoding="utf-8")
+    english = (ROOT / "site" / "en" / "score-centering.qmd").read_text(encoding="utf-8")
+    for phrase in (
+        "gradient de politique",
+        "fonction score",
+        "hors politique",
+        "décalage entraînement",
+        "centrage du score",
+        "échantillonnage par importance",
+    ):
+        assert phrase in french.lower()
+    for phrase in (
+        "policy-gradient",
+        "score function",
+        "off-policy",
+        "training–inference mismatch",
+        "score centering",
+        "importance sampling",
+    ):
+        assert phrase in english.lower()
+
+
+def test_marek_policy_drift_proposal_remains_unrepresented() -> None:
+    _, extractions, concepts_doc = _corpus()
+    mapping = extractions["marek-ryabinin-score-centering-off-policy-rl-2026"][
+        "canonical_mapping"
+    ]
+    canonical_ids = {concept["id"] for concept in concepts_doc["concepts"]}
+    assert "policy-drift" not in canonical_ids
+    assert any("policy-drift" in proposal for proposal in mapping["proposed_relations"])
+
