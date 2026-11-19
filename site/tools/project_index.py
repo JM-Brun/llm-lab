@@ -6,8 +6,8 @@ new registry or source of truth. Page, concept, and route relations stay distinc
 
 from __future__ import annotations
 
-from collections import defaultdict
 import re
+from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -79,9 +79,9 @@ def _has_explicit_anchor(source: str, anchor: str) -> bool:
     """Find an explicit Quarto heading/div or HTML ID; never infer a slug from text."""
     escaped = re.escape(anchor)
     patterns = (
-        rf"^#{1,6}\\s+.*\\{{[^}}\\n]*#{escaped}(?:\\s|}})[^}}\\n]*\\}}\\s*$",
-        rf"^:::\\s+\\{{[^}}\\n]*#{escaped}(?:\\s|}})[^}}\\n]*\\}}\\s*$",
-        rf"\\bid=[\\"']{escaped}[\\"']",
+        rf"^#{1,6}\s+.*\{{[^}}\n]*#{escaped}(?:\s|}})[^}}\n]*\}}\s*$",
+        rf"^:::\s+\{{[^}}\n]*#{escaped}(?:\s|}})[^}}\n]*\}}\s*$",
+        rf"\bid=[\"']{escaped}[\"']",
     )
     return any(re.search(pattern, source, re.MULTILINE) for pattern in patterns)
 
@@ -222,7 +222,7 @@ def _load_revision_relations(
         if unknown_fields:
             raise ValueError(f"{where}: unknown field(s) {', '.join(sorted(unknown_fields))}")
         status = revision.get("status")
-        if status not in REVISION_STATUSES:
+        if not isinstance(status, str) or status not in REVISION_STATUSES:
             raise ValueError(f"{where}.status: unsupported revision status {status!r}")
         raw_edges = revision.get("resources", [])
         if not isinstance(raw_edges, list):
@@ -242,12 +242,12 @@ def _load_revision_relations(
             if not isinstance(item, dict) or set(item) != {"role", "target"}:
                 raise ValueError(f"{relation_where}: expected exactly role and target")
             role, target = item.get("role"), item.get("target")
-            if role not in REVISION_ROLES:
+            if not isinstance(role, str) or role not in REVISION_ROLES:
                 raise ValueError(f"{relation_where}.role: unsupported revision role {role!r}")
             if not isinstance(target, dict) or set(target) != {"type", "id"}:
                 raise ValueError(f"{relation_where}.target: expected exactly type and id")
             target_type, target_id = target.get("type"), target.get("id")
-            if target_type not in REVISION_TARGET_TYPES:
+            if not isinstance(target_type, str) or target_type not in REVISION_TARGET_TYPES:
                 raise ValueError(
                     f"{relation_where}.target.type: unsupported target type {target_type!r}"
                 )
