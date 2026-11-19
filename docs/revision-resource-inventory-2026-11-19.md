@@ -2,6 +2,7 @@
 
 **Date:** 2026-11-19  
 **Status:** read-only inventory; no revision content created or migrated.  
+**Historical snapshot:** current revision-aid links and assessments are maintained in [revision-aid-inventory-2026-11-19.md](revision-aid-inventory-2026-11-19.md); the normative proposed relation model is in [revision-resource-contract.md](revision-resource-contract.md). This earlier document predates the typed page-aid pilot and must not be used as the current relationship inventory.  
 **Repository:** `JM-Brun/llm-lab`  
 **Current main inspected:** `8fc0b80cbcb7333720a42211e9119bbf0528763e`  
 **Inventory implementation:** `site/tools/audit_revision_coverage.py`, introduced in PR [#1379](https://github.com/JM-Brun/llm-lab/pull/1379).  
