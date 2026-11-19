@@ -204,3 +204,48 @@ The documents explicitly cross-link and declare complementary scopes. Their exis
 ### Rationalization decision
 
 No additional skill merge or deletion is justified by this pass. The highest-value next change, if needed, is to remove duplicated normative prose from orchestration skills only where a stable workflow link already owns the requirement. Preserve separate activation contracts and evidence gates.
+
+## Section-level workflow ownership matrix — 2026-11-19
+
+This pass inspected the four canonical workflow documents and their five coordinating/specialist skills. The matrix assigns ownership by decision, not by repeated vocabulary.
+
+| Concern / requirement | Canonical owner | Other documents: permitted treatment | Disposition |
+|---|---|---|---|
+| Select change mode, state learner problem, choose the smallest intervention | `docs/workflows/knowledge-change-workflow.md` | Source workflow may restate its source-specific entry boundary; project audit may state its project-level trigger | Keep general decision gate in one owner |
+| Establish repository baseline, find existing owner/issues/PRs, inspect canonical contracts | Knowledge-change workflow for general changes; source workflow Stage 0 for source intake; project-audit workflow §3 for project-owner reconciliation | Validation protocol may require traceability evidence but should not repeat repository reconnaissance steps | Context-specific baseline checks are valid; avoid copy/paste checklists |
+| Register source identity, scan scope, provenance, rights and source status | Source-to-learning-system integration workflow; source schema/records remain data authority | Validation protocol defines inspectability evidence; Phase A skill performs the operational scan | Keep source workflow as lifecycle owner; validation owns acceptance criteria |
+| Extract atomic items and preserve source-faithful evidence | Source-to-learning-system integration workflow Stages 1–2; `source-extraction` skill is procedural Phase A owner | Validation protocol defines extraction fidelity gate; Phase B skill consumes records, not re-extracts | Distinct procedure vs gate; do not duplicate extraction checklist |
+| Reconstruct source-local pedagogy, graph and route | Source-to-learning-system integration workflow Stages 3–4; source-extraction skill captures evidence | Project audit reconstructs the aggregate project model; validation checks claims and boundaries | Keep source-local and project-level models separate |
+| Compare evidence across sources and assess synthesis quality | Source-to-knowledge validation protocol §§4–8 | Source integration workflow defines when and where comparison occurs; Phase B uses approved dispositions | Validation protocol owns quality test; integration owns execution point |
+| Decide whether accepted evidence changes LLM Lab concepts/pages/resources | Knowledge-change workflow for general ownership; source integration workflow Stage 5 for source-derived decisions; Phase B skill for item disposition and implementation | Project audit produces project-level differential findings and delegates accepted changes | Keep distinct levels; avoid a second project disposition vocabulary |
+| Canonical graph, relation semantics, page ownership, routes and projections | Existing registries/schemas and information-architecture documentation; knowledge-change workflow §5 routes to them | Source integration and project audit describe impact and delegate implementation | Workflows must not supersede data/schema authority |
+| Bilingual parity and preservation/conservation | Knowledge-change workflow §§6 and 9 for general changes; source integration Stage 6 for source-derived publication | Project audit requires semantic parity; validation protocol may treat parity as a validation dimension | Retain contextual checks; use one shared template/checklist only if an existing canonical template can own it |
+| Validation evidence classes, independent completion states, gates and failure handling | Source-to-knowledge validation protocol | Source integration Stage 7 selects relevant checks; knowledge-change workflow §10 provides a high-level validation-layer map; project audit §9 reports project-level validation | Validation protocol owns normative gate semantics; others link and report scoped outcomes |
+| Project audit depth, coverage bias, project-local model and cross-project comparison | Project-level learning resource audit workflow | Source integration and validation protocol only identify when it applies and preserve source-level boundaries | Project-specific requirements; no duplication |
+| Completion report and maintenance/revisit triggers | Each workflow owns its own deliverable, limited to its unit of work | Skills summarize required output and point to workflow | Similar report headings are justified because units and evidence differ; avoid a universal mega-report |
+
+### Exact duplication versus useful repetition
+
+**No proven wholesale workflow duplication.** The four workflows describe nested units (change request, source/topic, validation protocol, coherent external project). Their repeated references to baseline, evidence, bilingual checks and validation are mostly contextual hand-offs rather than substitutable procedures.
+
+Three areas merit a future narrow cleanup, but not a speculative merge:
+
+1. **Validation language:** the general knowledge-change workflow §10 lists validation layers, while source integration Stage 7 and project audit §9 describe their scoped checks. Keep the general layer map as a summary; make the validation protocol the sole owner of evidence classes, gate definitions, failure handling and claims about learner validation. Replace any copied gate details with links if a future diff demonstrates exact repetition.
+2. **Baseline/reconciliation:** retain the general repository baseline in knowledge-change workflow §3, source-owner reconciliation in source workflow Stage 0, and project-owner reconciliation in project-audit workflow §3. These have different target entities. Do not collapse them into one generic checklist.
+3. **Bilingual/preservation checks:** retain the general conservation ledger in knowledge-change workflow §9 and source-derived publication checks in source workflow Stage 6. They share principles but apply to different transformations. A future common template could reduce repeated table structure, but should not erase source-specific provenance or move/merge preservation evidence.
+
+### Skill-to-workflow delegation check
+
+- `knowledge-change-workflow` skill is a short dispatcher to the canonical knowledge-change workflow; it does not reproduce the workflow's gates.
+- `source-to-learning-integration` skill coordinates Phase A and Phase B, states their hand-off and routes whole-project requests. Its cross-phase role is distinct from the detailed source-extraction and knowledge-integration procedures.
+- `source-extraction` owns Phase A execution and source-faithful capture; `knowledge-and-learning-integration` owns Phase B disposition and project changes. Their procedural depth is appropriate and should not be copied into the orchestrator.
+- `project-learning-resource-audit` skill activates the project-level audit and delegates to its workflow/template; it does not replace source records or Phase A/B.
+
+### Additional inspection note
+
+The source-to-learning workflow's scope-boundary heading currently contains literal escaped newline sequences in the fetched Markdown content rather than normal line breaks. This is a formatting defect in that file, not a responsibility overlap. It should be corrected in a separate, tightly scoped documentation patch after checking the raw file and rendered result; it is intentionally not mixed into this dated audit update.
+
+### Decision
+
+No workflow merge, skill merge or deletion is justified. Keep all four workflow documents and five skills. Treat the validation protocol as the sole normative owner for evidence classes and gate semantics; keep workflow-specific execution and completion criteria in their respective documents. Any future deduplication must identify exact duplicated requirements and preserve the local context and evidence outputs.
+
