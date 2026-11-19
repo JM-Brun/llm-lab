@@ -19,6 +19,11 @@ hierarchy:
   parents: ["fr/text-data"]
   children: ["fr/positional-encoding", "fr/contextualized-representations", "fr/cosine-similarity", "fr/linearite-embeddings"]
 related: ["fr/embedding-space-exercises", "fr/gpt-model-walkthrough"]
+revision_support:
+  status: partial
+  evidence:
+    - anchor: lookup
+      note: "La leçon explique le lookup, la matrice V×d, l'apprentissage des vecteurs et la transition vers les états contextualisés ; le compagnon Practice propose trois questions corrigées et une exploration guidée. Il manque toutefois un rappel intégré très court qui rassemble adresse de ligne, vecteur statique et distinction avec l'état contextualisé."
 tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:fr", "status:published"]
 -->
 
@@ -45,7 +50,7 @@ La continuation commence par « Vous savez, moi je ne crois pas qu'il y ait de b
 
 Le tokenizer découpe le préfixe en tokens selon son vocabulaire et ses règles. Il attribue à chaque token un ID entier. Un mot visible n'est pas nécessairement un token unique : la segmentation exacte dépend du tokenizer utilisé.
 
-## Le lookup : sélectionner une ligne, pas une coordonnée
+## Le lookup : sélectionner une ligne, pas une coordonnée {#lookup}
 
 La matrice de plongements, notée $E$, est une table apprise. Elle contient une ligne par ID du vocabulaire ; chaque ligne contient un vecteur de nombres réels.
 
