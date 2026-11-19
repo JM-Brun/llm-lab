@@ -464,6 +464,16 @@ def test_real_repository_index_has_referential_integrity() -> None:
         "en/context-engineering",
         "fr/llm-limits",
         "en/llm-limits",
+        "fr/text-data",
+        "en/text-data",
+        "fr/logits",
+        "en/logits",
+        "fr/probabilites",
+        "en/probabilities",
+        "fr/loss",
+        "en/loss",
+        "fr/gradients",
+        "en/gradients",
     }
     assert {
         page_id
@@ -472,7 +482,7 @@ def test_real_repository_index_has_referential_integrity() -> None:
     } == integrated_pages
     assert (
         sum(item["status"] == "not_assessed" for item in index.revision_support_by_page.values())
-        == len(index.revision_support_by_page) - 22
+        == len(index.revision_support_by_page) - 32
     )
     assert all(edge.target in index.pages_by_id for edge in index.page_edges)
     assert index.stats() == ProjectIndex.build(ROOT).stats()
