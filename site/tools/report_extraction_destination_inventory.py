@@ -101,6 +101,9 @@ def build_report(root: Path) -> dict[str, Any]:
     }
     pedagogical_model_routes = {"comparison.canonical_routes": _bucket()}
     record_key_presence: Counter[str] = Counter()
+    record_field_shapes: dict[str, Counter[str]] = {}
+    record_nested_field_presence: dict[str, Counter[str]] = {}
+    record_field_examples: dict[str, list[str]] = {}
     item_key_presence: Counter[str] = Counter()
     candidate_shapes: Counter[str] = Counter()
     unknown_concepts: dict[str, set[str]] = {
@@ -151,6 +154,28 @@ def build_report(root: Path) -> dict[str, Any]:
         relative_path = path.relative_to(root).as_posix()
         record = _load(path)
         record_key_presence.update(record.keys())
+        for field, value in record.items():
+            shape = (
+                "mapping"
+                if isinstance(value, dict)
+                else "list"
+                if isinstance(value, list)
+                else "null"
+                if value is None
+                else "string"
+                if isinstance(value, str)
+                else "boolean"
+                if isinstance(value, bool)
+                else "number"
+                if isinstance(value, (int, float))
+                else type(value).__name__
+            )
+            record_field_shapes.setdefault(field, Counter())[shape] += 1
+            examples = record_field_examples.setdefault(field, [])
+            if len(examples) < 3:
+                examples.append(path.relative_to(root).as_posix())
+            if isinstance(value, dict):
+                record_nested_field_presence.setdefault(field, Counter()).update(value.keys())
         source_id = record.get("source_id")
         if not isinstance(source_id, str) or not source_id:
             malformed.append(relative_path + ":missing-source-id")
@@ -250,6 +275,17 @@ def build_report(root: Path) -> dict[str, Any]:
             "source_local_teaching_route_steps": local_route_steps,
         },
         "extraction_record_field_presence": dict(sorted(record_key_presence.items())),
+        "extraction_record_field_shapes": {
+            key: dict(sorted(value.items()))
+            for key, value in sorted(record_field_shapes.items())
+        },
+        "extraction_record_nested_field_presence": {
+            key: dict(sorted(value.items()))
+            for key, value in sorted(record_nested_field_presence.items())
+        },
+        "extraction_record_field_examples": {
+            key: value for key, value in sorted(record_field_examples.items())
+        },
         "item_field_presence": dict(sorted(item_key_presence.items())),
         "candidate_destination_shapes": dict(sorted(candidate_shapes.items())),
         "candidate_destination_keys": {
