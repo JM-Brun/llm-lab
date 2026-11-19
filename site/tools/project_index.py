@@ -570,6 +570,50 @@ class ProjectIndex:
             self.concepts_by_id[key] for key in sorted(self.concepts_by_page.get(page_id, ()))
         )
 
+    def resources_for_page(self, page_id: str) -> tuple[ResourceRecord, ...]:
+        """Return non-page resources explicitly associated with one published page."""
+        if page_id not in self.pages_by_id:
+            raise KeyError(f"unknown published page: {page_id}")
+        resource_ids = sorted(
+            edge.resource_id
+            for edge in self.page_resource_associations
+            if edge.page_id == page_id
+        )
+        return tuple(self.resources_by_id[key] for key in resource_ids)
+
+    def pages_for_resource(self, resource_id: str) -> tuple[PublishedPage, ...]:
+        """Return published pages explicitly referencing one non-page resource."""
+        if resource_id not in self.resources_by_id:
+            raise KeyError(f"unknown non-page resource: {resource_id}")
+        page_ids = sorted(
+            edge.page_id
+            for edge in self.page_resource_associations
+            if edge.resource_id == resource_id
+        )
+        return tuple(self.pages_by_id[key] for key in page_ids)
+
+    def resources_for_concept(self, concept_id: str) -> tuple[ResourceRecord, ...]:
+        """Return non-page resources explicitly associated with one concept."""
+        if concept_id not in self.concepts_by_id:
+            raise KeyError(f"unknown concept: {concept_id}")
+        resource_ids = sorted(
+            edge.resource_id
+            for edge in self.concept_resource_associations
+            if edge.concept_id == concept_id
+        )
+        return tuple(self.resources_by_id[key] for key in resource_ids)
+
+    def concepts_for_resource(self, resource_id: str) -> tuple[dict[str, Any], ...]:
+        """Return concepts explicitly associated with one non-page resource."""
+        if resource_id not in self.resources_by_id:
+            raise KeyError(f"unknown non-page resource: {resource_id}")
+        concept_ids = sorted(
+            edge.concept_id
+            for edge in self.concept_resource_associations
+            if edge.resource_id == resource_id
+        )
+        return tuple(self.concepts_by_id[key] for key in concept_ids)
+
     def incoming_pages(
         self, page_id: str, *, family: str | None = None, relation: str | None = None
     ) -> tuple[PageEdge, ...]:
