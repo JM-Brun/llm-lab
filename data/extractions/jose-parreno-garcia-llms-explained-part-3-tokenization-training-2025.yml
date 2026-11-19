@@ -61,7 +61,7 @@ pedagogical_model:
     dossier: "docs/source-reviews/tokenization-embeddings-source-collection.md"
     canonical_graph: "data/concepts.yml"
     canonical_routes: ["Understand: text-data -> tokenization-strategies -> token embeddings -> language-modeling-math", "Build: tokenizer implementation -> sequence preparation -> training loop"]
-    decision: "Phase A only. Compare exact bilingual lessons and Build route before integration."
+    decision: "Phase B complete: add bilingual token-occurrence/vocabulary/parameter distinction to corpus-preparation; retain existing tokenization, next-token and training lessons without duplication; no new concept or graph edge."
     structures_kept_separate: ["Source-local graph and teaching sequence", "Canonical concept graph", "Understand and Build routes"]
 items:
   - id: jose-parreno-garcia-llms-explained-part-3-tokenization-training-2025:tokenization
@@ -165,7 +165,7 @@ items:
       redundancy: {level: low, rationale: "Specific confusion is not implied by generic token-ID coverage."}
       evidence_quality: {level: high, rationale: "Wording is visible and distinction is definitional."}
     classification: {primary_theme: text-tokenization, tags: [topic:token-count, topic:vocabulary-size, topic:model-scale], concept_ids: [token]}
-    candidate_destinations: {pages: [fr/tokenization-strategies, en/tokenization-strategies, fr/text-data, en/text-data], concepts: [token], route_ids: []}
+    candidate_destinations: {pages: [fr/corpus-preparation, en/corpus-preparation, fr/tokenization-strategies, en/tokenization-strategies, fr/text-data, en/text-data], concepts: [token], route_ids: []}
     disposition: correct
     disposition_rationale: "Do not import the 13T figure; distinguish corpus occurrences from vocabulary size."
 
