@@ -89,6 +89,8 @@ def test_inventory_separates_candidate_destinations_legacy_fields_and_local_rout
         "malformed_records_or_items": 0,
         "source_local_teaching_route_steps": 2,
     }
+    assert report["extraction_record_field_presence"]["pedagogical_model"] == 1
+    assert report["extraction_record_field_presence"]["items"] == 1
     assert report["candidate_destination_shapes"] == {"mapping": 1, "non-mapping": 1}
     assert report["candidate_destination_keys"]["route_ids"] == 1
     assert report["pedagogical_model_routes"]["comparison.canonical_routes"][
