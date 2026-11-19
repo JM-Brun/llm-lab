@@ -1,0 +1,233 @@
+schema_version: 1
+source_id: jose-parreno-garcia-llms-explained-part-3-tokenization-training-2025
+scan:
+  accessed_at: "2026-11-19"
+  retrieval_method: direct-canonical-page
+  author_text:
+    status: complete
+    coverage: "Complete visible article text: cleaning recap, tokenization, BPE/WordPiece/character approaches, next-token training example, encoding/decoding summary, compute-cost discussion and takeaways."
+    notes: ["Parts 1 and 2 are linked context and were not rescanned."]
+  figures_media:
+    status: not-inspected
+    coverage: null
+    notes: ["FineWeb, tokenizer, model-output, Karpathy and Epoch AI images were visible only as placements/captions; image bytes not inspected."]
+  code_data: {status: not-inspected, coverage: null, notes: ["No code, checkpoint or dataset was executed or audited."]}
+  comments: {status: not-inspected, coverage: null, notes: ["Discussion not inspected."]}
+  linked_resources: {status: partial, coverage: "FineWeb, Common Crawl, GPT-3 paper, TikTokenizer, BPE/WordPiece references, MIT material, Karpathy and Epoch AI links identified.", notes: ["Not all links opened."]}
+  metadata: {status: complete, coverage: "Author, title, publisher, URL and publication date (3 May 2025) visible.", notes: []}
+  rights: {status: unknown, coverage: null, notes: ["No reuse licence established."]}
+  unresolved_questions:
+    - "Inspect embedded visual assets and rights."
+    - "Verify GPT-4 token-count and parameter-count claims against dated primary evidence."
+    - "Inspect Epoch AI charts and methodology before reusing cost figures."
+pedagogical_model:
+  reconstruction: {status: complete, basis: ["Complete visible article text retrieved directly on 2026-11-19."], inferred_elements: ["Teaching sequence bridges corpus preparation, tokenization and autoregressive pretraining."]}
+  source_graph:
+    nodes:
+      - {id: src-corpus, kind: data, description: "Cleaned text supplied to tokenizer and training.", locator: "Cleaning recap"}
+      - {id: src-tokenizer, kind: transformation, description: "Text segmented into tokens and mapped to integer IDs.", locator: "Tokenization"}
+      - {id: src-families, kind: method-family, description: "BPE, WordPiece and character-level approaches.", locator: "How tokens are built"}
+      - {id: src-sequence, kind: representation, description: "Ordered sequence of token IDs.", locator: "What is tokenization"}
+      - {id: src-objective, kind: learning-objective, description: "Conditional distribution over the next token given preceding context.", locator: "Baseline LLM objective"}
+      - {id: src-update, kind: optimization, description: "Shared parameters updated to reduce prediction loss.", locator: "How baseline model learns"}
+      - {id: src-decode, kind: transformation, description: "Token IDs mapped back to text.", locator: "Encoding-decoding machines"}
+      - {id: src-compute, kind: constraint, description: "Accelerator compute and infrastructure constrain training scale.", locator: "Training costs"}
+    edges:
+      - {from: src-corpus, type: supplies-text-to, to: src-tokenizer, inferred: false}
+      - {from: src-families, type: provides-alternatives-for, to: src-tokenizer, inferred: false}
+      - {from: src-tokenizer, type: produces, to: src-sequence, inferred: false}
+      - {from: src-sequence, type: conditions, to: src-objective, inferred: false}
+      - {from: src-objective, type: trains, to: src-update, inferred: true}
+      - {from: src-sequence, type: is-rendered-through, to: src-decode, inferred: false}
+      - {from: src-compute, type: constrains-scale-of, to: src-update, inferred: true}
+    interpretation: "Editorial reconstruction, not a formal graph from the author. The probability-knobs metaphor is simplified; real training uses differentiable losses and shared parameter updates."
+  learning_outcomes:
+    - {status: inferred, outcome: "Explain why text is tokenized into discrete IDs.", basis: "Tokenization definition and text-to-ID walkthrough."}
+    - {status: inferred, outcome: "Distinguish corpus token occurrences, vocabulary size and model parameters.", basis: "The article discusses these quantities but risks conflating them."}
+    - {status: inferred, outcome: "Describe autoregressive pretraining as next-token distribution estimation and loss minimization.", basis: "Baseline objective and toy example."}
+    - {status: inferred, outcome: "Explain why fluent continuation does not guarantee factual answers.", basis: "Baseline-model failure discussion."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Basic text representation and integer indexing", basis: "Text-to-ID mapping is assumed."}
+    - {status: inferred, topic: "Basic probability and model parameters", basis: "Toy example uses candidate probabilities."}
+  teaching_route:
+    - {order: 1, section: "Cleaning recap", function: context-setting, moves: ["Connect corpus quality to tokenizer input."]}
+    - {order: 2, section: "Tokenization", function: representation, moves: ["Introduce tokens and IDs.", "Compare tokenizer families.", "Discuss token counts."]}
+    - {order: 3, section: "Baseline LLM objective", function: objective, moves: ["Define next-token prediction.", "Separate fluency from factuality.", "Use a toy completion."]}
+    - {order: 4, section: "Encoding-decoding machines", function: synthesis, moves: ["Reassemble text, IDs, model computation and decoded output."]}
+    - {order: 5, section: "Training costs", function: systems-context, moves: ["Connect scale to compute and infrastructure."]}
+  pedagogical_strengths: ["Accessible bridge from cleaning to pretraining.", "Concrete next-token example.", "Explicit warning that fluency does not guarantee factuality."]
+  pedagogical_limits: ["Probability knobs risk implying independent output controls rather than shared differentiable parameters.", "The objective is next-token, not necessarily next-word prediction.", "13 trillion training tokens is incorrectly described as 13 trillion unique tokens.", "Tokenizer encoding/decoding must not be confused with encoder-decoder architecture.", "Toy example omits loss, logits, gradients, batches and validation.", "Cost figures were not independently verified."]
+  comparison:
+    dossier: "docs/source-reviews/tokenization-embeddings-source-collection.md"
+    canonical_graph: "data/concepts.yml"
+    canonical_routes: ["Understand: text-data -> tokenization-strategies -> token embeddings -> language-modeling-math", "Build: tokenizer implementation -> sequence preparation -> training loop"]
+    decision: "Phase A only. Compare exact bilingual lessons and Build route before integration."
+    structures_kept_separate: ["Source-local graph and teaching sequence", "Canonical concept graph", "Understand and Build routes"]
+items:
+  - id: jose-parreno-garcia-llms-explained-part-3-tokenization-training-2025:tokenization
+    kind: mechanism
+    summary: "Tokenization segments text into model-specific units and maps each unit to an integer ID."
+    locator: {type: section, value: "Tokenization. How text becomes data"}
+    evidence: {kind: explicit-definition, confidence: established, scope: "Introductory tokenization account.", assumptions: [], limitations: ["Normalization, pre-tokenization, byte fallback and special tokens are not detailed."]}
+    technical_assessment: {status: correct-with-omissions, rationale: "Basic mapping is sound; production tokenizers may include more stages.", corroborating_sources: ["Hugging Face Tokenizers documentation", "tiktoken documentation"]}
+    pedagogical_assessment:
+      learner_question: "Why can't a Transformer consume ordinary text directly?"
+      explanatory_lens: "Map text units to vocabulary indices before embedding lookup."
+      teaching_form: [definition, representation-pipeline]
+      novelty: {level: low, rationale: "Existing lessons cover text-to-ID conversion."}
+      complementarity: {level: moderate, rationale: "Connects cleaning directly to tokenization and training."}
+      pedagogical_value: {level: moderate, rationale: "Useful transition for learners."}
+      applicability: {level: high, rationale: "Could improve the existing text-data/tokenization transition."}
+      redundancy: {level: moderate, rationale: "Core definition already exists."}
+      evidence_quality: {level: high, rationale: "Direct definition in complete article text."}
+    classification: {primary_theme: text-tokenization, tags: [topic:tokenization, method:token-to-id], concept_ids: [token]}
+    candidate_destinations: {pages: [fr/tokenization-strategies, en/tokenization-strategies, fr/text-data, en/text-data], concepts: [token], route_ids: []}
+    disposition: integrate-by-reference
+    disposition_rationale: "Retain as accessible pipeline explanation; do not duplicate canonical definition."
+
+  - id: jose-parreno-garcia-llms-explained-part-3-tokenization-training-2025:tokenizer-families
+    kind: method
+    summary: "The article contrasts BPE, WordPiece and character-level tokenization as approaches with different vocabulary and segmentation trade-offs."
+    locator: {type: section, value: "How tokens are built"}
+    evidence: {kind: illustrative-method-overview, confidence: context-dependent, scope: "High-level family descriptions.", assumptions: [], limitations: ["WordPiece and character-level descriptions are simplified and should not be generalized to every implementation or language."]}
+    technical_assessment: {status: requires-qualification, rationale: "Useful overview, not an implementation specification.", corroborating_sources: ["Sennrich et al. 2016", "Hugging Face Tokenizers documentation"]}
+    pedagogical_assessment:
+      learner_question: "Why do models split the same string differently?"
+      explanatory_lens: "Tokenizer algorithms impose different vocabulary and segmentation trade-offs."
+      teaching_form: [comparison, taxonomy]
+      novelty: {level: low, rationale: "Existing pages cover tokenizer design."}
+      complementarity: {level: moderate, rationale: "Short comparison can orient beginners."}
+      pedagogical_value: {level: moderate, rationale: "Useful before algorithmic detail."}
+      applicability: {level: moderate, rationale: "Possible compact callout if a gap remains."}
+      redundancy: {level: moderate, rationale: "Existing pages provide deeper coverage."}
+      evidence_quality: {level: moderate, rationale: "Direct overview, not comparative research."}
+    classification: {primary_theme: text-tokenization, tags: [topic:tokenizer-design, method:bpe, method:wordpiece], concept_ids: [token]}
+    candidate_destinations: {pages: [fr/tokenization-strategies, en/tokenization-strategies], concepts: [token], route_ids: []}
+    disposition: integrate-by-reference
+    disposition_rationale: "Use only if current pages have an explanatory gap."
+
+  - id: jose-parreno-garcia-llms-explained-part-3-tokenization-training-2025:next-token-objective
+    kind: definition
+    summary: "Autoregressive pretraining estimates a conditional distribution for the next token given preceding context; the observed next token supplies the target."
+    locator: {type: section, value: "What is a baseline LLM model trained for?"}
+    evidence: {kind: author-stated-objective, confidence: established, scope: "Baseline autoregressive language modelling.", assumptions: ["Causal/autoregressive model."], limitations: ["The article says next word in places; the objective is over tokens."]}
+    technical_assessment: {status: correct-with-terminology-correction, rationale: "Next-token prediction is the standard causal language-modelling objective.", corroborating_sources: ["Radford et al. 2019", "Karpathy, Let's build GPT"]}
+    pedagogical_assessment:
+      learner_question: "What does a base model learn during pretraining?"
+      explanatory_lens: "Predict the observed next token from the available prefix."
+      teaching_form: [objective-definition, worked-example]
+      novelty: {level: low, rationale: "Canonical next-token concept exists."}
+      complementarity: {level: high, rationale: "Eiffel Tower completion is a simple intuitive example."}
+      pedagogical_value: {level: high, rationale: "Bridges conditional distributions to a familiar task."}
+      applicability: {level: high, rationale: "Candidate worked example or flashcard."}
+      redundancy: {level: moderate, rationale: "Objective is covered; example is complementary."}
+      evidence_quality: {level: high, rationale: "Explicit in article and standard for causal language modelling."}
+    classification: {primary_theme: probabilistic-foundations-training, tags: [topic:next-token-prediction, method:autoregressive-pretraining], concept_ids: [next-token-prediction, token]}
+    candidate_destinations: {pages: [fr/language-modeling-math, en/language-modeling-math], concepts: [next-token-prediction], route_ids: []}
+    disposition: integrate-by-reference
+    disposition_rationale: "Retain as candidate example; validate against current bilingual lessons."
+
+  - id: jose-parreno-garcia-llms-explained-part-3-tokenization-training-2025:probability-knobs
+    kind: analogy
+    summary: "The author models learning as turning candidate-token probability knobs up or down after comparing a prediction with the target."
+    locator: {type: section, value: "First iteration; second iteration; stopping moment"}
+    evidence: {kind: pedagogical-metaphor, confidence: context-dependent, scope: "Three-candidate toy illustration.", assumptions: ["Illustrative, not literal implementation."], limitations: ["Real models use shared parameters, logits, differentiable loss and gradient-based optimization."]}
+    technical_assessment: {status: oversimplified, rationale: "Must be connected to cross-entropy and gradient updates to avoid a false training model.", corroborating_sources: ["Karpathy, Let's build GPT", "Goodfellow et al., Deep Learning"]}
+    pedagogical_assessment:
+      learner_question: "How does a wrong prediction change the model?"
+      explanatory_lens: "A toy probability dial illustrates feedback."
+      teaching_form: [analogy, toy-example]
+      novelty: {level: low, rationale: "Parameter optimization is already taught."}
+      complementarity: {level: high, rationale: "Intuitive entry point before gradients."}
+      pedagogical_value: {level: moderate, rationale: "Useful only with explicit correction."}
+      applicability: {level: high, rationale: "Could be adapted as a bounded analogy."}
+      redundancy: {level: moderate, rationale: "Existing lessons explain the real mechanism."}
+      evidence_quality: {level: high, rationale: "Metaphor is directly present; correction is established."}
+    classification: {primary_theme: probabilistic-foundations-training, tags: [topic:training-objective, method:gradient-descent], concept_ids: [cross-entropy, next-token-prediction]}
+    candidate_destinations: {pages: [fr/language-modeling-math, en/language-modeling-math], concepts: [cross-entropy, next-token-prediction], route_ids: []}
+    disposition: clarify
+    disposition_rationale: "State that knobs are a cartoon for gradient-driven shared-parameter updates."
+
+  - id: jose-parreno-garcia-llms-explained-part-3-tokenization-training-2025:token-count-confusion
+    kind: misconception
+    summary: "The claim that GPT-4 has 13 trillion unique tokens conflates token occurrences in training data with tokenizer vocabulary size."
+    locator: {type: section, value: "So, what does it mean that GPT4 has 13 trillion tokens?"}
+    evidence: {kind: direct-statement-with-technical-correction, confidence: established, scope: "The article explicitly describes the quantity as unique tokens.", assumptions: [], limitations: ["The 13-trillion estimate itself is unverified and must not be repeated as confirmed GPT-4 data."]}
+    technical_assessment: {status: incorrect-terminology, rationale: "Training token occurrences, vocabulary size and model parameters are distinct quantities.", corroborating_sources: ["Tokenizer documentation"]}
+    pedagogical_assessment:
+      learner_question: "Does training-token count mean the tokenizer has that many vocabulary entries?"
+      explanatory_lens: "Distinguish token occurrences, vocabulary size and parameter count."
+      teaching_form: [misconception, quantitative-distinction]
+      novelty: {level: moderate, rationale: "Concrete example of a common quantity confusion."}
+      complementarity: {level: high, rationale: "Correction callout contrasts three quantities."}
+      pedagogical_value: {level: high, rationale: "Prevents misreading model statistics."}
+      applicability: {level: high, rationale: "Warning box or flashcard fits tokenization/model-scale lessons."}
+      redundancy: {level: low, rationale: "Specific confusion is not implied by generic token-ID coverage."}
+      evidence_quality: {level: high, rationale: "Wording is visible and distinction is definitional."}
+    classification: {primary_theme: text-tokenization, tags: [topic:token-count, topic:vocabulary-size, topic:model-scale], concept_ids: [token]}
+    candidate_destinations: {pages: [fr/tokenization-strategies, en/tokenization-strategies, fr/text-data, en/text-data], concepts: [token], route_ids: []}
+    disposition: correct
+    disposition_rationale: "Do not import the 13T figure; distinguish corpus occurrences from vocabulary size."
+
+  - id: jose-parreno-garcia-llms-explained-part-3-tokenization-training-2025:fluency-factuality
+    kind: limitation
+    summary: "Fluent continuation learned from statistical regularities does not guarantee factual correctness or reliable question answering."
+    locator: {type: section, value: "Not a goal; Where does the baseline LLM fail?"}
+    evidence: {kind: author-illustration-and-claim, confidence: well-supported, scope: "Qualitative contrast between continuation and factual answering.", assumptions: [], limitations: ["Specific screenshots were not inspected; only author description is recorded."]}
+    technical_assessment: {status: correct-with-qualification, rationale: "Objective/factuality distinction is sound; specific outputs remain unverified.", corroborating_sources: ["Language-model pretraining and post-training literature"]}
+    pedagogical_assessment:
+      learner_question: "Why can a fluent base model fail factual questions?"
+      explanatory_lens: "Separate pretraining objective from assistant behaviour and factual evaluation."
+      teaching_form: [contrast, misconception]
+      novelty: {level: low, rationale: "Project already distinguishes next-token training from factuality."}
+      complementarity: {level: moderate, rationale: "Base-model framing is useful before instruction tuning."}
+      pedagogical_value: {level: high, rationale: "Prevents equating fluency with factual competence."}
+      applicability: {level: high, rationale: "Cross-link to base-vs-instruct and post-training."}
+      redundancy: {level: moderate, rationale: "Concept exists; example is accessible."}
+      evidence_quality: {level: moderate, rationale: "General principle sound; screenshots not inspected."}
+    classification: {primary_theme: probabilistic-foundations-training, tags: [topic:base-model, topic:hallucination, topic:language-modeling], concept_ids: [next-token-prediction]}
+    candidate_destinations: {pages: [fr/language-modeling-math, en/language-modeling-math], concepts: [next-token-prediction], route_ids: []}
+    disposition: integrate-by-reference
+    disposition_rationale: "Use as transition to post-training and factuality."
+
+  - id: jose-parreno-garcia-llms-explained-part-3-tokenization-training-2025:encoding-decoding
+    kind: misconception
+    summary: "The encoding-decoding summary describes tokenizer text/ID conversion, not necessarily an encoder-decoder Transformer architecture."
+    locator: {type: section, value: "LLMs are encoding-decoding machines"}
+    evidence: {kind: editorial-interpretation, confidence: established, scope: "Terminology for decoder-only language models.", assumptions: [], limitations: ["The author may use the phrase informally."]}
+    technical_assessment: {status: requires-clarification, rationale: "Tokenizer encoding/decoding and neural encoder-decoder architecture are distinct.", corroborating_sources: ["GPT architecture descriptions", "Hugging Face tokenizer documentation"]}
+    pedagogical_assessment:
+      learner_question: "Does text encoding and decoding mean the model has encoder and decoder stacks?"
+      explanatory_lens: "Separate tokenizer transformations from neural architecture."
+      teaching_form: [terminology-contrast, misconception]
+      novelty: {level: moderate, rationale: "Useful terminology trap."}
+      complementarity: {level: high, rationale: "Bridges tokenization and architecture."}
+      pedagogical_value: {level: high, rationale: "Important for understanding decoder-only GPT."}
+      applicability: {level: high, rationale: "Compact note in the transition."}
+      redundancy: {level: low, rationale: "Not guaranteed by generic tokenization coverage."}
+      evidence_quality: {level: high, rationale: "Wording is visible and distinction established."}
+    classification: {primary_theme: text-tokenization, tags: [topic:tokenizer-encoding, topic:decoder-only-transformer], concept_ids: [token]}
+    candidate_destinations: {pages: [fr/tokenization-strategies, en/tokenization-strategies], concepts: [token], route_ids: []}
+    disposition: clarify
+    disposition_rationale: "Distinguish tokenizer encoding/decoding from encoder-decoder architecture."
+
+  - id: jose-parreno-garcia-llms-explained-part-3-tokenization-training-2025:compute-cost
+    kind: claim
+    summary: "The article argues that frontier pretraining is constrained by accelerator compute, infrastructure and specialist labour."
+    locator: {type: section, value: "Training costs"}
+    evidence: {kind: author-assertion, confidence: context-dependent, scope: "Qualitative frontier-training economics.", assumptions: [], limitations: ["Charts not inspected; estimates and market concentration claims vary over time."]}
+    technical_assessment: {status: plausible-but-time-sensitive, rationale: "Compute is a major constraint, but figures need dated evidence.", corroborating_sources: ["Epoch AI training compute cost analyses"]}
+    pedagogical_assessment:
+      learner_question: "Why can a small team reproduce a training loop but not train a frontier model?"
+      explanatory_lens: "Separate algorithmic accessibility from infrastructure scale."
+      teaching_form: [systems-context, scale-contrast]
+      novelty: {level: low, rationale: "Project already covers compute and scale."}
+      complementarity: {level: moderate, rationale: "Connects conceptual training to industrial economics."}
+      pedagogical_value: {level: moderate, rationale: "Distinguishes toy implementation from frontier training."}
+      applicability: {level: moderate, rationale: "Possible cross-link to scaling material."}
+      redundancy: {level: moderate, rationale: "Existing scaling material covers related constraints."}
+      evidence_quality: {level: moderate, rationale: "Qualitative argument plausible; figures not inspected."}
+    classification: {primary_theme: scale-research, tags: [topic:training-compute, topic:frontier-models], concept_ids: []}
+    candidate_destinations: {pages: [], concepts: [], route_ids: []}
+    disposition: defer
+    disposition_rationale: "Do not reuse numeric cost claims until charts and underlying sources are inspected."
