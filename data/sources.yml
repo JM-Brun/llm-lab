@@ -879,10 +879,20 @@ sources:
         limitations:
           - "Documentation is living and was not pinned to a release or commit."
           - "No exhaustive API survey was intended."
+      - accessed_at: "2026-11-19"
+        status: partially-scanned
+        inspected_scope:
+          - "Current official Semantic Textual Similarity documentation: encode, all-pairs similarity, configurable metric and normalized-vector note"
+          - "Current similarity-function reference and SentenceTransformer model API: cosine, dot, negative Euclidean/Manhattan, pairwise methods and supported backends"
+          - "Bilingual cosine-similarity lessons and tokenization/embedding collection synthesis"
+        limitations:
+          - "The documentation is living and no immutable release/commit was pinned."
+          - "This was a bounded review of the dense SentenceTransformer similarity API, not a survey of sparse, cross-encoder, evaluation or all model APIs."
+          - "No package code, examples or numerical results were executed."
     related:
       pages: [en/cosine-similarity, fr/cosine-similarity]
       concepts: [contextualized-representation]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md, docs/source-reviews/sentence-transformers-similarity-api-2026-11-19.md]
 
   - id: openai-tiktoken-educational-bpe
     title: "tiktoken educational BPE module"
