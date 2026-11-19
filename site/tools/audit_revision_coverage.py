@@ -33,6 +33,7 @@ def build_revision_inventory(
     pages: list[dict[str, Any]],
     concepts: list[dict[str, Any]],
     resources: list[dict[str, Any]],
+    route_memberships: dict[str, list[dict[str, Any]]] | None = None,
 ) -> dict[str, Any]:
     """Project all published destination pages and their explicit relations."""
     concept_ids_by_page: dict[str, list[str]] = defaultdict(list)
@@ -47,22 +48,23 @@ def build_revision_inventory(
             if isinstance(page_id, str):
                 implementation_ids_by_page[page_id].append(str(resource.get("id")))
 
-    route_memberships: dict[str, list[dict[str, Any]]] = {}
-    for language in LANGUAGES:
-        language_pages = [p for p in pages if p["language"] in {language, "shared"}]
-        stages = load_guided_route(language, language_pages)
-        for page_id, entries in build_guided_route_memberships(stages).items():
-            route_memberships[page_id] = [
-                {
-                    "stage_id": item.stage_id,
-                    "stage_index": item.stage_index,
-                    "stage_title": item.stage_title,
-                    "role": item.role,
-                    "page_index": item.page_index,
-                    "page_count": item.page_count,
-                }
-                for item in entries
-            ]
+    if route_memberships is None:
+        route_memberships = {}
+        for language in LANGUAGES:
+            language_pages = [p for p in pages if p["language"] in {language, "shared"}]
+            stages = load_guided_route(language, language_pages)
+            for page_id, entries in build_guided_route_memberships(stages).items():
+                route_memberships[page_id] = [
+                    {
+                        "stage_id": item.stage_id,
+                        "stage_index": item.stage_index,
+                        "stage_title": item.stage_title,
+                        "role": item.role,
+                        "page_index": item.page_index,
+                        "page_count": item.page_count,
+                    }
+                    for item in entries
+                ]
 
     records: list[dict[str, Any]] = []
     for page in pages:
