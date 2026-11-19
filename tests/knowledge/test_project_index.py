@@ -174,9 +174,7 @@ def test_page_edge_target_must_exist(tmp_path: Path) -> None:
     _write_page(tmp_path / "site", "en/query", "en")
     _write_sources(tmp_path)
 
-    with pytest.raises(
-        ValueError, match=r"en/attention.qmd.*suggested_route.next.*en/missing"
-    ):
+    with pytest.raises(ValueError, match=r"en/attention.qmd.*suggested_route.next.*en/missing"):
         ProjectIndex.build(tmp_path)
 
 
