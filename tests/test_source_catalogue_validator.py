@@ -421,6 +421,18 @@ def test_invalid_community_provenance_and_verification_are_rejected(tmp_path: Pa
     assert any("verification.sources: unknown source 'missing-source'" in error for error in errors)
 
 
+def test_non_mapping_candidate_destinations_are_rejected(tmp_path: Path) -> None:
+    _corpus(tmp_path, with_extraction=True)
+    extraction_path = tmp_path / "data" / "extractions" / "example-source.yml"
+    data = yaml.safe_load(extraction_path.read_text(encoding="utf-8"))
+    data["items"][0]["candidate_destinations"] = ["en/attention"]
+    _write_yaml(extraction_path, data)
+
+    errors = MODULE.validate_source_catalogue(tmp_path)
+
+    assert any("candidate_destinations: expected a mapping" in error for error in errors)
+
+
 def test_source_collection_membership_is_optional_during_backfill(tmp_path: Path) -> None:
     _corpus(tmp_path)
 
