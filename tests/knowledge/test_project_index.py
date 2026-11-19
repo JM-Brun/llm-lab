@@ -438,16 +438,16 @@ def test_real_repository_index_has_referential_integrity() -> None:
     assert {
         page.page_id for page in index.lessons_for_revision_aid("fr/revision-information-theory")
     } == {"fr/entropy", "fr/cross-entropy"}
-    assert {
-        edge.aid_page_id for edge in index.revision_aids_for_lesson("en/cross-entropy")
-    } == {"en/revision-information-theory"}
+    assert {edge.aid_page_id for edge in index.revision_aids_for_lesson("en/cross-entropy")} == {
+        "en/revision-information-theory"
+    }
     assert all(
         index.revision_support_for_lesson(page_id)["status"] == "partial"
         for page_id in ("fr/entropy", "en/entropy", "fr/cross-entropy", "en/cross-entropy")
     )
-    assert sum(
-        item["status"] == "not_assessed"
-        for item in index.revision_support_by_page.values()
-    ) == len(index.revision_support_by_page) - 4
+    assert (
+        sum(item["status"] == "not_assessed" for item in index.revision_support_by_page.values())
+        == len(index.revision_support_by_page) - 4
+    )
     assert all(edge.target in index.pages_by_id for edge in index.page_edges)
     assert index.stats() == ProjectIndex.build(ROOT).stats()
