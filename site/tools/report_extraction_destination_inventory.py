@@ -308,6 +308,20 @@ def render_markdown(report: dict[str, Any]) -> str:
                 f"| `{key}` | {value['records_with_field']} | {value['references']} | "
                 f"{value['unique_reference_count']} | {value['invalid_entries']} |"
             )
+    lines.extend(
+        [
+            "",
+            "## Pedagogical-model route references",
+            "",
+            "| Field | Records with field | References | Unique values |",
+            "|---|---:|---:|---:|",
+        ]
+    )
+    for key, value in report["pedagogical_model_routes"].items():
+        lines.append(
+            f"| `{key}` | {value['records_with_field']} | {value['references']} | "
+            f"{value['unique_reference_count']} |"
+        )
     lines.extend(["", "## Candidate destination shapes", ""])
     for key, value in report["candidate_destination_shapes"].items():
         lines.append(f"- {key}: {value}")
