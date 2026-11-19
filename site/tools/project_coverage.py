@@ -81,7 +81,7 @@ def build_concept_coverage(index: Any) -> dict[str, Any]:
             (
                 "Explicit concept-to-page associations resolve to published pages."
                 if page_evidence
-                else "No explicit published teaching page is associated; eligibility is not defined."
+                else "No explicit published teaching page; eligibility is not defined."
             ),
         )
 
@@ -121,7 +121,7 @@ def build_concept_coverage(index: Any) -> dict[str, Any]:
             (
                 "Explicit first-class non-page resource associations exist."
                 if resource_evidence
-                else "No non-page resource association is registered; no universal requirement is assumed."
+                else "No non-page resource association; no universal requirement is assumed."
             ),
         )
 
@@ -142,12 +142,16 @@ def build_concept_coverage(index: Any) -> dict[str, Any]:
             revision_reason = "All associated pages are explicitly outside revision-support scope."
         elif revision_states and all(state == "not_assessed" for state in revision_states):
             revision_state = "not_assessed"
-            revision_reason = "Associated pages have not been assessed under the proposed revision contract."
+            revision_reason = (
+                "Associated pages have not been assessed under the proposed revision contract."
+            )
         else:
             # The revision contract is not yet validator-approved. Even declared
             # edges remain review evidence rather than an accepted coverage verdict.
             revision_state = "needs_review"
-            revision_reason = "Revision assessment or declarations require review under the unapproved contract."
+            revision_reason = (
+                "Revision assessment or declarations require review under the unapproved contract."
+            )
         revision_evidence = [
             {
                 "id": page_id,
