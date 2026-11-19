@@ -19,6 +19,11 @@ hierarchy:
   parents: ["en/probabilities"]
   children: ["en/cross-entropy"]
 related: ["en/likelihood", "en/entropy-exercises"]
+revision_support:
+  status: partial
+  evidence:
+    - aid: en/revision-information-theory
+      note: "The sheet covers the core identities and traps; context, temperature and calibration caveats still need explicit retrieval coverage in the lesson or practice."
 tags: ["type:concept-lesson", "destination:understand", "topic:entropy", "level:core", "language:en", "status:published"]
 -->
 
