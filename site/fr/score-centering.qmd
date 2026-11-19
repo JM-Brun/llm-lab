@@ -139,7 +139,7 @@ Ce sujet n'est pas une nouvelle étape du fil computationnel central de prédict
 
 
 ::: {.callout-warning}
-**Limites de l'audit :** le PDF arXiv canonique et toutes ses annexes n'ont pas encore été vérifiés indépendamment, les tests officiels n'ont pas été exécutés et le corps de l'article de Cameron Wolfe reste indisponible. Les chiffres expérimentaux sont rapportés par les auteurs et l'approximation de la queue top-k reste une hypothèse d'implémentation.
+**Limites et vérification :** le PDF arXiv v1 (16 pages), les annexes A.1–A.4 et B.1–B.3 ainsi que les deux tableaux expérimentaux ont été inspectés. Le test officiel `tests/test_loss.py` a passé ses 7 cas sur le snapshot upstream `fdca22b19793babdf08e33e5ba51537e82cbed2f`, avec JAX 0.9.0.1 et pytest 9.0.2 ; l'environnement ne correspond toutefois pas à la dépendance minimale déclarée (`jax>=0.11.1`). Les expériences à grande échelle et intégrations de frameworks n'ont pas été reproduites. Les résultats chiffrés restent ceux des auteurs ; le corps de l'article distinct de Cameron Wolfe demeure inaccessible.
 :::
 
 :::: {.language-switch}
