@@ -276,8 +276,7 @@ def build_report(root: Path) -> dict[str, Any]:
         },
         "extraction_record_field_presence": dict(sorted(record_key_presence.items())),
         "extraction_record_field_shapes": {
-            key: dict(sorted(value.items()))
-            for key, value in sorted(record_field_shapes.items())
+            key: dict(sorted(value.items())) for key, value in sorted(record_field_shapes.items())
         },
         "extraction_record_nested_field_presence": {
             key: dict(sorted(value.items()))
