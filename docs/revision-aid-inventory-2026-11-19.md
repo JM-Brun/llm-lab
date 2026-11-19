@@ -12,7 +12,7 @@
 | Build | 16 | 8 | 8 | 8 |
 | **Total** | **62** | **31** | **31** | **31** |
 
-The artifact records 144 explicit concept-to-page edges in Understand, 18 in Build, and 10 implementation-resource associations, all in Build. The original snapshot reported all 62 `synthesis_status` values as `not_assessed`. The relation pilot in PR #1408 adds four explicit page-aid links and `partial` assessments for the FR/EN entropy and cross-entropy lessons. It also records `integrated_sufficient` assessments for the FR/EN corpus-preparation and training-examples pages, each anchored to its existing revision callout. The other 42 Understand and 12 Build pages remain `not_assessed` until individually assessed.
+The artifact records 144 explicit concept-to-page edges in Understand, 18 in Build, and 10 implementation-resource associations, all in Build. The original snapshot reported all 62 `synthesis_status` values as `not_assessed`. The relation pilot in PR #1410 adds four explicit page-aid links and `partial` assessments for the FR/EN entropy and cross-entropy lessons. It also records `integrated_sufficient` assessments for the FR/EN corpus-preparation and training-examples pages, each anchored to its existing revision callout. The other 42 Understand and 12 Build pages remain `not_assessed` until individually assessed.
 
 The editorial observations below come from source reviews recorded in issue [#1109](https://github.com/JM-Brun/llm-lab/issues/1109). The artifact and those comments are the evidence base; this document does not claim that every page has received a paragraph-by-paragraph scientific re-review or rendered accessibility review.
 
