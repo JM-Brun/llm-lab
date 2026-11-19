@@ -44,6 +44,19 @@ Une incohérence documentaire ciblée mérite d'être conservée comme réserve 
 
 **Conséquence pour le projet :** citer la documentation du pipeline pour expliquer l'architecture conceptuelle, mais ne pas en déduire que toutes les opérations décrites sont exposées dans chaque binding/version. Pour un usage pratique, consigner la version de Tokenizers, le langage, le type d'offset (caractères/octets) et la disponibilité effective des API. Les offsets sont un point de vérification prioritaire dans un futur audit exécuté.
 
+
+### Comparaison de versions documentaires — 2026-11-19
+
+Une vérification supplémentaire distingue maintenant explicitement les documentations stables et non versionnées :
+
+- La page versionnée [Tokenizers v0.23.3 — pipeline](https://huggingface.co/docs/tokenizers/v0.23.3/en/pipeline) décrit les quatre étapes d'encodage (normalization, pre-tokenization, model, post-processing), puis le décodage dans une section distincte. Son sélecteur de version indique qu'une version plus récente, v1.0.0-rc.4, est disponible.
+- La page non versionnée [Tokenizers — pipeline](https://huggingface.co/docs/tokenizers/pipeline) affiche un avertissement relatif aux bindings « rc0 » : ils chargent un `tokenizer.json` et exposent l'encodage/décodage, mais pas la construction d'un tokenizer à partir de composants, sa modification, sa sauvegarde ni son entraînement. Ne pas transformer cette réserve de version en propriété générale de la bibliothèque.
+- Les pages de composants précisent que le normaliseur est optionnel et que le modèle est le seul composant obligatoire. Le pré-tokenizer peut également modifier la chaîne, pas seulement la découper ; ByteLevel remappe notamment les octets vers des caractères visibles.
+- La documentation indique que changer normalisation ou pré-tokenisation peut imposer un réentraînement, tandis que modifier le post-processor n'en impose pas. Cette distinction est un conseil lié au modèle et à sa configuration, pas une garantie universelle pour toute bibliothèque.
+- Le pipeline conceptuel reste cohérent entre les pages versionnée et non versionnée. En revanche, les garanties de disponibilité des API, les offsets et les bindings doivent être attribués à une version et à un langage précis.
+
+**Conséquence documentaire :** conserver la page versionnée v0.23.3 comme référence stable pour les explications d'API historiques ; utiliser l'URL non versionnée uniquement avec la date et l'avertissement de bindings. Aucun test d'exécution n'a été effectué dans cette vérification, et aucune compatibilité entre versions n'est revendiquée.
+
 ## 2. tiktoken — production et module éducatif
 
 **Dépôt :** [openai/tiktoken](https://github.com/openai/tiktoken)  
