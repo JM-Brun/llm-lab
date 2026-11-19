@@ -311,7 +311,8 @@ def test_revision_adapter_keeps_three_target_types_separate(tmp_path: Path) -> N
     ] == ["attention"]
 
     assert index.revision_targets_for_page("en/attention") == index.revision_edges
-    assert index.revision_targets_for_page("en/attention", role="synthesis")[0].target_type == "section"
+    synthesis_edges = index.revision_targets_for_page("en/attention", role="synthesis")
+    assert synthesis_edges[0].target_type == "section"
     assert [
         page.page_id for page in index.pages_for_revision_target("page", "en/query")
     ] == ["en/attention"]
