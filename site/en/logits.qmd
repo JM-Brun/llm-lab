@@ -19,6 +19,11 @@ hierarchy:
   parents: ["en/generation"]
   children: ["en/probabilities"]
 related: ["en/causal-masking", "en/transformer", "en/logits-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "The recap separates score, probability and truth; the lesson explains dimension V, ranking, common-shift invariance and the output projection. The exercise page checks these points with four answered questions."
 tags: ["type:concept-lesson", "destination:understand", "topic:logits", "level:core", "language:en", "status:published"]
 -->
 
@@ -39,7 +44,7 @@ By the end of this page, you will be able to:
 - identify the vector dimension from the vocabulary size.
 :::
 
-::: {.callout-tip title="The one-minute mental model"}
+::: {.callout-tip title="The one-minute mental model" #revision-summary}
 **Logits are scores, not probabilities.** At one position, the model produces one score per vocabulary token. The largest score identifies the top-ranked candidate; by itself, it is neither a probability nor a measure of truth.
 
 **First pass:** follow “Transformer representation → output projection → vector of $V$ logits”. The next page explains how these scores become a conditional distribution.

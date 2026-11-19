@@ -17,12 +17,21 @@ hierarchy:
   parents: ["fr/build-path"]
   children: []
 related: ["fr/transformer", "fr/queries-keys-values", "fr/scaled-dot-product-attention", "fr/causal-masking", "fr/contextualized-representations", "fr/transformer-block-walkthrough-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "Le rappel décrit le flux pré-LN, l'attention multi-têtes, les projections et les résidus, et sépare explicitement les variantes architecturales comparées de l'implémentation réellement testée."
 tags: ["type:guided-build", "destination:build", "topic:reference-transformer-block", "level:applied", "language:fr", "status:published"]
 -->
 
 ::: {.chapter-lead}
 Cette page est la troisième étape (3 sur 5) de la visite guidée du code de référence. Le bloc est l'unité répétée du réseau. Cette page suit le fichier ligne par ligne, de l'initialisation des paramètres jusqu'au `forward` complet. Code : [`src/llm_lab/foundations/transformer_block.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/transformer_block.py).
 :::
+::: {.callout-tip title="Le bloc Transformer en une minute" #revision-summary}
+Le bloc de référence suit un ordre pré-LN : normaliser, calculer l'auto-attention multi-têtes, ajouter le chemin résiduel, puis normaliser, appliquer le MLP et ajouter son résidu. Les projections Q/K/V/O et les formes permettent de suivre le calcul ; les variantes MQA/GQA, MLA et attention locale sont comparées comme architectures, sans être présentées comme implémentées dans ce code.
+:::
+
 :::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d'apprentissage"}
 À l'issue de cette visite, vous pourrez :
 - tracer une forme `(B, T, d)` à travers le bloc, de l'entrée à la sortie ;

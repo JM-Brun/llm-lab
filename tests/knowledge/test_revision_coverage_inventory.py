@@ -61,16 +61,15 @@ def test_real_repository_inventory_projects_revision_links_and_assessments() -> 
     build = inventory["counts"]["build"]
     assert understand["revision_aid_links"] == 4
     assert understand["pages_with_revision_aids"] == 4
-    assert understand["revision_support_by_status"]["partial"] == 4
-    assert understand["revision_support_by_status"]["integrated_sufficient"] == 8
-    assert understand["revision_support_by_status"]["not_assessed"] == 34
+    assert understand["revision_support_by_status"].get("partial", 0) == 0
+    assert understand["revision_support_by_status"]["integrated_sufficient"] == 46
+    assert understand["revision_support_by_status"].get("not_assessed", 0) == 0
     assert build["revision_support_by_status"] == {
-        "integrated_sufficient": 4,
-        "not_assessed": 12,
+        "integrated_sufficient": 16,
     }
     by_id = {page["id"]: page for page in inventory["pages"]}
     assert by_id["fr/entropy"]["revision_aids"][0]["id"] == "fr/revision-information-theory"
-    assert by_id["en/cross-entropy"]["revision_support"]["status"] == "partial"
+    assert by_id["en/cross-entropy"]["revision_support"]["status"] == "integrated_sufficient"
     assert by_id["fr/corpus-preparation"]["revision_support"]["status"] == "integrated_sufficient"
     assert by_id["en/training-examples"]["revision_support"]["status"] == "integrated_sufficient"
 

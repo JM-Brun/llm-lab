@@ -19,6 +19,11 @@ hierarchy:
   parents: ["fr/logits", "fr/generation"]
   children: ["fr/entropy", "fr/vraisemblance"]
 related: ["fr/probabilites-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "Le rappel relie softmax, distribution conditionnelle, température, sélection et limites de calibration/vérité. Le workbench numérique, les avertissements et les quatre questions corrigées couvrent normalisation, concentration et interprétation."
 tags: ["type:concept-lesson", "destination:understand", "topic:probabilites", "level:core", "language:fr", "status:published"]
 -->
 
@@ -28,7 +33,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:probabilites", "l
 Un LLM ne produit pas directement des faits ni des probabilités de vérité. À chaque position, il produit des scores qui sont transformés en une distribution sur les tokens possibles, conditionnée par le préfixe.
 :::
 
-::: {.callout-tip title="L'idée à retenir en une minute"}
+::: {.callout-tip title="L'idée à retenir en une minute" #revision-summary}
 La softmax transforme les logits en une **distribution conditionnée par le préfixe**. Elle garantit des valeurs positives dont la somme vaut un ; elle ne garantit ni calibration, ni vérité factuelle.
 
 **Première lecture :** suivez l'exemple à deux logits, puis retenez que $p_\theta(x_t\mid x_{<t})$ dépend du contexte. La température modifie la concentration de cette distribution, pas les paramètres appris.

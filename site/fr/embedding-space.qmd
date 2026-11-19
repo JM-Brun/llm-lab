@@ -19,6 +19,11 @@ hierarchy:
   parents: ["fr/text-data"]
   children: ["fr/positional-encoding", "fr/contextualized-representations", "fr/cosine-similarity", "fr/linearite-embeddings"]
 related: ["fr/embedding-space-exercises", "fr/gpt-model-walkthrough"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "Le rappel rassemble les trois distinctions de la leçon : l'ID est une adresse de ligne, la ligne contient un vecteur statique de dimension d, et les couches du Transformer produisent ensuite des états contextualisés dépendant de la position et du contexte. Trois questions corrigées et l'exploration guidée renforcent le rappel."
 tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space", "level:core", "language:fr", "status:published"]
 -->
 
@@ -26,6 +31,10 @@ tags: ["type:concept-lesson", "destination:understand", "topic:embedding-space",
 
 ::: {.chapter-lead}
 Après la tokenisation, le modèle reçoit une séquence d'**IDs entiers**. Chaque ID permet de retrouver un vecteur appris dans une table de paramètres : la **matrice de plongements** (*embedding matrix*). Cette page explique ce lookup, puis distingue soigneusement l'adresse de la ligne, le vecteur stocké dans cette ligne et les représentations que le Transformer construira ensuite.
+:::
+
+::: {.callout-tip title="L'idée à retenir en une minute" #revision-summary}
+Un **Token ID est une adresse de ligne**, pas un vecteur ni une coordonnée dans l'espace. La matrice d'embeddings $E\in\mathbb{R}^{V\times d}$ associe à chaque ID un vecteur initial de dimension $d$. Deux occurrences du même ID partagent ce vecteur de lookup ; les couches du Transformer produisent ensuite des états contextualisés différents selon la position et le contexte.
 :::
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d’apprentissage"}
@@ -45,7 +54,7 @@ La continuation commence par « Vous savez, moi je ne crois pas qu'il y ait de b
 
 Le tokenizer découpe le préfixe en tokens selon son vocabulaire et ses règles. Il attribue à chaque token un ID entier. Un mot visible n'est pas nécessairement un token unique : la segmentation exacte dépend du tokenizer utilisé.
 
-## Le lookup : sélectionner une ligne, pas une coordonnée
+## Le lookup : sélectionner une ligne, pas une coordonnée {#lookup}
 
 La matrice de plongements, notée $E$, est une table apprise. Elle contient une ligne par ID du vocabulaire ; chaque ligne contient un vecteur de nombres réels.
 

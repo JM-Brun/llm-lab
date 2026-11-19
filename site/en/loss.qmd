@@ -19,6 +19,11 @@ hierarchy:
   parents: ["en/cross-entropy"]
   children: ["en/gradients", "en/training-loop"]
 related: ["en/loss-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "The recap specifies logit-target alignment, valid positions and aggregation; the lesson covers teacher forcing, masking, reduction and perplexity. Three answered questions check denominators, generalization and comparability."
 tags: ["type:concept-lesson", "destination:understand", "topic:loss", "level:core", "language:en", "status:published"]
 -->
 
@@ -28,7 +33,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:loss", "level:cor
 *Loss* refers to a scalar objective that training seeks to minimize. It is often built from per-token cross-entropies, but its exact aggregation is part of the experiment's definition.
 :::
 
-::: {.callout-tip title="The one-minute mental model"}
+::: {.callout-tip title="The one-minute mental model" #revision-summary}
 The *loss* measures the mismatch between predictions and **target tokens**. In autoregressive prediction, we index logits by the **target position** here: logits computed from the prefix $x_{<t}$ are compared with target token $x_t$. Some implementations instead index logits by the input position and then predict $x_{t+1}$; a shift error can produce a plausible-looking loss while training the wrong task.
 
 **First pass:** understand the penalty for one token, then its mean over valid positions only. Ignored positions (such as padding) must contribute neither to the sum nor to the denominator.

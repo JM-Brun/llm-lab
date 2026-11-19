@@ -18,6 +18,11 @@ hierarchy:
   parents: []
   children: []
 related: ["fr/llm-overview", "fr/generation", "fr/context-engineering", "fr/contextualized-representations", "fr/in-context-learning-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "Le rappel distingue l'adaptation temporaire par le prompt, les paramètres fixes, les usages des démonstrations et les limites de généralisation ; la page Practice bilingue propose deux questions de transfert avec réponses."
 tags: ["type:concept-lesson", "destination:understand", "topic:in-context-learning", "level:core", "language:fr", "status:published"]
 -->
 
@@ -123,7 +128,7 @@ Pour distinguer apprentissage de la règle et simple imitation :
 Un bon protocole sépare la réussite sur les exemples vus de la généralisation à des cas non montrés.
 :::
 
-## À retenir
+## À retenir {#revision-summary}
 
 - L'ICL utilise le prompt comme support d'adaptation temporaire.
 - Les poids restent fixes pendant cette adaptation en contexte.

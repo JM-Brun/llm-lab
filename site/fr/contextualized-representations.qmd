@@ -19,6 +19,11 @@ hierarchy:
   parents: ["fr/embedding-space", "fr/positional-encoding"]
   children: []
 related: ["fr/queries-keys-values", "fr/transformer", "fr/contextualized-representations-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "Le rappel sépare embedding initial et état contextualisé ; le schéma, le parcours en cinq étapes, les exemples de dépendance contextuelle, trois questions corrigées et l'enquête SAE permettent de réviser puis d'examiner les limites d'interprétation."
 tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-representations", "level:core", "language:fr", "status:published"]
 -->
 
@@ -41,7 +46,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-re
 Le mot *situation* apparaît dans « une bonne situation, ça, scribe ? », puis dans « de bonne ou de mauvaise situation ». Le premier emploi désigne un poste ; le second, les circonstances. En supposant un ID commun et une position simplifiée identique, le lookup initial est le même. **Le Transformer construit ensuite des états cachés contextualisés à partir du contexte.**
 :::
 
-::: {.callout-tip title="L'idée à retenir en une minute"}
+::: {.callout-tip title="L'idée à retenir en une minute" #revision-summary}
 - **Même ID, même lookup :** avec une matrice fixe, les deux occurrences sélectionnent la même ligne.
 - **Position :** l'architecture introduit l'ordre selon son mécanisme (embedding absolu, RoPE, etc.).
 - **Contexte :** chaque bloc transforme l'état d'une position à partir des tokens auxquels elle peut accéder.

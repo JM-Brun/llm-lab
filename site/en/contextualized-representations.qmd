@@ -19,6 +19,11 @@ hierarchy:
   parents: ["en/embedding-space", "en/positional-encoding"]
   children: []
 related: ["en/queries-keys-values", "en/transformer", "en/contextualized-representations-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "The recap separates initial embeddings from contextualized states; the diagram, five-step route, context-dependence examples, three answered questions and SAE investigation support recall and critical interpretation."
 tags: ["type:concept-lesson", "destination:understand", "topic:contextualized-representations", "level:core", "language:en", "status:published"]
 -->
 
@@ -41,7 +46,7 @@ By the end of this lesson, you should be able to:
 The question “What have the Romans ever done for us?” and a reply such as “The Romans built roads” contain the same visible word in different surrounding sequences. Under the assumption that the tokenizer assigns it the same ID, both occurrences retrieve the same initial vector. **The lookup does not change; the Transformer's processing of each sequence builds hidden states that depend on context.**
 :::
 
-::: {.callout-tip title="The one-minute mental model"}
+::: {.callout-tip title="The one-minute mental model" #revision-summary}
 - **Same ID, same lookup:** with a fixed matrix, both occurrences select the same row.
 - **Position:** the architecture introduces order through its positional mechanism (absolute embeddings, RoPE, etc.).
 - **Context:** each block transforms a position's state using the tokens it can access.

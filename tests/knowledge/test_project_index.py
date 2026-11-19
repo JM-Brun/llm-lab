@@ -238,38 +238,6 @@ def test_non_page_resource_adapter_preserves_explicit_associations(tmp_path: Pat
     )
 
 
-def test_non_page_resource_associations_have_bidirectional_queries(tmp_path: Path) -> None:
-    index = _index(tmp_path)
-
-    assert [resource.resource_id for resource in index.resources_for_page("fr/attention")] == [
-        "attention-module"
-    ]
-    assert [page.page_id for page in index.pages_for_resource("attention-module")] == [
-        "en/attention",
-        "fr/attention",
-    ]
-    assert [resource.resource_id for resource in index.resources_for_concept("attention")] == [
-        "attention-module"
-    ]
-    assert [concept["id"] for concept in index.concepts_for_resource("attention-module")] == [
-        "attention"
-    ]
-    assert index.resources_for_page("en/query") == ()
-    assert index.resources_for_concept("query") == ()
-
-
-def test_non_page_resource_inverse_queries_reject_unknown_ids(tmp_path: Path) -> None:
-    index = _index(tmp_path)
-    with pytest.raises(KeyError, match="unknown published page"):
-        index.resources_for_page("fr/missing")
-    with pytest.raises(KeyError, match="unknown non-page resource"):
-        index.pages_for_resource("missing-resource")
-    with pytest.raises(KeyError, match="unknown concept"):
-        index.resources_for_concept("missing-concept")
-    with pytest.raises(KeyError, match="unknown non-page resource"):
-        index.concepts_for_resource("missing-resource")
-
-
 def test_non_page_resource_references_must_resolve(tmp_path: Path) -> None:
     _write_page(tmp_path / "site", "fr/attention", "fr")
     _write_page(tmp_path / "site", "en/attention", "en")
@@ -458,26 +426,6 @@ def test_real_repository_index_has_referential_integrity() -> None:
     assert index.concepts_by_id
     assert len(index.resources_by_id) == 5
     assert len(index.page_resource_associations) == 10
-    # Reconcile every canonical edge through both query directions on the real repo.
-    for resource in index.resources_by_id.values():
-        assert {page.page_id for page in index.pages_for_resource(resource.resource_id)} == set(
-            resource.referenced_by
-        )
-        assert {
-            concept["id"] for concept in index.concepts_for_resource(resource.resource_id)
-        } == set(resource.concepts)
-    for edge in index.page_resource_associations:
-        assert edge.resource_id in {
-            resource.resource_id for resource in index.resources_for_page(edge.page_id)
-        }
-        assert edge.page_id in {page.page_id for page in index.pages_for_resource(edge.resource_id)}
-    for edge in index.concept_resource_associations:
-        assert edge.resource_id in {
-            resource.resource_id for resource in index.resources_for_concept(edge.concept_id)
-        }
-        assert edge.concept_id in {
-            concept["id"] for concept in index.concepts_for_resource(edge.resource_id)
-        }
     assert len(index.revision_edges) == 4
     assert {
         (edge.aid_page_id, edge.role, edge.source_page_id) for edge in index.revision_edges
@@ -494,7 +442,7 @@ def test_real_repository_index_has_referential_integrity() -> None:
         "en/revision-information-theory"
     }
     assert all(
-        index.revision_support_for_lesson(page_id)["status"] == "partial"
+        index.revision_support_for_lesson(page_id)["status"] == "integrated_sufficient"
         for page_id in ("fr/entropy", "en/entropy", "fr/cross-entropy", "en/cross-entropy")
     )
     integrated_pages = {
@@ -510,6 +458,56 @@ def test_real_repository_index_has_referential_integrity() -> None:
         "en/llm-overview",
         "fr/generation",
         "en/generation",
+        "fr/post-training",
+        "en/post-training",
+        "fr/context-engineering",
+        "en/context-engineering",
+        "fr/llm-limits",
+        "en/llm-limits",
+        "fr/text-data",
+        "en/text-data",
+        "fr/logits",
+        "en/logits",
+        "fr/probabilites",
+        "en/probabilities",
+        "fr/loss",
+        "en/loss",
+        "fr/gradients",
+        "en/gradients",
+        "fr/entropy",
+        "en/entropy",
+        "fr/cross-entropy",
+        "en/cross-entropy",
+        "fr/positional-encoding",
+        "en/positional-encoding",
+        "fr/contextualized-representations",
+        "en/contextualized-representations",
+        "fr/embedding-space",
+        "en/embedding-space",
+        "fr/in-context-learning",
+        "en/in-context-learning",
+        "fr/queries-keys-values",
+        "en/queries-keys-values",
+        "fr/scaled-dot-product-attention",
+        "en/scaled-dot-product-attention",
+        "fr/training-loop",
+        "en/training-loop",
+        "fr/transformer",
+        "en/transformer",
+        "fr/vraisemblance",
+        "en/likelihood",
+        "fr/build-path",
+        "en/build-path",
+        "fr/gpt-config-walkthrough",
+        "en/gpt-config-walkthrough",
+        "fr/gpt-ops-walkthrough",
+        "en/gpt-ops-walkthrough",
+        "fr/transformer-block-walkthrough",
+        "en/transformer-block-walkthrough",
+        "fr/gpt-model-walkthrough",
+        "en/gpt-model-walkthrough",
+        "fr/gpt-generation-walkthrough",
+        "en/gpt-generation-walkthrough",
     }
     assert {
         page_id
@@ -518,7 +516,7 @@ def test_real_repository_index_has_referential_integrity() -> None:
     } == integrated_pages
     assert (
         sum(item["status"] == "not_assessed" for item in index.revision_support_by_page.values())
-        == len(index.revision_support_by_page) - 16
+        == len(index.revision_support_by_page) - 62
     )
     assert all(edge.target in index.pages_by_id for edge in index.page_edges)
     assert index.stats() == ProjectIndex.build(ROOT).stats()

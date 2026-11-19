@@ -19,6 +19,11 @@ hierarchy:
   parents: ["fr/embedding-space"]
   children: ["fr/contextualized-representations", "fr/rope", "fr/sinusoidal-positional-encoding"]
 related: ["fr/transformer", "fr/positional-encoding-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "Le rappel distingue les mécanismes positionnels absolus et relatifs, situe RoPE et sépare encodage positionnel et masque causal ; quatre questions intégrées corrigées vérifient ordre, RoPE, masque causal et limites d'extrapolation."
 tags: ["type:concept-lesson", "destination:understand", "topic:positional-encoding", "level:core", "language:fr", "status:published"]
 -->
 
@@ -28,7 +33,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:positional-encodi
 Un Transformer doit disposer d'un signal d'ordre pour distinguer, par exemple, « le chat poursuit le chien » de « le chien poursuit le chat ». Cette page présente les mécanismes positionnels et les distingue du masque causal ; la dérivation détaillée de RoPE est réservée à un [approfondissement avancé](rope.qmd). Pour les encodages sinusoïdaux du Transformer original, consultez l'[approfondissement dédié](sinusoidal-positional-encoding.qmd).
 :::
 
-::: {.callout-tip title="L'idée à retenir en une minute"}
+::: {.callout-tip title="L'idée à retenir en une minute" #revision-summary}
 - **Pourquoi :** les embeddings de contenu seuls ne disent pas où se trouve un token. Sans signal positionnel ni contrainte d'ordre, l'auto-attention est équivariante par permutation.
 - **Où :** les encodages absolus sont ajoutés aux représentations d'entrée ; les mécanismes relatifs agissent dans l'attention ; **RoPE** fait tourner les requêtes et les clés après projection.
 - **À ne pas confondre :** le masque causal limite les positions visibles (pas de futur), mais ne remplace pas un mécanisme qui représente les positions ou leurs décalages.

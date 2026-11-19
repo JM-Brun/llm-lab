@@ -17,12 +17,21 @@ hierarchy:
   parents: ["fr/build-path"]
   children: []
 related: ["fr/generation", "fr/logits", "fr/probabilites", "fr/gpt-generation-walkthrough-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "Le rappel suit validation du prompt, fenêtre glissante, logits de dernière position, sélection gloutonne ou échantillonnée avec température et limites explicites (pas de cache KV ni d'arrêt anticipé) ; les exercices et tests vérifient la boucle."
 tags: ["type:guided-build", "destination:build", "topic:reference-gpt-generation", "level:applied", "language:fr", "status:published"]
 -->
 
 ::: {.chapter-lead}
 Ce fichier transforme les logits en séquence : à chaque étape, retraiter le contexte, lire les logits à la dernière position, choisir un token, l'ajouter, recommencer. Cette page est la cinquième et dernière étape (5 sur 5) de la visite guidée ; le [modèle](gpt-model-walkthrough.qmd) est supposé lu. Code : [`src/llm_lab/foundations/generate.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/generate.py).
 :::
+::: {.callout-tip title="La génération en une minute" #revision-summary}
+À chaque itération, le générateur valide le prompt, conserve la fenêtre de contexte autorisée, exécute le modèle, lit les logits de la dernière position, choisit un token (glouton ou échantillonné après température), l'ajoute au contexte puis recommence. Cette version ne met pas en cache les clés/valeurs et ne définit pas de règle d'arrêt anticipé : ces limites font partie du contrat, pas d'une fonctionnalité implicite.
+:::
+
 :::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d'apprentissage"}
 À l'issue de cette visite, vous pourrez :
 - dérouler les étapes d'une génération à la main, fenêtre glissante comprise ;

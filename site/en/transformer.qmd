@@ -19,6 +19,11 @@ hierarchy:
   parents: ["en/index", "en/llm-overview", "en/transformer-architectures"]
   children: ["en/queries-keys-values", "en/scaled-dot-product-attention"]
 related: ["en/text-data", "en/embedding-space", "en/positional-encoding", "en/contextualized-representations", "en/logits", "en/tensors", "en/generation", "en/transformer-block-walkthrough", "en/gpt-model-walkthrough", "en/transformer-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "The new recap connects decoder-only architecture, self-attention and MLP roles, residual connections, normalization and logits; five answered questions check transfer across sublayers, blocks and generation."
 tags: ["type:system-overview", "destination:understand", "topic:transformer", "level:overview", "language:en", "status:published"]
 -->
 
@@ -28,6 +33,10 @@ tags: ["type:system-overview", "destination:understand", "topic:transformer", "l
 A **GPT** is a language model built around a **decoder-only Transformer**. The Transformer does not refer to a processing step placed between other components: it is a neural-network architecture. In a decoder-only GPT, its core is a stack of Transformer blocks that transform token representations. From these representations, the network computes **logits** — one score for every token in the vocabulary.
 
 This page first shows what that architecture looks like, then follows a forward pass through its blocks to the logits. It stops at the network output: converting logits into probabilities and selecting the next token belong to decoding, not to the Transformer's internal computation.
+:::
+
+::: {.callout-tip title="The Transformer in one minute" #revision-summary}
+A decoder-only GPT is a Transformer network made of repeated blocks. Within each block, self-attention mixes information across permitted positions, the MLP transforms each position, and residual connections plus normalization stabilize computation. The stack produces final representations and then logits; choosing the next token belongs to decoding.
 :::
 
 <div class="pipeline-stepper" role="group" aria-label="Steps in Transformer computation">

@@ -17,6 +17,11 @@ hierarchy:
   parents: ["en/llm-overview"]
   children: []
 related: ["en/experimental-evaluation", "en/emergence", "en/llm-limits-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "The recap connects the prediction objective to its limitations and evaluation requirements; the quick question and four bilingual exercises test truth, emergence, calibration and benchmark scope."
 tags: ["type:concept-lesson", "destination:understand", "topic:llm-limits", "level:overview", "language:en", "status:published"]
 -->
 
@@ -86,7 +91,7 @@ Discussions of so-called *emergent* abilities require specifying the task, the m
 
 Model size alone does not explain performance either. Data quality, diversity, and provenance, the objective, the architecture, the training procedure, adaptation, and the evaluation protocol jointly shape the results.
 
-::: {.callout-tip title="Key ideas in one minute"}
+::: {.callout-tip title="Key ideas in one minute" #revision-summary}
 - **Objective:** predicting plausible continuations is not the same as verifying their truth.
 - **Calibration:** a high probability is not, by itself, a guarantee of reliability.
 - **Understanding:** operational competence measured on a task does not establish human-like understanding.

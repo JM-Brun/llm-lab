@@ -19,6 +19,11 @@ hierarchy:
   parents: ["en/loss"]
   children: []
 related: ["en/gradients-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "The recap distinguishes the objective, its local variation and chain-rule backpropagation; the lesson connects logit gradients, parameters and updates. Three answered questions cover the cross-entropy derivative, numerical checking and step size."
 tags: ["type:concept-lesson", "destination:understand", "topic:gradients", "level:core", "language:en", "status:published"]
 -->
 
@@ -32,7 +37,7 @@ The gradient $\nabla_\theta\mathcal{L}$ collects partial derivatives of the loss
 Both methods use derivatives, but they use different information. **Gradient descent** uses the first derivative (the gradient) to choose a direction; **Newton's method** also uses curvature, represented by the Hessian in several dimensions, to scale and orient its step. Neural-network training commonly uses stochastic or minibatch gradients with optimizers such as Adam or AdamW—not a simplified Newton update. The methods are related, but one is not simply the other with a term removed.
 :::
 
-::: {.callout-tip title="The one-minute mental model"}
+::: {.callout-tip title="The one-minute mental model" #revision-summary}
 The loss tells us **what should improve**; the gradient tells us **how the loss changes when parameters change**. Backpropagation applies the chain rule to carry this information from the output back to the parameters.
 
 **First pass:** follow the path loss → derivative with respect to logits → derivatives with respect to parameters → parameter update. A gradient describes a local change; it does not guarantee that an arbitrary step will reduce the loss.

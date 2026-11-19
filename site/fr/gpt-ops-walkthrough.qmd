@@ -17,12 +17,21 @@ hierarchy:
   parents: ["fr/build-path"]
   children: []
 related: ["fr/transformer", "fr/tensors", "fr/gpt-ops-walkthrough-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "Le rappel rassemble initialisation, projection linéaire, layer normalization par position avec epsilon et GELU approximé ; la page expose les formes et les tests unitaires de chaque opération."
 tags: ["type:guided-build", "destination:build", "topic:reference-gpt-ops", "level:applied", "language:fr", "status:published"]
 -->
 
 ::: {.chapter-lead}
 Cette page est la deuxième étape (2 sur 5) de la visite guidée du code de référence. Ce fichier rassemble les opérations que chaque bloc Transformer répète : initialisation des poids, projection linéaire, normalisation et activation. Les sortir du modèle a deux bénéfices : chaque opération est **testable seule**, et les fichiers du modèle se lisent **comme de l'architecture**. Code complet : [`src/llm_lab/foundations/gpt_ops.py`](https://github.com/JM-Brun/llm-lab/blob/main/src/llm_lab/foundations/gpt_ops.py).
 :::
+::: {.callout-tip title="Les briques numériques en une minute" #revision-summary}
+Le module isole quatre opérations réutilisées par le modèle : initialiser des poids, projeter linéairement avec une convention de forme explicite, normaliser chaque position sur le dernier axe avec un terme epsilon et appliquer l'approximation tanh de GELU. Les tester séparément rend leurs formes et leurs comportements vérifiables avant l'assemblage du réseau.
+:::
+
 :::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d'apprentissage"}
 À l'issue de cette visite, vous pourrez :
 - prédire la forme de sortie de chaque opération (`linear`, `layer_norm`, `gelu`) sans l'exécuter ;

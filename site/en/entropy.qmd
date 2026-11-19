@@ -20,10 +20,10 @@ hierarchy:
   children: ["en/cross-entropy"]
 related: ["en/likelihood", "en/entropy-exercises"]
 revision_support:
-  status: partial
+  status: integrated_sufficient
   evidence:
-    - aid: en/revision-information-theory
-      note: "The sheet covers the core identities and traps; context, temperature and calibration caveats still need explicit retrieval coverage in the lesson or practice."
+    - anchor: revision-summary
+      note: "The recap and six answered questions cover context-conditional distributions, entropy vs surprisal, temperature effects, empirical calibration and comparison conventions."
 tags: ["type:concept-lesson", "destination:understand", "topic:entropy", "level:core", "language:en", "status:published"]
 -->
 
@@ -35,7 +35,7 @@ The previous page, [Output probabilities](probabilities.qmd), showed how logits 
 In an autoregressive LLM, entropy describes how spread out the predicted next-token distribution is for a given context. It characterizes that distribution: it does not tell us whether the answer is true or the model is reliable.
 :::
 
-::: {.callout-tip title="The one-minute mental model"}
+::: {.callout-tip title="The one-minute mental model" #revision-summary}
 - **Predictive entropy:** $H(p)=-\sum_v p(v)\log p(v)$ summarizes the spread of the entire next-token distribution for a given prefix.
 - **Observed surprise:** $-\log p(x_t\mid x_{<t})$ concerns the token that was actually observed; it is not the entropy of the distribution.
 - **Bounds:** for a finite vocabulary of size $V$, $0\leq H(p)\leq\log V$ nats (natural logarithm).
@@ -255,6 +255,9 @@ To make these ideas concrete, run the [reproducible predictive-compression exper
 1. Does low entropy guarantee that the most likely token is correct?
 2. How does entropy differ from the surprise of the observed token?
 3. Why should the tokenizer be documented when comparing perplexities?
+4. Why can the same model have different entropy values in different contexts?
+5. What does a higher temperature change, and what does it not establish?
+6. Does low entropy guarantee that predictions are well calibrated?
 
 <details>
 <summary>Show the answers</summary>
@@ -262,6 +265,9 @@ To make these ideas concrete, run the [reproducible predictive-compression exper
 1. No. Entropy describes the spread of the distribution, not factual correctness.
 2. Entropy is the expected surprisal under $p$; observed surprisal is $-\ln p(x_t)$ for the target that actually occurred.
 3. Tokenizers segment text differently, changing the units and number of positions being evaluated.
+4. Entropy is defined over $p(\cdot\mid context)$: a different context can produce a different distribution and therefore a different spread.
+5. Temperature rescales logits before softmax and tends to flatten the distribution as it increases. It does not update model parameters or prove truth or calibration.
+6. No. Calibration compares stated confidence with observed frequencies across a set of predictions; a concentrated distribution can still be wrong often.
 
 </details>
 :::

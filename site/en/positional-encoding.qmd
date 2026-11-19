@@ -19,6 +19,11 @@ hierarchy:
   parents: ["en/embedding-space"]
   children: ["en/contextualized-representations", "en/rope", "en/sinusoidal-positional-encoding"]
 related: ["en/transformer", "en/positional-encoding-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "The recap distinguishes absolute and relative positional mechanisms, situates RoPE and separates positional encoding from causal masking; four answered in-page questions check order, RoPE, causal masks and extrapolation limits."
 tags: ["type:concept-lesson", "destination:understand", "topic:positional-encoding", "level:core", "language:en", "status:published"]
 -->
 
@@ -28,7 +33,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:positional-encodi
 A Transformer needs an ordering signal to distinguish, for example, “the cat chases the dog” from “the dog chases the cat”. This page introduces positional mechanisms and distinguishes them from causal masking; the detailed RoPE derivation belongs in an [advanced deep dive](rope.qmd). For the original Transformer's sinusoidal encodings, see the [dedicated deep dive](sinusoidal-positional-encoding.qmd).
 :::
 
-::: {.callout-tip title="The one-minute mental model"}
+::: {.callout-tip title="The one-minute mental model" #revision-summary}
 - **Why:** content embeddings alone do not say where a token occurs. Without positional information or an order-dependent constraint, self-attention is permutation equivariant.
 - **Where:** absolute encodings are added to input representations; relative mechanisms act inside attention; **RoPE** rotates queries and keys after projection.
 - **Do not conflate:** the causal mask limits which positions are visible (no future tokens), but it does not replace a mechanism that represents positions or their offsets.

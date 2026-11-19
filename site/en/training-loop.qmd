@@ -19,6 +19,11 @@ hierarchy:
   parents: ["en/loss"]
   children: ["en/post-training"]
 related: ["en/scaling-laws", "en/build-path", "en/experimental-evaluation"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "The recap separates forward pass, loss, gradient, actual parameter update and independent validation measurement; the lesson includes an answered self-check on the loop and overfitting."
 tags: ["type:concept-lesson", "destination:understand", "topic:training-loop", "level:core", "language:en", "status:published"]
 -->
 
@@ -28,7 +33,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:training-loop", "
 Training repeats one cycle many times: predict, measure the loss, compute the gradient, update the parameters. Its objective is to improve fit to the training data; this does not guarantee a decrease at every step or better performance on unseen text, which must be measured separately on held-out data.
 :::
 
-::: {.callout-tip title="The one-minute mental model"}
+::: {.callout-tip title="The one-minute mental model" #revision-summary}
 A **training step** takes a batch of observed prefixes and targets, runs the forward pass, computes the [loss](loss.qmd), obtains the [gradient](gradients.qmd), and lets an **optimizer** turn that gradient into a parameter update. **Training** is this step repeated over many batches. Only the update changes the parameters.
 
 A second measurement runs alongside: the same loss computed on **validation** data that never produces an update. Training loss tells you how well the model fits what it is fitted to; validation loss estimates how well that fit carries over.

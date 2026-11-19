@@ -20,10 +20,10 @@ hierarchy:
   children: ["fr/loss"]
 related: ["fr/vraisemblance", "fr/cross-entropy-exercises"]
 revision_support:
-  status: partial
+  status: integrated_sufficient
   evidence:
-    - aid: fr/revision-information-theory
-      note: "La fiche couvre l’identité entropie + KL et le cas one-hot ; l’alignement décalé, les masques et le dénominateur des tokens valides restent spécifiques à la leçon."
+    - anchor: revision-summary
+      note: "Le rappel et quatre questions corrigées vérifient le cas one-hot, l'alignement logits[t] avec cible[t+1], la séparation masque causal/masque de loss et le dénominateur des seules positions valides."
 tags: ["type:concept-lesson", "destination:understand", "topic:cross-entropy", "level:core", "language:fr", "status:published"]
 -->
 
@@ -33,7 +33,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:cross-entropy", "
 La page précédente a construit la vraisemblance d'une séquence en combinant les probabilités conditionnelles des tokens observés, puis sa négative log-vraisemblance (NLL). Pour une cible one-hot, la cross-entropie d'une position est la négative log-probabilité du token observé. En entraînement autorégressif, cette quantité est calculée pour les positions cibles autorisées, puis agrégée selon une convention qu'il faut expliciter.
 :::
 
-::: {.callout-tip title="L'idée à retenir en une minute"}
+::: {.callout-tip title="L'idée à retenir en une minute" #revision-summary}
 - **Une cible :** pour une cible one-hot $y$, $\ell=-\log p_\theta(y\mid x_{<t})$ ; une faible probabilité attribuée au token observé coûte cher.
 - **Une distribution cible :** plus généralement, $H(q,p)=-\sum_i q_i\log p_i$. L'entropie croisée n'est pas l'entropie prédictive $H(p)$.
 - **Une séquence :** aligner chaque logit sur le bon token cible, décaler entrées et cibles de façon cohérente, puis exclure les positions invalides du numérateur et du dénominateur.
@@ -331,6 +331,7 @@ La [collection de fondations mathématiques](exercises.qmd#fondations) contient 
 1. Pourquoi une probabilité cible égale à 1 donne-t-elle une perte nulle ?
 2. Pourquoi faut-il exclure les positions masquées du dénominateur de la moyenne ?
 3. La perplexité mesure-t-elle directement la vérité ou l'utilité d'une réponse ?
+4. En entraînement next-token, pourquoi les logits à la position $t$ doivent-ils être alignés avec la cible à la position $t+1$ ?
 
 <details>
 <summary>Afficher les réponses</summary>
@@ -338,6 +339,7 @@ La [collection de fondations mathématiques](exercises.qmd#fondations) contient 
 1. La perte vaut $-\log p_y$ : elle est nulle lorsque $p_y=1$.
 2. Sinon, la moyenne ne porte plus uniquement sur les tokens valides et son échelle est faussée.
 3. Non. Elle mesure l'attribution de probabilités aux tokens d'un jeu de données donné ; elle ne mesure pas directement la vérité, l'utilité ou la sécurité.
+4. La représentation à la position $t$ ne voit que le préfixe jusqu'à $t$ et prédit le token suivant. Sans décalage, on comparerait les logits au token déjà présent à la position $t$ au lieu de la cible suivante.
 
 </details>
 :::

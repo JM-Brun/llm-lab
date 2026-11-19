@@ -17,11 +17,20 @@ hierarchy:
   parents: ["en/index", "en/llm-overview"]
   children: ["en/gpt-config-walkthrough", "en/gpt-ops-walkthrough", "en/transformer-block-walkthrough", "en/gpt-model-walkthrough", "en/gpt-generation-walkthrough", "en/corpus-preparation"]
 related: []
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "The recap synthesizes the five construction stages, their dependency order and expected evidence (code, shapes, tests, observable result), while distinguishing available inference from the incomplete data/training/evaluation pipeline."
 tags: ["type:guided-build", "destination:build", "topic:build-path", "level:applied", "language:en", "status:published"]
 -->
 
 ::: {.chapter-lead}
 This path guides you through an existing small decoder-only GPT: inspect its configuration and numerical building blocks, trace the Transformer block and assembled model, then run the generation loop. LLM Lab uses small, inspectable models to teach mechanisms, not to reproduce production-scale capabilities. The tested reference code lives in [`src/llm_lab/foundations/`](https://github.com/JM-Brun/llm-lab/tree/main/src/llm_lab/foundations); each of the five tours includes exercises with worked answers. You can use these tours to guide your own construction, but reading and running the reference is not evidence that you built it independently. Familiarity with Python and basic NumPy is useful; consult the linked concept pages for the mathematics and shapes as needed.
+:::
+
+::: {.callout-tip title="The build path in one minute" #revision-summary}
+The path follows the reference code's dependencies through five tours: configuration, numerical operations, the Transformer block, GPT assembly, and generation. Each stage connects code to tensor shapes, tests, and an observable result. It inspects and verifies a small inference model; the complete data, training, and evaluation pipeline remains outside the implemented scope.
 :::
 
 This path is **independent of the Theory / Understand path**: you can start here without completing its eight stages. Linked concept pages are references to consult when needed, not prerequisites. The progression below follows code dependencies and results you can run and verify.
