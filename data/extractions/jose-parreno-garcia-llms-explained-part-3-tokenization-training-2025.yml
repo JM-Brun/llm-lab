@@ -81,7 +81,7 @@ items:
       redundancy: {level: moderate, rationale: "Core definition already exists."}
       evidence_quality: {level: high, rationale: "Direct definition in complete article text."}
     classification: {primary_theme: text-tokenization, tags: [topic:tokenization, method:token-to-id], concept_ids: [token]}
-    candidate_destinations: {pages: [fr/tokenization-strategies, en/tokenization-strategies, fr/text-data, en/text-data], concepts: [token], route_ids: []}
+    candidate_destinations: {pages: [fr/corpus-preparation, en/corpus-preparation, fr/tokenization-strategies, en/tokenization-strategies, fr/text-data, en/text-data], concepts: [token], route_ids: []}
     disposition: integrate-by-reference
     disposition_rationale: "Retain as accessible pipeline explanation; do not duplicate canonical definition."
 
