@@ -426,23 +426,28 @@ class ProjectIndex:
         def freeze_ids(index: dict[str, set[str]]) -> dict[str, tuple[str, ...]]:
             return {key: tuple(sorted(value)) for key, value in index.items()}
 
-        def freeze_revision(
-            index: dict[Any, list[RevisionEdge]],
-        ) -> dict[Any, tuple[RevisionEdge, ...]]:
-            return {
-                key: tuple(
-                    sorted(
-                        value,
-                        key=lambda edge: (
-                            edge.source_page_id,
-                            edge.role,
-                            edge.target_type,
-                            edge.target_id,
-                        ),
-                    )
+        def sort_revision_edges(edges: list[RevisionEdge]) -> tuple[RevisionEdge, ...]:
+            return tuple(
+                sorted(
+                    edges,
+                    key=lambda edge: (
+                        edge.source_page_id,
+                        edge.role,
+                        edge.target_type,
+                        edge.target_id,
+                    ),
                 )
-                for key, value in index.items()
-            }
+            )
+
+        def freeze_revision_by_page(
+            index: dict[str, list[RevisionEdge]],
+        ) -> dict[str, tuple[RevisionEdge, ...]]:
+            return {key: sort_revision_edges(value) for key, value in index.items()}
+
+        def freeze_revision_by_section(
+            index: dict[tuple[str, str], list[RevisionEdge]],
+        ) -> dict[tuple[str, str], tuple[RevisionEdge, ...]]:
+            return {key: sort_revision_edges(value) for key, value in index.items()}
 
         tag_index: dict[tuple[str, str], set[str]] = defaultdict(set)
         for page in published:
@@ -551,10 +556,10 @@ class ProjectIndex:
             concept_ids_by_resource=freeze_ids(concept_ids_by_resource),
             revision_status_by_page=revision_status_by_page,
             revision_edges=revision_edges,
-            revision_edges_by_page=freeze_revision(revision_by_page),
-            revision_sources_by_page=freeze_revision(revision_by_target_page),
-            revision_sources_by_resource=freeze_revision(revision_by_target_resource),
-            revision_sources_by_section=freeze_revision(revision_by_target_section),
+            revision_edges_by_page=freeze_revision_by_page(revision_by_page),
+            revision_sources_by_page=freeze_revision_by_page(revision_by_target_page),
+            revision_sources_by_resource=freeze_revision_by_page(revision_by_target_resource),
+            revision_sources_by_section=freeze_revision_by_section(revision_by_target_section),
         )
 
     def select_pages(self, **filters: str) -> tuple[PublishedPage, ...]:
