@@ -601,8 +601,7 @@ class ProjectIndex:
         if resource_id not in self.resources_by_id:
             raise KeyError(f"unknown resource: {resource_id}")
         return tuple(
-            self.pages_by_id[page_id]
-            for page_id in self.page_ids_by_resource.get(resource_id, ())
+            self.pages_by_id[page_id] for page_id in self.page_ids_by_resource.get(resource_id, ())
         )
 
     def resources_for_concept(self, concept_id: str) -> tuple[ResourceRecord, ...]:
@@ -629,9 +628,7 @@ class ProjectIndex:
         """Return typed revision targets declared by a source page."""
         if page_id not in self.pages_by_id:
             raise KeyError(f"unknown published page: {page_id}")
-        if role is not None and (
-            not isinstance(role, str) or role not in REVISION_ROLES
-        ):
+        if role is not None and (not isinstance(role, str) or role not in REVISION_ROLES):
             raise ValueError(f"unknown revision role: {role}")
         return tuple(
             edge
