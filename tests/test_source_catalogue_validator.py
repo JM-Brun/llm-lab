@@ -573,8 +573,7 @@ def test_extraction_filename_must_match_canonical_source_id(tmp_path: Path) -> N
     errors = MODULE.validate_source_catalogue(tmp_path)
 
     assert any(
-        "filename must be canonical (expected example-source.yml)" in error
-        for error in errors
+        "filename must be canonical (expected example-source.yml)" in error for error in errors
     )
     assert any("duplicate extraction for 'example-source'" in error for error in errors)
 
