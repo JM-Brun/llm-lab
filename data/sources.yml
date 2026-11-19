@@ -1651,6 +1651,18 @@ sources:
           - "The study was a short immediate post-test with 90 non-experts and seven multiple-choice questions; it did not measure long-term retention, transfer or detailed mathematical mastery."
           - "The 3Blue1Brown baseline was But what is a GPT?, not the separate Attention in Transformers, step by step lesson."
           - "No claim is made that the study demonstrates learning gains for LLM Lab."
+      - accessed_at: "2026-11-19"
+        status: partially-scanned
+        inspected_scope:
+          - "Published CHI 2026 paper: abstract, architecture and design rationale, system implementation, user-study protocol, quantitative and qualitative findings, discussion and limitations"
+          - "Figures 1–12 and Table 1 inspected through the paper and extracted figure/table descriptions, focusing on study design and results"
+          - "Published PDF, DOI, distinction from the 2024/2026 arXiv preprint versions, and the paper's stated CC BY 4.0 licence"
+        limitations:
+          - "The linked project repository, source code, model files and raw study data were not independently audited; no experiment was reproduced."
+          - "Comparator resources are described by the paper; their current versions were not independently checked."
+          - "The paper's stated licence does not establish reuse rights for third-party materials, study data, software dependencies, screenshots or model assets."
+          - "Anonymized study data, survey instruments and analysis scripts still require a separate availability and rights audit."
+          - "The educational simplifications should be assessed against current decoder-only Transformer implementations before reuse as technical reference."
     related:
       pages: [en/transformer-explainer, fr/transformer-explainer, en/text-data, fr/text-data, en/embedding-space, fr/embedding-space]
       concepts: [token, token-embedding, contextualized-representation, self-attention, multi-head-attention, logits, decoding-policy]
