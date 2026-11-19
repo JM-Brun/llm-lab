@@ -19,6 +19,11 @@ hierarchy:
   parents: ["fr/cross-entropy"]
   children: ["fr/gradients", "fr/training-loop"]
 related: ["fr/loss-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "Le rappel précise l'alignement logits-cibles, les positions valides et l'agrégation ; le cours traite teacher forcing, masquage, réduction et perplexité. Trois questions corrigées vérifient dénominateur, généralisation et comparabilité."
 tags: ["type:concept-lesson", "destination:understand", "topic:loss", "level:core", "language:fr", "status:published"]
 -->
 
@@ -28,7 +33,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:loss", "level:cor
 La *loss* (fonction de perte) est un nombre que l'entraînement cherche à minimiser. Elle est souvent calculée à partir de l'entropie croisée pour chaque token, puis agrégée. La manière de faire cette agrégation fait partie du protocole et doit être documentée.
 :::
 
-::: {.callout-tip title="L'idée à retenir en une minute"}
+::: {.callout-tip title="L'idée à retenir en une minute" #revision-summary}
 La *loss* mesure l'écart entre les prédictions et les **tokens cibles attendus**. En prédiction autorégressive, nous indexons ici les logits par la **position cible** : les logits calculés à partir du préfixe $x_{<t}$ sont comparés au token cible $x_t$. Certaines implémentations indexent plutôt les logits par la position d'entrée et prédisent alors $x_{t+1}$ ; un décalage incorrect peut produire une loss plausible tout en entraînant la mauvaise tâche.
 
 **Première lecture :** comprenez la perte d'un token, puis sa moyenne sur les seules positions valides. Les positions ignorées (par exemple le padding) ne doivent contribuer ni à la somme ni au dénominateur.
