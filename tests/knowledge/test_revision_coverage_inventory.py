@@ -101,6 +101,7 @@ def test_report_documents_unrouted_and_unassessed_semantics() -> None:
     assert "unrouted" in report
     assert "not_assessed" in report
 
+
 def test_missing_topics_are_reported_and_excluded_from_parity() -> None:
     inventory = AUDIT["build_revision_inventory"](
         [
