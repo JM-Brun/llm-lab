@@ -70,6 +70,14 @@ Il faut distinguer quatre opérations :
 3. **Pipeline du tokenizer** : normalisation et pré-tokenisation configurées, appliquées lors de l'apprentissage puis de l'encodage.
 4. **Encodage** : transformation des textes en IDs avec une version figée du tokenizer.
 
+::: {.callout-note title="Trois quantités à ne pas confondre"}
+- **Occurrences de tokens d'entraînement :** nombre total d'instances de tokens traitées dans un corpus ou au cours d'un entraînement. Un même ID peut apparaître de nombreuses fois.
+- **Taille du vocabulaire du tokenizer :** nombre d'IDs distincts que le tokenizer figé peut produire.
+- **Paramètres du modèle :** valeurs numériques apprises par le réseau neuronal.
+
+Un corpus contenant des milliers de milliards d'occurrences de tokens n'implique pas un tokenizer doté de milliers de milliards d'entrées dans son vocabulaire. Rapporter séparément le volume de tokens du corpus, la taille du vocabulaire et le nombre de paramètres, en précisant le périmètre de mesure et la source.
+:::
+
 La normalisation et la pré-tokenisation ne remplacent pas le filtrage documentaire. Réciproquement, nettoyer un corpus ne définit pas à lui seul le comportement d'un tokenizer.
 
 ## 4. Annotation humaine et qualité des labels
