@@ -233,7 +233,10 @@ def build_report(root: Path) -> dict[str, Any]:
             "sources_file": "data/sources.yml",
             "concepts_file": "data/concepts.yml",
             "extraction_directory": "data/extractions/",
-            "matching_rule": "extraction.source_id -> sources[].id; filename equality is a separate diagnostic",
+            "matching_rule": (
+                "extraction.source_id -> sources[].id; "
+                "filename equality is a separate diagnostic"
+            ),
         },
         "counts": {
             "sources": len(sources),
@@ -269,10 +272,18 @@ def build_report(root: Path) -> dict[str, Any]:
         },
         "interpretation": {
             "candidate_destinations": "Editorial proposals, not evidence of integration.",
-            "mapped_concepts": "Legacy/authoring field counted separately from classification.concept_ids.",
-            "target_resources": "Legacy/authoring resource references; not assumed to be page IDs or routes.",
-            "teaching_route": "Source-local pedagogical sequence, not a canonical destination route.",
-            "unknown_references": "Reported for review; not promoted to validation errors by this report.",
+            "mapped_concepts": (
+                "Legacy/authoring field counted separately from classification.concept_ids."
+            ),
+            "target_resources": (
+                "Legacy/authoring resource references; not assumed to be page IDs or routes."
+            ),
+            "teaching_route": (
+                "Source-local pedagogical sequence, not a canonical destination route."
+            ),
+            "unknown_references": (
+                "Reported for review; not promoted to validation errors by this report."
+            ),
         },
     }
 
@@ -281,7 +292,10 @@ def render_markdown(report: dict[str, Any]) -> str:
     lines = [
         "# Extraction destination and field inventory",
         "",
-        "Read-only inventory. Proposals, classifications, resource references, and source-local teaching routes are kept separate.",
+        (
+            "Read-only inventory. Proposals, classifications, resource references, and "
+            "source-local teaching routes are kept separate."
+        ),
         "",
         "## Corpus",
         "",
