@@ -117,7 +117,7 @@ def render_report(repo: str, errors: list[str], counts: Counter[str], audited: i
         "| Priority | Issues |",
         "|---|---:|",
     ]
-    lines.extend(f"| {priority} | {counts[priority]} |" for priority in sorted(PRIORITIES))
+    lines.extend(f"| {priority} | {counts.get(priority, 0)} |" for priority in sorted(PRIORITIES))
     lines.extend(["", "## Findings", ""])
     lines.extend(f"- {error}" for error in errors)
     if not errors:
