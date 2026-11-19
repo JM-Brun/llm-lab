@@ -371,6 +371,7 @@ sources:
       audiences: [learner, practitioner, researcher]
     scan_status: partially-scanned
     integration_status: integrated
+    collections: [tokenization-embeddings]
     scan_history:
       - accessed_at: "2026-11-04"
         status: partially-scanned
