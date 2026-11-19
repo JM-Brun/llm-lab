@@ -155,9 +155,7 @@ def build_report(root: Path) -> dict[str, Any]:
         item for item in collections_doc.get("collections", []) if isinstance(item, dict)
     ]
     collection_source_ids: dict[str, set[str]] = {
-        str(item["id"]): set()
-        for item in collection_entries
-        if isinstance(item.get("id"), str)
+        str(item["id"]): set() for item in collection_entries if isinstance(item.get("id"), str)
     }
     collection_extraction_records: Counter[str] = Counter()
     collection_extraction_items: Counter[str] = Counter()
@@ -188,8 +186,7 @@ def build_report(root: Path) -> dict[str, Any]:
         "counts": {
             "sources_with_explicit_decision": len(explicit_collection_decisions),
             "sources_explicitly_unassigned": len(explicit_unassigned_sources),
-            "sources_without_explicit_decision": len(sources)
-            - len(explicit_collection_decisions),
+            "sources_without_explicit_decision": len(sources) - len(explicit_collection_decisions),
             "total_source_memberships": sum(
                 len(values) for values in collection_source_ids.values()
             ),
