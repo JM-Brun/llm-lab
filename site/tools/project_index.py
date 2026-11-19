@@ -92,9 +92,9 @@ def _has_explicit_anchor(source: str, anchor: str) -> bool:
     """Find an explicit Quarto heading/div or HTML ID; never infer a slug from text."""
     escaped = re.escape(anchor)
     patterns = (
-        rf"^#{1,6}\s+.*\{{[^}}\n]*#{escaped}(?=\s|})[^}}\n]*\}}\s*$",
-        rf"^:::\s+\{{[^}}\n]*#{escaped}(?=\s|})[^}}\n]*\}}\s*$",
-        rf"\bid=[\"']{escaped}[\"']",
+        r"^#{1,6}\s+.*\{[^}\n]*#" + escaped + r"(?=\s|\})[^}\n]*\}\s*$",
+        r"^:::\s+\{[^}\n]*#" + escaped + r"(?=\s|\})[^}\n]*\}\s*$",
+        r'\bid=["\']' + escaped + r'["\']',
     )
     return any(re.search(pattern, source, re.MULTILINE) for pattern in patterns)
 
