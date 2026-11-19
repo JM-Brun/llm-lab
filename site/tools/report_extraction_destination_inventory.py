@@ -77,7 +77,12 @@ def build_report(root: Path) -> dict[str, Any]:
 
     source_destinations = {
         key: _bucket()
-        for key in ("related.pages", "related.concepts", "related.routes", "classification.concept_ids")
+        for key in (
+            "related.pages",
+            "related.concepts",
+            "related.routes",
+            "classification.concept_ids",
+        )
     }
     item_destinations = {
         key: _bucket()
@@ -118,10 +123,14 @@ def build_report(root: Path) -> dict[str, Any]:
                 if field in related:
                     refs = _add(source_destinations[f"related.{field}"], related[field])
                     if field == "concepts":
-                        unknown_concepts["source.related.concepts"].update(set(refs) - known_concepts)
+                        unknown_concepts["source.related.concepts"].update(
+                            set(refs) - known_concepts
+                        )
         classification = source.get("classification")
         if isinstance(classification, dict) and "concept_ids" in classification:
-            refs = _add(source_destinations["classification.concept_ids"], classification["concept_ids"])
+            refs = _add(
+                source_destinations["classification.concept_ids"], classification["concept_ids"]
+            )
             unknown_concepts["source.classification.concept_ids"].update(set(refs) - known_concepts)
 
     for path in sorted((data_dir / "extractions").glob("*.yml")):
@@ -154,10 +163,20 @@ def build_report(root: Path) -> dict[str, Any]:
 
             classification = item.get("classification")
             if isinstance(classification, dict) and "concept_ids" in classification:
-                refs = _add(item_destinations["classification.concept_ids"], classification["concept_ids"])
-                unknown_concepts["item.classification.concept_ids"].update(set(refs) - known_concepts)
+                refs = _add(
+                    item_destinations["classification.concept_ids"], classification["concept_ids"]
+                )
+                unknown_concepts["item.classification.concept_ids"].update(
+                    set(refs) - known_concepts
+                )
 
-            for field in ("mapped_concepts", "target_resources", "target_pages", "target_concepts", "target_routes"):
+            for field in (
+                "mapped_concepts",
+                "target_resources",
+                "target_pages",
+                "target_concepts",
+                "target_routes",
+            ):
                 if field in item:
                     refs = _add(item_destinations[field], item[field])
                     if field == "mapped_concepts":
@@ -172,7 +191,10 @@ def build_report(root: Path) -> dict[str, Any]:
                     candidate_shapes["mapping"] += 1
                     for field in ("pages", "concepts", "routes", "resources"):
                         if field in candidate:
-                            refs = _add(item_destinations[f"candidate_destinations.{field}"], candidate[field])
+                            refs = _add(
+                                item_destinations[f"candidate_destinations.{field}"],
+                                candidate[field],
+                            )
                             if field == "concepts":
                                 unknown_concepts["item.candidate_destinations.concepts"].update(
                                     set(refs) - known_concepts
@@ -235,13 +257,15 @@ def render_markdown(report: dict[str, Any]) -> str:
     for key, value in report["item_field_presence"].items():
         lines.append(f"| `{key}` | {value} |")
     for section in ("source_destinations", "item_destinations"):
-        lines.extend([
-            "",
-            f"## {section.replace('_', ' ').title()}",
-            "",
-            "| Field | Records with field | References | Unique | Invalid entries |",
-            "|---|---:|---:|---:|---:|",
-        ])
+        lines.extend(
+            [
+                "",
+                f"## {section.replace('_', ' ').title()}",
+                "",
+                "| Field | Records with field | References | Unique | Invalid entries |",
+                "|---|---:|---:|---:|---:|",
+            ]
+        )
         for key, value in report[section].items():
             lines.append(
                 f"| `{key}` | {value['records_with_field']} | {value['references']} | "
