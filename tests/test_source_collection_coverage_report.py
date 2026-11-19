@@ -25,7 +25,7 @@ def test_collection_report_joins_extractions_by_source_id_and_counts_distinct_me
         {
             "schema_version": 1,
             "sources": [
-                {"id": "source-a", "collections": ["collection-one"]},
+                {"id": "source-a", "collections": ["collection-one", "collection-two"]},
                 {"id": "source-b", "collections": ["collection-two"]},
                 {"id": "source-c"},
                 {"id": "source-d", "collections": []},
@@ -75,11 +75,11 @@ def test_collection_report_joins_extractions_by_source_id_and_counts_distinct_me
         "sources_with_explicit_decision": 3,
         "sources_explicitly_unassigned": 1,
         "sources_without_explicit_decision": 1,
-        "total_source_memberships": 2,
+        "total_source_memberships": 3,
     }
     assert report["collection_coverage"]["collections"] == {
         "collection-one": {"source_records": 1, "extraction_files": 1, "atomic_items": 2},
-        "collection-two": {"source_records": 1, "extraction_files": 1, "atomic_items": 1},
+        "collection-two": {"source_records": 2, "extraction_files": 2, "atomic_items": 3},
     }
 
 
