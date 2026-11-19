@@ -19,6 +19,11 @@ hierarchy:
   parents: ["en/transformer"]
   children: ["en/queries-keys-values-advanced"]
 related: ["en/contextualized-representations", "en/scaled-dot-product-attention", "en/cross-attention", "en/transformer-block-walkthrough", "en/queries-keys-values-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "The takeaway separates Q/K (scores and weights) from V (aggregated content), explains what changes when V alone varies and flags interpretation limits; an answered self-check and dedicated exercises reinforce it."
 tags: ["type:concept-lesson", "destination:understand", "topic:queries-keys-values", "level:core", "language:en", "status:published"]
 -->
 
@@ -140,7 +145,7 @@ Per-position equations, compatibility geometry, gradient paths, and multi-head v
 
 To compare architectures that change the number of K/V heads, compress the cache, or restrict attended positions, see [Attention variants](transformer-block-walkthrough.qmd#attention-variants) in the guided Transformer-block walkthrough. It explicitly distinguishes this comparison from the MHA code actually implemented.
 
-## Takeaway and next steps
+## Takeaway and next steps {#revision-summary}
 
 The functional distinction is simple but fundamental:
 
