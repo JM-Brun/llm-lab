@@ -1,4 +1,4 @@
-""""Tests for the generated Understand/Build revision inventory."""
+"""Tests for the generated Understand/Build revision inventory."""
 
 from __future__ import annotations
 
