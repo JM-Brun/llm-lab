@@ -57,7 +57,70 @@ def test_build_inventory_does_not_invent_a_guided_route() -> None:
     )
     record = inventory["pages"][0]
     assert record["route_status"] == "not_applicable"
-    assert record["synthesis_status"] == "not_assessed"
+    assert record["revision_support"]["status"] == "not_assessed"
+
+
+def test_revision_aids_and_assessments_are_projected_independently() -> None:
+    pages = [
+        page("fr/attention", "fr", "understand", "attention"),
+        page("fr/revision-sheet", "fr", "practice", "attention-revision"),
+    ]
+    support = {
+        "fr/attention": {
+            "status": "partial",
+            "evidence": [
+                {"aid": "fr/revision-sheet", "note": "Core formulas are covered."}
+            ],
+            "reason": None,
+        }
+    }
+    aids = {
+        "fr/attention": [
+            {"id": "fr/revision-sheet", "role": "revision_sheet"}
+        ]
+    }
+
+    inventory = AUDIT["build_revision_inventory"](
+        pages,
+        [],
+        [],
+        route_memberships={},
+        revision_support_by_page=support,
+        revision_aids_by_lesson=aids,
+    )
+    record = next(item for item in inventory["pages"] if item["id"] == "fr/attention")
+
+    assert record["revision_support"]["status"] == "partial"
+    assert record["revision_aids"] == [
+        {
+            "id": "fr/revision-sheet",
+            "role": "revision_sheet",
+            "title": "fr/revision-sheet",
+            "href": "fr/revision-sheet.html",
+        }
+    ]
+    counts = inventory["counts"]["understand"]
+    assert counts["pages_with_revision_aids"] == 1
+    assert counts["revision_aid_links"] == 1
+    assert counts["revision_support_by_status"] == {"partial": 1}
+
+
+def test_inventory_rejects_revision_aid_page_missing_from_published_index() -> None:
+    inventory_pages = [page("fr/attention", "fr", "understand", "attention")]
+    try:
+        AUDIT["build_revision_inventory"](
+            inventory_pages,
+            [],
+            [],
+            route_memberships={},
+            revision_aids_by_lesson={
+                "fr/attention": [{"id": "fr/missing-aid", "role": "synthesis"}]
+            },
+        )
+    except ValueError as error:
+        assert "not a published page" in str(error)
+    else:
+        raise AssertionError("missing revision aid should fail")
 
 
 def test_explicit_concept_and_implementation_edges_are_projected() -> None:
