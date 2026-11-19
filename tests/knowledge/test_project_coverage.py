@@ -63,7 +63,7 @@ def test_revision_not_applicable_is_not_counted_as_missing(tmp_path: Path) -> No
             tmp_path / "site",
             page_id,
             language,
-            revision={"status": "not_applicable", "reason": "outside scope"},
+            revision_support={"status": "not_applicable", "reason": "outside scope"},
         )
     write_sources(tmp_path)
     matrix = build_concept_coverage(ProjectIndex.build(tmp_path))
@@ -88,7 +88,7 @@ def test_assessed_without_declared_aid_requires_review_not_missing(tmp_path: Pat
             tmp_path / "site",
             page_id,
             language,
-            revision={"status": "assessed", "resources": []},
+            revision_support={"status": "partial", "reason": "support needs editorial review"},
         )
     write_sources(tmp_path)
     matrix = build_concept_coverage(ProjectIndex.build(tmp_path))
