@@ -19,6 +19,11 @@ hierarchy:
   parents: []
   children: []
 related: ["fr/in-context-learning", "fr/contextualized-representations", "fr/generation", "fr/post-training", "fr/llm-evolution", "fr/llm-limits", "fr/rag-memory-boundaries", "fr/document-retrieval"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "Les trois niveaux de contexte et les distinctions avec RAG, mémoire et ICL sont synthétisés dans les points clés ; les sept questions Practice vérifient sélection, transmission, accès causal, provenance et évaluation."
 tags: ["type:concept-lesson", "destination:understand", "topic:context-engineering", "level:core", "language:fr", "status:published"]
 -->
 
@@ -118,7 +123,7 @@ Le context engineering réduit certains risques mais ne garantit ni la vérité 
 
 Établir une référence, ajouter une source ou un exemple à la fois, tester des questions dont la réponse est connue, introduire des documents non pertinents ou contradictoires dans un environnement contrôlé, puis mesurer exactitude, fidélité aux sources, robustesse, coût et latence. Il faut distinguer une amélioration observée sur un jeu de tests d'une garantie générale : un contexte performant sur quelques exemples peut échouer sur d'autres tâches ou distributions.
 
-## À retenir
+## À retenir {#revision-summary}
 
 - Le contexte est l'ensemble des informations effectivement fournies au modèle pour un appel, pas seulement le dernier message utilisateur.
 - Le context engineering organise ce contexte : sélection, récupération, structure, priorité, compression, actualisation, sécurité et évaluation.
