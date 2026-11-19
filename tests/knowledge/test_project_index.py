@@ -309,6 +309,42 @@ def test_revision_section_requires_an_explicit_anchor(tmp_path: Path) -> None:
         ProjectIndex.build(tmp_path)
 
 
+def test_revision_section_accepts_explicit_quarto_block_anchor(tmp_path: Path) -> None:
+    revision = {
+        "status": "assessed",
+        "resources": [
+            {"role": "revision_sheet", "target": {"type": "section", "id": "revision-block"}}
+        ],
+    }
+    _write_page(tmp_path / "site", "fr/attention", "fr")
+    _write_page(
+        tmp_path / "site",
+        "en/attention",
+        "en",
+        revision=revision,
+        body="\n::: {.callout-tip #revision-block}\nA concise recap.\n:::\n",
+    )
+    _write_page(tmp_path / "site", "en/query", "en")
+    _write_sources(tmp_path)
+
+    index = ProjectIndex.build(tmp_path)
+
+    assert index.revision_edges[0].target_type == "section"
+    assert index.revision_edges[0].target_id == "revision-block"
+
+
+def test_duplicate_revision_relationships_are_rejected(tmp_path: Path) -> None:
+    relationship = {"role": "synthesis", "target": {"type": "page", "id": "en/query"}}
+    revision = {"status": "assessed", "resources": [relationship, relationship]}
+    _write_page(tmp_path / "site", "fr/attention", "fr")
+    _write_page(tmp_path / "site", "en/attention", "en", revision=revision)
+    _write_page(tmp_path / "site", "en/query", "en")
+    _write_sources(tmp_path)
+
+    with pytest.raises(ValueError, match="duplicate revision relationship"):
+        ProjectIndex.build(tmp_path)
+
+
 def test_revision_page_target_must_be_published_and_language_compatible(tmp_path: Path) -> None:
     revision = {
         "status": "assessed",
