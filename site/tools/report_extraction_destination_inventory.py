@@ -205,21 +205,19 @@ def build_report(root: Path) -> dict[str, Any]:
                     candidate_shapes["non-mapping"] += 1
                 else:
                     candidate_shapes["mapping"] += 1
-                    for field in ("pages", "concepts", "routes", "resources"):
-                        if field in candidate:
-                            refs = _add(
-                                item_destinations[f"candidate_destinations.{field}"],
-                                candidate[field],
-                            )
-                            if field == "concepts":
-                                unknown = set(refs) - known_concepts
-                                unknown_concepts["item.candidate_destinations.concepts"].update(unknown)
-                                for concept_id in unknown:
-                                    unknown_concept_occurrences[
-                                        "item.candidate_destinations.concepts"
-                                    ][concept_id].append(
-                                        {"extraction_file": relative_path, "item_id": item.get("id")}
-                                    )
+                    for field, value in candidate.items():
+                        key = f"candidate_destinations.{field}"
+                        item_destinations.setdefault(key, _bucket())
+                        refs = _add(item_destinations[key], value)
+                        if field == "concepts":
+                            unknown = set(refs) - known_concepts
+                            unknown_concepts["item.candidate_destinations.concepts"].update(unknown)
+                            for concept_id in unknown:
+                                unknown_concept_occurrences[
+                                    "item.candidate_destinations.concepts"
+                                ][concept_id].append(
+                                    {"extraction_file": relative_path, "item_id": item.get("id")}
+                                )
 
     return {
         "schema_version": 1,
@@ -241,6 +239,11 @@ def build_report(root: Path) -> dict[str, Any]:
         },
         "item_field_presence": dict(sorted(item_key_presence.items())),
         "candidate_destination_shapes": dict(sorted(candidate_shapes.items())),
+        "candidate_destination_keys": {
+            key.removeprefix("candidate_destinations."): value["records_with_field"]
+            for key, value in sorted(item_destinations.items())
+            if key.startswith("candidate_destinations.")
+        },
         "source_destinations": _finalize(source_destinations),
         "item_destinations": _finalize(item_destinations),
         "unknown_concept_references": {
