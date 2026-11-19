@@ -407,6 +407,38 @@ jobs:
               print(f"- `{key}`: {value}")
           PY
 
+      - name: Run full-corpus extraction destination and field inventory
+        run: |
+          set -euo pipefail
+          uv run --no-project --with-requirements docs/requirements-history-validation.txt --python 3.12 python site/tools/report_extraction_destination_inventory.py --format json --output "$RUNNER_TEMP/extraction-destination-inventory.json"
+          python - "$RUNNER_TEMP/extraction-destination-inventory.json" <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          import sys
+
+          with open(sys.argv[1], encoding="utf-8") as f:
+              report = json.load(f)
+          print("### Extraction destination and field inventory")
+          print()
+          for key, value in report["counts"].items():
+              print(f"- **{key}:** {value}")
+          print()
+          print("**Item field presence**")
+          for key, value in report["item_field_presence"].items():
+              print(f"- `{key}`: {value}")
+          print()
+          print("**Item destination references**")
+          for key, value in report["item_destinations"].items():
+              print(
+                  f"- `{key}`: {value['references']} references "
+                  f"({value['unique_reference_count']} unique; "
+                  f"{value['invalid_entries']} invalid entries)"
+              )
+          print()
+          print("**Unknown concept references**")
+          for key, values in report["unknown_concept_references"].items():
+              print(f"- `{key}`: {len(values)}")
+          PY
+
       - name: Upload raw inventory and execution metadata
         if: always()
         uses: actions/upload-artifact@v4
@@ -415,5 +447,6 @@ jobs:
           path: |
             ${{ runner.temp }}/extraction-locator-inventory.json
             ${{ runner.temp }}/extraction-locator-inventory-metadata.json
+            ${{ runner.temp }}/extraction-destination-inventory.json
           if-no-files-found: warn
           retention-days: 90
