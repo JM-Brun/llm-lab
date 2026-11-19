@@ -1,6 +1,6 @@
 # Revision coverage and synthesis work plan
 
-**Status:** inventory implementation is in PR [#1379](https://github.com/JM-Brun/llm-lab/pull/1379); editorial contract and pilot remain tracked by [#1109](https://github.com/JM-Brun/llm-lab/issues/1109). Build-specific implementation expectations remain coordinated with [#78](https://github.com/JM-Brun/llm-lab/issues/78).
+**Status (2026-11-19):** inventory PR [#1379](https://github.com/JM-Brun/llm-lab/pull/1379) is merged. Its final PR head was `817048ecda141fbf256e42237dc1a4f34bf44a88`; CI, Quarto render and secret scanning passed on that exact SHA. The merge commit is `6f914064a18abbdb6e839c3247139f1295944b55`. Editorial assessment, typed revision links and the learner-facing revision experience remain open under [#1109](https://github.com/JM-Brun/llm-lab/issues/1109). Build-specific implementation expectations remain coordinated with [#78](https://github.com/JM-Brun/llm-lab/issues/78).
 
 ## 1. Inventory snapshot
 
@@ -47,14 +47,11 @@ The CI workflow generates JSON and Markdown reports, appends the Markdown report
 
 ## 3. Remaining work, in dependency order
 
-### A. Close the inventory PR safely
+### A. Close the inventory PR safely — completed
 
-1. Re-run CI on the latest PR head after the formatting-only correction to `audit_revision_coverage.py`.
-2. Confirm the formatting, lint, type-check and full test-suite steps all pass on that exact SHA.
-3. Confirm Quarto rendering and secret scanning pass on the same head SHA.
-4. Inspect the generated JSON/Markdown artifact and job summary; preserve the report as a reproducible CI output.
-5. Review the inventory tests for complete destination coverage, duplicate IDs, route membership preservation, and honest Build route semantics.
-6. Merge only after all required checks are green and the PR diff has been reviewed.
+PR #1379 is merged. On final head `817048ecda141fbf256e42237dc1a4f34bf44a88`, the repository CI, Quarto render and secret-scanning checks all passed. The CI run covered inventory generation, tests, formatting, lint and type checks; the Quarto run covered rendering, bilingual page/concept navigation and local links; the secret scan included repository history. The merge commit is `6f914064a18abbdb6e839c3247139f1295944b55`.
+
+The generated artifact reported 62 published pages in scope (46 Understand, 16 Build), with 31 pages per language. Understand had 40 core and 6 optional route memberships and no unrouted page. These are inventory facts, not editorial coverage claims.
 
 ### B. Harden the inventory diagnostics
 
@@ -84,12 +81,24 @@ Choose the lightest suitable format per page: an integrated synthesis section, a
 
 ### D. Introduce a typed source-to-synthesis relation
 
-1. Decide the canonical metadata representation for a revision aid and its source lesson.
-2. Use stable page IDs and preserve the distinction between canonical lesson, companion aid, and practice page.
-3. Do not overload `related`, `parents`, or `children` with this ownership relation.
-4. Validate target existence, destination/type constraints, language pairing, reciprocal or one-way semantics as deliberately chosen, and duplicate/orphan aids.
-5. Update the page metadata documentation, parser/index projection, generated graph and tests together.
-6. Re-run the inventory so `not_assessed` is replaced only by evidence-backed statuses.
+A candidate contract has been documented in #1109: one-way `revision_of` from an aid to one or more canonical source lessons; derive the reverse lesson→aids index rather than storing both directions. Keep this separate from `related`, `parents` and `children`.
+
+Implementation findings from source inspection:
+
+- `page_index.PublishedPage.metadata` already retains the raw page-map dictionary. It does not need a new field merely to carry `revision_of`.
+- `check_page_metadata.py` must validate and preserve `revision_of` in its own normalized page projection, then validate targets against published pages and eligible lesson types.
+- `check_resource_registry.py` currently accepts only `kind: implementation`; its `referenced_by` relation means page→resource and must not be reused for resource→lesson ownership.
+- `audit_revision_coverage.py` must index published aid pages before limiting its output records to Understand/Build lessons.
+
+Before implementing non-page revision aids, decide whether the resource registry should gain a distinct `kind: revision-aid` with its own required fields, or whether such aids warrant a separate registry. Do not make implementation resources appear as revision aids. The validator should receive published-page descriptors (ID, language, destination, type, status), not only a set of IDs, to enforce target eligibility and language compatibility.
+
+Remaining steps:
+
+1. Approve the page-map and resource representation, including the non-page resource-kind decision.
+2. Add tests for page→page and (if adopted) resource→page links, multi-source links, bilingual compatibility, unknown/unpublished/ineligible targets, self-links and duplicates.
+3. Implement validators and inventory projection without changing generic graph relations.
+4. Generate reverse links and aid diagnostics; keep editorial sufficiency assessment separate from link existence.
+5. Re-run CI and verify the machine-readable inventory.
 
 ### E. Pilot before scaling
 
@@ -132,4 +141,4 @@ The work is complete only when:
 
 ## 5. Current decision
 
-Do not mass-create synthesis pages or alter the metadata validator yet. First finish and validate the inventory, inspect existing revision support, agree the typed relation and editorial contract, then pilot the smallest end-to-end path. This sequence avoids duplicate pages, false coverage claims, and a second source of truth.
+The inventory is complete and merged. Do not mass-create synthesis pages or change the metadata schema until the editorial contract and typed relation are approved. Continue the page-by-page Understand audit and close the pilot decision first. The relation proposal is sufficiently concrete to write tests once the resource representation is settled, but it is not yet an implemented repository contract. This sequence avoids duplicate pages, false coverage claims, and a second source of truth.
