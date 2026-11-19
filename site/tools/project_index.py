@@ -82,6 +82,7 @@ REVISION_SUPPORT_STATUSES = {
     "not_applicable",
 }
 ELIGIBLE_LESSON_DESTINATIONS = {"understand", "build"}
+STABLE_ANCHOR = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
 
 
 def _language_matches(aid_language: str, lesson_language: str) -> bool:
