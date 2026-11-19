@@ -106,7 +106,7 @@ def build_concept_coverage(index: Any) -> dict[str, Any]:
             (
                 "At least one associated teaching page has explicit Understand-route membership."
                 if route_evidence
-                else "No associated page has explicit Understand-route membership; this is not automatically a defect."
+                else "No associated page has route membership; this is not automatically a defect."
             ),
         )
 
@@ -125,7 +125,10 @@ def build_concept_coverage(index: Any) -> dict[str, Any]:
             ),
         )
 
-        revision_states = [index.revision_status_by_page.get(page_id, "not_assessed") for page_id in page_ids]
+        revision_states = [
+            index.revision_status_by_page.get(page_id, "not_assessed")
+            for page_id in page_ids
+        ]
         revision_edges = [
             edge
             for page_id in page_ids
@@ -175,7 +178,7 @@ def build_concept_coverage(index: Any) -> dict[str, Any]:
             (
                 "FR and EN page records both exist, but semantic parity requires editorial review."
                 if languages == ["en", "fr"]
-                else "Expected bilingual counterparts have not been established by an explicit reviewed pairing rule."
+                else "Expected bilingual counterparts need an explicit reviewed pairing rule."
             ),
         )
 
