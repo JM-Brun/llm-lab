@@ -631,6 +631,22 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
                                 f"{item_where}.verification.sources: unknown source {reference!r}"
                             )
 
+            pedagogical_profile = item.get("pedagogical_profile")
+            if pedagogical_profile is not None:
+                if not isinstance(pedagogical_profile, dict):
+                    errors.append(f"{item_where}.pedagogical_profile: expected a mapping")
+                else:
+                    for concept_id in _strings(
+                        pedagogical_profile.get("prerequisites"),
+                        f"{item_where}.pedagogical_profile.prerequisites",
+                        errors,
+                    ):
+                        if concept_id not in concept_ids:
+                            errors.append(
+                                f"{item_where}.pedagogical_profile.prerequisites: "
+                                f"unknown concept {concept_id!r}"
+                            )
+
             if "candidate_destinations" in item:
                 destinations = item["candidate_destinations"]
                 if not isinstance(destinations, dict):
@@ -645,6 +661,16 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
                             errors.append(
                                 f"{item_where}.candidate_destinations.pages: "
                                 f"unknown page {page_id!r}"
+                            )
+                    for concept_id in _strings(
+                        destinations.get("concepts"),
+                        f"{item_where}.candidate_destinations.concepts",
+                        errors,
+                    ):
+                        if concept_id not in concept_ids:
+                            errors.append(
+                                f"{item_where}.candidate_destinations.concepts: "
+                                f"unknown concept {concept_id!r}"
                             )
 
     return errors
