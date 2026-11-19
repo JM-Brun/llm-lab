@@ -3,7 +3,7 @@
 **Repository:** `JM-Brun/llm-lab`  
 **Audited branch snapshot:** `main` at `fcd5d04781408140f65a8ac49c9553bd6318c1c0`  
 **Scope:** legacy extraction-level `scan` blocks and `canonical_mapping` blocks  
-**Status:** all 36 scan identities and dates paired; all 28 mappings and relation proposals reconciled; semantic scan comparison and CI verification remain open
+**Status:** all 36 scan identities, dates and semantic differences reconciled; all 28 mappings and relation proposals reconciled; Marek's six integrated concepts verified against canonical IDs and bilingual pages; historical audit CI passed on merged PR #1383
 
 This is a conservative, evidence-linked reconciliation. A historical proposal is not proof of canonical integration. No canonical record, relation, route, source or validator rule is changed by this audit.
 
@@ -142,9 +142,74 @@ The first-pass exact-key locator found 35 files; the broader locator found the f
 - `varis-stephen-libovicky-tokcollate-2026`
 - `wegmann-tokenization-language-variation-2025`
 
-### Source-history correspondence and content differences\n\nAll 36 extraction `scan.accessed_at` dates occur in the corresponding source record's `scan_history`. For 34 records, the extraction scan date is also the latest source-history date. Two records have later source-history events that are not represented by the extraction-level scan snapshot:\n\n- `andrej-karpathy-gpt-tokenizer-video`: extraction scan is dated 2026-10-30; source history also records a 2026-11-19 metadata-only check of the official YouTube title, creator and publication date. This is an additional event, not evidence that the 2026-10-30 transcript inspection was superseded.\n- `maarten-grootendorst-visual-guide-multimodal-generation`: extraction scan is dated 2026-11-07; source history adds a 2026-11-15 event covering the original bilingual Deepen pages, a Mermaid map/tables, four live article image elements, and navigation updates. That later work is not reflected in the extraction-level scan block.\n\nA concrete content comparison is available for AiEdge. Its extraction scan separates the partial indexed author text, uninspected figures/code/comments/linked resources, partial metadata, unknown rights, and three explicit unresolved questions (full article/figures, original assets/code/links/references, and possible vLLM-specific settings or measurements). The source event on the same date compresses this into three inspected-scope bullets and five limitations. It preserves the broad retrieval caveats, but not the ten facet-level status/coverage/notes or the three questions as separate structured entries. This is a real example of richer extraction-level facet detail alongside a more concise chronological event summary—not evidence that one record can replace the other.
+### Source-history correspondence and content differences — completed 2026-11-19
 
-The content models are not structurally equivalent. Each extraction `scan` is a ten-key facet snapshot (`accessed_at`, `retrieval_method`, `author_text`, `figures_media`, `code_data`, `comments`, `linked_resources`, `metadata`, `rights`, `unresolved_questions`). Source `scan_history` is an append-only event list with `accessed_at`, `status`, `inspected_scope`, and `limitations`. Therefore a date match is not content equality: facet-level evidence and unresolved questions cannot be reconstructed losslessly from the source event summary without a deliberate migration mapping. The two later source events are unique chronological content and must remain preserved.\n\nThe current comparison establishes identity/date correspondence for all 36 and two clear later-event differences. A field-by-field semantic comparison of all facet notes against each event's `inspected_scope` and `limitations` remains required before declaring any field duplicated, richer, stale or safe to migrate.
+The semantic comparison was completed against the corresponding source-history event for each of the 36 extraction snapshots. The comparison is semantic rather than a YAML equality test: the extraction snapshot has ten keys (retrieval method plus eight evidence facets and date), while a source-history event has four keys (accessed_at, status, inspected_scope, limitations). The source event is a chronology; the extraction is a faceted snapshot. They are not losslessly interchangeable.
+
+| Measure | Result |
+|---|---:|
+| Extraction scans with a source-history event on the exact same date | 36 / 36 |
+| Records whose latest source-history event is the extraction scan date | 33 / 36 |
+| Records with a later source-history event | 3 / 36 |
+| Records with structurally identical scan/history objects | 0 / 36 (different contracts) |
+
+The three later source-history events are distinct additions, not automatically superseding scans:
+- Karpathy tokenizer video: 2026-11-19 checks official YouTube title, creator and publication date only; it does not replace the 2026-10-30 transcript/chapter review.
+- Maarten Grootendorst guide: 2026-11-15 records bilingual Deepen-page work and inspection of four article image elements; it does not complete the advertised inventory of 50+ visuals.
+- Marek/Ryabinin: the original 2026-11-09 source event was stale relative to the extraction snapshot (it said the canonical PDF and official tests had not been checked). A new 2026-11-19 source event was appended to record the 16-page arXiv v1 PDF/appendix review and the seven passing upstream test cases, together with the JAX-version caveat. The historical 2026-11-09 event was retained, not rewritten.
+
+#### Per-record comparison matrix
+
+“Aligned” means the event scope and limitations support the same inspected material and caveats as the extraction snapshot. “Facet detail” means the extraction adds statuses, coverage, notes or unresolved questions that the event compresses into scope/limitations. Neither label means the two records are identical.
+
+| Source ID | Matched scan date | Semantic comparison |
+|---|---:|---|
+| ahia-do-all-languages-cost-the-same-2023 | 11-05 | Aligned. The event covers the full paper, figures and table; the extraction separates uninspected code/data, unknown reuse rights and historical API-price/reproducibility questions. |
+| aiedge-how-cuda-graphs-speed-up-llm-inference | 11-06 | Aligned with facet detail. The three scope bullets and five limitations summarize the same indexed excerpt; the extraction separately marks figures/code/comments/links uninspected and preserves three explicit open questions. |
+| ali-tokenizer-choice-llm-training-2024 | 11-05 | Aligned. The event captures the controlled setup/results; the extraction makes the no-reproduction and single-seed caveats explicit by facet. |
+| alliancy-la-compression-strategie-avenir-llm-2026 | 11-17 | Aligned. The event includes the later official challenge/UNESCO checks; the extraction preserves four operational questions and distinguishes secondary parameter-growth reporting from corroborated challenge facts. |
+| andrej-karpathy-gpt-tokenizer-video | 10-30 | Aligned for the transcript/chapter snapshot. The separate 11-19 metadata-only event is source-history-only and does not imply audiovisual inspection. |
+| arnett-explaining-mitigating-crosslingual-tokenizer-inequities-2025 | 11-05 | Aligned with facet detail. The extraction distinguishes figures, linked code/data, metadata and rights; the event preserves the study's 97-language design and downstream-LM limitation. |
+| bdtech-next-concept-modeling-2026 | 11-09 | Aligned. Both records cover indexed article text plus primary-paper/project/repository cross-checks; the extraction keeps figures uninspected and lists implementation/reproduction questions. |
+| chiu-toklens-acl-srw-2026 | 11-05 | Aligned. The event and extraction both preserve the 24-tokenizer/15-language intrinsic versus 7-model/11-language MMLU-ProX denominator distinction. |
+| dailydose-augsbert-sentence-similarity-2024 | 11-17 | Aligned. Both stop at the paywall boundary; the extraction records image placements, no code/data inspection and the unresolved need for primary paper/code. |
+| dailydose-bi-cross-encoders-sentence-similarity-2024 | 11-17 | Aligned. Both explicitly stop before inaccessible Part 1 details; the extraction separates visible background from inaccessible comparisons and uninspected image assets. |
+| dailydose-foundations-rag-2024 | 11-17 | Aligned. Both stop after cross-encoder reranking; the extraction adds the non-universality of vector databases and the fact that retrieval alone does not ensure correctness. |
+| ethayarajh-contextualized-representations-2019 | 11-05 | Aligned. The extraction decomposes mathematical measures, figures, code, rights and model-family limits; the event summarizes the same PDF review. |
+| faysse-etal-2025-colpali | 11-18 | Aligned with an earlier 11-17 abstract event. The extraction preserves the internal 100-versus-1,000 sample-size discrepancy and distinguishes Figure 2 from Table 5 protocols. |
+| formal-piwowarski-clinchant-2021-splade | 11-18 | Aligned with an earlier 11-17 abstract event. The extraction identifies equations, Table 1 and paper-specific efficiency limits; the event records the same primary audit and unresolved sample-size discrepancy. |
+| goldman-unpacking-tokenization-2024 | 11-18 | Aligned with an earlier 10-29 migration note. The extraction separates English/Turkish protocol, tables, unknown rights and reproduction questions; the event records the correlation-table review and Turkish subset limitation. |
+| hesam-sheikh-llm-study-roadmap-2024 | 11-17 | Aligned. The event lists the Day 003–016 sequence; the extraction separately records mirror retrieval, uninspected PDFs/images, author-reported durations and the author's prior-experience caveat. |
+| jose-parreno-garcia-how-llms-work-three-layers-2025 | 11-17 | Aligned. The event covers both inspected images and the visible comment; the extraction excludes community content from author claims and records missing prompts/evaluation conditions. |
+| jothi-moorthy-llm-processing-linkedin | 11-17 | Aligned. Both record the five-stage post and failed image retrieval; the extraction makes the relative/unverified publication date and unknown asset rights explicit. |
+| karthik-shashidhar-llms-compression-algorithms-2024 | 11-16 | Aligned. Both treat the piece as opinion rather than empirical research and distinguish the visible reader comment from author evidence. |
+| khattab-zaharia-2020-colbert | 11-18 | Aligned with an earlier 11-17 abstract-only event. The extraction adds architecture, MaxSim, indexing, tables and protocol-specific latency qualifications. |
+| lewish-intelligence-and-compression-2025 | 11-17 | Aligned. The event includes attribution and inspection of the sole inline musical-score image; the extraction marks code/benchmarks/comments uninspected and does not grant reuse rights. |
+| li-bert-flow-sentence-embeddings-2020 | 11-05 | Aligned. The extraction records the full-target unlabeled calibration protocol and transductive scope; the event captures the same BERT-flow/STS review. |
+| marek-ryabinin-score-centering-off-policy-rl-2026 | 11-09 | Corrected by a new 11-19 event. The extraction is richer than the original same-date event: full arXiv v1 and appendices plus exact upstream test execution. The new event now records that evidence without erasing the earlier history. |
+| maarten-grootendorst-visual-guide-multimodal-generation | 11-07 | Aligned for the indexed-text/primary-source snapshot. Later 11-15 source events record page/navigation work and four inspected images; the extraction remains a historical 11-07 snapshot. |
+| mikolov-word2vec-2013 | 11-05 | Aligned. Both cover the full v3 paper, CBOW/Skip-gram, hierarchical softmax and English-centric analogy limits; code/vectors remain unexecuted. |
+| poloclub-transformer-explainer-paper-2026 | 11-19 | Aligned. Both distinguish the published CHI paper from arXiv versions and retain the CC BY 4.0 statement while leaving repository/data replication open. |
+| reimers-gurevych-2019-sentence-bert | 11-18 | Aligned with an earlier 11-17 abstract event. The extraction adds pooling/objectives, tables, AFS evaluation and hardware-specific efficiency limits. |
+| santhanam-etal-2022-colbertv2 | 11-18 | Aligned with an earlier 11-17 abstract event. The extraction adds architecture, denoised supervision, residual compression, LoTTE/BEIR evidence and English/hardware limits. |
+| sasirekha-cota-understanding-llm-compression-2023 | 11-16 | Aligned. Both treat the article as introductory, distinguish abstract-level primary-paper checks from reproduction, and preserve hardware-specific claims. |
+| schmidt-tokenization-more-than-compression-2024 | 11-18 | Aligned with an earlier 10-29 migration note. The extraction adds PathPiece, English-only experiments and explicit model/code reproduction limits. |
+| sennrich-subword-nmt-2016 | 11-18 | Aligned with an earlier 10-30 abstract note. The extraction and event both distinguish word-level NMT BPE from GPT byte-level BPE; the extraction points to the bilingual Gage/Sennrich distinction. |
+| sourav-mukherjee-compression-intelligence-2026 | 11-16 | Aligned. Both distinguish entropy-guided cache methods from the unvalidated reasoning-token pruning claim and retain the third-party mirror limitation. |
+| steck-cosine-similarity-embeddings-2024 | 11-05 | Aligned. The extraction separates the linear-model theorem, simulated experiment, no-code status and limits on generalizing to nonlinear LLM embeddings. |
+| thakur-etal-2021-beir | 11-18 | Aligned with an earlier 11-17 abstract event. The extraction adds benchmark composition, task families and annotation-bias qualifications; no benchmark rerun is claimed. |
+| varis-stephen-libovicky-tokcollate-2026 | 11-05 | Aligned. Both cover all ten paper pages and the CC BY 4.0 proceedings licence; the implementation, live visualizer and metric code remain unverified. |
+| wegmann-tokenization-language-variation-2025 | 11-05 | Aligned with an earlier 10-30 abstract note. The extraction adds five pre-tokenizer settings, English task scope and the distinction from cross-lingual token-premium work. |
+
+#### Cross-model differences and decisions
+
+- Extraction-only detail: all ten facet fields remain useful: per-facet status, coverage, notes, rights state and explicit unresolved questions are not represented as separate fields in source events. Keep the snapshots during the compatibility window.
+- Source-history-only detail: event chronology, event status, inspected-scope bullets and limitations are not fully reconstructible from a single extraction snapshot. Preserve all source events, including older abstract-only and later follow-up events.
+- No destructive reconciliation: date matches establish identity and chronology, not equivalence. No scan snapshot was copied over a source event, and no event was deleted.
+- Marek correction: the stale 2026-11-09 limitations are now superseded chronologically by the appended 2026-11-19 event; the older event remains as a truthful record of the earlier review state.
+- AiEdge remains deferred: the canonical article still lacks full direct retrieval; unknown relation types and the missing cuda-graphs concept are not repaired by metadata reconciliation.
+- Maarten remains incomplete at asset level: four images were inspected, but the advertised 50+ visual inventory remains unverified.
+
 
 ## 5. Compatibility and non-regression contract
 
@@ -161,41 +226,38 @@ The historical fields remain optional legacy data. The following invariants shou
 9. Historical `integrated_concepts` is not treated as a canonical registry; each ID must be checked against `data/concepts.yml` and its actual page/source coverage.
 10. No route is inferred from `route_implications`, source-local `teaching_route`, or `comparison.canonical_routes`.
 
-## 6. Fixtures and tests still required
+## 6. Fixtures and non-regression tests — closeout
 
-Build real fixtures from the repository records after the 36th scan is found and its source-level counterpart is retrieved:
+The repository corpus itself is used as the fixture source. This avoids copying 36 scan records and 28 mappings into synthetic YAML files that could drift from the authoritative records. Tests read the actual extraction files, source catalogue, concept registry and bilingual page files.
 
-- `scan-identical.yml`: same ten fields and same values at source and extraction level.
-- `scan-source-richer.yml`: source-only keys/values, with extraction record retained.
-- `scan-extraction-richer.yml`: extraction-only keys/values, with source record retained.
-- `scan-conflict.yml`: same key, different values; report conflict without choosing a winner.
-- `scan-stale.yml`: timestamps or retrieval metadata differ; preserve chronology.
-- `mapping-aiedge-unrepresentable.yml`: candidate node and undeclared relation types.
-- `mapping-marek-prose-relations.yml`: prose-only relation proposals plus existing canonical neighborhood.
-- `mapping-already-covered.yml`: empty proposals and a decision summary pointing to existing content.
-- `mapping-deferred.yml`: proposal explicitly deferred pending source inspection.
-- `mapping-obsolete.yml`: redundant source retained for provenance, no canonical mutation.
+The test module covers:
+- all 36 scan records, exact source_id pairing, ten-key snapshot shape and matching source-history date;
+- the three later source-history events (Karpathy, Maarten and the newly reconciled Marek event);
+- the AiEdge example of facet-level extraction detail versus compressed event scope/limitations;
+- all 28 canonical mappings and their observed field-shape counts;
+- exact AiEdge endpoint/type checks and rejection of undeclared relation types;
+- the six Marek prose proposals remaining non-normalized, with no automatic relation promotion;
+- all six Marek integrated concept IDs resolving to canonical concepts and to both published bilingual score-centering pages;
+- explicit absence of policy-drift from the canonical concept registry.
 
-The implemented regression tests assert:
-- exact source/extraction identity pairing by `source_id`, not filename guesswork;
-- lossless preservation of all historical blocks;
-- the four scan-difference classes above;
-- exact relation tuple matching, plus explicit handling of symmetric types;
-- missing endpoint and unknown relation-type diagnostics;
-- no mutation of canonical registries from candidate-only or prose proposals;
-- deterministic report output and stable counts.
+No artificial fixtures named scan-identical.yml, scan-conflict.yml, etc. were added: those would test a hypothetical migration model rather than the real corpus. The real records cover the important cases: compact source event versus rich facet snapshot (AiEdge), source-only later chronology (Karpathy/Maarten), and a stale event corrected by a later append (Marek).
 
-**Verification status:** tests are committed, but a successful run on the latest PR head has not yet been observed. The initial CI attempt found formatting issues, which were corrected in subsequent commits; the cancelled test run must not be treated as a pass.
+CI evidence for the already merged PR #1383: commit 64ed7b490186b25258555853e6c82f70d0fa0598; CI run 44568073905 succeeded (test suite and Python/domain checks), Quarto run 44568073875 succeeded, and secret scanning run 44568074091 succeeded. The new closeout commit has its own CI pending; do not infer its result from PR #1383.
 
-## 7. Remaining ordered work
 
-1. Find the 36th scan using parser-level key detection and produce the 36-file list.
-2. Retrieve source-level `scan_history` for all 36 source IDs; compare the ten fields and record differences without migration.
-3. Verify all six Marek concepts under `integrated_concepts` against canonical IDs, definitions, pages and source evidence. All six IDs resolve in `data/concepts.yml`; page-level support and source evidence still require individual review. Do not infer relation integration.
-4. Decide whether any Marek prose relation should be normalized; retain non-representable propositions if no declared relation expresses them accurately.
-5. Keep both AiEdge relations deferred until full source inspection; do not extend the relation vocabulary solely to accommodate them.
-6. Build the real fixtures and tests above; run focused tests, full Python tests, inventory and relevant CI on the new commit.
-7. Update `docs/extraction-destination-inventory.md` only after the new report has been regenerated from the current corpus.
+## 7. Remaining work, blockers and ordered follow-up
+
+The historical reconciliation itself is closed. The remaining items below are source-access/reproducibility blockers, not unresolved matching of the 36 scans or the 28 mappings.
+
+1. AiEdge — source retrieval blocker. Retrieve the complete canonical article and inspect its figures, code, links and references. Until then, retain the proposed cuda-graphs concept and both optimizes/complements relations as deferred and non-representable under the current vocabulary.
+2. Cameron R. Wolfe — separate source blocker. The Substack body remains unavailable. Keep its source record distinct from Marek/Ryabinin's primary paper and do not attribute any claims from the inaccessible article.
+3. Varis/TokCollate — implementation blocker. Inspect the official repository, pin dependencies, verify the CLI/data contract and metric calculations, and test the live visualizer including accessibility. The proceedings paper alone does not establish current software behavior.
+4. Marek/Ryabinin — reproducibility boundary. The canonical PDF and upstream unit test module have been inspected/executed as recorded, but declared-minimum JAX compatibility, framework integrations, paper-scale sweeps and independent reproduction of reported model results remain open.
+5. Maarten — visual inventory. Reconcile the four inspected in-body images against the article's advertised 50+ visuals, with creator/provenance and reuse-rights checks. Do not reproduce any asset without permission.
+6. Cross-corpus reproducibility. For sources whose linked repositories/data/checkpoints remain marked not inspected, run targeted audits only when a lesson or experiment depends on implementation-level claims. The historical scan audit does not imply these experiments were reproduced.
+
+No further changes to canonical concepts, relation types, route definitions or page associations are justified by the historical proposals alone. Keep the existing 28-entry decision register unchanged unless new primary-source evidence changes a specific decision.
+
 
 ## 8. Explicit non-changes
 
