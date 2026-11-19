@@ -35,7 +35,7 @@ The source record owns collection membership. Extraction records must not repeat
 | `classification.tags` | Retrieval facets | Optional list; unique namespaced tags matching controlled syntax | Tags are not concepts or collections |
 | `classification.concept_ids` | Canonical concept references | Optional list of strings; each resolves | Do not infer from lexical overlap |
 | `scan_history` | Append-only inspection events | Required non-empty list; each event must be a mapping with ISO date/datetime `accessed_at`, controlled `status`; `inspected_scope` and `limitations` are checked as lists of strings | Event contents are evidence boundaries, not a guarantee of completeness |
-| `related` | Project artifact associations | Required mapping; supplied `pages` and `concepts` must resolve | `audit_records` is documented as navigation, not proof of review |
+| `related` | Project artifact associations | Optional mapping (absence defaults to an empty mapping); supplied `pages` and `concepts` must resolve | `audit_records` is documented as navigation, not proof of review |
 
 ### Transitional collection contract
 
@@ -64,7 +64,7 @@ On a source record, `collections` is currently optional for migration compatibil
 | `items[].classification` | Item-level refinement | Optional mapping; supplied tags and concept references are checked | Must not silently rewrite source-level classification |
 | `items[].provenance` | Attribution where item voice differs from parent source | Optional mapping; controlled `voice`, known `parent_source_id`, valid locator; optional `speaker` must be non-empty; `captured_at` must be ISO date/datetime | Attribution does not verify truth |
 | `items[].verification` | Separate assessment of community-derived claims | Optional mapping; controlled status; each source reference must resolve or be HTTP(S) | Verification is not merged into original speaker's claim |
-| `items[].candidate_destinations` | Proposed page/concept destinations | Optional mapping; supplied page IDs are checked in the page branch | A proposal is not an integrated link |
+| `items[].candidate_destinations` | Proposed page/concept destinations | If supplied as a mapping, `pages` is checked; a non-mapping value is not explicitly rejected by this validator | A proposal is not an integrated link; concept IDs are not validated in this branch |
 | `items[].pedagogical_assessment` | Qualitative editorial assessment | Optional mapping; supplied dimensions require a controlled level and non-empty rationale | Not a scientific confidence score |
 
 The current validator also checks source-local pedagogical models. For source types `blog`, `tutorial`, `course`, and `book-chapter`, the top-level model is required. Its reconstruction, graph nodes/edges, learning outcomes, assumed prerequisites, teaching route and comparison block have structural checks. Source-local graph IDs must be namespaced; edge endpoints must resolve within that graph. These local labels are not canonical concept relations.
