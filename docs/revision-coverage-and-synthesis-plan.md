@@ -80,7 +80,13 @@ The read-only adapters were merged in [PR #1394](https://github.com/JM-Brun/llm-
 
 The adapter is separate from the existing page graph families. It does not change the page metadata schema, either validator, the resource registry, or any of the 62 pages. No current page declares a revision object, so the real repository currently has no typed revision edges; all 62 remain not_assessed.
 
-### 4. Add inverse queries and test them on the real repository — next
+### 4. Add inverse queries and test them on the real repository — implemented in this PR
+
+`ProjectIndex` now exposes deterministic inverse queries for page↔non-page-resource and concept↔non-page-resource associations: `resources_for_page`, `pages_for_resource`, `resources_for_concept` and `concepts_for_resource`. Unknown IDs fail explicitly; results use stable ID ordering. Tests cover synthetic fixtures, empty associations, invalid IDs, and round-trip reconciliation of all five resources and ten page/resource associations on the real repository.
+
+The existing revision relation queries remain bidirectional and separate from ordinary page graph edges. The real repository continues to contain four revision edges and the same eight explicit support assessments.
+
+
 
 Add deterministic queries for:
 - pages using a non-page resource and resources used by a page;
@@ -91,7 +97,7 @@ Add deterministic queries for:
 
 Tests must use the real repository as well as synthetic fixtures. Reconcile the five current resources and ten page/resource associations in both directions, verify the current absence of typed revision edges, and cover all three target types with synthetic examples. Keep relation families distinct and return stable, deterministic ordering.
 
-### 5. Define the metric registry, then build the coverage matrix
+### 5. Define the metric registry, then build the coverage matrix — next
 
 Define a canonical metric register before generating the matrix. Each metric must state its stable ID, definition, counting unit, canonical source, source path/schema version, filters, inclusion/exclusion rules, bilingual grouping, deduplication rule, missing-value semantics and tests.
 
@@ -130,4 +136,4 @@ The work is complete only when:
 
 ## 5. Current decision
 
-The contract and inventory are documented, and the read-only ProjectIndex adapters are implemented. The contract remains a proposal: the page metadata validator and resource validator are unchanged, and none of the 62 pages has been migrated. The next task is inverse queries and real-repository tests, followed by the metric register and coverage matrix, then diagnostics and interfaces. Do not mass-create revision content or change the schema/validators ahead of that sequence and an explicit contract review.
+The contract and inventory are documented, the read-only ProjectIndex adapters and inverse queries are implemented, and real-repository round-trip tests cover all current non-page resource associations. The contract remains a proposal: the page metadata validator and resource validator are unchanged, and none of the 62 pages has been migrated. The next task is the metric register and coverage matrix, followed by diagnostics and interfaces. Do not mass-create revision content or change the schema/validators ahead of that sequence and an explicit contract review.
