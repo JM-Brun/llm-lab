@@ -161,7 +161,7 @@ def main() -> int:
 
     errors, counts, audited = classify(issues, known_labels)
     report = render_report(args.repo, errors, counts, audited)
-    sys.stdout.write(report + "\\n")
+    sys.stdout.write(report + "\n")
     return 1 if errors else 0
 
 
