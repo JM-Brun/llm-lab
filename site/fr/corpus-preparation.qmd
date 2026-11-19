@@ -17,6 +17,11 @@ hierarchy:
   parents: ["fr/build-path"]
   children: ["fr/training-examples"]
 related: ["fr/text-data", "fr/tokenization-strategies", "fr/tokenizer-design-evaluation", "fr/evaluation-experimentale", "fr/corpus-preparation-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "Le récapitulatif en cinq points couvre provenance, transformations traçables, partitions, isolation du tokenizer et contrat de transfert."
 tags: ["type:guided-build", "destination:build", "topic:corpus-preparation", "level:core", "language:fr", "status:published"]
 -->
 
@@ -124,7 +129,7 @@ Le chapitre [Créer son propre jeu de données](https://huggingface.co/learn/llm
 
 Le corpus préparé peut alors être encodé en flux de tokens. La page [Du corpus tokenisé aux exemples d'entraînement](training-examples.qmd) traite l'étape suivante : décalage entrée-cible, fenêtres, packing, padding et masques. La page [Texte et données](text-data.qmd) conserve le parcours d'inférence plus court, du texte fourni en prompt aux représentations initiales.
 
-::: {.callout-tip title="Fiche de révision — préparer un corpus"}
+::: {.callout-tip #revision-summary title="Fiche de révision — préparer un corpus"}
 - **Provenance avant volume :** définir l'objectif, les sources admissibles, les droits, les dates et l'unité documentaire.
 - **Transformations traçables :** versionner parsing, filtrage, déduplication et règles de conservation ; garder les volumes et échantillons d'audit.
 - **Partitions adaptées à la question :** séparer les unités réellement indépendantes (source, famille, utilisateur ou période) et contrôler les recouvrements après découpage.
