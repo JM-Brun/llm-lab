@@ -47,7 +47,11 @@ Measured against the repository data snapshot used by PR #1369:
 | `pedagogical_strengths` | 1 |
 | `supplementary_audit` | 1 |
 
-The top-level `scan` field is present in 36 historical extraction records even though the authoring guide says scan history is source-owned and new extraction-level scan blocks should not be created. Preserve and report this legacy presence; do not infer that it is authoritative or promote its absence/presence to a new validation rule without inspecting the 36 records. `canonical_mapping` is an optional editorial proposal field, not a second canonical source of links.
+The top-level `scan` field is present in 36 historical extraction records even though the authoring guide says scan history is source-owned and new extraction-level scan blocks should not be created. All 36 values are mappings with the same ten keys: `accessed_at`, `author_text`, `code_data`, `comments`, `figures_media`, `linked_resources`, `metadata`, `retrieval_method`, `rights`, and `unresolved_questions`. Preserve and report this legacy presence; do not infer that it is authoritative or promote its absence/presence to a new validation rule without inspecting the 36 records.
+
+The top-level `canonical_mapping` field occurs in 28 records, always as a mapping. Its nested fields are `decision_summary` (28), `proposed_relations` (28), `route_implications` (28), `proposed_concepts` (27), and `integrated_concepts` (1). This is an editorial proposal area, not a second canonical source of links; the field name alone does not prove that any proposal was integrated.
+
+The top-level `pedagogical_model` occurs in 59 records, always as a mapping. All 59 contain `reconstruction`, `source_graph`, `learning_outcomes`, `assumed_prerequisites`, `teaching_route`, and `comparison`. `pedagogical_strengths` occurs in 58 and `pedagogical_limits` in 57. Other branches such as `canonical_mapping`, `claim_assessment`, and `visual_analysis` occur only in individual records and remain conditional. The local `teaching_route` is not the same thing as a canonical site route.
 
 ### Item-field presence
 
