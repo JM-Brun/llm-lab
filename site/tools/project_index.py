@@ -9,7 +9,7 @@ from __future__ import annotations
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 from page_index import PublishedPage, load_published_pages
 from strict_yaml import load_yaml
@@ -81,11 +81,7 @@ class ProjectIndex:
                     concept_to_pages[concept_id].add(page_id)
                     page_to_concepts[page_id].add(concept_id)
 
-        concept_to_domains: dict[str, set[str]] = defaultdict(set)
         for concept_id, concept in concepts.items():
-            for domain_id in concept.get("domains", []):
-                concept_to_domains[domain_id].add(concept_id)
-
         page_domain_index: dict[str, set[str]] = defaultdict(set)
         for page in published:
             domain = page.metadata.get("domain")
