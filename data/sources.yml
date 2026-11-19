@@ -1418,7 +1418,7 @@ sources:
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies, en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenizers-huggingface-repository-audit-2026-11-19.md, docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
+      audit_records: [docs/source-reviews/tokenization-implementations-huggingface-tiktoken-minbpe-2026-11.md, docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: google-sentencepiece-repository
     title: "SentencePiece"
