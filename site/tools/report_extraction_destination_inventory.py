@@ -236,8 +236,7 @@ def build_report(root: Path) -> dict[str, Any]:
             "concepts_file": "data/concepts.yml",
             "extraction_directory": "data/extractions/",
             "matching_rule": (
-                "extraction.source_id -> sources[].id; "
-                "filename equality is a separate diagnostic"
+                "extraction.source_id -> sources[].id; filename equality is a separate diagnostic"
             ),
         },
         "counts": {
