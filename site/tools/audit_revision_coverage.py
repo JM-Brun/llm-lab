@@ -150,8 +150,8 @@ def build_revision_inventory(
                     "fr": fr_count,
                     "en": en_count,
                     "balanced": fr_count == en_count and fr_count > 0,
-                    "duplicate_fr": fr_count > 1,
-                    "duplicate_en": en_count > 1,
+                    "multiple_fr": fr_count > 1,
+                    "multiple_en": en_count > 1,
                 }
             )
 
@@ -236,7 +236,7 @@ def render_markdown(inventory: dict[str, Any]) -> str:
             "## Interpretation",
             "",
             "- Topic parity compares page counts only; it does not establish semantic equivalence.",
-            "- Duplicate pages within a topic/language are flagged in the JSON report.",
+            "- Multiple pages within a topic/language are counted explicitly; this is not a duplicate-page judgment.",
             "- Understand preserves every core/optional stage membership,",
             "  including multiple memberships.",
             "- Understand pages outside the guided route are explicitly marked unrouted.",
