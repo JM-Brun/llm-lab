@@ -120,7 +120,7 @@ def test_missing_topics_are_reported_and_excluded_from_parity() -> None:
     assert [item["topic"] for item in inventory["bilingual_parity"]["understand"]] == ["valid"]
 
 
-def test_bilingual_parity_flags_duplicate_pages_per_language() -> None:
+def test_bilingual_parity_reports_multiple_pages_per_topic() -> None:
     inventory = AUDIT["build_revision_inventory"](
         [
             page("fr/one", "fr", "understand", "duplicate"),
@@ -133,8 +133,8 @@ def test_bilingual_parity_flags_duplicate_pages_per_language() -> None:
     )
     item = inventory["bilingual_parity"]["understand"][0]
     assert item["balanced"] is False
-    assert item["duplicate_fr"] is True
-    assert item["duplicate_en"] is False
+    assert item["multiple_fr"] is True
+    assert item["multiple_en"] is False
 
 
 def test_unexpected_language_values_are_reported() -> None:
