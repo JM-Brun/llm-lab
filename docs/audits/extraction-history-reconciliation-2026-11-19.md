@@ -1,7 +1,7 @@
 # Historical extraction reconciliation — 2026-11-19
 
 **Repository:** `JM-Brun/llm-lab`  
-**Audited branch snapshot:** `main` at `1e20c55453421e079aefd6bdd686fe47277d98c8`  
+**Audited branch snapshot:** `main` at `fcd5d04781408140f65a8ac49c9553bd6318c1c0`  
 **Scope:** legacy extraction-level `scan` blocks and `canonical_mapping` blocks  
 **Status:** all 36 scan identities and dates paired; all 28 mappings and relation proposals reconciled; semantic scan comparison and CI verification remain open
 
