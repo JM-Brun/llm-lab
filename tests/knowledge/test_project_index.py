@@ -425,6 +425,25 @@ def test_revision_status_constraints_are_enforced(tmp_path: Path) -> None:
         ProjectIndex.build(tmp_path)
 
 
+def test_inverse_queries_reject_unknown_entities_and_invalid_targets(tmp_path: Path) -> None:
+    index = _index(tmp_path)
+
+    with pytest.raises(KeyError, match="unknown published page"):
+        index.resources_for_page("en/missing")
+    with pytest.raises(KeyError, match="unknown resource"):
+        index.pages_for_resource("missing-resource")
+    with pytest.raises(KeyError, match="unknown concept"):
+        index.resources_for_concept("missing-concept")
+    with pytest.raises(KeyError, match="unknown resource"):
+        index.concepts_for_resource("missing-resource")
+    with pytest.raises(KeyError, match="unknown revision target page"):
+        index.revision_edges_for_target("page", "en/missing")
+    with pytest.raises(ValueError, match="section targets require"):
+        index.revision_edges_for_target("section", "missing-anchor")
+    with pytest.raises(ValueError, match="unknown revision target type"):
+        index.revision_edges_for_target("concept", "attention")
+
+
 def test_real_repository_resource_and_revision_inverse_queries() -> None:
     index = ProjectIndex.build(ROOT)
 
