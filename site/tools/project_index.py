@@ -8,7 +8,7 @@ stay distinct.
 from __future__ import annotations
 
 import re
-from collections import defaultdict
+from collections import Counter, defaultdict
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -65,28 +65,34 @@ class ConceptResourceAssociation:
 
 @dataclass(frozen=True, slots=True)
 class RevisionEdge:
-    """A typed page-to-revision-support relation, separate from page graph edges."""
+    """A typed revision-aid → source-lesson relation, separate from page graph edges."""
 
-    source_page_id: str
+    aid_page_id: str
     role: str
-    target_type: str
-    target_id: str
+    source_page_id: str
 
 
-REVISION_STATUSES = {"not_assessed", "assessed", "not_applicable"}
 REVISION_ROLES = {"synthesis", "flashcards", "revision_sheet"}
-REVISION_TARGET_TYPES = {"section", "page", "resource"}
+REVISION_SUPPORT_STATUSES = {
+    "not_assessed",
+    "integrated_sufficient",
+    "companion_sufficient",
+    "partial",
+    "missing",
+    "not_applicable",
+}
+ELIGIBLE_LESSON_DESTINATIONS = {"understand", "build"}
 STABLE_ANCHOR = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
 
 
-def _language_matches(source: str, target: str) -> bool:
-    """Allow exact language matches, regional variants, and language-neutral targets."""
-    source_tag, target_tag = source.lower(), target.lower()
-    if target_tag == "shared":
-        return True
-    if source_tag == "shared":
-        return target_tag == "shared"
-    return target_tag == source_tag or target_tag.startswith(source_tag + "-")
+def _language_matches(aid_language: str, lesson_language: str) -> bool:
+    """Require same-language aids; allow a genuinely multilingual resource."""
+    aid_tag, lesson_tag = aid_language.lower(), lesson_language.lower()
+    if aid_tag == "mul":
+        return lesson_tag in {"fr", "en"}
+    if aid_tag == "shared":
+        return lesson_tag == "shared"
+    return lesson_tag == aid_tag or lesson_tag.startswith(aid_tag + "-")
 
 
 def _has_explicit_anchor(source: str, anchor: str) -> bool:
@@ -216,118 +222,146 @@ def _load_non_page_resources(
 
 def _load_revision_relations(
     pages: dict[str, PublishedPage],
-    resources: dict[str, ResourceRecord],
-) -> tuple[dict[str, str], tuple[RevisionEdge, ...]]:
-    """Adapt the proposed page-map revision object without changing the page validator."""
-    statuses: dict[str, str] = {}
+) -> tuple[dict[str, dict[str, Any]], tuple[RevisionEdge, ...]]:
+    """Load aid → lesson relations and evidence-backed lesson assessments."""
     edges: list[RevisionEdge] = []
-    for page_id, page in pages.items():
-        if "revision" not in page.metadata:
-            statuses[page_id] = "not_assessed"
+    for page_id, aid in pages.items():
+        role = aid.metadata.get("revision_role")
+        raw_targets = aid.metadata.get("revision_of")
+        if role is None and raw_targets is None:
             continue
-
-        revision = page.metadata["revision"]
-        where = f"{page.path.as_posix()}.revision"
-        if not isinstance(revision, dict):
-            raise ProjectIndexIntegrityError(
-                source=where, record_id=page_id, relation="revision object", target=revision
-            )
-        unknown_fields = set(revision) - {"status", "resources", "reason"}
-        if unknown_fields:
-            names = ", ".join(sorted(map(str, unknown_fields)))
-            raise ValueError(f"{where}: unknown field(s) {names}")
-        status = revision.get("status")
-        if not isinstance(status, str) or status not in REVISION_STATUSES:
-            raise ValueError(f"{where}.status: unsupported revision status {status!r}")
-        raw_edges = revision.get("resources", [])
-        if not isinstance(raw_edges, list):
-            raise ValueError(f"{where}.resources: expected a list")
-        reason = revision.get("reason")
-        if status == "not_applicable":
-            if not isinstance(reason, str) or not reason.strip():
-                raise ValueError(f"{where}.reason: not_applicable requires a non-empty reason")
-        elif reason is not None:
-            raise ValueError(f"{where}.reason: only not_applicable may declare a reason")
-        if status != "assessed" and raw_edges:
-            raise ValueError(f"{where}.resources: {status} cannot contain revision relations")
-
-        seen: set[tuple[str, str, str]] = set()
-        for index, item in enumerate(raw_edges):
-            relation_where = f"{where}.resources[{index}]"
-            if not isinstance(item, dict) or set(item) != {"role", "target"}:
-                raise ValueError(f"{relation_where}: expected exactly role and target")
-            role, target = item.get("role"), item.get("target")
-            if not isinstance(role, str) or role not in REVISION_ROLES:
-                raise ValueError(f"{relation_where}.role: unsupported revision role {role!r}")
-            if not isinstance(target, dict) or set(target) != {"type", "id"}:
-                raise ValueError(f"{relation_where}.target: expected exactly type and id")
-            target_type, target_id = target.get("type"), target.get("id")
-            if not isinstance(target_type, str) or target_type not in REVISION_TARGET_TYPES:
-                raise ValueError(
-                    f"{relation_where}.target.type: unsupported target type {target_type!r}"
+        where = f"{aid.path.as_posix()}.revision"
+        if not isinstance(role, str) or role not in REVISION_ROLES:
+            raise ValueError(f"{where}.revision_role: unsupported revision role {role!r}")
+        if (
+            not isinstance(raw_targets, list)
+            or not raw_targets
+            or not all(isinstance(target, str) and target.strip() for target in raw_targets)
+        ):
+            raise ValueError(f"{where}.revision_of: expected a non-empty list of page IDs")
+        if len(raw_targets) != len(set(raw_targets)):
+            raise ValueError(f"{where}.revision_of: duplicate page IDs")
+        if aid.tags.get("destination") in ELIGIBLE_LESSON_DESTINATIONS:
+            raise ValueError(f"{where}: a source lesson cannot also be declared as a revision aid")
+        for target_id in raw_targets:
+            target = pages.get(target_id)
+            if target is None:
+                raise ProjectIndexIntegrityError(
+                    source=where,
+                    record_id=page_id,
+                    relation="revision_of (published page)",
+                    target=target_id,
                 )
-            if not isinstance(target_id, str) or not target_id.strip():
-                raise ValueError(f"{relation_where}.target.id: expected a non-empty string")
-            key = (role, target_type, target_id)
-            if key in seen:
-                raise ValueError(f"{relation_where}: duplicate revision relationship {key!r}")
-            seen.add(key)
+            if target.tags.get("destination") not in ELIGIBLE_LESSON_DESTINATIONS:
+                raise ProjectIndexIntegrityError(
+                    source=where,
+                    record_id=page_id,
+                    relation="revision_of (eligible lesson)",
+                    target=target_id,
+                )
+            if not _language_matches(aid.language, target.language):
+                raise ProjectIndexIntegrityError(
+                    source=where,
+                    record_id=page_id,
+                    relation="revision_of language",
+                    target=target_id,
+                )
+            edges.append(RevisionEdge(page_id, role, target_id))
 
-            if target_type == "section":
-                if not STABLE_ANCHOR.fullmatch(target_id):
-                    raise ValueError(f"{relation_where}.target.id: invalid section anchor")
-                if not _has_explicit_anchor(page.source, target_id):
+    edge_keys = {(edge.aid_page_id, edge.source_page_id) for edge in edges}
+    assessments: dict[str, dict[str, Any]] = {}
+    for page_id, page in pages.items():
+        if page.tags.get("destination") not in ELIGIBLE_LESSON_DESTINATIONS:
+            if "revision_support" in page.metadata:
+                raise ValueError(
+                    f"{page.path.as_posix()}.revision_support: "
+                    "only Understand/Build lessons may be assessed"
+                )
+            continue
+        raw_support = page.metadata.get("revision_support")
+        if raw_support is None:
+            assessments[page_id] = {"status": "not_assessed", "evidence": (), "reason": None}
+            continue
+        where = f"{page.path.as_posix()}.revision_support"
+        if not isinstance(raw_support, dict) or set(raw_support) - {"status", "evidence", "reason"}:
+            raise ValueError(f"{where}: expected mapping with status, evidence and optional reason")
+        status = raw_support.get("status")
+        if not isinstance(status, str) or status not in REVISION_SUPPORT_STATUSES:
+            raise ValueError(f"{where}.status: unsupported revision support status {status!r}")
+        raw_evidence = raw_support.get("evidence", [])
+        if not isinstance(raw_evidence, list):
+            raise ValueError(f"{where}.evidence: expected a list")
+        reason = raw_support.get("reason")
+        if reason is not None and (not isinstance(reason, str) or not reason.strip()):
+            raise ValueError(f"{where}.reason: expected a non-empty string when present")
+        evidence: list[dict[str, str]] = []
+        has_aid = False
+        has_anchor = False
+        for index, item in enumerate(raw_evidence):
+            evidence_where = f"{where}.evidence[{index}]"
+            if not isinstance(item, dict) or set(item) not in ({"aid", "note"}, {"anchor", "note"}):
+                raise ValueError(f"{evidence_where}: expected exactly aid/anchor and note")
+            note = item.get("note")
+            if not isinstance(note, str) or not note.strip():
+                raise ValueError(f"{evidence_where}.note: expected a non-empty string")
+            if "anchor" in item:
+                anchor = item["anchor"]
+                if not isinstance(anchor, str) or not STABLE_ANCHOR.fullmatch(anchor):
+                    raise ValueError(f"{evidence_where}.anchor: expected a stable section anchor")
+                if not _has_explicit_anchor(page.source, anchor):
                     raise ProjectIndexIntegrityError(
                         source=where,
                         record_id=page_id,
-                        relation="revision section anchor",
-                        target=target_id,
+                        relation="revision evidence anchor",
+                        target=anchor,
                     )
-            elif target_type == "page":
-                target_page = pages.get(target_id)
-                if target_page is None or target_id == page_id:
-                    raise ProjectIndexIntegrityError(
-                        source=where,
-                        record_id=page_id,
-                        relation="revision page target",
-                        target=target_id,
-                    )
-                if not _language_matches(page.language, target_page.language):
-                    raise ProjectIndexIntegrityError(
-                        source=where,
-                        record_id=page_id,
-                        relation="revision page target language",
-                        target=target_id,
-                    )
+                has_anchor = True
+                evidence.append({"anchor": anchor, "note": note})
             else:
-                target_resource = resources.get(target_id)
-                if target_resource is None or target_resource.status != "published":
+                aid_id = item["aid"]
+                if not isinstance(aid_id, str) or not aid_id.strip():
+                    raise ValueError(f"{evidence_where}.aid: expected a non-empty aid ID")
+                if (
+                    aid_id not in pages
+                    or pages[aid_id].metadata.get("revision_role") not in REVISION_ROLES
+                ):
                     raise ProjectIndexIntegrityError(
                         source=where,
                         record_id=page_id,
-                        relation="revision resource target",
-                        target=target_id,
+                        relation="revision evidence aid",
+                        target=aid_id,
                     )
-                if not _language_matches(page.language, target_resource.language):
+                if (aid_id, page_id) not in edge_keys:
                     raise ProjectIndexIntegrityError(
                         source=where,
                         record_id=page_id,
-                        relation="revision resource target language",
-                        target=target_id,
+                        relation="revision evidence aid does not target lesson",
+                        target=aid_id,
                     )
-            edges.append(RevisionEdge(page_id, role, target_type, target_id))
-        statuses[page_id] = status
+                has_aid = True
+                evidence.append({"aid": aid_id, "note": note})
+        if status == "not_assessed" and (evidence or reason):
+            raise ValueError(f"{where}: not_assessed cannot contain evidence or reason")
+        if status == "integrated_sufficient" and not has_anchor:
+            raise ValueError(f"{where}: integrated_sufficient requires anchor evidence")
+        if status == "companion_sufficient" and not has_aid:
+            raise ValueError(f"{where}: companion_sufficient requires linked aid evidence")
+        if status == "partial" and not (evidence or reason):
+            raise ValueError(f"{where}: partial requires evidence or a reason")
+        if status in {"missing", "not_applicable"} and not reason:
+            raise ValueError(f"{where}.reason: {status} requires a non-empty reason")
+        if status in {"missing", "not_applicable"} and evidence:
+            raise ValueError(
+                f"{where}.evidence: {status} cannot claim revision aids or integrated support"
+            )
+        assessments[page_id] = {
+            "status": status,
+            "evidence": tuple(evidence),
+            "reason": reason,
+        }
 
-    return statuses, tuple(
-        sorted(
-            edges,
-            key=lambda edge: (
-                edge.source_page_id,
-                edge.role,
-                edge.target_type,
-                edge.target_id,
-            ),
-        )
+    return assessments, tuple(
+        sorted(edges, key=lambda edge: (edge.source_page_id, edge.aid_page_id, edge.role))
     )
 
 
@@ -371,16 +405,10 @@ class ProjectIndex:
     resources_by_id: dict[str, ResourceRecord]
     page_resource_associations: tuple[PageResourceAssociation, ...]
     concept_resource_associations: tuple[ConceptResourceAssociation, ...]
-    resource_ids_by_page: dict[str, tuple[str, ...]]
-    page_ids_by_resource: dict[str, tuple[str, ...]]
-    resource_ids_by_concept: dict[str, tuple[str, ...]]
-    concept_ids_by_resource: dict[str, tuple[str, ...]]
-    revision_status_by_page: dict[str, str]
+    revision_support_by_page: dict[str, dict[str, Any]]
     revision_edges: tuple[RevisionEdge, ...]
-    revision_edges_by_page: dict[str, tuple[RevisionEdge, ...]]
-    revision_sources_by_page: dict[str, tuple[RevisionEdge, ...]]
-    revision_sources_by_resource: dict[str, tuple[RevisionEdge, ...]]
-    revision_sources_by_section: dict[tuple[str, str], tuple[RevisionEdge, ...]]
+    revision_aids_by_lesson: dict[str, tuple[RevisionEdge, ...]]
+    revision_lessons_by_aid: dict[str, tuple[RevisionEdge, ...]]
 
     @classmethod
     def build(cls, root: Path) -> ProjectIndex:
@@ -397,57 +425,12 @@ class ProjectIndex:
         resources, page_resource_associations, concept_resource_associations = (
             _load_non_page_resources(root, pages, concepts)
         )
-        revision_status_by_page, revision_edges = _load_revision_relations(pages, resources)
-
-        resource_ids_by_page: dict[str, set[str]] = defaultdict(set)
-        page_ids_by_resource: dict[str, set[str]] = defaultdict(set)
-        resource_ids_by_concept: dict[str, set[str]] = defaultdict(set)
-        concept_ids_by_resource: dict[str, set[str]] = defaultdict(set)
-        for association in page_resource_associations:
-            resource_ids_by_page[association.page_id].add(association.resource_id)
-            page_ids_by_resource[association.resource_id].add(association.page_id)
-        for association in concept_resource_associations:
-            resource_ids_by_concept[association.concept_id].add(association.resource_id)
-            concept_ids_by_resource[association.resource_id].add(association.concept_id)
-
-        revision_by_page: dict[str, list[RevisionEdge]] = defaultdict(list)
-        revision_by_target_page: dict[str, list[RevisionEdge]] = defaultdict(list)
-        revision_by_target_resource: dict[str, list[RevisionEdge]] = defaultdict(list)
-        revision_by_target_section: dict[tuple[str, str], list[RevisionEdge]] = defaultdict(list)
+        revision_support_by_page, revision_edges = _load_revision_relations(pages)
+        aids_by_lesson: dict[str, list[RevisionEdge]] = defaultdict(list)
+        lessons_by_aid: dict[str, list[RevisionEdge]] = defaultdict(list)
         for edge in revision_edges:
-            revision_by_page[edge.source_page_id].append(edge)
-            if edge.target_type == "page":
-                revision_by_target_page[edge.target_id].append(edge)
-            elif edge.target_type == "resource":
-                revision_by_target_resource[edge.target_id].append(edge)
-            else:
-                revision_by_target_section[(edge.source_page_id, edge.target_id)].append(edge)
-
-        def freeze_ids(index: dict[str, set[str]]) -> dict[str, tuple[str, ...]]:
-            return {key: tuple(sorted(value)) for key, value in index.items()}
-
-        def sort_revision_edges(edges: list[RevisionEdge]) -> tuple[RevisionEdge, ...]:
-            return tuple(
-                sorted(
-                    edges,
-                    key=lambda edge: (
-                        edge.source_page_id,
-                        edge.role,
-                        edge.target_type,
-                        edge.target_id,
-                    ),
-                )
-            )
-
-        def freeze_revision_by_page(
-            index: dict[str, list[RevisionEdge]],
-        ) -> dict[str, tuple[RevisionEdge, ...]]:
-            return {key: sort_revision_edges(value) for key, value in index.items()}
-
-        def freeze_revision_by_section(
-            index: dict[tuple[str, str], list[RevisionEdge]],
-        ) -> dict[tuple[str, str], tuple[RevisionEdge, ...]]:
-            return {key: sort_revision_edges(value) for key, value in index.items()}
+            aids_by_lesson[edge.source_page_id].append(edge)
+            lessons_by_aid[edge.aid_page_id].append(edge)
 
         tag_index: dict[tuple[str, str], set[str]] = defaultdict(set)
         for page in published:
@@ -550,16 +533,16 @@ class ProjectIndex:
             resources_by_id=resources,
             page_resource_associations=page_resource_associations,
             concept_resource_associations=concept_resource_associations,
-            resource_ids_by_page=freeze_ids(resource_ids_by_page),
-            page_ids_by_resource=freeze_ids(page_ids_by_resource),
-            resource_ids_by_concept=freeze_ids(resource_ids_by_concept),
-            concept_ids_by_resource=freeze_ids(concept_ids_by_resource),
-            revision_status_by_page=revision_status_by_page,
+            revision_support_by_page=revision_support_by_page,
             revision_edges=revision_edges,
-            revision_edges_by_page=freeze_revision_by_page(revision_by_page),
-            revision_sources_by_page=freeze_revision_by_page(revision_by_target_page),
-            revision_sources_by_resource=freeze_revision_by_page(revision_by_target_resource),
-            revision_sources_by_section=freeze_revision_by_section(revision_by_target_section),
+            revision_aids_by_lesson={
+                key: tuple(sorted(value, key=lambda edge: (edge.aid_page_id, edge.role)))
+                for key, value in aids_by_lesson.items()
+            },
+            revision_lessons_by_aid={
+                key: tuple(sorted(value, key=lambda edge: edge.source_page_id))
+                for key, value in lessons_by_aid.items()
+            },
         )
 
     def select_pages(self, **filters: str) -> tuple[PublishedPage, ...]:
@@ -586,111 +569,6 @@ class ProjectIndex:
         return tuple(
             self.concepts_by_id[key] for key in sorted(self.concepts_by_page.get(page_id, ()))
         )
-
-    def resources_for_page(self, page_id: str) -> tuple[ResourceRecord, ...]:
-        """Return non-page resources explicitly referenced by a published page."""
-        if page_id not in self.pages_by_id:
-            raise KeyError(f"unknown published page: {page_id}")
-        return tuple(
-            self.resources_by_id[resource_id]
-            for resource_id in self.resource_ids_by_page.get(page_id, ())
-        )
-
-    def pages_for_resource(self, resource_id: str) -> tuple[PublishedPage, ...]:
-        """Return published pages listed by a non-page resource's referenced_by field."""
-        if resource_id not in self.resources_by_id:
-            raise KeyError(f"unknown resource: {resource_id}")
-        return tuple(
-            self.pages_by_id[page_id] for page_id in self.page_ids_by_resource.get(resource_id, ())
-        )
-
-    def resources_for_concept(self, concept_id: str) -> tuple[ResourceRecord, ...]:
-        """Return non-page resources explicitly associated with a canonical concept."""
-        if concept_id not in self.concepts_by_id:
-            raise KeyError(f"unknown concept: {concept_id}")
-        return tuple(
-            self.resources_by_id[resource_id]
-            for resource_id in self.resource_ids_by_concept.get(concept_id, ())
-        )
-
-    def concepts_for_resource(self, resource_id: str) -> tuple[dict[str, Any], ...]:
-        """Return canonical concepts explicitly associated with a non-page resource."""
-        if resource_id not in self.resources_by_id:
-            raise KeyError(f"unknown resource: {resource_id}")
-        return tuple(
-            self.concepts_by_id[concept_id]
-            for concept_id in self.concept_ids_by_resource.get(resource_id, ())
-        )
-
-    def revision_targets_for_page(
-        self, page_id: str, *, role: str | None = None
-    ) -> tuple[RevisionEdge, ...]:
-        """Return typed revision targets declared by a source page."""
-        if page_id not in self.pages_by_id:
-            raise KeyError(f"unknown published page: {page_id}")
-        if role is not None and (not isinstance(role, str) or role not in REVISION_ROLES):
-            raise ValueError(f"unknown revision role: {role}")
-        return tuple(
-            edge
-            for edge in self.revision_edges_by_page.get(page_id, ())
-            if role is None or edge.role == role
-        )
-
-    def revision_edges_for_target(
-        self,
-        target_type: str,
-        target_id: str,
-        *,
-        section_page_id: str | None = None,
-        role: str | None = None,
-    ) -> tuple[RevisionEdge, ...]:
-        """Return source→target revision edges using a page-local key for sections."""
-        if role is not None and (not isinstance(role, str) or role not in REVISION_ROLES):
-            raise ValueError(f"unknown revision role: {role}")
-        if not isinstance(target_id, str) or not target_id.strip():
-            raise ValueError("target_id must be a non-empty string")
-        if target_type == "page":
-            if section_page_id is not None:
-                raise ValueError("section_page_id is only valid for section targets")
-            if target_id not in self.pages_by_id:
-                raise KeyError(f"unknown revision target page: {target_id}")
-            edges = self.revision_sources_by_page.get(target_id, ())
-        elif target_type == "resource":
-            if section_page_id is not None:
-                raise ValueError("section_page_id is only valid for section targets")
-            if target_id not in self.resources_by_id:
-                raise KeyError(f"unknown revision target resource: {target_id}")
-            edges = self.revision_sources_by_resource.get(target_id, ())
-        elif target_type == "section":
-            if not isinstance(section_page_id, str) or not section_page_id:
-                raise ValueError("section targets require a non-empty section_page_id")
-            page = self.pages_by_id.get(section_page_id)
-            if page is None:
-                raise KeyError(f"unknown section owner page: {section_page_id}")
-            if not _has_explicit_anchor(page.source, target_id):
-                raise KeyError(f"unknown explicit section anchor: {section_page_id}#{target_id}")
-            edges = self.revision_sources_by_section.get((section_page_id, target_id), ())
-        else:
-            raise ValueError(f"unknown revision target type: {target_type}")
-        return tuple(edge for edge in edges if role is None or edge.role == role)
-
-    def pages_for_revision_target(
-        self,
-        target_type: str,
-        target_id: str,
-        *,
-        section_page_id: str | None = None,
-        role: str | None = None,
-    ) -> tuple[PublishedPage, ...]:
-        """Return unique source pages that point to a typed revision target."""
-        edges = self.revision_edges_for_target(
-            target_type,
-            target_id,
-            section_page_id=section_page_id,
-            role=role,
-        )
-        source_ids = sorted({edge.source_page_id for edge in edges})
-        return tuple(self.pages_by_id[page_id] for page_id in source_ids)
 
     def incoming_pages(
         self, page_id: str, *, family: str | None = None, relation: str | None = None
@@ -729,6 +607,36 @@ class ProjectIndex:
             raise KeyError(f"unknown route stage: {stage_id}")
         return tuple(self.pages_by_id[page_id] for page_id in self.route_pages.get(key, ()))
 
+    def revision_aids_for_lesson(
+        self, page_id: str, *, role: str | None = None
+    ) -> tuple[RevisionEdge, ...]:
+        """Return published revision aids explicitly linked to one lesson."""
+        if page_id not in self.pages_by_id:
+            raise KeyError(f"unknown published page: {page_id}")
+        return tuple(
+            edge
+            for edge in self.revision_aids_by_lesson.get(page_id, ())
+            if role is None or edge.role == role
+        )
+
+    def lessons_for_revision_aid(self, aid_page_id: str) -> tuple[PublishedPage, ...]:
+        """Return source lessons targeted by one published Quarto revision aid."""
+        aid = self.pages_by_id.get(aid_page_id)
+        if aid is None or aid.metadata.get("revision_role") not in REVISION_ROLES:
+            raise KeyError(f"unknown published revision-aid page: {aid_page_id}")
+        return tuple(
+            self.pages_by_id[edge.source_page_id]
+            for edge in self.revision_lessons_by_aid.get(aid_page_id, ())
+        )
+
+    def revision_support_for_lesson(self, page_id: str) -> dict[str, Any]:
+        """Return the independent editorial assessment for one Understand/Build lesson."""
+        if page_id not in self.pages_by_id:
+            raise KeyError(f"unknown published page: {page_id}")
+        if page_id not in self.revision_support_by_page:
+            raise ValueError(f"page is not an Understand/Build lesson: {page_id}")
+        return self.revision_support_by_page[page_id]
+
     def stats(self) -> dict[str, Any]:
         """Return counts with explicit units; route memberships are not page counts."""
         by_tag: dict[str, dict[str, int]] = defaultdict(dict)
@@ -740,6 +648,14 @@ class ProjectIndex:
             "domains": len(self.domains_by_id),
             "page_edges": len(self.page_edges),
             "route_memberships": len(self.route_memberships),
+            "revision_edges": len(self.revision_edges),
+            "revision_support_by_status": dict(
+                sorted(
+                    Counter(
+                        item["status"] for item in self.revision_support_by_page.values()
+                    ).items()
+                )
+            ),
             "pages_by_tag": dict(by_tag),
             "concepts_by_importance": {
                 importance: sum(
