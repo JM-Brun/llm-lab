@@ -11,7 +11,7 @@ This document records a candidate model for review. It does **not** authorize ed
 1. A learning page may have zero, one or several revision artifacts.
 2. A revision artifact may support more than one learning page; do not duplicate a shared artifact to manufacture one-to-one links.
 3. Revision support may be either:
-   - an integrated section of the learning page itself, identified by an explicit heading anchor;
+   - an integrated section of the learning page itself, identified by an explicit heading or block anchor;
    - a companion published Quarto page with its existing stable page ID; or
    - a non-page artifact with its own stable resource ID in `data/resources.yml`.
 4. The relationship has an explicit pedagogical role. A synthesis, a flashcard set and a revision sheet are not interchangeable.
@@ -88,7 +88,7 @@ Do not add a role merely because a file has a particular extension or title. If 
 
 Each relationship must contain exactly one target form:
 
-- `target.type: section` with `target.id` resolving to an explicit, unique heading anchor in the source page itself;
+- `target.type: section` with `target.id` resolving to an explicit, unique heading or Quarto block anchor in the source page itself;
 - `target.type: page` with `target.id` resolving to an existing, published companion page ID;
 - `target.type: resource` with `target.id` resolving to an existing, published non-page resource ID.
 
@@ -114,7 +114,7 @@ These constraints are requirements for a future validator implementation, not cu
 
 For a section target:
 
-- the anchor must be explicitly declared on a heading in the source page;
+- the anchor must be explicitly declared on a heading or fenced Quarto block in the source page;
 - the anchor must be unique within that page;
 - the section must contain the claimed revision role rather than merely being a generic heading;
 - the section link is rendered as the source page URL plus its fragment;
@@ -217,7 +217,7 @@ The 62-page historical snapshot must remain unchanged until the contract, its co
 ## 7. Decisions still requiring review
 
 - Is the optional page-map `revision` object the right canonical owner, or should the relation live in a separate relation registry?
-- Which explicit heading-anchor convention should identify integrated revision sections, and how should the validator prove that the anchor exists?\n- Should integrated sections be targeted by explicit heading anchors, and what exact heading/block syntax should the validator recognize?
+- Which explicit heading/block-anchor convention should identify integrated revision sections, and how should the validator prove that the anchor exists?\n- Should integrated sections be targeted by explicit heading anchors, and what exact heading/block syntax should the validator recognize?
 - Are the three proposed roles sufficiently distinct for the artifacts actually present?
 - Does the resource registry need a generic `revision` kind, or do concrete non-page artifacts justify narrower kinds?
 - What is the precise eligibility rule for `not_applicable`?
