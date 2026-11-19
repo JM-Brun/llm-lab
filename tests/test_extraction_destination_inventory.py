@@ -5,7 +5,12 @@ from pathlib import Path
 
 import yaml
 
-SCRIPT = Path(__file__).resolve().parents[1] / "site" / "tools" / "report_extraction_destination_inventory.py"
+SCRIPT = (
+    Path(__file__).resolve().parents[1]
+    / "site"
+    / "tools"
+    / "report_extraction_destination_inventory.py"
+)
 SPEC = importlib.util.spec_from_file_location("report_extraction_destination_inventory", SCRIPT)
 assert SPEC is not None and SPEC.loader is not None
 MODULE = importlib.util.module_from_spec(SPEC)
