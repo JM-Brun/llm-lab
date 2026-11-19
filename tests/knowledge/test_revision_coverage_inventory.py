@@ -72,6 +72,24 @@ def test_explicit_concept_and_implementation_edges_are_projected() -> None:
     assert record["implementation_resource_ids"] == ["attention-module"]
 
 
+def test_bilingual_parity_flags_missing_topic_counterparts() -> None:
+    inventory = AUDIT["build_revision_inventory"](
+        [
+            page("fr/shared-topic", "fr", "understand", "shared-topic"),
+            page("en/other-topic", "en", "understand", "other-topic"),
+        ],
+        [],
+        [],
+        route_memberships={},
+    )
+    parity = inventory["bilingual_parity"]["understand"]
+    by_topic = {item["topic"]: item for item in parity}
+    assert by_topic["shared-topic"]["balanced"] is False
+    assert by_topic["shared-topic"]["fr"] == 1
+    assert by_topic["shared-topic"]["en"] == 0
+    assert by_topic["other-topic"]["balanced"] is False
+
+
 def test_report_documents_unrouted_and_unassessed_semantics() -> None:
     inventory = AUDIT["build_revision_inventory"](
         [page("fr/lesson", "fr", "understand", "lesson")],
