@@ -983,7 +983,7 @@ sources:
     language: en
     version: null
     revision: 1acefe89412b20245db5a22d2a02001e547dc602
-    licence: {identifier: "MIT", url: "https://github.com/karpathy/minbpe/blob/master/LICENSE", status: verified}
+    licence: {identifier: "MIT", url: "https://github.com/karpathy/minbpe/blob/1acefe89412b20245db5a22d2a02001e547dc602/LICENSE", status: verified}
     reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
     classification:
       primary_theme: text-tokenization
@@ -997,6 +997,16 @@ sources:
     scan_status: partially-scanned
     integration_status: integrated
     scan_history:
+      - accessed_at: "2026-11-19"
+        status: partially-scanned
+        inspected_scope:
+          - "Pinned README, exercise.md, lecture.md, base/basic/regex/gpt4 implementations, test_tokenizer.py and LICENSE."
+          - "Mapped the five-step learner progression and statically inventoried round-trip, Wikipedia BPE, tiktoken parity and save/load tests."
+          - "Recorded edge-case limitations and the dependency of GPT4Tokenizer on tiktoken's private cl100k_base ranks."
+        limitations:
+          - "Static inspection only; no upstream tests, training run, notebook, performance measurement or compatibility reproduction executed."
+          - "Associated video has not been inspected audiovisually or timestamped; lecture.md is text evidence only."
+          - "No fuzzing or exhaustive Unicode/special-token policy coverage."
       - accessed_at: "2026-10-30"
         status: partially-scanned
         inspected_scope:
@@ -1016,7 +1026,7 @@ sources:
     related:
       pages: [en/tokenization-strategies, fr/tokenization-strategies]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md, docs/source-reviews/tokenization-implementations-huggingface-tiktoken-minbpe-2026-11.md]
+      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md, docs/source-reviews/tokenization-implementations-huggingface-tiktoken-minbpe-2026-11.md, docs/source-reviews/minbpe-exercises-tests-audit-2026-11-19.md]
 
   - id: huggingface-tokenizers-pipeline-docs
     title: "Hugging Face Tokenizers — Pipeline and Components"
