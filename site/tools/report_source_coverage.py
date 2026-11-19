@@ -188,8 +188,8 @@ def build_report(root: Path) -> dict[str, Any]:
         "counts": {
             "sources_with_explicit_decision": len(explicit_collection_decisions),
             "sources_explicitly_unassigned": len(explicit_unassigned_sources),
-            "sources_without_explicit_decision": len(sources) - len(explicit_collection_decisions),
-            "total_source_memberships": sum(len(values) for values in collection_source_ids.values()),
+            "sources_without_explicit_decision": len(sources)\n            - len(explicit_collection_decisions),
+            "total_source_memberships": sum(\n                len(values) for values in collection_source_ids.values()\n            ),
         },
         "collections": {
             collection_id: {
