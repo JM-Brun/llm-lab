@@ -18,6 +18,11 @@ hierarchy:
   parents: []
   children: []
 related: ["en/llm-overview", "en/generation", "en/context-engineering", "en/contextualized-representations", "en/in-context-learning-exercises"]
+revision_support:
+  status: integrated_sufficient
+  evidence:
+    - anchor: revision-summary
+      note: "The recap distinguishes temporary prompt-based adaptation, fixed parameters, demonstration uses and generalization limits; the bilingual Practice page adds two answered transfer questions."
 tags: ["type:concept-lesson", "destination:understand", "topic:in-context-learning", "level:core", "language:en", "status:published"]
 -->
 
@@ -123,7 +128,7 @@ To distinguish rule learning from simple imitation:
 A good protocol separates success on seen examples from generalization to unseen cases.
 :::
 
-## Key points
+## Key points {#revision-summary}
 
 - ICL uses the prompt as a temporary adaptation medium.
 - Model weights remain fixed during in-context adaptation.
