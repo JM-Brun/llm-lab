@@ -1,0 +1,34 @@
+name: Issue metadata audit
+
+on:
+  schedule:
+    - cron: "17 7 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: read
+
+concurrency:
+  group: issue-metadata-audit
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    name: Audit open issue classification
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: "3.12"
+
+      - name: Run read-only metadata audit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python scripts/issue_metadata_audit.py --repo "${GITHUB_REPOSITORY}" | tee -a "${GITHUB_STEP_SUMMARY}"
