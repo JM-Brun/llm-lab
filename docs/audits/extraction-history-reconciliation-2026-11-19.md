@@ -103,43 +103,44 @@ Relevant canonical neighborhood edges (all exact triples in `data/concepts.yml`)
 
 ## 4. Historical scan locator — all 36 identified
 
-The first-pass exact-key locator found 35 files; the broader locator found the final `bdtech-next-concept-modeling-2026` record (the key is at the root but was missed by the first pass). The complete list is:
+The first-pass exact-key locator found 35 files; the broader locator found the final `bdtech-next-concept-modeling-2026` record. The complete list is:
 
-1. `ahia-do-all-languages-cost-the-same-2023`
-2. `aiedge-how-cuda-graphs-speed-up-llm-inference`
-3. `ali-tokenizer-choice-llm-training-2024`
-4. `alliancy-la-compression-strategie-avenir-llm-2026`
-5. `andrej-karpathy-gpt-tokenizer-video`
-6. `arnett-explaining-mitigating-crosslingual-tokenizer-inequities-2025`
-7. `chiu-toklens-acl-srw-2026`
-8. `dailydose-augsbert-sentence-similarity-2024`
-9. `dailydose-bi-cross-encoders-sentence-similarity-2024`
-10. `dailydose-foundations-rag-2024`
-11. `ethayarajh-contextualized-representations-2019`
-12. `faysse-etal-2025-colpali`
-13. `formal-piwowarski-clinchant-2021-splade`
-14. `goldman-unpacking-tokenization-2024`
-15. `hesam-sheikh-llm-study-roadmap-2024`
-16. `jose-parreno-garcia-how-llms-work-three-layers-2025`
-17. `jothi-moorthy-llm-processing-linkedin`
-18. `karthik-shashidhar-llms-compression-algorithms-2024`
-19. `khattab-zaharia-2020-colbert`
-20. `lewish-intelligence-and-compression-2025`
-21. `li-bert-flow-sentence-embeddings-2020`
-22. `marek-ryabinin-score-centering-off-policy-rl-2026`
-23. `maarten-grootendorst-visual-guide-multimodal-generation`
-24. `mikolov-word2vec-2013`
-25. `poloclub-transformer-explainer-paper-2026`
-26. `reimers-gurevych-2019-sentence-bert`
-27. `santhanam-etal-2022-colbertv2`
-28. `sasirekha-cota-understanding-llm-compression-2023`
-29. `schmidt-tokenization-more-than-compression-2024`
-30. `sennrich-subword-nmt-2016`
-31. `sourav-mukherjee-compression-intelligence-2026`
-32. `steck-cosine-similarity-embeddings-2024`
-33. `thakur-etal-2021-beir`
-34. `varis-stephen-libovicky-tokcollate-2026`
-35. `wegmann-tokenization-language-variation-2025`
+- `ahia-do-all-languages-cost-the-same-2023`
+- `aiedge-how-cuda-graphs-speed-up-llm-inference`
+- `ali-tokenizer-choice-llm-training-2024`
+- `alliancy-la-compression-strategie-avenir-llm-2026`
+- `andrej-karpathy-gpt-tokenizer-video`
+- `arnett-explaining-mitigating-crosslingual-tokenizer-inequities-2025`
+- `bdtech-next-concept-modeling-2026`
+- `chiu-toklens-acl-srw-2026`
+- `dailydose-augsbert-sentence-similarity-2024`
+- `dailydose-bi-cross-encoders-sentence-similarity-2024`
+- `dailydose-foundations-rag-2024`
+- `ethayarajh-contextualized-representations-2019`
+- `faysse-etal-2025-colpali`
+- `formal-piwowarski-clinchant-2021-splade`
+- `goldman-unpacking-tokenization-2024`
+- `hesam-sheikh-llm-study-roadmap-2024`
+- `jose-parreno-garcia-how-llms-work-three-layers-2025`
+- `jothi-moorthy-llm-processing-linkedin`
+- `karthik-shashidhar-llms-compression-algorithms-2024`
+- `khattab-zaharia-2020-colbert`
+- `lewish-intelligence-and-compression-2025`
+- `li-bert-flow-sentence-embeddings-2020`
+- `marek-ryabinin-score-centering-off-policy-rl-2026`
+- `maarten-grootendorst-visual-guide-multimodal-generation`
+- `mikolov-word2vec-2013`
+- `poloclub-transformer-explainer-paper-2026`
+- `reimers-gurevych-2019-sentence-bert`
+- `santhanam-etal-2022-colbertv2`
+- `sasirekha-cota-understanding-llm-compression-2023`
+- `schmidt-tokenization-more-than-compression-2024`
+- `sennrich-subword-nmt-2016`
+- `sourav-mukherjee-compression-intelligence-2026`
+- `steck-cosine-similarity-embeddings-2024`
+- `thakur-etal-2021-beir`
+- `varis-stephen-libovicky-tokcollate-2026`
+- `wegmann-tokenization-language-variation-2025`
 
 ### Source-history correspondence and content differences\n\nAll 36 extraction `scan.accessed_at` dates occur in the corresponding source record's `scan_history`. For 34 records, the extraction scan date is also the latest source-history date. Two records have later source-history events that are not represented by the extraction-level scan snapshot:\n\n- `andrej-karpathy-gpt-tokenizer-video`: extraction scan is dated 2026-10-30; source history also records a 2026-11-19 metadata-only check of the official YouTube title, creator and publication date. This is an additional event, not evidence that the 2026-10-30 transcript inspection was superseded.\n- `maarten-grootendorst-visual-guide-multimodal-generation`: extraction scan is dated 2026-11-07; source history adds a 2026-11-15 event covering the original bilingual Deepen pages, a Mermaid map/tables, four live article image elements, and navigation updates. That later work is not reflected in the extraction-level scan block.\n\nThe content models are not structurally equivalent. Each extraction `scan` is a ten-key facet snapshot (`accessed_at`, `retrieval_method`, `author_text`, `figures_media`, `code_data`, `comments`, `linked_resources`, `metadata`, `rights`, `unresolved_questions`). Source `scan_history` is an append-only event list with `accessed_at`, `status`, `inspected_scope`, and `limitations`. Therefore a date match is not content equality: facet-level evidence and unresolved questions cannot be reconstructed losslessly from the source event summary without a deliberate migration mapping. The two later source events are unique chronological content and must remain preserved.\n\nThe current comparison establishes identity/date correspondence for all 36 and two clear later-event differences. A field-by-field semantic comparison of all facet notes against each event's `inspected_scope` and `limitations` remains required before declaring any field duplicated, richer, stale or safe to migrate.
 
