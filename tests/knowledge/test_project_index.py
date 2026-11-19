@@ -463,16 +463,14 @@ def test_real_repository_index_has_referential_integrity() -> None:
         assert {page.page_id for page in index.pages_for_resource(resource.resource_id)} == set(
             resource.referenced_by
         )
-        assert {concept["id"] for concept in index.concepts_for_resource(resource.resource_id)} == set(
-            resource.concepts
-        )
+        assert {
+            concept["id"] for concept in index.concepts_for_resource(resource.resource_id)
+        } == set(resource.concepts)
     for edge in index.page_resource_associations:
         assert edge.resource_id in {
             resource.resource_id for resource in index.resources_for_page(edge.page_id)
         }
-        assert edge.page_id in {
-            page.page_id for page in index.pages_for_resource(edge.resource_id)
-        }
+        assert edge.page_id in {page.page_id for page in index.pages_for_resource(edge.resource_id)}
     for edge in index.concept_resource_associations:
         assert edge.resource_id in {
             resource.resource_id for resource in index.resources_for_concept(edge.concept_id)
