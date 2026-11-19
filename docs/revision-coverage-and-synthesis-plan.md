@@ -26,7 +26,7 @@ The report found equal French and English page counts for every observed `topic`
 
 ## 2. What the inventory currently measures
 
-The generator `site/tools/audit_revision_coverage.py` reuses existing project sources rather than maintaining a second curriculum registry:
+The generator `site/tools/audit_revision_coverage.py` reuses existing project sources rather than maintaining a second curriculum registry. Its topic diagnostics exclude blank/missing topics, report unexpected language values, and expose per-language multiplicity without treating multiple pages under one topic as duplicates:
 
 - the published Quarto page index and page metadata;
 - `data/guided-route.yml` for Understand route memberships;
@@ -42,7 +42,7 @@ The CI workflow generates JSON and Markdown reports, appends the Markdown report
 - `synthesis_status: not_assessed` means the metadata model does not yet provide a typed relation from a synthesis/revision aid to its canonical lesson. It does **not** mean that the page has no synthesis content.
 - Generic `related` edges must not be interpreted as synthesis ownership.
 - Topic parity currently compares counts grouped by topic. It is not a semantic bilingual review and should not be presented as proof of equivalence.
-- Missing topic metadata needs an explicit diagnostic rather than being silently grouped under a stringified null value.
+- Missing topic metadata is reported explicitly and excluded from bilingual topic aggregation; unexpected language values are also reported.
 - Concept/resource counts indicate explicit registry links only; zero links do not automatically mean a page is deficient.
 
 ## 3. Remaining work, in dependency order
@@ -60,9 +60,9 @@ The CI workflow generates JSON and Markdown reports, appends the Markdown report
 
 1. Report pages with absent or invalid `topic` explicitly; do not aggregate them into a synthetic shared topic.
 2. Compare the French and English topic sets, not only counts for topics that happened to occur.
-3. Flag missing counterparts, duplicate pages per language/topic, and unexpected `shared` language records separately.
+3. Flag missing counterparts, multiple pages per topic/language, and unexpected language values separately. Multiple pages in one topic are not automatically duplicates.
 4. Keep count parity clearly labelled as structural; do not claim semantic parity.
-5. Add tests for missing topics, missing counterparts, duplicate topic-language entries, and empty destinations.
+5. Add tests for missing topics, missing counterparts, topic multiplicity, unexpected language values, and empty destinations.
 6. Keep the inventory deterministic and derived from the existing registries and page index.
 
 ### C. Define and apply the synthesis editorial contract
