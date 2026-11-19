@@ -1381,9 +1381,9 @@ sources:
     publication_date: null
     updated_date: null
     language: en
-    version: null
-    revision: null
-    licence: {identifier: "Apache-2.0", url: "https://github.com/huggingface/tokenizers/blob/main/LICENSE", status: verified}
+    version: "1.0.0 release-candidate development snapshot"
+    revision: "1a9ec50b1cdf1cf97da689aad32003aa73d49755"
+    licence: {identifier: "Apache-2.0", url: "https://github.com/huggingface/tokenizers/blob/1a9ec50b1cdf1cf97da689aad32003aa73d49755/LICENSE", status: verified}
     reuse: {text: link-only, figures: link-only, code: link-only, data: unknown}
     classification:
       primary_theme: text-tokenization
@@ -1404,10 +1404,21 @@ sources:
         limitations:
           - "Detailed API and implementation internals were outside the initial audit."
           - "The mutable main branch was not pinned in the historical note."
+      - accessed_at: "2026-11-19"
+        status: partially-scanned
+        inspected_scope:
+          - "Pinned repository snapshot 1a9ec50b1cdf1cf97da689aad32003aa73d49755; README, Apache-2.0 licence, Rust crate entry point, Python Tokenizer/CompiledTokenizer implementation, Encoding representation, and selected Python encode/decode/padding tests"
+          - "Reviewed the repository's explicit 1.0.0 release-candidate migration notes and feature split"
+        limitations:
+          - "This is a bounded source audit, not an exhaustive review of every Rust crate, binding, model, normalizer, pre-tokenizer, decoder, or test."
+          - "No package installation, Rust/Python test, benchmark, tokenizer training, or independent model-parity run was executed."
+          - "The inspected main snapshot is a moving development branch and release-candidate state, not a stable 1.0.0 release."
+          - "The README performance claims and linked benchmark page were not independently reproduced."
+          - "The repository README's compatibility examples do not establish universal support across all models, languages, or hardware."
     related:
-      pages: [en/tokenization-strategies, fr/tokenization-strategies]
+      pages: [en/tokenization-strategies, fr/tokenization-strategies, en/tokenizer-design-evaluation, fr/tokenizer-design-evaluation]
       concepts: [token]
-      audit_records: [docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
+      audit_records: [docs/source-reviews/tokenization-implementations-huggingface-tiktoken-minbpe-2026-11.md, docs/source-reviews/tokenization-embeddings-source-migration-map-2026-11.md, docs/source-reviews/tokenization-embeddings-source-collection.md]
 
   - id: google-sentencepiece-repository
     title: "SentencePiece"
