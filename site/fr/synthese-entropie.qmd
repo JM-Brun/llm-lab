@@ -1,0 +1,110 @@
+---
+title: "Fiche de synthèse — L'entropie, du langage aux LLM"
+subtitle: "Une distribution, un logarithme, plusieurs usages du même calcul"
+description-meta: "Fiche de synthèse montrant pourquoi l'entropie intervient dans le langage et les LLM, quel rôle le logarithme joue dans la surprise, la loss et la perplexité, et vers quelles leçons aller ensuite."
+keywords: ["type:concept-bridge", "destination:practice", "topic:entropy-synthesis", "level:core", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/synthese-entropie"
+revision_role: synthesis
+revision_of:
+  - fr/entropy
+  - fr/cross-entropy
+  - fr/loss
+summary: "Fiche de synthèse montrant pourquoi l'entropie intervient dans le langage et les LLM, et quel rôle le logarithme joue dans la surprise, la loss et la perplexité."
+scope: "Relier en une lecture unique l'entropie prédictive, la surprise en log, la vraisemblance, la cross-entropie, la perplexité et la compression, sans remplacer les leçons détaillées."
+purpose: "Montrer d'où vient l'entropie dans un LLM, pourquoi la mesure utilise un logarithme et rattacher chaque usage aux pages canoniques correspondantes."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: ["fr/entropy", "fr/cross-entropy", "fr/vraisemblance", "fr/loss", "fr/compression-revision"]
+tags: ["type:concept-bridge", "destination:practice", "topic:entropy-synthesis", "level:core", "language:fr", "status:published"]
+-->
+
+[← Revenir à la leçon d'entropie](entropy.qmd) · [Vraisemblance](vraisemblance.qmd) · [Cross-entropie](cross-entropy.qmd)
+
+## L'idée centrale
+
+Un LLM autorégressif ne choisit pas directement un mot : chaque étape produit une distribution de probabilité sur le prochain token, conditionnée au contexte. Tant qu'aucun token n'est observé, il existe donc une incertitude, et le langage est prévisible à des degrés divers. L'entropie est la mesure de cette incertitude ; le logarithme, lui, est ce qui rend la surprise mesurable et additive.
+
+Cette fiche relie ces notions entre elles et vers les pages canoniques. Elle ne remplace ni les leçons détaillées ni leurs hypothèses.
+
+## Pourquoi l'entropie intervient dans le langage
+
+La page [Entropie](entropy.qmd) pose deux questions différentes :
+
+- **Avant observation**, l'entropie prédictive est la dispersion de toute la distribution du prochain token pour un préfixe donné : $H(p) = -\sum_v p(v)\log p(v)$, bornée entre $0$ et $\log V$ nats.
+- **Après observation**, la surprise (ou surprisal) du token effectivement observé vaut $-\log p(x_t \mid x_{<t})$ : c'est sa contribution à la loss et sa log-vraisemblance négative, pas l'entropie de la distribution.
+
+L'identité centrale réunit les deux lectures : l'entropie est la surprise **attendue**, si l'issue est tirée selon $p$.
+
+$$H(p) = \mathbb{E}_{X \sim p}\left[-\log p(X)\right]$$
+
+Le fil rouge du scribe l'illustre. Pour la distribution illustrative (« Être » 0,6 ; « Vous » 0,2 ; « Oui » 0,1 ; « Non » 0,1) :
+
+$$H(p) = -(0{,}6\ln 0{,}6 + 0{,}2\ln 0{,}2 + 2 \times 0{,}1\ln 0{,}1) \approx 1{,}089 \text{ nats},$$
+
+soit environ 79 % du maximum $\ln 4 \approx 1{,}386$ nats. Les valeurs sont illustratives.
+
+## Le rôle du logarithme
+
+1. **La surprise se mesure en log.** Avec $\log_2$, un token de probabilité $1/2$ coûte idéalement 1 bit, un token de probabilité $1/8$ coûte 3 bits. Le logarithme transforme la **multiplication** des probabilités conditionnelles successives en une **somme** d'informations, propriété exigée d'une mesure d'information.
+2. **L'entropie est la surprise attendue.** $H(p) = \mathbb{E}_{X \sim p}[-\log p(X)]$ : la moyenne des surprises possibles, pondérée par leurs probabilités.
+3. **Le log explique la forme de la perte.** La fonction $-\log p$ est décroissante et convexe : une erreur confiante est très coûteuse, ce qu'une mesure linéaire ne garantirait pas. La base du logarithme fixe l'unité : $\log_2$ donne des bits, $\ln$ donne des nats.
+
+## Les mêmes quantités, plusieurs usages du calcul prédictif
+
+| Usage | Quantité | Page canonique |
+|---|---|---|
+| Générer | La température transforme les logits et modifie la dispersion de la distribution, sans changer l'ordre des logits | [Probabilités de sortie](probabilites.qmd) |
+| Scorer | La surprise du token observé s'additionne en log-vraisemblance négative de la séquence | [Vraisemblance](vraisemblance.qmd) |
+| Apprendre | Pour une cible one-hot, la cross-entropie d'une position est $-\log p_\theta(x_t \mid x_{<t})$ | [Cross-entropie](cross-entropy.qmd) · [Loss](loss.qmd) |
+| Évaluer | La perplexité est l'exponentielle de la NLL moyenne par token | [Entropie](entropy.qmd) |
+| Compresser | $-\log_2 p$ est la longueur de code idéale, sous réserve d'un codeur entropique | [Fiche compression et LLM](compression-revision.qmd) |
+
+## Exemples à mémoriser
+
+- **Confiance n'est pas vérité.** Avec $p = (0{,}99 ; 0{,}01)$, l'entropie vaut environ 0,056 nat, mais observer le second token coûte $-\ln 0{,}01 \approx 4{,}605$ nats.
+- **La perte punit l'erreur confiante.** Pour le même token cible, $p(y) = 0{,}9$ donne une perte d'environ 0,105 nat ; $p(y) = 0{,}1$ donne environ 2,303 nats, soit près de 22 fois plus.
+- **Perplexité et compression.** Le maximum de la perte vient de ce que $-\log$ grandit sans borne quand $p \to 0$ ; la perplexité résume cette performance sur un corpus, et la page [Entropie](entropy.qmd) détaille pourquoi « LLM = algorithme de compression » demande un codeur réel et des bornes prudentes.
+
+## Ce que l'entropie ne permet pas de conclure
+
+- Une entropie faible ne garantit pas que le token choisi soit correct : le modèle peut être très confiant et se tromper.
+- Une entropie élevée ne signifie pas que la sortie est fausse : plusieurs continuations peuvent être plausibles.
+- Les probabilités normalisées ne garantissent pas la calibration.
+- La perplexité dépend du tokenizer et du protocole d'évaluation ; une comparaison exige de préciser ces conventions.
+
+## Auto-évaluation
+
+1. Quelle est la différence entre l'entropie $H(p)$ et la surprise $-\log p(x_t \mid x_{<t})$ ?
+2. Pourquoi le logarithme transforme-t-il le produit des probabilités conditionnelles en une somme ?
+3. Pourquoi une erreur confiante est-elle bien plus coûteuse qu'une erreur incertaine pour le même token cible ?
+4. Une entropie faible permet-elle de conclure que la réponse choisie est correcte ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+1. L'entropie est une moyenne sur toute la distribution, avant observation ; la surprise concerne le token effectivement observé.
+2. Parce que l'information d'événements successifs s'additionne alors que leurs probabilités se multiplient : c'est la propriété d'additivité du logarithme, qui donne la NLL token par token puis la vraisemblance de la séquence.
+3. La fonction $-\log p$ est convexe et grandit sans borne quand $p \to 0$ : avec $p(y) = 0{,}1$ au lieu de $0{,}9$, la perte passe d'environ 0,105 nat à environ 2,303 nats, soit environ 22 fois plus.
+4. Non. Une distribution concentrée peut rester souvent erronée ; la calibration compare les confiances annoncées aux fréquences observées, séparément.
+
+</details>
+
+## Pour aller plus loin
+
+- [Entropie](entropy.qmd) · [Vraisemblance](vraisemblance.qmd) · [Cross-entropie](cross-entropy.qmd) · [Loss](loss.qmd) : les pages canoniques de la chaîne.
+- [Fiche de révision — Théorie de l'information et LLM](revision-information-theory.qmd) : identités, unités, pièges conceptuels et V-information.
+- [Fiche de révision — Compression et LLM](compression-revision.qmd) : codage prédictif, compression du modèle, mémoire d'exécution.
+- [Glossaire](glossary.qmd) : définitions des unités (nats, bits) et de la perplexité.
+
+::: {.language-switch}
+**Langue :** [Français](synthese-entropie.qmd) · [English](../en/entropy-synthesis.qmd)
+:::

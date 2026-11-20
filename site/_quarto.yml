@@ -85,6 +85,8 @@ project:
     - en/revision-information-theory.qmd
     - fr/experience-information-theory.qmd
     - en/experience-information-theory.qmd
+    - fr/synthese-entropie.qmd
+    - en/entropy-synthesis.qmd
     - fr/loss.qmd
     - en/loss.qmd
     - fr/gradients.qmd
@@ -317,6 +319,7 @@ website:
               contents:
                 - fr/vraisemblance.qmd
                 - fr/cross-entropy.qmd
+                - fr/synthese-entropie.qmd
                 - fr/revision-information-theory.qmd
                 - fr/experience-information-theory.qmd
             - section: "Loss et gradients"
@@ -519,6 +522,7 @@ website:
               contents:
                 - en/likelihood.qmd
                 - en/cross-entropy.qmd
+                - en/entropy-synthesis.qmd
                 - en/revision-information-theory.qmd
                 - en/experience-information-theory.qmd
             - section: "Loss and gradients"

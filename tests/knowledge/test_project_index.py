@@ -426,7 +426,6 @@ def test_real_repository_index_has_referential_integrity() -> None:
     assert index.concepts_by_id
     assert len(index.resources_by_id) == 5
     assert len(index.page_resource_associations) == 10
-    assert len(index.revision_edges) == 4
     assert {
         (edge.aid_page_id, edge.role, edge.source_page_id) for edge in index.revision_edges
     } == {
@@ -434,12 +433,19 @@ def test_real_repository_index_has_referential_integrity() -> None:
         ("fr/revision-information-theory", "revision_sheet", "fr/cross-entropy"),
         ("en/revision-information-theory", "revision_sheet", "en/entropy"),
         ("en/revision-information-theory", "revision_sheet", "en/cross-entropy"),
+        ("en/entropy-synthesis", "synthesis", "en/entropy"),
+        ("en/entropy-synthesis", "synthesis", "en/cross-entropy"),
+        ("en/entropy-synthesis", "synthesis", "en/loss"),
+        ("fr/synthese-entropie", "synthesis", "fr/entropy"),
+        ("fr/synthese-entropie", "synthesis", "fr/cross-entropy"),
+        ("fr/synthese-entropie", "synthesis", "fr/loss"),
     }
     assert {
         page.page_id for page in index.lessons_for_revision_aid("fr/revision-information-theory")
     } == {"fr/entropy", "fr/cross-entropy"}
     assert {edge.aid_page_id for edge in index.revision_aids_for_lesson("en/cross-entropy")} == {
-        "en/revision-information-theory"
+        "en/revision-information-theory",
+        "en/entropy-synthesis",
     }
     assert all(
         index.revision_support_for_lesson(page_id)["status"] == "integrated_sufficient"
