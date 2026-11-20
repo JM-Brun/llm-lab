@@ -47,6 +47,8 @@ For a fixed context, a model produces logits $z=(0,\ln 2,\ln 3)$ for vocabulary 
 
 </details>
 
+{{< include ../includes/generated-exercise-review-en-exercises-generation-ex-generation-distribution-selection.qmd >}}
+
 [Review greedy selection and sampling](generation.qmd#how-is-the-next-token-chosen).
 
 <a id="ge-b-trace-the-autoregressive-loop"></a>

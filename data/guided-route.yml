@@ -488,6 +488,8 @@ lesson_contracts:
 # Source review of conceptual boundaries in the Understand route (2026-11-20).
 # Stage, concept, and page IDs reference the existing registries. Each criterion
 # records an editorial judgment; the test verifies the referenced evidence exists.
+# Show return links below a solution by including the
+# generated-exercise-review-<page-id with slash replaced by hyphen>-<anchor>.qmd partial.
 boundaries:
   token-ids-and-embedding-lookup:
     criterion: >-

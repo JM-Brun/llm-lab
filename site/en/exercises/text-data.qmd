@@ -72,6 +72,8 @@ A toy tokenizer splits “cat follows the cat” into [“cat”, “follows”,
 
 </details>
 
+{{< include ../../includes/generated-exercise-review-en-text-data-exercises-ex-text-to-embedding-lookup.qmd >}}
+
 ## From embedding to first-block input {#ex-token-to-block-input}
 
 Use the original sequence of IDs $(17,42,8,17)$. Set $d=2$ and $E[17]=(2,-1)$ in a GPT that adds a position vector before the first block. The two occurrences of “cat” are at positions $0$ and $3$, with $P[0]=(0,1)$ and $P[3]=(1,0)$.
@@ -86,6 +88,8 @@ Use the original sequence of IDs $(17,42,8,17)$. Set $d=2$ and $E[17]=(2,-1)$ in
 2. Causal self-attention combines information from the accessible positions. It can contextualize the two states using their respective prefixes.
 
 </details>
+
+{{< include ../../includes/generated-exercise-review-en-text-data-exercises-ex-token-to-block-input.qmd >}}
 
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/text-data.qmd) · [English](text-data.qmd)

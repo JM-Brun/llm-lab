@@ -99,6 +99,8 @@ Together the two positions containing $A$ receive $3/4$ of the weight in this at
 
 </details>
 
+{{< include ../../includes/generated-exercise-review-en-logits-exercises-ex-attention-vocabulary-softmax.qmd >}}
+
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/logits.qmd) · [English](logits.qmd)
 :::

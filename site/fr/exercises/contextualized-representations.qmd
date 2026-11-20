@@ -57,6 +57,8 @@ Dans un GPT causal aux paramètres fixes, considérez trois séquences d'identif
 
 </details>
 
+{{< include ../../includes/generated-exercise-review-fr-contextualized-representations-exercises-ex-contextualization-causal-boundary.qmd >}}
+
 ## Enquête guidée — une feature SAE dans Neuronpedia
 
 [Ouvrir l'exemple Gemma Scope](https://www.neuronpedia.org/gemma-2-2b/20-gemmascope-res-16k/10956) · [Documentation des tableaux de bord](https://docs.neuronpedia.org/sparse-autoencoders/feature-dashboards).

@@ -101,6 +101,8 @@ System context is the selected information supplied: instructions, question, and
 
 </details>
 
+{{< include ../../includes/generated-exercise-review-en-context-engineering-exercises-ex-context-between-calls.qmd >}}
+
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/context-engineering.qmd) · [English](context-engineering.qmd)
 :::

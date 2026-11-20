@@ -654,6 +654,33 @@ def resolve_boundary_exercises(
     return by_stage
 
 
+def prepare_exercise_review_fragments(
+    stages: list[ResolvedGuidedRouteStage],
+    boundary_exercises: dict[str, list[ResolvedPage]],
+    language: str,
+) -> dict[Path, str]:
+    """Invert the plan's practice links into a partial for each exercise."""
+    stages_by_exercise: dict[tuple[str, str], list[ResolvedGuidedRouteStage]] = {}
+    for stage in stages:
+        for exercise in boundary_exercises.get(stage.id, []):
+            linked_stages = stages_by_exercise.setdefault((exercise.id, exercise.href), [])
+            if stage not in linked_stages:
+                linked_stages.append(stage)
+
+    label = "Reprendre la révision" if language == "fr" else "Return to the review plan"
+    artifacts: dict[Path, str] = {}
+    for (exercise_id, exercise_href), linked_stages in stages_by_exercise.items():
+        page_href, anchor = exercise_href.split("#", 1)
+        plan_href = posixpath.relpath("review-path.html", posixpath.dirname(page_href) or ".")
+        links = [
+            f"[{escape_markdown_text(stage.title)}]({plan_href}#{stage.id})"
+            for stage in linked_stages
+        ]
+        filename = f"generated-exercise-review-{exercise_id.replace('/', '-')}-{anchor}.qmd"
+        artifacts[SITE / "includes" / filename] = f"**{label}** · " + " · ".join(links) + "\n"
+    return artifacts
+
+
 def render_lesson_contracts(
     stages: list[ResolvedGuidedRouteStage],
     contracts: dict[str, ResolvedLessonContract],
@@ -1906,15 +1933,14 @@ def prepare_build(language: str) -> dict[Path, str]:
         )
     )
     if lesson_contracts:
+        boundary_exercises = resolve_boundary_exercises(
+            route_document, guided_route, pages, language
+        )
         artifacts[SITE / "includes" / f"generated-lesson-contracts-{language}.qmd"] = (
-            render_lesson_contracts(
-                guided_route,
-                lesson_contracts,
-                language,
-                boundary_exercises=resolve_boundary_exercises(
-                    route_document, guided_route, pages, language
-                ),
-            )
+            render_lesson_contracts(guided_route, lesson_contracts, language, boundary_exercises)
+        )
+        artifacts.update(
+            prepare_exercise_review_fragments(guided_route, boundary_exercises, language)
         )
     artifacts.update(prepare_cross_cutting_coverage_fragments(language, pages, guided_route))
     artifacts.update(prepare_suggested_route_fragments(language, pages, guided_route))

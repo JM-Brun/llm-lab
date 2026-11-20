@@ -78,6 +78,8 @@ $$
 
 </details>
 
+{{< include ../../includes/generated-exercise-review-en-gradients-exercises-ex-score-to-parameter-update.qmd >}}
+
 **Return to:** [Overview](../mathematical-foundations.qmd) · [Loss](../loss.qmd)
 
 ::: {.language-switch}

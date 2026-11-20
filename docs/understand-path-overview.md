@@ -6,6 +6,22 @@
 
 Cette note est fondée sur les sources du dépôt : `site/index.qmd`, `site/fr/learning-map.qmd`, `site/fr/llm-overview.qmd`, `site/fr/generation.qmd`, `data/guided-route.yml`, `docs/learning-path.md`, `docs/content-section-mapping.md` et `docs/information-architecture.md`. Il s'agit d'un audit éditorial des sources, pas encore d'une validation visuelle desktop/mobile ou d'un test utilisateur.
 
+## État et travail restant au 21 novembre 2026
+
+Le [registre du parcours](../data/guided-route.yml) porte les neuf étapes, les notions mobilisées et les objectifs des leçons. La [carte](../site/fr/learning-map.qmd#conceptual-route) présente le squelette global. Le [plan de révision](../site/fr/review-path.qmd) affiche la question et le résultat de chaque étape, puis ouvre l’écriture formelle à la demande. Depuis [Choisir une approche](../site/fr/llm-overview.qmd#choosing-an-approach), la comparaison issue de [#1455](https://github.com/JM-Brun/llm-lab/pull/1455) permet de suivre ce qui arrive au contexte et aux paramètres pendant les quatre opérations.
+
+Les exercices sur l’entrée positionnelle et les deux axes de softmax sont intégrés via [#1452](https://github.com/JM-Brun/llm-lab/pull/1452). Les PR [#1453](https://github.com/JM-Brun/llm-lab/pull/1453) et [#1454](https://github.com/JM-Brun/llm-lab/pull/1454) sont en revue. La première ajoute la projection des états finaux vers les logits et le choix de la dernière ligne. La seconde ajoute les retours du corrigé vers les étapes concernées. Elles peuvent être intégrées dans l’un ou l’autre ordre.
+
+| Priorité | Lot | Critère de validation |
+|---|---|---|
+| P0 | Terminer la revue de #1453 et #1454 | Les deux exercices de la page Logits coexistent en FR et EN. Les exercices de #1452 conservent leurs ancres. Les tests de la carte, du plan et des liens passent sur les deux changements réunis. |
+| P0 | Compléter l’aller-retour du nouvel exercice | Une fois #1453 et #1454 intégrées, inclure les retours générés sous les deux corrigés de `ex-final-state-to-next-token`, puis retirer son exception dans le test. Dans le HTML, les étapes Calcul et Prédiction mènent au même exercice et le corrigé renvoie vers les deux étapes. |
+| P1 | Vérifier les démarches du lecteur en FR et EN | Tester les trajets Panorama → comparaison → étape, carte → leçon → fiche, et plan → exercice → retour sur écran étroit et au clavier. Vérifier la visibilité de la cible, l’ordre du focus et le repli des formules. Consigner les étapes de reproduction des problèmes observés. |
+| P1 | Revoir les énoncés formels à leur périmètre exact | Réexaminer d’abord trois cas sensibles. L’addition `E + P` décrit un mécanisme de position particulier. La normalisation d’attention porte sur les clés accessibles et celle de sortie sur le vocabulaire. Le calcul du gradient précède le pas qui modifie les paramètres. Pour chaque cas, retrouver l’explication canonique et une vérification existante ou préciser ce qui manque. |
+| P2 | Tester le transfert entre les quatre opérations | Essayer un cas commun issu du fil du scribe en variant une décision à la fois. Demander au lecteur de nommer le préfixe, la cible éventuelle, la valeur lue et ce qui est modifié. Réutiliser un exercice existant s’il couvre déjà ces décisions. Observer les réponses avant de décider si un nouvel exercice est utile. |
+
+Les sections d’audit ci-dessous conservent les propositions de la revue initiale. Le tableau ci-dessus indique les travaux à reprendre en priorité.
+
 ## 1. Ce que le parcours doit faire comprendre
 
 Le parcours doit construire une représentation mentale progressive du système, et non faire mémoriser une liste de composants. À son terme, le lecteur doit pouvoir expliquer :
@@ -153,7 +169,7 @@ Ce schéma est un résumé de lecture. Il ne remplace ni le registre des neuf é
 
 ### P1 — Réduire la charge cognitive de la carte
 
-1. Faire apparaître la synthèse courte avant les huit étapes, puis les vues exploratoires.
+1. Faire apparaître la synthèse courte avant les étapes détaillées, puis les vues exploratoires.
 2. Conserver les vues Territoires / Rubriques / Pages / Notions, mais les présenter comme des outils de consultation, pas comme des étapes supplémentaires.
 3. Dans les libellés, privilégier les questions et résultats attendus ; garder les inventaires de notions dans les objectifs détaillés ou les pages.
 4. Distinguer les ressources centrales et facultatives sans ajouter une nouvelle taxonomie ni un nouveau registre.
@@ -167,7 +183,7 @@ Ce schéma est un résumé de lecture. Il ne remplace ni le registre des neuf é
 
 ## 5. Garde-fous
 
-- Ne pas créer un second parcours YAML ou une seconde source de vérité : conserver `data/guided-route.yml` pour les huit étapes.
+- Conserver `data/guided-route.yml` comme source des étapes.
 - Ne pas fusionner Understand et Build.
 - Ne pas transformer la carte des connaissances en séquence linéaire.
 - Ne pas faire des pages Deepen des prérequis implicites.
@@ -178,7 +194,7 @@ Ce schéma est un résumé de lecture. Il ne remplace ni le registre des neuf é
 ## 6. Ordre de réalisation
 
 1. Valider la synthèse en cinq mouvements et son vocabulaire.
-2. L'intégrer à la page de carte comme couche d'orientation, sans toucher au registre des huit étapes.
+2. L'intégrer à la page de carte comme couche d'orientation.
 3. Ajuster les libellés qui créent une ambiguïté entre aperçu et reprise détaillée de la génération.
 4. Vérifier les liens et la parité FR/EN.
 5. Effectuer la revue responsive, clavier et lecteur d'écran.
