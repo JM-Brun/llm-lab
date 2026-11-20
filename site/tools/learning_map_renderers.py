@@ -1328,7 +1328,7 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
       }
     });
 
-    window.addEventListener("popstate", function () {
+    function restoreLocationState() {
       if (!data) {
         return;
       }
@@ -1345,6 +1345,14 @@ PROGRESSIVE_MAP_TEMPLATE = r"""<script>
         showPageDetails(state.pageId);
       } else {
         renderPlaceholder();
+      }
+    }
+
+    window.addEventListener("popstate", restoreLocationState);
+    window.addEventListener("hashchange", function () {
+      var match = /^#mode=concepts&concept=([a-z0-9-]+)$/.exec(window.location.hash);
+      if (match && (state.mode !== "concepts" || state.conceptId !== match[1])) {
+        restoreLocationState();
       }
     });
 

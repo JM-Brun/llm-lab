@@ -945,6 +945,11 @@ def render_guided_route_markdown(stages: list[ResolvedGuidedRouteStage], languag
     return "\n".join(lines)
 
 
+def concept_fragment(concept_id: str) -> str:
+    """Use the map's existing concept selection state as a native link target."""
+    return f"mode=concepts&concept={concept_id}"
+
+
 def render_conceptual_route(
     stages: list[ResolvedGuidedRouteStage],
     pages: list[dict[str, Any]],
@@ -959,7 +964,7 @@ def render_conceptual_route(
         f"concept:{concept['id']}": (
             concept["label"],
             {resource["id"] for resource in concept["resources"]},
-            f"learning-map.html#mode=concepts&concept={concept['id']}",
+            f"learning-map.html#{concept_fragment(concept['id'])}",
         )
         for concept in concepts
     }
@@ -1520,6 +1525,22 @@ def prepare_build(language: str) -> dict[Path, str]:
         **concept_graph,
     }
     artifacts.update(prepare_map_fragments(language, navigation, pages, payload))
+    focus_concept_ids = {
+        reference.removeprefix("concept:")
+        for stage in guided_route
+        for focus in stage.conceptual_focus.values()
+        for reference in focus.objects
+        if reference.startswith("concept:")
+    }
+    if focus_concept_ids:
+        # Place the link targets above the interactive map so native fragment
+        # navigation scrolls to the graph along with setting its selection.
+        anchor_ids = (
+            escape(concept_fragment(item), quote=True) for item in sorted(focus_concept_ids)
+        )
+        anchors = "\n".join(f'<span id="{item}" aria-hidden="true"></span>' for item in anchor_ids)
+        territory = SITE / "includes" / f"generated-map-territories-{language}.qmd"
+        artifacts[territory] = f"```{{=html}}\n{anchors}\n```\n\n" + artifacts[territory]
     artifacts[output] = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
     return artifacts
 
