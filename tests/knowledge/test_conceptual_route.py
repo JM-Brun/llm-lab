@@ -11,7 +11,7 @@ from build_learning_map import (
     load_guided_route,
     load_pages,
     prepare_build,
-    render_conceptual_route,
+    resolve_conceptual_visits,
 )
 from strict_yaml import load_yaml
 
@@ -26,14 +26,20 @@ def test_conceptual_route_follows_core_visits_and_links_to_lessons_and_graph(
     path = SITE / "includes" / f"generated-conceptual-route-{language}.qmd"
     artifacts = prepare_build(language)
     projection = artifacts[path]
-    stages = load_guided_route(language, load_pages())
 
-    assert len(stages) == projection.count("<details>")
-    start = projection.index(f" ({preview})](generation.html)")
-    end = projection.index(f" ({revisit})](generation.html)")
-    assert start < projection.index("](text-data.html)") < end
-    assert end < projection.index("](context-engineering.html)")
-    assert projection.count("](generation.html)") == 4
+    overview, details = projection.split("<details>", maxsplit=1)
+    assert sum(line.startswith("- **") for line in overview.splitlines()) == 3
+    assert (
+        "](#guided-stage-inference) →" in overview
+        and "](#guided-stage-context-use) ·" in overview
+        and "](#guided-stage-scoring) ·" in overview
+    )
+    start = details.index(f" ({preview}) ·")
+    end = details.index(f" ({revisit}) ·")
+    assert start < details.index("](text-data.html)") < end
+    assert end < details.index("](context-engineering.html)")
+    assert details.count("](generation.html)") == 2
+    assert sum(line.startswith("- ") for line in details.splitlines()) == 21
     assert "learning-map.html#mode=concepts&concept=autoregressive-generation" in projection
     assert "learning-map.html#mode=concepts&concept=prefill" in projection
     assert "learning-map.html#mode=concepts&concept=kv-cache" not in projection
@@ -42,6 +48,16 @@ def test_conceptual_route_follows_core_visits_and_links_to_lessons_and_graph(
         r"learning-map\.html#(mode=concepts&concept=[a-z0-9-]+)", projection
     ):
         assert f'id="{escape(fragment, quote=True)}"' in map_shell
+    rows = re.findall(r"^- (.+) · \[([^\n]+)\]\(([^/\n]+)\.html\)$", details, re.MULTILINE)
+    assert len(rows) == 21
+    for chain, outcome, page_slug in rows:
+        fragment = SITE / "includes" / f"generated-guided-context-{language}-{page_slug}.qmd"
+        local = artifacts[fragment]
+        assert "(learning-map.html#conceptual-route)" in local
+        assert f"{chain} · {outcome}" in local
+    generation = SITE / "includes" / f"generated-guided-context-{language}-generation.qmd"
+    assert f" ({preview}) ·" in artifacts[generation]
+    assert f" ({revisit}) ·" in artifacts[generation]
     source = (SITE / language / "learning-map.qmd").read_text(encoding="utf-8")
     assert f"{{{{< include ../includes/{path.name} >}}}}" in source
 
@@ -62,4 +78,4 @@ def test_conceptual_route_checks_the_reference_and_its_supporting_page(
     nodes = load_yaml(ROOT / "data" / "computational-graph.yml")["nodes"]
     stages[0].conceptual_focus["llm-overview"].objects = [reference]
     with pytest.raises(ValueError, match=message):
-        render_conceptual_route(stages, pages, concepts, nodes, "fr")
+        resolve_conceptual_visits(stages, pages, concepts, nodes, "fr")

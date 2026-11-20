@@ -52,15 +52,13 @@ Section headings shown in a page's details are editorial landmarks, not canonica
 
 ## Theory path — Understand
 
-This theory path first answers three questions: what is an LLM, how does it compute a prediction, and what can be done with that prediction? The first part places the system in context; the second covers four stages, from text to the next-token distribution; the third presents three sibling uses, generating, scoring an observed target, and learning by updating the parameters, which are not successive prerequisites. Evaluation remains cross-cutting: it measures the model on held-out data ([experimental evaluation](experimental-evaluation.qmd)). The nine detailed stages remain the suggested progression: core pages cover each stage's main ideas; optional resources offer further context or depth and can belong to any destination. Pages within a stage are complementary resources, not a list of strict prerequisites.
+### Learning path skeleton {#conceptual-route}
 
-### Objects studied along the path {#conceptual-route}
-
-An arrow indicates the study progression. For example, contextualized states are introduced before studying the Transformer blocks that produce them. A plus sign groups objects studied in one lesson. Open a stage’s details to read the outcome for each visit and find its concepts in the graph.
-
-The generation preview shows the loop. The revisit explains how the first token is produced and how later steps work. Given the distribution, generation selects a token, scoring reads the probability of an observed target, and training updates parameters using the losses.
+In a lesson’s details, the arrow runs from the ideas used to the objects studied. The final link names the intended outcome.
 
 {{< include ../includes/generated-conceptual-route-en.qmd >}}
+
+The nine stages detail the study order and optional resources. Pages within a stage complement one another. [Evaluation on held-out data](experimental-evaluation.qmd) applies across all three uses.
 
 {{< include ../includes/generated-guided-route-en.qmd >}}
 

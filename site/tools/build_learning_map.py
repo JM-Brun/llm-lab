@@ -19,6 +19,7 @@ import sys
 import unicodedata
 from collections import deque
 from collections.abc import Sequence
+from dataclasses import dataclass
 from html import escape
 from pathlib import Path
 from typing import Any, Literal
@@ -115,10 +116,11 @@ class ConceptualFocus(StrictModel):
     """Objects studied during one visit to a published lesson."""
 
     objects: list[str] = Field(min_length=1)
+    outcome: LocalizedCopy
+    mobilizes: list[str] = Field(default_factory=list)
     visit: Literal["study", "preview", "revisit"] = "study"
-    outcome: LocalizedCopy | None = None
 
-    @field_validator("objects")
+    @field_validator("objects", "mobilizes")
     @classmethod
     def distinct_objects(cls, values: list[str]) -> list[str]:
         if len(values) != len(set(values)):
@@ -135,6 +137,8 @@ class GuidedRouteStage(StrictModel):
     pages: LocalizedPageIds
     optional_pages: OptionalLocalizedPageIds = Field(default_factory=OptionalLocalizedPageIds)
     conceptual_focus: dict[str, ConceptualFocus] = Field(default_factory=dict)
+    compact_title: LocalizedCopy | None = None
+    use_branch: str | None = None
 
     @model_validator(mode="after")
     def core_and_optional_pages_are_disjoint(self) -> GuidedRouteStage:
@@ -182,6 +186,8 @@ class ResolvedGuidedRouteStage(StrictModel):
     pages: list[ResolvedPage]
     optional_pages: list[ResolvedPage] = Field(default_factory=list)
     conceptual_focus: dict[str, ConceptualFocus] = Field(default_factory=dict)
+    compact_title: str | None = None
+    use_branch: str | None = None
 
 
 class ResolvedGuidedRouteTransition(StrictModel):
@@ -465,6 +471,10 @@ def load_guided_route(language: str, pages: list[dict[str, Any]]) -> list[Resolv
                     getattr(stage.optional_pages, language), stage.id, "optional"
                 ),
                 conceptual_focus=stage.conceptual_focus,
+                compact_title=getattr(stage.compact_title, language)
+                if stage.compact_title
+                else None,
+                use_branch=stage.use_branch,
             )
         )
     return resolved
@@ -950,15 +960,26 @@ def concept_fragment(concept_id: str) -> str:
     return f"mode=concepts&concept={concept_id}"
 
 
-def render_conceptual_route(
+@dataclass(frozen=True)
+class ConceptualVisit:
+    """The same short learning unit shown on the map and on its lesson."""
+
+    page: ResolvedPage
+    stage_id: str
+    objects: tuple[str, ...]
+    mobilizes: tuple[str, ...]
+    outcome: str
+    visit_label: str
+
+
+def resolve_conceptual_visits(
     stages: list[ResolvedGuidedRouteStage],
     pages: list[dict[str, Any]],
     concepts: list[dict[str, Any]],
     computational_nodes: list[dict[str, Any]],
     language: str,
-) -> str:
-    """Project route visits onto concepts and computational nodes already taught there."""
-    fr = language == "fr"
+) -> list[ConceptualVisit]:
+    """Resolve the objects studied and the ideas mobilized by each core visit."""
     page_by_id = {page["id"]: page for page in pages}
     objects = {
         f"concept:{concept['id']}": (
@@ -974,14 +995,24 @@ def render_conceptual_route(
             for node in computational_nodes
         }
     )
+    fr = language == "fr"
     visit_labels = {
         "study": "",
         "preview": " (aperçu)" if fr else " (preview)",
         "revisit": " (reprise)" if fr else " (revisit)",
     }
-    detail_label = "Objets et objectifs par leçon" if fr else "Lesson objects and outcomes"
+
+    def resolve(reference: str, where: str, resource_id: str | None = None) -> str:
+        if reference not in objects:
+            raise ValueError(f"{where}: unknown conceptual object {reference!r}")
+        label, resources, href = objects[reference]
+        if resource_id is not None and resource_id not in resources:
+            raise ValueError(f"{where}: {reference!r} does not list {resource_id!r} as a resource")
+        label = escape_markdown_text(label)
+        return f"[{label}]({href})" if href else label
+
     seen_topics: set[str] = set()
-    lines: list[str] = []
+    visits: list[ConceptualVisit] = []
     for stage in stages:
         core_topics = [page_by_id[page.id]["topic"] for page in stage.pages]
         if (
@@ -992,67 +1023,101 @@ def render_conceptual_route(
                 f"{stage.id} ({language}): conceptual_focus must match the core topics "
                 f"{core_topics!r}, found {sorted(stage.conceptual_focus)!r}"
             )
-        sequence: list[str] = []
-        details: list[str] = []
         for page, topic in zip(stage.pages, core_topics, strict=True):
             focus = stage.conceptual_focus[topic]
             if focus.visit == "revisit" and topic not in seen_topics:
                 raise ValueError(f"{stage.id}: revisited topic {topic!r} needs an earlier visit")
             seen_topics.add(topic)
-            labels: list[str] = []
-            links: list[str] = []
-            for reference in focus.objects:
-                if reference not in objects:
-                    raise ValueError(f"{stage.id}/{topic}: unknown conceptual object {reference!r}")
-                label, resources, href = objects[reference]
-                if page.id not in resources:
-                    raise ValueError(
-                        f"{stage.id}/{topic}: {reference!r} does not list {page.id!r} as a resource"
-                    )
-                label = escape_markdown_text(label)
-                labels.append(label)
-                links.append(f"[{label}]({href})" if href else label)
-            visit = visit_labels[focus.visit]
-            sequence.append(f"[{' + '.join(labels)}{visit}]({page.href})")
-            outcome = escape_markdown_text(
-                getattr(focus.outcome, language)
-                if focus.outcome
-                else page_by_id[page.id]["purpose"]
+            where = f"{stage.id}/{topic}"
+            visits.append(
+                ConceptualVisit(
+                    page=page,
+                    stage_id=stage.id,
+                    objects=tuple(resolve(ref, where, page.id) for ref in focus.objects),
+                    mobilizes=tuple(resolve(ref, where) for ref in focus.mobilizes),
+                    outcome=escape_markdown_text(getattr(focus.outcome, language)),
+                    visit_label=visit_labels[focus.visit],
+                )
             )
-            title = escape_markdown_text(page.title)
-            details.extend(
-                [f"- **[{title}]({page.href}){visit}** · {', '.join(links)}.", f"  {outcome}"]
-            )
-        title = escape_markdown_text(stage.title)
+    return visits
+
+
+def render_conceptual_visit(visit: ConceptualVisit, *, link_lesson: bool) -> str:
+    """Render mobilized concepts, studied objects and the learning outcome."""
+    studied = " + ".join(visit.objects) + visit.visit_label
+    mobilized = " + ".join(visit.mobilizes)
+    chain = f"{mobilized} → {studied}" if mobilized else studied
+    outcome = f"[{visit.outcome}]({visit.page.href})" if link_lesson else visit.outcome
+    return f"{chain} · {outcome}"
+
+
+def render_conceptual_route(
+    stages: list[ResolvedGuidedRouteStage],
+    visits: list[ConceptualVisit],
+    language: str,
+    branch_ids: set[str],
+) -> str:
+    """Render three global moves, with the full visit skeleton on demand."""
+    validate_route_projection(stages)
+    stage_order = [stage.id for stage in stages]
+    starts = [stage_order.index(stage_id) for _, stage_id, _, _ in ROUTE_PARTS]
+    fr = language == "fr"
+    lines: list[str] = []
+    for (part_id, _, french, english), first, end in zip(
+        ROUTE_PARTS, starts, [*starts[1:], len(stages)], strict=True
+    ):
+        groups: dict[str, list[str]] = {}
+        for stage in stages[first:end]:
+            title = escape_markdown_text(stage.compact_title or stage.title)
+            link = f"[{title}](#guided-stage-{stage.id})"
+            branch = stage.use_branch
+            if part_id == "usages" and branch not in branch_ids:
+                raise ValueError(f"{stage.id}: expected a canonical use_branch, found {branch!r}")
+            groups.setdefault(branch or part_id, []).append(link)
+        parts = " · ".join(" → ".join(group) for group in groups.values())
+        lines.append(f"- **{french if fr else english}** · {parts}")
+
+    count = len({visit.page.id for visit in visits})
+    label = f"Squelette des {count} leçons" if fr else f"Skeleton of the {count} lessons"
+    lines.extend(["", "<details>", f"<summary>{label}</summary>", ""])
+    for stage in stages:
+        lines.extend([f"**{escape_markdown_text(stage.title)}**", ""])
         lines.extend(
-            [
-                f"**[{title}](#guided-stage-{stage.id})**",
-                "",
-                " → ".join(sequence),
-                "",
-                "<details>",
-                f"<summary>{detail_label}</summary>",
-                "",
-                *details,
-                "",
-                "</details>",
-                "",
-            ]
+            "- " + render_conceptual_visit(visit, link_lesson=True)
+            for visit in visits
+            if visit.stage_id == stage.id
         )
-    return "\n".join(lines)
+        lines.append("")
+    return "\n".join([*lines, "</details>", ""])
+
+
+def render_lesson_skeleton(visits: list[ConceptualVisit], language: str) -> str:
+    """Expose the map's local unit next to the lesson's route navigation."""
+    fr = language == "fr"
+    label = "Squelette de la leçon" if fr else "Lesson skeleton"
+    map_label = "Voir le parcours" if fr else "See the path"
+    lines = ["", "<details>", f"<summary>{label}</summary>", ""]
+    lines.extend("- " + render_conceptual_visit(visit, link_lesson=False) for visit in visits)
+    return "\n".join(
+        [*lines, "", f"[{map_label}](learning-map.html#conceptual-route)", "", "</details>", ""]
+    )
 
 
 def prepare_guided_page_context_fragments(
     language: str,
     stages: list[ResolvedGuidedRouteStage],
     transitions: list[ResolvedGuidedRouteTransition] | None = None,
+    conceptual_visits: Sequence[ConceptualVisit] = (),
 ) -> dict[Path, str]:
-    """Render membership and explicit transition context for route pages."""
+    """Render membership, the lesson skeleton and transition context for route pages."""
     memberships = build_guided_route_memberships(stages)
     page_by_id = {
         page.id: page for stage in stages for page in [*stage.pages, *stage.optional_pages]
     }
     transition_index = build_guided_route_transition_index(transitions or [])
+    visits_by_page: dict[str, list[ConceptualVisit]] = {}
+    for visit in conceptual_visits:
+        visits_by_page.setdefault(visit.page.id, []).append(visit)
     includes = SITE / "includes"
     outputs: dict[Path, str] = {}
     for page_id, page_memberships in memberships.items():
@@ -1062,7 +1127,9 @@ def prepare_guided_page_context_fragments(
         transition_context = render_guided_page_transitions(
             transition_index.get(page_id, []), language
         )
-        outputs[output] = membership + transition_context
+        visits = visits_by_page.get(page_id)
+        skeleton = render_lesson_skeleton(visits, language) if visits else ""
+        outputs[output] = membership + skeleton + transition_context
     return outputs
 
 
@@ -1507,13 +1574,18 @@ def prepare_build(language: str) -> dict[Path, str]:
     guided_transitions = load_guided_route_transitions(language, pages)
     navigation = load_navigation(language, pages)
     artifacts = prepare_guided_route_fragment(language, guided_route)
+    visits: list[ConceptualVisit] = []
     if any(stage.conceptual_focus for stage in guided_route):
-        nodes = load_yaml(ROOT / "data" / "computational-graph.yml")["nodes"]
+        computation = load_yaml(ROOT / "data" / "computational-graph.yml")
+        visits = resolve_conceptual_visits(
+            guided_route, pages, concept_graph["concepts"], computation["nodes"], language
+        )
+        branch_ids = {branch["id"] for branch in computation["branches"]}
         artifacts[SITE / "includes" / f"generated-conceptual-route-{language}.qmd"] = (
-            render_conceptual_route(guided_route, pages, concept_graph["concepts"], nodes, language)
+            render_conceptual_route(guided_route, visits, language, branch_ids)
         )
     artifacts.update(
-        prepare_guided_page_context_fragments(language, guided_route, guided_transitions)
+        prepare_guided_page_context_fragments(language, guided_route, guided_transitions, visits)
     )
     artifacts.update(prepare_cross_cutting_coverage_fragments(language, pages, guided_route))
     artifacts.update(prepare_suggested_route_fragments(language, pages, guided_route))
@@ -1529,7 +1601,7 @@ def prepare_build(language: str) -> dict[Path, str]:
         reference.removeprefix("concept:")
         for stage in guided_route
         for focus in stage.conceptual_focus.values()
-        for reference in focus.objects
+        for reference in (*focus.objects, *focus.mobilizes)
         if reference.startswith("concept:")
     }
     if focus_concept_ids:

@@ -1,4 +1,5 @@
 ```{=html}
+<span id="mode=concepts&amp;concept=attention-score" aria-hidden="true"></span>
 <span id="mode=concepts&amp;concept=autoregressive-generation" aria-hidden="true"></span>
 <span id="mode=concepts&amp;concept=causal-mask" aria-hidden="true"></span>
 <span id="mode=concepts&amp;concept=conditional-distribution" aria-hidden="true"></span>
@@ -12,6 +13,7 @@
 <span id="mode=concepts&amp;concept=key" aria-hidden="true"></span>
 <span id="mode=concepts&amp;concept=logits" aria-hidden="true"></span>
 <span id="mode=concepts&amp;concept=next-token-prediction" aria-hidden="true"></span>
+<span id="mode=concepts&amp;concept=observed-target" aria-hidden="true"></span>
 <span id="mode=concepts&amp;concept=parameter-update" aria-hidden="true"></span>
 <span id="mode=concepts&amp;concept=positional-encoding" aria-hidden="true"></span>
 <span id="mode=concepts&amp;concept=prefill" aria-hidden="true"></span>
