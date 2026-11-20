@@ -32,16 +32,18 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-gener
 
 ### Distribution et sélection {#ex-generation-distribution-selection}
 
-Un modèle produit les logits $z=(0,\ln 2,\ln 3)$ pour le vocabulaire $\{A,B,C\}$.
+Pour un même contexte, un modèle produit les logits $z=(0,\ln 2,\ln 3)$ pour le vocabulaire $\{A,B,C\}$. Les deux règles partent de ces mêmes logits, avec une température de $1$ et sans filtrage.
 
 1. Calculer la distribution softmax.
 2. Quel token sélectionne le décodage glouton ?
-3. Avec l'échantillonnage, le token sélectionné est-il nécessairement celui de probabilité maximale ?
+3. Quelle est la probabilité de sélectionner $C$ avec chacune des deux règles ? Avec l’échantillonnage, quels autres tokens peuvent être sélectionnés ?
 
 <details>
 <summary>Afficher le corrigé</summary>
 
-Les exponentielles valent $(1,2,3)$ et leur somme vaut $6$. La distribution est $p=(1/6,1/3,1/2)$. Le décodage glouton sélectionne $C$. Avec l'échantillonnage, tout token de probabilité non nulle peut être sélectionné : $C$ est le plus probable, mais pas certain. La distribution est la sortie probabiliste du modèle ; le token est le résultat de la politique de sélection.
+1. Les exponentielles valent $(1,2,3)$ et leur somme vaut $6$. Le modèle attribue les probabilités $p=(1/6,1/3,1/2)$.
+2. Le décodage glouton sélectionne $C$, seul token de probabilité maximale.
+3. La probabilité de sélectionner $C$ vaut $1$ avec le décodage glouton et $1/2$ avec l’échantillonnage. Le tirage peut aussi donner $A$ avec probabilité $1/6$ ou $B$ avec probabilité $1/3$. La règle choisie détermine la loi du token sélectionné à partir de la même distribution prédite.
 
 </details>
 

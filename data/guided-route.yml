@@ -395,6 +395,25 @@ boundaries:
         fr: "Comparer un changement avant ou après le token étudié"
         en: "Compare a change before or after the token under study"
 
+  predictive-distribution-and-selection:
+    criterion: >-
+      At a fixed context and fixed logits, greedy decoding selects the unique
+      maximum with probability one. Sampling at unit temperature with all candidates
+      retained selects each token with its predicted probability.
+    explanations:
+      prediction:
+        concept_ids: [softmax, conditional-distribution]
+        pages: {fr: fr/probabilites, en: en/probabilities}
+      inference:
+        concept_ids: [decoding-policy]
+        pages: {fr: fr/generation, en: en/generation}
+    transfer:
+      pages: {fr: fr/exercises-generation, en: en/exercises-generation}
+      anchor: ex-generation-distribution-selection
+      label:
+        fr: "Comparer le choix glouton et le tirage à distribution fixée"
+        en: "Compare greedy selection and sampling with a fixed distribution"
+
   predictive-entropy-and-observed-score:
     criterion: >-
       The entropy of a predictive distribution uses every outcome. The score
