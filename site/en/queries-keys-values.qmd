@@ -155,9 +155,9 @@ The functional distinction is simple but fundamental:
 
 The weights are not a universal measure of semantic relevance, and attention is not nearest-neighbour search in the initial embedding space: it operates on learned projections. The limits of this interpretation and the gradient paths are developed in the [advanced Q/K/V deep dive](queries-keys-values-advanced.qmd).
 
-The next lesson, [Scaled dot-product attention](scaled-dot-product-attention.qmd), explains how scores become weights and how those weights aggregate V.
+The next lesson, [Scaled dot-product attention](scaled-dot-product-attention.qmd), explains how scores become weights and how those weights aggregate V. Its [optional lab](scaled-dot-product-attention.qmd#attention-intervention) lets you check what happens when you change a key or a value.
 
-To practise the skills associated with this lesson, the [Attention exercises](exercises-attention.qmd#attention) cover projection calculations and dimensions, predicting the effects of changing $W_Q$, $W_K$, or $W_V$, connecting projections to backpropagation, and transferring the reasoning to cross-attention and GQA/MQA. Numerical calculations remain in that practice route.
+To practise the skills associated with this lesson, the [Attention exercises](exercises-attention.qmd#attention) cover projection calculations and dimensions, predicting the effects of changing $W_Q$, $W_K$, or $W_V$, connecting projections to backpropagation, and transferring the reasoning to cross-attention and GQA/MQA. Work through the calculations by hand in that practice route.
 
 
 

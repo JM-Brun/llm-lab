@@ -283,6 +283,39 @@ async function runCase(testCase, caseIndex) {
     );
 
     item.title = await page.title();
+
+    if (pagePath === "scaled-dot-product-attention.html") {
+      const lab = page.locator("[data-attention-intervention]");
+      const summary = lab.locator(":scope > summary");
+      await summary.focus();
+      await summary.press("Enter");
+      const choice = lab.getByRole("combobox");
+      const baseline = await lab.locator("[data-attention-output]").innerText();
+      const read = selector => lab.locator(selector).innerText();
+      const baselineWeight = await read('[data-b="weight"]');
+      const baselineScore = await read('[data-b="raw"]');
+      const expected = lang === "fr"
+        ? { baseline: "(1,609 ; 0,782)", value: "(1,609 ; 1,565)", key: "(1 ; 2)", half: "0,5" }
+        : { baseline: "(1.609, 0.782)", value: "(1.609, 1.565)", key: "(1, 2)", half: "0.5" };
+
+      await choice.selectOption("value");
+      if (await read('[data-b="weight"]') !== baselineWeight ||
+          await read('[data-b="raw"]') !== baselineScore ||
+          await read("[data-attention-output]") !== expected.value) {
+        throw new Error("Changing only V must preserve the scores and weights and change the weighted output.");
+      }
+      await choice.selectOption("key");
+      if (await read('[data-b="raw"]') !== "2" ||
+          await read('[data-a="weight"]') !== expected.half ||
+          await read('[data-b="weight"]') !== expected.half ||
+          await read("[data-attention-output]") !== expected.key) {
+        throw new Error("Equal keys must give equal weights over both accessible positions.");
+      }
+      await choice.selectOption("baseline");
+      if (baseline !== expected.baseline || await read("[data-attention-output]") !== baseline) {
+        throw new Error("The attention lab must start with and return to the same baseline.");
+      }
+    }
     if (kind === "homepage") {
       // Quarto's index.html URL fixup iterates every <a> and assumes href is
       // a string. SVGAnchorElement.href is an SVGAnimatedString, so report

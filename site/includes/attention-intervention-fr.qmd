@@ -1,0 +1,37 @@
+```{=html}
+<details data-attention-intervention lang="fr">
+  <summary>Atelier facultatif · Que se passe-t-il si on change K ou V ?</summary>
+  <div class="mt-3">
+    <p id="attention-intervention">On suit une requête q = (1 ; 1) dans une tête jouet, avec deux positions accessibles A et B. Les vecteurs sont choisis pour l’exercice. Les décimales sont arrondies à trois chiffres.</p>
+    <div class="mb-3" data-attention-controls hidden>
+      <p>Avant de modifier B, prédisez ce qui changera dans les scores, les poids et les contributions à la sortie.</p>
+      <label for="attention-intervention-choice-fr">Intervention sur la position B</label>
+      <select class="form-select" id="attention-intervention-choice-fr">
+        <option value="baseline">Exemple de départ</option>
+        <option value="value">Changer seulement la valeur de B en (0 ; 8)</option>
+        <option value="key">Changer seulement la clé de B en (1 ; 1)</option>
+      </select>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-sm">
+        <caption>Calcul pour une requête et deux positions accessibles</caption>
+        <thead><tr><th scope="col">Étape</th><th scope="col">A</th><th scope="col">B</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Clé k</th><td data-a="key">(1 ; 1)</td><td data-b="key">(0 ; 0)</td></tr>
+          <tr><th scope="row">Score brut q · k</th><td data-a="raw">2</td><td data-b="raw">0</td></tr>
+          <tr><th scope="row">Score mis à l’échelle (÷ √2)</th><td data-a="scaled">1,414</td><td data-b="scaled">0</td></tr>
+          <tr><th scope="row">Poids a (softmax)</th><td data-a="weight">0,804</td><td data-b="weight">0,196</td></tr>
+          <tr><th scope="row">Valeur v</th><td data-a="value">(2 ; 0)</td><td data-b="value">(0 ; 4)</td></tr>
+          <tr><th scope="row">Contribution a × v</th><td data-a="term">(1,609 ; 0)</td><td data-b="term">(0 ; 0,782)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p role="status"><strong>Sortie (somme des contributions)</strong> <span data-attention-output>(1,609 ; 0,782)</span></p>
+    <p>Exemple de départ : poids ≈ (0,804 ; 0,196), sortie ≈ (1,609 ; 0,782).</p>
+    <details>
+      <summary>Afficher le raisonnement</summary>
+      <p>Si seule v<sub>B</sub> double, les poids restent identiques et la deuxième composante de la sortie double. Si les clés deviennent identiques, les deux poids valent 0,5 et la sortie devient (1 ; 2).</p>
+    </details>
+  </div>
+</details>
+```

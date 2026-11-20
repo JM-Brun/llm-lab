@@ -1,0 +1,164 @@
+schema_version: 1
+source_id: djamchid-karatsuba
+pedagogical_model:
+  reconstruction:
+    status: partial
+    basis: ["Direct canonical HTML, including article prose, section anchors, embedded markup and calculator script. Browser behavior and linked resources were not independently audited."]
+    inferred_elements: ["Learning outcomes, prerequisites, didactic functions and graph relations are editorial interpretations."]
+  source_graph:
+    nodes:
+      - {id: src-operands, kind: input, description: "The same integer pair anchors the worked comparison.", locator: "#ecole and #astuce"}
+      - {id: src-school-products, kind: computation, description: "School-method partial products establish the baseline.", locator: "#ecole"}
+      - {id: src-split, kind: operation, description: "Decimal place value separates high and low blocks.", locator: "#astuce"}
+      - {id: src-three-products, kind: computation, description: "An identity recovers the cross term from three products.", locator: "#astuce"}
+      - {id: src-result, kind: result, description: "The two routes recompose the same integer product.", locator: "#ecole and #astuce"}
+      - {id: src-recursion, kind: process, description: "A bounded tree displays repeated applications to smaller operands.", locator: "#atelier"}
+      - {id: src-implementation-cost, kind: qualification, description: "Overhead and implementation thresholds qualify the ideal operation model.", locator: "#seuil"}
+    edges:
+      - {from: src-operands, type: input-to, to: src-school-products}
+      - {from: src-operands, type: input-to, to: src-split}
+      - {from: src-split, type: supplies-blocks-to, to: src-three-products}
+      - {from: src-school-products, type: recomposes, to: src-result}
+      - {from: src-three-products, type: recomposes, to: src-result}
+      - {from: src-recursion, type: repeats, to: src-three-products}
+      - {from: src-implementation-cost, type: qualifies, to: src-recursion}
+    interpretation: "This editorial reconstruction follows the article's computation and examples. Its nodes and edges describe the source."
+  learning_outcomes:
+    - {status: inferred, outcome: "Trace how three block products reproduce the same result as school multiplication.", basis: "The paired worked example and exact calculator."}
+    - {status: inferred, outcome: "Explain why fewer recursive products need not reduce runtime for short operands.", basis: "The threshold section and the operation-count chart caption."}
+  assumed_prerequisites:
+    - {status: inferred, topic: "Decimal place value and elementary multiplication.", basis: "The article starts from partial products in school multiplication."}
+    - {status: inferred, topic: "Elementary distributivity for the cross-term identity.", basis: "The derivation expands products of block sums."}
+  teaching_route:
+    - {order: 1, section: "#ecole", function: establish-baseline, moves: ["Start with familiar multiplication and expose its partial products."]}
+    - {order: 2, section: "#astuce", function: reveal-mechanism, moves: ["Keep the same operands, split the digits and recompose the product."]}
+    - {order: 3, section: "#atelier", function: support-exploration, moves: ["Accept a preset or custom input and expose intermediate products and recursive calls."]}
+    - {order: 4, section: "#seuil", function: qualify-cost, moves: ["Distinguish idealized operation counts from overhead and implementation thresholds."]}
+    - {order: 5, section: "#histoire", function: situate-history, moves: ["Use a timeline to connect later algorithms to their asymptotic bounds."]}
+    - {order: 6, section: "#conclusion", function: qualify-research-claim, moves: ["Present a manuscript claim with its verification status and computational model."]}
+  pedagogical_strengths:
+    - "A stable worked input helps readers line up representations and intermediate results."
+    - "Controls expose intermediate state and keep the calculation reproducible."
+  pedagogical_limits:
+    - "The recursion display caps depth; the idealized count omits intermediate lengths and other work."
+    - "No evidence of comprehension gains or accessibility audit was supplied by the inspected article."
+  comparison:
+    dossier: docs/interactive-explanatory-lesson-pattern.md
+    canonical_graph: "data/concepts.yml"
+    canonical_routes: [data/guided-route.yml, docs/learning-path.md]
+    decision: "Apply a bounded numeric intervention to the canonical attention-computation lesson and link from QKV. Retain the shared editorial pattern for other candidates."
+    structures_kept_separate: [source-semantic-graph, source-pedagogical-route, canonical-concept-graph, canonical-learning-routes, site-navigation]
+items:
+  - id: djamchid-karatsuba:stable-example
+    kind: teaching-sequence
+    summary: "The same operands connect the school baseline, block identity and recomposition, and are available as a calculator preset."
+    locator: {type: section, value: "#ecole, #astuce, #atelier"}
+    evidence:
+      kind: source-inspection
+      confidence: well-supported
+      scope: "A direct comparison of authored sections and calculator presets."
+      limitations: ["Readers can align successive representations without redoing the input."]
+    candidate_destinations: {pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention], concepts: [scaled-dot-product-attention]}
+    disposition: integrate
+    disposition_rationale: "Keep one numeric baseline visible within the attention lab. Cross-page numeric continuity needs separate review."
+  - id: djamchid-karatsuba:three-products
+    kind: derivation
+    summary: "The cross term equals the product of block sums minus both same-side products, giving three block multiplications."
+    locator: {type: section, value: "#astuce"}
+    evidence:
+      kind: source-inspection
+      confidence: established
+      scope: "Distributivity and the decimal recomposition in the worked example."
+      limitations: ["The reduction is in the number of block products."]
+    disposition: reject
+    disposition_rationale: "Domain-specific mathematics outside the attention lesson."
+  - id: djamchid-karatsuba:guided-manipulation
+    kind: experiment
+    summary: "Custom operands and reproducible presets rerun the computation and expose intermediate products."
+    locator: {type: section, value: "#atelier"}
+    evidence:
+      kind: source-inspection
+      confidence: well-supported
+      scope: "Input controls, preset handlers and output construction in inline HTML and JavaScript."
+      limitations: ["Usability and learning outcomes require separate evaluation."]
+    candidate_destinations: {pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention], concepts: [scaled-dot-product-attention]}
+    disposition: integrate
+    disposition_rationale: "Use two bounded presets that isolate K or V. Expose scores, normalized weights, weighted terms and output; the attention calculation uses floating point."
+  - id: djamchid-karatsuba:exact-arithmetic
+    kind: implementation-pattern
+    summary: "The calculator uses BigInt and validates digit strings before computing and recomposing the product."
+    locator: {type: section, value: "#atelier"}
+    evidence:
+      kind: source-inspection
+      confidence: well-supported
+      scope: "Static inspection of the source's inline calculator."
+      limitations: ["Integer exactness is specific to this source task."]
+    disposition: reject
+    disposition_rationale: "Attention uses exponentials and floating-point approximation. The lab labels rounding."
+  - id: djamchid-karatsuba:bounded-tree
+    kind: visualization
+    summary: "The call tree makes recursive subproblems visible and limits display depth."
+    locator: {type: section, value: "#atelier"}
+    evidence:
+      kind: source-inspection
+      confidence: well-supported
+      scope: "Calculator tree markup, caption and inline call-tree function."
+      limitations: ["Display depth is a visualization limit."]
+    candidate_destinations: {pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention], concepts: [scaled-dot-product-attention]}
+    disposition: integrate
+    disposition_rationale: "Use the topology principle from the existing editorial guide. A comparison table aligns the two positions for one query; recursion is irrelevant here."
+  - id: djamchid-karatsuba:theoretical-growth
+    kind: derivation
+    summary: "The idealized recurrence branches into three half-sized products, with linear extra work."
+    locator: {type: section, value: "#seuil"}
+    evidence:
+      kind: source-inspection
+      confidence: context-dependent
+      scope: "Article recurrence and asymptotic comparison."
+      limitations: ["Balanced sizes and linear combination work are modeling assumptions."]
+    disposition: reject
+    disposition_rationale: "The recurrence concerns integer multiplication. Its epistemic framing is tracked separately."
+  - id: djamchid-karatsuba:measurement-boundary
+    kind: limitation
+    summary: "An idealized product count is qualified separately from implementation cutoffs and runtime."
+    locator: {type: section, value: "#seuil"}
+    evidence:
+      kind: source-inspection
+      confidence: well-supported
+      scope: "The section's caption and its discussion of implementation overhead."
+      limitations: ["The article's concrete cutoffs and their conditions were not independently checked."]
+    disposition: already-covered
+    disposition_rationale: "The canonical UX pattern already distinguishes mathematical counts, toy examples, and measurements."
+  - id: djamchid-karatsuba:historical-timeline
+    kind: visualization
+    summary: "A short timeline connects successive integer-multiplication results."
+    locator: {type: section, value: "#histoire"}
+    evidence:
+      kind: source-inspection
+      confidence: well-supported
+      scope: "Timeline as authored; underlying technical claims not independently audited."
+      limitations: ["The article moves from decimal examples to bounds in a bit-complexity model."]
+    disposition: already-covered
+    disposition_rationale: "LLM Lab already uses a history timeline; the attention lab needs the computation only."
+  - id: djamchid-karatsuba:manuscript-qualification
+    kind: claim
+    summary: "The article reports a manuscript claim about a sub-n-log-n bound in a specified computation model and flags independent verification."
+    locator: {type: section, value: "#histoire, #conclusion"}
+    evidence:
+      kind: source-inspection
+      confidence: unverified
+      scope: "The article's report of the manuscript claim."
+      limitations: ["The claimed proof and current validation status were not independently checked."]
+    disposition: reject
+    disposition_rationale: "Retain the source's qualification in the record; the technical claim is outside the lesson's scope."
+  - id: djamchid-karatsuba:section-jumps
+    kind: page-improvement
+    summary: "The numbered in-page links let readers jump directly to the worked method, calculator or qualifications."
+    locator: {type: section, value: "Section navigation before #ecole"}
+    evidence:
+      kind: source-inspection
+      confidence: well-supported
+      scope: "Navigation links and matching section anchors in the source HTML."
+      limitations: ["Keyboard behavior and discovery effects were not evaluated."]
+    disposition: already-covered
+    disposition_rationale: "Reuse Quarto navigation and give the optional lab a precise fragment link from QKV."
