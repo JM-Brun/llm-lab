@@ -136,3 +136,7 @@ All reader-facing self-checks must use the shared pattern documented in [the rea
 Design a short progression where the topic supports it: (1) retrieve or identify the key concept, (2) explain or calculate a mechanism, (3) apply it under changed conditions or diagnose a misconception, and (4) transfer or critique the result. Difficulty should increase through reasoning demand, not obscure wording. Each question must test a stated learning outcome and require an explanation, intermediate step, calculation, prediction, or justified choice where appropriate. Avoid recall-only quizzes, questions answered by copying one sentence, artificial trick questions, and questions whose answer depends on an unstated convention.
 
 Reveal solutions only on request. A useful solution explains the reasoning, names assumptions, and diagnoses a plausible wrong answer; it is not merely a letter or final number. Do not invent questions to fill a fixed count: a concise, topic-appropriate check is better than a padded sequence. Link to the relevant collection in the bilingual exercise hub when available, using a topic-specific anchor. Clearly distinguish short embedded checks from substantial exercise collections, and never imply that planned exercises already exist.
+
+## Draft pull requests
+
+Open work in progress as a draft and use the local checks above before marking it ready. The hosted Python, Quarto/browser, and secret-scanning checks start when the PR becomes ready for review. Keep the installed pre-commit hooks active on draft branches.

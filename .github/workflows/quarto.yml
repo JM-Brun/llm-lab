@@ -2,6 +2,7 @@ name: Quarto site
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review, converted_to_draft]
   workflow_dispatch:
   schedule:
     - cron: "17 3 * * *"
@@ -17,6 +18,7 @@ concurrency:
 
 jobs:
   render:
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     name: Quarto site & browser audit
     # Pinned: ubuntu-latest moved to 26.04, which Playwright 1.56.1 does not
     # support ("Playwright does not support chromium on ubuntu26.04-x64").
