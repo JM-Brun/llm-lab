@@ -489,6 +489,26 @@ lesson_contracts:
 # Stage, concept, and page IDs reference the existing registries. Each criterion
 # records an editorial judgment; the test verifies the referenced evidence exists.
 boundaries:
+  token-ids-and-embedding-lookup:
+    criterion: >-
+      The vocabulary assigns token IDs and the embedding lookup uses them as row
+      indices. At a fixed table, repeated IDs give identical lookup vectors in their
+      original positions. For a fixed segmentation, permuting vocabulary IDs and
+      applying the same permutation to the table rows preserves the lookup output.
+    explanations:
+      text-input:
+        concept_ids: [token]
+        pages: {fr: fr/text-data, en: en/text-data}
+      representations:
+        concept_ids: [token-embedding]
+        pages: {fr: fr/embedding-space, en: en/embedding-space}
+    transfer:
+      pages: {fr: fr/text-data-exercises, en: en/text-data-exercises}
+      anchor: ex-text-to-embedding-lookup
+      label:
+        fr: "Suivre les identifiants jusqu’aux lignes de la table de plongements"
+        en: "Trace token IDs to their embedding rows"
+
   contextualization-and-causality:
     criterion: >-
       At a fixed token ID and position, the base embedding stays the same.
