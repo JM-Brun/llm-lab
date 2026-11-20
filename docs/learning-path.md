@@ -27,6 +27,8 @@ Each stage's `conceptual_focus` names the concepts a visit mobilizes, the object
 The last line links four sibling uses of the shared predictor. Each stage's `prediction_use` gives the context, parameter behavior and action in the comparison. Generation feeds a chosen token back into the context. Context design changes what is supplied at inference. Scoring reads a target probability for a given prefix. Training adjusts parameters using losses on observed examples. The map and each core lesson display the same visit details, with an arrow from ideas used to objects studied and a short outcome. Each core lesson links to the primary revision sheet resolved from its `lesson_contracts` entry. The [learning plan](../site/en/review-path.qmd) gives the detailed scope, prerequisites and review objectives.
 
 
+The probability lesson supplies the distribution for both entropy and scoring. The scoring lessons work with two different units: likelihood combines probabilities across an observed sequence, while cross-entropy gives a penalty at one position. For a one-hot target, that penalty is the per-token NLL used by the loss lesson to build a scalar from valid positions. Both scoring lessons can start from the probability lesson. The entropy review covers only the predictive distribution and token surprisal; the broader entropy synthesis connects the downstream uses.
+
 ## Path A — Theory / Understand: the conceptual order
 
 The learner-facing course and the implementation dependency graph answer different questions. **The conceptual course starts with what a model does; the build route follows the dependencies needed to construct one.** Do not force these into one identical chapter order.

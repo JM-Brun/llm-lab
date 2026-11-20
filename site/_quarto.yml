@@ -284,6 +284,8 @@ project:
     - en/revision-logits.qmd
     - fr/revision-probabilites.qmd
     - en/revision-probabilites.qmd
+    - fr/revision-entropy.qmd
+    - en/revision-entropy.qmd
     - fr/revision-inference-generation.qmd
     - en/revision-inference-generation.qmd
     - fr/revision-in-context-learning.qmd

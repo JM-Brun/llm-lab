@@ -63,9 +63,8 @@ def test_conceptual_route_follows_core_visits_and_links_to_lessons_and_graph(
     )
     assert len(rows) == 20
     assert len({page_slug for _, _, page_slug, _ in rows}) == 20
-    assert (
-        "](" + ("synthese-entropie.html" if language == "fr" else "entropy-synthesis.html") + ")"
-        in details
+    assert next(sheet for _, _, lesson, sheet in rows if lesson == "entropy") == (
+        "revision-entropy.html"
     )
     for chain, outcome, page_slug, synthesis in rows:
         fragment = SITE / "includes" / f"generated-guided-context-{language}-{page_slug}.qmd"

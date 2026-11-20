@@ -41,11 +41,11 @@ For one context, the model predicts a distribution $p$ and we have a target $q$.
 :::
 
 <div class="pipeline-stepper" role="group" aria-label="Steps in calculating cross-entropy">
-  <a class="step-item" href="likelihood.qmd">1. Target distribution</a>
+  <a class="step-item" href="likelihood.qmd">Observed target</a>
+  <span class="step-arrow" aria-hidden="true">+</span>
+  <a class="step-item" href="probabilities.qmd">Predicted distribution</a>
   <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="probabilities.qmd">2. Predicted distribution</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item active">3. Local penalty</span>
+  <span class="step-item active">One-position penalty</span>
 </div>
 
 

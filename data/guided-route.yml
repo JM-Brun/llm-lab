@@ -123,7 +123,7 @@ stages:
       entropy:
         mobilizes: ["concept:conditional-distribution"]
         objects: ["concept:entropy"]
-        outcome: {fr: "Mesurer l’incertitude avant observation", en: "Measure uncertainty before observation"}
+        outcome: {fr: "Distinguer l’incertitude de la distribution et la surprise d’un token", en: "Distinguish distribution uncertainty from one token’s surprisal"}
     optional_pages:
       fr: []
       en: []
@@ -195,16 +195,16 @@ stages:
     prediction_use:
       context: {fr: "Préfixe donné pour chaque cible", en: "Prefix given for each target"}
       parameters: fixed
-      action: {fr: "Lire la probabilité du token observé", en: "Read the observed token’s probability"}
+      action: {fr: "Calculer le score d’une cible ou d’une suite observée", en: "Score an observed target or sequence"}
     conceptual_focus:
       vraisemblance:
         mobilizes: ["concept:conditional-distribution", "concept:observed-target"]
-        objects: ["concept:sequence-likelihood"]
-        outcome: {fr: "Évaluer la probabilité d’une séquence observée", en: "Evaluate the probability of an observed sequence"}
+        objects: ["concept:sequence-likelihood", "concept:log-likelihood"]
+        outcome: {fr: "Combiner les probabilités conditionnelles d’une suite observée", en: "Combine the conditional probabilities of an observed sequence"}
       cross-entropy:
         mobilizes: ["concept:conditional-distribution", "concept:observed-target"]
-        objects: ["concept:cross-entropy"]
-        outcome: {fr: "Calculer le coût prédictif associé à la cible", en: "Compute the predictive cost of the target"}
+        objects: ["concept:cross-entropy", "node:token-nll"]
+        outcome: {fr: "Calculer la pénalité à une position et reconnaître le cas one-hot", en: "Compute a one-position penalty and identify the one-hot case"}
     optional_pages:
       fr: [fr/language-modeling-math, fr/mathematical-foundations]
       en: [en/language-modeling-math, en/mathematical-foundations]
@@ -226,9 +226,9 @@ stages:
       action: {fr: "Agréger les pertes et ajuster les paramètres", en: "Aggregate losses and update parameters"}
     conceptual_focus:
       loss:
-        mobilizes: ["concept:cross-entropy"]
+        mobilizes: ["node:token-nll"]
         objects: ["node:loss-reduction", "node:training-objective"]
-        outcome: {fr: "Agréger les pertes des positions valides", en: "Aggregate losses over valid positions"}
+        outcome: {fr: "Former un scalaire à partir des pertes sur les positions valides", en: "Form a scalar from the losses at valid positions"}
       gradients:
         mobilizes: ["node:training-objective"]
         objects: ["concept:gradient", "concept:parameter-update"]
@@ -298,7 +298,7 @@ lesson_contracts:
     synthesis: revision-probabilites
     requires: [logits]
   entropy:
-    synthesis: entropy-synthesis
+    synthesis: revision-entropy
     requires: [probabilites]
   inference-generation:
     synthesis: revision-inference-generation
@@ -314,7 +314,7 @@ lesson_contracts:
     requires: [probabilites]
   cross-entropy:
     synthesis: revision-cross-entropy
-    requires: [vraisemblance, entropy]
+    requires: [probabilites]
   loss:
     synthesis: revision-loss
     requires: [probabilites]

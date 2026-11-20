@@ -11,6 +11,7 @@
 <span id="mode=concepts&amp;concept=gradient" aria-hidden="true"></span>
 <span id="mode=concepts&amp;concept=in-context-learning" aria-hidden="true"></span>
 <span id="mode=concepts&amp;concept=key" aria-hidden="true"></span>
+<span id="mode=concepts&amp;concept=log-likelihood" aria-hidden="true"></span>
 <span id="mode=concepts&amp;concept=logits" aria-hidden="true"></span>
 <span id="mode=concepts&amp;concept=next-token-prediction" aria-hidden="true"></span>
 <span id="mode=concepts&amp;concept=observed-target" aria-hidden="true"></span>

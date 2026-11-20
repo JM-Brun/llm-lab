@@ -59,7 +59,7 @@ def test_real_repository_inventory_projects_revision_links_and_assessments() -> 
 
     understand = inventory["counts"]["understand"]
     build = inventory["counts"]["build"]
-    assert understand["revision_aid_links"] == 48
+    assert understand["revision_aid_links"] == 50
     assert understand["pages_with_revision_aids"] == 40
     assert understand["revision_support_by_status"].get("partial", 0) == 0
     assert understand["revision_support_by_status"]["integrated_sufficient"] == 46
@@ -70,6 +70,7 @@ def test_real_repository_inventory_projects_revision_links_and_assessments() -> 
     by_id = {page["id"]: page for page in inventory["pages"]}
     assert {aid["id"] for aid in by_id["fr/entropy"]["revision_aids"]} == {
         "fr/revision-information-theory",
+        "fr/revision-entropy",
         "fr/synthese-entropie",
     }
     assert by_id["en/cross-entropy"]["revision_support"]["status"] == "integrated_sufficient"
