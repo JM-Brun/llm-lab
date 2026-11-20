@@ -86,6 +86,8 @@ Considérons maintenant trois tokens observés successifs. Leurs probabilités c
 
 </details>
 
+{{< include ../../includes/generated-exercise-review-fr-entropy-exercises-ex-entropy-and-observed-score.qmd >}}
+
 :::
 
 **Ne pas confondre les quantités :** le surprisal d'un token est une valeur au niveau d'un événement ; l'entropie est une espérance sur les issues possibles ; la log-vraisemblance d'une séquence additionne les log-probabilités conditionnelles ; la NLL / entropie croisée moyenne ajoute une convention de cible et d'agrégation. Voir [Vraisemblance](../vraisemblance.qmd) pour la factorisation d'une séquence.

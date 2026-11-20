@@ -72,6 +72,8 @@ A toy tokenizer splits “cat follows the cat” into [“cat”, “follows”,
 
 </details>
 
+{{< include ../../includes/generated-exercise-review-en-text-data-exercises-ex-text-to-embedding-lookup.qmd >}}
+
 
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/text-data.qmd) · [English](text-data.qmd)

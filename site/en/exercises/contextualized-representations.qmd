@@ -57,6 +57,8 @@ In a causal GPT with fixed parameters, consider three sequences of token IDs: `[
 
 </details>
 
+{{< include ../../includes/generated-exercise-review-en-contextualized-representations-exercises-ex-contextualization-causal-boundary.qmd >}}
+
 ## Guided investigation — an SAE feature in Neuronpedia
 
 [Open the Gemma Scope example](https://www.neuronpedia.org/gemma-2-2b/20-gemmascope-res-16k/10956) · [Feature dashboard documentation](https://docs.neuronpedia.org/sparse-autoencoders/feature-dashboards).

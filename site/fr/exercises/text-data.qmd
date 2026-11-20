@@ -72,6 +72,8 @@ Un tokenizer jouet segmente « chat suit le chat » en [« chat », « suit », 
 
 </details>
 
+{{< include ../../includes/generated-exercise-review-fr-text-data-exercises-ex-text-to-embedding-lookup.qmd >}}
+
 
 ::: {.language-switch}
 **Langue :** [Français](text-data.qmd) · [English](../../en/exercises/text-data.qmd)

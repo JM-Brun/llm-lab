@@ -47,6 +47,8 @@ Pour un même contexte, un modèle produit les logits $z=(0,\ln 2,\ln 3)$ pour l
 
 </details>
 
+{{< include ../includes/generated-exercise-review-fr-exercises-generation-ex-generation-distribution-selection.qmd >}}
+
 [Revoir la sélection gloutonne et l'échantillonnage](generation.qmd#comment-le-prochain-token-est-il-choisi).
 
 <a id="ge-b-tracer-la-boucle-autoregressive"></a>

@@ -86,6 +86,8 @@ Now consider three successive observed tokens. Their conditional probabilities, 
 
 </details>
 
+{{< include ../../includes/generated-exercise-review-en-entropy-exercises-ex-entropy-and-observed-score.qmd >}}
+
 :::
 
 **Keep the quantities distinct:** token surprisal is an event-level value; entropy is an expectation over possible outcomes; sequence log-likelihood sums conditional log-probabilities; mean NLL/cross-entropy adds a target and aggregation convention. See [Likelihood](../likelihood.qmd) for the sequence factorization.

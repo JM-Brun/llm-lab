@@ -101,6 +101,8 @@ Le contexte du système est l'ensemble sélectionné et transmis : instructions,
 
 </details>
 
+{{< include ../../includes/generated-exercise-review-fr-context-engineering-exercises-ex-context-between-calls.qmd >}}
+
 ::: {.language-switch}
 **Langue :** [Français](context-engineering.qmd) · [English](../../en/exercises/context-engineering.qmd)
 :::
