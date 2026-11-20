@@ -32,16 +32,18 @@ tags: ["type:exercise-collection", "destination:practice", "topic:exercise-gener
 
 ### Distribution and selection {#ex-generation-distribution-selection}
 
-A model produces logits $z=(0,\ln 2,\ln 3)$ for vocabulary $\{A,B,C\}$.
+For a fixed context, a model produces logits $z=(0,\ln 2,\ln 3)$ for vocabulary $\{A,B,C\}$. Both rules start from these same logits, with temperature set to $1$ and no filtering.
 
 1. Compute the softmax distribution.
 2. Which token does greedy decoding select?
-3. With sampling, must the selected token be the highest-probability one?
+3. What is the probability of selecting $C$ under each rule? Which other tokens can sampling select?
 
 <details>
 <summary>Show the solution</summary>
 
-The exponentials are $(1,2,3)$ and sum to $6$. Thus $p=(1/6,1/3,1/2)$. Greedy decoding selects $C$. With sampling, any token with nonzero probability may be selected: $C$ is most likely, but not certain. The distribution is the model's probabilistic output; the token is the result of the selection policy.
+1. The exponentials are $(1,2,3)$ and sum to $6$. The model assigns probabilities $p=(1/6,1/3,1/2)$.
+2. Greedy decoding selects $C$, the unique highest-probability token.
+3. The probability of selecting $C$ is $1$ under greedy decoding and $1/2$ under sampling. Sampling can also draw $A$ with probability $1/6$ or $B$ with probability $1/3$. The choice of rule determines the distribution of the selected token from the same predicted distribution.
 
 </details>
 
