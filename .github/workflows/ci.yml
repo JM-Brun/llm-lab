@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review, converted_to_draft]
   workflow_dispatch:
     inputs:
       run_concept_benchmark:
@@ -26,6 +27,7 @@ concurrency:
 
 jobs:
   quality:
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     name: Python quality and domain checks
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -146,6 +148,7 @@ jobs:
           uv run mypy site/tools/project_index.py site/tools/project_coverage.py
 
   tests:
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     name: Test suite
     runs-on: ubuntu-latest
     timeout-minutes: 15
