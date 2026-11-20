@@ -2,14 +2,14 @@
 title: "Synthesis sheet — Entropy, from language to LLMs"
 subtitle: "One distribution, one logarithm, several uses of the same computation"
 description-meta: "A synthesis sheet explaining why entropy enters language and LLMs, what role the logarithm plays in surprisal, loss, and perplexity, and which canonical lessons to read next."
-keywords: ["type:concept-bridge", "destination:understand", "topic:entropy-synthesis", "level:core", "language:en", "status:published"]
+keywords: ["type:concept-bridge", "destination:practice", "topic:entropy-synthesis", "level:core", "language:en", "status:published"]
 lang: en
 ---
 
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "en/entropy-synthesis"
-revision_role: synthesis_sheet
+revision_role: synthesis
 revision_of:
   - en/entropy
   - en/cross-entropy
@@ -24,7 +24,7 @@ hierarchy:
   parents: []
   children: []
 related: ["en/entropy", "en/cross-entropy", "en/likelihood", "en/loss", "en/compression-revision"]
-tags: ["type:concept-bridge", "destination:understand", "topic:entropy-synthesis", "level:core", "language:en", "status:published"]
+tags: ["type:concept-bridge", "destination:practice", "topic:entropy-synthesis", "level:core", "language:en", "status:published"]
 -->
 
 [← Back to the entropy lesson](entropy.qmd) · [Likelihood](likelihood.qmd) · [Cross-entropy](cross-entropy.qmd)

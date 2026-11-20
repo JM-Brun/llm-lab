@@ -2,14 +2,14 @@
 title: "Fiche de synthèse — L'entropie, du langage aux LLM"
 subtitle: "Une distribution, un logarithme, plusieurs usages du même calcul"
 description-meta: "Fiche de synthèse montrant pourquoi l'entropie intervient dans le langage et les LLM, quel rôle le logarithme joue dans la surprise, la loss et la perplexité, et vers quelles leçons aller ensuite."
-keywords: ["type:concept-bridge", "destination:understand", "topic:entropy-synthesis", "level:core", "language:fr", "status:published"]
+keywords: ["type:concept-bridge", "destination:practice", "topic:entropy-synthesis", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
 
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/synthese-entropie"
-revision_role: synthesis_sheet
+revision_role: synthesis
 revision_of:
   - fr/entropy
   - fr/cross-entropy
@@ -24,7 +24,7 @@ hierarchy:
   parents: []
   children: []
 related: ["fr/entropy", "fr/cross-entropy", "fr/vraisemblance", "fr/loss", "fr/compression-revision"]
-tags: ["type:concept-bridge", "destination:understand", "topic:entropy-synthesis", "level:core", "language:fr", "status:published"]
+tags: ["type:concept-bridge", "destination:practice", "topic:entropy-synthesis", "level:core", "language:fr", "status:published"]
 -->
 
 [← Revenir à la leçon d'entropie](entropy.qmd) · [Vraisemblance](vraisemblance.qmd) · [Cross-entropie](cross-entropy.qmd)

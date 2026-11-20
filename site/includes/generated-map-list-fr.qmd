@@ -21,6 +21,7 @@
   - Scoring des tokens observés
     - [Vraisemblance et log-vraisemblance](vraisemblance.html)
     - [Entropie croisée : l'objectif de prédiction des tokens](cross-entropy.html)
+    - [Fiche de synthèse — L'entropie, du langage aux LLM](synthese-entropie.html)
     - [Fiche de révision — Théorie de l'information et LLM](revision-information-theory.html)
     - [Expérience — Entropie, KL et compression prédictive](experience-information-theory.html)
   - Loss et gradients
