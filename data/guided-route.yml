@@ -370,7 +370,7 @@ lesson_contracts:
     synthesis: revision-training-loop
     requires: [causal-masking, loss, gradients]
 
-# Source review of two boundaries in the Understand route (2026-11-20).
+# Source review of conceptual boundaries in the Understand route (2026-11-20).
 # Stage, concept, and page IDs reference the existing registries. Each criterion
 # records an editorial judgment; the test verifies the referenced evidence exists.
 boundaries:
@@ -413,3 +413,24 @@ boundaries:
       label:
         fr: "Comparer deux distributions qui attribuent la même probabilité au token observé"
         en: "Compare two distributions that assign the same probability to the observed token"
+
+  observed-score-and-parameter-update:
+    criterion: >-
+      At one included position with a one-hot target, equal target probabilities give
+      equal cross-entropy losses. The gradient with respect to the logits is the
+      predicted distribution minus the target vector. If only the additive output
+      bias is trainable, different distributions with the same loss can give different
+      bias updates under the same gradient-descent rule.
+    explanations:
+      scoring:
+        concept_ids: [cross-entropy, negative-log-likelihood]
+        pages: {fr: fr/cross-entropy, en: en/cross-entropy}
+      training:
+        concept_ids: [gradient, parameter-update]
+        pages: {fr: fr/gradients, en: en/gradients}
+    transfer:
+      pages: {fr: fr/gradients-exercises, en: en/gradients-exercises}
+      anchor: ex-score-to-parameter-update
+      label:
+        fr: "Calculer deux mises à jour à perte égale"
+        en: "Calculate two updates at equal loss"
