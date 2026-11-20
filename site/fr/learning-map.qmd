@@ -55,6 +55,14 @@ Les intitulés de sections affichés dans les détails d'une page sont des repè
 
 Ce parcours théorique répond d'abord à trois questions : qu'est-ce qu'un LLM, comment calcule-t-il une prédiction, et que fait-on de cette prédiction ? La première partie situe le système ; la deuxième couvre quatre étapes, du texte à la distribution du prochain token ; la troisième présente trois usages frères, générer, scorer une cible observée et apprendre en ajustant les paramètres, qui ne sont pas des prérequis successifs. L'évaluation reste transversale : elle mesure le modèle sur des données tenues à l'écart ([évaluation expérimentale](evaluation-experimentale.qmd)). Les neuf étapes détaillées restent la progression conseillée : les pages centrales couvrent les idées principales de chaque étape ; les ressources facultatives apportent du contexte ou de la profondeur et peuvent appartenir à toute destination. Les pages d'une même étape sont des ressources complémentaires, pas une liste de prérequis stricts.
 
+### Les objets étudiés dans le parcours {#conceptual-route}
+
+La flèche indique la progression de l’étude. On découvre par exemple les états contextualisés avant d’étudier les blocs Transformer qui les produisent. Le signe + regroupe les objets travaillés dans une même leçon. Ouvrez le détail d’une étape pour lire l’objectif de chaque passage et retrouver les notions dans le graphe.
+
+L’aperçu de la génération montre la boucle. La reprise explique le calcul du premier token et les tours suivants. Après la distribution, la génération choisit un token, le scoring lit la probabilité d’une cible déjà observée, et l’entraînement ajuste les paramètres à partir des pertes.
+
+{{< include ../includes/generated-conceptual-route-fr.qmd >}}
+
 {{< include ../includes/generated-guided-route-fr.qmd >}}
 
 ::: {.guided-route-companion}

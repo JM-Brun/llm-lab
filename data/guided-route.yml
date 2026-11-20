@@ -10,6 +10,14 @@ stages:
     pages:
       fr: [fr/llm-overview, fr/generation]
       en: [en/llm-overview, en/generation]
+    conceptual_focus:
+      llm-overview: {objects: ["concept:next-token-prediction"]}
+      inference-generation:
+        visit: preview
+        objects: ["concept:autoregressive-generation"]
+        outcome:
+          fr: "Suivre un token sélectionné et comprendre comment il entre dans le contexte du tour suivant."
+          en: "Follow a selected token and see how it enters the context of the next step."
     optional_pages:
       fr: [fr/transformer-architectures, fr/llm-limits, fr/llm-evolution, fr/next-concept-modeling]
       en: [en/transformer-architectures, en/llm-limits, en/llm-evolution, en/next-concept-modeling]
@@ -24,6 +32,8 @@ stages:
     pages:
       fr: [fr/text-data]
       en: [en/text-data]
+    conceptual_focus:
+      text-data: {objects: ["concept:token", "node:token-ids"]}
     optional_pages:
       fr: [fr/tokenization-strategies, fr/unicode-text, fr/tokenizer-design-evaluation]
       en: [en/tokenization-strategies, en/unicode-text, en/tokenizer-design-evaluation]
@@ -38,6 +48,10 @@ stages:
     pages:
       fr: [fr/embedding-space, fr/positional-encoding, fr/contextualized-representations]
       en: [en/embedding-space, en/positional-encoding, en/contextualized-representations]
+    conceptual_focus:
+      embedding-space: {objects: ["concept:token-embedding"]}
+      positional-encoding: {objects: ["concept:positional-encoding"]}
+      contextualized-representations: {objects: ["concept:contextualized-representation"]}
     optional_pages:
       fr: [fr/tensors, fr/rope, fr/sinusoidal-positional-encoding, fr/contextualized-representations-advanced, fr/embeddings-deep-dive]
       en: [en/tensors, en/rope, en/sinusoidal-positional-encoding, en/contextualized-representations-advanced, en/embeddings-deep-dive]
@@ -52,6 +66,11 @@ stages:
     pages:
       fr: [fr/transformer, fr/queries-keys-values, fr/scaled-dot-product-attention, fr/causal-masking]
       en: [en/transformer, en/queries-keys-values, en/scaled-dot-product-attention, en/causal-masking]
+    conceptual_focus:
+      transformer: {objects: ["node:forward-computation"]}
+      queries-keys-values: {objects: ["concept:query", "concept:key", "concept:value"]}
+      scaled-dot-product-attention: {objects: ["concept:scaled-dot-product-attention"]}
+      causal-masking: {objects: ["concept:causal-mask"]}
     optional_pages:
       fr: [fr/cross-attention, fr/attention-score-scaling, fr/queries-keys-values-advanced, fr/multimodal-architectures, fr/hybrid-llm-architectures]
       en: [en/cross-attention, en/attention-score-scaling, en/queries-keys-values-advanced, en/multimodal-architectures, en/hybrid-llm-architectures]
@@ -66,6 +85,10 @@ stages:
     pages:
       fr: [fr/logits, fr/probabilites, fr/entropy]
       en: [en/logits, en/probabilities, en/entropy]
+    conceptual_focus:
+      logits: {objects: ["concept:logits"]}
+      probabilites: {objects: ["concept:conditional-distribution"]}
+      entropy: {objects: ["concept:entropy"]}
     optional_pages:
       fr: []
       en: []
@@ -80,6 +103,13 @@ stages:
     pages:
       fr: [fr/generation]
       en: [en/generation]
+    conceptual_focus:
+      inference-generation:
+        visit: revisit
+        objects: ["concept:autoregressive-generation", "concept:prefill", "concept:decode-step"]
+        outcome:
+          fr: "Relier le traitement du prompt au choix du premier token, puis expliquer comment le décodage incrémental poursuit la boucle."
+          en: "Connect prompt processing to the choice of the first token, then explain how incremental decoding continues the loop."
     optional_pages:
       fr: [fr/decoding-strategies, fr/llm-computational-complexity]
       en: [en/decoding-strategies, en/llm-computational-complexity]
@@ -94,6 +124,9 @@ stages:
     pages:
       fr: [fr/in-context-learning, fr/context-engineering]
       en: [en/in-context-learning, en/context-engineering]
+    conceptual_focus:
+      in-context-learning: {objects: ["concept:in-context-learning"]}
+      context-engineering: {objects: ["concept:context-engineering"]}
     optional_pages:
       fr: [fr/rag-memory-boundaries, fr/document-retrieval]
       en: [en/rag-memory-boundaries, en/document-retrieval]
@@ -108,6 +141,9 @@ stages:
     pages:
       fr: [fr/vraisemblance, fr/cross-entropy]
       en: [en/likelihood, en/cross-entropy]
+    conceptual_focus:
+      vraisemblance: {objects: ["concept:sequence-likelihood"]}
+      cross-entropy: {objects: ["concept:cross-entropy"]}
     optional_pages:
       fr: [fr/language-modeling-math, fr/mathematical-foundations]
       en: [en/language-modeling-math, en/mathematical-foundations]
@@ -122,6 +158,10 @@ stages:
     pages:
       fr: [fr/loss, fr/gradients, fr/training-loop]
       en: [en/loss, en/gradients, en/training-loop]
+    conceptual_focus:
+      loss: {objects: ["node:loss-reduction", "node:training-objective"]}
+      gradients: {objects: ["concept:gradient", "concept:parameter-update"]}
+      training-loop: {objects: ["concept:training-loop"]}
     optional_pages:
       fr: [fr/cross-entropy, fr/scaling-laws, fr/post-training, fr/mathematical-foundations, fr/score-centering]
       en: [en/cross-entropy, en/scaling-laws, en/post-training, en/mathematical-foundations, en/score-centering]

@@ -18,6 +18,12 @@ The generator resolves every core and optional page ID against published page me
 
 The practical GPT construction route remains the separate [Build path](../site/fr/build-path.qmd) / [EN](../site/en/build-path.qmd). In particular, G1b corpus preparation and G2 training-example construction form a branch for training, not a prerequisite for understanding or demonstrating inference.
 
+### Conceptual view of the current route
+
+Each stage's `conceptual_focus` selects the objects studied in each core lesson, keyed by the lesson's bilingual page-map topic. The stage's `pages` lists supply the order. A reference of the form `concept:<id>` resolves to [the concept registry](../data/concepts.yml). A reference of the form `node:<id>` resolves to an existing object or operation in [the computational graph](../data/computational-graph.yml). Both registries supply their own labels and resource links. The generator checks that each selected object lists the localized lesson as a resource.
+
+The visible arrows show the study progression. In a single lesson, a plus sign joins objects studied together. The expandable details use the page-map `purpose` unless a visit specifies its own bilingual `outcome`. The two generation visits share the canonical page and concept. At orientation, the reader follows a selected token back into the context. At inference, the reader accounts for the first token and incremental decode. To review a proposed redesign, compare the objects and outcomes here before changing the order in `pages`.
+
 
 ## Path A — Theory / Understand: the conceptual order
 
@@ -47,9 +53,7 @@ The conceptual relationship is not a rigid pipeline: pretraining creates reusabl
 
 ### Reader-facing sequence and operational branches
 
-The public page-navigation arrows follow the **conceptual inference route**, not the order in which every component is implemented:
-
-`LLM panorama → generation preview → text and tokens → tokenization → embeddings → positional information → contextualized representations → Transformer → Q/K/V → scaled attention → causal masking → logits → probabilities → context use (ICL and context engineering)`.
+The generated conceptual view shows the complete current study sequence on the learning-map pages. Technical data flow remains documented in the computational graph. For example, a reader studies contextualized representations before opening the Transformer blocks that produce them.
 
 The generation lesson appears early as a system-level preview: it establishes the autoregressive loop with fixed parameters before the learner studies each internal component. Its appearance before the detailed input and probability lessons is deliberate, not a claim that those details are unnecessary.
 

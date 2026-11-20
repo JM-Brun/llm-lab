@@ -111,6 +111,21 @@ class OptionalLocalizedPageIds(StrictModel):
         return value
 
 
+class ConceptualFocus(StrictModel):
+    """Objects studied during one visit to a published lesson."""
+
+    objects: list[str] = Field(min_length=1)
+    visit: Literal["study", "preview", "revisit"] = "study"
+    outcome: LocalizedCopy | None = None
+
+    @field_validator("objects")
+    @classmethod
+    def distinct_objects(cls, values: list[str]) -> list[str]:
+        if len(values) != len(set(values)):
+            raise ValueError("a visit must list distinct conceptual objects")
+        return values
+
+
 class GuidedRouteStage(StrictModel):
     """One conceptual stage with bilingual copy and page references."""
 
@@ -119,6 +134,7 @@ class GuidedRouteStage(StrictModel):
     objective: LocalizedCopy
     pages: LocalizedPageIds
     optional_pages: OptionalLocalizedPageIds = Field(default_factory=OptionalLocalizedPageIds)
+    conceptual_focus: dict[str, ConceptualFocus] = Field(default_factory=dict)
 
     @model_validator(mode="after")
     def core_and_optional_pages_are_disjoint(self) -> GuidedRouteStage:
@@ -165,6 +181,7 @@ class ResolvedGuidedRouteStage(StrictModel):
     objective: str
     pages: list[ResolvedPage]
     optional_pages: list[ResolvedPage] = Field(default_factory=list)
+    conceptual_focus: dict[str, ConceptualFocus] = Field(default_factory=dict)
 
 
 class ResolvedGuidedRouteTransition(StrictModel):
@@ -447,6 +464,7 @@ def load_guided_route(language: str, pages: list[dict[str, Any]]) -> list[Resolv
                 optional_pages=resolve_pages(
                     getattr(stage.optional_pages, language), stage.id, "optional"
                 ),
+                conceptual_focus=stage.conceptual_focus,
             )
         )
     return resolved
@@ -927,6 +945,98 @@ def render_guided_route_markdown(stages: list[ResolvedGuidedRouteStage], languag
     return "\n".join(lines)
 
 
+def render_conceptual_route(
+    stages: list[ResolvedGuidedRouteStage],
+    pages: list[dict[str, Any]],
+    concepts: list[dict[str, Any]],
+    computational_nodes: list[dict[str, Any]],
+    language: str,
+) -> str:
+    """Project route visits onto concepts and computational nodes already taught there."""
+    fr = language == "fr"
+    page_by_id = {page["id"]: page for page in pages}
+    objects = {
+        f"concept:{concept['id']}": (
+            concept["label"],
+            {resource["id"] for resource in concept["resources"]},
+            f"learning-map.html#mode=concepts&concept={concept['id']}",
+        )
+        for concept in concepts
+    }
+    objects.update(
+        {
+            f"node:{node['id']}": (node["labels"][language], set(node.get("resources", [])), None)
+            for node in computational_nodes
+        }
+    )
+    visit_labels = {
+        "study": "",
+        "preview": " (aperçu)" if fr else " (preview)",
+        "revisit": " (reprise)" if fr else " (revisit)",
+    }
+    detail_label = "Objets et objectifs par leçon" if fr else "Lesson objects and outcomes"
+    seen_topics: set[str] = set()
+    lines: list[str] = []
+    for stage in stages:
+        core_topics = [page_by_id[page.id]["topic"] for page in stage.pages]
+        if (
+            len(core_topics) != len(set(core_topics))
+            or set(core_topics) != stage.conceptual_focus.keys()
+        ):
+            raise ValueError(
+                f"{stage.id} ({language}): conceptual_focus must match the core topics "
+                f"{core_topics!r}, found {sorted(stage.conceptual_focus)!r}"
+            )
+        sequence: list[str] = []
+        details: list[str] = []
+        for page, topic in zip(stage.pages, core_topics, strict=True):
+            focus = stage.conceptual_focus[topic]
+            if focus.visit == "revisit" and topic not in seen_topics:
+                raise ValueError(f"{stage.id}: revisited topic {topic!r} needs an earlier visit")
+            seen_topics.add(topic)
+            labels: list[str] = []
+            links: list[str] = []
+            for reference in focus.objects:
+                if reference not in objects:
+                    raise ValueError(f"{stage.id}/{topic}: unknown conceptual object {reference!r}")
+                label, resources, href = objects[reference]
+                if page.id not in resources:
+                    raise ValueError(
+                        f"{stage.id}/{topic}: {reference!r} does not list {page.id!r} as a resource"
+                    )
+                label = escape_markdown_text(label)
+                labels.append(label)
+                links.append(f"[{label}]({href})" if href else label)
+            visit = visit_labels[focus.visit]
+            sequence.append(f"[{' + '.join(labels)}{visit}]({page.href})")
+            outcome = escape_markdown_text(
+                getattr(focus.outcome, language)
+                if focus.outcome
+                else page_by_id[page.id]["purpose"]
+            )
+            title = escape_markdown_text(page.title)
+            details.extend(
+                [f"- **[{title}]({page.href}){visit}** · {', '.join(links)}.", f"  {outcome}"]
+            )
+        title = escape_markdown_text(stage.title)
+        lines.extend(
+            [
+                f"**[{title}](#guided-stage-{stage.id})**",
+                "",
+                " → ".join(sequence),
+                "",
+                "<details>",
+                f"<summary>{detail_label}</summary>",
+                "",
+                *details,
+                "",
+                "</details>",
+                "",
+            ]
+        )
+    return "\n".join(lines)
+
+
 def prepare_guided_page_context_fragments(
     language: str,
     stages: list[ResolvedGuidedRouteStage],
@@ -1392,6 +1502,11 @@ def prepare_build(language: str) -> dict[Path, str]:
     guided_transitions = load_guided_route_transitions(language, pages)
     navigation = load_navigation(language, pages)
     artifacts = prepare_guided_route_fragment(language, guided_route)
+    if any(stage.conceptual_focus for stage in guided_route):
+        nodes = load_yaml(ROOT / "data" / "computational-graph.yml")["nodes"]
+        artifacts[SITE / "includes" / f"generated-conceptual-route-{language}.qmd"] = (
+            render_conceptual_route(guided_route, pages, concept_graph["concepts"], nodes, language)
+        )
     artifacts.update(
         prepare_guided_page_context_fragments(language, guided_route, guided_transitions)
     )

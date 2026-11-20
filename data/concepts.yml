@@ -238,7 +238,7 @@ concepts:
       fr: "Tâche consistant à estimer, à chaque position, une distribution conditionnelle sur le token suivant à partir du contexte disponible."
       en: "Task of estimating, at each position, a conditional distribution over the next token from the available context."
     domains: [architectures-mechanisms, probabilistic-foundations-training]
-    resources: [fr/logits, en/logits, fr/probabilites, en/probabilities]
+    resources: [fr/llm-overview, en/llm-overview, fr/logits, en/logits, fr/probabilites, en/probabilities]
   - id: observed-target
     importance: core
     labels: {fr: "Token cible observé", en: "Observed target token"}
