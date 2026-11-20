@@ -23,6 +23,7 @@ def _write_page(
     language: str,
     *,
     next_page: str | None = None,
+    topic: str | None = None,
     destination: str = "understand",
     page_type: str = "concept-lesson",
     revision_role: str | None = None,
@@ -36,7 +37,7 @@ def _write_page(
     tags = [
         f"type:{page_type}",
         f"destination:{destination}",
-        f"topic:{slug}",
+        f"topic:{topic if topic is not None else slug}",
         "level:core",
         f"language:{language}",
         "status:published",

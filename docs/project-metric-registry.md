@@ -1,6 +1,6 @@
 # Project metric registry
 
-**Status:** canonical measurement contract, v1 (2026-11-19).  
+**Status:** canonical measurement contract, v2 (2026-11-20).\
 **Scope:** deterministic structural metrics and coverage semantics for the Project Intelligence Layer (PIL).  
 **Authority:** this document is the canonical registry of PIL metric definitions. It does not replace or duplicate the canonical data files. Definitions are established; computation and the coverage matrix are separate implementation work.
 
@@ -34,7 +34,7 @@ Every computed value must carry repository commit, calculation timestamp, filter
 ## 3. Global counting rules
 
 1. **Page records are not logical topics.** FR and EN pages are two page records. Count language-specific records separately.
-2. **No inferred bilingual identity.** A shared topic tag is a grouping facet, not proof of semantic equivalence. Logical-content counts require an explicit reviewed page-pair mapping.
+2. **Bilingual page pairing.** The page metadata contract uses `topic` to identify expected FR/EN counterparts. A unique pair supports verification of structural associations. Semantic equivalence and logical-content counts require editorial review.
 3. **Concept IDs are language-independent.** Count unique canonical concept IDs once.
 4. **Edges have typed units.** Count stored directed associations in their owning registry. Do not symmetrize, transitively close or merge relation families.
 5. **Memberships are occurrences.** A page may have multiple route memberships. Count membership records separately from unique member pages.
@@ -132,7 +132,7 @@ The first matrix is concept-centred: one row per canonical concept ID. It is a s
 | revision_support | Editorial assessments of associated Understand/Build lessons and their explicit section anchors or companion aids | Page-map v1 through the ProjectIndex revision adapter | human_review |
 | sources | Explicit concept IDs in source/extraction records with valid lineage | sources.yml and extraction manifests; adapter pending | not_registered |
 | practice | Explicit reviewed exercise/test/experiment mapping | No complete canonical mapping | not_registered |
-| bilingual_parity | Expected FR and EN teaching-page counterparts under an explicit parity rule | Page-map v1 + reviewed pairing policy | needs_review |
+| bilingual_parity | Explicit concept links to both published counterparts of every associated localized page topic | concepts.yml v2 + page-map v1 pairing by `topic` | available |
 
 ### 5.1 Allowed cell states
 
@@ -162,7 +162,20 @@ The revision adapter supplies assessments for published Understand and Build les
 
 Assessment evidence points to the lesson metadata and any explicit section anchors. A typed link to a companion aid is evidence of the relationship. The lesson assessment determines sufficiency.
 
-### 5.3 Aggregation rules
+### 5.3 Structural FR/EN parity of concept links
+
+For each concept, use the published page IDs explicitly listed in `concepts[].resources`. Each `topic` represented by an associated FR or EN page must resolve to exactly one published page in each language. The validator and matrix use the same topic grouping. The cell records the topic, page IDs and paths, and indicates which associations exist. Language-neutral pages do not take part in pairing.
+
+| Evidence on localized page links for one concept | Matrix state |
+|---|---|
+| All topics resolve to unique pairs and both pages of every pair are linked | `present` |
+| All topics resolve to unique pairs and at least one published counterpart lacks an explicit concept link | `missing` |
+| A localized linked page has no topic, a topic has no unique pair, or the concept has no page links | `needs_review` |
+| The concept links only to language-neutral pages | `not_applicable` |
+
+For a `needs_review` cell, the evidence still identifies any known missing links from other, resolved pairs. `present` verifies link symmetry. Comparing the lessons' content and objectives requires editorial review. Registry v2 introduces this rule while retaining the matrix schema and dimension ID.
+
+### 5.4 Aggregation rules
 
 - Denominator: distinct canonical concept IDs in concepts.yml v2.
 - Each concept appears once, independent of language.
@@ -181,4 +194,4 @@ Generated reports are disposable projections. Never edit a generated matrix as c
 
 The registry is accepted when every metric has a stable ID, exact unit and definition; every metric names a canonical owner/version or explicitly states no registry exists; bilingual grouping and exclusions are explicit; unsupported dimensions are not_registered rather than zero; revision status distinguishes not_assessed from missing; and future implementations are tested on synthetic fixtures and a real repository snapshot.
 
-**Decision:** this document defines the metric registry and matrix contract. The first read-only matrix builder is being implemented against ProjectIndex; no validated repository-wide matrix snapshot is claimed yet.
+The read-only matrix builder uses ProjectIndex and is tested with synthetic fixtures and the canonical repository data.

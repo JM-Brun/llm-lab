@@ -6,14 +6,14 @@ keeps unregistered or unassessed dimensions distinct from missing evidence.
 
 from __future__ import annotations
 
-from collections import Counter
+from collections import Counter, defaultdict
 from pathlib import PurePosixPath
 from typing import Any
 
-from page_index import PublishedPage
+from page_index import PublishedPage, group_bilingual_topics
 from project_index import ProjectIndex
 
-REGISTRY_VERSION = 1
+REGISTRY_VERSION = 2
 MATRIX_SCHEMA_VERSION = 1
 
 UNREGISTERED_DIMENSIONS = {
@@ -36,6 +36,62 @@ def _page_path(page: PublishedPage) -> str:
 
 def _cell(state: str, evidence: list[dict[str, str]], reason: str) -> dict[str, Any]:
     return {"state": state, "evidence": evidence, "reason": reason}
+
+
+def _page_evidence(page: PublishedPage) -> dict[str, str]:
+    return {"id": page.page_id, "path": _page_path(page), "language": page.language}
+
+
+def _bilingual_coverage(
+    pages_by_id: dict[str, PublishedPage],
+    topics: dict[str, dict[str, list[str]]],
+    pages: list[PublishedPage],
+) -> dict[str, Any]:
+    if not pages:
+        return _cell("needs_review", [], "No explicit published teaching-page association.")
+
+    linked_by_topic: dict[str, set[str]] = defaultdict(set)
+    for page in pages:
+        if page.language in {"fr", "en"}:
+            linked_by_topic[page.tags.get("topic", "")].add(page.page_id)
+    if not linked_by_topic:
+        return _cell(
+            "not_applicable",
+            [dict(_page_evidence(page), association="linked") for page in pages],
+            "All associated pages are language-neutral.",
+        )
+
+    evidence: list[dict[str, str]] = []
+    unresolved = False
+    missing = False
+    for topic, linked_ids in sorted(linked_by_topic.items()):
+        counterparts = topics.get(topic, {})
+        unique_pair = set(counterparts) == {"fr", "en"} and all(
+            len(ids) == 1 for ids in counterparts.values()
+        )
+        candidate_ids = {page_id for ids in counterparts.values() for page_id in ids}
+        if not unique_pair:
+            unresolved = True
+        elif candidate_ids - linked_ids:
+            missing = True
+        for page_id in sorted(linked_ids | candidate_ids):
+            association = "linked"
+            if page_id not in linked_ids:
+                association = "missing_counterpart" if unique_pair else "candidate"
+            evidence.append(
+                {
+                    **_page_evidence(pages_by_id[page_id]),
+                    "topic": topic,
+                    "pair_status": "resolved" if unique_pair else "unresolved",
+                    "association": association,
+                }
+            )
+
+    if unresolved:
+        return _cell("needs_review", evidence, "At least one topic lacks a unique published pair.")
+    if missing:
+        return _cell("missing", evidence, "At least one published counterpart is not associated.")
+    return _cell("present", evidence, "Every associated topic links both published counterparts.")
 
 
 def _revision_coverage(index: ProjectIndex, page_ids: list[str]) -> dict[str, Any]:
@@ -84,6 +140,9 @@ def _revision_coverage(index: ProjectIndex, page_ids: list[str]) -> dict[str, An
 def build_concept_coverage(index: ProjectIndex) -> dict[str, Any]:
     """Build a deterministic concept-centred matrix from a validated ProjectIndex."""
     rows: list[dict[str, Any]] = []
+    bilingual_topics = group_bilingual_topics(
+        {page_id: page.tags for page_id, page in index.pages_by_id.items()}
+    )
 
     memberships_by_page: dict[str, list[Any]] = {}
     resource_ids_by_concept: dict[str, set[str]] = {}
@@ -98,14 +157,7 @@ def build_concept_coverage(index: ProjectIndex) -> dict[str, Any]:
         concept = index.concepts_by_id[concept_id]
         page_ids = sorted(index.pages_by_concept.get(concept_id, ()))
         pages = [index.pages_by_id[page_id] for page_id in page_ids]
-        page_evidence = [
-            {
-                "id": page.page_id,
-                "path": _page_path(page),
-                "language": page.language,
-            }
-            for page in pages
-        ]
+        page_evidence = [_page_evidence(page) for page in pages]
 
         labels = concept.get("labels", {})
         definitions = concept.get("definitions", {})
@@ -174,17 +226,6 @@ def build_concept_coverage(index: ProjectIndex) -> dict[str, Any]:
             ),
         )
 
-        languages = sorted({page.language for page in pages if page.language in {"fr", "en"}})
-        bilingual_cell = _cell(
-            "needs_review",
-            page_evidence,
-            (
-                "FR and EN page records both exist, but semantic parity requires editorial review."
-                if languages == ["en", "fr"]
-                else "Expected bilingual counterparts need an explicit reviewed pairing rule."
-            ),
-        )
-
         dimensions = {
             "definition": definition_cell,
             "teaching_pages": teaching_cell,
@@ -211,7 +252,7 @@ def build_concept_coverage(index: ProjectIndex) -> dict[str, Any]:
                 UNREGISTERED_DIMENSIONS["practice"],
             ),
             "revision_support": _revision_coverage(index, page_ids),
-            "bilingual_parity": bilingual_cell,
+            "bilingual_parity": _bilingual_coverage(index.pages_by_id, bilingual_topics, pages),
         }
         rows.append(
             {

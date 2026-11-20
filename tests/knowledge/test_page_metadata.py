@@ -42,6 +42,16 @@ def test_accepts_a_finite_suggested_route_chain() -> None:
     assert not errors
 
 
+def test_rejects_multiple_pages_in_one_language_for_a_topic() -> None:
+    pages = {
+        page_id: {"tags": {"topic": "text", "language": page_id.split("/")[0]}}
+        for page_id in ("en/text", "fr/texte", "fr/second-texte")
+    }
+    errors: list[str] = []
+    MODULE["_validate_bilingual_parity"](pages, errors)
+    assert errors == ["topic 'text': more than one fr page"]
+
+
 def test_flags_published_source_missing_from_quarto_render_list(tmp_path: Path) -> None:
     page = tmp_path / "fr" / "new-topic.qmd"
     page.parent.mkdir()
