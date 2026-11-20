@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/vraisemblance"]
+related: ["fr/vraisemblance", "fr/generation"]
 tags: ["type:exercise-hub", "destination:practice", "topic:vraisemblance-exercises", "level:applied", "language:fr", "status:published"]
 -->
 
@@ -57,6 +57,29 @@ Pour voir comment la vraisemblance devient une fonction de perte, lire [Entropie
 </details>
 
 **Lien complémentaire vers l'objectif agrégé :** [Loss](../loss.qmd).
+
+### Générer ou scorer à partir du même préfixe {#ex-generation-versus-scoring}
+
+Le modèle reste fixe. On part du préfixe $c$ et on compare deux opérations sur deux tokens. La génération utilise le décodage glouton. La continuation observée à scorer est $(A,C)$. Le tableau donne les probabilités prédites par le modèle.
+
+| Préfixe | $A$ | $B$ | $C$ |
+|---|---:|---:|---:|
+| $c$ | 0,30 | 0,60 | 0,10 |
+| $cA$ | 0,05 | 0,05 | 0,90 |
+| $cB$ | 0,40 | 0,35 | 0,25 |
+
+1. Quels tokens le décodage glouton génère-t-il ? Quel préfixe utilise-t-il pour le second token ?
+2. Quel préfixe sert à scorer le second token observé $C$ ? Calculez la vraisemblance de $(A,C)$ conditionnellement à $c$.
+3. Calculez aussi la vraisemblance de la suite générée sous le modèle. La suite gloutonne maximise-t-elle la vraisemblance sur deux tokens dans cet exemple ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+1. Le décodage sélectionne $B$ sous $c$, puis $A$ sous $cB$. La suite générée est $(B,A)$.
+2. Le scoring suit la continuation observée. Pour le second token, il utilise $cA$. La vraisemblance vaut $p(A\mid c)\,p(C\mid cA)=0{,}30\times0{,}90=0{,}27$.
+3. La suite générée a une vraisemblance de $p(B\mid c)\,p(A\mid cB)=0{,}60\times0{,}40=0{,}24$, inférieure à $0{,}27$. Le décodage glouton maximise chaque probabilité conditionnelle sur le chemin qu’il suit. Le choix de $B$ au premier pas l’engage sur un autre chemin.
+
+</details>
 
 ::: {.language-switch}
 **Langue :** [Français](vraisemblance.qmd) · [English](../../en/exercises/likelihood.qmd)

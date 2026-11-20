@@ -111,7 +111,7 @@ Un prompt contient les identifiants de tokens $(A,B,C)$. On suppose un Transform
 <details>
 <summary>Afficher le corrigé</summary>
 
-Le prefill traite les trois positions du prompt en un passage séquentiel et remplit le cache KV. Les logits de la dernière position du prompt (celle de $C$) définissent la distribution à partir de laquelle $D$ est sélectionné. L'étape de decode suivante fournit $D$ comme nouveau token et réutilise les clés et valeurs en cache pour prédire $E$. Le prompt est fourni comme contexte d'inférence, mais le prefill n'est pas du teacher forcing : il calcule la première distribution du prochain token sans utiliser une continuation de référence comme entrée suivante ni calculer de loss d'entraînement. $D$ est sélectionné par le modèle, puis devient le token de contexte suivant. En teacher forcing, les prédictions successives sont conditionnées par les préfixes de la séquence de référence. Les paramètres restent fixes pendant le prefill et le decode.
+Le prefill traite les trois positions du prompt en une seule passe avant et remplit le cache KV. Les logits à la position de $C$ donnent la première distribution, dans laquelle la règle de décodage sélectionne $D$. Le pas de decode reçoit $D$ et réutilise les clés et valeurs en cache pour calculer la distribution suivante, à partir de laquelle $E$ peut être choisi. Les paramètres restent fixes. En teacher forcing, chaque prédiction est conditionnée par le préfixe observé, y compris quand on score une continuation à paramètres fixes. [Comparez les deux calculs à partir du même préfixe](exercises/vraisemblance.qmd#ex-generation-versus-scoring).
 
 </details>
 

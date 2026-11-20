@@ -111,7 +111,7 @@ A prompt contains the token IDs $(A,B,C)$. Assume a causal Transformer with KV c
 <details>
 <summary>Show the solution</summary>
 
-Prefill processes the three prompt positions in one sequence pass and populates the KV cache. The logits at the final prompt position (the position of $C$) define the distribution from which $D$ is selected. The next decode step supplies $D$ as the new token and reuses the cached keys and values to predict $E$. The prompt is supplied as inference context, but prefill is not teacher forcing: it computes the first next-token distribution without using a reference continuation as the next input or computing a training loss. $D$ is selected by the model and then becomes the next context token. In teacher forcing, successive predictions are conditioned on reference-sequence prefixes. Parameters remain fixed during both prefill and decode.
+Prefill processes the three prompt positions in one forward pass and populates the KV cache. The logits at the position of $C$ give the first distribution, from which the decoding rule selects $D$. The decode step receives $D$ and reuses cached keys and values to compute the next distribution, from which $E$ can be selected. The parameters stay fixed. Under teacher forcing, each prediction is conditioned on the observed prefix, including when scoring a continuation with fixed parameters. [Compare both computations starting from the same prefix](exercises/likelihood.qmd#ex-generation-versus-scoring).
 
 </details>
 

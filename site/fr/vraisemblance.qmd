@@ -128,7 +128,7 @@ La log-vraisemblance vaut $\log(0{,}24)\approx-1{,}427$ et la négative log-vrai
 
 ### Exercices
 
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/vraisemblance.qmd).
+[Comparez le préfixe utilisé pour générer et pour scorer](exercises/vraisemblance.qmd#ex-generation-versus-scoring) ou parcourez les [autres exercices](exercises/vraisemblance.qmd).
 
 
 ### Pour approfondir
