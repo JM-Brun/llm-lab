@@ -166,12 +166,15 @@ Ces schémas sont des **reconstructions pédagogiques originales** fondées sur 
 **Langue :** [Français](scaled-dot-product-attention.qmd) · [English](../en/scaled-dot-product-attention.qmd)
 :::
 
+:::: {.supplementary-resources}
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Ressources complémentaires</span>
   <span class="learning-resources__description">Expérimenter, approfondir et s'exercer sur les notions de cette leçon.</span>
 </summary>
-<div class="learning-resources__content" markdown="1">
+
+::: {.learning-resources__content}
 
 ### Exercices
 
@@ -190,8 +193,11 @@ Cette page appartient au parcours conceptuel **Théorie / Understand** : elle ex
 La définition mathématique de l'attention ne dicte pas à elle seule la manière dont le GPU exécute le calcul. [FlashAttention](https://arxiv.org/abs/2205.14135) conserve l'attention dense exacte tout en découpant le calcul en blocs et en réduisant les échanges entre mémoire GPU et mémoire rapide sur puce. Il ne faut pas le confondre avec l'attention sparse, qui modifie les positions autorisées. Pour comprendre le mécanisme, ses compromis et les limites des mesures, consultez [la revue pédagogique de FlashAttention](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-reviews/flashattention-io-aware-2026-11.md), puis la [documentation PyTorch SDPA](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html) et [le protocole de benchmark reproductible](https://github.com/JM-Brun/llm-lab/blob/main/docs/experiments/flashattention-benchmark-protocol.md). Cette optimisation matérielle est un approfondissement, pas une étape supplémentaire du parcours conceptuel.
 
 
-</div>
+:::
+
 </details>
+
+::::
 
 L'analogie entre attention et dépendance statistique peut aider à poser une question, mais **un poids d'attention n'est pas une information mutuelle**. Une carte d'attention ne suffit pas non plus à établir une explication causale ou sémantique.
 Les poids d'attention ne calculent pas cette quantité. Ce sont des coefficients normalisés, dépendant de l'entrée, obtenus à partir des requêtes, des clés et du masque ; ils pondèrent l'agrégation des vecteurs de valeur. Ils ne mesurent donc pas directement, en bits, l'information qu'un token apporte à un autre.
