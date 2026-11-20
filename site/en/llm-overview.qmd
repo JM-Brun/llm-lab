@@ -163,6 +163,8 @@ An information-theoretic perspective sometimes connects this prediction to **pre
 
 Depending on the task, one can use a general model as is, supply context and external documents, adapt parameters, or have the application call tools. These approaches can be combined. The choice depends on measured quality, robustness, information freshness, cost, latency, privacy, provenance, and maintenance. A few successful prompts are not an evaluation ([post-training](post-training.qmd), [RAG and memory](rag-memory-boundaries.qmd)).
 
+[Compare the roles of context and model parameters in the review plan](review-path.qmd#compare-prediction-uses).
+
 ## From a model to a conversational system {#model-to-conversational-system}
 
 A conversational assistant is a **system built around a model**. The application formats messages, manages context, and coordinates tools. System, user, and assistant are message roles, not Transformer layers. A model-generated tool request has not run: the application validates it, calls the tool, and returns the result. Persistent memory also belongs to the application ([LLM evolution](llm-evolution.qmd#tool-using-systems), [Build](build-path.qmd)).

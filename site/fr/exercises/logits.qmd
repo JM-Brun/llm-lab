@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/logits", "fr/transformer"]
+related: ["fr/logits", "fr/transformer", "fr/scaled-dot-product-attention"]
 tags: ["type:exercise-hub", "destination:practice", "topic:logits-exercises", "level:applied", "language:fr", "status:published"]
 -->
 
@@ -76,6 +76,26 @@ Un GPT causal jouet reçoit le préfixe $(A,B)$, sans padding. Les états finaux
 1. La matrice des logits est de forme $(2,3)$, avec les positions en lignes et les candidats du vocabulaire en colonnes. Les lignes sont $(\ln 2,0,0)$ et $(0,\ln 3,0)$.
 2. La softmax normalise l’axe du vocabulaire indépendamment pour chaque position. Les distributions obtenues sont $(1/2,1/4,1/4)$ et $(1/5,3/5,1/5)$, de somme $1$ chacune.
 3. La première ligne donne $P(\cdot\mid A)$. Elle attribue une probabilité de $1/4$ au token observé $B$. La seconde donne $P(\cdot\mid A,B)$. C’est cette distribution que le décodage utilise pour prolonger le préfixe complet.
+
+</details>
+
+## Deux softmax, deux axes {#ex-attention-vocabulary-softmax}
+
+Un GPT jouet a pour vocabulaire $(A,B,C)$ et reçoit le préfixe $(A,B,A)$. Pour la requête à la dernière position d’une tête d’attention causale, les scores déjà mis à l’échelle valent $(\ln 2,0,0)$ dans l’ordre des positions. Les trois clés sont accessibles. Après les blocs et la tête de sortie, les logits à cette même position valent $(0,\ln 2,0)$ dans l’ordre du vocabulaire.
+
+1. Calculez le softmax des scores d’attention. Que désignent ses composantes et à quoi servent-elles ?
+2. Calculez le softmax des logits du vocabulaire. Quelle probabilité obtient-on pour le prochain token $A$ ?
+3. Additionnez les poids des deux positions qui portent $A$. Que mesure ce total ?
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+| Calcul | Axe normalisé | Résultat |
+|---|---|---|
+| Softmax d’attention | Positions des clés $1,2,3$ | $(1/2,1/4,1/4)$, les coefficients qui pondèrent les trois vecteurs valeurs. |
+| Softmax de sortie | Tokens du vocabulaire $A,B,C$ | $(1/4,1/2,1/4)$, les probabilités des trois prochains tokens possibles. |
+
+Les deux positions occupées par $A$ reçoivent ensemble $3/4$ du poids de cette ligne d’attention. Ce total décrit le poids attribué à ces positions dans la somme pondérée, où chacune a son propre vecteur valeur. La distribution prédite par le softmax de sortie attribue $1/4$ à $A$.
 
 </details>
 

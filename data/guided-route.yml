@@ -489,6 +489,46 @@ lesson_contracts:
 # Stage, concept, and page IDs reference the existing registries. Each criterion
 # records an editorial judgment; the test verifies the referenced evidence exists.
 boundaries:
+  token-ids-and-embedding-lookup:
+    criterion: >-
+      The vocabulary assigns token IDs and the embedding lookup uses them as row
+      indices. At a fixed table, repeated IDs give identical lookup vectors in their
+      original positions. For a fixed segmentation, permuting vocabulary IDs and
+      applying the same permutation to the table rows preserves the lookup output.
+    explanations:
+      text-input:
+        concept_ids: [token]
+        pages: {fr: fr/text-data, en: en/text-data}
+      representations:
+        concept_ids: [token-embedding]
+        pages: {fr: fr/embedding-space, en: en/embedding-space}
+    transfer:
+      pages: {fr: fr/text-data-exercises, en: en/text-data-exercises}
+      anchor: ex-text-to-embedding-lookup
+      label:
+        fr: "Suivre les identifiants jusqu’aux lignes de la table de plongements"
+        en: "Trace token IDs to their embedding rows"
+
+  positional-input-and-contextualization:
+    criterion: >-
+      In a model with additive positional embeddings, two occurrences of the
+      same token can enter the first block with different vectors because their
+      positional terms differ. Causal self-attention then combines information
+      from accessible positions to contextualize those inputs.
+    explanations:
+      representations:
+        concept_ids: [token-embedding, positional-encoding]
+        pages: {fr: fr/positional-encoding, en: en/positional-encoding}
+      computation:
+        concept_ids: [self-attention]
+        pages: {fr: fr/transformer, en: en/transformer}
+    transfer:
+      pages: {fr: fr/text-data-exercises, en: en/text-data-exercises}
+      anchor: ex-token-to-block-input
+      label:
+        fr: "Séparer l’ajout positionnel de la contextualisation"
+        en: "Separate positional addition from contextualization"
+
   contextualization-and-causality:
     criterion: >-
       At a fixed token ID and position, the base embedding stays the same.
@@ -529,6 +569,27 @@ boundaries:
       label:
         fr: "Calculer les probabilités et repérer la ligne du prochain token"
         en: "Compute the probabilities and find the next-token row"
+
+  attention-positions-and-vocabulary:
+    criterion: >-
+      For a fixed query, attention softmax normalizes scores over key positions
+      and its weights combine the value vectors. Output softmax normalizes the
+      logits over the vocabulary. Even if the two axes have the same length,
+      adding attention weights at positions with the same token does not give
+      its probability as a next token.
+    explanations:
+      computation:
+        concept_ids: [attention-score, attention-weight]
+        pages: {fr: fr/scaled-dot-product-attention, en: en/scaled-dot-product-attention}
+      prediction:
+        concept_ids: [softmax, conditional-distribution]
+        pages: {fr: fr/probabilites, en: en/probabilities}
+    transfer:
+      pages: {fr: fr/logits-exercises, en: en/logits-exercises}
+      anchor: ex-attention-vocabulary-softmax
+      label:
+        fr: "Distinguer les poids d’attention des probabilités du prochain token"
+        en: "Distinguish attention weights from next-token probabilities"
 
   predictive-distribution-and-selection:
     criterion: >-

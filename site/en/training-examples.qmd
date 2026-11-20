@@ -28,7 +28,7 @@ tags: ["type:concept-bridge", "destination:build", "topic:training-examples", "l
 -->
 
 ::: {.callout-note}
-**This page belongs to the Build path (training-example preparation, G2)**, not to the eight stages of the Theory / Understand path. Consult it independently when studying target construction and teacher forcing. [Return to the Build path](build-path.qmd).
+**This page belongs to the Build path (training-example preparation, G2).** Consult it directly to study target construction and teacher forcing. [Return to the Build path](build-path.qmd).
 :::
 
 ::: {.chapter-lead}

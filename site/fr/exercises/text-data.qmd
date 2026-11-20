@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/text-data"]
+related: ["fr/text-data", "fr/embedding-space"]
 tags: ["type:exercise-hub", "destination:practice", "topic:text-data-exercises", "level:applied", "language:fr", "status:published"]
 -->
 
@@ -55,17 +55,37 @@ La traduction qui consomme davantage de tokens utilise une plus grande part du b
 
 </details>
 
-4. **Reconstituer la chaîne d'entrée.** On fournit au tokenizer le texte « chat suit le chat ». Il renvoie les tokens [« chat », « suit », « le », « chat »], puis le vocabulaire associe les IDs [17, 42, 8, 17]. La matrice d'embeddings $E$ a la forme $(V,d)$. Décrivez, dans l'ordre, les objets obtenus entre le texte et l'entrée vectorielle du Transformer. Quelle est la forme de la séquence d'IDs, quelle ligne de $E$ est lue pour le dernier token, et que peut-on affirmer des deux occurrences de « chat » ?
+## Du texte aux lignes de la table de plongements {#ex-text-to-embedding-lookup}
+
+Un tokenizer jouet segmente « chat suit le chat » en [« chat », « suit », « le », « chat »]. Son vocabulaire associe à ces tokens les identifiants [17, 42, 8, 17]. La table de plongements $E$ a la forme $(V,d)$ et ses lignes sont numérotées à partir de zéro.
+
+1. Décrivez les objets obtenus du texte jusqu’au lookup des vecteurs. Quelles sont les formes de la séquence d’identifiants et du tableau de vecteurs ?
+2. Donnez l’ordre des lignes de $E$ lues et comparez les vecteurs des deux occurrences de « chat » à la sortie du lookup.
+3. Le vocabulaire échange les identifiants 17 et 42 et conserve la même segmentation. Quelles lignes sont lues si $E$ reste telle quelle ? Quel changement dans $E$ rétablit la séquence originale de vecteurs ?
 
 <details>
 <summary>Afficher le raisonnement</summary>
 
-Le texte est d'abord segmenté par le tokenizer en tokens ; le vocabulaire associe ensuite à chaque token son ID, ici la séquence $(17,42,8,17)$ de forme $(L)=(4)$. Chaque ID sert d'indice de ligne dans $E$ : le dernier token sélectionne la ligne 17. Le lookup produit donc une séquence de quatre vecteurs, de forme $(L,d)=(4,d)$. Les deux occurrences de « chat » ont le même ID et sélectionnent le même vecteur initial. Cela ne signifie ni que l'ID 17 mesure le sens du token, ni que les états contextualisés des deux occurrences resteront identiques après les couches du Transformer.
-
-**Critère de réussite :** restituer l'ordre texte → tokens → IDs → lookup, donner les formes $(4)$ puis $(4,d)$, et distinguer le vecteur initial de l'état contextualisé.
+1. Le tokenizer segmente le texte en tokens, puis le vocabulaire donne leurs identifiants. Le tableau d’identifiants est de forme $(4,)$ et le lookup produit un tableau de forme $(4,d)$.
+2. Le lookup lit les lignes 17, 42, 8 et 17 de $E$, dans cet ordre. Les deux occurrences de « chat » sélectionnent le même vecteur initial. L’identifiant sert d’indice de ligne. Les états contextualisés peuvent ensuite différer selon le contexte accessible à chaque position.
+3. Avec le vocabulaire renuméroté et la table originale, les lignes lues sont 42, 17, 8 et 42. Échanger aussi les lignes 17 et 42 de la table rétablit les vecteurs originaux à chacune des quatre positions. Le vocabulaire et la table doivent employer la même convention d’indexation.
 
 </details>
 
+## Du plongement à l’entrée du premier bloc {#ex-token-to-block-input}
+
+Reprenez la séquence d’IDs originale $(17,42,8,17)$. Fixez $d=2$ et $E[17]=(2,-1)$ dans un GPT qui ajoute un vecteur de position avant le premier bloc. Les deux occurrences de « chat » occupent les positions $0$ et $3$, avec $P[0]=(0,1)$ et $P[3]=(1,0)$.
+
+1. Calculez les deux entrées du premier bloc pour « chat ». Quelle opération crée leur différence ?
+2. **Après la leçon sur le Transformer.** Quelle opération permet ensuite à chaque état de dépendre des autres tokens de son préfixe ?
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+1. Les deux occurrences lisent le même plongement, $E[17]$. Les entrées valent $E[17]+P[0]=(2,0)$ et $E[17]+P[3]=(3,-1)$. La différence vient du terme positionnel.
+2. L’auto-attention causale combine des informations des positions accessibles. Elle permet de contextualiser ces deux états à partir de leurs préfixes respectifs.
+
+</details>
 
 ::: {.language-switch}
 **Langue :** [Français](text-data.qmd) · [English](../../en/exercises/text-data.qmd)
