@@ -18,6 +18,8 @@ The generator resolves every core and optional page ID against published page me
 
 The bilingual review plan ([FR](../site/fr/review-path.qmd), [EN](../site/en/review-path.qmd)) starts each stage with a question and result in plain language. The stage’s `overview` in `guided-route.yml` pairs those with a shared TeX signature and a localized statement of its main property or assumption. The plan puts the technical details and the stage objective in a disclosure above the lesson contracts.
 
+The `boundaries` entries in the same registry connect a distinction taught across stages to one existing exercise. They reference the core explanation pages, concept IDs, and a shared exercise anchor with a localized label. The review plan shows that exercise in each associated stage. Add a boundary when an exercise asks the reader to apply the distinction to a concrete case.
+
 The practical GPT construction route remains the separate [Build path](../site/fr/build-path.qmd) / [EN](../site/en/build-path.qmd). In particular, G1b corpus preparation and G2 training-example construction form a branch for training, not a prerequisite for understanding or demonstrating inference.
 
 
