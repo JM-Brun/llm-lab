@@ -40,6 +40,23 @@ You have understood this step if you can distinguish **the identity of the initi
 
 
 
+## Which change can reach the current state? {#ex-contextualization-causal-boundary}
+
+In a causal GPT with fixed parameters, consider three sequences of token IDs: `[A, X, U]`, `[B, X, U]`, and `[A, X, V]`. Inspect the second position, occupied by `X`, in all three sequences. Position indices match and the forward pass is deterministic.
+
+1. Which sequences give the same base embedding vector at `X`?
+2. In which comparison can a block change the hidden state of `X`? Which operation allows this?
+3. In which comparison must the state of `X` stay the same at every layer? What enforces that property?
+
+<details>
+<summary>Show the worked answer</summary>
+
+1. All three. The same ID selects the same row of the embedding table. The position of `X` is fixed as well.
+2. Between `[A, X, U]` and `[B, X, U]`, self-attention can pass the effect of changing `A` to `B` on to `X`. A difference is possible and depends on the learned weights.
+3. Between `[A, X, U]` and `[A, X, V]`, the [causal mask](../causal-masking.qmd) prevents `X` from using the third position. The accessible prefix stays the same at every layer, so the state at `X` does too, up to numerical tolerance.
+
+</details>
+
 ## Guided investigation — an SAE feature in Neuronpedia
 
 [Open the Gemma Scope example](https://www.neuronpedia.org/gemma-2-2b/20-gemmascope-res-16k/10956) · [Feature dashboard documentation](https://docs.neuronpedia.org/sparse-autoencoders/feature-dashboards).

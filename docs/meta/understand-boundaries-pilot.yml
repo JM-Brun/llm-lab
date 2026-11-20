@@ -1,0 +1,38 @@
+# Source review of two boundaries in the Understand route (2026-11-20).
+# Stage, concept, and page IDs reference the existing registries. Each criterion
+# records an editorial judgment; the test verifies the referenced evidence exists.
+schema_version: 1
+boundaries:
+  contextualization-and-causality:
+    criterion: >-
+      At a fixed token ID and position, the base embedding stays the same.
+      A change in the accessible prefix can affect hidden states; a change
+      exclusively in the future cannot affect the current state in a causal GPT.
+    explanations:
+      representations:
+        concept_ids: [token-embedding, contextualized-representation]
+        pages: {fr: fr/contextualized-representations, en: en/contextualized-representations}
+      computation:
+        concept_ids: [causal-mask]
+        pages: {fr: fr/causal-masking, en: en/causal-masking}
+    transfer:
+      pages:
+        fr: fr/contextualized-representations-exercises
+        en: en/contextualized-representations-exercises
+      anchor: ex-contextualization-causal-boundary
+
+  predictive-entropy-and-observed-score:
+    criterion: >-
+      The entropy of a predictive distribution uses every outcome. The score
+      of an observed token uses one probability. Equal observed scores can
+      therefore coexist with different entropies at the same prediction step.
+    explanations:
+      prediction:
+        concept_ids: [entropy]
+        pages: {fr: fr/entropy, en: en/entropy}
+      scoring:
+        concept_ids: [observed-target, sequence-likelihood, log-likelihood]
+        pages: {fr: fr/vraisemblance, en: en/likelihood}
+    transfer:
+      pages: {fr: fr/entropy-exercises, en: en/entropy-exercises}
+      anchor: ex-entropy-and-observed-score
