@@ -42,6 +42,18 @@ def test_conceptual_route_follows_core_visits_and_links_to_lessons_and_graph(
         ("scoring", fixed),
         ("training", updated),
     ]
+    anchor = "compare-prediction-uses"
+    plan = artifacts[SITE / "includes" / f"generated-lesson-contracts-{language}.qmd"]
+    comparison = plan.split(f"{{#{anchor} .unlisted}}", 1)[1].split("\n## ", 1)[0].strip()
+    map_table = uses.split("</summary>", 1)[1].split("</details>", 1)[0].strip()
+    assert comparison == map_table.replace("](#guided-stage-", "](#")
+    for stage_id, _ in rows:
+        assert f"{{#{stage_id}}}" in plan
+
+    overview_page = (SITE / language / "llm-overview.qmd").read_text(encoding="utf-8")
+    choosing = overview_page.split("{#choosing-an-approach}", 1)[1].split("\n## ", 1)[0]
+    assert f"](review-path.qmd#{anchor})" in choosing
+
     start = details.index(f" ({preview}) ·")
     end = details.index(f" ({revisit}) ·")
     assert start < details.index("](text-data.html)") < end
