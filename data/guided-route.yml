@@ -489,25 +489,45 @@ lesson_contracts:
 # Stage, concept, and page IDs reference the existing registries. Each criterion
 # records an editorial judgment; the test verifies the referenced evidence exists.
 boundaries:
-  token-id-and-positional-input:
+  token-ids-and-embedding-lookup:
     criterion: >-
-      Within one tokenizer and with a fixed token embedding table, repeated IDs
-      select the same token vector. In a model with additive positional
-      embeddings, each occurrence gets the vector for its own position before the
-      first block. The resulting inputs can already differ before contextualization.
+      The vocabulary assigns token IDs and the embedding lookup uses them as row
+      indices. At a fixed table, repeated IDs give identical lookup vectors in their
+      original positions. For a fixed segmentation, permuting vocabulary IDs and
+      applying the same permutation to the table rows preserves the lookup output.
     explanations:
       text-input:
         concept_ids: [token]
         pages: {fr: fr/text-data, en: en/text-data}
       representations:
+        concept_ids: [token-embedding]
+        pages: {fr: fr/embedding-space, en: en/embedding-space}
+    transfer:
+      pages: {fr: fr/text-data-exercises, en: en/text-data-exercises}
+      anchor: ex-text-to-embedding-lookup
+      label:
+        fr: "Suivre les identifiants jusqu’aux lignes de la table de plongements"
+        en: "Trace token IDs to their embedding rows"
+
+  positional-input-and-contextualization:
+    criterion: >-
+      In a model with additive positional embeddings, two occurrences of the
+      same token can enter the first block with different vectors because their
+      positional terms differ. Causal self-attention then combines information
+      from accessible positions to contextualize those inputs.
+    explanations:
+      representations:
         concept_ids: [token-embedding, positional-encoding]
         pages: {fr: fr/positional-encoding, en: en/positional-encoding}
+      computation:
+        concept_ids: [self-attention]
+        pages: {fr: fr/transformer, en: en/transformer}
     transfer:
       pages: {fr: fr/text-data-exercises, en: en/text-data-exercises}
       anchor: ex-token-to-block-input
       label:
-        fr: "Calculer l’entrée du premier bloc pour deux occurrences d’un token"
-        en: "Compute the first-block input for two occurrences of a token"
+        fr: "Séparer l’ajout positionnel de la contextualisation"
+        en: "Separate positional addition from contextualization"
 
   contextualization-and-causality:
     criterion: >-
