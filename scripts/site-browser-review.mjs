@@ -1348,6 +1348,16 @@ async function runCase(testCase, caseIndex) {
       item.axe = { skipped: true, reason: "Axe runs once per page/language on desktop/light" };
     }
 
+    if (pagePath === "generation.html") {
+      const trace = page.locator("[data-generation-trace]");
+      if (await trace.getByRole("listitem").count() !== 3) {
+        report.failures.push(`${lang}/${label}: the worked trace must expose three ordered turns.`);
+      }
+      if (await trace.evaluate(node => node.scrollWidth > node.clientWidth + 1)) {
+        report.failures.push(`${lang}/${label}: the worked generation trace overflows its container.`);
+      }
+    }
+
     if (kind === "spine-overview") {
       if (pageErrors.length) {
         report.failures.push(pagePath + "/" + lang + "/" + label + "/" + theme + ": uncaught page errors: " + pageErrors.map(error => error.message).join(" | "));
@@ -1370,10 +1380,13 @@ async function runCase(testCase, caseIndex) {
         if (!response.ok()) throw new Error("the worked trace could not be loaded");
         const turns = await page.evaluate(({ html, anchor }) => {
           const lesson = new DOMParser().parseFromString(html, "text/html");
-          return [...lesson.querySelectorAll(`#${anchor} table tbody tr`)].map(row => {
-            const [, prefix, distribution, chosen] = row.cells;
+          return [...lesson.querySelectorAll(`#${anchor} [data-generation-trace] > li`)].map(turn => {
+            const prefix = turn.querySelector("[data-generation-prefix]");
+            const distribution = turn.querySelector("[data-generation-distribution]");
+            const chosen = turn.querySelector("[data-generation-choice]");
             return {
               prefix: prefix.textContent.trim(),
+              appended: prefix.querySelector("mark")?.textContent.trim() ?? null,
               distribution: [...distribution.textContent.matchAll(/[«“]\s*([^»”]+?)\s*[»”]\s+(\d[,.]\d)/g)]
                 .map(([, token, probability]) => [token, probability]),
               chosen: chosen.textContent.trim().slice(1, -1).trim(),
@@ -1381,6 +1394,9 @@ async function runCase(testCase, caseIndex) {
           });
         }, { html: await response.text(), anchor: fallbackHref.hash.slice(1) });
         if (turns.length !== 3) throw new Error("the generation lesson should provide three worked turns");
+        if (turns.some((turn, index) => turn.appended !== (turns[index - 1]?.chosen ?? null))) {
+          throw new Error("each worked turn must highlight the token selected on the previous turn");
+        }
 
         const currentPrefix = () => prefix.evaluate(node =>
           node.querySelector(".next-token-explorer__prefix").textContent +

@@ -67,7 +67,7 @@ For the prefix “What have the Romans ever done for us?”, take a toy vocabula
 :::
 
 
-The illustrative continuation takes “They”. Once this token is appended to the prefix, the [next generation step](generation.qmd) uses a new distribution.
+The illustrative continuation takes “They”. Once this token is appended to the prefix, the [next generation step](generation.qmd#the-loop-on-an-example) uses a new distribution.
 
 ## Conditional probability in an autoregressive model
 

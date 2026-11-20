@@ -67,7 +67,7 @@ Pour le préfixe « C'est une bonne situation, ça, scribe ? », prenons un voca
 :::
 
 
-La continuation illustrative prend « Vous ». Une fois ce token ajouté au préfixe, le [tour suivant de la génération](generation.qmd) utilise une nouvelle distribution.
+La continuation illustrative prend « Vous ». Une fois ce token ajouté au préfixe, le [tour suivant de la génération](generation.qmd#la-boucle-sur-un-exemple) utilise une nouvelle distribution.
 
 ## Probabilité conditionnelle dans un modèle autorégressif
 

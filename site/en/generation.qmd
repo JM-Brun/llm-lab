@@ -46,7 +46,7 @@ By repeating four moves: predict, select, feed back, then continue or stop. This
 - **The chosen token becomes context.** It is appended to the text, and the model recomputes a distribution for the next position.
 - **Nothing is learned along the way.** The parameters are the same at the first token and at the last.
 
-**First reading:** the section “The loop on an example” is enough to continue the path. The notation, *prefill*, *decode*, and the selection rules read better on the way back, once you have seen [output probabilities](probabilities.qmd).
+**First reading:** the section [“The loop on an example”](#the-loop-on-an-example) is enough to continue the path. The notation, *prefill*, *decode*, and the selection rules read better on the way back, once you have seen [output probabilities](probabilities.qmd).
 :::
 
 <div class="pipeline-stepper" role="group" aria-label="Autoregressive generation loop">
@@ -78,13 +78,33 @@ By repeating four moves: predict, select, feed back, then continue or stop. This
 
 Let us follow three turns of the loop. The probabilities are made up, as in the overview, and the decoding rule is the simplest one: take the most probable token.
 
-| Turn | Context | Computed distribution (excerpt) | Chosen token |
-|---|---|---|---|
-| 1 | What have the Romans ever done for us? | “They” 0.6 · “Aqueducts” 0.2 · “Nothing” 0.1 · “Well” 0.1 | “They” |
-| 2 | What have the Romans ever done for us? They | “built” 0.5 · “gave” 0.3 · “made” 0.2 | “built” |
-| 3 | What have the Romans ever done for us? They built | “roads” 0.8 · “bridges” 0.1 · “walls” 0.1 | “roads” |
+```{=html}
+<ol class="list-group list-group-numbered mb-3" data-generation-trace role="list">
+  <li class="list-group-item d-flex gap-2">
+    <div>
+      <p class="mb-1"><strong>Context</strong> <span data-generation-prefix>What have the Romans ever done for us?</span></p>
+      <p class="mb-1"><strong>Distribution (excerpt)</strong> <span data-generation-distribution>“They” 0.6 · “Aqueducts” 0.2 · “Nothing” 0.1 · “Well” 0.1</span></p>
+      <p class="mb-0"><strong>Chosen token</strong> <span data-generation-choice>“They”</span></p>
+    </div>
+  </li>
+  <li class="list-group-item d-flex gap-2">
+    <div>
+      <p class="mb-1"><strong>Context</strong> <span data-generation-prefix>What have the Romans ever done for us? <mark class="next-token-explorer__added">They</mark></span></p>
+      <p class="mb-1"><strong>Distribution (excerpt)</strong> <span data-generation-distribution>“built” 0.5 · “gave” 0.3 · “made” 0.2</span></p>
+      <p class="mb-0"><strong>Chosen token</strong> <span data-generation-choice>“built”</span></p>
+    </div>
+  </li>
+  <li class="list-group-item d-flex gap-2">
+    <div>
+      <p class="mb-1"><strong>Context</strong> <span data-generation-prefix>What have the Romans ever done for us? They <mark class="next-token-explorer__added">built</mark></span></p>
+      <p class="mb-1"><strong>Distribution (excerpt)</strong> <span data-generation-distribution>“roads” 0.8 · “bridges” 0.1 · “walls” 0.1</span></p>
+      <p class="mb-0"><strong>Chosen token</strong> <span data-generation-choice>“roads”</span></p>
+    </div>
+  </li>
+</ol>
+```
 
-Each row chains the same moves.
+Each turn repeats the same moves.
 
 1. **Predict.** The model reads the whole context and computes a distribution over the next token.
 2. **Select.** The decoding rule keeps one.
