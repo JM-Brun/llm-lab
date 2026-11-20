@@ -63,6 +63,31 @@ def test_core_contracts_expose_objectives_and_link_bilingual_syntheses(
     assert memberships["fr"] == memberships["en"]
 
 
+@pytest.mark.parametrize("language", ["fr", "en"])
+def test_review_plan_opens_with_plain_language_and_keeps_math_in_details(
+    route_inputs, language: str
+) -> None:
+    document, inputs = route_inputs
+    stages, pages = inputs[language]
+    contracts = resolve_lesson_contracts(document, stages, pages)
+    plan = render_lesson_contracts(stages, contracts, language)
+    assert plan.count("<details>") == len(document.stages)
+
+    for stage in document.stages:
+        assert stage.overview is not None, stage.id
+        overview = stage.overview
+        section = plan.split(f"{{#{stage.id}}}", 1)[1].split("\n## ", 1)[0]
+        introduction, disclosure = section.split("<details>", 1)
+        formal, lessons = disclosure.split("</details>", 1)
+        assert getattr(overview.question, language) in introduction
+        assert getattr(overview.result, language) in introduction
+        assert "$$" not in introduction
+        assert f"$$\n{overview.signature}\n$$" in formal
+        assert getattr(overview.criterion, language) in formal
+        assert getattr(stage.objective, language) in formal
+        assert "\n### " in lessons
+
+
 @pytest.mark.parametrize("prerequisite", ["next-concept-modeling", "gradients", "text-data"])
 def test_optional_future_and_self_dependencies_are_rejected(route_inputs, prerequisite) -> None:
     document, inputs = route_inputs

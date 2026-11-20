@@ -111,12 +111,22 @@ class OptionalLocalizedPageIds(StrictModel):
         return value
 
 
+class StageOverview(StrictModel):
+    """A plain-language question and answer with a formal reading of the same stage."""
+
+    question: LocalizedCopy
+    result: LocalizedCopy
+    signature: str = Field(min_length=1)
+    criterion: LocalizedCopy
+
+
 class GuidedRouteStage(StrictModel):
     """One conceptual stage with bilingual copy and page references."""
 
     id: str = Field(pattern=r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
     title: LocalizedCopy
     objective: LocalizedCopy
+    overview: StageOverview | None = None
     pages: LocalizedPageIds
     optional_pages: OptionalLocalizedPageIds = Field(default_factory=OptionalLocalizedPageIds)
 
@@ -172,6 +182,7 @@ class ResolvedGuidedRouteStage(StrictModel):
     id: str
     title: str
     objective: str
+    overview: StageOverview | None = None
     pages: list[ResolvedPage]
     optional_pages: list[ResolvedPage] = Field(default_factory=list)
 
@@ -468,6 +479,7 @@ def load_guided_route(language: str, pages: list[dict[str, Any]]) -> list[Resolv
                 id=stage.id,
                 title=getattr(stage.title, language),
                 objective=getattr(stage.objective, language),
+                overview=stage.overview,
                 pages=resolve_pages(getattr(stage.pages, language), stage.id, "core"),
                 optional_pages=resolve_pages(
                     getattr(stage.optional_pages, language), stage.id, "optional"
@@ -561,14 +573,33 @@ def render_lesson_contracts(
 
     lines: list[str] = []
     for stage in stages:
-        lines.extend(
-            [
-                f"## {escape_markdown_text(stage.title)} {{#{stage.id}}}",
-                "",
-                escape_markdown_text(stage.objective),
-                "",
-            ]
-        )
+        lines.extend([f"## {escape_markdown_text(stage.title)} {{#{stage.id}}}", ""])
+        if overview := stage.overview:
+            question = escape_markdown_text(getattr(overview.question, language))
+            result = escape_markdown_text(getattr(overview.result, language))
+            formal_label = "Écriture formelle" if fr else "Formal view"
+            objective_label = "Objectif de l'étape" if fr else "Stage objective"
+            lines.extend(
+                [
+                    f"**{question}** {result}",
+                    "",
+                    "<details>",
+                    f"<summary>{formal_label}</summary>",
+                    "",
+                    "$$",
+                    overview.signature,
+                    "$$",
+                    "",
+                    getattr(overview.criterion, language),
+                    "",
+                    f"**{objective_label}.** {escape_markdown_text(stage.objective)}",
+                    "",
+                    "</details>",
+                    "",
+                ]
+            )
+        else:
+            lines.extend([escape_markdown_text(stage.objective), ""])
         for lesson in stage.pages:
             contract = contracts[lesson.id]
             lines.extend([f"### {escape_markdown_text(lesson.title)}", ""])
