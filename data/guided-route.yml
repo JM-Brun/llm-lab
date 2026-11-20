@@ -392,11 +392,11 @@ stages:
       gradients:
         mobilizes: ["node:training-objective"]
         objects: ["concept:gradient", "concept:parameter-update"]
-        outcome: {fr: "Relier la pente à la mise à jour", en: "Relate the gradient to the update"}
+        outcome: {fr: "Passer du gradient à la variation des paramètres", en: "Use the gradient to compute the parameter change"}
       training-loop:
         mobilizes: ["concept:parameter-update"]
         objects: ["concept:training-loop"]
-        outcome: {fr: "Répéter et contrôler l’apprentissage", en: "Repeat and monitor training"}
+        outcome: {fr: "Repérer quand les paramètres sont ajustés et quand le modèle est évalué", en: "Identify when parameters are updated and when the model is evaluated"}
     optional_pages:
       fr: [fr/cross-entropy, fr/scaling-laws, fr/post-training, fr/mathematical-foundations, fr/score-centering]
       en: [en/cross-entropy, en/scaling-laws, en/post-training, en/mathematical-foundations, en/score-centering]
@@ -485,7 +485,7 @@ lesson_contracts:
     synthesis: revision-training-loop
     requires: [causal-masking, loss, gradients]
 
-# Source review of two boundaries in the Understand route (2026-11-20).
+# Source review of conceptual boundaries in the Understand route (2026-11-20).
 # Stage, concept, and page IDs reference the existing registries. Each criterion
 # records an editorial judgment; the test verifies the referenced evidence exists.
 boundaries:
@@ -549,3 +549,26 @@ boundaries:
       label:
         fr: "Suivre ce qui passe d’un appel au suivant"
         en: "Trace what carries over to the next call"
+
+  observed-score-and-parameter-update:
+    criterion: >-
+      At one included position with a one-hot target, equal target probabilities give
+      equal cross-entropy losses. The gradient with respect to the logits is the
+      predicted distribution minus the target vector. If only the additive output
+      bias is trainable, different distributions with the same loss can give different
+      bias updates under the same gradient-descent rule. Computing a gradient
+      leaves the bias fixed. After an optimizer step, a new forward pass can assign
+      different target probabilities even when the target bias changed equally.
+    explanations:
+      scoring:
+        concept_ids: [cross-entropy, negative-log-likelihood]
+        pages: {fr: fr/cross-entropy, en: en/cross-entropy}
+      training:
+        concept_ids: [gradient, parameter-update]
+        pages: {fr: fr/gradients, en: en/gradients}
+    transfer:
+      pages: {fr: fr/gradients-exercises, en: en/gradients-exercises}
+      anchor: ex-score-to-parameter-update
+      label:
+        fr: "Calculer deux mises à jour à perte égale"
+        en: "Calculate two updates at equal loss"

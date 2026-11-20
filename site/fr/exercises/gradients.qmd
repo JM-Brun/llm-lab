@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/gradients"]
+related: ["fr/gradients", "fr/cross-entropy"]
 tags: ["type:exercise-hub", "destination:practice", "topic:gradients-exercises", "level:applied", "language:fr", "status:published"]
 -->
 
@@ -52,6 +52,29 @@ Il peut signaler une erreur de dérivation ou d'implémentation, mais aussi un p
 <summary>Afficher la réponse</summary>
 
 Le gradient décrit une variation locale. Un pas trop grand peut dépasser la région où cette approximation est utile, franchir un minimum ou augmenter l'objectif ; le taux d'apprentissage doit être contrôlé.
+
+</details>
+
+## Même perte, quelles mises à jour ? {#ex-score-to-parameter-update}
+
+On fixe le préfixe et le token observé $A$. Dans ce modèle jouet, les logits sont $z=u+b$, où $u$ est fixe et seul le biais de sortie $b$ est entraînable. Deux réglages de $b$ donnent les distributions suivantes sur $(A,B,C)$.
+
+$$
+p=(1/2,\;1/4,\;1/4),\qquad q=(1/2,\;3/8,\;1/8).
+$$
+
+1. Calculez la log-vraisemblance de $A$ et la [perte pour cette cible](../cross-entropy.qmd) dans les deux cas. C’est la seule cible prise en compte.
+2. Avec la cible one-hot $y=(1,0,0)$, calculez le gradient de la perte par rapport au biais. L’addition $z=u+b$ transmet chaque dérivée par logit au biais correspondant.
+3. Calculez la variation du biais pour un pas de descente de gradient de taux $\eta=1/5$. Le score de $A$ suffit-il pour déterminer comment ce pas traite $B$ et $C$ ?
+4. Refaites une prédiction sur le même préfixe dans deux cas. D’abord, arrêtez-vous après le calcul du gradient, avant le pas d’optimisation. Puis appliquez le pas et recalculez $p(A)$ et $q(A)$. Pour ce second calcul, vous pouvez prendre $\ln p$ et $\ln q$ comme logits initiaux, à une constante commune près.
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+1. Dans les deux cas, la log-vraisemblance vaut $\ln(1/2)=-\ln 2$ et la perte vaut $\ln 2$.
+2. Le gradient est la distribution prédite moins $y$. On obtient $(-1/2,\,1/4,\,1/4)$ pour $p$ et $(-1/2,\,3/8,\,1/8)$ pour $q$.
+3. La variation vaut $-\eta\nabla_b L$. Elle est $(1/10,\,-1/20,\,-1/20)$ pour $p$ et $(1/10,\,-3/40,\,-1/40)$ pour $q$. Le biais de $A$ augmente de la même quantité. Pour $p$, les biais de $B$ et $C$ baissent autant. Pour $q$, celui de $B$ baisse trois fois plus que celui de $C$. La probabilité de la cible détermine la perte scalaire. La mise à jour de chaque biais dépend de la probabilité du token correspondant.
+4. Après le seul calcul du gradient, les biais sont inchangés et les deux probabilités de $A$ valent encore $1/2$. Après le pas, normalisez de nouveau. Pour une distribution initiale $r$, la nouvelle probabilité de $A$ vaut $r_A e^{\Delta b_A}/\sum_j r_j e^{\Delta b_j}$. Elle vaut environ $0{,}537$ à partir de $p$ et $0{,}540$ à partir de $q$. Le numérateur est identique dans les deux cas. Au dénominateur, chaque terme combine la probabilité initiale d’un token et la variation de son biais.
 
 </details>
 
