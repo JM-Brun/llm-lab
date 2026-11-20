@@ -168,19 +168,14 @@ Choisir le token argmax à chaque position n'est pas équivalent à rechercher g
 
 ## De la distribution au token choisi
 
-<div class="pipeline-stepper meta-flow flex-wrap" role="group" aria-label="Des logits au token sélectionné" aria-describedby="probability-flow-description">
-  <a class="step-item" href="logits.qmd">Logits</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item">Température ÷ τ</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item">Softmax</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item">Filtres top-k/top-p</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item">Argmax ou tirage</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="generation.qmd">Token réinjecté</a>
-</div>
+<ol class="probability-flow" aria-label="Des logits au token sélectionné" aria-describedby="probability-flow-description">
+  <li><a href="logits.qmd">Logits</a></li>
+  <li>Température ÷ τ</li>
+  <li>Softmax</li>
+  <li>Filtres top-k/top-p</li>
+  <li>Argmax ou tirage</li>
+  <li><a href="generation.qmd">Token réinjecté</a></li>
+</ol>
 <p id="probability-flow-description" class="meta-flow__relation">La température et les filtres sont facultatifs. La température agit sur les logits avant la softmax. Dans l’implémentation de référence du projet, top-k et top-p filtrent ensuite la distribution et la renormalisent ; l’ordre peut varier selon les bibliothèques. Une distribution, même filtrée, n’est pas encore un token sélectionné.</p>
 
 ## Normalisation, calibration et vérité

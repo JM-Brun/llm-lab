@@ -282,8 +282,8 @@ async function runCase(testCase, caseIndex) {
       if (JSON.stringify(await readBars()) !== JSON.stringify(baseline)) {
         throw new Error("The standard-temperature preset must restore the worked distribution.");
       }
-      const flowFits = await page.locator(".pipeline-stepper.meta-flow").evaluate(
-        flow => flow.scrollWidth <= flow.clientWidth + 1
+      const flowFits = await page.locator("ol.probability-flow").evaluate(
+        flow => flow.children.length === 6 && flow.scrollWidth <= flow.clientWidth + 1
       );
       if (!flowFits) throw new Error("The probability flow must fit without horizontal scrolling.");
     }

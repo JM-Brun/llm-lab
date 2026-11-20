@@ -168,19 +168,14 @@ Selecting the argmax token at each position is not equivalent to globally search
 
 ## From the distribution to a selected token
 
-<div class="pipeline-stepper meta-flow flex-wrap" role="group" aria-label="From logits to the selected token" aria-describedby="probability-flow-description">
-  <a class="step-item" href="logits.qmd">Logits</a>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item">Temperature ÷ τ</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item">Softmax</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item">Top-k/top-p filters</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <span class="step-item">Argmax or sampling</span>
-  <span class="step-arrow" aria-hidden="true">→</span>
-  <a class="step-item" href="generation.qmd">Append token</a>
-</div>
+<ol class="probability-flow" aria-label="From logits to the selected token" aria-describedby="probability-flow-description">
+  <li><a href="logits.qmd">Logits</a></li>
+  <li>Temperature ÷ τ</li>
+  <li>Softmax</li>
+  <li>Top-k/top-p filters</li>
+  <li>Argmax or sampling</li>
+  <li><a href="generation.qmd">Append token</a></li>
+</ol>
 <p id="probability-flow-description" class="meta-flow__relation">Temperature scaling and filtering are optional. Temperature acts on logits before softmax. In the project reference implementation, top-k and top-p then filter the distribution and renormalize it; library pipelines may use different orders. Even a filtered distribution is not yet a selected token.</p>
 
 ## Normalization, calibration, and truth
