@@ -236,7 +236,7 @@ items:
       explanatory_lens: comparison
       teaching_form: [multiple-choice-question, formative-check]
       abstraction_level: introductory
-      prerequisites: [query, key, value, weighted-aggregation]
+      prerequisites: [query, key, value, attention-weight, scaled-dot-product-attention]
       distinctive_value: "Contrasts attention with mean/max pooling rather than only testing Q/K/V labels."
       limitations: ["Interactive answer and feedback behaviour was not exercised."]
     pedagogical_assessment:
@@ -249,7 +249,7 @@ items:
     classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, topic:attention], concept_ids: [query, key, attention-weight]}
     candidate_destinations:
       pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
-      concepts: [attention-weight, weighted-aggregation]
+      concepts: [attention-weight, scaled-dot-product-attention]
     disposition: integrate-by-reference
     disposition_rationale: "Keep as a source-specific comparison and possible future distractor set; do not create a duplicate activity."
 
@@ -267,7 +267,7 @@ items:
       explanatory_lens: contextual-aggregation
       teaching_form: [multiple-choice-question, formative-check]
       abstraction_level: introductory
-      prerequisites: [contextualized-representation, weighted-aggregation]
+      prerequisites: [contextualized-representation, scaled-dot-product-attention]
       distinctive_value: "Connects the mechanism to sequence-level information flow."
       limitations: ["Interactive answer and feedback behaviour was not exercised."]
     pedagogical_assessment:
@@ -280,7 +280,7 @@ items:
     classification: {primary_theme: architectures-mechanisms, tags: [topic:qkv, topic:contextualization], concept_ids: [contextualized-representation]}
     candidate_destinations:
       pages: [fr/contextualized-representations, en/contextualized-representations, fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
-      concepts: [contextualized-representation, weighted-aggregation]
+      concepts: [contextualized-representation, scaled-dot-product-attention]
     disposition: integrate-by-reference
     disposition_rationale: "Keep as a source-specific conceptual check; the current project already has a more complete explanation and does not need a duplicate quiz."
   - id: codefinity-qkv-building-blocks:scope-limitations

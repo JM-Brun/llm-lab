@@ -55,6 +55,10 @@ Use `::: {.responsive-card-table}` around a descriptive comparison table when lo
 
 An interactive element is justified when a learner action changes a meaningful state and makes a central mechanism easier to understand than prose or a static diagram alone. The shared bilingual next-token explorer on the LLM overview is a deliberate exception under the guardrails of #368: selecting a token extends the prefix and exposes the next conditional distribution, making the autoregressive feedback loop tangible. It reuses the running example's illustrative values, does not invent unspecified branch probabilities, and lives in one shared include. This is not a precedent for adding decorative interactions or one-off widgets without a concrete learning question and a reuse rationale.
 
+## Interactive explanatory lessons
+
+For lessons where a learner should investigate a mechanism rather than only read about it, consult the [interactive explanatory lesson pattern](interactive-explanatory-lesson-pattern.md). It provides a reusable learning rhythm (orient, establish a baseline, reveal the mechanism, manipulate a meaningful state, visualize, reconcile theory with practice, and synthesize) plus interaction and evidence guardrails. Treat it as a flexible composition aid: use only the moves that serve the page's learner question, and keep the canonical page archetypes, destinations, design tokens and validation workflows unchanged.
+
 ## Review aid—not a gate
 
 Ask only the questions that apply:

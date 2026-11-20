@@ -134,6 +134,8 @@ A chapter lead states the page's central answer; it is not interchangeable with 
 
 ## 4. Interaction and motion
 
+For the composition of a complete explanatory lesson that combines a motivating question, worked example, meaningful learner action, mechanism visualization and evidence-aware synthesis, use the [interactive explanatory lesson pattern](interactive-explanatory-lesson-pattern.md). It composes this design system; it does not define a new visual language or require every page to become interactive.
+
 - Interactive controls must identify the quantity they change and the output they affect.
 - Show units, tensor shapes, parameter constraints, and relevant assumptions beside controls and results.
 - A visualization must answer a stated learning question and support an interpretation; animation alone is not an interaction objective.
