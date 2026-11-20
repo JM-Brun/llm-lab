@@ -67,11 +67,14 @@ For one fixed context, suppose a model assigns the following next-token probabil
 
 ## From token surprisal to a sequence score
 
+::: {#ex-entropy-and-observed-score}
+
 Now consider three successive observed tokens. Their conditional probabilities, each evaluated with the observed prefix available at that position, are $1/2$, $1/4$, and $1/8$.
 
 1. Calculate each token's surprisal in bits.
 2. Calculate the sequence probability and total surprisal.
 3. Calculate the mean surprisal per token. Is this observed mean automatically equal to the entropy of the model?
+4. At the third step, the observed token has probability $1/8$. Can you infer the predictive entropy at that step? Compare distributions $(1/2, 1/4, 1/8, 1/8)$ and $(1/4, 1/4, 1/8, 3/8)$ when the third outcome is the target.
 
 <details>
 <summary>Show the worked answer</summary>
@@ -79,10 +82,15 @@ Now consider three successive observed tokens. Their conditional probabilities, 
 1. The token surprisals are 1, 2, and 3 bits.
 2. By the chain rule, the sequence probability is $(1/2)(1/4)(1/8)=1/64$. Its total surprisal is $-\log_2(1/64)=6$ bits, equal to the sum $1+2+3$.
 3. The observed mean is $6/3=2$ bits per token. It is not automatically the model's entropy: entropy is an expectation under a specified predictive distribution, whereas this mean is calculated from one observed sequence. Dataset-level mean NLL is related to empirical cross-entropy under the chosen targets and token-counting convention.
+4. Both distributions give 3 bits of surprisal for the third outcome. Their entropies differ, with $1.75$ bits for the first and about $1.91$ bits for the second. The target score leaves the allocation of probability across the other outcomes undetermined.
 
 </details>
 
+:::
+
 **Keep the quantities distinct:** token surprisal is an event-level value; entropy is an expectation over possible outcomes; sequence log-likelihood sums conditional log-probabilities; mean NLL/cross-entropy adds a target and aggregation convention. See [Likelihood](../likelihood.qmd) for the sequence factorization.
+
+[Apply the chain rule to an observed continuation](likelihood.qmd#ex-overview-likelihood-transfer).
 
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/entropy.qmd) · [English](entropy.qmd)
