@@ -48,7 +48,7 @@ Les probabilités présentées ci-dessous sont fictives et ne prétendent pas re
 - **Le token choisi devient du contexte.** Il est ajouté au texte, et le modèle recalcule une distribution pour la position suivante.
 - **Rien n'est appris en route.** Les paramètres sont les mêmes au premier et au dernier token.
 
-**Première lecture :** la section « La boucle sur un exemple » suffit pour poursuivre le parcours. La notation, le *prefill*, le *decode* et les règles de sélection se lisent mieux au retour, une fois vues les [probabilités de sortie](probabilites.qmd).
+**Première lecture :** la section [« La boucle sur un exemple »](#la-boucle-sur-un-exemple) suffit pour poursuivre le parcours. La notation, le *prefill*, le *decode* et les règles de sélection se lisent mieux au retour, une fois vues les [probabilités de sortie](probabilites.qmd).
 :::
 
 <div class="pipeline-stepper" role="group" aria-label="Boucle de génération autorégressive">
@@ -80,15 +80,35 @@ Les probabilités présentées ci-dessous sont fictives et ne prétendent pas re
 
 Suivons trois tours de boucle. Les probabilités sont fictives, comme dans le panorama, et la règle de décodage est la plus simple : prendre le token le plus probable.
 
-| Tour | Contexte | Distribution calculée (extrait) | Token choisi |
-|---|---|---|---|
-| 1 | C'est une bonne situation, ça, scribe ? | « Vous » 0,6 · « Je » 0,2 · « Moi » 0,1 · « Oui » 0,1 | « Vous » |
-| 2 | C'est une bonne situation, ça, scribe ? Vous | « savez » 0,5 · « êtes » 0,3 · « voyez » 0,2 | « savez » |
-| 3 | C'est une bonne situation, ça, scribe ? Vous savez | « , » 0,8 · « que » 0,1 · « : » 0,1 | « , » |
+```{=html}
+<ol class="list-group list-group-numbered mb-3" data-generation-trace role="list">
+  <li class="list-group-item d-flex gap-2">
+    <div>
+      <p class="mb-1"><strong>Contexte</strong> <span data-generation-prefix>C'est une bonne situation, ça, scribe ?</span></p>
+      <p class="mb-1"><strong>Distribution (extrait)</strong> <span data-generation-distribution>« Vous » 0,6 · « Je » 0,2 · « Moi » 0,1 · « Oui » 0,1</span></p>
+      <p class="mb-0"><strong>Token choisi</strong> <span data-generation-choice>« Vous »</span></p>
+    </div>
+  </li>
+  <li class="list-group-item d-flex gap-2">
+    <div>
+      <p class="mb-1"><strong>Contexte</strong> <span data-generation-prefix>C'est une bonne situation, ça, scribe ? <mark class="next-token-explorer__added">Vous</mark></span></p>
+      <p class="mb-1"><strong>Distribution (extrait)</strong> <span data-generation-distribution>« savez » 0,5 · « êtes » 0,3 · « voyez » 0,2</span></p>
+      <p class="mb-0"><strong>Token choisi</strong> <span data-generation-choice>« savez »</span></p>
+    </div>
+  </li>
+  <li class="list-group-item d-flex gap-2">
+    <div>
+      <p class="mb-1"><strong>Contexte</strong> <span data-generation-prefix>C'est une bonne situation, ça, scribe ? Vous <mark class="next-token-explorer__added">savez</mark></span></p>
+      <p class="mb-1"><strong>Distribution (extrait)</strong> <span data-generation-distribution>« , » 0,8 · « que » 0,1 · « : » 0,1</span></p>
+      <p class="mb-0"><strong>Token choisi</strong> <span data-generation-choice>« , »</span></p>
+    </div>
+  </li>
+</ol>
+```
 
-Dans cette trace simplifiée, les unités affichées sont traitées comme des tokens. Une segmentation réelle dépend du tokenizer choisi ; le tableau ne prétend pas reproduire celle d'un tokenizer particulier.
+Dans cette trace simplifiée, les unités affichées sont traitées comme des tokens. Une segmentation réelle dépend du tokenizer choisi ; la trace ne prétend pas reproduire celle d'un tokenizer particulier.
 
-Chaque ligne enchaîne les mêmes gestes.
+Chaque tour enchaîne les mêmes gestes.
 
 1. **Prédire.** Le modèle lit tout le contexte et calcule une distribution sur le prochain token.
 2. **Sélectionner.** La règle de décodage en retient un.

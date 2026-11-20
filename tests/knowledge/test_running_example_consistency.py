@@ -61,6 +61,7 @@ ENGLISH_CONTINUATION = "They built roads between distant towns."
 
 def test_generation_candidate_probabilities_form_a_distribution() -> None:
     source = (ROOT / "site" / "fr" / "generation.qmd").read_text(encoding="utf-8")
+    source = source.replace("\u00a0", " ")
     assert "« savez » 0,5 · « êtes » 0,3 · « voyez » 0,2" in source
     assert "« savez » 0,6 · « êtes » 0,2 · « voyez » 0,2" not in source
 
@@ -99,8 +100,8 @@ def test_english_understand_pages_keep_their_own_running_example(page_id: str) -
 def test_first_step_matches_generation(language: str, probability_page: str) -> None:
     site = ROOT / "site" / language
     generation = (site / "generation.qmd").read_text(encoding="utf-8")
-    first_step = next(line for line in generation.splitlines() if line.startswith("| 1 |"))
-    candidates = first_step.split("|")[3].strip().split(" · ")
+    _, _, first_step = generation.partition("<span data-generation-distribution>")
+    candidates = first_step.split("</span>", maxsplit=1)[0].replace("\u00a0", " ").split(" · ")
 
     source = (site / f"{probability_page}.qmd").read_text(encoding="utf-8")
     _, _, example = source.partition('<a id="running-example-next-token"></a>')
