@@ -26,4 +26,6 @@ Choisissez une étape pour retrouver les idées à maîtriser et les réviser av
 
 [Parcours guidé et ressources facultatives](learning-map.qmd) · [Français](../fr/review-path.qmd) · [English](../en/review-path.qmd)
 
+**À partir de la distribution.** [Générer](#inference) pour choisir le prochain token, [scorer](#scoring) pour mesurer la probabilité d’une cible observée, ou [entraîner](#training) pour ajuster les paramètres. [Le contexte](#context-use) prolonge l’inférence côté application.
+
 {{< include ../includes/generated-lesson-contracts-fr.qmd >}}

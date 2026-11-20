@@ -28,17 +28,17 @@ tags: ["type:concept-bridge", "destination:practice", "topic:revision-llm-overvi
 
 - Le texte devient une séquence de tokens. Un LLM autorégressif prédit le prochain token à partir des tokens déjà dans le contexte.
 - Une passe avant transforme ce contexte en scores, puis on peut normaliser les scores de la dernière position en une distribution sur le vocabulaire.
-- La génération choisit un token et le réinjecte dans le contexte. L’entraînement utilise des cibles connues pour ajuster les paramètres. Pendant la génération, les paramètres restent fixes.
+- Générer choisit un token et le réinjecte dans le contexte. Scorer lit la probabilité d’un token déjà observé. L’entraînement utilise des cibles connues pour ajuster les paramètres.
 - Les paramètres encodent des régularités apprises. Le contexte apporte les instructions et exemples du moment. Une même tâche de prédiction peut ainsi servir à résumer ou traduire selon le contexte fourni.
 
 ## Vérifier de mémoire {#revision-check}
 
-Quel objet change quand on ajoute un token au cours d’une génération ?
+La règle choisit d’abord « Vous », puis « savez ». Quel contexte le modèle reçoit-il au deuxième tour ? Que ferait-on de la première distribution si « Vous » était une cible observée à scorer ?
 
 <details>
 <summary>Afficher la réponse</summary>
 
-Le contexte s’allonge d’un token. Les paramètres du réseau restent fixes. La distribution calculée au tour suivant dépend du contexte ainsi modifié.
+Le deuxième contexte contient la question initiale suivie de « Vous ». Les paramètres restent fixes. Pour scorer ce token, on lit la probabilité de « Vous » dans la première distribution. Pour générer, on applique une règle de choix, puis on réinjecte le token choisi.
 
 </details>
 

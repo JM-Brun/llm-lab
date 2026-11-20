@@ -1090,8 +1090,12 @@ def prepare_guided_page_context_fragments(
         )
         review_link = ""
         if lesson_contracts and page_id in lesson_contracts:
+            outcome_label = "Objectif de la leçon" if language == "fr" else "Lesson objective"
             label = "Réviser cette leçon" if language == "fr" else "Review this lesson"
-            href = lesson_contracts[page_id].synthesis.href
+            contract = lesson_contracts[page_id]
+            outcome = escape_markdown_text(contract.outcome)
+            href = contract.synthesis.href
+            membership += f"\n**{outcome_label}.** {outcome}\n\n"
             review_link = f"\n[{label}]({href})\n\n"
         outputs[output] = membership + transition_context + review_link
     return outputs
@@ -1134,26 +1138,28 @@ def build_suggested_route_contexts(
     contexts: dict[str, list[dict[str, ResolvedPage | str | None]]] = {}
     for stage_index, stage in enumerate(stages):
         for page_index, page in enumerate(stage.pages):
-            previous = (
-                stage.pages[page_index - 1]
+            previous, previous_stage_title = (
+                (stage.pages[page_index - 1], stage.title)
                 if page_index > 0
-                else stages[stage_index - 1].pages[-1]
+                else (stages[stage_index - 1].pages[-1], stages[stage_index - 1].title)
                 if stage_index > 0 and stages[stage_index - 1].pages
-                else None
+                else (None, None)
             )
-            following = (
-                stage.pages[page_index + 1]
+            following, next_stage_title = (
+                (stage.pages[page_index + 1], stage.title)
                 if page_index + 1 < len(stage.pages)
-                else stages[stage_index + 1].pages[0]
+                else (stages[stage_index + 1].pages[0], stages[stage_index + 1].title)
                 if stage_index + 1 < len(stages) and stages[stage_index + 1].pages
-                else None
+                else (None, None)
             )
             contexts.setdefault(page.id, []).append(
                 {
                     "stage_id": stage.id,
                     "stage_title": stage.title,
                     "previous": previous,
+                    "previous_stage_title": previous_stage_title,
                     "next": following,
+                    "next_stage_title": next_stage_title,
                 }
             )
     return contexts
@@ -1183,11 +1189,11 @@ def render_suggested_route_markdown(
     if stage_routes:
         cards: list[str] = []
         for context in stage_routes:
-            stage_title = str(context["stage_title"])
             for direction in ("previous", "next"):
                 target = context.get(direction)
                 if target is None:
                     continue
+                stage_title = str(context[f"{direction}_stage_title"])
                 if not isinstance(target, ResolvedPage):
                     raise ValueError(
                         f"invalid {direction} stage route for {page['id']!r}: {target!r}"

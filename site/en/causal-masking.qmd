@@ -10,8 +10,8 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/causal-masking"
 summary: "Shows how causal masking prevents each position from using future tokens, enabling autoregressive prediction."
-scope: "Explains the causal constraint applied to attention scores in an autoregressive model: a position cannot use future positions; distinguishes this mask from next-token selection and from padding or other sequence masks."
-purpose: "Readers should be able to read a causal mask, explain which interactions it prevents, and connect the constraint to the autoregressive factorization of a sequence probability."
+scope: "Determines the positions each query can access in autoregressive computation and locates the mask before normalization."
+purpose: "Read a causal-mask row, infer the accessible prefix and identify the next token to predict."
 suggested_route:
   previous: "en/scaled-dot-product-attention"
   next: "en/logits"

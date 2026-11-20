@@ -331,7 +331,6 @@ website:
         - section: "Comprendre les LLM"
           contents:
             - fr/llm-overview.qmd
-            - fr/generation.qmd
             - section: "Comment le modèle calcule sa prédiction"
               href: fr/text-data.qmd
               contents:
@@ -352,8 +351,9 @@ website:
                     - fr/probabilites.qmd
                     - fr/entropy.qmd
 
-            - section: "Contexte et adaptation"
+            - section: "Génération et contexte"
               contents:
+                - fr/generation.qmd
                 - fr/in-context-learning.qmd
                 - fr/context-engineering.qmd
             - section: "Scoring des tokens observés"
@@ -534,7 +534,6 @@ website:
         - section: "Understand LLMs"
           contents:
             - en/llm-overview.qmd
-            - en/generation.qmd
             - section: "How the model computes a prediction"
               href: en/text-data.qmd
               contents:
@@ -555,8 +554,9 @@ website:
                     - en/probabilities.qmd
                     - en/entropy.qmd
 
-            - section: "Context and adaptation"
+            - section: "Generation and context"
               contents:
+                - en/generation.qmd
                 - en/in-context-learning.qmd
                 - en/context-engineering.qmd
             - section: "Observed-target scoring"

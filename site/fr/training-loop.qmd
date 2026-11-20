@@ -10,8 +10,8 @@ lang: fr
 LLM-LAB-PAGE-MAP v1
 id: "fr/training-loop"
 summary: "Montre comment des pas de gradient répétés transforment un modèle initialisé au hasard en modèle entraîné, ce qu'un optimiseur ajoute au gradient et pourquoi la loss de validation est mesurée sur des données réservées."
-scope: "Décrire un pas d'entraînement et sa répétition, distinguer gradient, optimiseur et taux d'apprentissage, définir loss d'entraînement et de validation ainsi que le surapprentissage, et situer le pré-entraînement comme la même boucle à plus grande échelle. Les plannings de taux d'apprentissage, l'écrêtage des gradients, les détails internes des optimiseurs et l'entraînement distribué sont hors périmètre."
-purpose: "Expliquer ce que fait une itération d'entraînement et quelles opérations modifient les paramètres, interpréter les courbes d'entraînement et de validation et reconnaître le surapprentissage sans confondre validation et test final."
+scope: "Assemble les calculs en pas d’entraînement répétés et distingue l’optimisation sur le lot du suivi sur données réservées."
+purpose: "Ordonner les opérations d’une itération et interpréter un écart entre les courbes d’entraînement et de validation."
 suggested_route:
   previous: "fr/gradients"
   next: null

@@ -10,8 +10,8 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/context-engineering"
 summary: "Defines context engineering and locates its main operations within an LLM system."
-scope: "Introduces context design and management at inference time; detailed RAG, memory, and agent architectures remain in their dedicated lessons."
-purpose: "Readers should distinguish model context, ICL, and context engineering, then identify the decisions that shape the quality of the input supplied to a model."
+scope: "Moves from model behavior to system-level context design under budget and reliability constraints."
+purpose: "Choose what information to supply for a task and diagnose a failure by inspecting the context actually passed to the model."
 suggested_route:
   previous: "en/in-context-learning"
   next: null

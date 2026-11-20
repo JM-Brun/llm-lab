@@ -10,8 +10,8 @@ lang: fr
 LLM-LAB-PAGE-MAP v1
 id: "fr/embedding-space"
 summary: "Explique comment un Token ID sélectionne une ligne de la matrice de plongements et comment le vecteur obtenu devient l'entrée des traitements ultérieurs."
-scope: "Présente le lookup dans la matrice de plongements, la distinction entre adresse de ligne et coordonnées vectorielles, l'apprentissage de la matrice et la transition vers les représentations contextualisées. Le code, les exercices, les références et l'histoire détaillée sont déportés vers Build, Practice et Deepen."
-purpose: "Le lecteur doit pouvoir expliquer qu'un Token ID sert d'indice/adresse de ligne dans E, identifier le vecteur contenu dans cette ligne et ne pas confondre ce vecteur avec un état contextualisé."
+scope: "Montre comment un ID indexe une ligne apprise de la matrice de plongements."
+purpose: "Pour un ID donné, retrouver la ligne du plongement initial et expliquer pourquoi les IDs voisins ne déterminent pas la proximité des vecteurs."
 suggested_route:
   previous: "fr/text-data"
   next: "fr/positional-encoding"

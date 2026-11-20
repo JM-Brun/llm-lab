@@ -10,8 +10,8 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/entropy"
 summary: "Defines the entropy of the next-token distribution as predictive dispersion before observing a target, then distinguishes it from the surprisal of the observed token, sequence likelihood, and cross-entropy."
-scope: "Define Shannon entropy of the model's next-token distribution for a fixed context as a measure of predictive dispersion before the next token is observed; distinguish it from the realized token's surprisal, sequence likelihood, and cross-entropy against a target distribution."
-purpose: "Calculate and interpret the entropy of a categorical next-token distribution, state its bounds for a finite vocabulary, and distinguish expected predictive uncertainty from the surprisal of an observed token."
+scope: "Measures uncertainty in the predictive distribution for a fixed context. Compression is a complementary application."
+purpose: "Compare the entropy of two distributions over the same vocabulary and distinguish that average from one observed token’s surprisal."
 suggested_route:
   previous: "en/probabilities"
   next: "en/likelihood"
@@ -179,6 +179,8 @@ The questions and exercises for this lesson are collected on its [dedicated prac
 - [Cross-entropy and KL divergence](cross-entropy.qmd) — the probabilistic objective used to train the model.
 - [Loss](loss.qmd) — target shifting, masks, and loss reduction.
 
+:::: {.callout-note collapse="true" title="Optional reading — prediction, compression and V-information"}
+
 ## Are LLMs compression algorithms?
 
 **Short answer: not exactly.** An LLM learns to predict the next token. That ability can help compress a sequence *when paired with an entropy coder*. But generating text is not decompressing the training corpus.
@@ -238,6 +240,7 @@ It measures the predictive gain from the input for that family and loss. A restr
 
 To make these ideas concrete, run the [reproducible predictive-compression experiment](https://github.com/JM-Brun/llm-lab/tree/main/experiments/predictive-compression). To compare marginal entropy, conditional entropy, and zlib compression, also run the [sequence-compression experiment](https://github.com/JM-Brun/llm-lab/blob/main/experiments/sequence-compression/README.md).
 
+::::
 
 ### References
 

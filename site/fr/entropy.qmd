@@ -10,8 +10,8 @@ lang: fr
 LLM-LAB-PAGE-MAP v1
 id: "fr/entropy"
 summary: "Définit l’entropie de la distribution du prochain token comme mesure de dispersion prédictive avant l’observation de la cible, puis la distingue de la surprise du token observé, de la vraisemblance d’une séquence et de l’entropie croisée."
-scope: "Définir l'entropie de Shannon de la distribution du prochain token pour un contexte fixé comme mesure de dispersion prédictive avant l'observation du token ; la distinguer de la surprise du token effectivement observé, de la vraisemblance d'une séquence et de l'entropie croisée avec une distribution cible."
-purpose: "Calculer et interpréter l'entropie d'une distribution catégorielle sur les prochains tokens, énoncer ses bornes pour un vocabulaire fini et distinguer l'incertitude prédictive moyenne de la surprise d'un token observé."
+scope: "Mesure l’incertitude d’une distribution prédictive à contexte fixé. La compression est une application complémentaire."
+purpose: "Comparer l’entropie de deux distributions sur le même vocabulaire et distinguer cette moyenne de la surprise du token observé."
 suggested_route:
   previous: "fr/probabilites"
   next: "fr/vraisemblance"
@@ -179,6 +179,8 @@ Les questions et exercices de cette leçon sont regroupés sur sa [page d’exer
 - [Entropie croisée et divergence KL](cross-entropy.qmd) — objectif probabiliste utilisé pour entraîner le modèle.
 - [Loss](loss.qmd) — décalage des cibles, masques et réduction de la perte.
 
+:::: {.callout-note collapse="true" title="Approfondissement — prédiction, compression et V-information"}
+
 ## Les LLM sont-ils des algorithmes de compression ?
 
 **Réponse courte : pas exactement.** Un LLM apprend à prédire le prochain token. Cette capacité peut servir à compresser une séquence *si on lui associe un véritable codeur entropique*. Mais générer du texte n'est pas décompresser le corpus d'entraînement.
@@ -238,6 +240,7 @@ Elle mesure le gain de prédictibilité obtenu grâce à l'entrée, pour cette f
 
 Pour manipuler ces idées, lancez l'[expérience reproductible de compression prédictive](https://github.com/JM-Brun/llm-lab/blob/main/experiments/predictive-compression/README.fr.md). Pour comparer entropie marginale, entropie conditionnelle et compression zlib, utilisez aussi l'[expérience sur les séquences](https://github.com/JM-Brun/llm-lab/blob/main/experiments/sequence-compression/README.fr.md).
 
+::::
 
 ### Références
 

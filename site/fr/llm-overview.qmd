@@ -10,11 +10,11 @@ lang: fr
 LLM-LAB-PAGE-MAP v1
 id: "fr/llm-overview"
 summary: "Donne une première représentation mentale d’un LLM : prédiction conditionnelle du prochain token, usages distincts, architecture, apprentissage, provenance de l’information et transfert."
-scope: "Présente les repères nécessaires pour comprendre un LLM sans remplacer les pages propriétaires sur la génération, l’apprentissage, le contexte, la récupération documentaire, l’histoire ou l’évaluation."
-purpose: "Expliquer ce que prédit un LLM, comment une distribution est utilisée, où se trouve l’information et pourquoi un objectif général peut soutenir plusieurs tâches."
+scope: "Situe le modèle de langage, ses paramètres et son contexte. Introduit les trois usages de la prédiction avec un exemple de génération en boîte noire."
+purpose: "Suivre deux tours de génération à paramètres fixes et distinguer générer un token, scorer une cible observée et apprendre."
 suggested_route:
   previous: "fr/index"
-  next: "fr/generation"
+  next: "fr/text-data"
 hierarchy:
   parents: ["fr/index"]
   children: ["fr/transformer", "fr/transformer-architectures", "fr/generation", "fr/build-path", "fr/language-modeling-math", "fr/mathematical-foundations", "fr/llm-limits", "fr/llm-computational-complexity"]
@@ -69,6 +69,8 @@ Le texte « C'est une bonne situation, ça, scribe ? » est le **préfixe** : la
 Ces valeurs sont fictives. Dans un vrai tokenizer, un token peut être un fragment de mot ; le même exemple numérique est repris dans plusieurs pages pour permettre des calculs à la main.
 
 C'est une **distribution conditionnelle** : les probabilités sont calculées en tenant compte du préfixe et leur somme vaut 1. Si la règle de décodage choisit « Vous », ce token est ajouté au contexte ; le modèle recalcule alors une nouvelle distribution, désormais conditionnée par le préfixe enrichi.
+
+Au tour 2, la question suivie de « Vous » donne une nouvelle distribution illustrative. « savez » reçoit 0,5, « êtes » 0,3 et « voyez » 0,2. Si la règle choisit « savez », le contexte contient désormais « Vous savez ». Les paramètres sont les mêmes aux deux tours.
 
 Trois termes suffisent :
 

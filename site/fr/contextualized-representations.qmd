@@ -10,8 +10,8 @@ lang: fr
 LLM-LAB-PAGE-MAP v1
 id: "fr/contextualized-representations"
 summary: "Montre comment les couches du Transformer transforment les vecteurs initiaux en états dépendant du contexte, de sorte qu’un même token puisse avoir plusieurs représentations."
-scope: "Explique comment les couches du Transformer transforment les embeddings initiaux en vecteurs dépendant du contexte et pourquoi un même ID peut donc correspondre à des états contextualisés différents selon sa position et son contexte ; ne confond pas ces états avec les vecteurs statiques de la table d’embeddings."
-purpose: "Le lecteur doit pouvoir expliquer pourquoi deux occurrences d’un même token partagent un embedding initial mais peuvent avoir des représentations contextualisées différentes, et relier cette différence au traitement par les couches du Transformer."
+scope: "Compare le plongement initial d’un token aux états cachés produits pour ses occurrences. Prépare l’étude des blocs qui produisent ces états."
+purpose: "Expliquer, sur deux occurrences du même token, pourquoi le lookup est identique et pourquoi les états obtenus peuvent dépendre des préfixes."
 suggested_route:
   previous: "fr/positional-encoding"
   next: "fr/transformer"
@@ -88,6 +88,8 @@ Le mot *situation* apparaît dans « une bonne situation, ça, scribe ? », puis
 
 Ce schéma est une illustration originale et simplifiée, et non une reproduction de la figure de Rushang Chauhan. Pour une autre présentation pédagogique du passage des tokens au contexte, voir l'article de [Rushang Chauhan, *Embeddings: The Bridge Between Tokens and Context*](https://www.linkedin.com/pulse/embeddings-bridge-between-tokens-context-rushang-chauhan-oqpzf/).
 
+
+Le rapprochement de ces objets prépare la lecture du Transformer. Dans le calcul, les blocs produisent les états contextualisés à partir de leurs entrées.
 
 ## Ce qui reste identique
 

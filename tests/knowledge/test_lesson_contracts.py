@@ -27,7 +27,7 @@ def route_inputs():
     return document, inputs
 
 
-def test_core_contracts_link_bilingual_syntheses_and_keep_the_two_generation_passes(
+def test_core_contracts_expose_objectives_and_link_bilingual_syntheses(
     route_inputs,
 ) -> None:
     document, inputs = route_inputs
@@ -43,6 +43,9 @@ def test_core_contracts_link_bilingual_syntheses_and_keep_the_two_generation_pas
                 SITE / "includes" / f"generated-guided-context-{page_id.replace('/', '-')}.qmd"
             )
             assert f"]({contract.synthesis.href})" in context[fragment]
+            label = "Objectif de la leçon" if lang == "fr" else "Lesson objective"
+            assert f"**{label}.** {contract.outcome}" in context[fragment]
+            assert contract.outcome in plan
             assert plan.count(f"]({contract.synthesis.href})") == 1
             sheet = Path(SITE, lang, contract.synthesis.href).with_suffix(".qmd")
             source = sheet.read_text(encoding="utf-8")
@@ -51,7 +54,10 @@ def test_core_contracts_link_bilingual_syntheses_and_keep_the_two_generation_pas
             assert "<details>" in source
             assert "review-path.qmd" in source
         assert contracts[f"{lang}/generation"].stage == "inference"
-        assert "(#inference)" in plan
+        assert sum(page.id == f"{lang}/generation" for stage in stages for page in stage.pages) == 1
+        source = (SITE / lang / "review-path.qmd").read_text(encoding="utf-8")
+        for branch in ("inference", "context-use", "scoring", "training"):
+            assert f"](#{branch})" in source
         topics = {page["id"]: page["topic"] for page in pages}
         memberships[lang] = [[topics[page.id] for page in stage.pages] for stage in stages]
     assert memberships["fr"] == memberships["en"]

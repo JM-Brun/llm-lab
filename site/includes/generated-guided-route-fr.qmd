@@ -22,12 +22,11 @@
 
 ### 01 · Fonctionnement d’un LLM
 
-Comprendre ce qu'est un LLM et suivre une génération complète comme une boîte noire, avec des paramètres fixes, avant d'en étudier les mécanismes internes.
+Situer le contexte et les paramètres du modèle. Suivre deux tours de génération dans le panorama avant d’étudier le calcul de la prédiction.
 
 **Pages centrales**
 
 - [Panorama : qu’est-ce qu’un LLM ?](llm-overview.html)
-- [Générer du texte : l'inférence pas à pas](generation.html)
 
 **Ressources facultatives**
 
@@ -66,7 +65,7 @@ Distinguer le texte, les tokens et les identifiants qui constituent l'entrée di
 
 ### 03 · Des identifiants aux représentations
 
-Suivre la lecture des vecteurs d'embedding et l'ajout d'information positionnelle, puis distinguer les états initiaux des représentations contextualisées.
+Identifier les plongements et l’information de position. Comparer les états initiaux et contextualisés avant d’ouvrir les blocs qui transforment les premiers en seconds.
 
 **Pages centrales**
 
@@ -135,7 +134,7 @@ Distinguer le prefill du prompt du decode itératif, sélectionner un token selo
 
 **Pages centrales**
 
-- [Générer du texte : l'inférence pas à pas](generation.html) *(rappel)*
+- [Générer du texte : l'inférence pas à pas](generation.html)
 
 **Ressources facultatives**
 
@@ -148,7 +147,7 @@ Distinguer le prefill du prompt du decode itératif, sélectionner un token selo
 
 ### 07 · Exploiter et concevoir le contexte
 
-Distinguer les informations encodées dans les paramètres (pré-entraînement et fine-tuning) des informations récupérées ou fournies à l'inférence (RAG et contexte), puis comprendre comment un système les sélectionne, structure, actualise et sécurise.
+Prolonger l’inférence côté application. Expliquer l’effet d’exemples fournis dans le prompt, puis choisir les informations qu’un système transmet au modèle.
 
 **Pages centrales**
 
@@ -171,7 +170,7 @@ Distinguer les informations encodées dans les paramètres (pré-entraînement e
 **Pages centrales**
 
 - [Vraisemblance et log-vraisemblance](vraisemblance.html)
-- [Entropie croisée : l'objectif de prédiction des tokens](cross-entropy.html)
+- [Entropie croisée pour une prédiction de token](cross-entropy.html)
 
 **Ressources facultatives**
 
@@ -188,13 +187,13 @@ Relier les cibles observées à la loss agrégée, aux gradients et aux mises à
 
 **Pages centrales**
 
-- [Loss : de la perte par token à l'objectif](loss.html)
+- [Du token à la perte du lot](loss.html)
 - [Gradients : relier la perte aux paramètres](gradients.html)
 - [La boucle d'entraînement : des gradients au modèle entraîné](training-loop.html)
 
 **Ressources facultatives**
 
-- [Entropie croisée : l'objectif de prédiction des tokens](cross-entropy.html) *(rappel)*
+- [Entropie croisée pour une prédiction de token](cross-entropy.html) *(rappel)*
 - [Lois d'échelle : paramètres, données et calcul](scaling-laws.html)
 - [D'un modèle de base à un assistant : le post-entraînement](post-training.html)
 - [La chaîne mathématique de l’entraînement d’un LLM](mathematical-foundations.html) *(rappel)*

@@ -1,6 +1,6 @@
 ---
 title: "Révision — Génération autorégressive"
-description-meta: "Le prefill, la sélection, les tours de decode, l’arrêt et les deux mesures de latence perçue."
+description-meta: "Du prefill du prompt à l’arrêt de la génération, en passant par la sélection et la réinjection."
 keywords: ["type:concept-bridge", "destination:practice", "topic:revision-inference-generation", "level:core", "language:fr", "status:published"]
 lang: fr
 ---
@@ -8,7 +8,7 @@ lang: fr
 <!--
 LLM-LAB-PAGE-MAP v1
 id: "fr/revision-inference-generation"
-scope: "Le prefill, la sélection, les tours de decode, l’arrêt et les deux mesures de latence perçue."
+scope: "Du prefill du prompt à l’arrêt de la génération, en passant par la sélection et la réinjection."
 purpose: "Restituer de mémoire les idées de cette leçon et les appliquer à la question de révision."
 revision_role: synthesis
 revision_of: ["fr/generation"]
@@ -29,7 +29,6 @@ tags: ["type:concept-bridge", "destination:practice", "topic:revision-inference-
 - Le prefill traite le prompt et fournit les logits de sa dernière position, qui servent à choisir le premier token généré.
 - En decode, chaque token choisi enrichit le contexte et influence la distribution du tour suivant. Avec un cache KV, on réutilise les clés et valeurs des positions précédentes.
 - Le décodage peut choisir le maximum ou échantillonner. Un token de fin, une séquence d’arrêt ou une limite de longueur peut terminer la boucle.
-- En service, le délai jusqu’au premier token (TTFT) inclut notamment l’attente et le prefill. Le temps par token de sortie (TPOT) renseigne sur la cadence après le premier token. L’ordonnancement peut affecter ces mesures.
 
 ## Vérifier de mémoire {#revision-check}
 
@@ -41,6 +40,10 @@ Le premier token produit est-il calculé lors d’un tour de decode séparé du 
 Les logits qui permettent de l’obtenir sont déjà produits par le prefill. Le token choisi devient ensuite l’entrée du tour qui prépare la prédiction suivante.
 
 </details>
+
+::: {.callout-note collapse="true" title="Latence en production"}
+En service, le délai jusqu’au premier token (TTFT) inclut notamment l’attente et le prefill. Le temps par token de sortie (TPOT) renseigne sur la cadence après le premier token. L’ordonnancement peut affecter ces mesures.
+:::
 
 ::: {.language-switch}
 **Langue** · [Français](../fr/revision-inference-generation.qmd) · [English](../en/revision-inference-generation.qmd)

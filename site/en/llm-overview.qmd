@@ -10,11 +10,11 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/llm-overview"
 summary: "Provides a first mental model of an LLM: conditional next-token prediction, distinct uses, architecture, learning, information provenance, and transfer."
-scope: "Introduces the essential concepts without replacing the canonical pages on generation, training, context, document retrieval, history, or evaluation."
-purpose: "Explain what an LLM predicts, how a distribution is used, where information resides, and why a general objective can support varied tasks."
+scope: "Places the language model, its parameters and its context. Introduces the three uses of a prediction with a black-box generation example."
+purpose: "Trace two generation steps with fixed parameters and distinguish generating a token, scoring an observed target and training."
 suggested_route:
   previous: "en/index"
-  next: "en/generation"
+  next: "en/text-data"
 hierarchy:
   parents: ["en/index"]
   children: ["en/transformer", "en/transformer-architectures", "en/generation", "en/build-path", "en/language-modeling-math", "en/mathematical-foundations", "en/llm-limits", "en/llm-computational-complexity"]
@@ -73,6 +73,8 @@ The question “What have the Romans ever done for us?” is the **prefix**: the
 These values are illustrative. Real tokens can be word fragments; the same numbers are reused across pages so the calculations can be checked by hand.
 
 This is a **conditional distribution**: probabilities are computed given the prefix and sum to 1. If the decoding rule selects “They”, the token is appended to the context; the model then computes a new distribution conditioned on the extended prefix.
+
+In turn 2, the question followed by “They” yields a new illustrative distribution. “built” gets 0.5, “gave” 0.3 and “made” 0.2. If the rule selects “built,” the context now contains “They built.” The parameters are the same in both turns.
 
 Three terms are enough:
 
