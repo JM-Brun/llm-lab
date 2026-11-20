@@ -10,6 +10,9 @@ from collections import Counter
 from pathlib import PurePosixPath
 from typing import Any
 
+from page_index import PublishedPage
+from project_index import ProjectIndex
+
 REGISTRY_VERSION = 1
 MATRIX_SCHEMA_VERSION = 1
 
@@ -21,7 +24,7 @@ UNREGISTERED_DIMENSIONS = {
 }
 
 
-def _page_path(page: Any) -> str:
+def _page_path(page: PublishedPage) -> str:
     """Return a stable repository-relative path without leaking the checkout root."""
     parts = PurePosixPath(page.path.as_posix()).parts
     try:
@@ -35,7 +38,50 @@ def _cell(state: str, evidence: list[dict[str, str]], reason: str) -> dict[str, 
     return {"state": state, "evidence": evidence, "reason": reason}
 
 
-def build_concept_coverage(index: Any) -> dict[str, Any]:
+def _revision_coverage(index: ProjectIndex, page_ids: list[str]) -> dict[str, Any]:
+    if not page_ids:
+        return _cell("needs_review", [], "No explicit published teaching-page association.")
+
+    statuses: set[str] = set()
+    evidence: list[dict[str, str]] = []
+    for page_id in page_ids:
+        assessment = index.revision_support_by_page.get(page_id)
+        if assessment is None:
+            continue
+        page_path = _page_path(index.pages_by_id[page_id])
+        status = assessment["status"]
+        if status != "not_applicable":
+            statuses.add(status)
+        lesson_evidence = {"id": page_id, "path": page_path, "status": status}
+        if assessment["reason"] is not None:
+            lesson_evidence["reason"] = assessment["reason"]
+        evidence.append(lesson_evidence)
+        for item in assessment["evidence"]:
+            if "anchor" in item:
+                anchor = item["anchor"]
+                evidence.append({"id": f"{page_id}#{anchor}", "path": f"{page_path}#{anchor}"})
+        for edge in index.revision_aids_for_lesson(page_id):
+            evidence.append(
+                {
+                    "id": f"{edge.aid_page_id}:{edge.role}:{edge.source_page_id}",
+                    "path": _page_path(index.pages_by_id[edge.aid_page_id]),
+                    "role": edge.role,
+                    "target_id": edge.source_page_id,
+                }
+            )
+
+    if not statuses:
+        return _cell("not_applicable", evidence, "No associated lesson is in revision scope.")
+    if statuses == {"not_assessed"}:
+        return _cell("not_assessed", evidence, "Every in-scope lesson awaits assessment.")
+    if statuses <= {"integrated_sufficient", "companion_sufficient"}:
+        return _cell("present", evidence, "Every in-scope lesson has sufficient revision support.")
+    if statuses == {"missing"}:
+        return _cell("missing", evidence, "Every in-scope lesson was assessed as missing support.")
+    return _cell("needs_review", evidence, "In-scope assessments are partial or have mixed states.")
+
+
+def build_concept_coverage(index: ProjectIndex) -> dict[str, Any]:
     """Build a deterministic concept-centred matrix from a validated ProjectIndex."""
     rows: list[dict[str, Any]] = []
 
@@ -128,58 +174,6 @@ def build_concept_coverage(index: Any) -> dict[str, Any]:
             ),
         )
 
-        revision_states = [
-            index.revision_support_by_page.get(page_id, {}).get("status", "not_assessed")
-            for page_id in page_ids
-        ]
-        revision_edges = [
-            edge for page_id in page_ids for edge in index.revision_aids_for_lesson(page_id)
-        ]
-        if not page_ids:
-            revision_state = "needs_review"
-            revision_reason = "No associated teaching page is available for revision assessment."
-        elif all(state == "not_applicable" for state in revision_states):
-            revision_state = "not_applicable"
-            revision_reason = "All associated pages are explicitly outside revision-support scope."
-        elif all(state == "not_assessed" for state in revision_states):
-            revision_state = "not_assessed"
-            revision_reason = (
-                "No editorial revision-support assessment is recorded for the associated pages."
-            )
-        elif all(
-            state in {"integrated_sufficient", "companion_sufficient"} for state in revision_states
-        ):
-            revision_state = "present"
-            revision_reason = (
-                "All associated teaching pages have sufficient assessed revision support."
-            )
-        else:
-            revision_state = "needs_review"
-            revision_reason = (
-                "At least one associated page has partial, missing, or "
-                "mixed revision-support status."
-            )
-        revision_evidence = [
-            {
-                "id": page_id,
-                "path": _page_path(index.pages_by_id[page_id]),
-                "status": index.revision_support_by_page.get(page_id, {}).get(
-                    "status", "not_assessed"
-                ),
-            }
-            for page_id in page_ids
-        ]
-        revision_evidence.extend(
-            {
-                "id": f"{edge.aid_page_id}:{edge.role}:{edge.source_page_id}",
-                "path": _page_path(index.pages_by_id[edge.aid_page_id]),
-                "role": edge.role,
-                "target_id": edge.source_page_id,
-            }
-            for edge in revision_edges
-        )
-        revision_cell = _cell(revision_state, revision_evidence, revision_reason)
-
         languages = sorted({page.language for page in pages if page.language in {"fr", "en"}})
         bilingual_cell = _cell(
             "needs_review",
@@ -216,7 +210,7 @@ def build_concept_coverage(index: Any) -> dict[str, Any]:
                 [],
                 UNREGISTERED_DIMENSIONS["practice"],
             ),
-            "revision_support": revision_cell,
+            "revision_support": _revision_coverage(index, page_ids),
             "bilingual_parity": bilingual_cell,
         }
         rows.append(

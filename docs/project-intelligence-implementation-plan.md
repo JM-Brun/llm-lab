@@ -1,6 +1,6 @@
 # Project Intelligence Layer — implementation plan
 
-**Status date:** 2026-11-19  
+**Status date:** 2026-11-20\
 **Initial implementation branch:** `feat/project-intelligence-index`  
 **Initial implementation:** [PR #1380](https://github.com/JM-Brun/llm-lab/pull/1380); resource/revision adapters: [PR #1394](https://github.com/JM-Brun/llm-lab/pull/1394)  
 **Architecture:** [Project intelligence layer](project-intelligence-layer.md)  
@@ -28,12 +28,11 @@ This document is the operational backlog for turning the proposed Project Intell
 
 ### Deliberate boundaries
 
-- The revision contract is documentation/proposal only. The adapter does not change the page metadata schema, `check_page_metadata.py`, `check_resource_registry.py`, or any of the 62 page records.
-- No current page declares a `revision` object; the adapter therefore exposes no current revision edges.
-- Inverse resource/revision query methods were merged in PR #1399 and tested against the real repository.
+- The current revision adapter reads `revision_role`, `revision_of` and `revision_support` from page metadata. The earlier nested `revision` proposal describes the first adapter design. The current reader is validated through the revision coverage inventory in CI.
+- Inverse resource/revision query methods were merged in PRs #1399, #1411 and #1415 and tested against the real repository.
 - Source/extraction, computational graph, historical, experiment and Build-milestone adapters remain future work.
 - No semantic links are inferred from tags, titles, body text or lexical similarity.
-- The metric registry and coverage-state contract are documented in [project-metric-registry.md](project-metric-registry.md). The first concept-matrix builder is being implemented; diagnostics and interfaces remain unimplemented.
+- The metric registry and coverage-state contract are documented in [project-metric-registry.md](project-metric-registry.md). The concept matrix has synthetic and real-repository tests. Diagnostics and interfaces remain pending.
 
 ## 2. Remaining work — ordered backlog
 
@@ -70,20 +69,20 @@ Tests must exercise the real repository, not only synthetic fixtures. Cover all 
 
 **Delivered:** PR #1399 merged. Deterministic forward/reverse resource and revision queries are tested with synthetic fixtures and the real repository. The tests reconcile all five resource records and ten page/resource associations in both directions, and preserve page-local section-anchor identity. CI, Quarto and secret scanning passed on the final PR head.
 
-### Step 5 — Metric registry, then coverage matrix (in progress)
+### Step 5 — Metric registry, then coverage matrix
 
 **Substep 5a — registry (documentation contract defined):**
 - Canonical registry: [project-metric-registry.md](project-metric-registry.md).
 - Stable IDs, definitions, units, populations, canonical sources/schema versions, filters, exclusions, bilingual grouping, unknown-state policy, implementation status and test expectations are specified.
 - Structural inventory metrics are kept distinct from outcome/quality KPIs.
 - Unsupported Build, practice, source-bridge and computation-bridge dimensions are explicitly marked not_registered rather than zero.
-- Revision support remains not_assessed until its proposed contract is approved and validated.
+- Revision support reflects explicit editorial assessments of eligible lessons.
 
-**Substep 5b — coverage matrix (first read-only projection implemented; validation pending):**
+**Substep 5b — coverage matrix (first read-only projection implemented and tested):**
 - `site/tools/project_coverage.py` builds one concept-centred row per canonical concept ID using ProjectIndex.
 - Dimensions remain separate: definition, teaching pages, Understand, Build, computation, resources, revision support, sources, practice and bilingual parity.
 - Each cell carries state, evidence IDs/paths and an explanatory reason; deterministic state counts are included.
-- Build, computation, sources and practice remain not_registered. Revision support preserves not_assessed and the proposed-contract boundary.
+- Build, computation, sources and practice remain `not_registered`. The revision metric uses the adapter's Understand/Build assessment scope. Concepts with eligible lessons, concepts linked only to pages outside that scope and concepts without any associated page have distinct outcomes.
 - No opaque aggregate score is computed; not_registered/not_applicable/needs_review/not_assessed are not failures.
 
 **Acceptance:** every published metric has a reproducible definition and explicit unit; matrix cells distinguish present, missing, not_applicable, not_registered, needs_review and not_assessed; unsupported dimensions remain visibly unregistered.
@@ -132,11 +131,9 @@ The CLI, JSON and dashboard must not implement separate counting or relationship
 
 ## 5. Immediate next actions
 
-1. Validate the first concept-centred matrix implementation with CI and the real repository.
-2. Review cell-state semantics, especially no-association cases, revision not_assessed and bilingual parity; do not convert them to missing.
-3. Extend tests for any corrected semantics and publish a reproducible matrix snapshot with commit and registry version.
-4. Only after step 5 is accepted, begin deterministic diagnostics.
-5. Keep CLI, JSON/Markdown and dashboard interfaces deferred until diagnostics are stable in step 6.
+1. Review the explicit pairing rule required for a bilingual parity verdict. The matrix still reports this dimension as `needs_review`.
+2. Once the matrix contract is accepted, implement the first deterministic diagnostics in step 6 over the same ProjectIndex projection.
+3. Use the validated diagnostics and metric definitions when implementing CLI and dashboard interfaces.
 
 ## 6. Definition of done for the PIL
 

@@ -129,7 +129,7 @@ The first matrix is concept-centred: one row per canonical concept ID. It is a s
 | build | Reviewed milestone/page/evidence association | No machine-readable milestone crosswalk | not_registered |
 | computation | Explicit concept-to-computational-node bridge | No canonical bridge established | not_registered |
 | resources | Explicit first-class resource association | resources.yml v1 + ProjectIndex | available |
-| revision_support | Per-page revision assessment and typed declarations; not_assessed remains distinct from missing | ProjectIndex revision adapter; proposed contract not validator-approved | human_review |
+| revision_support | Editorial assessments of associated Understand/Build lessons and their explicit section anchors or companion aids | Page-map v1 through the ProjectIndex revision adapter | human_review |
 | sources | Explicit concept IDs in source/extraction records with valid lineage | sources.yml and extraction manifests; adapter pending | not_registered |
 | practice | Explicit reviewed exercise/test/experiment mapping | No complete canonical mapping | not_registered |
 | bilingual_parity | Expected FR and EN teaching-page counterparts under an explicit parity rule | Page-map v1 + reviewed pairing policy | needs_review |
@@ -147,7 +147,22 @@ The first matrix is concept-centred: one row per canonical concept ID. It is a s
 
 Each cell must include evidence IDs/paths and the rule assigning its state. present does not mean pedagogically sufficient or scientifically correct. missing is not permitted merely because a list is empty.
 
-### 5.2 Aggregation rules
+### 5.2 Revision-support scope
+
+The revision adapter supplies assessments for published Understand and Build lessons. An optional Deepen page contributes to Understand route membership and stays outside revision assessment. An explicit `not_applicable` lesson assessment retains its rationale in the evidence and is excluded from the aggregation.
+
+| Applicable lesson assessments for one concept | Matrix state |
+|---|---|
+| No associated published pages | `needs_review` |
+| Associated pages exist, all outside the scope or explicitly `not_applicable` | `not_applicable` |
+| All await assessment | `not_assessed` |
+| All were assessed as `integrated_sufficient` or `companion_sufficient` | `present` |
+| All were explicitly assessed as `missing`, with a reason on each lesson | `missing` |
+| Partial assessments or any other mixture of applicable statuses | `needs_review` |
+
+Assessment evidence points to the lesson metadata and any explicit section anchors. A typed link to a companion aid is evidence of the relationship. The lesson assessment determines sufficiency.
+
+### 5.3 Aggregation rules
 
 - Denominator: distinct canonical concept IDs in concepts.yml v2.
 - Each concept appears once, independent of language.

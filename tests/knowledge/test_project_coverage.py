@@ -5,6 +5,9 @@ from __future__ import annotations
 import runpy
 from pathlib import Path
 
+import pytest
+import yaml
+
 ROOT = Path(__file__).resolve().parents[2]
 PROJECT_INDEX = runpy.run_path(
     str(ROOT / "site" / "tools" / "project_index.py"),
@@ -77,6 +80,10 @@ def test_sufficient_integrated_revision_support_projects_as_present(tmp_path: Pa
 
     assert _state(rows["attention"], "revision_support") == "present"
     assert _state(rows["query"], "revision_support") == "present"
+    assert {
+        "id": "fr/attention#revision-summary",
+        "path": "site/fr/attention.qmd#revision-summary",
+    } in rows["attention"]["dimensions"]["revision_support"]["evidence"]
 
 
 def test_revision_not_applicable_is_not_counted_as_missing(tmp_path: Path) -> None:
@@ -102,6 +109,84 @@ def test_revision_not_applicable_is_not_counted_as_missing(tmp_path: Path) -> No
     assert all(
         cell["state"] != "missing" for row in rows.values() for cell in row["dimensions"].values()
     )
+
+
+def test_optional_deepen_page_counts_for_route_but_not_revision(tmp_path: Path) -> None:
+    write_page = FIXTURES["_write_page"]
+    write_page(
+        tmp_path / "site",
+        "en/attention",
+        "en",
+        revision_support={
+            "status": "companion_sufficient",
+            "evidence": [
+                {"aid": "en/summary", "note": "Worked example."},
+            ],
+        },
+    )
+    write_page(
+        tmp_path / "site",
+        "fr/attention",
+        "fr",
+        revision_support={"status": "not_applicable", "reason": "Outside pilot scope."},
+    )
+    write_page(tmp_path / "site", "en/query", "en", destination="deepen")
+    write_page(
+        tmp_path / "site",
+        "en/summary",
+        "en",
+        destination="deepen",
+        revision_role="synthesis",
+        revision_of=["en/attention"],
+    )
+    FIXTURES["_write_sources"](tmp_path)
+    concepts_path = tmp_path / "data" / "concepts.yml"
+    concepts = yaml.safe_load(concepts_path.read_text(encoding="utf-8"))
+    concepts["concepts"][0]["resources"].append("en/query")
+    concepts["concepts"][1]["resources"] = ["en/query"]
+    concepts_path.write_text(yaml.safe_dump(concepts), encoding="utf-8")
+
+    matrix = build_concept_coverage(ProjectIndex.build(tmp_path))
+    rows = {row["concept_id"]: row["dimensions"] for row in matrix["rows"]}
+
+    assert rows["query"]["understand"]["state"] == "present"
+    assert rows["query"]["understand"]["evidence"][0]["role"] == "optional"
+    assert rows["query"]["revision_support"]["state"] == "not_applicable"
+    assert rows["query"]["revision_support"]["evidence"] == []
+    revision = rows["attention"]["revision_support"]
+    assert revision["state"] == "present"
+    assert [item["id"] for item in revision["evidence"]] == [
+        "en/attention",
+        "en/summary:synthesis:en/attention",
+        "fr/attention",
+    ]
+    assert revision["evidence"][-1]["reason"] == "Outside pilot scope."
+
+
+@pytest.mark.parametrize(
+    ("en_status", "expected_state"),
+    [("missing", "missing"), ("not_assessed", "needs_review")],
+)
+def test_missing_requires_an_explicit_assessment_for_each_in_scope_lesson(
+    tmp_path: Path, en_status: str, expected_state: str
+) -> None:
+    write_page = FIXTURES["_write_page"]
+    missing = {"status": "missing", "reason": "The lesson has no revision support."}
+    write_page(tmp_path / "site", "fr/attention", "fr", revision_support=missing)
+    write_page(
+        tmp_path / "site",
+        "en/attention",
+        "en",
+        revision_support=missing if en_status == "missing" else None,
+    )
+    write_page(tmp_path / "site", "en/query", "en")
+    FIXTURES["_write_sources"](tmp_path)
+
+    matrix = build_concept_coverage(ProjectIndex.build(tmp_path))
+    rows = {row["concept_id"]: row for row in matrix["rows"]}
+
+    assert _state(rows["attention"], "revision_support") == expected_state
+    assert _state(rows["query"], "revision_support") == "missing"
 
 
 def test_assessed_without_declared_aid_requires_review_not_missing(tmp_path: Path) -> None:
@@ -142,6 +227,13 @@ def test_matrix_evidence_paths_are_repository_relative_and_deterministic() -> No
                     assert not path.startswith("/")
                     assert ".." not in Path(path).parts
     assert sum(first["state_counts"]["revision_support"].values()) == first["row_count"]
+    for row in first["rows"]:
+        associated = index.pages_by_concept.get(row["concept_id"], ())
+        assessments = index.revision_support_by_page
+        cell = row["dimensions"]["revision_support"]
+        assert {item["id"] for item in cell["evidence"] if "status" in item} == {
+            page_id for page_id in associated if page_id in assessments
+        }
     assert first["state_counts"]["build"] == {"not_registered": first["row_count"]}
     assert first["state_counts"]["computation"] == {"not_registered": first["row_count"]}
     assert first["state_counts"]["sources"] == {"not_registered": first["row_count"]}
