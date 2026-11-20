@@ -1,0 +1,37 @@
+```{=html}
+<details data-attention-intervention lang="en">
+  <summary>Optional lab · What happens when you change K or V?</summary>
+  <div class="mt-3">
+    <p id="attention-intervention">Follow one query q = (1, 1) in a toy head with two accessible positions, A and B. The vectors are chosen for the exercise. Decimals are rounded to three places.</p>
+    <div class="mb-3" data-attention-controls hidden>
+      <p>Before changing B, predict what will change in the scores, the weights, and the contributions to the output.</p>
+      <label for="attention-intervention-choice-en">Intervention at position B</label>
+      <select class="form-select" id="attention-intervention-choice-en">
+        <option value="baseline">Starting example</option>
+        <option value="value">Change only B’s value to (0, 8)</option>
+        <option value="key">Change only B’s key to (1, 1)</option>
+      </select>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-sm">
+        <caption>Computation for one query and two accessible positions</caption>
+        <thead><tr><th scope="col">Step</th><th scope="col">A</th><th scope="col">B</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Key k</th><td data-a="key">(1, 1)</td><td data-b="key">(0, 0)</td></tr>
+          <tr><th scope="row">Raw score q · k</th><td data-a="raw">2</td><td data-b="raw">0</td></tr>
+          <tr><th scope="row">Scaled score (÷ √2)</th><td data-a="scaled">1.414</td><td data-b="scaled">0</td></tr>
+          <tr><th scope="row">Weight a (softmax)</th><td data-a="weight">0.804</td><td data-b="weight">0.196</td></tr>
+          <tr><th scope="row">Value v</th><td data-a="value">(2, 0)</td><td data-b="value">(0, 4)</td></tr>
+          <tr><th scope="row">Contribution a × v</th><td data-a="term">(1.609, 0)</td><td data-b="term">(0, 0.782)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p role="status"><strong>Output (sum of contributions)</strong> <span data-attention-output>(1.609, 0.782)</span></p>
+    <p>Starting example: weights ≈ (0.804, 0.196), output ≈ (1.609, 0.782).</p>
+    <details>
+      <summary>Show the reasoning</summary>
+      <p>If only v<sub>B</sub> doubles, the weights stay the same and the second output component doubles. If the keys become identical, both weights are 0.5 and the output becomes (1, 2).</p>
+    </details>
+  </div>
+</details>
+```

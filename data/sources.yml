@@ -6707,3 +6707,36 @@ sources:
       concepts: [token, next-token-prediction, cross-entropy]
       audit_records:
         - docs/source-reviews/jose-parreno-garcia-llms-explained-part-3-tokenization-training-2026-11.md
+  - id: djamchid-karatsuba
+    title: "Multiplier deux nombres — de Karatsuba à l'IA"
+    creators: ["Djamchid Dalili"]
+    source_type: blog
+    canonical_url: "https://djamchid.fr/blog/posts/2026-11-18-multiplication-karatsuba.html"
+    publisher: "Djamchid"
+    publication_date: "2026-11-18"
+    language: fr
+    version: "Unversioned public HTML inspected 2026-11-20"
+    licence: {identifier: null, url: null, status: unknown}
+    reuse: {text: link-only, figures: unknown, code: unknown, data: unknown}
+    classification:
+      primary_theme: mathematical-tools-geometry
+      tags: [topic:integer-multiplication, modality:interactive-visualization]
+    metadata:
+      technical_level: introductory
+      contribution_types: [mathematical-derivation, visualization, pedagogy, historical-context]
+      audiences: [beginner, learner, educator]
+    scan_status: partially-scanned
+    integration_status: partially-integrated
+    scan_history:
+      - accessed_at: "2026-11-20"
+        status: partially-scanned
+        inspected_scope:
+          - "Direct canonical HTML via HTTPS, including the opening, six sections and bibliography."
+          - "Source markup for the inline diagrams and in-page navigation, and inline JavaScript for the calculator, presets, input validation and recursion display."
+        limitations:
+          - "The 2026-11-19 inspection is documented in the existing design pattern; the canonical scan record starts with this direct retrieval."
+          - "The article's browser interaction, visual accessibility and surrounding site were not independently tested. Linked claims and comments were not audited."
+          - "No permission to reuse the source's illustrations, prose or JavaScript was established."
+    related:
+      pages: [fr/scaled-dot-product-attention, en/scaled-dot-product-attention]
+      audit_records: [docs/interactive-explanatory-lesson-pattern.md]

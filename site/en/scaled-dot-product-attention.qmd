@@ -91,6 +91,10 @@ In the running example, this operation is repeated for each position that needs 
 
 Read the full computation in order: scores from Q and K are scaled, an optional mask excludes forbidden positions, softmax normalizes the accessible scores, and the resulting weights combine the V vectors. To work through this sequence by hand, distinguish weighted mixing from selection, and manipulate projections in a multi-head setting, use the [Attention collection](exercises-attention.qmd#at-0-scores-to-output), especially exercises AT-A to AT-C.
 
+{{< include ../includes/attention-intervention-en.qmd >}}
+
+<script src="../scripts/attention-intervention.js" defer></script>
+
 ## Provenance and purpose
 
 The formulation is presented in [Vaswani et al. (2017), *Attention Is All You Need*](https://arxiv.org/abs/1706.03762), which compares additive and dot-product attention and introduces the scaling factor. It supports efficient matrix computation and naturally fits multi-head mechanisms.

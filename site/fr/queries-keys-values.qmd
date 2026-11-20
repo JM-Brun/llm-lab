@@ -155,9 +155,9 @@ La distinction fonctionnelle est simple, mais fondamentale :
 
 Les poids ne sont pas une mesure universelle de pertinence sémantique et l'attention n'est pas une recherche du plus proche voisin dans les embeddings initiaux : elle opère sur des projections apprises. Les limites de cette interprétation et les chemins de gradient sont détaillés dans l'[approfondissement Q/K/V](queries-keys-values-advanced.qmd).
 
-La page suivante, [Attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd), explique comment les scores deviennent des poids et comment ceux-ci agrègent V.
+La page suivante, [Attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd), explique comment les scores deviennent des poids et comment ceux-ci agrègent V. Son [atelier facultatif](scaled-dot-product-attention.qmd#attention-intervention) permet de vérifier l’effet de changer une clé ou une valeur.
 
-Pour mettre en pratique les compétences associées à cette leçon, les [exercices de la section Attention](exercises-attention.qmd#attention) proposent de calculer les projections et leurs dimensions, prévoir les effets d'une modification de $W_Q$, $W_K$ ou $W_V$, relier les projections à la rétropropagation, puis transférer le raisonnement à l'attention croisée et à GQA/MQA. Les calculs numériques restent dans ce parcours pratique.
+Pour mettre en pratique les compétences associées à cette leçon, les [exercices de la section Attention](exercises-attention.qmd#attention) proposent de calculer les projections et leurs dimensions, prévoir les effets d'une modification de $W_Q$, $W_K$ ou $W_V$, relier les projections à la rétropropagation, puis transférer le raisonnement à l'attention croisée et à GQA/MQA. Les calculs à la main se font dans ce parcours pratique.
 
 
 
