@@ -1386,7 +1386,8 @@ async function runCase(testCase, caseIndex) {
           const noScript = await browser.newContext({ javaScriptEnabled: false, viewport });
           try {
             const staticPage = await noScript.newPage();
-            await staticPage.goto(page.url(), { waitUntil: "domcontentloaded" });
+            // With scripting disabled, the stylesheet controls which fallback link is visible.
+            await staticPage.goto(page.url(), { waitUntil: "load" });
             const staticExplorer = staticPage.locator("[data-next-token-explorer]");
             if (await staticExplorer.locator(".next-token-explorer__interactive").isVisible() ||
                 await staticExplorer.locator(".next-token-explorer__fallback a:visible").count() !== 1) {
