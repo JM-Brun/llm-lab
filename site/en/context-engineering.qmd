@@ -133,7 +133,7 @@ Establish a baseline, add one source or example at a time, test questions with k
 
 ## Practice
 
-Apply these principles with the [context engineering exercises](exercises/context-engineering.qmd).
+[Trace what carries over to the next call](exercises/context-engineering.qmd#ex-context-between-calls) or explore the [context engineering exercises](exercises/context-engineering.qmd).
 
 ## References
 

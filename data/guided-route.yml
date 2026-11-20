@@ -245,7 +245,7 @@ stages:
       en: [en/generation]
     compact_title: {fr: "Générer (reprise)", en: "Generate (revisit)"}
     prediction_use:
-      context: {fr: "S’allonge avec le token choisi", en: "Grows by the selected token"}
+      context: {fr: "S’allonge à chaque token réinjecté", en: "Grows with each token fed back"}
       parameters: fixed
       action: {fr: "Sélectionner puis réinjecter un token", en: "Select and feed back a token"}
     conceptual_focus:
@@ -289,18 +289,18 @@ stages:
       en: [en/in-context-learning, en/context-engineering]
     compact_title: {fr: "Concevoir le contexte", en: "Design the context"}
     prediction_use:
-      context: {fr: "Composé avant la prédiction", en: "Assembled before prediction"}
+      context: {fr: "Assemblé pour chaque appel", en: "Assembled for each call"}
       parameters: fixed
       action: {fr: "Choisir les informations fournies", en: "Choose the information supplied"}
     conceptual_focus:
       in-context-learning:
         mobilizes: ["node:token-context"]
         objects: ["concept:in-context-learning"]
-        outcome: {fr: "Expliquer l’adaptation à paramètres fixes", en: "Explain adaptation with fixed parameters"}
+        outcome: {fr: "Expliquer l’effet d’un exemple fourni à paramètres fixes", en: "Explain the effect of a supplied example with fixed parameters"}
       context-engineering:
         mobilizes: ["node:token-context"]
         objects: ["concept:context-engineering"]
-        outcome: {fr: "Composer les informations fournies au modèle", en: "Assemble the information supplied to the model"}
+        outcome: {fr: "Déterminer ce qui est effectivement transmis à chaque appel", en: "Determine what is actually supplied in each call"}
     optional_pages:
       fr: [fr/rag-memory-boundaries, fr/document-retrieval]
       en: [en/rag-memory-boundaries, en/document-retrieval]
@@ -484,3 +484,68 @@ lesson_contracts:
   training-loop:
     synthesis: revision-training-loop
     requires: [causal-masking, loss, gradients]
+
+# Source review of two boundaries in the Understand route (2026-11-20).
+# Stage, concept, and page IDs reference the existing registries. Each criterion
+# records an editorial judgment; the test verifies the referenced evidence exists.
+boundaries:
+  contextualization-and-causality:
+    criterion: >-
+      At a fixed token ID and position, the base embedding stays the same.
+      A change in the accessible prefix can affect hidden states; a change
+      exclusively in the future cannot affect the current state in a causal GPT.
+    explanations:
+      representations:
+        concept_ids: [token-embedding, contextualized-representation]
+        pages: {fr: fr/contextualized-representations, en: en/contextualized-representations}
+      computation:
+        concept_ids: [causal-mask]
+        pages: {fr: fr/causal-masking, en: en/causal-masking}
+    transfer:
+      pages:
+        fr: fr/contextualized-representations-exercises
+        en: en/contextualized-representations-exercises
+      anchor: ex-contextualization-causal-boundary
+      label:
+        fr: "Comparer un changement avant ou après le token étudié"
+        en: "Compare a change before or after the token under study"
+
+  predictive-entropy-and-observed-score:
+    criterion: >-
+      The entropy of a predictive distribution uses every outcome. The score
+      of an observed token uses one probability. Equal observed scores can
+      therefore coexist with different entropies at the same prediction step.
+    explanations:
+      prediction:
+        concept_ids: [entropy]
+        pages: {fr: fr/entropy, en: en/entropy}
+      scoring:
+        concept_ids: [observed-target, sequence-likelihood, log-likelihood]
+        pages: {fr: fr/vraisemblance, en: en/likelihood}
+    transfer:
+      pages: {fr: fr/entropy-exercises, en: en/entropy-exercises}
+      anchor: ex-entropy-and-observed-score
+      label:
+        fr: "Comparer deux distributions qui attribuent la même probabilité au token observé"
+        en: "Compare two distributions that assign the same probability to the observed token"
+
+  generation-and-context-across-calls:
+    criterion: >-
+      Within a generation, the chosen token is fed back into the current prefix
+      if generation continues. On another call, the application defines the input.
+      Stored history and examples can affect the new prediction through context
+      only if they are supplied again, directly or through derived information.
+      Both calls can use the same fixed model parameters.
+    explanations:
+      inference:
+        concept_ids: [autoregressive-generation]
+        pages: {fr: fr/generation, en: en/generation}
+      context-use:
+        concept_ids: [context-engineering, in-context-learning]
+        pages: {fr: fr/context-engineering, en: en/context-engineering}
+    transfer:
+      pages: {fr: fr/context-engineering-exercises, en: en/context-engineering-exercises}
+      anchor: ex-context-between-calls
+      label:
+        fr: "Suivre ce qui passe d’un appel au suivant"
+        en: "Trace what carries over to the next call"
