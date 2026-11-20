@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "The recap separates score, probability and truth; the lesson explains dimension V, ranking, common-shift invariance and the output projection. The exercise page checks these points with four answered questions."
+      note: "The recap separates score, probability and truth; the lesson explains dimension V, ranking, common-shift invariance and the output projection. The exercises check these points and compare the attention and output softmax axes."
 tags: ["type:concept-lesson", "destination:understand", "topic:logits", "level:core", "language:en", "status:published"]
 -->
 
@@ -136,7 +136,7 @@ The [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/stable/generate
 
 ### Practice
 
-The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/logits.qmd).
+[Compare the two softmax axes](exercises/logits.qmd#ex-attention-vocabulary-softmax) or explore the [other practice questions](exercises/logits.qmd).
 
 </div>
 </details>

@@ -530,6 +530,27 @@ boundaries:
         fr: "Comparer un changement avant ou après le token étudié"
         en: "Compare a change before or after the token under study"
 
+  attention-positions-and-vocabulary:
+    criterion: >-
+      For a fixed query, attention softmax normalizes scores over key positions
+      and its weights combine the value vectors. Output softmax normalizes the
+      logits over the vocabulary. Even if the two axes have the same length,
+      adding attention weights at positions with the same token does not give
+      its probability as a next token.
+    explanations:
+      computation:
+        concept_ids: [attention-score, attention-weight]
+        pages: {fr: fr/scaled-dot-product-attention, en: en/scaled-dot-product-attention}
+      prediction:
+        concept_ids: [softmax, conditional-distribution]
+        pages: {fr: fr/probabilites, en: en/probabilities}
+    transfer:
+      pages: {fr: fr/logits-exercises, en: en/logits-exercises}
+      anchor: ex-attention-vocabulary-softmax
+      label:
+        fr: "Distinguer les poids d’attention des probabilités du prochain token"
+        en: "Distinguish attention weights from next-token probabilities"
+
   predictive-distribution-and-selection:
     criterion: >-
       At a fixed context and fixed logits, greedy decoding selects the unique
