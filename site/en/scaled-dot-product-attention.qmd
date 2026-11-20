@@ -166,12 +166,15 @@ These diagrams are **original pedagogical reconstructions** based on the FlashAt
 **Language:** [Français](../fr/scaled-dot-product-attention.qmd) · [English](scaled-dot-product-attention.qmd)
 ::::
 
+:::: {.supplementary-resources}
+
 <details class="learning-resources">
 <summary>
   <span class="learning-resources__title">Supplementary resources</span>
   <span class="learning-resources__description">Experiment, explore further, and practise the ideas from this lesson.</span>
 </summary>
-<div class="learning-resources__content" markdown="1">
+
+::: {.learning-resources__content}
 
 ### Practice
 
@@ -190,8 +193,11 @@ This page belongs to the conceptual **Theory / Understand** path: it explains th
 The mathematical definition of attention does not prescribe how a GPU executes it. [FlashAttention](https://arxiv.org/abs/2205.14135) preserves exact dense attention while processing blocks and reducing transfers between GPU memory and fast on-chip memory. It should not be confused with sparse attention, which changes the allowed positions. For the mechanism, trade-offs and measurement caveats, see [the FlashAttention source review](https://github.com/JM-Brun/llm-lab/blob/main/docs/source-reviews/flashattention-io-aware-2026-11.md), followed by the [PyTorch SDPA documentation](https://docs.pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html) and the [reproducible benchmark protocol](https://github.com/JM-Brun/llm-lab/blob/main/docs/experiments/flashattention-benchmark-protocol.md). This hardware optimization is an optional deepening, not an extra stage in the conceptual route.
 
 
-</div>
+:::
+
 </details>
+
+::::
 
 The analogy between attention and statistical dependency can motivate a question, but **an attention weight is not mutual information**. An attention map alone also does not establish a causal or semantic explanation.
 Attention weights do not compute this quantity. They are input-dependent normalized coefficients obtained from queries, keys and the mask; they weight the aggregation of value vectors. They therefore do not directly measure, in bits, how much information one token provides about another.
