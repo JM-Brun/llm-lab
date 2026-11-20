@@ -85,7 +85,7 @@ $$
 
 Here $M$ denotes an additive hard mask: $M_{ij}=0$ for an allowed query-key pair and $M_{ij}=-\infty$ for a disallowed pair. If no mask is needed, omit $M$ (equivalently, use an all-zero matrix). The mask acts on scores **before** softmax: that is the only point where it can change which positions are accessible to normalization. Which positions to forbid — the causal constraint — and how to handle a fully masked row are defined in [causal masking](causal-masking.qmd), the next step on the route.
 
-In the running example, this operation is repeated for each position that needs a contextualized representation. It combines values according to weights computed from Q–K compatibility; it does not directly select the next token.
+In the running example “What have the Romans ever done for us?”, follow the final position of the prefix. Its query is compared with the keys at accessible positions, and its weights combine their values. The sum is the head's output for that position. The [causal mask](causal-masking.qmd) determines which positions are accessible.
 
 ## From the mechanism to the calculation
 

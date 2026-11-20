@@ -92,10 +92,10 @@ Reprenons le premier tour du scribe et sa distribution illustrative sur quatre t
 
 | Token candidat | Probabilité |
 |---|---:|
-| « Être » | 0,6 |
-| « Vous » | 0,2 |
+| « Vous » | 0,6 |
+| « Je » | 0,2 |
+| « Moi » | 0,1 |
 | « Oui » | 0,1 |
-| « Non » | 0,1 |
 
 Avec des logarithmes naturels, l'entropie vaut :
 

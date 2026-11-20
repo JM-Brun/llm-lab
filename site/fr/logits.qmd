@@ -61,7 +61,7 @@ Les **logits sont des scores, pas des probabilités**. À une position, le modè
 </div>
 
 
-Dans cet exemple, une fois le préfixe « C'est une bonne situation, ça, scribe ? » traité par le Transformer, la tête de sortie associe un logit à chaque token du vocabulaire pour la prochaine position.
+Après le traitement de « C'est une bonne situation, ça, scribe ? », la tête de sortie lit l'état final du **dernier token du préfixe**. Elle lui associe un score par token du vocabulaire pour prédire la position suivante. Le [calcul sur quatre candidats](probabilites.qmd#running-example-next-token) montre comment ces scores deviennent la distribution du premier tour.
 
 ## Définition et dimensions
 

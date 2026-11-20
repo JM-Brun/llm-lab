@@ -74,15 +74,18 @@ Les probabilités sont positives et leur somme vaut un. Cette normalisation ne p
 
 Avec deux logits $z=(0,\log 3)$, la softmax donne $p=(0.25,0.75)$. Le second token est plus probable, mais cette distribution ne signifie pas qu'il est trois fois plus vrai : elle reflète les scores du modèle dans ce contexte.
 
-Dans notre exemple, la distribution est conditionnée par le préfixe « C'est une bonne situation, ça, scribe ? ». Après l'ajout d'un token généré, le préfixe change : le modèle recalcule alors une nouvelle distribution pour l'étape suivante.
+<a id="running-example-next-token"></a>
 
-Pour conserver un **repère numérique commun** avec les pages sur la perte et les gradients, nous suivrons aussi cette distribution illustrative au premier tour :
+Pour le préfixe « C'est une bonne situation, ça, scribe ? », prenons un vocabulaire jouet de quatre tokens. Les logits sont choisis pour retrouver les probabilités du premier tour du fil rouge. Les exponentielles somment à 10, donc la softmax divise chacune par 10.
 
-| Token candidat | Être | Vous | Oui | Non |
-|---|---:|---:|---:|---:|
-| Probabilité | 0,6 | 0,2 | 0,1 | 0,1 |
+| Token candidat | Logit | Exponentielle | Probabilité |
+|---|---:|---:|---:|
+| « Vous » | $\ln 6$ | 6 | 0,6 |
+| « Je » | $\ln 2$ | 2 | 0,2 |
+| « Moi » | $0$ | 1 | 0,1 |
+| « Oui » | $0$ | 1 | 0,1 |
 
-La cible de la continuation de référence est « Vous », premier token de la réponse illustrative. Ces quatre valeurs reprennent la première étape de la boucle de génération ; elles ne sont pas présentées comme la sortie d'un modèle réellement exécuté.
+La continuation illustrative prend « Vous ». Une fois ce token ajouté au préfixe, le [tour suivant de la génération](generation.qmd) utilise une nouvelle distribution.
 
 ## Probabilité conditionnelle dans un modèle autorégressif
 

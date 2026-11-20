@@ -61,7 +61,7 @@ Le masque causal impose une règle d'information : **la sortie à la position $i
 
 Lorsqu'on entraîne un modèle à prédire le token suivant, toutes les positions d'une séquence peuvent être calculées en parallèle. Sans masque, cependant, la représentation d'une position pourrait utiliser des tokens qui ne seraient pas encore connus au moment de la génération. Le masque rend donc l'entraînement parallèle compatible avec l'objectif autorégressif.
 
-Ainsi, lorsqu'on entraîne le modèle sur le préfixe et sa continuation, la position qui prédit un token ne peut pas consulter les tokens qui viennent après lui dans la séquence cible. En génération, ces tokens futurs ne sont tout simplement pas encore présents.
+Pour « C'est une bonne situation, ça, scribe ? », la dernière position du préfixe peut consulter toute la question, y compris son propre token. Si la question et sa continuation sont présentes ensemble pendant l'entraînement, le masque empêche cette position de consulter « Vous » et la suite. En génération, la continuation sera ajoutée après la prédiction.
 
 ## Définition
 
