@@ -41,7 +41,7 @@ def test_synthetic_matrix_uses_explicit_evidence_and_keeps_unknown_states(tmp_pa
     assert _state(rows["attention"], "understand") == "present"
     assert _state(rows["attention"], "resources") == "present"
     assert _state(rows["attention"], "revision_support") == "not_assessed"
-    assert _state(rows["attention"], "bilingual_parity") == "needs_review"
+    assert _state(rows["attention"], "bilingual_parity") == "present"
     assert _state(rows["query"], "teaching_pages") == "present"
     assert _state(rows["query"], "understand") == "present"
     assert _state(rows["query"], "resources") == "needs_review"
@@ -49,9 +49,70 @@ def test_synthetic_matrix_uses_explicit_evidence_and_keeps_unknown_states(tmp_pa
     assert _state(rows["query"], "computation") == "not_registered"
     assert _state(rows["query"], "sources") == "not_registered"
     assert _state(rows["query"], "practice") == "not_registered"
+    assert _state(rows["query"], "bilingual_parity") == "missing"
     assert all(
-        cell["state"] != "missing" for row in rows.values() for cell in row["dimensions"].values()
+        cell["state"] != "missing"
+        for row in rows.values()
+        for dimension, cell in row["dimensions"].items()
+        if dimension != "bilingual_parity"
     )
+
+
+def _set_query_pages(root: Path, page_ids: list[str]) -> None:
+    path = root / "data" / "concepts.yml"
+    data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    query = next(concept for concept in data["concepts"] if concept["id"] == "query")
+    query["resources"] = page_ids
+    path.write_text(yaml.safe_dump(data), encoding="utf-8")
+
+
+@pytest.mark.parametrize(
+    ("linked_pages", "state", "missing_counterparts"),
+    [
+        (["fr/texte", "en/text", "reference/references"], "present", []),
+        (["fr/attention", "en/text"], "missing", ["en/attention", "fr/texte"]),
+        (["en/query"], "needs_review", []),
+        (["reference/references"], "not_applicable", []),
+        ([], "needs_review", []),
+    ],
+)
+def test_bilingual_coverage_uses_topic_pairs_instead_of_language_counts(
+    tmp_path: Path, linked_pages: list[str], state: str, missing_counterparts: list[str]
+) -> None:
+    FIXTURES["_index"](tmp_path)
+    write_page = FIXTURES["_write_page"]
+    write_page(tmp_path / "site", "fr/texte", "fr", topic="text")
+    write_page(tmp_path / "site", "en/text", "en", topic="text")
+    write_page(tmp_path / "site", "reference/references", "shared")
+    _set_query_pages(tmp_path, linked_pages)
+
+    matrix = build_concept_coverage(ProjectIndex.build(tmp_path))
+    assert matrix["registry_version"] == 2
+    row = next(row for row in matrix["rows"] if row["concept_id"] == "query")
+    cell = row["dimensions"]["bilingual_parity"]
+    assert cell["state"] == state
+    assert [
+        page["id"] for page in cell["evidence"] if page["association"] == "missing_counterpart"
+    ] == missing_counterparts
+    if state == "present":
+        assert {page["topic"] for page in cell["evidence"]} == {"text"}
+        assert {page["id"] for page in cell["evidence"]} == {"fr/texte", "en/text"}
+    elif state == "not_applicable":
+        assert [page["language"] for page in cell["evidence"]] == ["shared"]
+
+
+def test_ambiguous_topic_requires_review_even_with_both_languages_linked(tmp_path: Path) -> None:
+    FIXTURES["_index"](tmp_path)
+    FIXTURES["_write_page"](tmp_path / "site", "en/attention-alternate", "en", topic="attention")
+    matrix = build_concept_coverage(ProjectIndex.build(tmp_path))
+    row = next(row for row in matrix["rows"] if row["concept_id"] == "attention")
+    cell = row["dimensions"]["bilingual_parity"]
+    assert cell["state"] == "needs_review"
+    assert {page["id"]: page["association"] for page in cell["evidence"]} == {
+        "en/attention": "linked",
+        "en/attention-alternate": "candidate",
+        "fr/attention": "linked",
+    }
 
 
 def test_sufficient_integrated_revision_support_projects_as_present(tmp_path: Path) -> None:
@@ -106,9 +167,7 @@ def test_revision_not_applicable_is_not_counted_as_missing(tmp_path: Path) -> No
 
     assert _state(rows["attention"], "revision_support") == "not_applicable"
     assert _state(rows["query"], "revision_support") == "not_applicable"
-    assert all(
-        cell["state"] != "missing" for row in rows.values() for cell in row["dimensions"].values()
-    )
+    assert matrix["state_counts"]["revision_support"] == {"not_applicable": 2}
 
 
 def test_optional_deepen_page_counts_for_route_but_not_revision(tmp_path: Path) -> None:

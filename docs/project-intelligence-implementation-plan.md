@@ -82,6 +82,7 @@ Tests must exercise the real repository, not only synthetic fixtures. Cover all 
 - `site/tools/project_coverage.py` builds one concept-centred row per canonical concept ID using ProjectIndex.
 - Dimensions remain separate: definition, teaching pages, Understand, Build, computation, resources, revision support, sources, practice and bilingual parity.
 - Each cell carries state, evidence IDs/paths and an explanatory reason; deterministic state counts are included.
+- Structural FR/EN parity checks each localized concept-to-page link against the published counterpart declared by `topic`. Editorial comparison of page content remains a separate assessment.
 - Build, computation, sources and practice remain `not_registered`. The revision metric uses the adapter's Understand/Build assessment scope. Concepts with eligible lessons, concepts linked only to pages outside that scope and concepts without any associated page have distinct outcomes.
 - No opaque aggregate score is computed; not_registered/not_applicable/needs_review/not_assessed are not failures.
 
@@ -131,9 +132,8 @@ The CLI, JSON and dashboard must not implement separate counting or relationship
 
 ## 5. Immediate next actions
 
-1. Review the explicit pairing rule required for a bilingual parity verdict. The matrix still reports this dimension as `needs_review`.
-2. Once the matrix contract is accepted, implement the first deterministic diagnostics in step 6 over the same ProjectIndex projection.
-3. Use the validated diagnostics and metric definitions when implementing CLI and dashboard interfaces.
+1. Implement deterministic diagnostics in step 6 over the ProjectIndex projection. The structural FR/EN rule can supply specific concept IDs and published counterpart paths for review.
+2. Use the validated diagnostics and metric definitions when implementing CLI and dashboard interfaces.
 
 ## 6. Definition of done for the PIL
 

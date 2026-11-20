@@ -5,11 +5,11 @@ from __future__ import annotations
 
 import re
 import sys
-from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
 import yaml
+from page_index import group_bilingual_topics
 from strict_yaml import load_yaml, parse_yaml
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -347,21 +347,17 @@ def _validate_relations(pages: dict[str, dict[str, Any]], errors: list[str]) -> 
 
 def _validate_bilingual_parity(pages: dict[str, dict[str, Any]], errors: list[str]) -> None:
     """Compare French and English pages by canonical topic rather than slug."""
-    by_topic: dict[str, dict[str, str]] = defaultdict(dict)
-    for page_id, page in pages.items():
-        tags = page["tags"]
-        language = tags.get("language")
-        topic = tags.get("topic")
-        if language in {"fr", "en"} and topic:
-            if language in by_topic[topic]:
-                errors.append(f"topic {topic!r}: more than one {language} page")
-            by_topic[topic][language] = page_id
-
+    by_topic = group_bilingual_topics({page_id: page["tags"] for page_id, page in pages.items()})
     for topic, counterparts in by_topic.items():
+        for language, page_ids in counterparts.items():
+            if len(page_ids) > 1:
+                errors.append(f"topic {topic!r}: more than one {language} page")
         if set(counterparts) != {"fr", "en"}:
             errors.append(f"topic {topic!r}: expected French and English counterparts")
             continue
-        fr_id, en_id = counterparts["fr"], counterparts["en"]
+        if any(len(page_ids) != 1 for page_ids in counterparts.values()):
+            continue
+        fr_id, en_id = counterparts["fr"][0], counterparts["en"][0]
         fr, en = pages[fr_id], pages[en_id]
         for dimension in ("type", "destination", "level", "status"):
             if fr["tags"].get(dimension) != en["tags"].get(dimension):

@@ -7,6 +7,8 @@ metadata validator. Authored page IDs and their source files remain authoritativ
 from __future__ import annotations
 
 import re
+from collections import defaultdict
+from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -17,6 +19,18 @@ from strict_yaml import parse_yaml
 _MARKER = "LLM-LAB-PAGE-MAP v1"
 _COMMENT = re.compile(r"<!--\s*\nLLM-LAB-PAGE-MAP v1\n(.*?)\n-->", re.DOTALL)
 _FRONT_MATTER = re.compile(r"\A---\s*\n(.*?)\n---\s*(?:\n|\Z)", re.DOTALL)
+
+
+def group_bilingual_topics(
+    tags_by_page: Mapping[str, Mapping[str, str]],
+) -> dict[str, dict[str, list[str]]]:
+    """Group declared page counterparts and retain duplicates for validation."""
+    groups: dict[str, dict[str, list[str]]] = defaultdict(dict)
+    for page_id, tags in sorted(tags_by_page.items()):
+        language, topic = tags.get("language"), tags.get("topic")
+        if language in ("fr", "en") and topic:
+            groups[topic].setdefault(language, []).append(page_id)
+    return dict(groups)
 
 
 @dataclass(frozen=True, slots=True)
