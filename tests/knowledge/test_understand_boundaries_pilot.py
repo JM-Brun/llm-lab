@@ -12,14 +12,6 @@ from strict_yaml import load_yaml
 
 ROOT = Path(__file__).resolve().parents[2]
 SITE = ROOT / "site"
-RETURN_LINK_PILOT = {
-    "ex-text-to-embedding-lookup",
-    "ex-contextualization-causal-boundary",
-    "ex-generation-distribution-selection",
-    "ex-entropy-and-observed-score",
-    "ex-context-between-calls",
-    "ex-score-to-parameter-update",
-}
 
 
 @pytest.mark.parametrize("language", ["fr", "en"])
@@ -35,7 +27,6 @@ def test_boundary_evidence_resolves_to_core_and_published_practice(language: str
     artifacts = prepare_build(language)
     plan = artifacts[fragment]
     assert document.boundaries
-    assert {item.transfer.anchor for item in document.boundaries.values()} >= RETURN_LINK_PILOT
 
     for boundary_id, boundary in document.boundaries.items():
         transfer = boundary.transfer
@@ -63,7 +54,8 @@ def test_boundary_evidence_resolves_to_core_and_published_practice(language: str
         label = "Reprendre la révision" if language == "fr" else "Return to the review plan"
         assert artifacts[exercise_fragment] == f"**{label}** · {return_links}\n"
 
-        if transfer.anchor in RETURN_LINK_PILOT:
+        # Remove this exception after #1453 lands and its exercise includes the fragment.
+        if transfer.anchor != "ex-final-state-to-next-token":
             exercise = site_pages[exercise_id]
             include_path = relpath(exercise_fragment, exercise.path.parent)
             shortcode = "{{< include " + include_path + " >}}"

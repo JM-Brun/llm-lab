@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["en/logits"]
+related: ["en/logits", "en/scaled-dot-product-attention"]
 tags: ["type:exercise-hub", "destination:practice", "topic:logits-exercises", "level:applied", "language:en", "status:published"]
 -->
 
@@ -61,6 +61,28 @@ It identifies the token with the highest score in that vector. By itself, it doe
 No. The second vector is obtained by adding the same constant (100) to every component. This offset cancels in the softmax formula, so both vectors produce the same distribution. The absolute level of logits therefore has no standalone meaning; their differences matter.
 
 </details>
+
+## Two softmax operations, two axes {#ex-attention-vocabulary-softmax}
+
+A toy GPT has vocabulary $(A,B,C)$ and receives prefix $(A,B,A)$. For the query at the last position in a causal attention head, the already-scaled scores are $(\ln 2,0,0)$ in position order. All three keys are accessible. After the blocks and the output head, the logits at the same position are $(0,\ln 2,0)$ in vocabulary order.
+
+1. Compute softmax over the attention scores. What does each component represent, and what is it used for?
+2. Compute softmax over the vocabulary logits. What probability does it assign to $A$ as the next token?
+3. Add the weights of the two positions containing $A$. What does the total measure?
+
+<details>
+<summary>Show the reasoning</summary>
+
+| Computation | Normalized axis | Result |
+|---|---|---|
+| Attention softmax | Key positions $1,2,3$ | $(1/2,1/4,1/4)$, the coefficients that weight the three value vectors. |
+| Output softmax | Vocabulary tokens $A,B,C$ | $(1/4,1/2,1/4)$, the probabilities of the three possible next tokens. |
+
+Together the two positions containing $A$ receive $3/4$ of the weight in this attention row. That total describes how much weight is assigned to those positions in the weighted sum, where each has its own value vector. The distribution predicted by the output softmax assigns $1/4$ to $A$.
+
+</details>
+
+{{< include ../../includes/generated-exercise-review-en-logits-exercises-ex-attention-vocabulary-softmax.qmd >}}
 
 ::: {.language-switch}
 **Language:** [Français](../../fr/exercises/logits.qmd) · [English](logits.qmd)

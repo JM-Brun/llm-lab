@@ -695,6 +695,16 @@ def render_lesson_contracts(
 
     lines: list[str] = []
     practice_by_stage = boundary_exercises or {}
+    if any(stage.prediction_use for stage in stages):
+        comparison_title = "Comparer les usages" if fr else "Compare uses"
+        lines.extend(
+            [
+                f"## {comparison_title} {{#compare-prediction-uses .unlisted}}",
+                "",
+                render_prediction_use_comparison(stages, language),
+                "",
+            ]
+        )
     for stage in stages:
         lines.extend([f"## {escape_markdown_text(stage.title)} {{#{stage.id}}}", ""])
         if overview := stage.overview:
@@ -1319,6 +1329,39 @@ def render_conceptual_visit(visit: ConceptualVisit, *, link_lesson: bool) -> str
     return f"{chain} · {outcome}"
 
 
+def render_prediction_use_comparison(
+    stages: Sequence[ResolvedGuidedRouteStage], language: str, *, stage_anchor_prefix: str = ""
+) -> str:
+    """Compare the treatment of context, parameters and predictions at each use."""
+    fr = language == "fr"
+    header = (
+        "| Usage | Contexte $c$ | Paramètres $\\theta$ | Opération |"
+        if fr
+        else "| Use | Context $c$ | Parameters $\\theta$ | Operation |"
+    )
+    parameter_labels = (
+        {"fixed": "Fixés", "updated": "Mis à jour"}
+        if fr
+        else {"fixed": "Fixed", "updated": "Updated"}
+    )
+    lines = [header, "|---|---|---|---|"]
+    for stage in stages:
+        if use := stage.prediction_use:
+            title = escape_markdown_text(stage.compact_title or stage.title)
+            link = f"[{title}](#{stage_anchor_prefix}{stage.id})"
+            context = escape_markdown_text(getattr(use.context, language)).replace("|", r"\|")
+            action = escape_markdown_text(getattr(use.action, language)).replace("|", r"\|")
+            parameters = parameter_labels[use.parameters]
+            lines.append(f"| {link} | {context} | {parameters} | {action} |")
+    upstream_note = (
+        "Composer le contexte agit en amont. Les trois autres opérations utilisent "
+        "la distribution produite."
+        if fr
+        else "Context design shapes the input. The other three operations use the distribution."
+    )
+    return "\n".join([*lines, "", upstream_note, ""])
+
+
 def render_conceptual_route(
     stages: list[ResolvedGuidedRouteStage],
     visits: list[ConceptualVisit],
@@ -1331,7 +1374,6 @@ def render_conceptual_route(
     starts = [stage_order.index(stage_id) for _, stage_id, _, _ in ROUTE_PARTS]
     fr = language == "fr"
     lines: list[str] = []
-    uses: list[tuple[str, PredictionUse]] = []
     for (part_id, _, french, english), first, end in zip(
         ROUTE_PARTS, starts, [*starts[1:], len(stages)], strict=True
     ):
@@ -1340,43 +1382,23 @@ def render_conceptual_route(
             title = escape_markdown_text(stage.compact_title or stage.title)
             link = f"[{title}](#guided-stage-{stage.id})"
             stage_links.append(link)
-            if part_id == "usages":
-                if stage.prediction_use is None:
-                    raise ValueError(f"{stage.id}: expected a prediction_use")
-                uses.append((link, stage.prediction_use))
+            if (stage.prediction_use is not None) != (part_id == "usages"):
+                raise ValueError(f"{stage.id}: prediction_use must match membership in uses")
         separator = " · " if part_id == "usages" else " → "
         parts = separator.join(stage_links)
         lines.append(f"- **{french if fr else english}** · {parts}")
 
     summary = "Comparer les usages" if fr else "Compare uses"
-    header = (
-        "| Usage | Contexte $c$ | Paramètres $\\theta$ | Opération |"
-        if fr
-        else "| Use | Context $c$ | Parameters $\\theta$ | Operation |"
-    )
-    parameter_labels = (
-        {"fixed": "Fixés", "updated": "Mis à jour"}
-        if fr
-        else {
-            "fixed": "Fixed",
-            "updated": "Updated",
-        }
-    )
     lines.extend(
-        ["", "<details>", f"<summary>{summary}</summary>", "", header, "|---|---|---|---|"]
+        [
+            "",
+            "<details>",
+            f"<summary>{summary}</summary>",
+            "",
+            render_prediction_use_comparison(stages, language, stage_anchor_prefix="guided-stage-"),
+            "</details>",
+        ]
     )
-    for link, use in uses:
-        context = escape_markdown_text(getattr(use.context, language)).replace("|", r"\|")
-        action = escape_markdown_text(getattr(use.action, language)).replace("|", r"\|")
-        parameters = parameter_labels[use.parameters]
-        lines.append(f"| {link} | {context} | {parameters} | {action} |")
-    upstream_note = (
-        "Composer le contexte agit en amont. Les trois autres opérations utilisent "
-        "la distribution produite."
-        if fr
-        else "Context design shapes the input. The other three operations use the distribution."
-    )
-    lines.extend(["", upstream_note, "", "</details>"])
 
     count = len({visit.page.id for visit in visits})
     label = f"Squelette des {count} leçons" if fr else f"Skeleton of the {count} lessons"

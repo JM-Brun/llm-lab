@@ -33,7 +33,7 @@ This path guides you through an existing small decoder-only GPT: inspect its con
 The path follows the reference code's dependencies through five tours: configuration, numerical operations, the Transformer block, GPT assembly, and generation. Each stage connects code to tensor shapes, tests, and an observable result. It inspects and verifies a small inference model; the complete data, training, and evaluation pipeline remains outside the implemented scope.
 :::
 
-This path is **independent of the Theory / Understand path**: you can start here without completing its eight stages. Linked concept pages are references to consult when needed, not prerequisites. The progression below follows code dependencies and results you can run and verify.
+You can start Build independently of the [Theory / Understand path](learning-map.qmd#conceptual-route). Consult concept pages as needed. The progression below follows code dependencies and results you can run and verify.
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Learning outcomes"}
 By the end of this path, you will be able to:

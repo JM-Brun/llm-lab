@@ -33,7 +33,7 @@ Ce parcours vous guide dans un petit GPT décodeur seul existant : examinez sa c
 Le parcours suit les dépendances du code de référence en cinq visites : configuration, opérations numériques, bloc Transformer, assemblage du GPT, puis génération. À chaque étape, on relie le code à des formes, des tests et un résultat observable. Il s'agit d'inspecter et de vérifier un petit modèle d'inférence ; le pipeline complet de données, d'entraînement et d'évaluation reste hors du périmètre implémenté.
 :::
 
-Ce parcours est **indépendant du parcours théorique Understand** : vous pouvez commencer ici sans avoir suivi ses huit étapes. Les pages conceptuelles liées sont des références à consulter lorsque vous en avez besoin, pas des prérequis. La progression ci-dessous suit les dépendances du code et les résultats que vous pouvez exécuter et vérifier.
+Vous pouvez commencer Build indépendamment du [parcours théorique Understand](learning-map.qmd#conceptual-route). Consultez les pages conceptuelles selon vos besoins. La progression ci-dessous suit les dépendances du code et les résultats que vous pouvez exécuter et vérifier.
 
 ::: {.callout-note .learning-outcomes collapse="true" title="Objectifs d'apprentissage"}
 À l'issue de ce parcours, vous pourrez :

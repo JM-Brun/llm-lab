@@ -23,7 +23,7 @@ revision_support:
   status: integrated_sufficient
   evidence:
     - anchor: revision-summary
-      note: "Le rappel sépare score, probabilité et vérité ; le cours explique la dimension V, le classement, l'invariance par décalage commun et la projection de sortie. La page d'exercices vérifie ces points avec quatre questions corrigées."
+      note: "Le rappel sépare score, probabilité et vérité ; le cours explique la dimension V, le classement, l'invariance par décalage commun et la projection de sortie. Les exercices vérifient ces points et font comparer les axes du softmax d’attention et de sortie."
 tags: ["type:concept-lesson", "destination:understand", "topic:logits", "level:core", "language:fr", "status:published"]
 -->
 
@@ -136,7 +136,7 @@ La documentation [PyTorch — CrossEntropyLoss](https://docs.pytorch.org/docs/st
 
 ### Exercices
 
-Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/logits.qmd).
+[Comparez les deux axes du softmax](exercises/logits.qmd#ex-attention-vocabulary-softmax) ou parcourez les [autres exercices](exercises/logits.qmd).
 
 </div>
 </details>

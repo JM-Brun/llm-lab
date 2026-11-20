@@ -74,6 +74,22 @@ Un tokenizer jouet segmente « chat suit le chat » en [« chat », « suit », 
 
 {{< include ../../includes/generated-exercise-review-fr-text-data-exercises-ex-text-to-embedding-lookup.qmd >}}
 
+## Du plongement à l’entrée du premier bloc {#ex-token-to-block-input}
+
+Reprenez la séquence d’IDs originale $(17,42,8,17)$. Fixez $d=2$ et $E[17]=(2,-1)$ dans un GPT qui ajoute un vecteur de position avant le premier bloc. Les deux occurrences de « chat » occupent les positions $0$ et $3$, avec $P[0]=(0,1)$ et $P[3]=(1,0)$.
+
+1. Calculez les deux entrées du premier bloc pour « chat ». Quelle opération crée leur différence ?
+2. **Après la leçon sur le Transformer.** Quelle opération permet ensuite à chaque état de dépendre des autres tokens de son préfixe ?
+
+<details>
+<summary>Afficher le raisonnement</summary>
+
+1. Les deux occurrences lisent le même plongement, $E[17]$. Les entrées valent $E[17]+P[0]=(2,0)$ et $E[17]+P[3]=(3,-1)$. La différence vient du terme positionnel.
+2. L’auto-attention causale combine des informations des positions accessibles. Elle permet de contextualiser ces deux états à partir de leurs préfixes respectifs.
+
+</details>
+
+{{< include ../../includes/generated-exercise-review-fr-text-data-exercises-ex-token-to-block-input.qmd >}}
 
 ::: {.language-switch}
 **Langue :** [Français](text-data.qmd) · [English](../../en/exercises/text-data.qmd)

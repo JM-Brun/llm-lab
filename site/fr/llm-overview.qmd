@@ -159,6 +159,8 @@ Une lecture informationnelle rapproche parfois cette prédiction de la **compres
 
 Selon la tâche, on peut utiliser un modèle généraliste tel quel, lui fournir du contexte et des documents externes, adapter ses paramètres ou lui faire mobiliser des outils. Ces approches peuvent se combiner. Le choix dépend de critères mesurés : qualité, robustesse, fraîcheur des informations, coût, latence, confidentialité, provenance et maintenance. Quelques prompts réussis ne constituent pas une évaluation ([post-entraînement](post-training.qmd), [RAG et mémoire](rag-memory-boundaries.qmd)).
 
+[Comparer le rôle du contexte et des paramètres dans le plan de révision](review-path.qmd#compare-prediction-uses).
+
 ## Du modèle au système conversationnel {#model-to-conversational-system}
 
 Un assistant est un **système construit autour d'un modèle**. L'application formate les messages, gère le contexte et coordonne les outils. Les rôles system, user et assistant décrivent les messages, pas les couches du Transformer. Une demande d'outil produite par le modèle n'est pas exécutée : l'application valide, appelle l'outil puis transmet le résultat. La mémoire persistante relève aussi de l'application ([évolution des LLM](llm-evolution.qmd#tool-using-systems), [Build](build-path.qmd)).
