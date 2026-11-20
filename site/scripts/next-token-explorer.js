@@ -1,135 +1,108 @@
 (() => {
   "use strict";
+
   const copy = {
     fr: {
-      tokens: ["Vous", "Je", "Moi", "Oui"],
-      probs: ["0,6", "0,2", "0,1", "0,1"],
-      next: "savez",
-      other: "Autres tokens (ensemble)",
-      prefixLabel: "Préfixe actuel :",
-      choose: "Choisir le token à ajouter",
-      append: "Ajouter au préfixe",
-      reset: "Réinitialiser",
-      unknown: "Une nouvelle distribution est recalculée pour ce préfixe. Ses valeurs ne sont pas précisées dans l'exemple : nous ne les inventons pas.",
-      extended: "Le préfixe a grandi : la distribution est maintenant conditionnée par le contexte enrichi."
+      turns: [
+        [["Vous", 0.6], ["Je", 0.2], ["Moi", 0.1], ["Oui", 0.1]],
+        [["savez", 0.5], ["êtes", 0.3], ["voyez", 0.2]],
+        [[",", 0.8, ""], ["que", 0.1], [":", 0.1, "\u202f"]]
+      ],
+      distribution: turn => `Distribution du prochain token · tour ${turn}`,
+      add: (token, probability) => `Ajouter « ${token} » (probabilité ${probability})`,
+      unknown: "La distribution suivante dépend de ce nouveau préfixe. Ses valeurs ne figurent pas dans la trace.",
+      end: "La trace s’arrête ici, après trois ajouts."
     },
     en: {
-      tokens: ["They", "Aqueducts", "Nothing", "Well"],
-      probs: ["0.6", "0.2", "0.1", "0.1"],
-      next: "built",
-      other: "Other tokens (combined)",
-      prefixLabel: "Current prefix:",
-      choose: "Choose the token to append",
-      append: "Append to prefix",
-      reset: "Reset",
-      unknown: "A new distribution is recomputed for this prefix. Its values are not specified in the example, so we do not invent them.",
-      extended: "The prefix has grown: the distribution is now conditioned on the extended context."
+      turns: [
+        [["They", 0.6], ["Aqueducts", 0.2], ["Nothing", 0.1], ["Well", 0.1]],
+        [["built", 0.5], ["gave", 0.3], ["made", 0.2]],
+        [["roads", 0.8], ["bridges", 0.1], ["walls", 0.1]]
+      ],
+      distribution: turn => `Next-token distribution · turn ${turn}`,
+      add: (token, probability) => `Append “${token}” (probability ${probability})`,
+      unknown: "The next distribution depends on this new prefix. Its values are outside the worked trace.",
+      end: "The worked trace ends here, after three additions."
     }
   };
 
   function init(root) {
-    if (root.dataset.initialised === "true") return;
     const lang = document.documentElement.lang.toLowerCase().startsWith("fr") ? "fr" : "en";
-    const t = copy[lang];
+    const text = copy[lang];
+    const format = new Intl.NumberFormat(lang, { maximumFractionDigits: 1 });
+    const basePrefix = lang === "fr" ? root.dataset.prefixFr : root.dataset.prefixEn;
     const controls = root.querySelector(".next-token-explorer__interactive");
     const fallback = root.querySelector(".next-token-explorer__fallback");
-    const basePrefix = lang === "fr" ? root.dataset.prefixFr : root.dataset.prefixEn;
-    if (!controls || !fallback || !basePrefix) {
-      root.dataset.initialisationError = "container-or-prefix";
-      console.error("Next-token explorer is missing its container or language prefix");
-      return;
-    }
+    const context = root.querySelector(".next-token-explorer__context");
+    const prefix = root.querySelector(".next-token-explorer__prefix");
+    const added = root.querySelector(".next-token-explorer__added");
+    const status = root.querySelector(".next-token-explorer__status");
+    const choices = root.querySelector(".next-token-explorer__choices");
+    const heading = choices.querySelector("h4");
+    const list = choices.querySelector("ul");
+    const reset = root.querySelector(".next-token-explorer__reset");
 
-    const prefixLine = document.createElement("p");
-    const prefixLabel = document.createElement("strong");
-    const prefix = document.createElement("output");
-    prefix.className = "next-token-explorer__prefix";
-    prefixLabel.textContent = t.prefixLabel;
-    prefixLine.append(prefixLabel, document.createTextNode(" "), prefix);
-
-    const list = document.createElement("ul");
-    list.className = "next-token-explorer__distribution";
-    list.setAttribute("aria-live", "polite");
-
-    const actions = document.createElement("div");
-    actions.className = "next-token-explorer__actions";
-    const label = document.createElement("label");
-    label.htmlFor = "next-token-choice";
-    label.textContent = t.choose;
-    const select = document.createElement("select");
-    select.id = "next-token-choice";
-    select.className = "next-token-explorer__choice";
-    const appendButton = document.createElement("button");
-    appendButton.type = "button";
-    appendButton.className = "next-token-explorer__append";
-    appendButton.textContent = t.append;
-    const resetButton = document.createElement("button");
-    resetButton.type = "button";
-    resetButton.className = "secondary next-token-explorer__reset";
-    resetButton.textContent = t.reset;
-    actions.append(label, select, appendButton, resetButton);
-
-    const status = document.createElement("p");
-    status.className = "next-token-explorer__next";
-    status.setAttribute("role", "status");
-    controls.replaceChildren(prefixLine, list, actions, status);
-
-    let current = "", stage = 0;
-    function options(tokens) {
-      select.replaceChildren();
-      tokens.forEach((token, i) => {
-        const option = document.createElement("option");
-        option.value = String(i);
-        option.textContent = token;
-        select.append(option);
-      });
-    }
-    function rows(tokens, probs) {
-      list.replaceChildren();
-      tokens.forEach((token, i) => {
+    function showTurn(turn) {
+      heading.textContent = text.distribution(turn + 1);
+      const items = text.turns[turn].map(([token, probability, separator = " "], index) => {
         const item = document.createElement("li");
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "next-token-explorer__candidate";
+        const value = format.format(probability);
+        button.setAttribute("aria-label", text.add(token, value));
+
         const name = document.createElement("span");
-        const probability = document.createElement("strong");
         name.textContent = token;
-        probability.textContent = probs[i];
-        item.append(name, probability);
-        list.append(item);
+        const number = document.createElement("strong");
+        number.textContent = value;
+        const bar = document.createElement("span");
+        bar.className = "next-token-explorer__bar";
+        bar.style.setProperty("--probability", probability);
+        bar.setAttribute("aria-hidden", "true");
+        button.append(name, number, bar);
+        item.append(button);
+        button.addEventListener("click", () => {
+          prefix.textContent += added.textContent;
+          added.textContent = separator + token;
+          const followsTrace = index === 0;
+          const atLastTurn = turn + 1 === text.turns.length;
+
+          if (followsTrace && !atLastTurn) {
+            showTurn(turn + 1);
+          } else {
+            list.replaceChildren();
+            choices.hidden = true;
+            status.textContent = followsTrace ? text.end : text.unknown;
+            status.hidden = false;
+          }
+
+          reset.hidden = false;
+          context.focus();
+        });
+        return item;
       });
+      list.replaceChildren(...items);
+      choices.hidden = false;
     }
-    function reset() {
-      current = basePrefix;
-      stage = 0;
-      prefix.textContent = current;
-      rows(t.tokens, t.probs);
-      options(t.tokens);
-      select.disabled = false;
-      appendButton.disabled = false;
+
+    function restart() {
+      prefix.textContent = basePrefix;
+      added.textContent = "";
       status.textContent = "";
+      status.hidden = true;
+      reset.hidden = true;
+      showTurn(0);
     }
-    appendButton.addEventListener("click", () => {
-      const index = Number(select.value);
-      const token = select.options[select.selectedIndex].textContent;
-      current += " " + token;
-      prefix.textContent = current;
-      if (stage === 0 && index === 0) {
-        stage = 1;
-        rows([t.next, t.other], ["0.5", "0.5"].map(value => lang === "fr" ? value.replace(".", ",") : value));
-        options([t.next, t.other]);
-        select.disabled = true;
-        appendButton.disabled = true;
-        status.textContent = t.extended;
-      } else {
-        stage = 2;
-        select.disabled = true;
-        appendButton.disabled = true;
-        status.textContent = t.unknown;
-      }
+
+    reset.addEventListener("click", () => {
+      restart();
+      list.querySelector("button").focus();
     });
-    resetButton.addEventListener("click", reset);
-    reset();
+
+    restart();
     controls.hidden = false;
     fallback.hidden = true;
-    root.dataset.initialised = "true";
   }
 
   function labelTables() {

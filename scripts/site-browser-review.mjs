@@ -1331,42 +1331,111 @@ async function runCase(testCase, caseIndex) {
       if (pageErrors.length) {
         report.failures.push(pagePath + "/" + lang + "/" + label + "/" + theme + ": uncaught page errors: " + pageErrors.map(error => error.message).join(" | "));
       }
-      const explorer = page.locator("[data-next-token-explorer]").first();
+      const explorer = page.locator("[data-next-token-explorer]");
       try {
-        if (await explorer.count() !== 1) throw new Error("expected exactly one next-token explorer");
-        item.nextTokenExplorerDiagnostics = await explorer.evaluate(root => ({
-          initialised: root.dataset.initialised || null,
-          initialisationError: root.dataset.initialisationError || null,
-          selectors: {
-            controls: Boolean(root.querySelector(".next-token-explorer__interactive")),
-            prefix: Boolean(root.querySelector(".next-token-explorer__interactive output")),
-            distribution: Boolean(root.querySelector(".next-token-explorer__interactive ul")),
-            tokenChoice: Boolean(root.querySelector(".next-token-explorer__interactive select")),
-            nextDistribution: Boolean(root.querySelectorAll(".next-token-explorer__interactive p")[1]),
-            append: Boolean(root.querySelectorAll(".next-token-explorer__interactive button")[0]),
-            reset: Boolean(root.querySelectorAll(".next-token-explorer__interactive button")[1]),
-          },
-        }));
         const controls = explorer.locator(".next-token-explorer__interactive");
-        const prefix = explorer.locator(".next-token-explorer__interactive output");
-        const distribution = explorer.locator(".next-token-explorer__interactive ul");
+        const prefix = explorer.locator("#next-token-context");
+        const context = explorer.getByRole("group");
+        const candidate = explorer.locator(".next-token-explorer__candidate");
+        const status = explorer.locator(".next-token-explorer__status");
+        const reset = explorer.locator(".next-token-explorer__reset");
         await controls.waitFor({ state: "visible", timeout: 5000 });
-        const initialPrefix = (await prefix.textContent()).trim();
-        await explorer.locator(".next-token-explorer__interactive select").selectOption("0");
-        await explorer.locator(".next-token-explorer__interactive button").nth(0).click();
-        const extendedPrefix = (await prefix.textContent()).trim();
-        const expectedToken = lang === "fr" ? "Vous" : "They";
-        const expectedNext = lang === "fr" ? "savez" : "built";
-        if (extendedPrefix === initialPrefix || !extendedPrefix.includes(expectedToken)) {
-          throw new Error("selecting the first token did not extend the prefix");
+
+        const fallbackHref = new URL(
+          await explorer.locator(`.next-token-explorer__fallback [lang="${lang}"] a`).getAttribute("href"),
+          page.url()
+        );
+        const response = await page.request.get(fallbackHref.href);
+        if (!response.ok()) throw new Error("the worked trace could not be loaded");
+        const turns = await page.evaluate(({ html, anchor }) => {
+          const lesson = new DOMParser().parseFromString(html, "text/html");
+          return [...lesson.querySelectorAll(`#${anchor} table tbody tr`)].map(row => {
+            const [, prefix, distribution, chosen] = row.cells;
+            return {
+              prefix: prefix.textContent.trim(),
+              distribution: [...distribution.textContent.matchAll(/[«“]\s*([^»”]+?)\s*[»”]\s+(\d[,.]\d)/g)]
+                .map(([, token, probability]) => [token, probability]),
+              chosen: chosen.textContent.trim().slice(1, -1).trim(),
+            };
+          });
+        }, { html: await response.text(), anchor: fallbackHref.hash.slice(1) });
+        if (turns.length !== 3) throw new Error("the generation lesson should provide three worked turns");
+
+        const currentPrefix = () => prefix.evaluate(node =>
+          node.querySelector(".next-token-explorer__prefix").textContent +
+          node.querySelector("mark").textContent
+        );
+        const normalizePrefix = value => value.replaceAll("’", "'").replace(/\s+/g, " ");
+        const firstCandidateIsFocused = () => candidate.first().evaluate(node => node === document.activeElement);
+
+        await candidate.first().focus();
+        for (const [index, turn] of turns.entries()) {
+          if (await controls.evaluate(node => node.scrollWidth > node.clientWidth + 1)) {
+            throw new Error("the next-token controls overflow their container");
+          }
+          const visibleDistribution = await candidate.evaluateAll(buttons =>
+            buttons.map(button => [button.querySelector("span").textContent, button.querySelector("strong").textContent])
+          );
+          if (turn.distribution.length < 2 || JSON.stringify(visibleDistribution) !== JSON.stringify(turn.distribution)) {
+            throw new Error("the displayed distribution differs from the generation lesson");
+          }
+          if (normalizePrefix(await currentPrefix()) !== normalizePrefix(turn.prefix)) {
+            throw new Error("the displayed prefix differs from the generation lesson");
+          }
+          if (index > 0) await page.keyboard.press("Tab");
+          if (!(await firstCandidateIsFocused())) throw new Error("the next turn is not reachable by keyboard");
+          await page.keyboard.press("Enter");
+          if (!(await currentPrefix()).endsWith(turn.chosen)) {
+            throw new Error("the selected token did not extend the prefix");
+          }
+          if (!(await context.evaluate(node => node === document.activeElement))) {
+            throw new Error("focus did not move to the updated prefix");
+          }
         }
-        if (!(await distribution.textContent()).includes(expectedNext)) {
-          throw new Error("the next conditional distribution was not displayed");
+
+        const end = lang === "fr" ? "trois ajouts" : "three additions";
+        if (await candidate.count() || !(await status.textContent()).includes(end)) {
+          throw new Error("the final worked turn did not end the trace");
         }
-        await explorer.locator(".next-token-explorer__interactive button").nth(1).click();
-        const resetPrefix = (await prefix.textContent()).trim();
-        if (resetPrefix !== initialPrefix) throw new Error("reset did not restore the original prefix");
-        item.nextTokenExplorer = { initialized: true, prefixExtended: true, nextDistributionShown: true, resetWorks: true };
+
+        await page.keyboard.press("Tab");
+        if (!(await reset.evaluate(node => node === document.activeElement))) {
+          throw new Error("restart is not reachable from the completed trace");
+        }
+        await page.keyboard.press("Space");
+        if (normalizePrefix(await currentPrefix()) !== normalizePrefix(turns[0].prefix) ||
+            await reset.isVisible() || !(await firstCandidateIsFocused())) {
+          throw new Error("restart did not restore the initial state and focus");
+        }
+
+        await candidate.nth(1).click();
+        const alternative = turns[0].distribution[1][0];
+        const unknown = lang === "fr" ? "ce nouveau préfixe" : "this new prefix";
+        if (!(await currentPrefix()).endsWith(alternative) || await candidate.count() ||
+            !(await status.textContent()).includes(unknown)) {
+          throw new Error("a branch outside the worked trace retained stale probabilities");
+        }
+        item.nextTokenExplorer = { matchesLesson: true, keyboard: true, restart: true, unknownBranch: true };
+
+        if (label === "mobile") {
+          const noScript = await browser.newContext({ javaScriptEnabled: false, viewport });
+          try {
+            const staticPage = await noScript.newPage();
+            await staticPage.goto(page.url(), { waitUntil: "domcontentloaded" });
+            const staticExplorer = staticPage.locator("[data-next-token-explorer]");
+            if (await staticExplorer.locator(".next-token-explorer__interactive").isVisible() ||
+                await staticExplorer.locator(".next-token-explorer__fallback a:visible").count() !== 1) {
+              throw new Error("the localized fallback should replace inactive controls without JavaScript");
+            }
+            await staticExplorer.locator(".next-token-explorer__fallback a:visible").click();
+            if (staticPage.url() !== fallbackHref.href) {
+              throw new Error("the fallback should link to the trace in the same language");
+            }
+            item.nextTokenExplorer.withoutJavaScript = true;
+          } finally {
+            await noScript.close();
+          }
+        }
       } catch (error) {
         item.nextTokenExplorer = { error: error.message };
         report.failures.push(pagePath + "/" + lang + "/" + label + "/" + theme + ": next-token explorer failed: " + error.message);
