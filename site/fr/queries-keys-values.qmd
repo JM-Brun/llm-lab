@@ -116,7 +116,7 @@ Pour suivre cette distinction dans les opérations, passez ensuite à [l'attenti
 
 Le schéma fait apparaître deux chemins : l'un détermine la pondération, l'autre fournit le contenu. **Pourquoi faut-il trois projections distinctes pour construire ces deux chemins à partir d'une même entrée ?**
 
-## Pourquoi trois projections à partir de la même entrée ?
+## Pourquoi trois projections à partir de la même entrée ? {#pourquoi-trois-projections-à-partir-de-la-même-entrée}
 
 En auto-attention, Q, K et V sont trois transformations apprises du même flux de représentations. $X$ désigne l'entrée du sous-module d'attention : dans le premier bloc, elle correspond à la représentation construite à partir des embeddings de tokens et du traitement positionnel ; dans les blocs suivants, elle correspond à un état caché déjà contextualisé. Dans le GPT de référence de ce projet, les embeddings positionnels absolus appris sont **additionnés** aux embeddings de tokens avant le premier bloc ([embeddings positionnels](positional-encoding.qmd)). D'autres architectures, comme celles qui utilisent [RoPE](rope.qmd), injectent l'information positionnelle dans les requêtes et les clés au sein de l'attention.
 
@@ -139,6 +139,8 @@ Avec $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ et $W_V\in\mathbb{R}^{d_{model
 
 Chaque ligne correspond à une position. Les mêmes matrices de projection sont appliquées à toutes les positions, mais les représentations d'entrée varient. Les dimensions $d_k$ et $d_v$ ne sont pas nécessairement égales ; les biais éventuels sont omis dans cette écriture. Cette provenance commune caractérise l'auto-attention ; en [attention croisée](cross-attention.qmd), Q provient du flux qui consulte, tandis que K et V proviennent du flux consulté. Pour suivre ces projections dans le code du bloc, voir la [visite guidée du bloc Transformer](transformer-block-walkthrough.qmd) ; les conventions générales de dimensions et d'axes sont détaillées dans [Tenseurs](tensors.qmd).
 
+[Calculer les projections Q, K et V et isoler l’effet d’un changement de $W_V$](exercises-attention.qmd#ex-attention-calculate-qkv-isolate-values).
+
 ## Approfondissement mathématique et architectural
 
 Les équations par position, la géométrie des compatibilités, les chemins de gradient et les variantes multi-têtes sont utiles une fois le modèle mental acquis. Ils sont regroupés dans l'[approfondissement avancé sur Q/K/V](queries-keys-values-advanced.qmd), plutôt que dispersés dans plusieurs encadrés repliés sur cette page.
@@ -156,8 +158,6 @@ La distinction fonctionnelle est simple, mais fondamentale :
 Les poids ne sont pas une mesure universelle de pertinence sémantique et l'attention n'est pas une recherche du plus proche voisin dans les embeddings initiaux : elle opère sur des projections apprises. Les limites de cette interprétation et les chemins de gradient sont détaillés dans l'[approfondissement Q/K/V](queries-keys-values-advanced.qmd).
 
 La page suivante, [Attention à produit scalaire mise à l'échelle](scaled-dot-product-attention.qmd), explique comment les scores deviennent des poids et comment ceux-ci agrègent V. Son [atelier facultatif](scaled-dot-product-attention.qmd#attention-intervention) permet de vérifier l’effet de changer une clé ou une valeur.
-
-Pour mettre en pratique les compétences associées à cette leçon, les [exercices de la section Attention](exercises-attention.qmd#attention) proposent de calculer les projections et leurs dimensions, prévoir les effets d'une modification de $W_Q$, $W_K$ ou $W_V$, relier les projections à la rétropropagation, puis transférer le raisonnement à l'attention croisée et à GQA/MQA. Les calculs à la main se font dans ce parcours pratique.
 
 
 
@@ -178,6 +178,8 @@ Pour mettre en pratique les compétences associées à cette leçon, les [exerci
 ### Exercices
 
 Les questions et exercices de cette leçon sont regroupés sur sa [page d’exercices dédiée](exercises/queries-keys-values.qmd).
+
+La [suite des exercices d’attention](exercises-attention.qmd#ex-attention-predict-projection-change) porte sur l’effet d’une modification des projections, leur apprentissage et le transfert vers l’attention croisée et GQA/MQA.
 
 
 

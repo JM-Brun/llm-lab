@@ -47,6 +47,8 @@ $$
 4. Compute the weighted combination of the values.
 5. Explain why the weights are not an absolute measure of semantic relevance.
 
+[Review how to compute the scores, weights, and output](scaled-dot-product-attention.qmd#five-computation-steps).
+
 <details>
 <summary>Show the worked solution</summary>
 
@@ -152,6 +154,8 @@ $$
 2. Replace only $W_V$ with $W'_V=\begin{bmatrix}2&0\\0&1\end{bmatrix}$. Calculate $v'_t$.
 3. Which of Q, K, V, the scores, and the weights can change? Justify your answer from the mechanism's dependencies.
 4. Explain why the aggregated output may change even when the weights stay the same.
+
+[Review the projection formulas and the shapes of Q, K, and V](queries-keys-values.qmd#why-three-projections-from-the-same-input).
 
 <details>
 <summary>Show the worked solution</summary>

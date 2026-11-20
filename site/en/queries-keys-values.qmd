@@ -116,7 +116,7 @@ To follow this distinction through the actual operations, continue to [scaled do
 
 The diagram reveals two paths: one determines the weighting, the other supplies the content. **Why are three distinct projections needed to build these two paths from the same input?**
 
-## Why three projections from the same input?
+## Why three projections from the same input? {#why-three-projections-from-the-same-input}
 
 In self-attention, Q, K, and V are three learned transformations of the same representation stream. $X$ denotes the input to the attention sublayer: in the first block it is the representation built from token embeddings and positional processing; in later blocks it is an already contextualized hidden state. In this project's reference GPT, learned absolute positional embeddings are **added** to token embeddings before the first block ([positional embeddings](positional-encoding.qmd)). Other architectures, such as those using [RoPE](rope.qmd), inject positional information into queries and keys inside attention.
 
@@ -139,6 +139,8 @@ With $W_Q,W_K\in\mathbb{R}^{d_{model}\times d_k}$ and $W_V\in\mathbb{R}^{d_{mode
 
 Each row corresponds to one position. The same projection matrices are applied at every position, while the input representations vary. The dimensions $d_k$ and $d_v$ need not be equal; optional biases are omitted here. This shared provenance is specific to self-attention; in [cross-attention](cross-attention.qmd), Q comes from the querying stream, while K and V come from the stream being queried. To trace these projections in the block implementation, see the [guided Transformer-block walkthrough](transformer-block-walkthrough.qmd); general dimension and axis conventions are covered in the [tensor reference](tensors.qmd).
 
+[Compute the Q, K, and V projections and isolate the effect of changing $W_V$](exercises-attention.qmd#ex-attention-calculate-qkv-isolate-values).
+
 ## Mathematical and architectural deep dive
 
 Per-position equations, compatibility geometry, gradient paths, and multi-head variants become useful once the mental model is established. They are collected in the [advanced Q/K/V deep dive](queries-keys-values-advanced.qmd), rather than scattered across several collapsed callouts on this page.
@@ -156,8 +158,6 @@ The functional distinction is simple but fundamental:
 The weights are not a universal measure of semantic relevance, and attention is not nearest-neighbour search in the initial embedding space: it operates on learned projections. The limits of this interpretation and the gradient paths are developed in the [advanced Q/K/V deep dive](queries-keys-values-advanced.qmd).
 
 The next lesson, [Scaled dot-product attention](scaled-dot-product-attention.qmd), explains how scores become weights and how those weights aggregate V. Its [optional lab](scaled-dot-product-attention.qmd#attention-intervention) lets you check what happens when you change a key or a value.
-
-To practise the skills associated with this lesson, the [Attention exercises](exercises-attention.qmd#attention) cover projection calculations and dimensions, predicting the effects of changing $W_Q$, $W_K$, or $W_V$, connecting projections to backpropagation, and transferring the reasoning to cross-attention and GQA/MQA. Work through the calculations by hand in that practice route.
 
 
 
@@ -178,6 +178,8 @@ To practise the skills associated with this lesson, the [Attention exercises](ex
 ### Practice
 
 The questions and exercises for this lesson are collected on its [dedicated practice page](exercises/queries-keys-values.qmd).
+
+The [next attention exercises](exercises-attention.qmd#ex-attention-predict-projection-change) cover the effects of projection changes, how projections are learned, and transfer to cross-attention and GQA/MQA.
 
 
 
