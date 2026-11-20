@@ -200,7 +200,7 @@ An extraction item may include a compact perspective profile when the contributi
       limitations:
         - "Illustrative motivation; not evidence that one attention head resolves coreference."
 
-Use concise source-grounded values. The lens and teaching-form values are descriptive facets, not concept IDs or graph relations. Do not invent a unique perspective when sources share one. This field is optional for general factual or technical items, but expected for newly extracted pedagogical contributions that are candidates for cross-source synthesis.
+Use concise source-grounded values. The lens and teaching-form values are descriptive facets, not concept IDs or graph relations. `prerequisites` is likewise a descriptive list of learner knowledge or skills: entries may be canonical concept labels, mathematical vocabulary, or concise natural-language descriptions, and are not validated as IDs in `data/concepts.yml`. Do not turn free-form prerequisites into concept references without an explicit, reviewed mapping. Do not invent a unique perspective when sources share one. This field is optional for general factual or technical items, but expected for newly extracted pedagogical contributions that are candidates for cross-source synthesis.
 
 An extraction item may also include:
 

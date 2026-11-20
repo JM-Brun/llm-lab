@@ -646,6 +646,16 @@ def validate_source_catalogue(root: Path = ROOT) -> list[str]:
                                 f"{item_where}.candidate_destinations.pages: "
                                 f"unknown page {page_id!r}"
                             )
+                    for concept_id in _strings(
+                        destinations.get("concepts"),
+                        f"{item_where}.candidate_destinations.concepts",
+                        errors,
+                    ):
+                        if concept_id not in concept_ids:
+                            errors.append(
+                                f"{item_where}.candidate_destinations.concepts: "
+                                f"unknown concept {concept_id!r}"
+                            )
 
     return errors
 

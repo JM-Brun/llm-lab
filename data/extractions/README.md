@@ -53,6 +53,7 @@ Instructional sources may include a top-level `pedagogical_model` alongside atom
 - Item-level classification may refine the source classification; it must not silently rewrite it.
 - concept_ids refer only to existing canonical concepts in data/concepts.yml. Candidate concepts are proposals, not IDs to insert pre-emptively.
 - Candidate page IDs are proposals and must resolve before integration.
+- `pedagogical_profile.prerequisites` describes learner knowledge or skills. Values may be concept labels, mathematical vocabulary or natural-language descriptions; they are not required to be canonical concept IDs and are not checked against `data/concepts.yml`.
 - Use only item_dispositions from data/source-taxonomy.yml; pending is not a controlled disposition. Use defer when an item is retained for later review, with a rationale.
 - Keep full text, copied figures, datasets, and code out of these records unless rights permit it. Prefer concise paraphrases and links to source locations.
 

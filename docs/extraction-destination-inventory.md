@@ -116,3 +116,16 @@ The legacy `target_resources` field contains bilingual page-like IDs (for exampl
 7. A resolvable ID does not prove that the source supports the destination or that the proposed integration is pedagogically appropriate.
 
 The inventory does not alter source records, extraction records, taxonomy, canonical registries, or validator behavior.
+
+
+## Post-reconciliation validation — 2026-11-19
+
+The baseline above is a historical snapshot from PR #1369 and intentionally preserves the three unresolved candidate concept IDs observed at that time. They have since been reviewed individually:
+
+- `context-window` was removed from `hesam-sheikh-llm-study-roadmap-2024:hallucination-causality-qualification` in merged PR #1422 because the item did not make a distinct contribution about context-window mechanisms.
+- `log-probability` was mapped to the existing `log-likelihood` concept in merged PR #1424, with the token-level/sequence-level distinction documented.
+- Two `weighted-aggregation` candidates were mapped to the existing `scaled-dot-product-attention` concept in PR #1424. The remaining candidate in `mbrenndoerfer-qkv-attention-mechanism:convex-hull` was removed in PR #1425 because no standalone canonical concept exists.
+
+The canonical full-corpus validator passed on PR #1425 head `11ec2319d6473173aff605009249f36046bb1711`, including candidate-concept referential checks. Thus the three unresolved IDs in the historical baseline are no longer unresolved on that revision. The baseline counts above are not silently rewritten; rerun the opt-in destination inventory to publish a new count snapshot if exact updated field totals are needed.
+
+Candidate route IDs remain a separate unresolved contract question: 143 lists were present in the historical corpus and all were empty. No route vocabulary is inferred from source-local teaching routes or descriptive comparison annotations.

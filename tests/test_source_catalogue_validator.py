@@ -433,6 +433,38 @@ def test_non_mapping_candidate_destinations_are_rejected(tmp_path: Path) -> None
     assert any("candidate_destinations: expected a mapping" in error for error in errors)
 
 
+def test_unknown_candidate_concepts_are_rejected(tmp_path: Path) -> None:
+    _corpus(tmp_path, with_extraction=True)
+    extraction_path = tmp_path / "data" / "extractions" / "example-source.yml"
+    data = yaml.safe_load(extraction_path.read_text(encoding="utf-8"))
+    item = data["items"][0]
+    item["candidate_destinations"] = {"pages": [], "concepts": ["unknown-candidate"]}
+    _write_yaml(extraction_path, data)
+
+    errors = MODULE.validate_source_catalogue(tmp_path)
+
+    assert any(
+        "candidate_destinations.concepts: unknown concept 'unknown-candidate'" in error
+        for error in errors
+    )
+
+
+def test_valid_candidate_concepts_and_descriptive_prerequisites_are_accepted(
+    tmp_path: Path,
+) -> None:
+    _corpus(tmp_path, with_extraction=True)
+    extraction_path = tmp_path / "data" / "extractions" / "example-source.yml"
+    data = yaml.safe_load(extraction_path.read_text(encoding="utf-8"))
+    item = data["items"][0]
+    item["candidate_destinations"] = {"pages": [], "concepts": ["attention"]}
+    item["pedagogical_profile"] = {
+        "prerequisites": ["linear algebra", "functions", "a working understanding of vectors"]
+    }
+    _write_yaml(extraction_path, data)
+
+    assert MODULE.validate_source_catalogue(tmp_path) == []
+
+
 def test_source_collection_membership_is_optional_during_backfill(tmp_path: Path) -> None:
     _corpus(tmp_path)
 
