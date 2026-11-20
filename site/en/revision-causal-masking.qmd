@@ -1,0 +1,47 @@
+---
+title: "Review — Causal masking"
+description-meta: "Accessible positions for a query, the diagonal and applying the mask before softmax."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-causal-masking", "level:core", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/revision-causal-masking"
+scope: "Accessible positions for a query, the diagonal and applying the mask before softmax."
+purpose: "Recall the key ideas from this lesson and apply them to the review question."
+revision_role: synthesis
+revision_of: ["en/causal-masking"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-causal-masking", "level:core", "language:en", "status:published"]
+-->
+
+[Back to the lesson](causal-masking.qmd) · [Learning path plan](review-path.qmd#computation)
+
+## What to remember {#revision-essentials}
+
+- For a query at position i, keys at positions j ≤ i are accessible. The diagonal allows access to the current position.
+- The mask blocks future-position scores before softmax, typically by setting them to negative infinity. Their weights are then zero.
+- During parallel training, position i can see token i while predicting token i + 1, which its attention cannot access.
+- This restriction makes it possible to compute the terms of the autoregressive factorization in parallel. Each term predicts the next token using only the available prefix.
+
+## Recall from memory {#revision-check}
+
+For A, B, C and D, which positions can C read and which token is its target in shifted training?
+
+<details>
+<summary>Show the answer</summary>
+
+C can read A, B and C. The target is D. The position of D remains masked for C’s query.
+
+</details>
+
+::: {.language-switch}
+**Language** · [Français](../fr/revision-causal-masking.qmd) · [English](../en/revision-causal-masking.qmd)
+:::

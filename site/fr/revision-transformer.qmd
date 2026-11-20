@@ -1,0 +1,46 @@
+---
+title: "Révision — Calcul d’un Transformer GPT"
+description-meta: "La chaîne plongements, blocs, états finaux et logits, avec le rôle de l’attention, du MLP et des résidus."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-transformer", "level:core", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/revision-transformer"
+scope: "La chaîne plongements, blocs, états finaux et logits, avec le rôle de l’attention, du MLP et des résidus."
+purpose: "Restituer de mémoire les idées de cette leçon et les appliquer à la question de révision."
+revision_role: synthesis
+revision_of: ["fr/transformer"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-transformer", "level:core", "language:fr", "status:published"]
+-->
+
+[Revenir à la leçon](transformer.qmd) · [Plan du parcours](review-path.qmd#computation)
+
+## À retenir {#revision-essentials}
+
+- Le modèle prépare des états d’entrée à partir des IDs et intègre la position selon l’architecture. Les blocs affinent ensuite un état par position.
+- L’auto-attention combine de l’information entre positions. Le MLP transforme séparément l’état de chaque position. Les connexions résiduelles et la normalisation accompagnent ces transformations.
+- La tête de sortie projette les états finaux en logits sur le vocabulaire. La règle de décodage intervient après ce calcul.
+
+## Vérifier de mémoire {#revision-check}
+
+Dans un bloc GPT, quelle sous-couche permet directement à une position d’utiliser le contenu d’une autre position ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+L’auto-attention. Le MLP d’un bloc traite chaque position séparément en réutilisant les mêmes paramètres.
+
+</details>
+
+::: {.language-switch}
+**Langue** · [Français](../fr/revision-transformer.qmd) · [English](../en/revision-transformer.qmd)
+:::

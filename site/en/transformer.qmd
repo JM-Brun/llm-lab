@@ -10,8 +10,8 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/transformer"
 summary: "Introduces the architecture of a decoder-only GPT, from its Transformer block stack to the output head, then traces a forward pass to the logits. Distinguishes attention, the repeated block, and the complete model."
-scope: "Follows an autoregressive GPT computation inside the network, from input representations to logits, focusing on Transformer blocks, self-attention, the MLP, residual connections, and normalization; text preparation and the generation loop are located but not retaught."
-purpose: "Readers should be able to recognize a decoder-only Transformer architecture, distinguish the attention sublayer, block, and complete network, then trace a forward pass to the logits without conflating it with generation."
+scope: "Locates sublayers, repeated blocks and the output head in a GPT forward pass."
+purpose: "Trace a forward pass to the logits and identify the operation within a block that combines information across positions."
 suggested_route:
   previous: "en/contextualized-representations"
   next: "en/queries-keys-values"

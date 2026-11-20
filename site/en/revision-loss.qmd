@@ -1,0 +1,47 @@
+---
+title: "Review — GPT loss function"
+description-meta: "The target-token penalty, aggregation over valid positions and the role of the resulting scalar."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-loss", "level:core", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/revision-loss"
+scope: "The target-token penalty, aggregation over valid positions and the role of the resulting scalar."
+purpose: "Recall the key ideas from this lesson and apply them to the review question."
+revision_role: synthesis
+revision_of: ["en/loss"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-loss", "level:core", "language:en", "status:published"]
+-->
+
+[Back to the lesson](loss.qmd) · [Learning path plan](review-path.qmd#training)
+
+## What to remember {#revision-essentials}
+
+- At each valid training position, compare the prediction with the observed next token. For a one-hot target the penalty is minus the log of its predicted probability.
+- Aggregate these penalties over valid positions in the batch, usually by averaging. Ignored positions contribute to neither the sum nor the denominator.
+- Loss is a scalar objective. Backpropagation computes its gradients, and the optimizer determines the update.
+- On a fixed batch, changing from mean to sum multiplies the gradient by the number of valid positions. Weighting tokens differently can change their relative contributions to the gradient.
+
+## Recall from memory {#revision-check}
+
+Three positions have penalties of 1, 3 and 5, but the third is ignored. What is the mean loss?
+
+<details>
+<summary>Show the answer</summary>
+
+(1 + 3) ÷ 2 = 2. The ignored position does not count in the denominator.
+
+</details>
+
+::: {.language-switch}
+**Language** · [Français](../fr/revision-loss.qmd) · [English](../en/revision-loss.qmd)
+:::

@@ -10,11 +10,11 @@ lang: fr
 LLM-LAB-PAGE-MAP v1
 id: "fr/generation"
 summary: "Présente la génération comme une boucle autorégressive : contexte, prédiction du prochain token, sélection, réinjection et arrêt. Situe le prefill, le decode incrémental et les stratégies de sélection, puis distingue l’inférence du scoring et de l’apprentissage."
-scope: "Décrit l’inférence autorégressive et ses principaux mécanismes de serving : prefill/decode, cache KV, latence, ordonnancement multi-requêtes, continuous batching, prefix caching et chunked prefill. Les détails internes du Transformer et l’apprentissage des paramètres restent hors périmètre."
-purpose: "Le lecteur doit pouvoir dérouler une génération token par token, distinguer le calcul du modèle de la sélection, expliquer les phases prefill/decode et relier les métriques de latence aux mécanismes de serving sans confondre ordonnancement et prédiction."
+scope: "Déroule une génération libre, du traitement du prompt au critère d’arrêt. La latence et l’ordonnancement relèvent de l’approfondissement."
+purpose: "Suivre le choix du premier token au prefill, puis la réinjection des tokens choisis jusqu’à l’arrêt."
 suggested_route:
-  previous: "fr/llm-overview"
-  next: "fr/text-data"
+  previous: null
+  next: "fr/in-context-learning"
 hierarchy:
   parents: ["fr/llm-overview"]
   children: ["fr/logits", "fr/probabilites"]
@@ -30,7 +30,7 @@ tags: ["type:concept-lesson", "destination:understand", "topic:inference-generat
 {{< include ../includes/generated-guided-context-fr-generation.qmd >}}
 
 ::: {.chapter-lead}
-Le panorama s'est arrêté sur un tableau : après « C'est une bonne situation, ça, scribe ? », le modèle donne 0,6 à « Vous », 0,2 à « Je ». Un tableau de probabilités n'est pas encore une réponse. Comment passe-t-on de l'un à l'autre ?
+Reprenons le premier tour de la prédiction : après « C'est une bonne situation, ça, scribe ? », le modèle donne 0,6 à « Vous », 0,2 à « Je ». Un tableau de probabilités n'est pas encore une réponse. Comment passe-t-on de l'un à l'autre ?
 
 En répétant quatre gestes : prédire, sélectionner, réinjecter, puis continuer ou s'arrêter. Cette boucle est la **génération autorégressive**. Pendant qu'elle tourne, les paramètres du modèle ne changent pas : produire une réponse n'est pas apprendre.
 :::
@@ -186,8 +186,7 @@ Le *prefill* est souvent limité par la capacité de calcul, tandis que le *deco
 
 La boucle autorégressive décrit **une séquence**. Un serveur doit en gérer plusieurs, avec des prompts et des longueurs de sortie différents.
 
-- **TPOT (*time per output token*)** : moyenne du délai entre les tokens de sortie, hors premier token. Pour une requête qui produit $N_{out}>1$ tokens, on peut l'estimer par
-  On l'estime par $\operatorname{TPOT}=\frac{\operatorname{E2E}-\operatorname{TTFT}}{N_{out}-1}$.
+- **TPOT (*time per output token*)** : moyenne du délai entre les tokens de sortie, hors premier token. Pour une requête qui produit $N_{out}>1$ tokens, on peut l'estimer par $\operatorname{TPOT}=\frac{\operatorname{E2E}-\operatorname{TTFT}}{N_{out}-1}$.
   L'**ITL** est l'intervalle individuel entre deux tokens successifs. Pour une requête, la moyenne de ses ITL correspond au TPOT ; les agrégations sur plusieurs requêtes peuvent différer selon leur pondération.
 - **Continuous batching** (*in-flight batching*) : le serveur ajuste le groupe de séquences à chaque itération de decode. Lorsqu'une séquence termine, elle libère sa place ; une nouvelle requête peut entrer sans attendre la fin des autres. Chaque séquence reste autorégressive : c'est l'ordonnancement du lot qui change, pas la règle de prédiction.
 - **Prefix caching** : deux requêtes peuvent réutiliser le cache KV d'un préfixe commun si leur préfixe de tokens est exactement identique et si l'entrée de cache est encore disponible sur un worker compatible. Une ressemblance sémantique ou des mots communs ne suffisent pas ; une différence de sérialisation ou de tokenisation peut casser le partage. Ce n'est pas un cache de réponses.

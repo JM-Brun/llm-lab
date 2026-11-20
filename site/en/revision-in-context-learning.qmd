@@ -1,0 +1,47 @@
+---
+title: "Review — In-context learning"
+description-meta: "How examples, instructions and documents in a prompt influence a model with fixed parameters."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-in-context-learning", "level:core", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/revision-in-context-learning"
+scope: "How examples, instructions and documents in a prompt influence a model with fixed parameters."
+purpose: "Recall the key ideas from this lesson and apply them to the review question."
+revision_role: synthesis
+revision_of: ["en/in-context-learning"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-in-context-learning", "level:core", "language:en", "status:published"]
+-->
+
+[Back to the lesson](in-context-learning.qmd) · [Learning path plan](review-path.qmd#context-use)
+
+## What to remember {#revision-essentials}
+
+- Instructions or demonstrations in the prompt can change model behavior. Few-shot prompting uses a handful of examples to show the desired transformation.
+- This operates during inference by changing the context the prediction is conditioned on. Fine-tuning adjusts parameters beforehand.
+- RAG may retrieve external documents and insert them into the context. The model can use them when they are supplied.
+- Zero-shot, one-shot and few-shot mean zero, one or a few task examples. These terms describe what the prompt supplies and do not identify the internal mechanism producing the behavior.
+
+## Recall from memory {#revision-check}
+
+Adding two classification examples to a prompt improves its answers. Which parameters were learned at that point?
+
+<details>
+<summary>Show the answer</summary>
+
+The addition updated no model parameters. The new examples changed the context and therefore the distribution of answers.
+
+</details>
+
+::: {.language-switch}
+**Language** · [Français](../fr/revision-in-context-learning.qmd) · [English](../en/revision-in-context-learning.qmd)
+:::

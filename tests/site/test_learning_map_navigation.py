@@ -182,8 +182,8 @@ def test_every_core_guided_route_page_keeps_contextual_navigation_cards(language
         rendered = fragments[fragment_path]
         contexts = contexts_by_page[page_id]
         for context in contexts:
-            stage_title = context["stage_title"]
             if context["previous"] is not None:
+                stage_title = context["previous_stage_title"]
                 label = (
                     f"← Étape précédente · {stage_title}"
                     if language == "fr"
@@ -193,6 +193,7 @@ def test_every_core_guided_route_page_keeps_contextual_navigation_cards(language
                 assert html.escape(label) in rendered, page_id
                 assert target.href.removesuffix(".html") + ".qmd" in rendered, page_id
             if context["next"] is not None:
+                stage_title = context["next_stage_title"]
                 label = (
                     f"Continuer {stage_title} →"
                     if language == "fr"

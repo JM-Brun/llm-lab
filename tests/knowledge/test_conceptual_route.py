@@ -27,19 +27,27 @@ def test_conceptual_route_follows_core_visits_and_links_to_lessons_and_graph(
     artifacts = prepare_build(language)
     projection = artifacts[path]
 
-    overview, details = projection.split("<details>", maxsplit=1)
+    overview, uses, details = projection.split("<details>")
     assert sum(line.startswith("- **") for line in overview.splitlines()) == 3
     assert (
-        "](#guided-stage-inference) →" in overview
+        "](#guided-stage-inference) ·" in overview
         and "](#guided-stage-context-use) ·" in overview
         and "](#guided-stage-scoring) ·" in overview
     )
+    rows = re.findall(r"^\| \[[^\n]+\]\(#guided-stage-([a-z-]+)\) \| .+? \| (.+?) \|", uses, re.M)
+    fixed, updated = ("Fixés", "Mis à jour") if language == "fr" else ("Fixed", "Updated")
+    assert rows == [
+        ("inference", fixed),
+        ("context-use", fixed),
+        ("scoring", fixed),
+        ("training", updated),
+    ]
     start = details.index(f" ({preview}) ·")
     end = details.index(f" ({revisit}) ·")
     assert start < details.index("](text-data.html)") < end
     assert end < details.index("](context-engineering.html)")
-    assert details.count("](generation.html)") == 2
-    assert sum(line.startswith("- ") for line in details.splitlines()) == 21
+    assert details.count("](generation.html)") == 1
+    assert details.count("](llm-overview.html)") == 1
     assert "learning-map.html#mode=concepts&concept=autoregressive-generation" in projection
     assert "learning-map.html#mode=concepts&concept=prefill" in projection
     assert "learning-map.html#mode=concepts&concept=kv-cache" not in projection
@@ -48,15 +56,26 @@ def test_conceptual_route_follows_core_visits_and_links_to_lessons_and_graph(
         r"learning-map\.html#(mode=concepts&concept=[a-z0-9-]+)", projection
     ):
         assert f'id="{escape(fragment, quote=True)}"' in map_shell
-    rows = re.findall(r"^- (.+) · \[([^\n]+)\]\(([^/\n]+)\.html\)$", details, re.MULTILINE)
-    assert len(rows) == 21
-    for chain, outcome, page_slug in rows:
+    rows = re.findall(
+        r"^- (.+) · \[([^\n]+)\]\(([^/\n]+)\.html\) · \[[^\n]+\]\(([^/\n]+\.html)\)$",
+        details,
+        re.MULTILINE,
+    )
+    assert len(rows) == 20
+    assert len({page_slug for _, _, page_slug, _ in rows}) == 20
+    assert (
+        "](" + ("synthese-entropie.html" if language == "fr" else "entropy-synthesis.html") + ")"
+        in details
+    )
+    for chain, outcome, page_slug, synthesis in rows:
         fragment = SITE / "includes" / f"generated-guided-context-{language}-{page_slug}.qmd"
         local = artifacts[fragment]
         assert "(learning-map.html#conceptual-route)" in local
         assert f"{chain} · {outcome}" in local
+        assert f"]({synthesis})" in local
+    panorama = SITE / "includes" / f"generated-guided-context-{language}-llm-overview.qmd"
     generation = SITE / "includes" / f"generated-guided-context-{language}-generation.qmd"
-    assert f" ({preview}) ·" in artifacts[generation]
+    assert f" ({preview}) ·" in artifacts[panorama]
     assert f" ({revisit}) ·" in artifacts[generation]
     source = (SITE / language / "learning-map.qmd").read_text(encoding="utf-8")
     assert f"{{{{< include ../includes/{path.name} >}}}}" in source

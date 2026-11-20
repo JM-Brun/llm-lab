@@ -1,0 +1,46 @@
+---
+title: "Review — Queries, keys and values"
+description-meta: "The three projections of a hidden state and the path from Q–K comparisons to weights and the weighted combination of V."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-queries-keys-values", "level:core", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/revision-queries-keys-values"
+scope: "The three projections of a hidden state and the path from Q–K comparisons to weights and the weighted combination of V."
+purpose: "Recall the key ideas from this lesson and apply them to the review question."
+revision_role: synthesis
+revision_of: ["en/queries-keys-values"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-queries-keys-values", "level:core", "language:en", "status:published"]
+-->
+
+[Back to the lesson](queries-keys-values.qmd) · [Learning path plan](review-path.qmd#computation)
+
+## What to remember {#revision-essentials}
+
+- A self-attention head projects each state into a query Q, key K and value V using learned matrices.
+- For one position, the query is compared with keys from accessible positions. The score contributes to the weight assigned to each position.
+- The output combines the values using those weights. Keys contribute to comparison, and values provide the content being aggregated.
+
+## Recall from memory {#revision-check}
+
+With Q and K fixed, what can changing V affect in a head?
+
+<details>
+<summary>Show the answer</summary>
+
+It can change the weighted output. The head’s weights stay fixed because they are computed from Q, K and the mask.
+
+</details>
+
+::: {.language-switch}
+**Language** · [Français](../fr/revision-queries-keys-values.qmd) · [English](../en/revision-queries-keys-values.qmd)
+:::

@@ -128,6 +128,14 @@ class ConceptualFocus(StrictModel):
         return values
 
 
+class PredictionUse(StrictModel):
+    """How a stage uses the shared prediction and treats its two inputs."""
+
+    context: LocalizedCopy
+    parameters: Literal["fixed", "updated"]
+    action: LocalizedCopy
+
+
 class GuidedRouteStage(StrictModel):
     """One conceptual stage with bilingual copy and page references."""
 
@@ -138,7 +146,7 @@ class GuidedRouteStage(StrictModel):
     optional_pages: OptionalLocalizedPageIds = Field(default_factory=OptionalLocalizedPageIds)
     conceptual_focus: dict[str, ConceptualFocus] = Field(default_factory=dict)
     compact_title: LocalizedCopy | None = None
-    use_branch: str | None = None
+    prediction_use: PredictionUse | None = None
 
     @model_validator(mode="after")
     def core_and_optional_pages_are_disjoint(self) -> GuidedRouteStage:
@@ -151,6 +159,14 @@ class GuidedRouteStage(StrictModel):
         return self
 
 
+class LessonContract(StrictModel):
+    """Logical topic references shared by both versions of a core lesson."""
+
+    synthesis: str
+    requires: list[str] = Field(default_factory=list)
+    stage: str | None = None
+
+
 class GuidedRouteDocument(StrictModel):
     """Versioned source document for the reader-facing conceptual route."""
 
@@ -160,6 +176,7 @@ class GuidedRouteDocument(StrictModel):
     # this document accepts the canonical top-level field while keeping the
     # stage model and its membership projection independent.
     transitions: list[GuidedRouteTransition] = Field(default_factory=list)
+    lesson_contracts: dict[str, LessonContract] | None = None
 
     @model_validator(mode="after")
     def stage_ids_are_unique(self) -> GuidedRouteDocument:
@@ -187,7 +204,18 @@ class ResolvedGuidedRouteStage(StrictModel):
     optional_pages: list[ResolvedPage] = Field(default_factory=list)
     conceptual_focus: dict[str, ConceptualFocus] = Field(default_factory=dict)
     compact_title: str | None = None
-    use_branch: str | None = None
+    prediction_use: PredictionUse | None = None
+
+
+class ResolvedLessonContract(StrictModel):
+    """A core lesson, its knowledge dependencies and its primary revision page."""
+
+    scope: str
+    outcome: str
+    stage: str
+    requires: list[ResolvedPage]
+    synthesis: ResolvedPage
+    revision_scope: str
 
 
 class ResolvedGuidedRouteTransition(StrictModel):
@@ -284,6 +312,11 @@ def load_pages() -> list[dict[str, Any]]:
                 "scope": str(metadata.get("scope", "")),
                 "summary": str(metadata.get("summary", "")),
                 "purpose": str(metadata.get("purpose", "")),
+                **(
+                    {"revision_of": metadata.get("revision_of", [])}
+                    if metadata.get("revision_role") == "synthesis"
+                    else {}
+                ),
                 "covered_stages": metadata.get("covered_stages", []),
                 "section_headings": section_headings,
                 "route": metadata.get("suggested_route", {}),
@@ -474,10 +507,125 @@ def load_guided_route(language: str, pages: list[dict[str, Any]]) -> list[Resolv
                 compact_title=getattr(stage.compact_title, language)
                 if stage.compact_title
                 else None,
-                use_branch=stage.use_branch,
+                prediction_use=stage.prediction_use,
             )
         )
     return resolved
+
+
+def resolve_lesson_contracts(
+    document: GuidedRouteDocument,
+    stages: list[ResolvedGuidedRouteStage],
+    pages: list[dict[str, Any]],
+) -> dict[str, ResolvedLessonContract]:
+    """Resolve shared topic IDs and verify prerequisites against the authored sequence."""
+    page_by_id = {page["id"]: page for page in pages}
+    occurrences: dict[str, list[tuple[str, int, ResolvedPage]]] = {}
+    position = 0
+    for stage in stages:
+        for page in stage.pages:
+            topic = page_by_id[page.id]["topic"]
+            occurrences.setdefault(topic, []).append((stage.id, position, page))
+            position += 1
+
+    contracts = document.lesson_contracts or {}
+    if contracts.keys() != occurrences.keys():
+        raise ValueError(
+            "guided lesson contracts must cover exactly the core topics: "
+            f"missing={sorted(occurrences.keys() - contracts.keys())}, "
+            f"extra={sorted(contracts.keys() - occurrences.keys())}"
+        )
+    acquisition: dict[str, tuple[str, int, ResolvedPage]] = {}
+    for topic, visits in occurrences.items():
+        stages_for_topic = {visit[0] for visit in visits}
+        page_ids_for_topic = {visit[2].id for visit in visits}
+        stage = contracts[topic].stage
+        if len(page_ids_for_topic) != 1 or (len(visits) > 1 and stage is None):
+            raise ValueError(f"guided lesson {topic!r}: ambiguous acquisition stage or page")
+        if stage is not None and stage not in stages_for_topic:
+            raise ValueError(f"guided lesson {topic!r}: acquisition stage {stage!r} is not core")
+        acquisition[topic] = next(visit for visit in visits if stage in (None, visit[0]))
+
+    by_page: dict[str, ResolvedLessonContract] = {}
+    for topic, (stage, order, lesson) in acquisition.items():
+        contract = contracts[topic]
+        if len(set(contract.requires)) != len(contract.requires):
+            raise ValueError(f"guided lesson {topic!r}: duplicate prerequisites")
+        requires = []
+        for prerequisite in contract.requires:
+            previous = acquisition.get(prerequisite)
+            if previous is None or previous[1] >= order:
+                raise ValueError(
+                    f"guided lesson {topic!r}: prerequisite {prerequisite!r} "
+                    "must be acquired earlier in the core route"
+                )
+            requires.append(previous[2])
+        candidates = [
+            page
+            for page in pages
+            if page["topic"] == contract.synthesis
+            and page["language"] == page_by_id[lesson.id]["language"]
+            and lesson.id in page.get("revision_of", [])
+        ]
+        if len(candidates) != 1:
+            raise ValueError(
+                f"guided lesson {lesson.id!r}: expected one published synthesis "
+                f"with topic {contract.synthesis!r} and a typed revision link"
+            )
+        synthesis = candidates[0]
+        by_page[lesson.id] = ResolvedLessonContract(
+            stage=stage,
+            scope=page_by_id[lesson.id]["scope"],
+            outcome=page_by_id[lesson.id]["purpose"],
+            requires=requires,
+            synthesis=ResolvedPage(**{key: synthesis[key] for key in ("id", "title", "href")}),
+            revision_scope=synthesis["scope"],
+        )
+    return by_page
+
+
+def render_lesson_contracts(
+    stages: list[ResolvedGuidedRouteStage],
+    contracts: dict[str, ResolvedLessonContract],
+    language: str,
+) -> str:
+    """Render the stage plan from the same lesson metadata used by the map."""
+    fr = language == "fr"
+
+    def link(page: ResolvedPage) -> str:
+        return f"[{escape_markdown_text(page.title)}]({page.href})"
+
+    lines: list[str] = []
+    for stage in stages:
+        lines.extend(
+            [
+                f"## {escape_markdown_text(stage.title)} {{#{stage.id}}}",
+                "",
+                escape_markdown_text(stage.objective),
+                "",
+            ]
+        )
+        for lesson in stage.pages:
+            contract = contracts[lesson.id]
+            lines.extend([f"### {escape_markdown_text(lesson.title)}", ""])
+            if stage.id != contract.stage:
+                acquired = next(item for item in stages if item.id == contract.stage)
+                label = "Acquis visé à l'étape" if fr else "Outcome expected in"
+                lines.extend([f"{link(lesson)} · {label} [{acquired.title}](#{acquired.id}).", ""])
+                continue
+            lines.extend([f"{link(lesson)} · {link(contract.synthesis)}", ""])
+            if contract.requires:
+                label = "Acquis mobilisés" if fr else "Prior learning"
+                lines.append(f"- **{label}** — " + ", ".join(map(link, contract.requires)))
+            revision_label = "À retrouver dans la fiche" if fr else "What the sheet covers"
+            for label, value in (
+                ("Périmètre" if fr else "Scope", contract.scope),
+                ("Acquis visé" if fr else "Learning outcome", contract.outcome),
+                (revision_label, contract.revision_scope),
+            ):
+                lines.append(f"- **{label}** — {escape_markdown_text(value)}")
+            lines.append("")
+    return "\n".join(lines)
 
 
 def load_guided_route_transitions(
@@ -1011,7 +1159,7 @@ def resolve_conceptual_visits(
         label = escape_markdown_text(label)
         return f"[{label}]({href})" if href else label
 
-    seen_topics: set[str] = set()
+    seen_objects: set[str] = set()
     visits: list[ConceptualVisit] = []
     for stage in stages:
         core_topics = [page_by_id[page.id]["topic"] for page in stage.pages]
@@ -1025,9 +1173,9 @@ def resolve_conceptual_visits(
             )
         for page, topic in zip(stage.pages, core_topics, strict=True):
             focus = stage.conceptual_focus[topic]
-            if focus.visit == "revisit" and topic not in seen_topics:
-                raise ValueError(f"{stage.id}: revisited topic {topic!r} needs an earlier visit")
-            seen_topics.add(topic)
+            if focus.visit == "revisit" and seen_objects.isdisjoint(focus.objects):
+                raise ValueError(f"{stage.id}: revisited topic {topic!r} needs an earlier object")
+            seen_objects.update(focus.objects)
             where = f"{stage.id}/{topic}"
             visits.append(
                 ConceptualVisit(
@@ -1055,7 +1203,7 @@ def render_conceptual_route(
     stages: list[ResolvedGuidedRouteStage],
     visits: list[ConceptualVisit],
     language: str,
-    branch_ids: set[str],
+    lesson_contracts: dict[str, ResolvedLessonContract],
 ) -> str:
     """Render three global moves, with the full visit skeleton on demand."""
     validate_route_projection(stages)
@@ -1063,30 +1211,66 @@ def render_conceptual_route(
     starts = [stage_order.index(stage_id) for _, stage_id, _, _ in ROUTE_PARTS]
     fr = language == "fr"
     lines: list[str] = []
+    uses: list[tuple[str, PredictionUse]] = []
     for (part_id, _, french, english), first, end in zip(
         ROUTE_PARTS, starts, [*starts[1:], len(stages)], strict=True
     ):
-        groups: dict[str, list[str]] = {}
+        stage_links: list[str] = []
         for stage in stages[first:end]:
             title = escape_markdown_text(stage.compact_title or stage.title)
             link = f"[{title}](#guided-stage-{stage.id})"
-            branch = stage.use_branch
-            if part_id == "usages" and branch not in branch_ids:
-                raise ValueError(f"{stage.id}: expected a canonical use_branch, found {branch!r}")
-            groups.setdefault(branch or part_id, []).append(link)
-        parts = " · ".join(" → ".join(group) for group in groups.values())
+            stage_links.append(link)
+            if part_id == "usages":
+                if stage.prediction_use is None:
+                    raise ValueError(f"{stage.id}: expected a prediction_use")
+                uses.append((link, stage.prediction_use))
+        separator = " · " if part_id == "usages" else " → "
+        parts = separator.join(stage_links)
         lines.append(f"- **{french if fr else english}** · {parts}")
+
+    summary = "Comparer les usages" if fr else "Compare uses"
+    header = (
+        "| Usage | Contexte $c$ | Paramètres $\\theta$ | Opération |"
+        if fr
+        else "| Use | Context $c$ | Parameters $\\theta$ | Operation |"
+    )
+    parameter_labels = (
+        {"fixed": "Fixés", "updated": "Mis à jour"}
+        if fr
+        else {
+            "fixed": "Fixed",
+            "updated": "Updated",
+        }
+    )
+    lines.extend(
+        ["", "<details>", f"<summary>{summary}</summary>", "", header, "|---|---|---|---|"]
+    )
+    for link, use in uses:
+        context = escape_markdown_text(getattr(use.context, language)).replace("|", r"\|")
+        action = escape_markdown_text(getattr(use.action, language)).replace("|", r"\|")
+        parameters = parameter_labels[use.parameters]
+        lines.append(f"| {link} | {context} | {parameters} | {action} |")
+    upstream_note = (
+        "Composer le contexte agit en amont. Les trois autres opérations utilisent "
+        "la distribution produite."
+        if fr
+        else "Context design shapes the input. The other three operations use the distribution."
+    )
+    lines.extend(["", upstream_note, "", "</details>"])
 
     count = len({visit.page.id for visit in visits})
     label = f"Squelette des {count} leçons" if fr else f"Skeleton of the {count} lessons"
     lines.extend(["", "<details>", f"<summary>{label}</summary>", ""])
+    review_label = "Fiche de révision" if fr else "Review sheet"
     for stage in stages:
         lines.extend([f"**{escape_markdown_text(stage.title)}**", ""])
-        lines.extend(
-            "- " + render_conceptual_visit(visit, link_lesson=True)
-            for visit in visits
-            if visit.stage_id == stage.id
-        )
+        for visit in visits:
+            if visit.stage_id != stage.id:
+                continue
+            line = "- " + render_conceptual_visit(visit, link_lesson=True)
+            if contract := lesson_contracts.get(visit.page.id):
+                line += f" · [{review_label}]({contract.synthesis.href})"
+            lines.append(line)
         lines.append("")
     return "\n".join([*lines, "</details>", ""])
 
@@ -1107,6 +1291,7 @@ def prepare_guided_page_context_fragments(
     language: str,
     stages: list[ResolvedGuidedRouteStage],
     transitions: list[ResolvedGuidedRouteTransition] | None = None,
+    lesson_contracts: dict[str, ResolvedLessonContract] | None = None,
     conceptual_visits: Sequence[ConceptualVisit] = (),
 ) -> dict[Path, str]:
     """Render membership, the lesson skeleton and transition context for route pages."""
@@ -1129,7 +1314,16 @@ def prepare_guided_page_context_fragments(
         )
         visits = visits_by_page.get(page_id)
         skeleton = render_lesson_skeleton(visits, language) if visits else ""
-        outputs[output] = membership + skeleton + transition_context
+        review_link = ""
+        if lesson_contracts and page_id in lesson_contracts:
+            outcome_label = "Objectif de la leçon" if language == "fr" else "Lesson objective"
+            label = "Réviser cette leçon" if language == "fr" else "Review this lesson"
+            contract = lesson_contracts[page_id]
+            outcome = escape_markdown_text(contract.outcome)
+            href = contract.synthesis.href
+            membership += f"\n**{outcome_label}.** {outcome}\n\n"
+            review_link = f"\n[{label}]({href})\n\n"
+        outputs[output] = membership + skeleton + transition_context + review_link
     return outputs
 
 
@@ -1170,26 +1364,28 @@ def build_suggested_route_contexts(
     contexts: dict[str, list[dict[str, ResolvedPage | str | None]]] = {}
     for stage_index, stage in enumerate(stages):
         for page_index, page in enumerate(stage.pages):
-            previous = (
-                stage.pages[page_index - 1]
+            previous, previous_stage_title = (
+                (stage.pages[page_index - 1], stage.title)
                 if page_index > 0
-                else stages[stage_index - 1].pages[-1]
+                else (stages[stage_index - 1].pages[-1], stages[stage_index - 1].title)
                 if stage_index > 0 and stages[stage_index - 1].pages
-                else None
+                else (None, None)
             )
-            following = (
-                stage.pages[page_index + 1]
+            following, next_stage_title = (
+                (stage.pages[page_index + 1], stage.title)
                 if page_index + 1 < len(stage.pages)
-                else stages[stage_index + 1].pages[0]
+                else (stages[stage_index + 1].pages[0], stages[stage_index + 1].title)
                 if stage_index + 1 < len(stages) and stages[stage_index + 1].pages
-                else None
+                else (None, None)
             )
             contexts.setdefault(page.id, []).append(
                 {
                     "stage_id": stage.id,
                     "stage_title": stage.title,
                     "previous": previous,
+                    "previous_stage_title": previous_stage_title,
                     "next": following,
+                    "next_stage_title": next_stage_title,
                 }
             )
     return contexts
@@ -1219,11 +1415,11 @@ def render_suggested_route_markdown(
     if stage_routes:
         cards: list[str] = []
         for context in stage_routes:
-            stage_title = str(context["stage_title"])
             for direction in ("previous", "next"):
                 target = context.get(direction)
                 if target is None:
                     continue
+                stage_title = str(context[f"{direction}_stage_title"])
                 if not isinstance(target, ResolvedPage):
                     raise ValueError(
                         f"invalid {direction} stage route for {page['id']!r}: {target!r}"
@@ -1572,6 +1768,12 @@ def prepare_build(language: str) -> dict[Path, str]:
     concept_graph = load_concept_graph(language, pages)
     guided_route = load_guided_route(language, pages)
     guided_transitions = load_guided_route_transitions(language, pages)
+    route_document = GuidedRouteDocument.model_validate(load_yaml(ROOT / "data/guided-route.yml"))
+    lesson_contracts = (
+        resolve_lesson_contracts(route_document, guided_route, pages)
+        if route_document.lesson_contracts is not None
+        else {}
+    )
     navigation = load_navigation(language, pages)
     artifacts = prepare_guided_route_fragment(language, guided_route)
     visits: list[ConceptualVisit] = []
@@ -1580,13 +1782,18 @@ def prepare_build(language: str) -> dict[Path, str]:
         visits = resolve_conceptual_visits(
             guided_route, pages, concept_graph["concepts"], computation["nodes"], language
         )
-        branch_ids = {branch["id"] for branch in computation["branches"]}
         artifacts[SITE / "includes" / f"generated-conceptual-route-{language}.qmd"] = (
-            render_conceptual_route(guided_route, visits, language, branch_ids)
+            render_conceptual_route(guided_route, visits, language, lesson_contracts)
         )
     artifacts.update(
-        prepare_guided_page_context_fragments(language, guided_route, guided_transitions, visits)
+        prepare_guided_page_context_fragments(
+            language, guided_route, guided_transitions, lesson_contracts, visits
+        )
     )
+    if lesson_contracts:
+        artifacts[SITE / "includes" / f"generated-lesson-contracts-{language}.qmd"] = (
+            render_lesson_contracts(guided_route, lesson_contracts, language)
+        )
     artifacts.update(prepare_cross_cutting_coverage_fragments(language, pages, guided_route))
     artifacts.update(prepare_suggested_route_fragments(language, pages, guided_route))
     payload = {

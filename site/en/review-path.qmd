@@ -1,0 +1,31 @@
+---
+title: "Learning path plan and review sheets"
+description-meta: "Lists the prior learning, scope, expected outcome and review sheet contents for each core Understand lesson."
+keywords: ["type:entry-point", "destination:orient", "topic:review-path", "level:overview", "language:en", "status:published"]
+lang: en
+toc: true
+toc-depth: 2
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/review-path"
+scope: "Lists the prior learning, scope, expected outcome and review sheet contents for each core Understand lesson."
+purpose: "Locate each learning outcome in the progression and find its review sheet."
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:entry-point", "destination:orient", "topic:review-path", "level:overview", "language:en", "status:published"]
+-->
+
+Choose a stage to find the ideas to master and review them with a question and answer. **Prior learning** links point to lessons that supply knowledge used at the stage shown.
+
+[Guided route and optional resources](learning-map.qmd) · [Français](../fr/review-path.qmd) · [English](../en/review-path.qmd)
+
+**Starting from the distribution.** [Generate](#inference) to select the next token, [score](#scoring) to measure the probability of an observed target, or [train](#training) to adjust the parameters. [Context](#context-use) extends inference at the application level.
+
+{{< include ../includes/generated-lesson-contracts-en.qmd >}}

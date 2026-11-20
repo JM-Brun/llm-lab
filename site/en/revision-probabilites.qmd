@@ -1,0 +1,47 @@
+---
+title: "Review — Next-token probabilities"
+description-meta: "Softmax over the vocabulary, the effect of temperature, token selection and calibration."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-probabilites", "level:core", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/revision-probabilites"
+scope: "Softmax over the vocabulary, the effect of temperature, token selection and calibration."
+purpose: "Recall the key ideas from this lesson and apply them to the review question."
+revision_role: synthesis
+revision_of: ["en/probabilities"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-probabilites", "level:core", "language:en", "status:published"]
+-->
+
+[Back to the lesson](probabilities.qmd) · [Learning path plan](review-path.qmd#prediction)
+
+## What to remember {#revision-essentials}
+
+- Softmax exponentiates each logit and divides it by the sum of exponentials over the vocabulary. The result is a distribution conditioned on the context.
+- Adding a common constant to all logits preserves the distribution. Score differences determine probability ratios.
+- With temperature T > 0, apply softmax to logits divided by T. Lower temperatures sharpen the distribution and higher ones flatten it. Token selection is a separate operation.
+- A normalized distribution sums to 1. With calibration, events assigned 80% probability occur about 80% of the time under a specified population and success criterion. Next-token probability alone does not measure whether an answer is factually true.
+
+## Recall from memory {#revision-check}
+
+Do logits (1, 2) and (11, 12) give different distributions?
+
+<details>
+<summary>Show the answer</summary>
+
+No. Adding 10 multiplies all exponential terms by the same constant, which cancels during normalization.
+
+</details>
+
+::: {.language-switch}
+**Language** · [Français](../fr/revision-probabilites.qmd) · [English](../en/revision-probabilites.qmd)
+:::

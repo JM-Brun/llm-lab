@@ -1,0 +1,46 @@
+---
+title: "Review — Contextualized representations"
+description-meta: "The progression from an initial embedding to a hidden state for each occurrence, and then to a prediction."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-contextualized-representations", "level:core", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/revision-contextualized-representations"
+scope: "The progression from an initial embedding to a hidden state for each occurrence, and then to a prediction."
+purpose: "Recall the key ideas from this lesson and apply them to the review question."
+revision_role: synthesis
+revision_of: ["en/contextualized-representations"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-contextualized-representations", "level:core", "language:en", "status:published"]
+-->
+
+[Back to the lesson](contextualized-representations.qmd) · [Learning path plan](review-path.qmd#representations)
+
+## What to remember {#revision-essentials}
+
+- Embedding lookup yields a vector for each vocabulary ID. A Transformer layer then maintains a hidden state for each sequence position.
+- Attention mixes information from accessible positions. In a causal GPT, the current position can use its prefix and its own input.
+- The output head uses the final state at a position to score the vocabulary for the next token.
+
+## Recall from memory {#revision-check}
+
+Can two occurrences of “bank” have the same initial embedding and different final states?
+
+<details>
+<summary>Show the answer</summary>
+
+Yes. If they have the same ID, their lookup is identical. Different prefixes can lead the layers to produce different final states.
+
+</details>
+
+::: {.language-switch}
+**Language** · [Français](../fr/revision-contextualized-representations.qmd) · [English](../en/revision-contextualized-representations.qmd)
+:::

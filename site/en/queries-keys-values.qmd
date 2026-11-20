@@ -10,8 +10,8 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/queries-keys-values"
 summary: "Distinguishes the three learned self-attention projections: Q forms queries, K supports compatibility scores, and V carries the content that is aggregated."
-scope: "Explains the roles and learned Q, K, and V projections in self-attention, their shared input and output dimensions; delegates score and aggregation computation to scaled dot-product attention, the temporal constraint to causal masking, implementation to the guided build, and historical context to the dedicated reference."
-purpose: "Readers should be able to distinguish the conceptual roles of Q, K, and V, explain why Q/K determine the weights while V supplies the aggregated content, and describe their qualitative dependencies without performing matrix calculations."
+scope: "Distinguishes three learned projections of a block state and their roles in one self-attention head."
+purpose: "Predict what changing the values can affect in an attention head when queries, keys and the mask stay fixed."
 suggested_route:
   previous: "en/transformer"
   next: "en/scaled-dot-product-attention"

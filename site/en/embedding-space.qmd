@@ -10,8 +10,8 @@ lang: en
 LLM-LAB-PAGE-MAP v1
 id: "en/embedding-space"
 summary: "Explains how a token ID selects a row in the embedding matrix and how the resulting vector becomes input to later processing."
-scope: "Introduces embedding-matrix lookup, distinguishes a row address from vector coordinates, explains how the matrix is learned, and connects the lookup to contextualized representations. Code, exercises, references, and extended history are moved to Build, Practice, and Deepen."
-purpose: "Readers should be able to explain that a token ID is used as a row index/address in E, identify the vector stored in that row, and distinguish it from a contextualized state."
+scope: "Shows how an ID indexes a learned row of the embedding matrix."
+purpose: "Given an ID, find the row of its initial embedding and explain why neighboring IDs do not determine vector proximity."
 suggested_route:
   previous: "en/text-data"
   next: "en/positional-encoding"

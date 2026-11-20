@@ -294,7 +294,7 @@ concepts:
       fr: "Procédure qui sélectionne un token à partir de la distribution prédite, l'ajoute au contexte, puis répète le calcul avec les mêmes paramètres."
       en: "Procedure that selects a token from the predicted distribution, appends it to the context, and repeats computation with unchanged parameters."
     domains: [inference-efficiency]
-    resources: [fr/generation, en/generation]
+    resources: [fr/llm-overview, en/llm-overview, fr/generation, en/generation]
   - id: decoding-policy
     importance: supporting
     labels: {fr: "Politique de décodage", en: "Decoding policy"}

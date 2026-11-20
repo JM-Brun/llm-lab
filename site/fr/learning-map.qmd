@@ -55,11 +55,17 @@ Les intitulés de sections affichés dans les détails d'une page sont des repè
 
 ### Squelette du parcours {#conceptual-route}
 
-Dans le détail d’une leçon, la flèche va des notions mobilisées aux objets étudiés. Le lien final indique l’acquis visé.
+Pour un GPT autorégressif, $f_\theta(c)$ transforme le contexte $c$ en logits avec les paramètres $\theta$. La normalisation donne la distribution de base du prochain token.
+
+$$p_\theta(\cdot\mid c)=\operatorname{softmax}\!\bigl(f_\theta(c)\bigr).$$
+
+Dans chaque leçon, le détail suit la forme **notions mobilisées → objet étudié · acquis visé**.
 
 {{< include ../includes/generated-conceptual-route-fr.qmd >}}
 
-Les neuf étapes détaillent l’ordre de lecture et les ressources facultatives. Les pages d’une étape sont complémentaires. L’[évaluation sur données tenues à l’écart](evaluation-experimentale.qmd) traverse les trois usages.
+Les neuf étapes détaillent l’ordre de lecture et les ressources facultatives. Les pages d’une étape sont complémentaires. L’exercice d’[évaluation sur données tenues à l’écart](evaluation-experimentale.qmd) prolonge le parcours.
+
+[Plan du parcours et fiches de révision](review-path.qmd)
 
 {{< include ../includes/generated-guided-route-fr.qmd >}}
 

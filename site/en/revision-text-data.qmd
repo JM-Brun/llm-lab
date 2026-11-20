@@ -1,0 +1,47 @@
+---
+title: "Review — From text to tokens"
+description-meta: "The text → tokens → IDs → embeddings chain and the difference between encoding a prompt and preparing a corpus."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-text-data", "level:core", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/revision-text-data"
+scope: "The text → tokens → IDs → embeddings chain and the difference between encoding a prompt and preparing a corpus."
+purpose: "Recall the key ideas from this lesson and apply them to the review question."
+revision_role: synthesis
+revision_of: ["en/text-data"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-text-data", "level:core", "language:en", "status:published"]
+-->
+
+[Back to the lesson](text-data.qmd) · [Learning path plan](review-path.qmd#text-input)
+
+## What to remember {#revision-essentials}
+
+- The tokenizer encodes text as units from its vocabulary. A token can represent part of a word, a space, a symbol, or part of its byte representation.
+- The vocabulary assigns an integer ID to each token. The number identifies that entry in the vocabulary.
+- Both segmentation and IDs depend on the tokenizer. Two tokenizers may encode the same text into sequences of different lengths.
+- IDs then select embeddings in the model. Encoding a prompt gives its immediate input. Preparing a corpus adds decisions about cleaning data and constructing training examples.
+
+## Recall from memory {#revision-check}
+
+Two tokenizers return different ID lists for the same text. Does this imply a bug?
+
+<details>
+<summary>Show the answer</summary>
+
+No. Their segmentation rules and vocabularies may differ. Each ID list is interpreted with its own tokenizer.
+
+</details>
+
+::: {.language-switch}
+**Language** · [Français](../fr/revision-text-data.qmd) · [English](../en/revision-text-data.qmd)
+:::

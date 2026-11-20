@@ -15,17 +15,18 @@
       - [Logits : les scores avant normalisation](logits.html)
       - [Probabilités de sortie : des logits aux tokens](probabilites.html)
       - [Entropie : incertitude sur le prochain token](entropy.html)
-  - Contexte et adaptation
+  - Génération et contexte
+    - [Générer du texte : l'inférence pas à pas](generation.html)
     - [Apprentissage en contexte (in-context learning)](in-context-learning.html)
     - [Ingénierie du contexte (context engineering)](context-engineering.html)
   - Scoring des tokens observés
     - [Vraisemblance et log-vraisemblance](vraisemblance.html)
-    - [Entropie croisée : l'objectif de prédiction des tokens](cross-entropy.html)
+    - [Entropie croisée pour une prédiction de token](cross-entropy.html)
     - [Fiche de synthèse — L'entropie, du langage aux LLM](synthese-entropie.html)
     - [Fiche de révision — Théorie de l'information et LLM](revision-information-theory.html)
     - [Expérience — Entropie, KL et compression prédictive](experience-information-theory.html)
   - Loss et gradients
-    - [Loss : de la perte par token à l'objectif](loss.html)
+    - [Du token à la perte du lot](loss.html)
     - [Gradients : relier la perte aux paramètres](gradients.html)
     - [La boucle d'entraînement : des gradients au modèle entraîné](training-loop.html)
     - [D'un modèle de base à un assistant : le post-entraînement](post-training.html)
@@ -33,7 +34,6 @@
     - [Architectures Transformer : encodeur, encodeur-décodeur et décodeur](transformer-architectures.html)
     - [Objectif d'entraînement : garanties et limites](llm-limits.html)
   - [Panorama : qu’est-ce qu’un LLM ?](llm-overview.html)
-  - [Générer du texte : l'inférence pas à pas](generation.html)
 - **Construire un petit GPT**
   - Préparer les données d'entraînement
     - [Préparer un corpus pour le préentraînement](corpus-preparation.html)

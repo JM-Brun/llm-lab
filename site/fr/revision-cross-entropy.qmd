@@ -1,0 +1,48 @@
+---
+title: "Révision — Entropie croisée"
+description-meta: "La différence entre prédiction et cible, le calcul à une position et le cas one-hot."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-cross-entropy", "level:core", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/revision-cross-entropy"
+scope: "La différence entre prédiction et cible, le calcul à une position et le cas one-hot."
+purpose: "Restituer de mémoire les idées de cette leçon et les appliquer à la question de révision."
+revision_role: synthesis
+revision_of: ["fr/cross-entropy"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-cross-entropy", "level:core", "language:fr", "status:published"]
+-->
+
+[Revenir à la leçon](cross-entropy.qmd) · [Plan du parcours](review-path.qmd#scoring)
+
+## À retenir {#revision-essentials}
+
+- Pour une cible q et une prédiction p, l’entropie croisée H(q,p) est la moyenne de −log p(x) pondérée par q(x).
+- Elle vaut H(q) + D_KL(q ∥ p). Pour q fixée, elle est minimale lorsque p coïncide avec q.
+- Si la cible est concentrée sur le token observé y, elle devient −log p(y). L’entropie prédictive H(p) répond à une autre question, celle de l’incertitude avant observation.
+
+## Vérifier de mémoire {#revision-check}
+
+Le modèle prédit p = (0,75 ; 0,25). Comparez l’entropie croisée en nats pour q = (0,5 ; 0,5) et pour la cible one-hot q = (1 ; 0).
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Pour la cible répartie, on obtient −0,5 ln(0,75) − 0,5 ln(0,25) ≈ 0,837 nat. Pour la cible one-hot, seul le premier terme contribue et la pénalité vaut −ln(0,75) ≈ 0,288 nat.
+
+</details>
+
+Pour appliquer cette pénalité à un lot, voir [la fiche sur la perte](revision-loss.qmd).
+
+::: {.language-switch}
+**Langue** · [Français](../fr/revision-cross-entropy.qmd) · [English](../en/revision-cross-entropy.qmd)
+:::

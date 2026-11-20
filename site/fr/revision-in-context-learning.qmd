@@ -1,0 +1,47 @@
+---
+title: "Révision — Apprentissage en contexte"
+description-meta: "Le rôle des exemples, des instructions et des documents dans le prompt avec un modèle à paramètres fixes."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-in-context-learning", "level:core", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/revision-in-context-learning"
+scope: "Le rôle des exemples, des instructions et des documents dans le prompt avec un modèle à paramètres fixes."
+purpose: "Restituer de mémoire les idées de cette leçon et les appliquer à la question de révision."
+revision_role: synthesis
+revision_of: ["fr/in-context-learning"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-in-context-learning", "level:core", "language:fr", "status:published"]
+-->
+
+[Revenir à la leçon](in-context-learning.qmd) · [Plan du parcours](review-path.qmd#context-use)
+
+## À retenir {#revision-essentials}
+
+- Les instructions ou démonstrations dans le prompt peuvent modifier le comportement du modèle. Avec du few-shot, quelques exemples montrent la transformation attendue.
+- Le mécanisme agit à l’inférence, en changeant le contexte sur lequel la prédiction est conditionnée. Le fine-tuning modifie les paramètres au préalable.
+- Le RAG peut récupérer des documents externes et les ajouter au contexte. Le modèle bénéficie de ces documents lorsqu’ils lui sont fournis.
+- Zero-shot, one-shot et few-shot désignent zéro, un ou quelques exemples de la tâche. Ces termes décrivent ce qui est fourni et ne suffisent pas à établir le mécanisme interne qui produit le comportement.
+
+## Vérifier de mémoire {#revision-check}
+
+On ajoute deux exemples de classification au prompt et les réponses s’améliorent. Quels paramètres ont été appris à ce moment-là ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Aucun paramètre du modèle n’a été mis à jour par cet ajout. Les nouveaux exemples ont changé le contexte et donc la distribution des réponses.
+
+</details>
+
+::: {.language-switch}
+**Langue** · [Français](../fr/revision-in-context-learning.qmd) · [English](../en/revision-in-context-learning.qmd)
+:::

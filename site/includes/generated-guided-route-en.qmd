@@ -22,12 +22,11 @@
 
 ### 01 · How an LLM works
 
-Understand what an LLM is and follow a complete generation loop as a black box with fixed parameters before studying its internal mechanisms.
+Locate the model’s context and parameters. Follow two generation steps in the overview before studying how a prediction is computed.
 
 **Core pages**
 
 - [Overview: what is an LLM?](llm-overview.html)
-- [Generating text: inference step by step](generation.html)
 
 **Optional resources**
 
@@ -66,7 +65,7 @@ Distinguish text, tokens, and token IDs that form the model's discrete input wit
 
 ### 03 · From IDs to representations
 
-Trace embedding lookup and the addition of positional information, then distinguish initial states from contextualized representations.
+Identify embeddings and positional information. Compare initial and contextualized states before opening the blocks that turn the former into the latter.
 
 **Core pages**
 
@@ -135,7 +134,7 @@ Distinguish prompt prefill from iterative decode, select a token with a decoding
 
 **Core pages**
 
-- [Generating text: inference step by step](generation.html) *(recap)*
+- [Generating text: inference step by step](generation.html)
 
 **Optional resources**
 
@@ -148,7 +147,7 @@ Distinguish prompt prefill from iterative decode, select a token with a decoding
 
 ### 07 · Use and design context
 
-Distinguish information encoded in parameters (pretraining and fine-tuning) from information retrieved or supplied at inference (RAG and context), then understand how a system selects, structures, updates, and secures it.
+Extend inference to the application level. Explain the effect of examples supplied in the prompt, then choose what information a system passes to the model.
 
 **Core pages**
 
@@ -171,7 +170,7 @@ Evaluate the probability assigned to a known target, build a sequence likelihood
 **Core pages**
 
 - [Likelihood and log-likelihood](likelihood.html)
-- [Cross-entropy: the token-prediction objective](cross-entropy.html)
+- [Cross-entropy for a token prediction](cross-entropy.html)
 
 **Optional resources**
 
@@ -188,13 +187,13 @@ Connect observed targets to the aggregated loss, gradients, and parameter update
 
 **Core pages**
 
-- [Loss: from per-token penalty to training objective](loss.html)
+- [From token penalties to batch loss](loss.html)
 - [Gradients: connecting loss to parameters](gradients.html)
 - [The training loop: from gradients to a trained model](training-loop.html)
 
 **Optional resources**
 
-- [Cross-entropy: the token-prediction objective](cross-entropy.html) *(recap)*
+- [Cross-entropy for a token prediction](cross-entropy.html) *(recap)*
 - [Scaling laws: parameters, data, and compute](scaling-laws.html)
 - [From a base model to an assistant: post-training](post-training.html)
 - [The mathematical chain of LLM training](mathematical-foundations.html) *(recap)*

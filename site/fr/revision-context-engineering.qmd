@@ -1,0 +1,47 @@
+---
+title: "Révision — Ingénierie du contexte"
+description-meta: "La sélection, l’organisation et la vérification du contexte sous contrainte de budget et de fiabilité."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-context-engineering", "level:core", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/revision-context-engineering"
+scope: "La sélection, l’organisation et la vérification du contexte sous contrainte de budget et de fiabilité."
+purpose: "Restituer de mémoire les idées de cette leçon et les appliquer à la question de révision."
+revision_role: synthesis
+revision_of: ["fr/context-engineering"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-context-engineering", "level:core", "language:fr", "status:published"]
+-->
+
+[Revenir à la leçon](context-engineering.qmd) · [Plan du parcours](review-path.qmd#context-use)
+
+## À retenir {#revision-essentials}
+
+- Un système assemble le contexte d’un appel à partir des instructions, de la demande, des échanges et des données ou résultats d’outils pertinents.
+- Le budget de tokens impose des choix. Le système peut récupérer, structurer, résumer ou actualiser les informations et doit tenir compte de leur provenance.
+- Un document récupéré peut contenir une instruction hostile. Son contenu doit être traité comme donnée. La qualité du contexte s’évalue par les résultats obtenus et les erreurs introduites.
+- Le contexte est ce que le modèle reçoit. L’apprentissage en contexte décrit l’adaptation observée à partir de cette entrée. L’ingénierie du contexte organise ce que le système choisit de transmettre.
+
+## Vérifier de mémoire {#revision-check}
+
+Une réponse ignore un fait censé venir du RAG. Quel contrôle précède une conclusion sur les capacités du modèle ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Vérifier si le bon document a été récupéré, si le passage pertinent était présent et lisible dans le contexte final, et si sa provenance justifie de l’utiliser.
+
+</details>
+
+::: {.language-switch}
+**Langue** · [Français](../fr/revision-context-engineering.qmd) · [English](../en/revision-context-engineering.qmd)
+:::

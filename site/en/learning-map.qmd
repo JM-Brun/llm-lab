@@ -54,11 +54,17 @@ Section headings shown in a page's details are editorial landmarks, not canonica
 
 ### Learning path skeleton {#conceptual-route}
 
-In a lesson’s details, the arrow runs from the ideas used to the objects studied. The final link names the intended outcome.
+For an autoregressive GPT, $f_\theta(c)$ maps context $c$ to logits using parameters $\theta$. Normalizing the logits gives the base next-token distribution.
+
+$$p_\theta(\cdot\mid c)=\operatorname{softmax}\!\bigl(f_\theta(c)\bigr).$$
+
+The details of each lesson follow the form **ideas used → object studied · intended outcome**.
 
 {{< include ../includes/generated-conceptual-route-en.qmd >}}
 
-The nine stages detail the study order and optional resources. Pages within a stage complement one another. [Evaluation on held-out data](experimental-evaluation.qmd) applies across all three uses.
+The nine stages detail the study order and optional resources. Pages within a stage complement one another. The [exercise on held-out evaluation](experimental-evaluation.qmd) extends the route.
+
+[Learning path plan and review sheets](review-path.qmd)
 
 {{< include ../includes/generated-guided-route-en.qmd >}}
 

@@ -5,21 +5,17 @@ stages:
       fr: "Fonctionnement d’un LLM"
       en: "How an LLM works"
     objective:
-      fr: "Comprendre ce qu'est un LLM et suivre une génération complète comme une boîte noire, avec des paramètres fixes, avant d'en étudier les mécanismes internes."
-      en: "Understand what an LLM is and follow a complete generation loop as a black box with fixed parameters before studying its internal mechanisms."
+      fr: "Situer le contexte et les paramètres du modèle. Suivre deux tours de génération dans le panorama avant d’étudier le calcul de la prédiction."
+      en: "Locate the model’s context and parameters. Follow two generation steps in the overview before studying how a prediction is computed."
     pages:
-      fr: [fr/llm-overview, fr/generation]
-      en: [en/llm-overview, en/generation]
-    compact_title: {fr: "Prédiction et boucle", en: "Prediction and feedback"}
+      fr: [fr/llm-overview]
+      en: [en/llm-overview]
+    compact_title: {fr: "Prédiction et boucle (aperçu)", en: "Prediction and loop (preview)"}
     conceptual_focus:
       llm-overview:
-        objects: ["concept:next-token-prediction"]
-        outcome: {fr: "Identifier ce que prédit le modèle", en: "Identify what the model predicts"}
-      inference-generation:
         visit: preview
-        mobilizes: ["concept:next-token-prediction"]
-        objects: ["concept:autoregressive-generation"]
-        outcome: {fr: "Suivre le retour du token choisi dans le contexte", en: "Follow the selected token back into the context"}
+        objects: ["concept:next-token-prediction", "concept:autoregressive-generation"]
+        outcome: {fr: "Suivre deux tours de prédiction et de réinjection", en: "Trace two rounds of prediction and feedback"}
     optional_pages:
       fr: [fr/transformer-architectures, fr/llm-limits, fr/llm-evolution, fr/next-concept-modeling]
       en: [en/transformer-architectures, en/llm-limits, en/llm-evolution, en/next-concept-modeling]
@@ -34,7 +30,7 @@ stages:
     pages:
       fr: [fr/text-data]
       en: [en/text-data]
-    compact_title: {fr: "Texte → identifiants", en: "Text → token IDs"}
+    compact_title: {fr: "Tokeniser", en: "Tokenize"}
     conceptual_focus:
       text-data:
         mobilizes: ["node:raw-text-context"]
@@ -49,12 +45,12 @@ stages:
       fr: "Des identifiants aux représentations"
       en: "From IDs to representations"
     objective:
-      fr: "Suivre la lecture des vecteurs d'embedding et l'ajout d'information positionnelle, puis distinguer les états initiaux des représentations contextualisées."
-      en: "Trace embedding lookup and the addition of positional information, then distinguish initial states from contextualized representations."
+      fr: "Identifier les plongements et l’information de position. Comparer les états initiaux et contextualisés avant d’ouvrir les blocs qui transforment les premiers en seconds."
+      en: "Identify embeddings and positional information. Compare initial and contextualized states before opening the blocks that turn the former into the latter."
     pages:
       fr: [fr/embedding-space, fr/positional-encoding, fr/contextualized-representations]
       en: [en/embedding-space, en/positional-encoding, en/contextualized-representations]
-    compact_title: {fr: "Représentations", en: "Representations"}
+    compact_title: {fr: "Représenter", en: "Represent"}
     conceptual_focus:
       embedding-space:
         mobilizes: ["node:token-ids"]
@@ -82,7 +78,7 @@ stages:
     pages:
       fr: [fr/transformer, fr/queries-keys-values, fr/scaled-dot-product-attention, fr/causal-masking]
       en: [en/transformer, en/queries-keys-values, en/scaled-dot-product-attention, en/causal-masking]
-    compact_title: {fr: "Blocs Transformer", en: "Transformer blocks"}
+    compact_title: {fr: "Contextualiser", en: "Contextualize"}
     conceptual_focus:
       transformer:
         mobilizes: ["node:initial-hidden-states"]
@@ -114,7 +110,7 @@ stages:
     pages:
       fr: [fr/logits, fr/probabilites, fr/entropy]
       en: [en/logits, en/probabilities, en/entropy]
-    compact_title: {fr: "Distribution prédictive", en: "Predictive distribution"}
+    compact_title: {fr: "Projeter et normaliser", en: "Project and normalize"}
     conceptual_focus:
       logits:
         mobilizes: ["node:final-hidden-states"]
@@ -142,8 +138,11 @@ stages:
     pages:
       fr: [fr/generation]
       en: [en/generation]
-    compact_title: {fr: "Générer", en: "Generate"}
-    use_branch: generation
+    compact_title: {fr: "Générer (reprise)", en: "Generate (revisit)"}
+    prediction_use:
+      context: {fr: "S’allonge avec le token choisi", en: "Grows by the selected token"}
+      parameters: fixed
+      action: {fr: "Sélectionner puis réinjecter un token", en: "Select and feed back a token"}
     conceptual_focus:
       inference-generation:
         visit: revisit
@@ -159,13 +158,16 @@ stages:
       fr: "Exploiter et concevoir le contexte"
       en: "Use and design context"
     objective:
-      fr: "Distinguer les informations encodées dans les paramètres (pré-entraînement et fine-tuning) des informations récupérées ou fournies à l'inférence (RAG et contexte), puis comprendre comment un système les sélectionne, structure, actualise et sécurise."
-      en: "Distinguish information encoded in parameters (pretraining and fine-tuning) from information retrieved or supplied at inference (RAG and context), then understand how a system selects, structures, updates, and secures it."
+      fr: "Prolonger l’inférence côté application. Expliquer l’effet d’exemples fournis dans le prompt, puis choisir les informations qu’un système transmet au modèle."
+      en: "Extend inference to the application level. Explain the effect of examples supplied in the prompt, then choose what information a system passes to the model."
     pages:
       fr: [fr/in-context-learning, fr/context-engineering]
       en: [en/in-context-learning, en/context-engineering]
-    compact_title: {fr: "Adapter le contexte", en: "Adapt the context"}
-    use_branch: generation
+    compact_title: {fr: "Concevoir le contexte", en: "Design the context"}
+    prediction_use:
+      context: {fr: "Composé avant la prédiction", en: "Assembled before prediction"}
+      parameters: fixed
+      action: {fr: "Choisir les informations fournies", en: "Choose the information supplied"}
     conceptual_focus:
       in-context-learning:
         mobilizes: ["node:token-context"]
@@ -190,7 +192,10 @@ stages:
       fr: [fr/vraisemblance, fr/cross-entropy]
       en: [en/likelihood, en/cross-entropy]
     compact_title: {fr: "Scorer", en: "Score"}
-    use_branch: observed-target-scoring
+    prediction_use:
+      context: {fr: "Préfixe donné pour chaque cible", en: "Prefix given for each target"}
+      parameters: fixed
+      action: {fr: "Lire la probabilité du token observé", en: "Read the observed token’s probability"}
     conceptual_focus:
       vraisemblance:
         mobilizes: ["concept:conditional-distribution", "concept:observed-target"]
@@ -215,7 +220,10 @@ stages:
       fr: [fr/loss, fr/gradients, fr/training-loop]
       en: [en/loss, en/gradients, en/training-loop]
     compact_title: {fr: "Entraîner", en: "Train"}
-    use_branch: training
+    prediction_use:
+      context: {fr: "Préfixes des exemples observés", en: "Prefixes from observed examples"}
+      parameters: updated
+      action: {fr: "Agréger les pertes et ajuster les paramètres", en: "Aggregate losses and update parameters"}
     conceptual_focus:
       loss:
         mobilizes: ["concept:cross-entropy"]
@@ -255,3 +263,64 @@ transitions:
     purpose:
       fr: "Relier le score attribué à une cible observée à l'objectif d'apprentissage qui agrège ces pénalités pour ajuster les paramètres, sans faire du scoring un prérequis."
       en: "Connect the score assigned to an observed target with the learning objective that aggregates these penalties to update parameters, without making scoring a prerequisite."
+
+lesson_contracts:
+  llm-overview:
+    synthesis: revision-llm-overview
+  text-data:
+    synthesis: revision-text-data
+    requires: [llm-overview]
+  embedding-space:
+    synthesis: revision-embedding-space
+    requires: [text-data]
+  positional-encoding:
+    synthesis: revision-positional-encoding
+    requires: [embedding-space]
+  contextualized-representations:
+    synthesis: revision-contextualized-representations
+    requires: [embedding-space, positional-encoding]
+  transformer:
+    synthesis: revision-transformer
+    requires: [contextualized-representations]
+  queries-keys-values:
+    synthesis: revision-queries-keys-values
+    requires: [transformer]
+  scaled-dot-product-attention:
+    synthesis: revision-scaled-dot-product-attention
+    requires: [queries-keys-values]
+  causal-masking:
+    synthesis: revision-causal-masking
+    requires: [scaled-dot-product-attention]
+  logits:
+    synthesis: revision-logits
+    requires: [transformer]
+  probabilites:
+    synthesis: revision-probabilites
+    requires: [logits]
+  entropy:
+    synthesis: entropy-synthesis
+    requires: [probabilites]
+  inference-generation:
+    synthesis: revision-inference-generation
+    requires: [probabilites]
+  in-context-learning:
+    synthesis: revision-in-context-learning
+    requires: [inference-generation]
+  context-engineering:
+    synthesis: revision-context-engineering
+    requires: [in-context-learning]
+  vraisemblance:
+    synthesis: revision-vraisemblance
+    requires: [probabilites]
+  cross-entropy:
+    synthesis: revision-cross-entropy
+    requires: [vraisemblance, entropy]
+  loss:
+    synthesis: revision-loss
+    requires: [probabilites]
+  gradients:
+    synthesis: revision-gradients
+    requires: [loss]
+  training-loop:
+    synthesis: revision-training-loop
+    requires: [causal-masking, loss, gradients]

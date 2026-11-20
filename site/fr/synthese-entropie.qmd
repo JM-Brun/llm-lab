@@ -29,6 +29,10 @@ tags: ["type:concept-bridge", "destination:practice", "topic:entropy-synthesis",
 
 [← Revenir à la leçon d'entropie](entropy.qmd) · [Vraisemblance](vraisemblance.qmd) · [Cross-entropie](cross-entropy.qmd)
 
+[Plan du parcours](review-path.qmd#prediction)
+
+<span id="revision-essentials"></span>
+
 ## L'idée centrale
 
 Un LLM autorégressif ne choisit pas directement un mot : chaque étape produit une distribution de probabilité sur le prochain token, conditionnée au contexte. Tant qu'aucun token n'est observé, il existe donc une incertitude, et le langage est prévisible à des degrés divers. L'entropie est la mesure de cette incertitude ; le logarithme, lui, est ce qui rend la surprise mesurable et additive.
@@ -80,6 +84,8 @@ soit environ 79 % du maximum $\ln 4 \approx 1{,}386$ nats. Les valeurs sont illu
 - Une entropie élevée ne signifie pas que la sortie est fausse : plusieurs continuations peuvent être plausibles.
 - Les probabilités normalisées ne garantissent pas la calibration.
 - La perplexité dépend du tokenizer et du protocole d'évaluation ; une comparaison exige de préciser ces conventions.
+
+<span id="revision-check"></span>
 
 ## Auto-évaluation
 

@@ -19,6 +19,7 @@ site/_freeze/
 site/learning-map-data-*.json
 site/includes/generated-guided-context-*.qmd
 site/includes/generated-conceptual-route-*.qmd
+site/includes/generated-lesson-contracts-*.qmd
 site/includes/generated-suggested-route-*.qmd
 
 # Test, coverage, and type-check caches

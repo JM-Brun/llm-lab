@@ -46,11 +46,11 @@ The list order follows the stage order in `data/guided-route.yml`. The role is p
 
 The bilingual tests exercise:
 
-- `generation`: core in both `orientation` and `prediction`;
+- `generation`: core in `inference`;
+- `cross-entropy`: core in `scoring` and optional in `training`;
 - `transformer-architectures`: optional in `orientation`;
 - `attention-score-scaling`: optional in `computation` (mathematical deep dive, not a core prerequisite);
 - `embedding-space`: core in `representations`;
-- `evaluation-experimentale` / `experimental-evaluation`: included because the canonical route explicitly lists it in `learning-evaluation`;
 - `build-path`: absent from the Understand route;
 - a synthetic unassigned page: absent from the mapping.
 
@@ -63,7 +63,7 @@ The same branch now includes a renderer, `render_guided_page_context_markdown()`
 
 Stage anchors are added to the generated bilingual route fragments, and responsive styles are defined for the two context presentations.
 
-The renderer is covered by tests for a single optional membership, multiple core memberships, stable anchors, and an absent membership. A generator now emits one ignored Quarto partial per route-member page. The English and French overview and generation lessons exercise the single-membership and multi-membership paths. The embeddings and Q/K/V lessons include their generated route-context partials, exercising the `representations` and `computation` stages respectively. The optional attention-score-scaling deep dive is also listed in the computation stage and receives an explicitly optional route context. The Quarto build runs the generator before rendering; local builds must run `python site/tools/build_learning_map.py` before `quarto render site`.
+The renderer is covered by tests for a single optional membership, multiple memberships, stable anchors, and an absent membership. A generator emits one ignored Quarto partial per route-member page. The generation and cross-entropy lessons exercise the single-membership and multi-membership paths. The embeddings and Q/K/V lessons include their generated route-context partials, exercising the `representations` and `computation` stages respectively. The optional attention-score-scaling deep dive is also listed in the computation stage and receives an explicitly optional route context. The Quarto build runs the generator before rendering. For local builds, run `python site/tools/build_learning_map.py` before `quarto render site`.
 
 The remaining work is visual and accessibility validation of the implemented presentation; preserve the semantic distinction between single and multiple memberships:
 
@@ -100,7 +100,7 @@ Do not add a duplicate per-page `coverage` array when the existing stage members
 
 A transition record must identify a stable ID, `from` and `to` stage IDs, canonical page IDs in each published language, and a concise localized purpose. Direction must be intentional; if the relationship is symmetric, encode that explicitly rather than relying on an ambiguous arrow. Transition edges are explanatory, not prerequisite edges. Validate endpoint existence, page publication/language, unique IDs, bilingual purpose, and page association. The renderer should show localized stage titles and purpose, never raw IDs or fabricated step numbers.
 
-The two regression fixtures are `generation` (orientation + inference; early overview and later detailed inference) and `cross-entropy` (scoring core + training optional; observed-target scoring and training objective). Their distinct membership roles must survive generation unchanged. The `text-data` page is a negative boundary fixture: its mention of corpus preparation must not imply Build membership.
+The regression tests verify `generation` as a member of inference and a transition from prediction to inference. They also verify `cross-entropy` as core in scoring and optional in training, with its own transition linking the two. A mention of corpus preparation in `text-data` leaves its membership at text input.
 
 No YAML schema, generator, page fragment, or source page is changed by this design note. Implement the schema only after these semantics and the bilingual examples are reviewed.
 

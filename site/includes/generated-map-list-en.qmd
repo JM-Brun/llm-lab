@@ -15,17 +15,18 @@
       - [Logits: scores before normalization](logits.html)
       - [Output probabilities: from logits to tokens](probabilities.html)
       - [Entropy: uncertainty over the next token](entropy.html)
-  - Context and adaptation
+  - Generation and context
+    - [Generating text: inference step by step](generation.html)
     - [In-context learning](in-context-learning.html)
     - [Context engineering](context-engineering.html)
   - Observed-target scoring
     - [Likelihood and log-likelihood](likelihood.html)
-    - [Cross-entropy: the token-prediction objective](cross-entropy.html)
+    - [Cross-entropy for a token prediction](cross-entropy.html)
     - [Synthesis sheet — Entropy, from language to LLMs](entropy-synthesis.html)
     - [Revision sheet — Information theory and LLMs](revision-information-theory.html)
     - [Experiment — Entropy, KL and predictive coding](experience-information-theory.html)
   - Loss and gradients
-    - [Loss: from per-token penalty to training objective](loss.html)
+    - [From token penalties to batch loss](loss.html)
     - [Gradients: connecting loss to parameters](gradients.html)
     - [The training loop: from gradients to a trained model](training-loop.html)
     - [From a base model to an assistant: post-training](post-training.html)
@@ -33,7 +34,6 @@
     - [Transformer architectures: encoder, encoder–decoder, and decoder](transformer-architectures.html)
     - [The training objective: guarantees and limits](llm-limits.html)
   - [Overview: what is an LLM?](llm-overview.html)
-  - [Generating text: inference step by step](generation.html)
 - **Build a small GPT**
   - Prepare training data
     - [Preparing a corpus for pretraining](corpus-preparation.html)

@@ -1,0 +1,47 @@
+---
+title: "Révision — Probabilités du prochain token"
+description-meta: "Le softmax sur le vocabulaire, l’effet de la température, le choix du token et la calibration."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-probabilites", "level:core", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/revision-probabilites"
+scope: "Le softmax sur le vocabulaire, l’effet de la température, le choix du token et la calibration."
+purpose: "Restituer de mémoire les idées de cette leçon et les appliquer à la question de révision."
+revision_role: synthesis
+revision_of: ["fr/probabilites"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-probabilites", "level:core", "language:fr", "status:published"]
+-->
+
+[Revenir à la leçon](probabilites.qmd) · [Plan du parcours](review-path.qmd#prediction)
+
+## À retenir {#revision-essentials}
+
+- Le softmax exponentie chaque logit puis le divise par la somme des exponentielles sur le vocabulaire. On obtient une distribution conditionnée au contexte.
+- Ajouter la même constante à tous les logits conserve la distribution. Les différences entre scores déterminent les rapports de probabilités.
+- Pour une température T > 0, on applique le softmax aux logits divisés par T. Une température plus faible accentue les écarts, une plus forte aplatit la distribution. Le choix du token est une autre opération.
+- Être normalisée signifie que la distribution somme à 1. Être calibrée signifie que, pour une population et une définition de succès données, les événements annoncés à 80 % arrivent environ 80 % du temps. Une probabilité pour le prochain token ne mesure pas à elle seule la véracité d’une réponse.
+
+## Vérifier de mémoire {#revision-check}
+
+Les logits (1, 2) et (11, 12) donnent-ils deux distributions différentes ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Non. L’ajout de 10 multiplie tous les termes exponentiels par la même constante, qui s’annule à la normalisation.
+
+</details>
+
+::: {.language-switch}
+**Langue** · [Français](../fr/revision-probabilites.qmd) · [English](../en/revision-probabilites.qmd)
+:::

@@ -1,0 +1,46 @@
+---
+title: "Révision — Représentations contextualisées"
+description-meta: "Le passage du plongement initial à un état caché par occurrence, puis à une prédiction."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-contextualized-representations", "level:core", "language:fr", "status:published"]
+lang: fr
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "fr/revision-contextualized-representations"
+scope: "Le passage du plongement initial à un état caché par occurrence, puis à une prédiction."
+purpose: "Restituer de mémoire les idées de cette leçon et les appliquer à la question de révision."
+revision_role: synthesis
+revision_of: ["fr/contextualized-representations"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-contextualized-representations", "level:core", "language:fr", "status:published"]
+-->
+
+[Revenir à la leçon](contextualized-representations.qmd) · [Plan du parcours](review-path.qmd#representations)
+
+## À retenir {#revision-essentials}
+
+- Le lookup donne un vecteur par ID du vocabulaire. Une couche du Transformer manipule ensuite un état caché par position de la séquence.
+- L’attention mélange de l’information issue des positions accessibles. En GPT causal, la position courante dispose de son préfixe et de sa propre entrée.
+- La tête de sortie utilise l’état final d’une position pour produire des scores sur le vocabulaire du prochain token.
+
+## Vérifier de mémoire {#revision-check}
+
+Deux occurrences du mot « avocat » peuvent-elles avoir le même plongement initial et des états finaux différents ?
+
+<details>
+<summary>Afficher la réponse</summary>
+
+Oui, si elles reçoivent le même ID, leur lookup est identique. Dans des préfixes différents, les couches peuvent produire des états différents.
+
+</details>
+
+::: {.language-switch}
+**Langue** · [Français](../fr/revision-contextualized-representations.qmd) · [English](../en/revision-contextualized-representations.qmd)
+:::

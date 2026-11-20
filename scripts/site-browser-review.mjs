@@ -511,8 +511,9 @@ async function runCase(testCase, caseIndex) {
       };
     });
     const expectedCoreNavigation = {
-      "text-data.html": { previous: "generation.html", next: "embedding-space.html" },
+      "text-data.html": { previous: "llm-overview.html", next: "embedding-space.html" },
       "embedding-space.html": { previous: "text-data.html", next: "positional-encoding.html" },
+      "generation.html": { previous: "entropy.html", next: "in-context-learning.html" },
     }[pagePath];
     if (expectedCoreNavigation) {
       for (const [direction, expectedTarget] of Object.entries(expectedCoreNavigation)) {
@@ -1143,7 +1144,6 @@ async function runCase(testCase, caseIndex) {
         item.routeContext.stageAnchorsResolve = stageFragments.every(id => availableStageAnchors.has(id));
         if (!item.routeContext.stageAnchorsResolve) throw new Error("guided-route stage link points to a missing anchor");
         const multiStagePages = {
-          "generation.html": ["guided-stage-orientation", "guided-stage-inference"],
           "cross-entropy.html": ["guided-stage-scoring", "guided-stage-training"],
         };
         if (multiStagePages[pagePath]) {
@@ -1183,6 +1183,7 @@ async function runCase(testCase, caseIndex) {
             "logits.html": "guided-stage-prediction",
             "probabilities.html": "guided-stage-prediction",
             "probabilites.html": "guided-stage-prediction",
+            "generation.html": "guided-stage-inference",
             "likelihood.html": "guided-stage-scoring",
             "vraisemblance.html": "guided-stage-scoring",
             "decoding-strategies.html": "guided-stage-inference",

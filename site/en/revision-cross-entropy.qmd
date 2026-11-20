@@ -1,0 +1,48 @@
+---
+title: "Review — Cross-entropy"
+description-meta: "Prediction versus target, the computation at one position, and the one-hot case."
+keywords: ["type:concept-bridge", "destination:practice", "topic:revision-cross-entropy", "level:core", "language:en", "status:published"]
+lang: en
+---
+
+<!--
+LLM-LAB-PAGE-MAP v1
+id: "en/revision-cross-entropy"
+scope: "Prediction versus target, the computation at one position, and the one-hot case."
+purpose: "Recall the key ideas from this lesson and apply them to the review question."
+revision_role: synthesis
+revision_of: ["en/cross-entropy"]
+suggested_route:
+  previous: null
+  next: null
+hierarchy:
+  parents: []
+  children: []
+related: []
+tags: ["type:concept-bridge", "destination:practice", "topic:revision-cross-entropy", "level:core", "language:en", "status:published"]
+-->
+
+[Back to the lesson](cross-entropy.qmd) · [Learning path plan](review-path.qmd#scoring)
+
+## What to remember {#revision-essentials}
+
+- For target q and prediction p, cross-entropy H(q,p) is the average of −log p(x) weighted by q(x).
+- It equals H(q) + D_KL(q ∥ p). With q fixed, it is minimized when p matches q.
+- If the target is concentrated on observed token y, it becomes −log p(y). Predictive entropy H(p) addresses uncertainty before observing the outcome.
+
+## Recall from memory {#revision-check}
+
+The model predicts p = (0.75, 0.25). Compare the cross-entropy in nats for q = (0.5, 0.5) and for the one-hot target q = (1, 0).
+
+<details>
+<summary>Show the answer</summary>
+
+For the distributed target, the result is −0.5 ln(0.75) − 0.5 ln(0.25) ≈ 0.837 nats. With the one-hot target only the first term contributes, so the penalty is −ln(0.75) ≈ 0.288 nats.
+
+</details>
+
+To apply this penalty to a batch, see [the loss review sheet](revision-loss.qmd).
+
+::: {.language-switch}
+**Language** · [Français](../fr/revision-cross-entropy.qmd) · [English](../en/revision-cross-entropy.qmd)
+:::
