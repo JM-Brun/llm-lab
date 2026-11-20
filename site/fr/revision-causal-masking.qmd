@@ -33,12 +33,12 @@ tags: ["type:concept-bridge", "destination:practice", "topic:revision-causal-mas
 
 ## Vérifier de mémoire {#revision-check}
 
-Pour A, B, C et D, quelles positions C peut-il lire et quel token est sa cible dans une séquence d’entraînement décalée ?
+Une séquence d’entraînement contient A, B, C et D. La requête à la position de C donne quatre scores égaux avant masquage. Quel token est sa cible ? Quels poids obtient-on avec le masque causal ? Quels poids obtiendrait-on en annulant seulement le poids de D après le softmax ?
 
 <details>
 <summary>Afficher la réponse</summary>
 
-C peut lire A, B et C. La cible est D. La position de D reste masquée pour la requête en C.
+La cible est D. Le masque causal autorise A, B et C, qui reçoivent chacun un poids de $\frac{1}{3}$, et bloque D, qui reçoit $0$. Si l’on applique le softmax aux quatre scores égaux puis annule seulement le poids de D, les trois poids restants valent $\frac{1}{4}$ et leur somme vaut $\frac{3}{4}$.
 
 </details>
 

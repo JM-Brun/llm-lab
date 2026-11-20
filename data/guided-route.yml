@@ -63,7 +63,7 @@ stages:
       contextualized-representations:
         mobilizes: ["concept:token-embedding", "concept:positional-encoding"]
         objects: ["concept:contextualized-representation"]
-        outcome: {fr: "Distinguer état initial et état contextualisé", en: "Distinguish initial and contextualized states"}
+        outcome: {fr: "Expliquer pourquoi deux occurrences du même token peuvent avoir des états différents", en: "Explain why two occurrences of one token can have different states"}
     optional_pages:
       fr: [fr/tensors, fr/rope, fr/sinusoidal-positional-encoding, fr/contextualized-representations-advanced, fr/embeddings-deep-dive]
       en: [en/tensors, en/rope, en/sinusoidal-positional-encoding, en/contextualized-representations-advanced, en/embeddings-deep-dive]
@@ -87,15 +87,15 @@ stages:
       queries-keys-values:
         mobilizes: ["node:transformer-block-input"]
         objects: ["concept:query", "concept:key", "concept:value"]
-        outcome: {fr: "Distinguer requête, clé et contenu agrégé", en: "Distinguish the query, key and aggregated content"}
+        outcome: {fr: "Prévoir l’effet de V à requêtes, clés et masque fixés", en: "Predict the effect of V with queries, keys and mask fixed"}
       scaled-dot-product-attention:
         mobilizes: ["concept:query", "concept:key", "concept:value"]
-        objects: ["concept:scaled-dot-product-attention"]
-        outcome: {fr: "Passer des scores à une somme pondérée", en: "Turn scores into a weighted sum"}
+        objects: ["concept:scaled-dot-product-attention", "node:attention-weights"]
+        outcome: {fr: "Calculer les poids d’une requête et agréger les valeurs", en: "Compute one query’s weights and aggregate the values"}
       causal-masking:
         mobilizes: ["concept:attention-score"]
-        objects: ["concept:causal-mask"]
-        outcome: {fr: "Déterminer les positions accessibles", en: "Determine which positions are accessible"}
+        objects: ["concept:causal-mask", "node:masked-attention-scores"]
+        outcome: {fr: "Déterminer quelles positions participent au softmax", en: "Determine which positions participate in softmax"}
     optional_pages:
       fr: [fr/cross-attention, fr/attention-score-scaling, fr/queries-keys-values-advanced, fr/multimodal-architectures, fr/hybrid-llm-architectures]
       en: [en/cross-attention, en/attention-score-scaling, en/queries-keys-values-advanced, en/multimodal-architectures, en/hybrid-llm-architectures]

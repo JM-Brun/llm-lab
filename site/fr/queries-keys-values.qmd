@@ -42,10 +42,10 @@ La page précédente, [Le Transformer dans un GPT : architecture et calcul](tran
 :::
 ::: {.meta-flow__branches}
 ::: {.meta-flow__branch}
-<strong>Q · Query</strong><span>Ce que la position cherche</span>
+<strong>Q · Query</strong><span>Vecteur comparé aux clés</span>
 :::
 ::: {.meta-flow__branch}
-<strong>K · Key</strong><span>Ce que chaque position rend repérable</span>
+<strong>K · Key</strong><span>Vecteur comparé aux requêtes</span>
 :::
 ::: {.meta-flow__branch}
 <strong>V · Value</strong><span>Le contenu qui pourra être agrégé</span>
@@ -55,7 +55,7 @@ La page précédente, [Le Transformer dans un GPT : architecture et calcul](tran
 Q et K déterminent les poids ; V fournit le contenu à mélanger
 :::
 ::: {.meta-flow__result}
-<strong>QKᵀ → scores → softmax → poids d’attention</strong>
+<strong>QKᵀ → scores → <a href="scaled-dot-product-attention.qmd#calcul-en-cinq-étapes">calcul des poids</a></strong>
 :::
 ::: {.meta-flow__result}
 <strong>Poids × V → somme pondérée → sortie de l’attention</strong>

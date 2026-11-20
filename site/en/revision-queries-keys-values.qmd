@@ -32,12 +32,12 @@ tags: ["type:concept-bridge", "destination:practice", "topic:revision-queries-ke
 
 ## Recall from memory {#revision-check}
 
-With Q and K fixed, what can changing V affect in a head?
+With Q, K and the mask fixed, what can changing V affect within one head?
 
 <details>
 <summary>Show the answer</summary>
 
-It can change the weighted output. The head’s weights stay fixed because they are computed from Q, K and the mask.
+Changing V can change the weighted sum. The weights depend on the scores computed from Q and K and the positions allowed by the mask.
 
 </details>
 
