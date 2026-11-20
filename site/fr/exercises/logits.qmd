@@ -18,7 +18,7 @@ suggested_route:
 hierarchy:
   parents: []
   children: []
-related: ["fr/logits", "fr/scaled-dot-product-attention"]
+related: ["fr/logits", "fr/transformer", "fr/scaled-dot-product-attention"]
 tags: ["type:exercise-hub", "destination:practice", "topic:logits-exercises", "level:applied", "language:fr", "status:published"]
 -->
 
@@ -59,6 +59,23 @@ Il identifie le token dont le score est le plus élevé dans ce vecteur. Il ne d
 <summary>Afficher la réponse</summary>
 
 Non. Le second vecteur s'obtient en ajoutant la même constante (100) à chaque composante. Ce décalage s'annule dans la formule de softmax : les deux vecteurs produisent la même distribution. Le niveau absolu des logits n'a donc pas de signification isolée ; ce sont leurs écarts qui comptent.
+
+</details>
+
+## Des états finaux à la distribution du prochain token {#ex-final-state-to-next-token}
+
+Un GPT causal jouet reçoit le préfixe $(A,B)$, sans padding. Les états finaux à l’entrée de la tête de sortie sont $h_1=(\ln 2,0)$ et $h_2=(0,\ln 3)$. Le vocabulaire est $(A,B,C)$ et la tête de sortie a trois lignes de poids $w_A=(1,0)$, $w_B=(0,1)$ et $w_C=(0,0)$, avec un biais nul. À chaque position $t$, le score du candidat $i$ vaut $h_t\cdot w_i$.
+
+1. Calculez les logits des deux positions et donnez la forme de la matrice obtenue.
+2. Appliquez la softmax à chaque ligne. Quel axe est normalisé et que doit valoir la somme des probabilités à chaque position ?
+3. À quel préfixe correspond chaque distribution ? Laquelle sert à prédire le token qui suit le préfixe complet $(A,B)$ ?
+
+<details>
+<summary>Afficher le corrigé</summary>
+
+1. La matrice des logits est de forme $(2,3)$, avec les positions en lignes et les candidats du vocabulaire en colonnes. Les lignes sont $(\ln 2,0,0)$ et $(0,\ln 3,0)$.
+2. La softmax normalise l’axe du vocabulaire indépendamment pour chaque position. Les distributions obtenues sont $(1/2,1/4,1/4)$ et $(1/5,3/5,1/5)$, de somme $1$ chacune.
+3. La première ligne donne $P(\cdot\mid A)$. Elle attribue une probabilité de $1/4$ au token observé $B$. La seconde donne $P(\cdot\mid A,B)$. C’est cette distribution que le décodage utilise pour prolonger le préfixe complet.
 
 </details>
 

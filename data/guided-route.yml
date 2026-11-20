@@ -550,6 +550,26 @@ boundaries:
         fr: "Comparer un changement avant ou après le token étudié"
         en: "Compare a change before or after the token under study"
 
+  final-states-and-next-token-prediction:
+    criterion: >-
+      The output head maps each final state to one score per vocabulary token,
+      preserving the position axis. Softmax normalizes over the vocabulary at
+      each position. For a single unpadded causal prefix, the last row gives the
+      distribution for the token after the complete prefix.
+    explanations:
+      computation:
+        concept_ids: [contextualized-representation]
+        pages: {fr: fr/transformer, en: en/transformer}
+      prediction:
+        concept_ids: [output-projection, logits, softmax]
+        pages: {fr: fr/logits, en: en/logits}
+    transfer:
+      pages: {fr: fr/logits-exercises, en: en/logits-exercises}
+      anchor: ex-final-state-to-next-token
+      label:
+        fr: "Calculer les probabilités et repérer la ligne du prochain token"
+        en: "Compute the probabilities and find the next-token row"
+
   attention-positions-and-vocabulary:
     criterion: >-
       For a fixed query, attention softmax normalizes scores over key positions
