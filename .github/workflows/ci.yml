@@ -143,6 +143,7 @@ jobs:
         run: |
           uv run mypy src
           uv run mypy site/tools/strict_yaml.py site/tools/page_index.py site/tools/artifact_writer.py
+          uv run mypy site/tools/project_index.py site/tools/project_coverage.py
 
   tests:
     name: Test suite

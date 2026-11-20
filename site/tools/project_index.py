@@ -147,7 +147,12 @@ def _load_non_page_resources(
             )
 
         kind, language, status = item.get("kind"), item.get("language"), item.get("status")
-        if not all(isinstance(value, str) and value for value in (kind, language, status)):
+        if (
+            not isinstance(kind, str)
+            or not isinstance(language, str)
+            or not isinstance(status, str)
+            or not all((kind, language, status))
+        ):
             raise ValueError(f"{where}: kind, language and status must be non-empty strings")
         labels, descriptions, location = (
             item.get("labels"),
@@ -428,9 +433,9 @@ class ProjectIndex:
         revision_support_by_page, revision_edges = _load_revision_relations(pages)
         aids_by_lesson: dict[str, list[RevisionEdge]] = defaultdict(list)
         lessons_by_aid: dict[str, list[RevisionEdge]] = defaultdict(list)
-        for edge in revision_edges:
-            aids_by_lesson[edge.source_page_id].append(edge)
-            lessons_by_aid[edge.aid_page_id].append(edge)
+        for revision_edge in revision_edges:
+            aids_by_lesson[revision_edge.source_page_id].append(revision_edge)
+            lessons_by_aid[revision_edge.aid_page_id].append(revision_edge)
 
         tag_index: dict[tuple[str, str], set[str]] = defaultdict(set)
         for page in published:
